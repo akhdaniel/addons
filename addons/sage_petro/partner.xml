@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<!-- petro tab -->
+        <record id="view_partner_form_sage" model="ir.ui.view">
+            <field name="name">res.partner.form.sage</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<page string="Internal Notes" position="after">
+            		<page string="Petro+" name="petro" >
+            			<group>
+				            <field name="card_no"/>
+				            <field name="at_limit"/>
+				            <field name="nt_limit"/>
+				        </group>
+			        </page>
+                </page>
+			</field>
+		</record>
+
+
+		<!-- scheduler : transactions -->
+		<record forcecreate="True" model="ir.cron" id="sage_read_trans">
+			<field name="name">Read Petro+ Transactions table</field>
+			<field name="active">True</field>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="interval_number">1</field>
+			<field name="interval_type">minutes</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="True"/>
+			<field name="model" eval="'res.partner'"/>
+			<field name="function" eval="'read_trans'"/>
+			<field name="args" eval="'()'"/>
+		</record>    	
+
+		<!-- scheduler : bonuses -->
+		<record forcecreate="True" model="ir.cron" id="sage_read_bonus">
+			<field name="name">Read Petro+ Bonuses table</field>
+			<field name="active">True</field>
+			<field name="user_id" ref="base.user_root"/>
+			<field name="interval_number">1</field>
+			<field name="interval_type">minutes</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="True"/>
+			<field name="model" eval="'res.partner'"/>
+			<field name="function" eval="'read_bonus'"/>
+			<field name="args" eval="'()'"/>
+		</record>   
+
+    </data>
+</openerp>
