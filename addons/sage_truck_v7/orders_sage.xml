@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		  <record id="view_order_form2" model="ir.ui.view">
+            <field name="name">sale.order.form2</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+				<field name="partner_id" position='after'>
+					<field name="pricing_per"/>
+	            </field>
+	        </field>   	
+		  </record>
+		  
+		   <record id="view_order_form3" model="ir.ui.view">
+            <field name="name">sale.order.form3</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+				<field name="discount" position='after'>
+					<field name="truck_numb"/>
+	            </field>
+				<field name="discount" position='after'>
+					<field name="location"/>
+	            </field>
+	        </field>   	
+		  </record>
+		  
+		  <record id="view_order_form4" model="ir.ui.view">
+            <field name="name">sale.order.form4</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+				<field name="price_subtotal" position='after'>
+					<field name="truck_numb"/>
+	            </field>
+				<field name="price_subtotal" position='after'>
+					<field name="location"/>
+	            </field>
+
+	        </field>   	
+		  </record>
+		  
+		 
+		   
+		 
+		<record id="invoice_form2" model="ir.ui.view">
+            <field name="name">account.invoice.form2</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+			
+				<field name="partner_id" position='after'>
+					<field name="pricing_per"/>
+	            </field>
+	            
+	            <xpath expr="/form/sheet/notebook/page[@string='Invoice Lines']/field[@name='invoice_line']/tree/field[@name='price_subtotal']" position="after">
+                    <field name="location" />
+                    <field name="truck_numb" />
+                </xpath>
+	  	
+            </field>
+		</record>		
+		
+		
+	</data>
+</openerp>
