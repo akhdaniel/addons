@@ -1,0 +1,20 @@
+id,create_uid,create_date,write_date,write_uid,warranty,supply_method,uos_id,list_price,weight,standard_price,mes_type,uom_id,description_purchase,uos_coeff,purchase_ok,product_manager,company_id,name,state,loc_rack,uom_po_id,type,description,weight_net,volume,loc_row,description_sale,procure_method,cost_method,rental,sale_ok,sale_delay,loc_case,produce_delay,categ_id
+52,1,11/27/12 9:42,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Gasoil Mines,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+53,1,11/27/12 9:43,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,MGO Foreign,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+54,1,11/27/12 9:43,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,MGO Local,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+55,1,11/27/12 9:43,11/29/12 9:29,1,0,produce,\N,0,0,1,fixed,1,\N,1,t,\N,1,Power Dissel,\N,\N,1,consu,\N,0,0,\N,\N,make_to_order,standard,f,t,7,\N,1,1
+56,1,11/27/12 9:43,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Power Super,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+58,1,11/27/12 9:44,11/29/12 9:29,1,0,produce,\N,0,0,1,fixed,1,\N,1,t,\N,1,Premix,\N,\N,1,consu,\N,0,0,\N,\N,make_to_order,standard,f,t,7,\N,1,1
+59,1,11/27/12 9:44,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Regular Gasoline,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+60,1,11/27/12 9:44,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Aviation Turbine Kerosene,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+62,1,11/27/12 9:45,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Kerosene (Mines),\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+61,1,11/27/12 9:44,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Kerosene (Domestic),\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+63,1,11/27/12 9:45,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Residual Fuel Oil,\N,\N,1,consu,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+64,1,11/27/12 9:45,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,LPG,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+65,1,11/27/12 9:45,11/29/12 9:29,1,0,buy,\N,0,0,1,fixed,1,\N,1,t,\N,1,Naphtha,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+210,1,11/27/12 12:37,11/29/12 9:29,1,0,buy,\N,1,0,1,fixed,1,\N,1,t,\N,1,Additive G2003,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+213,1,11/27/12 12:42,11/29/12 9:29,1,0,buy,\N,1,0,1,fixed,1,\N,1,t,\N,1,Gasoil,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+214,1,11/27/12 15:11,11/29/12 9:29,1,0,buy,\N,1,0,1,fixed,1,\N,1,t,\N,1,Gasoline,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+57,1,11/27/12 9:44,11/29/12 9:29,1,0,produce,\N,0,0,1,fixed,1,\N,1,f,\N,1,Regular Gas Oil,\N,\N,1,consu,\N,0,0,\N,\N,make_to_order,standard,f,t,7,\N,1,1
+211,1,11/27/12 12:37,11/29/12 9:29,1,0,buy,\N,1,0,1,fixed,1,\N,1,t,\N,1,Additive D3010,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
+212,1,11/27/12 12:37,11/29/12 9:29,1,0,buy,\N,1,0,1,fixed,1,\N,1,t,\N,1,Additive Marine Mix,\N,\N,1,product,\N,0,0,\N,\N,make_to_stock,standard,f,t,7,\N,1,1
