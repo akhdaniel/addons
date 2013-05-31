@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="list_price" model="product.price.type">
+            <field name="name">Public Price</field>
+            <field name="field">list_price</field>
+        </record>
+
+		<!-- 
+			Pricelist USD 2012 
+		-->
+       	<record id="list2012_usd" model="product.pricelist">
+            <field name="name">2012 Ex Refinery Sale USD Pricelist</field>
+            <field name="type">sale</field>
+            <field name="currency_id" search="[('name','=','USD')]" model="res.currency"></field>
+       </record>
+		<record id="ver_usd_jul_1" model="product.pricelist.version">
+			<field name="pricelist_id" ref="list2012_usd"/>
+			<field name="name">2012 Jul 1-15 USD Version</field>
+			<field name="date_start">2012-07-01</field>
+			<field name="date_end">2012-07-15</field>
+		</record>
+		<record id="pricelist_jul_1_atk" model="product.pricelist.item">
+			<field name="price_version_id" ref="ver_usd_jul_1"/>
+			<field name="base" ref="list_price"/>
+			<field name="name">ATK Pricelist</field>
+			<field name="core_price">0.0</field>
+			<field name="price_surcharge">0.0</field>
+			<field name="product_id" search="[('name','=','Aviation Turbine Kerosene')]" model="product.product"></field>
+		</record>
+		<record id="pricelist_jul_1_gasoil_mines" model="product.pricelist.item">
+			<field name="price_version_id" ref="ver_usd_jul_1"/>
+			<field name="base" ref="list_price"/>
+			<field name="name">Gasoil Mines Pricelist</field>
+			<field name="core_price">0.0</field>
+			<field name="price_surcharge">0.0</field>
+			<field name="product_id" search="[('name','=','Gasoil Mines')]" model="product.product"></field>            
+		</record>
+
+    </data>
+</openerp>

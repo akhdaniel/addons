@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="list_price" model="product.price.type">
+            <field name="name">Public Price</field>
+            <field name="field">list_price</field>
+        </record>
+        <!--
+		Price lists GHS 2012
+		-->
+        <record id="list2012_ghs" model="product.pricelist">
+            <field name="name">2012 Ex Refinery Sale GHS Pricelist</field>
+            <field name="type">sale</field>
+            <field name="currency_id" search="[('name','=','GHS')]" model="res.currency"></field>
+        </record>
+        <record id="ver_ghs_sep_1" model="product.pricelist.version">
+            <field name="pricelist_id" ref="list2012_ghs"/>
+            <field name="name">2012 Sep 1-15 GHS Version</field>
+            <field name="date_start">2012-09-01</field>
+            <field name="date_end">2012-09-15</field>
+        </record>
+        <record id="pricelist_sep_1_mgo_foreign" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">MGO Foreign Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','MGO Foreign')]" model="product.product"></field>            
+        </record>
+        <record id="pricelist_sep_1_mgo_local" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">MGO Local Pricelist</field> 
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','MGO Local')]" model="product.product"></field>            
+        </record>
+        <record id="pricelist_sep_1_power_diesel" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Power Dissel Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">1.446387</field>
+            <field name="product_id" search="[('name','=','Power Dissel')]" model="product.product"></field>            
+        </record>                                                                                      
+        <record id="pricelist_sep_1_power_super" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Power Super Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Power Super')]" model="product.product"></field>            
+        </record>
+        <record id="pricelist_sep_1_regular_gasoil" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Regular Gas Oil Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Regular Gas Oil')]" model="product.product"></field>            
+        </record>        
+        <record id="pricelist_sep_1_premix" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Premix Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Premix')]" model="product.product"></field>            
+        </record>        
+        <record id="pricelist_sep_1_regular_gasoline" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Regular Gasoline Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Regular Gasoline')]" model="product.product"></field>
+       </record>        
+        <record id="pricelist_sep_1_kerosene_domestic" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Kerosene (Domestic) Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Kerosene (Domestic)')]" model="product.product"></field>
+        </record>        
+        <record id="pricelist_sep_1_kerosene_mines" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Kerosene (Mines) Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Kerosene (Mines)')]" model="product.product"></field>
+        </record>                 
+        <record id="pricelist_sep_1_residual_fuel_oil" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Residual Fuel Oil Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Residual Fuel Oil')]" model="product.product"></field>
+        </record>                 
+        <record id="pricelist_sep_1_lpg" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">LPG Pricelist</field>
+            <field name="core_price">2.649684</field>
+            <field name="price_surcharge">2.346387</field>
+            <field name="product_id" search="[('name','=','LPG')]" model="product.product"></field>
+        </record>
+        <record id="pricelist_sep_1_naphta" model="product.pricelist.item">
+            <field name="price_version_id" ref="ver_ghs_sep_1"/>
+            <field name="base" ref="list_price"/>
+            <field name="name">Naphtha Pricelist</field>
+            <field name="core_price">0.0</field>
+            <field name="price_surcharge">0.0</field>
+            <field name="product_id" search="[('name','=','Naphtha')]" model="product.product"></field>
+        </record>
+    </data>
+</openerp>
