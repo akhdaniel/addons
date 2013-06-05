@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+        <record id="view_order_form2" model="ir.ui.view">
+            <field name="name">sale.order.form2</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+				<!-- add discount_nominal-->
+                <xpath expr="/form/notebook/page/field[@name='order_line']/form/notebook/page/group/field[@name='discount']"  
+					position='after'>
+						<field name="discount_nominal"/>
+	            </xpath>				
+                <xpath expr="/form/notebook/page/field[@name='order_line']/tree/field[@name='discount']"  
+					position='after'>
+						<field name="discount_nominal"/>
+	            </xpath>
+				<!-- hide discount-->
+                <xpath expr="/form/notebook/page/field[@name='order_line']/form/notebook/page/group/field[@name='discount']"  
+					position='replace'/>
+                <xpath expr="/form/notebook/page/field[@name='order_line']/tree/field[@name='discount']"  
+					position='replace'/>
+
+            </field>
+        </record>
+
+		<record id="view_invoice_line_tree2" model="ir.ui.view">
+            <field name="name">account.invoice.line.tree2</field>
+            <field name="model">account.invoice.line</field>
+            <field name="type">tree</field>
+			<field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+				<!-- add discount_nominal-->
+				<field name="price_unit" position='after'>
+					<field name="discount_nominal"/>
+	            </field>
+				<!-- hide discount-->
+                <field name="discount"	position='replace'/>
+            </field>
+        </record>
+        
+        <record id="view_invoice_line_form2" model="ir.ui.view">
+            <field name="name">account.invoice.line.form2</field>
+            <field name="model">account.invoice.line</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+				<!-- add discount_nominal-->
+				<field name="discount"	position='after'>
+					<field name="discount_nominal"/>
+	            </field>
+				<!-- hide discount-->
+                <field name="discount"	position='replace'/>
+            </field>
+		</record>        
+
+        <record id="view_partner_form4" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit4</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page string="History" position="before">
+	                <page string="Product Discounts">
+	                	
+	                    <field name="product_discount" nolabel="1" widget="one2many_list">
+	                        <form string="Product Discounts">
+	                            <field name="product_id"/>
+                                <field name="discount"/>
+	                        </form>
+	                        <tree string="Product Discounts Details">
+	                            <field name="product_id"/>
+	                            <field name="discount"/>
+	                        </tree>
+	                    </field>
+	                    
+	                </page>                		
+                </page>
+            		
+            </field>
+        </record>
+        
+	</data>
+</openerp>

@@ -1,0 +1,15 @@
+id,user_type/id,code,company_id/id,type,name,currency_mode
+__export__.account_account_103,account.data_account_type_receivable,1032200,base.main_company,Regular,NPA Receivables,At Date
+__export__.account_account_113,account.data_account_type_asset,13100,base.main_company,Regular,Gasoline Stock,At Date
+__export__.account_account_114,account.data_account_type_asset,13200,base.main_company,Regular,Gasoil Stock,At Date
+__export__.account_account_115,account.data_account_type_asset,13300,base.main_company,Regular,Additive Stock,At Date
+__export__.account_account_104,account.data_account_type_payable,2011200,base.main_company,Regular,NPA Payables,At Date
+__export__.account_account_105,account.data_account_type_income,4020001,base.main_company,Regular,Ex Ref -Gasoline,At Date
+__export__.account_account_106,account.data_account_type_income,4020002,base.main_company,Regular,Ex Ref -Gasoil Regular ,At Date
+__export__.account_account_107,account.data_account_type_income,4020003,base.main_company,Regular,Ex Ref -Premix ,At Date
+__export__.account_account_108,account.data_account_type_income,4020004,base.main_company,Regular,Ex Ref -LPG ,At Date
+__export__.account_account_109,account.data_account_type_income,4020005,base.main_company,Regular,Ex Ref -DPK ,At Date
+__export__.account_account_110,account.data_account_type_income,4020006,base.main_company,Regular,Ex Ref -RFO  ,At Date
+__export__.account_account_111,account.data_account_type_income,4020007,base.main_company,Regular,Ex Ref -Kerosene,At Date
+__export__.account_account_117,account.data_account_type_expense,501000,base.main_company,Regular,Cost of Sales,At Date
+__export__.account_account_118,account.data_account_type_expense,605000,base.main_company,Regular,Product Discount,At Date
