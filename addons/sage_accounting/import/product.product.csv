@@ -1,0 +1,18 @@
+id,create_uid,create_date,write_date,write_uid,ean13,color,price_extra,default_code,name_template,active,variants,product_tmpl_id,product_image,price_margin,track_production,valuation,track_outgoing,track_incoming
+54,1,11/27/12 9:43,11/29/12 9:29,1,\N,0,0,100 MGOL,MGO Local,t,\N,54,\N,1,f,manual_periodic,f,f
+55,1,11/27/12 9:43,11/29/12 9:29,1,\N,0,0,100 POD,Power Dissel,t,\N,55,\N,1,f,manual_periodic,f,f
+56,1,11/27/12 9:43,11/29/12 9:29,1,\N,0,0,100 POS,Power Super,t,\N,56,\N,1,f,manual_periodic,f,f
+57,1,11/27/12 9:44,11/29/12 9:29,1,\N,0,0,100 RGO,Regular Gas Oil,t,\N,57,\N,1,f,manual_periodic,f,f
+58,1,11/27/12 9:44,11/29/12 9:29,1,\N,0,0,200 PRM,Premix,t,\N,58,\N,1,f,manual_periodic,f,f
+59,1,11/27/12 9:44,11/29/12 9:29,1,\N,0,0,200 RGL,Regular Gasoline,t,\N,59,\N,1,f,manual_periodic,f,f
+52,1,11/27/12 9:42,11/29/12 9:29,1,\N,0,0,100 GOM,Gasoil Mines ,t,\N,52,\N,1,f,manual_periodic,f,f
+53,1,11/27/12 9:43,11/29/12 9:29,1,\N,0,0,100 MGOF,MGO Foreign,t,\N,53,\N,1,f,manual_periodic,f,f
+60,1,11/27/12 9:44,11/29/12 9:29,1,\N,0,0,300 ATK,Aviation Turbine Kerosene,t,\N,60,\N,1,f,manual_periodic,f,f
+62,1,11/27/12 9:45,11/29/12 9:29,1,\N,0,0,300 KERO - ME,Kerosene (Mines),t,\N,62,\N,1,f,manual_periodic,f,f
+61,1,11/27/12 9:44,11/29/12 9:29,1,\N,0,0,300 KERO DM,Kerosene (Domestic),t,\N,61,\N,1,f,manual_periodic,f,f
+63,1,11/27/12 9:45,11/29/12 9:29,1,\N,0,0,400 RFO,Residual Fuel Oil,t,\N,63,\N,1,f,manual_periodic,f,f
+64,1,11/27/12 9:45,11/29/12 9:29,1,\N,0,0,700 LPG,LPG,t,\N,64,\N,1,f,manual_periodic,f,f
+213,1,11/27/12 12:42,11/29/12 9:29,1,\N,0,0,GAS,Gasoil,t,\N,213,\N,1,f,manual_periodic,f,f
+214,1,11/27/12 15:11,11/29/12 9:29,1,\N,0,0,GASOLINE,Gasoline,t,\N,214,\N,1,f,manual_periodic,f,f
+212,1,11/27/12 12:37,11/29/12 9:29,1,\N,0,0,Marine,Additive Marine Mix,t,\N,212,\N,1,f,manual_periodic,f,f
+65,1,11/27/12 12:37,11/29/12 9:29,1,\N,0,0,NAP,Naphtha,t,\N,65,\N,1,f,manual_periodic,f,f

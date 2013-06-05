@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+        <record id="view_ml_tree" model="ir.ui.view">
+            <field name="name">product.pricelist.item.tree2</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+            <field name="arch" type="xml">
+                
+                <!-- show core_price and price_surchage after base field -->
+                <field name="base" position="after">
+                    <field name="price_surcharge" string="Ex Ref Price"/>
+                    <field name="core_price"/>
+                </field>
+            </field>
+        </record>
+        
+        <record id="product_pricelist_item_form_view" model="ir.ui.view">
+            <field name="name">product.pricelist.item.form2</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+                
+                <!-- show core_price field after price_surchage -->
+                <field name="price_surcharge" position="after">
+                    <field name="core_price"/>
+                </field>
+
+                <!-- remove unecessary fields -->
+                <label string="New Price =" position="replace"/>
+                <label string="Base Price" position="replace"/>
+                <label string="* ( 1 + " position="replace"/>
+                <field name="price_discount" nolabel="1" position="replace"/>
+                <label string=" ) + " position="replace"/>
+                
+                <!-- change the label of price_surchage -->
+                <field name="price_surcharge" position="replace">
+                    <field name="price_surcharge" string="Ex Ref Price"/>
+                </field>
+
+            </field>
+        </record>  
+        
+        <!-- add ex ref account in product \\--> 
+        <record id="product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.normal.form.inherit2</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Ex Ref">
+                        <field name="property_account_exref"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
+		<!--discount account -->
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.product.form.inherit2</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Ex Ref">
+                        <field name="property_account_exref"/>
+                    </page>
+                </notebook>
+             </field>
+        </record>
+
+        <record id="view_category_property_form2" model="ir.ui.view">
+            <field name="name">product.category.property.form.inherit2</field>
+            <field name="model">product.category</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_category_property_form"/>
+            <field name="arch" type="xml">
+            	<xpath
+            		expr="//form/group/field[@name='property_account_income_categ']"
+            		position="after" 
+            	>
+                   <field name="property_account_discount_categ" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>            	
+            	</xpath>
+                <!--form position="inside">
+                    <group col="2" colspan="2">
+                        <field name="property_account_income_categ" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
+                    </group>
+                </form-->
+            </field>
+        </record>
+        
+        
+
+                        
+    </data>
+</openerp>
