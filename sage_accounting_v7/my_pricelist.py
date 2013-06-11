@@ -234,7 +234,13 @@ product_category()
 class account_invoice(osv.osv):
     _inherit="account.invoice"
     _name="account.invoice"
-    
+
+    def line_get_convert(self, cr, uid, x, part, date, context=None):
+        #import pdb; pdb.set_trace()
+        res = super(account_invoice, self).line_get_convert(cr, uid, x, part, date, context=None)
+        res['invoice_line_id']=x.get('invoice_line_id',False)
+        return res
+
     def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
         """finalize_invoice_move_lines(cr, uid, invoice, move_lines) -> move_lines
         Hook method to be overridden in additional modules to verify and possibly alter the
@@ -261,6 +267,7 @@ class account_invoice(osv.osv):
         company_currency = invoice_browse.company_id.currency_id.id
         diff_currency_p = invoice_browse.currency_id.id <> company_currency
         currency_id = invoice_browse.currency_id.id
+        cur_obj = self.pool.get('res.currency')
         #total, total_currency, iml = self.compute_invoice_totals(cr, uid, invoice_browse, company_currency, 'ref', move_lines)
 
         partner_id = move_lines[0][2]['partner_id']
@@ -274,6 +281,9 @@ class account_invoice(osv.osv):
             raise osv.except_osv(_('Error !'), _('Ex Journal does not have Default Debit Account. Please set it up through Accounting - Configuration - Journals ') )
         date_due= invoice_browse.date_due
         
+
+        #import pdb; pdb.set_trace()
+
         """
         find the sales order originating the invoice
         """
@@ -291,6 +301,7 @@ class account_invoice(osv.osv):
         
         account_obj = self.pool.get('account.account')
         
+        #import pdb; pdb.set_trace()
 
         """""""""""
         loop for each product items in the invoice
@@ -301,15 +312,17 @@ class account_invoice(osv.osv):
             qty = il.quantity
             subtotal = il.price_subtotal
             product_id = il.product_id.id
+            product_name = il.product_id.name
+            product_xfer_account = il.product_id.property_account_exref.id
             
-            discount = prettyFloat(il.discount_nominal) * qty
+            #discount in local currency
+            discount_currency = il.discount_nominal * qty
+            discount = cur_obj.compute(cr, uid, currency_id, company_currency, discount_currency, context={'date': invoice_browse.date_invoice}) 
 
             discount_account=il.product_id.categ_id.property_account_discount_categ.id
             if not discount_account:
                 raise osv.except_osv(_('Error !'), _('Product %s does not have Discount Account. Please set it up through Product Category Accounting Tab') % (product_name))
 
-            product_name = il.product_id.name
-            product_xfer_account = il.product_id.property_account_exref.id
             if not product_xfer_account:
                 raise osv.except_osv(_('Error !'), _('Product %s does not have Ex Ref Account. Please set it up through Product Ex Ref Tab') % (product_name))
             
@@ -340,6 +353,7 @@ class account_invoice(osv.osv):
             """
             
             i=0
+            #import pdb; pdb.set_trace()
             for ml in move_lines:
                 # if SALES account for same product_id
                 account = account_obj.browse(cr, uid, ml[2]['account_id'])
@@ -347,6 +361,7 @@ class account_invoice(osv.osv):
                 if account.user_type.code == 'income' \
                 and ml[2]['account_id'] != product_xfer_account \
                 and 'credit' in ml[2] \
+                and ml[2]['invoice_line_id'] == il.id\
                 and ml[2]['product_id'] == il.product_id.id:
                 #and ml[2]['credit'] == subtotal:
                     #import pdb; pdb.set_trace()
@@ -371,7 +386,9 @@ class account_invoice(osv.osv):
                     'date': date_order,
                 }) 
             
-            val = (core_price['core_price'] - il.price_unit ) * qty
+            val_currency = (core_price['core_price'] - il.price_unit ) * qty
+            val = cur_obj.compute(cr, uid, currency_id, company_currency, val_currency, context={'date': invoice_browse.date_invoice}) 
+
 
             """
             differential journal, core price > exref price
@@ -387,7 +404,7 @@ class account_invoice(osv.osv):
                    'account_id': product_xfer_account,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                       and val or False,
+                       and -1*val_currency or False,
                    'currency_id': diff_currency_p \
                        and currency_id or False,
                    'ref': 'test',
@@ -406,7 +423,7 @@ class account_invoice(osv.osv):
                    'account_id': default_debit_account_id ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                        and val or False,
+                        and val_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
                    'ref': 'test',
@@ -428,7 +445,7 @@ class account_invoice(osv.osv):
                    'account_id': default_credit_account_id ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                       and val or False,
+                       and -1*val_currency or False,
                    'currency_id': diff_currency_p \
                        and currency_id or False,
                    'ref': 'test',
@@ -447,7 +464,7 @@ class account_invoice(osv.osv):
                    'account_id': product_xfer_account ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                        and val or False,
+                        and val_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
                    'ref': 'test',
@@ -473,7 +490,7 @@ class account_invoice(osv.osv):
                    'account_id': discount_account ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                        and discount or False,
+                        and discount_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
                    'ref': 'test',
@@ -489,7 +506,7 @@ class account_invoice(osv.osv):
                    'account_id': invoice_browse.account_id.id ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                        and discount or False,
+                        and -1*discount_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
                    'ref': 'test',
@@ -499,10 +516,29 @@ class account_invoice(osv.osv):
                 }))
                 
         #end for invoice_lines
-	import pdb; pdb.set_trace()
         return move_lines
 account_invoice()
 
+class account_invoice_line(osv.osv):
+    _inherit = "account.invoice.line"
+    _name = "account.invoice.line"
+
+    def move_line_get_item(self, cr, uid, line, context=None):
+        #import pdb; pdb.set_trace()
+        res = {}
+        res = super(account_invoice_line, self).move_line_get_item(cr, uid, line, context=None)
+        res['invoice_line_id']=line.id
+        return res
+account_invoice_line()
+
+class account_move_line(osv.osv):
+    _inherit = "account.move.line"
+    _name = "account.move.line"
+
+    _columns = {
+        'invoice_line_id': fields.integer('Invoice Line ID' ),
+    }
+account_move_line()
 
 def rounding(f, r):
     if not r:
