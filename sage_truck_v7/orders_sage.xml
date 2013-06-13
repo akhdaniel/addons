@@ -10,10 +10,19 @@
 				<field name="partner_id" position='after'>
 					<field name="pricing_per"/>
 	            </field>
+	            <xpath expr="/form/sheet/notebook/page[@string='Order Lines']/field/form[@string='Sales Order Lines']/group/group/field[@name='price_unit']" position="after">
+                    <field name="location" />
+                    <field name="truck_numb" />	            	
+	            </xpath>
+
+	            <xpath expr="/form/sheet/notebook/page[@string='Order Lines']/field/tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="after">
+                    <field name="location" />
+                    <field name="truck_numb" />	            	
+	            </xpath>	            
 	        </field>   	
 		  </record>
 		  
-		   <record id="view_order_form3" model="ir.ui.view">
+		   <!--record id="view_order_form3" model="ir.ui.view">
             <field name="name">sale.order.form3</field>
             <field name="model">sale.order</field>
             <field name="type">form</field>
@@ -42,7 +51,7 @@
 	            </field>
 
 	        </field>   	
-		  </record>
+		  </record-->
 		  
 		 
 		   
@@ -62,10 +71,24 @@
                     <field name="location" />
                     <field name="truck_numb" />
                 </xpath>
-	  	
+	            
+
+
             </field>
 		</record>		
 		
-		
+
+        <record id="view_order_line_form3" model="ir.ui.view">
+            <field name="name">sale.order.line.form3</field>
+            <field name="model">sale.order.line</field>
+            <field name="type">form</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2"/>
+            <field name="arch" type="xml">
+                <field name="price_unit" position="after">
+                    <field name="location" />
+                    <field name="truck_numb" />
+                </field>
+            </field>
+        </record>		
 	</data>
 </openerp>
