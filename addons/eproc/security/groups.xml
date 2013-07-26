@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="0">
+	<record id="group_eproc_manager" model="res.groups">
+		<field name="name">E-Proc / Manager</field>
+	</record>
+
+	<record id="group_eproc_user" model="res.groups">
+		<field name="name">E-Proc / User</field>
+	</record>
+	
+	<record id="group_res_partner" model="res.groups">
+		<field name="name">E-Proc / Supplier</field>
+	</record>	
+</data>
+</openerp>

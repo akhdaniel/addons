@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <!--record model="ir.ui.view" id="view_res_partner_tree_eproc">
+        <field name="name">res.partner.tree.eproc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="res.partner">
+                <field name="no"/>
+                <field name="name"/>
+                <field name="address1"/>
+                <field name="city_id"/>
+                <field name="state_id"/>
+                <field name="country_id"/>
+                <field name="telephone"/>
+                <field name="email"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record-->
+        
+    <record model="ir.ui.view" id="view_eproc_city_form">
+        <field name="name">eproc.city.form</field>
+        <field name="model">eproc.city</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.city">
+                <field name="name" select="1"/>
+                <field name="state_id" select="2"/>
+
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_city_tree">
+        <field name="name">eproc.city.tree</field>
+        <field name="model">eproc.city</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.city">
+                <field name="name"/>
+                <field name="state_id"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <!-- SUPPLIER DATA DETAIL TREE -->
+
+    <record model="ir.ui.view" id="view_eproc_ijin_usaha_tree">
+        <field name="name">eproc.ijin_usaha.tree</field>
+        <field name="model">eproc.ijin_usaha</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.ijin_usaha">
+                <field name="masterIjinUsaha"/>
+                <field name="nomor"/>
+                <field name="berlakuSampai"/>
+                <field name="instansiPemberi"/>
+                <field name="filename"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_eproc_pemilik_tree">
+        <field name="name">eproc.pemilik.tree</field>
+        <field name="model">eproc.pemilik</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.pemilik">
+                <field name="name"/>
+                <field name="ktp"/>
+                <field name="alamat"/>
+                <field name="saham"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="view_eproc_pengurus_tree">
+        <field name="name">eproc.pengurus.tree</field>
+        <field name="model">eproc.pengurus</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.pengurus">
+                <field name="name"/>
+                <field name="ktp"/>
+                <field name="alamat"/>
+                <field name="jabatan"/>
+                <field name="mulai"/>
+                <field name="sampai"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_eproc_tenaga_ahli_tree">
+        <field name="name">eproc.tenaga_ahli.tree</field>
+        <field name="model">eproc.tenaga_ahli</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.tenaga_ahli">
+                <field name="name" />
+                <field name="tanggalLahir" />
+                <field name="pendidikanTerakhir" />
+                <field name="tahunPengalamanKerja" />
+                <field name="profesi" />
+                <field name="email" />
+                <field name="wargaNegara" />
+                <field name="jabatan" />
+                <field name="statusPegawai" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peralatan_tree">
+        <field name="name">eproc.peralatan.tree</field>
+        <field name="model">eproc.peralatan</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peralatan">
+                <field name="name" />
+                <field name="jumlah" />
+                <field name="kapasitas" />
+                <field name="merk" />
+                <field name="type" />
+                <field name="tahunPembuatan" />
+                <field name="kondisi" />
+                <field name="lokasiSekarang" />
+                <field name="buktiKepemilikan" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_eproc_pengalaman_tree">
+        <field name="name">eproc.pengalaman.tree</field>
+        <field name="model">eproc.pengalaman</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.pengalaman">
+                <field name="name" />
+                <field name="lokasi" />
+                <field name="instansiPemberi" />
+                <field name="alamatInstansi" />
+                <field name="telponInstansi" />
+                <field name="tanggalKontrak" />
+                <field name="selesaiKontrak" />
+                <field name="nomorKontrak" />
+                <field name="nilai" />
+                <field name="tanggalPelaksanaan" />
+                <field name="tanggalSerahTerima" />
+                <field name="prosentasePelaksanaan" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_eproc_neraca_tree">
+        <field name="name">eproc.neraca.tree</field>
+        <field name="model">eproc.neraca</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.neraca">
+                <field name="tahun" />
+                <field name="tanggal" />
+                <field name="aktivaTetap" />
+                <field name="aktivaLancar" />
+                <field name="aktivaLainnya" />
+                <field name="hutangJangkaPanjang" />
+                <field name="hutangJangkaPendek" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_eproc_bukti_pajak_tree">
+        <field name="name">eproc.bukti_pajak.tree</field>
+        <field name="model">eproc.bukti_pajak</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.bukti_pajak">
+                <field name="masterPajak" />
+                <field name="nomor" />
+                <field name="tanggal" />
+                <field name="masaTahun" />
+                <field name="masaBulan" />
+                <field name="filename" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_akta_perusahaan_tree">
+        <field name="name">eproc.akta_perusahaan.tree</field>
+        <field name="model">eproc.akta_perusahaan</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.akta_perusahaan">
+                <field name="nomor" />
+                <field name="tanggalSurat" />
+                <field name="notaris" />
+                <field name="dokumenName" />
+                <field name="dokumenFileName" />
+                <field name="jenis" />
+            </tree>
+        </field>
+    </record>
+
+
+
+
+</data>
+</openerp>
