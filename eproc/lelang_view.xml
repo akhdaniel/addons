@@ -1,0 +1,636 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    
+    <!-- FORM VIEW -->
+    <record model="ir.ui.view" id="view_eproc_lelang_form">
+        <field name="name">eproc.lelang.form</field>
+        <field name="model">eproc.lelang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.lelang" version="7.0">
+                <header>
+
+                    <button string="Ikut Lelang" type="object" 
+                        states="open" name="action_ikut" 
+                        groups="EProc.group_res_partner"
+                        class="oe_highlight"  />
+
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify" 
+                        groups="EProc.group_eproc_user"
+                        class="oe_highlight"  />
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_open"
+                        groups="EProc.group_eproc_manager"
+                        class="oe_highlight"  /> 
+
+                    <button string="Reject" type="workflow"  
+                        groups="EProc.group_eproc_manager"
+                        states="verify" name="signal_reject" /> 
+
+                    <button string="Cancel" type="workflow"  
+                        groups="EProc.group_eproc_manager"
+                        states="verify" name="signal_cancel" /> 
+
+                    <button string="Usulan Pemenang" type="workflow" 
+                        states="open" name="signal_propose_winner" 
+                        groups="EProc.group_eproc_user"
+                        class="oe_highlight"  />
+
+                    <button string="Approve Winner and Close" type="workflow"  
+                        groups="EProc.group_eproc_manager"
+                        states="propose_winner" name="signal_done" 
+                        class="oe_highlight" /> 
+
+                    <button string="Review Winner" type="workflow"  
+                        groups="EProc.group_eproc_manager"
+                        states="propose_winner" name="signal_review_winner" 
+                        class="oe_highlight" /> 
+
+                    <field name="state" widget="statusbar"/>
+
+                </header>
+
+                <sheet>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <field name="state" />
+
+                    <group>
+                        <group>
+                            <field name="paket" />
+                            <field name="kategori" />
+                            <field name="nilaiHps" />
+                            <field name="currency" />
+                        </group>
+                        <group>
+                            <field name="tahap" />                        
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Metoda">
+                            <group>
+                                <field name="metodaLelang" />
+                                <field name="metodaEvaluasi" />
+                            </group>
+                        </page>
+
+                        <page string="Jenis Kontrak">
+                            <group>
+                                <field name="jenisKontrakImbalan" />
+                                <field name="jenisKontrakJangkaWaktu" />
+                                <field name="jenisKontrakJumlahPihak" />
+                            </group>
+                        </page>
+
+                        <page string="Syarat Kualifikasi">
+                            <group>
+                                <field name="businessType" />
+                                <field name="subBusinessType" />
+                            </group>
+                            <field name="syaratKualifikasi" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+
+                        <page string="Jadwal Lelang">
+                            <field name="jadwalLelang" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Dokumen Lelang">
+                            <field name="dokumenLelang" nolabel="1" widget="one2many_list"/>
+                        </page>
+                        
+                        <page string="Detail Barang/Jasa">
+                            <field name="detailProduct" nolabel="1" widget="one2many_list"/>
+                        </page>    
+
+                        <page string="Aanwizing">
+                            <field name="penjelasanDokumen" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Adendum Lelang">
+                            <field name="adendumLelang" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Peserta Lelang">
+                            <field name="pesertaLelang" nolabel="1" widget="one2many_list"/>
+                        </page>                        
+                        
+                        <page string="Berita Acara Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
+                            <group>
+                                <field name="beritaAcaraEvaluasiNo" />
+                                <field name="beritaAcaraEvaluasiFilename" />
+                            </group>
+                        </page>
+                        
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_eproc_syarat_kualifikasi_form">
+        <field name="name">eproc.syarat_kualifikasi.form</field>
+        <field name="model">eproc.syarat_kualifikasi</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.syarat_kualifikasi">
+                <field name="masterSyaratKualifikasi"/>
+                <field name="notes"/>
+                <field name="checkedSupplier"/>
+                <field name="checkedBuyer"/>
+            </form>
+        </field>
+    </record>   
+
+    <record model="ir.ui.view" id="view_eproc_master_syarat_kualifikasi_form">
+        <field name="name">eproc.master_syarat_kualifikasi.form</field>
+        <field name="model">eproc.master_syarat_kualifikasi</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.master_syarat_kualifikasi">
+                <field name="name"/>
+                <field name="mandatory"/>
+            </form>
+        </field>
+    </record>   
+
+    <record model="ir.ui.view" id="view_eproc_dokumen_lelang_form">
+        <field name="name">eproc.dokumen_lelang.form</field>
+        <field name="model">eproc.dokumen_lelang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.dokumen_lelang">
+                <field name="name"/>
+                <field name="filename"/>
+            </form>
+        </field>
+    </record>   
+
+    <record model="ir.ui.view" id="view_eproc_adendum_lelang_form">
+        <field name="name">eproc.adendum_lelang.form</field>
+        <field name="model">eproc.adendum_lelang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.adendum_lelang">
+                <field name="name"/>
+                <field name="filename"/>
+            </form>
+        </field>
+    </record>  
+
+    <record model="ir.ui.view" id="view_eproc_jadwal_lelang_form">
+        <field name="name">eproc.jadwal_lelang.form</field>
+        <field name="model">eproc.jadwal_lelang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.jadwal_lelang">
+                <field name="masterJadwalLelang" colspan="4"/>
+                <field name="startDate" />
+                <field name="endDate" />
+                <field name="notes" colspan="4"/>
+            </form>
+        </field>
+    </record>  
+
+    <record model="ir.ui.view" id="view_eproc_penjelasan_dokumen_form">
+        <field name="name">eproc.penjelasan_dokumen.form</field>
+        <field name="model">eproc.penjelasan_dokumen</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.penjelasan_dokumen">
+                <group colspan="2">
+                    <field name="lelang" />
+                    <field name="partner_id"/>
+                </group>
+                <group colspan="2">
+                    <field name="name"/>
+                    <field name="dokumenLelang"/>
+                    <field name="bab"/>
+                </group>
+
+                <group colspan="4">
+                    <field name="pertanyaan" />
+                    <field name="jawaban"/>
+                </group>
+                <field name="penjawab"/>
+                <field name="attachmentFilename"/>
+            </form>
+        </field>
+    </record>  
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_form">
+        <field name="name">eproc.peserta_lelang.form</field>
+        <field name="model">eproc.peserta_lelang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.peserta_lelang" version="7.0">
+                <sheet>
+                    <group>
+                        <field name="lelang" />
+                        <field name="partner_id" />                    
+                    </group>
+                    <group colspan="2">
+                        <field name="tanggalDaftar" />
+                        <field name="evaluasiBiayaHargaPenawaran" />
+                        <field name="evaluasiBiayaHargaTerkoreksi" 
+                            groups="EProc.group_eproc_manager,EProc.group_eproc_user"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Ijin Usaha">
+                            <field name="pesertaLelangIjinUsaha" nolabel="1" widget="one2many_list"/>             
+                        </page>
+
+                        <page string="Dukungan Bank">
+                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Bukti Pajak">
+                            <field name="pesertaLelangBuktiPajak" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Tenaga Ahli">
+                            <field name="pesertaLelangTenagaAhli" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Pengalaman">
+                            <field name="pesertaLelangPengalaman" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Pekerjaan Sedang Berjalan">
+                            <field name="pesertaLelangPekerjaanSedangBerjalan" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Peralatan">
+                            <field name="pesertaLelangPeralatan" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Neraca">
+                            <field name="pesertaLelangNeraca" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Dokumen Penawaran">
+                            <field name="pesertaLelangDokumenPenawaran" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Detail Penawaran">
+                            <field name="pesertaLelangProduct" nolabel="1" widget="one2many_list"/>
+                        </page>
+
+                        <page string="Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
+                            <notebook>
+                                <page string="Administrasi">
+                                    <group>
+                                        <field name="evaluasiAdministrasiLulus" />
+                                        <field name="evaluasiAdministrasiAlasan" />
+                                    </group>
+                                </page>
+                                <page string="Teknis">
+                                    <group>
+                                        <field name="evaluasiTeknisLulus" />
+                                        <field name="evaluasiTeknisAlasan" />
+                                    </group>
+                                </page>
+                                <page string="Kualifikasi">
+                                    <group>
+                                        <field name="evaluasiKualifikasiLulus" />
+                                        <field name="evaluasiKualifikasiAlasan" />
+                                    </group>
+                                </page>
+                                <page string="Biaya">
+                                    <group>
+                                        <field name="evaluasiBiayaLulus" />
+                                    </group>
+                                </page>
+                                <page string="Evaluasi Akhir">
+                                    <group>
+                                        <field name="evaluasiUrutan" />
+                                        <field name="evaluasiAkhir" />                        
+                                    </group>
+                                </page>
+
+                            </notebook>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>  
+
+
+
+    <record model="ir.ui.view" id="view_eproc_lelang_product_form">
+        <field name="name">eproc.lelang_product.form</field>
+        <field name="model">eproc.lelang_product</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.lelang_product">
+                <field name="product"/>
+                <field name="qty"/>
+                <field name="specification"/>
+                <field name="filename"/>
+            </form>
+        </field>
+    </record> 
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_product_form">
+        <field name="name">eproc.peserta_lelang_product.form</field>
+        <field name="model">eproc.peserta_lelang_product</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="eproc.peserta_lelang_product">
+                <field name="lelangProduct"/>
+                <field name="hargaPenawaran"/>
+                <field name="notes"/>
+            </form>
+        </field>
+    </record>  
+
+    <!-- TREE VIEWS -->
+    <record model="ir.ui.view" id="view_eproc_paket_tree">
+        <field name="name">eproc.paket.tree</field>
+        <field name="model">eproc.paket</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.lelang">
+                <field name="name"/>
+                <field name="branch_id"/>
+                <field name="tahun"/>
+                <field name="keterangan"/>
+                <field name="lokasi"/>
+                <field name="pagu"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_lelang_tree">
+        <field name="name">eproc.lelang.tree</field>
+        <field name="model">eproc.lelang</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.lelang" colors="blue:state=='draft'">
+                <field name="name"/>
+                <field name="paket"/>
+                <field name="kategori"/>
+                <field name="metodaLelang"/>
+                <field name="metodaEvaluasi"/>
+                <field name="businessType"/>
+                <field name="subBusinessType"/>
+                <field name="state" select="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_syarat_kualifikasi_tree">
+        <field name="name">eproc.syarat_kualifikasi.tree</field>
+        <field name="model">eproc.syarat_kualifikasi</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.syarat_kualifikasi">
+                <field name="masterSyaratKualifikasi"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>   
+
+    <record model="ir.ui.view" id="view_eproc_jadwal_lelang_tree">
+        <field name="name">eproc.jadwal_lelang.tree</field>
+        <field name="model">eproc.jadwal_lelang</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.jadwal_lelang">
+                <field name="masterJadwalLelang" />
+                <field name="startDate" />
+                <field name="endDate" />
+                <field name="notes" />
+            </tree>
+        </field>
+    </record>  
+
+    <record model="ir.ui.view" id="view_eproc_dokumen_lelang_tree">
+        <field name="name">eproc.dokumen_lelang.tree</field>
+        <field name="model">eproc.dokumen_lelang</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.lelang">
+                <field name="name"/>
+                <field name="filename"/>
+            </tree>
+        </field>
+    </record>    
+
+    <record model="ir.ui.view" id="view_eproc_penjelasan_dokumen_tree">
+        <field name="name">eproc.penjelasan_dokumen.tree</field>
+        <field name="model">eproc.penjelasan_dokumen</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.penjelasan_dokumen">
+                <field name="lelang" />
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="dokumenLelang"/>
+                <field name="bab"/>
+                <field name="pertanyaan"/>
+                <field name="jawaban"/>
+                <field name="penjawab"/>
+                <field name="attachmentFilename"/>
+            </tree>
+        </field>
+    </record>  
+
+    <record model="ir.ui.view" id="view_eproc_adendum_lelang_tree">
+        <field name="name">eproc.adendum_lelang.tree</field>
+        <field name="model">eproc.adendum_lelang</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.lelang">
+                <field name="name"/>
+                <field name="filename"/>
+            </tree>
+        </field>
+    </record> 
+
+    <record model="ir.ui.view" id="view_eproc_lelang_product_tree">
+        <field name="name">eproc.lelang_product.tree</field>
+        <field name="model">eproc.lelang_product</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.lelang_product">
+                <field name="lelang"/>
+                <field name="product"/>
+                <field name="qty"/>
+                <field name="specification"/>
+                <field name="filename"/>
+            </tree>
+        </field>
+    </record> 
+
+    <!-- peserta_lelang -->
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_tree">
+        <field name="name">eproc.peserta_lelang.tree</field>
+        <field name="model">eproc.peserta_lelang</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang">
+                <field name="lelang"/>
+                <field name="partner_id"/>
+                <field name="tanggalDaftar"/>
+                <field name="evaluasiBiayaHargaPenawaran"/>
+                <field name="evaluasiUrutan"/>
+                <field name="evaluasiAkhir"/>
+            </tree>
+        </field>
+    </record>   
+    
+    <record id="view_peserta_lelang_filter" model="ir.ui.view">
+        <field name="name">eproc.peserta_lelang.select</field>
+        <field name="model">eproc.peserta_lelang</field>
+        <field name="arch" type="xml">
+            <search string="Search Peserta Lelang">
+                <filter icon="terp-dolar_ok!" string="Pemenang" domain="[('evaluasiAkhir','=', True)]"  
+                    help="Daftar Pemenang Lelang"/>
+                <separator/>
+                <field name="partner_id"/>
+                <field name="evaluasiBiayaHargaPenawaran"/>
+
+                <group expand="0" string="Group By...">
+                    <filter string="Lelang" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'lelang'}"/>
+                    <filter string="Supplier" icon="terp-gtk-jump-to-rtl" domain="[]" context="{'group_by':'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_ijin_usaha_tree">
+        <field name="name">eproc.peserta_lelang_ijin_usaha.tree</field>
+        <field name="model">eproc.peserta_lelang_ijin_usaha</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_ijin_usaha">
+                <field name="ijin_usaha"/>
+                <field name="name"/>                
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_dukungan_bank_tree">
+        <field name="name">eproc.peserta_lelang_dukungan_bank.tree</field>
+        <field name="model">eproc.peserta_lelang_dukungan_bank</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_dukungan_bank">
+                <field name="namaBank" />
+                <field name="nomor" />
+                <field name="tanggal" />
+                <field name="nilai" />
+                <field name="bukti" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_bukti_pajak_tree">
+        <field name="name">eproc.peserta_lelang_bukti_pajak.tree</field>
+        <field name="model">eproc.peserta_lelang_bukti_pajak</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_bukti_pajak">
+                <field name="bukti_pajak"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_tenaga_ahli_tree">
+        <field name="name">eproc.peserta_lelang_tenaga_ahli.tree</field>
+        <field name="model">eproc.peserta_lelang_tenaga_ahli</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_tenaga_ahli">
+                <field name="tenaga_ahli"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_pengalaman_tree">
+        <field name="name">eproc.peserta_lelang_pengalaman.tree</field>
+        <field name="model">eproc.peserta_lelang_pengalaman</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_pengalaman">
+                <field name="pengalaman"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_pekerjaan_sedang_berjalan_tree">
+        <field name="name">eproc.peserta_lelang_pekerjaan_sedang_berjalan.tree</field>
+        <field name="model">eproc.peserta_lelang_pekerjaan_sedang_berjalan</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_pekerjaan_sedang_berjalan">
+                <field name="name"/>
+                <field name="lokasi"/>
+                <field name="instansiPemberi"/>
+                <field name="alamatInstansi"/>
+                <field name="tanggalKontrak"/>
+                <field name="selesaiKontrak"/>
+                <field name="nomorKontrak"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_peralatan_tree">
+        <field name="name">eproc.peserta_lelang_peralatan.tree</field>
+        <field name="model">eproc.peserta_lelang_peralatan</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_peralatan">
+                <field name="peralatan"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_neraca_tree">
+        <field name="name">eproc.peserta_lelang_neraca.tree</field>
+        <field name="model">eproc.peserta_lelang_neraca</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_neraca">
+                <field name="neraca"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_dokumen_penawaran_tree">
+        <field name="name">eproc.peserta_lelang_dokumen_penawaran.tree</field>
+        <field name="model">eproc.peserta_lelang_dokumen_penawaran</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_dokumen_penawaran">
+                <field name="name"/>
+                <field name="filename"/>
+                <field name="jenisDokumen"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_eproc_peserta_lelang_product_tree">
+        <field name="name">eproc.peserta_lelang_product.tree</field>
+        <field name="model">eproc.peserta_lelang_product</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="eproc.peserta_lelang_product">
+                <field name="lelangProduct"/>
+                <field name="hargaPenawaran"/>
+                <field name="notes"/>
+            </tree>
+        </field>
+    </record>    
+</data>
+</openerp>

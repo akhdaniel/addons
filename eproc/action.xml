@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!-- ACTION WINDOWS -->
+
+    <record model="ir.actions.act_window" id="action_res_partner">
+        <field name="name">Supplier Data</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_all_supplier">
+        <field name="name">Supplier Management</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_eproc_city">
+        <field name="name">City</field>
+        <field name="res_model">eproc.city</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_paket">
+        <field name="name">Paket</field>
+        <field name="res_model">eproc.paket</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>    
+
+    <record model="ir.actions.act_window" id="action_eproc_all_lelang">
+        <field name="name">Lelang</field>
+        <field name="res_model">eproc.lelang</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_open_lelang">
+        <field name="name">Pengumuman Lelang</field>
+        <field name="res_model">eproc.lelang</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="domain">[('state','=','open')]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_penjelasan_dokumen">
+        <field name="name">Penjelasan Dokumen Lelang</field>
+        <field name="res_model">eproc.penjelasan_dokumen</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_peserta_lelang">
+        <field name="name">Peserta Lelang</field>
+        <field name="res_model">eproc.peserta_lelang</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_ikut_lelang">
+        <field name="name">Ikut Lelang</field>
+        <field name="res_model">eproc.peserta_lelang</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,graph</field>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_eproc_branch">
+        <field name="name">Branch</field>
+        <field name="res_model">eproc.branch</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+	<!-- system MENU -->
+    <menuitem name="E-Proc" id="menu_eproc" />
+    <menuitem name="Supplier" id="menu_res_partner_main" parent="menu_eproc" sequence="10" />
+    <menuitem name="Supplier Data" id="menu_res_partner" 
+        sequence="10" 
+        parent="menu_res_partner_main" 
+        action="action_res_partner"/>
+    <menuitem name="Pengumuman Lelang" id="menu_eproc_pengumuman" 
+        sequence="20"
+        parent="menu_res_partner_main" 
+        action="action_eproc_open_lelang"/>
+    <menuitem name="Ikut Lelang" id="menu_eproc_ikut_lelang" 
+        sequence="25"
+        parent="menu_res_partner_main" 
+        action="action_eproc_ikut_lelang"/>
+    <menuitem name="Aanwizing" id="menu_eproc_penjelasan_dokumen" 
+        sequence="30" 
+        parent="menu_res_partner_main" 
+        action="action_eproc_penjelasan_dokumen"/>
+
+    <menuitem name="Buyer" id="menu_eproc_buyer_main" parent="menu_eproc" 
+        sequence="20" 
+        groups="EProc.group_eproc_manager,EProc.group_eproc_user"
+    />
+    <menuitem name="Paket" id="menu_eproc_paket" 
+        parent="menu_eproc_buyer_main" 
+        action="action_eproc_paket"/>
+    <menuitem name="Lelang" id="menu_eproc_lelang" 
+        parent="menu_eproc_buyer_main" 
+        action="action_eproc_all_lelang"/>
+    <menuitem name="Evaluasi" id="menu_eproc_evaluasi" 
+        parent="menu_eproc_buyer_main" 
+        action="action_eproc_peserta_lelang"/>
+    <menuitem name="Supplier Management" id="menu_eproc_all_supplier" 
+        parent="menu_eproc_buyer_main" 
+        action="action_eproc_all_supplier"/>
+
+    <menuitem name="Master Data" id="menu_eproc_master_data" 
+        groups="EProc.group_eproc_manager,EProc.group_eproc_user"
+        parent="menu_eproc" sequence="500" />
+    <menuitem name="Branch" id="menu_eproc_branch" 
+        parent="menu_eproc_master_data" action="action_eproc_branch"/>
+
+
+
+</data>
+</openerp>
