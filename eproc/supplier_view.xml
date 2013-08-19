@@ -1,26 +1,51 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-    <!--record model="ir.ui.view" id="view_res_partner_tree_eproc">
-        <field name="name">res.partner.tree.eproc</field>
+    <record model="ir.ui.view" id="view_res_partner_tree_eproc">
+        <field name="name">res.partner.tree</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="res.partner">
-                <field name="no"/>
-                <field name="name"/>
-                <field name="address1"/>
-                <field name="city_id"/>
-                <field name="state_id"/>
-                <field name="country_id"/>
-                <field name="telephone"/>
-                <field name="email"/>
-                <field name="state"/>
-            </tree>
+            <field name="name" position="after">
+                <field name='no'/>  
+                <field name='street'/>
+                <field name='city'/>
+                <field name='country'/>
+                <field name='phone'/>
+            </field>
+            <field name='phone' position='replace'/>
+            <field name='email' position='replace'/>
         </field>
-    </record-->
+    </record>
+    
+    <!--record model="ir.ui.view" id="view_res_partner_form_eproc">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name='name' position='after'>
+                <!field name='no'/>
+                <field name='user_id'/>
+                <button string="Ikut Lelang" type='action' name='%(action_supplier_lelang)d' />           
+            </field>           
+        </field>
+    </record-->    
+    
+     <record forcecreate="1" id="seq_type_personal" model="ir.sequence.type">
+            <field name="name">Personal</field>
+            <field name="code">res.partner</field>
+        </record>
         
+        <record  forcecreate="1" id="seq_personal" model="ir.sequence">
+            <field name="name">Partner</field>
+            <field name="code">res.partner</field>
+            <field name='prefix'>SUP/</field>
+            <field name="padding">3</field>
+            <field name="no" eval="False"/>
+        </record> 
+            
     <record model="ir.ui.view" id="view_eproc_city_form">
         <field name="name">eproc.city.form</field>
         <field name="model">eproc.city</field>

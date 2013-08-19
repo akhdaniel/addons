@@ -1,0 +1,245 @@
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="tab_form_view">
+            <field name="name">res.partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                 
+                 <notebook>                       
+                        <page string="Ijin Usaha" name="ijin_usaha" >
+                            <field view_mode="tree,form" name="ijin_usaha_ids" nolabel="1">
+                                <tree>
+                                    <field name='masterIjinUsaha'/>
+                                    <field name="nomor"/>
+                                    <field name='berlakuSampai'/>
+                                    <field name='instansiPemberi'/>
+                                    <field name='kualifikasi'/>
+                                   
+                                </tree>
+                                <form>
+                                    <field name='masterIjinUsaha'/>
+                                    <field name="nomor"/>
+                                    <field name='berlakuSampai'/>
+                                    <field name='instansiPemberi'/>
+                                    <field name='kualifikasi'/>
+                                     <field name= 'filename'/>
+                                </form>
+                            </field>                                
+                        </page>	
+                        <page string="Pemilik Perusahaan" name="Pemilik_perusahaan" >
+                            <field view_mode="tree,form" name="pemilik_ids" nolabel="1">
+                                <tree>
+                                    <field name='name'/>
+                                    <field name="ktp"/>
+                                    <field name='alamat'/>
+                                    <field name='saham'/>
+                                </tree>
+                                <form>
+                                    <field name='name'/>
+                                    <field name="ktp"/>
+                                    <field name='alamat'/>
+                                    <field name='saham'/>
+                                </form>
+                            </field>                                
+                        </page>	
+                        <page string="Pengurus Perusahaan" name="pengurus_perusahaan" >
+                            <field view_mode="tree,form" name="pengurus_ids" nolabel="1">
+                                <tree>
+                                    <field name='name'/>
+                                    <field name="ktp"/>
+                                    <field name='alamat'/>
+                                    <field name='jabatan'/>
+                                    <field name='mulai'/>
+                                    <field name='sampai'/>
+                                </tree>
+                                <form>
+                                    <field name='name'/>
+                                    <field name="ktp"/>
+                                    <field name='alamat'/>
+                                    <field name='jabatan'/>
+                                    <field name='mulai'/>
+                                    <field name='sampai'/>
+                                </form>
+                            </field>                                
+                        </page>		
+                        <page string="Bukti Pajak" name="bukti_pajak" >
+                            <field view_mode="tree,form" name="bukti_pajak_ids" nolabel="1">
+                                <tree>
+                                    <field name='masterPajak'/>
+                                    <field name="nomor"/>
+                                    <field name='tanggal'/>
+                                    <field name='masaTahun'/>
+                                    <field name='masaBulan'/>
+                                    <field name='filename'/>
+                                </tree>
+                                <form>
+                                    <field name='masterPajak'/>
+                                    <field name="nomor"/>
+                                    <field name='tanggal'/>
+                                    <field name='masaTahun'/>
+                                    <field name='masaBulan'/>
+                                    <field name='filename'/>
+                                </form>
+                            </field>                                
+                        </page>
+                        <page string="Tenaga Ahli" name="tenaga_ahli" >
+                            <field view_mode="tree,form" name="tenaga_ahli_ids">
+                                <tree>
+                                    <field name='name'/>
+                                    <field name="tanggalLahir"/>
+                                    <field name='pendidikanTerakhir'/>
+                                    <field name='profesi'/>
+                                    <field name='statusPegawai'/>
+                                    
+                                </tree>
+                                <form>
+                                    <group colspan='4' col='4'>
+                                    <field name='name'/>
+                                    <field name="tanggalLahir"/>
+                                    <field name='pendidikanTerakhir'/>
+                                    <field name='tahunPengalamanKerja'/>
+                                    <field name='profesi'/>                                 
+                                    <field name='email'/>
+                                    <field name='wargaNegara'/>
+                                    <field name='jabatan'/>
+                                    <field name='statusPegawai'/>
+                                    </group>
+                                    <group col='2' colspan='2'>
+                                    <field view_mode='tre,form' name='pengalaman_kerja'>
+                                        <tree>
+                                            <field name='name'/>
+                                            <field name='tahun'/>
+                                        </tree>
+                                        <form>
+                                            <field name='name'/>
+                                            <field name='tahun'/>
+                                        </form>
+                                    </field>
+                                    <field view_mode='tre,form' name='pendidikan'>
+                                        <tree>
+                                            <field name='name'/>
+                                            <field name='tahun'/>
+                                        </tree>
+                                        <form>
+                                            <field name='name'/>
+                                            <field name='tahun'/>
+                                        </form>
+                                    </field>
+                                    <field view_mode='tree,form' name='sertifikat'>
+                                        <tree>
+                                            <field name='name'/>
+                                            <field name='tahun'/>
+                                        </tree>
+                                        <form>
+                                            <field name='name'/>
+                                            <field name='tahun'/>
+                                        </form>
+                                    </field>
+                                    <field view_mode='tre,form' name='bahasa'>
+                                    <tree>
+                                            <field name='name'/>
+                                        </tree>
+                                        <form>
+                                            <field name='name'/>
+                                        </form>
+                                    </field>
+                                    </group>
+                                </form>
+                            </field>                                
+                        </page>	
+                        <page string="Pengalaman Perusahaan" name="pengalaman" >
+                            <field view_mode="tree,form" name="pengalaman_ids" nolabel="1">
+                                <tree>
+                                    <field name='name'/>
+                                    <field name="lokasi"/>
+                                    <field name='instansiPemberi'/>
+                                    <field name='alamatInstansi'/>
+                                    <field name='telponInstansi'/>
+                                </tree>
+                                <form>
+                                    <field name='name'/>
+                                    <field name="lokasi"/>
+                                    <field name='instansiPemberi'/>
+                                    <field name='alamatInstansi'/>
+                                    <field name='telponInstansi'/>
+                                    <field name='tanggalKontrak'/>
+                                    <field name='selesaiKontrak'/>
+                                    <field name='nomorKontrak'/>
+                                    <field name='nilai'/>
+                                    <field name='tanggalPelaksanaan'/>
+                                    <field name='tanggalSerahTerima'/>
+                                    <field name='prosentasePelaksanaan'/>
+                                </form>
+                            </field>                                
+                        </page>	    	
+                        <page string="Peralatan" name="peralatan" >
+                            <field view_mode="tree,form" name="peralatan_ids" nolabel="1">
+                                <tree>
+                                    <field name='name'/>
+                                    <field name="jumlah"/>
+                                    <field name='merk'/>
+                                    <field name='type'/>
+                                    <field name='kondisi'/>
+                                </tree>
+                                <form>
+                                    <field name='name'/>
+                                    <field name="jumlah"/>
+                                    <field name='kapasitas'/>
+                                    <field name='merk'/>
+                                    <field name='type'/>
+                                    <field name='tahunPembuatan'/>
+                                    <field name='kondisi'/>
+                                    <field name='lokasiSekarang'/>
+                                    <field name='buktiKepemilikan'/>
+                                </form>
+                            </field>                                
+                        </page>	 
+                        <page string="Neraca" name="neraca">
+                            <field view_mode="tree,form" name="neraca_ids" nolabel="1">
+                                <tree>
+                                    <field name="tahun"/>
+                                    <field name="tanggal"/>
+                                    <field name="aktivaTetap"/>
+                                    <field name="aktivaLancar"/>
+                                    <field name="aktivaLainnya"/>
+                                    <field name="hutangJangkaPanjang"/>
+                                    <field name="hutangJangkaPendek"/>
+                                </tree>
+                                <form>
+                                    <field name="tahun"/>
+                                    <field name="tanggal"/>
+                                    <field name="aktivaTetap"/>
+                                    <field name="aktivaLancar"/>
+                                    <field name="aktivaLainnya"/>
+                                    <field name="hutangJangkaPanjang"/>
+                                    <field name="hutangJangkaPendek"/>
+                                </form>
+                            </field>
+                        </page>    
+                        <page string="Akta Perusahaan" name="aktaPerusahaan">
+                            <field view_mode="tree,form" name="akta_perusahaan_ids" nolabel="1">
+                                <tree>
+                                    <field name="nomor"/>
+                                    <field name="tanggalSurat"/>
+                                    <field name="notaris"/>
+                                    <field name="dokumenName"/>
+                                    <field name="dokumenFileName"/>
+                                    <field name="jenis"/>
+                                </tree>
+                                <form>
+                                    <field name="nomor"/>
+                                    <field name="tanggalSurat"/>
+                                    <field name="notaris"/>
+                                    <field name="dokumenName"/>
+                                    <field name="dokumenFileName"/>
+                                    <field name="jenis"/>
+                                </form>
+                            </field>
+                        </page>  			    				    		        		                 	                 
+                 </notebook>                                                  
+            </field>       
+        </record>
+    </data>
+</openerp>
