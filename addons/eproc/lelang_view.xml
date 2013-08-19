@@ -9,43 +9,47 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="eproc.lelang" version="7.0">
-                <header>
-
-                    <button string="Ikut Lelang" type="object" 
-                        states="open" name="action_ikut" 
-                        groups="EProc.group_res_partner"
-                        class="oe_highlight"  />
-
+                <header>                              
                     <button string="Send for Approval" type="workflow" 
-                        states="draft" name="signal_verify" 
-                        groups="EProc.group_eproc_user"
-                        class="oe_highlight"  />
+                        states="draft" name="signal_verify"
+                        res.groups="eproc.group_eproc_user" 
+                        class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_open"
-                        groups="EProc.group_eproc_manager"
+                        res.groups="eproc.group_eproc_manager"
                         class="oe_highlight"  /> 
 
                     <button string="Reject" type="workflow"  
-                        groups="EProc.group_eproc_manager"
+                        res.groups="eproc.group_eproc_manager"
                         states="verify" name="signal_reject" /> 
 
                     <button string="Cancel" type="workflow"  
-                        groups="EProc.group_eproc_manager"
+                        res.groups="eproc.group_eproc_manager"
                         states="verify" name="signal_cancel" /> 
 
-                    <button string="Usulan Pemenang" type="workflow" 
+                    <!--button string="Usulan Pemenang" type="workflow" 
                         states="open" name="signal_propose_winner" 
-                        groups="EProc.group_eproc_user"
-                        class="oe_highlight"  />
+                        groups="eproc.group_eproc_user"
+                        class="oe_highlight"/-->
+                                       
+                    <button string="Sorting" type="object" 
+                        states="open" name="action_rangking" 
+                        class="oe_highlight"
+                        res.groups="eproc.group_eproc_user,eproc.group_eproc_manager" />
+                                                              
+                    <button string="Propose Winner" type="workflow" 
+                        states="open" name="action_propose_winner" 
+                        class="oe_highlight"
+                        res.groups="eproc.group_eproc_user,eproc.group_eproc_manager" />
 
                     <button string="Approve Winner and Close" type="workflow"  
-                        groups="EProc.group_eproc_manager"
+                        res.groups="eproc.group_eproc_manager"
                         states="propose_winner" name="signal_done" 
                         class="oe_highlight" /> 
 
                     <button string="Review Winner" type="workflow"  
-                        groups="EProc.group_eproc_manager"
+                        res.groups="eproc.group_eproc_user,eproc.group_eproc_manager"
                         states="propose_winner" name="signal_review_winner" 
                         class="oe_highlight" /> 
 
@@ -54,11 +58,10 @@
                 </header>
 
                 <sheet>
+                    <label for="name" string="Nama Lelang"/>    
                     <h1>
-                        <field name="name" class="oe_inline"/>
-                    </h1>
-                    <field name="state" />
-
+                        <field name="name"/>
+                    </h1>   
                     <group>
                         <group>
                             <field name="paket" />
@@ -67,7 +70,8 @@
                             <field name="currency" />
                         </group>
                         <group>
-                            <field name="tahap" />                        
+                            <field name="tahap" /> 
+                                     
                         </group>
                     </group>
 
@@ -88,9 +92,19 @@
                         </page>
 
                         <page string="Syarat Kualifikasi">
+                            <!--group>
+                                <field name="businessType"/>
+                            </group-->
                             <group>
-                                <field name="businessType" />
-                                <field name="subBusinessType" />
+                                <div>
+                                <label for="subBusinessType" string="Sub Tipe Bisnis"/>
+                                <field name="subBusinessType" view_mode="form" class="oe_inline">
+                                    <form>
+                                    <field name="business_type"/>
+                                    <field name="name"/>                                    
+                                    </form>
+                                </field>                              
+                                </div>                                
                             </group>
                             <field name="syaratKualifikasi" nolabel="1" widget="one2many_list"/>
                         </page>
@@ -103,13 +117,47 @@
                         <page string="Dokumen Lelang">
                             <field name="dokumenLelang" nolabel="1" widget="one2many_list"/>
                         </page>
-                        
+
                         <page string="Detail Barang/Jasa">
-                            <field name="detailProduct" nolabel="1" widget="one2many_list"/>
+                            <field name="detailProduct" nolabel="1" widget="one2many_list" view_mode='tree,form'>
+                                <tree>
+                                    <field name='product'/>
+                                    <field name='qty'/>
+                                    <field name='filename'/>
+                                    <field name='specification'/>
+                                </tree>
+                                <form>
+                                    <field name='product'/>
+                                    <field name='qty'/>
+                                    <field name='filename'/>
+                                    <field name='specification'/>
+                                </form>
+                            </field>
                         </page>    
 
                         <page string="Aanwizing">
-                            <field name="penjelasanDokumen" nolabel="1" widget="one2many_list"/>
+                            <field name="penjelasanDokumen" nolabel="1" widget="one2many_list" view_mode='tree,form'>
+                            <tree>
+                                <field name='name'/>
+                                <field name='dokumenLelang'/>
+                                <field name='bab'/>
+                                <field name='pertanyaan'/>
+                                <field name='partner_id'/>
+                                <field name='jawaban'/>
+                                <field name='penjawab'/>
+                                <field name='attachmentFilename'/>
+                            </tree>
+                            <form>
+                                <field name='name'/>
+                                <field name='dokumenLelang'/>
+                                <field name='bab'/>
+                                <field name='pertanyaan'/>
+                                <field name='partner_id'/>
+                                <field name='jawaban'/>
+                                <field name='penjawab'/>
+                                <field name='attachmentFilename'/>
+                            </form>
+                            </field>
                         </page>
 
                         <page string="Adendum Lelang">
@@ -223,7 +271,28 @@
             </form>
         </field>
     </record>  
-
+    
+    <record id="view_eproc_peserta_lelang_filter" model="ir.ui.view">
+        <field name="name">eproc.peserta_lelang.select</field>
+        <field name="model">eproc.peserta_lelang</field>
+        <field name="arch" type="xml">
+            <search string="Peserta Lelang">
+                <!--field name="name" string="Payslips" filter_domain="['|',('name','ilike',self),('number','ilike',self)]"/>
+                <field name="date_from"/>
+                <filter icon="terp-document-new" string="Draft" domain="[('state','=','draft')]" help="Draft Slip"/>
+                <filter icon="terp-camera_test" string="Done" domain="[('state','=','done')]" help="Done Slip"/>
+                <field name="employee_id"/>
+                <field name="payslip_run_id"/-->
+                <group expand="0" string="Group By...">
+                    <filter string="supplyer" icon="terp-personal" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <!--filter string="Paket Pekerjaan" name="pesertaLelang" icon="terp-folder-orange" context="{'group_by':'pesertaLelang'}"/>
+                    <filter string="Companies" name="company_id" groups="base.group_multi_company" icon="terp-go-home" context="{'group_by':'company_id'}"/>
+                    <filter string="States" name="state" icon="terp-stock_effects-object-colorize" context="{'group_by':'state'}"/-->
+                </group>
+            </search>
+        </field>
+    </record>
+    
     <record model="ir.ui.view" id="view_eproc_peserta_lelang_form">
         <field name="name">eproc.peserta_lelang.form</field>
         <field name="model">eproc.peserta_lelang</field>
@@ -232,8 +301,8 @@
             <form string="eproc.peserta_lelang" version="7.0">
                 <sheet>
                     <group>
-                        <field name="lelang" />
-                        <field name="partner_id" />                    
+                        <field name="partner_id" />   
+                        <field name="lelang" />                                            
                     </group>
                     <group colspan="2">
                         <field name="tanggalDaftar" />
@@ -244,23 +313,81 @@
 
                     <notebook>
                         <page string="Ijin Usaha">
-                            <field name="pesertaLelangIjinUsaha" nolabel="1" widget="one2many_list"/>             
+                            <field name="pesertaLelangIjinUsaha" nolabel="1" widget="one2many_list">    
+                                <tree>
+                                    <field name='masterIjinUsaha'/>
+                                    <field name="nomor"/>
+                                    <field name='berlakuSampai'/>
+                                    <field name='instansiPemberi'/>
+                                    <field name='kualifikasi'/>
+                                </tree>
+                                <form>
+                                    <field name='masterIjinUsaha'/>
+                                    <field name="nomor"/>
+                                    <field name='berlakuSampai'/>
+                                    <field name='instansiPemberi'/>
+                                    <field name='kualifikasi'/>
+                                </form>
+                            </field>                  
                         </page>
 
                         <page string="Dukungan Bank">
-                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list">
+                                <tree>
+                                    <field name="namaBank"/>
+                                    <field name="nomor"/>
+                                    <field name="tanggal"/>
+                                    <field name="nilai"/>
+                                    <field name="bukti"/>
+                                </tree>
+                                <form>
+                                    <field name="namaBank"/>
+                                    <field name="nomor"/>
+                                    <field name="tanggal"/>
+                                    <field name="nilai"/>
+                                    <field name="bukti"/>
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Bukti Pajak">
-                            <field name="pesertaLelangBuktiPajak" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangBuktiPajak" nolabel="1" widget="one2many_list">
+                                <tree>
+                                    <field name='masterPajak'/>
+                                    <field name="nomor"/>
+                                    <field name='tanggal'/>
+                                    <field name='masaTahun'/>
+                                    <field name='masaBulan'/>
+                                    <field name='filename'/>
+                                </tree>
+                                <form>
+                                    <field name='masterPajak'/>
+                                    <field name="nomor"/>
+                                    <field name='tanggal'/>
+                                    <field name='masaTahun'/>
+                                    <field name='masaBulan'/>
+                                    <field name='filename'/>
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Tenaga Ahli">
-                            <field name="pesertaLelangTenagaAhli" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangTenagaAhli" nolabel="1" widget="one2many_list">
+                                <form>
+                                    <field name="name"/>
+                                    <field name="profesi"/>
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Pengalaman">
-                            <field name="pesertaLelangPengalaman" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangPengalaman" nolabel="1" widget="one2many_list">
+                                 <form>
+                                    <field name="name"/>
+                                    <field name="lokasi"/>
+                                    <field name="instansiPemberi"/>
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Pekerjaan Sedang Berjalan">
@@ -268,19 +395,53 @@
                         </page>
 
                         <page string="Peralatan">
-                            <field name="pesertaLelangPeralatan" nolabel="1" widget="one2many_list"/>
+                            <field view_mode="tree,form" name="pesertaLelangPeralatan">
+                                <tree>
+                                    <field name="name"/>
+                                  
+                                </tree>
+                                <form>
+                                    <field name="name"/>
+                                   
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Neraca">
-                            <field name="pesertaLelangNeraca" nolabel="1" widget="one2many_list"/>
+                            <field view_mode="tree,form" name="pesertaLelangNeraca">
+                                 <tree>
+                                	<field name='tahun'/>
+                                    <field name='tanggal'/> 
+                                    <field name='aktivaTetap'/> 
+                                    <field name='aktivaLancar'/>
+                                    <field name='aktivaLainnya'/> 
+                                    <field name='hutangJangkaPanjang'/> 
+                                    <field name='hutangJangkaPendek'/>
+                                </tree>
+                                <form>
+                                	<field name='tahun'/>
+                                    <field name='tanggal'/> 
+                                    <field name='aktivaTetap'/> 
+                                    <field name='aktivaLancar'/>
+                                    <field name='aktivaLainnya'/> 
+                                    <field name='hutangJangkaPanjang'/> 
+                                    <field name='hutangJangkaPendek'/>
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Dokumen Penawaran">
-                            <field name="pesertaLelangDokumenPenawaran" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangDokumenPenawaran" nolabel="1" widget="one2many_list">
+                                <form>                               
+                                    <field name="name"/>
+                                    <field name="filename"/>
+                                    <field name="jenisDokumen"/>
+                                </form>
+                            </field>    
                         </page>
 
                         <page string="Detail Penawaran">
-                            <field name="pesertaLelangProduct" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangProduct" nolabel="1" widget="one2many_list"/>     
                         </page>
 
                         <page string="Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
@@ -507,7 +668,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_eproc_peserta_lelang_ijin_usaha_tree">
+    <!--record model="ir.ui.view" id="view_eproc_peserta_lelang_ijin_usaha_tree">
         <field name="name">eproc.peserta_lelang_ijin_usaha.tree</field>
         <field name="model">eproc.peserta_lelang_ijin_usaha</field>
         <field name="type">tree</field>
@@ -517,7 +678,7 @@
                 <field name="name"/>                
             </tree>
         </field>
-    </record>
+    </record-->
 
     <record model="ir.ui.view" id="view_eproc_peserta_lelang_dukungan_bank_tree">
         <field name="name">eproc.peserta_lelang_dukungan_bank.tree</field>
@@ -534,7 +695,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_eproc_peserta_lelang_bukti_pajak_tree">
+    <!--record model="ir.ui.view" id="view_eproc_peserta_lelang_bukti_pajak_tree">
         <field name="name">eproc.peserta_lelang_bukti_pajak.tree</field>
         <field name="model">eproc.peserta_lelang_bukti_pajak</field>
         <field name="type">tree</field>
@@ -543,7 +704,7 @@
                 <field name="bukti_pajak"/>
             </tree>
         </field>
-    </record>
+    </record-->
 
     <record model="ir.ui.view" id="view_eproc_peserta_lelang_tenaga_ahli_tree">
         <field name="name">eproc.peserta_lelang_tenaga_ahli.tree</field>
@@ -551,7 +712,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="eproc.peserta_lelang_tenaga_ahli">
-                <field name="tenaga_ahli"/>
+                <field name="name"/>
+                <field name="profesi"/>
             </tree>
         </field>
     </record>
@@ -562,7 +724,9 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="eproc.peserta_lelang_pengalaman">
-                <field name="pengalaman"/>
+                <field name="name"/>
+                <field name="lokasi"/>
+                <field name="instansiPemberi"/>
             </tree>
         </field>
     </record>
@@ -596,7 +760,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_eproc_peserta_lelang_neraca_tree">
+    <!--record model="ir.ui.view" id="view_eproc_peserta_lelang_neraca_tree">
         <field name="name">eproc.peserta_lelang_neraca.tree</field>
         <field name="model">eproc.peserta_lelang_neraca</field>
         <field name="type">tree</field>
@@ -605,7 +769,7 @@
                 <field name="neraca"/>
             </tree>
         </field>
-    </record>
+    </record-->
 
     <record model="ir.ui.view" id="view_eproc_peserta_lelang_dokumen_penawaran_tree">
         <field name="name">eproc.peserta_lelang_dokumen_penawaran.tree</field>
@@ -632,5 +796,16 @@
             </tree>
         </field>
     </record>    
+    
+    <!--record model="ir.ui.view" id="view_eproc_master_jadwal_lelang_form">
+        <field name="name">eproc.master_jadwal_lelang.form</field>
+        <field name="model">eproc.master_jadwal_lelang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="name"/>
+            </form>             
+        </field>
+    </record-->   
 </data>
 </openerp>

@@ -44,11 +44,11 @@ class res_partner(osv.osv):
         return self.write(cr,uid,ids,{'state':SUPPLIER_STATES[4][0]},context=context)    
 
     _columns = {
-        'no': fields.char('Nomor', size=100),
+        'no': fields.char('Nomor', size=100,readonly=True),
 
         #'businessType' : fields.many2one('eproc.business_type','Business Type'),
         #'subBusinessType' : fields.many2one('eproc.sub_business_type','Sub Business Type'),
-        
+        'city':fields.many2one('eproc.city','City'),
         'contactPerson' : fields.char('Contact Person',size=300),
         'contactPersonEmail' : fields.char('Contact Person Email',size=300),
         'contactPersonAddress' : fields.char('Contact Person Address',size=300),
@@ -61,39 +61,43 @@ class res_partner(osv.osv):
         'bankAccountName' : fields.char('Bank Account Name',size=300),
         'bankAccountType' : fields.char('Bank Account Type',size=300),
 
-        #'state' : fields.selection(SUPPLIER_STATES,'Status', readonly=True ),
+      #  'state' : fields.selection(SUPPLIER_STATES,'Status', readonly=True ),
 
-        #'ijin_usaha':  fields.one2many('eproc.ijin_usaha','partner_id','Ijin Usaha'),
-        #'pemilik':     fields.one2many('eproc.pemilik','partner_id','Pemilik'),
-        #'pengurus':    fields.one2many('eproc.pengurus','partner_id','Pengurus'),
-        #'tenaga_ahli': fields.one2many('eproc.tenaga_ahli','partner_id','Tenaga Ahli'),
-        #'pengalaman':  fields.one2many('eproc.pengalaman','partner_id','Pengalaman'),
-        #'peralatan':   fields.one2many('eproc.peralatan','partner_id','Peralatan'),
-        #'neraca':      fields.one2many('eproc.neraca','partner_id','Neraca'),
-        #'bukti_pajak': fields.one2many('eproc.bukti_pajak','partner_id','Bukti Pajak'),
-        #'akta_perusahaan': fields.one2many('eproc.akta_perusahaan','partner_id','Akta Perusahaan'),
-        #'user_id': fields.many2one('res.users','Registered By')
+        'ijin_usaha_ids':  fields.one2many('eproc.ijin_usaha','partner_id','Ijin Usaha'),
+        'pemilik_ids':     fields.one2many('eproc.pemilik','partner_id','Pemilik Perusahaan'),
+        'pengurus_ids':    fields.one2many('eproc.pengurus','partner_id','Pengurus Perusahaan'),
+        'tenaga_ahli_ids': fields.one2many('eproc.tenaga_ahli','partner_id','Tenaga Ahli'),
+        'pengalaman_ids':  fields.one2many('eproc.pengalaman','partner_id','Pengalaman'),
+        'peralatan_ids':   fields.one2many('eproc.peralatan','partner_id','Peralatan'),
+        'neraca_ids':      fields.one2many('eproc.neraca','partner_id','Neraca'),
+        'bukti_pajak_ids': fields.one2many('eproc.bukti_pajak','partner_id','Bukti Pajak'),
+        'akta_perusahaan_ids': fields.one2many('eproc.akta_perusahaan','partner_id','Akta Perusahaan'),
+        'user_id': fields.many2one('res.users','Registered By')
     }
     _defaults = {
-        #'state': SUPPLIER_STATES[0][0],
-        #'user_id': lambda obj, cr, uid, context: uid
-    }    
+       # 'state': SUPPLIER_STATES[0][0],
+        'user_id': lambda obj, cr, uid, context: uid,
+        'no': lambda self,cr,uid,context={}: self.pool.get('ir.sequence').get(cr, uid, 'res.partner'),
+        }
+    
 res_partner()
 
 
 class eproc_business_type(osv.osv):
     _name = 'eproc.business_type'
+
     _columns = {
-        'name': fields.char('Name', size=300),
-        'sub_business_type': fields.one2many('eproc.sub_business_type','business_type')
+        'name': fields.char('Tipe Bisnis', size=300),
+        'sub_business_type': fields.one2many('eproc.sub_business_type','business_type','Sub Tipe Bisnis')
     }
 eproc_business_type()
 
 class eproc_sub_business_type(osv.osv):
     _name = 'eproc.sub_business_type'
+    
     _columns = {
-        'name': fields.char('Name', size=300),
-        'business_type': fields.many2one('eproc.business_type')
+        'name': fields.char('Sub Tipe Bisnis', size=300),
+        'business_type': fields.many2one('eproc.business_type','Tipe Bisnis')
     }
 eproc_sub_business_type()
 
@@ -101,7 +105,7 @@ eproc_sub_business_type()
 class eproc_city(osv.osv):
     _name = 'eproc.city'
     _columns = {
-        'name': fields.char('Name', size=300),
+        'name': fields.char('Nama', size=300),
         'state_id': fields.many2one('res.country.state')
     }
 eproc_city()
@@ -110,7 +114,7 @@ eproc_city()
 class eproc_status(osv.osv):
     _name = 'eproc.status'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
     }
 eproc_status()
 
@@ -125,18 +129,18 @@ class eproc_ijin_usaha(osv.osv):
         'berlakuSampai' : fields.date('Berlaku Sampai'),
         'instansiPemberi' : fields.char('Instansi Pemberi', size=100),
         'filename' : fields.binary('Bukti Dokumen'),
+        'kualifikasi':fields.many2one('eproc.master_kualifikasi','Kualifikasi'),
         'partner_id': fields.many2one('res.partner','Supplier'),
     }
 eproc_ijin_usaha()
 
-
 class eproc_pemilik(osv.osv):
     _name = 'eproc.pemilik'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
         'ktp' : fields.char('KTP',size=300),
         'alamat' : fields.char('Alamat',size=300),
-        'saham' : fields.integer('Lembar Saham'),
+        'saham' : fields.integer('Jumlah Lembar Saham'),
         'partner_id': fields.many2one('res.partner','Supplier'),
     }
 eproc_pemilik()
@@ -144,10 +148,10 @@ eproc_pemilik()
 class eproc_pengurus(osv.osv):
     _name = 'eproc.pengurus'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
         'ktp' : fields.char('KTP',size=300),
         'alamat' : fields.char('Alamat',size=300),
-        'jabatan': fields.char('jabatan',size=300),
+        'jabatan': fields.char('Jabatan',size=300),
         'mulai' : fields.date('Tanggal Mulai'),
         'sampai' :fields.date('Tanggal Selesai'),
         'partner_id': fields.many2one('res.partner','Supplier'),
@@ -157,29 +161,30 @@ eproc_pengurus()
 class eproc_tenaga_ahli(osv.osv):
     _name = 'eproc.tenaga_ahli'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
         'partner_id': fields.many2one('res.partner','Supplier'),
         'tanggalLahir' : fields.date('Tanggal Lahir'),
         'pendidikanTerakhir' : fields.char('Pendidikan Terakhir',size=300),
-        'tahunPengalamanKerja' : fields.integer('Tahun Pengalaman Kerja'),
-        'profesi' : fields.char('profesi',size=300), 
+        'tahunPengalamanKerja' : fields.char('Tahun Pengalaman Kerja',size=4),
+        'profesi' : fields.char('Profesi',size=300), 
         'email' : fields.char('email',size=300),
-        'wargaNegara' : fields.char('wargaNegara',size=300),
-        'jabatan' : fields.char('jabatan',size=300),
-        'statusPegawai' : fields.char('status Pegawai',size=300),
+        'wargaNegara' : fields.char('Warga Negara',size=300),
+        'jabatan' : fields.char('Jabatan',size=300),
+        'statusPegawai' : fields.char('Status Pegawai',size=300),
 
-        'pengalaman_kerja' : fields.one2many('eproc.tenaga_ahli_pengalaman_kerja','tenaga_ahli','Pengalaman Kerja'),
-        'pendidikan' : fields.one2many('eproc.tenaga_ahli_pendidikan','tenaga_ahli','Pendidikan'),
-        'sertifikat' : fields.one2many('eproc.tenaga_ahli_sertifikat','tenaga_ahli','Sertifikat'),
-        'bahasa' : fields.one2many('eproc.tenaga_ahli_bahasa','tenaga_ahli','Bahasa'),
+        'pengalaman_kerja' : fields.one2many('eproc.tenaga_ahli_pengalaman_kerja','tahun','Pengalaman Kerja'),
+        'pendidikan' : fields.one2many('eproc.tenaga_ahli_pendidikan','tenaga_ahli','Pendidikan yang Relevan'),
+        'sertifikat' : fields.one2many('eproc.tenaga_ahli_sertifikat','tenaga_ahli','Sertifikat Pendukung'),
+        'bahasa' : fields.one2many('eproc.tenaga_ahli_bahasa','tenaga_ahli','Bahasa Asing Yang Dikuasai'),
     }
 eproc_tenaga_ahli()
 
 class eproc_tenaga_ahli_pengalaman_kerja(osv.osv):
     _name = 'eproc.tenaga_ahli_pengalaman_kerja'
     _columns = {
-        'name': fields.char('Name',size=300),
-        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli','tenaga_ahli'),
+        'name': fields.char('Nama',size=300),
+        'tahun': fields.integer('Tahun Pengalaman Kerja',size=4),
+        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli',''),
     }
 eproc_tenaga_ahli_pengalaman_kerja()
 
@@ -187,8 +192,9 @@ eproc_tenaga_ahli_pengalaman_kerja()
 class eproc_tenaga_ahli_pendidikan(osv.osv):
     _name = 'eproc.tenaga_ahli_pendidikan'
     _columns = {
-        'name': fields.char('Name',size=300),
-        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli','tenaga_ahli'),
+        'name': fields.char('Nama',size=300),
+        'tahun': fields.char('Tahun Lulus',size=4),
+        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli',''),
     }
 eproc_tenaga_ahli_pendidikan()
 
@@ -196,8 +202,9 @@ eproc_tenaga_ahli_pendidikan()
 class eproc_tenaga_ahli_sertifikat(osv.osv):
     _name = 'eproc.tenaga_ahli_sertifikat'
     _columns = {
-        'name': fields.char('Name',size=300),
-        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli','tenaga_ahli'),
+        'name': fields.char('Nama',size=300),
+        'tahun': fields.char('Tahun',size=4),
+        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli',''),
     }
 eproc_tenaga_ahli_sertifikat()
 
@@ -205,8 +212,8 @@ eproc_tenaga_ahli_sertifikat()
 class eproc_tenaga_ahli_bahasa(osv.osv):
     _name = 'eproc.tenaga_ahli_bahasa'
     _columns = {
-        'name': fields.char('Name',size=300),
-        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli','tenaga_ahli'),
+        'name': fields.char('Nama',size=300),
+        'tenaga_ahli': fields.many2one('eproc.tenaga_ahli',''),
     }
 eproc_tenaga_ahli_bahasa()
 
@@ -214,14 +221,14 @@ class eproc_peralatan(osv.osv):
     _name = 'eproc.peralatan'
     _columns = {
         'name' : fields.char('Nama Peralatan',size=200),
-        'jumlah' : fields.integer('jumlah',size=200),
-        'kapasitas' : fields.char('kapasitas',size=200),
-        'merk' : fields.char('merk',size=200),
-        'type' : fields.char('type',size=200),
-        'tahunPembuatan' : fields.integer('tahunPembuatan',size=200),
-        'kondisi' : fields.char('kondisi',size=200),
-        'lokasiSekarang' : fields.char('lokasiSekarang',size=200),
-        'buktiKepemilikan' : fields.char('buktiKepemilikan',size=200),
+        'jumlah' : fields.integer('Jumlah',size=200),
+        'kapasitas' : fields.char('Kapasitas',size=200),
+        'merk' : fields.char('Merk',size=200),
+        'type' : fields.char('Type',size=200),
+        'tahunPembuatan' : fields.char('Tahun  Pembuatan',size=4),
+        'kondisi' : fields.char('Kondisi',size=200),
+        'lokasiSekarang' : fields.char('Lokasi  Sekarang',size=200),
+        'buktiKepemilikan' : fields.char('Bukti Kepemilikan',size=200),
         'partner_id': fields.many2one('res.partner','Supplier'),
     }
 eproc_peralatan()
@@ -240,7 +247,7 @@ class eproc_pengalaman(osv.osv):
         'nilai' : fields.integer('Nilai',size=200),
         'tanggalPelaksanaan' : fields.date('Tanggal Pelaksanaan'),
         'tanggalSerahTerima' : fields.date('Tanggal Serah Terima'),
-        'prosentasePelaksanaan' : fields.float('Prosentase Pelaksanaan'),
+        'prosentasePelaksanaan' : fields.float('Persentase Pelaksanaan'),
 
         'partner_id': fields.many2one('res.partner','Supplier'),
     }
@@ -251,7 +258,7 @@ class eproc_neraca(osv.osv):
     _rec_name = 'tahun'
     _name = 'eproc.neraca'
     _columns = {
-        'tahun' : fields.integer('Tahun'),
+        'tahun' : fields.char('Tahun'),
         'tanggal' : fields.date('Tanggal'),
         'aktivaTetap' : fields.float('Aktiva Tetap'),
         'aktivaLancar' : fields.float('Aktiva Lancar'),
@@ -269,9 +276,9 @@ class eproc_bukti_pajak(osv.osv):
         'masterPajak' : fields.many2one('eproc.master_pajak','Master Pajak'),
         'nomor' : fields.char('Nomor',size=200),
         'tanggal' : fields.date('Tanggal'),
-        'masaTahun' : fields.integer('Masa Tahun'),
+        'masaTahun' : fields.char('Masa Tahun',size=4),
         'masaBulan' : fields.char('Masa Bulan',size=200),
-        'filename' : fields.binary('Filename',size=200),
+        'filename' : fields.binary('Filename',size=200,required=True),
         'partner_id': fields.many2one('res.partner','Supplier'),
     }
 eproc_bukti_pajak()
@@ -279,7 +286,7 @@ eproc_bukti_pajak()
 class eproc_master_pajak(osv.osv):
     _name = 'eproc.master_pajak'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
     }
 eproc_master_pajak()
 
@@ -288,12 +295,12 @@ class eproc_akta_perusahaan(osv.osv):
     _rec_name = 'nomor'
     _name = 'eproc.akta_perusahaan'
     _columns = {
-        'nomor' : fields.char('nomor',size=200),
-        'tanggalSurat' : fields.date('tanggalSurat',size=200),
+        'nomor' : fields.char('Nomor',size=200),
+        'tanggalSurat' : fields.date('Tanggal Surat',size=200),
         'notaris' : fields.char('Notaris',size=200),
-        'dokumenName' : fields.char('Dokumen Name',size=200),
-        'dokumenFileName' : fields.binary('Dokumen FileName',size=200),
-        'jenis' : fields.selection([('pendirian','Pendirian'),('perubahan', 'Perubahan')], 'Jenis Akte'),
+        'dokumenName' : fields.char('Nama Dokumen',size=200),
+        'dokumenFileName' : fields.binary('File Dokumen',size=200),
+        'jenis' : fields.selection([('pendirian','Pendirian'),('perubahan', 'Perubahan')], 'Jenis Akta'),
         'partner_id': fields.many2one('res.partner','Supplier'),
     }
 eproc_akta_perusahaan()
@@ -302,7 +309,7 @@ eproc_akta_perusahaan()
 class eproc_master_ijin_usaha(osv.osv):
     _name = 'eproc.master_ijin_usaha'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
     }
 eproc_master_ijin_usaha()
 
@@ -310,7 +317,7 @@ eproc_master_ijin_usaha()
 class eproc_master_kualifikasi(osv.osv):
     _name = 'eproc.master_kualifikasi'
     _columns = {
-        'name': fields.char('Name',size=300),
+        'name': fields.char('Nama',size=300),
     }
 eproc_master_kualifikasi()
 

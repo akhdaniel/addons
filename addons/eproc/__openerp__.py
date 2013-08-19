@@ -32,9 +32,11 @@
         "update_xml" : [
                 'supplier_view.xml', 
                 'lelang_view.xml',
-                'action.xml',
                 'security/groups.xml',
-                'security/ir.model.access.csv'
+                'security/ir.model.access.csv',
+                'action.xml',                
+                'tambah_tab.xml',
+                'eproc_workflow.xml'
         ],
         "installable": True
 }

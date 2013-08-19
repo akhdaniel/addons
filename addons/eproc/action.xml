@@ -3,20 +3,19 @@
 <data>
 
     <!-- ACTION WINDOWS -->
-
-    <record model="ir.actions.act_window" id="action_res_partner">
-        <field name="name">Supplier Data</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('user_id','=',uid)]</field>
-    </record>
-
     <record model="ir.actions.act_window" id="action_eproc_all_supplier">
         <field name="name">Supplier Management</field>
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_res_partner">
+        <field name="name">Supplier Data</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain"></field>
     </record>
     
     <record model="ir.actions.act_window" id="action_eproc_city">
@@ -69,10 +68,25 @@
         <field name="view_mode">tree,form,graph</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
-
+    
+     <record model="ir.actions.act_window" id="action_supplier_lelang">
+        <field name="name">supplier lelang</field>
+        <field name="res_model">eproc.peserta_lelang</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record>
+    
     <record model="ir.actions.act_window" id="action_eproc_branch">
         <field name="name">Branch</field>
         <field name="res_model">eproc.branch</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_eproc_master_jadwal_lelang">
+        <field name="name">Master Jadwal</field>
+        <field name="res_model">eproc.master_jadwal_lelang</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -98,9 +112,8 @@
         action="action_eproc_penjelasan_dokumen"/>
 
     <menuitem name="Buyer" id="menu_eproc_buyer_main" parent="menu_eproc" 
-        sequence="20" 
-        groups="EProc.group_eproc_manager,EProc.group_eproc_user"
-    />
+        sequence="20"
+        groups="group_eproc_manager,group_eproc_user"/> 
     <menuitem name="Paket" id="menu_eproc_paket" 
         parent="menu_eproc_buyer_main" 
         action="action_eproc_paket"/>
@@ -114,13 +127,12 @@
         parent="menu_eproc_buyer_main" 
         action="action_eproc_all_supplier"/>
 
-    <menuitem name="Master Data" id="menu_eproc_master_data" 
-        groups="EProc.group_eproc_manager,EProc.group_eproc_user"
-        parent="menu_eproc" sequence="500" />
+    <menuitem name="Master Data" id="menu_eproc_master_data"       
+        parent="menu_eproc" sequence="500" groups="group_eproc_manager,group_eproc_user"/>
+    <menuitem name="Master Jadwal" id="menu_eproc_master_jadwal" 
+        parent="menu_eproc_master_data" action="action_eproc_master_jadwal_lelang"/>
     <menuitem name="Branch" id="menu_eproc_branch" 
         parent="menu_eproc_master_data" action="action_eproc_branch"/>
-
-
 
 </data>
 </openerp>
