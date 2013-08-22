@@ -516,6 +516,8 @@ class account_invoice(osv.osv):
                 }))
                 
         #end for invoice_lines
+	import pprint
+	pprint.pprint(move_lines)
         return move_lines
 account_invoice()
 
