@@ -436,7 +436,8 @@ class account_invoice(osv.osv):
                 differential journal, core price < exref price
                 NPA payable
                 """   
-                #val = val *-1
+                val = val *-1
+                val_currency = val_currency * -1
                 move_lines.append((0,0,{
                    'type': 'dest',
                    'name': 'NPA payable',
@@ -445,7 +446,7 @@ class account_invoice(osv.osv):
                    'account_id': default_credit_account_id ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                       and val_currency or False,
+                       and -1*val_currency or False,
                    'currency_id': diff_currency_p \
                        and currency_id or False,
                    'ref': 'core price < exref price',
@@ -464,7 +465,7 @@ class account_invoice(osv.osv):
                    'account_id': product_xfer_account ,
                    'date_maturity': date_due,
                    'amount_currency': diff_currency_p \
-                        and -1*val_currency or False,
+                        and val_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
                    'ref': 'core price < exref price',
