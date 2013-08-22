@@ -407,7 +407,7 @@ class account_invoice(osv.osv):
                        and -1*val_currency or False,
                    'currency_id': diff_currency_p \
                        and currency_id or False,
-                   'ref': 'test',
+                   'ref': 'core price > exref price',
                    'period_id': period_id,
                    'partner_id':partner_id,                           
                    'product_id':product_id,
@@ -426,14 +426,14 @@ class account_invoice(osv.osv):
                         and val_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
-                   'ref': 'test',
+                   'ref': 'core price > exref price',
                    'period_id':period_id,
                    'partner_id':partner_id,
                    'product_id':product_id,
                 }))             
             else:
                 """
-                differential journal, core price > exref price
+                differential journal, core price < exref price
                 NPA payable
                 """   
                 val = val *-1
@@ -448,7 +448,7 @@ class account_invoice(osv.osv):
                        and -1*val_currency or False,
                    'currency_id': diff_currency_p \
                        and currency_id or False,
-                   'ref': 'test',
+                   'ref': 'core price < exref price',
                    'period_id': period_id,
                    'partner_id':partner_id,                           
                    'product_id':product_id,
@@ -467,7 +467,7 @@ class account_invoice(osv.osv):
                         and val_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
-                   'ref': 'test',
+                   'ref': 'core price < exref price',
                    'period_id':period_id,
                    'partner_id':partner_id,
                    'product_id':product_id,
@@ -493,7 +493,7 @@ class account_invoice(osv.osv):
                         and discount_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
-                   'ref': 'test',
+                   'ref': 'discount journal',
                    'period_id':period_id,
                    'partner_id':partner_id,
                    'product_id':product_id,
@@ -509,15 +509,15 @@ class account_invoice(osv.osv):
                         and -1*discount_currency or False,
                    'currency_id': diff_currency_p \
                         and currency_id or False,
-                   'ref': 'test',
+                   'ref': 'discount journal',
                    'period_id':period_id,
                    'partner_id':partner_id,
                    'product_id':product_id,
                 }))
                 
         #end for invoice_lines
-	import pprint
-	pprint.pprint(move_lines)
+        import pprint
+        pprint.pprint(move_lines)
         return move_lines
 account_invoice()
 
