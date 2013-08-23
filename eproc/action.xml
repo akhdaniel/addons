@@ -8,6 +8,7 @@
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
     </record>
     
     <record model="ir.actions.act_window" id="action_res_partner">
@@ -15,7 +16,7 @@
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain"></field>
+        <field name="domain">[("user_id","=",uid)]</field>
     </record>
     
     <record model="ir.actions.act_window" id="action_eproc_city">
@@ -133,6 +134,9 @@
         parent="menu_eproc_master_data" action="action_eproc_master_jadwal_lelang"/>
     <menuitem name="Branch" id="menu_eproc_branch" 
         parent="menu_eproc_master_data" action="action_eproc_branch"/>
+    
+
+
 
 </data>
 </openerp>

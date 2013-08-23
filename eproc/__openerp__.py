@@ -30,13 +30,14 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "update_xml" : [
-                'supplier_view.xml', 
-                'lelang_view.xml',
                 'security/groups.xml',
-                'security/ir.model.access.csv',
                 'action.xml',                
+                'security/ir.model.access.csv',
+                'supplier_view.xml', 
+                'lelang_view.xml',                              
                 'tambah_tab.xml',
-                'eproc_workflow.xml'
+                'eproc_workflow.xml',
+                'eproc_supplier_workflow.xml',
         ],
         "installable": True
 }

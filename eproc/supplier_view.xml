@@ -19,19 +19,44 @@
         </field>
     </record>
     
-    <!--record model="ir.ui.view" id="view_res_partner_form_eproc">
+    <record model="ir.ui.view" id="view_res_partner_form_eproc">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <field name='name' position='after'>
-                <!field name='no'/>
-                <field name='user_id'/>
-                <button string="Ikut Lelang" type='action' name='%(action_supplier_lelang)d' />           
-            </field>           
+            <form>
+                <header>                            
+                    <button string="Verify" type="workflow" 
+                        name="supplier_verify" class="oe_highlight"
+                        groups="eproc.group_eproc_user"   status="draft"                  
+                        attrs="{'invisible': [('status','!=', 'draft')]}"/>
+
+                    <button string="Cancel" type="workflow"  
+                        name="supplier_cancel" class="oe_highlight"
+                        groups="eproc.group_eproc_user"  status="verify"                               
+                        attrs="{'invisible': [('status','!=', 'draft')]}"/>
+
+                    <button string="Approve" type="workflow"  
+                        name="supplier_approve" class="oe_highlight"
+                        groups="eproc.group_eproc_manager" status="verify"  
+                        attrs="{'invisible': [('status','!=', 'verify')]}"/>
+
+                    <button string="Reject" type="workflow"  
+                        name="supplier_reject" class="oe_highlight"
+                        groups="eproc.group_eproc_manager"  status="verify"               
+                        attrs="{'invisible': [('status','!=', 'verify')]}"/>
+
+                    <button string="Blacklist" type="workflow"  
+                        name="supplier_blacklist" class="oe_highlight" 
+                        groups="eproc.group_eproc_manager" status="active"  
+                        attrs="{'invisible': [('status','!=', 'active')]}"/> 
+
+                    <field name="status" widget="statusbar"/>
+                </header> 
+            </form>
         </field>
-    </record-->    
+    </record>    
     
      <record forcecreate="1" id="seq_type_personal" model="ir.sequence.type">
             <field name="name">Personal</field>
