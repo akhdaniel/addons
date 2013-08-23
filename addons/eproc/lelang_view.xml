@@ -3,53 +3,49 @@
 <data>
     
     <!-- FORM VIEW -->
+
     <record model="ir.ui.view" id="view_eproc_lelang_form">
         <field name="name">eproc.lelang.form</field>
         <field name="model">eproc.lelang</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="eproc.lelang" version="7.0">
-                <header>                              
+                <header>                
+                    <button string="Sorting" type="object" 
+                        states="open" name="action_ikut" 
+                        groups="eproc.group_res_partner"
+                        class="oe_highlight"  />
+
                     <button string="Send for Approval" type="workflow" 
-                        states="draft" name="signal_verify"
-                        res.groups="eproc.group_eproc_user" 
-                        class="oe_highlight" /> 
+                        states="draft" name="signal_verify" 
+                        groups="eproc.group_eproc_user"
+                        class="oe_highlight"  />
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_open"
-                        res.groups="eproc.group_eproc_manager"
+                        groups="eproc.group_eproc_manager"
                         class="oe_highlight"  /> 
 
                     <button string="Reject" type="workflow"  
-                        res.groups="eproc.group_eproc_manager"
+                        groups="eproc.group_eproc_manager"
                         states="verify" name="signal_reject" /> 
 
                     <button string="Cancel" type="workflow"  
-                        res.groups="eproc.group_eproc_manager"
+                        groups="eproc.group_eproc_manager"
                         states="verify" name="signal_cancel" /> 
 
-                    <!--button string="Usulan Pemenang" type="workflow" 
+                    <button string="Propose Winner" type="workflow" 
                         states="open" name="signal_propose_winner" 
                         groups="eproc.group_eproc_user"
-                        class="oe_highlight"/-->
-                                       
-                    <button string="Sorting" type="object" 
-                        states="open" name="action_rangking" 
-                        class="oe_highlight"
-                        res.groups="eproc.group_eproc_user,eproc.group_eproc_manager" />
-                                                              
-                    <button string="Propose Winner" type="workflow" 
-                        states="open" name="action_propose_winner" 
-                        class="oe_highlight"
-                        res.groups="eproc.group_eproc_user,eproc.group_eproc_manager" />
+                        class="oe_highlight"  />
 
                     <button string="Approve Winner and Close" type="workflow"  
-                        res.groups="eproc.group_eproc_manager"
+                        groups="eproc.group_eproc_manager"
                         states="propose_winner" name="signal_done" 
                         class="oe_highlight" /> 
 
                     <button string="Review Winner" type="workflow"  
-                        res.groups="eproc.group_eproc_user,eproc.group_eproc_manager"
+                        groups="eproc.group_eproc_manager"
                         states="propose_winner" name="signal_review_winner" 
                         class="oe_highlight" /> 
 
@@ -58,10 +54,9 @@
                 </header>
 
                 <sheet>
-                    <label for="name" string="Nama Lelang"/>    
                     <h1>
-                        <field name="name"/>
-                    </h1>   
+                        <field name="name" class="oe_inline"/>
+                    </h1>                  
                     <group>
                         <group>
                             <field name="paket" />
@@ -70,8 +65,7 @@
                             <field name="currency" />
                         </group>
                         <group>
-                            <field name="tahap" /> 
-                                     
+                            <field name="tahap" />                                      
                         </group>
                     </group>
 
@@ -92,19 +86,13 @@
                         </page>
 
                         <page string="Syarat Kualifikasi">
-                            <!--group>
-                                <field name="businessType"/>
-                            </group-->
                             <group>
-                                <div>
-                                <label for="subBusinessType" string="Sub Tipe Bisnis"/>
-                                <field name="subBusinessType" view_mode="form" class="oe_inline">
+                                <field name="businessType" />
+                                <field name="subBusinessType" view_mode='form'>
                                     <form>
-                                    <field name="business_type"/>
-                                    <field name="name"/>                                    
+                                    <field name='name'/>
                                     </form>
-                                </field>                              
-                                </div>                                
+                                </field>
                             </group>
                             <field name="syaratKualifikasi" nolabel="1" widget="one2many_list"/>
                         </page>
@@ -168,7 +156,7 @@
                             <field name="pesertaLelang" nolabel="1" widget="one2many_list"/>
                         </page>                        
                         
-                        <page string="Berita Acara Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
+                        <page string="Berita Acara Evaluasi" ><!--groups="EProc.group_eproc_manager,EProc.group_eproc_user"-->
                             <group>
                                 <field name="beritaAcaraEvaluasiNo" />
                                 <field name="beritaAcaraEvaluasiFilename" />
@@ -301,8 +289,8 @@
             <form string="eproc.peserta_lelang" version="7.0">
                 <sheet>
                     <group>
-                        <field name="partner_id" />   
-                        <field name="lelang" />                                            
+                        <field name="lelang" />
+                        <field name="partner_id" domain="[('user_id','=',uid),('status','=','active')]" />                    
                     </group>
                     <group colspan="2">
                         <field name="tanggalDaftar" />
@@ -313,7 +301,7 @@
 
                     <notebook>
                         <page string="Ijin Usaha">
-                            <field name="pesertaLelangIjinUsaha" nolabel="1" widget="one2many_list">    
+                            <field name="pesertaLelangIjinUsaha">    
                                 <tree>
                                     <field name='masterIjinUsaha'/>
                                     <field name="nomor"/>
@@ -332,26 +320,11 @@
                         </page>
 
                         <page string="Dukungan Bank">
-                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list">
-                                <tree>
-                                    <field name="namaBank"/>
-                                    <field name="nomor"/>
-                                    <field name="tanggal"/>
-                                    <field name="nilai"/>
-                                    <field name="bukti"/>
-                                </tree>
-                                <form>
-                                    <field name="namaBank"/>
-                                    <field name="nomor"/>
-                                    <field name="tanggal"/>
-                                    <field name="nilai"/>
-                                    <field name="bukti"/>
-                                </form>
-                            </field>
+                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list"/>
                         </page>
 
                         <page string="Bukti Pajak">
-                            <field name="pesertaLelangBuktiPajak" nolabel="1" widget="one2many_list">
+                            <field name="pesertaLelangBuktiPajak">
                                 <tree>
                                     <field name='masterPajak'/>
                                     <field name="nomor"/>
@@ -441,7 +414,8 @@
                         </page>
 
                         <page string="Detail Penawaran">
-                            <field name="pesertaLelangProduct" nolabel="1" widget="one2many_list"/>     
+                            <field view_mode="tree,form" name="pesertaLelangProduct" nolabel="1" widget="one2many_list"/>  
+                                   
                         </page>
 
                         <page string="Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
@@ -507,8 +481,9 @@
         <field name="arch" type="xml">
             <form string="eproc.peserta_lelang_product">
                 <field name="lelangProduct"/>
+                <field name="jumlah"/>
                 <field name="hargaPenawaran"/>
-                <field name="notes"/>
+               
             </form>
         </field>
     </record>  
@@ -791,8 +766,9 @@
         <field name="arch" type="xml">
             <tree string="eproc.peserta_lelang_product">
                 <field name="lelangProduct"/>
+                <field name="jumlah"/>
                 <field name="hargaPenawaran"/>
-                <field name="notes"/>
+                <field name="subTotal"/>
             </tree>
         </field>
     </record>    
