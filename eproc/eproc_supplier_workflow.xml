@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="wkf_supplier">
+            <field name="name">eproc.supplier</field>
+            <field name="osv">res.partner</field>
+            <field name="on_create">True</field>
+        </record>  
+              
+        <!--nodes-->
+        <record model="workflow.activity" id="act_drafts">
+            <field name="wkf_id" ref="wkf_supplier"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>   
+             
+        <record model="workflow.activity" id="act_verifys">
+            <field name="wkf_id" ref="wkf_supplier"/>
+            <field name="name">verify</field>
+            <field name="kind">function</field>
+            <field name="action">action_verify()</field>
+        </record>
+                
+        <record model="workflow.activity" id="act_rejects">
+            <field name="wkf_id" ref="wkf_supplier"/>
+            <field name="name">reject</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_reject()</field>
+        </record>
+                
+        <record model="workflow.activity" id="act_approves">
+            <field name="wkf_id" ref="wkf_supplier"/>
+            <field name="name">approve</field>
+            <field name="kind">function</field>
+            <field name="action">action_approve()</field>
+        </record>        
+        
+        <record model="workflow.activity" id="act_blacklists">
+            <field name="wkf_id" ref="wkf_supplier"/>
+            <field name="name">blacklist</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_blacklist()</field>
+        </record>
+        
+        <!--
+        Transition
+        -->
+        <record model="workflow.transition" id="ts1">
+            <field name="act_from" ref="act_drafts"/>
+            <field name="act_to" ref="act_verifys"/>
+            <field name="signal">supplier_verify</field>
+        </record>
+        <record model="workflow.transition" id="ts2">
+            <field name="act_from" ref="act_verifys"/>
+            <field name="act_to" ref="act_drafts"/>
+            <field name="signal">supplier_cancel</field>
+        </record>
+        <record model="workflow.transition" id="ts3">
+            <field name="act_from" ref="act_verifys"/>
+            <field name="act_to" ref="act_rejects"/>
+            <field name="signal">supplier_reject</field>
+        </record>        
+        <record model="workflow.transition" id="ts4">
+            <field name="act_from" ref="act_verifys"/>
+            <field name="act_to" ref="act_approves"/>
+            <field name="signal">supplier_approve</field>
+        </record>
+        <record model="workflow.transition" id="ts5">
+            <field name="act_from" ref="act_approves"/>
+            <field name="act_to" ref="act_blacklists"/>
+            <field name="signal">supplier_blacklist</field>
+        </record>
+        
+    </data>
+</openerp>
+
