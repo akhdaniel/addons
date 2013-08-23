@@ -1,0 +1,57 @@
+<openerp>
+    <data>
+                 
+        <record id="hr_training_view_tree" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.tree</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="department_id"/>
+                    <field name="no"/>
+                    <field name="name"/>
+                    <field name="tanggal"/> 
+                    <field name="catatan"/>  
+                    <field name="is_internal"/>     
+                </tree>
+            </field>
+        </record>
+        
+         <record id="hr_training_view_form" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.form</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Training">
+                    <field name="is_internal"/>
+                    <field name="department_id"/>
+                    <group colspan="4">
+                    <field name="no"/>
+                    <field name="name"/>
+                    <field name="penyelenggara" attrs="{'invisible': [('is_internal','=', True)]}"/>
+                    <field name="presentasi" attrs="{'invisible': [('is_internal','=', True)]}"/>
+                    <field name="name" attrs="{'invisible': [('is_internal','=', False)]}"/>
+                    <field name="tanggal"/>
+                    <field name="realisasi"/> 
+                    <field name="catatan"/>                    
+                    </group>             
+                    <notebook colspan="4">
+                          <page string="Karyawan" name="karyawan">
+                            <field view_mode="tree,form" name="employee_ids" nolabel="1">
+                                <tree>
+                                    <field name="employee_id"/>
+                                    <field name="job_id"/>
+                                    <field name="department_id"/>                                 
+                                </tree>
+                                <form>
+                                    <field name="employee_id"/>> 
+                                </form>
+                            </field>
+                        </page>	
+                    </notebook>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
+    
