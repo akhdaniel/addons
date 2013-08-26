@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+
 	<record id="group_hr_manager" model="res.groups">
 		<field name="name">hr / Manager</field>
 	</record>

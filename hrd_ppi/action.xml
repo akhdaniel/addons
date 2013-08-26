@@ -9,7 +9,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-     <record model="ir.actions.act_window" id="action_hr_recrut">
+     <record model="ir.actions.act_window" id="action_hr_recruit">
         <field name="name">Permohonan Rekrutmen</field>
         <field name="res_model">hr.job</field>
         <field name="view_type">form</field>
@@ -18,7 +18,7 @@
     </record>
 
 	<!-- system MENU -->
-    <menuitem action="action_hr_recrut" id="hr_menu_recrut" parent="hr.menu_hr_main" name="Permohonan Recrutment" groups="group_hr_department"/>       
+    <menuitem action="action_hr_recruit" id="hr_menu_recruit" parent="hr.menu_hr_main" name="Permohonan recruitment" groups="group_hr_department"/>       
     <menuitem action="action_hr_training" id="hr_menu_training" parent="hr.menu_hr_main" name="Training"/> 
 </data>
 </openerp>

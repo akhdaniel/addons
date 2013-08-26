@@ -11,13 +11,20 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="arch" type="xml">
+            <!--field name="partner_name" position="after">
+                    <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/>
+                    <button class="oe_inline"
+                        string=" Print Interview"
+                        name="action_print_survey" type="object"
+                        attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft')]}"/>
+            </field-->
             <field name="partner_id" position="before">
                 <field name="tmp_lahir"/>
                 <field name="tgl_lahir"/>
                 <field name="agama"/>
                 <field name="country_id"/>
                 <field name="status"/>
-                <field name="sjk_tanggal"/>
+                <field name="sjk_tanggal"  attrs="{'invisible': [('status','=','Lajang')]}"/>
                 <field name="ktp"/>
                 <field name="dikeluarkan"/>
                 <field name="tgl_keluar_ktp"/>
@@ -155,7 +162,27 @@
                                 </form>
                             </field>                                
                         </page>                       
-                       		                 	                 
+                         <page string="Interview" name="interview" attrs="{'invisible':[('state','!=','open')]}">
+                            <group>
+                            <field name="tgl_int"/>
+                            <field name="kesimpulan"/>
+                            <field name="note"/>
+                            </group>
+                            <page string="Penilaian Interview">
+                            <field view_mode="tree,form" name="nilai_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="hasil"/>
+                                    <field name="note"/>
+                                </tree>
+                                <form>
+                                    <field name="name"/>
+                                    <field name="hasil"/>
+                                    <field name="note"/>
+                                </form>
+                            </field>
+                            </page>
+                        </page> 		                 	                 
                 </notebook> 
             </field>
         </field>

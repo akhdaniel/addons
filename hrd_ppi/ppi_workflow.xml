@@ -47,7 +47,7 @@
         <record model="workflow.transition" id="t3_in_progress">
             <field name="act_from" ref="act_verify"/>
             <field name="act_to" ref="act_in_progress"/>
-            <field name="signal">signal_approve()</field>
+            <field name="signal">signal_approve</field>
         </record>
         
         <record model="workflow.transition" id="t_stop">

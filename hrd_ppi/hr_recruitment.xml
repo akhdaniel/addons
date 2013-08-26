@@ -9,7 +9,7 @@
                 <header>                              
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        res.groups="hr.group_hr_user" 
+                        groups="hr.group_hr_user" 
                         class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
@@ -21,7 +21,7 @@
                         res.groups="hr.group_hr_manager"
                         states="verify" name="signal_cancel" />                                                               
 
-                    <button string="Stop Recrutment" type="workflow"  
+                    <button string="Stop Recruitment" type="workflow"  
                         res.groups="hr.group_hr_manager"
                         states="in_progress" name="signal_stop_recruit" 
                         class="oe_highlight" /> 
@@ -49,10 +49,10 @@
                         <div class="oe_title">
                             <label for="wkt_pemohon"/>
                             <field name="wkt_pemohon" />
-                            <label for="wkt_rekruter"/>
-                            <field name="wkt_rekruter"/>                   
+                            <label for="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>
+                            <field name="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>                   
                         </div>                    
-                    <field name="catatan"/>
+                    <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')]}"/>
                     <field name="pendidikan_id"/>
                     <field view_mode="tree" name="jurusan_ids">
                         <tree editable="bottom">
