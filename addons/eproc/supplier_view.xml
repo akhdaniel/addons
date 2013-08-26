@@ -24,8 +24,8 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form>
+        <field name="arch" type="xml">         
+            <field name="image" position="before">               
                 <header>                            
                     <button string="Verify" type="workflow" 
                         name="supplier_verify" class="oe_highlight"
@@ -53,8 +53,9 @@
                         attrs="{'invisible': [('status','!=', 'active')]}"/> 
 
                     <field name="status" widget="statusbar"/>
+                    
                 </header> 
-            </form>
+            </field>
         </field>
     </record>    
     

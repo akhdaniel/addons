@@ -27,7 +27,7 @@ SUPPLIER_STATES =[('draft','Draft'),
 class res_partner(osv.osv):
     _name = 'res.partner'
     _inherit = 'res.partner'
-
+    
     def action_draft(self,cr,uid,ids,context=None): 
         return self.write(cr,uid,ids,{'status':SUPPLIER_STATES[0][0]},context=context)
 
