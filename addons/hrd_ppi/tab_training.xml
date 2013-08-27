@@ -11,8 +11,8 @@
                 </field>
                     <page string ="HR Settings" position="after">                      
                         <page string="Training" name="training">
-                            <field view_mode="tree,form" name="training_idm" nolabel="1">
-                                <tree>
+                            <field view_mode="tree,form" name="training_ids" nolabel="1">
+                                <tree>                               
                                     <field name="nama"/>
                                     <field name="lama"/>
                                     <field name="instansi"/>
