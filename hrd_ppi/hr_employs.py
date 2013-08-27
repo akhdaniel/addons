@@ -41,10 +41,7 @@ class employee(osv.osv):
         'kodepos':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         }
-        
-    _defaults = {
-        'sjk_tanggal': ('invisible','=',True),
-    }    
+          
     
 employee()
 
