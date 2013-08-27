@@ -12,7 +12,7 @@
                                         <group >
                                         <field name="kelamin"/>
                                         <field name="blood"/>
-                                        <field name="bahasa_id"/>
+                                        <field name="bahasa2_id"/>
                                         <field name='country_id'/>
                                         <field name="bank_account_id"/>
                                         </group>

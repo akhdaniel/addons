@@ -262,7 +262,7 @@ class bahasa(osv.osv):
     _name='hr_recruit.bahasa'
     
     _columns= {
-        'applicant_id':fields.many2one('hr.applicant'),        
+        'applicant_id':fields.many2one('hr.applicant','Applicant'),        
         'name':fields.char('Nama',30,required=True),
         'tulis':fields.selection([('Sedang','Sedang'),('Cukup_Baik','Cukup Baik'),('Baik','Baik'),('Sangat_Baik','Sangat Baik')],'Tertulis'),
         'lisan':fields.selection([('Sedang','Sedang'),('Cukup_Baik','Cukup Baik'),('Baik','Baik'),('Sangat_Baik','Sangat Baik')],'Lisan'),
