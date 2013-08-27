@@ -17,14 +17,14 @@
                                     <field name="lama"/>
                                     <field name="instansi"/>
                                     <field name="tanggal"/>
-                                    <field name="bukti2"/>                                    
+                                                                      
                                 </tree>
                                 <form>
                                     <field name="name"/>
                                     <field name="lama"/>
                                     <field name="instansi"/>
                                     <field name="tanggal"/>
-                                    <field name="bukti2"/>   
+                                    
                                 </form>
                             </field>
                         </page>	
