@@ -25,7 +25,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="type">form</field>
         <field name="arch" type="xml">         
-            <field name="image" position="before">               
+            <!--field name="image" position="before"-->     
+            <sheet position="before">          
                 <header>                            
                     <button string="Verify" type="workflow" 
                         name="supplier_verify" class="oe_highlight"
@@ -55,7 +56,8 @@
                     <field name="status" widget="statusbar"/>
                     
                 </header> 
-            </field>
+            <!--/field-->
+            </sheet>
         </field>
     </record>    
     
