@@ -8,10 +8,10 @@ class training(osv.osv):
         'nama' :fields.char('Judul Pelatihan', 128,required = True,ondelete="cascade"),
         'lama' :fields.char('Lama',25,ondelete='cascade'),
         'instansi' : fields.char('Instansi Penyelenggara',128,ondelete='cascade'),
-        'tanggal': fields.date('Tanggal',),
-        'bukti': fields.binary('Bukti Keikutsertaan',required=True), 
-        'employee_ids':fields.one2many('hr_training.train','training_id','Nama Karyawan'),     
-        'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),   
+        'tanggal': fields.date('Tanggal',ondelete='cascade'),
+        'bukti': fields.binary('Bukti Keikutsertaan',required=True,ondelete='cascade'), 
+        'employee_ids':fields.one2many('hr_training.train','training_id','Nama Karyawan',ondelete='cascade'),  
+        'employee_id' : fields.many2one('hr.employee','Nama Karyawan',ondelete='cascade'),      
     }
     _defaults = {
         #'tahun' : lambda*a : time.strftime('%Y'),
@@ -23,15 +23,14 @@ class train(osv.osv):
     _name = 'hr_training.train'
 
     _columns = {
-        'training_id' :fields.many2one('hr_training.training', 'Nama Training'),
-        'name':fields.char('Judul Pelatihan',60,required=True),
-        'bukti2': fields.binary('Bukti Keikutsertaan',required=True), 
+        'training_id' :fields.many2one('hr_training.training', 'Nama Training',128),
         'instansi' :fields.related('training_id','instansi',type='char',relation='hr_training.training',string='Instansi Penyelenggara'),
         'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),
         'job_id' :fields.related('employee_id','job_id',type='char',relation='hr.job',string='Jabatan'),
         'department_id' : fields.related('employee_id','department_id',type='char',relation='hr.department',string='Departemen'),
         'lama' : fields.related('training_id','lama',type='char',relation='hr_training.training',string='Lama'),
-        'tanggal': fields.related('training_id','date_start',type='date',relation='hr_training.training',string='Tanggal'),        
+        'tanggal': fields.related('training_id','tanggal',type='date',relation='hr_training.training',string='Tanggal'),
+        'bukti': fields.related('training_id','bukti',type='binary',relation='hr_training.training',string='Bukti Keikutsertaan'),
         'analisa_id':fields.many2one('hr_training.analisa'),
             }
     
@@ -43,9 +42,10 @@ class employee(osv.osv):
     _inherit = 'hr.employee'
     _columns ={
         'nik': fields.char('NIK',20),
-        'training_ids':fields.one2many('hr_training.training','employee_id',),
+        'training_ids':fields.one2many('hr_training.train','employee_id','Nama'),
         'training_id': fields.many2one('hr_training.training','Training'),
         'employee_id' :fields.many2one('hr.employee', 'Nama Karyawan',),
+        'training_idm':fields.one2many('hr_training.training','employee_id','Nama'),
         #'employee_ids' : fields.many2many('hr.employee','employee_rel','employee_id','training_id','Nama Karyawan'),
         }
 employee()
