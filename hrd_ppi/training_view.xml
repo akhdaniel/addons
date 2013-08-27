@@ -39,7 +39,7 @@
                           <page string="Karyawan" name="karyawan">
                             <field view_mode="tree,form" name="employee_ids" nolabel="1">
                                 <tree>
-                                    <field name="employee_id"/>
+                                    <field name="employee_id" />
                                     <field name="job_id"/>
                                     <field name="department_id"/>                                 
                                 </tree>
