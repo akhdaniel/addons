@@ -135,11 +135,11 @@ class hr_applicant(osv.osv):
                     prod_ids6.append((0,0, {'name':pr.name,'alamat':pr.alamat,'jabatan':pr.jabatan}))  
                 emp_id = hr_employee.create(cr,uid,{'name': applicant.partner_name or applicant.name,
                                                      'job_id': applicant.job_id.id,
-                                                     'address_home_id': address_id,
                                                      'department_id': applicant.department_id.id,
-                                                     'tmp_lahir' : applicant.tmp_lahir,
-                                                     'tgl_lahir' : applicant.tgl_lahir,
-                                                     'agama' : applicant.agama,
+                                                     'gender':applicant.kelamin,
+                                                     'tmp_lahir_id' : applicant.tmp_lahir_id.id,
+                                                     'birthday' : applicant.tgl_lahir,
+                                                     'agama_id' : applicant.agama_id.id,
                                                      'country_id' : applicant.country_id.id,
                                                      'ktp' : applicant.ktp,
                                                      'dikeluarkan' : applicant.dikeluarkan,
@@ -183,9 +183,10 @@ class hr_applicant(osv.osv):
         return res 
     
     _columns= {
-        'tmp_lahir':fields.char('Tempat Lahir',50),
+        'kelamin':fields.selection([('Male','Male'),('Female','Female')],'Jenis Kelamin'),
+        'tmp_lahir_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir'),
-        'agama':fields.selection([('Islam','Islam'),('Kristen','Kristen'),('Budha','Budha'),('Hindu','Hindu'),('Kepercayaan','Kepercayaan')],'Agama'),
+        'agama_id':fields.many2one('hr_recruit.agama','Agama'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No KTP',20),
         'dikeluarkan':fields.char('Dikeluarkan di',50),
@@ -197,7 +198,7 @@ class hr_applicant(osv.osv):
         'alamat2':fields.text('Alamat 2'),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
-        'status':fields.selection([('Lajang','Lajang'),('Menikah','Menikah'),('Bercerai','Bercerai')],'Status Pernikahan'),
+        'status':fields.selection([('Single','Single'),('Menikah','Menikah'),('Bercerai','Bercerai')],'Status Pernikahan'),
         'sjk_tanggal':fields.date('Sejak Tanggal'),  
         'survey_id': fields.many2one('survey', 'Interview Form', help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),      
         'susunan_kel1_ids':fields.one2many('hr_recruit.suskel1','applicant_id','Susunan Keluarga'),
@@ -311,10 +312,26 @@ class nilai_interview(osv.osv):
     _columns={
         'applicant_id':fields.many2one('hr.applicant'),
         'name':fields.char('Aspek yang Dinilai',100),
-        'hasil':fields.selection([('Kurang_Sekali','Kurang_Sekali'),('Kurang','Kurang'),('Sedang','Sedang'),('Baik','Baik'),('Baik_Sekali','Baik Sekali')],'Hasil Penilaian'),
+        'hasil':fields.selection([('Kurang_Sekali','Kurang Sekali'),('Kurang','Kurang'),('Sedang','Sedang'),('Baik','Baik'),('Baik_Sekali','Baik Sekali')],'Hasil Penilaian'),
         'note':fields.text('Komentar/Catatan'),
             }
 nilai_interview()
+
+class kota(osv.osv):
+    _name='hr_recruit.kota'
+    
+    _columns={
+        'name':fields.char('Nama Kota',50),
+        }
+kota()
+
+class agama(osv.osv):
+    _name='hr_recruit.agama'
+        
+    _columns={
+        'name':fields.char('Agama',12),
+        }
+agama()                    
 
 
 

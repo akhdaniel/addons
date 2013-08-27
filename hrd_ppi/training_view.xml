@@ -30,7 +30,7 @@
                     <field name="name"/>
                     <field name="penyelenggara" attrs="{'invisible': [('is_internal','=', True)]}"/>
                     <field name="presentasi" attrs="{'invisible': [('is_internal','=', True)]}"/>
-                    <field name="name" attrs="{'invisible': [('is_internal','=', False)]}"/>
+                    <field name="nama" attrs="{'invisible': [('is_internal','=', False)]}"/>
                     <field name="tanggal"/>
                     <field name="realisasi"/> 
                     <field name="catatan"/>                    

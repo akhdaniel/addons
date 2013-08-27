@@ -19,12 +19,13 @@
                         attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft')]}"/>
             </field-->
             <field name="partner_id" position="before">
-                <field name="tmp_lahir"/>
+                <field name="kelamin"/>
+                <field name="tmp_lahir_id"/>
                 <field name="tgl_lahir"/>
-                <field name="agama"/>
+                <field name="agama_id"/>
                 <field name="country_id"/>
                 <field name="status"/>
-                <field name="sjk_tanggal"  attrs="{'invisible': [('status','=','Lajang')]}"/>
+                <field name="sjk_tanggal"  attrs="{'invisible': [('status','=','Single')]}"/>
                 <field name="ktp"/>
                 <field name="dikeluarkan"/>
                 <field name="tgl_keluar_ktp"/>
