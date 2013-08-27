@@ -11,27 +11,33 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="arch" type="xml">
-            <!--field name="partner_name" position="after">
-                    <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/>
-                    <button class="oe_inline"
-                        string=" Print Interview"
-                        name="action_print_survey" type="object"
-                        attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft')]}"/>
-            </field-->
+            <!--header>
+                <button name="case_close_with_emp" string="Create Employee" type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|', ('emp_id','!=',False), ('state','=','cancel')]}"/>
+                <button name="case_cancel" string="Refuses" type="object"
+                        states="draft,open,pending" class="oe_highlight"/>
+                <field name="stage_id" widget="statusbar" clickable="True"/>
+                <field name="emp_id" invisible="1"/>
+            </header-->
             <field name="partner_id" position="before">
+                <field name='tanggal'/>
+                <field name='usia'/>
                 <field name="kelamin"/>
-                <field name="tmp_lahir_id"/>
+                <field name="tmp_lahir"/>
                 <field name="tgl_lahir"/>
-                <field name="agama_id"/>
+                <field name="agama"/>
                 <field name="country_id"/>
                 <field name="status"/>
-                <field name="sjk_tanggal"  attrs="{'invisible': [('status','=','Single')]}"/>
+                <field name="sjk_tanggal"/>
                 <field name="ktp"/>
                 <field name="dikeluarkan"/>
                 <field name="tgl_keluar_ktp"/>
-                <field name="tgl_berlaku"/>
+                <!--field name="tgl_berlaku"/-->
                 <field name="sim"/>
-                <field name="tgl_keluar_sim"/>              
+                <field name="tgl_keluar_sim"/> 
+                  
+                <field name="pengalaman" placeholder="berapa tahun"/>           
             </field>
             <field name="user_id" position="before">
                 <field name="alamat1" placeholder="Alamat di Jakarta"/>
@@ -163,27 +169,16 @@
                                 </form>
                             </field>                                
                         </page>                       
-                         <page string="Interview" name="interview" attrs="{'invisible':[('state','!=','open')]}">
-                            <group>
-                            <field name="tgl_int"/>
-                            <field name="kesimpulan"/>
-                            <field name="note"/>
-                            </group>
-                            <page string="Penilaian Interview">
-                            <field view_mode="tree,form" name="nilai_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="hasil"/>
-                                    <field name="note"/>
+                       	<page string="Keahlian" name="keahlian" >
+                            <field view_mode="tree,form" name="keahlian_ids" nolabel="1">
+                                <tree>
+                                    <field name='name'/>
                                 </tree>
                                 <form>
-                                    <field name="name"/>
-                                    <field name="hasil"/>
-                                    <field name="note"/>
+                                    <field name='name'/>
                                 </form>
-                            </field>
-                            </page>
-                        </page> 		                 	                 
+                            </field>                                
+                        </page>    	                 	                 
                 </notebook> 
             </field>
         </field>

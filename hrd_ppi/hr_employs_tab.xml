@@ -6,56 +6,31 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-                   <page string="Personal Information" position="replace">                    
-                         <page string="Personal Information" groups="base.group_hr_user">
-                                    <group string="Citizenship &amp; Other Info">
-                                        <group >
-                                        <field name="kelamin"/>
-                                        <field name="blood"/>
-                                        <field name="bahasa_id"/>
-                                        <field name='country_id'/>
-                                        <field name="bank_account_id"/>
-                                        </group>
-                                        <group string="ID Card">
-                                        <field name="jenis_id"/>
-
-                                        <field name='ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                        <field name='dikeluarkan' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                        <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
-                                        <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                        <!--field name='sim'/-->
-                                        <!--field name='tgl_keluar_sim' attrs="{'invisible':['|',('jenis_id','=','KTP'),('jenis_id','=','Rek.Bank'),('jenis_id','=','Passport')]}"/-->         
-                                        <field name="no_pass" attrs="{'invisible':[('jenis_id','!=','Passport')]}"/>
-                                        <field name="no_rek" attrs="{'invisible':[('jenis_id','!=','Rek.Bank')]}"/> 
-                                        <!--field name="no_sim" attrs="{'invisible':['|',('jenis_id','=','KTP'),('jenis_id','=','Rek.Bank'),('jenis_id','=','Passport')]}"/-->                 
-                                        </group> 
-                                    </group>
-                                    <group>
-                                    <group string="Contact Information">
-                                        <field name='alamat1' placeholder="Alamat di Jakarta"/>
-                                        <field name="kota_id" placeholder="Kota di Jakarta"/>
-                                        <field name="kodepos" placeholder="Kode Pos di Jakarta"/>
-                                        <field name='telp1' placeholder="Telp. di Jakarta"/>
-                                        <field name='alamat2' placeholder="Alamat Luar Jakarta"/>
-                                        <field name="kota_id" placeholder="Kota di Luar Jakarta"/>
-                                        <field name="kodepos" placeholder="Zip"/>                         
-                                        <field name='telp2' placeholder="Telp. di Luar Jakarta"/>
-                                        <field name="country_id2"/>
-                                        <field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' placeholder="From Employee"/>
-                                    </group>
-                                    <group>
-                                    <group string="Status">
-                                        <field name='agama'/>
-                                        <field name='marital'/>
-                                        <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
-                                        
-                                    </group>
-                                    <group string="Birth">
-                                        <field name='birthday'/>
-                                    </group>
-                                    </group>
-                                    </group>
-                                </page>         
+                    <page string ="Public Information" position="after">                   
+                        <page string="Information Employee"> 
+                            <group colspan="2">
+                            <field name='kelamin'/>
+                            <field name='tmp_lahir'/>
+                            <field name='tgl_lahir'/>
+                            <field name='agama'/>
+                            <field name='country_id'/>
+                            <field name='ktp'/>
+                            <field name='dikeluarkan'/>
+                            <field name='tgl_keluar_ktp'/>
+                            <field name='tgl_berlaku'/>
+                            </group>
+                            <group colspan="2">
+                            <field name='sim'/>
+                            <field name='tgl_keluar_sim'/>
+                            <field name='alamat1'/>
+                            <field name='telp1'/>
+                            <field name='alamat2'/>                           
+                            <field name='telp2'/>
+                            <field name='status'/>
+                            <field name='sjk_tanggal'/>   
+                            <field name="pengalaman" placeholder="berapa tahun"/>
+                            </group> 
+                        </page>          
                     </page>
                     <page string ="HR Settings" position="after">                   
                                 <page string="Susunan Keluarga Istri/Suami" name="Susunan Keluarga Istri/Suami">

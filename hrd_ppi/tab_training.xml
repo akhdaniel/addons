@@ -11,20 +11,20 @@
                 </field>
                     <page string ="HR Settings" position="after">                      
                         <page string="Training" name="training">
-                            <field view_mode="tree,form" name="training_ids" nolabel="1">
-                                <tree>                               
-                                    <field name="name"/>
+                            <field view_mode="tree,form" name="training_idm" nolabel="1">
+                                <tree>
+                                    <field name="nama"/>
                                     <field name="lama"/>
                                     <field name="instansi"/>
                                     <field name="tanggal"/>
-                                                                      
+                                    <field name="bukti"/>                                    
                                 </tree>
                                 <form>
-                                    <field name="name"/>
+                                    <field name="nama"/>
                                     <field name="lama"/>
                                     <field name="instansi"/>
                                     <field name="tanggal"/>
-                                    
+                                    <field name="bukti"/>   
                                 </form>
                             </field>
                         </page>	
