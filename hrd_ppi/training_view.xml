@@ -39,22 +39,12 @@
                           <page string="Karyawan" name="karyawan">
                             <field view_mode="tree,form" name="employee_ids" nolabel="1">
                                 <tree>
-                                    <field name="employee_id"/>
+                                    <field name="employee_id" />
                                     <field name="job_id"/>
                                     <field name="department_id"/>                                 
                                 </tree>
                                 <form>
                                     <field name="employee_id"/>
-                                    <field name='bukti'/>
-                                    <fiels name='training_id'/> 
-                                    <fiels name='instansi' />
-                                    <fiels name='employee_id'/> 
-                                    <fiels name='job_id' />
-                                    <fiels name='department_id'/> 
-                                    <fiels name='lama' />
-                                    <fiels name='tanggal'/>
-                                    <fiels name='bukti'/>
-                                    <fiels name='analisa_id'/>
                                 </form>
                             </field>
                         </page>	
