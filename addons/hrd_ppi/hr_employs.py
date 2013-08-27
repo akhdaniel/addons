@@ -33,7 +33,7 @@ class employee(osv.osv):
         'rwt_krj_ids':fields.one2many('hr_employee.rwt_krj','employee_id','Rwayat Pekerjaan'),
         'koneksi1_ids':fields.one2many('hr_employee.kon1','employee_id','Koneksi Internal'),
         'koneksi2_ids':fields.one2many('hr_employee.kon2','employee_id','Koneksi Eksternal'),
-        
+        'ss':fields.char('ww'),
         'blood':fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
         'bahasa_id':fields.many2one('hr_recruit.bahasa','Bahasa'),
         'kota_id':fields.many2one('hr_recruit.kota','Kota'),
@@ -41,8 +41,8 @@ class employee(osv.osv):
         'kodepos':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         }
-          
-    
+        
+
 employee()
 
 class susunan_keluarga1(osv.osv):

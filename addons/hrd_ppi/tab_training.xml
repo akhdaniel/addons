@@ -13,18 +13,18 @@
                         <page string="Training" name="training">
                             <field view_mode="tree,form" name="training_ids" nolabel="1">
                                 <tree>                               
-                                    <field name="nama"/>
+                                    <field name="name"/>
                                     <field name="lama"/>
                                     <field name="instansi"/>
                                     <field name="tanggal"/>
-                                    <field name="bukti"/>                                    
+                                    <field name="bukti2"/>                                    
                                 </tree>
                                 <form>
-                                    <field name="nama"/>
+                                    <field name="name"/>
                                     <field name="lama"/>
                                     <field name="instansi"/>
                                     <field name="tanggal"/>
-                                    <field name="bukti"/>   
+                                    <field name="bukti2"/>   
                                 </form>
                             </field>
                         </page>	
