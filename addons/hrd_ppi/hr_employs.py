@@ -5,11 +5,15 @@ class employee(osv.osv):
     _inherit = 'hr.employee'
     
     _columns = {
-        'tmp_lahir':fields.char('Tempat Lahir',50),
-        'tgl_lahir':fields.date('Tanggal Lahir'),
-        'agama':fields.selection([('Islam','Islam'),('Kristen','Kristen'),('Budha','Budha'),('Hindu','Hindu'),('Kepercayaan','Kepercayaan')],'Agama'),
+        'kelamin':fields.selection([('Male','Male'),('Female','Female')],'Jenis Kelamin'),
+        'tmp_lahir':fields.many2one('hr_recruit.kota','Tempat Lahir'),
+        'agama':fields.many2one('hr_recruit.agama','Agama'),
+        'birthday':fields.date('Tanggal Lahirku'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No KTP',20),
+        'no_pass':fields.char('No Passport',30),
+        'no_rek':fields.char('No. Rekening',20),
+        'no_sim':fields.char('No. SIM',30),
         'dikeluarkan':fields.char('Dikeluarkan di',50),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
@@ -19,7 +23,7 @@ class employee(osv.osv):
         'alamat2':fields.text('Alamat 2'),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
-        'status':fields.selection([('Lajang','Lajang'),('Menikah','Menikah'),('Bercerai','Bercerai')],'Status Pernikahan'),
+        'status':fields.selection([('Single','Menikah'),('Menikah','Menikah'),('Cerai','Cerai')],'Status Pernikahan'),
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
         'susunan_kel1_ids':fields.one2many('hr_employee.suskel1','employee_id','Susunan Keluarga'),
@@ -29,7 +33,19 @@ class employee(osv.osv):
         'rwt_krj_ids':fields.one2many('hr_employee.rwt_krj','employee_id','Rwayat Pekerjaan'),
         'koneksi1_ids':fields.one2many('hr_employee.kon1','employee_id','Koneksi Internal'),
         'koneksi2_ids':fields.one2many('hr_employee.kon2','employee_id','Koneksi Eksternal'),
+        
+        'blood':fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
+        'bahasa_id':fields.many2one('hr_recruit.bahasa','Bahasa'),
+        'kota_id':fields.many2one('hr_recruit.kota','Kota'),
+        'country_id2': fields.many2one('res.country', 'Negara'),
+        'kodepos':fields.char('Kode Pos',8),
+        'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         }
+        
+    _defaults = {
+        'sjk_tanggal': ('invisible','=',True),
+    }    
+    
 employee()
 
 class susunan_keluarga1(osv.osv):
@@ -39,7 +55,7 @@ class susunan_keluarga1(osv.osv):
         'employee_id':fields.many2one('hr.employee'),
         'name':fields.char('Nama',required=True),
         'jenis_kel':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
-        'tmp_lahir':fields.char('Tempat Lahir',50),
+        'tmp_lahir':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir'),
         'pendidikan':fields.char('Pendidikan',50),
         'pekerjaan':fields.char('Pekerjaan',60),
@@ -54,7 +70,7 @@ class susunan_keluarga2(osv.osv):
         'susunan':fields.selection([('Ayah','Ayah'),('Ibu','Ibu'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Nama Susunan Keluarga'),
         'name':fields.char('Nama',required=True),
         'jenis_kel':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
-        'tmp_lahir':fields.char('Tempat Lahir',50),
+        'tmp_lahir':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir'),
         'pendidikan':fields.char('Pendidikan',50),
         'pekerjaan':fields.char('Pekerjaan',60),
