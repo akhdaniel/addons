@@ -51,12 +51,11 @@
                                     <group string="Status">
                                         <field name='agama'/>
                                         <field name='marital'/>
-                                        <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
-                                        
-                                    </group>
+                                        <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/>                                                                           
                                     <group string="Birth">
                                         <field name='birthday'/>
                                         <field name="kota_id"/>
+									</group>	
                                     </group>
                                     </group>
                                     </group>
