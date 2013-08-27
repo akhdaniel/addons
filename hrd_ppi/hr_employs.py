@@ -14,11 +14,15 @@ class employee(osv.osv):
         'no_pass':fields.char('No Passport',30),
         'no_rek':fields.char('No. Rekening',20),
         'no_sim':fields.char('No. SIM',30),
+        'no_sima':fields.char('No. SIM A',30),
+        'no_simc':fields.char('No. SIM C',30),
         'dikeluarkan':fields.char('Dikeluarkan di',50),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
-        'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan'),
+        'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan SIM'),
+        'tgl_keluar_sima':fields.date('Tanggal Dikeluarkan SIM A'),
+        'tgl_keluar_simc':fields.date('Tanggal Dikeluarkan SIM C'),
         'alamat1':fields.text('Alamat 1'),
         'alamat2':fields.text('Alamat 2'),
         'telp1':fields.char('Telepon',50),
@@ -33,7 +37,6 @@ class employee(osv.osv):
         'rwt_krj_ids':fields.one2many('hr_employee.rwt_krj','employee_id','Rwayat Pekerjaan'),
         'koneksi1_ids':fields.one2many('hr_employee.kon1','employee_id','Koneksi Internal'),
         'koneksi2_ids':fields.one2many('hr_employee.kon2','employee_id','Koneksi Eksternal'),
-        'ss':fields.char('ww'),
         'blood':fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
         'bahasa_id':fields.many2one('hr_recruit.bahasa','Bahasa'),
         'kota_id':fields.many2one('hr_recruit.kota','Kota'),
@@ -133,6 +136,7 @@ class koneksi2(osv.osv):
         'jabatan':fields.char('Jabatan',30),
             }
 koneksi2()
+
 
 
 
