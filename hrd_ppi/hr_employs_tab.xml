@@ -24,10 +24,14 @@
                                         <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
                                         <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
                                         <!--field name='sim'/-->
-                                        <field name='tgl_keluar_sim' attrs="{'invisible':['|',('jenis_id','=','KTP'),('jenis_id','=','Rek.Bank'),('jenis_id','=','Passport')]}"/>         
+                                        <field name='tgl_keluar_sim' attrs="{'invisible':[('jenis_id','!=','SIM')]}"/>  
+                                        <field name='tgl_keluar_sima' attrs="{'invisible':[('jenis_id','!=','SIM_A')]}"/> 
+                                        <field name='tgl_keluar_simc' attrs="{'invisible':[('jenis_id','!=','SIM_C')]}"/>        
                                         <field name="no_pass" attrs="{'invisible':[('jenis_id','!=','Passport')]}"/>
                                         <field name="no_rek" attrs="{'invisible':[('jenis_id','!=','Rek.Bank')]}"/> 
-                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','=','KTP'),('jenis_id','=','Rek.Bank'),('jenis_id','=','Passport')]}"/>                 
+                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
+                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
+                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/>          
                                         </group> 
                                     </group>
                                     <group>
@@ -52,6 +56,7 @@
                                     </group>
                                     <group string="Birth">
                                         <field name='birthday'/>
+                                        <field name="kota_id"/>
                                     </group>
                                     </group>
                                     </group>
