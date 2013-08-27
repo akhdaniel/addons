@@ -138,7 +138,7 @@ class koneksi2(osv.osv):
 koneksi2()
 
 class bahasa2(osv.osv):
-    _name='hr_employee.bahasa2'
+    _name='hr_recruit.bahasa2'
     
     _columns= {       
         'name':fields.char('Nama Bahasa',30,required=True),
