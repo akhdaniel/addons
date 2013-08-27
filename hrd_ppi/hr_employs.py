@@ -38,7 +38,7 @@ class employee(osv.osv):
         'koneksi1_ids':fields.one2many('hr_employee.kon1','employee_id','Koneksi Internal'),
         'koneksi2_ids':fields.one2many('hr_employee.kon2','employee_id','Koneksi Eksternal'),
         'blood':fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
-        'bahasa_id':fields.many2one('hr_recruit.bahasa','Bahasa'),
+        'bahasa2_id':fields.many2one('hr_recruit.bahasa2','Bahasa'),
         'kota_id':fields.many2one('hr_recruit.kota','Kota'),
         'country_id2': fields.many2one('res.country', 'Negara'),
         'kodepos':fields.char('Kode Pos',8),
