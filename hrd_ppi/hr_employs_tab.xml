@@ -6,36 +6,59 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-                   <page string="Personal Information" position="replace">                    
-                         <page string="Personal Information" groups="base.group_hr_user">
-                                    <group string="Citizenship &amp; Other Info">
-                                        <group >
-                                        <field name="kelamin"/>
-                                        <field name="blood"/>
-                                        <field name="bahasa2_id"/>
-                                        <field name='country_id'/>
-                                        <field name="bank_account_id"/>
-                                        </group>
-                                        <group string="ID Card">
-                                        <field name="jenis_id"/>
-
-                                        <field name='ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                        <field name='dikeluarkan' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                        <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
-                                        <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                        <!--field name='sim'/-->
-                                        <field name='tgl_keluar_sim' attrs="{'invisible':[('jenis_id','!=','SIM')]}"/>  
-                                        <field name='tgl_keluar_sima' attrs="{'invisible':[('jenis_id','!=','SIM_A')]}"/> 
-                                        <field name='tgl_keluar_simc' attrs="{'invisible':[('jenis_id','!=','SIM_C')]}"/>        
-                                        <field name="no_pass" attrs="{'invisible':[('jenis_id','!=','Passport')]}"/>
-                                        <field name="no_rek" attrs="{'invisible':[('jenis_id','!=','Rek.Bank')]}"/> 
-                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
-                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
-                                        <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/>          
-                                        </group> 
+                <page string="Public Information" position="replace"> 
+                    <page string="Job &amp; Public Information">
+                                <group>
+                                    <group string="Contact Information">
+                                        <field name="address_id" on_change="onchange_address_id(address_id)" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}'/>
+                                        <field name="work_email" widget="email"/>
+                                        <field name="work_phone"/>
+                                        <field name="mobile_phone"/>
+                                        <field name="work_location"/>
+                                        <field name="parent_id"/>
+                                        <field name="coach_id"/>
+                                    </group>
+                                    <group string="Position">
+                                        <field name="clas_id"/>
+                                        <field name="department_id" on_change="onchange_department_id(department_id)"/>
+                                        <field name="title_id"/>
+                                        <field name="extitle_id"/>
+                                        <field name="gol_id"/>
+                                        <field name="job_id" options='{"no_open": True}' domain="[('state','!=','old')]" context="{'form_view_ref': 'hr.view_hr_job_employee_form'}"/>
+                                        <field name="wfield_id"/>
+                                        <field name="pansion_id"/>
+                                        
                                     </group>
                                     <group>
+                                        <field name="company_id" groups="base.group_multi_company" on_change="onchange_company(company_id)"/>
+                                        <field name="user_id" on_change="onchange_user(user_id)" string="Related User"/>
+                                    </group>
+                                </group>
+                                <field name="notes" placeholder="Other Information ..." colspan="4"/>
+                            </page>
+                       </page>     
+                   <page string="Personal Information" position="replace">                    
+                         <page string="Personal Information" groups="base.group_hr_user">
+                               <group>
+                                    <group string="Citizenship &amp; Other Info">
+                                        <group >
+                                            <field name="kelamin"/>
+                                            <field name="blood"/>
+                                            <field name="bahasa2_id"/>
+                                            <field name='country_id'/>
+                                            <field name="bank_account_id"/>
+                                        </group>
+                                    </group>
+                                    <group string="Education">
+                                        <field name="type_id"/>
+                                        <field name="jurusan_id"/>
+                                        <field name="result_id"/>
+                                        <field name="gelar_id"/>
+                                     </group>
+                               </group> 
+                                <group>
                                     <group string="Contact Information">
+                                    <group>
                                         <field name='alamat1' placeholder="Alamat di Jakarta"/>
                                         <field name="kota_id" placeholder="Kota di Jakarta"/>
                                         <field name="kodepos" placeholder="Kode Pos di Jakarta"/>
@@ -46,20 +69,35 @@
                                         <field name='telp2' placeholder="Telp. di Luar Jakarta"/>
                                         <field name="country_id2"/>
                                         <field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' placeholder="From Employee"/>
+                                    </group>    
                                     </group>
                                     <group>
-                                    <group string="Status">
-                                        <field name='agama'/>
-                                        <field name='marital'/>
-                                        <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/>                                                                           
-                                    <group string="Birth">
-                                        <field name='birthday'/>
-                                        <field name="kota_id"/>
-									</group>	
+                                        <group string="ID Card &amp; Status &amp; Birth">
+                                            <field name="jenis_id"/>
+                                            <field name='ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
+                                            <field name='dikeluarkan' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
+                                            <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
+                                            <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
+                                            <!--field name='sim'/-->
+                                            <field name='tgl_keluar_sim' attrs="{'invisible':[('jenis_id','!=','SIM')]}"/>  
+                                            <field name='tgl_keluar_sima' attrs="{'invisible':[('jenis_id','!=','SIM_A')]}"/> 
+                                            <field name='tgl_keluar_simc' attrs="{'invisible':[('jenis_id','!=','SIM_C')]}"/>        
+                                            <field name="no_pass" attrs="{'invisible':[('jenis_id','!=','Passport')]}"/>
+                                            <field name="no_rek" attrs="{'invisible':[('jenis_id','!=','Rek.Bank')]}"/> 
+                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
+                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
+                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/> 
+                                            <field name="issued_by_id"/>                                
+                                            <field name='agama'/>
+                                            <field name='marital'/>
+                                            <field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/>
+                                            <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
+                                            <field name='birthday'/>
+                                            <field name="kota_id"/>                                           
+                                    </group>                              
                                     </group>
                                     </group>
-                                    </group>
-                                </page>         
+                          </page>         
                     </page>
                     <page string ="HR Settings" position="after">                   
                                 <page string="Susunan Keluarga Istri/Suami" name="Susunan Keluarga Istri/Suami">
@@ -67,7 +105,7 @@
                                         <tree>
                                             <field name="name"/>
                                             <field name="jenis_kel"/>
-                                            <field name="tmp_lahir"/>
+                                            <field name="kota_id"/>
                                             <field name='tgl_lahir'/>
                                             <field name='pendidikan'/>
                                             <field name='pekerjaan'/>
@@ -75,7 +113,7 @@
                                         <form>
                                             <field name="name"/>
                                             <field name="jenis_kel"/>
-                                            <field name="tmp_lahir"/>
+                                            <field name="kota_id"/>
                                             <field name='tgl_lahir'/>
                                             <field name='pendidikan'/>
                                             <field name='pekerjaan'/>
@@ -90,7 +128,7 @@
                                             <field name='susunan'/>
                                             <field name="name"/>
                                             <field name="jenis_kel"/>
-                                            <field name="tmp_lahir"/>
+                                            <field name="kota_id"/>
                                             <field name='tgl_lahir'/>
                                             <field name='pendidikan'/>
                                             <field name='pekerjaan'/>
@@ -99,7 +137,7 @@
                                             <field name='susunan'/>
                                             <field name="name"/>
                                             <field name="jenis_kel"/>
-                                            <field name="tmp_lahir"/>
+                                            <field name="kota_id"/>
                                             <field name='tgl_lahir'/>
                                             <field name='pendidikan'/>
                                             <field name='pekerjaan'/>

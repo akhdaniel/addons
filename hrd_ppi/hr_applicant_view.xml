@@ -12,16 +12,20 @@
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="arch" type="xml">
             <!--field name="partner_name" position="after">
-                    <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/>
-                    <button class="oe_inline"
-                        string=" Print Interview"
-                        name="action_print_survey" type="object"
-                        attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft')]}"/>
-            </field-->
+                    <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/-->
+          <header>          <button
+                        string="Filter Applicant"
+                        name="coco" type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':[('state','!=','draft')]}"/>
+                        
+                        <button string="Test" name="interview" type="object" class="oe_highlight"/>
+            </header>
             <field name="partner_id" position="before">
                 <field name="kelamin"/>
-                <field name="tmp_lahir_id"/>
+                <field name="kota_id"/>
                 <field name="tgl_lahir"/>
+                <field name="age"/>
                 <field name="agama_id"/>
                 <field name="country_id"/>
                 <field name="status"/>
@@ -31,7 +35,11 @@
                 <field name="tgl_keluar_ktp"/>
                 <field name="tgl_berlaku"/>
                 <field name="sim"/>
-                <field name="tgl_keluar_sim"/>              
+                <field name="tgl_keluar_sim"/>                         
+            </field>
+            <field name="type_id" position="after" >
+                <field name="jurusan_id"/> 
+                <field name="result_id"/>   
             </field>
             <field name="user_id" position="before">
                 <field name="alamat1" placeholder="Alamat di Jakarta"/>
@@ -41,12 +49,12 @@
             </field>
             <field name="description" position="after">
                 <notebook colspan="4">                      
-                        <page string="Susunan Keluarga Istri/Suami" name="istri/suami">
+                        <page string="Susunan Keluarga Istri/Suami" name="istri/suami" attrs="{'invisible':[('status','=','Single')]}">
                             <field view_mode="tree,form" name="susunan_kel1_ids" nolabel="1">
                                 <tree>
                                     <field name="name"/>
                                     <field name="jenis_kel"/>
-                                    <field name="tmp_lahir"/>
+                                    <field name="kota_id"/>
                                     <field name="tgl_lahir"/>
                                     <field name="pendidikan"/>
                                     <field name="pekerjaan"/>
@@ -54,7 +62,7 @@
                                 <form>
                                     <field name="name"/>
                                     <field name="jenis_kel"/>
-                                    <field name="tmp_lahir"/>
+                                    <field name="kota_id"/>
                                     <field name="tgl_lahir"/>
                                     <field name="pendidikan"/>
                                     <field name="pekerjaan"/>
@@ -67,7 +75,7 @@
                                     <field name="susunan"/>
                                     <field name="name"/>
                                     <field name="jenis_kel"/>
-                                    <field name="tmp_lahir"/>
+                                    <field name="kota_id"/>
                                     <field name="tgl_lahir"/>
                                     <field name="pendidikan"/>
                                     <field name="pekerjaan"/>
@@ -76,7 +84,7 @@
                                     <field name="susunan"/>
                                     <field name="name"/>
                                     <field name="jenis_kel"/>
-                                    <field name="tmp_lahir"/>
+                                    <field name="kota_id"/>
                                     <field name="tgl_lahir"/>
                                     <field name="pendidikan"/>
                                     <field name="pekerjaan"/>
@@ -164,25 +172,38 @@
                             </field>                                
                         </page>                       
                          <page string="Interview" name="interview" attrs="{'invisible':[('state','!=','open')]}">
-                            <group>
-                            <field name="tgl_int"/>
-                            <field name="kesimpulan"/>
-                            <field name="note"/>
-                            </group>
-                            <page string="Penilaian Interview">
-                            <field view_mode="tree,form" name="nilai_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="hasil"/>
-                                    <field name="note"/>
+                            <field view_mode="tree,form" name="interview_ids" nolabel="1">
+                                <tree>
+                                    <field name="tgl_int"/>
+                                    <field name="stage_id"/>
+                                    <field name="nilai_interview_ids"/>
+                                    <field name="kesimpulan"/>
                                 </tree>
                                 <form>
-                                    <field name="name"/>
-                                    <field name="hasil"/>
-                                    <field name="note"/>
+                                     
+                                    <group>
+                                    <field name="tgl_int"/>                                   
+                                    <field name="kesimpulan"/>
+                                    </group>
+                                    <field name="note"/>                                    
+                                    <notebook colspan="4">
+                                        <page string="Start Interview" name="interview">
+                                            <field view_mode="tree,form" name="nilai_interview_ids" nolabel="1">
+                                            <tree>
+                                                <field name="name"/>
+                                                <field name="hasil"/>
+                                                <field name="note2"/>
+                                            </tree>
+                                            <form>
+                                                <field name="name"/>
+                                                <field name="hasil"/>
+                                                <field name="note2"/>
+                                            </form>
+                                            </field>
+                                        </page>   
+                                    </notebook> 
                                 </form>
                             </field>
-                            </page>
                         </page> 		                 	                 
                 </notebook> 
             </field>

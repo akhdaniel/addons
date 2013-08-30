@@ -9,20 +9,20 @@
                 <header>                              
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        groups="hr.group_hr_user" 
+                        groups="hr_PPI.group_hr_user" 
                         class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        res.groups="hr.group_hr_manager"
+                        groups="hr_PPI.group_hr_manager"
                         class="oe_highlight"  />  
 
                     <button string="Cancel" type="workflow"  
-                        res.groups="hr.group_hr_manager"
-                        states="verify" name="signal_cancel" />                                                               
+                        groups="hr_PPI.group_hr_manager"
+                        states="verify" name="signal_cancel"/>                                                             
 
                     <button string="Stop Recruitment" type="workflow"  
-                        res.groups="hr.group_hr_manager"
+                        groups="hr_PPI.group_hr_manager"
                         states="in_progress" name="signal_stop_recruit" 
                         class="oe_highlight" /> 
 
