@@ -59,24 +59,16 @@ class eproc_lelang(osv.osv):
     def action_done(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':LELANG_STATES[5][0]},context=context)
 
-    def action_ikut(self,cr,uid,ids,vals,context=None): 
-        import pdb;pdb.set_trace()
-        pes=self.browse(cr,uid,ids)[0]
-        coy=pes.name
-        le=self.pool.get('eproc.peserta_lelang')
-        lel=le.search(cr,uid,[('name','=',coy)])
-        lele=le.browse(cr,uid,lel,context=context)
-        #sorting=sorted(lele)
-        penawaran=[]
-        for pen in lele: 
-            penawaran.append((0,0,{'partner_id':pen.partner_id.id,'evaluasiBiayaHargaPenawaran':pen.evaluasiBiayaHargaPenawaran}))
-            #vals=pena  
-            #pen=pen.evaluasiBiayaHargaPenawaran    
-        tam=sorted(penawaran)
-        #ta=tam[0]      
-        vals['pesertaLelang']=tam
-        #vals['state']=LELANG_STATES[4][0]
-        return vals#super(eproc_lelang,self).write(cr,uid,ids,vals,context=None)
+    def action_order(self,cr,uid,ids,vals,context=None): 
+        data = self.browse(cr,uid,ids)[0]
+        lelang_obj = self.pool.get('eproc.peserta_lelang')
+        winid = False; price=data.nilaiHps
+        for x in data.pesertaLelang:
+            if x.evaluasiBiayaHargaPenawaran < price:
+                winid = x.id
+                price = x.evaluasiBiayaHargaPenawaran
+        lelang_obj.write(cr, uid, [x.id for x in data.pesertaLelang], {'evaluasiAkhir':False})
+        return lelang_obj.write(cr, uid, [winid], {'evaluasiAkhir': True})
     
     def isi_master_jadwal(self, cr, uid, vals, context=None):   
         jad=self.pool.get('eproc.master_jadwal_lelang')

@@ -12,7 +12,7 @@
             <form string="eproc.lelang" version="7.0">
                 <header>                
                     <button string="Sorting" type="object" 
-                        states="open" name="action_ikut" 
+                        states="open" name="action_order" 
                         groups="eproc.group_res_partner"
                         class="oe_highlight"  />
 
