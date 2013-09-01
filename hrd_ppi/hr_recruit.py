@@ -2,6 +2,7 @@ from openerp.osv import fields, osv
 #from openerp.addons.base_status.base_stage import base_stage
 from datetime import date
 from time import strptime
+from time import strftime
 
 PERMOHONAN_STATES =[
 	('draft','Draft'),
@@ -35,7 +36,9 @@ class permohonan_recruit(osv.osv):
         'catatan':fields.char('Realisasi Penempatan',128),
         'catatan2':fields.text('Catatan'),
         'state': fields.selection(PERMOHONAN_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
-        'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),      
+        'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
+        'survey_ids':fields.one2many('survey','job_id','Interview Form'),
+        'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
                 }
     _defaults = {
         'state': PERMOHONAN_STATES[0][0],
@@ -43,6 +46,16 @@ class permohonan_recruit(osv.osv):
                  }  
             
 permohonan_recruit()
+
+class hr_survey(osv.osv):
+    _name='hr.survey'
+    
+    _columns= {
+        'surveys_id' :fields.many2one('survey', 'Interview Form'),  
+        'jobs_id' : fields.many2one('hr.job'),  
+        'applicant_id':fields.many2one('hr.applicant'),
+        }
+hr_survey()
 
 class pendidikan(osv.osv):
     _name='hr_recruit.pendidikan'
@@ -235,12 +248,12 @@ class hr_applicant(osv.osv):
         jur=jurusan.browse(cr,uid,jur_id,context)
         stg_id=[]
         for line in pers :
-            stage=line.name
-            if stage == 'Refused' :
+            stage=line.sequence
+            if stage == 100 :
                 stgs=line.id
                 if ap_umr > job_umr or ap_pend != job_pend or job_kelamin != ap_kelamin :                                                 
                     return self.write(cr,uid,ids,{'stage_id': stgs},context=context) 
-            if stage == 'Wawancara Pertama' :
+            if stage == 2 :
                 stg=line.id
                 if ap_umr <= job_umr and ap_pend == job_pend :
                     if job_kelamin == 'male/female' or job_kelamin == ap_kelamin :
@@ -250,22 +263,25 @@ class hr_applicant(osv.osv):
                                 return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
 
-    def interview(self,cr, uid,ids, context):
-        import pdb;pdb.set_trace()
-        #applicant=vals(cr,uid,['partner_name'],context)
-        appl=self.browse(cr,uid,ids)[0]
-        applicant=appl.partner_name
-        interv=self.pool.get('hr_recruit.interview')
-        inter=interv.search(cr,uid,[('applicant_id','=',applicant)])
-        inte=interv.browse(cr,uid,inter,context)[0]
-        for app in inte.interview_ids:
-            kesimpulan = app.kesimpulan     
-        return 
+    def interview(self, cr, uid,vals, context=None):
+        #import pdb;pdb.set_trace()
+        #appl=self.browse(cr,uid,ids)[0]
+        app=vals["job_id"]
+        apps=self.pool.get('survey')
+        appss=apps.search(cr,uid,[('job_id','=',app)])
+        ap=apps.browse(cr,uid,appss,context)
+        res=[]
+        for pr in ap:
+            if pr.state == "open":
+                prs=pr.id
+                res.append((0,0, {'name':prs})) 
+        vals['surv_ids']=res
+        return vals
         
-    #def write(self,cr, uid, ids, vals, context):
-        #vals=self.interview(cr, uid, vals, context)
-        #result= super(applicant,self).write (cr, uid,ids, vals, context)
-        #return result 
+    def create(self, cr, uid, vals, context=None):       
+        vals=self.interview(cr, uid, vals, context=None)
+        result= super(hr_applicant,self).create (cr, uid, vals, context=None)
+        return result 
                     
     
     _columns= {
@@ -298,6 +314,7 @@ class hr_applicant(osv.osv):
         'interview_ids':fields.one2many('hr_recruit.interview','applicant_id','Mulai Interview'),
         'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan'),
         'result_id':fields.many2one('hr_recruit.result','Result'),
+        'surv_ids':fields.one2many('hr.survey','applicant_id','Interview Form')  
         }
 hr_applicant()
 
@@ -463,6 +480,30 @@ class gelar(osv.osv):
     _columns={
         'name':fields.char('Gelar',50),
         }
-gelar() 
+gelar()
 
+class hr_survey(osv.osv):
+    _name='hr.survey'
+    
+    _columns={
+        'name':fields.many2one('survey','Title'),
+        'applicant_id':fields.many2one('hr.applicant'),
+        } 
 
+class survey(osv.osv):
+    _name="survey"
+    _inherit="survey"
+    
+    def survey_close(self, cr, uid, ids, arg):
+        self.write(cr, uid, ids, {'state': 'close', 'date_close': strftime("%Y-%m-%d %H:%M:%S"),'job_id' : False })
+        return True
+    
+    _columns = {
+        'name': fields.related('job_id',type="many2one", 
+            relation="hr.job", string="Job Name", readonly=True),
+        'job_id' : fields.many2one('hr.job', 'Job Name',required=True),
+        'applicant_id':fields.many2one('hr.applicant'),
+        'tgl_int':fields.date('Tanggal Interview')
+        
+    }
+survey()

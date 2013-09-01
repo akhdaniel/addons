@@ -1,37 +1,31 @@
 from openerp.osv import fields, osv
 import time
-class training(osv.osv):
-    _name = 'hr_training.training'
-    _rec_name = 'nama'
+
+class bukti(osv.osv):
+    _name='hr_training.bukti'
     
-    _columns = {
-        'nama' :fields.char('Judul Pelatihan', 128,required = True,ondelete="cascade"),
-        'lama' :fields.char('Lama',25,ondelete='cascade'),
-        'instansi' : fields.char('Instansi Penyelenggara',128,ondelete='cascade'),
-        'tanggal': fields.date('Tanggal',),
-        'bukti': fields.binary('Bukti Keikutsertaan',required=True), 
-        'employee_ids':fields.one2many('hr.employee','training_id','Nama Karyawan'),     
-        'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),   
-    }
-    _defaults = {
-        #'tahun' : lambda*a : time.strftime('%Y'),
-        }
-   
-training()
+    _columns={
+        'name':fields.binary('Sertifikat',required=True),  
+        'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),
+        'train_id':fields.many2one('hr_training.train','Nama Training'),
+            }
+bukti()   
 
 class train(osv.osv):
     _name = 'hr_training.train'
 
     _columns = {
-        'training_id' :fields.many2one('hr_training.training', 'Nama Training',128),
+
         'instansi' :fields.related('training_id','instansi',type='char',relation='hr_training.training',string='Instansi Penyelenggara'),
         'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),
         'job_id' :fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan'),
         'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen'),
-        'lama' : fields.related('training_id','lama',type='char',relation='hr_training.training',string='Lama'),
-        'tanggal': fields.related('training_id','tanggal',type='date',relation='hr_training.training',string='Tanggal'),
-        'bukti': fields.related('training_id','bukti',type='binary',relation='hr_training.training',string='Bukti Keikutsertaan'),
-        'analisa_id':fields.many2one('hr_training.analisa'),
+        'paket_id': fields.related('analisa_id','bukti',type='char',relation='hr_training.analisa',string='Paket Pelatihan'),
+        'analisa_id':fields.many2one('hr_training.analisa','Nama Training'),
+        'lama' : fields.related('analisa_id','lama',type='char',relation='hr_training.analisa',string='Lama'),
+        'tanggal': fields.related('analisa_id','tanggal',type='date',relation='hr_training.analisa',string='Tanggal'),
+        'bukti_ids':fields.one2many('hr_training.bukti','train_id','Bukti File'),
+        'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),        
             }
     
 train()
@@ -41,38 +35,127 @@ class employee(osv.osv):
     _inherit = 'hr.employee'
     _columns ={
         'nik': fields.char('NIK',20),
-        'training_ids':fields.one2many('hr_training.training','employee_id',),
-        'training_id': fields.many2one('hr_training.training','Training'),
-
+        'training_ids':fields.one2many('hr_training.train','employee_id','Training'),
+        'analisa_id':fields.many2one('hr_training.analisa'),
+        'lama' : fields.related('analisa_id','lama',type='char',relation='hr_training.analisa',string='Lama'),
+        'tanggal': fields.related('analisa_id','tanggal',type='date',relation='hr_training.analisa',string='Tanggal'),
+        'bukti': fields.related('analisa_id','bukti',type='binary',relation='hr_training.analisa',string='Bukti Keikutsertaan'),
+        'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
+        'paket_id': fields.related('analisa_id','bukti',type='char',relation='hr_training.analisa',string='Paket Pelatihan'),
+        'bukti_ids':fields.one2many('hr_training.bukti','employee_id','Bukti File'),
         }
 employee()
 
-class kualifikasi(osv.osv):
-    _name='hr_training.kualifikasi'
-    #_inherit='hr.job'
-    
-    _columns= {
-        'name':fields.many2one('hr.job','Job Name',),
-        'kualifikasi_ids':fields.one2many('hr_training.kualifikasi_detail','kualifikasi_id',string='Kualifikasi'),
-            }
-kualifikasi()
+TRAINING_STATES =[
+	('draft','Draft'),
+	('verify','Verify'),
+	('reject','Reject'),
+	('approve','Approve'),
+	('evaluation','Evaluation')]
 
 class analisa(osv.osv):
     _name='hr_training.analisa'
+    _rec_name='subject_id'
     
+    def action_draft(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[0][0]},context=context)
+
+    def action_verify(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[1][0]},context=context)
+ 
+    def action_reject(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context) 
+    	
+    def action_approve(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
+ 
+    def action_evaluation(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context)       
+    	
+    def training (self, cr, uid,vals, context):
+        import pdb;pdb.set_trace()
+        employee=self.pool.get('hr.employee')
+        employ=employee.browse(cr,uid,vals['name'],context)
+        name=employee.name
+        employee_id=eproc.search(cr, uid,[('name','=',name)])
+        pro=eproc.browse(cr,uid,employee_id,context)[0]
+        prod_ids=[]
+        for pr in pro.detailProduct:
+            prod_ids.append((0,0, {'lelangProduct':pr.product.id}))
+        vals['pesertaLelangProduct']=prod_ids   
+        eproc=self.pool.get('res.partner')
+        per=eproc.browse(cr,uid,vals['partner_id'],context)
+        name=per.name
+        prod_id=eproc.search(cr, uid,[('name','=',name)])
+        pro=eproc.browse(cr,uid,prod_id,context)[0]
+        prod_ids=[]
+        return
     _columns= {
+        'employee_id':fields.many2one('hr.employee','Karyawan'),
         'is_internal':fields.boolean('Ceklist Jika Training Internal'),
         'department_id': fields.many2one('hr.department', 'Department',required=True),
         'bulan':fields.selection([('Januari','Januari'),('Februari','Februari'),('Maret','Maret'),('April','April'),('Mei','Mei'),('Juni','Juni'),('Juli','Juli'),('Agustus','Agustus'),('September','September'),('Oktober','Oktober'),('November','November'),('Desember','Desember')],'Bulan'),
         'presentasi':fields.char('Presentasi Pelatihan',60),
         'no':fields.char('Nomor',10),
-        'name':fields.char('Nama Pelatihan',128,required=True),
+        'paket_id':fields.many2one('hr_training.paket','Paket Training'),
+        'subject_id':fields.char('Nama Training',required=True),
         'penyelenggara':fields.char('Lembaga Penyelenggara',128),
+        'mgt_id':fields.many2one('hr_training.mgt_company','MGT Company'),
+        'evaluasi_id':fields.many2one('hr_training.evaluasi_training','Evaluasi Training'),
+        'rekomendasi_id':fields.many2one('hr_training.rekomendasi_training','Rekomendasi'),
         'nama':fields.char('Nama Trainer',50),
         'tanggal':fields.date('Tanggal Penyelenggaraan'),
         'catatan':fields.char('Catatan Umum',60),
         'lama':fields.char('Lama',25),
         'realisasi':fields.date('Realisasi Pelaksanaan'),
-        'employee_ids':fields.one2many('hr_training.train','analisa_id','Nama Karyawan'),
+        'employee_ids':fields.one2many('hr_training.train','analisa_id','Nama Karyawan'),        
+        'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Gives the status of the training."),  
+        'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),
+        'bukti': fields.binary('Bukti Keikutsertaan',required=True), 
             }
-analisa()           
+            
+    _defaults = {
+        'state': TRAINING_STATES[0][0],
+        'user_id': lambda obj, cr, uid, context: uid,
+                 }  
+analisa()    
+
+class paket(osv.osv):
+    _name='hr_training.paket'
+    
+    _columns={
+        'name':fields.char('Paket Training',35,required=True),  
+            }
+paket()   
+
+class subject(osv.osv):
+    _name='hr_training.subject'
+    
+    _columns={
+        'name':fields.char('Nama Training',50,required=True),  
+            }
+subject()  
+
+class evaluasi_training(osv.osv):
+    _name='hr_training.evaluasi_training'
+    
+    _columns={
+        'name':fields.char('Evaluasi Training',50,required=True),  
+            }
+evaluasi_training()       
+
+class rekomendasi_training(osv.osv):
+    _name='hr_training.rekomendasi_training'
+    
+    _columns={
+        'name':fields.char('Rekomendasi Training',50,required=True),  
+            }
+rekomendasi_training()      
+
+class mgt_company(osv.osv):
+    _name='hr_training.mgt_company'
+    
+    _columns={
+        'name':fields.char('MGT Company',50,required=True),  
+            }
+mgt_company() 

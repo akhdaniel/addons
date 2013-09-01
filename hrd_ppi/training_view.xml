@@ -9,10 +9,11 @@
                 <tree string="Training">
                     <field name="department_id"/>
                     <field name="no"/>
-                    <field name="name"/>
+                    <field name="subject_id"/>
                     <field name="tanggal"/> 
-                    <field name="catatan"/>  
-                    <field name="is_internal"/>     
+                    <field name="lama"/>  
+                    <field name="is_internal"/>   
+                    <field name="state"/>  
                 </tree>
             </field>
         </record>
@@ -21,27 +22,76 @@
             <field name="name">hr_training.analisa.view.form</field>
             <field name="model">hr_training.analisa</field>
             <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Training">
-                    <field name="is_internal"/>
+            <field name="arch" type="xml">                
+                <form string="hr_training.analisa" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        groups="hr_PPI.group_hr_user" 
+                        class="oe_highlight" /> 
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_approve"
+                        groups="hr_PPI.group_hr_manager"
+                        class="oe_highlight"  />  
+
+                    <button string="Cancel" type="workflow"  
+                        groups="hr_PPI.group_hr_manager"
+                        states="verify" name="signal_cancel"/>
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hr_PPI.group_hr_manager"
+                        states="verify" name="signal_reject"/>     
+                                                                                     
+
+                    <button string="Start Evaluation" type="workflow"  
+                        groups="hr_PPI.group_hr_manager"
+                        states="approve" name="signal_evaluation" 
+                        class="oe_highlight" /> 
+ 
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group>
+                <group >
+                    <field name="is_internal" attrs="{'invisible': [('state','!=', 'draft')]}"/>
+                     <field name="paket_id"/>
+                </group>
+                <group >
                     <field name="department_id"/>
-                    <group colspan="4">
+                </group>    
+                </group>
+                    <group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)]}">
+                    </group>
+                    <group string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}">
+                    </group>
+                <group>      
+                    <group>                  
                     <field name="no"/>
-                    <field name="name"/>
+                    <field name="subject_id"/>
+                    <field name="mgt_id"/>                   
                     <field name="penyelenggara" attrs="{'invisible': [('is_internal','=', True)]}"/>
                     <field name="presentasi" attrs="{'invisible': [('is_internal','=', True)]}"/>
-                    <field name="nama" attrs="{'invisible': [('is_internal','=', False)]}"/>
-                    <field name="tanggal"/>
-                    <field name="realisasi"/> 
-                    <field name="catatan"/>                    
-                    </group>             
+                    <field name="nama" attrs="{'invisible': [('is_internal','=', False)]}"/>                   
+                    </group>
+                    <group>
+                    <field name="tanggal"/>                   
+                    <field name="realisasi" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/> 
+                    <field name="lama" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/>
+                    <field name="catatan"/>
+                    <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                    <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
+                    </group>    
+                </group>                   
                     <notebook colspan="4">
                           <page string="Karyawan" name="karyawan">
                             <field view_mode="tree,form" name="employee_ids" nolabel="1">
                                 <tree>
                                     <field name="employee_id" />
                                     <field name="job_id"/>
-                                    <field name="department_id"/>                                 
+                                    <field name="department_id"/> 
+                                    <!--field name="penyelenggara"/-->
+                                    <!--field name="paket_id"/-->                          
                                 </tree>
                                 <form>
                                     <field name="employee_id"/>
