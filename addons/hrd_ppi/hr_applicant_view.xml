@@ -18,8 +18,7 @@
                         name="coco" type="object"
                         class="oe_highlight"
                         attrs="{'invisible':[('state','!=','draft')]}"/>
-                        
-                        <button string="Test" name="interview" type="object" class="oe_highlight"/>
+                       
             </header>
             <field name="partner_id" position="before">
                 <field name="kelamin"/>
