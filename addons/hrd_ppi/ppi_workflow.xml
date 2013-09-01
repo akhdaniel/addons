@@ -8,7 +8,13 @@
             <field name="on_create">True</field>
         </record>
         
-        <!--nodes-->
+        <record model="workflow" id="wkf_hr_ppi_training">
+            <field name="name">hr_recruit.training</field>
+            <field name="osv">hr_recruit.training</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <!--nodes recruitment-->
         <record model="workflow.activity" id="act_draft">
             <field name="wkf_id" ref="wkf_hr_ppi"/>
             <field name="flow_start">True</field>
@@ -29,6 +35,43 @@
             <field name="name">in_progress</field>
             <field name="kind">function</field>
             <field name="action">action_in_progress()</field>
+        </record>
+       
+       <!--nodes training--> 
+        <record model="workflow.activity" id="act_draft_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_verify_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">verify</field>
+            <field name="kind">function</field>
+            <field name="action">action_verify()</field>
+        </record>
+                
+        <record model="workflow.activity" id="act_approve_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">approve</field>
+            <field name="kind">function</field>
+            <field name="action">action_approve()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_reject_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">reject</field>
+            <field name="kind">function</field>
+            <field name="action">action_reject()</field>
+        </record>
+                
+        <record model="workflow.activity" id="act_evaluation_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">avaluation</field>
+            <field name="kind">function</field>
+            <field name="action">action_evaluation()</field>
         </record>
         
         <!--Transition-->
@@ -54,6 +97,37 @@
             <field name="act_from" ref="act_in_progress"/>
             <field name="act_to" ref="act_draft"/>
             <field name="signal">signal_stop_recruit</field>
+        </record>
+        
+                <!--Transition training-->
+        <record model="workflow.transition" id="t_draft_training">
+            <field name="act_from" ref="act_draft_training"/>
+            <field name="act_to" ref="act_verify_training"/>
+            <field name="signal">signal_verify</field>
+        </record>
+        
+        <record model="workflow.transition" id="t1_verify_training">
+            <field name="act_from" ref="act_verify_training"/>
+            <field name="act_to" ref="act_draft_training"/>
+            <field name="signal">signal_cancel</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_approve_training">
+            <field name="act_from" ref="act_verify_training"/>
+            <field name="act_to" ref="act_approve_training"/>
+            <field name="signal">signal_approve</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_reject_training">
+            <field name="act_from" ref="act_verify_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_evaluation_training">
+            <field name="act_from" ref="act_approve_training"/>
+            <field name="act_to" ref="act_evaluation_training"/>
+            <field name="signal">signal_evaluasi</field>
         </record>
 
     </data> 

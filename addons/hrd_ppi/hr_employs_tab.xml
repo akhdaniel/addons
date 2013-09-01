@@ -237,5 +237,44 @@
                     </page>                                            
              </field>                                                   
         </record>
+        
+         <record id="view_employee_tree" model="ir.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>            
+            <field name="arch" type="xml"> 
+                    <field name="name" position="before">
+                    <field name="nik"/>
+                    </field>
+                    <field name="name" position="after">
+                    <field name="gol_id"/>
+                    <field name="type_id"/>
+                    <field name="jurusan_id"/>
+                    </field>
+                    <field name="work_phone" position="replace"/>
+                    <field name="work_email" position="replace"/>
+            </field>
+        </record>
+        
+        <record id="view_employee_filter2" model="ir.ui.view">
+            <field name="name">Employees</field>
+            <field name="model">hr.employee</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <search string="Employees">
+                    <group expand="0" string="Group By...">
+                        <filter string="Golongan" icon="terp-personal" domain="[]" context="{'group_by':'gol_id'}"/>
+                        <filter string="Pendidikan" icon="terp-personal" domain="[]" context="{'group_by':'type_id'}"/>
+                        <filter string="Jurusan" icon="terp-personal+" domain="[]" context="{'group_by':'jurusan_id'}"/>
+                        <!--filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>
+                        <filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
+                    </group>
+                </search>
+             </field>
+         </record>
+        
+        
     </data>
 </openerp>
