@@ -58,7 +58,7 @@
                         states="verify" name="signal_cancel"/>
                         
                     <button string="Reject" type="workflow"  
-                        groups="hrd_PPI.group_hr_manager"
+                        groups="hrd_ppi.group_hr_manager"
                         states="verify" name="signal_reject"/>     
                                                                                      
 
