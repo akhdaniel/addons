@@ -10,6 +10,7 @@ Human Resource PT.PPI
             'security/groups.xml',
             'security/ir.model.access.csv',
             'training_view.xml',
+            'report/hr_training.xml',
             'action.xml',
             'hr_recruitment.xml',
             'hr_applicant_view.xml',           

@@ -18,7 +18,6 @@
                         name="coco" type="object"
                         class="oe_highlight"
                         attrs="{'invisible':[('state','!=','draft')]}"/>
-                       
             </header>
             <field name="partner_id" position="before">
                 <field name="kelamin"/>
@@ -38,6 +37,7 @@
             </field>
             <field name="partner_mobile" position="replace"/>
             <field name="type_id" position="after" >
+                <field name="pengalaman"/>
                 <field name="jurusan_id"/> 
                 <field name="result_id"/>   
             </field>

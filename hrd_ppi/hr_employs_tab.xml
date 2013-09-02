@@ -207,12 +207,12 @@
                                 <page string="Koneksi Internal">
                                     <field view_mode="tree,form" name='koneksi1_ids' nolabel="1" >
                                         <tree>
-                                            <field name='employee_id'/>
+                                            <field name='employee_idd'/>
                                             <field name='alamat'/>
                                             <field name='jabatan'/>
                                         </tree>
                                         <form>
-                                             <field name='employee_id'/>
+                                             <field name='employee_idd'/>
                                             <field name='alamat'/>
                                             <field name='jabatan'/>
                                         </form>

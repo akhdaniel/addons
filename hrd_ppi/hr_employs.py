@@ -131,7 +131,7 @@ class koneksi1(osv.osv):
     _name='hr_employee.kon1'
     
     _columns={        
-        'employee_id':fields.many2one('hr.employee',),
+        'employee_idd':fields.char('Nama',),
         'employee_id':fields.many2one('hr.employee','Nama'),
         'alamat':fields.text('Alamat/Telepon'),
         'jabatan':fields.char('Jabatan',30),
