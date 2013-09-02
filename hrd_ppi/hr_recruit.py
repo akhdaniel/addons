@@ -257,7 +257,7 @@ class hr_applicant(osv.osv):
                 stgs=line.id
             if stage == 2 :
                 stg=line.id
-                if ap_umr <= job_umr or job_umr == False :
+                if ap_umr <= job_umr or job_umr == 0 :
                     if ap_pend == job_pend and job_pengalaman <= ap_pengalaman:
                         if job_kelamin == 'male/female' or job_kelamin == ap_kelamin :
                             if ap_status == job_status or job_status == False :
