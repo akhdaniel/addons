@@ -45,25 +45,25 @@
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        groups="hr_PPI.group_hr_user" 
+                        groups="hrd_ppi.group_hr_user" 
                         class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        groups="hr_PPI.group_hr_manager"
+                        groups="hrd_ppi.group_hr_manager"
                         class="oe_highlight"  />  
 
                     <button string="Cancel" type="workflow"  
-                        groups="hr_PPI.group_hr_manager"
+                        groups="hrd_ppi.group_hr_manager"
                         states="verify" name="signal_cancel"/>
                         
                     <button string="Reject" type="workflow"  
-                        groups="hr_PPI.group_hr_manager"
+                        groups="hrd_PPI.group_hr_manager"
                         states="verify" name="signal_reject"/>     
                                                                                      
 
                     <button string="Start Evaluation" type="workflow"  
-                        groups="hr_PPI.group_hr_manager"
+                        groups="hrd_ppi.group_hr_manager"
                         states="approve" name="signal_evaluation" 
                         class="oe_highlight" /> 
  
