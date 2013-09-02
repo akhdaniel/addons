@@ -18,6 +18,24 @@
             </field>
         </record>
         
+        <record id="hr_training2_view_tree" model="ir.ui.view">
+            <field name="name">hr_training.train.view.tree</field>
+            <field name="model">hr_training.train</field>
+            <field name="type">tree</field>
+            <field name="domain">[('state','=',approve)]</field>
+            <field name="arch" type="xml">
+                <tree string="Rencana Training">
+                    <field name="employee_id"/>
+                    <field name="subject_id"/>
+                    <field name="department_id"/>                                                            
+                    <field name="job_id"/> 
+                    <field name="penyelenggara"/> 
+                    <!--field name="state"/> 
+                    <field name="is_internal"/-->   
+                </tree>
+            </field>
+        </record>
+        
          <record id="hr_training_view_form" model="ir.ui.view">
             <field name="name">hr_training.analisa.view.form</field>
             <field name="model">hr_training.analisa</field>
@@ -56,9 +74,10 @@
                 <group >
                     <field name="is_internal" attrs="{'invisible': [('state','!=', 'draft')]}"/>
                      <field name="paket_id"/>
+                     <field name="bulan"/>
                 </group>
                 <group >
-                    <field name="department_id"/>
+                    <field name="department_id"/>                    
                 </group>    
                 </group>
                     <group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)]}">
@@ -79,8 +98,6 @@
                     <field name="realisasi" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/> 
                     <field name="lama" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/>
                     <field name="catatan"/>
-                    <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
-                    <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
                     </group>    
                 </group>                   
                     <notebook colspan="4">
@@ -89,12 +106,26 @@
                                 <tree>
                                     <field name="employee_id" />
                                     <field name="job_id"/>
-                                    <field name="department_id"/> 
-                                    <!--field name="penyelenggara"/-->
+                                    <field name="department_id"/>                                     
+                                    <field name="evaluasi_id"/>
+                                    <field name="rekomendasi_id"/> 
+                                    <field name="bukti_ids"/>
                                     <!--field name="paket_id"/-->                          
                                 </tree>
                                 <form>
+                                <group>
                                     <field name="employee_id"/>
+                                    <field name="evaluasi_id"/>
+                                    <field name="rekomendasi_id"/> 
+                                </group>
+                                <group>    
+                                    <field view_mode="form" name="bukti_ids" >>
+                                        <form>     
+                                            <field name="name"/>                                                           
+                                        </form>
+                                    </field>
+                                </group>     
+                                    
                                 </form>
                             </field>
                         </page>	
@@ -102,6 +133,45 @@
                 </form>
             </field>
         </record>
+        
+        <record id="view_training_filter2" model="ir.ui.view">
+            <field name="name">Training</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">search</field>
+            <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
+            <field name="arch" type="xml">
+                <search string="Pelatihan">
+                    <group expand="0" string="Group By...">
+                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Internal/Eksternal" icon="terp-personal+" domain="[]" context="{'group_by':'is_internal'}"/>
+                        <filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/>
+                        <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
+                    </group>
+                </search>
+             </field>
+         </record>
+         
+         <record id="view_training_filter3" model="ir.ui.view">
+            <field name="name">Rencana Training</field>
+            <field name="model">hr_training.train</field>
+            <field name="type">search</field>
+            <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
+            <field name="arch" type="xml">
+                <search string="Rencana Pelatihan">
+                    <group expand="0" string="Group By...">
+                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <!--filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/-->
+                        <!--filter string="Internal/Eksternal" icon="terp-personal+" domain="[]" context="{'group_by':'is_internal'}"/-->
+                        <filter string="Karyawan" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
+                    </group>
+                </search>
+             </field>
+         </record>
+        
+        
     </data>
 </openerp>
     
