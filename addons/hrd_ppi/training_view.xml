@@ -108,7 +108,7 @@
                                     <field name="job_id"/>
                                     <field name="department_id"/>                                     
                                     <field name="evaluasi_id"/>
-                                    <field name="rekomendasi_id"/> 
+                                    <!--field name="rekomendasi_id"/--> 
                                     <field name="bukti_ids"/>
                                     <!--field name="paket_id"/-->                          
                                 </tree>
@@ -116,7 +116,7 @@
                                 <group>
                                     <field name="employee_id"/>
                                     <field name="evaluasi_id"/>
-                                    <field name="rekomendasi_id"/> 
+                                    <!--field name="rekomendasi_id"/--> 
                                 </group>
                                 <group>    
                                     <field view_mode="form" name="bukti_ids" >>
