@@ -1,0 +1,270 @@
+<openerp>
+	<data>
+	<!-- working days -->
+	    <record model="resource.calendar" id="working_hours_ppi_staff" >
+	    	<field name="name">PPI Staff Working Hours</field>
+	    </record>
+
+    <!-- detail working days -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+	    <record model="resource.calendar.attendance" id="working_hours_tue" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sun" >
+	    	<field name="name">sun</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	<!-- salary structure -->
+	    <record model="hr.payroll.structure" id="structure_ppi_staff" >
+	    	<field name="name">PPI Staff Salary Structure</field>
+	    	<field name="code">PPI_STAFF</field>
+        	<field name="parent_id" ref="hr_payroll.structure_base"/>
+	        <field name="company_id" ref="base.main_company"/>
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay') ])]" name="rule_ids"/>
+	    </record>
+
+    <!-- salary rule -->
+	    <record id="hr_payroll_rules_pot_absen" model="hr.salary.rule">
+	        <field name="name">POTONGAN ABSEN</field>
+	        <field name="code">POT_ABSEN</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = -contract.wage * (worked_days.WORK100.number_of_days - worked_days.PRESENCES.number_of_days)/ worked_days.WORK100.number_of_days </field>
+	    </record>
+	    <record id="hr_payroll_rules_overtime" model="hr.salary.rule">
+	        <field name="name">OVERTIME</field>
+	        <field name="code">OVERTIME</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = contract.wage/173 * worked_days.OVERTIME.number_of_hours </field>
+	    </record>
+	    <record id="hr_payroll_rules_overtime_meal" model="hr.salary.rule">
+	        <field name="name">OVERTIME MEAL</field>
+	        <field name="code">OT_MEAL</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = worked_days.OVERTIME.number_of_days * 12500 </field>
+	    </record>
+	    <record id="hr_payroll_rules_meal" model="hr.salary.rule">
+	        <field name="name">MEAL ALLOWANCE</field>
+	        <field name="code">MEAL</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * 12500 </field>
+	    </record>
+	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
+	        <field name="name">TRANSPORT ALLOWANCE</field>
+	        <field name="code">TRANSPORT</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * 12500 </field>
+	    </record>
+	    <record id="hr_payroll_rules_medical_allowance" model="hr.salary.rule">
+	        <field name="name">MEDICAL ALLOWANCE</field>
+	        <field name="code">MED_ALW</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.MEDICAL_ALLOWANCE.amount </field>
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
+	        <field name="name">JAMSOSTEK 1.19%</field>
+	        <field name="code">JAMSOSTEK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = contract.wage * 1.19 / 100</field>
+	    </record>
+	    <record id="hr_payroll_rules_others" model="hr.salary.rule">
+	        <field name="name">OTHERS ALLOWANCE</field>
+	        <field name="code">OTHERS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.OTHERS.amount </field>
+	    </record>	 
+	    <record id="hr_payroll_rules_luar_kota" model="hr.salary.rule">
+	        <field name="name">TUNJANGAN LUAR KOTA</field>
+	        <field name="code">LUAR_KOTA</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.LUAR_KOTA.amount </field>
+	    </record>	 
+	    <record id="hr_payroll_rules_pulsa" model="hr.salary.rule">
+	        <field name="name">TUNJANGAN PULSA</field>
+	        <field name="code">PULSA</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.PULSA.amount </field>
+	    </record>	 	  
+	    <record id="hr_payroll_rules_housing" model="hr.salary.rule">
+	        <field name="name">HOUSING ALLOWANCE</field>
+	        <field name="code">HOUSING</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.HOUSING.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_thr" model="hr.salary.rule">
+	        <field name="name">THR/THN</field>
+	        <field name="code">THR</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.THR.amount </field>
+	    </record>		
+	    <record id="hr_payroll_rules_bonus" model="hr.salary.rule">
+	        <field name="name">BONUS</field>
+	        <field name="code">BONUS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.BONUS.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_medical_refund" model="hr.salary.rule">
+	        <field name="name">MEDICAL REFUND</field>
+	        <field name="code">MED_RFD</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.MEDICAL_REFUND.amount </field>
+	    </record>
+	    <record id="hr_payroll_rules_tunjangan_pajak" model="hr.salary.rule">
+	        <field name="name">TUNJANGAN PAJAK</field>
+	        <field name="code">T_PAJAK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.TUNJANGAN_PAJAK.amount </field>
+	    </record>		
+	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
+	        <field name="name">RAPEL</field>
+	        <field name="code">RAPEL</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.RAPEL.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_leave_pay" model="hr.salary.rule">
+	        <field name="name">LEAVE PAY</field>
+	        <field name="code">LEAVE_PAY</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = inputs.LEAVE_PAY.amount </field>
+	    </record>	 
+
+    <!-- SALARY RULE INPUT -->
+	    <record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
+	        <field name="name">MEDICAL_ALLOWANCE</field>
+	        <field name="code">MEDICAL_ALLOWANCE</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_medical_allowance"/>	    	
+		</record>
+    		 	     
+	    <record id="hr_payroll_rules_input_others" model="hr.rule.input">
+	        <field name="name">OTHERS</field>
+	        <field name="code">OTHERS</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_others"/>	    	
+		</record>	    
+	    <record id="hr_payroll_rules_input_luar_kota" model="hr.rule.input">
+	        <field name="name">LUAR_KOTA</field>
+	        <field name="code">LUAR_KOTA</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_luar_kota"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_pulsa" model="hr.rule.input">
+	        <field name="name">PULSA</field>
+	        <field name="code">PULSA</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_pulsa"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_housing" model="hr.rule.input">
+	        <field name="name">HOUSING</field>
+	        <field name="code">HOUSING</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_housing"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_thr" model="hr.rule.input">
+	        <field name="name">THR</field>
+	        <field name="code">THR</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_thr"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_bonus" model="hr.rule.input">
+	        <field name="name">BONUS</field>
+	        <field name="code">BONUS</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_bonus"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_medical_refund" model="hr.rule.input">
+	        <field name="name">MEDICAL_REFUND</field>
+	        <field name="code">MEDICAL_REFUND</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_medical_refund"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_tunjangan_pajak" model="hr.rule.input">
+	        <field name="name">TUNJANGAN_PAJAK</field>
+	        <field name="code">TUNJANGAN_PAJAK</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_tunjangan_pajak"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_rapel" model="hr.rule.input">
+	        <field name="name">RAPEL</field>
+	        <field name="code">RAPEL</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_rapel"/>	    	
+		</record>	
+	    <record id="hr_payroll_rules_input_leave_pay" model="hr.rule.input">
+	        <field name="name">LEAVE_PAY</field>
+	        <field name="code">LEAVE_PAY</field>	    	
+	        <field name="input_id" ref="hr_payroll_rules_leave_pay"/>	    	
+		</record>	
+																																       	         	  	      	       
+	</data>
+</openerp>
