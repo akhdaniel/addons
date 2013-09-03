@@ -62,7 +62,7 @@ class hr_payslip(osv.osv):
             overtimes = {
                  'name': _("Overtime"),
                  'sequence': 2,
-                 'code': 'OVERTIME',
+                 'code': 'Overtime',
                  'number_of_days': 0.0,
                  'number_of_hours': 0.0,
                  'contract_id': contract.id,            
@@ -127,6 +127,10 @@ class hr_payslip(osv.osv):
                             isNonWorkingDay : dihitung berdasarkan jam hadir
                             workingDay: dihitung berdasarkan jam lembur (jam hadir - jam kerja normal)
 
+
+
+                            if employee.title_id.urutan < 100:
+
                             """
 
 
@@ -159,16 +163,21 @@ class hr_payslip(osv.osv):
                                     jam4 = 0
 
                             total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
-                            pprint.pprint(isNonWorkingDay)
-                            pprint.pprint(jam1)
-                            pprint.pprint(jam2)
-                            pprint.pprint(jam3)
-                            pprint.pprint(jam4)
-                            pprint.pprint(total_overtime)
+
                             overtimes['number_of_hours'] += total_overtime
 
+                            """
+                            else if employee.title_id > 100 : #operator ke atas:
+                                gol_id 1- 3 :
+                                    incentive: gajipokok/12 * jlm hari hadir di NonWorkingDay
+                                    incentives['number_of_days'] += 1.0 jika isNonWorkingDay && real_working_hours_on_day > 4
+
+                                gol_id 4-7:
+                                    nol
+                            """
+
             leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves + [presences] + [overtimes]
+            res += [attendances] + leaves + [presences] + [overtimes] 
         return res
 
 hr_payslip()
