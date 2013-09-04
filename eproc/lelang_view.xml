@@ -11,9 +11,10 @@
         <field name="arch" type="xml">
             <form string="eproc.lelang" version="7.0">
                 <header>                
+                               
                     <button string="Sorting" type="object" 
                         states="open" name="action_order" 
-                        groups="eproc.group_res_partner"
+                        groups="eproc.group_eproc_user"
                         class="oe_highlight"  />
 
                     <button string="Send for Approval" type="workflow" 
@@ -153,10 +154,19 @@
                         </page>
 
                         <page string="Peserta Lelang">
-                            <field name="pesertaLelang" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelang" nolabel="1" view_mode='tree,form' widget="one2many_list">
+                            <tree>
+                                <!--field name='lelang' invisible="True"/-->
+                                <field name='partner_id'/>
+                                <field name='tanggalDaftar'/>
+                                <field name='evaluasiBiayaHargaPenawaran'/>
+                                <field name='evaluasiUrutan'/>
+                                <field name='evaluasiAkhir'/>
+                            </tree>
+                            </field>
                         </page>                        
                         
-                        <page string="Berita Acara Evaluasi" ><!--groups="EProc.group_eproc_manager,EProc.group_eproc_user"-->
+                        <page string="Berita Acara Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
                             <group>
                                 <field name="beritaAcaraEvaluasiNo" />
                                 <field name="beritaAcaraEvaluasiFilename" />
@@ -272,7 +282,7 @@
                 <field name="employee_id"/>
                 <field name="payslip_run_id"/-->
                 <group expand="0" string="Group By...">
-                    <filter string="supplyer" icon="terp-personal" name="partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="supplier" icon="terp-personal" name="partner_id" context="{'group_by':'partner_id'}"/>
                     <!--filter string="Paket Pekerjaan" name="pesertaLelang" icon="terp-folder-orange" context="{'group_by':'pesertaLelang'}"/>
                     <filter string="Companies" name="company_id" groups="base.group_multi_company" icon="terp-go-home" context="{'group_by':'company_id'}"/>
                     <filter string="States" name="state" icon="terp-stock_effects-object-colorize" context="{'group_by':'state'}"/-->
@@ -296,9 +306,10 @@
                         <field name="tanggalDaftar" />
                         <field name="evaluasiBiayaHargaPenawaran" />
                         <field name="evaluasiBiayaHargaTerkoreksi" 
-                            groups="EProc.group_eproc_manager,EProc.group_eproc_user"/>
+                            groups="eproc.group_eproc_manager,eproc.group_eproc_user"/>
                     </group>
-
+                    
+                    <!--**-->
                     <notebook>
                         <page string="Ijin Usaha">
                             <field name="pesertaLelangIjinUsaha">    
@@ -308,6 +319,7 @@
                                     <field name='berlakuSampai'/>
                                     <field name='instansiPemberi'/>
                                     <field name='kualifikasi'/>
+                                    <field name="filename"/>
                                 </tree>
                                 <form>
                                     <field name='masterIjinUsaha'/>
@@ -315,12 +327,28 @@
                                     <field name='berlakuSampai'/>
                                     <field name='instansiPemberi'/>
                                     <field name='kualifikasi'/>
+                                    <field name="filename"/>
                                 </form>
                             </field>                  
                         </page>
 
                         <page string="Dukungan Bank">
-                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangDukunganBank" nolabel="1" widget="one2many_list">
+                                <tree>
+                                    <field name="namaBank" />
+                                    <field name="nomor" />
+                                    <field name="tanggal" />
+                                    <field name="nilai" />
+                                    <field name="bukti" />
+                                </tree>
+                                <form>
+                                    <field name="namaBank" />
+                                    <field name="nomor" />
+                                    <field name="tanggal" />
+                                    <field name="nilai" />
+                                    <field name="bukti" />
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Bukti Pajak">
@@ -364,7 +392,17 @@
                         </page>
 
                         <page string="Pekerjaan Sedang Berjalan">
-                            <field name="pesertaLelangPekerjaanSedangBerjalan" nolabel="1" widget="one2many_list"/>
+                            <field name="pesertaLelangPekerjaanSedangBerjalan" nolabel="1" widget="one2many_list">
+                                <form>
+                                    <field name="name"/>
+                                    <field name="lokasi"/>
+                                    <field name="instansiPemberi"/>
+                                    <field name="alamatInstansi"/>
+                                    <field name="tanggalKontrak"/>
+                                    <field name="selesaiKontrak"/>
+                                    <field name="nomorKontrak"/>
+                                </form>
+                            </field>
                         </page>
 
                         <page string="Peralatan">
@@ -418,7 +456,7 @@
                                    
                         </page>
 
-                        <page string="Evaluasi" groups="EProc.group_eproc_manager,EProc.group_eproc_user">
+                        <page string="Evaluasi" groups="eproc.group_eproc_manager,eproc.group_eproc_user">
                             <notebook>
                                 <page string="Administrasi">
                                     <group>
