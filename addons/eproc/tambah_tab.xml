@@ -1,6 +1,6 @@
 <openerp>
     <data>
-
+        <!--Supplier Data-->
         <record model="ir.ui.view" id="tab_form_view">
             <field name="name">res.partner</field>
             <field name="model">res.partner</field>
@@ -15,8 +15,7 @@
                                     <field name="nomor"/>
                                     <field name='berlakuSampai'/>
                                     <field name='instansiPemberi'/>
-                                    <field name='kualifikasi'/>
-                                   
+                                    <field name='kualifikasi'/>                                   
                                 </tree>
                                 <form>
                                     <field name='masterIjinUsaha'/>
@@ -24,7 +23,7 @@
                                     <field name='berlakuSampai'/>
                                     <field name='instansiPemberi'/>
                                     <field name='kualifikasi'/>
-                                     <field name= 'filename'/>
+                                    <field name="filename"/>
                                 </form>
                             </field>                                
                         </page>	

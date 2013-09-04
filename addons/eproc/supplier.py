@@ -117,7 +117,6 @@ class eproc_status(osv.osv):
 eproc_status()
 
 
-
 class eproc_ijin_usaha(osv.osv):
     _rec_name = 'nomor'
     _name = 'eproc.ijin_usaha'
@@ -126,7 +125,7 @@ class eproc_ijin_usaha(osv.osv):
         'nomor' : fields.char('Nomor',size=100),
         'berlakuSampai' : fields.date('Berlaku Sampai'),
         'instansiPemberi' : fields.char('Instansi Pemberi', size=100),
-        'filename' : fields.binary('Bukti Dokumen'),
+        'filename' : fields.binary('Bukti Dokumen', required=True),
         'kualifikasi':fields.many2one('eproc.master_kualifikasi','Kualifikasi'),
         'partner_id': fields.many2one('res.partner','Supplier'),
     }

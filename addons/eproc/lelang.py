@@ -1,5 +1,6 @@
 import time
 from osv import fields,osv
+import one2many_sorted
 
 class eproc_paket(osv.osv):
     _name = 'eproc.paket'
@@ -37,7 +38,6 @@ LELANG_STATES =[
 class eproc_lelang(osv.osv):
     _name = 'eproc.lelang'
      
-
     def action_draft(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':LELANG_STATES[0][0]},context=context)
 
@@ -83,24 +83,7 @@ class eproc_lelang(osv.osv):
         vals=self.isi_master_jadwal(cr, uid, vals, context=None)
         result= super(eproc_lelang,self).create (cr, uid, vals, context=None)
         return result   
-    '''    	
-    def action_button_propose_winner(self,cr,uid,ids,vals,context=None):         
-        pes=self.browse(cr,uid,ids)[0]
-        coy=pes.name
-        le=self.pool.get('eproc.peserta_lelang')
-        lel=le.search(cr,uid,[('name','=',coy)])
-        lele=le.browse(cr,uid,lel,context=context)
-        penawaran=[]
-        penmin=[]
-        #pel2 = pes.nilaiHps
-        for pen in lele:
-            penawaran.append((0,0,{'partner_id':pen.partner_id.id,'evaluasiBiayaHargaPenawaran':pen.evaluasiBiayaHargaPenawaran,'evaluasiAkhir':True}))  
-        penmin=sorted(penawaran)  
-        penm=penmin[0]      
-        vals['pesertaLelang']=[penm]
-        vals['state']=LELANG_STATES[4][0]
-    	return super(eproc_lelang,self).write(cr,uid,ids,vals,context=None)
-    '''    
+        
     _columns = {
 		'name' : fields.char('Nama', size=200,
 			readonly=True, 
@@ -110,14 +93,11 @@ class eproc_lelang(osv.osv):
 		'kategori' : fields.many2one('eproc.lelang_kategori','Kategori Lelang'),
 		'metodaLelang' : fields.many2one('eproc.metoda_lelang', 'Metoda Lelang'),
 		'metodaEvaluasi' : fields.many2one('eproc.metoda_evaluasi', 'Metoda Evaluasi'),
-        #'jad': fields.one2many('eproc.master_jadwal_lelang','lelang','jadwal'),
 		'nilaiHps' : fields.float('Nilai HPS'),
         'currency': fields.many2one('res.currency', 'Currency', help='The currency used to enter statement'),
-        'pesertalelang': fields.many2one('eproc.peserta_lelang'),
+        #'pesertalelang': fields.many2one('eproc.peserta_lelang'),
 		'businessType' : fields.many2one( 'eproc.business_type','Business Type'),
-		'subBusinessType' : fields.many2one( 'eproc.sub_business_type','Sub Business Type'),
-
-
+		'subBusinessType' : fields.many2one( 'eproc.sub_business_type','Sub Business Type'),       
 		'jenisKontrakImbalan' : fields.many2one('eproc.jenis_kontrak_imbalan', 'Jenis Kontrak/Imbalan',''),
 		'jenisKontrakJangkaWaktu' : fields.many2one('eproc.jenis_kontrak_jangka_waktu', 'Jenis Kontrak/Jangka Waktu',''),
 		'jenisKontrakJumlahPihak' : fields.many2one('eproc.jenis_kontrak_jumlah_pihak', 'Jenis Kontrak/Jumlah Pihak',''),
@@ -126,7 +106,8 @@ class eproc_lelang(osv.osv):
 		'jadwalLelang' : fields.one2many('eproc.jadwal_lelang','lelang','Jadwal Lelang'),
 		'dokumenLelang' : fields.one2many('eproc.dokumen_lelang','lelang', 'Dokumen Lelang'),
 		'adendumLelang' : fields.one2many('eproc.adendum_lelang','lelang', 'Adendum Lelang'),
-		'pesertaLelang' : fields.one2many('eproc.peserta_lelang','lelang', 'Peserta Lelang'),
+		#'pesertaLelang' : fields.one2many('eproc.peserta_lelang','lelang', 'Peserta Lelang'),
+		'pesertaLelang': one2many_sorted.one2many_sorted('eproc.peserta_lelang', 'lelang', 'Peserta Lelang', order='evaluasiBiayaHargaPenawaran, evaluasiAkhir'),
 		'penjelasanDokumen' : fields.one2many('eproc.penjelasan_dokumen','lelang', 'Aanwizing'),
 		'detailProduct' : fields.one2many('eproc.lelang_product','lelang', 'Barang/Jasa'),
 
@@ -139,10 +120,7 @@ class eproc_lelang(osv.osv):
 		'beritaAcaraEvaluasiFilename' : fields.binary('File Berita Acara Evaluasi'),
 		'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),
 	        }
-	
-	
-		
-    
+	    
     _defaults = {
         'state': LELANG_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
@@ -182,7 +160,6 @@ class eproc_peserta_lelang(osv.osv):
     _name = 'eproc.peserta_lelang'
         
     def oto_produk(self, cr, uid,vals, context=None):
-        #import pdb;pdb.set_trace()
         eproc=self.pool.get('eproc.lelang')
         per=eproc.browse(cr,uid,vals['lelang'],context)
         name=per.name
@@ -203,15 +180,34 @@ class eproc_peserta_lelang(osv.osv):
         vals['pesertaLelangPeralatan']=prod_ids 
         nera_ids=[]
         for pr1 in pro.neraca_ids:
-            nera_ids.append((0,0,{'tahun':pr1.tahun,'tanggal':pr1.tanggal,'aktivaTetap':pr1.aktivaTetap,'aktivaLancar':pr1.aktivaLancar,'aktivaLainnya' :pr1.aktivaLainnya,'hutangJangkaPanjang':pr1.hutangJangkaPanjang,'hutangJangkaPendek' :pr1.hutangJangkaPendek}))  
+            nera_ids.append((0,0,{
+            'tahun':pr1.tahun,
+            'tanggal':pr1.tanggal,
+            'aktivaTetap':pr1.aktivaTetap,
+            'aktivaLancar':pr1.aktivaLancar,
+            'aktivaLainnya' :pr1.aktivaLainnya,
+            'hutangJangkaPanjang':pr1.hutangJangkaPanjang,
+            'hutangJangkaPendek' :pr1.hutangJangkaPendek}))  
         vals['pesertaLelangNeraca']=nera_ids 
         IU_ids=[]
         for pr2 in pro.ijin_usaha_ids:
-            IU_ids.append((0,0, {'masterIjinUsaha':pr2.masterIjinUsaha.id,'nomor' :pr2.nomor,'berlakuSampai':pr2.berlakuSampai,'instansiPemberi':pr2.instansiPemberi,'kualifikasi':pr2.kualifikasi.id }))
+            IU_ids.append((0,0, {
+            'masterIjinUsaha':pr2.masterIjinUsaha.id,
+            'nomor' :pr2.nomor,
+            'berlakuSampai':pr2.berlakuSampai,
+            'instansiPemberi':pr2.instansiPemberi,
+            'kualifikasi':pr2.kualifikasi.id }))
         vals['pesertaLelangIjinUsaha']=IU_ids
         BP_ids=[]
         for pr3 in pro.bukti_pajak_ids:
-            BP_ids.append((0,0, {'masterPajak':pr3.masterPajak.id,'nomor':pr3.nomor,'tanggal':pr3.tanggal,'masaTahun':pr3.masaTahun,'masaBulan':pr3.masaBulan,'filename':pr3.filename}))
+            BP_ids.append((0,0, {
+            'masterPajak':pr3.masterPajak.id,
+            'nomor':pr3.nomor,
+            'tanggal':pr3.tanggal,
+            'masaTahun':pr3.masaTahun,
+            'masaBulan':pr3.masaBulan,
+            'filename':pr3.filename
+            }))
         vals['pesertaLelangBuktiPajak']=BP_ids
         TA_ids=[]
         for pr4 in pro.tenaga_ahli_ids:
@@ -219,19 +215,19 @@ class eproc_peserta_lelang(osv.osv):
         vals['pesertaLelangTenagaAhli']=TA_ids
         PENG_ids=[]
         for pr5 in pro.pengalaman_ids:
-            PENG_ids.append((0,0, {'name':pr5.name,'lokasi':pr5.lokasi,'instansiPemberi':pr5.instansiPemberi}))
+            PENG_ids.append((0,0, {
+            'name':pr5.name,
+            'lokasi':pr5.lokasi,
+            'instansiPemberi':pr5.instansiPemberi}))
         vals['pesertaLelangPengalaman']=PENG_ids
-        return vals
-        
-    
-         
+        return vals    
+
     def create(self, cr, uid, vals, context=None):       
         vals=self.oto_produk(cr, uid, vals, context=None)
         result= super(eproc_peserta_lelang,self).create (cr, uid, vals, context=None)
         return result  
      
     def nilai_total(self, cr, uid, ids,field_name, arg, context=None):
-        #import pdb;pdb.set_trace()      
         res = {}
         for order in self.browse(cr, uid, ids, context=context):
             res[order.id] = {
@@ -388,12 +384,7 @@ class eproc_master_jadwal_lelang(osv.osv):
     _name = 'eproc.master_jadwal_lelang'
     _columns = {
 		'name' : fields.char('Nama', size=200),
-	#	'jadwal':fields.time('bebas',readonly=True),
-		'jadwal_lelang': fields.one2many('eproc.jadwal_lelang','masterJadwalLelang', 'Jadwal Lelang')
-		
-    }
-    _defaults = {
-   #     'jadwal': lambda*a : time.strftime('1'),
+		'jadwal_lelang': fields.one2many('eproc.jadwal_lelang','masterJadwalLelang', 'Jadwal Lelang')		
     }     
 eproc_master_jadwal_lelang()
 
@@ -455,7 +446,7 @@ class eproc_peserta_lelang_tenaga_ahli(osv.osv):
     	'peserta_lelang': fields.many2one('eproc.peserta_lelang'),
     	'tenaga_ahli': fields.many2one('eproc.tenaga_ahli','Tenaga Ahli'), 
 		'name' : fields.char('Nama', size=200),
-		'profesi': fields.char('keahlian')
+		'profesi': fields.char('Keahlian')
     }
 eproc_peserta_lelang_tenaga_ahli()
 
@@ -531,7 +522,7 @@ class eproc_peserta_lelang_product(osv.osv):
     _name = 'eproc.peserta_lelang_product'
     
     def total2(self,jumlah,hargaPenawaran):
-        x= float(jumlah) * hargaPenawaran
+        x= jumlah * hargaPenawaran
         return float(x)
         
                     
@@ -541,14 +532,13 @@ class eproc_peserta_lelang_product(osv.osv):
         x=0
         for ips in p:
             result[ips.id]=self.total2(ips.jumlah, ips.hargaPenawaran)
-            #x=x+[ips.id]
         return result
         
     _columns = {
 		'peserta_lelang' : fields.many2one('eproc.peserta_lelang','Peserta Lelang'),
 		'notes' : fields.text('Notes'),
 		'lelangProduct' : fields.char('Product'),
-		'jumlah' : fields.char('Jumlah'),
+		'jumlah' : fields.float('Jumlah'),
 		'hargaPenawaran' : fields.float('Harga Penawaran'),
         'discount': fields.float('Discount'),
         'subTotal': fields.function(total,type='float',method=True,store=True,string='Total'),     
@@ -586,5 +576,6 @@ class eproc_adendum_lelang(osv.osv):
 		'lelang': fields.many2one('eproc.lelang','Lelang')
     }
 eproc_adendum_lelang()
+
 
 

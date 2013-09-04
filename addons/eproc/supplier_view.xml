@@ -69,7 +69,7 @@
         <record  forcecreate="1" id="seq_personal" model="ir.sequence">
             <field name="name">Partner</field>
             <field name="code">res.partner</field>
-            <field name='prefix'>SUP/</field>
+            <field name='prefix'>SUP/%(doy)s/</field>
             <field name="padding">3</field>
             <field name="no" eval="False"/>
         </record> 
