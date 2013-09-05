@@ -7,8 +7,35 @@
                 <field name="arch" type="xml">
                     <field name="contract_id" position="before">
                         <field name="gol_id"/>
+                        <field name="department_id"/>
                     </field>
                 </field>
+        </record>
+        <record id="view_hr_payslip_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                    <field name="number" position="after">                    
+                        <field name="department_id"/>
+                    </field>
+            </field>
+        </record>
+         <record id="view_hr_payslip_filter" model="ir.ui.view">
+            <field name="name">hr.payslip.select</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+            <field name="arch" type="xml">
+                <search string="Search Payslips">
+                    <field name="name" string="Payslips" filter_domain="['|',('name','ilike',self),('number','ilike',self)]"/>
+                    <field name="date_from"/>
+                    <field name="employee_id"/>
+                    <field name="payslip_run_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Departmen" icon="terp-personal" name='department_id' context="{'group_by':'department_id'}"/>
+                    </group>
+                </search>
+            </field>
         </record>
     </data>
 </openerp>

@@ -24,6 +24,7 @@ class hr_payslip(osv.osv):
     
     _columns ={
         'gol_id':fields.many2one('hr_employs.gol','Golongan'),
+        'department_id':fields.many2one('hr.department', 'Department'),
     }
  
 
@@ -239,15 +240,23 @@ class hr_payslip(osv.osv):
         ttyme = datetime.fromtimestamp(time.mktime(time.strptime(date_from, "%Y-%m-%d")))
         employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
         employee_gol = employee_id.gol_id.name
+        employee_dep = employee_id.department_id.name
         grade_obj =self.pool.get('hr_employs.gol') 
         grade_src=grade_obj.search(cr,uid,[('name','=',employee_gol)])
-        grade_id=grade_obj.browse(cr,uid,grade_src,context=context)[0]
-        grade_pay = grade_id.id
-        res['value'].update({
-                    'name': _('Salary Slip of %s for %s') % (employee_id.name, tools.ustr(ttyme.strftime('%B-%Y'))),
-                    'company_id': employee_id.company_id.id,
-                    'gol_id': grade_pay
-        })
+        grade_id=grade_obj.browse(cr,uid,grade_src,context=context)        
+        dep_obj =self.pool.get('hr.department') 
+        dep_src=dep_obj.search(cr,uid,[('name','=',employee_dep)])
+        dep_id=dep_obj.browse(cr,uid,grade_src,context=context)
+        for grade in grade_id :
+            grade_pay = grade.id
+            for dep in dep_id :
+                dep_pay = dep_id.id
+                res['value'].update({
+                            'name': _('Salary Slip of %s for %s') % (employee_id.name, tools.ustr(ttyme.strftime('%B-%Y'))),
+                            'company_id': employee_id.company_id.id,
+                            'gol_id': grade_pay,
+                            'department_id' : dep_pay
+                })
 
         if not context.get('contract', False):
             #fill with the first contract of the employee
