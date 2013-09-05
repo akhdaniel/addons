@@ -21,6 +21,11 @@ class hr_payslip(osv.osv):
     _name = 'hr.payslip'
     _inherit = 'hr.payslip'
     _description = 'Pay Slip Inheriteed PPI'
+    
+    _columns ={
+        'gol_id':fields.many2one('hr_employs.gol','Golongan'),
+    }
+ 
 
     def get_worked_day_lines(self, cr, uid, contract_ids, date_from, date_to, context=None):
         """
@@ -62,7 +67,16 @@ class hr_payslip(osv.osv):
             overtimes = {
                  'name': _("Overtime"),
                  'sequence': 2,
-                 'code': 'Overtime',
+                 'code': 'OVERTIME',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
+            
+            incentives = {
+                 'name': _("Incentives"),
+                 'sequence': 3,
+                 'code': 'INCENTIVES',
                  'number_of_days': 0.0,
                  'number_of_hours': 0.0,
                  'contract_id': contract.id,            
@@ -114,8 +128,10 @@ class hr_payslip(osv.osv):
                         if real_working_hours_on_day > 0:
                             presences['number_of_days'] += 1.0
                             presences['number_of_hours'] += working_hours_on_day
-
-                        if real_working_hours_on_day >= working_hours_on_day:
+                            
+                        no = self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context)[0]
+                        no_urut = no.employee_id.gol_id.no
+                        if real_working_hours_on_day >= working_hours_on_day and no_urut < 100 :
                             #add the input vals to tmp (increment if existing)
                             # number_of_days = hari masuk dalam sebulan sesuai absensi
 
@@ -166,18 +182,103 @@ class hr_payslip(osv.osv):
 
                             overtimes['number_of_hours'] += total_overtime
 
-                            """
+                            
+                        elif no_urut >= 100 and no_urut <200 :
+                            if isNonWorkingDay and real_working_hours_on_day > 4:
+                                incentives['number_of_days'] += 1.0
+                        
+                            """ title = kolom sortir
                             else if employee.title_id > 100 : #operator ke atas:
-                                gol_id 1- 3 :
-                                    incentive: gajipokok/12 * jlm hari hadir di NonWorkingDay
-                                    incentives['number_of_days'] += 1.0 jika isNonWorkingDay && real_working_hours_on_day > 4
+                                employee.gol_id.urutan > 1 and  employee.gol_id.urutan < 3 :
+                                  xml rule =  incentive: contract.wage/12 * worked_days.INCENTIVE.number_of_days
+                                     if isNonWorkingDay && real_working_hours_on_day > 4:
+                                        incentives['number_of_days'] += 1.0
+                                     
 
-                                gol_id 4-7:
+                                else :employee.gol_id.urutan > 4:
                                     nol
                             """
-
+                            
+                        
             leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves + [presences] + [overtimes] 
+            res += [attendances] + leaves + [presences] + [overtimes] + [incentives]
+        return res
+        
+    def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
+        empolyee_obj = self.pool.get('hr.employee')
+        contract_obj = self.pool.get('hr.contract')
+        worked_days_obj = self.pool.get('hr.payslip.worked_days')
+        input_obj = self.pool.get('hr.payslip.input')
+
+        if context is None:
+            context = {}
+        #delete old worked days lines
+        old_worked_days_ids = ids and worked_days_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
+        if old_worked_days_ids:
+            worked_days_obj.unlink(cr, uid, old_worked_days_ids, context=context)
+
+        #delete old input lines
+        old_input_ids = ids and input_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
+        if old_input_ids:
+            input_obj.unlink(cr, uid, old_input_ids, context=context)
+
+
+        #defaults
+        res = {'value':{
+                      'line_ids':[],
+                      'input_line_ids': [],
+                      'worked_days_line_ids': [],
+                      #'details_by_salary_head':[], TODO put me back
+                      'name':'',
+                      'contract_id': False,
+                      'struct_id': False,
+                      }
+            }       
+        if (not employee_id) or (not date_from) or (not date_to):
+            return res
+        ttyme = datetime.fromtimestamp(time.mktime(time.strptime(date_from, "%Y-%m-%d")))
+        employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
+        employee_gol = employee_id.gol_id.name
+        grade_obj =self.pool.get('hr_employs.gol') 
+        grade_src=grade_obj.search(cr,uid,[('name','=',employee_gol)])
+        grade_id=grade_obj.browse(cr,uid,grade_src,context=context)[0]
+        grade_pay = grade_id.id
+        res['value'].update({
+                    'name': _('Salary Slip of %s for %s') % (employee_id.name, tools.ustr(ttyme.strftime('%B-%Y'))),
+                    'company_id': employee_id.company_id.id,
+                    'gol_id': grade_pay
+        })
+
+        if not context.get('contract', False):
+            #fill with the first contract of the employee
+            contract_ids = self.get_contract(cr, uid, employee_id, date_from, date_to, context=context)
+        else:
+            if contract_id:
+                #set the list of contract for which the input have to be filled
+                contract_ids = [contract_id]
+            else:
+                #if we don't give the contract, then the input to fill should be for all current contracts of the employee
+                contract_ids = self.get_contract(cr, uid, employee_id, date_from, date_to, context=context)
+
+        if not contract_ids:
+            return res
+        contract_record = contract_obj.browse(cr, uid, contract_ids[0], context=context)
+        res['value'].update({
+                    'contract_id': contract_record and contract_record.id or False
+        })
+        struct_record = contract_record and contract_record.struct_id or False
+        if not struct_record:
+            return res
+        res['value'].update({
+                    'struct_id': struct_record.id,
+        })
+        #computation of the salary input
+        worked_days_line_ids = self.get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
+        input_line_ids = self.get_inputs(cr, uid, contract_ids, date_from, date_to, context=context)
+        res['value'].update({
+                    'worked_days_line_ids': worked_days_line_ids,
+                    'input_line_ids': input_line_ids,
+        })
         return res
 
 hr_payslip()
@@ -229,3 +330,6 @@ class hr_attendance(osv.osv):
         return True
 
 hr_attendance()
+
+
+
