@@ -1,0 +1,60 @@
+<openerp>
+    <data>
+
+        <!--record id="tab_ppht_view" model="ir.ui.view" >
+            <field name="name">hr.pph.form2</field> 
+            <field name="model">hr.payslip</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+                    <page string="Other Information" position="after">                     
+			            <page string="PPh Tahunan" name="pph">                    		
+	                            <group>				                  
+				                    <field name="no_urut"/>
+				                    <field name="npwp_pe_pajak"/>
+				                    <field name="npwp_peg"/>
+				                    <field name="peg_asing"/>
+				                    <field name="jns_tanggungan"/>
+				                    <field name="jml_tanggungan"/>
+				                    <field name="masa_peng_awal"/>
+				                    <field name="masa_peng_akhir"/>
+				                </group>
+				                <group>
+				                    <field name="gaji"/>
+				                    <field name="tunjangan_pph"/>
+				                    <field name="tunjangan_lainya"/>
+				                    <field name="honorarium"/>
+				                    <field name="premi_asuransi"/>
+				                    <field name="natura"/>
+				                    <field name="jumlah"/>
+				                    <field name="tantiem"/>
+				                    <field name="bruto"/>
+				                    <field name="biaya_jabatan7"/>
+				                    <field name="biaya_jabatan8"/>
+				                    <field name="iuran_pensiun"/>
+				                    <field name="jml_pengurangan"/>
+				                    <field name="jml_netto"/>
+				                    <field name="netto_sebelumnya"/>
+				                    <field name="jml_netto_21"/>
+				                    <field name="ptkp"/>
+				                    <field name="P_kena_pajak"/>
+				                    <field name="pph_21_atas"/>
+				                    <field name="pph_21_yang"/>
+				                    <field name="pph_21_terutang"/>
+				                    <field name="pph_21_dan"/>
+				                    <field name="pph_pemerintah"/>
+				                    <field name="pph_ssp"/>
+				                    <field name="jml_pph"/>
+				                    <field name="jml_pph2"/>
+				                    <field name="jml_tsb"/>
+				                    <field name="tanggal"/>
+				                    <field name="jml_telah"/>
+
+				                </group>				          
+			            </page>		
+		        </page>                	                                                                
+            </field>       
+        </record-->
+
+    </data>
+</openerp>
