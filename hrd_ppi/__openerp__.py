@@ -1,5 +1,5 @@
 {
-    'name': 'ppi',
+    'name': 'hrd_ppi',
     'author'  :'vitraining.com',
     'category': 'Human Resources',
     'description': """
@@ -9,15 +9,11 @@ Human Resource PT.PPI
     'update_xml':[
             'security/groups.xml',
             'security/ir.model.access.csv',
-            'training_view.xml',
-            'report/hr_training.xml',
             'action.xml',
             'hr_recruitment.xml',
             'hr_applicant_view.xml',           
-            'tab_training.xml',
             'ppi_workflow.xml',
             'hr_employs_tab.xml',
-            'grade_structure.xml',
             ],
     'data': [],
     'installable':True,
