@@ -17,6 +17,7 @@ Human Resource PT.PPI
             'tab_training.xml',
             'ppi_workflow.xml',
             'hr_employs_tab.xml',
+            'grade_structure.xml',
             ],
     'data': [],
     'installable':True,

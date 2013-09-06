@@ -183,9 +183,12 @@ extitle()
 
 class golongan(osv.osv):
     _name='hr_employs.gol'
+    _order='rec'
     
     _columns= {       
         'name':fields.char('Golongan',20,required=True),
+        'rec' :fields.char('Record',2,required=True),
+        'no' :fields.integer('no')
             }
 golongan()
 
