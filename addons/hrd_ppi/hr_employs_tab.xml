@@ -6,6 +6,9 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
+                 <field name="name" position="after">
+                    <field name="nik" placeholder="Nomor Induk Karyawan"/>
+                </field>
                 <page string="Public Information" position="replace"> 
                     <page string="Job &amp; Public Information">
                                 <group>
@@ -75,7 +78,6 @@
                                         <group string="ID Card &amp; Status &amp; Birth">
                                             <field name="jenis_id"/>
                                             <field name='ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                            <field name='dikeluarkan' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
                                             <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
                                             <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
                                             <!--field name='sim'/-->
@@ -87,7 +89,7 @@
                                             <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
                                             <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
                                             <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/> 
-                                            <field name="issued_by_id"/>                                
+                                            <field name="issued_id"/>                                
                                             <field name='agama'/>
                                             <field name='marital'/>
                                             <field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/>
@@ -97,76 +99,84 @@
                                     </group>                              
                                     </group>
                                     </group>
-                          </page>         
-                    </page>
-                    <page string ="HR Settings" position="after">                   
-                                <page string="Susunan Keluarga Istri/Suami" name="Susunan Keluarga Istri/Suami">
-                                    <field view_mode="tree,form" name='susunan_kel1_ids' nolabel="1" >
+                                    <group string="Susunan Keluarga Istri/Suami">
+                                    <field name='susunan_kel1_ids' view_mode="tree,form" widget="one2many_list" nolabel="1">
                                         <tree>
-                                            <field name="name"/>
-                                            <field name="jenis_kel"/>
-                                            <field name="kota_id"/>
-                                            <field name='tgl_lahir'/>
-                                            <field name='pendidikan'/>
-                                            <field name='pekerjaan'/>
+                                                <field name="susunan"/>
+                                                <field name="name"/>
+                                                <field name="kelamin"/> 
+                                                <field name="kota_id"/>
+                                                <field name="tgl_lahir"/>
+                                                <field name="type_id"/>
+                                                <field name="pekerjaan"/>
                                         </tree>
                                         <form>
-                                            <field name="name"/>
-                                            <field name="jenis_kel"/>
-                                            <field name="kota_id"/>
-                                            <field name='tgl_lahir'/>
-                                            <field name='pendidikan'/>
-                                            <field name='pekerjaan'/>
+                                             <group>
+                                                <field name="susunan"/>
+                                                <field name="name"/>
+                                                <field name="kelamin"/>
+                                            </group>    
+                                            <group>    
+                                                <field name="kota_id"/>
+                                                <field name="tgl_lahir"/>
+                                                <field name="type_id"/>
+                                                <field name="pekerjaan"/>
+                                            </group>
                                         </form>
                                     </field>
-                                </page>
-                    </page>
-                    <page string ="Susunan Keluarga Istri/Suami" position="after">                   
-                                <page string="Susunan Keluarga Ayah/Ibu" name="Susunan Keluarga Ayah/Ibu">
-                                    <field view_mode="tree,form" name='susunan_kel2_ids' nolabel="1" >
+                                    </group>
+                                    
+                                    <group string="Susunan Keluarga Ayah/Ibu">
+                                    <field view_mode="tree,form" name='susunan_kel2_ids' widget="one2many_list" nolabel="1">
                                         <tree>
                                             <field name='susunan'/>
                                             <field name="name"/>
-                                            <field name="jenis_kel"/>
+                                            <field name="kelamin"/>
                                             <field name="kota_id"/>
                                             <field name='tgl_lahir'/>
-                                            <field name='pendidikan'/>
+                                            <field name='type_id'/>
                                             <field name='pekerjaan'/>
                                         </tree>
-                                        <form>
-                                            <field name='susunan'/>
-                                            <field name="name"/>
-                                            <field name="jenis_kel"/>
-                                            <field name="kota_id"/>
-                                            <field name='tgl_lahir'/>
-                                            <field name='pendidikan'/>
-                                            <field name='pekerjaan'/>
-                                        </form>
+                                        <group>
+                                                <field name="susunan"/>
+                                                <field name="name"/>
+                                                <field name="kelamin"/>
+                                            </group>    
+                                            <group>    
+                                                <field name="kota_id"/>
+                                                <field name="tgl_lahir"/>
+                                                <field name="type_id"/>
+                                                <field name="pekerjaan"/>
+                                            </group>
                                     </field>
-                                </page>
-                    </page>  
-                    <page string ="Susunan Keluarga Istri/Suami" position="after">                   
-                                <page string="Riwayat Pendidikan" name="Riwayat Pendidikan">
-                                    <field view_mode="tree,form" name='rwt_pend_ids' nolabel="1" >
-                                        <tree>
-                                            <field name='name'/>
-                                            <field name='jurusan'/>
-                                            <field name='tempat'/>
-                                            <field name='tahun'/>
-                                            <field name='ijazah'/>
-                                        </tree>
-                                        <form>
-                                            <field name='name'/>
-                                            <field name='jurusan'/>
-                                            <field name='tempat'/>
-                                            <field name='tahun'/>
-                                            <field name='ijazah'/>
-                                        </form>
-                                    </field>
-                                </page>
-                    </page>   
-                    <page string ="Riwayat Pendidikan" position="after">                   
-                                <page string="Bahasa">
+                                    </group>
+                                    
+                                <group string="Riwayat Pendidikan">    
+                                <field view_mode="tree,form" name='rwt_pend_ids' widget="one2many_list" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="jurusan"/>
+                                    <field name="tempat"/>
+                                    <field name="tahun_msk"/>
+                                    <field name="tahun_klr"/>
+                                    <field name="ijazah"/>
+                                </tree>
+                                <form>
+                                <group>
+                                    <field name="name"/>                                                                     
+                                    <field name="jurusan"/>
+                                    <field name="tahun_msk"/>
+                                    <field name="tahun_klr"/>                                   
+                                    <field name="ijazah"/>
+                                 </group>
+                                 <group>
+                                    <field name="tempat"/>
+                                 </group>
+                                </form>                                       
+                                </field>
+                                 </group>   
+                                    
+                                    <group string ="Bahasa">
                                     <field view_mode="tree,form" name='bahasa_ids' nolabel="1" >
                                         <tree>
                                             <field name='name'/>
@@ -174,67 +184,92 @@
                                             <field name='lisan'/>
                                         </tree>
                                         <form>
-                                            <field name='name'/>
-                                            <field name='tulis'/>
-                                            <field name='lisan'/>
+                                            <group>
+                                                <field name="name"/>
+                                            </group>  
+                                            <group>  
+                                                <field name="tulis"/>
+                                                <field name="lisan"/>
+                                            </group>
                                         </form>
                                     </field>
-                                </page>
-                    </page>                 
-                    <page string ="Bahasa" position="after">                   
-                                <page string="Riwayat Pekerjaan">
-                                    <field view_mode="tree,form" name='rwt_krj_ids' nolabel="1" >
+                                    </group>
+                                    
+                                    <group string="Riwayat Pendidikan">
+                                    <field view_mode="tree,form" name='rwt_krj_ids' nolabel="1">
                                         <tree>
-                                            <field name='no'/>
-                                            <field name='name'/>
-                                            <field name='tahun'/>
-                                            <field name='jabatan'/>
-                                            <field name='gaji'/>
-                                            <field name='alasan'/>
+                                            <field name="no"/>
+                                            <field name="name"/>
+                                            <field name="tempat"/>
+                                            <field name="tahun_msk"/>
+                                            <field name="tahun_klr"/>
+                                            <field name="jabatan"/>
+                                            <field name="gaji"/>
+                                            <field name="alasan"/>
                                         </tree>
                                         <form>
-                                            <field name='no'/>
+                                        <group>
+                                            <field name="no"/>
+                                            <field name="name"/>
+                                            <field name="tempat"/>
+                                        </group>
+                                        <group>    
+                                            <field name="tahun_msk"/>
+                                            <field name="tahun_klr"/>
+                                            <field name="jabatan"/>
+                                            <field name="gaji"/>
+                                            <field name="alasan"/>
+                                        </group>     
+                                </form>
+                                    </field>
+                                    </group>
+                                    
+                                    <group string="Referensi Internal">
+                                    <field view_mode="tree,form" name='koneksi1_ids' nolabel="1">
+                                         <tree>
+                                            <field name='employee_id'/>
+                                            <field name='job_id'/>
+                                            <field name="alamat"/>                                    
+                                            <field name="telepon"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                            <field name='employee_id'/>
+                                            <field name='job_id'/>
+                                            </group>
+                                            <group>
+                                            <field name="alamat"/>                                    
+                                            <field name="telepon"/>
+                                            </group>
+                                        </form>
+                                    </field>    
+                                    </group>
+                                                               
+                                    <group string = "Referensi Eksternal">
+                                    <field view_mode="tree,form" name='koneksi2_ids' nolabel="1">
+                                         <tree>
                                             <field name='name'/>
-                                            <field name='tahun'/>
                                             <field name='jabatan'/>
-                                            <field name='gaji'/>
-                                            <field name='alasan'/>
+                                            <field name="alamat"/>                                    
+                                            <field name="telepon"/>
+                                        </tree>
+                                        <form>
+                                            <group>
+                                            <field name='name'/>
+                                            <field name='jabatan'/>
+                                            </group>
+                                            <group>
+                                            <field name="alamat"/>                                    
+                                            <field name="telepon"/>
+                                            </group>
                                         </form>
                                     </field>
+                                    </group>
                                 </page>
+                                                                    
+                               
                     </page>
-                    <page string ="Riwayat Pekerjaan" position="after">                   
-                                <page string="Koneksi Internal">
-                                    <field view_mode="tree,form" name='koneksi1_ids' nolabel="1" >
-                                        <tree>
-                                            <field name='employee_idd'/>
-                                            <field name='alamat'/>
-                                            <field name='jabatan'/>
-                                        </tree>
-                                        <form>
-                                             <field name='employee_idd'/>
-                                            <field name='alamat'/>
-                                            <field name='jabatan'/>
-                                        </form>
-                                    </field>
-                                </page>
-                    </page>            
-                    <page string ="Koneksi Internal" position="after">                   
-                                <page string="Koneksi Eksternal">
-                                    <field view_mode="tree,form" name='koneksi2_ids' nolabel="1" >
-                                        <tree>
-                                            <field name='name'/>
-                                            <field name='alamat'/>
-                                            <field name='jabatan'/>
-                                        </tree>
-                                        <form>
-                                             <field name='name'/>
-                                            <field name='alamat'/>
-                                            <field name='jabatan'/>
-                                        </form>
-                                    </field>
-                                </page>
-                    </page>                                            
+                    
              </field>                                                   
         </record>
         

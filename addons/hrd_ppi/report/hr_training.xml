@@ -6,7 +6,7 @@
         string="Rencana Training" 
         model="hr_training.analisa" 
         name="hr_training" 
-        rml="hr_PPI/report/hr_training.rml" 
+        rml="hrd_ppi/report/hr_training.rml" 
         auto="False" 
         header="False"/>    
     </data> 

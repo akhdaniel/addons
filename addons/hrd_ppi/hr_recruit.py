@@ -111,19 +111,19 @@ class hr_applicant(osv.osv):
                 lele=le.browse(cr,uid,lel,context=context)
                 prod_ids=[]              
                 for pr in lele:
-                    prod_ids.append((0,0, {'name':pr.name,'jenis_kel':pr.jenis_kel,'kota_id':pr.kota_id.id,'tgl_lahir':pr.tgl_lahir,'pendidikan':pr.pendidikan,'pekerjaan':pr.pekerjaan}))
+                    prod_ids.append((0,0, {'name':pr.name,'kelamin':pr.kelamin,'kota_id':pr.kota_id.id,'tgl_lahir':pr.tgl_lahir,'type_id':pr.type_id.id,'pekerjaan':pr.pekerjaan,'susunan':pr.susunan}))
                 le=self.pool.get('hr_recruit.suskel2')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids1=[]   
                 for pr in lele:
-                    prod_ids1.append((0,0, {'susunan':pr.susunan,'name':pr.name,'jenis_kel':pr.jenis_kel,'kota_id':pr.kota_id.id,'tgl_lahir':pr.tgl_lahir,'pendidikan':pr.pendidikan,'pekerjaan':pr.pekerjaan}))          
+                    prod_ids1.append((0,0, {'susunan':pr.susunan,'name':pr.name,'kelamin':pr.kelamin,'kota_id':pr.kota_id.id,'tgl_lahir':pr.tgl_lahir,'type_id':pr.type_id.id,'pekerjaan':pr.pekerjaan}))          
                 le=self.pool.get('hr_recruit.rwt_pend')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids2=[]   
                 for pr in lele:
-                    prod_ids2.append((0,0, {'name':pr.name,'jurusan':pr.jurusan,'tempat':pr.tempat,'tahun':pr.tahun,'ijazah':pr.ijazah})) 
+                    prod_ids2.append((0,0, {'name':pr.name,'jurusan':pr.jurusan.id,'tempat':pr.tempat,'tahun_msk':pr.tahun_msk,'tahun_klr':pr.tahun_klr,'ijazah':pr.ijazah.id})) 
                 le=self.pool.get('hr_recruit.bahasa')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
@@ -135,19 +135,19 @@ class hr_applicant(osv.osv):
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids4=[]   
                 for pr in lele:
-                    prod_ids4.append((0,0, {'no':pr.no,'name':pr.name,'tahun':pr.tahun,'jabatan':pr.jabatan,'gaji':pr.gaji,'alasan':pr.alasan})) 
+                    prod_ids4.append((0,0, {'no':pr.no,'name':pr.name,'tempat':pr.tempat,'tahun_msk':pr.tahun_msk,'tahun_klr':pr.tahun_klr,'job_id':pr.job_id.id,'gaji':pr.gaji,'alasan':pr.alasan})) 
                 le=self.pool.get('hr_recruit.kon1')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids5=[]   
                 for pr in lele:
-                    prod_ids5.append((0,0, {'employee_id':pr.employee_id.name,'alamat':pr.alamat,'jabatan':pr.jabatan})) 
+                    prod_ids5.append((0,0, {'employee_id':pr.employee_id.name,'alamat':pr.alamat,'jabatan':pr.jabatan,'telepon':pr.telepon})) 
                 le=self.pool.get('hr_recruit.kon2')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids6=[]   
                 for pr in lele:
-                    prod_ids6.append((0,0, {'name':pr.name,'alamat':pr.alamat,'jabatan':pr.jabatan}))  
+                    prod_ids6.append((0,0, {'name':pr.name,'alamat':pr.alamat,'jabatan':pr.jabatan,'telepon':pr.telepon}))  
                 emp_id = hr_employee.create(cr,uid,{'name': applicant.partner_name or applicant.name,
                                                      'job_id': applicant.job_id.id,
                                                      'department_id': applicant.department_id.id,
@@ -157,7 +157,7 @@ class hr_applicant(osv.osv):
                                                      'agama_id' : applicant.agama_id.id,
                                                      'country_id' : applicant.country_id.id,
                                                      'ktp' : applicant.ktp,
-                                                     'dikeluarkan' : applicant.dikeluarkan,
+                                                     'issued_id' : applicant.issued_id,
                                                      'tgl_keluar_ktp' : applicant.tgl_keluar_ktp,
                                                      'tgl_berlaku' : applicant.tgl_berlaku,
                                                      'sim' : applicant.sim,
@@ -238,7 +238,7 @@ class hr_applicant(osv.osv):
         per=partner.browse(cr,uid,pero,context)[0] 
         job_name=per.name     
         job_umr=per.usia
-        job_pend=per.pendidikan_id.id
+        job_pend=per.type_id_id.id
         job_kelamin =per.kelamin
         job_pengalaman=per.pengalaman
         job_status=per.sts_prk
@@ -295,9 +295,10 @@ class hr_applicant(osv.osv):
         'agama_id':fields.many2one('hr_recruit.agama','Agama'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No KTP',20),
-        'dikeluarkan':fields.char('Dikeluarkan di',50),
+        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan Oleh',50),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
+        'tgl_berlaku2':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
         'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan'),
         'alamat1':fields.text('Alamat 1'),
@@ -311,16 +312,17 @@ class hr_applicant(osv.osv):
         'susunan_kel2_ids':fields.one2many('hr_recruit.suskel2','applicant_id','Susunan Keluarga'),
         'rwt_pend_ids':fields.one2many('hr_recruit.rwt_pend','applicant_id','Riwayat Pendidikan'),
         'bahasa_ids':fields.one2many('hr_recruit.bahasa','applicant_id','Bahasa'),
-        'rwt_krj_ids':fields.one2many('hr_recruit.rwt_krj','applicant_id','Rwayat Pekerjaan'),
-        'koneksi1_ids':fields.one2many('hr_recruit.kon1','applicant_id','Koneksi Internal'),
-        'koneksi2_ids':fields.one2many('hr_recruit.kon2','applicant_id','Koneksi Eksternal'),
+        'rwt_krj_ids':fields.one2many('hr_recruit.rwt_krj','applicant_id','Riwayat Pekerjaan'),
+        'koneksi1_ids':fields.one2many('hr_recruit.kon1','applicant_id','Referensi Internal'),
+        'koneksi2_ids':fields.one2many('hr_recruit.kon2','applicant_id','Referensi Eksternal'),
         'interview_ids':fields.one2many('hr_recruit.interview','applicant_id','Mulai Interview'),
         'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan',required=True),
         'job_id': fields.many2one('hr.job', 'Applied Job',required=True),
-        'type_id': fields.many2one('hr.recruitment.degree', 'Degree',required=True),
+        'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
         'result_id':fields.many2one('hr_recruit.result','Result'),
         'surv_ids':fields.one2many('hr.survey','applicant_id','Interview Form'),
         'pengalaman':fields.integer('Pengalaman (min-th)'),
+        'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
         }
 hr_applicant()
 
@@ -330,11 +332,12 @@ class susunan_keluarga1(osv.osv):
     _columns= {
         'applicant_id':fields.many2one('hr.applicant'),
         'name':fields.char('Nama',required=True),
-        'jenis_kel':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
+        'kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir'),
-        'pendidikan':fields.char('Pendidikan',50),
+        'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan'),
         'pekerjaan':fields.char('Pekerjaan',60),
+        'susunan':fields.selection([('Suami','Suami'),('Istri','Istri'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Status Dalam Keluarga'),
             }
 susunan_keluarga1()
 
@@ -343,12 +346,12 @@ class susunan_keluarga2(osv.osv):
     
     _columns= {
         'applicant_id':fields.many2one('hr.applicant'),
-        'susunan':fields.selection([('Ayah','Ayah'),('Ibu','Ibu'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Nama Susunan Keluarga'),
+        'susunan':fields.selection([('Ayah','Ayah'),('Ibu','Ibu'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Status Dalam Keluarga'),
         'name':fields.char('Nama',required=True),
-        'jenis_kel':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
+        'kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir'),
-        'pendidikan':fields.char('Pendidikan',50),
+        'type_id':fields.many2one('hr.recruitment.degree', 'Pendidikan'),
         'pekerjaan':fields.char('Pekerjaan',60),
             }
 susunan_keluarga2()   
@@ -359,10 +362,11 @@ class rwt_pendidikan(osv.osv):
     _columns= {
         'applicant_id':fields.many2one('hr.applicant'),
         'name':fields.char('Nama Sekolah',128,required=True),
-        'jurusan':fields.char('Jurusan',50),
-        'tempat':fields.char('Tempat',60),
-        'tahun':fields.char('Dari-Sampai tahun',11),
-        'ijazah':fields.char('Ijazah yang Diperoleh',100),
+        'jurusan':fields.many2one('hr_recruit.jurusan_detail','Jurusan',50),
+        'tempat':fields.text('Alamat'),
+        'tahun_msk':fields.date('Tahun Masuk'),
+        'tahun_klr':fields.date('Tahun Keluar'),
+        'ijazah':fields.many2one('hr.recruitment.degree','Ijazah yang Diperoleh'),
             }
 rwt_pendidikan()      
 
@@ -371,9 +375,9 @@ class bahasa(osv.osv):
     
     _columns= {
         'applicant_id':fields.many2one('hr.applicant','Applicant'),        
-        'name':fields.char('Nama',30,required=True),
-        'tulis':fields.selection([('Sedang','Sedang'),('Cukup_Baik','Cukup Baik'),('Baik','Baik'),('Sangat_Baik','Sangat Baik')],'Tertulis'),
-        'lisan':fields.selection([('Sedang','Sedang'),('Cukup_Baik','Cukup Baik'),('Baik','Baik'),('Sangat_Baik','Sangat Baik')],'Lisan'),
+        'name':fields.many2one('res.country', 'Bahasa',required=True),
+        'tulis':fields.many2one('hr_recruit.b_tulisan','Tertulis'),
+        'lisan':fields.many2one('hr_recruit.b_lisan','Lisan'),
             }
 bahasa()    
 
@@ -381,14 +385,21 @@ class rwt_pekerjaan(osv.osv):
     _name='hr_recruit.rwt_krj'
     
     _columns= {
+        'no':fields.integer('Nomor',readonly=True),
         'applicant_id':fields.many2one('hr.applicant'), 
-        'no':fields.integer('No'),
-        'name':fields.char('Nama Perusahaan & Tempat',128),
-        'tahun':fields.char('Dari-Sampai Tahun',11),
+        'name':fields.char('Nama Perusahaan',60),
+        'tempat':fields.text('Alamat'),
+        'tahun_msk':fields.date('Tahun Masuk'),
+        'tahun_klr':fields.date('Tahun Keluar'),
         'jabatan':fields.char('Jabatan',30),
         'gaji':fields.float('Gaji'),
         'alasan':fields.char('Alasan Pindah',30),
             }
+            
+    #_defaults = {               
+        #'no': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'hr_recruit.rwt_krj'),
+               # }
+            
 rwt_pekerjaan()
 
 class koneksi1(osv.osv):
@@ -397,8 +408,9 @@ class koneksi1(osv.osv):
     _columns={        
         'applicant_id':fields.many2one('hr.applicant',),
         'employee_id':fields.many2one('hr.employee','Nama'),
-        'alamat':fields.text('Alamat/Telepon'),
-        'jabatan':fields.char('Jabatan',30),
+        'job_id':fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan',readonly=True),
+        'alamat':fields.text('Alamat'),
+        'telepon':fields.char('Telepon',25),
             }
 koneksi1()
 
@@ -408,8 +420,9 @@ class koneksi2(osv.osv):
     _columns={        
         'applicant_id':fields.many2one('hr.applicant'),
         'name':fields.char('Nama',60),
-        'alamat':fields.text('Alamat/Telepon'),
+        'alamat':fields.text('Alamat'),
         'jabatan':fields.char('Jabatan',30),
+        'telepon':fields.char('Telepon',25),
             }
 koneksi2()
 
@@ -487,6 +500,22 @@ class gelar(osv.osv):
         'name':fields.char('Gelar',50),
         }
 gelar()
+
+class b_lisan(osv.osv):
+    _name='hr_recruit.b_lisan'
+        
+    _columns={
+        'name':fields.char('Lisan',20),
+        }
+b_lisan()
+
+class b_tulisan(osv.osv):
+    _name='hr_recruit.b_tulisan'
+        
+    _columns={
+        'name':fields.char('Tulisan',20),
+        }
+b_tulisan()
 
 class hr_survey(osv.osv):
     _name='hr.survey'
