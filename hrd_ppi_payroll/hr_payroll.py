@@ -249,13 +249,13 @@ class hr_payslip(osv.osv):
         dep_id=dep_obj.browse(cr,uid,grade_src,context=context)
         for grade in grade_id :
             grade_pay = grade.id
-            for dep in dep_id :
-                dep_pay = dep_id.id
-                res['value'].update({
+            #for dep in dep_id :
+             #   dep_pay = dep_id.id
+            res['value'].update({
                             'name': _('Salary Slip of %s for %s') % (employee_id.name, tools.ustr(ttyme.strftime('%B-%Y'))),
                             'company_id': employee_id.company_id.id,
                             'gol_id': grade_pay,
-                            'department_id' : dep_pay
+                           # 'department_id' : dep_pay
                 })
 
         if not context.get('contract', False):
