@@ -9,7 +9,8 @@ Human Resource PT.PPI
     'depends': ['hr','hr_recruitment','hr_attendance',"hr_payroll","hrd_ppi"],
     'update_xml':[
     	'salary_structure.xml',
-    	'payslip_view.xml'
+    	'payslip_view.xml',
+    	'report/hr_payrport.xml'
     ],
     'data': [],
     'installable':True,

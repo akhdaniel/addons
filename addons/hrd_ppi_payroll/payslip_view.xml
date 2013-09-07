@@ -37,5 +37,6 @@
                 </search>
             </field>
         </record>
+        <!--menuitem id="jenis_tunjangan" parent="menu_hr_root_payroll" name="Jenis Tunjangan" groups="base.group_hr_manager" sequence="45"/-->
     </data>
 </openerp>
