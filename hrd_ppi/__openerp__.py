@@ -13,7 +13,7 @@ Human Resource PT.PPI
             'hr_recruitment.xml',
             'hr_applicant_view.xml',           
             'ppi_workflow.xml',
-            'hr_employs_tab.xml',
+            'hr_employs_tab.xml',           
             ],
     'data': [],
     'installable':True,
