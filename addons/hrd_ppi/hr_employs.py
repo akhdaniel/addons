@@ -5,6 +5,7 @@ class employee(osv.osv):
     _inherit = 'hr.employee'
     
     _columns = {
+        'nik': fields.char('NIK',20,readonly=True),
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin'),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
@@ -55,6 +56,10 @@ class employee(osv.osv):
         'kodepos':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         }
+        
+    _defaults = {
+        'nik': lambda self, cr, uid, context={}: self.pool.get('ir.sequence').get(cr, uid, 'hr.employee'),
+                }
         
 
 employee()
@@ -210,11 +215,5 @@ class pansion(osv.osv):
             }
 pansion()
 
-class employee(osv.osv):
-    _name='hr.employee'
-    _inherit = 'hr.employee'
-    _columns ={
-        'nik': fields.char('NIK',20),
 
-        }
 employee()
