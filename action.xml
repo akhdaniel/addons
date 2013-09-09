@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <!-- ACTION WINDOWS -->
+    <record id="action_hr_training" model="ir.actions.act_window">
+        <field name="name">Analisa Kebutuhan Pelatihan</field>
+        <field name="res_model">hr_training.analisa</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="action_hr_rencana_training" model="ir.actions.act_window">
+        <field name="name">Rencana Training</field>
+        <field name="res_model">hr_training.train</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+     <!--record model="ir.actions.act_window" id="action_hr_recruit">
+        <field name="name">Permohonan Rekrutmen</field>
+        <field name="res_model">hr.job</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record-->
+
+	<!-- system MENU -->
+    <!--menuitem action="action_hr_recruit" id="hr_menu_recruit" parent="hr.menu_hr_main" name="Permohonan recruitment" groups="group_hr_department,group_hr_user"/-->       
+    <menuitem action="action_hr_training" id="hr_menu_training" parent="hr.menu_hr_main" name="Analisa Kebutuhan Pelatihan" /> 
+    <menuitem action="action_hr_rencana_training" id="hr_menu_rencana_training" parent="hr.menu_hr_main" name="Rencana Training" />
+    <menuitem parent="hr.menu_hr_configuration" name="Tools" id="base.menu_tools" sequence="120" groups="base.group_tool_user"/>  
+</data>
+</openerp>
