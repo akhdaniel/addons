@@ -1,0 +1,55 @@
+<openerp>
+    <data>
+      <record model="ir.ui.view" id="tab_training_view">
+            <field name="name">employee.training</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml"> 
+                <!--field name="name" position="after">
+                    <field name="nik" placeholder="Nomor Induk Karyawan"/>
+                </field-->
+                <page string ="HR Settings" position="after">                      
+                    <page string="Training" name="training">
+                    <group colspan="2">
+                        <field view_mode="tree,form" name="train_ids" nolabel="1" >
+                            <tree>      
+                                <field name="subject"/>                        
+                                <field name="tanggal"/>
+                                <field name="lama"/>
+                                <field name="penyelenggara"/>
+                                <field view_mode="tree,form" name="bukti_ids" nolabel="1" >
+                                    <tree>     
+                                        <field name="name"/>                                                           
+                                    </tree>
+                                    <form>     
+                                        <field name="name"/>                                                           
+                                    </form>
+                                </field>                                    
+                            </tree>
+                            <form>
+                                <field name="analisa_id"/> 
+                                <field name="subject"/>
+                                <field name="lama"/>
+                                <field name="tanggal"/>
+                                <field name="penyelenggara"/>
+                                <field view_mode="tree,form" name="bukti_ids" >
+                                    <tree>     
+                                        <field name="name"/>                                                           
+                                    </tree>
+                                    <form>     
+                                        <field name="name"/>                                                           
+                                    </form>
+                                </field>  
+                            </form>
+                        </field>
+
+                            
+                    </group>
+                    </page>	
+                </page>	        		                 	                                                                 
+            </field>       
+        </record>
+
+    </data>
+</openerp>
