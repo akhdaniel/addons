@@ -20,17 +20,24 @@ class permohonan_recruit(osv.osv):
  
     def action_in_progress(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[2][0]},context=context)
+    	
+    def scroll_no(self, cr, uid, ids, no, args, context=None):
+        res = []
+        for x in range(15,51):
+            res.append(x)
+        return res
+
     
     _columns= {
         'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian')],'Jenis Permohonan',required=True),
-        'no':fields.char('Nomor',20,required=True),
-        'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],'Status Jabatan'),
-        'pendidikan_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
+        'no':fields.char('Nomor',20),
+        'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],'Status'),
+        'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
         'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','jurusan'),
         'pengalaman':fields.integer('Pengalaman (min-th)'),
-        'usia':fields.integer('Usia (max)'),
-        'sts_prk':fields.selection([('Belum_Menikah','Belum Menikah'),('Menikah','Menikah')],'Status Pernikahan'),
-        'kelamin':fields.selection([('male','Male'),('female','female'),('male/Female','Male / Female')],'Jenis Kelamin'),
+        'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','25'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],'Usia (max)'),
+        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan'),
+        'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],'Jenis Kelamin'),
         'wkt_pemohon':fields.date('Permintaan Pemohon'),
         'wkt_rekruter':fields.date('Kesanggupan Rekruter'),
         'catatan':fields.char('Realisasi Penempatan',128),
@@ -72,7 +79,7 @@ class jurusan(osv.osv):
     _columns= {
         'name':fields.many2one('hr_recruit.jurusan_detail','Jurusan',required=True),
         #'pendidikan_id':fields.many2one('hr_recruit.pendidikan'),
-        'permohonan_recruit_id':fields.many2one('hr.job'),
+        'permohonan_recruit_id':fields.many2one('hr.job','Pekerjaan'),
             }
 jurusan()
 
@@ -89,6 +96,15 @@ class hr_applicant(osv.osv):
     _inherit='hr.applicant'
     _rec_name='partner_name'
     #_inherit = ['mail.thread', 'ir.needaction_mixin']
+    
+    def create(self, cr, uid, vals, context=None):
+        vals['name'] = vals['name'].title()
+        return super(hr_applicant, self).create(cr, uid, vals, context)
+ 
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals.get('name', False):
+            vals['name'] = vals['name'].title()
+        return super(hr_applicant, self).write(cr, uid, ids, vals, context)
     
     def case_close_with_emp(self, cr, uid, ids,vals, context=None):
         if context is None:
@@ -238,7 +254,7 @@ class hr_applicant(osv.osv):
         per=partner.browse(cr,uid,pero,context)[0] 
         job_name=per.name     
         job_umr=per.usia
-        job_pend=per.type_id_id.id
+        job_pend=per.type_id.id
         job_kelamin =per.kelamin
         job_pengalaman=per.pengalaman
         job_status=per.sts_prk
@@ -257,15 +273,14 @@ class hr_applicant(osv.osv):
                 stgs=line.id
             if stage == 2 :
                 stg=line.id
-                if ap_umr <= job_umr or job_umr == 0 :
-                    if ap_pend == job_pend and job_pengalaman <= ap_pengalaman:
-                        if job_kelamin == 'male/female' or job_kelamin == ap_kelamin :
-                            if ap_status == job_status or job_status == False :
-                                for jjr in jur:
-                                    perok=jjr.name.id
-                                    if perok == ap_jurusan :                                
-                                        return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
+                if ap_umr <= job_umr or job_umr == 0 and ap_pend == job_pend and job_pengalaman <= ap_pengalaman and job_kelamin == 'male/female' or job_kelamin == ap_kelamin and ap_status == job_status or job_status == "" :
+                    for jjr in jur:
+                        perok=jjr.name.id
+                        if perok == ap_jurusan :                                
+                            return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
+
+    
 
     def interview(self, cr, uid,vals, context=None):
         #import pdb;pdb.set_trace()
@@ -286,6 +301,33 @@ class hr_applicant(osv.osv):
         vals=self.interview(cr, uid, vals, context=None)
         result= super(hr_applicant,self).create (cr, uid, vals, context=None)
         return result 
+        
+    def simpul(self, cr, uid,ids,vals,context=None):     
+        #import pdb;pdb.set_trace() 
+        hasil=self.browse(cr,uid,ids)[0]
+        #hasil2=hasil.kesimpulan
+        partner=self.pool.get('hr.recruitment.stage')  
+        pero=partner.search(cr,uid,[])     
+        pers=partner.browse(cr,uid,pero,context)
+        stg2=float(hasil.stage_id.sequence)+1
+        for line in pers: 
+            stage=line.sequence
+            #if stage == 100 :
+               # stgs=line.id
+                #if hasil2 == 'Ditolak':         
+                    #vals=stg                       
+                    #return self.write(cr,uid,ids,{'stage_id': stgs},context=context)   
+            if stage == stg2 :
+                stg=line.id
+                #if hasil2 == 'Dapat_Diterima':   
+                    #vals=stg                             
+                return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
+        #return self.write(cr,uid,ids,{'stage_id': stgs},context=context)    
+    
+    #def write(self, cr, uid, ids, vals, context=None):      
+        #vals=self.simpul(cr, uid, ids, vals, context=None)
+        #result= super(hr_applicant,self).write (cr, uid, ids,vals, context)
+        #return result 
                         
     _columns= {
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin',required=True),
@@ -305,7 +347,7 @@ class hr_applicant(osv.osv):
         'alamat2':fields.text('Alamat 2'),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
-        'status':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan'),
+        'status':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan',required=True),
         'sjk_tanggal':fields.date('Sejak Tanggal'),  
         'survey_id': fields.many2one('survey', 'Interview Form', help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),      
         'susunan_kel1_ids':fields.one2many('hr_recruit.suskel1','applicant_id','Susunan Keluarga'),
@@ -322,7 +364,9 @@ class hr_applicant(osv.osv):
         'result_id':fields.many2one('hr_recruit.result','Result'),
         'surv_ids':fields.one2many('hr.survey','applicant_id','Interview Form'),
         'pengalaman':fields.integer('Pengalaman (min-th)'),
-        'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
+        'stage_id': fields.many2one ('hr.recruitment.stage', 'Stage',
+                        domain="['&', ('fold', '=', False), '|', ('department_id', '=', department_id), ('department_id', '=', False)]",readonly=True),
+        #'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
         }
 hr_applicant()
 
