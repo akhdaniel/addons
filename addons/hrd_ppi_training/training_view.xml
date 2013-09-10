@@ -26,7 +26,7 @@
             <field name="arch" type="xml">
                 <tree string="Rencana Training">
                     <field name="employee_id"/>
-                    <!--field name="subject_id"/--> 
+                    <field name="subject"/> 
                     <field name="department_id"/>                                                            
                     <field name="job_id"/> 
                     <field name="penyelenggara"/> 
@@ -62,17 +62,17 @@
                         states="verify" name="signal_reject"/>     
                     
                     <button string="Second Approve" type="workflow"  
-                        states="verify2" name="signal_approve_hr_department"
+                        states="approve" name="signal_approve_hr_department"
                         groups="hrd_ppi.group_hr_department"
                         class="oe_highlight"  />  
                         
                     <button string="Second Reject" type="workflow"  
                         groups="hrd_ppi.group_hr_department"
-                        states="verify2" name="signal_reject_hr_department"/>                                                                  
+                        states="approve" name="signal_reject_hr_department"/>                                                                  
 
                     <button string="Start Evaluation" type="workflow"  
                         groups="hrd_ppi.group_hr_manager"
-                        states="approve" name="signal_evaluation" 
+                        states="approve2" name="signal_evaluation" 
                         class="oe_highlight" /> 
                         
                     <!--button string="SendMail" type="object" name="send_email" class="oe_highlight" /--> 
@@ -173,7 +173,7 @@
             <field name="arch" type="xml">
                 <search string="Rencana Pelatihan">
                     <group expand="0" string="Group By...">
-                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
+                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject'}"/>
                         <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
                         <!--filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/-->
                         <!--filter string="Internal/Eksternal" icon="terp-personal+" domain="[]" context="{'group_by':'is_internal'}"/-->
