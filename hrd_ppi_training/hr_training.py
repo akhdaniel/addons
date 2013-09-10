@@ -15,13 +15,13 @@ class train(osv.osv):
     _name = 'hr_training.train'
 
     _columns = {
-        'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),
+        'employee_id' : fields.many2one('hr.employee','Nama Karyawan',store=True),
         'job_id' :fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan'),
-        'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen'),
+        'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen',store=True),
         'paket_id': fields.related('analisa_id','bukti',type='char',relation='hr_training.analisa',string='Paket Pelatihan'),
         'analisa_id':fields.many2one('hr_training.analisa','Nama Training'),
         'subject_id':fields.related('analisa_id','subject_id',type='char',relation='hr_training.analisa',string='Nama Training ID'),
-        'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Training'),
+        'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Training',store=True),
         'evaluasi_id':fields.many2one('hr_training.evaluasi_training','Evaluasi Training'),
         'rekomendasi_id':fields.many2one('hr_training.rekomendasi_training','Rekomendasi'),
         'lama' : fields.related('analisa_id','lama',type='char',relation='hr_training.analisa',string='Lama'),
