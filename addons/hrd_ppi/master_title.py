@@ -7,7 +7,7 @@ class title(osv.osv):
         'name' : fields.char('Description'),
         'digit':fields.integer('Digit'),
         'code':fields.char('Code'),
-        'Jenis_tunjangan':fields.selection([('overtime','Overtime'),('incentive','Incentive')],"Jenis Tunjangan"),
+        'urutan':fields.char("Urutan"),
     }
 title
 
