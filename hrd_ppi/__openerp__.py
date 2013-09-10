@@ -17,7 +17,8 @@ Human Resource PT.PPI
             'grade_structure.xml',   
             'title_structure.xml',
     	    'title_view.xml',
-        	'payslip_view.xml'      
+        	'payslip_view.xml', 
+			'extitle.xml',
             ],
     'data': [],
     'installable':True,
