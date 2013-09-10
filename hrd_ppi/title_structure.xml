@@ -1,0 +1,605 @@
+<openerp>
+    <data>
+        <record id="hr_title1" model="hr.title">
+	            <field name="name">(None)</field>
+	            <field name="digit">5</field>
+	            <field name="code"></field>
+	    </record>
+	    <record id="hr_title2" model="hr.title">
+	            <field name="name">None</field>
+	            <field name="digit">5</field>
+	            <field name="code">99</field>
+	    </record>
+	    <record id="hr_title3" model="hr.title">
+	            <field name="name">ACCOUNTING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T01</field>
+	    </record>
+		<record id="hr_title4" model="hr.title">
+	            <field name="name">ACCOUNTING STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T02</field>
+	    </record>
+	    <record id="hr_title5" model="hr.title">
+	            <field name="name">ADM. MARKETING</field>
+	            <field name="digit">5</field>
+	            <field name="code">T03</field>
+	    </record>
+	    <record id="hr_title6" model="hr.title">
+	            <field name="name">ADM. PAYROLL STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T04</field>
+	    </record>
+        <record id="hr_title7" model="hr.title">
+	            <field name="name">ADM. PROYEK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T05</field>
+	    </record>
+	    <record id="hr_title8" model="hr.title">
+	            <field name="name">ADM. PURCHASING</field>
+	            <field name="digit">5</field>
+	            <field name="code">T06</field>
+	    </record>
+	    <record id="hr_title9" model="hr.title">
+	            <field name="name">ADM. TEKNIK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T07</field>
+	    </record>
+	    <record id="hr_title10" model="hr.title">
+	            <field name="name">ADMIN AND FINANCE DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T08</field>
+	    </record>
+	    <record id="hr_title11" model="hr.title">
+	            <field name="name">ANGGOTA SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">T09</field>
+	    </record>
+	    <record id="hr_title12" model="hr.title">
+	            <field name="name">ASSISTEN OPERATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T10</field>
+	    </record>
+	    <record id="hr_title13" model="hr.title">
+	            <field name="name">REPAIR PRODUCT SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T100</field>
+	    </record>
+	    <record id="hr_title14" model="hr.title">
+	            <field name="name">RIGGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T101</field>
+	    </record>
+	    <record id="hr_title15" model="hr.title">
+	            <field name="name">S.H.E. SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T102</field>
+	    </record>
+	    <record id="hr_title16" model="hr.title">
+	            <field name="name">SAFETY OFFICER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T103</field>
+	    </record>
+	    <record id="hr_title17" model="hr.title">
+	            <field name="name">SECRETARY</field>
+	            <field name="digit">5</field>
+	            <field name="code">T104</field>
+	    </record>
+	    <record id="hr_title18" model="hr.title">
+	            <field name="name">SENIOR DESIGN ENGINEER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T105</field>
+	    </record>
+	    <record id="hr_title19" model="hr.title">
+	            <field name="name">SENIOR ESTIMATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T106</field>
+	    </record>
+	    <record id="hr_title20" model="hr.title">
+	            <field name="name">SENIOR PROCUREMENT</field>
+	            <field name="digit">5</field>
+	            <field name="code">T107</field>
+	    </record>
+	    <record id="hr_title21" model="hr.title">
+	            <field name="name">STOCK AND DELIVERY SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T108</field>
+	    </record>
+	    <record id="hr_title22" model="hr.title">
+	            <field name="name">SURVEYOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T108</field>
+	    </record>
+	    <record id="hr_title23" model="hr.title">
+	            <field name="name">BATCHING PLANT SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T11</field>
+	    </record>
+	    <record id="hr_title24" model="hr.title">
+	            <field name="name">TAX STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T110</field>
+	    </record>
+	    <record id="hr_title25" model="hr.title">
+	            <field name="name">TIME KEEPER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T111</field>
+	    </record>
+	    <record id="hr_title26" model="hr.title">
+	            <field name="name">TOOL KEEPER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T112</field>
+	    </record>
+	    <record id="hr_title27" model="hr.title">
+	            <field name="name">VICE PRESIDENT DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T114</field>
+	    </record>
+	    <record id="hr_title28" model="hr.title">
+	            <field name="name">WAREHOUSE SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T114</field>
+	    </record>
+	    <record id="hr_title29" model="hr.title">
+	            <field name="name">WELDER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T115</field>
+	    </record>
+	    <record id="hr_title30" model="hr.title">
+	            <field name="name">ADMINISTRASI</field>
+	            <field name="digit">5</field>
+	            <field name="code">T116</field>
+	    </record>
+	    <record id="hr_title31" model="hr.title">
+	            <field name="name">STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T117</field>
+	    </record>
+	        <record id="hr_title32" model="hr.title">
+	            <field name="name">STOCK AND DELIVERY SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T118</field>
+	    </record>
+	    <record id="hr_title33" model="hr.title">
+	            <field name="name">CAGING SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T12</field>
+	    </record>
+	    <record id="hr_title34" model="hr.title">
+	            <field name="name">CASHIER</field>
+	            <field name="digit">13</field>
+	            <field name="code">T13</field>
+	    </record>
+	    <record id="hr_title35" model="hr.title">
+	            <field name="name">CHIEF SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">T14</field>
+	    </record>
+	    <record id="hr_title36" model="hr.title">
+	            <field name="name">COLECTOR STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T15</field>
+	    </record>
+	    <record id="hr_title37" model="hr.title">
+	            <field name="name">CONCRETE SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T16</field>
+	    </record>
+	    <record id="hr_title38" model="hr.title">
+	            <field name="name">COST CONTROL COORDINATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T17</field>
+	    </record>
+	    <record id="hr_title39" model="hr.title">
+	            <field name="name">COST CONTROL STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T18</field>
+	    </record>
+	    <record id="hr_title40" model="hr.title">
+	            <field name="name">DELIVERY STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T19</field>
+	    </record>
+	    <record id="hr_title41" model="hr.title">
+	            <field name="name">DESIGN ENGINER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T20</field>
+	    </record>
+	    <record id="hr_title42" model="hr.title">
+	            <field name="name">DRAFTER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T21</field>
+	    </record>
+	    <record id="hr_title43" model="hr.title">
+	            <field name="name">DRIVER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T22</field>
+	    </record>
+	    <record id="hr_title44" model="hr.title">
+	            <field name="name">DRIVER MIXER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T23</field>
+	    </record>
+	    <record id="hr_title45" model="hr.title">
+	            <field name="name">ELECTRIC</field>
+	            <field name="digit">5</field>
+	            <field name="code">T24</field>
+	    </record>
+	    <record id="hr_title46" model="hr.title">
+	            <field name="name">ELECTRIC SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T25</field>
+	    </record>
+	    <record id="hr_title47" model="hr.title">
+	            <field name="name">ELECTRICIAN</field>
+	            <field name="digit">5</field>
+	            <field name="code">T26</field>
+	    </record>
+	    <record id="hr_title48" model="hr.title">
+	            <field name="name">ENGINEERING</field>
+	            <field name="digit">5</field>
+	            <field name="code">T27</field>
+	    </record>
+	    <record id="hr_title49" model="hr.title">
+	            <field name="name">ESTIMATOR STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T28</field>
+	    </record>
+	    <record id="hr_title50" model="hr.title">
+	            <field name="name">EXECUTIF SECRETARY</field>
+	            <field name="digit">5</field>
+	            <field name="code">T29</field>
+	    </record>
+	    <record id="hr_title51" model="hr.title">
+	            <field name="name">FABRICATION SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T30</field>
+	    </record>
+	    <record id="hr_title52" model="hr.title">
+	            <field name="name">FACTORY MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T31</field>
+	    </record>
+	    <record id="hr_title53" model="hr.title">
+	            <field name="name">FINANCE MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T32</field>
+	    </record>
+	    <record id="hr_title54" model="hr.title">
+	            <field name="name">FINANCE STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T33</field>
+	    </record>
+	    <record id="hr_title55" model="hr.title">
+	            <field name="name">FOREMAN</field>
+	            <field name="digit">5</field>
+	            <field name="code">T34</field>
+	    </record>
+	    <record id="hr_title56" model="hr.title">
+	            <field name="name">GENERAL AFFAIRS SECT. HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T35</field>
+	    </record>
+	    <record id="hr_title57" model="hr.title">
+	            <field name="name">GENERAL AFFAIRS STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T36</field>
+	    </record>
+	    <record id="hr_title58" model="hr.title">
+	            <field name="name">GENERAL WORKER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T37</field>
+	    </record>
+	    <record id="hr_title59" model="hr.title">
+	            <field name="name">HELPER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T38</field>
+	    </record>
+	    <record id="hr_title60" model="hr.title">
+	            <field name="name">HRD-GA MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T39</field>
+	    </record>
+	    <record id="hr_title61" model="hr.title">
+	            <field name="name">KA.ADM. TEKNIK AND KONTRAK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T40</field>
+	    </record>	
+	    <record id="hr_title62" model="hr.title">
+	            <field name="name">KA. PELAKSANA ARSITEKTUR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T41</field>
+	    </record>
+	    <record id="hr_title63" model="hr.title">
+	            <field name="name">KA. PELAKSANA MECH AND ELECT</field>
+	            <field name="digit">5</field>
+	            <field name="code">T42</field>
+	    </record>
+	    <record id="hr_title64" model="hr.title">
+	            <field name="name">KENDALI BIAYA</field>
+	            <field name="digit">5</field>
+	            <field name="code">T43</field>
+	    </record>
+	    <record id="hr_title65" model="hr.title">
+	            <field name="name">KENDALI MUTU</field>
+	            <field name="digit">5</field>
+	            <field name="code">T44</field>
+	    </record>
+	    <record id="hr_title66" model="hr.title">
+	            <field name="name">KEPALA ALAT</field>
+	            <field name="digit">5</field>
+	            <field name="code">T45</field>
+	    </record>
+	    <record id="hr_title67" model="hr.title">
+	            <field name="name">KEPALA DRAFTER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T46</field>
+	    </record>
+	    <record id="hr_title68" model="hr.title">
+	            <field name="name">KEPALA KENDALI MUTU</field>
+	            <field name="digit">5</field>
+	            <field name="code">T47</field>
+	    </record>
+	    <record id="hr_title69" model="hr.title">
+	            <field name="name">KEPALA KONSTRUKSI</field>
+	            <field name="digit">5</field>
+	            <field name="code">T48</field>
+	    </record>
+	    <record id="hr_title70" model="hr.title">
+	            <field name="name">KEPALA LAPANGAN</field>
+	            <field name="digit">5</field>
+	            <field name="code">T49</field>
+	    </record>
+	    <record id="hr_title71" model="hr.title">
+	            <field name="name">KEPALA LOGISTIK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T50</field>
+	    </record>
+	    <record id="hr_title72" model="hr.title">
+	            <field name="name">KEPALA PROYEK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T51</field>
+	    </record>
+	    <record id="hr_title73" model="hr.title">
+	            <field name="name">KEPALA REGU SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">T52</field>
+	    </record>
+	    <record id="hr_title74" model="hr.title">
+	            <field name="name">KEPALA SURVEYOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T53</field>
+	    </record>
+	    <record id="hr_title75" model="hr.title">
+	            <field name="name">KOORDINATOR PROYEK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T54</field>
+	    </record>
+	    <record id="hr_title76" model="hr.title">
+	            <field name="name">LABORATORY SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T55</field>
+	    </record>
+	    <record id="hr_title77" model="hr.title">
+	            <field name="name">LABORATORY TECHNICIAN</field>
+	            <field name="digit">5</field>
+	            <field name="code">T56</field>
+	    </record>
+	    <record id="hr_title78" model="hr.title">
+	            <field name="name">LEGAL STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T57</field>
+	    </record>
+	    <record id="hr_title79" model="hr.title">
+	            <field name="name">LOGISTIK</field>
+	            <field name="digit">5</field>
+	            <field name="code">T58</field>
+	    </record>
+	    <record id="hr_title80" model="hr.title">
+	            <field name="name">MAINTENANCE SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T59</field>
+	    </record>
+	    <record id="hr_title81" model="hr.title">
+	            <field name="name">MAINTENANCE SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T60</field>
+	    </record>
+	    <record id="hr_title82" model="hr.title">
+	            <field name="name">MARKETING DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T61</field>
+	    </record>
+	    <record id="hr_title83" model="hr.title">
+	            <field name="name">MARKETING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T62</field>
+	    </record>
+	    <record id="hr_title84" model="hr.title">
+	            <field name="name">MARKETING STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T63</field>
+	    </record>
+	    <record id="hr_title85" model="hr.title">
+	            <field name="name">MECHANIC</field>
+	            <field name="digit">5</field>
+	            <field name="code">T64</field>
+	    </record>
+	    <record id="hr_title86" model="hr.title">
+	            <field name="name">MECHANIC SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T65</field>
+	    </record>
+	    <record id="hr_title87" model="hr.title">
+	            <field name="name">MESSENGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T66</field>
+	    </record>
+	    <record id="hr_title88" model="hr.title">
+	            <field name="name">MIS/IT SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T67</field>
+	    </record>
+	    <record id="hr_title89" model="hr.title">
+	            <field name="name">MIS/IT STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T68</field>
+	    </record>
+	    <record id="hr_title90" model="hr.title">
+	            <field name="name">OFFICE BOY</field>
+	            <field name="digit">5</field>
+	            <field name="code">T69</field>
+	    </record>
+	    <record id="hr_title91" model="hr.title">
+	            <field name="name">OPERATION DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T70</field>
+	    </record>
+	    <record id="hr_title92" model="hr.title">
+	            <field name="name">OPERATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T71</field>
+	    </record>
+	    <record id="hr_title93" model="hr.title">
+	            <field name="name">OPERATOR CRANE</field>
+	            <field name="digit">5</field>
+	            <field name="code">T72</field>
+	    </record>
+	    <record id="hr_title94" model="hr.title">
+	            <field name="name">OPERATOR LOADER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T73</field>
+	    </record>
+	    <record id="hr_title95" model="hr.title">
+	            <field name="name">OPT.TELP/RECEPTION</field>
+	            <field name="digit">5</field>
+	            <field name="code">T74</field>
+	    </record>
+	    <record id="hr_title96" model="hr.title">
+	            <field name="name">PELAKSANA ARSITEKTUR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T75</field>
+	    </record>
+	    <record id="hr_title97" model="hr.title">
+	            <field name="name">PELAKSANA MECH AND ELECT</field>
+	            <field name="digit">5</field>
+	            <field name="code">T76</field>
+	    </record>
+	    <record id="hr_title98" model="hr.title">
+	            <field name="name">PERAWATAN ALAT</field>
+	            <field name="digit">5</field>
+	            <field name="code">T77</field>
+	    </record>
+	    <record id="hr_title99" model="hr.title">
+	            <field name="name">PERS. ADM STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T78</field>
+	    </record>
+	    <record id="hr_title100" model="hr.title">
+	            <field name="name">PLANT MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T79</field>
+	    </record>
+	    <record id="hr_title101" model="hr.title">
+	            <field name="name">PRECAST PRODUCT SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T80</field>
+	    </record>
+	    <record id="hr_title102" model="hr.title">
+	            <field name="name">PREPARATORY SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T81</field>
+	    </record>
+	    <record id="hr_title103" model="hr.title">
+	            <field name="name">PRESIDENT DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T82</field>
+	    </record>
+	    <record id="hr_title104" model="hr.title">
+	            <field name="name">PROCUREMENT STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T83</field>
+	    </record>
+	    <record id="hr_title105" model="hr.title">
+	            <field name="name">PRODUCT DEVELOPMENT MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T84</field>
+	    </record>
+	    <record id="hr_title106" model="hr.title">
+	            <field name="name">PRODUCT DEVELOPMENT STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T85</field>
+	    </record>
+	    <record id="hr_title107" model="hr.title">
+	            <field name="name">PRODUCTION SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T86</field>
+	    </record>
+	    <record id="hr_title108" model="hr.title">
+	            <field name="name">PRODUCTION SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T87</field>
+	    </record>
+	    <record id="hr_title109" model="hr.title">
+	            <field name="name">PROJECT CONTROLER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T88</field>
+	    </record>
+	    <record id="hr_title110" model="hr.title">
+	            <field name="name">PROJECT ENGINEER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T89</field>
+	    </record>
+	    <record id="hr_title111" model="hr.title">
+	            <field name="name">PROJECT OFFICER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T90</field>
+	    </record>
+	    <record id="hr_title112" model="hr.title">
+	            <field name="name">PROJECT SALES MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T91</field>
+	    </record>
+	    <record id="hr_title113" model="hr.title">
+	            <field name="name">PURCHASING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T92</field>
+	    </record>
+	    <record id="hr_title114" model="hr.title">
+	            <field name="name">PURCHASING SECT. HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T93</field>
+	    </record>
+	    <record id="hr_title115" model="hr.title">
+	            <field name="name">PURCHASING STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">T94</field>
+	    </record>
+	    <record id="hr_title116" model="hr.title">
+	            <field name="name">QUALITY CONTROL INSPECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T95</field>
+	    </record>
+	    <record id="hr_title117" model="hr.title">
+	            <field name="name">QUALITY CONTROL SUPERVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T96</field>
+	    </record>
+	    <record id="hr_title118" model="hr.title">
+	            <field name="name">QUALITY ENGINEER</field>
+	            <field name="digit">5</field>
+	            <field name="code">T97</field>
+	    </record>
+	    <record id="hr_title119" model="hr.title">
+	            <field name="name">RECRUIT/TRAINING SECT.HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">T98</field>
+	    </record>
+	    <record id="hr_title120" model="hr.title">
+	            <field name="name">QUALITY CONTROL INSPECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">T99</field>
+	    </record>
+    </data>
+</openerp>
+
