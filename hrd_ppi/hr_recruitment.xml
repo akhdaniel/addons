@@ -7,8 +7,13 @@
             <field name="arch" type="xml">
 
                 <header>                              
+                    <button string="Submit to HRD" type="workflow" 
+                        states="draft" name="signal_submit"
+                        groups="hrd_ppi.group_hr_department" 
+                        class="oe_highlight" />                 
+                                             
                     <button string="Send for Approval" type="workflow" 
-                        states="draft" name="signal_verify"
+                        states="submit" name="signal_verify"
                         groups="hrd_ppi.group_hr_user" 
                         class="oe_highlight" /> 
 
@@ -24,14 +29,14 @@
                     <button string="Stop Recruitment" type="workflow"  
                         groups="hrd_ppi.group_hr_manager"
                         states="in_progress" name="signal_stop_recruit" 
-                        class="oe_highlight" /> 
+                        class="oe_highlight" />
 
                     <field name="state" widget="statusbar"/>
 
                 </header> 
                 <label for="name" position="before">
                     <group>
-                    <field name="no"/>
+                    <!--field name="no"/-->
                     <field name="jenis_permohonan"/>
                     </group>
                     <group>

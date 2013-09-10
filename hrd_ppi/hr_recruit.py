@@ -6,6 +6,7 @@ from time import strftime
 
 PERMOHONAN_STATES =[
 	('draft','Draft'),
+	('submit','Submit'),
 	('verify','Verify'),
 	('in_progress','In Progress')]
 class permohonan_recruit(osv.osv):
@@ -14,12 +15,15 @@ class permohonan_recruit(osv.osv):
     
     def action_draft(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[0][0]},context=context)
+    	
+    def action_submit(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[1][0]},context=context) 	
 
     def action_verify(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[1][0]},context=context)
+    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[2][0]},context=context)
  
     def action_in_progress(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[2][0]},context=context)
+    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[3][0]},context=context)
     	
     def scroll_no(self, cr, uid, ids, no, args, context=None):
         res = []
@@ -35,7 +39,7 @@ class permohonan_recruit(osv.osv):
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
         'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','jurusan'),
         'pengalaman':fields.integer('Pengalaman (min-th)'),
-        'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','25'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],'Usia (max)'),
+        'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],'Usia (max)'),
         'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan'),
         'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],'Jenis Kelamin'),
         'wkt_pemohon':fields.date('Permintaan Pemohon'),

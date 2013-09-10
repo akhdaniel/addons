@@ -18,10 +18,11 @@
                         name="coco" type="object"
                         class="oe_highlight"
                         attrs="{'invisible':[('state','!=','draft')]}"/>
-            <field name="stage_id" position="replace">
-            <field name="stage_id" clickable="False"/> 
-            </field>           
             </header>
+            <field name="partner_name" position="after">
+            <field name="stage_id"/>
+            </field>
+            <field name="stage_id" position="replace"/>
             <field name="reference" position="replace"/>
             <field name="email_from" position="replace"/>
             <field name="partner_phone" position="replace"/>
