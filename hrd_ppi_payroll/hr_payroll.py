@@ -22,10 +22,6 @@ class hr_payslip(osv.osv):
     _inherit = 'hr.payslip'
     _description = 'Pay Slip Inheriteed PPI'
     
-    _columns ={
-        'gol_id':fields.many2one('hr_employs.gol','Golongan'),
-        'department_id':fields.many2one('hr.department', 'Department'),
-    }
  
 
     def get_worked_day_lines(self, cr, uid, contract_ids, date_from, date_to, context=None):
@@ -129,10 +125,13 @@ class hr_payslip(osv.osv):
                         if real_working_hours_on_day > 0:
                             presences['number_of_days'] += 1.0
                             presences['number_of_hours'] += working_hours_on_day
-                            
-                        no = self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context)[0]
-                        no_urut = no.employee_id.gol_id.no
-                        if real_working_hours_on_day >= working_hours_on_day and no_urut < 100 :
+                        no_urut = employee.gol_id.no
+                        urut_title = employee.title_id.urutan
+                        pprint.pprint(no_urut)
+                        pprint.pprint(urut_title)
+                        no_urut=float(no_urut)
+                        urut_title=float(urut_title)
+                        if real_working_hours_on_day >= working_hours_on_day and urut_title < 100 :
                             #add the input vals to tmp (increment if existing)
                             # number_of_days = hari masuk dalam sebulan sesuai absensi
 
@@ -183,10 +182,10 @@ class hr_payslip(osv.osv):
 
                             overtimes['number_of_hours'] += total_overtime
 
-                            
-                        elif no_urut >= 100 and no_urut <200 :
-                            if isNonWorkingDay and real_working_hours_on_day > 4:
-                                incentives['number_of_days'] += 1.0
+                        elif urut_title > 100 and urut_title < 200:   
+                            if no_urut >= 100 and no_urut < 200 :
+                                if isNonWorkingDay and real_working_hours_on_day > 4:
+                                    incentives['number_of_days'] += 1.0
                         
                             """ title = kolom sortir
                             else if employee.title_id > 100 : #operator ke atas:
@@ -339,6 +338,3 @@ class hr_attendance(osv.osv):
         return True
 
 hr_attendance()
-
-
-

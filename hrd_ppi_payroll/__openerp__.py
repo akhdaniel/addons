@@ -6,11 +6,11 @@
 Hitung Lembur, Payroll, dan PPH21 
 Human Resource PT.PPI
 """,    
-    'depends': ['hr','hr_recruitment','hr_attendance',"hr_payroll","hrd_ppi"],
+    'depends': ['hr','hr_recruitment','hr_attendance',"hr_payroll"],
     'update_xml':[
     	'salary_structure.xml',
-    	'payslip_view.xml',
-    	'report/hr_payrport.xml'
+    	'report/hr_payrport.xml',
+  	
     ],
     'data': [],
     'installable':True,
