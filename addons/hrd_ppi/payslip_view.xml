@@ -50,7 +50,5 @@
         <field name="view_mode">tree,form</field>
     </record>
         <!--menuitem id="jenis_tunjangan" parent="menu_hr_root_payroll" name="Jenis Tunjangan" groups="base.group_hr_manager" sequence="45"/-->
-        <menuitem parent="hr.menu_hr_configuration" name="Master Title" id="menu_title" sequence="120" groups="base.group_tool_user" action="master_title"/>
-        <menuitem parent="hr.menu_hr_configuration" name="Master ExTitle" id="menu_extitle" sequence="120" groups="base.group_tool_user" action="master_extitle"/>
     </data>
 </openerp>
