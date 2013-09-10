@@ -37,8 +37,8 @@ class employee(osv.osv):
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
         'clas_id':fields.many2one('hr_employs.clas','Class'),
-        'title_id':fields.many2one('hr_employs.title','Title'),
-        'extitle_id':fields.many2one('hr_employs.extitle','Ex Title'),
+        'title_id':fields.many2one('hr.title','Title'),
+        'extitle_id':fields.many2one('hr.extitle','Ex Title'),
         'gol_id':fields.many2one('hr_employs.gol','Golongan'),
         'wfield_id':fields.many2one('hr_employs.wfield','Bidang Pekerjaan'),
         'pansion_id':fields.many2one('hr_employs.pansion','Masa Pensiun'),
@@ -196,6 +196,8 @@ class golongan(osv.osv):
     
     _columns= {       
         'name':fields.char('Golongan',20,required=True),
+        'rec':fields.char('record'),
+        'no' : fields.char('Urutan')
             }
 golongan()
 

@@ -17,6 +17,13 @@
             <field name="action">action_draft()</field>
         </record>
         
+        <record model="workflow.activity" id="act_submit">
+            <field name="wkf_id" ref="wkf_hr_ppi"/>
+            <field name="name">submit</field>
+            <field name="kind">function</field>
+            <field name="action">action_submit()</field>
+        </record>
+        
         <record model="workflow.activity" id="act_verify">
             <field name="wkf_id" ref="wkf_hr_ppi"/>
             <field name="name">verify</field>
@@ -34,6 +41,12 @@
         <!--Transition-->
         <record model="workflow.transition" id="t_draft">
             <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_submit"/>
+            <field name="signal">signal_submit</field>
+        </record>
+        
+        <record model="workflow.transition" id="t0_draft">
+            <field name="act_from" ref="act_submit"/>
             <field name="act_to" ref="act_verify"/>
             <field name="signal">signal_verify</field>
         </record>
