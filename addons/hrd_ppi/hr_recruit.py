@@ -240,8 +240,8 @@ class hr_applicant(osv.osv):
             result[r.id] = age
         return result
         
-    def coco(self,cr, uid,ids, context=None):  
-        #import pdb;pdb.set_trace()
+    def coco(self,cr, uid,ids, context=None): 
+		#import pdb;pdb.set_trace()
         par=self.browse(cr,uid,ids)[0]
         #aplican
         ap_jb=par.job_id.name
