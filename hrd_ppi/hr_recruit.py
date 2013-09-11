@@ -273,19 +273,23 @@ class hr_applicant(osv.osv):
         jur=jurusan.browse(cr,uid,jur_id,context)
         stg_id=[]
         for line in pers :
-            stage=line.sequence
-			if job_state == 'in_progress' :
-				if stage == 100 :
-					stgs=line.id
-				if stage == 2 :
-					stg=line.id
-					if ap_umr <= job_umr or job_umr == 0 and ap_pend == job_pend and job_pengalaman <= ap_pengalaman and job_kelamin == 'male/female' or job_kelamin == ap_kelamin and ap_status == job_status or job_status == "" :
-						for jjr in jur:
-							perok=jjr.name.id
-							if perok == ap_jurusan :                                
-								return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
+            stage=line.sequence          
+            if stage == 100 :
+                stgs=line.id
+            if job_state == 'in_progress':    
+                if stage == 2 :
+                    stg=line.id
+                    if ap_umr <= job_umr or job_umr == 0 :
+                        if ap_pend == job_pend :
+                            if job_kelamin == 'male/female' or job_kelamin == ap_kelamin :
+                                if ap_status == job_status or job_status == False :
+                                    if ap_pengalaman >= job_pengalaman or job_pengalaman  == 0 :
+                                        for jjr in jur:
+                                            perok=jjr.name.id
+                                            if perok == ap_jurusan or perok == False:                                
+                                                return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
-
+ju
     
 
     def interview(self, cr, uid,vals, context=None):
