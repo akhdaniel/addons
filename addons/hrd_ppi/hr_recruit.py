@@ -261,8 +261,8 @@ class hr_applicant(osv.osv):
         job_pend=per.type_id.id
         job_kelamin =per.kelamin
         job_pengalaman=per.pengalaman
-        job_status=per.sts_prk
-		job_state=per.state
+        job_status=per.sts_prk	
+	job_state=per.state
         #refused
         partner=self.pool.get('hr.recruitment.stage')  
         pero=partner.search(cr,uid,[])     
@@ -289,7 +289,6 @@ class hr_applicant(osv.osv):
                                             if perok == ap_jurusan or perok == False:                                
                                                 return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
-ju
     
 
     def interview(self, cr, uid,vals, context=None):
