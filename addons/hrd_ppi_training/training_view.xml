@@ -115,7 +115,7 @@
                           <page string="Karyawan" name="karyawan">
                             <field view_mode="tree,form" name="employee_ids" nolabel="1">
                                 <tree>
-                                    <field name="kode"/>
+                                    <!--field name="kode"/-->
                                     <field name="employee_id" />
                                     <field name="job_id"/>
                                     <field name="department_id"/>                                     
@@ -126,7 +126,7 @@
                                 </tree>
                                 <form>
                                 <group>
-                                    <field name="kode"/> 
+                                    <!--field name="kode"/--> 
                                     <field name="employee_id"/>                                    
                                     <field name="evaluasi_id"/>
                                     <field name="rekomendasi_id"/> 
@@ -221,7 +221,7 @@
             <field name="padding">3</field>
         </record>      
         
-        <record forcecreate="1" id="seq_type_training_employee" model="ir.sequence.type">
+        <!--record forcecreate="1" id="seq_type_training_employee" model="ir.sequence.type">
             <field name="name">Training Participants</field>
             <field name="code">hr_training.train</field>
         </record>
@@ -231,7 +231,7 @@
             <field name="code">hr_training.train</field>
             <field name="prefix"></field>
             <field name="padding">3</field>
-        </record>   
+        </record-->   
         
     </data>
 </openerp>
