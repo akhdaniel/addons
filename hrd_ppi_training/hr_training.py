@@ -30,7 +30,7 @@ class train(osv.osv):
         'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
         'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklist Jika Training Internal'),        
         #'state':fields.related('analisa_id','state',type='selection',relation='hr_training.analisa',string='Status'),
-        'kode':fields.char('Kode Pelatihan Karyawan',5),
+        #'kode':fields.char('Kode Pelatihan Karyawan',5),
             }   
 train()
 
@@ -81,6 +81,8 @@ class analisa(osv.osv):
         obj = self.pool.get('hr_training.subject')
         sid=vals['subject_id']
         vals['subject'] = obj.browse(cr,uid,sid).name
+        kode=self.pool.get('ir.sequence').get(cr,uid,'hr_training.analisa.nomor')
+        vals['no']=str(obj.browse(cr,uid,sid).code)+'/'+str(kode)
         return super(analisa, self).create(cr, uid, vals, context)
   
         
@@ -110,7 +112,7 @@ class analisa(osv.osv):
     _defaults = {
         'state': TRAINING_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
-        'no': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'hr_training.analisa.nomor'),
+        #'no': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'hr_training.analisa.nomor'),
         }  
 analisa()    
 
