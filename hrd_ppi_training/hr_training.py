@@ -47,10 +47,9 @@ employee()
 TRAINING_STATES =[
 	('draft','Draft'),
 	('verify','Verify'),
-	('reject','Reject'),
 	('approve','Approve'),
-	('reject2','Second Reject'),
 	('approve2','Second Approve'),
+	('reject','Reject'),
 	('evaluation','Evaluation')]
 
 class analisa(osv.osv):
@@ -64,19 +63,19 @@ class analisa(osv.osv):
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[1][0]},context=context)
  
     def action_reject(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context) 
-    	
-    def action_approve(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
-    	
-    def action_reject_hr_department(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context) 
     	
+    def action_approve(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)
+    	
+    '''def action_reject_hr_department(self,cr,uid,ids,context=None): 
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)''' 
+    	
     def action_approve_hr_department(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
     	
     def action_evaluation(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[6][0]},context=context)       
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)       
  
     def create(self, cr, uid, vals, context=None):
         obj = self.pool.get('hr_training.subject')
@@ -120,6 +119,7 @@ class paket(osv.osv):
     
     _columns={
         'name':fields.char('Paket Training',35,required=True),  
+        'code':fields.char('Kode',5),
             }
 paket()   
 

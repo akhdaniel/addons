@@ -68,7 +68,7 @@
                         
                     <button string="Second Reject" type="workflow"  
                         groups="hrd_ppi.group_hr_department"
-                        states="approve" name="signal_reject_hr_department"/>                                                                  
+                        states="approve" name="signal_reject"/>                                                                  
 
                     <button string="Start Evaluation" type="workflow"  
                         groups="hrd_ppi.group_hr_manager"
@@ -187,6 +187,18 @@
         <record id="hr_training_subject_view_form" model="ir.ui.view">
             <field name="name">hr_training.subject.view.form</field>
             <field name="model">hr_training.subject</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="hr_training.subject"> 
+                    <field name="name"/>
+                    <field name="code"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="hr_training_paket_view_form" model="ir.ui.view">
+            <field name="name">hr_training.paket.view.form</field>
+            <field name="model">hr_training.paket</field>
             <field name="type">form</field>
             <field name="arch" type="xml">                
                 <form string="hr_training.subject"> 
