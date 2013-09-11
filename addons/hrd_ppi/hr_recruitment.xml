@@ -15,7 +15,11 @@
                     <button string="Send for Approval" type="workflow" 
                         states="submit" name="signal_verify"
                         groups="hrd_ppi.group_hr_user" 
-                        class="oe_highlight" /> 
+                        class="oe_highlight" />
+
+					<button string="Cancel" type="workflow"  
+                        groups="hrd_ppi.group_hr_user"
+                        states="submit" name="signal_cancel"/>
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
