@@ -54,7 +54,7 @@ TRAINING_STATES =[
 
 class analisa(osv.osv):
     _name='hr_training.analisa'
-    _rec_name='subject_id'
+    _rec_name='no'
     
     def action_draft(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[0][0]},context=context)
