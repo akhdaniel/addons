@@ -197,7 +197,7 @@ class hr_applicant(osv.osv):
                                                      'bahasa_ids':prod_ids3,
                                                      'rwt_krj_ids':prod_ids4,
                                                      'koneksi1_ids':prod_ids5,
-                                                     'koneksi2_ids':prod_ids6
+                                                     'koneksi2_ids':prod_ids6,
                                                     })
                 
                 
