@@ -262,6 +262,7 @@ class hr_applicant(osv.osv):
         job_kelamin =per.kelamin
         job_pengalaman=per.pengalaman
         job_status=per.sts_prk
+		job_state=per.state
         #refused
         partner=self.pool.get('hr.recruitment.stage')  
         pero=partner.search(cr,uid,[])     
@@ -273,15 +274,16 @@ class hr_applicant(osv.osv):
         stg_id=[]
         for line in pers :
             stage=line.sequence
-            if stage == 100 :
-                stgs=line.id
-            if stage == 2 :
-                stg=line.id
-                if ap_umr <= job_umr or job_umr == 0 and ap_pend == job_pend and job_pengalaman <= ap_pengalaman and job_kelamin == 'male/female' or job_kelamin == ap_kelamin and ap_status == job_status or job_status == "" :
-                    for jjr in jur:
-                        perok=jjr.name.id
-                        if perok == ap_jurusan :                                
-                            return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
+			if job_state == 'in_progress' :
+				if stage == 100 :
+					stgs=line.id
+				if stage == 2 :
+					stg=line.id
+					if ap_umr <= job_umr or job_umr == 0 and ap_pend == job_pend and job_pengalaman <= ap_pengalaman and job_kelamin == 'male/female' or job_kelamin == ap_kelamin and ap_status == job_status or job_status == "" :
+						for jjr in jur:
+							perok=jjr.name.id
+							if perok == ap_jurusan :                                
+								return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
 
     
