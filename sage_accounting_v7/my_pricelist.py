@@ -282,6 +282,11 @@ class account_invoice(osv.osv):
         date_due= invoice_browse.date_due
         
 
+        partner_obj = self.pool.get('res.partner')
+        npa_partner_id = order_obj.search(cr, uid, [('name','=', 'National Petroleum Authority')])[0]
+        if not npa_partner_id:
+            raise osv.except_osv(_('Error !'), _('No Partner with name National Petroleum Authority. Please set it up through Partner data') )
+
         #import pdb; pdb.set_trace()
 
         """
@@ -395,6 +400,9 @@ class account_invoice(osv.osv):
             NPA receivable
             kondisi normal
             """    
+
+
+
             if val > 0:
                 move_lines.append((0,0,{
                    'type': 'dest',
@@ -428,7 +436,7 @@ class account_invoice(osv.osv):
                         and currency_id or False,
                    'ref': 'core price > exref price',
                    'period_id':period_id,
-                   'partner_id':partner_id,
+                   'partner_id':npa_partner_id,
                    'product_id':product_id,
                 }))             
             else:
@@ -451,7 +459,7 @@ class account_invoice(osv.osv):
                        and currency_id or False,
                    'ref': 'core price < exref price',
                    'period_id': period_id,
-                   'partner_id':partner_id,                           
+                   'partner_id':npa_partner_id,                           
                    'product_id':product_id,
                 }))
                 """
