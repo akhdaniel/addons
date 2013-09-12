@@ -5,7 +5,7 @@ class employee(osv.osv):
     _inherit = 'hr.employee'
     
     _columns = {
-        'nik': fields.char('NIK',20,readonly=True),
+        'nik': fields.char('NIK',20),
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin'),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
