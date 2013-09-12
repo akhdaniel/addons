@@ -1,5 +1,5 @@
 {
-    'name': 'ppi_training',
+    'name': 'HR PPI / Training',
     'author'  :'vitraining.com',
     'category': 'Human Resources',
     'description': """

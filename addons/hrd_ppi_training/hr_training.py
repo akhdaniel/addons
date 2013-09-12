@@ -72,11 +72,11 @@ class analisa(osv.osv):
         train_obj = self.pool.get('hr_training.train')
         sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
         tr=train_obj.browse(cr,uid,sr)
-        yids=[];
+        #yids=[];
         for xids in tr:
             nikid=xids.employee_id.nik
             yes=str(kode) +'/'+ str(nikid)
-            yids.append({"nonik" : yes})
+            #yids.append({"nonik" : yes})
             train_obj.write(cr, uid, [xids.id], {'nonik':yes })
         #train_obj.write(cr, uid, [xids.id for ux in tr], {'nonik':yids.nonik})   	
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)
