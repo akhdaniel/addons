@@ -149,7 +149,7 @@ class hr_applicant(osv.osv):
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids3=[]   
                 for pr in lele:
-                    prod_ids3.append((0,0, {'name':pr.name,'tulis':pr.tulis,'lisan':pr.lisan})) 
+                    prod_ids3.append((0,0, {'name':pr.name.id,'tulis':pr.tulis.id,'lisan':pr.lisan.id})) 
                 le=self.pool.get('hr_recruit.rwt_krj')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
