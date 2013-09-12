@@ -74,8 +74,14 @@
                 </group>
                 <group string="Alamat" colspan="4">
                     <field name="alamat1" placeholder="Alamat di Jakarta"/>
+                    <field name="prov_id"/>
+                    <field name="kab_id"/>
+                    <field name="kec_id"/>
                     <field name="telp1" placeholder="Telp. di Jakarta"/>
                     <field name="alamat2" placeholder="Alamat Luar Jakarta"/>
+                     <field name="prov_id2"/>
+                    <field name="kab_id2"/>
+                    <field name="kec_id2"/>
                     <field name="telp2" placeholder="Telp. di luar Jakarta" />
                 </group> 
             </field>
