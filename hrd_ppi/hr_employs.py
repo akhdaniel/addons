@@ -11,13 +11,14 @@ class employee(osv.osv):
         'agama':fields.many2one('hr_recruit.agama','Agama'),
         'birthday':fields.date('Tanggal Lahirku'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
-        'ktp':fields.char('No KTP',20),
+        'ktp':fields.char('No ID',20),
         'no_pass':fields.char('No Passport',30),
         'no_rek':fields.char('No. Rekening',20),
         'no_sim':fields.char('No. SIM',30),
         'no_sima':fields.char('No. SIM A',30),
         'no_simc':fields.char('No. SIM C',30),
-        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan oleh'),
+        'issued_id2':fields.many2one('res.country','Dikeluarkan di'),
+        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan di'),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
@@ -55,6 +56,8 @@ class employee(osv.osv):
         'country_id2': fields.many2one('res.country', 'Negara'),
         'kodepos':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
+        'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),
+        'bidang_id':fields.many2one('hr_recruit.bidang','Bidang'),
         }
         
     _defaults = {
