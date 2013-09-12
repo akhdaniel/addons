@@ -65,11 +65,16 @@
                                     <group string="Contact Information">
                                     <group>
                                         <field name='alamat1' placeholder="Alamat di Jakarta"/>
-                                        <field name="kota_id" placeholder="Kota di Jakarta"/>
+                                        <field name="prov_id"/>
+                                        <field name="kab_id"/>
+                                        <field name="kec_id"/>
+                                        <field name="kota_id"/>
                                         <field name="kodepos" placeholder="Kode Pos di Jakarta"/>
                                         <field name='telp1' placeholder="Telp. di Jakarta"/>
                                         <field name='alamat2' placeholder="Alamat Luar Jakarta"/>
-                                        <field name="kota_id" placeholder="Kota di Luar Jakarta"/>
+                                        <field name="prov_id2"/>
+                                        <field name="kota_id"/>
+                                        <field name="kec_id2"/>
                                         <field name="kodepos" placeholder="Zip"/>                         
                                         <field name='telp2' placeholder="Telp. di Luar Jakarta"/>
                                         <field name="country_id2"/>

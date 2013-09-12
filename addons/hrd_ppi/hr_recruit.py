@@ -358,8 +358,14 @@ class hr_applicant(osv.osv):
         'tgl_berlaku2':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
         'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan'),
-        'alamat1':fields.text('Alamat 1'),
-        'alamat2':fields.text('Alamat 2'),
+        'alamat1':fields.char('Alamat 1',100),
+        'prov_id':fields.many2one('hr_recruit.prov','Provinsi'),
+        'kab_id':fields.many2one('hr_recruit.kota','Kab./kota'),
+        'kec_id':fields.many2one('hr_recruit.issued','Kecamatan'),
+        'alamat2':fields.char('Alamat 2',100),
+        'prov_id2':fields.many2one('hr_recruit.prov','Provinsi'),
+        'kab_id2':fields.many2one('hr_recruit.kota','Kab./Kota'),
+        'kec_id2':fields.many2one('hr_recruit.issued','Kecamatan'),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
         'status':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan',required=True),
@@ -526,7 +532,7 @@ class kota(osv.osv):
     _name='hr_recruit.kota'
     
     _columns={
-        'name':fields.char('Nama Kota',50),
+        'name':fields.char('Nama Kab./Kota',50),
         }
 kota()
 
@@ -577,6 +583,14 @@ class bidang(osv.osv):
         'name':fields.char('Bidang',50),
         }
 bidang()
+
+class provinsi(osv.osv):
+    _name='hr_recruit.prov'
+        
+    _columns={
+        'name':fields.char('Provinsi',50),
+        }
+provinsi()
 
 class b_lisan(osv.osv):
     _name='hr_recruit.b_lisan'
