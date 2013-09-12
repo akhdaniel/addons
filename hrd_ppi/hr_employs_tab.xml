@@ -68,7 +68,7 @@
                                         <field name="prov_id"/>
                                         <field name="kab_id"/>
                                         <field name="kec_id"/>
-                                        <field name="kota_id"/>
+                                        <!--field name="kota_id"/-->
                                         <field name="kodepos" placeholder="Kode Pos di Jakarta"/>
                                         <field name='telp1' placeholder="Telp. di Jakarta"/>
                                         <field name='alamat2' placeholder="Alamat Luar Jakarta"/>

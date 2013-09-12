@@ -165,7 +165,7 @@ class hr_applicant(osv.osv):
                 le=self.pool.get('hr_recruit.kon2')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
-                prod_ids6=[]   
+                prod_ids6=[] 
                 for pr in lele:
                     prod_ids6.append((0,0, {'name':pr.name,'alamat':pr.alamat,'jabatan':pr.jabatan,'telepon':pr.telepon}))  
                 emp_id = hr_employee.create(cr,uid,{'name': applicant.partner_name or applicant.name,
@@ -174,7 +174,7 @@ class hr_applicant(osv.osv):
                                                      'gender':applicant.kelamin,
                                                      'kota_id' : applicant.kota_id.id,
                                                      'birthday' : applicant.tgl_lahir,
-                                                     'agama_id' : applicant.agama_id.id,
+                                                     'agama' : applicant.agama_id.id,
                                                      'country_id' : applicant.country_id.id,
                                                      'jenis_id': applicant.jenis_id,
                                                      'ktp' : applicant.ktp,
@@ -190,6 +190,12 @@ class hr_applicant(osv.osv):
                                                      'pt_id':applicant.pt_id.id,
                                                      'result_id':applicant.result_id.id,
                                                      'alamat1' : applicant.alamat1,
+                                                     'prov_id':applicant.prov_id.id,
+                                                     'kab_id':applicant.kab_id.id,
+                                                     'kec_id':applicant.kec_id.id,
+                                                     'prov_id2':applicant.prov_id.id,
+                                                     'kota_id':applicant.kab_id2.id,
+                                                     'kec_id2':applicant.kec_id2.id,
                                                      'alamat2' : applicant.alamat2,
                                                      'telp1' : applicant.telp1,
                                                      'telp2' : applicant.telp2,
