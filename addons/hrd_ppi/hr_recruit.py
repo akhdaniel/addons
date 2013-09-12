@@ -177,7 +177,7 @@ class hr_applicant(osv.osv):
                                                      'agama_id' : applicant.agama_id.id,
                                                      'country_id' : applicant.country_id.id,
                                                      'ktp' : applicant.ktp,
-                                                     'issued_id' : applicant.issued_id,
+                                                     'issued_id' : applicant.issued_id.id,
                                                      'tgl_keluar_ktp' : applicant.tgl_keluar_ktp,
                                                      'tgl_berlaku' : applicant.tgl_berlaku,
                                                      'sim' : applicant.sim,
