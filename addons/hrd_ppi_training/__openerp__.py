@@ -14,6 +14,7 @@ Human Resource - Training PT.PPI
             'action.xml',
             'training_workflow.xml',
             'tab_training.xml',
+            'master_training.xml',
             ],
     'data': [],
     'installable':True,
