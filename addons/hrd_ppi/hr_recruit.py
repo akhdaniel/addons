@@ -176,14 +176,18 @@ class hr_applicant(osv.osv):
                                                      'birthday' : applicant.tgl_lahir,
                                                      'agama_id' : applicant.agama_id.id,
                                                      'country_id' : applicant.country_id.id,
+                                                     'jenis_id': applicant.jenis_id,
                                                      'ktp' : applicant.ktp,
                                                      'issued_id' : applicant.issued_id.id,
+                                                     'issued_id2' : applicant.issued_id2.id,
                                                      'tgl_keluar_ktp' : applicant.tgl_keluar_ktp,
                                                      'tgl_berlaku' : applicant.tgl_berlaku,
                                                      'sim' : applicant.sim,
                                                      'tgl_keluar_sim' : applicant.tgl_keluar_sim,
                                                      'type_id':applicant.type_id.id,
+                                                     'bidang_id':applicant.bidang_id.id,
                                                      'jurusan_id':applicant.jurusan_id.id,
+                                                     'pt_id':applicant.pt_id.id,
                                                      'result_id':applicant.result_id.id,
                                                      'alamat1' : applicant.alamat1,
                                                      'alamat2' : applicant.alamat2,
@@ -345,8 +349,10 @@ class hr_applicant(osv.osv):
         'age': fields.function(_compute_age, type='integer', obj='hr.applicant', method=True, store=False, string='Usia (Thn)', readonly=True),
         'agama_id':fields.many2one('hr_recruit.agama','Agama'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
-        'ktp':fields.char('No KTP',20),
-        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan Oleh',50),
+        'ktp':fields.char('No.ID',20),
+        'jenis_id':fields.selection([('KTP','Kartu Tanda Penduduk'),('Passport','Passport')],'Jenis ID'),
+        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan di',50),
+        'issued_id2':fields.many2one('res.country','Dikeluarkan di'),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
         'tgl_berlaku2':fields.date('Tanggal Berlaku'),
@@ -375,6 +381,8 @@ class hr_applicant(osv.osv):
         'pengalaman':fields.integer('Pengalaman (min-th)'),
         'stage_id': fields.many2one ('hr.recruitment.stage', 'Stage',
                         domain="['&', ('fold', '=', False), '|', ('department_id', '=', department_id), ('department_id', '=', False)]",readonly=True),
+        'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),  
+        'bidang_id':fields.many2one('hr_recruit.bidang','Bidang'),                
         #'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
         }
 hr_applicant()
@@ -534,7 +542,7 @@ class issued(osv.osv):
     _name='hr_recruit.issued'
         
     _columns={
-        'name':fields.char('Dikeluarkan Oleh',50),
+        'name':fields.char('Dikeluarkan di',50),
         }
 issued()
 
@@ -553,6 +561,22 @@ class gelar(osv.osv):
         'name':fields.char('Gelar',50),
         }
 gelar()
+
+class pt(osv.osv):
+    _name='hr_recruit.pt'
+        
+    _columns={
+        'name':fields.char('Nama Perguruan Tinggi',50),
+        }
+pt()
+
+class bidang(osv.osv):
+    _name='hr_recruit.bidang'
+        
+    _columns={
+        'name':fields.char('Bidang',50),
+        }
+bidang()
 
 class b_lisan(osv.osv):
     _name='hr_recruit.b_lisan'

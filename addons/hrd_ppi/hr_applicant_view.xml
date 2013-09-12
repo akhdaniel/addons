@@ -47,8 +47,10 @@
                     <field name="partner_phone"/>
                 </group>
                 <group string="Kartu Identitas" colspan="4">
+                    <field name="jenis_id"/>
                     <field name="ktp"/>
-                    <field name="issued_id"/>
+                    <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')]}"/>
+                    <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')]}"/>
                     <field name="tgl_keluar_ktp"/>
                     <field name="tgl_berlaku"/>
                     <field name="sim"/>
@@ -65,7 +67,9 @@
                 <group string="Pendidikan" colspan="4">
                     <field name="pengalaman"/>
                     <field name="type_id" placeholder="Degree"/>
+                    <field name="bidang_id"/>
                     <field name="jurusan_id"/> 
+                    <field name="pt_id"/>
                     <field name="result_id"/>  
                 </group>
                 <group string="Alamat" colspan="4">
@@ -191,7 +195,7 @@
                         <page string="Riwayat Pekerjaan" name="rwt_krj">
                             <field view_mode="tree,form" name="rwt_krj_ids" nolabel="1">
                                 <tree>
-                                    <field name="no"/>
+                                    <!--field name="no"/-->
                                     <field name="name"/>
                                     <field name="tempat"/>
                                     <field name="tahun_msk"/>
@@ -202,7 +206,7 @@
                                 </tree>
                                 <form>
                                 <group>
-                                    <field name="no"/>
+                                    <!--field name="no"/-->
                                     <field name="name"/>
                                     <field name="tempat"/>
                                 </group>
