@@ -1,6 +1,14 @@
 from openerp.osv import fields, osv
 import time
 
+TRAINING_STATES =[
+	('draft','Draft'),
+	('verify','Verify'),
+	('approve','Approve'),
+	('approve2','Second Approve'),
+	('reject','Reject'),
+	('evaluation','Evaluation')]
+	
 class bukti(osv.osv):
     _name='hr_training.bukti'
     
@@ -12,8 +20,8 @@ class bukti(osv.osv):
 bukti()   
 
 class train(osv.osv):
-    _name = 'hr_training.train'
-
+    _name = 'hr_training.train'   
+            
     _columns = {
         'employee_id' : fields.many2one('hr.employee','Nama Karyawan',store=True),
         'job_id' :fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan'),
@@ -28,10 +36,10 @@ class train(osv.osv):
         'tanggal': fields.related('analisa_id','tanggal',type='date',relation='hr_training.analisa',string='Tanggal'),
         'bukti_ids':fields.one2many('hr_training.bukti','train_id','Bukti File'),
         'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
-        'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklist Jika Training Internal'),        
-        #'state':fields.related('analisa_id','state',type='selection',relation='hr_training.analisa',string='Status'),
-        #'kode':fields.char('Kode Pelatihan Karyawan',5),
-            }   
+        'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklist Jika Training Internal'),  
+        #'state': fields.related('analisa_id','state',type='selection',relation='hr_training.analisa',string='xtate', store=True), 
+        'nonik':fields.char('Kode Training'),
+            } 
 train()
 
 class employee(osv.osv):
@@ -44,13 +52,6 @@ class employee(osv.osv):
         }
 employee()
 
-TRAINING_STATES =[
-	('draft','Draft'),
-	('verify','Verify'),
-	('approve','Approve'),
-	('approve2','Second Approve'),
-	('reject','Reject'),
-	('evaluation','Evaluation')]
 
 class analisa(osv.osv):
     _name='hr_training.analisa'
@@ -65,7 +66,19 @@ class analisa(osv.osv):
     def action_reject(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context) 
     	
-    def action_approve(self,cr,uid,ids,context=None): 
+    def action_approve(self,cr,uid,ids,context=None):
+        kod=self.browse(cr,uid,ids)[0]
+        kode=kod.no       
+        train_obj = self.pool.get('hr_training.train')
+        sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
+        tr=train_obj.browse(cr,uid,sr)
+        yids=[];
+        for xids in tr:
+            nikid=xids.employee_id.nik
+            yes=str(kode) +'/'+ str(nikid)
+            yids.append({"nonik" : yes})
+            train_obj.write(cr, uid, [xids.id], {'nonik':yes })
+        #train_obj.write(cr, uid, [xids.id for ux in tr], {'nonik':yids.nonik})   	
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)
     	
     '''def action_reject_hr_department(self,cr,uid,ids,context=None): 
@@ -77,22 +90,22 @@ class analisa(osv.osv):
     def action_evaluation(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)       
  
-    def create(self, cr, uid, vals, context=None):
+    def create(self, cr, uid, vals, context=None):       
         obj = self.pool.get('hr_training.subject')
-        sid=vals['subject_id']
+        sid = vals['subject_id']           
         vals['subject'] = obj.browse(cr,uid,sid).name
         kode=self.pool.get('ir.sequence').get(cr,uid,'hr_training.analisa.nomor')
-        vals['no']=str(obj.browse(cr,uid,sid).code)+'/'+str(kode)
-        return super(analisa, self).create(cr, uid, vals, context)
-  
-        
+        kode=str(obj.browse(cr,uid,sid).code)+'/'+str(kode)
+        vals['no']=kode               
+        return super(analisa, self).create(cr, uid, vals, context) 
+
     _columns= {
         'employee_id':fields.many2one('hr.employee','Karyawan'),
         'is_internal':fields.boolean('Ceklist Jika Training Internal'),
         'department_id': fields.many2one('hr.department', 'Department',required=True),
         'bulan':fields.selection([('Januari','Januari'),('Februari','Februari'),('Maret','Maret'),('April','April'),('Mei','Mei'),('Juni','Juni'),('Juli','Juli'),('Agustus','Agustus'),('September','September'),('Oktober','Oktober'),('November','November'),('Desember','Desember')],'Bulan'),
         'presentasi':fields.char('Presentasi Pelatihan',60),
-        'no':fields.char('Nomor',10),
+        'no':fields.char('Nomor', 10, readonly=True),
         'paket_id':fields.many2one('hr_training.paket','Paket Training'),
         'subject_id':fields.many2one('hr_training.subject','Nama Training',required=True, store=True),
         'penyelenggara':fields.char('Lembaga Penyelenggara',128),
@@ -114,6 +127,9 @@ class analisa(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
         #'no': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'hr_training.analisa.nomor'),
         }  
+        
+    _sql_constraints = [('no_uniq', 'unique(no)','Kode Training tidak boleh sama')]
+        
 analisa()    
 
 class paket(osv.osv):
