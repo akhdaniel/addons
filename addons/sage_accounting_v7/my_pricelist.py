@@ -283,7 +283,7 @@ class account_invoice(osv.osv):
         
 
         partner_obj = self.pool.get('res.partner')
-        npa_partner_id = order_obj.search(cr, uid, [('name','=', 'National Petroleum Authority')])[0]
+        npa_partner_id = partner_obj.search(cr, uid, [('name','=', 'National Petroleum Authority')])[0]
         if not npa_partner_id:
             raise osv.except_osv(_('Error !'), _('No Partner with name National Petroleum Authority. Please set it up through Partner data') )
 
