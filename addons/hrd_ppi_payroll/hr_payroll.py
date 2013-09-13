@@ -183,7 +183,7 @@ class hr_payslip(osv.osv):
                             overtimes['number_of_hours'] += total_overtime
 
                         elif urut_title > 100 and urut_title < 200:   
-                            if no_urut >= 100 and no_urut < 200 :
+                            if no_urut < 200 :
                                 if isNonWorkingDay and real_working_hours_on_day > 4:
                                     incentives['number_of_days'] += 1.0
                         
