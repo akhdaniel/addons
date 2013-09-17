@@ -113,15 +113,14 @@ class hr_payslip(osv.osv):
                                 'contract_id': contract.id,
                             }
                     else: 
-
-                        attendances['number_of_days'] += 1.0
-                        attendances['number_of_hours'] += working_hours_on_day
-                        ### tidak cuti, cek apakah dia masuk absen?
                         real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
 
                         date = (day_from + timedelta(days=day))
                         isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7
-
+                        if isNonWorkingDay == False :
+                            attendances['number_of_days'] += 1.0
+                            attendances['number_of_hours'] += working_hours_on_day
+                        ### tidak cuti, cek apakah dia masuk absen?
                         if real_working_hours_on_day > 0:
                             presences['number_of_days'] += 1.0
                             presences['number_of_hours'] += working_hours_on_day
@@ -199,7 +198,6 @@ class hr_payslip(osv.osv):
                                     nol
                             """
                             
-                        
             leaves = [value for key,value in leaves.items()]
             res += [attendances] + leaves + [presences] + [overtimes] + [incentives]
         return res
@@ -338,3 +336,12 @@ class hr_attendance(osv.osv):
         return True
 
 hr_attendance()
+
+class hr_salary_rule(osv.osv):
+    _name = 'hr.salary.rule'
+    _inherit = 'hr.salary.rule'
+    
+    _columns = {
+        'amount_python_compute':fields.text('Python Code',readonly=True),
+            }
+hr_salary_rule()
