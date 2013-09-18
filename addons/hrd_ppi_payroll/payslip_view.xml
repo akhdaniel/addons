@@ -1,42 +1,27 @@
 <openerp>
     <data>
-        <record id="view_hr_payslip_form" model="ir.ui.view">
-                <field name="name">hr.payslip.form</field>
-                <field name="model">hr.payslip</field>
-                <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
-                <field name="arch" type="xml">
-                    <field name="contract_id" position="before">
-                        <field name="gol_id"/>
-                        <field name="department_id"/>
-                    </field>
-                </field>
+        <!-- Master Gaji -->
+        <record model="ir.actions.act_window" id="action_gaji">
+            <field name="name">Master Gaji</field>
+            <field name="res_model">hr.master_gaji</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
         </record>
-        <record id="view_hr_payslip_tree" model="ir.ui.view">
-            <field name="name">hr.payslip.tree</field>
-            <field name="model">hr.payslip</field>
-            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+        
+        <!-- contract -->
+        
+        <record id="hr_contract_view_form1" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
-                    <field name="number" position="after">                    
-                        <field name="department_id"/>
-                    </field>
+                   <field name="wage" position="after">
+                   <field name="master_gaji_id"/>
+                   <field name="makan"/>
+                   <field name="transport"/>
+                   </field>
             </field>
         </record>
-         <record id="view_hr_payslip_filter" model="ir.ui.view">
-            <field name="name">hr.payslip.select</field>
-            <field name="model">hr.payslip</field>
-            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
-            <field name="arch" type="xml">
-                <search string="Search Payslips">
-                    <field name="name" string="Payslips" filter_domain="['|',('name','ilike',self),('number','ilike',self)]"/>
-                    <field name="date_from"/>
-                    <field name="employee_id"/>
-                    <field name="payslip_run_id"/>
-                    <group expand="0" string="Group By...">
-                        <filter string="Departmen" icon="terp-personal" name='department_id' context="{'group_by':'department_id'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-        <!--menuitem id="jenis_tunjangan" parent="menu_hr_root_payroll" name="Jenis Tunjangan" groups="base.group_hr_manager" sequence="45"/-->
+        <menuitem action="action_gaji" parent="base.menu_tools" name="Master Gaji" id="master_gaji" sequence="211" groups="base.group_tool_user"/>
     </data>
 </openerp>

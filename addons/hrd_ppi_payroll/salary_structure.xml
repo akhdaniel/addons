@@ -84,7 +84,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = worked_days.OVERTIME.number_of_days * 12500 </field>
+	        <field name="amount_python_compute">result = worked_days.OVERTIME.number_of_days* contract.makan </field>
 	    </record>
 	    <record id="hr_payroll_rules_incentive" model="hr.salary.rule">
 	        <field name="name">INCENTIVES</field>
@@ -100,7 +100,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = worked_days.INCENTIVES.number_of_days * 12500 </field>
+	        <field name="amount_python_compute">result = worked_days.INCENTIVES.number_of_days * contract.makan </field>
 	    </record>
 	    <record id="hr_payroll_rules_meal" model="hr.salary.rule">
 	        <field name="name">MEAL ALLOWANCE</field>
@@ -108,7 +108,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * 12500 </field>
+	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.makan  </field>
 	    </record>
 	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
 	        <field name="name">TRANSPORT ALLOWANCE</field>
@@ -116,7 +116,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * 12500 </field>
+	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.transport</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALLOWANCE</field>
@@ -272,6 +272,8 @@
 	        <field name="code">LEAVE_PAY</field>	    	
 	        <field name="input_id" ref="hr_payroll_rules_leave_pay"/>	    	
 		</record>	
+		
+		
 		
 		<!-- salary structure -->
 	    <record model="hr.payroll.structure" id="structure_ppi_staff" >
