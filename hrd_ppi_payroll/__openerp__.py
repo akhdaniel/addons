@@ -10,6 +10,7 @@ Human Resource PT.PPI
     'update_xml':[
     	'salary_structure.xml',
     	'report/hr_payrport.xml',
+    	'payslip_view.xml',
   	
     ],
     'data': [],
