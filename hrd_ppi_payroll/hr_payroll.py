@@ -70,6 +70,15 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,            
             }
             
+            overtimes_trs = {
+                 'name': _("Overtime Transport"),
+                 'sequence': 2,
+                 'code': 'OVERTIMETRS',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
+            
             incentives = {
                  'name': _("Incentives"),
                  'sequence': 3,
@@ -174,7 +183,8 @@ class hr_payslip(osv.osv):
                                 jam1 = 0
                                 jam2 = 7
                                 jam3 = 1
-                                jam4 = real_working_hours_on_day - 8
+                                jam4 = real_working_hours_on_day - 8                            
+                            overtimes_trs['number_of_days'] += 1.0
                         else:
                             if overtime <=1:
                                 jam1 = overtime
@@ -206,7 +216,7 @@ class hr_payslip(osv.osv):
                                     nol
                             """                 
             leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves + [presences] + [overtimes] + [incentives]
+            res += [attendances] + leaves + [presences] + [overtimes] + [overtimes_trs] + [incentives]
         return res
     '''    
     def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
