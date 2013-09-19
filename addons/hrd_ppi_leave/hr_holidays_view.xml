@@ -1,0 +1,61 @@
+<openerp>
+    <data>
+        
+    	<!-- Public Holiday -->
+
+		<record id="action_hr_public_holiday" model="ir.actions.act_window">
+            <field name="name">Holidays</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem name="Holidays" parent="hr.menu_hr_root" id="menu_open_holidays" sequence="6"/>
+        <menuitem id="menu_action_hr_public_holiday" parent="menu_open_holidays" sequence="1"
+            action="action_hr_public_holiday"/>
+            
+        <!-- Public Holiday --> 
+    	<record id="hr_public_holiday_form" model="ir.ui.view">
+            <field name="name">Public Holidays</field>
+            <field name="model">hr.holidays</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+            	<field name="number_of_days_temp" position="after">
+					<field name="is_libur"/> (Libur Nasional)
+            	</field>
+            </field>
+        </record>
+        
+        <record id="hr_public_holiday_tree" model="ir.ui.view">
+            <field name="name">Public Holidays</field>
+            <field name="model">hr.holidays</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+            	<tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Holidays Summary">
+            		<field name="name"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<field name="number_of_days_temp"/>
+					<!--field name="previous_holiday"/>
+					<field name="next_holiday"/>
+					<field name="country_id"/>
+					<field name="rule_id"/-->
+					<field name="state" invisible="1"/>
+            	</tree>
+            </field>
+        </record>
+
+		<record id="action_hr_public_holiday" model="ir.actions.act_window">
+            <field name="name">Public Holidays</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="hr_public_holiday_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_libur','=',True)]</field>
+            <field name="help">You will find here the list of public holidays</field>
+        </record>
+        </data>
+</openerp>
+   
+   
