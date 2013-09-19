@@ -6,7 +6,7 @@
 Human Resource PT.PPI
 """,    
     'depends': ['hr_holidays'],
-    'update_xml':[],
+    'update_xml':['hr_holidays_view.xml'],
     'data': [],
     'installable':True,
 }
