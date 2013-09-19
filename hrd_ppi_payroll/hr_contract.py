@@ -19,7 +19,7 @@ class master_gaji(osv.osv):
         "makan" :fields.integer("Uang Makan"),
         "transport" : fields.integer("Uang Transportasi"),
     }
-    _sql_constraints = [('status_uniq', 'unique(status)','Kode status tidak boleh sama')]
+    _sql_constraints = [('name_uniq', 'unique(name)','Kode status tidak boleh sama')]
     
     
 master_gaji()    
