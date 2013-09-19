@@ -11,7 +11,7 @@
         </record>
         
         <menuitem name="Holidays" parent="hr.menu_hr_root" id="menu_open_holidays" sequence="6"/>
-        <menuitem id="menu_action_hr_public_holiday" parent="menu_open_holidays" sequence="1"
+        <menuitem  name="Calendar Event" id="menu_action_hr_public_holiday" parent="menu_open_holidays" sequence="1"
             action="action_hr_public_holiday"/>
             
         <!-- Public Holiday --> 
@@ -21,7 +21,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
             <field name="arch" type="xml">
-            	<field name="number_of_days_temp" position="after">
+            	<field name="department_id" position="after">
 					<field name="is_libur"/> (Libur Nasional)
             	</field>
             </field>
@@ -55,6 +55,25 @@
             <field name="domain">[('is_libur','=',True)]</field>
             <field name="help">You will find here the list of public holidays</field>
         </record>
+        
+         <record id="view_holiday_new_calendar1" model="ir.ui.view">
+            <field name="name">Calendar Event</field>
+            <field name="model">hr.holidays</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendar Event" color="user_id" date_start="date_from" date_stop="date_to">
+                    <field name="user_id"/>
+                    <field name="holiday_status_id"/>
+                </calendar>
+            </field>
+        </record>
+        
+       <record model="ir.actions.act_window.view" id="action_open_ask_holidays_calendar">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_holiday_new_calendar1"/>
+            <field name="act_window_id" ref="action_hr_public_holiday"/>
+        </record>
+        
         </data>
 </openerp>
    
