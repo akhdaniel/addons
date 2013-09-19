@@ -16,7 +16,15 @@ class hr_holidays(osv.osv):
     _name = "hr.holidays"
     _description = "Leave"
     _inherit = "hr.holidays"
+    
+    _columns = {
+        'is_libur': fields.boolean('Libur Nasional'),
 
+    }
+    
+    _defaults = {
+        'is_libur': False,
+                }
     '''def _get_number_of_days(self, date_from, date_to):
         """Returns a float equals to the timedelta between two dates given as string."""
         import pdb;pdb.set_trace()
@@ -28,6 +36,7 @@ class hr_holidays(osv.osv):
        return diff_day
     '''        
     def _get_number_of_days(self,date_from, date_to):
+
         """Returns a float equals to the timedelta between two dates given as string."""
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
         day_from = datetime.strptime(date_from,DATETIME_FORMAT)
