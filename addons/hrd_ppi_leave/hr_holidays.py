@@ -32,7 +32,7 @@ class hr_holidays(osv.osv):
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
         day_from = datetime.strptime(date_from,DATETIME_FORMAT)
         day_to = datetime.strptime(date_to,DATETIME_FORMAT)
-        nb_of_days = (day_to - day_from).days         
+        nb_of_days = (day_to - day_from).days + 1        
         bob=0
         for day in range(0, nb_of_days):  
             date = (day_from + timedelta(days=day)) 
@@ -40,7 +40,7 @@ class hr_holidays(osv.osv):
             if isNonWorkingDay :
                 non=bob
                 bob=non+1
-        diff_day = nb_of_days - bob
+        diff_day = (nb_of_days - 1) - bob
         return diff_day
          
 hr_holidays()
