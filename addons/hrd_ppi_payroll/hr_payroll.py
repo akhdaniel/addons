@@ -71,7 +71,7 @@ class hr_payslip(osv.osv):
             }
             
             overtimes_trs = {
-                 'name': _("Overtime Transport"),
+                 'name': _("Overtime Hari Libur"),
                  'sequence': 2,
                  'code': 'OVERTIMETRS',
                  'number_of_days': 0.0,
