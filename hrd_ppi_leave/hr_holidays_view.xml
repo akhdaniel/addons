@@ -10,7 +10,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         
-        <menuitem name="Holidays" parent="hr.menu_hr_root" id="menu_open_holidays" sequence="6" groups="base.group_tool_user"/>
+        <menuitem name="Holidays" parent="hr.menu_hr_root" id="menu_open_holidays" sequence="6" groups="base.group_hr_user,base.group_hr_manager"/>
         <menuitem  name="Calendar Event" id="menu_action_hr_public_holiday" parent="menu_open_holidays" sequence="1"
             action="action_hr_public_holiday"/>
             
