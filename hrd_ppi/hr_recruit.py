@@ -645,11 +645,11 @@ class survey(osv.osv):
 survey()
 
 class fasilitas(osv.osv):
-    _name = "hr.fasilitas"
+	_name = "hr.fasilitas"
 	_rec_name="fasilitas"
-    
-    _columns = {
-        "fasilitas" : fields.char("Fasilitas",required=True),
-        "applican_id" : fields.many2one("hr.applicant","Fasilitas"),
-    }
+	
+	_columns = {
+		"fasilitas" : fields.char("Fasilitas",required=True),
+		"applican_id" : fields.many2one("hr.applicant","Fasilitas"),
+		}
 fasilitas()
