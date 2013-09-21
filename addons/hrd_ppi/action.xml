@@ -94,7 +94,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Kurikulum">
-                    <field name="name"/>
+                    <field name="fasilitas"/>
                 </form>
             </field>
     </record>
@@ -110,7 +110,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Kurikulum">
-                    <field name="name"/>
+                    <field name="fasilitas"/>
                 </form>
             </field>
     </record>
