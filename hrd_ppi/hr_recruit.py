@@ -91,7 +91,7 @@ class jurusan_detail(osv.osv):
     _name='hr_recruit.jurusan_detail'
     
     _columns= {
-        'bidang_id':fields.char("bidang",required=True),
+        'bidang_id':fields.char("bidang"),
         'name':fields.char("Jurusan",required=True),       
             }
 jurusan_detail()
