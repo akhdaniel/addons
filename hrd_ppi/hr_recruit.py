@@ -665,7 +665,7 @@ class fasilitas2(osv.osv):
 fasilitas()
 
 class fasilitas3(osv.osv):
-	_name = "hr.fasilitas2"
+	_name = "hr.fasilitas3"
 	
 	_columns = {
 		"fasilitas" : fields.char("Fasilitas",required=True),
