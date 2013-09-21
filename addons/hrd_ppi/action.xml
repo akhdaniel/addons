@@ -74,7 +74,7 @@
     </record>
 	<record id="fasilitas_form_view" model="ir.ui.view">
             <field name="name">Master Fasilitas</field>
-            <field name="model">hr.fasilitas</field>
+            <field name="model">hr.fasilitas3</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Kurikulum">
