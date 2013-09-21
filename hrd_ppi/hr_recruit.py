@@ -395,7 +395,7 @@ class hr_applicant(osv.osv):
         'stage_id': fields.many2one ('hr.recruitment.stage', 'Stage',
                         domain="['&', ('fold', '=', False), '|', ('department_id', '=', department_id), ('department_id', '=', False)]",readonly=True),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),  
-        'bidang_id':fields.related('jurusan_id','bidang',type='char',relation='hr_recruit.jurusan_detail',string='Bidang'),        
+        'bidang_id':fields.related('jurusan_id','bidang',type='char',relation='hr_recruit.jurusan_detail',string='Bidang',required=True),        
         "fasilitas1_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
         "fasilitas2_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
