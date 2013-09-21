@@ -649,7 +649,7 @@ class fasilitas(osv.osv):
 	_rec_name="fasilitas"
 	
 	_columns = {
-		"fasilitas" : fields.many2one("hr.fasilitas2","Fasilitas",required=True),
+		"fasilitas" : fields.many2one("hr.fasilitas3","Fasilitas",required=True),
 		"applican_id" : fields.many2one("hr.applicant","Fasilitas"),
 		}
 fasilitas()
@@ -659,7 +659,7 @@ class fasilitas2(osv.osv):
 	_rec_name="fasilitas"
 	
 	_columns = {
-		"fasilitas" : fields.many2one("hr.fasilitas2","Fasilitas",required=True),
+		"fasilitas" : fields.many2one("hr.fasilitas3","Fasilitas",required=True),
 		"applican_id" : fields.many2one("hr.applicant","Fasilitas"),
 		}
 fasilitas()
