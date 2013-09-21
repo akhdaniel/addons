@@ -66,6 +66,12 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+	<record model="ir.actions.act_window" id="action_fasilitas">
+        <field name="name">Master Fasilitas</field>
+        <field name="res_model">hr.fasilitas</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
  
 
 	<!-- system MENU -->
@@ -79,5 +85,6 @@
     <menuitem action="action_hr_recruit_agama" parent="base.menu_tools" name="Master Agama" id="master_hr_agama" sequence="190" groups="base.group_tool_user"/>
     <menuitem action="action_hr_recruit_issued" parent="base.menu_tools" name="Master Issued" id="master_hr_issued" sequence="200" groups="base.group_tool_user"/>
     <menuitem action="action_gol" parent="base.menu_tools" name="Master Golongan" id="master_gol" sequence="201" groups="base.group_tool_user"/>
+	<menuitem action="action_fasilitas" parent="base.menu_tools" name="Master Fasilitas" id="master_fasilitas" sequence="202" groups="base.group_tool_user"/>
 </data>
 </openerp>
