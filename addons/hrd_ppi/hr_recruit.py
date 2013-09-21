@@ -668,6 +668,6 @@ class fasilitas3(osv.osv):
 	_name = "hr.fasilitas2"
 	
 	_columns = {
-		"fasilitas" : field.char("Fasilitas",required=True),
+		"fasilitas" : fields.char("Fasilitas",required=True),
 		}
 fasilitas3()
