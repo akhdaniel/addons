@@ -649,7 +649,7 @@ class fasilitas(osv.osv):
     _name = "hr.fasilitas"
     
     _columns = {
-        "fasilitas" : fields.char("Fasilitas"),
-        "applican_id" : fields.many2one("hr.applicant","applicant"),
+        "fasilitas" : fields.char("Fasilitas",required=True),
+        "applican_id" : fields.many2one("hr.applicant","Fasilitas"),
     }
 fasilitas()
