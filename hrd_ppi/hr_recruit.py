@@ -646,6 +646,7 @@ survey()
 
 class fasilitas(osv.osv):
     _name = "hr.fasilitas"
+	_rec_name="fasilitas"
     
     _columns = {
         "fasilitas" : fields.char("Fasilitas",required=True),
