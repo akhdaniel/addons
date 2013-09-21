@@ -397,7 +397,7 @@ class hr_applicant(osv.osv):
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),  
         'bidang_id':fields.related('jurusan_id','bidang_id',type='char',relation='hr_recruit.jurusan_detail',string='Bidang',readonly=True),        
         "fasilitas1_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
-        "fasilitas2_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
+        "fasilitas2_ids":fields.one2many("hr.fasilitas2","applican_id","Fasilitas"),  
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
         "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True), 
 		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
@@ -649,7 +649,25 @@ class fasilitas(osv.osv):
 	_rec_name="fasilitas"
 	
 	_columns = {
-		"fasilitas" : fields.char("Fasilitas",required=True),
+		"fasilitas" : fields.many2one("hr.fasilitas2","Fasilitas",required=True),
 		"applican_id" : fields.many2one("hr.applicant","Fasilitas"),
 		}
 fasilitas()
+
+class fasilitas2(osv.osv):
+	_name = "hr.fasilitas2"
+	_rec_name="fasilitas"
+	
+	_columns = {
+		"fasilitas" : fields.many2one("hr.fasilitas2","Fasilitas",required=True),
+		"applican_id" : fields.many2one("hr.applicant","Fasilitas"),
+		}
+fasilitas()
+
+class fasilitas3(osv.osv):
+	_name = "hr.fasilitas2"
+	
+	_columns = {
+		"fasilitas" : field.char("Fasilitas",required=True),
+		}
+fasilitas3()
