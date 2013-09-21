@@ -68,7 +68,7 @@
     </record>
 	<record model="ir.actions.act_window" id="action_fasilitas">
         <field name="name">Master Fasilitas</field>
-        <field name="res_model">hr.fasilitas</field>
+        <field name="res_model">hr.fasilitas3</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -78,7 +78,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Kurikulum">
-                    <field name="fasilitas"/>
+                    <field name="name"/>
                 </form>
             </field>
     </record>
