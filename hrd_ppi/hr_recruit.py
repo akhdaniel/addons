@@ -91,7 +91,8 @@ class jurusan_detail(osv.osv):
     _name='hr_recruit.jurusan_detail'
     
     _columns= {
-        'name':fields.char('Jurusan',30,required=True),
+        'bidang':fields.char("bidang",required=True),
+        'name':fields.char("Jurusan",required=True),       
             }
 jurusan_detail()
 
@@ -385,7 +386,7 @@ class hr_applicant(osv.osv):
         'koneksi1_ids':fields.one2many('hr_recruit.kon1','applicant_id','Referensi Internal'),
         'koneksi2_ids':fields.one2many('hr_recruit.kon2','applicant_id','Referensi Eksternal'),
         'interview_ids':fields.one2many('hr_recruit.interview','applicant_id','Mulai Interview'),
-        'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan',required=True),
+        'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan'),   
         'job_id': fields.many2one('hr.job', 'Applied Job',required=True),
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
         'result_id':fields.many2one('hr_recruit.result','Result'),
@@ -394,8 +395,12 @@ class hr_applicant(osv.osv):
         'stage_id': fields.many2one ('hr.recruitment.stage', 'Stage',
                         domain="['&', ('fold', '=', False), '|', ('department_id', '=', department_id), ('department_id', '=', False)]",readonly=True),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),  
-        'bidang_id':fields.many2one('hr_recruit.bidang','Bidang'),                
-        #'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
+        'bidang_id':fields.related('jurusan_id','bidang',type='char',relation='hr_recruit.jurusan_detail',string='Bidang'),        
+        "fasilitas1_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
+        "fasilitas2_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
+        "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
+        "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True), 
+		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
         }
 hr_applicant()
 
@@ -639,3 +644,12 @@ class survey(osv.osv):
         
     }
 survey()
+
+class fasilitas(osv.osv):
+    _name = "hr.fasilitas"
+    
+    _columns = {
+        "fasilitas" : fields.char("Fasilitas"),
+        "applican_id" : fields.many2one("hr.applicant","applicant"),
+    }
+fasilitas()
