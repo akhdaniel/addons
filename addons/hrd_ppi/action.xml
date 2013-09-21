@@ -82,6 +82,38 @@
                 </form>
             </field>
     </record>
+	<record model="ir.actions.act_window" id="action_fasilitas3">
+        <field name="name">Master Fasilitas</field>
+        <field name="res_model">hr.fasilitas</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+	<record id="fasilitas3_form_view" model="ir.ui.view">
+            <field name="name">Master Fasilitas</field>
+            <field name="model">hr.fasilitas</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Kurikulum">
+                    <field name="name"/>
+                </form>
+            </field>
+    </record>
+	<record model="ir.actions.act_window" id="action_fasilitas2">
+        <field name="name">Master Fasilitas</field>
+        <field name="res_model">hr.fasilitas2</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+	<record id="fasilitas2_form_view" model="ir.ui.view">
+            <field name="name">Master Fasilitas</field>
+            <field name="model">hr.fasilitas2</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Kurikulum">
+                    <field name="name"/>
+                </form>
+            </field>
+    </record>
  
 
 	<!-- system MENU -->
