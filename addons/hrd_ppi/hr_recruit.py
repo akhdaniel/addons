@@ -636,8 +636,7 @@ class survey(osv.osv):
         return True
     
     _columns = {
-        'name': fields.related('job_id',type="many2one", 
-            relation="hr.job", string="Job Name", readonly=True),
+        'name': fields.related('job_id',type="many2one",relation="hr.job", string="Job Name", readonly=True),
         'job_id' : fields.many2one('hr.job', 'Job Name',required=True),
         'applicant_id':fields.many2one('hr.applicant'),
         'tgl_int':fields.date('Tanggal Interview')
