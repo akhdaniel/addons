@@ -94,10 +94,16 @@
                         <form>
                             <field name='name'/>
                         </form>
-                </field>
-
+                </field>	
              </field>
-            
+			 
+            <field name='salary_expected' position="after">
+                <field name="fasilitas1_ids"/>
+             </field>
+             <field name='salary_proposed' position="after">
+                <field name="fasilitas2_ids"/>
+             </field>
+			
              <field name="description" position="after">
                 <notebook colspan="4">                      
                         <page string="Susunan Keluarga Istri/Suami" name="istri/suami" attrs="{'invisible':[('status','=','single')]}">
