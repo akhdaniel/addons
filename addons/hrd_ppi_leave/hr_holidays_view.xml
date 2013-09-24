@@ -61,12 +61,13 @@
             <field name="help">You will find here the list of public holidays</field>
         </record>
         
-         <record id="view_holiday_new_calendar" model="ir.ui.view">
+  		<record id="view_holiday_new_calendar" model="ir.ui.view">
             <field name="name">Calendar Event</field>
             <field name="model">hr.holidays</field>
             <field name="arch" type="xml">
-                <calendar string="Calendar Event" color="user_id" date_start="date_from" date_stop="date_to">
-                    <field name="user_id"/>
+                <calendar string="Calendar Event" color="state" date_start="date_from" date_stop="date_to">
+                    <field name="state"/>
+                    <!--field name="user_id"/-->
                     <field name="holiday_status_id"/>
                 </calendar>
             </field>
@@ -91,6 +92,19 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="hr_public_holiday_form"/>
             <field name="act_window_id" ref="action_hr_public_holiday"/>
+        </record>
+        
+         <record id="view_hr_holidays_filter2" model="ir.ui.view">
+            <field name="name">hr.holidays.filter</field>
+            <field name="model">hr.holidays</field>
+            <field name="arch" type="xml">
+                <search string="Search Leave">
+                    <field name="name"/>                    
+                    <filter icon="terp-check" domain="[('state','=','draft')]" string="To Confirm"/>
+                    <filter icon="terp-camera_test" domain="[('state','in',('confirm','validate1'))]" string="To Approve" name="approve"/>
+                    <filter icon="terp-camera_test" domain="[('state','=','validate')]" string="Validated" name="validated"/>
+                </search>
+            </field>
         </record>
         
         </data>
