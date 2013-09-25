@@ -71,7 +71,7 @@ class hr_payslip(osv.osv):
             }
             
             overtimes_trs = {
-                 'name': _("Overtime Hari Libur"),
+                 'name': _("Transport Hari Libur"),
                  'sequence': 2,
                  'code': 'OVERTIMETRS',
                  'number_of_days': 0.0,
@@ -179,7 +179,7 @@ class hr_payslip(osv.osv):
                                 jam2 = 7
                                 jam3 = real_working_hours_on_day - 7
                                 jam4 = 0
-                            elif real_working_hours_on_day>9:
+                            elif real_working_hours_on_day>=9:
                                 jam1 = 0
                                 jam2 = 7
                                 jam3 = 1
@@ -362,3 +362,61 @@ class hr_salary_rule(osv.osv):
         'amount_python_compute':fields.text('Python Code',readonly=True),
             }
 hr_salary_rule()
+
+class hr_payslip_worked_days(osv.osv):
+    '''
+    Payslip Worked Days
+    '''
+
+    _name = 'hr.payslip.worked_days'
+    _inherit = 'hr.payslip.worked_days'
+    _description = 'Payslip Worked Days'
+    _columns = {
+        'name': fields.char('Description', size=256, required=True,readonly=True),
+        'payslip_id': fields.many2one('hr.payslip', 'Pay Slip', required=True, ondelete='cascade', select=True),
+        'sequence': fields.integer('Sequence', required=True, select=True),
+        'code': fields.char('Code', size=52, required=True, help="The code that can be used in the salary rules",readonly=True),
+        'number_of_days': fields.float('Number of Days',readonly=True),
+        'number_of_hours': fields.float('Number of Hours',readonly=True),
+        'contract_id': fields.many2one('hr.contract', 'Contract', required=True, help="The contract for which applied this input",readonly=True),
+    }
+    _order = 'payslip_id, sequence'
+    _defaults = {
+        'sequence': 10,
+    }
+hr_payslip_worked_days()
+
+class hr_payslip_run(osv.osv):
+
+    _name = 'hr.payslip.run'
+    _inherit = 'hr.payslip.run'
+    _description = 'Payslip Batches'
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, readonly=True, states={'draft': [('readonly', False)]}),
+        'slip_ids': fields.one2many('hr.payslip', 'payslip_run_id', 'Payslips', required=False, readonly=True, states={'draft': [('readonly', False)]}),
+        'state': fields.selection([
+            ('draft', 'Draft'),
+            ('close', 'Close'),
+        ], 'Status', select=True, readonly=True),
+        'date_start': fields.date('Date From', required=True, readonly=True, states={'draft': [('readonly', False)]}),
+        'date_end': fields.date('Date To', required=True, readonly=True, states={'draft': [('readonly', False)]}),
+        'credit_note': fields.boolean('Credit Note', readonly=True, states={'draft': [('readonly', False)]}, help="If its checked, indicates that all payslips generated from here are refund payslips."),
+    }
+    _defaults = {
+        'state': 'draft',
+        'date_start': lambda *a: time.strftime('%Y-%m-01'),
+        'date_end': lambda *a: str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-1))[:10],
+    }
+
+    def draft_payslip_run(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
+
+    def close_payslip_run(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'close'}, context=context)
+        
+    def approve (self, cr, uid, ids, context=None):
+        data = self.browse(cr,uid,ids)[0]
+        payslip_obj = self.pool.get('hr.payslip')       
+        return payslip_obj.write(cr, uid, [x.id for x in data.slip_ids], {'state':"done"})
+
+hr_payslip_run()
