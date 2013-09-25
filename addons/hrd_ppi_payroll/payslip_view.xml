@@ -7,7 +7,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        
+
         <!-- contract -->
         
         <record id="hr_contract_view_form1" model="ir.ui.view">
@@ -15,11 +15,30 @@
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
-                   <field name="wage" position="after">
-                   <field name="master_gaji_id"/>
-                   <field name="makan"/>
-                   <field name="transport"/>
-                   </field>
+               <field name="wage" position="after">
+               <field name="master_gaji_id"/>
+               <field name="makan"/>
+               <field name="transport"/>
+               </field>
+               <!--div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+               </div-->
+            </field>            
+        </record>
+        
+        <!-- payslip batches-->
+        
+        <record id="hr_payslip_run_form" model="ir.ui.view">
+            <field name="name">hr.payslip.run.form</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+            <field name="arch" type="xml">
+                <form string="Payslips Batches" version="7.0">
+                <header>
+                    <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" group="base.group_tool_manager"/>                   
+                </header>
+                </form>
             </field>
         </record>
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Gaji" id="master_gaji" sequence="211" groups="base.group_tool_user"/>
