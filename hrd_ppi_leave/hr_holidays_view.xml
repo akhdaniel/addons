@@ -2,17 +2,26 @@
     <data>
         
     	<!-- Public Holiday -->
-
-		<record id="action_hr_public_holiday" model="ir.actions.act_window">
+       
+        <record id="action_hr_public_holiday" model="ir.actions.act_window">
             <field name="name">Holidays</field>
             <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>           
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+        
+		<record id="action_hr_public_holiday91" model="ir.actions.act_window">
+            <field name="name">Holidays</field>
+            <field name="res_model">hr.bln_libur</field>
             <field name="view_type">form</field>
-            <!--field name="view_mode">tree,form</field-->
+            <field name="view_mode">form</field>
         </record>
         
         <menuitem name="Holidays" parent="hr.menu_hr_root" id="menu_open_holidays" sequence="6" groups="base.group_hr_user,base.group_hr_manager"/>
         <menuitem  name="Calendar Event" id="menu_action_hr_public_holiday" parent="menu_open_holidays" sequence="1"
             action="action_hr_public_holiday"/>
+        <menuitem  name="New Calendar Event" id="menu_action_hr_public_holiday_approve" parent="menu_open_holidays" sequence="2"
+            action="action_hr_public_holiday91"/>
             
         <!-- Public Holiday --> 
     	<record id="hr_public_holiday_form" model="ir.ui.view">
@@ -21,7 +30,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
             <field name="arch" type="xml">
-				<header position="replace">
+                <header position="replace">
                 <header>
                     <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
                     <button string="Validate" name="second_validate" states="validate1" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
@@ -30,9 +39,31 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}'/>
                 </header>
                 </header>
-            	<field name="department_id" position="after">
-					<field name="is_libur" attrs="{'invisible':[('holiday_type','=','employee')]}"/> (Libur Nasional)
-            	</field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="hr_public_holiday_form9">
+            <field name="name">PublicHolidays</field>
+            <field name="model">hr.bln_libur</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Libur">
+                    <notebook colspan="4">
+                            <page string="Tanggal Libur">
+                                <field view_mode="tree" name="hol_ids" nolabel="1">
+                                	<tree editable="bottom">
+                                		<field name="name"/>
+                                		<field name="holiday_status_id"/>
+					                    <field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
+                                        <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"/>
+					                    <field name="number_of_days_temp"/>
+					                    <field name="holiday_type" on_change="onchange_type(holiday_type)"/>
+                                        <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}"/>
+                                        <field name="state"/>
+                                	</tree>
+                                </field>
+                            </page>
+                    </notebook> 
+            </form>               
             </field>
         </record>
         
@@ -40,18 +71,20 @@
             <field name="name">Public Holidays</field>
             <field name="model">hr.holidays</field>
             <field name="type">tree</field>
+            <field name="domain">[('holiday_type','=','category')]</field>
             <field name="arch" type="xml">
-            	<tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Holidays Summary">
+            	<tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Hari Libur Nasional">
             		<field name="name"/>
-					<field name="date_from"/>
-					<field name="date_to"/>
+            		<field name="holiday_status_id"/>
+					<field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
+                    <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"/>
 					<field name="number_of_days_temp"/>
-					<field name="state" invisible="1"/>
+					<field name="state" />
             	</tree>
             </field>
         </record>
 
-		<record id="action_hr_public_holiday" model="ir.actions.act_window">
+		<!--record id="action_hr_public_holiday" model="ir.actions.act_window">
             <field name="name">Public Holidays</field>
             <field name="res_model">hr.holidays</field>
             <field name="view_type">form</field>
@@ -59,17 +92,15 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[('is_libur','=',True)]</field>
             <field name="help">You will find here the list of public holidays</field>
-        </record>
+        </record-->
         
-  		<record id="view_holiday_new_calendar" model="ir.ui.view">
+         <record id="view_holiday_new_calendar" model="ir.ui.view">
             <field name="name">Calendar Event</field>
             <field name="model">hr.holidays</field>
             <field name="arch" type="xml">
-                <calendar string="Calendar Event" color="state" date_start="date_from" date_stop="date_to">
-					<field name="name"/>
+                <calendar string="Calendar Event" color="state" date_start="date_from" date_stop="date_to">                   
+                    <field name="name"/>
                     <field name="state"/>
-                    <!--field name="user_id"/>
-                    <field name="holiday_status_id"/-->
                 </calendar>
             </field>
         </record>
@@ -105,6 +136,22 @@
                     <filter icon="terp-camera_test" domain="[('state','in',('confirm','validate1'))]" string="To Approve" name="approve"/>
                     <filter icon="terp-camera_test" domain="[('state','=','validate')]" string="Validated" name="validated"/>
                 </search>
+            </field>
+        </record>
+        
+
+        <!-- Holidays: Leave Request -->
+
+        <record id="view_holiday_new_calendar3" model="ir.ui.view">
+            <field name="name">Leave Request</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_holiday_new_calendar"/>
+
+            <field name="arch" type="xml">
+                <field name="user_id" position="replace">
+                    <field name="name"/>
+                    <!--field name="user_id" attrs="{'invisible':[('holiday_type','=','category')]}"/-->
+                </field>
             </field>
         </record>
         

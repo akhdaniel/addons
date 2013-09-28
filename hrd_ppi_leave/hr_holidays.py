@@ -12,19 +12,29 @@ import openerp.addons.decimal_precision as dp
 
 from openerp.tools.safe_eval import safe_eval as eval
 import pprint
+
+class bln_libur(osv.osv):
+    _name="hr.bln_libur"
+
+    
+    _columns = {
+        'hol_ids':fields.one2many('hr.holidays','bln_libur_id','Tanggal Libur'),
+        'name': fields.selection([('Libur','Libur Nasional')]),
+    }
+    _defaults={
+        'name':'Libur',
+    }
+bln_libur()
+
 class hr_holidays(osv.osv):
     _name = "hr.holidays"
     _description = "Leave"
     _inherit = "hr.holidays"
     
     _columns = {
-        'is_libur': fields.boolean('Libur Nasional'),
-
+        'bln_libur_id':fields.many2one('hr.bln_libur',''),
     }
     
-    _defaults = {
-        'is_libur': False,
-                }
     '''def _get_number_of_days(self, date_from, date_to):
         """Returns a float equals to the timedelta between two dates given as string."""
         import pdb;pdb.set_trace()
