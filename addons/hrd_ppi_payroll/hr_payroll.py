@@ -21,7 +21,6 @@ class hr_payslip(osv.osv):
     _name = 'hr.payslip'
     _inherit = 'hr.payslip'
     _description = 'Pay Slip Inheriteed PPI'
-    
  
 
     def get_worked_day_lines(self, cr, uid, contract_ids, date_from, date_to, context=None):
@@ -218,92 +217,36 @@ class hr_payslip(osv.osv):
             leaves = [value for key,value in leaves.items()]
             res += [attendances] + leaves + [presences] + [overtimes] + [overtimes_trs] + [incentives]
         return res
-    '''    
-    def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
-        empolyee_obj = self.pool.get('hr.employee')
-        contract_obj = self.pool.get('hr.contract')
-        worked_days_obj = self.pool.get('hr.payslip.worked_days')
-        input_obj = self.pool.get('hr.payslip.input')
-
-        if context is None:
-            context = {}
-        #delete old worked days lines
-        old_worked_days_ids = ids and worked_days_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
-        if old_worked_days_ids:
-            worked_days_obj.unlink(cr, uid, old_worked_days_ids, context=context)
-
-        #delete old input lines
-        old_input_ids = ids and input_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
-        if old_input_ids:
-            input_obj.unlink(cr, uid, old_input_ids, context=context)
-
-
-        #defaults
-        res = {'value':{
-                      'line_ids':[],
-                      'input_line_ids': [],
-                      'worked_days_line_ids': [],
-                      #'details_by_salary_head':[], TODO put me back
-                      'name':'',
-                      'contract_id': False,
-                      'struct_id': False,
-                      }
-            }       
-        if (not employee_id) or (not date_from) or (not date_to):
-            return res
-        ttyme = datetime.fromtimestamp(time.mktime(time.strptime(date_from, "%Y-%m-%d")))
-        employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
-        employee_gol = employee_id.gol_id.name
-        employee_dep = employee_id.department_id.name
-        grade_obj =self.pool.get('hr_employs.gol') 
-        grade_src=grade_obj.search(cr,uid,[('name','=',employee_gol)])
-        grade_id=grade_obj.browse(cr,uid,grade_src,context=context)        
-        dep_obj =self.pool.get('hr.department') 
-        dep_src=dep_obj.search(cr,uid,[('name','=',employee_dep)])
-        dep_id=dep_obj.browse(cr,uid,grade_src,context=context)
-        for grade in grade_id :
-            grade_pay = grade.id
-            #for dep in dep_id :
-             #   dep_pay = dep_id.id
-            res['value'].update({
-                            'name': _('Salary Slip of %s for %s') % (employee_id.name, tools.ustr(ttyme.strftime('%B-%Y'))),
-                            'company_id': employee_id.company_id.id,
-                            'gol_id': grade_pay,
-                           # 'department_id' : dep_pay
-                })
-
-        if not context.get('contract', False):
-            #fill with the first contract of the employee
-            contract_ids = self.get_contract(cr, uid, employee_id, date_from, date_to, context=context)
-        else:
-            if contract_id:
-                #set the list of contract for which the input have to be filled
-                contract_ids = [contract_id]
+        
+    def compute_sheet(self, cr, uid, ids, context=None):         
+        slip_line_pool = self.pool.get('hr.payslip.line')
+        sequence_obj = self.pool.get('ir.sequence')
+        for payslip in self.browse(cr, uid, ids, context=context):
+            number = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
+            #delete old payslip lines
+            old_slipline_ids = slip_line_pool.search(cr, uid, [('slip_id', '=', payslip.id)], context=context)
+#            old_slipline_ids
+            if old_slipline_ids:
+                slip_line_pool.unlink(cr, uid, old_slipline_ids, context=context)
+            if payslip.contract_id:
+                #set the list of contract for which the rules have to be applied
+                contract_ids = [payslip.contract_id.id]
             else:
-                #if we don't give the contract, then the input to fill should be for all current contracts of the employee
-                contract_ids = self.get_contract(cr, uid, employee_id, date_from, date_to, context=context)
-
-        if not contract_ids:
-            return res
-        contract_record = contract_obj.browse(cr, uid, contract_ids[0], context=context)
-        res['value'].update({
-                    'contract_id': contract_record and contract_record.id or False
-        })
-        struct_record = contract_record and contract_record.struct_id or False
-        if not struct_record:
-            return res
-        res['value'].update({
-                    'struct_id': struct_record.id,
-        })
-        #computation of the salary input
-        worked_days_line_ids = self.get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
-        input_line_ids = self.get_inputs(cr, uid, contract_ids, date_from, date_to, context=context)
-        res['value'].update({
-                    'worked_days_line_ids': worked_days_line_ids,
-                    'input_line_ids': input_line_ids,
-        })
-        return res
-     '''
+                #if we don't give the contract, then the rules to apply should be for all current contracts of the employee
+                contract_ids = self.get_contract(cr, uid, payslip.employee_id, payslip.date_from, payslip.date_to, context=context)
+            lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
+            for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
+                cod= line['code']
+                if cod == "NET":
+                    coo =line['amount']      
+                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)              
+            self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
+        return True
+    
+    _columns = {
+        'net' : fields.integer("Net"),
+    }
+                     
 hr_payslip()
 
 
@@ -391,28 +334,6 @@ class hr_payslip_run(osv.osv):
     _name = 'hr.payslip.run'
     _inherit = 'hr.payslip.run'
     _description = 'Payslip Batches'
-    _columns = {
-        'name': fields.char('Name', size=64, required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'slip_ids': fields.one2many('hr.payslip', 'payslip_run_id', 'Payslips', required=False, readonly=True, states={'draft': [('readonly', False)]}),
-        'state': fields.selection([
-            ('draft', 'Draft'),
-            ('close', 'Close'),
-        ], 'Status', select=True, readonly=True),
-        'date_start': fields.date('Date From', required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'date_end': fields.date('Date To', required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'credit_note': fields.boolean('Credit Note', readonly=True, states={'draft': [('readonly', False)]}, help="If its checked, indicates that all payslips generated from here are refund payslips."),
-    }
-    _defaults = {
-        'state': 'draft',
-        'date_start': lambda *a: time.strftime('%Y-%m-01'),
-        'date_end': lambda *a: str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-1))[:10],
-    }
-
-    def draft_payslip_run(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
-
-    def close_payslip_run(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'close'}, context=context)
         
     def approve (self, cr, uid, ids, context=None):
         data = self.browse(cr,uid,ids)[0]
