@@ -46,8 +46,6 @@ class hr_holidays(osv.osv):
        return diff_day
     '''        
     def _get_number_of_days(self,date_from, date_to):
-
-        """Returns a float equals to the timedelta between two dates given as string."""
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
         day_from = datetime.strptime(date_from,DATETIME_FORMAT)
         day_to = datetime.strptime(date_to,DATETIME_FORMAT)
