@@ -34,7 +34,7 @@ class hr_holidays(osv.osv):
     _columns = {
         'bln_libur_id':fields.many2one('hr.bln_libur',''),
 		'is_libur':fields.boolean('Libur Nasional'),
-    
+			}
     '''def _get_number_of_days(self, date_from, date_to):
         """Returns a float equals to the timedelta between two dates given as string."""
         import pdb;pdb.set_trace()
