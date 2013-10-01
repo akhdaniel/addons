@@ -68,9 +68,9 @@
                             <field name="name"/>
                         </tree>    
                     </field>   
-                    <field view_mode="tree" name="survey_ids" widget="one2many_list">
-                        <tree>
-                            <field name='title'/>
+                    <field view_mode="tree" name="survey_ids">
+                        <tree editable='botom'>
+                            <field name='name'/>
                             <!--field name="responsible_id" attrs="{'invisible':[('state','!=','open')]}"/-->
                         </tree>
                     </field>   
