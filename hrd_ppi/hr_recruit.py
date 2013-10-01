@@ -48,7 +48,7 @@ class permohonan_recruit(osv.osv):
         'catatan2':fields.text('Catatan'),
         'state': fields.selection(PERMOHONAN_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
-        'survey_ids':fields.one2many('survey','job_id','Interview Form'),
+        'survey_ids':fields.one2many('hr.survey','jobs_id','Interview Form'),
         'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
                 }
     _defaults = {
