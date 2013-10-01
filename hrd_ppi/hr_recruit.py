@@ -48,7 +48,7 @@ class permohonan_recruit(osv.osv):
         'catatan2':fields.text('Catatan'),
         'state': fields.selection(PERMOHONAN_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
-        'survey_ids':fields.one2many('hr.survey','jobs_id','Interview Form'),
+        'survey_ids':fields.one2many('hr.survey1','job_id','Interview Form'),
         #'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
                 }
     _defaults = {
@@ -63,10 +63,20 @@ class hr_survey(osv.osv):
     
     _columns= {
         'surveys_id' :fields.many2one('survey', 'Interview Form'),  
-        'jobs_id' : fields.many2one('hr.job'),  
+        'jobs_id' : fields.many2one('hr.job','job'),  
         'applicant_id':fields.many2one('hr.applicant'),
         }
 hr_survey()
+
+class hr_survey1(osv.osv):
+    _name='hr.survey1'
+    
+    _columns= {
+        'surveys_id' :fields.many2one('survey', 'Interview Form'),  
+        'job_id' : fields.many2one('hr.job'),  
+
+        }
+hr_survey1()
 
 class pendidikan(osv.osv):
     _name='hr_recruit.pendidikan'
@@ -306,12 +316,12 @@ class hr_applicant(osv.osv):
         #import pdb;pdb.set_trace()
         #appl=self.browse(cr,uid,ids)[0]
         app=vals["job_id"]
-        apps=self.pool.get('survey')
-        appss=apps.search(cr,uid,[('job_id','=',app)])
+        apps=self.pool.get('hr.survey1')
+        appss=apps.search(cr,uid,[('job_id.id','=',app)])
         ap=apps.browse(cr,uid,appss,context)
         res=[]
         for pr in ap:
-            if pr.state == "open":
+            if pr.surveys_id.state == "open":
                 prs=pr.id
                 res.append((0,0, {'name':prs})) 
         vals['surv_ids']=res
