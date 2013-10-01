@@ -62,7 +62,7 @@ class employee(osv.osv):
         'kodepos':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),
-        'bidang_id':fields.many2one('hr_recruit.bidang','Bidang'),
+        'bidang_id':fields.char('Bidang'),
         }
         
     _defaults = {
