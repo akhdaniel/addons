@@ -89,9 +89,9 @@ class hr_payslip(osv.osv):
             leaves = {}
             day_from = datetime.strptime(date_from,"%Y-%m-%d")
             day_to = datetime.strptime(date_to,"%Y-%m-%d")
-            nb_of_days = (day_to - day_from).days + 1
+            nb_of_days = (day_to - day_from).days + 1          
             for day in range(0, nb_of_days):
-            	# cek dari jadwal kerja, berapa jam sehari employee bekerja
+            	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
                 #working_hours_on_day = 8.00
 
@@ -128,9 +128,15 @@ class hr_payslip(osv.osv):
                             
                            # xi += working_hours_on_day    
                             }
-
+                    import pdb;pdb.set_trace()
                     real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
-
+                    working_hours=int(real_working_hours_on_day)
+                    working_minutes=real_working_hours_on_day - working_hours
+                    work_minutes = working_minutes / 1.66666667
+                    if working_minutes > 0.15 and working_minutes <= 0.45 :
+                        real_working_hours_on_day= working_hours + (0.30 * 1.66666667)
+                    elif working_minutes >= 0.45 :    
+                        real_working_hours_on_day= working_hours + 1                             
                     date = (day_from + timedelta(days=day))
                     
                     isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7 or leave_type 
@@ -164,9 +170,7 @@ class hr_payslip(osv.osv):
 
                         if employee.title_id.urutan < 100:
 
-                        """
-
-
+                        """                                                
                         if isNonWorkingDay:
                             if real_working_hours_on_day < 8:
                                 jam1 = 0
@@ -184,7 +188,7 @@ class hr_payslip(osv.osv):
                                 jam3 = 1
                                 jam4 = real_working_hours_on_day - 8                            
                             overtimes_trs['number_of_days'] += 1.0
-                        else:
+                        else: 
                             if overtime <=1:
                                 jam1 = overtime
                                 jam2 = 0
@@ -194,9 +198,9 @@ class hr_payslip(osv.osv):
                                 jam1 = 1
                                 jam2 = overtime - 1
                                 jam3 = 0
-                                jam4 = 0
-
+                                jam4 = 0                       
                         total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
+                        
 
                         overtimes['number_of_hours'] += total_overtime
                     elif urut_title > 100 and urut_title < 200:   
@@ -213,7 +217,7 @@ class hr_payslip(osv.osv):
 
                                 else :employee.gol_id.urutan > 4:
                                     nol
-                            """                 
+                            """                                
             leaves = [value for key,value in leaves.items()]
             res += [attendances] + leaves + [presences] + [overtimes] + [overtimes_trs] + [incentives]
         return res
