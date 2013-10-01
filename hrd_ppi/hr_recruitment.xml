@@ -68,7 +68,14 @@
                             <field name="name"/>
                         </tree>    
                     </field>   
- 
+                    <field view_mode="tree" name="survey_ids">
+                        <tree>
+                            <field name='surveys_id'/>
+                        </tree>
+                        <form>
+                            <field name='surveys_id'/>
+                        </form>
+                    </field>   
 	            </field>
                 <field name="requirements" position="after">
                     <div>
