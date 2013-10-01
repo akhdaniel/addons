@@ -128,7 +128,6 @@ class hr_payslip(osv.osv):
                             
                            # xi += working_hours_on_day    
                             }
-                    import pdb;pdb.set_trace()
                     real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
                     working_hours=int(real_working_hours_on_day)
                     working_minutes=real_working_hours_on_day - working_hours
