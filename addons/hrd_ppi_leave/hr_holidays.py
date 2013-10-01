@@ -35,6 +35,7 @@ class hr_holidays(osv.osv):
     _columns = {
         'bln_libur_id':fields.many2one('hr.bln_libur',''),
         'libur_bersih':fields.boolean('Hitung Tanggal Merah'),
+		'is_libur':fields.boolean('Libur'),
     }
  
     def _get_holi_status(self, cr, uid, context=None):
