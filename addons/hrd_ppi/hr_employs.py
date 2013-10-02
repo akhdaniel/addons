@@ -1,4 +1,7 @@
 from openerp.osv import fields, osv
+from datetime import date
+from time import strptime
+from time import strftime
 
 class employee(osv.osv):
     _name = "hr.employee"
@@ -15,6 +18,28 @@ class employee(osv.osv):
        country_id1_obj = self.pool.get('res.country')
        brow = country_id1_obj.browse(cr, uid, country_id2, context=context).code_telp
        return {'value':{'telp2': brow}}
+       
+    def _compute_age(self, cr, uid, ids, usia, birthday, arg, context=None):
+        #import pdb;pdb.set_trace()
+        # Fetch data structure and store it in object form
+        records = self.browse(cr, uid, ids, context=context)
+        result = {}
+        # For all records in 'ids'
+        for r in records:
+            # In case 'birthdate' field is null
+            usia = 0
+            # If 'birthdate' field not null
+            if r.birthday:
+                # Encode string from 'birthdate' attribute
+                d = strptime(r.birthday,"%Y-%m-%d")
+                # Compute age as a time interval
+                #delta = date(d[0], d[1], d[2]) - date.today()
+                delta = date.today() - date(d[0], d[1], d[2])
+                # Convert time interval to string value
+                usia = delta.days / 365
+            result[r.id] = usia
+        return result    
+           
     
     _columns = {
         'nik': fields.char('NIK',20),
@@ -72,18 +97,34 @@ class employee(osv.osv):
         'kota_id':fields.many2one('hr_recruit.kota','Kota'),
         'country_id2': fields.many2one('res.country', 'Negara'),
         'kodepos':fields.char('Kode Pos',8),
-	'kodepos1':fields.char('Kode Pos',8),
+	    'kodepos1':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),
         'bidang_id':fields.related('jurusan_id','bidang_id',type='char',relation='hr_recruit.jurusan_detail',string='Bidang',readonly=True,store=True),  
-	'country_id1':fields.many2one('res.country','Negara'),
+	    'country_id1':fields.many2one('res.country','Negara'),
         'country_id2':fields.many2one('res.country','Negara'),
+        'address_id2': fields.many2one('res.partner', 'Nama Kantor'),
+        'work_location2': fields.char('Alamat Kantor', size=32),
+        'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
         }
         
     _defaults = {
         'nik': lambda self, cr, uid, context={}: self.pool.get('ir.sequence').get(cr, uid, 'hr.employee'),
                 }
-        
+               
+    def onchange_alamat(self, cr, uid, ids, address_id2, context=None):
+        result = {}
+        result2 = {}
+        result3 = {}
+
+        if address_id2:
+            #import pdb;pdb.set_trace()
+            address_id2_obj = self.pool.get('res.partner')
+            result['street'] = address_id2_obj.browse(cr, uid, address_id2, context=context).street
+            result2['phone'] = address_id2_obj.browse(cr, uid, address_id2, context=context).phone
+            result3['email'] = address_id2_obj.browse(cr, uid, address_id2, context=context).email
+            return {'value':{'work_location2': result['street'],'work_phone': result2['phone'],'work_email': result3['email']}}
+        return {'value': {'work_location2': False,'work_phone': False,'work_email': False}}               
 
 employee()
 
