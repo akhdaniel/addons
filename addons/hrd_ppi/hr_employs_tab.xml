@@ -11,6 +11,23 @@
                 </field>
                 <page string="Public Information" position="replace"> 
                     <page string="Job &amp; Public Information">
+                                    <group string="Informasi Pribadi">
+                                        <group >
+                                            <field name="kelamin"/>
+                                            <field name="blood"/>
+                                            <field name='agama'/>
+                                            <field name="birthday"/>
+                                            <field name="usia"/>
+                                            <field name='marital'/>
+                                            <!--field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/-->
+                                            <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
+                                            <field name="mobile_phone"/>
+                                            <!--field name="kota_id"/--> 
+                                            <!--field name="bahasa2_id"/-->
+                                            <field name='country_id'/>
+                                            <field name="bank_account_id"/>
+                                        </group>
+                                    </group>					
                                 <group>
                                     <group string="Contact Information">
                                        <field name="address_id2" on_change="onchange_alamat(address_id2)" />
@@ -73,19 +90,21 @@
                                     </group>
                                     <group>
                                         <group string="Kartu Identitas">
-                                            <field name="kelamin"/>
-                                            <field name="blood"/>
-                                            <field name='agama'/>
-                                            <field name="birthday"/>
-                                            <field name="usia"/>
-                                            <field name='marital'/>
-                                            <!--field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/-->
-                                            <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
-                                            <field name="mobile_phone"/>
-                                            <!--field name="kota_id"/--> 
-                                            <!--field name="bahasa2_id"/-->
-                                            <field name='country_id'/>
-                                            <field name="bank_account_id"/>                                         
+                                            <field name="jenis_id"/>
+                                            <field name='ktp'/>
+                                            <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
+                                            <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
+                                            <!--field name='sim'/-->
+                                            <field name='tgl_keluar_sim' attrs="{'invisible':[('jenis_id','!=','SIM')]}"/>  
+                                            <field name='tgl_keluar_sima' attrs="{'invisible':[('jenis_id','!=','SIM_A')]}"/> 
+                                            <field name='tgl_keluar_simc' attrs="{'invisible':[('jenis_id','!=','SIM_C')]}"/>        
+                                            <!--field name="no_pass" attrs="{'invisible':[('jenis_id','!=','Passport')]}"/-->
+                                            <field name="no_rek" attrs="{'invisible':[('jenis_id','!=','Rek.Bank')]}"/> 
+                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
+                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
+                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/> 
+                                            <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')]}"/> 
+                                            <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')]}"/>                                           
                                     </group>                              
                                     </group>
                                     </group>
