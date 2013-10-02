@@ -335,7 +335,25 @@ class hr_applicant(osv.osv):
         vals=self.interview(cr, uid, vals, context=None)
         result= super(hr_applicant,self).create (cr, uid, vals, context=None)
         return result 
-        
+    
+	def onchange_country(self, cr, uid, ids, country_id, context=None):
+       result = {}
+       country_id1_obj = self.pool.get('res.country')
+       brew = country_id1_obj.browse(cr, uid, country_id, context=context).code_telp
+       return {'value':{'partner_phone': brew}}
+   
+    def onchange_country1(self, cr, uid, ids, country_id1, context=None):
+       result = {}
+       country_id1_obj = self.pool.get('res.country')
+       brew = country_id1_obj.browse(cr, uid, country_id1, context=context).code_telp
+       return {'value':{'telp1': brew}}
+       
+    def onchange_country2(self, cr, uid, ids, country_id2, context=None):
+       result = {}
+       country_id1_obj = self.pool.get('res.country')
+       brow = country_id1_obj.browse(cr, uid, country_id2, context=context).code_telp
+       return {'value':{'telp2': brow}}
+    
     def simpul(self, cr, uid,ids,vals,context=None):     
         #import pdb;pdb.set_trace() 
         hasil=self.browse(cr,uid,ids)[0]
