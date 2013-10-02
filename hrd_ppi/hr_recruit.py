@@ -49,7 +49,7 @@ class permohonan_recruit(osv.osv):
         'state': fields.selection(PERMOHONAN_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
         'survey_ids':fields.one2many('hr.survey1','job_id','Interview Form'),
-        #'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
+        'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
                 }
     _defaults = {
         'state': PERMOHONAN_STATES[0][0],
@@ -433,8 +433,8 @@ class hr_applicant(osv.osv):
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
         "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True),
         "blood":fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
-	"respon_div":fields.many2one('hr.department','Responsible Division'),
-	'country_id1':fields.many2one('res.country','Negara'),
+	    "respon_div":fields.many2one('hr.department','Responsible Division'),
+	    'country_id1':fields.many2one('res.country','Negara'),
         'country_id2':fields.many2one('res.country','Negara'),
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
