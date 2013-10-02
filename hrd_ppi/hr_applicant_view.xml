@@ -239,7 +239,7 @@
                                 <tree>
                                     <field name='employee_id'/>
                                     <field name='job_id'/>
-                                    <field name="alamat"/>                                    
+                                    <field name='Departmen_id'/>                                  
                                     <field name="telepon"/>
                                 </tree>
                                 <form>
@@ -248,7 +248,7 @@
                                     <field name='job_id'/>
                                     </group>
                                     <group>
-                                    <field name="alamat"/>                                    
+                                    <field name='Departmen_id'/>                                    
                                     <field name="telepon"/>
                                     </group>
                                 </form>
