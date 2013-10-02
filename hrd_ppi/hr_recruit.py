@@ -336,7 +336,7 @@ class hr_applicant(osv.osv):
         result= super(hr_applicant,self).create (cr, uid, vals, context=None)
         return result 
     
-	def onchange_country(self, cr, uid, ids, country_id, context=None):
+    def onchange_country(self, cr, uid, ids, country_id, context=None):
        result = {}
        country_id1_obj = self.pool.get('res.country')
        brew = country_id1_obj.browse(cr, uid, country_id, context=context).code_telp
