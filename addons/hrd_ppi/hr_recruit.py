@@ -183,7 +183,7 @@ class hr_applicant(osv.osv):
                                                      'job_id': applicant.job_id.id,
                                                      'department_id': applicant.department_id.id,
                                                      'gender':applicant.kelamin,
-                                                     'kota_id' : applicant.kota_id.id,
+                                                     'place_of_birth' : applicant.kota_id.name,
                                                      'birthday' : applicant.tgl_lahir,
                                                      'agama' : applicant.agama_id.id,
                                                      'country_id' : applicant.country_id.id,
