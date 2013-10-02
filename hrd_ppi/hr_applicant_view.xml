@@ -45,6 +45,7 @@
                     <field name="sjk_tanggal" attrs="{'invisible': [('status','=','single')]}"/>
                     <field name="email_from" widget="email"/>
                     <field name="partner_phone"/>
+					<field name="blood"/>
                 </group>
                 <group string="Kartu Identitas" colspan="4">
                     <field name="jenis_id"/>
