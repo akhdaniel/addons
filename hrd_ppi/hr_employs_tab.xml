@@ -69,7 +69,7 @@
                                         <field name="kab_id"/>
                                         <field name="kec_id"/>
                                         <field name="kodepos" placeholder="Kode Pos di Jakarta"/>
-                                        <field name='country_id1'/>
+                                        <field name='country_id1' on_change="onchange_country1(country_id1)"/>
                                         <field name='telp1' placeholder="Telp. di Jakarta"/>
                                         <field name='alamat2' placeholder="Alamat Luar Jakarta"/>
                                         <field name="prov_id2"/>
@@ -77,7 +77,7 @@
                                         <field name="kec_id2"/>
                                         <field name="kodepos1" placeholder="Zip"/>                         
                                         <field name='telp2' placeholder="Telp. di Luar Jakarta"/>
-                                        <field name="country_id2"/>
+                                        <field name="country_id2" on_change="onchange_country2(country_id2)"/>
                                         <field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' placeholder="From Employee"/>
                                     </group>      
                                     </group>
