@@ -84,6 +84,7 @@
                     <field name="kab_id2"/>
                     <field name="kec_id2"/>
                     <field name="telp2" placeholder="Telp. di luar Jakarta" />
+					<field name="respon_div"/>
                 </group> 
             </field>
             
