@@ -26,6 +26,21 @@
                </div-->
             </field>            
         </record>
+		
+		<record id="hr_contract_type_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.type.view.form2</field>
+            <field name="model">hr.contract.type</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
+            <field name="arch" type="xml">                
+                  <field name="name" position="after">
+                        <group string="Jamsostek">
+                            <field name="jams1"/>
+                            <field name="jams2"/>
+                       </group>     
+                  </field>
+                        
+            </field>
+        </record>
         
         <!-- payslip batches-->
         

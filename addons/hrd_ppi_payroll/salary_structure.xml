@@ -60,6 +60,11 @@
 	    	<field name="hour_to">17</field>
 	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
 	    </record>
+				<!--salary Category-->
+		<record id="IGN" model="hr.salary.rule.category">
+            <field name="name">Ignore</field>
+            <field name="code">IGN</field>
+        </record>
 
     <!-- salary rule -->
 	    <record id="hr_payroll_rules_pot_absen" model="hr.salary.rule">
@@ -127,13 +132,23 @@
 	        <field name="amount_python_compute">result = inputs.MEDICAL_ALLOWANCE.amount </field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
-	        <field name="name">JAMSOSTEK 1.19%</field>
+	        <field name="name">JAMSOSTEK</field>
 	        <field name="code">JAMSOSTEK</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = contract.wage * 1.19 / 100</field>
+	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams1 / 100</field>
 	    </record>
+		
+	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
+	        <field name="name">JAMSOSTEK KONTRIBUSI PERUSAHAN</field>
+	        <field name="code">JKP</field>
+	        <field name="category_id" ref="hr_payroll.IGN"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams2 / 100</field>
+	    </record>
+		
 	    <record id="hr_payroll_rules_others" model="hr.salary.rule">
 	        <field name="name">OTHERS ALLOWANCE</field>
 	        <field name="code">OTHERS</field>
