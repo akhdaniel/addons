@@ -499,7 +499,7 @@ class koneksi1(osv.osv):
         'applicant_id':fields.many2one('hr.applicant',),
         'employee_id':fields.many2one('hr.employee','Nama'),
         'job_id':fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan',readonly=True),
-        'alamat':fields.text('Alamat'),
+        'Departmen_id':fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='departmen',readonly=True),
         'telepon':fields.char('Telepon',25),
             }
 koneksi1()
