@@ -3,6 +3,18 @@ from openerp.osv import fields, osv
 class employee(osv.osv):
     _name = "hr.employee"
     _inherit = 'hr.employee'
+	
+    def onchange_country1(self, cr, uid, ids, country_id1, context=None):
+       result = {}
+       country_id1_obj = self.pool.get('res.country')
+       brew = country_id1_obj.browse(cr, uid, country_id1, context=context).code_telp
+       return {'value':{'telp1': brew}}
+       
+    def onchange_country2(self, cr, uid, ids, country_id2, context=None):
+       result = {}
+       country_id1_obj = self.pool.get('res.country')
+       brow = country_id1_obj.browse(cr, uid, country_id2, context=context).code_telp
+       return {'value':{'telp2': brow}}
     
     _columns = {
         'nik': fields.char('NIK',20),
