@@ -10,24 +10,7 @@
                     <field name="nik" placeholder="Nomor Induk Karyawan"/>
                 </field>
                 <page string="Public Information" position="replace"> 
-                    <page string="Job &amp; Public Information">
-                                    <group string="Informasi Pribadi">
-                                        <group >
-                                            <field name="kelamin"/>
-                                            <field name="blood"/>
-                                            <field name='agama'/>
-                                            <field name="birthday"/>
-                                            <field name="usia"/>
-                                            <field name='marital'/>
-                                            <!--field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/-->
-                                            <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
-                                            <field name="mobile_phone"/>
-                                            <!--field name="kota_id"/--> 
-                                            <!--field name="bahasa2_id"/-->
-                                            <field name='country_id'/>
-                                            <field name="bank_account_id"/>
-                                        </group>
-                                    </group>					
+                    <page string="Job &amp; Public Information">				
                                 <group>
                                     <group string="Contact Information">
                                        <field name="address_id2" on_change="onchange_alamat(address_id2)" />
@@ -57,6 +40,23 @@
                        </page>     
                    <page string="Personal Information" position="replace">                    
                          <page string="Personal Information" groups="base.group_hr_user">
+                                    <group string="Informasi Pribadi">
+                                        <group >
+                                            <field name="kelamin"/>
+                                            <field name="blood"/>
+                                            <field name='agama'/>
+                                            <field name="birthday"/>
+                                            <field name="usia"/>
+                                            <field name='marital'/>
+                                            <!--field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/-->
+                                            <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
+                                            <field name="mobile_phone"/>
+                                            <!--field name="kota_id"/--> 
+                                            <!--field name="bahasa2_id"/-->
+                                            <field name='country_id'/>
+                                            <field name="bank_account_id"/>
+                                        </group>
+                                    </group>							 
                                <group>
                                     <group string="Education">
                                         <field name="type_id"/>
