@@ -172,7 +172,7 @@ class hr_applicant(osv.osv):
                 lele=le.browse(cr,uid,lel,context=context)   
                 prod_ids5=[]   
                 for pr in lele:
-                    prod_ids5.append((0,0, {'employee_id':pr.employee_id.name,'alamat':pr.alamat,'job_id':pr.job_id.id,'telepon':pr.telepon})) 
+                    prod_ids5.append((0,0, {'employee_id':pr.employee_id.name,'alamat':pr.departmen_id.name,'job_id':pr.job_id.id,'telepon':pr.telepon})) 
                 le=self.pool.get('hr_recruit.kon2')
                 lel=le.search(cr,uid,[('applicant_id','=',coy)])
                 lele=le.browse(cr,uid,lel,context=context)   
@@ -503,8 +503,8 @@ class koneksi1(osv.osv):
         'applicant_id':fields.many2one('hr.applicant',),
         'employee_id':fields.many2one('hr.employee','Nama'),
         'job_id':fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan',readonly=True),
-        'Departmen_id':fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='departmen',readonly=True),
-        'telepon':fields.char('Telepon',25),
+        'Departmen_id':fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='departmen',readonly=True),            
+	'telepon':fields.char('Telepon',25),
             }
 koneksi1()
 
