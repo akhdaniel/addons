@@ -688,3 +688,12 @@ class fasilitas3(osv.osv):
 		"name" : fields.char("Fasilitas",required=True),
 		}
 fasilitas3()
+
+class country(osv.osv):
+    _name = "res.country"
+    _inherit = "res.country"
+    
+    _columns = {
+        "code_telp" : fields.char("Kode Telp"),
+    }
+country()
