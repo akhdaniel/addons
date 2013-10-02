@@ -219,6 +219,10 @@ class hr_applicant(osv.osv):
                                                      'koneksi1_ids':prod_ids5,
                                                      'koneksi2_ids':prod_ids6,
                                                      'blood' : applicant.blood,
+                                                     'kodepos' :applicant.kode1,
+                                                     'kodepos1':applicant.kode2,
+                                                     'country_id1':applicant.country_id1.id,
+                                                     'country_id2':applicant.country_id2.id,
                                                     })
                 
                 
