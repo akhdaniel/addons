@@ -143,7 +143,7 @@
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
 	        <field name="name">JAMSOSTEK KONTRIBUSI PERUSAHAN</field>
 	        <field name="code">JKP</field>
-	        <field name="category_id" ref="hr_payroll.IGN"/>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams2 / 100</field>
