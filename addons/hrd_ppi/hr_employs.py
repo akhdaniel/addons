@@ -60,9 +60,12 @@ class employee(osv.osv):
         'kota_id':fields.many2one('hr_recruit.kota','Kota'),
         'country_id2': fields.many2one('res.country', 'Negara'),
         'kodepos':fields.char('Kode Pos',8),
+	'kodepos1':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),
         'bidang_id':fields.related('jurusan_id','bidang_id',type='char',relation='hr_recruit.jurusan_detail',string='Bidang',readonly=True,store=True),  
+	'country_id1':fields.many2one('res.country','Negara'),
+        'country_id2':fields.many2one('res.country','Negara'),
         }
         
     _defaults = {
