@@ -196,7 +196,6 @@ class hr_applicant(osv.osv):
                                                      'sim' : applicant.sim,
                                                      'tgl_keluar_sim' : applicant.tgl_keluar_sim,
                                                      'type_id':applicant.type_id.id,
-                                                     'bidang_id':applicant.bidang_id,
                                                      'jurusan_id':applicant.jurusan_id.id,
                                                      'pt_id':applicant.pt_id.id,
                                                      'result_id':applicant.result_id.id,
