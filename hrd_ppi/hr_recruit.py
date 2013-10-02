@@ -369,7 +369,7 @@ class hr_applicant(osv.osv):
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No.ID',20),
         'jenis_id':fields.selection([('KTP','Kartu Tanda Penduduk'),('Passport','Passport')],'Jenis ID'),
-        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan di',50),
+        'issued_id':fields.many2one('hr_recruit.kota','Dikeluarkan di',50),
         'issued_id2':fields.many2one('res.country','Dikeluarkan di'),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
