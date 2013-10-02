@@ -40,6 +40,7 @@
                        </page>     
                    <page string="Personal Information" position="replace">                    
                          <page string="Personal Information" groups="base.group_hr_user">
+							<group>
                                     <group string="Informasi Pribadi">
                                         <group >
                                             <field name="kelamin"/>
@@ -67,6 +68,7 @@
                                         <field name="gelar_id"/>
                                      </group>
                                </group> 
+							</group>   
                                 <group>
 								
                                     <group string="Contact Information">
