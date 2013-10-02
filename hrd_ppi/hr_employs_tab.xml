@@ -13,12 +13,10 @@
                     <page string="Job &amp; Public Information">
                                 <group>
                                     <group string="Contact Information">
-                                        <field name="address_id" on_change="onchange_address_id(address_id)" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}'/>
+                                       <field name="address_id2" on_change="onchange_alamat(address_id2)" />
                                         <field name="work_email" widget="email"/>
-                                        <field name="work_phone"/>
-                                        <field name="mobile_phone"/>
-                                        <field name="work_location"/>
-                                        <field name="parent_id"/>
+                                        <field name="work_phone"/>                                       
+                                        <field name="work_location2"/>
                                         <field name="coach_id"/>
                                     </group>
                                     <group string="Position">
@@ -43,15 +41,6 @@
                    <page string="Personal Information" position="replace">                    
                          <page string="Personal Information" groups="base.group_hr_user">
                                <group>
-                                    <group string="Citizenship &amp; Other Info">
-                                        <group >
-                                            <field name="kelamin"/>
-                                            <field name="blood"/>
-                                            <field name="bahasa2_id"/>
-                                            <field name='country_id'/>
-                                            <field name="bank_account_id"/>
-                                        </group>
-                                    </group>
                                     <group string="Education">
                                         <field name="type_id"/>
                                         <field name="bidang_id"/>
@@ -83,28 +72,20 @@
                                     </group>      
                                     </group>
                                     <group>
-                                        <group string="ID Card &amp; Status &amp; Birth">
-                                            <field name="jenis_id"/>
-                                            <field name='ktp'/>
-                                            <!--field name='tgl_keluar_ktp' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/-->
-                                            <field name='tgl_berlaku' attrs="{'invisible':[('jenis_id','!=','KTP')]}"/>
-                                            <!--field name='sim'/-->
-                                            <field name='tgl_keluar_sim' attrs="{'invisible':[('jenis_id','!=','SIM')]}"/>  
-                                            <field name='tgl_keluar_sima' attrs="{'invisible':[('jenis_id','!=','SIM_A')]}"/> 
-                                            <field name='tgl_keluar_simc' attrs="{'invisible':[('jenis_id','!=','SIM_C')]}"/>        
-                                            <!--field name="no_pass" attrs="{'invisible':[('jenis_id','!=','Passport')]}"/-->
-                                            <field name="no_rek" attrs="{'invisible':[('jenis_id','!=','Rek.Bank')]}"/> 
-                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
-                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
-                                            <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/> 
-                                            <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')]}"/> 
-                                            <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')]}"/>                               
+                                        <group string="Kartu Identitas">
+                                            <field name="kelamin"/>
+                                            <field name="blood"/>
                                             <field name='agama'/>
+                                            <field name="birthday"/>
+                                            <field name="usia"/>
                                             <field name='marital'/>
                                             <!--field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/-->
                                             <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
-                                            <field name='birthday'/>
-                                            <field name="kota_id"/>                                           
+                                            <field name="mobile_phone"/>
+                                            <!--field name="kota_id"/--> 
+                                            <!--field name="bahasa2_id"/-->
+                                            <field name='country_id'/>
+                                            <field name="bank_account_id"/>                                         
                                     </group>                              
                                     </group>
                                     </group>
@@ -204,7 +185,7 @@
                                     </field>
                                     </group>
                                     
-                                    <group string="Riwayat Pendidikan">
+                                    <group string="Riwayat Pekerjaan">
                                     <field view_mode="tree,form" name='rwt_krj_ids' nolabel="1">
                                         <tree>
                                             <!--field name="no"/-->
@@ -229,7 +210,7 @@
                                             <field name="gaji"/>
                                             <field name="alasan"/>
                                         </group>     
-                                </form>
+										</form>
                                     </field>
                                     </group>
                                     
