@@ -219,6 +219,7 @@ class hr_applicant(osv.osv):
                                                      'rwt_krj_ids':prod_ids4,
                                                      'koneksi1_ids':prod_ids5,
                                                      'koneksi2_ids':prod_ids6,
+                                                     'blood' : applicant.blood,
                                                     })
                 
                 
@@ -409,7 +410,8 @@ class hr_applicant(osv.osv):
         "fasilitas1_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
         "fasilitas2_ids":fields.one2many("hr.fasilitas2","applican_id","Fasilitas"),  
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
-        "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True), 
+        "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True),
+        "blood":fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
 		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
         }
 hr_applicant()
