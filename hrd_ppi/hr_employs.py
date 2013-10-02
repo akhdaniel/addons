@@ -62,7 +62,7 @@ class employee(osv.osv):
         'kodepos':fields.char('Kode Pos',8),
         'jenis_id':fields.selection([('Rek.Bank','Rekening Bank'),('KTP','Kartu Tanda Penduduk'),('Passport','Passport'),('SIM','SURAT IZIN MENGEMUDI'),('SIM_A','Surat Izin Mengemudi A'),('SIM_C','Surat Izin Mengemudi C')],'Jenis ID'),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),
-        'bidang_id':fields.char('Bidang'),
+        'bidang_id':fields.related('jurusan_id','bidang_id',type='char',relation='hr_recruit.jurusan_detail',string='Bidang',readonly=True,store=True),  
         }
         
     _defaults = {
@@ -150,7 +150,7 @@ class koneksi1(osv.osv):
         'employee_idd':fields.char('Nama',),
         'employee_id':fields.many2one('hr.employee','Nama',required=True),
         'job_id':fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan',readonly=True),
-        'alamat':fields.text('Alamat'),
+        'alamat':fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='departmen',readonly=True), 
         'telepon':fields.char('Telepon',25),
             }
 koneksi1()
