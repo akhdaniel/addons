@@ -62,6 +62,7 @@
                                      </group>
                                </group> 
                                 <group>
+								
                                     <group string="Contact Information">
                                     <group>
                                         <field name='alamat1' placeholder="Alamat di Jakarta"/>
