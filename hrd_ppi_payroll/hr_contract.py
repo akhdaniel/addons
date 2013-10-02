@@ -73,3 +73,13 @@ class master_gaji(osv.osv):
 
         return super(hr_applicant, self).message_update(cr, uid, ids, msg, update_vals=update_vals, context=context)
 master_gaji()    
+
+class hr_contract_type(osv.osv):
+    _name = 'hr.contract.type'
+    _inherit= 'hr.contract.type'
+    
+    _columns = {
+        "jams1":fields.float('Kontribusi Karyawan (%)'),
+        "jams2":fields.float('Kontribusi Perusahaan (%)'),
+     } 
+hr_contract_type()

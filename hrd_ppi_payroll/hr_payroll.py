@@ -344,3 +344,28 @@ class hr_payslip_run(osv.osv):
         return payslip_obj.write(cr, uid, [x.id for x in data.slip_ids], {'state':"done"})
 
 hr_payslip_run()
+
+class hr_salary_rule(osv.osv):
+    _name = 'hr.salary.rule'
+    _inherit = 'hr.salary.rule'     
+    
+    _columns={
+        'condition_range':fields.selection([('contract.wage','Gaji Pokok'),('employee.children','Jumlah Anak'),('emoployee.remaining_leaves','Sisa Cuti'),('employee.vehicle_distance','Jarak dari Rumah ke Kantor'),('employee.job_id.urutan','Jabatan/Title'),('employee.gol_id.no','Golongan'),('worked_days.PRESENCES.number_of_days','Jumlah Kehadiran Perbulan'),('inputs.THR.amount','Jumlah THR'),('inputs.TUNJANGAN_PAJAK.amount','Tunjangan Pajak'),('inputs.MEDICAL_REFUND.amount','Medical Refund'),('inputs.MEDICAL_REFUND.amount','Medical Allowance'),('inputs.BONUS.amount','Jumlah Bonus'),('inputs.RAPEL.amount','Jumlah Rapel'),('inputs.HOUSING.amount','Housing Allowance'),('inputs.LUAR_KOTA.amount','Tunjangan Luar Kota'),('inputs.PULSA.amount','Tunjangan Pulsa')],'Range Based on', readonly=False, help='This will be used to compute the % fields values; in general it is on basic, but you can also use categories code fields in lowercase as a variable names (hra, ma, lta, etc.) and the variable basic.'),
+            }
+    
+    _defaults={
+        'condition_range':'contract.wage',
+            }
+   
+    def _check_crange(self, cr, uid, ids):
+        for crange in self.browse(cr, uid, ids):
+            crange_id = self.search(cr, uid, [('condition_range_min', '>', crange.condition_range_max), ('condition_range_max', '<', crange.condition_range_min)])
+            if crange_id:
+                return False
+        return True      
+            
+    _constraints = [
+        (_check_crange, 'range max tidak boleh lebih kecil dari range min!', ['condition_range_min','condition_range_max']),
+                    ]
+                    
+hr_salary_rule()
