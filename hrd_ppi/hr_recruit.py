@@ -302,7 +302,7 @@ class hr_applicant(osv.osv):
             if stage == 100 :
                 stgs=line.id
             if job_state == 'in_progress':    
-                if stage == 2 :
+                if stage == 1 :
                     stg=line.id
                     if ap_umr <= job_umr or job_umr == 0 :
                         if ap_pend == job_pend :
