@@ -435,9 +435,7 @@ class hr_applicant(osv.osv):
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
         "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True),
         "blood":fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
-	    "respon_div":fields.many2one('hr.department','Responsible Division'),
-	    
-        
+        "respon_div":fields.many2one('hr.department','Responsible Division'),   
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
 		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
