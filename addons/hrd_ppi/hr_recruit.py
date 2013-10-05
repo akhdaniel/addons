@@ -397,14 +397,16 @@ class hr_applicant(osv.osv):
         'tgl_berlaku2':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
         'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan'),
-        'alamat1':fields.char('Alamat 1',100),
-        'prov_id':fields.many2one('hr_recruit.prov','Provinsi'),
-        'kab_id':fields.many2one('hr_recruit.kota','Kab./kota'),
+	'country_id1':fields.many2one('res.country','Negara'),
+        'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id1)]"),
+        'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=',prov_id)]"),
         'kec_id':fields.many2one('hr_recruit.issued','Kecamatan'),
-        'alamat2':fields.char('Alamat 2',100),
-        'prov_id2':fields.many2one('hr_recruit.prov','Provinsi'),
-        'kab_id2':fields.many2one('hr_recruit.kota','Kab./Kota'),
+	'alamat1':fields.char('Alamat 1',100),
+	'country_id2':fields.many2one('res.country','Negara'),
+        'prov_id2':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id2)]"),
+        'kab_id2':fields.many2one('hr_recruit.kota','Kab./Kota', domain="[('provinsi_id','=',prov_id2)]"),
         'kec_id2':fields.many2one('hr_recruit.issued','Kecamatan'),
+	'alamat2':fields.char('Alamat 2',100),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
         'status':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan',required=True),
@@ -434,8 +436,8 @@ class hr_applicant(osv.osv):
         "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True),
         "blood":fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
 	    "respon_div":fields.many2one('hr.department','Responsible Division'),
-	    'country_id1':fields.many2one('res.country','Negara'),
-        'country_id2':fields.many2one('res.country','Negara'),
+	    
+        
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
 		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
@@ -582,6 +584,7 @@ class kota(osv.osv):
     
     _columns={
         'name':fields.char('Nama Kab./Kota',50),
+	'provinsi_id' : fields.many2one('hr_recruit.prov','Provinsi'),
         }
 kota()
 
@@ -638,6 +641,7 @@ class provinsi(osv.osv):
         
     _columns={
         'name':fields.char('Provinsi',50),
+	'country_id':fields.many2one('res.country','Negara'),
         }
 provinsi()
 
