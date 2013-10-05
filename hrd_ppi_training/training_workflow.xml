@@ -45,19 +45,12 @@
             <field name="kind">function</field>
             <field name="action">action_approve_hr_department()</field>
         </record>
-        
-        <!--record model="workflow.activity" id="act2_reject_training">
-            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
-            <field name="name">reject2</field>
-            <field name="flow_stop">True</field>
-            <field name="kind">function</field>
-            <field name="action">action_reject_hr_department()</field>
-        </record-->
                 
         <record model="workflow.activity" id="act_evaluation_training">
             <field name="wkf_id" ref="wkf_hr_ppi_training"/>
             <field name="name">evaluation</field>
             <field name="kind">function</field>
+            <field name="flow_stop">True</field>
             <field name="action">action_evaluation()</field>
         </record>
  
@@ -98,6 +91,12 @@
             <field name="signal">signal_reject</field>
         </record>
         
+		<record model="workflow.transition" id="t3_reject_training">
+            <field name="act_from" ref="act2_approve_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+
         <record model="workflow.transition" id="t_evaluation_training">
             <field name="act_from" ref="act2_approve_training"/>
             <field name="act_to" ref="act_evaluation_training"/>
