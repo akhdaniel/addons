@@ -3,7 +3,7 @@
     <data> 
         <report 
         id="hr_training" 
-        string="Print Rencana Training" 
+        string="Rencana Training" 
         model="hr_training.analisa" 
         name="hr_training" 
         rml="hrd_ppi_training/report/hr_training.rml" 

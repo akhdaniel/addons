@@ -105,7 +105,7 @@
     <para style="P1">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="53.0,143.0,77.0,123.0,91.0,109.0,85.0,92.0" style="Table1">
+    <blockTable colWidths="63.0,141.0,70.0,123.0,91.0,109.0,85.0,92.0" style="Table1">
       <tr>
         <td>
           <para style="P4">No</para>
@@ -133,7 +133,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="53.0,143.0,77.0,123.0,91.0,109.0,85.0,92.0" style="Table3">
+    <blockTable colWidths="62.0,141.0,70.0,123.0,91.0,109.0,85.0,92.0" style="Table3">
       <tr>
         <td>
           <para style="P3">[[ analisa.no ]]</para>

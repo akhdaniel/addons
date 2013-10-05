@@ -29,7 +29,7 @@ class train(osv.osv):
         'paket_id': fields.related('analisa_id','bukti',type='char',relation='hr_training.analisa',string='Paket Pelatihan'),
         'analisa_id':fields.many2one('hr_training.analisa','Nama Training'),
         'subject_id':fields.related('analisa_id','subject_id',type='char',relation='hr_training.analisa',string='Nama Training ID'),
-        'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Training',store=True),
+        'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Training',store=True), 
         'evaluasi_id':fields.many2one('hr_training.evaluasi_training','Evaluasi Training'),
         'rekomendasi_id':fields.many2one('hr_training.rekomendasi_training','Rekomendasi'),
         'lama' : fields.related('analisa_id','lama',type='char',relation='hr_training.analisa',string='Lama'),
@@ -37,9 +37,20 @@ class train(osv.osv):
         'bukti_ids':fields.one2many('hr_training.bukti','train_id','Bukti File'),
         'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
         'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklist Jika Training Internal'),  
-        #'state': fields.related('analisa_id','state',type='selection',relation='hr_training.analisa',string='xtate', store=True), 
         'nonik':fields.char('Kode Training'),
-            } 
+        'email':fields.char('Email'),
+        'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Status Training"),
+        }
+
+    _defaults = {
+        'state': TRAINING_STATES[0][0],
+        }
+
+    def create(self, cr, uid, vals, context=None):    
+        emp = self.pool.get('hr.employee')         
+        vals['email'] = emp.browse(cr,uid,vals['employee_id']).work_email        
+        return super(train, self).create(cr, uid, vals, context) 
+
 train()
 
 class employee(osv.osv):
@@ -60,25 +71,25 @@ class analisa(osv.osv):
     def action_draft(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[0][0]},context=context)
 
-    def action_verify(self,cr,uid,ids,context=None): 
+    def action_verify(self,cr,uid,ids,context=None):  
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[1][0]},context=context)
  
     def action_reject(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context) 
     	
     def action_approve(self,cr,uid,ids,context=None):
-        kod=self.browse(cr,uid,ids)[0]
-        kode=kod.no       
+        obj=self.browse(cr,uid,ids)[0]
+        kode=obj.no; state=obj.state      
         train_obj = self.pool.get('hr_training.train')
         sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
         tr=train_obj.browse(cr,uid,sr)
         #yids=[];
         for xids in tr:
             nikid=xids.employee_id.nik
-            yes=str(kode) +'/'+ str(nikid)
+            kod=str(kode) +'/'+ str(nikid)
             #yids.append({"nonik" : yes})
-            train_obj.write(cr, uid, [xids.id], {'nonik':yes })
-        #train_obj.write(cr, uid, [xids.id for ux in tr], {'nonik':yids.nonik})   	
+            train_obj.write(cr, uid, [xids.id], {'nonik':kod})
+        #train_obj.write(cr, uid, [xids.id for ux in tr], {'nonik':yids.nonik})  	
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)
     	
     '''def action_reject_hr_department(self,cr,uid,ids,context=None): 
@@ -87,7 +98,14 @@ class analisa(osv.osv):
     def action_approve_hr_department(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
     	
-    def action_evaluation(self,cr,uid,ids,context=None): 
+    def action_evaluation(self,cr,uid,ids,context=None):
+        obj=self.browse(cr,uid,ids)[0]
+        kode=obj.id; state=obj.state      
+        train_obj = self.pool.get('hr_training.train')
+        sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
+        tr = train_obj.browse(cr,uid,sr)
+        for xids in tr:
+            train_obj.write(cr, uid, [xids.id], {'state':state})
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)       
  
     def create(self, cr, uid, vals, context=None):       
