@@ -74,19 +74,19 @@
                     <field name="result_id"/>  
                 </group>
                 <group string="Alamat" colspan="4">
-                    <field name="alamat1" placeholder="Alamat di Jakarta"/>
+					<field name='country_id1' on_change="onchange_country1(country_id1)"/>	                  
                     <field name="prov_id"/>
                     <field name="kab_id"/>
                     <field name="kec_id"/>
+					<field name="alamat1" placeholder="Alamat di Jakarta"/>
                     <field name='kode1'/>
-                    <field name='country_id1' on_change="onchange_country1(country_id1)"/>
                     <field name="telp1" placeholder="Telp. di Jakarta"/>
-                    <field name="alamat2" placeholder="Alamat Luar Jakarta"/>
-                     <field name="prov_id2"/>
+                    <field name='country_id1' on_change="onchange_country2(country_id2)"/>
+                    <field name="prov_id2"/>
                     <field name="kab_id2"/>
                     <field name="kec_id2"/>
-                    <field name='kode2'/>
-                    <field name='country_id1' on_change="onchange_country2(country_id2)"/>
+					<field name="alamat2" placeholder="Alamat Luar Jakarta"/>
+                    <field name='kode2'/>                  
                     <field name="telp2" placeholder="Telp. di luar Jakarta" />
                     <field name="respon_div"/>
                 </group> 
