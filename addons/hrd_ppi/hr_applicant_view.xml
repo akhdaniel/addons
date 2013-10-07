@@ -81,7 +81,7 @@
 					<field name="alamat1" placeholder="Alamat di Jakarta"/>
                     <field name='kode1'/>
                     <field name="telp1" placeholder="Telp. di Jakarta"/>
-                    <field name='country_id1' on_change="onchange_country2(country_id2)"/>
+                    <field name='country_id2' on_change="onchange_country2(country_id2)"/>
                     <field name="prov_id2"/>
                     <field name="kab_id2"/>
                     <field name="kec_id2"/>
