@@ -67,7 +67,7 @@
                     <button string="Reject" type="workflow"  
                         groups="hrd_ppi.group_hr_department"
                         states="approve" name="signal_reject"/>                                               
-                        
+
                     <!--button string="Reject" type="workflow"  
                         groups="hrd_ppi.group_hr_manager"
                         states="approve2" name="signal_reject"/-->
@@ -127,7 +127,7 @@
                                     <field name="evaluasi_id"/>
                                     <field name="rekomendasi_id"/> 
                                     <field name="bukti_ids"/> 
-                                    <field name="email"/>                                                       
+                                    <!--field name="email"/-->                                                       
                                 </tree>
                                 <form>
                                     <group>

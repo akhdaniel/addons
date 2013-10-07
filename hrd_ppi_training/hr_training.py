@@ -38,7 +38,7 @@ class train(osv.osv):
         'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
         'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklist Jika Training Internal'),  
         'nonik':fields.char('Kode Training'),
-        'email':fields.char('Email'),
+        #'email':fields.char('Email'), TODO if needed for email confirmstion for non-OpenERP-user 
         'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Status Training"),
         }
 
