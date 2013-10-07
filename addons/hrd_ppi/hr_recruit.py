@@ -409,7 +409,7 @@ class hr_applicant(osv.osv):
         'alamat2':fields.char('Alamat 2',100),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
-        'status':fields.many2one('hrd.status','Status Pernikahan'),
+        'status':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan'),
         'sjk_tanggal':fields.date('Sejak Tanggal'),  
         'survey_id': fields.many2one('survey', 'Interview Form', help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),      
         'susunan_kel1_ids':fields.one2many('hr_recruit.suskel1','applicant_id','Susunan Keluarga'),
