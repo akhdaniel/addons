@@ -397,7 +397,7 @@ class hr_applicant(osv.osv):
         'tgl_berlaku2':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
         'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan'),              
-        'prov_id':fields.many2one('hr_recruit.prov','Provinsi'domain="[('country_id','=',country_id2)]"),
+        'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id2)]"),
         'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=',prov_id)]"),
         'kec_id':fields.many2one('hr_recruit.issued','Kecamatan'),
         'alamat1':fields.char('Alamat 1',100),        
