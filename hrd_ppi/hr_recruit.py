@@ -101,7 +101,7 @@ class jurusan_detail(osv.osv):
     _name='hr_recruit.jurusan_detail'
     
     _columns= {
-        'bidang_id':fields.char("bidang"),
+        'bidang_id':fields.many2one('hr_recruit.bidang','bidang'),
         'name':fields.char("Jurusan",required=True),       
             }
 jurusan_detail()
@@ -418,7 +418,7 @@ class hr_applicant(osv.osv):
         'koneksi1_ids':fields.one2many('hr_recruit.kon1','applicant_id','Referensi Internal'),
         'koneksi2_ids':fields.one2many('hr_recruit.kon2','applicant_id','Referensi Eksternal'),
         'interview_ids':fields.one2many('hr_recruit.interview','applicant_id','Mulai Interview'),
-        'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan'),   
+        'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan', domain="[('bidang_id','=',bidang_id)]"),  
         'job_id': fields.many2one('hr.job', 'Applied Job',required=True),
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
         'result_id':fields.many2one('hr_recruit.result','Result'),
@@ -427,7 +427,7 @@ class hr_applicant(osv.osv):
         'stage_id': fields.many2one ('hr.recruitment.stage', 'Stage',
                         domain="['&', ('fold', '=', False), '|', ('department_id', '=', department_id), ('department_id', '=', False)]",readonly=True),
         'pt_id':fields.many2one('hr_recruit.pt','Perguruan Tinggi'),  
-        'bidang_id':fields.related('jurusan_id','bidang_id',type='char',relation='hr_recruit.jurusan_detail',string='Bidang',readonly=True,store=True),        
+        'bidang_id':fields.many2one('hr_recruit.bidang','bidang'),          
         "fasilitas1_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
         "fasilitas2_ids":fields.one2many("hr.fasilitas2","applican_id","Fasilitas"),  
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
