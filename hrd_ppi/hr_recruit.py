@@ -418,7 +418,7 @@ class hr_applicant(osv.osv):
         'koneksi1_ids':fields.one2many('hr_recruit.kon1','applicant_id','Referensi Internal'),
         'koneksi2_ids':fields.one2many('hr_recruit.kon2','applicant_id','Referensi Eksternal'),
         'interview_ids':fields.one2many('hr_recruit.interview','applicant_id','Mulai Interview'),
-        'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan', domain="[('bidang_id','=',bidang_id.id)]"),  
+        'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan', domain="[('bidang_id','=',bidang_id)]"),  
         'job_id': fields.many2one('hr.job', 'Applied Job',required=True),
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
         'result_id':fields.many2one('hr_recruit.result','Result'),
