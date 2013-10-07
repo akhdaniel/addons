@@ -639,7 +639,7 @@ class provinsi(osv.osv):
         
     _columns={
         'name':fields.char('Provinsi',50),
-        'countri_id':fields.many2one('res.country','Negara'),
+        'country_id':fields.many2one('res.country','Negara'),
         }
 provinsi()
 
