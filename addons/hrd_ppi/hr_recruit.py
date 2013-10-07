@@ -381,7 +381,7 @@ class hr_applicant(osv.osv):
         #result= super(hr_applicant,self).write (cr, uid, ids,vals, context)
         #return result 
                         
-       _columns= {
+    _columns= {
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin',required=True),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir',required=True),
