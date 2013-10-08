@@ -72,6 +72,43 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+	
+	<record model="ir.actions.act_window" id="action_kota">
+        <field name="name">Master Kota</field>
+        <field name="res_model">hr_recruit.kota</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_prov">
+        <field name="name">Master Provinsi</field>
+        <field name="res_model">hr_recruit.prov</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record id="kota_form_view" model="ir.ui.view">
+            <field name="name">Master Kota</field>
+            <field name="model">hr_recruit.kota</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Kota">
+                    <field name="name"/>
+                    <field name="provinsi_id"/>
+                </tree>
+            </field>
+    </record>
+    
+    <record id="prov_form_view" model="ir.ui.view">
+            <field name="name">Master Provinsi</field>
+            <field name="model">hr_recruit.prov</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Kota">
+                    <field name="name"/>
+                    <field name="country_id"/>
+                </tree>
+            </field>
+    </record>
 	<record id="fasilitas_form_view" model="ir.ui.view">
             <field name="name">Master Fasilitas</field>
             <field name="model">hr.fasilitas3</field>
@@ -128,5 +165,7 @@
     <menuitem action="action_hr_recruit_issued" parent="base.menu_tools" name="Master Issued" id="master_hr_issued" sequence="200" groups="base.group_tool_user"/>
     <menuitem action="action_gol" parent="base.menu_tools" name="Master Golongan" id="master_gol" sequence="201" groups="base.group_tool_user"/>
 	<menuitem action="action_fasilitas" parent="base.menu_tools" name="Master Fasilitas" id="master_fasilitas" sequence="202" groups="base.group_tool_user"/>
+	<menuitem action="action_kota" parent="base.menu_tools" name="Master Kota" id="master_Kota" sequence="203" groups="base.group_tool_user"/>
+	<menuitem action="action_prov" parent="base.menu_tools" name="Master Provisi" id="master_prov" sequence="203" groups="base.group_tool_user"/>
 </data>
 </openerp>
