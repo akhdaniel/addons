@@ -77,7 +77,7 @@
                         states="approve2" name="signal_evaluation" 
                         class="oe_highlight" /> 
                         
-                    <field name="state" widget="statusbar" statusbar_visible="draft,verify,approve,approve2,evaluation" attrs="{'invisible': [('state','=', 'reject')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,verify,approve,approve2,evaluation" attrs="{'invisible': [('state','=', 'reject')]}" class="oe_inline"/>
                 </header>
                 <group>
                 <group >
@@ -97,7 +97,7 @@
                 <group>      
                     <separator string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)]}"/>
                     <separator string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}"/>    
-                    <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/> 
+                    <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/>
                     <group> 
                     <field name="no"/>
                     <field name="subject_id" />
