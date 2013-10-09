@@ -1,0 +1,254 @@
+<openerp>
+    <data>
+    
+    <record id="action_hr_alokasi_reimburse" model="ir.actions.act_window">
+        <field name="name">Alokasi Reimburse</field>
+        <field name="res_model">reimburse</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_type':'remove'}</field>
+        <field name="domain">[('type','=','remove')]</field>        
+        <field name="view_id" ref="hr_reimburse_view_form2"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+        <record model="ir.actions.act_window.view" id="action_alokasi_tree">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_reimburse_view_tree2"/>
+            <field name="act_window_id" ref="action_hr_alokasi_reimburse"/>
+        </record>
+
+        <!--record model="ir.actions.act_window.view" id="action_alokasi_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_reimburse_view_form2"/>
+            <field name="act_window_id" ref="action_hr_alokasi_reimburse"/>
+        </record-->     
+    
+    <record id="action_hr_permohonan_reimburse" model="ir.actions.act_window">
+        <field name="name">Permohonan Reimburse</field>
+        <field name="res_model">reimburse</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_type':'add'}</field>
+        <field name="domain">[('type','=','add')]</field> 
+        <field name="view_id" ref="hr_reimburse_view_form"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+        <record model="ir.actions.act_window.view" id="action_permohonan_tree">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_reimburse_view_tree"/>
+            <field name="act_window_id" ref="action_hr_permohonan_reimburse"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_permohonan_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_reimburse_view_form"/>
+            <field name="act_window_id" ref="action_hr_permohonan_reimburse"/>
+        </record> 
+
+	<!-- system MENU -->
+    <menuitem name="Reimburse" parent="hr.menu_hr_root" id="menu_reimburse" sequence="20"/>	
+    <menuitem action="action_hr_permohonan_reimburse" id="hr_menu_permohonan_reimburse" parent="menu_reimburse" name="Permohonan Reimburse" /> 
+    <menuitem action="action_hr_alokasi_reimburse" id="hr_menu_alokasi_reimburse" parent="menu_reimburse" name="Alokasi Reimburse"  groups="base.group_hr_user,base.group_hr_manager"/>
+ 
+     
+         <record id="hr_reimburse_view_form" model="ir.ui.view">
+            <field name="name">Reimburse</field>
+            <field name="model">reimburse</field>
+            <field name="priority">1</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="Permohonan Reimburse" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        groups="hrd_ppi.group_hr_user" 
+                        class="oe_highlight" /> 
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_approve"
+                        groups="hrd_ppi.group_hr_manager"
+                        class="oe_highlight"  />  
+                        
+                    <button string="Second Approve" type="workflow"  
+                        states="approve" name="signal_approve2"
+                        groups="hrd_ppi.group_hr_manager"
+                        class="oe_highlight"  />                          
+
+                    <button string="Cancel" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_cancel"/>
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_reject"/>    
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="approve" name="signal_reject"/>                          
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                <group>
+                <group>
+                     <field name="jenis"/>
+                     <field name="tanggal"/>
+                     <field name="nominal"/>
+                </group>
+                <group>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="bukti"/>  
+                     <field name="keterangan"/>                                      
+                </group>    
+                 </group>
+                 </sheet>
+                </form>
+            </field>
+        </record>  
+                        
+    <record id="hr_reimburse_view_form2" model="ir.ui.view">
+            <field name="name">Alokasi Reimburse</field>
+            <field name="model">reimburse</field>
+            
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="Alokasi Reimburse" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        groups="hrd_ppi.group_hr_user" 
+                        class="oe_highlight" /> 
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_approve"
+                        groups="hrd_ppi.group_hr_manager"
+                        class="oe_highlight"  />  
+                        
+                    <button string="Second Approve" type="workflow"  
+                        states="approve" name="signal_approve2"
+                        groups="hrd_ppi.group_hr_manager"
+                        class="oe_highlight"  />                          
+
+                    <button string="Cancel" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_cancel"/>
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_reject"/>    
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="approve" name="signal_reject"/>                          
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                <group>
+                <group >
+                     <field name="jenis"/>
+                     <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1"/>
+                </group>
+                <group >
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="keterangan"/>                                      
+                </group>    
+                 </group>
+                 </sheet>
+                </form>
+            </field>
+        </record> 
+              
+                
+        <record id="hr_reimburse_view_tree" model="ir.ui.view">
+            <field name="name">Reimburse tree</field>
+            <field name="model">reimburse</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state == 'reject';blue:state == 'draft';black:state in ('verify','approve','approve2')" string="Permohonan Reimburse">
+                    <field name="jenis"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="tanggal"/> 
+                    <field name="nominal"/> 
+                    <!--field name="sisa_reimburse"/--> 
+                    <field name="keterangan"/>   
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>
+        
+        <record id="hr_reimburse_view_tree2" model="ir.ui.view">
+            <field name="name">Reimburse tree2</field>
+            <field name="model">reimburse</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state == 'reject';blue:state == 'draft';black:state in ('verify','approve','approve2')" string="Alokasi Reimburse">
+                    <field name="jenis"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <!--field name="tanggal" invisible="1"/--> 
+                    <field name="nominal" string="Alokasi Reimburse" />  
+                    <field name="keterangan"/>   
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>                  
+                
+        <record id="view_reimburse_filter2" model="ir.ui.view">
+            <field name="name">Filter Reimburse</field>
+            <field name="model">reimburse</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Reimburse">
+                    <group expand="0" string="Group By...">
+                        <filter string="Karyawan" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Jenis Reimburse" icon="terp-personal+" domain="[]" context="{'group_by':'jenis'}"/>
+                        <filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+             </field>
+         </record>
+         
+        <!--Hr employee inherit reimburse-->
+        <record id="view_employee_form_reimburse" model="ir.ui.view">
+            <field name="name">hr.employee.reimburse</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <page string="HR Settings" position="inside"> 
+                    <xpath expr="//group[@name='active_group']" position="before">
+                    <group string="Reimburse" >
+                        <field name="sisa_reimburse_pengobatan" class="oe_inline"/>
+                        <field name="sisa_reimburse_rs" class="oe_inline"/>
+                    </group>
+                    </xpath>
+                </page>    
+            </field>
+        </record>  
+        
+        <!-- contract -->
+        
+        <!--record id="hr_contract_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+               <field name="type_id" position="after">
+               <field name="jatah_reimburse_pengobatan"/>
+               <field name="jatah_reimburse_perawatan"/>
+               </field>
+            </field>            
+        </record-->               
+        
+    </data>
+</openerp>
+    
