@@ -72,7 +72,7 @@
 	        <field name="code">POT_ABSEN</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
-			<field name="sequence">1</field>
+			<field name="sequence">100</field>
 	        <field name="amount_select">code</field>
 	        <field name="amount_python_compute">result = -contract.wage * (worked_days.WORK100.number_of_days - worked_days.PRESENCES.number_of_days)/ worked_days.WORK100.number_of_days </field>
 	    </record>
@@ -82,6 +82,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">1</field>
 	        <field name="amount_python_compute">result = contract.wage/173 * worked_days.OVERTIME.number_of_hours </field>
 	    </record>
 	    <record id="hr_payroll_rules_overtime_meal" model="hr.salary.rule">
@@ -90,6 +91,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">2</field>
 	        <field name="amount_python_compute">result = worked_days.OVERTIME.number_of_days* contract.makan </field>
 	    </record>
 	    <record id="hr_payroll_rules_incentive" model="hr.salary.rule">
@@ -98,6 +100,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">3</field>
 	        <field name="amount_python_compute">result = contract.wage/12 * worked_days.INCENTIVES.number_of_days </field>
 	    </record>
 	    <record id="hr_payroll_rules_incentive_meal" model="hr.salary.rule">
@@ -106,6 +109,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">4</field>
 	        <field name="amount_python_compute">result = worked_days.INCENTIVES.number_of_days * contract.makan </field>
 	    </record>
 	    <record id="hr_payroll_rules_meal" model="hr.salary.rule">
@@ -114,6 +118,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">5</field>
 	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.makan  </field>
 	    </record>
 	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
@@ -122,6 +127,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">6</field>
 	        <field name="amount_python_compute">result = (worked_days.PRESENCES.number_of_days + worked_days.INCENTIVES.number_of_days + worked_days.OVERTIMETRS.number_of_days) * contract.transport</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance" model="hr.salary.rule">
@@ -130,6 +136,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">7</field>
 	        <field name="amount_python_compute">result = inputs.MEDICAL_ALLOWANCE.amount </field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
@@ -138,6 +145,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">8</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams1 / 100</field>
 	    </record>
 		
@@ -147,6 +155,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">9</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams2 / 100</field>
 	    </record>
 		
@@ -156,6 +165,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">10</field>
 	        <field name="amount_python_compute">result = inputs.OTHERS.amount </field>
 	    </record>	 
 	    <record id="hr_payroll_rules_luar_kota" model="hr.salary.rule">
@@ -164,6 +174,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">11</field>
 	        <field name="amount_python_compute">result = inputs.LUAR_KOTA.amount </field>
 	    </record>	 
 	    <record id="hr_payroll_rules_pulsa" model="hr.salary.rule">
@@ -172,6 +183,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">12</field>
 	        <field name="amount_python_compute">result = inputs.PULSA.amount </field>
 	    </record>	 	  
 	    <record id="hr_payroll_rules_housing" model="hr.salary.rule">
@@ -180,6 +192,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">13</field>
 	        <field name="amount_python_compute">result = inputs.HOUSING.amount </field>
 	    </record>	
 	    <record id="hr_payroll_rules_thr" model="hr.salary.rule">
@@ -188,6 +201,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">14</field>
 	        <field name="amount_python_compute">result = inputs.THR.amount </field>
 	    </record>		
 	    <record id="hr_payroll_rules_bonus" model="hr.salary.rule">
@@ -196,6 +210,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">15</field>
 	        <field name="amount_python_compute">result = inputs.BONUS.amount </field>
 	    </record>	
 	    <record id="hr_payroll_rules_medical_refund" model="hr.salary.rule">
@@ -204,6 +219,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">16</field>
 	        <field name="amount_python_compute">result = inputs.MEDICAL_REFUND.amount </field>
 	    </record>
 	    <record id="hr_payroll_rules_tunjangan_pajak" model="hr.salary.rule">
@@ -212,6 +228,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">17</field>
 	        <field name="amount_python_compute">result = inputs.TUNJANGAN_PAJAK.amount </field>
 	    </record>		
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
@@ -220,6 +237,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
 	        <field name="amount_python_compute">result = inputs.RAPEL.amount </field>
 	    </record>	
 	    <record id="hr_payroll_rules_leave_pay" model="hr.salary.rule">
@@ -228,64 +246,76 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">19</field>
 	        <field name="amount_python_compute">result = inputs.LEAVE_PAY.amount </field>
 	    </record>	 
 
     <!-- SALARY RULE INPUT -->
 	    <record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
 	        <field name="name">MEDICAL_ALLOWANCE</field>
-	        <field name="code">MEDICAL_ALLOWANCE</field>	    	
+	        <field name="code">MEDICAL_ALLOWANCE</field>
+			<field name="sequence">20</field>	
 	        <field name="input_id" ref="hr_payroll_rules_medical_allowance"/>	    	
 		</record>
     		 	     
 	    <record id="hr_payroll_rules_input_others" model="hr.rule.input">
 	        <field name="name">OTHERS</field>
-	        <field name="code">OTHERS</field>	    	
+	        <field name="code">OTHERS</field>
+			<field name="sequence">21</field>	
 	        <field name="input_id" ref="hr_payroll_rules_others"/>	    	
 		</record>	    
 	    <record id="hr_payroll_rules_input_luar_kota" model="hr.rule.input">
 	        <field name="name">LUAR_KOTA</field>
-	        <field name="code">LUAR_KOTA</field>	    	
+	        <field name="code">LUAR_KOTA</field>
+			<field name="sequence">22</field>
 	        <field name="input_id" ref="hr_payroll_rules_luar_kota"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_pulsa" model="hr.rule.input">
 	        <field name="name">PULSA</field>
-	        <field name="code">PULSA</field>	    	
+	        <field name="code">PULSA</field>
+			<field name="sequence">23</field>	
 	        <field name="input_id" ref="hr_payroll_rules_pulsa"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_housing" model="hr.rule.input">
 	        <field name="name">HOUSING</field>
-	        <field name="code">HOUSING</field>	    	
+	        <field name="code">HOUSING</field>	  
+			<field name="sequence">24</field>			
 	        <field name="input_id" ref="hr_payroll_rules_housing"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_thr" model="hr.rule.input">
 	        <field name="name">THR</field>
-	        <field name="code">THR</field>	    	
+	        <field name="code">THR</field>	
+			<field name="sequence">25</field>	
 	        <field name="input_id" ref="hr_payroll_rules_thr"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_bonus" model="hr.rule.input">
 	        <field name="name">BONUS</field>
-	        <field name="code">BONUS</field>	    	
+	        <field name="code">BONUS</field>	
+			<field name="sequence">26</field>	
 	        <field name="input_id" ref="hr_payroll_rules_bonus"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_medical_refund" model="hr.rule.input">
 	        <field name="name">MEDICAL_REFUND</field>
-	        <field name="code">MEDICAL_REFUND</field>	    	
+	        <field name="code">MEDICAL_REFUND</field>	
+			<field name="sequence">27</field>	
 	        <field name="input_id" ref="hr_payroll_rules_medical_refund"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_tunjangan_pajak" model="hr.rule.input">
 	        <field name="name">TUNJANGAN_PAJAK</field>
-	        <field name="code">TUNJANGAN_PAJAK</field>	    	
+	        <field name="code">TUNJANGAN_PAJAK</field>	 
+			<field name="sequence">28</field>			
 	        <field name="input_id" ref="hr_payroll_rules_tunjangan_pajak"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_rapel" model="hr.rule.input">
 	        <field name="name">RAPEL</field>
-	        <field name="code">RAPEL</field>	    	
+	        <field name="code">RAPEL</field>	
+			<field name="sequence">29</field>	
 	        <field name="input_id" ref="hr_payroll_rules_rapel"/>	    	
 		</record>	
 	    <record id="hr_payroll_rules_input_leave_pay" model="hr.rule.input">
 	        <field name="name">LEAVE_PAY</field>
-	        <field name="code">LEAVE_PAY</field>	    	
+	        <field name="code">LEAVE_PAY</field>	
+			<field name="sequence">30</field>	
 	        <field name="input_id" ref="hr_payroll_rules_leave_pay"/>	    	
 		</record>	
 		
