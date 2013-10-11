@@ -55,7 +55,7 @@
     </record>
     
     <record model="ir.actions.act_window" id="action_hr_recruit_issued">
-        <field name="name">Master Issued</field>
+        <field name="name">Master Kecamatan</field>
         <field name="res_model">hr_recruit.issued</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
