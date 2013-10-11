@@ -135,7 +135,9 @@ class hr_payslip(osv.osv):
                     if working_minutes > 0.15 and working_minutes <= 0.45 :
                         real_working_hours_on_day= working_hours + (0.30 * 1.66666667)
                     elif working_minutes >= 0.45 :    
-                        real_working_hours_on_day= working_hours + 1                             
+                        real_working_hours_on_day= working_hours + 1
+                    elif working_minutes < 15 :
+                        real_working_hours_on_day= working_hours  						
                     date = (day_from + timedelta(days=day))
                     
                     isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7 or leave_type 
