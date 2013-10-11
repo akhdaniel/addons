@@ -86,6 +86,18 @@
         <field name="view_mode">tree,form</field>
     </record>
     
+	<record id="kec_form_view" model="ir.ui.view">
+            <field name="name">Master Kecamatan</field>
+            <field name="model">hr_recruit.issued</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Kota">
+                    <field name="name"/>
+                    <field name="kota_id"/>
+                </tree>
+            </field>
+    </record>
+	
     <record id="kota_form_view" model="ir.ui.view">
             <field name="name">Master Kota</field>
             <field name="model">hr_recruit.kota</field>
@@ -162,7 +174,7 @@
     <menuitem action="action_hr_recruit_bid_krj" parent="base.menu_tools" name="Master Bidang Pekerjaan" id="master_hr_bid_krj" sequence="170" groups="base.group_tool_user"/>
     <menuitem action="action_hr_recruit_kota" parent="base.menu_tools" name="Master Kota" id="master_hr_kota" sequence="180" groups="base.group_tool_user"/>
     <menuitem action="action_hr_recruit_agama" parent="base.menu_tools" name="Master Agama" id="master_hr_agama" sequence="190" groups="base.group_tool_user"/>
-    <menuitem action="action_hr_recruit_issued" parent="base.menu_tools" name="Master Issued" id="master_hr_issued" sequence="200" groups="base.group_tool_user"/>
+    <menuitem action="action_hr_recruit_issued" parent="base.menu_tools" name="Master Kecamatan" id="master_hr_issued" sequence="200" groups="base.group_tool_user"/>
     <menuitem action="action_gol" parent="base.menu_tools" name="Master Golongan" id="master_gol" sequence="201" groups="base.group_tool_user"/>
 	<menuitem action="action_fasilitas" parent="base.menu_tools" name="Master Fasilitas" id="master_fasilitas" sequence="202" groups="base.group_tool_user"/>
 	<menuitem action="action_kota" parent="base.menu_tools" name="Master Kota" id="master_Kota" sequence="203" groups="base.group_tool_user"/>
