@@ -598,7 +598,7 @@ class issued(osv.osv):
     _name='hr_recruit.issued'
         
     _columns={
-        'name':fields.char('Dikeluarkan di',50),
+        'name':fields.char('Kecamatan',50),
         'kota_id':fields.many2one('hr_recruit.kota','Kota'),
         }
 issued()
