@@ -227,7 +227,7 @@ class hr_payslip(osv.osv):
         slip_line_pool = self.pool.get('hr.payslip.line')
         sequence_obj = self.pool.get('ir.sequence')
         for payslip in self.browse(cr, uid, ids, context=context):
-			date_contract=payslip.contract_id.date_start
+	    date_contract=payslip.contract_id.date_start
             date_to = payslip.date_to
             date_cont = datetime.strptime(date_contract,"%Y-%m-%d").year
             date_pays = datetime.strptime(date_to,"%Y-%m-%d").year
