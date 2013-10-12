@@ -249,6 +249,15 @@
 			<field name="sequence">19</field>
 	        <field name="amount_python_compute">result = inputs.LEAVE_PAY.amount </field>
 	    </record>	 
+		<record id="hr_payroll_rules_gaji" model="hr.salary.rule">
+	        <field name="name">GAJI DUA KALI</field>
+	        <field name="code">GDK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="sequence">20</field>
+	        <field name="amount_python_compute">result = payslip.komisi * contract.wage</field>
+	    </record>
 
     <!-- SALARY RULE INPUT -->
 	    <record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
@@ -327,7 +336,7 @@
 	    	<field name="code">PPI_STAFF</field>
         	<field name="parent_id" ref="hr_payroll.structure_base"/>
 	        <field name="company_id" ref="base.main_company"/>
-            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay') ])]" name="rule_ids"/>
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji') ])]" name="rule_ids"/>
 	    </record>
 																																       	         	  	      	       
 	</data>
