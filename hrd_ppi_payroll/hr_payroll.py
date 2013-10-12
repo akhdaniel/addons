@@ -227,6 +227,17 @@ class hr_payslip(osv.osv):
         slip_line_pool = self.pool.get('hr.payslip.line')
         sequence_obj = self.pool.get('ir.sequence')
         for payslip in self.browse(cr, uid, ids, context=context):
+			date_contract=payslip.contract_id.date_start
+            date_to = payslip.date_to
+            date_cont = datetime.strptime(date_contract,"%Y-%m-%d").year
+            date_pays = datetime.strptime(date_to,"%Y-%m-%d").year
+            year =(date_pays - date_cont) / 5
+            date_cont = datetime.strptime(date_contract,"%Y-%m-%d").month
+            date_pays = datetime.strptime(date_to,"%Y-%m-%d").month
+            if year == 1 or year == 2 or year == 3 or year == 4 or year == 5 or year == 6 or year == 7 or year ==8 or year == 9 or year == 10 :
+                if date_cont == date_pays :
+                    nilai=1
+                    self.write(cr, uid,ids, {'komisi': nilai}, context=context)
             number = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
             #delete old payslip lines
             old_slipline_ids = slip_line_pool.search(cr, uid, [('slip_id', '=', payslip.id)], context=context)
@@ -250,6 +261,7 @@ class hr_payslip(osv.osv):
     
     _columns = {
         'net' : fields.integer("Net"),
+        'komisi': fields.integer("komisi"),
     }
                      
 hr_payslip()
