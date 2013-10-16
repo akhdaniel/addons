@@ -10,7 +10,7 @@
 
         <!-- Master Pajak -->
         <record model="ir.actions.act_window" id="action_pkp">
-            <field name="name">Master PKP</field>
+            <field name="name">Master Pajak</field>
             <field name="res_model">hr.pkp</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
