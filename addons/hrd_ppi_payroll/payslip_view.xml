@@ -8,8 +8,15 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <!-- contract -->
-        
+        <!-- Master Pajak -->
+        <record model="ir.actions.act_window" id="action_pkp">
+            <field name="name">Master PKP</field>
+            <field name="res_model">hr.pkp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>  
+
+        <!-- contract -->        
         <record id="hr_contract_view_form1" model="ir.ui.view">
             <field name="name">hr.contract.view.form</field>
             <field name="model">hr.contract</field>
@@ -27,20 +34,60 @@
             </field>            
         </record>
 		
-		<record id="hr_contract_type_view_form2" model="ir.ui.view">
+
+         <record id="hr_contract_type_view_form2" model="ir.ui.view">
             <field name="name">hr.contract.type.view.form2</field>
             <field name="model">hr.contract.type</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
             <field name="arch" type="xml">                
                   <field name="name" position="after">
+                    <field name="pajak"/>
+                    <group colspan="4">
                         <group string="Jamsostek">
                             <field name="jams1"/>
                             <field name="jams2"/>
-                       </group>     
-                  </field>
-                        
+                            
+                        </group>
+                       <group string="Reimburse" >                      
+                            <field name="reimburse_pengobatan" />                        
+                            <field name="reimburse_perawatan" />                          
+                       </group>
+                    </group>          
+                  </field>                       
             </field>
         </record>
+        
+         <record id="hr_pkp_view_form" model="ir.ui.view">
+            <field name="name">hr.pkp</field>
+            <field name="model">hr.pkp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml"> 
+                <form string="Master Pajak">
+                <group> 
+                <field name="kode"/>
+                <field name="nominal_pajak"/>                              
+                </group>
+                <group>
+                <field name="nominal_bulan_min"/>
+                <field name="nominal_bulan_max"/>
+                </group>   
+                </form>                   
+            </field>
+        </record>    
+        
+         <record id="hr_pkp_view_tree" model="ir.ui.view">
+            <field name="name">hr.pkp</field>
+            <field name="model">hr.pkp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">  
+                <tree string="Master Pajak">    
+                <field name="kode"/>          
+                <field name="nominal_bulan_min"/>
+                <field name="nominal_bulan_max"/>
+                <field name="nominal_pajak"/>
+                </tree>                      
+            </field>
+        </record>         
         
         <!-- payslip batches-->
         
@@ -80,5 +127,6 @@
             </field>
         </record>
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Gaji" id="master_gaji" sequence="211" groups="base.group_tool_user"/>
+        <menuitem action="action_pkp" parent="base.menu_tools" name="Master Pajak" id="master_pkp" sequence="212" groups="base.group_tool_user"/>
     </data>
 </openerp>

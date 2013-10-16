@@ -223,21 +223,40 @@ class hr_payslip(osv.osv):
             res += [attendances] + leaves + [presences] + [overtimes] + [overtimes_trs] + [incentives]
         return res
         
-    def compute_sheet(self, cr, uid, ids, context=None):         
+    def compute_sheet(self, cr, uid, ids,employee_id, context=None):    
+        #import pdb;pdb.set_trace()     
         slip_line_pool = self.pool.get('hr.payslip.line')
         sequence_obj = self.pool.get('ir.sequence')
-        for payslip in self.browse(cr, uid, ids, context=context):
-	    date_contract=payslip.contract_id.date_start
+        contract_obj = self.pool.get("hr.contract")
+        reimburse_obj = self.pool.get("reimburse")
+
+        for payslip in self.browse(cr, uid, ids, context=context):   
+            emp=payslip.employee_id.name
+            emp_id=reimburse_obj.search(cr, uid, [('employee_id', '=', emp)], context=context)           
+            date_contract=payslip.contract_id.date_start
+            date_from=payslip.date_from
             date_to = payslip.date_to
             date_cont = datetime.strptime(date_contract,"%Y-%m-%d").year
             date_pays = datetime.strptime(date_to,"%Y-%m-%d").year
             year =(date_pays - date_cont) / 5
             date_cont = datetime.strptime(date_contract,"%Y-%m-%d").month
             date_pays = datetime.strptime(date_to,"%Y-%m-%d").month
+            nom=0.00
+            nam=0.00
             if year == 1 or year == 2 or year == 3 or year == 4 or year == 5 or year == 6 or year == 7 or year ==8 or year == 9 or year == 10 :
                 if date_cont == date_pays :
                     nilai=1
                     self.write(cr, uid,ids, {'komisi': nilai}, context=context)
+            for su in reimburse_obj.browse(cr, uid, emp_id, context=context):
+                tgl=su.tanggal
+                jn=su.jenis
+                st=su.state               
+                if tgl >= date_from and tgl <= date_to and st == 'approve2' and jn == 'obat' :    
+                    nom=su.nominal+nom
+                    self.write(cr, uid,ids, {'reimburse_obat': nom}, context=context)
+                if tgl >= date_from and tgl <= date_to and st == 'approve2' and jn == 'rawat' :    
+                    nam=su.nominal+nam
+                    self.write(cr, uid,ids, {'reimburse_rawat': nam}, context=context)                    
             number = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
             #delete old payslip lines
             old_slipline_ids = slip_line_pool.search(cr, uid, [('slip_id', '=', payslip.id)], context=context)
@@ -255,14 +274,20 @@ class hr_payslip(osv.osv):
                 cod= line['code']
                 if cod == "NET":
                     coo =line['amount']      
-                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)              
+                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)     
+                if cod == "POT_ABSEN":
+                    coo =line['amount']      
+                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context)                             
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
         return True
     
     _columns = {
         'net' : fields.integer("Net"),
         'komisi': fields.integer("komisi"),
-    }
+        'reimburse_obat':fields.float('Total Reimburse Obat'),
+        'reimburse_rawat':fields.float('Total Reimburse Rawat'),
+        'pot_absen':fields.float('Potongan Absen'),
+    } 
                      
 hr_payslip()
 
@@ -316,11 +341,27 @@ hr_attendance()
 
 class hr_salary_rule(osv.osv):
     _name = 'hr.salary.rule'
-    _inherit = 'hr.salary.rule'
+    _inherit = 'hr.salary.rule'     
     
-    _columns = {
+    _columns={
         'amount_python_compute':fields.text('Python Code',readonly=True),
+        'condition_range':fields.selection([('contract.wage','Gaji Pokok'),('employee.children','Jumlah Anak'),('emoployee.remaining_leaves','Sisa Cuti'),('employee.vehicle_distance','Jarak dari Rumah ke Kantor'),('employee.job_id.urutan','Jabatan/Title'),('employee.gol_id.no','Golongan'),('worked_days.PRESENCES.number_of_days','Jumlah Kehadiran Perbulan'),('inputs.THR.amount','Jumlah THR'),('inputs.TUNJANGAN_PAJAK.amount','Tunjangan Pajak'),('inputs.MEDICAL_REFUND.amount','Medical Refund'),('inputs.MEDICAL_REFUND.amount','Medical Allowance'),('inputs.BONUS.amount','Jumlah Bonus'),('inputs.RAPEL.amount','Jumlah Rapel'),('inputs.HOUSING.amount','Housing Allowance'),('inputs.LUAR_KOTA.amount','Tunjangan Luar Kota'),('inputs.PULSA.amount','Tunjangan Pulsa')],'Range Based on', readonly=False, help='This will be used to compute the % fields values; in general it is on basic, but you can also use categories code fields in lowercase as a variable names (hra, ma, lta, etc.) and the variable basic.'),
             }
+    
+    _defaults={
+        'condition_range':'contract.wage',
+            }
+   
+    def _check_crange(self, cr, uid, ids):
+        for crange in self.browse(cr, uid, ids):
+            crange_id = self.search(cr, uid, [('condition_range_min', '>', crange.condition_range_max), ('condition_range_max', '<', crange.condition_range_min)])
+            if crange_id:
+                return False
+        return True      
+            
+    _constraints = [
+        (_check_crange, 'range max tidak boleh lebih kecil dari range min!', ['condition_range_min','condition_range_max']),
+                    ]
 hr_salary_rule()
 
 class hr_payslip_worked_days(osv.osv):
