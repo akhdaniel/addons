@@ -81,5 +81,23 @@ class hr_contract_type(osv.osv):
     _columns = {
         "jams1":fields.float('Kontribusi Karyawan (%)'),
         "jams2":fields.float('Kontribusi Perusahaan (%)'),
+        "pajak":fields.float('Pajak (%)'),
+        "reimburse_pengobatan":fields.integer('Pengobatan Tahunan',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
+        "reimburse_perawatan":fields.integer('Perawatan Rumah Sakit',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
      } 
 hr_contract_type()
+
+class pkp(osv.osv):
+    _name="hr.pkp"
+    _rec_name="nominal_pajak"
+    _order="nominal_bulan_min"
+    
+    _columns = {
+        "kode":fields.char('Kode',size=5),
+        "nominal_bulan_min" : fields.float("Min Nominal Perbulan"),
+        "nominal_bulan_max" :fields.float("Max Nominal Perbulan"),
+        "nominal_pajak" : fields.integer("Nominal Pajak (%)", size=2),
+
+    }
+
+pkp() 

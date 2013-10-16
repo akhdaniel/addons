@@ -139,6 +139,62 @@
 			<field name="sequence">7</field>
 	        <field name="amount_python_compute">result = inputs.MEDICAL_ALLOWANCE.amount </field>
 	    </record>
+	    <record id="hr_payroll_rules_medical_allowance" model="hr.salary.rule">
+	        <field name="name">MEDICAL ALW PENGOBATAN</field>
+	        <field name="code">MED_ALW_OBAT</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = 0</field>
+	    </record>
+	    <record id="hr_payroll_rules_medical_allowance_obat" model="hr.salary.rule">
+	        <field name="name">MEDICAL ALW (OBAT)</field>
+	        <field name="code">MED_ALW_OBAT</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = payslip.reimburse_obat</field>
+	    </record>
+	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
+	        <field name="name">MEDICAL ALW (PERAWATAN RS)</field>
+	        <field name="code">MED_ALW_RS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = payslip.reimburse_rawat</field>
+	    </record>
+	    <record id="hr_payroll_rules_medical_deduction_obat" model="hr.salary.rule">
+	        <field name="name">MEDICAL DED (OBAT)</field>
+	        <field name="code">MED_DED_OBAT</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = -payslip.reimburse_obat</field>
+	    </record>
+	    <record id="hr_payroll_rules_medical_deduction_rawat" model="hr.salary.rule">
+	        <field name="name">MEDICAL DED (PERAWATAN RS)</field>
+	        <field name="code">MED_DED_RS</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = -payslip.reimburse_rawat</field>
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
+	        <field name="name">POTONGAN JAMSOSTEK</field>
+	        <field name="code">P_JAMSOSTEK</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = (-contract.wage * contract.type_id.jams1 / 100)+(-contract.wage * contract.type_id.jams2 / 100)</field>
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
+	        <field name="name">TUNJANGAN JAMSOSTEK</field>
+	        <field name="code">T_JAMSOSTEK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams2 / 100</field>
+	    </record>	    	    	    
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
 	        <field name="name">JAMSOSTEK</field>
 	        <field name="code">JAMSOSTEK</field>
@@ -230,7 +286,15 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">17</field>
 	        <field name="amount_python_compute">result = inputs.TUNJANGAN_PAJAK.amount </field>
-	    </record>		
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek3" model="hr.salary.rule">
+	        <field name="name">POTONGAN PAJAK</field>
+	        <field name="code">PAJAK</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = -(categories.BASIC + categories.ALW + payslip.reimburse_obat + payslip.reimburse_rawat + payslip.pot_absen) * contract.type_id.pajak/100</field>
+	    </record>	    		
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
 	        <field name="name">RAPEL</field>
 	        <field name="code">RAPEL</field>
@@ -336,7 +400,7 @@
 	    	<field name="code">PPI_STAFF</field>
         	<field name="parent_id" ref="hr_payroll.structure_base"/>
 	        <field name="company_id" ref="base.main_company"/>
-            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji') ])]" name="rule_ids"/>
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),ref('hr_payroll_rules_medical_deduction_rawat'),ref('hr_payroll_rules_medical_deduction_obat') ])]" name="rule_ids"/>
 	    </record>
 																																       	         	  	      	       
 	</data>
