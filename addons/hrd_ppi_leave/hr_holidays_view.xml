@@ -177,7 +177,33 @@
             </field>
         </record-->
         
-        </data>
+        <!-- Holidays: Allocation Request via button-->
+        <!--record model="ir.ui.view" id="allocation_leave_new~1">
+            <field name="name">Allocation Request</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.allocation_leave_new"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="legal_leave_alloc" type="object" string="Legal leave allocation/>
+                </header>
+            </field>
+        </record-->
+
+        <!-- Holidays: Allocation Request-->
+        <record forcecreate="1" id="ppi_annual_leave" model="ir.cron">
+            <field name="name">Create PPI Annual Leave Allocation</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.holidays'" name="model" />
+            <field eval="'legal_leave_alloc'" name="function" />
+            <field eval="'()'" name="args" />
+            <!--field eval="import time;strftime("%m/%d/%Y %H:%M:%S")" name="nextcall" /-->
+        </record>
+    </data>
 </openerp>
    
    

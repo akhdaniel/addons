@@ -35,7 +35,7 @@ class hr_holidays(osv.osv):
     _columns = {
         'bln_libur_id':fields.many2one('hr.bln_libur',''),
         'libur_bersih':fields.boolean('Hitung Tanggal Merah'),
-		'is_libur':fields.boolean('Libur'),
+        'is_libur':fields.boolean('Libur'),
     }
  
     def _get_holi_status(self, cr, uid, context=None):
@@ -149,5 +149,48 @@ class hr_holidays(osv.osv):
             #result['value']['number_of_days_temp'] = 0
 
         return result
-  
+
+    def legal_leave_alloc(self, cr, uid, ids=None, context=None):
+        #""" Override to avoid automatic logging of creation """
+        if context is None:
+            context = {}
+        context = dict(context, mail_create_nolog=True) 
+
+        employee_ids = self.pool.get('hr.employee')
+        src = employee_ids.search(cr, uid, [])
+        employs = employee_ids.browse(cr, uid, src)
+        obj_contract = self.pool.get('hr.contract')
+        
+        values = {}
+        for emp in employs:
+            src_contract = obj_contract.search(cr, uid, [('employee_id','=',emp.id),('is_have_allocation','=',1),], context=context)
+            if src_contract:
+                values = {
+                    'type':'add',
+                    'name': _("Annual Legal Leave Allocation for %s") % _(emp.name),
+                    'holiday_status_id':1,
+                    'number_of_days_temp':12,
+                    #'holiday_type':'employee',
+                    'employee_id':emp.id,
+                    'notes':""
+                    }
+                self.create(cr,uid,values,context=context)
+        return True    
 hr_holidays()
+
+class hr_contract_type(osv.osv):
+    _name = 'hr.contract.type'
+    _description = 'Contract Type'
+    _inherit = 'hr.contract.type'
+
+    _columns = {
+        'is_have_allocation': fields.boolean('Leave Allocation', help="Ceklist untuk membuat alokasi cuti otomatis"),
+    }
+
+class hr_contract(osv.osv):
+    _name = 'hr.contract'
+    _inherit = 'hr.contract'
+
+    _columns = {
+        'is_have_allocation' :  fields.related('type_id', 'is_have_allocation', type='boolean', relation='hr.contract.type', string='Ceklist untuk membuat alokasi cuti otomatis',),
+    }
