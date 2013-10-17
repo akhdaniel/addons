@@ -96,7 +96,7 @@
                 <group>
                 <group>
                      <field name="jenis"/>
-                     <field name="tanggal"/>
+                     <field name="tanggal" required="1"/>
                      <field name="nominal"/>
                 </group>
                 <group>
