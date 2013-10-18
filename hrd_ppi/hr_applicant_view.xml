@@ -93,9 +93,12 @@
                     <field name="kec_id2"/>
 					<field name="alamat2" placeholder="Alamat Luar Jakarta"/>
                     <field name='kode2'/>                  
-                    <field name="telp2" placeholder="Telp. di luar Jakarta" />
-                    <field name="respon_div"/>	
+                    <field name="telp2" placeholder="Telp. di luar Jakarta" />                    	
                     </group>
+					<newline/>
+					<group>
+					<field name="respon_div"/>
+					</group>
                 </group> 
             </field>
             
