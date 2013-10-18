@@ -58,7 +58,7 @@
                                             <field name="bank_account_id"/>
                                         </group>
                                     </group>							 
-                               <group>
+									<group>
                                     <group string="Education">
                                         <field name="type_id"/>
                                         <field name="bidang_id"/>
@@ -67,8 +67,13 @@
                                         <field name="result_id"/>
                                         <field name="gelar_id"/>
                                      </group>
-                               </group> 
-							</group>   
+                                     <newline/>
+                                     <group string="Tax">
+                                        <field name="ptkp_id"/>
+                                        <field name="npwp"/>
+                                     </group>
+                                     </group>
+								</group>   
                                 <group>
 								
                                     <group string="Contact Information">
