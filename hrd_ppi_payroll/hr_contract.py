@@ -84,6 +84,9 @@ class hr_contract_type(osv.osv):
         "pajak":fields.float('Pajak (%)'),
         "reimburse_pengobatan":fields.integer('Pengobatan Tahunan',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
         "reimburse_perawatan":fields.integer('Perawatan Rumah Sakit',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
+        "biaya_jabatan":fields.integer('Biaya Jabatan (%)',size=1),
+        "max_biaya_jabatan":fields.float('Nominal Max (Rp)'),
+        "tht":fields.integer('Tunjangan Hari Tua (%)'),		
      } 
 hr_contract_type()
 

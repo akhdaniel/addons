@@ -402,6 +402,73 @@
 	        <field name="company_id" ref="base.main_company"/>
             <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),ref('hr_payroll_rules_medical_deduction_rawat'),ref('hr_payroll_rules_medical_deduction_obat') ])]" name="rule_ids"/>
 	    </record>
+		
+        <!--Master PTKP-->
+		<record id="hr_master_ptkp_t0" model="hr.ptkp">
+	        <field name="kode">T0</field> 
+	        <field name="nominal_bulan">1320000</field>
+	        <field name="nominal_tahun">15840000</field>
+	    </record>																																       	         		    <record id="hr_master_ptkp_t1" model="hr.ptkp">
+	        <field name="kode">T1</field> 
+            <field name="nominal_bulan">1430000</field>
+            <field name="nominal_tahun">17160000</field>
+	    </record>
+	    <record id="hr_master_ptkp_t2" model="hr.ptkp">
+	        <field name="kode">T2</field> 
+            <field name="nominal_bulan">1540000</field>
+            <field name="nominal_tahun">18480000</field>
+	    </record>
+	    <record id="hr_master_ptkp_t3" model="hr.ptkp">
+	        <field name="kode">T3</field> 
+            <field name="nominal_bulan">1650000</field>
+            <field name="nominal_tahun">19800000</field>
+	    </record>
+	    <record id="hr_master_ptkp_k0" model="hr.ptkp">
+	        <field name="kode">K0</field> 
+            <field name="nominal_bulan">1430000</field>
+            <field name="nominal_tahun">17160000</field>
+	    </record>
+	    <record id="hr_master_ptkp_k1" model="hr.ptkp">
+	        <field name="kode">K1</field> 
+            <field name="nominal_bulan">1540000</field>
+            <field name="nominal_tahun">18480000</field>
+	    </record>
+	    <record id="hr_master_ptkp_k2" model="hr.ptkp">
+	        <field name="kode">K2</field> 
+            <field name="nominal_bulan">1650000</field>
+            <field name="nominal_tahun">19800000</field>
+	    </record>
+	    <record id="hr_master_ptkp_k3" model="hr.ptkp">
+	        <field name="kode">K3</field> 
+            <field name="nominal_bulan">1760000</field>
+            <field name="nominal_tahun">21120000</field>
+	    </record>
+	    
+	    <!--Master PKP-->
+	    <record id="hr_master_pkp_1" model="hr.pkp">
+	        <field name="kode">p1</field> 
+            <field name="nominal_min">0</field>
+            <field name="nominal_max">50000000</field>
+            <field name="pajak">5</field>
+	    </record>	    
+	    <record id="hr_master_pkp_2" model="hr.pkp">
+	        <field name="kode">p2</field> 
+            <field name="nominal_min">50000001</field>
+            <field name="nominal_max">250000000</field>
+            <field name="pajak">15</field>
+	    </record>
+	    <record id="hr_master_pkp_3" model="hr.pkp">
+	        <field name="kode">p3</field> 
+            <field name="nominal_min">25000001</field>
+            <field name="nominal_max">500000000</field>
+            <field name="pajak">25</field>
+	    </record>	
+	    <record id="hr_master_pkp_4" model="hr.pkp">
+	        <field name="kode">p4</field> 
+            <field name="nominal_min">500000001</field>
+            <field name="nominal_max">0</field>
+            <field name="pajak">30</field>
+	    </record>				
 																																       	         	  	      	       
 	</data>
 </openerp>
