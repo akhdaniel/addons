@@ -11,7 +11,7 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 
 from openerp.tools.safe_eval import safe_eval as eval
-import math
+import math,pprint
 
 class bln_libur(osv.osv):
     _name="hr.bln_libur"
@@ -26,6 +26,11 @@ class bln_libur(osv.osv):
     }
 bln_libur()
 
+#referensi leave
+D = datetime.strftime(datetime.now(), "%Y-%m-%d") #type:int
+D_y = datetime.strptime(D,"%Y-%m-%d").year
+D_m = datetime.strptime(D,"%Y-%m-%d").month
+D_d = datetime.strptime(D,"%Y-%m-%d").day
 
 class hr_holidays(osv.osv):
     _name = "hr.holidays"
@@ -167,7 +172,7 @@ class hr_holidays(osv.osv):
             if src_contract:
                 values = {
                     'type':'add',
-                    'name': _("Annual Legal Leave Allocation for %s") % _(emp.name),
+                    'name': _("Alokasi Cuti Tahunan untuk %s") % _(emp.name),
                     'holiday_status_id':1,
                     'number_of_days_temp':12,
                     #'holiday_type':'employee',
@@ -176,6 +181,46 @@ class hr_holidays(osv.osv):
                     }
                 self.create(cr,uid,values,context=context)
         return True    
+
+    def leave_allocation_5(self, cr, uid, ids=None, context=None):
+        
+        """ Override to avoid automatic logging of creation """
+        if context is None:
+            context = {}
+        context = dict(context, mail_create_nolog=True) 
+
+        obj_contract = self.pool.get('hr.contract')
+        c_src = obj_contract.search(cr, uid, [],)
+        contracts  = obj_contract.browse(cr, uid, c_src,)
+
+        obj_holi = self.pool.get('hr.holidays.status')
+        src_holi = obj_holi.search(cr, uid, [('is_5_years','=',True)],)
+        
+        for contract in contracts:
+            values = {}
+            date_from = contract.date_start
+
+            if contract.is_have_allocation: 
+                E_y = datetime.strptime(date_from,"%Y-%m-%d").year
+                E_m = datetime.strptime(date_from,"%Y-%m-%d").month
+                E_d = datetime.strptime(date_from,"%Y-%m-%d").day 
+                #set cuti 22 hari saat masa kerja n*5 tahun, 
+                #n=1,2,... ;masa kerja dihitung dari awal kontrak
+                dy = (D_y - E_y)
+                ddy = dy % 5
+                if dy >= 5: 
+                    if ddy == 0 and (D_m >= E_m) and (D_d >= E_d):
+                        values = {
+                            'type':'add',
+                            'name': _("Alokasi Cuti 5 Tahunan untuk %s") % _(contract.employee_id.name),
+                            'holiday_status_id':src_holi[0],
+                            'number_of_days_temp':22,
+                            #'holiday_type':'employee',
+                            'employee_id':contract.employee_id.id,
+                            'notes':""
+                            }
+                        self.create(cr,uid,values,context=context)
+        return True 
 hr_holidays()
 
 class hr_contract_type(osv.osv):
@@ -193,4 +238,12 @@ class hr_contract(osv.osv):
 
     _columns = {
         'is_have_allocation' :  fields.related('type_id', 'is_have_allocation', type='boolean', relation='hr.contract.type', string='Ceklist untuk membuat alokasi cuti otomatis',),
+    }
+
+class hr_holidays_status(osv.osv):
+    _name = "hr.holidays.status"
+    _inherit = "hr.holidays.status"
+
+    _columns = {
+        'is_5_years' :  fields.boolean('Cuti per 5 tahun masa kerja',readonly=True),
     }
