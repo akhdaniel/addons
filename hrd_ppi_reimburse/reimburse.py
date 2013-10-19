@@ -29,7 +29,28 @@ class reimburse(osv.osv):
             'reimburse.mt_reimburse_confirmed': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'verify',
             }
         }, 
-        
+    
+    def employe(self, cr, uid,ids,vals,name,context=None):  
+        #import pdb;pdb.set_trace()
+        result ={}
+        for xxx in self.browse(cr,uid,ids):
+            tahun = xxx.tahun
+            thn = time.strftime('%Y')
+            tanggal =xxx.tanggal
+            if tahun == thn :
+                if tanggal == False :
+                    yyy = xxx.employee_id.name
+                    contract_obj = self.pool.get('hr.contract')
+                    co_id = contract_obj.search(cr, uid,[('employee_id', '=', yyy)],context=context) 
+                    ob= contract_obj.browse(cr, uid, co_id, context=context)[0]                             
+                    jeje=xxx.jenis      
+                    obcd=ob.department_id.id 
+                    if jeje == 'obat':  
+                        result[xxx.id]=ob.jatah_reimburse_pengobatan                    
+                    elif jeje == 'rawat':   
+                        result[xxx.id]=ob.jatah_reimburse_perawatan                   
+        return result       
+    
     def _employee_get(self, cr, uid, context=None):
         ids = self.pool.get('hr.employee').search(cr, uid, [('user_id', '=', uid)], context=context)
         if ids:
@@ -61,11 +82,12 @@ class reimburse(osv.osv):
     	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[4][0]},context=context)
     
     _columns={
-        'jenis':fields.selection([('obat','Pengobatan Tahunan'),('rawat','Perawatan Rumah Sakit')],'Jenis Reimburse',required=True),
-        'employee_id':fields.many2one('hr.employee','Nama Karyawan',select=True,required=True),
+        'jenis':fields.selection([('obat','Pengobatan Tahunan'),('rawat','Perawatan Rumah Sakit')],'Jenis Reimburse'),
+        'employee_id':fields.many2one('hr.employee','Nama Karyawan',select=True,store=True),
         'user_id':fields.related('employee_id', 'user_id', type='many2one', relation='res.users', string='User', store=True),
         'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen',store=True,readonly=True),
-        'nominal':fields.float('Nominal Reimburse',required=True),
+        'nominal':fields.function(employe,string='Alokasi Reimburse',store=True),
+        'nomin' : fields.float("Permintaan Reimburse"),
         'sisa_reimburse': fields.function(_compute_sisa_reimburse, string='Sisa Reimburse', store=True),
         'tanggal':fields.date('Tanggal'),
         'keterangan':fields.char('Keterangan',200),
@@ -73,19 +95,21 @@ class reimburse(osv.osv):
         'state': fields.selection(REIMBURSE_STATES, 'Status', readonly=True, help="Gives the status of the reimburse."),  
         'type': fields.selection([('remove','Permohonan Reimburse'),('add','Alokasi Reimburse')], 'Tipe Reimburse', required=True, readonly=True, states={'draft':[('readonly',False)], 'verify':[('readonly',False)]}, select=True),  
         'parent_id': fields.many2one('reimburse', 'Parent'),      
+        "tahun" : fields.char("Tahun",readonly=True),
             }
     _defaults = {
         'employee_id': _employee_get,
         'state': REIMBURSE_STATES[0][0],
         'type': 'remove',
-        'user_id': lambda obj, cr, uid, context: uid,        
+        'user_id': lambda obj, cr, uid, context: uid,    
+        'tahun' : lambda *a : time.strftime('%Y')    
         }   
         
-    def unlink(self, cr, uid, ids, context=None):
-        for rec in self.browse(cr, uid, ids, context=context):
-            if rec.state not in ['draft', 'reject', 'verify']:
-                raise osv.except_osv(_('Warning!'),_('Anda tidak bisa menghapus reimburse ketika statusnya %s.')%(rec.state))
-        return super(reimburse, self).unlink(cr, uid, ids, context)       
+    #def unlink(self, cr, uid, ids, context=None):
+     #   for rec in self.browse(cr, uid, ids, context=context):
+      #      if rec.state not in ['draft', 'reject', 'verify']:
+       #         raise osv.except_osv(_('Warning!'),_('Anda tidak bisa menghapus reimburse ketika statusnya %s.')%(rec.state))
+        #return super(reimburse, self).unlink(cr, uid, ids, context)       
         
     def create(self, cr, uid, values, context=None):
         """ Override to avoid automatic logging of creation """
@@ -94,8 +118,51 @@ class reimburse(osv.osv):
         context = dict(context, mail_create_nolog=True)
         return super(reimburse, self).create(cr, uid, values, context=context)
 
-
-    
+    def reimburse_alloc(self, cr, uid, ids,context=None):
+        #""" Override to avoid automatic logging of creation """
+        if context is None:
+            context = {}
+        context = dict(context, mail_create_nolog=True)
+        #import pdb; pdb.set_trace()
+        employee_ids = self.pool.get('hr.employee')
+        src = employee_ids.search(cr, uid, [])
+        employs = employee_ids.browse(cr, uid, src)
+        values={}
+        values1={}
+        for xxx in employs:
+            '''result ={}
+            tahun = xxx.tahun
+            thn = time.strftime('%Y')
+            if tahun == thn :
+                yyy = xxx.employee_id.name
+                contract_obj = self.pool.get('hr.contract')
+                co_id = contract_obj.search(cr, uid,[('employee_id', '=', yyy)],context=context) 
+                ob= contract_obj.browse(cr, uid, co_id, context=context)[0]                             
+                jeje=xxx.jenis      
+                obcd=ob.department_id.id 
+                if jeje == 'obat':  
+                    result[xxx.id]=ob.jatah_reimburse_pengobatan                    
+                elif jeje == 'rawat':   
+                    result[xxx.id]=ob.jatah_reimburse_perawatan                          
+            '''
+            values = {
+                'jenis':'obat',
+                #'Keterangan': _("Reimburse Allocation for %s") % _(xxx.name), 
+                'employee_id':xxx.id,
+                'notes':"tes"
+                }
+            self.create(cr,uid,values,context=context)
+            values = {
+                'jenis':'rawat',
+                #'Keterangan': _("Reimburse Allocation for %s") % _(xxx.name),
+                #'nominal': result,
+                #'tahun':time.strftime('%Y'),  
+                'employee_id':xxx.id,
+                'notes':"tes"
+                }
+            self.create(cr,uid,values,context=context)
+        return True
+        
 reimburse()
 
 class hr_employee(osv.osv):
@@ -146,44 +213,48 @@ class hr_employee(osv.osv):
     def _compute_sisa_reimburse_obat(self, cr, uid, ids, name, args, context=None):
         #import pdb;pdb.set_trace()
        #reimburse = self.pool.get('reimburse').browse(cr, uid, ids, context=context)
-        cr.execute("""SELECT
-                sum(h.sisa_reimburse) as rp,
-                h.employee_id
-            from
-                reimburse h
-            where
-                h.state='approve2' and
-                h.jenis='obat'
-            group by h.employee_id""")
-        res = cr.dictfetchall()
-        remaining = {}
-        for r in res:
-            remaining[r['employee_id']] = r['rp']
-        for employee_id in ids:
-            if not remaining.get(employee_id):
-                remaining[employee_id] = 0.0
-        return remaining
+        reimburse_obj = self.pool.get("reimburse")
+        yyy=0.0
+        result={}
+        for reim in self.browse(cr,uid,ids):
+            xxx=reim.name
+            search_obj=reimburse_obj.search(cr,uid,[('employee_id','=',xxx)])
+            reimb=reimburse_obj.browse(cr,uid,search_obj,context=context)
+            for emp in reimb :
+                xyz=emp.jenis
+                thn = time.strftime('%Y')
+                tahun =emp.tahun
+                zzz = emp.nominal
+                if tahun == thn  :
+                    if xyz  == "obat":
+                        yyy += emp.nomin
+                    if zzz != False and xyz == "obat" :
+                        zz = emp.nominal
+            result[reim.id] =zz - yyy
+        return result
         
     def _compute_sisa_reimburse_rawat(self, cr, uid, ids, name, args, context=None):
         #import pdb;pdb.set_trace()
        #reimburse = self.pool.get('reimburse').browse(cr, uid, ids, context=context)
-        cr.execute("""SELECT
-                sum(h.sisa_reimburse) as rp,
-                h.employee_id
-            from
-                reimburse h
-            where
-                h.state='approve2' and
-                h.jenis='rawat'
-            group by h.employee_id""")
-        res = cr.dictfetchall()
-        remaining = {}
-        for r in res:
-            remaining[r['employee_id']] = r['rp']
-        for employee_id in ids:
-            if not remaining.get(employee_id):
-                remaining[employee_id] = 0.0
-        return remaining        
+        reimburse_obj = self.pool.get("reimburse")
+        yyy=0.0
+        result={}
+        for reim in self.browse(cr,uid,ids):
+            xxx=reim.name
+            search_obj=reimburse_obj.search(cr,uid,[('employee_id','=',xxx)])
+            reimb=reimburse_obj.browse(cr,uid,search_obj,context=context)
+            for emp in reimb :
+                xyz=emp.jenis
+                thn = time.strftime('%Y')
+                tahun =emp.tahun
+                zzz = emp.nominal
+                if tahun == thn  :
+                    if xyz  == "rawat":
+                        yyy += emp.nomin
+                    if zzz != False and xyz == "rawat" :
+                        zz = emp.nominal
+            result[reim.id] =zz - yyy
+        return result 
 
     def _get_reimburse_status(self, cr, uid, ids, name, args, context=None):
         reimburse_obj = self.pool.get('reimburse')
@@ -202,7 +273,7 @@ class hr_employee(osv.osv):
     _columns = {
         'sisa_reimburse_pengobatan': fields.function(_compute_sisa_reimburse_obat, string='Sisa Reimburse Pengobatan', fnct_inv=_set_remaining_reimburse_obat, type="float",),
         'sisa_reimburse_rs': fields.function(_compute_sisa_reimburse_rawat, string='Sisa Reimburse Perawatan RS', fnct_inv=_set_remaining_reimburse_rawat, type="float",),
-
+        'reimburse_ids':fields.one2many('reimburse','employee_id','Daftar Reimburse',readonly=True),
     }
 
 hr_employee()
