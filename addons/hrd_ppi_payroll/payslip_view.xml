@@ -121,6 +121,9 @@
                
                 <field name='name' position='after'>
                     <field name="net"/>
+					<field name="pot_absen"/>
+					<field name="net"/>
+					<field name="net"/>					
                 </field>
                
             </field>
