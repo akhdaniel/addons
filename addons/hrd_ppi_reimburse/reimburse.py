@@ -118,7 +118,7 @@ class reimburse(osv.osv):
         context = dict(context, mail_create_nolog=True)
         return super(reimburse, self).create(cr, uid, values, context=context)
 
-    def reimburse_alloc(self, cr, uid, ids,context=None):
+    def reimburse_alloc(self, cr, uid, ids=None,context=None):
         #""" Override to avoid automatic logging of creation """
         if context is None:
             context = {}
@@ -149,7 +149,7 @@ class reimburse(osv.osv):
                 'jenis':'obat',
                 #'Keterangan': _("Reimburse Allocation for %s") % _(xxx.name), 
                 'employee_id':xxx.id,
-                'notes':"tes"
+                'keterangan':"tes"
                 }
             self.create(cr,uid,values,context=context)
             values = {
@@ -158,7 +158,7 @@ class reimburse(osv.osv):
                 #'nominal': result,
                 #'tahun':time.strftime('%Y'),  
                 'employee_id':xxx.id,
-                'notes':"tes"
+                'keterangan':"tes"
                 }
             self.create(cr,uid,values,context=context)
         return True
