@@ -171,6 +171,7 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">121</field>
 	        <field name="amount_python_compute">result = -payslip.reimburse_obat</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_deduction_rawat" model="hr.salary.rule">
@@ -297,6 +298,7 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">140</field>
 	        <field name="amount_python_compute">result = -(categories.BASIC + categories.ALW + payslip.reimburse_obat + payslip.reimburse_rawat + payslip.pot_absen) * contract.type_id.pajak/100</field>
 	    </record>	    		
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
