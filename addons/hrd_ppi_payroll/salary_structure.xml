@@ -153,6 +153,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">20</field>
 	        <field name="amount_python_compute">result = payslip.reimburse_obat</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
@@ -161,6 +162,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">21</field>
 	        <field name="amount_python_compute">result = payslip.reimburse_rawat</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_deduction_obat" model="hr.salary.rule">
@@ -177,6 +179,7 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">120</field>
 	        <field name="amount_python_compute">result = -payslip.reimburse_rawat</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
@@ -185,6 +188,7 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
+			<field name="sequence">121</field>
 	        <field name="amount_python_compute">result = (-contract.wage * contract.type_id.jams1 / 100)+(-contract.wage * contract.type_id.jams2 / 100)</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
