@@ -326,6 +326,15 @@
 	        <field name="sequence">20</field>
 	        <field name="amount_python_compute">result = payslip.komisi * contract.wage</field>
 	    </record>
+		<record id="hr_payroll_rules_tax" model="hr.salary.rule">
+	        <field name="name">TAX</field>
+	        <field name="code">TAX</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="sequence">140</field>
+	        <field name="amount_python_compute">result =-(((categories.BASIC + categories.ALW) + (payslip.pot_absen)-((((categories.BASIC + categories.ALW) + payslip.pot_absen)*contract.type_id.tht)/100)-((((categories.BASIC + categories.ALW)+ payslip.pot_absen)*contract.type_id.biaya_jabatan)/100))*5)/100  </field>
+	    </record>
 
     <!-- SALARY RULE INPUT -->
 	    <record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
@@ -404,7 +413,9 @@
 	    	<field name="code">PPI_STAFF</field>
         	<field name="parent_id" ref="hr_payroll.structure_base"/>
 	        <field name="company_id" ref="base.main_company"/>
-            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_medical_allowance'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),ref('hr_payroll_rules_medical_deduction_rawat'),ref('hr_payroll_rules_medical_deduction_obat') ])]" name="rule_ids"/>
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_medical_refund'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),ref('hr_payroll_rules_medical_deduction_rawat'),
+            ref('hr_payroll_rules_tax'),
+            ref('hr_payroll_rules_medical_deduction_obat') ])]" name="rule_ids"/>
 	    </record>
 		
         <!--Master PTKP-->

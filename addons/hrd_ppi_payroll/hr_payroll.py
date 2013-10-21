@@ -277,7 +277,10 @@ class hr_payslip(osv.osv):
                     self.write(cr, uid, [payslip.id], {'net':coo}, context=context)     
                 if cod == "POT_ABSEN":
                     coo =line['amount']      
-                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context)                             
+                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context) 
+                if cod == "GROSS":
+                    coo = line['amount']
+                    self.write(cr, uid, [payslip.id], {'gros':coo}, context=context) 
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
         return True
     
@@ -287,6 +290,7 @@ class hr_payslip(osv.osv):
         'reimburse_obat':fields.float('Total Reimburse Obat'),
         'reimburse_rawat':fields.float('Total Reimburse Rawat'),
         'pot_absen':fields.float('Potongan Absen'),
+        'gros':fields.float('gros'),
     } 
                      
 hr_payslip()
