@@ -252,10 +252,10 @@ class hr_payslip(osv.osv):
                 jn=su.jenis
                 st=su.state               
                 if tgl >= date_from and tgl <= date_to and st == 'approve2' and jn == 'obat' :    
-                    nom=su.nominal+nom
+                    nom=su.nomin+nom
                     self.write(cr, uid,ids, {'reimburse_obat': nom}, context=context)
                 if tgl >= date_from and tgl <= date_to and st == 'approve2' and jn == 'rawat' :    
-                    nam=su.nominal+nam
+                    nam=su.nomin+nam
                     self.write(cr, uid,ids, {'reimburse_rawat': nam}, context=context)                    
             number = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
             #delete old payslip lines
