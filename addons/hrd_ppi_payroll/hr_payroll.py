@@ -280,9 +280,43 @@ class hr_payslip(osv.osv):
                     self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context) 
                 if cod == "GROSS":
                     coo = line['amount']
-                    self.write(cr, uid, [payslip.id], {'gros':coo}, context=context) 
+                    self.write(cr, uid, [payslip.id], {'gros':coo}, context=context)     
+                    coos = self.funct(cr,uid,ids,context=None)    
+                    self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
+                    coos = self.pkp(cr,uid,ids,context=None)  
+                    self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context)
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
         return True
+		
+	def funct(self,cr,uid,ids,context=None) :
+        xxx=self.browse(cr,uid,ids)[0]
+        xyz=xxx.employee_id.name
+        ccc=xxx.date_to
+        yyy=datetime.strptime(ccc,"%Y-%m-%d").year
+        self_obj=self.pool.get('hr.payslip')
+        src_obj=self_obj.search(cr,uid,[('employee_id','=',xyz)])
+        obj=self_obj.browse(cr,uid,src_obj)
+        totals = 0.0
+        for xyc in obj :
+            ttt=xyc.date_to
+            ttx=datetime.strptime(ttt,"%Y-%m-%d").year
+            if yyy == ttx :
+                gtot= xyc.gros + xyc.pot_absen
+                totals = totals + gtot
+        return totals
+
+    def pkp(self,cr,uid,ids,context=None) :
+        xxx=self.browse(cr,uid,ids)[0]
+        xcz=xxx.total
+        self_obj=self.pool.get('hr.pkp')
+        src_obj=self_obj.search(cr,uid,[])
+        obj = self_obj.browse(cr,uid,src_obj)
+        for ccc in obj :
+            ocd = ccc.nominal_min
+            occ = ccc.nominal_max
+            if xcz >= ocd and xcz <= occ :
+                pkp = ccc.pajak
+        return pkp    	
     
     _columns = {
         'net' : fields.integer("Net"),
@@ -291,6 +325,8 @@ class hr_payslip(osv.osv):
         'reimburse_rawat':fields.float('Total Reimburse Rawat'),
         'pot_absen':fields.float('Potongan Absen'),
         'gros':fields.float('gros'),
+        'total':fields.float('total'), 
+        'pkp' :fields.float('pkp'),
     } 
                      
 hr_payslip()
