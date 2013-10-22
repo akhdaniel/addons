@@ -335,7 +335,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">140</field>
-	        <field name="amount_python_compute">result =-(((categories.BASIC + categories.ALW) + (payslip.pot_absen)-((((categories.BASIC + categories.ALW) + payslip.pot_absen)*contract.type_id.tht)/100)-((((categories.BASIC + categories.ALW)+ payslip.pot_absen)*contract.type_id.biaya_jabatan)/100))*5)/100  </field>
+	        <field name="amount_python_compute">result =-(((categories.BASIC + categories.ALW) + (payslip.pot_absen)-((((categories.BASIC + categories.ALW) + payslip.pot_absen)*contract.type_id.tht)/100)-((((categories.BASIC + categories.ALW)+ payslip.pot_absen)*contract.type_id.biaya_jabatan)/100))*payslip.pkp)/100  </field>
 	    </record>
 
     <!-- SALARY RULE INPUT -->
