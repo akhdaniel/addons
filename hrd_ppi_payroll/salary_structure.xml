@@ -72,11 +72,11 @@
 	        <field name="code">POT_ABSEN</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
-			<field name="sequence">100</field>
+			<field name="sequence">101</field>
 	        <field name="amount_select">code</field>
 	        <field name="amount_python_compute">result = -contract.wage * (worked_days.WORK100.number_of_days - worked_days.PRESENCES.number_of_days)/ worked_days.WORK100.number_of_days </field>
 	    </record>
-		<record id="hr_payroll_rules_pot_absen1" model="hr.salary.rule">
+	    <record id="hr_payroll_rules_pot_absen1" model="hr.salary.rule">
 	        <field name="name">POTONGAN ABSEN</field>
 	        <field name="code">POT_ABSEN1</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
@@ -162,7 +162,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">20</field>
+	        <field name="sequence">20</field>
 	        <field name="amount_python_compute">result = payslip.reimburse_obat</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
@@ -171,7 +171,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">21</field>
+	        <field name="sequence">21</field>
 	        <field name="amount_python_compute">result = payslip.reimburse_rawat</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_deduction_obat" model="hr.salary.rule">
@@ -180,7 +180,7 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">121</field>
+	        <field name="sequence">120</field>
 	        <field name="amount_python_compute">result = -payslip.reimburse_obat</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_deduction_rawat" model="hr.salary.rule">
@@ -189,7 +189,7 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">120</field>
+	        <field name="sequence">121</field>
 	        <field name="amount_python_compute">result = -payslip.reimburse_rawat</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
@@ -198,7 +198,6 @@
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">121</field>
 	        <field name="amount_python_compute">result = (-contract.wage * contract.type_id.jams1 / 100)+(-contract.wage * contract.type_id.jams2 / 100)</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
@@ -235,7 +234,7 @@
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">10</field>
+			<field name="sequence">99</field>
 	        <field name="amount_python_compute">result = inputs.OTHERS.amount </field>
 	    </record>	 
 	    <record id="hr_payroll_rules_luar_kota" model="hr.salary.rule">
@@ -301,13 +300,13 @@
 			<field name="sequence">17</field>
 	        <field name="amount_python_compute">result = inputs.TUNJANGAN_PAJAK.amount </field>
 	    </record>
+
 	    <record id="hr_payroll_rules_jamsostek3" model="hr.salary.rule">
 	        <field name="name">POTONGAN PAJAK</field>
 	        <field name="code">PAJAK</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
-			<field name="sequence">140</field>
 	        <field name="amount_python_compute">result = -(categories.BASIC + categories.ALW + payslip.reimburse_obat + payslip.reimburse_rawat + payslip.pot_absen) * contract.type_id.pajak/100</field>
 	    </record>	    		
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
@@ -337,7 +336,7 @@
 	        <field name="sequence">20</field>
 	        <field name="amount_python_compute">result = payslip.komisi * contract.wage</field>
 	    </record>
-		<record id="hr_payroll_rules_tax" model="hr.salary.rule">
+	    <record id="hr_payroll_rules_tax" model="hr.salary.rule">
 	        <field name="name">TAX</field>
 	        <field name="code">TAX</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
@@ -346,7 +345,7 @@
 	        <field name="sequence">140</field>
 	        <field name="amount_python_compute">result =-(((categories.BASIC + categories.ALW) + (payslip.pot_absen)-((((categories.BASIC + categories.ALW) + payslip.pot_absen)*contract.type_id.tht)/100)-((((categories.BASIC + categories.ALW)+ payslip.pot_absen)*contract.type_id.biaya_jabatan)/100))*payslip.pkp)/100  </field>
 	    </record>
-		<record id="hr_payroll_rules_rapel_gaji" model="hr.salary.rule">
+	    <record id="hr_payroll_rules_rapel_gaji" model="hr.salary.rule">
 	        <field name="name">RAPEL_GAJI</field>
 	        <field name="code">RAPEL_GAJI</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
@@ -373,14 +372,68 @@
 			<field name="sequence">18</field>
 	        <field name="amount_python_compute">result = inputs.LEBIH_BAYAR_PAJAK.amount </field>
 	    </record>	
+	    <record id="hr_payroll_rules_loan_payment" model="hr.salary.rule">
+	        <field name="name">LOAN_PAYMENT</field>
+	        <field name="code">LOAN_PAYMENT</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.LOAN_PAYMENT.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_pot_spsi" model="hr.salary.rule">
+	        <field name="name">POT_SPSI</field>
+	        <field name="code">POT_SPSI</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.POT_SPSI.amount </field>
+	    </record>
+	    <record id="hr_payroll_rules_pot_koperasi" model="hr.salary.rule">
+	        <field name="name">POT_KOPERASI</field>
+	        <field name="code">POT_KOPERASI</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.POT_KOPERASI.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_pot_telepon" model="hr.salary.rule">
+	        <field name="name">POT_TELEPON</field>
+	        <field name="code">POT_TELEPON</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.POT_TELEPON.amount </field>
+	    </record>
+	    <record id="hr_payroll_rules_transport_alw" model="hr.salary.rule">
+	        <field name="name">TRANSPORT_ALW</field>
+	        <field name="code">TRANSPORT_ALW</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.TRANSPORT_ALW.amount </field>
+	    </record>
+	    <record id="hr_payroll_rules_opex" model="hr.salary.rule">
+	        <field name="name">OPEX</field>
+	        <field name="code">OPEX</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.OPEX.amount </field>
+	    </record>
 
     <!-- SALARY RULE INPUT -->
-	    <record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
+	    <!--record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
 	        <field name="name">MEDICAL_ALLOWANCE</field>
 	        <field name="code">MEDICAL_ALLOWANCE</field>
 			<field name="sequence">20</field>	
 	        <field name="input_id" ref="hr_payroll_rules_medical_allowance"/>	    	
-		</record>
+		</record-->
     		 	     
 	    <record id="hr_payroll_rules_input_others" model="hr.rule.input">
 	        <field name="name">OTHERS</field>
@@ -460,8 +513,42 @@
 			<field name="sequence">30</field>	
 	        <field name="input_id" ref="hr_payroll_rules_lebih_bayar_pajak"/>	    	
 		</record>
-		
-		
+		<record id="hr_payroll_rules_input_loan_payment" model="hr.rule.input">
+	        <field name="name">LOAN_PAYMENT</field>
+	        <field name="code">LOAN_PAYMENT</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_loan_payment"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_pot_spsi" model="hr.rule.input">
+	        <field name="name">POT_SPSI</field>
+	        <field name="code">POT_SPSI</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_pot_spsi"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_pot_koperasi" model="hr.rule.input">
+	        <field name="name">POT_KOPERASI</field>
+	        <field name="code">POT_KOPERASI</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_pot_koperasi"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_pot_telepon" model="hr.rule.input">
+	        <field name="name">POT_TELEPON</field>
+	        <field name="code">POT_TELEPON</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_pot_telepon"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_transport_alw" model="hr.rule.input">
+	        <field name="name">TRANSPORT_ALW</field>
+	        <field name="code">TRANSPORT_ALW</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_transport_alw"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_opex" model="hr.rule.input">
+	        <field name="name">OPEX</field>
+	        <field name="code">OPEX</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_opex"/>	    	
+		</record>
 		
 		<!-- salary structure -->
 	    <record model="hr.payroll.structure" id="structure_ppi_staff" >
@@ -469,11 +556,17 @@
 	    	<field name="code">PPI_STAFF</field>
         	<field name="parent_id" ref="hr_payroll.structure_base"/>
 	        <field name="company_id" ref="base.main_company"/>
-            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),ref('hr_payroll_rules_rapel_gaji'),
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),
+            ref('hr_payroll_rules_tax'),
+            ref('hr_payroll_rules_rapel_gaji'),
             ref('hr_payroll_rules_leave_alw'),
             ref('hr_payroll_rules_lebih_bayar_pajak'),
             ref('hr_payroll_rules_pot_absen1'),
-            ref('hr_payroll_rules_tax')])]" name="rule_ids"/>
+            ref('hr_payroll_rules_loan_payment'),
+            ref('hr_payroll_rules_pot_telepon'), 
+			ref('hr_payroll_rules_transport_alw'),
+			ref('hr_payroll_rules_opex'),
+             ])]" name="rule_ids"/>
 	    </record>
 		
         <!--Master PTKP-->
