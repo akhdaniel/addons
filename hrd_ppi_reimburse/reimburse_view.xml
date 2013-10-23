@@ -251,7 +251,7 @@
         <field eval="1" name="active" />
         <field name="user_id" ref="base.user_root" />
         <field name="interval_number">12</field>
-        <field name="interval_type">mounts</field>
+        <field name="interval_type">months</field>
         <field name="numbercall">-1</field>
         <field eval="False" name="doall" />
         <field eval="'reimburse'" name="model" />
