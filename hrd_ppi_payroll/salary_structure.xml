@@ -208,7 +208,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams2 / 100</field>
 	    </record>	    	    	    
-	    <!--record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
+	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
 	        <field name="name">JAMSOSTEK</field>
 	        <field name="code">JAMSOSTEK</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
@@ -216,7 +216,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">8</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams1 / 100</field>
-	    </record-->
+	    </record>
 		
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
 	        <field name="name">JAMSOSTEK KONTRIBUSI PERUSAHAN</field>
