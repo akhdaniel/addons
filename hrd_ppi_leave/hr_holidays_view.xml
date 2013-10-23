@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
 
@@ -494,7 +495,6 @@
             <field eval="True" name="is_5_years" />
 
         </record-->
-
 
 
     </data>
