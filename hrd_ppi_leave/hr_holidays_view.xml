@@ -1,552 +1,256 @@
-<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
+        
     	<!-- Public Holiday -->
-
        
-
         <record id="action_hr_public_holiday" model="ir.actions.act_window">
-
             <field name="name">Holidays</field>
-
             <field name="res_model">hr.holidays</field>
-
             <field name="view_type">form</field>           
-
             <field name="view_mode">tree,form,calendar</field>
-
         </record>
-
         
-
 		<record id="action_hr_public_holiday91" model="ir.actions.act_window">
-
             <field name="name">Holidays</field>
-
             <field name="res_model">hr.bln_libur</field>
-
             <field name="view_type">form</field>
-
             <field name="view_mode">form</field>
-
         </record>
-
         
-
         <menuitem name="Holidays" parent="hr.menu_hr_root" id="menu_open_holidays" sequence="6" groups="base.group_hr_user,base.group_hr_manager"/>
-
         <menuitem  name="Calendar Event" id="menu_action_hr_public_holiday" parent="menu_open_holidays" sequence="1"
-
             action="action_hr_public_holiday"/>
-
         <menuitem  name="New Calendar Event" id="menu_action_hr_public_holiday_approve" parent="menu_open_holidays" sequence="2"
-
             action="action_hr_public_holiday91"/>
-
          
-
          <!--holidays Status-->   
-
         <record id="hr_public_holiday_form_status_2" model="ir.ui.view">
-
             <field name="name">Public Holidays Status</field>
-
             <field name="model">hr.holidays.status</field>
-
             <field name="type">form</field>
-
             <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
-
             <field name="arch" type="xml">
-
                    <field name="active" position="after">
-
                     <field name="libur_bersih"/>
-
                   </field>  
-
                
-
             </field>
-
         </record>            
-
             
-
         <!-- Public Holiday --> 
-
     	<record id="hr_public_holiday_form" model="ir.ui.view">
-
             <field name="name">Public Holidays</field>
-
             <field name="model">hr.holidays</field>
-
             <field name="type">form</field>
-
             <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
-
             <field name="arch" type="xml">
-
                 <header position="replace">
-
                 <header>
-
                     <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
-
                     <button string="Validate" name="second_validate" states="validate1" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
-
                     <button string="Refuse" name="refuse" states="confirm,validate1,validate" type="workflow" groups="base.group_hr_manager"/>
-
                     <button string="Reset to New" name="set_to_draft" states="refuse" type="object" groups="base.group_hr_user"/>
-
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}'/>
-
                 </header>
-
                 </header>
-
                  <field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1" class="oe_inline" position="replace">
-
                     <field name="date_from" nolabel="1" on_change="onchange_date_from2(libur_bersih2,date_to, date_from)" required="1" class="oe_inline"/>
-
                 </field> 
-
                 <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)" required="1" class="oe_inline" position="replace">
-
                     <field name="date_to" nolabel="1" on_change="onchange_date_to2(libur_bersih2,date_to, date_from)" required="1" class="oe_inline"/>
-
                 </field>
-
                 <field name="holiday_status_id" position="replace">
-
                     <field name="holiday_status_id" on_change="onchange_hol_status(holiday_status_id)"/> 
                     <field name="libur_bersih2" invisible="1"/> 
-
                 </field>  
                 
-
             </field>
-
         </record>
-
         <record model="ir.ui.view" id="hr_public_holiday_form9">
-
             <field name="name">PublicHolidays</field>
-
             <field name="model">hr.bln_libur</field>
-
             <field name="type">form</field>
-
             <field name="arch" type="xml">
-
             <form string="Libur">
-
                     <notebook colspan="4">
-
                             <page string="Tanggal Libur">
-
                                 <field view_mode="tree" name="hol_ids" nolabel="1">
-
                                 	<tree editable="bottom">
-
                                 		<field name="name"/>
-
                                 		<field name="holiday_status_id"/>
-
 					                    <field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
-
                                         <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"/>
-
 					                    <field name="number_of_days_temp"/>
-
 					                    <field name="holiday_type" on_change="onchange_type(holiday_type)"/>
-
                                         <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}"/>
-
                                         <field name="state"/>
-
                                 	</tree>
-
                                 </field>
-
                             </page>
-
                     </notebook> 
-
             </form>               
-
             </field>
-
         </record>
-
         
-
         <record id="hr_public_holiday_tree" model="ir.ui.view">
-
             <field name="name">Public Holidays</field>
-
             <field name="model">hr.holidays</field>
-
             <field name="type">tree</field>
-
             <field name="domain">[('holiday_type','=','category')]</field>
-
             <field name="arch" type="xml">
-
             	<tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Hari Libur Nasional">
-
             		<field name="name"/>
-
             		<field name="holiday_status_id"/>
-
 					<field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
-
                     <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"/>
-
 					<field name="number_of_days_temp"/>
-
 					<field name="state" />
-
             	</tree>
-
             </field>
-
         </record>
-
-
 
 		<!--record id="action_hr_public_holiday" model="ir.actions.act_window">
-
             <field name="name">Public Holidays</field>
-
             <field name="res_model">hr.holidays</field>
-
             <field name="view_type">form</field>
-
             <field name="view_id" ref="hr_public_holiday_tree"/>
-
             <field name="view_mode">tree,form</field>
-
             <field name="domain">[('is_libur','=',True)]</field>
-
             <field name="help">You will find here the list of public holidays</field>
-
         </record-->
-
         
-
          <record id="view_holiday_new_calendar" model="ir.ui.view">
-
             <field name="name">Calendar Event</field>
-
             <field name="model">hr.holidays</field>
-
             <field name="arch" type="xml">
-
                 <calendar string="Calendar Event" color="state" date_start="date_from" date_stop="date_to">                   
-
                     <field name="name"/>
-
                     <field name="state"/>
-
                 </calendar>
-
             </field>
-
         </record>
-
         
-
        <record model="ir.actions.act_window.view" id="action_open_ask_holidays_calendar">
-
             <field name="sequence" eval="1"/>
-
             <field name="view_mode">calendar</field>
-
             <field name="view_id" ref="view_holiday_new_calendar"/>
-
             <field name="act_window_id" ref="action_hr_public_holiday"/>
-
         </record>
-
         
-
                 <record model="ir.actions.act_window.view" id="action_open_ask_holidays_tree">
-
             <field name="sequence" eval="2"/>
-
             <field name="view_mode">tree</field>
-
             <field name="view_id" ref="hr_public_holiday_tree"/>
-
             <field name="act_window_id" ref="action_hr_public_holiday"/>
-
         </record>
-
-
 
         <record model="ir.actions.act_window.view" id="action_open_ask_holidays_form">
-
             <field name="sequence" eval="3"/>
-
             <field name="view_mode">form</field>
-
             <field name="view_id" ref="hr_public_holiday_form"/>
-
             <field name="act_window_id" ref="action_hr_public_holiday"/>
-
         </record>
-
         
-
          <record id="view_hr_holidays_filter2" model="ir.ui.view">
-
             <field name="name">hr.holidays.filter</field>
-
             <field name="model">hr.holidays</field>
-
             <field name="arch" type="xml">
-
                 <search string="Search Leave">
-
                     <field name="name"/>                    
-
                     <filter icon="terp-check" domain="[('state','=','draft')]" string="To Confirm"/>
-
                     <filter icon="terp-camera_test" domain="[('state','in',('confirm','validate1'))]" string="To Approve" name="approve"/>
-
                     <filter icon="terp-camera_test" domain="[('state','=','validate')]" string="Validated" name="validated"/>
-
                 </search>
-
             </field>
-
         </record>
-
         
-
-
 
         <!-- Holidays: Leave Request -->
 
-
-
         <!--record id="view_holiday_new_calendar3" model="ir.ui.view">
-
             <field name="name">Leave Request</field>
-
             <field name="model">hr.holidays</field>
-
             <field name="inherit_id" ref="hr_holidays.view_holiday_new_calendar"/>
 
-
-
             <field name="arch" type="xml">
-
                 <field name="user_id" position="replace">
-
                     <field name="name"/>
-
                 </field>
-
             </field>
-
         </record-->
-
-
 
         <!-- Master Kontrak -->
-
         <record id="hr_contract_type_view_form_leave" model="ir.ui.view">
-
             <field name="name">hr.contract.type.view.form.leave</field>
-
             <field name="model">hr.contract.type</field>
-
             <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
-
             <field name="arch" type="xml">
-
                 <field name="name" position="after">
-
                     <separator string="Alokasi Cuti"/>
-
                     <field name="is_have_allocation"/>
-
                 </field>
-
             </field>
-
         </record>
-
         
-
         <!-- Holidays: Allocation Request via button-->
-
         <record model="ir.ui.view" id="allocation_leave_new~1">
-
             <field name="name">Allocation Request</field>
-
             <field name="model">hr.holidays</field>
-
             <field name="inherit_id" ref="hr_holidays.allocation_leave_new"/>
-
             <field name="arch" type="xml">
-
                 <header>
-
                     <!--button name="leave_allocation_5" type="object" string="5 Years leave allocation"/>
-
                     <button name="leave_allocation_annual" type="object" string="Annual leave allocation" group="base.user_root"/>
-
                     <button name="purge_leave" type="object" string="Delete Allocation"/>
-
                     <button name="approveall" type="object" string="Approve All"/-->
-
                 </header>
-
             </field>
-
         </record>
-
         
-
         <!-- Holidays: Allocation Request-->
-
         <record forcecreate="1" id="ppi_annual_leave" model="ir.cron">
-
             <field name="name">Alokasi Cuti Tahunan</field>
-
             <field eval="1" name="active" />
-
             <field name="user_id" ref="base.user_root" />
-
             <field name="interval_number">12</field>
-
             <field name="interval_type">months</field>
-
             <field name="numbercall">-1</field>
-
             <field eval="False" name="doall" />
-
             <field eval="'hr.holidays'" name="model" />
-
             <field eval="'leave_allocation_annual'" name="function" />
-
             <field eval="'()'" name="args" />
-
             <field name="nextcall">"2014-01-01 00:00:00"</field>
-
         </record>
-
         <!--record forcecreate="1" id="libur1" model="hr.holidays.status">
-
             <field name="name">Cuti Tahunan</field>
-
             <field name="color_name">lightyellow</field>
-
             <field eval="True" name="active" />
-
             <field eval="True" name="is_1_year" />
-
         </record-->
 
-
-
         <!-- Holidays: Holidays per 5 year-->
-
         <record forcecreate="1" id="ppi_leave_5" model="ir.cron">
-
             <field name="name">Alokasi Cuti 5 Tahunan</field>
-
             <field eval="1" name="active" />
-
             <field name="user_id" ref="base.user_root" />
-
             <field name="interval_number">12</field>
-
             <field name="interval_type">months</field>
-
             <field name="numbercall">-1</field>
-
             <field eval="False" name="doall" />
-
             <field eval="'hr.holidays'" name="model" />
-
             <field eval="'leave_allocation_5'" name="function" />
-
             <field eval="'()'" name="args" />
-
             <field name="nextcall">"2014-01-01 00:00:00"</field>
-
         </record>
-
-
 
         <!--record forcecreate="1" id="libur5" model="hr.holidays.status">
-
             <field name="name">Cuti untuk Masa Kerja 5 Tahun</field>
-
             <field name="color_name">lightcyan</field>
-
             <field eval="True" name="active" />
-
             <field eval="True" name="is_5_years" />
-
         </record-->
 
-
     </data>
-
-
-        <!-- Holidays: Allocation Request via button-->
-        <record model="ir.ui.view" id="allocation_leave_new~1">
-            <field name="name">Allocation Request</field>
-            <field name="model">hr.holidays</field>
-            <field name="inherit_id" ref="hr_holidays.allocation_leave_new"/>
-            <field name="arch" type="xml">
-                <header>
-                    <button name="leave_allocation_5" type="object" string="Legal leave allocation"/>
-                </header>
-            </field>
-        </record>
-
-        <!-- Holidays: Allocation Request-->
-        <record forcecreate="1" id="ppi_annual_leave" model="ir.cron">
-            <field name="name">Alokasi Cuti Tahunan</field>
-            <field eval="1" name="active" />
-            <field name="user_id" ref="base.user_root" />
-            <field name="interval_number">12</field>
-            <field name="interval_type">months</field>
-            <field name="numbercall">-1</field>
-            <field eval="False" name="doall" />
-            <field eval="'hr.holidays'" name="model" />
-            <field eval="'legal_leave_alloc'" name="function" />
-            <field eval="'()'" name="args" />
-            <field name="nextcall">"2014-01-01 00:00:00"</field>
-        </record>
-
-        <!-- Holidays: Holidays per 5 year-->
-        <record forcecreate="1" id="ppi_leave_5" model="ir.cron">
-            <field name="name">Alokasi Cuti 5 Tahunan</field>
-            <field eval="1" name="active" />
-            <field name="user_id" ref="base.user_root" />
-            <field name="interval_number">12</field>
-            <field name="interval_type">months</field>
-            <field name="numbercall">-1</field>
-            <field eval="False" name="doall" />
-            <field eval="'hr.holidays'" name="model" />
-            <field eval="'leave_allocation_5'" name="function" />
-            <field eval="'()'" name="args" />
-            <field name="nextcall">"2014-01-01 00:00:00"</field>
-        </record>
-        <record forcecreate="1" id="libur5" model="hr.holidays.status">
-            <field name="name">Cuti untuk masa kerja 5 tahun</field>
-            <field name="color_name">lightcyan</field>
-            <field eval="True" name="active" />
-            <field eval="True" name="is_5_years" />
-        </record>
-
-    </data>
-</openerp> 
+</openerp>
+   
+   
