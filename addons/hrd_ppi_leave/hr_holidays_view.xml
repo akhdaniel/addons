@@ -1,8 +1,5 @@
 <openerp>
-
     <data>
-
-        
 
     	<!-- Public Holiday -->
 
@@ -383,7 +380,6 @@
         </record>
 
         
-<<<<<<< .mine
 
         <!-- Holidays: Allocation Request via button-->
 
@@ -503,7 +499,7 @@
 
     </data>
 
-=======
+
         <!-- Holidays: Allocation Request via button-->
         <record model="ir.ui.view" id="allocation_leave_new~1">
             <field name="name">Allocation Request</field>
@@ -553,7 +549,6 @@
         </record>
 
     </data>
->>>>>>> .r9175
 </openerp>
 
    
