@@ -326,7 +326,7 @@ class hr_applicant(osv.osv):
         res=[]
         for pr in ap:
             if pr.surveys_id.state == "open":
-                prs=pr.survey_id.id
+                prs=pr.surveys_id.id
                 res.append((0,0, {'name':prs})) 
         vals['surv_ids']=res
         return vals
