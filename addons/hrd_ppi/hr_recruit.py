@@ -202,7 +202,7 @@ class hr_applicant(osv.osv):
                                                      'alamat1' : applicant.alamat1,
                                                      'prov_id':applicant.prov_id.name,
                                                      'kab_id':applicant.kab_id.name,
-                                                     'kec_id':applicant.kec_id.name,
+                                                     'kec_id':applicant.kec_id.id,
                                                      'prov_id2':applicant.prov_id.name,
                                                      'kota_id':applicant.kab_id2.name,
                                                      'kec_id2':applicant.kec_id2.name,
