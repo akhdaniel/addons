@@ -115,15 +115,15 @@ class hr_holidays(osv.osv):
         'bln_libur_id':fields.many2one('hr.bln_libur',''),
 
         'libur_bersih':fields.boolean('Hitung Tanggal Merah'),
-<<<<<<< .mine
+
 
         'is_libur':fields.boolean('Libur'),
 
         'libur_bersih2':fields.related('holiday_status_id','libur_bersih',type='boolean',relation='hr.holidays.status',string='Hitung Tanggal Merah',readonly=True),
 
-=======
+
         'is_libur':fields.boolean('Libur'),
->>>>>>> .r9176
+
     }
 
  
@@ -325,7 +325,7 @@ class hr_holidays(osv.osv):
 
 
         return result
-<<<<<<< .mine
+
 
 
 
@@ -495,9 +495,6 @@ class hr_holidays(osv.osv):
                             }
                         self.create(cr,uid,values,context=context)
         return True 
->>>>>>> .r9176
-hr_holidays()
-<<<<<<< .mine
 
 
 class hr_contract_type(osv.osv):
@@ -548,4 +545,4 @@ class hr_holidays_status(osv.osv):
 
     _columns = {
         'is_5_years' :  fields.boolean('Cuti per 5 tahun masa kerja',readonly=True),
-    }>>>>>>> .r9176
+    }
