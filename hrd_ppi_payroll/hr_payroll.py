@@ -288,7 +288,7 @@ class hr_payslip(osv.osv):
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
         return True
 		
-	def funct(self,cr,uid,ids,context=None) :
+    def funct(self,cr,uid,ids,context=None) :
         xxx=self.browse(cr,uid,ids)[0]
         xyz=xxx.employee_id.name
         ccc=xxx.date_to
