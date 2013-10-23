@@ -89,7 +89,7 @@ class reimburse(osv.osv):
         'nominal':fields.function(employe,string='Alokasi Reimburse',store=True),
         'nomin' : fields.float("Permintaan Reimburse"),
         'sisa_reimburse': fields.function(_compute_sisa_reimburse, string='Sisa Reimburse', store=True),
-        'tanggal':fields.date('Tanggal'),
+        'tanggal':fields.date('Tanggal',required=True),
         'keterangan':fields.char('Keterangan',200),
         'bukti':fields.binary('Bukti File',),
         'state': fields.selection(REIMBURSE_STATES, 'Status', readonly=True, help="Gives the status of the reimburse."),  
@@ -118,14 +118,11 @@ class reimburse(osv.osv):
         context = dict(context, mail_create_nolog=True)
         return super(reimburse, self).create(cr, uid, values, context=context)
 
-    def reimburse_alloc(self, cr, uid, ids=None,context=None):
+    def reimburse_alloc(self,cr,uid, ids=None,context=None):
         #""" Override to avoid automatic logging of creation """
-        if context is None:
-            context = {}
-        context = dict(context, mail_create_nolog=True)
         #import pdb; pdb.set_trace()
         employee_ids = self.pool.get('hr.employee')
-        src = employee_ids.search(cr, uid, [])
+        src = employee_ids.search(cr,uid, [])
         employs = employee_ids.browse(cr, uid, src)
         values={}
         values1={}
@@ -216,6 +213,7 @@ class hr_employee(osv.osv):
         reimburse_obj = self.pool.get("reimburse")
         yyy=0.0
         result={}
+        zz=0.0
         for reim in self.browse(cr,uid,ids):
             xxx=reim.name
             search_obj=reimburse_obj.search(cr,uid,[('employee_id','=',xxx)])
@@ -225,7 +223,8 @@ class hr_employee(osv.osv):
                 thn = time.strftime('%Y')
                 tahun =emp.tahun
                 zzz = emp.nominal
-                if tahun == thn  :
+                stt = emp.state
+                if tahun == thn and stt == 'approve2':
                     if xyz  == "obat":
                         yyy += emp.nomin
                     if zzz != False and xyz == "obat" :
@@ -239,6 +238,7 @@ class hr_employee(osv.osv):
         reimburse_obj = self.pool.get("reimburse")
         yyy=0.0
         result={}
+        zz=0.0
         for reim in self.browse(cr,uid,ids):
             xxx=reim.name
             search_obj=reimburse_obj.search(cr,uid,[('employee_id','=',xxx)])
@@ -248,7 +248,8 @@ class hr_employee(osv.osv):
                 thn = time.strftime('%Y')
                 tahun =emp.tahun
                 zzz = emp.nominal
-                if tahun == thn  :
+                stt = emp.state
+                if tahun == thn and stt == 'approve2':
                     if xyz  == "rawat":
                         yyy += emp.nomin
                     if zzz != False and xyz == "rawat" :
