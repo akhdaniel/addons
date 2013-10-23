@@ -107,7 +107,8 @@ class employee(osv.osv):
         'work_location2': fields.char('Alamat Kantor', size=32),
         'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
         'ptkp_id': fields.many2one('hr.ptkp','Status Pajak'),
-        'npwp':fields.char('NPWP',size=20),        
+        'npwp':fields.char('NPWP',size=20),
+        'bid_id':fields.many2one('hr_recruit.bidang','bidang'),        
         }
         
     _defaults = {

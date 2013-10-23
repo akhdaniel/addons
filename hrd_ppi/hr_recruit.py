@@ -223,6 +223,7 @@ class hr_applicant(osv.osv):
                                                      'kodepos1':applicant.kode2,
                                                      'country_id1':applicant.country_id1.id,
                                                      'country_id2':applicant.country_id2.id,
+													 'bid_id':applicant.bidang_id.id,
                                                     })
                 
                 

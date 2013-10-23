@@ -61,7 +61,7 @@
 									<group>
                                     <group string="Education">
                                         <field name="type_id"/>
-                                        <field name="bidang_id"/>
+                                        <field name="bid_id"/>
                                         <field name="jurusan_id"/>
                                         <field name="pt_id"/>
                                         <field name="result_id"/>
