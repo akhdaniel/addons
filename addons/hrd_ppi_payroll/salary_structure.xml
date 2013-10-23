@@ -76,6 +76,15 @@
 	        <field name="amount_select">code</field>
 	        <field name="amount_python_compute">result = -contract.wage * (worked_days.WORK100.number_of_days - worked_days.PRESENCES.number_of_days)/ worked_days.WORK100.number_of_days </field>
 	    </record>
+		<record id="hr_payroll_rules_pot_absen1" model="hr.salary.rule">
+	        <field name="name">POTONGAN ABSEN</field>
+	        <field name="code">POT_ABSEN1</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+			<field name="sequence">80</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = contract.wage * (worked_days.WORK100.number_of_days - worked_days.PRESENCES.number_of_days)/ worked_days.WORK100.number_of_days </field>
+	    </record>
 	    <record id="hr_payroll_rules_overtime" model="hr.salary.rule">
 	        <field name="name">OVERTIME</field>
 	        <field name="code">OVERTIME</field>
@@ -337,6 +346,33 @@
 	        <field name="sequence">140</field>
 	        <field name="amount_python_compute">result =-(((categories.BASIC + categories.ALW) + (payslip.pot_absen)-((((categories.BASIC + categories.ALW) + payslip.pot_absen)*contract.type_id.tht)/100)-((((categories.BASIC + categories.ALW)+ payslip.pot_absen)*contract.type_id.biaya_jabatan)/100))*payslip.pkp)/100  </field>
 	    </record>
+		<record id="hr_payroll_rules_rapel_gaji" model="hr.salary.rule">
+	        <field name="name">RAPEL_GAJI</field>
+	        <field name="code">RAPEL_GAJI</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.RAPEL_GAJI.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_leave_alw" model="hr.salary.rule">
+	        <field name="name">LEAVE_ALW</field>
+	        <field name="code">LEAVE_ALW</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.LEAVE_ALW.amount </field>
+	    </record>	
+	    <record id="hr_payroll_rules_lebih_bayar_pajak" model="hr.salary.rule">
+	        <field name="name">LEBIH_BAYAR_PAJAK</field>
+	        <field name="code">LEBIH_BAYAR_PAJAK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">18</field>
+	        <field name="amount_python_compute">result = inputs.LEBIH_BAYAR_PAJAK.amount </field>
+	    </record>	
 
     <!-- SALARY RULE INPUT -->
 	    <record id="hr_payroll_rules_input_medical_allowance" model="hr.rule.input">
@@ -406,6 +442,24 @@
 			<field name="sequence">30</field>	
 	        <field name="input_id" ref="hr_payroll_rules_leave_pay"/>	    	
 		</record>	
+		<record id="hr_payroll_rules_input_rapel_gaji" model="hr.rule.input">
+	        <field name="name">RAPEL_GAJI</field>
+	        <field name="code">RAPEL_GAJI</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_rapel_gaji"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_leave_alw" model="hr.rule.input">
+	        <field name="name">LEAVE_ALW</field>
+	        <field name="code">LEAVE_ALW</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_leave_alw"/>	    	
+		</record>
+		<record id="hr_payroll_rules_input_lebih_bayar_pajak" model="hr.rule.input">
+	        <field name="name">LEBIH_BAYAR_PAJAK</field>
+	        <field name="code">LEBIH_BAYAR_PAJAK</field>	
+			<field name="sequence">30</field>	
+	        <field name="input_id" ref="hr_payroll_rules_lebih_bayar_pajak"/>	    	
+		</record>
 		
 		
 		
@@ -415,7 +469,10 @@
 	    	<field name="code">PPI_STAFF</field>
         	<field name="parent_id" ref="hr_payroll.structure_base"/>
 	        <field name="company_id" ref="base.main_company"/>
-            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),ref('hr_payroll_rules_rapel_gaji'),
+            ref('hr_payroll_rules_leave_alw'),
+            ref('hr_payroll_rules_lebih_bayar_pajak'),
+            ref('hr_payroll_rules_pot_absen1'),
             ref('hr_payroll_rules_tax')])]" name="rule_ids"/>
 	    </record>
 		
@@ -475,7 +532,7 @@
 	    </record>
 	    <record id="hr_master_pkp_3" model="hr.pkp">
 	        <field name="kode">p3</field> 
-            <field name="nominal_min">25000001</field>
+            <field name="nominal_min">250000001</field>
             <field name="nominal_max">500000000</field>
             <field name="pajak">25</field>
 	    </record>	
