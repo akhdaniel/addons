@@ -55,7 +55,7 @@ class employee(osv.osv):
         'no_sima':fields.char('No. SIM A',30),
         'no_simc':fields.char('No. SIM C',30),
         'issued_id2':fields.many2one('res.country','Dikeluarkan di'),
-        'issued_id':fields.many2one('hr_recruit.kota','Dikeluarkan di'),
+        'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan di'),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
