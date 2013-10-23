@@ -124,7 +124,7 @@
                     <field name="pot_absen"/>
 					<field name="gros"/>
                     <field name="total"/>	
-					<field name="pkp">					
+					<field name="pkp"/>					
                 </field>
                
             </field>
