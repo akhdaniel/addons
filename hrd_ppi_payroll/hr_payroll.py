@@ -230,7 +230,8 @@ class hr_payslip(osv.osv):
         contract_obj = self.pool.get("hr.contract")
         reimburse_obj = self.pool.get("reimburse")
 
-        for payslip in self.browse(cr, uid, ids, context=context):   
+        for payslip in self.browse(cr, uid, ids, context=context): 
+            #import pdb;pdb.set_trace()  
             emp=payslip.employee_id.name
             emp_id=reimburse_obj.search(cr, uid, [('employee_id', '=', emp)], context=context)           
             date_contract=payslip.contract_id.date_start
@@ -243,6 +244,7 @@ class hr_payslip(osv.osv):
             date_pays = datetime.strptime(date_to,"%Y-%m-%d").month
             nom=0.00
             nam=0.00
+            #ddd= self.compute(cr,uid,ids,context=None)    
             if year == 1 or year == 2 or year == 3 or year == 4 or year == 5 or year == 6 or year == 7 or year ==8 or year == 9 or year == 10 :
                 if date_cont == date_pays :
                     nilai=1
@@ -277,7 +279,7 @@ class hr_payslip(osv.osv):
                     self.write(cr, uid, [payslip.id], {'net':coo}, context=context)     
                 if cod == "POT_ABSEN":
                     coo =line['amount']      
-                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context) 
+                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context)  
                 if cod == "GROSS":
                     coo = line['amount']
                     self.write(cr, uid, [payslip.id], {'gros':coo}, context=context)     
@@ -285,9 +287,10 @@ class hr_payslip(osv.osv):
                     self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
                     coos = self.pkp(cr,uid,ids,context=None)  
                     self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context)
-            self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
-        return True
-		
+            lin = [(0,0,lin) for lin in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]    
+            self.write(cr, uid, [payslip.id], {'line_ids': lin, 'number': number})
+        return True     
+
     def funct(self,cr,uid,ids,context=None) :
         xxx=self.browse(cr,uid,ids)[0]
         xyz=xxx.employee_id.name
@@ -316,8 +319,9 @@ class hr_payslip(osv.osv):
             occ = ccc.nominal_max
             if xcz >= ocd and xcz <= occ :
                 pkp = ccc.pajak
-        return pkp    	
-    
+        return pkp    
+
+
     _columns = {
         'net' : fields.integer("Net"),
         'komisi': fields.integer("komisi"),
