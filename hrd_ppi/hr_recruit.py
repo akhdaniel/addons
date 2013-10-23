@@ -190,7 +190,7 @@ class hr_applicant(osv.osv):
                                                      'jenis_id': applicant.jenis_id,
                                                      'ktp' : applicant.ktp,
                                                      'issued_id' : applicant.issued_id.name,
-                                                     'issued_id2' : applicant.issued_id2.name,
+                                                     'issued_id2' : applicant.issued_id2.id,
                                                      'tgl_keluar_ktp' : applicant.tgl_keluar_ktp,
                                                      'tgl_berlaku' : applicant.tgl_berlaku,
                                                      'sim' : applicant.sim,
