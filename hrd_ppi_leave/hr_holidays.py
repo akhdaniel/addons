@@ -427,8 +427,6 @@ class hr_holidays(osv.osv):
         return self.write(cr, uid, [x.id for x in B], {'state':'validate'})
     '''
 
-=======
-
     def legal_leave_alloc(self, cr, uid, ids=None, context=None):
         #""" Override to avoid automatic logging of creation """
         if context is None:
@@ -519,8 +517,6 @@ class hr_contract(osv.osv):
     }
 
 
-
-=======
 
 class hr_contract_type(osv.osv):
     _name = 'hr.contract.type'
