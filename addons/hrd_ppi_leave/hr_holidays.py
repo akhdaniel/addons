@@ -20,16 +20,11 @@ from openerp.tools.translate import _
 
 import openerp.addons.decimal_precision as dp
 
-
-
 from openerp.tools.safe_eval import safe_eval as eval
-<<<<<<< .mine
-=======
-import math,pprint
->>>>>>> .r9176
 
 import math,pprint
 
+import math,pprint
 
 
 class bln_libur(osv.osv):
