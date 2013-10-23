@@ -18,7 +18,7 @@
     </record>
     
     <menuitem action="action_hr_training" id="hr_menu_training" parent="hr.menu_hr_main" name="Analisa Kebutuhan Pelatihan" /> 
-    <menuitem action="action_hr_rencana_training" id="hr_menu_rencana_training" parent="hr.menu_hr_main" name="Rencana Training" />
+    <menuitem action="action_hr_rencana_training" id="hr_menu_rencana_training" parent="hr.menu_hr_main" name="Rencana Pelatihan" />
     <menuitem parent="hr.menu_hr_configuration" name="Tools" id="base.menu_tools" sequence="120" groups="base.group_tool_user"/>  
 </data>
 </openerp>

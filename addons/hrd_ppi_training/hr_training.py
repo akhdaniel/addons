@@ -36,7 +36,7 @@ class train(osv.osv):
         'tanggal': fields.related('analisa_id','tanggal',type='date',relation='hr_training.analisa',string='Tanggal'),
         'bukti_ids':fields.one2many('hr_training.bukti','train_id','Bukti File'),
         'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
-        'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklist Jika Training Internal'),  
+        'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklis Jika Training Internal'),  
         'nonik':fields.char('Kode Training'),
         #'email':fields.char('Email'), TODO if needed for email confirmstion for non-OpenERP-user 
         'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Status Training"),
@@ -119,7 +119,7 @@ class analisa(osv.osv):
 
     _columns= {
         'employee_id':fields.many2one('hr.employee','Karyawan'),
-        'is_internal':fields.boolean('Ceklist Jika Training Internal'),
+        'is_internal':fields.boolean('Ceklis Jika Training Internal'),
         'department_id': fields.many2one('hr.department', 'Department',required=True),
         'bulan':fields.selection([('Januari','Januari'),('Februari','Februari'),('Maret','Maret'),('April','April'),('Mei','Mei'),('Juni','Juni'),('Juli','Juli'),('Agustus','Agustus'),('September','September'),('Oktober','Oktober'),('November','November'),('Desember','Desember')],'Bulan'),
         'presentasi':fields.char('Presentasi Pelatihan',60),
