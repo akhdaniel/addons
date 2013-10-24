@@ -118,7 +118,9 @@
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml">
-               
+                <field name="number_of_days" position="replace">
+					 <field name="number_of_days" />
+				</field>
                 <field name='name' position='after'>
                     <field name="net"/>				
                 </field>
