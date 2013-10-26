@@ -69,10 +69,28 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,            
             }
             
-            overtimes_trs = {
-                 'name': _("Transport Hari Libur"),
+            transport = {
+                 'name': _("Transport"),
                  'sequence': 2,
-                 'code': 'OVERTIMETRS',
+                 'code': 'TRANSPORT',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
+            
+            uang_makan = {
+                 'name': _("Uang Makan"),
+                 'sequence': 2,
+                 'code': 'UANG_MAKAN',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
+            
+            uang_makan_lembur = {
+                 'name': _("Uang Makan Lembur"),
+                 'sequence': 2,
+                 'code': 'UANG_MAKAN_LEMBUR',
                  'number_of_days': 0.0,
                  'number_of_hours': 0.0,
                  'contract_id': contract.id,            
@@ -148,13 +166,17 @@ class hr_payslip(osv.osv):
                     if real_working_hours_on_day > 0 and not isNonWorkingDay:
                         presences['number_of_days'] += 1.0
                         presences['number_of_hours'] += working_hours_on_day
-                    no_urut = employee.gol_id.no
-                    urut_title = employee.title_id.urutan
-                    pprint.pprint(no_urut)
-                    pprint.pprint(urut_title)
-                    no_urut=float(no_urut)
-                    urut_title=float(urut_title)
-                    if real_working_hours_on_day >= working_hours_on_day and urut_title < 100 :
+                    if real_working_hours_on_day > 0 : 
+                        transport['number_of_days'] += 1.0
+                        uang_makan['number_of_days'] += 1.0
+                    #no_urut = employee.gol_id.no
+                    #urut_title = employee.title_id.urutan
+                    #pprint.pprint(no_urut)
+                    #pprint.pprint(urut_title)
+                    #no_urut=float(no_urut)
+                    #urut_title=float(urut_title)
+                    
+                    if real_working_hours_on_day >= working_hours_on_day and contract.jenis_lembur == 'overtime' :
                         #add the input vals to tmp (increment if existing)
                         # number_of_days = hari masuk dalam sebulan sesuai absensi
 
@@ -162,6 +184,7 @@ class hr_payslip(osv.osv):
                         overtime =  real_working_hours_on_day - working_hours_on_day
                         if overtime >= 4 or isNonWorkingDay :
                             overtimes['number_of_days'] += 1.0
+                            uang_makan_lembur['number_of_days'] += 1.0
 
                         """
                         isNonWorkingDay : dihitung berdasarkan jam hadir
@@ -188,7 +211,6 @@ class hr_payslip(osv.osv):
                                 jam2 = 7
                                 jam3 = 1
                                 jam4 = real_working_hours_on_day - 8                            
-                            overtimes_trs['number_of_days'] += 1.0
                         else: 
                             if overtime <=1:
                                 jam1 = overtime
@@ -204,10 +226,9 @@ class hr_payslip(osv.osv):
                         
 
                         overtimes['number_of_hours'] += total_overtime
-                    elif urut_title > 100 and urut_title < 200:   
-                        if no_urut < 200 :
-                            if isNonWorkingDay and real_working_hours_on_day > 4:
-                                incentives['number_of_days'] += 1.0
+                    elif contract.jenis_lembur == 'incentive' :
+                        if isNonWorkingDay and real_working_hours_on_day > 4:
+                            incentives['number_of_days'] += 1.0
                         """ title = kolom sortir
                         else if employee.title_id > 100 : #operator ke atas:
                             employee.gol_id.urutan > 1 and  employee.gol_id.urutan < 3 :
@@ -220,7 +241,7 @@ class hr_payslip(osv.osv):
                                     nol
                             """                                
             leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves + [presences] + [overtimes] + [overtimes_trs] + [incentives]
+            res += [attendances] + leaves + [presences] + [overtimes] + [incentives] + [transport] + [uang_makan] + [uang_makan_lembur] 
         return res
 
     def compute_sheet(self, cr, uid, ids, context=None):         
