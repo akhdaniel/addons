@@ -61,6 +61,7 @@ class hr_payslip(osv.osv):
             }
 
             leaves = {}
+           # import pdb;pdb.set_trace()
             day_from = datetime.strptime(date_from,"%Y-%m-%d")
             day_to = datetime.strptime(date_to,"%Y-%m-%d")
             nb_of_days = (day_to - day_from).days + 1          
@@ -119,7 +120,7 @@ class hr_payslip(osv.osv):
                         attendances['number_of_days'] += 1.0
                         attendances['number_of_hours'] += working_hours_on_day
                         ### tidak cuti, cek apakah dia masuk absen?
-                    if real_working_hours_on_day > 0 and not isNonWorkingDay:
+                    if real_working_hours_on_day >= 0.000000000000000001 and not isNonWorkingDay:
                         presences['number_of_days'] += 1.0
                         presences['number_of_hours'] += working_hours_on_day
                     #no_urut = employee.gol_id.no
@@ -198,6 +199,7 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,            
             }
             leaves = {}
+            #import pdb;pdb.set_trace()
             date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1, days=-15))[:10]
             date_to_15 =str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-17))[:10]
             day_from = datetime.strptime(date_from_16,"%Y-%m-%d")
@@ -215,8 +217,12 @@ class hr_payslip(osv.osv):
                     #employee info
                     emp_obj = self.pool.get('hr.employee')
                     employee = emp_obj.browse(cr, uid, employee_id, context=context)
-
+                    #import pdb;pdb.set_trace()
                     real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
+                    if real_working_hours_on_day >= 0.000000000000001 : 
+                        transport['number_of_days'] += 1.0
+                    if real_working_hours_on_day >= 4 :    
+                        uang_makan['number_of_days'] += 1.0
                     working_hours=int(real_working_hours_on_day)
                     working_minutes=real_working_hours_on_day - working_hours
                     work_minutes = working_minutes / 1.66666667
@@ -227,71 +233,68 @@ class hr_payslip(osv.osv):
                     elif working_minutes < 15 :
                         real_working_hours_on_day= working_hours  						
                     date = (day_from + timedelta(days=day))
-                    
+                    import pdb;pdb.set_trace()
                     leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
                     isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7 or leave_type 
-                    if real_working_hours_on_day > 0 : 
-                        transport['number_of_days'] += 1.0
-                        uang_makan['number_of_days'] += 1.0
-                    #no_urut = employee.gol_id.no
-                    #urut_title = employee.title_id.urutan
-                    #pprint.pprint(no_urut)
-                    #pprint.pprint(urut_title)
-                    #no_urut=float(no_urut)
-                    #urut_title=float(urut_title)
-                    
-                    if real_working_hours_on_day >= working_hours_on_day and contract.jenis_lembur == 'overtime' :
-                        #add the input vals to tmp (increment if existing)
-                        # number_of_days = hari masuk dalam sebulan sesuai absensi
+                    no_urut = employee.gol_id.no
+                    urut_title = employee.title_id.urutan
+                    pprint.pprint(no_urut)
+                    pprint.pprint(urut_title)
+                    no_urut=float(no_urut)
+                    urut_title=float(urut_title)
+                    if real_working_hours_on_day >= working_hours_on_day :
+                        if contract.jenis_lembur == 'overtime' or no_urut < 100 :
+                            #add the input vals to tmp (increment if existing)
+                            # number_of_days = hari masuk dalam sebulan sesuai absensi
 
-                        ### hitung overtime: masukkan di field number_of_hours
-                        overtime =  real_working_hours_on_day - working_hours_on_day
-                        if overtime >= 4 or isNonWorkingDay :
-                            overtimes['number_of_days'] += 1.0
-                            uang_makan_lembur['number_of_days'] += 1.0
+                            ### hitung overtime: masukkan di field number_of_hours
+                            overtime =  real_working_hours_on_day - working_hours_on_day
+                            if overtime >= 4 or isNonWorkingDay :
+                                overtimes['number_of_days'] += 1.0
+                                uang_makan_lembur['number_of_days'] += 1.0
 
-                        """
-                        isNonWorkingDay : dihitung berdasarkan jam hadir
-                        workingDay: dihitung berdasarkan jam lembur (jam hadir - jam kerja normal)
+                            """
+                            isNonWorkingDay : dihitung berdasarkan jam hadir
+                            workingDay: dihitung berdasarkan jam lembur (jam hadir - jam kerja normal)
 
 
 
-                        if employee.title_id.urutan < 100:
+                            if employee.title_id.urutan < 100:
 
-                        """                                                
-                        if isNonWorkingDay:
-                            if real_working_hours_on_day < 8:
-                                jam1 = 0
-                                jam2 = real_working_hours_on_day
-                                jam3 = 0
-                                jam4 = 0
-                            elif (real_working_hours_on_day >= 8 and real_working_hours_on_day<9):
-                                jam1 = 0
-                                jam2 = 7
-                                jam3 = real_working_hours_on_day - 7
-                                jam4 = 0
-                            elif real_working_hours_on_day>=9:
-                                jam1 = 0
-                                jam2 = 7
-                                jam3 = 1
-                                jam4 = real_working_hours_on_day - 8                            
-                        else: 
-                            if overtime <=1:
-                                jam1 = overtime
-                                jam2 = 0
-                                jam3 = 0
-                                jam4 = 0
-                            elif (overtime > 1 ):
-                                jam1 = 1
-                                jam2 = overtime - 1
-                                jam3 = 0
-                                jam4 = 0                       
-                        total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
-                        
+                            """                                                
+                            if isNonWorkingDay:
+                                if real_working_hours_on_day < 8:
+                                    jam1 = 0
+                                    jam2 = real_working_hours_on_day
+                                    jam3 = 0
+                                    jam4 = 0
+                                elif (real_working_hours_on_day >= 8 and real_working_hours_on_day<9):
+                                    jam1 = 0
+                                    jam2 = 7
+                                    jam3 = real_working_hours_on_day - 7
+                                    jam4 = 0
+                                elif real_working_hours_on_day>=9:
+                                    jam1 = 0
+                                    jam2 = 7
+                                    jam3 = 1
+                                    jam4 = real_working_hours_on_day - 8                            
+                            else: 
+                                if overtime <=1:
+                                    jam1 = overtime
+                                    jam2 = 0
+                                    jam3 = 0
+                                    jam4 = 0
+                                elif (overtime > 1 ):
+                                    jam1 = 1
+                                    jam2 = overtime - 1
+                                    jam3 = 0
+                                    jam4 = 0                       
+                            total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
+                            
 
-                        overtimes['number_of_hours'] += total_overtime
-                    elif contract.jenis_lembur == 'incentive' :
-                        if isNonWorkingDay and real_working_hours_on_day > 4:
+                            overtimes['number_of_hours'] += total_overtime
+                    elif contract.jenis_lembur == 'incentive' or no_urut >= 100 : 
+                        if isNonWorkingDay and real_working_hours_on_day > 4 and no_urut <= 200 :
                             incentives['number_of_days'] += 1.0
                         """ title = kolom sortir
                         else if employee.title_id > 100 : #operator ke atas:
