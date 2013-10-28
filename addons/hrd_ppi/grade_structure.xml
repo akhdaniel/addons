@@ -33,37 +33,37 @@
 	    <record id="hr_employee 2A" model="hr_employs.gol">
 	            <field name="name">LEVEL IIA</field>
 	            <field name="rec">2A</field>
-	            <field name="no">7</field>
+	            <field name="no">101</field>
 	    </record>
 	    <record id="hr_employee 2B" model="hr_employs.gol">
 	            <field name="name">LEVEL IIB</field>
 	            <field name="rec">2B</field>
-	            <field name="no">8</field>
+	            <field name="no">102</field>
 	    </record>
 	    <record id="hr_employee 2C" model="hr_employs.gol">
 	            <field name="name">LEVEL IIC</field>
 	            <field name="rec">2C</field>
-	            <field name="no">9</field>
+	            <field name="no">103</field>
 	    </record>
 	    <record id="hr_employee 2D" model="hr_employs.gol">
 	            <field name="name">LEVEL IID</field>
 	            <field name="rec">2D</field>
-	            <field name="no">10</field>
+	            <field name="no">104</field>
 	    </record>
 	    <record id="hr_employee 2E" model="hr_employs.gol">
 	            <field name="name">LEVEL IIE</field>
 	            <field name="rec">2E</field>
-	            <field name="no">11</field>
+	            <field name="no">105</field>
 	    </record>
 	    <record id="hr_employee 2F" model="hr_employs.gol">
 	            <field name="name">LEVEL IIF</field>
 	            <field name="rec">2F</field>
-	            <field name="no">12</field>
+	            <field name="no">106</field>
 	    </record>
 	    <record id="hr_employee 3A" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIA</field>
 	            <field name="rec">3A</field>
-	            <field name="no">101</field>
+	            <field name="no">107</field>
 	    </record>
 	    <record id="hr_employee 3B" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIB</field>
