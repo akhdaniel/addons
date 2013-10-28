@@ -33,6 +33,7 @@
                <field name="master_gaji_id"/>
                <field name="makan"/>
                <field name="transport"/>
+			   <field name="jenis_lembur"/>
                </field>
                <!--div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
