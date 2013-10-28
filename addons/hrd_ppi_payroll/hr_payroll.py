@@ -61,7 +61,6 @@ class hr_payslip(osv.osv):
             }
 
             leaves = {}
-            import pdb;pdb.set_trace()
             day_from = datetime.strptime(date_from,"%Y-%m-%d")
             day_to = datetime.strptime(date_to,"%Y-%m-%d")
             nb_of_days = (day_to - day_from).days + 1          
@@ -199,7 +198,6 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,            
             }
             leaves = {}
-            import pdb;pdb.set_trace()
             date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1, days=-15))[:10]
             date_to_15 =str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-17))[:10]
             day_from = datetime.strptime(date_from_16,"%Y-%m-%d")
