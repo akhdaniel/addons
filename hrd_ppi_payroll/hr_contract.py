@@ -8,7 +8,8 @@ class hr_contract(osv.osv):
         'master_gaji_id':fields.many2one('hr.master_gaji', "incentive"),
         'makan':fields.related('master_gaji_id','makan',type='integer',relation='hr.master_gaji',string='Uang Makan',readonly=True),
         'transport':fields.related('master_gaji_id','transport',type='integer',relation='hr.master_gaji',string='Uang Transport',readonly=True),
-    }
+        'jenis_lembur' : fields.selection([('incentive','Incentive'),('overtime','Overtime')], 'Jenis Lembur'),
+	}
 hr_contract()    
     
 class master_gaji(osv.osv):
