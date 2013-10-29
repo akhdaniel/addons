@@ -340,12 +340,12 @@ class hr_payslip(osv.osv):
             else:
                 #if we don't give the contract, then the rules to apply should be for all current contracts of the employee
                 contract_ids = self.get_contract(cr, uid, payslip.employee_id, payslip.date_from, payslip.date_to, context=context)
-            lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']
                 if cod == "NET":
                     coo =line['amount']      
-                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)              
+                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context) 
+	        lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
         return True 
 		
