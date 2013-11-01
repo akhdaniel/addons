@@ -46,13 +46,32 @@
                     <group>
                 </group>
                 </label> 
+				<label for="name" position="after">
+                    <group>
+                    <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" nolabel="1"/>           
+                    </group>
+                </label>  				
                 <field name="no_of_employee" position="before">
-                    <field name="status_jabatan"/>
+                    <field name="status_jabatan" />                  
                     <field name="pengalaman"/>
                     <field name="usia"/>
                     <field name="kelamin"/> 
-                    <field name="sts_prk"/>                   
+                    <field name="sts_prk"/>  
+                    <field name="domisili_id"/>
+                    <field name="tempat_lahir_id"/>                 
                 </field>
+                <field name="expected_employees" position="after">
+                    <group colspan="4"> 
+                    <field name="bol_pengalaman" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/> 
+                    <field name="bol_usia" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                    <field name="bol_kelamin" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>  
+                    <field name="bol_sts_prk" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                    <field name="bol_domisili" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                    <field name="bol_tempat_lahir_id" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                    <field name="bol_type_id" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                    <field name="bol_jurusan_ids" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                     </group>                
+                </field>				
                 <field name="department_id" position="after">                                        
                     <label for="wkt_pemohon" string="Waktu Penempatan"/>
                         <div class="oe_title">
@@ -77,12 +96,35 @@
                         </form>
                     </field>   
 	            </field>
-                <field name="requirements" position="after">
+				<field name="requirements" position="replace">
                     <div>
                     <label for="catatan2"/>
                     <field name="catatan2"/>
-                    </div>
-                </field>       	                                                                            
+                    </div>             
+                    <button string="Filter" type="object" 
+                        states="in_progress" name="cici"
+                        groups="hrd_ppi.group_hr_manager" 
+                        class="oe_highlight" attrs="{'invisible':[('bol_name','=',True)]}"/> 
+                    <button string="Execute" type="object" 
+                        states="in_progress" name="execute"
+                        groups="hrd_ppi.group_hr_manager" 
+                        class="oe_highlight" attrs="{'invisible':[('bol_name','=',True)]}"/>     
+                <notebook colspan="4">                      
+                        <page string="Daftar Pelamar" name="Pelamar" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" >
+                            <field view_mode="tree,form" name="applicant_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="partner_name"/>
+                                    <field name="job_id"/>                                    
+                                    <field name="age"/>
+                                    <field name="kelamin"/>
+                                    <field name="status"/> 
+                                    <field name="stage_id"/>
+                                </tree>
+                            </field>
+                        </page>    
+                 </notebook>  
+                </field>             	                                                                            
             </field>      
         </record>
     
