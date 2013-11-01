@@ -50,11 +50,122 @@ class permohonan_recruit(osv.osv):
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
         'survey_ids':fields.one2many('hr.survey1','job_id','Interview Form'),
         'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
-                }
+        'domisili_id':fields.many2one('hr_recruit.kota','Domisili'),    
+        'tempat_lahir_id':fields.many2one('hr_recruit.kota','Tempat Lahir'), 
+        'bol_name':fields.boolean('Nama Tugas',help="Hilangkan ceklist jika ingin filter tidak sesuai dengan aplikasi yang dilamar"),
+        'bol_type_id':fields.boolean('Pendidikan'),
+        'bol_jurusan_ids':fields.boolean('Jurusan'),
+        'bol_pengalaman':fields.boolean('Pengalaman'),
+        'bol_usia':fields.boolean('Usia'),
+        'bol_sts_prk':fields.boolean('Status Pernikahan'),
+        'bol_kelamin':fields.boolean('Jenis Kelamin'),
+        'bol_domisili':fields.boolean('Domisili'),
+        'bol_tempat_lahir_id':fields.boolean('Tempat Lahir'),
+        'applicant_ids':fields.one2many('hr.applicant','app_id','Daftar Pelamar',readonly=True),    
+	}
     _defaults = {
         'state': PERMOHONAN_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
+        'bol_name':True,
+        'bol_type_id':True,
+        'bol_jurusan_ids':True,
+        'bol_pengalaman':True,
+        'bol_usia':True,
+        'bol_sts_prk':True,
+        'bol_kelamin':True,        
                  }  
+
+    def cici(self,cr, uid,ids, context=None): 
+        per=self.browse(cr,uid,ids,context)[0] 
+        job_name=per.name     
+        job_umr=per.usia
+        job_pend=per.type_id.id
+        job_kelamin =per.kelamin
+        job_pengalaman=per.pengalaman
+        job_status=per.sts_prk  
+        job_state=per.state
+        job_domisili_id=per.domisili_id.id
+        job_tempat_lahir_id=per.tempat_lahir_id.id
+        job_jurusan_ids=per.jurusan_ids
+        job_b_name=per.bol_name
+        job_b_pend=per.bol_type_id
+        job_b_umr=per.bol_usia
+        job_b_kelamin=per.bol_kelamin
+        job_b_pengalaman=per.bol_pengalaman
+        job_b_status=per.bol_sts_prk
+        job_b_jurusan_ids=per.bol_jurusan_ids
+        job_b_domisili=per.bol_domisili
+        job_b_tempat_lahir_id=per.bol_tempat_lahir_id
+        #import pdb;pdb.set_trace()
+
+        partner=self.pool.get('hr.recruitment.stage')  
+        pero=partner.search(cr,uid,[])     
+        pers=partner.browse(cr,uid,pero,context)[0]
+        
+        #jurusan
+        jurusan=self.pool.get('hr_recruit.jurusan')        
+        jur_id=jurusan.search(cr, uid,[('permohonan_recruit_id','=',job_name)])       
+        jur=jurusan.browse(cr,uid,jur_id,context)
+   
+        filt=[('stage_id','=','Initial Qualification')]
+        partner=self.pool.get('hr.applicant') 
+
+        perok=partner.search(cr,uid,[('app_id','=',job_name),(pers.id,'=',1)])
+        for tt in partner.browse(cr,uid,perok):
+            partner.write(cr,uid,perok,{'app_id': False},context=context)
+        
+        if job_b_pend :
+            filt.append(('type_id','=',job_pend))
+        if job_b_umr:
+            filt.append(('age','<=',job_umr))
+        if job_b_kelamin:
+            filt.append(('kelamin','=',job_kelamin))
+        if job_b_pengalaman:
+            filt.append(('pengalaman','>=',job_pengalaman))
+        if job_b_status:
+            filt.append(('status','=',job_status)) 
+        if job_b_domisili:
+            filt.append(('kab_id','=',job_domisili_id))  
+        if job_b_tempat_lahir_id:
+            filt.append(('kota_id','=',job_tempat_lahir_id))  
+           
+        if job_b_jurusan_ids:
+            if len(job_jurusan_ids) == 1:
+                filt.append(('jurusan_id','=',job_jurusan_ids[0].name.id))
+            elif len(job_jurusan_ids) > 1: 
+                A = []
+                for xx in job_jurusan_ids:
+                    A.append(xx.name.id)
+                filt.append(('jurusan_id','in',A))
+        
+        pero=partner.search(cr,uid,filt)
+        if job_b_name == False:
+            for xux in partner.browse(cr,uid,pero): 
+                partner.write(cr,uid,pero,{'app_id':per.id},context=context)
+        elif job_b_name:
+            ada = partner.browse(cr,uid,pero)
+            for rr in ada:
+                if rr.job_id.name==job_name :
+                    partner.write(cr,uid,[rr.id],{'app_id': rr.job_id.id},context=context)                              
+                                                                                                                                                
+        return True  
+
+    def execute(self,cr, uid,ids, context=None): 
+
+        hasil=self.browse(cr,uid,ids,context)[0] 
+        job_applicant_ids=hasil.applicant_ids[0]    
+        obj_app=self.pool.get('hr.applicant')
+        hasil_app=obj_app.browse(cr,uid,ids,context)[0]
+
+        partner=self.pool.get('hr.recruitment.stage')  
+        pero=partner.search(cr,uid,[])     
+        pers=partner.browse(cr,uid,pero,context)
+        
+        for exe in hasil.applicant_ids:
+            asu= exe.stage_id.id+1  
+            if asu == 2:                      
+                obj_app.write(cr,uid,[exe.id for exe in hasil.applicant_ids],{'stage_id':asu})
+        return True                         				 
             
 permohonan_recruit()
 
@@ -327,6 +438,7 @@ class hr_applicant(osv.osv):
         res=[]
         for pr in ap:
             if pr.surveys_id.state == "open":
+                prs=pr.survey_id.id
                 prs=pr.surveys_id.id
                 res.append((0,0, {'name':prs})) 
         vals['surv_ids']=res
