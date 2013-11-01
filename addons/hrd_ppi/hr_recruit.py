@@ -551,6 +551,7 @@ class hr_applicant(osv.osv):
         'country_id2':fields.many2one('res.country','Negara'),
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
+        'app_id':fields.many2one('hr.job','job'),
 		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
         }
 hr_applicant()
