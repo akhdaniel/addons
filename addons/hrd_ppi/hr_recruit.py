@@ -513,14 +513,14 @@ class hr_applicant(osv.osv):
         'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=','Indonesia')]"),
         'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=','DKI Jakarta')]"),
         'kec_id':fields.many2one('hr_recruit.issued','Kecamatan', domain="[('kota_id','=',kab_id)]"),
-        'alamat1':fields.char('Alamat 1',100),        
+        'alamat1':fields.char('Alamat Domisili',100),        
         'prov_id2':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id2)]"),
         'kab_id2':fields.many2one('hr_recruit.kota','Kab./Kota', domain="[('provinsi_id','=',prov_id2)]"),
         'kec_id2':fields.many2one('hr_recruit.issued','Kecamatan', domain="[('kota_id','=',kab_id2)]"),
-        'alamat2':fields.char('Alamat 2',100),
+        'alamat2':fields.char('Alamat sesuai KTP',100),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
-        'status':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan'),
+        'status':fields.selection([('single','Single'),('married','Menikah'),('divorced','Cerai')],'Status Pernikahan'),
         'sjk_tanggal':fields.date('Sejak Tanggal'),  
         'survey_id': fields.many2one('survey', 'Interview Form', help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),      
         'susunan_kel1_ids':fields.one2many('hr_recruit.suskel1','applicant_id','Susunan Keluarga'),
@@ -544,16 +544,20 @@ class hr_applicant(osv.osv):
         "fasilitas1_ids":fields.one2many("hr.fasilitas","applican_id","Fasilitas"),  
         "fasilitas2_ids":fields.one2many("hr.fasilitas2","applican_id","Fasilitas"),  
         "salary_proposed_extra": fields.char('Proposed Salary Extra', size=100, help="Salary Proposed by the Organisation, extra advantages",readonly=True),
-        "salary_expected_extra": fields.char('Expected Salary Extra', size=100, help="Salary Expected by Applicant, extra advantages",readonly=True), 
         "blood":fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
         "respon_div":fields.many2one('hr.department','Responsible Division'), 
         'country_id1':fields.many2one('res.country','Negara'),
         'country_id2':fields.many2one('res.country','Negara'),
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
-        'app_id':fields.many2one('hr.job','job'),
-		#'kesimpulan':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
+		'app_id' : fields.many2one('hr.job','Job'),
+        'salary_proposed': fields.float('Proposed Salary', readonly=True),
+        'salary_proposed_botom_margin': fields.float('Standar Gaji Perusahaan', help="Batas range terendah"), 
+        'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"), 
+        'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
+        'survey_result_ids': fields.one2many('hr_applicant.hasil_wawancara','app_id', "Hasil Wawancara"),
         }
+
 hr_applicant()
 
 class susunan_keluarga1(osv.osv):
@@ -835,3 +839,23 @@ class country(osv.osv):
         "code_telp" : fields.char("Kode Telp"),
     }
 country()
+
+class HasilSurvey(osv.Model):
+    """Informasi Hasil Wawancara"""
+    _name = "hr_applicant.hasil_wawancara"
+
+    def create(self, cr, uid, vals, context=None):  
+        vals['stage'] = self.pool.get("hr.applicant").browse(cr,uid,vals['app_id'],context).stage_id.name
+        return super(HasilSurvey, self).create(cr, uid, vals, context)    
+
+    _columns = {
+        'app_id':fields.many2one("hr.applicant","Applicant"),
+        'result':fields.selection([('Dapat_Diterima','Dapat Diterima'),('Untuk_Dicadangkan','Untuk Dicadangkan'),('Ditolak','Ditolak')],'Kesimpulan'), 
+        'reason': fields.text("Alasan"),
+        'user_id': fields.many2one('res.users', 'Responsible', readonly=True),
+        'stage':fields.char('Stage', readonly=True),
+    }
+
+    _defaults = {
+        'user_id': lambda s, cr, uid, c: uid,
+    }
