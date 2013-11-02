@@ -21,6 +21,7 @@
             </header>
             <field name="partner_name" position="after">
             <field name="stage_id"/>
+            <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" class="oe_inline"/>
             </field>
             <field name="stage_id" position="replace"/>
             <field name="reference" position="replace"/>
@@ -63,6 +64,10 @@
                 <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight"/>
                 </group>                                     
             </field>
+
+            <!--field name="user_id" position="replace">
+                <field name="user_id" attrs="{'required':[('state','=','open')],'invisible':[('state','!=','open')]}" />
+            </field-->
             
             <field name="user_id" position="before" >
                 <group string="Pendidikan" colspan="4">
@@ -76,22 +81,22 @@
 
 			
                <group colspan="4">
-                    <group string="Alamat Jakarta">
+                    <group string="Alamat Domisili">
 					<!--field name='country_id1' on_change="onchange_country1(country_id1)"/>	                  
                     <field name="prov_id"/-->
                     <field name="kab_id"/>
                     <field name="kec_id"/>
-					<field name="alamat1" placeholder="Alamat di Jakarta"/>
+					<field name="alamat1" placeholder="Alamat Domisili"/>
                     <field name='kode1'/>
                     <field name="telp1" placeholder="Telp. di Jakarta"/>
                     </group>
                     <newline/>
-                    <group string="Alamat Luar Jakarta">
+                    <group string="Alamat sesuai KTP">
                     <field name='country_id2' on_change="onchange_country2(country_id2)"/>
                     <field name="prov_id2"/>
                     <field name="kab_id2"/>
                     <field name="kec_id2"/>
-					<field name="alamat2" placeholder="Alamat Luar Jakarta"/>
+					<field name="alamat2" placeholder="Alamat sesuai KTP"/>
                     <field name='kode2'/>                  
                     <field name="telp2" placeholder="Telp. di luar Jakarta" />                    	
                     </group>
@@ -112,15 +117,58 @@
                         </form>
                 </field>	
              </field>
-			 
-            <field name='salary_expected' position="after">
-                <field name="fasilitas1_ids"/>
-             </field>
-             <field name='salary_proposed' position="after">
-                <field name="fasilitas2_ids"/>
-             </field>
-			
-             <field name="description" position="after">
+
+			<group string="Job" position="replace" />
+
+            <group string="Contract" position="replace" >
+                <newline/>
+                <group string="Job" col="2">
+                    <field name="survey" invisible="1"/>
+                    <field name="response" invisible="1"/>
+                    <field name="job_id" on_change="onchange_job(job_id)"/>
+                    <field name="department_id" on_change="onchange_department_id(department_id)"/>
+                    <label for="availability"/>
+                    <div>
+                        <field name="availability" class="oe_inline"/> <label string="Day(s)" class="oe_inline"/>
+                    </div>
+                    <group string="Survey Result"  colspan="2" attrs="{'invisible':[('state','=','draft')]}">
+                        <field name="survey_result_ids" view_mode="tree,form" >
+                            <tree>
+                                <field name='result'/>
+                                <field name='user_id'/>
+                                <field name='stage'/>
+                            </tree>
+                            <form>
+                                <field name='result' groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                                <field name='user_id' groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                                <field name='reason' groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                            </form>
+                        </field>
+                    </group>
+                </group>
+                <group>
+                    <group string="Contract">
+                        <label for="salary_expected"/>
+                        <div>
+                            <field name="salary_expected" class="oe_inline"/>
+                            <field name="fasilitas1_ids"/>
+                        </div>
+                        <label for="salary_proposed" string="Standar Gaji Perusahaan"/>
+                        <div>
+                            <field name="salary_proposed_botom_margin" class="oe_inline"/>
+                            <span class="oe_inline" > - </span>
+                            <field name="salary_proposed_top_margin" class="oe_inline"/>
+                            <field name="fasilitas2_ids"/>
+                        </div>
+                        <label for="salary_proposed"/>
+                        <div>
+                            <field name="salary_proposed" class="oe_inline" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" />
+                        </div>
+                    </group>
+                </group>
+            </group>
+
+            <field name="description" position="after">
                 <notebook colspan="4">                      
                         <page string="Susunan Keluarga Istri/Suami" name="istri/suami" attrs="{'invisible':[('status','=','single')]}">
                             <field view_mode="tree,form" name="susunan_kel1_ids" nolabel="1">
