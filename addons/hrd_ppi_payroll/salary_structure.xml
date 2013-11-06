@@ -101,7 +101,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">2</field>
-	        <field name="amount_python_compute">result = worked_days.UANG_MAKAN_LEMBUR.number_of_days* contract.makan  </field>
+	        <field name="amount_python_compute">result = worked_days.OVERTIME.number_of_days* contract.makan </field>
 	    </record>
 	    <record id="hr_payroll_rules_incentive" model="hr.salary.rule">
 	        <field name="name">INCENTIVES</field>
@@ -128,7 +128,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">5</field>
-	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.makan   </field>
+	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.makan  </field>
 	    </record>
 	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
 	        <field name="name">TRANSPORT ALLOWANCE</field>
@@ -137,7 +137,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">6</field>
-	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.transport</field>
+	        <field name="amount_python_compute">result = (worked_days.PRESENCES.number_of_days + worked_days.INCENTIVES.number_of_days + worked_days.OVERTIMETRS.number_of_days) * contract.transport</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALLOWANCE</field>
@@ -556,7 +556,7 @@
 	    	<field name="code">PPI_STAFF</field>
         	<field name="parent_id" ref="hr_payroll.structure_base"/>
 	        <field name="company_id" ref="base.main_company"/>
-            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),
+            <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), ref('hr_payroll_rules_overtime'), ref('hr_payroll_rules_overtime_meal'), ref('hr_payroll_rules_incentive'), ref('hr_payroll_rules_incentive_meal'), ref('hr_payroll_rules_meal'), ref('hr_payroll_rules_transport'), ref('hr_payroll_rules_jamsostek'), ref('hr_payroll_rules_jamsostek3'), ref('hr_payroll_rules_others'), ref('hr_payroll_rules_luar_kota'), ref('hr_payroll_rules_pulsa'), ref('hr_payroll_rules_housing'), ref('hr_payroll_rules_thr'), ref('hr_payroll_rules_bonus'), ref('hr_payroll_rules_tunjangan_pajak'), ref('hr_payroll_rules_rapel'), ref('hr_payroll_rules_leave_pay'),ref('hr_payroll_rules_gaji'),ref('hr_payroll_rules_medical_allowance_rawat'),ref('hr_payroll_rules_medical_allowance_obat'),
             ref('hr_payroll_rules_tax'),
             ref('hr_payroll_rules_rapel_gaji'),
             ref('hr_payroll_rules_leave_alw'),
