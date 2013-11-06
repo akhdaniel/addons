@@ -418,7 +418,7 @@
     <menuitem name="Jadwal Interview"
         id="menu_hr_meeting_applicant"
         parent="base.menu_crm_case_job_req_main"
-        sequence="3" action="action_hr_pmeeting applicant"/>
+        sequence="25" action="action_hr_pmeeting applicant"/>
 
     </data>
 </openerp>
