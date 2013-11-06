@@ -13,16 +13,15 @@
         <field name="arch" type="xml">
             <!--field name="partner_name" position="after">
                     <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/-->
-            <header>          <button
-                        string="Filter Applicant"
-                        name="coco" type="object"
-                        class="oe_highlight"
-                        attrs="{'invisible':[('state','!=','draft')]}"/>
+            <header>          
+                <button string="Filter Applicant" name="coco" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
             </header>
+            
             <field name="partner_name" position="after">
             <field name="stage_id"/>
             <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" class="oe_inline"/>
             </field>
+            <div class="oe_right oe_button_box" position="replace"/>
             <field name="stage_id" position="replace"/>
             <field name="reference" position="replace"/>
             <field name="email_from" position="replace"/>
@@ -58,11 +57,25 @@
                     <field name="sim"/>
                     <field name="tgl_keluar_sim"/> 
                     <field name="tgl_berlaku2"/>
-                </group>  
-                <group string="Kesimpulan" states="open,pending">                                
-                <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
-                <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight"/>
-                </group>                                     
+                </group> 
+                <group string="Interview">
+                    <field view_mode="tree,form" name="surv_ids" >
+                        <tree>
+                            <field name='name'/>
+                        </tree>
+                        <form>
+                            <field name='name'/>
+                        </form>
+                    </field>                    
+                    <field view_mode="tree" name="meeting_ids" >
+                        <tree editable="bottom">
+                            <field name='name'/>
+                            <field name="date"/>
+                            <field name="location"/>
+                        </tree>
+                    </field>                     
+                </group> 
+                                   
             </field>
 
             <!--field name="user_id" position="replace">
@@ -82,13 +95,13 @@
 			
                <group colspan="4">
                     <group string="Alamat Domisili">
-					<!--field name='country_id1' on_change="onchange_country1(country_id1)"/>	                  
-                    <field name="prov_id"/-->
+					<field name='country_id1' on_change="onchange_country1(country_id1)"/>	                  
+                    <field name="prov_id"/>
                     <field name="kab_id"/>
                     <field name="kec_id"/>
-					<field name="alamat1" placeholder="Alamat Domisili"/>
+					<field name="alamat1"/>
                     <field name='kode1'/>
-                    <field name="telp1" placeholder="Telp. di Jakarta"/>
+                    <field name="telp1"/>
                     </group>
                     <newline/>
                     <group string="Alamat sesuai KTP">
@@ -96,9 +109,9 @@
                     <field name="prov_id2"/>
                     <field name="kab_id2"/>
                     <field name="kec_id2"/>
-					<field name="alamat2" placeholder="Alamat sesuai KTP"/>
+					<field name="alamat2"/>
                     <field name='kode2'/>                  
-                    <field name="telp2" placeholder="Telp. di luar Jakarta" />                    	
+                    <field name="telp2"/>                    	
                     </group>
 					<newline/>
 					<group>
@@ -108,14 +121,11 @@
             </field>
             
             <field name="source_id" position="after">                
-                <field view_mode="tree,form" name="surv_ids" >
-                        <tree>
-                            <field name='name'/>
-                        </tree>
-                        <form>
-                            <field name='name'/>
-                        </form>
-                </field>	
+                <newline/>
+                <group string="Kesimpulan" states="open,pending">                                
+                <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
+                <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight"/>
+                </group>                 	
              </field>
 
 			<group string="Job" position="replace" />
@@ -131,7 +141,7 @@
                     <div>
                         <field name="availability" class="oe_inline"/> <label string="Day(s)" class="oe_inline"/>
                     </div>
-                    <group string="Survey Result"  colspan="2" attrs="{'invisible':[('state','=','draft')]}">
+                    <group string="Result"  colspan="2" attrs="{'invisible':[('state','=','draft')]}">
                         <field name="survey_result_ids" view_mode="tree,form" >
                             <tree>
                                 <field name='result'/>
@@ -340,7 +350,7 @@
                         </page>
                         
                     </notebook>      
-             </field>      
+             </field>   
         </field>
     </record>
      <!--record model="ir.ui.view" id="survey_form">
@@ -376,5 +386,27 @@
                 </field>
             </field>
     </record>  
+
+    <record id="view_meeting_form" model="ir.ui.view">
+            <field name="name">Interview</field>
+            <field name="model">crm.meeting</field>
+            <field name="inherit_id" ref="base_calendar.view_crm_meeting_form"/>
+            <field name="arch" type="xml">
+                <field name="description" position="after">
+                <field view_mode="tree" name="applicant_ids" >
+                        <tree editable="bottom">
+                            <field name="create_date"/> 
+                            <field name="name" string="Subject"/> 
+                            <field name="partner_name"/> 
+                            <field name="type_id"/>
+                            <field name="job_id"/> 
+                            <field name="department_id" invisible="context.get('invisible_department', True)"/>
+                            <field name="stage_id"/>
+                        </tree>                    
+                </field>
+                </field>
+            </field>
+    </record>
+
     </data>
 </openerp>

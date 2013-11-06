@@ -510,8 +510,8 @@ class hr_applicant(osv.osv):
         'tgl_berlaku2':fields.date('Tanggal Berlaku'),
         'sim':fields.selection([('A','A'),('B1','B1'),('B2','B2'),('C','C')],'SIM'),
         'tgl_keluar_sim':fields.date('Tanggal Dikeluarkan'),              
-        'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=','Indonesia')]"),
-        'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=','DKI Jakarta')]"),
+        'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=','country_id1')]"),
+        'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=','prov_id')]"),
         'kec_id':fields.many2one('hr_recruit.issued','Kecamatan', domain="[('kota_id','=',kab_id)]"),
         'alamat1':fields.char('Alamat Domisili',100),        
         'prov_id2':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id2)]"),
@@ -556,6 +556,7 @@ class hr_applicant(osv.osv):
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"), 
         'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
         'survey_result_ids': fields.one2many('hr_applicant.hasil_wawancara','app_id', "Hasil Wawancara"),
+        "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id","Interview Schedule"), 
         }
 
 hr_applicant()
@@ -859,3 +860,13 @@ class HasilSurvey(osv.Model):
     _defaults = {
         'user_id': lambda s, cr, uid, c: uid,
     }
+
+class meeting(osv.osv):
+    _name = "crm.meeting"
+    _inherit = "crm.meeting"
+    
+    _columns = {
+        "applicant_ids" : fields.many2many("hr.applicant","meeting_rel","applicant_id","meeting_id","Nama Pelamar"),
+    }
+
+meeting()    
