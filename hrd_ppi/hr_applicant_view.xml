@@ -66,13 +66,15 @@
                         <form>
                             <field name='name'/>
                         </form>
-                    </field>                    
-                    <field view_mode="tree" name="meeting_ids" >
-                        <tree editable="bottom">
+                    </field>                  
+                    <field name="meeting_ids" view_mode="tree">
+                        <!--tree>
                             <field name='name'/>
+                            <field name='user_id'/>
                             <field name="date"/>
+                            <field name='duration'/>
                             <field name="location"/>
-                        </tree>
+                        </tree-->
                     </field>                     
                 </group> 
                                    

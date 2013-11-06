@@ -556,7 +556,7 @@ class hr_applicant(osv.osv):
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"), 
         'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
         'survey_result_ids': fields.one2many('hr_applicant.hasil_wawancara','app_id', "Hasil Wawancara"),
-        "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id","Interview Schedule"), 
+        "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id",string="Jadwal Interview",readonly=True), 
         }
 
 hr_applicant()
@@ -867,6 +867,19 @@ class meeting(osv.osv):
     
     _columns = {
         "applicant_ids" : fields.many2many("hr.applicant","meeting_rel","applicant_id","meeting_id","Nama Pelamar"),
+        "app_id":fields.many2one('hr.applicant'),
     }
 
 meeting()    
+
+class meeting_tampung(osv.osv):
+    _name = "crm.meeting_tampung"
+    
+    _columns = {
+        "meeting_id":fields.many2one('crm.meeting',"Subject",required=True),
+        "date":fields.related('meeting_id','date',type='date',relation='crm.meeting',string='Tanggal',store=True,readonly=True),
+        "location":fields.related('meeting_id','location',type='char',relation='crm.meeting',string='Tempat',store=True,readonly=True),
+        #"stage_id":fields.related('meeting_id','stage_id',type='many2one',relation='hr.recruitment.stage',string='Tahapan',store=True),
+    }
+
+meeting_tampung() 
