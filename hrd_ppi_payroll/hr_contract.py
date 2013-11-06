@@ -8,8 +8,7 @@ class hr_contract(osv.osv):
         'master_gaji_id':fields.many2one('hr.master_gaji', "incentive"),
         'makan':fields.related('master_gaji_id','makan',type='integer',relation='hr.master_gaji',string='Uang Makan',readonly=True),
         'transport':fields.related('master_gaji_id','transport',type='integer',relation='hr.master_gaji',string='Uang Transport',readonly=True),
-        'jenis_lembur' : fields.selection([('incentive','Incentive'),('overtime','Overtime')], 'Jenis Lembur'),
-	}
+    }
 hr_contract()    
     
 class master_gaji(osv.osv):
@@ -96,6 +95,7 @@ class pkp(osv.osv):
     _rec_name="kode"
     
     _columns = {
+        'payslip_id': fields.many2one("hr.payslip"),
         "kode":fields.char('Kode',size=5,required=True),
         "nominal_min" : fields.float("Nominal Min",required=True),
         "nominal_max" : fields.float("Nominal Max",required=True),

@@ -60,8 +60,33 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,            
             }
 
+            overtimes = {
+                 'name': _("Overtime"),
+                 'sequence': 2,
+                 'code': 'OVERTIME',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
+            
+            overtimes_trs = {
+                 'name': _("Transport Hari Libur"),
+                 'sequence': 2,
+                 'code': 'OVERTIMETRS',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
+            
+            incentives = {
+                 'name': _("Incentives"),
+                 'sequence': 3,
+                 'code': 'INCENTIVES',
+                 'number_of_days': 0.0,
+                 'number_of_hours': 0.0,
+                 'contract_id': contract.id,            
+            }
             leaves = {}
-           # import pdb;pdb.set_trace()
             day_from = datetime.strptime(date_from,"%Y-%m-%d")
             day_to = datetime.strptime(date_to,"%Y-%m-%d")
             nb_of_days = (day_to - day_from).days + 1          
@@ -120,182 +145,69 @@ class hr_payslip(osv.osv):
                         attendances['number_of_days'] += 1.0
                         attendances['number_of_hours'] += working_hours_on_day
                         ### tidak cuti, cek apakah dia masuk absen?
-                    if real_working_hours_on_day >= 0.000000000000000001 and not isNonWorkingDay:
+                    if real_working_hours_on_day > 0 and not isNonWorkingDay:
                         presences['number_of_days'] += 1.0
                         presences['number_of_hours'] += working_hours_on_day
-                    #no_urut = employee.gol_id.no
-                    #urut_title = employee.title_id.urutan
-                    #pprint.pprint(no_urut)
-                    #pprint.pprint(urut_title)
-                    #no_urut=float(no_urut)
-                    #urut_title=float(urut_title)
-                   
-            leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves + [presences]
-        coos = self.line2(cr, uid, contract_ids,context=None)    
-        return res + coos
-        
-    def line2(self, cr, uid, contract_ids, context=None):
-        """
-        @param contract_ids: list of contract id
-        @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
-        """
-        def was_on_leave(employee_id, datetime_day, context=None):
-            res = False
-            day = datetime_day.strftime("%Y-%m-%d")
-            holiday_ids = self.pool.get('hr.holidays').search(cr, uid, [('state','=','validate'),('employee_id','=',employee_id),('type','=','remove'),('date_from','<=',day),('date_to','>=',day)])
-            if holiday_ids:
-                res = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].holiday_status_id.name
-            return res
-
-        res = []
-        for contract in self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context):
-            if not contract.working_hours:
-                #fill only if the contract as a working schedule linked
-                continue
-  
-            overtimes = {
-                 'name': _("Overtime"),
-                 'sequence': 2,
-                 'code': 'OVERTIME',
-                 'number_of_days': 0.0,
-                 'number_of_hours': 0.0,
-                 'contract_id': contract.id,            
-            }
-            
-            transport = {
-                 'name': _("Transport"),
-                 'sequence': 2,
-                 'code': 'TRANSPORT',
-                 'number_of_days': 0.0,
-                 'number_of_hours': 0.0,
-                 'contract_id': contract.id,            
-            }
-            
-            uang_makan = {
-                 'name': _("Uang Makan"),
-                 'sequence': 2,
-                 'code': 'UANG_MAKAN',
-                 'number_of_days': 0.0,
-                 'number_of_hours': 0.0,
-                 'contract_id': contract.id,            
-            }
-            
-            uang_makan_lembur = {
-                 'name': _("Uang Makan Lembur"),
-                 'sequence': 2,
-                 'code': 'UANG_MAKAN_LEMBUR',
-                 'number_of_days': 0.0,
-                 'number_of_hours': 0.0,
-                 'contract_id': contract.id,            
-            }
-            
-            incentives = {
-                 'name': _("Incentives"),
-                 'sequence': 3,
-                 'code': 'INCENTIVES',
-                 'number_of_days': 0.0,
-                 'number_of_hours': 0.0,
-                 'contract_id': contract.id,            
-            }
-            leaves = {}
-            #import pdb;pdb.set_trace()
-            date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1, days=-15))[:10]
-            date_to_15 =str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-17))[:10]
-            day_from = datetime.strptime(date_from_16,"%Y-%m-%d")
-            day_to = datetime.strptime(date_to_15,"%Y-%m-%d")
-            nb_of_days = (day_to - day_from).days + 1          
-            for day in range(0, nb_of_days):
-            	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
-                working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
-                #working_hours_on_day = 8.00
-
-                if working_hours_on_day:
-                    #the employee had to work
-                    employee_id = contract.employee_id.id
-
-                    #employee info
-                    emp_obj = self.pool.get('hr.employee')
-                    employee = emp_obj.browse(cr, uid, employee_id, context=context)
-                    #import pdb;pdb.set_trace()
-                    real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
-                    if real_working_hours_on_day >= 0.000000000000001 : 
-                        transport['number_of_days'] += 1.0
-                    if real_working_hours_on_day >= 4 :    
-                        uang_makan['number_of_days'] += 1.0
-                    working_hours=int(real_working_hours_on_day)
-                    working_minutes=real_working_hours_on_day - working_hours
-                    work_minutes = working_minutes / 1.66666667
-                    if working_minutes > 0.15 and working_minutes <= 0.45 :
-                        real_working_hours_on_day= working_hours + (0.30 * 1.66666667)
-                    elif working_minutes >= 0.45 :    
-                        real_working_hours_on_day= working_hours + 1
-                    elif working_minutes < 15 :
-                        real_working_hours_on_day= working_hours  						
-                    date = (day_from + timedelta(days=day))
-                    import pdb;pdb.set_trace()
-                    leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
-                    isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7 or leave_type 
                     no_urut = employee.gol_id.no
                     urut_title = employee.title_id.urutan
                     pprint.pprint(no_urut)
                     pprint.pprint(urut_title)
                     no_urut=float(no_urut)
                     urut_title=float(urut_title)
-                    if real_working_hours_on_day >= working_hours_on_day :
-                        if contract.jenis_lembur == 'overtime' or no_urut < 100 :
-                            #add the input vals to tmp (increment if existing)
-                            # number_of_days = hari masuk dalam sebulan sesuai absensi
+                    if real_working_hours_on_day >= working_hours_on_day and urut_title < 100 :
+                        #add the input vals to tmp (increment if existing)
+                        # number_of_days = hari masuk dalam sebulan sesuai absensi
 
-                            ### hitung overtime: masukkan di field number_of_hours
-                            overtime =  real_working_hours_on_day - working_hours_on_day
-                            if overtime >= 4 or isNonWorkingDay :
-                                overtimes['number_of_days'] += 1.0
-                                uang_makan_lembur['number_of_days'] += 1.0
+                        ### hitung overtime: masukkan di field number_of_hours
+                        overtime =  real_working_hours_on_day - working_hours_on_day
+                        if overtime >= 4 or isNonWorkingDay :
+                            overtimes['number_of_days'] += 1.0
 
-                            """
-                            isNonWorkingDay : dihitung berdasarkan jam hadir
-                            workingDay: dihitung berdasarkan jam lembur (jam hadir - jam kerja normal)
+                        """
+                        isNonWorkingDay : dihitung berdasarkan jam hadir
+                        workingDay: dihitung berdasarkan jam lembur (jam hadir - jam kerja normal)
 
 
 
-                            if employee.title_id.urutan < 100:
+                        if employee.title_id.urutan < 100:
 
-                            """                                                
-                            if isNonWorkingDay:
-                                if real_working_hours_on_day < 8:
-                                    jam1 = 0
-                                    jam2 = real_working_hours_on_day
-                                    jam3 = 0
-                                    jam4 = 0
-                                elif (real_working_hours_on_day >= 8 and real_working_hours_on_day<9):
-                                    jam1 = 0
-                                    jam2 = 7
-                                    jam3 = real_working_hours_on_day - 7
-                                    jam4 = 0
-                                elif real_working_hours_on_day>=9:
-                                    jam1 = 0
-                                    jam2 = 7
-                                    jam3 = 1
-                                    jam4 = real_working_hours_on_day - 8                            
-                            else: 
-                                if overtime <=1:
-                                    jam1 = overtime
-                                    jam2 = 0
-                                    jam3 = 0
-                                    jam4 = 0
-                                elif (overtime > 1 ):
-                                    jam1 = 1
-                                    jam2 = overtime - 1
-                                    jam3 = 0
-                                    jam4 = 0                       
-                            total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
-                            
+                        """                                                
+                        if isNonWorkingDay:
+                            if real_working_hours_on_day < 8:
+                                jam1 = 0
+                                jam2 = real_working_hours_on_day
+                                jam3 = 0
+                                jam4 = 0
+                            elif (real_working_hours_on_day >= 8 and real_working_hours_on_day<9):
+                                jam1 = 0
+                                jam2 = 7
+                                jam3 = real_working_hours_on_day - 7
+                                jam4 = 0
+                            elif real_working_hours_on_day>=9:
+                                jam1 = 0
+                                jam2 = 7
+                                jam3 = 1
+                                jam4 = real_working_hours_on_day - 8                            
+                            overtimes_trs['number_of_days'] += 1.0
+                        else: 
+                            if overtime <=1:
+                                jam1 = overtime
+                                jam2 = 0
+                                jam3 = 0
+                                jam4 = 0
+                            elif (overtime > 1 ):
+                                jam1 = 1
+                                jam2 = overtime - 1
+                                jam3 = 0
+                                jam4 = 0                       
+                        total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
+                        
 
-                            overtimes['number_of_hours'] += total_overtime
-                    elif contract.jenis_lembur == 'incentive' or no_urut >= 100 : 
-                        if isNonWorkingDay and real_working_hours_on_day > 4 and no_urut <= 200 :
-                            incentives['number_of_days'] += 1.0
+                        overtimes['number_of_hours'] += total_overtime
+                    elif urut_title > 100 and urut_title < 200:   
+                        if no_urut < 200 :
+                            if isNonWorkingDay and real_working_hours_on_day > 4:
+                                incentives['number_of_days'] += 1.0
                         """ title = kolom sortir
                         else if employee.title_id > 100 : #operator ke atas:
                             employee.gol_id.urutan > 1 and  employee.gol_id.urutan < 3 :
@@ -306,28 +218,47 @@ class hr_payslip(osv.osv):
 
                                 else :employee.gol_id.urutan > 4:
                                     nol
-                            """     
-            res += [overtimes] + [incentives] + [transport] + [uang_makan] + [uang_makan_lembur]                            
+                            """                                
+            leaves = [value for key,value in leaves.items()]
+            res += [attendances] + leaves + [presences] + [overtimes] + [overtimes_trs] + [incentives]
         return res
-
-    def compute_sheet(self, cr, uid, ids, context=None):         
+        
+    def compute_sheet(self, cr, uid, ids,employee_id, context=None):    
+        #import pdb;pdb.set_trace()     
         slip_line_pool = self.pool.get('hr.payslip.line')
         sequence_obj = self.pool.get('ir.sequence')
         contract_obj = self.pool.get("hr.contract")
-        #contract_src = contract_obj.search()
-        for payslip in self.browse(cr, uid, ids, context=context):
+        reimburse_obj = self.pool.get("reimburse")
 
+        for payslip in self.browse(cr, uid, ids, context=context): 
+            #import pdb;pdb.set_trace()  
+            emp=payslip.employee_id.name
+            emp_id=reimburse_obj.search(cr, uid, [('employee_id', '=', emp)], context=context)           
             date_contract=payslip.contract_id.date_start
+            date_from=payslip.date_from
             date_to = payslip.date_to
             date_cont = datetime.strptime(date_contract,"%Y-%m-%d").year
             date_pays = datetime.strptime(date_to,"%Y-%m-%d").year
             year =(date_pays - date_cont) / 5
             date_cont = datetime.strptime(date_contract,"%Y-%m-%d").month
             date_pays = datetime.strptime(date_to,"%Y-%m-%d").month
+            nom=0.00
+            nam=0.00
+            #ddd= self.compute(cr,uid,ids,context=None)    
             if year == 1 or year == 2 or year == 3 or year == 4 or year == 5 or year == 6 or year == 7 or year ==8 or year == 9 or year == 10 :
                 if date_cont == date_pays :
                     nilai=1
                     self.write(cr, uid,ids, {'komisi': nilai}, context=context)
+            for su in reimburse_obj.browse(cr, uid, emp_id, context=context):
+                tgl=su.tanggal
+                jn=su.jenis
+                st=su.state               
+                if tgl >= date_from and tgl <= date_to and st == 'approve2' and jn == 'obat' :    
+                    nom=su.nomin+nom
+                    self.write(cr, uid,ids, {'reimburse_obat': nom}, context=context)
+                if tgl >= date_from and tgl <= date_to and st == 'approve2' and jn == 'rawat' :    
+                    nam=su.nomin+nam
+                    self.write(cr, uid,ids, {'reimburse_rawat': nam}, context=context)                    
             number = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
             #delete old payslip lines
             old_slipline_ids = slip_line_pool.search(cr, uid, [('slip_id', '=', payslip.id)], context=context)
@@ -345,10 +276,21 @@ class hr_payslip(osv.osv):
                 cod= line['code']
                 if cod == "NET":
                     coo =line['amount']      
-                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)              
-            self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number}, context=context)
-        return True 
-		
+                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)     
+                if cod == "POT_ABSEN":
+                    coo =line['amount']      
+                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context)  
+                if cod == "GROSS":
+                    coo = line['amount']
+                    self.write(cr, uid, [payslip.id], {'gros':coo}, context=context)     
+                    coos = self.funct(cr,uid,ids,context=None)    
+                    self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
+                    coos = self.pkp(cr,uid,ids,context=None)  
+                    self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context)
+            lin = [(0,0,lin) for lin in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]    
+            self.write(cr, uid, [payslip.id], {'line_ids': lin, 'number': number})
+        return True     
+
     def funct(self,cr,uid,ids,context=None) :
         xxx=self.browse(cr,uid,ids)[0]
         xyz=xxx.employee_id.name
@@ -523,18 +465,6 @@ class hr_salary_rule(osv.osv):
             
     _constraints = [
         (_check_crange, 'range max tidak boleh lebih kecil dari range min!', ['condition_range_min','condition_range_max']),
-                    ]    		
-class hr_holidays(osv.osv):
-    _name = "hr.holidays"
-    _description = "Leave"
-    _inherit = "hr.holidays"
-    
-    def check_holidays(self, cr, uid, ids, context=None):
-        holi_status_obj = self.pool.get('hr.holidays.status')
-        for record in self.browse(cr, uid, ids):
-            if record.holiday_type == 'employee' and record.type == 'remove':
-                if record.employee_id and not record.holiday_status_id.limit:
-                    leaves_rest = holi_status_obj.get_days( cr, uid, [record.holiday_status_id.id], record.employee_id.id, False)[record.holiday_status_id.id]['remaining_leaves']
-                    if leaves_rest > record.number_of_days_temp :
-                        raise osv.except_osv(_('Warning!'), _('There are not enough %s allocated for employee %s; please create an allocation request for this leave type.') % (record.holiday_status_id.name, record.employee_id.name))            
-        return True   					
+                    ]
+                    
+hr_salary_rule()

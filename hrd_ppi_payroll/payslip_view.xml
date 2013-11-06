@@ -33,7 +33,6 @@
                <field name="master_gaji_id"/>
                <field name="makan"/>
                <field name="transport"/>
-			   <field name="jenis_lembur"/>
                </field>
                <!--div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
@@ -49,7 +48,7 @@
             <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
             <field name="arch" type="xml">                
                   <field name="name" position="after">
-                    <!--field name="pajak"/-->
+                    <field name="pajak"/>
                     <group colspan="4">
                         <group string="Jamsostek">
                             <field name="jams1"/>
@@ -105,12 +104,10 @@
             <field name="name">hr.payslip.run.form</field>
             <field name="model">hr.payslip.run</field>
             <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
-            <field name="arch" type="xml">
-                <form string="Payslips Batches" version="7.0">
+            <field name="arch" type="xml">              
                 <header>
                     <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" group="base.group_tool_manager"/>                   
-                </header>
-                </form>
+                </header>          
             </field>
         </record>
         
@@ -119,11 +116,15 @@
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml">
-                <field name="number_of_days" position="replace">
-					 <field name="number_of_days" />
-				</field>
+               
                 <field name='name' position='after'>
-                    <field name="net"/>				
+                    <field name="net"/>
+                    <field name='reimburse_obat'/>
+                    <field name='reimburse_rawat'/>
+                    <field name='pot_absen'/>
+                    <field name='gros'/>
+                    <field name='total'/>
+                    <field name='pkp'/>
                 </field>
                
             </field>
