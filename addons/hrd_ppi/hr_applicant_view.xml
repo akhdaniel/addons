@@ -21,7 +21,7 @@
             <field name="stage_id"/>
             <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" class="oe_inline"/>
             </field>
-            <div class="oe_right oe_button_box" position="replace"/>
+            <!--div class="oe_right oe_button_box" position="replace"/-->
             <field name="stage_id" position="replace"/>
             <field name="reference" position="replace"/>
             <field name="email_from" position="replace"/>
@@ -407,6 +407,18 @@
                 </field>
             </field>
     </record>
+
+        <record id="action_hr_pmeeting applicant" model="ir.actions.act_window">
+            <field name="name">Interview</field>
+            <field name="res_model">crm.meeting</field>
+            <field name="view_type">form</field>           
+            <field name="view_mode">calendar,tree,form</field>
+        </record>   
+
+    <menuitem name="Schedule Interview"
+        id="menu_hr_meeting_applicant"
+        parent="base.menu_crm_case_job_req_main"
+        sequence="2" action="action_hr_pmeeting applicant"/>
 
     </data>
 </openerp>
