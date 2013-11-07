@@ -1,5 +1,4 @@
 from openerp.osv import fields, osv
-#from openerp.addons.base_status.base_stage import base_stage
 from datetime import date
 from time import strptime
 from time import strftime
@@ -440,7 +439,6 @@ class hr_applicant(osv.osv):
     
 
     def interview(self, cr, uid,vals, context=None):
-        #import pdb;pdb.set_trace()
         #appl=self.browse(cr,uid,ids)[0]
         app=vals["job_id"]
         apps=self.pool.get('hr.survey1')
@@ -478,8 +476,7 @@ class hr_applicant(osv.osv):
        brow = country_id1_obj.browse(cr, uid, country_id2, context=context).code_telp
        return {'value':{'telp2': brow}}
     
-    def simpul(self, cr, uid,ids,vals,context=None):     
-        #import pdb;pdb.set_trace() 
+    def simpul(self, cr, uid,ids,vals,context=None):   
         hasil=self.browse(cr,uid,ids)[0]
         #hasil2=hasil.kesimpulan
         partner=self.pool.get('hr.recruitment.stage')  
@@ -862,8 +859,7 @@ class country(osv.osv):
     }
 country()
 
-class hasil_wawancara(osv.Model):
-    """Informasi Hasil Wawancara"""
+class hasil_wawancara(osv.osv):
     _name = "hr_applicant.hasil_wawancara"
 
     def create(self, cr, uid, vals, context=None):  
@@ -881,6 +877,8 @@ class hasil_wawancara(osv.Model):
     _defaults = {
         'user_id': lambda s, cr, uid, c: uid,
     }
+    
+hasil_wawancara()
 
 class meeting(osv.osv):
     _name = "crm.meeting"
