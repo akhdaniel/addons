@@ -36,7 +36,7 @@
                   <field name="limit" position="replace">
                     <field name="limit_cuti"/>
                   </field>
-               
+                    <field name="categ_id" position="replace"/>
             </field>
         </record>            
             
