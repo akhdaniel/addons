@@ -33,7 +33,8 @@ class hr_holidays_status(osv.osv):
     _columns={
         'libur_bersih':fields.boolean('Hitung Tanggal Merah'), 
         'is_5_years' :  fields.boolean('Cuti per 5 tahun masa kerja',readonly=True),
-        'is_1_year' :  fields.boolean('Cuti per tahun',readonly=True),    
+        'is_1_year' :  fields.boolean('Cuti per tahun',readonly=True),  
+        'limit_cuti': fields.boolean('Limit Cuti',help="Ceklist jika cuti tidak bisa minus"),  
             }
             
     _defaults={
@@ -57,6 +58,7 @@ class hr_holidays(osv.osv):
         'libur_bersih':fields.boolean('Hitung Tanggal Merah'),
         'is_libur':fields.boolean('Libur'),
         'libur_bersih2':fields.related('holiday_status_id','libur_bersih',type='boolean',relation='hr.holidays.status',string='Hitung Tanggal Merah',readonly=True),
+        'limit_cuti':fields.related('holiday_status_id','limit_cuti',type='boolean',relation='hr.holidays.status',string='Limit Cuti',readonly=True),
     }
  
     def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
