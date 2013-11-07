@@ -61,7 +61,9 @@ class permohonan_recruit(osv.osv):
         'bol_kelamin':fields.boolean('Jenis Kelamin'),
         'bol_domisili':fields.boolean('Domisili'),
         'bol_tempat_lahir_id':fields.boolean('Tempat Lahir'),
-        'applicant_ids':fields.one2many('hr.applicant','app_id','Daftar Pelamar',readonly=True),    
+        'applicant_ids':fields.one2many('hr.applicant','app_id','Daftar Pelamar',readonly=True), 
+        'salary_proposed_botom_margin': fields.float('Standar Gaji Perusahaan', help="Batas range terendah"), 
+        'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"),   
 	}
     _defaults = {
         'state': PERMOHONAN_STATES[0][0],
@@ -166,7 +168,16 @@ class permohonan_recruit(osv.osv):
             if asu == 2:                      
                 obj_app.write(cr,uid,[exe.id for exe in hasil.applicant_ids],{'stage_id':asu})
         return True                         				 
+      
+    def _check_sal(self, cr, uid, ids):
+        for sal in self.browse(cr, uid, ids):
+            sal_src = self.search(cr, uid, [('salary_proposed_botom_margin', '>', sal.salary_proposed_top_margin), ('salary_proposed_top_margin', '<', sal.salary_proposed_botom_margin)])
+            if sal_src:
+                return False
+        return True      
             
+    _constraints = [(_check_sal, 'Standar gaji max tidak boleh lebih kecil dari standar gaji min!', ['salary_proposed_botom_margin','salary_proposed_top_margin']),]
+
 permohonan_recruit()
 
 class hr_survey(osv.osv):
@@ -438,7 +449,7 @@ class hr_applicant(osv.osv):
         res=[]
         for pr in ap:
             if pr.surveys_id.state == "open":
-                prs=pr.survey_id.id
+                #prs=pr.survey_id.id
                 prs=pr.surveys_id.id
                 res.append((0,0, {'name':prs})) 
         vals['surv_ids']=res
@@ -493,7 +504,17 @@ class hr_applicant(osv.osv):
         #vals=self.simpul(cr, uid, ids, vals, context=None)
         #result= super(hr_applicant,self).write (cr, uid, ids,vals, context)
         #return result 
-                        
+    
+    def onchange_job(self, cr, uid, ids, job, context=None):
+        if job:
+            job_record = self.pool.get('hr.job').browse(cr, uid, job, context=context)
+            if job_record and job_record.department_id:
+                return {'value': {
+                    'department_id': job_record.department_id.id,
+                    'salary_proposed_botom_margin':job_record.salary_proposed_botom_margin,
+                    'salary_proposed_top_margin':job_record.salary_proposed_top_margin}}
+        return {}
+
     _columns= {
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin',required=True),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
@@ -551,7 +572,7 @@ class hr_applicant(osv.osv):
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
 		'app_id' : fields.many2one('hr.job','Job'),
-        'salary_proposed': fields.float('Proposed Salary', readonly=True),
+        'salary_proposed': fields.float('Proposed Salary'),
         'salary_proposed_botom_margin': fields.float('Standar Gaji Perusahaan', help="Batas range terendah"), 
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"), 
         'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
@@ -841,13 +862,13 @@ class country(osv.osv):
     }
 country()
 
-class HasilSurvey(osv.Model):
+class hasil_wawancara(osv.Model):
     """Informasi Hasil Wawancara"""
     _name = "hr_applicant.hasil_wawancara"
 
     def create(self, cr, uid, vals, context=None):  
         vals['stage'] = self.pool.get("hr.applicant").browse(cr,uid,vals['app_id'],context).stage_id.name
-        return super(HasilSurvey, self).create(cr, uid, vals, context)    
+        return super(hasil_wawancara, self).create(cr, uid, vals, context)    
 
     _columns = {
         'app_id':fields.many2one("hr.applicant","Applicant"),
@@ -867,19 +888,6 @@ class meeting(osv.osv):
     
     _columns = {
         "applicant_ids" : fields.many2many("hr.applicant","meeting_rel","applicant_id","meeting_id","Nama Pelamar"),
-        "app_id":fields.many2one('hr.applicant'),
     }
 
 meeting()    
-
-class meeting_tampung(osv.osv):
-    _name = "crm.meeting_tampung"
-    
-    _columns = {
-        "meeting_id":fields.many2one('crm.meeting',"Subject",required=True),
-        "date":fields.related('meeting_id','date',type='date',relation='crm.meeting',string='Tanggal',store=True,readonly=True),
-        "location":fields.related('meeting_id','location',type='char',relation='crm.meeting',string='Tempat',store=True,readonly=True),
-        #"stage_id":fields.related('meeting_id','stage_id',type='many2one',relation='hr.recruitment.stage',string='Tahapan',store=True),
-    }
-
-meeting_tampung() 

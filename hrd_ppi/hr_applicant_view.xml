@@ -16,7 +16,13 @@
             <header>          
                 <button string="Filter Applicant" name="coco" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
             </header>
-            
+
+            <button name="case_close_with_emp"  position="replace">
+                <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
+            </button>
+
             <field name="partner_name" position="after">
             <field name="stage_id"/>
             <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" class="oe_inline"/>
@@ -67,15 +73,7 @@
                             <field name='name'/>
                         </form>
                     </field>                  
-                    <field name="meeting_ids" view_mode="tree">
-                        <!--tree>
-                            <field name='name'/>
-                            <field name='user_id'/>
-                            <field name="date"/>
-                            <field name='duration'/>
-                            <field name="location"/>
-                        </tree-->
-                    </field>                     
+                    <field name="meeting_ids" />                     
                 </group> 
                                    
             </field>
@@ -124,7 +122,7 @@
             
             <field name="source_id" position="after">                
                 <newline/>
-                <group string="Kesimpulan" states="open,pending">                                
+                <group string="Kesimpulan" states="open,pending" group="hrd_ppi.group_hr_manager">                                
                 <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
                 <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight"/>
                 </group>                 	
@@ -165,15 +163,15 @@
                             <field name="salary_expected" class="oe_inline"/>
                             <field name="fasilitas1_ids"/>
                         </div>
-                        <label for="salary_proposed" string="Standar Gaji Perusahaan"/>
-                        <div>
+                        <label for="salary_proposed" string="Standar Gaji Perusahaan" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
                             <field name="salary_proposed_botom_margin" class="oe_inline"/>
                             <span class="oe_inline" > - </span>
                             <field name="salary_proposed_top_margin" class="oe_inline"/>
                             <field name="fasilitas2_ids"/>
                         </div>
-                        <label for="salary_proposed"/>
-                        <div>
+                        <label for="salary_proposed" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
                             <field name="salary_proposed" class="oe_inline" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" />
                         </div>
                     </group>
@@ -394,6 +392,8 @@
             <field name="model">crm.meeting</field>
             <field name="inherit_id" ref="base_calendar.view_crm_meeting_form"/>
             <field name="arch" type="xml">
+                <field name="categ_ids" position="replace"/>
+                <field name="organizer" position="replace"/>
                 <field name="description" position="after">
                 <field view_mode="tree" name="applicant_ids" >
                         <tree editable="bottom">
