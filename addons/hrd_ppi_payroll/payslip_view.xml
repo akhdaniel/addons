@@ -2,7 +2,7 @@
     <data>
         <!-- Master Gaji -->
         <record model="ir.actions.act_window" id="action_gaji">
-            <field name="name">Master Gaji</field>
+            <field name="name">Master Incentive dan Transport</field>
             <field name="res_model">hr.master_gaji</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -24,6 +24,18 @@
         </record>  
 
         <!-- contract -->        
+        <record id="hr_master_gaji_tree" model="ir.ui.view">
+            <field name="name">hr.master_gaji</field>
+            <field name="model">hr.master_gaji</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">  
+                <tree string="Master incentive dan Transport">    
+                <field name="name"/>          
+                <field name="makan"/>
+                <field name="transport"/>
+                </tree>                      
+            </field>
+        </record> 
         <record id="hr_contract_view_form1" model="ir.ui.view">
             <field name="name">hr.contract.view.form</field>
             <field name="model">hr.contract</field>
@@ -33,6 +45,7 @@
                <field name="master_gaji_id"/>
                <field name="makan"/>
                <field name="transport"/>
+               <field name="jenis_lembur"/>
                </field>
                <!--div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
@@ -48,7 +61,7 @@
             <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
             <field name="arch" type="xml">                
                   <field name="name" position="after">
-                    <field name="pajak"/>
+                    <!--field name="pajak"/-->
                     <group colspan="4">
                         <group string="Jamsostek">
                             <field name="jams1"/>
@@ -65,6 +78,7 @@
                        </group>
                        <group string="THT">
                             <field name="tht"/>
+                            <field name="ttht"/>
                        </group>
                     </group>          
                   </field>                       
@@ -104,10 +118,12 @@
             <field name="name">hr.payslip.run.form</field>
             <field name="model">hr.payslip.run</field>
             <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
-            <field name="arch" type="xml">              
+            <field name="arch" type="xml">
+                <form string="Payslips Batches" version="7.0">
                 <header>
                     <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" group="base.group_tool_manager"/>                   
-                </header>          
+                </header>
+                </form>
             </field>
         </record>
         
@@ -115,16 +131,13 @@
             <field name="name">hr.payslip.form</field>
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
-            <field name="arch" type="xml">
-               
+            <field name="arch" type="xml"> 
                 <field name='name' position='after'>
-                    <field name="net"/>
-                    <field name='reimburse_obat'/>
-                    <field name='reimburse_rawat'/>
-                    <field name='pot_absen'/>
-                    <field name='gros'/>
+                    <field name="net"/>	
                     <field name='total'/>
                     <field name='pkp'/>
+                    <field name="pot_absen"/> 	
+                    <field name="libur"/>
                 </field>
                
             </field>
@@ -139,7 +152,18 @@
                 </tree>
             </field>
         </record>
-        <menuitem action="action_gaji" parent="base.menu_tools" name="Master Gaji" id="master_gaji" sequence="211" groups="base.group_tool_user"/>
+        <record model="ir.ui.view" id="tab_form_view">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                 <field name="name" position="after">
+                    <field name="alokasi" />
+                </field>
+            </field>
+        </record>
+        <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user"/>
         <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user"/>
         <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user"/>
     </data>
