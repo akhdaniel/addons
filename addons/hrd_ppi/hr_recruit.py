@@ -345,6 +345,7 @@ class hr_applicant(osv.osv):
                                                      'country_id1':applicant.country_id1.id,
                                                      'country_id2':applicant.country_id2.id,
 													 'bid_id':applicant.bidang_id.id,
+                                                     'wage':applicant.salary_proposed,
                                                     })
                 
                 
