@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+
 <openerp>
     <data>
       
@@ -19,8 +20,7 @@
 
             <button name="case_close_with_emp"  position="replace">
                 <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
-                        class="oe_highlight"
-                        attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
+                        class="oe_highlight" attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
             </button>
 
             <field name="partner_name" position="after">
