@@ -108,7 +108,8 @@ class employee(osv.osv):
         'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
         'ptkp_id': fields.many2one('hr.ptkp','Status Pajak'),
         'npwp':fields.char('NPWP',size=20),
-        'bid_id':fields.many2one('hr_recruit.bidang','bidang'),        
+        'bid_id':fields.many2one('hr_recruit.bidang','bidang'), 
+        'wage':fields.float('Proposed Salary'),       
         }
         
     _defaults = {

@@ -19,6 +19,8 @@ Human Resource PT.PPI
     	    'title_view.xml',
         	'payslip_view.xml', 
 			'extitle.xml',
+            'hr_applicant_view.xml',
+            'hr_contract_view.xml',
             ],
     'data': [],
     'installable':True,
