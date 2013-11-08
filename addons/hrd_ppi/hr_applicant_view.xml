@@ -91,7 +91,6 @@
                     <field name="pt_id"/>
                     <field name="result_id"/>  
                 </group>
-
 			
                <group colspan="4">
                     <group string="Alamat Domisili">
@@ -122,9 +121,9 @@
             
             <field name="source_id" position="after">                
                 <newline/>
-                <group string="Kesimpulan" states="open,pending" group="hrd_ppi.group_hr_manager">                                
+                <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_manager">                                
                 <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
-                <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight"/>
+                <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight" />
                 </group>                 	
              </field>
 
@@ -148,10 +147,10 @@
                                 <field name='user_id'/>
                                 <field name='stage'/>
                             </tree>
-                            <form>
-                                <field name='result' groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
-                                <field name='user_id' groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
-                                <field name='reason' groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                            <form groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
+                                <field name='result'/>
+                                <field name='user_id' />
+                                <field name='reason' />
                             </form>
                         </field>
                     </group>
