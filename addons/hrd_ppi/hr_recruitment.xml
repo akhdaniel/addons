@@ -9,7 +9,7 @@
                 <header>                              
                     <button string="Submit to HRD" type="workflow" 
                         states="draft" name="signal_submit"
-                        groups="hrd_ppi.group_hr_department" 
+                        groups="hrd_ppi.group_hr_department,hrd_ppi.group_hr_manager" 
                         class="oe_highlight" />                 
                                              
                     <button string="Send for Approval" type="workflow" 
