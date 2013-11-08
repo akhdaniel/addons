@@ -78,7 +78,7 @@ class permohonan_recruit(osv.osv):
         'bol_sts_prk':True,
         'bol_kelamin':True, 
         'bol_domisili':True,  
-        'bol_tempat_lahir_id',True     
+        'bol_tempat_lahir_id':True,     
                  }  
 
     def cici(self,cr, uid,ids, context=None): 
@@ -393,6 +393,7 @@ class hr_applicant(osv.osv):
             result[r.id] = age
         return result
         
+    '''Filter Applicant
     def coco(self,cr, uid,ids, context=None): 
 		#import pdb;pdb.set_trace()
         par=self.browse(cr,uid,ids)[0]
@@ -442,7 +443,7 @@ class hr_applicant(osv.osv):
                                             if perok == ap_jurusan or perok == False:                                
                                                 return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
-    
+    '''
 
     def interview(self, cr, uid,vals, context=None):
         #appl=self.browse(cr,uid,ids)[0]

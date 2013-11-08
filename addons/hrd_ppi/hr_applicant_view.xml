@@ -14,9 +14,9 @@
         <field name="arch" type="xml">
             <!--field name="partner_name" position="after">
                     <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/-->
-            <header>          
+            <!--header>          
                 <button string="Filter Applicant" name="coco" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
-            </header>
+            </header-->
 
             <button name="case_close_with_emp"  position="replace">
                 <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
