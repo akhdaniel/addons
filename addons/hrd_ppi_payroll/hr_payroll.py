@@ -80,7 +80,6 @@ class hr_payslip(osv.osv):
                     employee = emp_obj.browse(cr, uid, employee_id, context=context)
                     #import pdb;pdb.set_trace()
                     leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
-                    #import pdb;pdb.set_trace()
                     if leave_type:
                         ###### cuti	
                         #if he was on leave, fill the leaves dict
@@ -188,10 +187,10 @@ class hr_payslip(osv.osv):
                     #pprint.pprint(urut_title)
                     #no_urut=float(no_urut)
                     #urut_title=float(urut_title)
-                   
+            import pdb;pdb.set_trace()       
             leaves = [value for key,value in leaves.items()]
             res += [attendances] + leaves + [presences]
-        coos = self.line2(cr, uid, contract_ids,context=None)  
+        coos = self.line2(cr, uid, contract_ids,context=None) 
         return res + coos
         
     def line2(self, cr, uid, contract_ids, context=None):
@@ -446,6 +445,8 @@ class hr_payslip(osv.osv):
                     self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context)
             lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number})
+            ccc =self.libur(cr,uid,ids,context=None)
+            self.write(cr,uid,ids,{'libur':ccc},context=context)
         return True     
 
     def funct(self,cr,uid,ids,context=None) :
@@ -485,7 +486,23 @@ class hr_payslip(osv.osv):
             occ = ccc.nominal_max
             if xcz >= ocd and xcz <= occ :
                 pkp = ccc.pajak
-        return pkp    
+        return pkp   
+        
+    def libur (self,cr,uid,ids,context=None):
+        #import pdb;pdb.set_trace()
+        xxx=self.browse(cr,uid,ids)[0]
+        aaa=xxx.name
+        date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
+        day_from = datetime.strptime(date_from_16,"%Y-%m-%d").year
+        cuti = "Cuti Tahunan"
+        obj=self.pool.get('hr.payslip.worked_days')
+        src=obj.search(cr,uid,[('payslip_id','=',aaa)])
+        pay_obj=obj.browse(cr,uid,src,context=context)
+        for xyz in pay_obj :
+            if xyz.code == cuti :
+                ccc = xyz.number_of_days
+        return ccc
+         
 
     _columns = {
         'net' : fields.integer("Net"),
@@ -658,8 +675,11 @@ class hr_holidays(osv.osv):
         return True
     def _aac(self, cr, uid, ids, name, args, context=None):
         result = {}
+        date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
+        dates = datetime.strptime(date_from_16,"%Y-%m-%d").year
+        date = str(dates)
         for hol in self.browse(cr, uid, ids, context=context):
-            if hol.type!='remove':
+            if hol.type!='remove' and hol.tahun == date :
                 result[hol.id] = hol.number_of_days_temp
             else:
                 result[hol.id] = 0.0
@@ -667,16 +687,19 @@ class hr_holidays(osv.osv):
         
     _columns = {
         'temp' : fields.function(_aac, "blabla"),
+        'tahun': fields.char('tahun',readonly=True),
      }
-        
+      
+    _defaults = { 
+        'tahun' : lambda *a : time.strftime('%Y')    
+        }   
+         
 hr_holidays()  
 
 class hr_employee(osv.osv):
     _inherit="hr.employee"
     
     def _aloc(self, cr, uid, ids, name, args, context=None):
-        #import pdb;pdb.set_trace()
-       #reimburse = self.pool.get('reimburse').browse(cr, uid, ids, context=context)
         holiday_obj = self.pool.get("hr.holidays")
         yyy=0.0
         result={}
@@ -689,7 +712,6 @@ class hr_employee(osv.osv):
                 xyz=hol.number_of_days
                 xxx=hol.temp
                 stt = hol.state
-               # if tahun == thn and stt == 'validate':
                 if stt == 'validate':
                     yyy  += xyz   
                     zz += xxx                
