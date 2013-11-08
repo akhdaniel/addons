@@ -8,6 +8,7 @@ class hr_contract(osv.osv):
         'master_gaji_id':fields.many2one('hr.master_gaji', "incentive"),
         'makan':fields.related('master_gaji_id','makan',type='integer',relation='hr.master_gaji',string='Uang Makan',readonly=True),
         'transport':fields.related('master_gaji_id','transport',type='integer',relation='hr.master_gaji',string='Uang Transport',readonly=True),
+        'jenis_lembur' : fields.selection([('incentive','Incentive'),('overtime','Overtime')], 'Jenis Lembur'),
     }
 hr_contract()    
     
@@ -15,7 +16,7 @@ class master_gaji(osv.osv):
     _name="hr.master_gaji"
     
     _columns = {
-        "name" : fields.selection([('gol1-2','Gol 1-2'),('gol3-4','Gol 3-4'),('gol5','Gol 5 keatas')],'Pilih Golongan'),
+        "name" : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'),('9','9')],'Pilih Golongan'),
         "makan" :fields.integer("Uang Makan"),
         "transport" : fields.integer("Uang Transportasi"),
     }
@@ -86,7 +87,8 @@ class hr_contract_type(osv.osv):
         "reimburse_perawatan":fields.integer('Perawatan Rumah Sakit',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
         "biaya_jabatan":fields.integer('Biaya Jabatan (%)',size=1),
         "max_biaya_jabatan":fields.float('Nominal Max (Rp)'),
-        "tht":fields.integer('Tunjangan Hari Tua (%)'),		
+        "tht":fields.float('Kontribusi Perusahaan (%)'),
+        'ttht':fields.float('Kontribusi Karyawan (%)'),		
      } 
 hr_contract_type()
 
@@ -95,7 +97,6 @@ class pkp(osv.osv):
     _rec_name="kode"
     
     _columns = {
-        'payslip_id': fields.many2one("hr.payslip"),
         "kode":fields.char('Kode',size=5,required=True),
         "nominal_min" : fields.float("Nominal Min",required=True),
         "nominal_max" : fields.float("Nominal Max",required=True),
