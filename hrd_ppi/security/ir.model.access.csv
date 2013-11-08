@@ -103,7 +103,7 @@ access_hr_recruit_kota,hr_recruit.kota,model_hr_recruit_kota,group_hr_user,1,1,1
 access_hr_recruit_kota_man,hr_recruit.kota,model_hr_recruit_kota,group_hr_manager,1,1,1,1
 access_hr_recruit_kota_dep,hr_recruit.kota,model_hr_recruit_kota,group_hr_department,1,0,1,0
 
-access_hr_applicant_hasil_wawancara_user,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_user,1,1,1,0
+access_hr_applicant_hasil_wawancara_user,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_user,1,0,0,0
 access_hr_applicant_hasil_wawancara_dep,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_department,1,0,1,0
 access_hr_applicant_hasil_wawancara_man,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_manager,1,0,1,0
 
@@ -116,4 +116,20 @@ access_hr_fasilitas2_man,hr.fasilitas2,model_hr_fasilitas2,group_hr_manager,1,1,
 access_hr_fasilitas3_user,hr.fasilitas3,model_hr_fasilitas3,group_hr_user,1,1,1,0
 access_hr_fasilitas3_man,hr.fasilitas3,model_hr_fasilitas3,group_hr_manager,1,1,1,1
 
+access_hr_recruit_pt_user,hr_recruit.pt,model_hr_recruit_pt,group_hr_user,1,1,1,0
+access_hr_recruit_pt_man,hr_recruit.pt,model_hr_recruit_pt,group_hr_manager,1,1,1,1
 
+access_hr_recruit_result_user,hr_recruit.result,model_hr_recruit_result,group_hr_user,1,1,1,0
+access_hr_recruit_result_man,hr_recruit.result,model_hr_recruit_result,group_hr_manager,1,1,1,1
+
+access_hr_recruit_prov_user,hr_recruit.prov,model_hr_recruit_prov,group_hr_user,1,1,1,0
+access_hr_recruit_prov_man,hr_recruit.prov,model_hr_recruit_prov,group_hr_manager,1,1,1,1
+
+access_hr_recruit_issued_user,hr_recruit.issued,model_hr_recruit_issued,group_hr_user,1,1,1,0
+access_hr_recruit_issued_man,hr_recruit.issued,model_hr_recruit_issued,group_hr_manager,1,1,1,1
+
+access_hr_recruit_b_tulisan_user,hr_recruit.b_tulisan,model_hr_recruit_b_tulisan,group_hr_user,1,1,1,0
+access_hr_recruit_b_tulisan_man,hr_recruit.b_tulisan,model_hr_recruit_b_tulisan,group_hr_manager,1,1,1,1
+
+access_hr_recruit_b_lisan_user,hr_recruit.b_lisan,model_hr_recruit_b_lisan,group_hr_user,1,1,1,0
+access_hr_recruit_b_lisan_man,hr_recruit.b_lisan,model_hr_recruit_b_lisan,group_hr_manager,1,1,1,1
