@@ -32,25 +32,26 @@ class permohonan_recruit(osv.osv):
 
     
     _columns= {
-        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian')],'Jenis Permohonan',required=True),
+        'name': fields.char('Job Name', size=128, required=True, select=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian')],string='Jenis Permohonan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'no':fields.char('Nomor',20),
-        'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],'Status'),
-        'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True),
-        'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','jurusan'),
-        'pengalaman':fields.integer('Pengalaman (min-th)'),
-        'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],'Usia (max)'),
-        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],'Status Pernikahan'),
-        'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],'Jenis Kelamin'),
-        'wkt_pemohon':fields.date('Permintaan Pemohon'),
+        'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],string='Status',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','jurusan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'pengalaman':fields.integer('Pengalaman (min-th)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],string='Usia (max)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],string='Jenis Kelamin',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'wkt_pemohon':fields.date('Permintaan Pemohon',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'wkt_rekruter':fields.date('Kesanggupan Rekruter'),
-        'catatan':fields.char('Realisasi Penempatan',128),
+        'catatan':fields.char('Realisasi Penempatan',128,states={'draft':[('readonly',True)], 'submit':[('readonly',True)]}),
         'catatan2':fields.text('Catatan'),
         'state': fields.selection(PERMOHONAN_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
         'survey_ids':fields.one2many('hr.survey1','job_id','Interview Form'),
         'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
-        'domisili_id':fields.many2one('hr_recruit.kota','Domisili'),    
-        'tempat_lahir_id':fields.many2one('hr_recruit.kota','Tempat Lahir'), 
+        'domisili_id':fields.many2one('hr_recruit.kota','Domisili',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),    
+        'tempat_lahir_id':fields.many2one('hr_recruit.kota','Tempat Lahir',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}), 
         'bol_name':fields.boolean('Nama Tugas',help="Hilangkan ceklist jika ingin filter tidak sesuai dengan aplikasi yang dilamar"),
         'bol_type_id':fields.boolean('Pendidikan'),
         'bol_jurusan_ids':fields.boolean('Jurusan'),
@@ -63,6 +64,8 @@ class permohonan_recruit(osv.osv):
         'applicant_ids':fields.one2many('hr.applicant','app_id','Daftar Pelamar',readonly=True), 
         'salary_proposed_botom_margin': fields.float('Standar Gaji Perusahaan', help="Batas range terendah"), 
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"),   
+        'no_of_recruitment': fields.float('Expected in Recruitment', help='Number of new employees you expect to recruit.',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'department_id': fields.many2one('hr.department', 'Department',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
 	}
     _defaults = {
         'state': PERMOHONAN_STATES[0][0],
@@ -73,7 +76,9 @@ class permohonan_recruit(osv.osv):
         'bol_pengalaman':True,
         'bol_usia':True,
         'bol_sts_prk':True,
-        'bol_kelamin':True,        
+        'bol_kelamin':True, 
+        'bol_domisili':True,  
+        'bol_tempat_lahir_id',True     
                  }  
 
     def cici(self,cr, uid,ids, context=None): 
