@@ -46,32 +46,50 @@
                     <group>
                 </group>
                 </label> 
-				<label for="name" position="after">
-                    <group>
-                    <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" nolabel="1"/>           
-                    </group>
-                </label>  				
+                <field name="name" position="before">
+                    <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" nolabel="1" class="oe_inline"/>   
+                </field> 
                 <field name="no_of_employee" position="before">
-                    <field name="status_jabatan" />                  
-                    <field name="pengalaman"/>
-                    <field name="usia"/>
-                    <field name="kelamin"/> 
-                    <field name="sts_prk"/>  
-                    <field name="domisili_id"/>
-                    <field name="tempat_lahir_id"/>                 
+                    <field name="status_jabatan" /> 
+
+                    <div>
+                        <field name="bol_pengalaman" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="pengalaman" class="oe_inline" />
+                    </div>
+                    <field name="pengalaman" class="oe_inline"  nolabel="1"/>
+
+                    <div>
+                        <field name="bol_usia" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="usia" class="oe_inline" />
+                    </div>
+                    <field name="usia" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_kelamin" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="kelamin" class="oe_inline" />
+                    </div>  
+                    <field name="kelamin" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_sts_prk" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="sts_prk" class="oe_inline" />
+                    </div>
+                    <field name="sts_prk" nolabel="1"/> 
+
+                    <div>
+                        <field name="bol_domisili" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="domisili_id" class="oe_inline" />
+                    </div>
+                    <field name="domisili_id" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_tempat_lahir_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="tempat_lahir_id" class="oe_inline" />
+                    </div>
+                    <field name="tempat_lahir_id" nolabel="1"/> 
+
                 </field>
-                <field name="expected_employees" position="after">
-                    <group colspan="4"> 
-                    <field name="bol_pengalaman" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/> 
-                    <field name="bol_usia" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
-                    <field name="bol_kelamin" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>  
-                    <field name="bol_sts_prk" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
-                    <field name="bol_domisili" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
-                    <field name="bol_tempat_lahir_id" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
-                    <field name="bol_type_id" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
-                    <field name="bol_jurusan_ids" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
-                     </group>                
-                </field>				
+				
                 <field name="department_id" position="after">                                        
                     <label for="wkt_pemohon" string="Waktu Penempatan"/>
                         <div class="oe_title">
@@ -81,12 +99,23 @@
                             <field name="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>                   
                         </div>                    
                     <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')]}"/>
-                    <field name="type_id"/>
-                    <field view_mode="tree" name="jurusan_ids">
+
+                    <div>
+                        <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="type_id" class="oe_inline" />
+                    </div>
+                    <field name="type_id" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_jurusan_ids" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <label for="jurusan_ids" class="oe_inline" />
+                    </div>
+                    <field view_mode="tree" name="jurusan_ids" nolabel="1">
                         <tree editable="bottom">
                             <field name="name"/>
                         </tree>    
-                    </field>   
+                    </field> 
+
                     <field view_mode="tree" name="survey_ids">
                         <tree>
                             <field name='surveys_id'/>
