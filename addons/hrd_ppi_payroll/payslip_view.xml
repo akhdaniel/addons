@@ -148,6 +148,18 @@
                 </tree>
             </field>
         </record>
+        <record model="ir.ui.view" id="tab_form_view">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                 <field name="name" position="after">
+                    <field name="alokasi" />
+                    <field name="cuti_tahunan"/>
+                </field>
+            </field>
+        </record>
         <record id="hr_public_holiday_form" model="ir.ui.view">
             <field name="name">Public Holidays</field>
             <field name="model">hr.holidays</field>
