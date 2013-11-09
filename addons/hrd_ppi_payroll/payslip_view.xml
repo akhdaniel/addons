@@ -134,10 +134,6 @@
             <field name="arch" type="xml"> 
                 <field name='name' position='after'>
                     <field name="net"/>	
-                    <field name='total'/>
-                    <field name='pkp'/>
-                    <field name="pot_absen"/> 	
-                    <field name="libur"/>
                 </field>
                
             </field>

@@ -62,6 +62,7 @@ class hr_payslip(osv.osv):
             }
 
             leaves = {}
+            leave={}
            # import pdb;pdb.set_trace()
             day_from = datetime.strptime(date_from,"%Y-%m-%d")
             day_to = datetime.strptime(date_to,"%Y-%m-%d")
@@ -80,13 +81,13 @@ class hr_payslip(osv.osv):
                     employee = emp_obj.browse(cr, uid, employee_id, context=context)
                     #import pdb;pdb.set_trace()
                     leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
-                    if leave_type:
+                    if leave_type == "Cuti Tahunan" :
                         ###### cuti	
                         #if he was on leave, fill the leaves dict
                         
                         if leave_type in leaves:
                            # xis += 1.0 
-                            if employee.remaining_leaves >= 0 :
+                            if employee.cuti_tahunan >= 0 :
                                 leaves[leave_type]['number_of_days'] += 1.0
                                 leaves[leave_type]['number_of_hours'] += working_hours_on_day
                             else : 
@@ -108,8 +109,11 @@ class hr_payslip(osv.osv):
                                 if totals == 0.0 :
                                     leaves[leave_type]['number_of_days'] = alok_cuti
                                 else :
-                                    if totals >= alok_cuti :
-                                        leaves[leave_type]['number_of_days'] = 0.0       
+                                    if totals <= alok_cuti :
+                                        fff= alok_cuti - totals
+                                        leaves[leave_type]['number_of_days'] = fff 
+                                    else : 
+                                        leaves[leave_type]['number_of_days'] = 0.0 
                            # xo += working_hours_on_day
                         else:
                             #import pdb;pdb.set_trace()
@@ -161,6 +165,21 @@ class hr_payslip(osv.osv):
                             
                            # xi += working_hours_on_day    
                             }
+                    if leave_type != "Cuti Tahunan" and leave_type :
+                        if leave_type in leave:
+                            leave[leave_type]['number_of_days'] += 1.0
+                            leave[leave_type]['number_of_hours'] += working_hours_on_day
+                        else :
+                            leave[leave_type] = {
+                                    'name': leave_type,
+                                    'sequence': 5,
+                                    'code': leave_type,
+                                    'number_of_days': 1.0,
+                                    'number_of_hours': working_hours_on_day,
+                                    'contract_id': contract.id,
+                                    }
+                                    
+                  
                     real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
                     working_hours=int(real_working_hours_on_day)
                     working_minutes=real_working_hours_on_day - working_hours
@@ -173,7 +192,7 @@ class hr_payslip(osv.osv):
                         real_working_hours_on_day= working_hours  						
                     date = (day_from + timedelta(days=day))
                     
-                    isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7 or leave_type 
+                    isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7
                     if isNonWorkingDay == False :
                         attendances['number_of_days'] += 1.0
                         attendances['number_of_hours'] += working_hours_on_day
@@ -181,15 +200,10 @@ class hr_payslip(osv.osv):
                     if real_working_hours_on_day >= 0.000000000000000001 and not isNonWorkingDay:
                         presences['number_of_days'] += 1.0
                         presences['number_of_hours'] += working_hours_on_day
-                    #no_urut = employee.gol_id.no
-                    #urut_title = employee.title_id.urutan
-                    #pprint.pprint(no_urut)
-                    #pprint.pprint(urut_title)
-                    #no_urut=float(no_urut)
-                    #urut_title=float(urut_title)
-            import pdb;pdb.set_trace()       
             leaves = [value for key,value in leaves.items()]
-            res += [attendances] + leaves + [presences]
+            leave = [value for key,value in leave.items()]
+           # attendances['number_of_days'] = attendances['number_of_days'] - leaves[leave_type]['number_of_days']
+            res += [attendances] + leaves + leave + [presences] 
         coos = self.line2(cr, uid, contract_ids,context=None) 
         return res + coos
         
@@ -355,8 +369,6 @@ class hr_payslip(osv.osv):
                                     jam3 = 0
                                     jam4 = 0                       
                             total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
-                            
-
                             overtimes['number_of_hours'] += total_overtime       
                         elif contract.jenis_lembur == 'incentive' or no_urut >= 200 : 
                             if isNonWorkingDay and real_working_hours_on_day > 4 and no_urut <= 399 :
@@ -666,13 +678,20 @@ class hr_holidays(osv.osv):
     
     def check_holidays(self, cr, uid, ids, context=None):
         holi_status_obj = self.pool.get('hr.holidays.status')
+        date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
+        days = datetime.strptime(date_from_16,"%Y-%m-%d").month
+        DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+        import pdb;pdb.set_trace()
         for record in self.browse(cr, uid, ids):
             if record.holiday_type == 'employee' and record.type == 'remove':
                 if record.employee_id and not record.holiday_status_id.limit:
                     leaves_rest = holi_status_obj.get_days( cr, uid, [record.holiday_status_id.id], record.employee_id.id, False)[record.holiday_status_id.id]['remaining_leaves']
-                    if leaves_rest > record.number_of_days_temp :
-                        raise osv.except_osv(_('Warning!'), _('There are not enough %s allocated for employee %s; please create an allocation request for this leave type.') % (record.holiday_status_id.name, record.employee_id.name))            
+                    day_too= record.date_to
+                    day_took = datetime.strptime(day_too, DATETIME_FORMAT ).month
+                    if days != day_took :
+                        raise osv.except_osv(_('Warning!'),_('Pengajuan Cuti Harus Pada Bulan Yang Sama.')) 
         return True
+        
     def _aac(self, cr, uid, ids, name, args, context=None):
         result = {}
         date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
@@ -684,9 +703,22 @@ class hr_holidays(osv.osv):
             else:
                 result[hol.id] = 0.0
         return result
+    
+    def _aaa(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
+        dates = datetime.strptime(date_from_16,"%Y-%m-%d").year
+        date = str(dates)
+        for hol in self.browse(cr, uid, ids, context=context):
+            if hol.type!='remove' and hol.tahun == date :
+                result[hol.id] = 0.0
+            else:
+                result[hol.id] = -hol.number_of_days_temp
+        return result
         
     _columns = {
         'temp' : fields.function(_aac, "blabla"),
+        'tempp' :fields.function(_aaa),
         'tahun': fields.char('tahun',readonly=True),
      }
       
@@ -711,15 +743,37 @@ class hr_employee(osv.osv):
             for hol in holi :   
                 xyz=hol.number_of_days
                 xxx=hol.temp
+                ccc=hol.holiday_status_id.name
                 stt = hol.state
-                if stt == 'validate':
+                if stt == 'validate' and ccc == 'Cuti Tahunan':
                     yyy  += xyz   
                     zz += xxx                
             result[reim.id] =zz
         return result   
     
+    def _cuti(self, cr, uid, ids, name, args, context=None):
+        holiday_obj = self.pool.get("hr.holidays")
+        yyy=0.0
+        result={}
+        zz=0.0
+        for reim in self.browse(cr,uid,ids):
+            xxx=reim.name
+            search_obj=holiday_obj.search(cr,uid,[('employee_id','=',xxx)])
+            holi=holiday_obj.browse(cr,uid,search_obj,context=context)
+            for hol in holi :   
+                xyz=hol.tempp
+                xxx=hol.temp
+                ccc=hol.holiday_status_id.name
+                stt = hol.state
+                if stt == 'validate' and ccc == 'Cuti Tahunan':
+                    yyy  += xyz   
+                    zz += xxx               
+            result[reim.id] =zz + yyy
+        return result       
+    
     _columns = {
-        'alokasi' : fields.function(_aloc)
+        'alokasi' : fields.function(_aloc),
+        'cuti_tahunan': fields.function(_cuti)
     }
     
 hr_employee()
