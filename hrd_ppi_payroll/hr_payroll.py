@@ -289,7 +289,7 @@ class hr_payslip(osv.osv):
             	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
                 #working_hours_on_day = 8.00
-
+                leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
                 if working_hours_on_day:
                     #the employee had to work
                     employee_id = contract.employee_id.id
@@ -340,35 +340,59 @@ class hr_payslip(osv.osv):
 
                             if employee.title_id.urutan < 100:
 
-                            """                                                
-                            if isNonWorkingDay:
+                            """       
+                            if leave_type == "Libur Nasional" and isNonWorkingDay :
+                                if real_working_hours_on_day < 8:
+                                    jam1 = 0
+                                    jam2 = 0
+                                    jam3 = real_working_hours_on_day
+                                    jam4 = 0
+                                    jam5 = 0
+                                elif (real_working_hours_on_day >= 8 and real_working_hours_on_day<9):
+                                    jam1 = 0
+                                    jam2 = 0
+                                    jam3 = 7
+                                    jam4 = real_working_hours_on_day - 7
+                                    jam5 = 0
+                                elif real_working_hours_on_day >= 9:
+                                    jam1 = 0
+                                    jam2 = 0
+                                    jam3 = 7
+                                    jam4 = 1        
+                                    jam5 = real_working_hours_on_day - 8                             
+                            elif isNonWorkingDay:
                                 if real_working_hours_on_day < 8:
                                     jam1 = 0
                                     jam2 = real_working_hours_on_day
                                     jam3 = 0
                                     jam4 = 0
+                                    jam5 = 0
                                 elif (real_working_hours_on_day >= 8 and real_working_hours_on_day<9):
                                     jam1 = 0
                                     jam2 = 7
                                     jam3 = real_working_hours_on_day - 7
                                     jam4 = 0
+                                    jam5 = 0
                                 elif real_working_hours_on_day>=9:
                                     jam1 = 0
                                     jam2 = 7
                                     jam3 = 1
-                                    jam4 = real_working_hours_on_day - 8                            
+                                    jam4 = real_working_hours_on_day - 8     
+                                    jam5 = 0                       
                             else: 
                                 if overtime <=1:
                                     jam1 = overtime
                                     jam2 = 0
                                     jam3 = 0
                                     jam4 = 0
+                                    jam5 = 0
                                 elif (overtime > 1 ):
                                     jam1 = 1
                                     jam2 = overtime - 1
                                     jam3 = 0
-                                    jam4 = 0                       
-                            total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0
+                                    jam4 = 0   
+                                    jam5 = 0                    
+                            total_overtime = jam1*1.5 + jam2*2.0 + jam3*3.0 + jam4*4.0 + jam5*5.0
                             overtimes['number_of_hours'] += total_overtime       
                         elif contract.jenis_lembur == 'incentive' or no_urut >= 200 : 
                             if isNonWorkingDay and real_working_hours_on_day > 4 and no_urut <= 399 :
@@ -681,6 +705,7 @@ class hr_holidays(osv.osv):
         date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
         days = datetime.strptime(date_from_16,"%Y-%m-%d").month
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+        import pdb;pdb.set_trace()
         for record in self.browse(cr, uid, ids):
             if record.holiday_type == 'employee' and record.type == 'remove':
                 if record.employee_id and not record.holiday_status_id.limit:
