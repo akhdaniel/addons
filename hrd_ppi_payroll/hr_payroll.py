@@ -681,7 +681,6 @@ class hr_holidays(osv.osv):
         date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1))[:10]
         days = datetime.strptime(date_from_16,"%Y-%m-%d").month
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
-        import pdb;pdb.set_trace()
         for record in self.browse(cr, uid, ids):
             if record.holiday_type == 'employee' and record.type == 'remove':
                 if record.employee_id and not record.holiday_status_id.limit:
