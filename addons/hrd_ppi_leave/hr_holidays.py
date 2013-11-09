@@ -80,6 +80,8 @@ class hr_holidays(osv.osv):
         
     _defaults={
         'holiday_status_id': _get_holi_status,
+        'date_from':lambda *a : time.strftime('%Y-%m-%d %H:%M:%S'),
+        'date_to':lambda *a : time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
     '''def _get_number_of_days(self, date_from, date_to):
