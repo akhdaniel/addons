@@ -59,6 +59,8 @@ class hr_holidays(osv.osv):
         'is_libur':fields.boolean('Libur'),
         'libur_bersih2':fields.related('holiday_status_id','libur_bersih',type='boolean',relation='hr.holidays.status',string='Hitung Tanggal Merah',readonly=True),
         'limit_cuti':fields.related('holiday_status_id','limit_cuti',type='boolean',relation='hr.holidays.status',string='Limit Cuti',readonly=True),
+        'is_edit':fields.boolean('Kunci ?',required=True),
+        'name': fields.char('Description', size=64,required=True),
     }
  
     def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
@@ -82,6 +84,7 @@ class hr_holidays(osv.osv):
         'holiday_status_id': _get_holi_status,
         'date_from':lambda *a : time.strftime('%Y-%m-%d %H:%M:%S'),
         'date_to':lambda *a : time.strftime('%Y-%m-%d %H:%M:%S'),
+        'is_edit': True,
     }
 
     '''def _get_number_of_days(self, date_from, date_to):
