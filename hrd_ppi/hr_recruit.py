@@ -66,7 +66,9 @@ class permohonan_recruit(osv.osv):
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"),   
         'no_of_recruitment': fields.float('Expected in Recruitment', help='Number of new employees you expect to recruit.',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'department_id': fields.many2one('hr.department', 'Department',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-	}
+	    'is_edit':fields.boolean('Kunci ?'),
+            }
+
     _defaults = {
         'state': PERMOHONAN_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
@@ -581,7 +583,8 @@ class hr_applicant(osv.osv):
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"), 
         'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
         'survey_result_ids': fields.one2many('hr_applicant.hasil_wawancara','app_id', "Hasil Wawancara"),
-        "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id",string="Jadwal Interview",readonly=True), 
+        "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id",string="Jadwal Interview",readonly=True),
+        'is_edit':fields.boolean('kunci ?'), 
         }
 
 hr_applicant()

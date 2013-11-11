@@ -13,5 +13,10 @@
 	<record id="group_hr_department" model="res.groups">
 		<field name="name">hr / Department</field>
 	</record>	
+
+	<record id="group_hr_employee" model="res.groups">
+		<field name="name">hr / Employee</field>
+	</record>
+
 </data>
 </openerp>
