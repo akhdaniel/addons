@@ -75,7 +75,7 @@
                     <field name="partner_phone" attrs="{'readonly': [('is_edit','=',True)]}"/>
 					<field name="blood" attrs="{'readonly': [('is_edit','=',True)]}"/>
                 </group>
-                <group string="Kartu Identitas" colspan="4">
+                <group string="Kartu Identitas">
                     <field name="jenis_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     <field name="ktp" attrs="{'readonly': ['|',('is_edit','=',True),('is_edit','=',True)]}"/>
                     <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')],'readonly': [('is_edit','=',True)]}"/>
@@ -95,7 +95,14 @@
                             <field name='name'/>
                         </form>
                     </field>                  
-                    <field name="meeting_ids" />                     
+                    <field view_mode="tree,form" name="meeting_ids">
+                        <tree>
+                            <field name='name'/>
+                            <field name='date'/>
+                            <field name='location'/>
+                            <field name='state' invisible="1"/>
+                        </tree>
+                    </field>
                 </group> 
                                    
             </field>
@@ -104,7 +111,9 @@
                 <field name="user_id" attrs="{'required':[('state','=','open')],'invisible':[('state','!=','open')]}" />
             </field-->
             <field name="user_id" position="before" >
+           
                 <field name="is_edit" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+            
                 <group string="Pendidikan" colspan="4">
                     <field name="pengalaman" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     <field name="type_id" placeholder="Degree" attrs="{'readonly': [('is_edit','=',True)]}"/>
