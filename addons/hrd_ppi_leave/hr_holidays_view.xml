@@ -208,6 +208,50 @@
                     <button name="purge_leave" type="object" string="Delete Allocation"/>
                     <button name="approveall" type="object" string="Approve All"/-->
                 </header>
+
+                <field name="department_id" position="after">                   
+                   <group colspan="2" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_user" >
+                    <div class="oe_right oe_button_box">
+                    <label for="is_edit" string="kunci ?" />
+                    <field name="is_edit" />
+                    </div>
+                    </group>
+                </field>     
+                
+                <!--field name="name" position="before">                   
+                   <group colspan="4">
+                    <field name="notes" nolabel="1" colspan="2" />
+                    </group>
+                </field-->  
+
+                <field name="name" position="replace">
+                    <field name="name" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>
+
+                <field name="holiday_status_id" position="replace">
+                    <field name="holiday_status_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>
+
+                <field name="number_of_days_temp" position="replace">
+                    <field name="number_of_days_temp" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>
+
+                <field name="holiday_type" position="replace">
+                    <field name="holiday_type" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>
+
+                <field name="employee_id" position="replace">
+                    <field name="employee_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>
+
+                <field name="department_id" position="replace">
+                    <field name="department_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field> 
+
+                <field name="notes" position="replace">
+                    <field name="notes" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>                             
+
             </field>
         </record>
         
@@ -253,6 +297,7 @@
             <field eval="True" name="active" />
             <field eval="True" name="is_5_years" />
         </record-->
+      
 
     </data>
 </openerp>
