@@ -17,7 +17,7 @@
                         groups="hrd_ppi.group_hr_user" 
                         class="oe_highlight" />
 
-					<button string="Cancel" type="workflow"  
+                    <button string="Cancel" type="workflow"  
                         groups="hrd_ppi.group_hr_user"
                         states="submit" name="signal_cancel"/>
 
@@ -36,16 +36,18 @@
                         class="oe_highlight" />
 
                     <field name="state" widget="statusbar"/>
-
+                    
                 </header> 
+
                 <label for="name" position="before">
                     <group>
                     <!--field name="no"/-->
                     <field name="jenis_permohonan"/>
                     </group>
-                    <group>
-                </group>
                 </label> 
+                <field name="name" position="replace">
+                    <field name="name" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>    
                 <field name="name" position="before">
                     <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" nolabel="1" class="oe_inline"/>   
                 </field> 
@@ -89,18 +91,21 @@
                     <field name="tempat_lahir_id" nolabel="1"/> 
 
                 </field>
-				
+                            
+                <field name="department_id" position="before">
+                    <field name="is_edit" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
+                </field>                
                 <field name="department_id" position="after">                                        
                     <label for="wkt_pemohon" string="Waktu Penempatan"/>
                         <div class="oe_title">
                             <label for="wkt_pemohon"/>
                             <field name="wkt_pemohon" />
                             <label for="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>
-                            <field name="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>                   
+                            <field name="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')],'readonly': [('is_edit','=',True)]}"/>                   
                         </div>                    
-                    <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')]}"/>
+                    <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')],'readonly': [('is_edit','=',True)]}"/>
 
-                    <div>
+                     <div>
                         <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
                         <label for="type_id" class="oe_inline" />
                     </div>
@@ -114,18 +119,15 @@
                         <tree editable="bottom">
                             <field name="name"/>
                         </tree>    
-                    </field> 
-
+                    </field>                        
+                      
                     <field view_mode="tree" name="survey_ids">
                         <tree>
                             <field name='surveys_id'/>
                         </tree>
-                        <form>
-                            <field name='surveys_id'/>
-                        </form>
                     </field>   
-	            </field>
-				<field name="requirements" position="replace">
+                </field>
+                <field name="requirements" position="replace">
                     <div>
                     <label for="catatan2"/>
                     <field name="catatan2"/>
@@ -153,7 +155,7 @@
                             </field>
                         </page>    
                  </notebook>  
-                </field>             	                                                                            
+                </field>                                                                                            
             </field>      
         </record>
     

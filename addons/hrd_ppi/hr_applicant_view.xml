@@ -20,8 +20,14 @@
 
             <button name="case_close_with_emp"  position="replace">
                 <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
+                        groups="hrd_ppi.group_hr_manager" 
                         class="oe_highlight" attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
             </button>
+            <button name="case_cancel" position="replace">
+                 <button name="case_cancel" string="Refuse" type="object"
+                        states="draft,open,pending" class="oe_highlight"
+                        groups="hrd_ppi.group_hr_manager" />
+            </button>            
 
             <field name="partner_name" position="after">
             <field name="stage_id"/>
@@ -39,30 +45,46 @@
             <field name="priority" position="replace"/>
             <field name="type_id" position="replace" />
             
+            <field name="partner_name" position="replace">
+                <field name="partner_name" attrs="{'readonly': [('is_edit','=',True)]}"/>
+            </field>   
+
+            <field name="name" position="replace">   
+                <field name="name" attrs="{'readonly': [('is_edit','=',True)]}"/>
+            </field>
+
+            <field name="user_id" position="replace">
+                <field name="user_id" readonly="1"/>
+            </field>      
+
+            <field name="source_id" position="replace">
+                <field name="source_id" readonly="1"/>
+            </field>                  
+
             <field name="partner_id" position="replace">
                 <group string="Informasi Pribadi" colspan="4">
-                    <field name="kelamin"/>
-                    <field name="kota_id"/>
-                    <field name="tgl_lahir"/>
+                    <field name="kelamin" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="kota_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="tgl_lahir" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     <field name="age"/>
-                    <field name="agama_id"/>
-                    <field name="country_id" on_change="onchange_country(country_id)"/>
-                    <field name="status"/>
-                    <field name="sjk_tanggal" attrs="{'invisible': [('status','=','single')]}"/>
-                    <field name="email_from" widget="email"/>
-                    <field name="partner_phone"/>
-					<field name="blood"/>
+                    <field name="agama_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="country_id" on_change="onchange_country(country_id)" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="status" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="sjk_tanggal" attrs="{'invisible': [('status','=','single')] ,'readonly': [('is_edit','=',True)]}"/>
+                    <field name="email_from" widget="email" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="partner_phone" attrs="{'readonly': [('is_edit','=',True)]}"/>
+					<field name="blood" attrs="{'readonly': [('is_edit','=',True)]}"/>
                 </group>
                 <group string="Kartu Identitas" colspan="4">
-                    <field name="jenis_id"/>
-                    <field name="ktp"/>
-                    <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')]}"/>
-                    <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')]}"/>
-                    <field name="tgl_keluar_ktp"/>
-                    <field name="tgl_berlaku"/>
-                    <field name="sim"/>
-                    <field name="tgl_keluar_sim"/> 
-                    <field name="tgl_berlaku2"/>
+                    <field name="jenis_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="ktp" attrs="{'readonly': ['|',('is_edit','=',True),('is_edit','=',True)]}"/>
+                    <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')],'readonly': [('is_edit','=',True)]}"/>
+                    <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')],'readonly': [('is_edit','=',True)]}"/>
+                    <field name="tgl_keluar_ktp" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="tgl_berlaku" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="sim" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="tgl_keluar_sim" attrs="{'readonly': [('is_edit','=',True)]}"/> 
+                    <field name="tgl_berlaku2" attrs="{'readonly': [('is_edit','=',True)]}"/>
                 </group> 
                 <group string="Interview">
                     <field view_mode="tree,form" name="surv_ids" >
@@ -81,40 +103,40 @@
             <!--field name="user_id" position="replace">
                 <field name="user_id" attrs="{'required':[('state','=','open')],'invisible':[('state','!=','open')]}" />
             </field-->
-            
             <field name="user_id" position="before" >
+                <field name="is_edit" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
                 <group string="Pendidikan" colspan="4">
-                    <field name="pengalaman"/>
-                    <field name="type_id" placeholder="Degree"/>
-                    <field name="bidang_id"/>
-                    <field name="jurusan_id"/> 
-                    <field name="pt_id"/>
-                    <field name="result_id"/>  
+                    <field name="pengalaman" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="type_id" placeholder="Degree" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="bidang_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="jurusan_id" attrs="{'readonly': [('is_edit','=',True)]}"/> 
+                    <field name="pt_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="result_id" attrs="{'readonly': [('is_edit','=',True)]}"/>  
                 </group>
 			
                <group colspan="4">
                     <group string="Alamat Domisili">
-					<field name='country_id1' on_change="onchange_country1(country_id1)"/>	                  
-                    <field name="prov_id"/>
-                    <field name="kab_id"/>
-                    <field name="kec_id"/>
-					<field name="alamat1"/>
-                    <field name='kode1'/>
-                    <field name="telp1"/>
+					<field name='country_id1' on_change="onchange_country1(country_id1)" attrs="{'readonly': [('is_edit','=',True)]}"/>	                  
+                    <field name="prov_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="kab_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="kec_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
+					<field name="alamat1" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name='kode1' attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="telp1" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     </group>
                     <newline/>
                     <group string="Alamat sesuai KTP">
-                    <field name='country_id2' on_change="onchange_country2(country_id2)"/>
-                    <field name="prov_id2"/>
-                    <field name="kab_id2"/>
-                    <field name="kec_id2"/>
-					<field name="alamat2"/>
-                    <field name='kode2'/>                  
-                    <field name="telp2"/>                    	
+                    <field name='country_id2' on_change="onchange_country2(country_id2)" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="prov_id2" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="kab_id2" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="kec_id2" attrs="{'readonly': [('is_edit','=',True)]}"/>
+					<field name="alamat2" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name='kode2' attrs="{'readonly': [('is_edit','=',True)]}"/>                  
+                    <field name="telp2" attrs="{'readonly': [('is_edit','=',True)]}"/>                    	
                     </group>
 					<newline/>
 					<group>
-					<field name="respon_div"/>
+					<field name="respon_div" attrs="{'readonly': [('is_edit','=',True)]}"/>
 					</group>
                 </group> 
             </field>
@@ -134,11 +156,11 @@
                 <group string="Job" col="2">
                     <field name="survey" invisible="1"/>
                     <field name="response" invisible="1"/>
-                    <field name="job_id" on_change="onchange_job(job_id)"/>
-                    <field name="department_id" on_change="onchange_department_id(department_id)"/>
+                    <field name="job_id" on_change="onchange_job(job_id)" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                    <field name="department_id" on_change="onchange_department_id(department_id)" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     <label for="availability"/>
                     <div>
-                        <field name="availability" class="oe_inline"/> <label string="Day(s)" class="oe_inline"/>
+                        <field name="availability" class="oe_inline" attrs="{'readonly': [('is_edit','=',True)]}"/> <label string="Day(s)" class="oe_inline"/>
                     </div>
                     <group string="Result"  colspan="2" attrs="{'invisible':[('state','=','draft')]}">
                         <field name="survey_result_ids" view_mode="tree,form" >
@@ -147,7 +169,7 @@
                                 <field name='user_id'/>
                                 <field name='stage'/>
                             </tree>
-                            <form groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
+                            <form >
                                 <field name='result'/>
                                 <field name='user_id' />
                                 <field name='reason' />
@@ -159,19 +181,19 @@
                     <group string="Contract">
                         <label for="salary_expected"/>
                         <div>
-                            <field name="salary_expected" class="oe_inline"/>
+                            <field name="salary_expected" class="oe_inline" attrs="{'readonly': [('is_edit','=',True)]}"/>
                             <field name="fasilitas1_ids"/>
                         </div>
                         <label for="salary_proposed" string="Standar Gaji Perusahaan" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
                         <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
                             <field name="salary_proposed_botom_margin" class="oe_inline"/>
                             <span class="oe_inline" > - </span>
-                            <field name="salary_proposed_top_margin" class="oe_inline"/>
+                            <field name="salary_proposed_top_margin" class="oe_inline" attrs="{'readonly': [('is_edit','=',True)]}"/>
                             <field name="fasilitas2_ids"/>
                         </div>
                         <label for="salary_proposed" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
                         <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
-                            <field name="salary_proposed" class="oe_inline" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" />
+                            <field name="salary_proposed" class="oe_inline" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
                         </div>
                     </group>
                 </group>
@@ -420,6 +442,8 @@
         id="menu_hr_meeting_applicant"
         parent="base.menu_crm_case_job_req_main"
         sequence="25" action="action_hr_pmeeting applicant"/>
+
+   
 
     </data>
 </openerp>
