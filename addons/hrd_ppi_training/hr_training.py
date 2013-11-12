@@ -138,11 +138,13 @@ class analisa(osv.osv):
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),
         'description'   : fields.text('Deskripsi Training'),
         'subject': fields.char("Nama Training", readonly=True),
+        'is_edit': fields.boolean('Kunci ?',required=True),
             }
             
     _defaults = {
         'state': TRAINING_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
+        'is_edit': True,
         #'no': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'hr_training.analisa.nomor'),
         }  
         

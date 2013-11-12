@@ -7,7 +7,6 @@ Human Resource - Training PT.PPI
 """,    
     'depends': ['hr','hr_recruitment','hrd_ppi'],
     'update_xml':[
-            'security/groups.xml',
             'security/ir.model.access.csv',
             'training_view.xml',
             'report/hr_training.xml',
