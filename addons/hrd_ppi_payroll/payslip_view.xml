@@ -134,6 +134,13 @@
             <field name="arch" type="xml"> 
                 <field name='name' position='after'>
                     <field name="net"/>	
+                    <field name='total'/>
+                    <field name='totals'/>
+                    <field name='pkp'/>
+                    <field name='gros'/>
+                    <field name='pot_absen'/>
+                    <field name='basic'/>
+                    <field name="tunj_pajak"/>
                 </field>
                
             </field>
@@ -148,14 +155,26 @@
                 </tree>
             </field>
         </record>
+        <record model="ir.ui.view" id="tab_form_view">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                 <field name="name" position="after">
+                    <field name="alokasi" />
+                    <field name="cuti_tahunan"/>
+                </field>
+            </field>
+        </record>
         <record id="hr_public_holiday_form" model="ir.ui.view">
             <field name="name">Public Holidays</field>
             <field name="model">hr.holidays</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="hr_holidays.allocation_leave_new"/>
             <field name="arch" type="xml">
-                <field name="department_id" position="after">
-                    <field name="tahun"/>
+                <field name="holiday_status_id" position="after">
+                        <field name="tahun"/>
                 </field>                     
             </field>
         </record>

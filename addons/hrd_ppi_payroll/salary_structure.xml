@@ -309,7 +309,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">33</field>
-	        <field name="amount_python_compute">result = inputs.TUNJANGAN_PAJAK.amount </field>
+	        <field name="amount_python_compute">result = payslip.tunj_pajak </field>
 	    </record>	
 	   
 	    <!-- deduction -->
@@ -491,7 +491,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">140</field>
-	        <field name="amount_python_compute">result =-(((categories.BASIC + categories.ALW) + (payslip.pot_absen)-((((categories.BASIC + categories.ALW) + payslip.pot_absen)*contract.type_id.tht)/100)-((((categories.BASIC + categories.ALW)+ payslip.pot_absen)*contract.type_id.biaya_jabatan)/100))*payslip.pkp)/100  </field>
+	        <field name="amount_python_compute">result = -payslip.pkp  </field>
 	    </record> 	    	    	      	  
 		<record id="hr_payroll_rules_gaji" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN 5 TAHUN</field>
@@ -540,12 +540,6 @@
 			<field name="sequence">26</field>	
 	        <field name="input_id" ref="hr_payroll_rules_bonus"/>	    	
 		</record>		
-	    <record id="hr_payroll_rules_input_tunjangan_pajak" model="hr.rule.input">
-	        <field name="name">TUNJANGAN_PAJAK</field>
-	        <field name="code">TUNJANGAN_PAJAK</field>	 
-			<field name="sequence">28</field>			
-	        <field name="input_id" ref="hr_payroll_rules_tunjangan_pajak"/>	    	
-		</record>	
 	    <record id="hr_payroll_rules_input_rapel" model="hr.rule.input">
 	        <field name="name">RAPEL</field>
 	        <field name="code">RAPEL</field>	
