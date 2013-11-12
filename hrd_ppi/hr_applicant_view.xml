@@ -20,26 +20,19 @@
 
             <button name="case_close_with_emp"  position="replace">
                 <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
-                        groups="hrd_ppi.group_hr_manager" 
+                        groups="hrd_ppi.group_hr_training_head" 
                         class="oe_highlight" attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
             </button>
             <button name="case_cancel" position="replace">
                  <button name="case_cancel" string="Refuse" type="object"
                         states="draft,open,pending" class="oe_highlight"
-                        groups="hrd_ppi.group_hr_manager" />
+                        groups="hrd_ppi.group_hr_training_head" />
             </button>            
 
             <field name="partner_name" position="after">
                 <field name="stage_id"/>
                 <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" class="oe_inline"/>
             </field>
-
-            <div class="oe_right oe_button_box" position="replace">
-                <div class="oe_right oe_button_box">
-                    <label for="is_edit" />
-                    <field name="is_edit" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
-                </div>
-            </div>
 
             <div class="oe_right oe_button_box" position="replace"/>
             <field name="stage_id" position="replace"/>
@@ -53,13 +46,20 @@
             <field name="priority" position="replace"/>
             <field name="type_id" position="replace" />
             
-            <field name="partner_name" position="replace">
-                <field name="partner_name" attrs="{'readonly': [('is_edit','=',True)]}"/>
+            <field name="partner_name" position="replace">               
+                <field name="partner_name" attrs="{'readonly': [('is_edit','=',True)]}"/>           
             </field>   
 
-            <field name="name" position="replace">   
+            <field name="name" position="replace">  
                 <field name="name" attrs="{'readonly': [('is_edit','=',True)]}"/>
             </field>
+
+            <label for="name" position="before">   
+                <div class="oe_right" groups="hrd_ppi.group_hr_training_head">
+                    <label for="is_edit" />
+                    <field name="is_edit" />
+                </div>             
+            </label>            
 
             <field name="user_id" position="replace">
                 <field name="user_id" readonly="1"/>
@@ -120,7 +120,7 @@
             </field-->
             <field name="user_id" position="before" >
             
-                <group string="Pendidikan" colspan="4">
+                <group string="Pendidikan" colspan="2">
                     <field name="pengalaman" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     <field name="type_id" placeholder="Degree" attrs="{'readonly': [('is_edit','=',True)]}"/>
                     <field name="bidang_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
@@ -129,7 +129,7 @@
                     <field name="result_id" attrs="{'readonly': [('is_edit','=',True)]}"/>  
                 </group>
 			
-               <group colspan="4">
+               <group colspan="2">
                     <group string="Alamat Domisili">
 					<field name='country_id1' on_change="onchange_country1(country_id1)" attrs="{'readonly': [('is_edit','=',True)]}"/>	                  
                     <field name="prov_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
@@ -158,7 +158,7 @@
             
             <field name="source_id" position="after">                
                 <newline/>
-                <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_manager">                                
+                <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_training_head">                                
                 <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
                 <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight" />
                 </group>                 	
@@ -199,15 +199,15 @@
                             <field name="salary_expected" class="oe_inline" attrs="{'readonly': [('is_edit','=',True)]}"/>
                             <field name="fasilitas1_ids"/>
                         </div>
-                        <label for="salary_proposed" string="Standar Gaji Perusahaan" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
-                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
-                            <field name="salary_proposed_botom_margin" class="oe_inline"/>
+                        <label for="salary_proposed" string="Standar Gaji Perusahaan" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head"/>
+                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head">
+                            <field name="salary_proposed_botom_margin" class="oe_inline" readonly="1"/>
                             <span class="oe_inline" > - </span>
-                            <field name="salary_proposed_top_margin" class="oe_inline" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                            <field name="salary_proposed_top_margin" class="oe_inline" readonly="1"/>
                             <field name="fasilitas2_ids"/>
                         </div>
-                        <label for="salary_proposed" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
-                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager">
+                        <label for="salary_proposed" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head"/>
+                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head">
                             <field name="salary_proposed" class="oe_inline" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
                         </div>
                     </group>

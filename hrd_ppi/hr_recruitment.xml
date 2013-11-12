@@ -23,15 +23,15 @@
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         class="oe_highlight"  />  
 
                     <button string="Cancel" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         states="verify" name="signal_cancel"/>                                                             
 
                     <button string="Stop Recruitment" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         states="in_progress" name="signal_stop_recruit" 
                         class="oe_highlight" />
 
@@ -76,8 +76,8 @@
                 </xpath>                
 
                 <field name="no_of_employee" position="before">
-                    <label for="salary_proposed_botom_margin"/>
-                    <div  attrs="{'readonly': [('is_edit','=',True)]}">
+                    <label for="salary_proposed_botom_margin" groups="hrd_ppi.group_hr_manager"/>
+                    <div  attrs="{'readonly': [('is_edit','=',True)]}" groups="hrd_ppi.group_hr_manager">
                         <field name="salary_proposed_botom_margin" class="oe_inline"/>
                         <span class="oe_inline"> - </span>
                         <field name="salary_proposed_top_margin" class="oe_inline"/>
@@ -121,7 +121,9 @@
                     <field name="tempat_lahir_id" nolabel="1"/> 
 
                 </field>
-                
+                <field name="department_id" position="replace">
+                    <field name="department_id" attrs="{'readonly':[('is_edit','=',True)]}"/>
+                </field>
                 <field name="department_id" position="after">                                        
                     <label for="wkt_pemohon" string="Waktu Penempatan"/>
                         <div class="oe_title">
