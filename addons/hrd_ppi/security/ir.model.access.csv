@@ -124,7 +124,7 @@ access_hr_employee_suskel1_employee,hr_employee.suskel1,model_hr_employee_suskel
 access_hr_survey,hr.survey,model_hr_survey,group_hr_user,1,1,1,0
 access_hr_survey_manager,hr.survey,model_hr_survey,group_hr_manager,1,1,1,1
 access_hr_survey_department,hr.survey,model_hr_survey,group_hr_department,1,1,0,0
-access_hr_survey_th,hr.survey1,model_hr_survey1,group_hr_training_head,1,1,1,1
+access_hr_survey_th,hr.survey,model_hr_survey,group_hr_training_head,1,1,1,1
 
 access_hr_survey1,hr.survey1,model_hr_survey1,group_hr_user,1,1,1,0
 access_hr_survey1_manager,hr.survey1,model_hr_survey1,group_hr_manager,1,1,1,1
