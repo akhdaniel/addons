@@ -48,24 +48,24 @@
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         class="oe_highlight"  />  
 
                     <button string="Cancel" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         states="verify" name="signal_cancel"/>
                         
                     <button string="Reject" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         states="verify,approve2" name="signal_reject"/>     
                     
                     <button string="Second Approve" type="workflow"  
                         states="approve" name="signal_approve_hr_department"
-                        groups="hrd_ppi.group_hr_department"
+                        groups="hrd_ppi.group_hr_manager"
                         class="oe_highlight"  />  
                         
                     <button string="Reject" type="workflow"  
-                        groups="hrd_ppi.group_hr_department"
+                        groups="hrd_ppi.group_hr_manager"
                         states="approve" name="signal_reject"/>                                               
 
                     <!--button string="Reject" type="workflow"  
@@ -73,7 +73,7 @@
                         states="approve2" name="signal_reject"/-->
 
                     <button string="Start Evaluation" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_training_head"
                         states="approve2" name="signal_evaluation" 
                         class="oe_highlight" /> 
                         
@@ -81,38 +81,42 @@
                 </header>
                 <group>
                 <group >
-                    <field name="is_internal" attrs="{'invisible': [('state','!=', 'draft')]}"/>
+                    <field name="is_internal" attrs="{'invisible': [('state','!=', 'draft')],'readonly': [('state','!=', 'draft')]}"/>
                     
-                     <field name="paket_id"/>
-                     <field name="bulan"/>
+                     <field name="paket_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                     <field name="bulan" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                 </group>
                 <group >
-                    <field name="department_id"/>                    
+                    <field name="department_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                    
                 </group>    
                 </group>
-                    <!--group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)]}">
+                    <!--group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}>
                     </group>
                     <group string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}">
                     </group-->
                 <group>      
-                    <separator string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)]}"/>
-                    <separator string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}"/>    
+                    <separator string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}"/>
+                    <separator string="Training Internal" attrs="{'invisible': [('is_internal','=', False)],'readonly': [('state','!=', 'draft')]}"/>    
                     <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/>
                     <group> 
-                    <field name="no"/>
-                    <field name="subject_id" />
+                    <field name="no" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                    <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                     <!--field name="subject"/-->
-                    <field name="mgt_id"/>                   
-                    <field name="penyelenggara" attrs="{'invisible': [('is_internal','=', True)]}"/>
-                    <field name="presentasi" attrs="{'invisible': [('is_internal','=', True)]}"/>
-                    <field name="nama" attrs="{'invisible': [('is_internal','=', False)]}"/> 
-                    <field name="tanggal"/>                   
+                    <field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
+                    <field name="penyelenggara" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}"/>
+                    <field name="presentasi" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}"/>
+                    <field name="nama" attrs="{'invisible': [('is_internal','=', False)],'readonly': [('state','!=', 'draft')]}"/> 
+                    <field name="tanggal" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
                     </group>
-                    <group>                                      
-                    <field name="realisasi" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/> 
-                    <field name="lama" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/>
-                    <field name="catatan"/>
-                    <field name="description"/>
+                    <group>                                                        
+                    <div>
+                        <label for="realisasi" class="oe_inline" />
+                        <field name="is_edit" groups="hrd_ppi.group_hr_training_head" nolabel="1" />                       
+                    </div> 
+                    <field name="realisasi" attrs="{'invisible': [('state','=', 'draft')],'readonly':[('is_edit','=',True)]}" nolabel="1"/> 
+                    <field name="lama" attrs="{'invisible': [('state','=', 'draft')],'readonly':[('is_edit','=',True)]}"/>
+                    <field name="catatan" />
+                    <field name="description" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                     </group>    
                 </group>      
                          
