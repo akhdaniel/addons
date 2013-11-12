@@ -6,8 +6,8 @@ class hr_contract(osv.osv):
     
     _columns = {
         'master_gaji_id':fields.many2one('hr.master_gaji', "incentive"),
-        'makan':fields.related('master_gaji_id','makan',type='integer',relation='hr.master_gaji',string='Uang Makan',readonly=True),
-        'transport':fields.related('master_gaji_id','transport',type='integer',relation='hr.master_gaji',string='Uang Transport',readonly=True),
+        'makan':fields.related('master_gaji_id','makan',type='float',relation='hr.master_gaji',string='Uang Makan',readonly=True),
+        'transport':fields.related('master_gaji_id','transport',type='float',relation='hr.master_gaji',string='Uang Transport',readonly=True),
         'jenis_lembur' : fields.selection([('incentive','Incentive'),('overtime','Overtime')], 'Jenis Lembur'),
     }
 hr_contract()    
@@ -17,8 +17,8 @@ class master_gaji(osv.osv):
     
     _columns = {
         "name" : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'),('9','9')],'Pilih Golongan'),
-        "makan" :fields.integer("Uang Makan"),
-        "transport" : fields.integer("Uang Transportasi"),
+        "makan" :fields.float("Uang Makan"),
+        "transport" : fields.float("Uang Transportasi"),
     }
     _sql_constraints = [('name_uniq', 'unique(name)','Kode status tidak boleh sama')]
     
@@ -83,9 +83,9 @@ class hr_contract_type(osv.osv):
         "jams1":fields.float('Kontribusi Karyawan (%)'),
         "jams2":fields.float('Kontribusi Perusahaan (%)'),
         "pajak":fields.float('Pajak (%)'),
-        "reimburse_pengobatan":fields.integer('Pengobatan Tahunan',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
-        "reimburse_perawatan":fields.integer('Perawatan Rumah Sakit',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
-        "biaya_jabatan":fields.integer('Biaya Jabatan (%)',size=1),
+        "reimburse_pengobatan":fields.float('Pengobatan Tahunan',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
+        "reimburse_perawatan":fields.float('Perawatan Rumah Sakit',size=1,help='Digit dikalikan dengan gaji pokok karyawan'),
+        "biaya_jabatan":fields.float('Biaya Jabatan (%)',size=1),
         "max_biaya_jabatan":fields.float('Nominal Max (Rp)'),
         "tht":fields.float('Kontribusi Perusahaan (%)'),
         'ttht':fields.float('Kontribusi Karyawan (%)'),		
@@ -100,7 +100,7 @@ class pkp(osv.osv):
         "kode":fields.char('Kode',size=5,required=True),
         "nominal_min" : fields.float("Nominal Min",required=True),
         "nominal_max" : fields.float("Nominal Max",required=True),
-        "pajak":fields.integer('Pajak (%)',size=2,required=True),
+        "pajak":fields.float('Pajak (%)',size=2,required=True),
     }
     '''
     def _check_nominal(self, cr, uid, ids):
