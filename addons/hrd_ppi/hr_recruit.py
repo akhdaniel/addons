@@ -66,7 +66,7 @@ class permohonan_recruit(osv.osv):
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"),   
         'no_of_recruitment': fields.float('Expected in Recruitment', help='Number of new employees you expect to recruit.',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'department_id': fields.many2one('hr.department', 'Department',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-	    'is_edit':fields.boolean('Kunci ?'),
+	    'is_edit':fields.boolean('Kunci ?',required=True),
             }
 
     _defaults = {
@@ -579,12 +579,12 @@ class hr_applicant(osv.osv):
         'kode2' :fields.char('Kode Pos'),
 		'app_id' : fields.many2one('hr.job','Job'),
         'salary_proposed': fields.float('Proposed Salary'),
-        'salary_proposed_botom_margin': fields.float('Standar Gaji Perusahaan', help="Batas range terendah"), 
-        'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"), 
+        'salary_proposed_botom_margin': fields.float('Standar Gaji', readonly=True, help="Batas range terendah"), 
+        'salary_proposed_top_margin': fields.float('Standar Gaji', readonly=True, help="Batas range tertinggi"), 
         'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
         'survey_result_ids': fields.one2many('hr_applicant.hasil_wawancara','app_id', "Hasil Wawancara"),
         "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id",string="Jadwal Interview",readonly=True),
-        'is_edit':fields.boolean('kunci ?'), 
+        'is_edit':fields.boolean('kunci ?',required=True), 
         }
 
 hr_applicant()

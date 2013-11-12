@@ -38,10 +38,9 @@
                     <field name="state" widget="statusbar"/>
                     
                 </header> 
-
-                <label for="name" position="before">
+                
+                <!--label for="name" position="before">
                     <group>
-                    <!--field name="no"/-->
                     <field name="jenis_permohonan"/>
                     </group>
                 </label> 
@@ -50,51 +49,79 @@
                 </field>    
                 <field name="name" position="before">
                     <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" nolabel="1" class="oe_inline"/>   
-                </field> 
+                </field-->
+
+                <xpath expr="//div[@class='oe_title']" version="7.0" position="replace">
+                   
+                    <div>
+                         <group>
+                            <div class="oe_right oe_button_box">
+                                <label for="is_edit" groups="hrd_ppi.group_hr_training_head"/>
+                                <field name="is_edit" groups="hrd_ppi.group_hr_training_head"/>
+                            </div> 
+                        </group>
+                        <group colspan="2">
+                            <field name="jenis_permohonan"/> 
+                        </group>
+
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <div>
+                                <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/> 
+                                <field name="name" nolabel="1" attrs="{'readonly':[('is_edit','=',True)]}" class="oe_inline"/>
+                            </div>
+                        </h1>
+                    </div>                    
+                    <div class='oe_title'/>
+                </xpath>                
+
                 <field name="no_of_employee" position="before">
+                    <label for="salary_proposed_botom_margin"/>
+                    <div  attrs="{'readonly': [('is_edit','=',True)]}">
+                        <field name="salary_proposed_botom_margin" class="oe_inline"/>
+                        <span class="oe_inline"> - </span>
+                        <field name="salary_proposed_top_margin" class="oe_inline"/>
+                    </div>                    
                     <field name="status_jabatan" /> 
 
                     <div>
-                        <field name="bol_pengalaman" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_pengalaman" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="pengalaman" class="oe_inline" />
                     </div>
                     <field name="pengalaman" class="oe_inline"  nolabel="1"/>
 
                     <div>
-                        <field name="bol_usia" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_usia" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="usia" class="oe_inline" />
                     </div>
                     <field name="usia" nolabel="1"/>
 
                     <div>
-                        <field name="bol_kelamin" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_kelamin" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="kelamin" class="oe_inline" />
                     </div>  
                     <field name="kelamin" nolabel="1"/>
 
                     <div>
-                        <field name="bol_sts_prk" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_sts_prk" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="sts_prk" class="oe_inline" />
                     </div>
                     <field name="sts_prk" nolabel="1"/> 
 
                     <div>
-                        <field name="bol_domisili" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_domisili" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="domisili_id" class="oe_inline" />
                     </div>
                     <field name="domisili_id" nolabel="1"/>
 
                     <div>
-                        <field name="bol_tempat_lahir_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_tempat_lahir_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="tempat_lahir_id" class="oe_inline" />
                     </div>
                     <field name="tempat_lahir_id" nolabel="1"/> 
 
                 </field>
-                            
-                <field name="department_id" position="before">
-                    <field name="is_edit" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_manager"/>
-                </field>                
+                
                 <field name="department_id" position="after">                                        
                     <label for="wkt_pemohon" string="Waktu Penempatan"/>
                         <div class="oe_title">
@@ -106,13 +133,13 @@
                     <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')],'readonly': [('is_edit','=',True)]}"/>
 
                      <div>
-                        <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="type_id" class="oe_inline" />
                     </div>
                     <field name="type_id" nolabel="1"/>
 
                     <div>
-                        <field name="bol_jurusan_ids" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager"/>
+                        <field name="bol_jurusan_ids" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="jurusan_ids" class="oe_inline" />
                     </div>
                     <field view_mode="tree" name="jurusan_ids" nolabel="1">
@@ -134,14 +161,14 @@
                     </div>             
                     <button string="Filter" type="object" 
                         states="in_progress" name="cici"
-                        groups="hrd_ppi.group_hr_manager" 
+                        groups="hrd_ppi.group_hr_training_head" 
                         class="oe_highlight" attrs="{'invisible':[('bol_name','=',True)]}"/> 
                     <button string="Execute" type="object" 
                         states="in_progress" name="execute"
-                        groups="hrd_ppi.group_hr_manager" 
+                        groups="hrd_ppi.group_hr_training_head" 
                         class="oe_highlight" attrs="{'invisible':[('bol_name','=',True)]}"/>     
                 <notebook colspan="4">                      
-                        <page string="Daftar Pelamar" name="Pelamar" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager" >
+                        <page string="Daftar Pelamar" name="Pelamar" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_training_head" >
                             <field view_mode="tree,form" name="applicant_ids" nolabel="1">
                                 <tree>
                                     <field name="name"/>
