@@ -191,12 +191,10 @@
         </record-->
 
      <!-- ALL JOBS REQUESTS -->
-
-    
  
 
 	<!-- system MENU -->
-    <menuitem action="action_hr_recruit" id="hr_menu_recruit" parent="hr.menu_hr_main" name="Permohonan recruitment" groups="group_hr_department,group_hr_user"/>  
+    <menuitem action="action_hr_recruit" id="hr_menu_recruit" parent="hr.menu_hr_main" name="Permohonan recruitment" groups="group_hr_department,group_hr_user,group_hr_training_head"/>  
     <menuitem action="action_crm_case_categ0_act_job1" id="menu_crm_case_categ0_act_job1" parent="hr.menu_hr_main" name="Applications for Department" groups="group_hr_department"/>           
     <menuitem parent="hr.menu_hr_configuration" name="Tools" id="base.menu_tools" sequence="120" groups="base.group_tool_user"/>  
     <menuitem action="action_hr_recruit_pend" parent="base.menu_tools" name="Master Pendidikan" id="master_hr_type" sequence="140" groups="base.group_tool_user"/>

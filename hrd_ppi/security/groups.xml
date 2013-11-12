@@ -18,5 +18,9 @@
 		<field name="name">hr / Employee</field>
 	</record>
 
+	<record id="group_hr_training_head" model="res.groups">
+		<field name="name">hr / Training Head</field>
+	</record>	
+
 </data>
 </openerp>
