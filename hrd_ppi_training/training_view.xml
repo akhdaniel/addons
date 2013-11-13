@@ -43,7 +43,7 @@
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        groups="hrd_ppi.group_hr_user" 
+                        groups="hrd_ppi.group_hr_department" 
                         class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
@@ -99,7 +99,7 @@
                     <separator string="Training Internal" attrs="{'invisible': [('is_internal','=', False)],'readonly': [('state','!=', 'draft')]}"/>    
                     <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/>
                     <group> 
-                    <field name="no" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                    <field name="no"/>
                     <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                     <!--field name="subject"/-->
                     <field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
