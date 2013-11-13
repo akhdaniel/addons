@@ -134,13 +134,6 @@
             <field name="arch" type="xml"> 
                 <field name='name' position='after'>
                     <field name="net"/>	
-                    <field name='total'/>
-                    <field name='totals'/>
-                    <field name='pkp'/>
-                    <field name='gros'/>
-                    <field name='pot_absen'/>
-                    <field name='basic'/>
-                    <field name="tunj_pajak"/>
                 </field>
                
             </field>

@@ -509,11 +509,11 @@ class hr_payslip(osv.osv):
             tt=datetime.strptime(ttt,"%Y-%m-%d").month
             if yyy == ttx :
                 if yy > tt :
-                    gtot= xyc.gros + xyc.pot_absen
+                    gtot= xyc.gros 
                     total = totals + gtot
             if yyy == ttx :
                 if yy >= tt :         
-                    gtot= xyc.gros + xyc.pot_absen
+                    gtot= xyc.gros 
                     totals = totals + gtot  
         self.write(cr,uid,ids,{'totals' : total}, context=context)
         return totals
@@ -526,80 +526,83 @@ class hr_payslip(osv.osv):
         basic = xxx.basic
         xxu = xxx.pot_absen
         tax_alw= xxx.tunj_pajak
+        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
+        gros = xxx.gros
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         obj = self_obj.browse(cr,uid,src_obj)
-        for ccc in obj :
-            ocd = ccc.nominal_min
-            occ = ccc.nominal_max
-            coc = ccc.pajak
-            if xx >= ocd and xx<=occ :
-                import pdb;pdb.set_trace()
-                if xcz >= ocd and xcz <= occ :
-                    #pajak dengan alw                    
-                    gros = xyz + xxu
-                    pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                    tht = (basic * xxx.contract_id.type_id.tht)/100 
-                    ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                    pajak_kotor = gros - pot_jab - ptkp - tht
-                    pkpi = (gros*coc)/100
-                    #pajak tanpa alw
-                    gros = basic + xxu 
-                    pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                    #tht = (gros * xxx.contract_id.type_id.tht)/100 
-                    ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                    pajak_kotor = gros - pot_jab - ptkp - tht
-                    pkp_murni = (gros * coc)/100
-                    tunj_pajak = (pkpi - pkp_murni)/((100-coc)/100)
-                else :
-                    for pers in obj :
-                        ocdc = pers.nominal_min
-                        occc = pers.nominal_max
-                        coc = pers.pajak  
-                        oco = pers.pajak  
-                        if xx <= occc and xx >=ocdc :
-                            xxyyz= occc
-                            pkp1 = coc
-                            #pajak dengan alw
-                            pajak1 = occc - xx
-                            pot_jab = (pajak1 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                            tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
-                            ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                            pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
-                            pajak = (pajak1 * pkp1)/100
-                            #pajak tanpa alw
-                            bas1=(pajak1*100)/xyz
-                            basik = basic*(((pajak1*100)/xyz)/100)
-                            pot_jab = (basik * xxx.contract_id.type_id.biaya_jabatan)/100 
-                            tht = (basik * xxx.contract_id.type_id.tht)/100 
-                            ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                            pajak_kotor_basic = basik - pot_jab - ptkp - tht
-                            pajak_basic1=(basik * pkp1)/100
-                            #tunj_pajak1 = (pajak - pajak_basic)/((100-pkp1)/100) 
-                        if xcz <= occc and xcz >=ocdc  :
-                            pkp2 = oco
-                            #pajak dengan alw
-                            pajak2 = xcz - xxyyz
-                            pot_jab = (pajak2 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                            tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
-                            ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
-                            pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
-                            pajaks = (pajak2 * pkp2)/100  
-                            #pajak tanpa alw  
-                            bas2=(pajak2*100)/xyz
-                            basik = basic*(((pajak2*100)/xyz)/100)
-                            pot_jab = (basik * xxx.contract_id.type_id.biaya_jabatan)/100 
-                            tht = (basik * xxx.contract_id.type_id.tht)/100 
-                            ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                            pajak_kotor_basic = basik - pot_jab - ptkp - tht
-                            pajak_basic2=(basik * pkp1)/100
-                            #tunj_pajaks = (pajaks - pajak_basic)/((100-pkp1)/100)  
-                    pjk_bas = pajak_basic1 + pajak_basic2
-                    pjk_alwn = pajak + pajaks
-                    tj_pjk1 =(((pjk_alwn - pjk_bas)*bas1)/100)/((100-pkp1)/100)
-                    tj_pjk2 =(((pjk_alwn - pjk_bas)*bas2)/100)/((100-pkp2)/100) 
-                    tunj_pajak = tj_pjk1 + tj_pjk2         
-                   # tunj_pajak = tunj_pajak1 + tunj_pajaks                 
+        if gros > ptkp :
+            for ccc in obj :
+                ocd = ccc.nominal_min
+                occ = ccc.nominal_max
+                coc = ccc.pajak
+                if xx >= ocd and xx<=occ :
+                    if xcz >= ocd and xcz <= occ :
+                        #pajak dengan alw                    
+                        gros = xyz - tax_alw
+                        pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
+                        tht = (basic * xxx.contract_id.type_id.tht)/100 
+                        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
+                        pajak_kotor = gros - pot_jab - ptkp - tht
+                        pkpi = (gros*coc)/100
+                        #pajak tanpa alw
+                        gros = basic 
+                        pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
+                        #tht = (gros * xxx.contract_id.type_id.tht)/100 
+                        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
+                        pajak_kotor = gros - pot_jab - ptkp - tht
+                        pkp_murni = (gros * coc)/100
+                        tunj_pajak = (pkpi - pkp_murni)/((100-coc)/100)
+                    else :
+                        for pers in obj :
+                            ocdc = pers.nominal_min
+                            occc = pers.nominal_max
+                            coc = pers.pajak  
+                            oco = pers.pajak  
+                            if xx <= occc and xx >=ocdc :
+                                xxyyz= occc
+                                pkp1 = coc
+                                #pajak dengan alw
+                                pajak1 = occc - xx
+                                pot_jab = (pajak1 * xxx.contract_id.type_id.biaya_jabatan)/100 
+                                tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
+                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
+                                pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
+                                pajak = (pajak1 * pkp1)/100
+                                #pajak tanpa alw
+                                bas1=(pajak1*100)/xyz
+                                basik = basic*(((pajak1*100)/xyz)/100)
+                                pot_jab = (basik * xxx.contract_id.type_id.biaya_jabatan)/100 
+                                tht = (basik * xxx.contract_id.type_id.tht)/100 
+                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
+                                pajak_kotor_basic = basik - pot_jab - ptkp - tht
+                                pajak_basic1=(basik * pkp1)/100
+                                #tunj_pajak1 = (pajak - pajak_basic)/((100-pkp1)/100) 
+                            if xcz <= occc and xcz >=ocdc  :
+                                pkp2 = oco
+                                #pajak dengan alw
+                                pajak2 = xcz - xxyyz
+                                pot_jab = (pajak2 * xxx.contract_id.type_id.biaya_jabatan)/100 
+                                tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
+                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
+                                pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
+                                pajaks = (pajak2 * pkp2)/100  
+                                #pajak tanpa alw  
+                                bas2=(pajak2*100)/xyz
+                                basik = basic*(((pajak2*100)/xyz)/100)
+                                pot_jab = (basik * xxx.contract_id.type_id.biaya_jabatan)/100 
+                                tht = (basik * xxx.contract_id.type_id.tht)/100 
+                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
+                                pajak_kotor_basic = basik - pot_jab - ptkp - tht
+                                pajak_basic2=(basik * pkp2)/100
+                                #tunj_pajaks = (pajaks - pajak_basic)/((100-pkp1)/100)  
+                        pjk_bas = pajak_basic1 + pajak_basic2
+                        pjk_alwn = pajak + pajaks
+                        tj_pjk1 =(((pjk_alwn - pjk_bas)*bas1)/100)/((100-pkp1)/100)
+                        tj_pjk2 =(((pjk_alwn - pjk_bas)*bas2)/100)/((100-pkp2)/100) 
+                        tunj_pajak = tj_pjk1 + tj_pjk2   
+        else :                     
+            tunj_pajak = 0.0               
         return tunj_pajak 
 
     def pkp(self,cr,uid,ids,context=None) :
@@ -608,45 +611,50 @@ class hr_payslip(osv.osv):
         xx = xxx.totals
         xyz =xxx.gros
         xxu = xxx.pot_absen
+        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
+        gros = xxx.gros
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         obj = self_obj.browse(cr,uid,src_obj)
-        for ccc in obj :
-            ocd = ccc.nominal_min
-            occ = ccc.nominal_max
-            coc = ccc.pajak
-            if xx >= ocd and xx<=occ :
-                if xcz >= ocd and xcz <= occ :
-                    gros = (xyz + xxu)
-                    pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                    tht = (gros * xxx.contract_id.type_id.tht)/100 
-                    ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                    pajak_kotor = gros - pot_jab - ptkp - tht
-                    pkp = (gros*coc)/100
-                else :
-                    for pers in obj :
-                        ocdc = pers.nominal_min
-                        occc = pers.nominal_max
-                        coc = pers.pajak  
-                        oco = pers.pajak  
-                        if xx <= occc and xx >=ocdc :
-                            xxyyz= occc
-                            pkp1 = coc
-                            pajak1 = occc - xx
-                            pot_jab = (pajak1 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                            tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
-                            ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                            pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
-                            pajak = (pajak1 * pkp1)/100
-                        if xcz <= occc and xcz >=ocdc  :
-                            pkp2 = oco
-                            pajak2 = xcz - xxyyz
-                            pot_jab = (pajak2 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                            tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
-                            ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
-                            pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
-                            pajaks = (pajak2 * pkp2)/100    
-                    pkp = pajak + pajaks                  
+        if gros > ptkp :
+            for ccc in obj :
+                ocd = ccc.nominal_min
+                occ = ccc.nominal_max
+                coc = ccc.pajak
+                if xx >= ocd and xx<=occ :
+                    if xcz >= ocd and xcz <= occ :
+                        gros = xyz
+                        pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
+                        tht = (gros * xxx.contract_id.type_id.tht)/100 
+                        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
+                        pajak_kotor = gros - pot_jab - ptkp - tht
+                        pkp = (gros*coc)/100
+                    else :
+                        for pers in obj :
+                            ocdc = pers.nominal_min
+                            occc = pers.nominal_max
+                            coc = pers.pajak  
+                            oco = pers.pajak  
+                            if xx <= occc and xx >=ocdc :
+                                xxyyz= occc
+                                pkp1 = coc
+                                pajak1 = occc - xx
+                                pot_jab = (pajak1 * xxx.contract_id.type_id.biaya_jabatan)/100 
+                                tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
+                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
+                                pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
+                                pajak = (pajak1 * pkp1)/100
+                            if xcz <= occc and xcz >=ocdc  :
+                                pkp2 = oco
+                                pajak2 = xcz - xxyyz
+                                pot_jab = (pajak2 * xxx.contract_id.type_id.biaya_jabatan)/100 
+                                tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
+                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
+                                pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
+                                pajaks = (pajak2 * pkp2)/100    
+                        pkp = pajak + pajaks                  
+        else :
+            pkp = 0.0
         return pkp   
         
     def libur (self,cr,uid,ids,context=None):
