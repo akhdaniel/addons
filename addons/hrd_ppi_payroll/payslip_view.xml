@@ -114,28 +114,49 @@
         
         <!-- payslip batches-->
         
-        <record id="hr_payslip_run_form" model="ir.ui.view">
-            <field name="name">hr.payslip.run.form</field>
+        <record id="hr_payslip_run_form99" model="ir.ui.view">
+            <field name="name">hr.payslip.run.form2</field>
             <field name="model">hr.payslip.run</field>
             <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
             <field name="arch" type="xml">
-                <form string="Payslips Batches" version="7.0">
                 <header>
                     <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" group="base.group_tool_manager"/>                   
                 </header>
-                </form>
             </field>
         </record>
         
-        <record id="view_hr_payslip_form" model="ir.ui.view">
-            <field name="name">hr.payslip.form</field>
+        <record id="view_hr_payslip_form99" model="ir.ui.view">
+            <field name="name">hr.payslip.form2</field>
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml"> 
+                
+                <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" position="replace">
+                    <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>
+                </button>    
+
+                <!--button string="Refund" name="refund_sheet" states="confirm,done" type='object' position="replace">
+                    <button string="Cek2" name="refund_sheet" states="confirm,done" type='object' class="oe_highlight"/>
+                </button--> 
+                <button string="Set to Draft" name="draft" states="cancel" position="replace">
+                    <button string="Set to Draft" name="draft" states="cancel" position="replace" groups="hrd_ppi.group_hr_user"/>
+                </button>
+
+                <button string="Compute Sheet" name="compute_sheet" type="object" states="draft" class="oe_highlight" position="replace">
+                    <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_user"/>
+                </button>
+
+                <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
+                    <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
+                </button>  
+                               
                 <field name='name' position='after'>
-                    <field name="net"/>	
+                    <field name="net" readonly="1"/>	
                 </field>
-               
+
+                <field name="number_of_days" sum="Total Working Days" position="replace">
+                    <field name="number_of_days"/>
+                </field>                
             </field>
         </record>
         <record id="view_hr_payslip_tree" model="ir.ui.view">
@@ -174,5 +195,7 @@
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user"/>
         <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user"/>
         <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user"/>
+
+
     </data>
 </openerp>
