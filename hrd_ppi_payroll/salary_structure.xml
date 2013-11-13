@@ -124,7 +124,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN JAMSOSTEK</field>
-	        <field name="code">T_JAMSOSTEK</field>
+	        <field name="code">T_JMS</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -133,7 +133,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance_obat" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALW (OBAT)</field>
-	        <field name="code">MED_ALW_OBAT</field>
+	        <field name="code">MAO</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -142,7 +142,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALW (PERAWATAN RS)</field>
-	        <field name="code">MED_ALW_RS</field>
+	        <field name="code">MAR</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -187,7 +187,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_rapel_overtime" model="hr.salary.rule">
 	        <field name="name">RAPEL OVERTIME</field>
-	        <field name="code">RAPEL_OVERTIME</field>
+	        <field name="code">RO</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -205,7 +205,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_luar_kota" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN LUAR KOTA</field>
-	        <field name="code">LUAR_KOTA</field>
+	        <field name="code">LK</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -214,7 +214,7 @@
 	    </record>		    
 	    <record id="hr_payroll_rules_tunjangan_driver" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN DRIVER</field>
-	        <field name="code">TUNJANGAN_DRIVER</field>
+	        <field name="code">TD</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -223,7 +223,7 @@
 	    </record>    
 	    <record id="hr_payroll_rules_housing_alw" model="hr.salary.rule">
 	        <field name="name">HOUSING_ALW</field>
-	        <field name="code">HOUSING_ALW</field>
+	        <field name="code">HA</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -250,7 +250,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_lebih_bayar_pajak" model="hr.salary.rule">
 	        <field name="name">LEBIH_BAYAR_PAJAK</field>
-	        <field name="code">LEBIH_BAYAR_PAJAK</field>
+	        <field name="code">LBP</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -259,7 +259,7 @@
 	    </record>	
 	    <record id="hr_payroll_rules_loan_repayment" model="hr.salary.rule">
 	        <field name="name">LOAN_REPAYMENT</field>
-	        <field name="code">LOAN_REPAYMENT</field>
+	        <field name="code">LR</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -268,7 +268,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_pot_koperasi" model="hr.salary.rule">
 	        <field name="name">POT_KOPERASI</field>
-	        <field name="code">POTO_KOPERASI</field>
+	        <field name="code">PK</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -277,7 +277,7 @@
 	    </record>	
 	    <record id="hr_payroll_rules_pot_spsi" model="hr.salary.rule">
 	        <field name="name">POT_SPSI</field>
-	        <field name="code">POT_SPSI</field>
+	        <field name="code">PSI</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -286,7 +286,7 @@
 	    </record>    
 	    <record id="hr_payroll_rules_pot_telepon" model="hr.salary.rule">
 	        <field name="name">POT_TELEPON</field>
-	        <field name="code">POT_TELEPON</field>
+	        <field name="code">PTEL</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -304,7 +304,7 @@
 	    </record>	
 	    <record id="hr_payroll_rules_tunjangan_pajak" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN PAJAK</field>
-	        <field name="code">TUNJANGAN_PAJAK</field>
+	        <field name="code">TPAJ</field>
 	        <field name="category_id" ref="hr_payroll.ALW"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -324,7 +324,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_potongan_loan_repayment" model="hr.salary.rule">
 	        <field name="name">POTONGAN LOAN REPAYMENT</field>
-	        <field name="code">POTONGAN_LOAN_REPAYMENT</field>
+	        <field name="code">PLR</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -333,7 +333,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_kurang_bayar_pajak" model="hr.salary.rule">
 	        <field name="name">KURANG_BAYAR_PAJAK</field>
-	        <field name="code">KURANG_BAYAR_PAJAKK</field>
+	        <field name="code">KBP</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -342,7 +342,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_pot_koperasi_ded" model="hr.salary.rule">
 	        <field name="name">POTONGAN KOPERASI</field>
-	        <field name="code">POT_KOPERASI</field>
+	        <field name="code">PKOP</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -351,7 +351,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_pot_spsi_ded" model="hr.salary.rule">
 	        <field name="name">POTONGAN SPSI</field>
-	        <field name="code">POTO_SPSI</field>
+	        <field name="code">PSP</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -360,7 +360,7 @@
 	    </record>	 
 	    <record id="hr_payroll_rules_pot_telepon_ded" model="hr.salary.rule">
 	        <field name="name">POT TELEPON</field>
-	        <field name="code">POTO_TELEPON</field>
+	        <field name="code">PTLP</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -369,7 +369,7 @@
 	    </record>
 	    <record id="hr_payroll_rules_others_deduction" model="hr.salary.rule">
 	        <field name="name">OTHERS DEDUCTION</field>
-	        <field name="code">OTHERS_DEDUCTION</field>
+	        <field name="code">OD</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -386,7 +386,7 @@
 	        <field name="amount_python_compute">result = -inputs.ADJ_BONUS.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_THR/THN" model="hr.salary.rule">
-	        <field name="name">Adj THR/THN</field>
+	        <field name="name">ADJ THR/THN</field>
 	        <field name="code">Adj_THR/THN</field>	
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
@@ -395,8 +395,8 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_THR.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_LEAVE_ALW" model="hr.salary.rule">
-	        <field name="name">Adj. LEAVE ALW</field>
-	        <field name="code">Adj_LEAVE_ALW</field>		
+	        <field name="name">ADJ LEAVE ALW</field>
+	        <field name="code">AdjLW</field>		
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -404,8 +404,8 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_LEAVE_ALW.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_PULSA" model="hr.salary.rule">
-	         <field name="name">Adj. PULSA</field>
-	        <field name="code">Adj_PULSA</field>		
+	         <field name="name">ADJ PULSA</field>
+	        <field name="code">AdjP</field>		
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -413,8 +413,8 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_PULSA.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_T_Luar_Kota" model="hr.salary.rule">
-	        <field name="name">Adj T. Luar Kota</field>
-	        <field name="code">Adj_T_Luar_Kota</field>	
+	        <field name="name">ADJ T. Luar Kota</field>
+	        <field name="code">AdjTLK</field>	
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -422,8 +422,8 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_T_Luar_Kota.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_Overtime" model="hr.salary.rule">
-	        <field name="name">Adj. Overtime</field>
-	        <field name="code">Adj_Overtime</field>	
+	        <field name="name">ADJ. Overtime</field>
+	        <field name="code">AdjO</field>	
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -431,8 +431,8 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_Overtime.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_Leave_Alw" model="hr.salary.rule">
-	        <field name="name">Adj. Leave Alw</field>
-	        <field name="code">Adj_Leave_Alw</field>	
+	        <field name="name">ADJ Leave Alw</field>
+	        <field name="code">AdjLA</field>	
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -440,7 +440,7 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_Leave_Alw.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_MEAL" model="hr.salary.rule">
-	        <field name="name">Adj. MEAL</field>
+	        <field name="name">ADJ MEAL</field>
 	        <field name="code">Adj_MEAL</field>		
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
@@ -449,7 +449,7 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_MEAL.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_Medical" model="hr.salary.rule">
-	        <field name="name">Adj. Medical</field>
+	        <field name="name">ADJ Medical</field>
 	        <field name="code">Adj_Medical</field>	
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
@@ -458,8 +458,8 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_Medical.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_Adj_TRANSPORT" model="hr.salary.rule">
-	        <field name="name">Adj. TRANSPORT</field>
-	        <field name="code">Adj_TRANSPORT</field>	
+	        <field name="name">ADJ TRANSPORT</field>
+	        <field name="code">AdjT</field>	
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
@@ -468,14 +468,14 @@
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
 	        <field name="name">POTONGAN JAMSOSTEK</field>
-	        <field name="code">P_JAMSOSTEK</field>
+	        <field name="code">P_JA</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">116</field>
 	        <field name="amount_python_compute">result = (-contract.wage * contract.type_id.jams1 / 100)+(-contract.wage * contract.type_id.jams2 / 100)</field>
 	    </record>
-	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
+	    <record id="hr_payroll_rules_tht" model="hr.salary.rule">
 	        <field name="name">POTONGAN THT</field>
 	        <field name="code">P_THT</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>

@@ -5,7 +5,7 @@ class hr_contract(osv.osv):
     _inherit = 'hr.contract'
     
     _columns = {
-        'master_gaji_id':fields.many2one('hr.master_gaji', "incentive"),
+        'master_gaji_id':fields.many2one('hr.master_gaji', "Incentive"),
         'makan':fields.related('master_gaji_id','makan',type='float',relation='hr.master_gaji',string='Uang Makan',readonly=True),
         'transport':fields.related('master_gaji_id','transport',type='float',relation='hr.master_gaji',string='Uang Transport',readonly=True),
         'jenis_lembur' : fields.selection([('incentive','Incentive'),('overtime','Overtime')], 'Jenis Lembur'),
