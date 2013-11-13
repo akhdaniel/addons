@@ -36,7 +36,14 @@ class hr_payslip(osv.osv):
             if holiday_ids:
                 res = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].holiday_status_id.name
             return res
-
+        def was_on_tugas(employee_id, datetime_day, context=None):
+            ress = False
+            day = datetime_day.strftime("%Y-%m-%d")
+            holiday_ids = self.pool.get('hr.holidays').search(cr, uid, [('state','=','validate'),('employee_id','=',employee_id),('type','=','luar'),('date_from','<=',day),('date_to','>=',day)])
+            if holiday_ids:
+                ress = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].tugas_luar
+            return ress    
+        ress = []
         res = []
         for contract in self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context):
             if not contract.working_hours:
@@ -60,7 +67,7 @@ class hr_payslip(osv.osv):
                  'number_of_hours': 0.0,
                  'contract_id': contract.id,            
             }
-
+            luar ={}
             leaves = {}
             leave={}
             day_from = datetime.strptime(date_from,"%Y-%m-%d")
@@ -170,8 +177,20 @@ class hr_payslip(osv.osv):
                                     'number_of_hours': working_hours_on_day,
                                     'contract_id': contract.id,
                                     }
-                                    
-                  
+                    tugas_luar = was_on_tugas(contract.employee_id.id, day_from + timedelta(days=day), context=context)                
+                    if tugas_luar :
+                        if tugas_luar in luar:
+                            luar[tugas_luar]['number_of_days'] += 1.0
+                            luar[tugas_luar]['number_of_hours'] += working_hours_on_day
+                        else :
+                            luar[tugas_luar] = {
+                                    'name': tugas_luar,
+                                    'sequence': 5,
+                                    'code': tugas_luar,
+                                    'number_of_days': 1.0,
+                                    'number_of_hours': working_hours_on_day,
+                                    'contract_id': contract.id,
+                                    }
                     real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
                     working_hours=int(real_working_hours_on_day)
                     working_minutes=real_working_hours_on_day - working_hours
@@ -195,11 +214,12 @@ class hr_payslip(osv.osv):
                         presences['number_of_hours'] += working_hours_on_day
             leaves = [value for key,value in leaves.items()]
             leave = [value for key,value in leave.items()]
+            luar = [value for key,value in luar.items()]
             if leaves == [] :
                 attendances['number_of_days'] = attendances['number_of_days'] - 0
             else :    
                 attendances['number_of_days'] = attendances['number_of_days'] - leaves[leave_type]['number_of_days']
-            res += [attendances] + leaves + leave + [presences] 
+            res += [attendances] + leaves + leave + luar + [presences] 
         coos = self.line2(cr, uid, contract_ids,context=None) 
         return res + coos
         
@@ -879,12 +899,15 @@ class hr_holidays(osv.osv):
     _columns = {
         'temp' : fields.function(_aac, "blabla"),
         'tempp' :fields.function(_aaa),
-        'tahun': fields.char('tahun',readonly=True),
+        'tahun': fields.char('Tahun',readonly=True),
+        'tugas_luar':fields.selection([('luar','luar')],'allokasi'),
+        'holiday_status_id': fields.many2one("hr.holidays.status", "Leave Type", required=False,readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
+        'type': fields.selection([('remove','Leave Request'),('add','Allocation Request'),('luar','Luar Kota')], 'Request Type', required=True, readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}, help="Choose 'Leave Request' if someone wants to take an off-day. \nChoose 'Allocation Request' if you want to increase the number of leaves available for someone", select=True),
      }
       
     _defaults = { 
-        'tahun' : lambda *a : time.strftime('%Y')    
-        }   
+        'tahun' : lambda *a : time.strftime('%Y'),   
+        }    
          
 hr_holidays()  
 
@@ -932,8 +955,8 @@ class hr_employee(osv.osv):
         return result       
     
     _columns = {
-        'alokasi' : fields.function(_aloc),
-        'cuti_tahunan': fields.function(_cuti)
+        'alokasi' : fields.function(_aloc,string='Alokasi Cuti Tahunan'),
+        'cuti_tahunan': fields.function(_cuti, string='Jatah Cuti Tahunan'),
     }
     
 hr_employee()
