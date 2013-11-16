@@ -120,7 +120,7 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">7</field>
-	        <field name="amount_python_compute">result = worked_days.PRESENCES.number_of_days * contract.transport</field>
+	        <field name="amount_python_compute">result = worked_days.TRANSPORT.number_of_days * contract.transport</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN JAMSOSTEK</field>
