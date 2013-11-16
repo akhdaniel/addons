@@ -36,7 +36,7 @@ class hr_payslip(osv.osv):
             if holiday_ids:
                 res = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].holiday_status_id.name
             return res
-        def was_on_tugas(employee_id, datetime_day, context=None):
+        '''def was_on_tugas(employee_id, datetime_day, context=None):
             ress = False
             day = datetime_day.strftime("%Y-%m-%d")
             holiday_ids = self.pool.get('hr.holidays').search(cr, uid, [('state','=','validate'),('employee_id','=',employee_id),('type','=','luar'),('date_from','<=',day),('date_to','>=',day)])
@@ -44,6 +44,7 @@ class hr_payslip(osv.osv):
                 ress = self.pool.get('hr.holidays').browse(cr, uid, holiday_ids, context=context)[0].tugas_luar
             return ress    
         ress = []
+        '''
         res = []
         for contract in self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context):
             if not contract.working_hours:
@@ -177,7 +178,7 @@ class hr_payslip(osv.osv):
                                     'number_of_hours': working_hours_on_day,
                                     'contract_id': contract.id,
                                     }
-                    tugas_luar = was_on_tugas(contract.employee_id.id, day_from + timedelta(days=day), context=context)                
+                    '''tugas_luar = was_on_tugas(contract.employee_id.id, day_from + timedelta(days=day), context=context)                
                     if tugas_luar :
                         if tugas_luar in luar:
                             luar[tugas_luar]['number_of_days'] += 1.0
@@ -191,6 +192,7 @@ class hr_payslip(osv.osv):
                                     'number_of_hours': working_hours_on_day,
                                     'contract_id': contract.id,
                                     }
+                    '''
                     real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)
                     working_hours=int(real_working_hours_on_day)
                     working_minutes=real_working_hours_on_day - working_hours
@@ -220,10 +222,10 @@ class hr_payslip(osv.osv):
             else :    
                 attendances['number_of_days'] = attendances['number_of_days'] - leaves[leave_type]['number_of_days']
             res += [attendances] + leaves + leave + luar + [presences] 
-        coos = self.line2(cr, uid, contract_ids,context=None) 
+        coos = self.line2(cr, uid, contract_ids,date_to,date_from,context=None) 
         return res + coos
         
-    def line2(self, cr, uid, contract_ids, context=None):
+    def line2(self, cr, uid, contract_ids,date_to,date_from, context=None):
         """
         @param contract_ids: list of contract id
         @return: returns a list of dict containing the input that should be applied for the given contract between date_from and date_to
@@ -295,10 +297,28 @@ class hr_payslip(osv.osv):
                  'contract_id': contract.id,            
             }
             leaves = {}
-            date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+0, day=1, days=-15))[:10]
-            date_to_15 =str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-17))[:10]
-            day_from = datetime.strptime(date_from_16,"%Y-%m-%d")
-            day_to = datetime.strptime(date_to_15,"%Y-%m-%d")
+            xxx=date_to
+            ccc=date_from
+            year_from=str(datetime.strptime(ccc,"%Y-%m-%d").year)
+            month_f=datetime.strptime(ccc,"%Y-%m-%d").month
+            month_from=str(month_f-1)
+            day_from = str(16)
+            if month_f != 1 :
+                dates_from=year_from+"-"+month_from+"-"+day_from
+            else :
+                year=datetime.strptime(ccc,"%Y-%m-%d").year
+                year_from = str(year -1)
+                dates_from = year_from+"-"+"12"+"-"+day_from
+            day_from = datetime.strptime(dates_from,"%Y-%m-%d")
+            year_to=str(datetime.strptime(xxx,"%Y-%m-%d").year)
+            month_to=str(datetime.strptime(xxx,"%Y-%m-%d").month)
+            day_to = str(15)
+            dates_to=year_to+"-"+month_to+"-"+day_to
+            day_to = datetime.strptime(dates_to,"%Y-%m-%d")
+            #date_from_16 =str(datetime.now() + relativedelta.relativedelta(months=+bulan, day=1, days=-15))[:10]
+            #date_to_15 =str(datetime.now() + relativedelta.relativedelta(months=+1, day=1, days=-17))[:10]
+            #day_from = datetime.strptime(date_from_16,"%Y-%m-%d")
+            #day_to = datetime.strptime(date_to_15,"%Y-%m-%d")
             nb_of_days = (day_to - day_from).days + 1          
             for day in range(0, nb_of_days):
             	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
@@ -509,11 +529,16 @@ class hr_payslip(osv.osv):
             ccc =self.libur(cr,uid,ids,context=None)
             self.write(cr,uid,ids,{'libur':ccc},context=context)
         return True     
-
+        
     def funct(self,cr,uid,ids,context=None) :
         xxx=self.browse(cr,uid,ids)[0]
         xyz=xxx.employee_id.name
         ccc=xxx.date_to
+        pot_jab = (xxx.gros * xxx.contract_id.type_id.biaya_jabatan)/100 
+        tht = (xxx.basic * xxx.contract_id.type_id.tht)/100 
+        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
+        kena_pajak = xxx.gros - pot_jab - tht - ptkp
+        self.write(cr,uid,ids,{'kena_pajak' : kena_pajak}, context=context)
         yyy=datetime.strptime(ccc,"%Y-%m-%d").year
         yy=datetime.strptime(ccc,"%Y-%m-%d").month
         zzz=datetime.strptime(ccc,"%Y-%m-%d")
@@ -528,13 +553,11 @@ class hr_payslip(osv.osv):
             ttz=datetime.strptime(ttt,"%Y-%m-%d")
             tt=datetime.strptime(ttt,"%Y-%m-%d").month
             if yyy == ttx :
-                if yy > tt :
-                    gtot= xyc.gros 
-                    total = totals + gtot
+                if yy > tt :             
+                    total += xxx.kena_pajak
             if yyy == ttx :
                 if yy >= tt :         
-                    gtot= xyc.gros 
-                    totals = totals + gtot  
+                    totals += xxx.kena_pajak
         self.write(cr,uid,ids,{'totals' : total}, context=context)
         return totals
 
@@ -551,7 +574,7 @@ class hr_payslip(osv.osv):
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         obj = self_obj.browse(cr,uid,src_obj)
-        if gros > ptkp :
+        if xxx.kena_pajak > 0 :
             for ccc in obj :
                 ocd = ccc.nominal_min
                 occ = ccc.nominal_max
@@ -564,14 +587,14 @@ class hr_payslip(osv.osv):
                         tht = (basic * xxx.contract_id.type_id.tht)/100 
                         ptkp = xxx.employee_id.ptkp_id.nominal_bulan
                         pajak_kotor = gros - pot_jab - ptkp - tht
-                        pkpi = (gros*coc)/100
+                        pkpi = (pajak_kotor*coc)/100
                         #pajak tanpa alw
                         gros = basic 
                         pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
                         #tht = (gros * xxx.contract_id.type_id.tht)/100 
                         ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                        pajak_kotor = gros - pot_jab - ptkp - tht
-                        pkp_murni = (gros * coc)/100
+                        pajak_kotor = gros - pot_jab - ptkp
+                        pkp_murni = (pajak_kotor * coc)/100
                         tunj_pajak = (pkpi - pkp_murni)/((100-coc)/100)
                     else :
                         for pers in obj :
@@ -588,7 +611,7 @@ class hr_payslip(osv.osv):
                                 tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
                                 ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
                                 pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
-                                pajak = (pajak1 * pkp1)/100
+                                pajak = (pajak_kotor1 * pkp1)/100
                                 #pajak tanpa alw
                                 bas1=(pajak1*100)/xyz
                                 basik = basic*(((pajak1*100)/xyz)/100)
@@ -633,10 +656,11 @@ class hr_payslip(osv.osv):
         xxu = xxx.pot_absen
         ptkp = xxx.employee_id.ptkp_id.nominal_bulan
         gros = xxx.gros
+        basic=xxx.basic
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         obj = self_obj.browse(cr,uid,src_obj)
-        if gros > ptkp :
+        if xxx.kena_pajak > 0 :
             for ccc in obj :
                 ocd = ccc.nominal_min
                 occ = ccc.nominal_max
@@ -645,10 +669,10 @@ class hr_payslip(osv.osv):
                     if xcz >= ocd and xcz <= occ :
                         gros = xyz
                         pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                        tht = (gros * xxx.contract_id.type_id.tht)/100 
+                        tht = (basic * xxx.contract_id.type_id.tht)/100 
                         ptkp = xxx.employee_id.ptkp_id.nominal_bulan
                         pajak_kotor = gros - pot_jab - ptkp - tht
-                        pkp = (gros*coc)/100
+                        pkp = (pajak_kotor*coc)/100
                     else :
                         for pers in obj :
                             ocdc = pers.nominal_min
@@ -663,7 +687,7 @@ class hr_payslip(osv.osv):
                                 tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
                                 ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
                                 pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
-                                pajak = (pajak1 * pkp1)/100
+                                pajak = (pajak_kotor1 * pkp1)/100
                             if xcz <= occc and xcz >=ocdc  :
                                 pkp2 = oco
                                 pajak2 = xcz - xxyyz
@@ -671,7 +695,7 @@ class hr_payslip(osv.osv):
                                 tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
                                 ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
                                 pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
-                                pajaks = (pajak2 * pkp2)/100    
+                                pajaks = (pajak_kotor2 * pkp2)/100    
                         pkp = pajak + pajaks                  
         else :
             pkp = 0.0
@@ -700,7 +724,7 @@ class hr_payslip(osv.osv):
         'reimburse_rawat':fields.float('Total Reimburse Rawat'),
         'pot_absen':fields.float('Potongan Absen'),
         'gros':fields.float('gros'),
-        'total':fields.float('total'), 
+        'total':fields.float('total kena pajak'), 
         'pkp' :fields.float('pkp'),
         'pot_koperasi':fields.float('potongan koperasi'),
         'pot_telepon' :fields.float('potongan telepon'),
@@ -709,10 +733,10 @@ class hr_payslip(osv.osv):
         'ut' : fields.float('uang transport'),
         'uml' : fields.float('uang makan lembur'),
         'libur' : fields.float('libur'),
-        'totals' :fields.float('total sebelum'),
+        'totals' :fields.float('kena pajak sebelum'),
         'basic' : fields.float('basic'),
         'tunj_pajak' :fields.float('tunjangan pajak'),
-        
+        'kena_pajak' :fields.float('kena Pajak')
     } 
                      
 hr_payslip()
@@ -903,6 +927,7 @@ class hr_holidays(osv.osv):
         'tugas_luar':fields.selection([('luar','luar')],'allokasi'),
         'holiday_status_id': fields.many2one("hr.holidays.status", "Leave Type", required=False,readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
         'type': fields.selection([('remove','Leave Request'),('add','Allocation Request'),('luar','Luar Kota')], 'Request Type', required=True, readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}, help="Choose 'Leave Request' if someone wants to take an off-day. \nChoose 'Allocation Request' if you want to increase the number of leaves available for someone", select=True),
+        'ket' : fields.boolean('Tugas Luar Kota'),
      }
       
     _defaults = { 
