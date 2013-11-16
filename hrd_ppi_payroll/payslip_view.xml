@@ -151,7 +151,15 @@
                 </button>  
                 </header>               
                 <field name='name' position='after'>
-                    <field name="net" readonly="1"/>	
+                    <field name="net" readonly="1"/>
+                    <field name='pot_absen' readonly="1"/>
+                    <field name='gros' readonly="1"/>
+                    <field name='total' readonly="1"/>
+                    <field name='pkp'  readonly="1"/>
+                    <field name='totals'  readonly="1"/>
+                    <field name='basic'  readonly="1"/>
+                    <field name='tunj_pajak'   readonly="1"/> 
+                    <field name='kena_pajak'/>   
                 </field>
 
                 <field name="number_of_days" sum="Total Working Days" position="replace">
@@ -200,6 +208,67 @@
                 </field>                     
             </field>
         </record>
+<<<<<<< .mine
+        <record id="action_tugas_luar_kota" model="ir.actions.act_window">
+            <field name="name">Holidays</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>           
+            <field name="view_mode">tree,form</field>
+        </record>
+                <record id="hr_form_lala" model="ir.ui.view">
+            <field name="name">Public Holidays</field>
+            <field name="model">hr.holidays</field>
+            <field name="type">form</field>
+            <!--field name="inherit_id" ref="hr_holidays.edit_holiday_new"/-->
+            <field name="arch" type="xml">
+                <header position="replace">
+                <header>
+                    <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
+                    <button string="Validate" name="second_validate" states="validate1" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
+                    <button string="Refuse" name="refuse" states="confirm,validate1,validate" type="workflow" groups="base.group_hr_manager"/>
+                    <button string="Reset to New" name="set_to_draft" states="refuse" type="object" groups="base.group_hr_user"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}'/>
+                </header>  
+                </header>  
+                <field name="name" position="before">
+                    <field name='ket'/>
+                </field> 
+                <field name="holiday_status_id" context="{'employee_id':employee_id}" position="replace">
+                    <field name="holiday_status_id" context="{'employee_id':employee_id}" attrs="{'invisible': [('ket','=', True)]}"/>  
+                    <field name="tugas_luar" attrs="{'invisible': [('ket','=', False)]}"/>
+                </field>             
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="tugas_luar">
+            <field name="name">Requests to Approve</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'default_type': 'luar', 'search_default_approve':1}</field>
+            <field name="domain">[('type','=','luar')]</field>
+            <field name="view_id" ref="hr_form_lala"/>
+            <!--field name="search_view_id" ref="view_hr_holidays_filter"/-->
+        </record>
+        <record id="hr_tugas_luar_tree" model="ir.ui.view">
+            <field name="name">Public Holidays</field>
+            <field name="model">hr.holidays</field>
+            <field name="type">tree</field>
+            <field name="domain">[('type','=','luar')]</field>
+            <field name="arch" type="xml">
+            	<tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Hari Libur Nasional">
+            		<field name="name"/>
+            		<field name="employee_id"/>
+					<field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
+                    <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"/>
+					<field name="number_of_days_temp"/>
+					<field name="state" />
+            	</tree>
+            </field>
+        </record>
+        <!-- menu item -->
+        <menuitem  id="menu_hr_tugas_luar_kota" name="Tugas Luar Kota" parent="hr.menu_hr_root" sequence="15"/>
+        <menuitem action="tugas_luar" id="tugas_luar_kota" parent="menu_hr_tugas_luar_kota" name="Tugas Luar Kota"/>
+=======
         <record id="action_tugas_luar_kota" model="ir.actions.act_window">
             <field name="name">Holidays</field>
             <field name="res_model">hr.holidays</field>
@@ -255,6 +324,7 @@
         <!-- menu item -->
         <menuitem  id="menu_hr_tugas_luar_kota" name="Tugas Luar Kota" parent="hr.menu_hr_root" sequence="15"/>
         <menuitem action="tugas_luar" id="tugas_luar_kota" parent="menu_hr_tugas_luar_kota" name="Tugas Luar Kota"/>
+>>>>>>> .r9615
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user"/>
         <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user"/>
         <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user"/>
