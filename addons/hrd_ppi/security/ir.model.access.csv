@@ -121,6 +121,14 @@ access_hr_employee_kon1_employee,hr_employee.kon1,model_hr_employee_kon1,group_h
 access_hr_employee_rwt_pend_employee,hr_employee.rwt_pend,model_hr_employee_rwt_pend,group_hr_employee,1,0,0,0
 access_hr_employee_suskel1_employee,hr_employee.suskel1,model_hr_employee_suskel1,group_hr_employee,1,0,0,0
 
+access_hr_employee_bahasa_training_head,hr_employee.bahasa,model_hr_employee_bahasa,group_hr_training_head,1,1,1,0
+access_hr_employee_kon2_training_head,hr_employee.kon2,model_hr_employee_kon2,group_hr_training_head,1,1,1,0
+access_hr_employee_rwt_krj_training_head,hr_employee.rwt_krj,model_hr_employee_rwt_krj,group_hr_training_head,1,1,1,0
+access_hr_employee_suskel2_training_head,hr_employee.suskel2,model_hr_employee_suskel2,group_hr_training_head,1,1,1,0
+access_hr_training_head_kon1_training_head,hr_employee.kon1,model_hr_employee_kon1,group_hr_training_head,1,1,1,0
+access_hr_employee_rwt_pend_training_head,hr_training_head.rwt_pend,model_hr_employee_rwt_pend,group_hr_training_head,1,1,1,0
+access_hr_employee_suskel1_training_head,hr_employee.suskel1,model_hr_employee_suskel1,group_hr_training_head,1,1,1,0
+
 access_hr_survey,hr.survey,model_hr_survey,group_hr_user,1,1,1,0
 access_hr_survey_manager,hr.survey,model_hr_survey,group_hr_manager,1,1,1,1
 access_hr_survey_department,hr.survey,model_hr_survey,group_hr_department,1,1,0,0
@@ -143,8 +151,8 @@ access_hr_recruit_kota_th,hr_recruit.kota,model_hr_recruit_kota,group_hr_trainin
 
 access_hr_applicant_hasil_wawancara_user,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_user,1,0,0,0
 access_hr_applicant_hasil_wawancara_dep,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_department,1,0,1,0
-access_hr_applicant_hasil_wawancara_man,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_manager,1,1,1,1
-access_hr_applicant_hasil_wawancara_th,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_training_head,1,1,1,1
+access_hr_applicant_hasil_wawancara_man,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_manager,1,0,1,1
+access_hr_applicant_hasil_wawancara_th,hr_applicant.hasil_wawancara,model_hr_applicant_hasil_wawancara,group_hr_training_head,1,0,1,1
 
 access_hr_fasilitas_user,hr.fasilitas,model_hr_fasilitas,group_hr_user,1,1,1,0
 access_hr_fasilitas_man,hr.fasilitas,model_hr_fasilitas,group_hr_manager,1,1,1,1
@@ -190,6 +198,64 @@ access_hr_recruit_b_lisan_user,hr_recruit.b_lisan,model_hr_recruit_b_lisan,group
 access_hr_recruit_b_lisan_man,hr_recruit.b_lisan,model_hr_recruit_b_lisan,group_hr_manager,1,1,1,1
 access_hr_recruit_b_lisan_dep,hr_recruit.b_lisan,model_hr_recruit_b_lisan,group_hr_department,1,1,1,0
 access_hr_recruit_b_lisan_th,hr_recruit.b_lisan,model_hr_recruit_b_lisan,group_hr_training_head,1,1,1,1
+
+access_hr_recruit_interview_th,hr_recruit.interview,model_hr_recruit_interview,group_hr_training_head,1,1,1,1
+access_hr_recruit_interview_user,hr_recruit.interview,model_hr_recruit_interview,group_hr_user,1,0,1,0
+
+access_hr_extitle_user,hr.extitle,model_hr_extitle,group_hr_user,1,1,1,0
+access_hr_extitle_man,hr.extitle,model_hr_extitle,group_hr_manager,1,1,1,1
+
+access_hr_recruit_gelar_user,hr_recruit.gelar,model_hr_recruit_gelar,group_hr_user,1,1,1,0
+access_hr_recruit_gelar_man,hr_recruit.gelar,model_hr_recruit_gelar,group_hr_manager,1,1,1,1
+
+access_hr_contract,hr.contract,model_hr_contract,group_hr_user,1,0,0,0
+
+access_hr_master_gaji_user,hr.master_gaji,model_hr_master_gaji,group_hr_user,1,0,0,0
+access_hr_master_gaji_man,hr.master_gaji,model_hr_master_gaji,group_hr_manager,1,1,1,1
+
+access_hr_title_user,hr.title,model_hr_title,group_hr_user,1,0,0,0
+access_hr_title_man,hr.title,model_hr_title,group_hr_manager,1,1,1,1
+
+access_hr_ptkp_user,hr.ptkp,model_hr_ptkp,group_hr_user,1,1,1,0
+access_hr_ptkp_man,hr.ptkp,model_hr_ptkp,group_hr_manager,1,1,1,1
+
+access_hr_pkp_user,hr.pkp,model_hr_pkp,group_hr_user,1,1,1,0
+access_hr_pkp_man,hr.pkp,model_hr_pkp,group_hr_manager,1,1,1,1
+
+access_reimburse_user,reimburse,model_reimburse,group_hr_user,1,1,1,0
+access_reimburse_man,reimburse,model_reimburse,group_hr_manager,1,1,1,1
+access_reimburse_emp,reimburse,model_reimburse,group_hr_employee,1,0,0,0
+access_reimburse_dep,reimburse,model_reimburse,group_hr_department,1,0,0,0
+access_reimburse_th,reimburse,model_reimburse,group_hr_training_head,1,0,0,0
+
+access_hr_training_bukti_dep,hr_training.bukti,model_hr_training_bukti,group_hr_department,1,0,0,0
+access_hr_training_bukti_man,hr_training.bukti,model_hr_training_bukti,group_hr_manager,1,1,1,1
+access_hr_training_bukti_th,hr_training.bukti,model_hr_training_bukti,group_hr_training_head,1,1,1,1
+
+access_hr_payslip_run_man,hr.payslip.run,model_hr_payslip_run,group_hr_manager,1,1,1,1
+access_hr_payslip_run_user,hr.payslip.run,model_hr_payslip_run,group_hr_user,1,0,1,0
+
+access_hr_employs_gol_man,hr_employs.gol,model_hr_employs_gol,group_hr_manager,1,1,1,1
+access_hr_employs_gol_user,hr_employs.gol,model_hr_employs_gol,group_hr_user,1,0,0,0
+
+access_hr_recruitment_stage_man,hr.recruitment.stage,model_hr_recruitment_stage,group_hr_manager,1,1,1,1
+access_hr_recruitment_stage_user,hr.recruitment.stage,model_hr_recruitment_stage,group_hr_user,1,0,0,0
+
+access_hr_contract_type_man,hr.contract.type,model_hr_contract_type,group_hr_manager,1,1,1,1
+access_hr_contract_type_user,hr.contract.type,model_hr_contract_type,group_hr_user,1,1,1,0
+
+access_hr_payslip_worked_days_man,hr.payslip.worked.days,model_hr_payslip_worked_days,group_hr_manager,1,1,1,1
+access_hr_payslip_worked_days_user,hr.payslip.worked.days,model_hr_payslip_worked_days,group_hr_user,1,1,1,0
+
+access_hr_rule_input_man,hr.rule.input,model_hr_rule_input,group_hr_manager,1,1,1,1
+access_hr_rule_input_user,hr.rule.input,model_hr_rule_input,group_hr_user,1,1,1,0
+
+access_resource_calendar_attendance_man,resource.calendar.attendance,model_resource_calendar_attendance,group_hr_manager,1,1,1,1
+
+
+
+
+
 
 
 
