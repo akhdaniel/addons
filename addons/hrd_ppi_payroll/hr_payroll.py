@@ -75,7 +75,7 @@ class hr_payslip(osv.osv):
             day_to = datetime.strptime(date_to,"%Y-%m-%d")
             nb_of_days = (day_to - day_from).days + 1    
             for day in range(0, nb_of_days):
-            	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
+                # cek dari jadwal kerja, berapa jam sehari employee bekerja             
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
                 #working_hours_on_day = 8.00
                 if working_hours_on_day:
@@ -86,7 +86,7 @@ class hr_payslip(osv.osv):
                     employee = emp_obj.browse(cr, uid, employee_id, context=context)
                     leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
                     if leave_type == "Cuti Tahunan" :
-                        ###### cuti	
+                        ###### cuti 
                         #if he was on leave, fill the leaves dict
                         
                         if leave_type in leaves:
@@ -202,7 +202,7 @@ class hr_payslip(osv.osv):
                     elif working_minutes >= 0.45 :    
                         real_working_hours_on_day= working_hours + 1
                     elif working_minutes < 15 :
-                        real_working_hours_on_day= working_hours  						
+                        real_working_hours_on_day= working_hours                        
                     date = (day_from + timedelta(days=day))
                     #leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
                     isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7
@@ -321,7 +321,7 @@ class hr_payslip(osv.osv):
             #day_to = datetime.strptime(date_to_15,"%Y-%m-%d")
             nb_of_days = (day_to - day_from).days + 1          
             for day in range(0, nb_of_days):
-            	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
+                # cek dari jadwal kerja, berapa jam sehari employee bekerja             
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
                 #working_hours_on_day = 8.00
                 if working_hours_on_day:
@@ -344,7 +344,7 @@ class hr_payslip(osv.osv):
                     elif working_minutes >= 0.45 :    
                         real_working_hours_on_day= working_hours + 1
                     elif working_minutes < 15 :
-                        real_working_hours_on_day= working_hours                       						
+                        real_working_hours_on_day= working_hours                                            
                     date = (day_from + timedelta(days=day))
                     leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
                     isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7 or leave_type 
@@ -505,7 +505,15 @@ class hr_payslip(osv.osv):
                     self.write(cr, uid, [payslip.id], {'uml':coo}, context=context)  
                 if cod == "BASIC" :      
                     coo =line['amount']  
-                    self.write(cr, uid, [payslip.id], {'basic':coo}, context=context)   
+                    self.write(cr, uid, [payslip.id], {'basic':coo}, context=context)
+                if cod =="TPAJ" :   
+                    tunj=line['amount']
+                    if tunj == 0 :
+                        for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
+                            cod= line['code']
+                            if cod == "GROSS" :
+                                tj =line['amount']
+                                self.write(cr, uid, [payslip.id], {'gros_sebelum':tj}, context=context)        
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']   
                 if cod == "GROSS":
@@ -514,16 +522,24 @@ class hr_payslip(osv.osv):
                     coos = self.funct(cr,uid,ids,context=None)    
                     self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
                     coos = self.tunj_pajak(cr,uid,ids,context=None)    
-                    self.write(cr, uid, [payslip.id], {'tunj_pajak':coos}, context=context)     
+                    self.write(cr, uid, [payslip.id], {'tunj_pajak':coos}, context=context)        
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']   
                 if cod == "GROSS":
                     coo = line['amount']
                     self.write(cr, uid, [payslip.id], {'gros':coo}, context=context)     
-                    coos = self.funct(cr,uid,ids,context=None)    
-                    self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
-                    coos = self.pkp(cr,uid,ids,context=None)  
-                    self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context)
+                if cod == "NET":
+                    coo =line['amount']      
+                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)   
+            coos = self.funct(cr,uid,ids,context=None)    
+            self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
+            coos = self.pkp(cr,uid,ids,context=None)  
+            self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context) 
+            for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
+                cod= line['code']   
+                if cod == "NET":
+                    coo =line['amount']      
+                    self.write(cr, uid, [payslip.id], {'net':coo}, context=context)                         
             lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
             self.write(cr, uid, [payslip.id], {'line_ids': lines, 'number': number})
             ccc =self.libur(cr,uid,ids,context=None)
@@ -538,7 +554,8 @@ class hr_payslip(osv.osv):
         tht = (xxx.basic * xxx.contract_id.type_id.tht)/100 
         ptkp = xxx.employee_id.ptkp_id.nominal_bulan
         kena_pajak = xxx.gros - pot_jab - tht - ptkp
-        self.write(cr,uid,ids,{'kena_pajak' : kena_pajak}, context=context)
+        if kena_pajak >= 0 :
+            self.write(cr,uid,ids,{'kena_pajak' : kena_pajak}, context=context)
         yyy=datetime.strptime(ccc,"%Y-%m-%d").year
         yy=datetime.strptime(ccc,"%Y-%m-%d").month
         zzz=datetime.strptime(ccc,"%Y-%m-%d")
@@ -554,152 +571,114 @@ class hr_payslip(osv.osv):
             tt=datetime.strptime(ttt,"%Y-%m-%d").month
             if yyy == ttx :
                 if yy > tt :             
-                    total += xxx.kena_pajak
+                    total += xyc.kena_pajak
             if yyy == ttx :
                 if yy >= tt :         
-                    totals += xxx.kena_pajak
+                    totals += xyc.kena_pajak
         self.write(cr,uid,ids,{'totals' : total}, context=context)
         return totals
 
     def tunj_pajak(self,cr,uid,ids,context=None) :
-        xxx=self.browse(cr,uid,ids)[0]
-        xcz=xxx.total
-        xx = xxx.totals
-        xyz =xxx.gros
-        basic = xxx.basic
-        xxu = xxx.pot_absen
-        tax_alw= xxx.tunj_pajak
-        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-        gros = xxx.gros
+        obj=self.browse(cr,uid,ids)[0]
+        gros = obj.gros_sebelum
+        basic=obj.basic
+        gros_tahun = gros * 13
+        #menghitung pajak dengan alw
+        #import pdb;pdb.set_trace()
+        pot_jab = (gros_tahun* obj.contract_id.type_id.biaya_jabatan)/100
+        if pot_jab <= obj.contract_id.type_id.max_biaya_jabatan :
+            pot_jab = (gros_tahun* obj.contract_id.type_id.biaya_jabatan)/100
+        else :
+            pot_jab = obj.contract_id.type_id.max_biaya_jabatan    
+        tht = ((basic*13) * obj.contract_id.type_id.tht)/100  
+        ptkp = obj.employee_id.ptkp_id.nominal_tahun
+        pkp_alw = gros_tahun - (pot_jab + tht + ptkp)
+        #menghitung pajak tanpa alw
+        pot_jab_bas = (((basic*13)*obj.contract_id.type_id.biaya_jabatan))/100
+        if pot_jab_bas <= obj.contract_id.type_id.max_biaya_jabatan :
+            pot_jab_bas = (((basic*13)*obj.contract_id.type_id.biaya_jabatan))/100
+        else :
+            pot_jab = obj.contract_id.type_id.max_biaya_jabatan  
+        tht_bas = 0.0
+        ptkp_bas = obj.employee_id.ptkp_id.nominal_tahun
+        pkp_bas = (basic*13) - (pot_jab_bas + tht_bas + ptkp_bas)
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         obj = self_obj.browse(cr,uid,src_obj)
-        if xxx.kena_pajak > 0 :
-            for ccc in obj :
-                ocd = ccc.nominal_min
-                occ = ccc.nominal_max
-                coc = ccc.pajak
-                if xx >= ocd and xx<=occ :
-                    if xcz >= ocd and xcz <= occ :
-                        #pajak dengan alw                    
-                        gros = xyz - tax_alw
-                        pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                        tht = (basic * xxx.contract_id.type_id.tht)/100 
-                        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                        pajak_kotor = gros - pot_jab - ptkp - tht
-                        pkpi = (pajak_kotor*coc)/100
-                        #pajak tanpa alw
-                        gros = basic 
-                        pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                        #tht = (gros * xxx.contract_id.type_id.tht)/100 
-                        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                        pajak_kotor = gros - pot_jab - ptkp
-                        pkp_murni = (pajak_kotor * coc)/100
-                        tunj_pajak = (pkpi - pkp_murni)/((100-coc)/100)
-                    else :
-                        for pers in obj :
-                            ocdc = pers.nominal_min
-                            occc = pers.nominal_max
-                            coc = pers.pajak  
-                            oco = pers.pajak  
-                            if xx <= occc and xx >=ocdc :
-                                xxyyz= occc
-                                pkp1 = coc
-                                #pajak dengan alw
-                                pajak1 = occc - xx
-                                pot_jab = (pajak1 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                                tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
-                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                                pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
-                                pajak = (pajak_kotor1 * pkp1)/100
-                                #pajak tanpa alw
-                                bas1=(pajak1*100)/xyz
-                                basik = basic*(((pajak1*100)/xyz)/100)
-                                pot_jab = (basik * xxx.contract_id.type_id.biaya_jabatan)/100 
-                                tht = (basik * xxx.contract_id.type_id.tht)/100 
-                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                                pajak_kotor_basic = basik - pot_jab - ptkp - tht
-                                pajak_basic1=(basik * pkp1)/100
-                                #tunj_pajak1 = (pajak - pajak_basic)/((100-pkp1)/100) 
-                            if xcz <= occc and xcz >=ocdc  :
-                                pkp2 = oco
-                                #pajak dengan alw
-                                pajak2 = xcz - xxyyz
-                                pot_jab = (pajak2 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                                tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
-                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
-                                pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
-                                pajaks = (pajak2 * pkp2)/100  
-                                #pajak tanpa alw  
-                                bas2=(pajak2*100)/xyz
-                                basik = basic*(((pajak2*100)/xyz)/100)
-                                pot_jab = (basik * xxx.contract_id.type_id.biaya_jabatan)/100 
-                                tht = (basik * xxx.contract_id.type_id.tht)/100 
-                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                                pajak_kotor_basic = basik - pot_jab - ptkp - tht
-                                pajak_basic2=(basik * pkp2)/100
-                                #tunj_pajaks = (pajaks - pajak_basic)/((100-pkp1)/100)  
-                        pjk_bas = pajak_basic1 + pajak_basic2
-                        pjk_alwn = pajak + pajaks
-                        tj_pjk1 =(((pjk_alwn - pjk_bas)*bas1)/100)/((100-pkp1)/100)
-                        tj_pjk2 =(((pjk_alwn - pjk_bas)*bas2)/100)/((100-pkp2)/100) 
-                        tunj_pajak = tj_pjk1 + tj_pjk2   
+        tunj_pajak_alw = 0.0
+        tunj_pajak_bas = 0.0
+        tunj_pajak = 0.0
+        if pkp_alw >= 0 :
+            for hitung in obj :
+                minimal = hitung.nominal_min
+                mak = hitung.nominal_max
+                pajak = hitung.pajak   
+                #hitung pajak dengan alw
+                if pkp_alw >= mak :
+                    tunj_pajak_alw = tunj_pajak_alw + ((mak - minimal) * pajak)/100  
+                    tpj= ((mak - minimal) * pajak)/100   
+                elif pkp_alw >= minimal and pkp_alw <= mak and minimal == 0 :    
+                    tunj_pajak_alw = (pkp_alw *pajak)/100 
+                    tpj = (pkp_alw *pajak)/100 
+                elif pkp_alw >= minimal and pkp_alw <= mak and minimal != 0 :
+                    tunj_pajak_alw = tunj_pajak_alw + ((pkp_alw - minimal) * pajak)/100  
+                    tpj = ((pkp_alw - minimal) * pajak)/100                  
+                else :
+                    tpj = 0.0
+                #hitung pajak tanpa alw
+                if pkp_bas >= mak :
+                    tunj_pajak_bas = tunj_pajak_bas + ((mak - minimal) * pajak)/100   
+                    tpb = ((mak - minimal) * pajak)/100    
+                elif pkp_bas >= minimal and pkp_bas <= mak and minimal == 0 :    
+                    tunj_pajak_bas = (pkp_bas *pajak)/100 
+                    tpb = (pkp_bas * pajak)/100 
+                elif pkp_bas >= minimal and pkp_bas <= mak and minimal != 0 :
+                    tunj_pajak_bas = tunj_pajak_bas + ((pkp_bas - mak) * pajak)/100 
+                    tpb = ((pkp_bas - minimal) * pajak)/100 
+                else :
+                    tpb = 0.0
+                tunj_pajak =  tunj_pajak + ((( tpj - tpb )/((100 - pajak)/100)) / 13 )     
+
+           # tunj_pajak = ((tunj_pajak_alw-tunj_pajak_bas)*((100 - paja)/100)) / 13             
         else :                     
             tunj_pajak = 0.0               
         return tunj_pajak 
 
     def pkp(self,cr,uid,ids,context=None) :
-        xxx=self.browse(cr,uid,ids)[0]
-        xcz=xxx.total
-        xx = xxx.totals
-        xyz =xxx.gros
-        xxu = xxx.pot_absen
-        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-        gros = xxx.gros
-        basic=xxx.basic
+        #import pdb;pdb.set_trace()
+        obj=self.browse(cr,uid,ids)[0]
+        gros = obj.gros
+        basic=obj.basic
+        gros_tahun = gros * 13
+        #menghitung pajak dengan alw
+        pot_jab = (gros_tahun* obj.contract_id.type_id.biaya_jabatan)/100
+        if pot_jab <= obj.contract_id.type_id.max_biaya_jabatan :
+            pot_jab = (gros_tahun* obj.contract_id.type_id.biaya_jabatan)/100
+        else :
+            pot_jab = obj.contract_id.type_id.max_biaya_jabatan    
+        tht = ((basic*13) * obj.contract_id.type_id.tht)/100  
+        ptkp = obj.employee_id.ptkp_id.nominal_tahun
+        pkp_alw = gros_tahun - (pot_jab + tht + ptkp)
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         obj = self_obj.browse(cr,uid,src_obj)
-        if xxx.kena_pajak > 0 :
-            for ccc in obj :
-                ocd = ccc.nominal_min
-                occ = ccc.nominal_max
-                coc = ccc.pajak
-                if xx >= ocd and xx<=occ :
-                    if xcz >= ocd and xcz <= occ :
-                        gros = xyz
-                        pot_jab = (gros * xxx.contract_id.type_id.biaya_jabatan)/100 
-                        tht = (basic * xxx.contract_id.type_id.tht)/100 
-                        ptkp = xxx.employee_id.ptkp_id.nominal_bulan
-                        pajak_kotor = gros - pot_jab - ptkp - tht
-                        pkp = (pajak_kotor*coc)/100
-                    else :
-                        for pers in obj :
-                            ocdc = pers.nominal_min
-                            occc = pers.nominal_max
-                            coc = pers.pajak  
-                            oco = pers.pajak  
-                            if xx <= occc and xx >=ocdc :
-                                xxyyz= occc
-                                pkp1 = coc
-                                pajak1 = occc - xx
-                                pot_jab = (pajak1 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                                tht = (pajak1 * xxx.contract_id.type_id.tht)/100 
-                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak1*100)/xyz))/100
-                                pajak_kotor1 = pajak1 - pot_jab - ptkp - tht
-                                pajak = (pajak_kotor1 * pkp1)/100
-                            if xcz <= occc and xcz >=ocdc  :
-                                pkp2 = oco
-                                pajak2 = xcz - xxyyz
-                                pot_jab = (pajak2 * xxx.contract_id.type_id.biaya_jabatan)/100 
-                                tht = (pajak2 * xxx.contract_id.type_id.tht)/100 
-                                ptkp = (xxx.employee_id.ptkp_id.nominal_bulan*((pajak2*100)/xyz))/100
-                                pajak_kotor2 = pajak2 - pot_jab - ptkp - tht
-                                pajaks = (pajak_kotor2 * pkp2)/100    
-                        pkp = pajak + pajaks                  
-        else :
-            pkp = 0.0
-        return pkp   
+        pajak_alw = 0.0
+        #import pdb;pdb.set_trace()
+        if pkp_alw >= 0 :
+            for hitung in obj :
+                minimal = hitung.nominal_min
+                mak = hitung.nominal_max
+                pajak = hitung.pajak   
+                if pkp_alw >= mak :
+                    pajak_alw = pajak_alw + ((mak - minimal) * pajak)/100    
+                elif pkp_alw >= minimal and pkp_alw <= mak and minimal == 0 :    
+                    pajak_alw = (pkp_alw *pajak)/100 
+                elif pkp_alw >= minimal and pkp_alw <= mak and minimal != 0 :
+                    pajak_alw = pajak_alw + ((pkp_alw - minimal) * pajak)/100   
+            pajak = pajak_alw /13                                   
+        else :                     
+            pajak = 0.0               
+        return pajak   
         
     def libur (self,cr,uid,ids,context=None):
         xxx=self.browse(cr,uid,ids)[0]
@@ -724,6 +703,7 @@ class hr_payslip(osv.osv):
         'reimburse_rawat':fields.float('Total Reimburse Rawat'),
         'pot_absen':fields.float('Potongan Absen'),
         'gros':fields.float('gros'),
+        'gros_sebelum' :fields.float('gros sebelum kena pajak'),
         'total':fields.float('total kena pajak'), 
         'pkp' :fields.float('pkp'),
         'pot_koperasi':fields.float('potongan koperasi'),
@@ -762,16 +742,16 @@ class hr_attendance(osv.osv):
 
         for att in self.browse(cr, uid, atts_ids, context=context):
             if att.action == 'sign_in':
-            	pprint.pprint('sign_in')
-            	pprint.pprint(att.name)
+                pprint.pprint('sign_in')
+                pprint.pprint(att.name)
                 time1 = datetime.strptime(att.name,"%Y-%m-%d %H:%M:%S")
             else:
-            	pprint.pprint('sign_out')
-            	pprint.pprint(att.name)
+                pprint.pprint('sign_out')
+                pprint.pprint(att.name)
                 time2 = datetime.strptime(att.name,"%Y-%m-%d %H:%M:%S")
         
         if time2 and time1:
-	        delta = (time2 - time1).seconds / 3600.00
+            delta = (time2 - time1).seconds / 3600.00
         else:
             delta = 0
 
