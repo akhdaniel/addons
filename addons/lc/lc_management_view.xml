@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.actions.act_window" id="action_lc_management">
+            <field name="name">LC Management</field>
+            <field name="res_model">lc.management</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Click to record a new letter of credit.
+                </p><p>
+                A Letter of Credit associated with Purchase Order and Supplier Invoice.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="lc_management_main_menu" name="LC Management" />
+        <menuitem id="lc_management" name="Letter of Credit" parent="lc_management_main_menu" />
+        <menuitem id="lc_management_menu" name="Letter of Credit" parent="lc_management" action="action_lc_management" />
+
+        <record model="ir.ui.view" id="lc_management_form">
+            <field name="name"> LC Management</field>
+            <field name="model">lc.management</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Letter of Credit Application" version="7.0">
+                <group col="4" colspan="4">
+                    <div class="oe_title">
+                        <h1><field name="no"/></h1>
+                    </div>
+                </group>
+                <group col="4">
+                    <field name="supplier_id"/>
+                    <field name="certificate_date"/>
+                    <field name="readiness_date"/>
+                    <field name="cod_date"/>
+                    <field name="due_date"/>
+                    <field name="credit_extention_due_period"/>
+                    <field name="re_financing_date"/>
+                    <field name="proforma_invoice"/>
+                    <field name="revised_invoice"/>
+                    <field name="lc_value"/>
+                    <field name="avail_bank_balance"/>
+                    <field name="net"/>
+                    <field name="remark"/>
+                    <field name="purchase_id"/>
+                    <field name="invoice_id"/>
+                </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="lc_management_tree" model="ir.ui.view">
+            <field name="name">lc.management.tree</field>
+            <field name="model">lc.management</field>
+            <field name="type">tree</field>
+            <!--field name="domain">[('type','=','in_invoice')]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice'}</field-->
+            <field name="arch" type="xml">
+                <tree string="LC Management Tree" >
+                    <field name="no"/>
+                    <field name="supplier_id"/>
+                    <field name="purchase_id"/>
+                    <field name="invoice_id"/>
+                    <field name="certificate_date"/>
+                    <field name="readiness_date"/>
+                    <field name="cod_date"/>
+                    <field name="due_date"/>
+                    <field name="credit_extention_due_period"/>
+                    <field name="re_financing_date"/>
+                    <field name="proforma_invoice"/>
+                    <field name="revised_invoice"/>
+                    <field name="lc_value"/>
+                    <field name="avail_bank_balance"/>
+                    <field name="net"/>
+                    <field name="remark"/>
+                </tree>
+            </field>
+        </record>
+
+        <record forcecreate="1" id="seq_type_lc_no" model="ir.sequence.type">
+            <field name="name">LC Number</field>
+            <field name="code">lc.management</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_personal" model="ir.sequence">
+            <field name="name">LC Number</field>
+            <field name="code">lc.management</field>
+            <field name='prefix'>LC/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="no" eval="False"/>
+        </record> 
+
+        <record id="invoice_supplier_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="date_due" position="after">
+                    <field name="lc_ids" widget="many2one"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_ref" position="after">
+                    <field name="lc_ids" widget="many2one"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
