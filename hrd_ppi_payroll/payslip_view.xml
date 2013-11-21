@@ -53,7 +53,7 @@
                </div-->
             </field>            
         </record>
-		
+        
 
          <record id="hr_contract_type_view_form2" model="ir.ui.view">
             <field name="name">hr.contract.type.view.form2</field>
@@ -120,7 +120,7 @@
             <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
             <field name="arch" type="xml">
                 <header>
-                    <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" group="base.group_tool_manager"/>                   
+                    <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>                   
                 </header>
             </field>
         </record>
@@ -130,9 +130,8 @@
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml"> 
-                <header>
                 <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" position="replace">
-                    <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>
+                    <button string="Approve" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>
                 </button>    
 
                 <!--button string="Refund" name="refund_sheet" states="confirm,done" type='object' position="replace">
@@ -148,9 +147,8 @@
 
                 <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
                     <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
-                </button>  
-                </header>               
-                <field name='name' position='after'>
+                </button>               
+                <!--field name='name' position='after'>
                     <field name="net" readonly="1"/>
                     <field name='pot_absen' readonly="1"/>
                     <field name='gros' readonly="1"/>
@@ -159,8 +157,9 @@
                     <field name='totals'  readonly="1"/>
                     <field name='basic'  readonly="1"/>
                     <field name='tunj_pajak'   readonly="1"/> 
-                    <field name='kena_pajak'/>   
-                </field>
+                    <field name='kena_pajak'/>  
+                    <field name='gros_sebelum'/> 
+                </field-->
 
                 <field name="number_of_days" sum="Total Working Days" position="replace">
                     <field name="number_of_days"/>
@@ -197,7 +196,7 @@
                 </xpath>
             </field>
         </record>
-        <record id="hr_public_holiday_form" model="ir.ui.view">
+        <!--record id="hr_public_holiday_form" model="ir.ui.view">
             <field name="name">Public Holidays</field>
             <field name="model">hr.holidays</field>
             <field name="type">form</field>
@@ -214,11 +213,11 @@
             <field name="view_type">form</field>           
             <field name="view_mode">tree,form</field>
         </record>
-                <record id="hr_form_lala" model="ir.ui.view">
+            <record id="hr_form_lala" model="ir.ui.view">
             <field name="name">Public Holidays</field>
             <field name="model">hr.holidays</field>
             <field name="type">form</field>
-            <!--field name="inherit_id" ref="hr_holidays.edit_holiday_new"/-->
+
             <field name="arch" type="xml">
                 <header position="replace">
                 <header>
@@ -246,7 +245,7 @@
             <field name="context">{'default_type': 'luar', 'search_default_approve':1}</field>
             <field name="domain">[('type','=','luar')]</field>
             <field name="view_id" ref="hr_form_lala"/>
-            <!--field name="search_view_id" ref="view_hr_holidays_filter"/-->
+
         </record>
         <record id="hr_tugas_luar_tree" model="ir.ui.view">
             <field name="name">Public Holidays</field>
@@ -254,19 +253,19 @@
             <field name="type">tree</field>
             <field name="domain">[('type','=','luar')]</field>
             <field name="arch" type="xml">
-            	<tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Hari Libur Nasional">
-            		<field name="name"/>
-            		<field name="employee_id"/>
-					<field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
+                <tree colors="red:state == 'refuse';blue:state == 'draft';black:state in ('confirm','validate','validate1')" string="Hari Libur Nasional">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" required="1"/>
                     <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"/>
-					<field name="number_of_days_temp"/>
-					<field name="state" />
-            	</tree>
+                    <field name="number_of_days_temp"/>
+                    <field name="state" />
+                </tree>
             </field>
         </record>
-        <!-- menu item -->
+
         <menuitem  id="menu_hr_tugas_luar_kota" name="Tugas Luar Kota" parent="hr.menu_hr_root" sequence="15"/>
-        <menuitem action="tugas_luar" id="tugas_luar_kota" parent="menu_hr_tugas_luar_kota" name="Tugas Luar Kota"/>
+        <menuitem action="tugas_luar" id="tugas_luar_kota" parent="menu_hr_tugas_luar_kota" name="Tugas Luar Kota"/-->
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user"/>
         <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user"/>
         <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user"/>

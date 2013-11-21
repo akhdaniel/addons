@@ -797,7 +797,7 @@
 	    <record id="hr_master_pkp_4" model="hr.pkp">
 	        <field name="kode">p4</field> 
             <field name="nominal_min">500000001</field>
-            <field name="nominal_max">0</field>
+            <field name="nominal_max">1000000000000</field>
             <field name="pajak">30</field>
 	    </record>				
 																																       	         	  	      	       
