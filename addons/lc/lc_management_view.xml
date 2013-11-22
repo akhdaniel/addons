@@ -21,33 +21,40 @@
         <menuitem id="lc_management_menu" name="Letter of Credit" parent="lc_management" action="action_lc_management" />
 
         <record model="ir.ui.view" id="lc_management_form">
-            <field name="name"> LC Management</field>
+            <field name="name">Letter of Credit Application</field>
             <field name="model">lc.management</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Letter of Credit Application" version="7.0">
-                <group col="4" colspan="4">
+                <sheet>
                     <div class="oe_title">
-                        <h1><field name="no"/></h1>
+                    <h1>
+                            <label string="Letter of Credit Application"/><field name="no" class="oe_inline"/>
+                    </h1>
                     </div>
-                </group>
-                <group col="4">
-                    <field name="supplier_id"/>
-                    <field name="certificate_date"/>
-                    <field name="readiness_date"/>
-                    <field name="cod_date"/>
-                    <field name="due_date"/>
-                    <field name="credit_extention_due_period"/>
-                    <field name="re_financing_date"/>
-                    <field name="proforma_invoice"/>
-                    <field name="revised_invoice"/>
-                    <field name="lc_value"/>
-                    <field name="avail_bank_balance"/>
-                    <field name="net"/>
-                    <field name="remark"/>
-                    <field name="purchase_id"/>
-                    <field name="invoice_id"/>
-                </group>
+                    <group col="4">
+                        <group col="2">
+                        <field name="supplier_id"/>
+                        <field name="invoice_id"/>
+                        <field name="bank_name"/>
+                        <field name="purchase_id"/>
+                        </group>
+                    </group>
+                    <group col="4">
+                        <field name="certificate_date"/>
+                        <field name="readiness_date"/>
+                        <field name="cod_date"/>
+                        <field name="due_date"/>
+                        <field name="credit_extention_due_period"/>
+                        <field name="re_financing_date"/>
+                        <field name="proforma_invoice"/>
+                        <field name="revised_invoice"/>
+                        <field name="lc_value"/>
+                        <field name="avail_bank_balance"/>
+                        <field name="net"/>
+                        <field name="remark"/>
+                    </group>
+                </sheet>
                 </form>
             </field>
         </record>

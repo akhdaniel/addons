@@ -5,8 +5,7 @@ class lc_management(osv.Model):
     _rec_name = "no"
 
     _columns = {
-        #'name': fields.char("Name",256,required=True),
-        'no'  : fields.char("L/C Number",size=13),
+        'no'  : fields.char("L/C Number",size=13, readonly=True),
         'supplier_id' : fields.many2one('res.partner', string="Vessel / Supplier Name", domain="[('supplier','=',True)]", required=True),
         'certificate_date' : fields.date("In-Tank Certificate Date"),
         'readiness_date' : fields.date("Notice of Readiness Date"),
@@ -22,6 +21,8 @@ class lc_management(osv.Model):
         'remark' : fields.char("L/C Status or Remark"),
         'purchase_id': fields.many2one('purchase.order',"Purchase Order", required=True),
         'invoice_id': fields.many2one('account.invoice',"Supplier Invoice",domain="[('type','=','in_invoice')]", required=True),
+        'bank_name': fields.related('invoice_id','partner_bank_id', readonly=True, 
+            type="many2one", relation='res.partner.bank', string="Bank Account", store=False),
         'type': fields.selection([
             ('out_invoice','Customer Invoice'),
             ('in_invoice','Supplier Invoice'),
