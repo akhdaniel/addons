@@ -638,7 +638,8 @@ class hr_payslip(osv.osv):
                 else :
                     tpb = 0.0
                 tunj_pajak =  tunj_pajak + ((( tpj - tpb )/((100 - pajak)/100)) / 13 )     
-
+                tpbb=tpbb + tpb    
+            self.write(cr,uid,ids,{'tunj_paj_tnpalw':tpbb},context=context) 
            # tunj_pajak = ((tunj_pajak_alw-tunj_pajak_bas)*((100 - paja)/100)) / 13             
         else :                     
             tunj_pajak = 0.0               
@@ -650,6 +651,9 @@ class hr_payslip(osv.osv):
         gros = obj.gros
         basic=obj.basic
         gros_tahun = gros * 13
+        tunj_pajak=obj.tunj_pajak
+        tunj_paj_tnpalw = obj.tunj_paj_tnpalw
+        gros_sebelum = obj.gros_sebelum
         #menghitung pajak dengan alw
         pot_jab = (gros_tahun* obj.contract_id.type_id.biaya_jabatan)/100
         if pot_jab <= obj.contract_id.type_id.max_biaya_jabatan :
@@ -661,21 +665,35 @@ class hr_payslip(osv.osv):
         pkp_alw = gros_tahun - (pot_jab + tht + ptkp)
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
-        obj = self_obj.browse(cr,uid,src_obj)
+        obj_pkp = self_obj.browse(cr,uid,src_obj)
         pajak_alw = 0.0
+        n=0.9999
+        check = 1
         #import pdb;pdb.set_trace()
         if pkp_alw >= 0 :
-            for hitung in obj :
-                minimal = hitung.nominal_min
-                mak = hitung.nominal_max
-                pajak = hitung.pajak   
-                if pkp_alw >= mak :
-                    pajak_alw = pajak_alw + ((mak - minimal) * pajak)/100    
-                elif pkp_alw >= minimal and pkp_alw <= mak and minimal == 0 :    
-                    pajak_alw = (pkp_alw *pajak)/100 
-                elif pkp_alw >= minimal and pkp_alw <= mak and minimal != 0 :
-                    pajak_alw = pajak_alw + ((pkp_alw - minimal) * pajak)/100   
-            pajak = pajak_alw /13                                   
+            while check >= 0.00001 :
+                self.write(cr,uid,ids,{'tunj_pajak': tunj_pajak},context=context)
+                self.write(cr,uid,ids,{'cek': check},context=context)
+                for hitung in obj_pkp :
+                    minimal = hitung.nominal_min
+                    mak = hitung.nominal_max
+                    pajak = hitung.pajak   
+                    if pkp_alw >= mak :
+                        pajak_alw = pajak_alw + ((mak - minimal) * pajak)/100    
+                    elif pkp_alw >= minimal and pkp_alw <= mak and minimal == 0 :    
+                        pajak_alw = (pkp_alw *pajak)/100 
+                    elif pkp_alw >= minimal and pkp_alw <= mak and minimal != 0 :
+                        pajak_alw = pajak_alw + ((pkp_alw - minimal) * pajak)/100   
+                pajak = pajak_alw /13 
+                cek = pajak - tunj_pajak
+                check = cek - tunj_paj_tnpalw  
+                if check >= 0 :
+                    n = n - 0.0001 
+                #else
+                 #   n = n + 0.0001
+                tunj_pajak = tunj_pajak / n 
+                gros = (gros_sebelum + tunj_pajak) *13
+                pkp_alw = gros_tahun - (pot_jab + tht + ptkp)                          
         else :                     
             pajak = 0.0               
         return pajak   
