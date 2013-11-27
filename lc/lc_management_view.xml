@@ -33,14 +33,16 @@
                     </h1>
                     </div>
                     <group col="4">
-                        <group col="2">
-                        <field name="supplier_id"/>
-                        <field name="invoice_id"/>
-                        <field name="bank_name"/>
+                        <group string="Purchase Order">
                         <field name="purchase_id"/>
                         </group>
+                        <group string="Invoice">
+                        <field name="invoice_id"/>
+                        <field name="supplier_id"/>
+                        <field name="bank_name"/>
+                        </group>
                     </group>
-                    <group col="4">
+                    <group col="4" string="Details">
                         <field name="certificate_date"/>
                         <field name="readiness_date"/>
                         <field name="cod_date"/>
@@ -105,9 +107,23 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
-                <field name="date_due" position="after">
-                    <field name="lc_ids" widget="many2one"/>
-                </field>
+                <page string="Invoice" position="after">
+                    <page string="Letter of Credit">
+                        <field name="lc_ids" view_mode="tree">
+                            <tree>
+                                <field name="no"/>
+                                <field name="purchase_id"/>
+                                <field name="certificate_date"/>
+                                <field name="readiness_date"/>
+                                <field name="cod_date"/>
+                                <field name="due_date"/>
+                                <field name="credit_extention_due_period"/>
+                                <field name="re_financing_date"/>
+                                <field name="remark"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
             </field>
         </record>
 
@@ -116,9 +132,23 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
-                <field name="partner_ref" position="after">
-                    <field name="lc_ids" widget="many2one"/>
-                </field>
+                <page string="Incoming Shipments &amp; Invoices" position="after">
+                    <page string="Letter of Credit">
+                        <field name="lc_ids" view_mode="tree">
+                            <tree>
+                                <field name="no"/>
+                                <field name="invoice_id"/>
+                                <field name="certificate_date"/>
+                                <field name="readiness_date"/>
+                                <field name="cod_date"/>
+                                <field name="due_date"/>
+                                <field name="credit_extention_due_period"/>
+                                <field name="re_financing_date"/>
+                                <field name="remark"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
             </field>
         </record>
 

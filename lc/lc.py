@@ -6,7 +6,6 @@ class lc_management(osv.Model):
 
     _columns = {
         'no'  : fields.char("L/C Number",size=13, readonly=True),
-        'supplier_id' : fields.many2one('res.partner', string="Vessel / Supplier Name", domain="[('supplier','=',True)]", required=True),
         'certificate_date' : fields.date("In-Tank Certificate Date"),
         'readiness_date' : fields.date("Notice of Readiness Date"),
         'cod_date' : fields.date("COD Date"),
@@ -19,8 +18,10 @@ class lc_management(osv.Model):
         'avail_bank_balance' : fields.float("Available Bank Balance"),
         'net' : fields.float("Net Cash-flow Requirement"),
         'remark' : fields.char("L/C Status or Remark"),
-        'purchase_id': fields.many2one('purchase.order',"Purchase Order", required=True),
-        'invoice_id': fields.many2one('account.invoice',"Supplier Invoice",domain="[('type','=','in_invoice')]", required=True),
+        'purchase_id': fields.many2one('purchase.order',"Purchase Order", domain="[('state','=','approved')]", required=True),
+        'invoice_id': fields.many2one('account.invoice',"Supplier Invoice",domain="[('type','=','in_invoice'),('state','=','open')]", required=True),
+        'supplier_id': fields.related('invoice_id','partner_id', readonly=True, 
+            type="many2one", relation='res.partner', string="Supplier", store=False),
         'bank_name': fields.related('invoice_id','partner_bank_id', readonly=True, 
             type="many2one", relation='res.partner.bank', string="Bank Account", store=False),
         'type': fields.selection([

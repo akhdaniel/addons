@@ -23,10 +23,8 @@
     'name' : "LC Management",
     'category' : "Letter of Credit",
     'version' : "1.0",
-    'depends' : ['sale','purchase'],
-    'author' : 'vitraining',
-    'description' : """\
-The Letter of Credit associated with Purchase Orders and Purchase Invoice.""",
+    'depends' : ['account','purchase'],
+    'description' : "The Letter of Credit associated with Purchase Orders and Supplier Invoice.",
     'data' : [
         'lc_management_view.xml',
     ],
