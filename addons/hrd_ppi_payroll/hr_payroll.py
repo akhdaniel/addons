@@ -482,9 +482,6 @@ class hr_payslip(osv.osv):
                 if cod == "NET":
                     coo =line['amount']      
                     self.write(cr, uid, [payslip.id], {'net':coo}, context=context)     
-                if cod == "POT_ABSEN":
-                    coo =line['amount']      
-                    self.write(cr, uid, [payslip.id], {'pot_absen':coo}, context=context)  
                 if cod == "POTO_KOPERASI":
                     coo =line['amount']      
                     self.write(cr, uid, [payslip.id], {'pot_koperasi':coo}, context=context)
@@ -513,7 +510,13 @@ class hr_payslip(osv.osv):
                             cod= line['code']
                             if cod == "GROSS" :
                                 tj =line['amount']
-                                self.write(cr, uid, [payslip.id], {'gros_sebelum':tj}, context=context)        
+                                self.write(cr, uid, [payslip.id], {'gros_sebelum':tj}, context=context)      
+                if cod == "T_JMS" :      
+                    coo =line['amount']  
+                    self.write(cr, uid, [payslip.id], {'jamsostek':coo}, context=context)  
+                if cod == "THT" :      
+                    coo =line['amount']  
+                    self.write(cr, uid, [payslip.id], {'tht':coo}, context=context)      
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']   
                 if cod == "GROSS":
@@ -558,24 +561,22 @@ class hr_payslip(osv.osv):
             self.write(cr,uid,ids,{'kena_pajak' : kena_pajak}, context=context)
         yyy=datetime.strptime(ccc,"%Y-%m-%d").year
         yy=datetime.strptime(ccc,"%Y-%m-%d").month
+        akum_sebelum = yy - 1
         zzz=datetime.strptime(ccc,"%Y-%m-%d")
         self_obj=self.pool.get('hr.payslip')
         src_obj=self_obj.search(cr,uid,[('employee_id','=',xyz)])
         obj=self_obj.browse(cr,uid,src_obj)
         totals = 0.0
         total = 0.0
+        import pdb;pdb.set_trace()
         for xyc in obj :
-            ttt=xyc.date_to
-            ttx=datetime.strptime(ttt,"%Y-%m-%d").year
-            ttz=datetime.strptime(ttt,"%Y-%m-%d")
-            tt=datetime.strptime(ttt,"%Y-%m-%d").month
-            if yyy == ttx :
-                if yy > tt :             
-                    total += xyc.kena_pajak
-            if yyy == ttx :
-                if yy >= tt :         
-                    totals += xyc.kena_pajak
-        self.write(cr,uid,ids,{'totals' : total}, context=context)
+            dates=xyc.date_to
+            dates_month = datetime.strptime(dates,"%Y-%m-%d").month
+            if yy == 1 :
+                totals = xyz.gros_sebelum + xyz.jamsostek + xyz.tht
+                return totals
+            elif dates_month == akum_sebelum :
+                totals = xyc.totals + xyz.jamsostek + xyz.tht    
         return totals
 
     def tunj_pajak(self,cr,uid,ids,context=None) :
@@ -608,6 +609,7 @@ class hr_payslip(osv.osv):
         tunj_pajak_alw = 0.0
         tunj_pajak_bas = 0.0
         tunj_pajak = 0.0
+        tpbb = 0.0
         if pkp_alw >= 0 :
             for hitung in obj :
                 minimal = hitung.nominal_min
@@ -636,10 +638,10 @@ class hr_payslip(osv.osv):
                     tunj_pajak_bas = tunj_pajak_bas + ((pkp_bas - mak) * pajak)/100 
                     tpb = ((pkp_bas - minimal) * pajak)/100 
                 else :
-                    tpb = 0.0
-                tunj_pajak =  tunj_pajak + ((( tpj - tpb )/((100 - pajak)/100)) / 13 )     
+                    tpb = 0.0    
+                tunj_pajak =  tunj_pajak + ((( tpj - tpb )/((100 - pajak)/100)) / 13 )
                 tpbb=tpbb + tpb    
-            self.write(cr,uid,ids,{'tunj_paj_tnpalw':tpbb},context=context) 
+            self.write(cr,uid,ids,{'tunj_paj_tnpalw':tpbb},context=context)         
            # tunj_pajak = ((tunj_pajak_alw-tunj_pajak_bas)*((100 - paja)/100)) / 13             
         else :                     
             tunj_pajak = 0.0               
@@ -719,9 +721,9 @@ class hr_payslip(osv.osv):
         'komisi': fields.float("komisi"),
         'reimburse_obat':fields.float('Total Reimburse Obat'),
         'reimburse_rawat':fields.float('Total Reimburse Rawat'),
-        'pot_absen':fields.float('Potongan Absen'),
         'gros':fields.float('gros'),
         'gros_sebelum' :fields.float('gros sebelum kena pajak'),
+        'gros_update' : fields.float('gros setelah di grow up'),
         'total':fields.float('total kena pajak'), 
         'pkp' :fields.float('pkp'),
         'pot_koperasi':fields.float('potongan koperasi'),
@@ -731,10 +733,13 @@ class hr_payslip(osv.osv):
         'ut' : fields.float('uang transport'),
         'uml' : fields.float('uang makan lembur'),
         'libur' : fields.float('libur'),
-        'totals' :fields.float('kena pajak sebelum'),
         'basic' : fields.float('basic'),
         'tunj_pajak' :fields.float('tunjangan pajak'),
-        'kena_pajak' :fields.float('kena Pajak')
+        'kena_pajak' :fields.float('kena Pajak'),
+        'tunj_paj_tnpalw' : fields.float('tunjangan pajak tanpa alw'),
+        'cek' :fields.float('hasil cek'),
+        'jamsostek' : fields.float('jamsostek'),
+        'tht':fields.float('THT'),
     } 
                      
 hr_payslip()
