@@ -6,13 +6,13 @@ from openerp.tools.translate import _
 from openerp import tools
 
 TRAINING_STATES =[
-    ('draft','Draft'),
-    ('verify','Verify'),
-    ('approve','Approve'),
-    ('approve2','Second Approve'),
-    ('reject','Reject'),
-    ('evaluation','Evaluation')]
-    
+	('draft','Draft'),
+	('verify','Verify'),
+	('approve','Approve'),
+	('approve2','Second Approve'),
+	('reject','Reject'),
+	('evaluation','Evaluation')]
+	
 class bukti(osv.osv):
     _name='hr_training.bukti'
     
@@ -25,6 +25,69 @@ bukti()
 
 class train(osv.osv):
     _name = 'hr_training.train'   
+
+    def _get_number_of_days(self, date_from, date_to):
+        """Returns a float equals to the timedelta between two dates given as string."""
+        #import pdb;pdb.set_trace()
+        DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+        from_dt = datetime.datetime.strptime(date_from, DATETIME_FORMAT)
+        to_dt = datetime.datetime.strptime(date_to, DATETIME_FORMAT)
+        timedelta = to_dt - from_dt
+        diff_day = timedelta.days + float(timedelta.seconds) / 86400
+        return diff_day              
+
+    def onchange_date_from(self, cr, uid, ids, date_to, date_from):
+        """
+        If there are no date set for date_to, automatically set one 8 hours later than
+        the date_from.
+        Also update the number_of_days.
+        """
+        # date_to has to be greater than date_from
+        if (date_from and date_to) and (date_from > date_to):
+            raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
+
+        result = {'value': {}}
+
+        # No date_to set so far: automatically compute one 8 hours later
+        if date_from and not date_to:
+            #import pdb;pdb.set_trace()
+            date_to_with_delta = datetime.datetime.strptime(date_from, tools.DEFAULT_SERVER_DATETIME_FORMAT) + datetime.timedelta(hours=8)
+            result['value']['date_to'] = str(date_to_with_delta)
+
+        # Compute and update the number of days
+        if (date_to and date_from) and (date_from <= date_to):
+            diff_day = self._get_number_of_days(date_from, date_to)
+            result['value']['durasi'] = round(math.floor(diff_day))+1
+        else:
+            result['value']['durasi'] = 0
+
+        return result
+
+    def onchange_date_to(self, cr, uid, ids, date_to, date_from):
+        """
+        Update the number_of_days.
+        """
+
+        # date_to has to be greater than date_from
+        if (date_from and date_to) and (date_from > date_to):
+            raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
+
+        result = {'value': {}}
+
+        # Compute and update the number of days
+        if (date_to and date_from) and (date_from <= date_to):
+            diff_day = self._get_number_of_days(date_from, date_to)
+            result['value']['durasi'] = round(math.floor(diff_day))+1
+        else:
+            result['value']['durasi'] = 0
+
+        return result  
+
+    def _compute_number_of_days(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        for hol in self.browse(cr, uid, ids, context=context):
+            result[hol.id] = -hol.lama
+        return result     
             
     _columns = {
         'employee_id' : fields.many2one('hr.employee','Nama Karyawan',store=True),
@@ -32,18 +95,21 @@ class train(osv.osv):
         'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen',store=True),
         'paket_id': fields.related('analisa_id','bukti',type='char',relation='hr_training.analisa',string='Paket Pelatihan'),
         'analisa_id':fields.many2one('hr_training.analisa','Nama Training'),
-        'subject_id':fields.related('analisa_id','subject_id',type='char',relation='hr_training.analisa',string='Nama Training ID'),
+        'subject_id':fields.related('analisa_id','subject_id',type='many2one',relation='hr_training.subject',string='Nama Training',store=True),
         'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Training',store=True), 
         'evaluasi_id':fields.many2one('hr_training.evaluasi_training','Evaluasi Training'),
         'rekomendasi_id':fields.many2one('hr_training.rekomendasi_training','Rekomendasi'),
         'lama' : fields.related('analisa_id','lama',type='char',relation='hr_training.analisa',string='Lama'),
+        'date_from' : fields.related('analisa_id','date_from',type='datetime',relation='hr_training.analisa',string='Tanggal Mulai'),
+        'date_to' : fields.related('analisa_id','date_to',type='datetime',relation='hr_training.analisa',string='Tanggal Berakhir'),
+        'durasi' : fields.related('analisa_id','durasi',type='integer',relation='hr_training.analisa',string='Durasi (Hari)'),
         'tanggal': fields.related('analisa_id','tanggal',type='date',relation='hr_training.analisa',string='Tanggal'),
         'bukti_ids':fields.one2many('hr_training.bukti','train_id','Bukti File'),
-        'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'),
-        'is_internal':fields.related('analisa_id','is_internal',type='boolean',relation='hr_training.analisa',string='Ceklis Jika Training Internal'),  
+        'penyelenggara':fields.related('analisa_id','penyelenggara',type='char',relation='hr_training.analisa',string='Lembaga'), 
         'nonik':fields.char('Kode Training'),
         #'email':fields.char('Email'), TODO if needed for email confirmstion for non-OpenERP-user 
         'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Status Training"),
+        'number_of_days': fields.function(_compute_number_of_days, string='Jumlah Hari', store=True,readonly=True),
         }
 
     _defaults = {
@@ -73,14 +139,14 @@ class analisa(osv.osv):
     _rec_name='no'
     
     def action_draft(self,cr,uid,ids,context=None): 
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[0][0]},context=context)
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[0][0]},context=context)
 
     def action_verify(self,cr,uid,ids,context=None):  
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[1][0]},context=context)
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[1][0]},context=context)
  
     def action_reject(self,cr,uid,ids,context=None): 
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context) 
-        
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context) 
+    	
     def action_approve(self,cr,uid,ids,context=None):
         obj=self.browse(cr,uid,ids)[0]
         kode=obj.no; state=obj.state      
@@ -93,15 +159,15 @@ class analisa(osv.osv):
             kod=str(kode) +'/'+ str(nikid)
             #yids.append({"nonik" : yes})
             train_obj.write(cr, uid, [xids.id], {'nonik':kod})
-        #train_obj.write(cr, uid, [xids.id for ux in tr], {'nonik':yids.nonik})     
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)
-        
+        #train_obj.write(cr, uid, [xids.id for ux in tr], {'nonik':yids.nonik})  	
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)
+    	
     '''def action_reject_hr_department(self,cr,uid,ids,context=None): 
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)''' 
-        
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)''' 
+    	
     def action_approve_hr_department(self,cr,uid,ids,context=None): 
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
-        
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
+    	
     def action_evaluation(self,cr,uid,ids,context=None):
         obj=self.browse(cr,uid,ids)[0]
         kode=obj.id; state=obj.state      
@@ -110,7 +176,7 @@ class analisa(osv.osv):
         tr = train_obj.browse(cr,uid,sr)
         for xids in tr:
             train_obj.write(cr, uid, [xids.id], {'state':state})
-        return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)       
+    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)       
  
     def create(self, cr, uid, vals, context=None):       
         obj = self.pool.get('hr_training.subject')
@@ -184,11 +250,13 @@ class analisa(osv.osv):
             result[hol.id] = -hol.lama
         return result 
 
+      
+
     _columns= {
         'employee_id':fields.many2one('hr.employee','Karyawan'),
-        'is_internal':fields.boolean('Centang Jika Training Internal'),
-        'department_id': fields.many2one('hr.department', 'Department',required=True),
+        'department_id': fields.many2one('hr.department', 'Department'),
         'bulan':fields.selection([('Januari','Januari'),('Februari','Februari'),('Maret','Maret'),('April','April'),('Mei','Mei'),('Juni','Juni'),('Juli','Juli'),('Agustus','Agustus'),('September','September'),('Oktober','Oktober'),('November','November'),('Desember','Desember')],'Bulan'),
+        'tes': fields.selection([('Internal','Internal'),('Eksternal','Eksternal')],'Tes'),
         'presentasi':fields.char('Presentasi Pelatihan',60),
         'no':fields.char('Nomor', 10, readonly=True),
         'paket_id':fields.many2one('hr_training.paket','Paket Training'),
@@ -213,6 +281,7 @@ class analisa(osv.osv):
     _defaults = {
         'state': TRAINING_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
+        'tes':'Internal',
         #'no': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'hr_training.analisa.nomor'),
         }  
         
