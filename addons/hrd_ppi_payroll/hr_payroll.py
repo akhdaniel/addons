@@ -568,7 +568,7 @@ class hr_payslip(osv.osv):
         obj=self_obj.browse(cr,uid,src_obj)
         totals = 0.0
         total = 0.0
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         for xyc in obj :
             dates=xyc.date_to
             dates_month = datetime.strptime(dates,"%Y-%m-%d").month
