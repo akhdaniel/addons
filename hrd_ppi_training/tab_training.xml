@@ -14,9 +14,10 @@
                     <group colspan="2">
                         <field view_mode="tree,form" name="train_ids" nolabel="1" >
                             <tree>      
-                                <field name="subject"/>                        
-                                <field name="tanggal"/>
-                                <field name="lama"/>
+                                <field name="subject_id"/>                        
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="durasi"/>
                                 <field name="penyelenggara"/>
                                 <field view_mode="tree,form" name="bukti_ids" nolabel="1" >
                                     <tree>     
@@ -28,19 +29,28 @@
                                 </field>                                    
                             </tree>
                             <form>
-                                <field name="analisa_id"/> 
-                                <field name="subject"/>
-                                <field name="lama"/>
-                                <field name="tanggal"/>
+                                <!--field name="analisa_id"/--> 
+                            <group>    
+                                <field name="subject_id"/>
                                 <field name="penyelenggara"/>
-                                <field view_mode="tree,form" name="bukti_ids" >
+                                <label for="durasi" string="Durasi" />
+                                    <div >
+                                        <field name="date_from" on_change="onchange_date_from(date_to, date_from)" class="oe_inline"/><field name="date_to" on_change="onchange_date_from(date_to, date_from)" class="oe_inline"/>
+                                        <div>
+                                            <field name="durasi" class="oe_inline"/> Hari
+                                        </div>
+                                    </div>   
+                            </group>
+                            <group>                                                                            
+                                <field view_mode="tree,form" name="bukti_ids">
                                     <tree>     
                                         <field name="name"/>                                                           
                                     </tree>
                                     <form>     
                                         <field name="name"/>                                                           
                                     </form>
-                                </field>  
+                                </field> 
+                            </group>     
                             </form>
                         </field>
 
