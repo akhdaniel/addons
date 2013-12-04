@@ -130,6 +130,7 @@
             <field name="model">hr.payslip</field>
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml"> 
+            <header>
                 <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" position="replace">
                     <button string="Approve" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>
                 </button>    
@@ -147,19 +148,21 @@
 
                 <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
                     <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
-                </button>               
-                <!--field name='name' position='after'>
+                </button>
+                </header>               
+                <field name='name' position='after'>
                     <field name="net" readonly="1"/>
-                    <field name='pot_absen' readonly="1"/>
-                    <field name='gros' readonly="1"/>
+                    <!--field name='gros' readonly="1"/>
                     <field name='total' readonly="1"/>
                     <field name='pkp'  readonly="1"/>
-                    <field name='totals'  readonly="1"/>
                     <field name='basic'  readonly="1"/>
                     <field name='tunj_pajak'   readonly="1"/> 
                     <field name='kena_pajak'/>  
                     <field name='gros_sebelum'/> 
-                </field-->
+                    <field name='cek'/>
+                    <field name='jamsostek'/>
+                    <field name='tht'/-->
+                </field>
 
                 <field name="number_of_days" sum="Total Working Days" position="replace">
                     <field name="number_of_days"/>
