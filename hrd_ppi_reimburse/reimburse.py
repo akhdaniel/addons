@@ -83,7 +83,7 @@ class reimburse(osv.osv):
     
     _columns={
         'jenis':fields.selection([('obat','Pengobatan Tahunan'),('rawat','Perawatan Rumah Sakit')],'Jenis Reimburse'),
-        'employee_id':fields.many2one('hr.employee','Nama Karyawan',select=True,store=True),
+        'employee_id':fields.many2one('hr.employee','Nama Karyawan',select=True,store=True,readonly=True,required=True),
         'user_id':fields.related('employee_id', 'user_id', type='many2one', relation='res.users', string='User', store=True),
         'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen',store=True,readonly=True),
         'nominal':fields.function(employe,string='Alokasi Reimburse',store=True),

@@ -100,15 +100,15 @@
                 <sheet>
                 <group>
                 <group >
-                     <field name="jenis"/>
-                     <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1"/>
-                     <field name="tahun"/>
-                     <field name="employee_id"/>
+                     <field name="jenis" attrs="{'readonly':[('state','=','draft')]}"/>
+                     <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1"  attrs="{'readonly': [('state','!=','draft')]}"/>/>
+                     <field name="tahun"  attrs="{'readonly': [('state','!=','draft')]}"/>/>
+                     <field name="employee_id" attrs="{'readonly': [('state','!=','draft')]}"/>/>
                 </group>
                 <group >
                     
-                    <field name="department_id"/>
-                    <field name="keterangan"/>                                      
+                    <field name="department_id" attrs="{'readonly': [('state','!=','draft')]}"/>/>
+                    <field name="keterangan"  attrs="{'readonly': [('state','!=','draft')]}"/>/>                                      
                 </group>    
                  </group>
                  </sheet>
@@ -272,10 +272,12 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="hr_reimburse_view_form"/>
             <field name="act_window_id" ref="action_hr_permohonan_reimburse"/>
-        </record>                 
-    <menuitem name="Reimburse" parent="hr.menu_hr_root" id="menu_reimburse" sequence="20"/> 
+        </record> 
+
+    <menuitem name="Reimburse" parent="hr.menu_hr_root" id="menu_reimburse" sequence="15" /> 
     <menuitem action="action_hr_permohonan_reimburse" id="hr_menu_permohonan_reimburse" parent="menu_reimburse" name="Permohonan Reimburse" /> 
-    <menuitem action="action_hr_alokasi_reimburse" id="hr_menu_alokasi_reimburse" parent="menu_reimburse" name="Alokasi Reimburse"  groups="base.group_hr_user,base.group_hr_manager"/>    
+    <menuitem action="action_hr_alokasi_reimburse" id="hr_menu_alokasi_reimburse" parent="menu_reimburse" name="Alokasi Reimburse" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_user"/> 
+
     </data>
 </openerp>
     
