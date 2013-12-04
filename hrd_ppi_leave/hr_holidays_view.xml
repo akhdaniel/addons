@@ -197,17 +197,17 @@
         </record>
         
         <!-- Holidays: Allocation Request via button-->
-        <record model="ir.ui.view" id="allocation_leave_new~1">
+        <!--record model="ir.ui.view" id="allocation_leave_new~1">
             <field name="name">Allocation Request</field>
             <field name="model">hr.holidays</field>
             <field name="inherit_id" ref="hr_holidays.allocation_leave_new"/>
             <field name="arch" type="xml">
-                <header>
+                <header-->
                     <!--button name="leave_allocation_5" type="object" string="5 Years leave allocation"/>
                     <button name="leave_allocation_annual" type="object" string="Annual leave allocation" group="base.user_root"/>
                     <button name="purge_leave" type="object" string="Delete Allocation"/>
                     <button name="approveall" type="object" string="Approve All"/-->
-                </header>
+                <!--/header>
 
                 <field name="department_id" position="after">                   
                    <group colspan="2" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_user" >
@@ -217,15 +217,14 @@
                     </div>
                     </group>
                 </field>     
-                
-                <!--field name="name" position="before">                   
-                   <group colspan="4">
-                    <field name="notes" nolabel="1" colspan="2" />
-                    </group>
-                </field-->  
+
 
                 <field name="name" position="replace">
                     <field name="name" attrs="{'readonly': [('is_edit','=',True)]}"/>
+                </field>
+
+                <field name="number_of_days_temp" position="replace">
+                    <field name="number_of_days_temp" attrs="{'readonly': [('is_edit','=',True)]}"/>
                 </field>
 
                 <field name="holiday_status_id" position="replace">
@@ -253,7 +252,7 @@
                 </field>                             
 
             </field>
-        </record>
+        </record-->
         
         <!-- Holidays: Allocation Request-->
         <record forcecreate="1" id="ppi_annual_leave" model="ir.cron">

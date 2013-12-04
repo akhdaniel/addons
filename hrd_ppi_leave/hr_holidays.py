@@ -60,7 +60,7 @@ class hr_holidays(osv.osv):
         'libur_bersih2':fields.related('holiday_status_id','libur_bersih',type='boolean',relation='hr.holidays.status',string='Hitung Tanggal Merah',readonly=True),
         'limit_cuti':fields.related('holiday_status_id','limit_cuti',type='boolean',relation='hr.holidays.status',string='Limit Cuti',readonly=True),
         'is_edit':fields.boolean('Kunci ?',required=True),
-        'name': fields.char('Description', size=64,required=True),
+        #'name': fields.char('Description', size=64,required=True),
     }
  
     def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
@@ -265,5 +265,3 @@ class hr_contract(osv.osv):
     _columns = {
         'is_have_allocation' :  fields.related('type_id', 'is_have_allocation', type='boolean', relation='hr.contract.type', string='Ceklist untuk membuat alokasi cuti otomatis',),
     }
-
-
