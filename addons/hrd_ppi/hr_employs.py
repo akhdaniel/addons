@@ -66,16 +66,16 @@ class employee(osv.osv):
         'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan'),
         'result_id':fields.many2one('hr_recruit.result','Result'),
         'gelar_id':fields.many2one('hr_recruit.gelar','Gelar'),
-        'alamat1':fields.char('Alamat 1',100),
+        'alamat1':fields.char('Alamat',100),
         'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id1)]"),
         'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=',prov_id)]"),
         'kec_id':fields.many2one('hr_recruit.issued','Kecamatan', domain="[('kota_id','=',kab_id)]"),
-        'alamat2':fields.char('Alamat 2',100),
+        'alamat2':fields.char('Alamat',100),
         'prov_id2':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id2)]"),
         'kec_id2':fields.many2one('hr_recruit.issued','Kecamatan', domain="[('kota_id','=',kab_id2)]"),
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
-        'status':fields.selection([('single','Single'),('menikah','Menikah'),('duda','Duda'),('janda','Janda')],'Status Pernikahan'),
+        'status':fields.selection([('single','Single'),('married','Menikah'),('duda','Duda'),('janda','Janda')],'Status Pernikahan'),
         'jml_anak':fields.integer('Jumlah Anak'),
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
@@ -108,7 +108,7 @@ class employee(osv.osv):
         'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
         'ptkp_id': fields.many2one('hr.ptkp','Status Pajak'),
         'npwp':fields.char('NPWP',size=20),
-        'bid_id':fields.many2one('hr_recruit.bidang','bidang'), 
+        'bid_id':fields.many2one('hr_recruit.bidang','Bidang'), 
         'wage':fields.float('Proposed Salary'),       
         }
         
@@ -152,12 +152,12 @@ class susunan_keluarga2(osv.osv):
     
     _columns= {
         'employee_id':fields.many2one('hr.employee'),
-       'susunan':fields.selection([('Ayah','Ayah'),('Ibu','Ibu'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Status Dalam Keluarga'),
+        'susunan':fields.selection([('Ayah','Ayah'),('Ibu','Ibu'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Status Dalam Keluarga'),
         'name':fields.char('Nama'),
         'kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir'),
-        'type_id':fields.char('Pendidikan',50),
+        'type_id':fields.many2one('hr.recruitment.degree', 'Pendidikan',50),
         'pekerjaan':fields.char('Pekerjaan',60),
             }
 susunan_keluarga2()   
@@ -286,4 +286,13 @@ class pansion(osv.osv):
 pansion()
 
 
-employee()
+class res_users(osv.osv):
+    _name = "res.users"
+    _inherit = "res.users"
+    _description = 'Inherit Users'
+
+    _columns= {
+
+
+    }    
+res_users()    

@@ -22,5 +22,9 @@
 		<field name="name">hr / Training Head</field>
 	</record>	
 
+	<record id="group_hr_director" model="res.groups">
+		<field name="name">hr / Director</field>
+	</record>		
+
 </data>
 </openerp>

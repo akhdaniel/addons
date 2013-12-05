@@ -210,47 +210,19 @@ access_hr_recruit_gelar_man,hr_recruit.gelar,model_hr_recruit_gelar,group_hr_man
 
 access_hr_contract,hr.contract,model_hr_contract,group_hr_user,1,0,0,0
 
-access_hr_master_gaji_user,hr.master_gaji,model_hr_master_gaji,group_hr_user,1,0,0,0
-access_hr_master_gaji_man,hr.master_gaji,model_hr_master_gaji,group_hr_manager,1,1,1,1
 
 access_hr_title_user,hr.title,model_hr_title,group_hr_user,1,0,0,0
 access_hr_title_man,hr.title,model_hr_title,group_hr_manager,1,1,1,1
 
-access_hr_ptkp_user,hr.ptkp,model_hr_ptkp,group_hr_user,1,1,1,0
-access_hr_ptkp_man,hr.ptkp,model_hr_ptkp,group_hr_manager,1,1,1,1
-
-access_hr_pkp_user,hr.pkp,model_hr_pkp,group_hr_user,1,1,1,0
-access_hr_pkp_man,hr.pkp,model_hr_pkp,group_hr_manager,1,1,1,1
-
-access_reimburse_user,reimburse,model_reimburse,group_hr_user,1,1,1,0
-access_reimburse_man,reimburse,model_reimburse,group_hr_manager,1,1,1,1
-access_reimburse_emp,reimburse,model_reimburse,group_hr_employee,1,0,0,0
-access_reimburse_dep,reimburse,model_reimburse,group_hr_department,1,0,0,0
-access_reimburse_th,reimburse,model_reimburse,group_hr_training_head,1,0,0,0
-
-access_hr_training_bukti_dep,hr_training.bukti,model_hr_training_bukti,group_hr_department,1,0,0,0
-access_hr_training_bukti_man,hr_training.bukti,model_hr_training_bukti,group_hr_manager,1,1,1,1
-access_hr_training_bukti_th,hr_training.bukti,model_hr_training_bukti,group_hr_training_head,1,1,1,1
-
-access_hr_payslip_run_man,hr.payslip.run,model_hr_payslip_run,group_hr_manager,1,1,1,1
-access_hr_payslip_run_user,hr.payslip.run,model_hr_payslip_run,group_hr_user,1,0,1,0
 
 access_hr_employs_gol_man,hr_employs.gol,model_hr_employs_gol,group_hr_manager,1,1,1,1
 access_hr_employs_gol_user,hr_employs.gol,model_hr_employs_gol,group_hr_user,1,0,0,0
 
-access_hr_recruitment_stage_man,hr.recruitment.stage,model_hr_recruitment_stage,group_hr_manager,1,1,1,1
-access_hr_recruitment_stage_user,hr.recruitment.stage,model_hr_recruitment_stage,group_hr_user,1,0,0,0
+access_hr_applicant_dep,hr.applicant,model_hr_applicant,group_hr_department,1,1,0,0
 
-access_hr_contract_type_man,hr.contract.type,model_hr_contract_type,group_hr_manager,1,1,1,1
-access_hr_contract_type_user,hr.contract.type,model_hr_contract_type,group_hr_user,1,1,1,0
+access_crm_meeting_dep,crm.meeting,model_crm_meeting,group_hr_department,1,0,0,0
 
-access_hr_payslip_worked_days_man,hr.payslip.worked.days,model_hr_payslip_worked_days,group_hr_manager,1,1,1,1
-access_hr_payslip_worked_days_user,hr.payslip.worked.days,model_hr_payslip_worked_days,group_hr_user,1,1,1,0
 
-access_hr_rule_input_man,hr.rule.input,model_hr_rule_input,group_hr_manager,1,1,1,1
-access_hr_rule_input_user,hr.rule.input,model_hr_rule_input,group_hr_user,1,1,1,0
-
-access_resource_calendar_attendance_man,resource.calendar.attendance,model_resource_calendar_attendance,group_hr_manager,1,1,1,1
 
 
 

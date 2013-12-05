@@ -76,26 +76,27 @@
 								</group>   
                                 <group>
 								
-                                    <group string="Contact Information">
+                                    <group>
 										<group colspan="4">
-											<group string="Alamat Jakarta">
-												<field name='alamat1' placeholder="Alamat di Jakarta"/>
-												<!--field name="prov_id"/-->
-												<field name="kab_id"/>
-												<field name="kec_id"/>
-												<field name="kodepos" placeholder="Kode Pos di Jakarta"/>
-												<!--field name='country_id1' on_change="onchange_country1(country_id1)"/-->
-												<field name='telp1' placeholder="Telp. di Jakarta"/>
+											<group string="Alamat Domisili">
+                                                <field name='country_id1' on_change="onchange_country1(country_id1)"/>
+                                                <field name="prov_id"/>
+                                                <field name="kab_id"/>
+                                                <field name="kec_id"/>
+												<field name='alamat1' placeholder="Alamat Domisili"/>
+												<field name="kodepos" placeholder="ZIP"/>
+												<field name='telp1'/>
 											</group>
 											<newline/>
-											<group string="Alamat Luar Jakarta">
-												<field name='alamat2' placeholder="Alamat Luar Jakarta"/>
-												<field name="prov_id2"/>
-												<field name="kab_id2"/>
-												<field name="kec_id2"/>
+											<group string="Alamat Sesuai KTP">
+                                                <field name="country_id2" on_change="onchange_country2(country_id2)"/>
+                                                <field name="prov_id2"/>
+                                                <field name="kab_id2"/>
+                                                <field name="kec_id2"/>
+												<field name='alamat2' placeholder="Alamat Sesuai KTP"/>
 												<field name="kodepos1" placeholder="Zip"/>                         
-												<field name='telp2' placeholder="Telp. di Luar Jakarta"/>
-												<field name="country_id2" on_change="onchange_country2(country_id2)"/>
+												<field name='telp2'/>
+												
 												<field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' placeholder="From Employee"/>
 											</group>      
 										</group>
@@ -158,7 +159,8 @@
                                             <field name='type_id'/>
                                             <field name='pekerjaan'/>
                                         </tree>
-                                        <group>
+                                        <form>
+                                            <group>
                                                 <field name="susunan"/>
                                                 <field name="name"/>
                                                 <field name="kelamin"/>
@@ -169,6 +171,7 @@
                                                 <field name="type_id"/>
                                                 <field name="pekerjaan"/>
                                             </group>
+                                        </form>    
                                     </field>
                                     </group>
                                     
