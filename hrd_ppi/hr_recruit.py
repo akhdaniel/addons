@@ -1,4 +1,5 @@
 from openerp.osv import fields, osv
+from osv import osv, fields
 from datetime import date
 from time import strptime
 from time import strftime
@@ -37,7 +38,7 @@ class permohonan_recruit(osv.osv):
         'no':fields.char('Nomor',20),
         'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],string='Status',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-        'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','jurusan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','Jurusan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'pengalaman':fields.integer('Pengalaman (min-th)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],string='Usia (max)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
@@ -66,7 +67,6 @@ class permohonan_recruit(osv.osv):
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"),   
         'no_of_recruitment': fields.float('Expected in Recruitment', help='Number of new employees you expect to recruit.',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'department_id': fields.many2one('hr.department', 'Department',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-	    'is_edit':fields.boolean('Kunci ?',required=True),
             }
 
     _defaults = {
@@ -229,7 +229,7 @@ class jurusan_detail(osv.osv):
     _name='hr_recruit.jurusan_detail'
     
     _columns= {
-        'bidang_id':fields.many2one('hr_recruit.bidang','bidang'),
+        'bidang_id':fields.many2one('hr_recruit.bidang','Bidang'),
         'name':fields.char("Jurusan",required=True),       
             }
 jurusan_detail()
@@ -317,8 +317,8 @@ class hr_applicant(osv.osv):
                                                      'country_id' : applicant.country_id.id,
                                                      'jenis_id': applicant.jenis_id,
                                                      'ktp' : applicant.ktp,
-                                                     #'issued_id' : applicant.issued_id.id,
-                                                     'issued_id2' : applicant.issued_id2.id,
+                                                     'kab_id' : applicant.kab_id.id,
+                                                     'kab_id2' : applicant.kab_id2.id,
                                                      'tgl_keluar_ktp' : applicant.tgl_keluar_ktp,
                                                      'tgl_berlaku' : applicant.tgl_berlaku,
                                                      'sim' : applicant.sim,
@@ -353,6 +353,12 @@ class hr_applicant(osv.osv):
                                                      'country_id2':applicant.country_id2.id,
 													 'bid_id':applicant.bidang_id.id,
                                                      'wage':applicant.salary_proposed,
+                                                     'kelamin':applicant.kelamin,
+                                                     'marital':applicant.status,
+                                                     'mobile_phone':applicant.partner_phone,
+                                                     'gol_id':applicant.empgol_id.id,
+                                                     'title_id':applicant.title_id.id,
+                                                     'pajak_id':applicant.pajak_id.id,
                                                     })
                 
                 
@@ -446,7 +452,6 @@ class hr_applicant(osv.osv):
                                                 return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
     '''
-
     def interview(self, cr, uid,vals, context=None):
         #appl=self.browse(cr,uid,ids)[0]
         app=vals["job_id"]
@@ -461,12 +466,12 @@ class hr_applicant(osv.osv):
                 res.append((0,0, {'name':prs})) 
         vals['surv_ids']=res
         return vals
-        
+           
     def create(self, cr, uid, vals, context=None):       
         vals=self.interview(cr, uid, vals, context=None)
         result= super(hr_applicant,self).create (cr, uid, vals, context=None)
-        return result 
-    
+        return result
+
     def onchange_country(self, cr, uid, ids, country_id, context=None):
        result = {}
        country_id1_obj = self.pool.get('res.country')
@@ -522,6 +527,10 @@ class hr_applicant(osv.osv):
         return {}
 
     _columns= {
+        'name': fields.char('Subject', size=128, required=True, select=True),
+        'partner_name': fields.char("Applicant's Name", size=64, select=True),
+        'email_from': fields.char('Email', size=128, help="These people will receive email.", select=True,states={'open':[('readonly',True)], 'cancel':[('readonly',True)], 'pending':[('readonly',True)], 'done':[('readonly',True)]}),
+        'partner_phone': fields.char('Phone', size=32, select=True,states={'open':[('readonly',True)], 'cancel':[('readonly',True)], 'pending':[('readonly',True)], 'done':[('readonly',True)]}),
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin',required=True),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'tgl_lahir':fields.date('Tanggal Lahir',required=True),
@@ -579,15 +588,21 @@ class hr_applicant(osv.osv):
         'kode2' :fields.char('Kode Pos'),
 		'app_id' : fields.many2one('hr.job','Job'),
         'salary_proposed': fields.float('Proposed Salary'),
-        'salary_proposed_botom_margin': fields.float('Standar Gaji', readonly=True, help="Batas range terendah"), 
-        'salary_proposed_top_margin': fields.float('Standar Gaji', readonly=True, help="Batas range tertinggi"), 
+        'salary_proposed_botom_margin': fields.float('Standar Gaji', help="Batas range terendah"), 
+        'salary_proposed_top_margin': fields.float('Standar Gaji', help="Batas range tertinggi"), 
         'empgol_id': fields.many2one('hr_employs.gol','Golongan'),
         'survey_result_ids': fields.one2many('hr_applicant.hasil_wawancara','app_id', "Hasil Wawancara"),
         "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id",string="Jadwal Interview",readonly=True),
-        'is_edit':fields.boolean('kunci ?',required=True), 
+        'title_id':fields.many2one("hr.title","Title"),
+        'pajak_id':fields.many2one('hr.ptkp',"Status Pajak"),
         }
 
+    _sql_constraints = [
+        ('ktp_uniq', 'unique(ktp)','No KTP / Passport sudah ada !')
+    ]
+
 hr_applicant()
+
 
 class susunan_keluarga1(osv.osv):
     _name='hr_recruit.suskel1'
@@ -737,7 +752,7 @@ class agama(osv.osv):
     _name='hr_recruit.agama'
         
     _columns={
-        'name':fields.char('Agama',12),
+        'name':fields.char('Agama',30),
         }
 agama()                    
 

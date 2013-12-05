@@ -54,12 +54,12 @@
                 <xpath expr="//div[@class='oe_title']" version="7.0" position="replace">
                    
                     <div>
-                         <group>
+                         <!--group>
                             <div class="oe_right oe_button_box">
                                 <label for="is_edit" groups="hrd_ppi.group_hr_training_head"/>
                                 <field name="is_edit" groups="hrd_ppi.group_hr_training_head"/>
                             </div> 
-                        </group>
+                        </group-->
                         <group colspan="2">
                             <field name="jenis_permohonan"/> 
                         </group>
@@ -68,7 +68,7 @@
                         <h1>
                             <div>
                                 <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/> 
-                                <field name="name" nolabel="1" attrs="{'readonly':[('is_edit','=',True)]}" class="oe_inline"/>
+                                <field name="name" nolabel="1" class="oe_inline"/>
                             </div>
                         </h1>
                     </div>                    
@@ -77,7 +77,7 @@
 
                 <field name="no_of_employee" position="before">
                     <label for="salary_proposed_botom_margin" groups="hrd_ppi.group_hr_manager"/>
-                    <div  attrs="{'readonly': [('is_edit','=',True)]}" groups="hrd_ppi.group_hr_manager">
+                    <div groups="hrd_ppi.group_hr_manager">
                         <field name="salary_proposed_botom_margin" class="oe_inline"/>
                         <span class="oe_inline"> - </span>
                         <field name="salary_proposed_top_margin" class="oe_inline"/>
@@ -122,7 +122,7 @@
 
                 </field>
                 <field name="department_id" position="replace">
-                    <field name="department_id" attrs="{'readonly':[('is_edit','=',True)]}"/>
+                    <field name="department_id"/>
                 </field>
                 <field name="department_id" position="after">                                        
                     <label for="wkt_pemohon" string="Waktu Penempatan"/>
@@ -130,9 +130,9 @@
                             <label for="wkt_pemohon"/>
                             <field name="wkt_pemohon" />
                             <label for="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>
-                            <field name="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')],'readonly': [('is_edit','=',True)]}"/>                   
+                            <field name="wkt_rekruter" attrs="{'invisible':[('state','!=','in_progress')]}"/>                   
                         </div>                    
-                    <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')],'readonly': [('is_edit','=',True)]}"/>
+                    <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')]}"/>
 
                      <div>
                         <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
@@ -187,6 +187,42 @@
                 </field>                                                                                            
             </field>      
         </record>
+
+        <record id="view_recruitment_readonly" model="ir.ui.view">
+            <field name="name">Recruitment form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department'),ref('hrd_ppi.group_hr_user'),ref('hrd_ppi.group_hr_manager')])]"/>
+            <field name="arch" type="xml">
+                <!--field name='date_from' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','not in',['draft','evaluation'])]}</attribute>
+                </field-->
+                <field name='name' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','=','draft')]}</attribute>
+                </field>        
+                <field name='department_id' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','=','draft')]}</attribute>
+                </field>           
+                     
+            </field>
+        </record>     
+
+        <record id="view_recruitment_readonly2" model="ir.ui.view">
+            <field name="name">Recruitment form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hrd_ppi.view_hr_job_form2"/>
+            <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department'),ref('hrd_ppi.group_hr_user'),ref('hrd_ppi.group_hr_manager')])]"/>
+            <field name="arch" type="xml">
+
+                <field name='wkt_rekruter' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
+                </field>        
+                <field name='catatan' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
+                </field>                
+                     
+            </field>
+        </record>              
     
     </data>
 </openerp>
