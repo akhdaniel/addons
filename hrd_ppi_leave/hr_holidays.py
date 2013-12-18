@@ -62,8 +62,31 @@ class hr_holidays(osv.osv):
         'is_edit':fields.boolean('Kunci ?',required=True),
         #'name': fields.char('Description', size=64,required=True),
     }
- 
-    def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
+	
+    def hapus_cuti(self,cr,uid,ids,context=None):
+        dates=time.strftime('%Y-%m-%d')
+        year1=datetime.strptime(dates,"%Y-%m-%d").year
+        month1=datetime.strptime(dates,"%Y-%m-%d").month
+        day1=datetime.strptime(dates,"%Y-%m-%d").day
+        years =year1 - 1
+        nilai = 'draft'
+        tipe='add'
+        palidate='validate'
+        self_obj=self.pool.get('hr.holidays')
+        src_obj=self_obj.search(cr,uid,[('type','=',tipe),('state','=',palidate)])
+        obj = self_obj.browse(cr,uid,src_obj)   
+        import pdb;pdb.set_trace()   
+        for hapus in obj :
+            date_from = hapus.date_from
+            year=datetime.strptime(date_from,'%Y-%m-%d').year
+            month=datetime.strptime(date_from,'%Y-%m-%d').month
+            day=datetime.strptime(date_from,'%Y-%m-%d').day            
+            if year == years :
+                self.write(cr, uid,ids, {'state': nilai}, context=context)
+                self.unlink(cr,uid,ids,context=None)
+        return True
+    
+	def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
         result = {}
         # cfimport pdb;pdb.set_trace()
         if holiday_status_id:
