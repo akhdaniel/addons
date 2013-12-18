@@ -289,7 +289,20 @@
             <field eval="'()'" name="args" />
             <field name="nextcall">"2014-01-01 00:00:00"</field>
         </record>
-
+		
+		<record forcecreate="1" id="ppi_hapus_cuti" model="ir.cron">
+            <field name="name">Hapus Cuti</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">12</field>
+            <field name="interval_type">months</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.holidays'" name="model" />
+            <field eval="'hapus_cuti'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-06-01 00:00:00"</field>
+        </record>
         <!--record forcecreate="1" id="libur5" model="hr.holidays.status">
             <field name="name">Cuti untuk Masa Kerja 5 Tahun</field>
             <field name="color_name">lightcyan</field>
