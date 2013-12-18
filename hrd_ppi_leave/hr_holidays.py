@@ -86,7 +86,7 @@ class hr_holidays(osv.osv):
                 self.unlink(cr,uid,ids,context=None)
         return True
     
-	def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
+    def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
         result = {}
         # cfimport pdb;pdb.set_trace()
         if holiday_status_id:
