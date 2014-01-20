@@ -46,6 +46,8 @@
                     <field name="department_id"/>                                                            
                     <field name="job_id"/> 
                     <field name="penyelenggara"/>  
+                    <field name="tanggal"/>
+                    <field name="durasi"/>
                 </tree>
             </field>
         </record>
@@ -155,12 +157,12 @@
                                 <form>
                                     <group>
                                         <field name="employee_id"/>  
-                                        <field name="state" invisible="1"/> 
-                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'approve2')]}"/> 
-                                        <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'approve2')]}"/> 
+                                        <field name="state" invisible="True" widget="handle"/> 
+                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
+                                        <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
                                     </group>
                                     <group>    
-                                    <field view_mode="form" name="bukti_ids" attrs="{'invisible':[('state','!=','approve2')]}">
+                                    <field view_mode="form" name="bukti_ids" attrs="{'invisible':[('state','!=','evaluation')]}">
                                         <form>     
                                             <field name="name"/>                                                           
                                         </form>
@@ -281,12 +283,12 @@
                                 <form>
                                     <group>
                                         <field name="employee_id"/>  
-                                        <field name="state" invisible="1"/> 
-                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'approve2')]}"/> 
-                                        <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'approve2')]}"/> 
+                                        <field name="state" invisible="0"/> 
+                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
+                                        <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
                                     </group>
                                     <group>    
-                                    <field view_mode="form" name="bukti_ids" attrs="{'invisible':[('state','!=','approve2')]}">
+                                    <field view_mode="form" name="bukti_ids" attrs="{'invisible':[('state','!=','evaluation')]}">
                                         <form>     
                                             <field name="name"/>                                                           
                                         </form>
@@ -319,12 +321,12 @@
          </record>
          
          <record id="view_training_filter3" model="ir.ui.view">
-            <field name="name">Rencana Training</field>
+            <field name="name">Daftar Peserta Pelatihan</field>
             <field name="model">hr_training.train</field>
             <field name="type">search</field>
             <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
             <field name="arch" type="xml">
-                <search string="Rencana Pelatihan">
+                <search string="Daftar Peserta Pelatihan">
                     <group expand="0" string="Group By...">
                         <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject'}"/>
                         <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
