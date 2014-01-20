@@ -129,7 +129,7 @@ class employee(osv.osv):
     _columns ={
         #'nik': fields.char('NIK',20),
         'train_ids':fields.one2many('hr_training.train','employee_id','Training'),
-        'analisa_id':fields.many2one('hr_training.analisa'),           
+        'analisa_id':fields.many2one('hr_training.analisa', domain="[('state','=','evaluation')]"),          
         }
 employee()
 
@@ -170,13 +170,13 @@ class analisa(osv.osv):
     	
     def action_evaluation(self,cr,uid,ids,context=None):
         obj=self.browse(cr,uid,ids)[0]
-        kode=obj.id; state=obj.state      
+        kode=obj.id; state=TRAINING_STATES[5][0]      
         train_obj = self.pool.get('hr_training.train')
         sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
         tr = train_obj.browse(cr,uid,sr)
         for xids in tr:
             train_obj.write(cr, uid, [xids.id], {'state':state})
-    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)       
+    	return self.write(cr,uid,ids,{'state':state},context=context)       
  
     def create(self, cr, uid, vals, context=None):       
         obj = self.pool.get('hr_training.subject')
@@ -249,8 +249,6 @@ class analisa(osv.osv):
         for hol in self.browse(cr, uid, ids, context=context):
             result[hol.id] = -hol.lama
         return result 
-
-      
 
     _columns= {
         'employee_id':fields.many2one('hr.employee','Karyawan'),
