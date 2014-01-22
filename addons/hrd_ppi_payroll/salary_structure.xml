@@ -71,7 +71,7 @@
         <record id="hr_payroll_rules_overtime" model="hr.salary.rule">
 	        <field name="name">OVERTIME</field>
 	        <field name="code">OVERTIME</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">2</field>
@@ -89,7 +89,7 @@
 	    <record id="hr_payroll_rules_incentive" model="hr.salary.rule">
 	        <field name="name">INCENTIVES</field>
 	        <field name="code">INCENTIVES</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">4</field>
@@ -161,7 +161,7 @@
 	    <record id="hr_payroll_rules_thr" model="hr.salary.rule">
 	        <field name="name">THR/THN</field>
 	        <field name="code">THR</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">12</field>
@@ -170,7 +170,7 @@
 	    <record id="hr_payroll_rules_bonus" model="hr.salary.rule">
 	        <field name="name">BONUS</field>
 	        <field name="code">BONUS</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">13</field>
@@ -179,7 +179,7 @@
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
 	        <field name="name">RAPEL</field>
 	        <field name="code">RAPEL</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">18</field>
@@ -188,7 +188,7 @@
 	    <record id="hr_payroll_rules_rapel_overtime" model="hr.salary.rule">
 	        <field name="name">RAPEL OVERTIME</field>
 	        <field name="code">RO</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">19</field>

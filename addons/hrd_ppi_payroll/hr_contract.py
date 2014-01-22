@@ -4,7 +4,46 @@ class hr_contract(osv.osv):
     _name = 'hr.contract'
     _inherit = 'hr.contract'
     
+    def incentive(self,cr,uid,ids,arg,vals,context=None):
+        #obj_gol = self.pool.get('hr_employe.gol')
+        #obj_src = obj_gol.search(cr,uid,[])
+        #obj_brw = obj_gol.browse(cr,uid,obj_src)
+        #for xxx in obj_brw :
+        #    no = xxx.no
+        #    if no <= 100 :
+        #        gol = 1
+        import pdb;pdb.set_trace()
+        oobj = self.browse(cr,uid,ids)[0]
+        employee = int(oobj.employee_id.gol_id.no)
+        if employee <= 100 :
+            no = '1'
+        elif employee > 100 and employee <=200 :
+            no = '2'
+        elif employee > 200 and employee <=300 :
+            no = '3'
+        elif employee > 400 and employee <=400 :
+            no = '4' 
+        elif employee > 500 and employee <=600 :
+            no = '5'
+        elif employee > 600 and employee <=700 :
+            no = '6'
+        elif employee > 700 and employee <=800 :
+            no = '7'
+        elif employee > 900 :
+            no = '9'
+        obj = self.pool.get('hr.master_gaji')
+        obj_src = obj.search(cr,uid,[])
+        obj_brw = obj.browse(cr,uid,obj_src)
+        for xxx in obj_brw :
+            gol = xxx.name
+            cow = '1'
+            idss = xxx.id
+            if no == gol :
+                self.write(cr, uid,ids, {'master_gaji_id': idss}, context=context)
+        return True
+            
     _columns = {
+        #'gol' :fields.function(incentive,string='fungsi',type='char'),
         'master_gaji_id':fields.many2one('hr.master_gaji', "Incentive"),
         'makan':fields.related('master_gaji_id','makan',type='float',relation='hr.master_gaji',string='Uang Makan',readonly=True),
         'transport':fields.related('master_gaji_id','transport',type='float',relation='hr.master_gaji',string='Uang Transport',readonly=True),
@@ -88,7 +127,8 @@ class hr_contract_type(osv.osv):
         "biaya_jabatan":fields.float('Biaya Jabatan (%)',size=1),
         "max_biaya_jabatan":fields.float('Nominal Max (Rp)'),
         "tht":fields.float('Kontribusi Perusahaan (%)'),
-        'ttht':fields.float('Kontribusi Karyawan (%)'),		
+        'ttht':fields.float('Kontribusi Karyawan (%)'),
+        'range_pengobatan' :fields.float('Batas Pengobatan',help='batas maksimal pengobatan')		
      } 
 hr_contract_type()
 
