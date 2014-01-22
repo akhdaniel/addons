@@ -1,7 +1,10 @@
 from openerp.osv import fields, osv
+import datetime
+import time
 from datetime import date
 from time import strptime
 from time import strftime
+from datetime import datetime
 
 class employee(osv.osv):
     _name = "hr.employee"
@@ -46,7 +49,7 @@ class employee(osv.osv):
         'kelamin':fields.selection([('male','Male'),('female','Female')],'Jenis Kelamin'),
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
-        'birthday':fields.date('Tanggal Lahirku'),
+        'birthday':fields.date('Tanggal Lahir'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No ID',20),
         'no_pass':fields.char('No Passport',30),
@@ -54,7 +57,7 @@ class employee(osv.osv):
         'no_sim':fields.char('No. SIM',30),
         'no_sima':fields.char('No. SIM A',30),
         'no_simc':fields.char('No. SIM C',30),
-        'issued_id2':fields.many2one('res.country','Dikeluarkan di'),
+        'issued_id2':fields.many2one('res.country','Dikeluarkan di Negara'),
         'issued_id':fields.many2one('hr_recruit.issued','Dikeluarkan di'),
         'tgl_keluar_ktp':fields.date('Tanggal Dikeluarkan',),
         'tgl_berlaku':fields.date('Tanggal Berlaku'),
@@ -80,7 +83,7 @@ class employee(osv.osv):
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
         'clas_id':fields.many2one('hr_employs.clas','Class'),
-        'title_id':fields.many2one('hr.title','Title'),
+        'title_id':fields.many2one('hr.title','Title',required=True),
         'extitle_id':fields.many2one('hr.extitle','Ex Title'),
         'gol_id':fields.many2one('hr_employs.gol','Golongan'),
         'wfield_id':fields.many2one('hr_employs.wfield','Bidang Pekerjaan'),
@@ -104,16 +107,22 @@ class employee(osv.osv):
 	    'country_id1':fields.many2one('res.country','Negara'),
         'country_id2':fields.many2one('res.country','Negara'),
         'address_id2': fields.many2one('res.partner', 'Nama Kantor'),
-        'work_location2': fields.char('Alamat Kantor', size=32),
+        'work_location2': fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang'),('proyek','Proyek')],'Alamat Kantor',required=True), 
         'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
         'ptkp_id': fields.many2one('hr.ptkp','Status Pajak'),
         'npwp':fields.char('NPWP',size=20),
         'bid_id':fields.many2one('hr_recruit.bidang','Bidang'), 
-        'wage':fields.float('Proposed Salary'),       
+        'wage':fields.float('Proposed Salary'), 
+        'npp' :fields.integer('NPP', help="Nomor Pokok Perusahaan"),
+        'npkj' :fields.integer('NPKJ', help='Nomor Kepesertaan Jamsostek'), 
+        'remaining_leaves' :fields.float('Remaining Legal Leavs',readonly=True),  
+        'tgl_masuk' :fields.date('Tanggal Masuk'),
         }
         
     _defaults = {
         'nik': lambda self, cr, uid, context={}: self.pool.get('ir.sequence').get(cr, uid, 'hr.employee'),
+        'jenis_id': 'KTP',
+        'tgl_masuk' : lambda *a: time.strftime('%Y-%m-%d'),
                 }
                
     def onchange_alamat(self, cr, uid, ids, address_id2, context=None):

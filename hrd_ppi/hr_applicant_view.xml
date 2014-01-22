@@ -27,13 +27,17 @@
                  <button name="case_cancel" string="Refuse" type="object"
                         states="draft,open,pending" class="oe_highlight"
                         groups="hrd_ppi.group_hr_training_head" />
-            </button>            
+                 <!--button name='daftar_seleksi_pelamar' string='daftar pelamar' type='object'/--> 
+            </button>  
+
 
             <field name="partner_name" position="after">
+                <label for='stage_id' string="Status"/>
                 <field name="stage_id"/>
-                <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head" class="oe_inline"/>
-                <field name="title_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
-                <field name="pajak_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
+                <label for='empgol_id' string="Golongan" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head" />
+                <label for="lokasi_id" string="Lokasi Kerja" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="lokasi_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
             </field>
 
             <div class="oe_right oe_button_box" position="replace"/>
@@ -49,7 +53,7 @@
             <field name="type_id" position="replace" />
             
             <field name="partner_name" position="replace">               
-                <field name="partner_name"/>           
+                <field name="partner_name"/>    
             </field>   
 
             <field name="name" position="replace">  
@@ -147,11 +151,12 @@
 					<newline/>
 					<group>
 					<field name="respon_div"/>
-					</group>
+					</group>    
                 </group> 
             </field>
             
-            <field name="source_id" position="after">                
+            <field name="source_id" position="after"> 
+                <field name="ref"/>              
                 <newline/>
                 <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_training_head">                                
                 <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
@@ -435,8 +440,10 @@
                             <field name="job_id"/> 
                             <field name="department_id" invisible="context.get('invisible_department', True)"/>
                             <field name="stage_id"/>
-                        </tree>                    
+                        </tree>                  
                 </field>
+                <field name='status'/>  
+                <button name="status" string="status" type="object"/>
                 </field>
             </field>
     </record>
@@ -448,22 +455,261 @@
             <field name="view_mode">calendar,tree,form</field>
         </record>   
 
+    <record model="ir.actions.act_window" id="daftar_seleksi_pelamar">
+        <field name="name">Daftar Seleksi Pelamar</field>
+        <field name="res_model">hr.seleksi_pelamar</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record> 
+
+    <record id="hr_daftar_seleksi_pelamar" model="ir.ui.view">
+            <field name="name">daftar seleksi pelamar</field>
+            <field name="model">hr.seleksi_pelamar</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Seleksi Pelamar">
+                    <field name="nama"/>
+                    <field name="tgl_seleksi"/>
+                    <field name="tgl_seleksi1"/>
+                    <field name="pendidikan"/>
+                    <field name="jurusan"/> 
+                    <field name="tgl_lahir"/>    
+                    <field name="usia"/>
+                    <field name="sumber"/>
+                    <field name="ref"/>
+                    <field name="kehadiran"/>
+                    <field name="department"/>
+                    <field name="bagian"/>  
+                    <field name="jabatan"/>  
+                    <field name="status"/>
+                    <field name="status1"/>  
+                    <field name="keputusan"/>  
+                    <field name="tgl_keputusan"/>    
+                </tree>
+            </field>
+        </record> 
+
+    <record model="ir.actions.act_window" id="laporan_pemenuhan_recrutiment">
+        <field name="name">Laporan Pemenuhan Recruitment</field>
+        <field name="res_model">hr_pemenuhan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record> 
+
+    <record id="hr_pemenuhan_recrutiment" model="ir.ui.view">
+            <field name="name">Laporan Pemenuhan Recruitment</field>
+            <field name="model">hr_pemenuhan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Laporan Pemenuhan Recruitment">
+                    <field name="tgl_permintaan"/>
+                    <field name="department"/>
+                    <field name="jabatan"/>
+                    <field name="jml_prmintaan"/>
+                    <field name="aktifitas"/> 
+                    <field name="tgl_seleksi"/>    
+                    <field name="jml_kandidat"/>
+                    <field name="per_masuk"/>
+                    <field name="status"/>
+                    <field name="ket"/>   
+                </tree>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="progres_recruitmen">
+        <field name="name">Progres Recruitment</field>
+        <field name="res_model">hr_progres</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record> 
+
+    <record id="hr_progres_recruitmen" model="ir.ui.view">
+            <field name="name">Progres Recruitment</field>
+            <field name="model">hr_progres</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Laporan Pemenuhan Recruitment">
+                    <field name="tanggal"/>
+                    <field name='posisi'/>
+                    <field name="pemanggilan"/>
+                    <field name="status_hrd"/>
+                    <field name="status_usr"/>
+                    <field name="persentase"/> 
+                    <field name="ket"/>   
+                </tree>
+            </field>
+    </record>      
+
+    <record model="ir.actions.act_window" id="detail_pemenuhan">
+        <field name="name">Progres Recruitment</field>
+        <field name="res_model">hr_detail_pemenuhan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record> 
+
+    <record id="hr_detail_pemenuhan" model="ir.ui.view">
+            <field name="name">Progres Recruitment</field>
+            <field name="model">hr_detail_pemenuhan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Laporan Pemenuhan Recruitment">
+                    <field name="tgl_permintaan"/>
+                    <field name='jml_prmintaan'/>
+                    <field name="jml_kandidat"/>
+                    <field name="pemenuhan"/>
+                    <field name="persentase"/>
+                    <field name="kekurangan"/> 
+                    <field name="waktu_rposes"/>
+                    <field name="keterangan"/>     
+                </tree>
+            </field>
+    </record>      
+
+    <record model="ir.actions.act_window" id="pemenuhan_kebutuhan_harian">
+        <field name="name">Pemenuhan Kebutuhan Harian</field>
+        <field name="res_model">hr.pemenuhan_kebutuhan_harian</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record> 
+
+    <record id="hr_pemenuhan_kebutuhan_harian" model="ir.ui.view">
+            <field name="name">Pemenuhan Kebuthan Harian</field>
+            <field name="model">hr.pemenuhan_kebutuhan_harian</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Laporan Pemenuhan Kebuthan Harian">
+                    <field name="bul_har"/>
+                    <field name='div'/>
+                    <field name="dept"/>
+                    <field name="bagian"/>
+                    <field name="jabatan"/>
+                    <field name="level"/> 
+                    <field name="tgl_permohonan"/>
+                    <field name="status_wawancara"/>
+                    <field name="status_pemenuhan"/>
+                    <field name="jumlah_kebutuhan"/>
+                    <field name="jumlah_terpenuhi"/>
+                    <field name="kekurangan_pmenuhan"/>
+                    <field name="status_penempatan"/>
+                    <field name="ket"/>     
+                    <field name="review"/>
+                </tree>
+            </field>
+    </record>   
+
+    <record model="ir.actions.act_window" id="pemenuhan_kebutuhan_bulanan">
+        <field name="name">Pemenuhan Kebutuhan Bulanan</field>
+        <field name="res_model">hr.pemenuhan_kebutuhan_bulanan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record> 
+
+    <record id="hr_pemenuhan_kebutuhan_bulanan" model="ir.ui.view">
+            <field name="name">Pemenuhan Kebuthan Bulanan</field>
+            <field name="model">hr.pemenuhan_kebutuhan_bulanan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Laporan Pemenuhan Kebuthan Harian">
+                    <field name="bulanan"/>
+                    <field name='div'/>
+                    <field name="dept"/>
+                    <field name="bagian"/>
+                    <field name="jabatan"/>
+                    <field name="level"/> 
+                    <field name="tgl_permohonan"/>
+                    <field name="status_wawancara"/>
+                    <field name="status_pemenuhan"/>
+                    <field name="jumlah_kebutuhan"/>
+                    <field name="jumlah_terpenuhi"/>
+                    <field name="kekurangan_pmenuhan"/>
+                    <field name="status_penempatan"/>
+                    <field name="ket"/>     
+                    <field name="review"/>
+                </tree>
+            </field>
+    </record>   
+
+
     <menuitem name="Jadwal Interview"
         id="menu_hr_meeting_applicant"
         parent="base.menu_crm_case_job_req_main"
         sequence="25" action="action_hr_pmeeting applicant"
         groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_training_head,hrd_ppi.group_hr_user"/>
 
+    <menuitem name="Data Report Recruitmnt"
+        id="menu_hr_report"
+        parent="base.menu_crm_case_job_req_main"
+        sequence="27"/> 
+
+    <menuitem name="Daftar Seleksi Pelamar" 
+        id="daftar_pelamar"
+        parent="menu_hr_report"
+        sequence="28" action="daftar_seleksi_pelamar"/> 
+
+    <menuitem name='Progress Recruitment'
+        id='progress_recruitment'
+        parent='daftar_pelamar'
+        sequence='29' action='progres_recruitmen'/>
+
+    <menuitem name='Pemenuhan'
+        id='pemenuhan'
+        parent='daftar_pelamar'
+        sequence='29' action='detail_pemenuhan'/>        
+
+    <menuitem name="Laporan Pemenuhan Recruitment" 
+        id="pemenuhan_recrutiment"
+        parent="menu_hr_report"
+        sequence="29" action="laporan_pemenuhan_recrutiment"/> 
+
+    <menuitem name="List Pemenuhan Kebutuhan reqruitment" 
+        id="pmenuhan_kebutuhan"
+        parent="menu_hr_report"
+        sequence="30"/>
+
+    <menuitem name='Daftar Pemenuhan Kebutuhan Harian'
+        id='pemenuhan_harian'
+        parent='pmenuhan_kebutuhan'
+        sequence='30' action='pemenuhan_kebutuhan_harian'/>    
+
+    <menuitem name='Daftar Pemenuhan Kebutuhan Bulanan'
+        id='pemenuhan_bulanan'
+        parent='pmenuhan_kebutuhan'
+        sequence='30' action='pemenuhan_kebutuhan_bulanan'/>   
+
+    <menuitem name="Sumary Recruitment"
+        id='sumary_recruitment'
+        parent='pmenuhan_kebutuhan'
+        sequence='30' action='action_hr_pmeeting applicant'/>     
+
+    <menuitem name="Laporan Monitoring sasaran Mutu HRD" 
+        id="monitoring"
+        parent="menu_hr_report"
+        sequence="31" action="action_hr_pmeeting applicant"/>      
+
+    <menuitem name="Laporan Permintaan Karyawan" 
+        id="permintaan_karyawan"
+        parent="menu_hr_report"
+        sequence="32" action="action_hr_pmeeting applicant"/>  
+
+    <menuitem name="Daftar Pelamar" 
+        id="pelamar"
+        parent="menu_hr_report"
+        sequence="33" action="action_hr_pmeeting applicant"/>
+
+    <menuitem name="Laporan Monitoring progress interview" 
+        id="monitoring_progres"
+        parent="menu_hr_report"
+        sequence="34" action="action_hr_pmeeting applicant"/>                        
         <!--readonly per group-->
-    <record id="view_applicant_readonly2" model="ir.ui.view">
+    <!--record id="view_applicant_readonly2" model="ir.ui.view">
         <field name="name">Recruitment form R</field>
         <field name="model">hr.applicant</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department')])]"/>
         <field name="arch" type="xml">
-            <!--field name='date_from' position="attributes">
+            <field name='date_from' position="attributes">
                 <attribute name="attrs">{'readonly':[('state','not in',['draft','evaluation'])]}</attribute>
-            </field-->
+            </field>
             <field name='name' position="attributes">
                 <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
             </field>   
@@ -482,9 +728,8 @@
             <field name='partner_phone' position="attributes">
                 <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
             </field>                        
-                 
         </field>
-    </record>     
+    </record-->     
 
     <record id="view_recruitment_readonly2" model="ir.ui.view">
         <field name="name">Recruitment form</field>
@@ -625,7 +870,7 @@
     </record>     
 
     <!--edit kanban-->
-    <record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
+    <!--record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
             <field name="name">Hr Applicants kanban R</field>
             <field name="model">hr.applicant</field>
             <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
@@ -701,7 +946,7 @@
                 </kanban>
                 </kanban>
             </field>
-        </record>
+        </record-->
 
 
     </data>
