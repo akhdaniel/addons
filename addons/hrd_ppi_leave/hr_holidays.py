@@ -53,6 +53,101 @@ class hr_holidays(osv.osv):
     _description = "Leave"
     _inherit = "hr.holidays"
     
+    def unlink(self, cr, uid, ids, context=None):
+        for rec in self.browse(cr, uid, ids, context=context):
+            if rec.state not in ['draft', 'cancel', 'confirm']:
+                raise osv.except_osv(_('Warning!'),_('teu bisa ngadelet ai maneh.')%(rec.state))
+        return super(hr_holidays, self).unlink(cr, uid, ids, context)
+
+    def holidays_validate(self, cr, uid, ids, context=None):
+        self.check_holidays(cr, uid, ids, context=context)
+        obj_emp = self.pool.get('hr.employee')
+        ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
+        manager = ids2 and ids2[0] or False
+        self.write(cr, uid, ids, {'state':'validate'})
+        data_holiday = self.browse(cr, uid, ids)
+        for record in data_holiday:
+            if record.double_validation:
+                self.write(cr, uid, [record.id], {'manager_id2': manager})
+            else:
+                self.write(cr, uid, [record.id], {'manager_id': manager})
+            if record.holiday_type == 'employee' and record.type == 'remove':
+                meeting_obj = self.pool.get('crm.meeting')
+                meeting_vals = {
+                    'name': record.name or _('Leave Request'),
+                    'categ_ids': record.holiday_status_id.categ_id and [(6,0,[record.holiday_status_id.categ_id.id])] or [],
+                    'duration': record.number_of_days_temp * 8,
+                    'description': record.notes,
+                    'user_id': record.user_id.id,
+                    'date': record.date_from,
+                    'end_date': record.date_to,
+                    'date_deadline': record.date_to,
+                    'state': 'open',            # to block that meeting date in the calendar
+                }
+                meeting_id = meeting_obj.create(cr, uid, meeting_vals)
+                self._create_resource_leave(cr, uid, [record], context=context)
+                self.write(cr, uid, ids, {'meeting_id': meeting_id})
+            elif record.holiday_type == 'lokasi':
+                emp_ids = obj_emp.search(cr, uid, [('work_location2','=' ,record.lokasi_id)])
+                leave_ids = []
+                for emp in obj_emp.browse(cr, uid, emp_ids):
+                    vals = {
+                        'name': record.name,
+                        'type': record.type,
+                        'holiday_type': 'employee',
+                        'holiday_status_id': record.holiday_status_id.id,
+                        'date_from': record.date_from,
+                        'date_to': record.date_to,
+                        'notes': record.notes,
+                        'number_of_days_temp': record.number_of_days_temp,
+                        'parent_id': record.id,
+                        'employee_id': emp.id
+                    }
+                    leave_ids.append(self.create(cr, uid, vals, context=None))
+                wf_service = netsvc.LocalService("workflow")
+                for leave_id in leave_ids:
+                    wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
+                    wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
+                    wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
+        return True
+
+    def holiday(self, cr,uid,ids=None,context=None):
+        #import pdb;pdb.set_trace()
+        val='validate'
+        obj = self.pool.get('hr.holidays')        
+        src = obj.search(cr,uid,[('state','=',val)])
+        brw = obj.browse(cr,uid,src)
+        tahun = datetime.now().year
+        date = datetime.now()
+        obj_emp = self.pool.get('hr.employee')
+        obj_src = obj_emp.search(cr,uid,[('tgl_masuk','=',date)])
+        obj_brw = obj_emp.browse(cr,uid,obj_src)
+        leave_ids=[]
+        for holiday in brw :
+            dates = holiday.date_from
+            year = datetime.strptime(dates,'%Y-%m-%d %H:%M:%S').year
+            for data in obj_brw :
+                if tahun == year and holiday.lokasi_id == data.work_location2 and holiday.type == 'remove' :
+                    vali = {
+                            'name': holiday.name,
+                            'type': holiday.type,
+                            'holiday_type': 'employee',
+                            'holiday_status_id': holiday.holiday_status_id.id,
+                            'date_from': holiday.date_from,
+                            'date_to': holiday.date_to,
+                            'notes': holiday.notes,
+                            'number_of_days_temp': holiday.number_of_days_temp,
+                            'parent_id': holiday.id,
+                            'employee_id': data.id,
+                        }
+                    leave_ids.append(self.create(cr, uid, vali, context=None))
+                    wf_service = netsvc.LocalService("workflow")
+                    for leave_id in leave_ids:
+                        wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
+                        wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
+                        wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
+        return True    
+
     _columns = {
         'bln_libur_id':fields.many2one('hr.bln_libur',''),
         'libur_bersih':fields.boolean('Hitung Tanggal Merah'),
@@ -60,10 +155,17 @@ class hr_holidays(osv.osv):
         'libur_bersih2':fields.related('holiday_status_id','libur_bersih',type='boolean',relation='hr.holidays.status',string='Hitung Tanggal Merah',readonly=True),
         'limit_cuti':fields.related('holiday_status_id','limit_cuti',type='boolean',relation='hr.holidays.status',string='Limit Cuti',readonly=True),
         'is_edit':fields.boolean('Kunci ?',required=True),
+        'holiday_type': fields.selection([('employee','By Employee'),('lokasi','Lokasi')], 'Allocation Mode', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}, help='By Employee: Allocation/Request for individual Employee, By Employee Tag: Allocation/Request for group of employees in category', required=True),
+        'lokasi_id': fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
+        'category_id': fields.many2one('hr.employee.category', "Employee Tag"),
         #'name': fields.char('Description', size=64,required=True),
     }
 	
-    def hapus_cuti(self,cr,uid,ids,context=None):
+    _sql_constraints = [
+        ('type_value', "CHECK( (holiday_type='employee' AND employee_id IS NOT NULL) or (holiday_type='category' AND category_id IS NOT NULL)) or (holiday_type='lokasi' AND category_id IS NOT NULL)", 
+         "The employee or employee category of this request is missing. Please make sure that your user login is linked to an employee."),
+    ]   
+    def hapus_cuti(self,cr,uid,ids=None,context=None):
         dates=time.strftime('%Y-%m-%d')
         year1=datetime.strptime(dates,"%Y-%m-%d").year
         month1=datetime.strptime(dates,"%Y-%m-%d").month
@@ -74,8 +176,7 @@ class hr_holidays(osv.osv):
         palidate='validate'
         self_obj=self.pool.get('hr.holidays')
         src_obj=self_obj.search(cr,uid,[('type','=',tipe),('state','=',palidate)])
-        obj = self_obj.browse(cr,uid,src_obj)   
-        import pdb;pdb.set_trace()   
+        obj = self_obj.browse(cr,uid,src_obj)     
         for hapus in obj :
             date_from = hapus.date_from
             year=datetime.strptime(date_from,'%Y-%m-%d').year
