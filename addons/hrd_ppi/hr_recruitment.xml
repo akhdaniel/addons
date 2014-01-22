@@ -1,3 +1,4 @@
+
 <openerp>
     <data>
       <record id="view_hr_job_form2" model="ir.ui.view">

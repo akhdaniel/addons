@@ -63,32 +63,32 @@
 	    <record id="hr_employee 3A" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIA</field>
 	            <field name="rec">3A</field>
-	            <field name="no">107</field>
+	            <field name="no">207</field>
 	    </record>
 	    <record id="hr_employee 3B" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIB</field>
 	            <field name="rec">3B</field>
-	            <field name="no">108</field>
+	            <field name="no">208</field>
 	    </record>
 	    <record id="hr_employee 3C" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIC</field>
 	            <field name="rec">3C</field>
-	            <field name="no">109</field>
+	            <field name="no">209</field>
 	    </record>
 	    <record id="hr_employee 3D" model="hr_employs.gol">
 	            <field name="name">LEVEL IIID</field>
 	            <field name="rec">3D</field>
-	            <field name="no">110</field>
+	            <field name="no">210</field>
 	    </record>
 	    <record id="hr_employee 3E" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIE</field>
 	            <field name="rec">3E</field>
-	            <field name="no">111</field>
+	            <field name="no">211</field>
 	    </record>
 	    <record id="hr_employee 3F" model="hr_employs.gol">
 	            <field name="name">LEVEL IIIF</field>
 	            <field name="rec">3F</field>
-	            <field name="no">112</field>
+	            <field name="no">212</field>
 	    </record>
 	    <record id="hr_employee 4A" model="hr_employs.gol">
 	            <field name="name">LEVEL IVA</field>
@@ -123,92 +123,92 @@
 	    <record id="hr_employee 5" model="hr_employs.gol">
 	            <field name="name">LEVEL 5</field>
 	            <field name="rec">5</field>
-	            <field name="no">402</field>
+	            <field name="no">502</field>
 	    </record>
 	    <record id="hr_employee 5A" model="hr_employs.gol">
 	            <field name="name">LEVEL VA</field>
 	            <field name="rec">5A</field>
-	            <field name="no">401</field>
+	            <field name="no">501</field>
 	    </record>
 	    <record id="hr_employee 5B" model="hr_employs.gol">
 	            <field name="name">LEVEL VB</field>
 	            <field name="rec">5B</field>
-	            <field name="no">408</field>
+	            <field name="no">508</field>
 	    </record>
 	    <record id="hr_employee 5C" model="hr_employs.gol">
 	            <field name="name">LEVEL VC</field>
 	            <field name="rec">5C</field>
-	            <field name="no">409</field>
+	            <field name="no">509</field>
 	    </record>
 	    <record id="hr_employee 5D" model="hr_employs.gol">
 	            <field name="name">LEVEL VD</field>
 	            <field name="rec">5D</field>
-	            <field name="no">410</field>
+	            <field name="no">510</field>
 	    </record>
 	    <record id="hr_employee 6" model="hr_employs.gol">
 	            <field name="name">LEVEL 6</field>
 	            <field name="rec">6</field>
-	            <field name="no">402</field>
+	            <field name="no">602</field>
 	    </record>
 	    <record id="hr_employee 6A" model="hr_employs.gol">
 	            <field name="name">LEVEL VIA</field>
 	            <field name="rec">6A</field>
-	            <field name="no">401</field>
+	            <field name="no">601</field>
 	    </record>
 	    <record id="hr_employee 6B" model="hr_employs.gol">
 	            <field name="name">LEVEL VIB</field>
 	            <field name="rec">6B</field>
-	            <field name="no">408</field>
+	            <field name="no">608</field>
 	    </record>
 	    <record id="hr_employee 6C" model="hr_employs.gol">
 	            <field name="name">LEVEL VIC</field>
 	            <field name="rec">6C</field>
-	            <field name="no">409</field>
+	            <field name="no">609</field>
 	    </record>
 	    <record id="hr_employee 6D" model="hr_employs.gol">
 	            <field name="name">LEVEL VID</field>
 	            <field name="rec">6D</field>
-	            <field name="no">410</field>
+	            <field name="no">610</field>
 	    </record>
 	    <record id="hr_employee 7" model="hr_employs.gol">
 	            <field name="name">LEVEL 7</field>
 	            <field name="rec">7</field>
-	            <field name="no">502</field>
+	            <field name="no">702</field>
 	    </record>
 	    <record id="hr_employee 7A" model="hr_employs.gol">
 	            <field name="name">LEVEL VIIA</field>
 	            <field name="rec">7A</field>
-	            <field name="no">501</field>
+	            <field name="no">701</field>
 	    </record>
 	    <record id="hr_employee 7B" model="hr_employs.gol">
 	            <field name="name">LEVEL VIIB</field>
 	            <field name="rec">7B</field>
-	            <field name="no">508</field>
+	            <field name="no">708</field>
 	    </record>
 	    <record id="hr_employee 7C" model="hr_employs.gol">
 	            <field name="name">LEVEL VIIC</field>
 	            <field name="rec">7C</field>
-	            <field name="no">509</field>
+	            <field name="no">709</field>
 	    </record>
 	    <record id="hr_employee 7D" model="hr_employs.gol">
 	            <field name="name">LEVEL VIID</field>
 	            <field name="rec">7D</field>
-	            <field name="no">510</field>
+	            <field name="no">710</field>
 	    </record>
 	    <record id="hr_employee 9" model="hr_employs.gol">
 	            <field name="name">LEVEL 9</field>
 	            <field name="rec">9</field>
-	            <field name="no">608</field>
+	            <field name="no">908</field>
 	    </record>
 	    <record id="hr_employee 99" model="hr_employs.gol">
 	            <field name="name">None</field>
 	            <field name="rec">99</field>
-	            <field name="no">608</field>
+	            <field name="no">908</field>
 	    </record>
 	    <record id="hr_employee 7D" model="hr_employs.gol">
 	            <field name="name">LEVEL VIID</field>
 	            <field name="rec">7D</field>
-	            <field name="no">510</field>
+	            <field name="no">710</field>
 	    </record>
 	</data>
 </openerp>

@@ -1,5 +1,16 @@
 <openerp>
     <data>
+        <record model="ir.ui.view" id="tab_form_view1">
+            <field name="name">employee</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+                <field name="place_of_birth" position="replace"/>
+                <group string="Contract" position='replace'/>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="tab_form_view">
             <field name="name">employe</field>
             <field name="model">hr.employee</field>
@@ -9,6 +20,9 @@
                  <field name="name" position="after">
                     <field name="nik" placeholder="Nomor Induk Karyawan"/>
                 </field>
+                <label for="category_ids" class="oe_edit_only" groups="base.group_hr_user" position='replace'/>
+                <field name="category_ids" widget="many2many_tags" placeholder="e.g. Part Time" groups="base.group_hr_user" position='replace'/>
+                <field name='address_home_id' position='replace'/>
                 <page string="Public Information" position="replace"> 
                     <page string="Job &amp; Public Information">				
                                 <group>
@@ -28,7 +42,6 @@
                                         <field name="job_id" options='{"no_open": True}' domain="[('state','!=','old')]" context="{'form_view_ref': 'hr.view_hr_job_employee_form'}"/>
                                         <field name="wfield_id"/>
                                         <field name="pansion_id"/>
-                                        
                                     </group>
                                     <group>
                                         <field name="company_id" groups="base.group_multi_company" on_change="onchange_company(company_id)"/>
@@ -71,6 +84,11 @@
                                      <group string="Tax">
                                         <field name="ptkp_id"/>
                                         <field name="npwp"/>
+                                     </group>
+                                     <newline/>
+                                     <group string="Insurance">
+                                        <field name='npp'/>
+                                        <field name='npkj'/>
                                      </group>
                                      </group>
 								</group>   
@@ -116,8 +134,8 @@
                                             <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM')]}"/>    
                                             <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_A')]}"/>
                                             <field name="no_sim" attrs="{'invisible':['|',('jenis_id','!=','SIM_C')]}"/> 
-                                            <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')]}"/> 
-                                            <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')]}"/>                                           
+                                            <field name="issued_id" attrs="{'invisible': [('jenis_id','!=','KTP')]}"/> 
+                                            <field name="issued_id2" attrs="{'invisible': [('jenis_id','!=','Passport')]}"/>                                           
                                     </group>                              
                                     </group>
                                     </group>
