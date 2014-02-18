@@ -12,12 +12,32 @@
             	<page string="Internal Notes" position="after">
             		<page string="Petro+" name="petro" >
             			<group>
-				            <field name="card_no"/>
-				            <field name="at_limit"/>
-				            <field name="nt_limit"/>
-				        </group>
+	            			<group>
+					            <field name="card_no"/>
+					            <field name="at_limit"/>
+					            <field name="nt_limit"/>
+					        </group>
+					        <group>
+					            <field name="pos_group_id"/>
+					        </group>
+					    </group>
 			        </page>
                 </page>
+			</field>
+		</record>
+		
+        <record id="view_partner_tree_sage" model="ir.ui.view">
+            <field name="name">res.partner.tree.sage</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<field name="parent_id" position="after">
+		            <field name="card_no"/>
+		            <field name="at_limit"/>
+		            <field name="nt_limit"/>
+		            <field name="pos_group_id"/>
+                </field>
 			</field>
 		</record>
 
