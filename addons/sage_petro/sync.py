@@ -1,12 +1,16 @@
 from datetime import datetime
 from openerp.osv import osv, fields
 import psycopg2
+from openerp import netsvc
+import logging
+_logger = logging.getLogger(__name__)
 
 EXCH_HOST = "127.0.0.1"
 EXCH_DB = "card"
 EXCH_USER = "postgres"
 EXCH_PASS = "123456"
 LOYALTY_PRODUCT_ID = 3
+PAYMENT_PRODUCT_ID = 2
 
 class res_partner(osv.osv):
 	_description = 'Partner'
@@ -14,6 +18,7 @@ class res_partner(osv.osv):
 	_inherit = "res.partner"
 	con = None
 	cur = None
+	payment_process = False 
 
 	def connect_petro(self, cr, uid, context=None):
 		conn_string2 = "host='"+EXCH_HOST+"' dbname='" + EXCH_DB + "' user='"+EXCH_USER+"' password='"+EXCH_PASS+"'"
@@ -149,24 +154,29 @@ class res_partner(osv.osv):
 
 		return True
 
+
+	#write partner => push to temp DB
 	def write(self, cr, uid, ids, vals, context=None):
 		if isinstance(ids, (int, long)):
 			ids = [ids]
 		result = super(res_partner,self).write(cr, uid, ids, vals, context=context)
 
-		self.connect_petro(cr, uid, context)
-		for partner in self.browse(cr, uid, ids, context=context):
-			self.update_client(cr, uid, partner)
-			self.update_client_account(cr, uid, partner)
+		if not self.payment_process:
+			self.connect_petro(cr, uid, context)
+			for partner in self.browse(cr, uid, ids, context=context):
+				self.update_client(cr, uid, partner)
+				self.update_client_account(cr, uid, partner)
 
-		if self.con:
-			self.con.close()
+			if self.con:
+				self.con.close()
 
 		return result
 
+	#read TRANSACTION raw data from temp DB, create invoices
+	#according to OPERATION_ID, prepaid/postpaid trans
 	def read_trans(self, cr, uid, context=None):
+		_logger.info("reading TRANSACTION")
 		self.connect_petro(cr, uid, context)
-
 
 		# cari record yang p_date>p_date_exchange:
 		# p_date = timestamp dari petro ketika dia update/create record
@@ -174,32 +184,167 @@ class res_partner(osv.osv):
 		sql = """SELECT * FROM erpexchange."TRANSACTIONS" WHERE "P_DATE">"P_DATE_EXCHANGE" OR "P_DATE_EXCHANGE" IS NULL"""
 		self.cur.execute(sql)
 
+
+		#prepare common variable
+		company_id 		= self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+		product_id 		= PAYMENT_PRODUCT_ID
+		product 		= self.pool.get('product.product').browse(cr, uid, product_id, context=context)
+		journal_ids = self.pool.get('account.journal').search(cr, uid,[('type', '=', 'sale'), ('company_id', '=', company_id)],limit=1)
+		if not journal_ids:
+			raise osv.except_osv(_('Error!'),
+				_('Please define sales journal for this company.')  )
+		sale_journal_id = journal_ids[0]
+
+		journal_ids = self.pool.get('account.journal').search(cr, uid,[('type', '=', 'purchase'), ('company_id', '=', company_id)],limit=1)
+		if not journal_ids:
+			raise osv.except_osv(_('Error!'),
+				_('Please define purchase journal for this company.')  )
+		purchase_journal_id = journal_ids[0]
+
+		date_invoice 	= datetime.now().strftime('%Y-%m-%d')
+		partner_id 		= 0
+		omc_partner_id 	= 0
+		ap_account_id 	= 0
+		ar_account_id 	= 0		
+
 		rows = self.cur.fetchall()
 		for row in rows:
 			"""
-			P_DATETIME
-			P_CLIENT_ID
-			P_POS_NUMBER
-			P_CLIENT_TYPE
-			P_SERVICE_ID
-			P_AMOUNT
-			P_TERMINAL_PRICE
-			P_TOTAL_AMOUNT
-			P_ACTUAL_PRICE
-			P_TOTAL_AMOUNT_WITHOUT_DISC
-			P_GUID
-			P_OPERATION_ID
-			P_COMMENT
-			P_DATE
-			P_DATE_EXCHANGE
+			0 P_DATETIME
+			1 P_CLIENT_ID
+			2 P_POS_NUMBER
+			3 P_CLIENT_TYPE
+			4 P_SERVICE_ID
+			5 P_AMOUNT
+			6 P_TERMINAL_PRICE
+			7 P_TOTAL_AMOUNT
+			8 P_ACTUAL_PRICE
+			9 P_TOTAL_AMOUNT_WITHOUT_DISC
+			10 P_GUID
+			11 P_OPERATION_ID
+			12 P_COMMENT
+			13 P_DATE
+			14 P_DATE_EXCHANGE
 			"""
 
+			sale_inv_lines = []
+			purchase_inv_lines = []
+
 			# create Journal Entries/ atau Invoice berdasarkan record transaksi 
+			P_DATETIME 						= row[0]
+			P_CLIENT_ID						= row[1]
+			P_POS_NUMBER					= row[2]
+			P_CLIENT_TYPE					= row[3]
+			P_SERVICE_ID					= row[4]
+			P_AMOUNT						= row[5]
+			P_TERMINAL_PRICE				= row[6]
+			P_TOTAL_AMOUNT					= row[7]
+			P_ACTUAL_PRICE					= row[8]
+			P_TOTAL_AMOUNT_WITHOUT_DISC		= row[9]
+			P_GUID							= row[10]
+			P_OPERATION_ID					= row[11]
+			P_COMMENT						= row[12]
+			P_POS_NAME						= P_POS_NUMBER
+
+			qty 		= P_AMOUNT
+
+
+			#coming from each record 
+			prepaid 	= True
+			postpaid 	= False  
+
+			if P_OPERATION_ID == 1:
+
+				#get partner for card User
+				partner = self.find_partner_by_client_id(cr,uid,P_CLIENT_ID)
+				if not partner:
+					_logger.error(  'not found partner for card user.')
+					return
+				partner_id = partner.id
+				ar_account_id = partner.property_account_receivable.id
+
+				#get partner by pos_group_id : OMCs, temporary
+				omc_partner = self.find_partner_by_pos_group_id(cr,uid, 4 ) 
+				if not omc_partner:
+					_logger.error( 'not found partner for OMC .')
+					return
+				omc_partner_id = omc_partner.id
+				ap_account_id = omc_partner.property_account_payable.id
+
+				#setup inv_lines
+				sale_inv_lines.append(
+					(0,0,{
+						'name': "%s %s" % ( product.name , P_POS_NAME),
+						'origin':  'interface records',
+						'sequence':  '',
+						'uos_id':  False,
+						'product_id':  product_id,
+						'account_id':  product.property_account_income.id, 
+						#'price_unit':  product.list_price,
+						'price_unit':  P_TOTAL_AMOUNT,
+						'quantity':    qty , 
+						#'price_subtotal': product.list_price * qty,  
+						'price_subtotal': P_ACTUAL_PRICE,  
+						'discount':  0,
+						'company_id':  company_id,
+						'partner_id':  partner_id
+					})
+				)			
+				purchase_inv_lines.append(
+					(0,0,{
+						'name': "%s %s" % ( product.name , P_POS_NAME),
+						'origin':  'interface records',
+						'sequence':  '',
+						'uos_id':  False,
+						'product_id':  product_id,
+						'account_id':  product.property_stock_account_input.id, 
+						'price_unit':  product.standard_price,
+						'quantity':  qty, 
+						'price_subtotal': product.standard_price * qty,  
+						'discount':  0,
+						'company_id':  company_id,
+						'partner_id':  omc_partner_id
+					})
+				)
+
+				#create customer invoice for this CLIENT_ID
+				if prepaid:
+					print "prepaid processing..."
+					#create sales invoice to card user
+					invoice_id = self.create_customer_invoice(cr, uid, date_invoice, partner_id, ar_account_id, sale_inv_lines , sale_journal_id, company_id, context)
+					#confirm invoice
+					self.invoice_confirm(cr, uid, invoice_id, context)
+
+					#create payment from deposit, first cari jurnal deposit dulu
+					journal_ids = self.pool.get('account.journal').search(cr, uid,[('code', '=', 'DEP'), ('company_id', '=', company_id)],limit=1)
+					if not journal_ids:
+						_logger.error('Please define deposit journal  with code "DEP" and type bank for this company.')
+						return
+					dep_journal = self.pool.get('account.journal').browse(cr,uid, journal_ids[0])
+					voucher_id = self.create_payment(cr, uid, invoice_id, partner_id, qty*P_ACTUAL_PRICE, dep_journal, company_id, context)
+
+					self.payment_process = True 
+					self.payment_confirm( cr, uid, voucher_id, context)
+					self.payment_process = False
+
+					#create purchase invoice to OMC
+					invoice_id=self.create_supplier_invoice(cr, uid, date_invoice, omc_partner_id, ap_account_id, purchase_inv_lines , purchase_journal_id, company_id, context)
+					#confirm invoice
+					self.invoice_confirm(cr, uid, invoice_id, context)
+
+				elif postpaid:
+					print "prepaid processing..."
+					#create sales invoice to card user
+					self.create_customer_invoice(cr, uid, date_invoice, partner_id, ar_account_id, sale_inv_lines , sale_journal_id, company_id, context)
+					#create purchase invoice to OMC
+					self.create_supplier_invoice(cr, uid, date_invoice, omc_partner_id, ap_account_id, purchase_inv_lines , purchase_journal_id, company_id, context)
+
+			#end if operation id
+
 
 			# selesai proses , set p_date_exchange = now
 			sql = """UPDATE erpexchange."TRANSACTIONS" SET "P_DATE_EXCHANGE"='%s' WHERE "P_GUID"='%s'""" % (
-				datetime.now(), row[10])
-
+				datetime.now(), P_GUID)
 			self.cur.execute(sql)
 			self.con.commit()
 
@@ -208,12 +353,18 @@ class res_partner(osv.osv):
 
 		return True 
 
+	#read BONUSES transaction from temp db, create invoices
+	#according to OPERATION_ID
 	def read_bonus(self, cr, uid, context=None):
+		_logger.info("reading BONUSES")
 		self.connect_petro(cr, uid, context)
 		self.read_bonus_by_operation(cr, uid, "accum", context)
 		self.read_bonus_by_operation(cr, uid, "remove", context)
+		if self.con:
+			self.con.close()		
 		return True 
 
+	#actual read BONUSES process
 	def read_bonus_by_operation(self, cr, uid, operation, context=None):
 
 		if operation == "accum":
@@ -318,20 +469,21 @@ class res_partner(osv.osv):
 
 				inv_lines.append(
 					(0,0,{
-						'name': "%s %s" % ( product.name , P_POS_NAME),
-						'origin':  'interface records',
-						'sequence':  '',
-						'uos_id':  False,
-						'product_id':  product_id,
-						'account_id':  product.property_account_income.id, 
-						'price_unit':  product.list_price,
-						'quantity':  qty, 
-						'price_subtotal': product.list_price * qty,  
-						'discount':  0,
-						'company_id':  company_id,
-						'partner_id':  partner_id
+						'name'			:  "%s %s" % ( product.name , P_POS_NAME),
+						'origin'		:  'interface records',
+						'sequence'		:  '',
+						'uos_id'		:  False,
+						'product_id'	:  product_id,
+						'account_id'	:  product.property_account_income.id, 
+						'price_unit'	:  product.list_price,
+						'quantity'		:  qty, 
+						'price_subtotal':  product.list_price * qty,  
+						'discount'		:  0,
+						'company_id'	:  company_id,
+						'partner_id'	:  partner_id
 					})
 				)
+
 			#operation id removal
 			elif operation=="remove":
 				if P_POS_GROUP_ID != old_pos_group_id and i != 0:
@@ -341,18 +493,18 @@ class res_partner(osv.osv):
 
 				inv_lines.append(
 					(0,0,{
-						'name': "%s %s" % ( product.name , P_POS_NAME),
-						'origin':  'interface records',
-						'sequence':  '',
-						'uos_id':  False,
-						'product_id':  product_id,
-						'account_id':  product.property_account_expense.id, 
-						'price_unit':  product.standard_price,
-						'quantity':  -1 * qty, 
-						'price_subtotal': -1 * product.standard_price * qty,  
-						'discount':  0,
-						'company_id':  company_id,
-						'partner_id':  partner_id
+						'name'			:  "%s %s" % ( product.name , P_POS_NAME),
+						'origin'		:  'interface records',
+						'sequence'		:  '',
+						'uos_id'		:  False,
+						'product_id'	:  product_id,
+						'account_id'	:  product.property_account_expense.id, 
+						'price_unit'	:  product.standard_price,
+						'quantity'		:  -1 * qty, 
+						'price_subtotal':  -1 * product.standard_price * qty,  
+						'discount'		:  0,
+						'company_id'	:  company_id,
+						'partner_id'	:  partner_id
 					})
 				)
 
@@ -360,7 +512,7 @@ class res_partner(osv.osv):
 			old_pos_group_id = P_POS_GROUP_ID
 
 			#update partner 
-			partner = self.find_partner_by_pos_group(cr,uid,P_POS_GROUP_ID)
+			partner = self.find_partner_by_pos_group_id(cr,uid,P_POS_GROUP_ID)
 			if not partner:
 				print 'Please define POS Group ID for this partner.'
 				return
@@ -386,35 +538,82 @@ class res_partner(osv.osv):
 		#psycopg2.close()
 		return True
 
-	def create_customer_invoice(self, cr, uid, date_invoice, partner_id, account_id, lines , journal_id, context=None):
+	#create customer invoice
+	def create_customer_invoice(self, cr, uid, date_invoice, partner_id, account_id, lines , journal_id, company_id, context=None):
 		invoice_id = self.pool.get('account.invoice').create(cr,uid,{
 		    'date_invoice' : date_invoice,
 		    'partner_id' : partner_id,
 		    'account_id' : account_id,
 		    'invoice_line': lines,
 		    'type': 'out_invoice',
-		    'journal_id': journal_id
+		    'journal_id': journal_id,
+		    'company_id': company_id
 		    })		
 		print "created customer invoice id:%d" % (invoice_id)
-		return True
+		return invoice_id
 
-	def create_supplier_invoice(self, cr, uid, date_invoice, partner_id, account_id, lines , journal_id, context=None ):
+	#create supplier invoice
+	def create_supplier_invoice(self, cr, uid, date_invoice, partner_id, account_id, lines , journal_id, company_id, context=None ):
 		invoice_id = self.pool.get('account.invoice').create(cr,uid,{
 		    'date_invoice' : date_invoice,
 		    'partner_id' : partner_id,
 		    'account_id' : account_id,
 		    'invoice_line': lines,
 		    'type': 'in_invoice',
-		    'journal_id': journal_id		    
+		    'journal_id': journal_id,
+		    'company_id': company_id
 		    })
 		print "created supplier invoice id:%d" % (invoice_id)
-		return True
+		return invoice_id
 
-	def find_partner_by_pos_group(self, cr, uid, pos_group_id, context=None ):
-		print pos_group_id
+	#create payment 
+	#invoice_id: yang mau dibayar
+	#journal_id: payment method
+	def create_payment(self, cr, uid, invoice_id, partner_id, amount, journal, company_id, context=None):
+		voucher_lines = []
+
+		#cari invoice
+		inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id)
+		#import pdb; pdb.set_trace()
+
+		#cari move_line yang move_id nya = invoice.move_id
+		move_line_id = self.pool.get('account.move.line').search( cr, uid, [('move_id.id','=', inv.move_id.id)] );
+		move_lines = self.pool.get('account.move.line').browse(cr, uid, move_line_id)
+		move_line = move_lines[0] # yang AR saja
+
+		voucher_lines.append((0,0,{
+			'move_line_id': 		move_line.id,
+			'account_id':			move_line.account_id.id,
+			'amount_original':		move_line.debit,
+			'amount_unreconciled':	move_line.debit,
+			'reconcile':			True,
+			'amount':				move_line.debit,
+			'type':					'cr',
+			'name':					move_line.name,
+			'company_id':  			company_id
+		}))
+		
+
+		voucher_id = self.pool.get('account.voucher').create(cr,uid,{
+			'partner_id' 	: partner_id,
+			'amount' 		: amount,
+			'account_id'	: journal.default_debit_account_id.id,
+			'journal_id'	: journal.id,
+			'reference' 	: 'payment #',
+			'name' 			: 'payment #',
+			'company_id' 	: company_id,
+			'type'			: 'receipt',
+			'line_ids'		: voucher_lines
+		    })
+		print "created payment id:%d" % (voucher_id)
+		return voucher_id
+
+	#mencari partner berdasarkan POS_GROUP_ID, 
+	#untuk partner OMC
+	def find_partner_by_pos_group_id(self, cr, uid, pos_group_id, context=None ):
 		partner_obj = self.pool.get('res.partner')
 		partner_ids = partner_obj.search(cr, uid, [
-			('pos_group_id.name','=', pos_group_id )
+			('pos_group_id','=', pos_group_id )
 			], context=context)
 		partner     = partner_obj.browse(cr,uid,partner_ids[0])
 		print partner.name 
@@ -423,17 +622,46 @@ class res_partner(osv.osv):
 		else:
 			return False
 
+	#mencari partner berdasarkan CLIENT_ID 
+	#untuk partner retail cusomter postpaid/prepaid
+	def find_partner_by_client_id(self, cr, uid, client_id, context=None ):
+		partner_obj = self.pool.get('res.partner')
+		partner_ids = partner_obj.search(cr, uid, [
+			('id','=', client_id )
+			], context=context)
+		partner     = partner_obj.browse(cr,uid,partner_ids[0])
+		print partner.name 
+		if partner:
+			return partner
+		else:
+			return False
+
+	#set open/validate
+	def invoice_confirm(self, cr, uid, id, context=None):
+		wf_service = netsvc.LocalService('workflow')
+		wf_service.trg_validate(uid, 'account.invoice', id , 'invoice_open', cr)
+		return True
+
+	#set done
+	def payment_confirm(self, cr, uid, vid, context=None):
+		wf_service = netsvc.LocalService('workflow')
+		wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
+		return True
+
+	#additional columns 
 	_columns = {
         'card_no': fields.char('Card Number'),
 		'at_limit': fields.integer('Alert Limit', translate=True),
 		'nt_limit': fields.integer('Notification Limit', translate=True),
-		'pos_group_id' : fields.many2one("sage_petro.pos_group", "POS Group")
+		#'pos_group_id' : fields.many2one("sage_petro.pos_group", "POS Group")
+		'pos_group_id' : fields.integer("POS Group")
+		#'client_id': fields.integer("Client ID")
 	}
 res_partner()
 
-class pos_group(osv.osv):
-	_name = "sage_petro.pos_group"
-	_columns = {
-		'name': fields.integer("Number"),
-	}
-pos_group()
+# class pos_group(osv.osv):
+# 	_name = "sage_petro.pos_group"
+# 	_columns = {
+# 		'name': fields.integer("Number"),
+# 	}
+# pos_group()
