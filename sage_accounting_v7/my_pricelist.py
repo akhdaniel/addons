@@ -241,7 +241,7 @@ class account_invoice(osv.osv):
         res['invoice_line_id']=x.get('invoice_line_id',False)
         return res
 
-    def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
+    def original_finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
         """finalize_invoice_move_lines(cr, uid, invoice, move_lines) -> move_lines
         Hook method to be overridden in additional modules to verify and possibly alter the
         move lines to be created by an invoice, for special cases.
@@ -528,6 +528,168 @@ class account_invoice(osv.osv):
         import pprint
         pprint.pprint(move_lines)
         return move_lines
+
+    def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
+        """finalize_invoice_move_lines(cr, uid, invoice, move_lines) -> move_lines
+        Hook method to be overridden in additional modules to verify and possibly alter the
+        move lines to be created by an invoice, for special cases.
+        :param invoice_browse: browsable record of the invoice that is generating the move lines
+        :param move_lines: list of dictionaries with the account.move.lines (as for create())
+        :return: the (possibly updated) final move_lines to create for this invoice  
+        """
+        
+        if invoice_browse.journal_id.code != 'EXREF':
+             return move_lines
+        
+        context={}
+        discount_total=0
+
+        ####################################################################################
+        # global common data                
+        ####################################################################################                
+        company_currency    = invoice_browse.company_id.currency_id.id
+        diff_currency_p     = invoice_browse.currency_id.id <> company_currency
+        currency_id         = invoice_browse.currency_id.id
+        cur_obj             = self.pool.get('res.currency')
+        account_obj         = self.pool.get('account.account')
+
+        ####################################################################################
+        # partner data               
+        ####################################################################################                
+        partner_id          = move_lines[0][2]['partner_id']
+        period_id           = invoice_browse.period_id.id
+        default_credit_account_id = invoice_browse.journal_id.default_credit_account_id.id
+        if not default_credit_account_id:
+            raise osv.except_osv(_('Error !'), _('Ex Journal does not have Default Credit Account. Please set it up through Accounting - Configuration - Journals ') )
+        
+        default_debit_account_id = invoice_browse.journal_id.default_debit_account_id.id
+        if not default_debit_account_id:
+            raise osv.except_osv(_('Error !'), _('Ex Journal does not have Default Debit Account. Please set it up through Accounting - Configuration - Journals ') )
+        date_due= invoice_browse.date_due
+
+        ####################################################################################
+        # loop for each product items in the invoice
+        # to generate Differential Journal and Discount Journal
+        ####################################################################################
+        for il in invoice_browse.invoice_line:
+            uom                 = il.uos_id.id
+            qty                 = il.quantity
+            subtotal            = il.price_subtotal
+            product_id          = il.product_id.id
+            product_name        = il.product_id.name
+            product_xfer_account = il.product_id.property_account_exref.id
+            
+            ################################################################################
+            # calculate discount amount 
+            ################################################################################
+            discount_currency   = il.discount_nominal * qty
+            discount            = cur_obj.compute(cr, uid, currency_id, company_currency, discount_currency, context={'date': invoice_browse.date_invoice}) 
+
+            ################################################################################
+            # find discount account for each product
+            ################################################################################
+            discount_account=il.product_id.categ_id.property_account_discount_categ.id
+            if not discount_account:
+                raise osv.except_osv(_('Error !'), _('Product %s does not have Discount Account. Please set it up through Product Category Accounting Tab') % (product_name))
+            if not product_xfer_account:
+                raise osv.except_osv(_('Error !'), _('Product %s does not have Ex Ref Account. Please set it up through Product Ex Ref Tab') % (product_name))
+
+            ################################################################################
+            # modification rules
+            ################################################################################            
+            """
+            modify original move_lines to add discount to the credit/debit amount
+            misal discount=10 dan 20
+            
+            asli:
+            
+            AR     400
+                Sales   100   product 1
+                Sales   300   product 2
+                
+            COGS    50        product 1
+                Inv    50
+            COGS    100       product 2
+                Inv    100
+            
+            modif:
+            
+            AR        400 + 30
+                Sales       100 + 10 prod1
+                Sales       300 + 20 prod2
+
+            COGS      50
+                Inv        50
+    
+            """
+            
+            i=0
+            for ml in move_lines:
+                # if SALES account for same product_id
+                account = account_obj.browse(cr, uid, ml[2]['account_id'])
+
+                if account.user_type.code == 'income' \
+                and ml[2]['account_id'] != product_xfer_account \
+                and 'credit' in ml[2] \
+                and ml[2]['invoice_line_id'] == il.id\
+                and ml[2]['product_id'] == il.product_id.id:
+                    move_lines[i][2]['credit'] += discount
+                    move_lines[i][2]['credit'] = prettyFloat(move_lines[i][2]['credit'])
+
+                elif account.user_type.code == 'receivable' \
+                and ml[2]['account_id'] != product_xfer_account \
+                and 'debit' in ml[2] \
+                and ml[2]['account_id'] != default_credit_account_id\
+                and ml[2]['account_id'] != default_debit_account_id:
+                    move_lines[i][2]['debit'] += discount
+                    move_lines[i][2]['debit'] = prettyFloat(move_lines[i][2]['debit']) 
+                i += 1  
+
+            ################################################################################
+            # generate discount journal entries
+            ################################################################################            
+            if discount > 0:
+                """
+                generate discount journal
+                Dr Discount (product discount account)
+                Cr   customer (invoice_browse.account.id)
+                """
+                
+                move_lines.append((0,0,{
+                   'type': 'dest',
+                   'name': 'Discount ' + product_name,
+                   'debit' : prettyFloat(discount),
+                   'price': 0.0,
+                   'account_id': discount_account ,
+                   'date_maturity': date_due,
+                   'amount_currency': diff_currency_p \
+                        and discount_currency or False,
+                   'currency_id': diff_currency_p \
+                        and currency_id or False,
+                   'ref': 'discount journal',
+                   'period_id':period_id,
+                   'partner_id':partner_id,
+                   'product_id':product_id,
+                }))             
+                move_lines.append((0,0,{
+                   'type': 'dest',
+                   'name': 'Discount ' + product_name,
+                   'credit' : prettyFloat(discount),
+                   'price': 0.0,
+                   'account_id': invoice_browse.account_id.id ,
+                   'date_maturity': date_due,
+                   'amount_currency': diff_currency_p \
+                        and -1*discount_currency or False,
+                   'currency_id': diff_currency_p \
+                        and currency_id or False,
+                   'ref': 'discount journal',
+                   'period_id':period_id,
+                   'partner_id':partner_id,
+                   'product_id':product_id,
+                }))
+
+        return move_lines
+
 account_invoice()
 
 class account_invoice_line(osv.osv):
