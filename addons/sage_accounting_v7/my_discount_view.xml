@@ -57,7 +57,7 @@
             </field>
 		</record>        
 
-        <record id="view_partner_form4" model="ir.ui.view">
+        <!--record id="view_partner_form4" model="ir.ui.view">
             <field name="name">res.partner.form.inherit4</field>
             <field name="model">res.partner</field>
             <field name="type">form</field>
@@ -81,7 +81,7 @@
                 </page>
             		
             </field>
-        </record>
+        </record-->
         
 	</data>
 </openerp>
