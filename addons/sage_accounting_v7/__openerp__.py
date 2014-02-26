@@ -1,8 +1,8 @@
 {
 	'name':'SAGE Accounting Module',
 	'description':'Price list to support SAGE bi-weekly core/ex-ref price, automatic journal for subsidised and discount in nominal value',
-	'version':'1.0',
-	'website':'http://www.openerp.com',
+	'version':'2.0',
+	'website':'http://www.vitraining.com',
 	'depends':['base','product',"process", "decimal_precision",'account','sale','purchase'],
 	'init_xml':[],
 	'update_xml':[
