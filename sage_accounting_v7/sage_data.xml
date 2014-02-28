@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
         <record id="list_price" model="product.price.type">
             <field name="name">Public Price</field>
             <field name="field">list_price</field>
@@ -19,6 +19,7 @@
             <field name="type">general</field>
             <field name="update_posted">True</field>
             <!--field name="currency" search="[('name','=','GHS')]" model="res.currency" /-->
+            <field name="company_id" search="[('name','like','SAGE Petroleum Ltd.')]" model="res.company" />
             <field name="sequence_id" ref="sequence_npa_journal"/>
             <field name="default_debit_account_id" search="[('name','like','NPA Receivables')]" model="account.account"/>
             <field name="default_credit_account_id" search="[('name','=','NPA Payables')]" model="account.account"/>

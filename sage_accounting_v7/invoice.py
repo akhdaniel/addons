@@ -83,7 +83,7 @@ class account_invoice(osv.osv):
 		#####################################################################
 		# cari NPA journal , default db and cr account
 		#####################################################################
-		journal_id 		= self.pool.get('account.journal').search(cr,uid,[('name','=','NPA Journal')])[0]
+		journal_id 		= self.pool.get('account.journal').search(cr,uid,[('name','=','NPA Journal'),('company_id','=', company_id)])[0]
 		journal 		= self.pool.get('account.journal').browse(cr,uid,journal_id,context)
 		default_credit_account_id = journal.default_credit_account_id.id
 		if not default_credit_account_id:
@@ -170,7 +170,8 @@ class account_invoice(osv.osv):
 					'currency_id': diff_currency_p \
 						and currency_id or False,
 					'ref': 'core price > exref price',
-					'period_id': period_id,
+					'period_id'		: period_id,
+					'company_id' 	: company_id,
 					'partner_id':npa_partner_id,
 					'product_id':product_id,
 				}))
@@ -187,8 +188,9 @@ class account_invoice(osv.osv):
 					'currency_id': diff_currency_p \
 						and currency_id or False,
 					'ref': 'core price > exref price',
-					'period_id':period_id,
 					'partner_id':npa_partner_id,
+					'period_id':period_id,
+					'company_id' 	: company_id,
 					'product_id':product_id,
 				}))             
 			else:
@@ -208,7 +210,8 @@ class account_invoice(osv.osv):
 					'currency_id': diff_currency_p \
 						and currency_id or False,
 					'ref': 'core price < exref price',
-					'period_id': period_id,
+					'period_id'		: period_id,
+					'company_id' 	: company_id,
 					'partner_id':npa_partner_id,                           
 					'product_id':product_id,
 				}))
@@ -227,17 +230,19 @@ class account_invoice(osv.osv):
 					'currency_id': diff_currency_p \
 						and currency_id or False,
 					'ref': 'core price < exref price',
-					'period_id':period_id,
-					#'partner_id':partner_id,
+					'period_id'		: period_id,
+					'company_id' 	: company_id,
 					'product_id':product_id,
 				}))      
 
+		_logger.warning(move_lines )
 		move_obj 	= self.pool.get('account.move')
 		move_id 	= move_obj.create(cr,uid,{
 			'journal_id'	: journal.id,
 			'ref' 			: invoice_browse.number ,
 			'internal_sequence_number' : invoice_browse.number ,
 			'company_id' 	: company_id,
+			'period_id'		: period_id,
 			'line_id'		: move_lines
 		})
 		move_obj.button_validate(cr,uid, [move_id], context)
@@ -261,12 +266,13 @@ class account_invoice(osv.osv):
 		invoice_browse = self.pool.get('account.invoice').browse(cr, uid, invoice_id)
 		_logger.info(invoice_browse)
 		_logger.info(invoice_browse.number)
+		company_id = invoice_browse.company_id.id
 		
 		#####################################################################
 		#cari account move yang ref nya = invoice number
 		#####################################################################
 		account_move_obj = self.pool.get('account.move')
-		move_ids = account_move_obj.search(cr,uid, [('ref','=',invoice_browse.number)])
+		move_ids = account_move_obj.search(cr,uid, [('ref','=',invoice_browse.number),('company_id','=',company_id)])
 
 		#####################################################################
 		# jika ditemukan ada id move, jalankan button_cancel dan 
