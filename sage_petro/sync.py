@@ -9,8 +9,8 @@ EXCH_HOST = "127.0.0.1"
 EXCH_DB = "card"
 EXCH_USER = "postgres"
 EXCH_PASS = "123456"
-LOYALTY_PRODUCT_ID = 3
-PAYMENT_PRODUCT_ID = 2
+LOYALTY_PRODUCT_ID = 2
+PAYMENT_PRODUCT_ID = 4
 
 class res_partner(osv.osv):
 	_description = 'Partner'
@@ -464,7 +464,7 @@ class res_partner(osv.osv):
 			if operation == "accum":
 				if P_POS_GROUP_ID != old_pos_group_id and i!=0:
 					print 'creating customer invoice ...'
-					self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id)
+					self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id, company_id)
 					inv_lines=[]
 
 				inv_lines.append(
@@ -488,7 +488,7 @@ class res_partner(osv.osv):
 			elif operation=="remove":
 				if P_POS_GROUP_ID != old_pos_group_id and i != 0:
 					print 'creating supplier invoice ...'
-					self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id)
+					self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id, company_id)
 					inv_lines=[]
 
 				inv_lines.append(
@@ -522,11 +522,11 @@ class res_partner(osv.osv):
 
 		if partner_id != 0 and ar_account_id !=0 and operation == "accum":
 			print 'creating last customer invoice ...'
-			self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id)
+			self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id, company_id)
 			inv_lines=[]
 		elif partner_id != 0 and ap_account_id !=0 and operation=="remove":
 			print 'creating last supplier invoice ...'
-			self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id)
+			self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id, company_id)
 			inv_lines=[]				
 
 		# selesai proses , set p_date_exchange = now
