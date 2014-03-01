@@ -31,7 +31,7 @@ Requirements and Installation:
 
 """,
     'version': '0.9',
-    'depends': ['base'],
+    'depends': ['base','account'],
     'author': 'vitraining.com',
     'category': 'Tools', # i.e a technical module, not shown in Application install menu
     'url': 'http://www.vitraining.com/',
