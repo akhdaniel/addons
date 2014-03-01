@@ -614,9 +614,11 @@ class account_invoice(osv.osv):
             
             modif:
             
-            AR        400 + 30
+            AR        400
                 Sales       100 + 10 prod1
                 Sales       300 + 20 prod2
+            Discount prod1 10
+            Discount prod2 10
 
             COGS      50
                 Inv        50
@@ -636,13 +638,13 @@ class account_invoice(osv.osv):
                     move_lines[i][2]['credit'] += discount
                     move_lines[i][2]['credit'] = prettyFloat(move_lines[i][2]['credit'])
 
-                elif account.user_type.code == 'receivable' \
-                and ml[2]['account_id'] != product_xfer_account \
-                and 'debit' in ml[2] \
-                and ml[2]['account_id'] != default_credit_account_id\
-                and ml[2]['account_id'] != default_debit_account_id:
-                    move_lines[i][2]['debit'] += discount
-                    move_lines[i][2]['debit'] = prettyFloat(move_lines[i][2]['debit']) 
+                # elif account.user_type.code == 'receivable' \
+                # and ml[2]['account_id'] != product_xfer_account \
+                # and 'debit' in ml[2] \
+                # and ml[2]['account_id'] != default_credit_account_id\
+                # and ml[2]['account_id'] != default_debit_account_id:
+                #     move_lines[i][2]['debit'] += discount
+                #     move_lines[i][2]['debit'] = prettyFloat(move_lines[i][2]['debit']) 
                 i += 1  
 
             ################################################################################
@@ -671,22 +673,22 @@ class account_invoice(osv.osv):
                    'partner_id':partner_id,
                    'product_id':product_id,
                 }))             
-                move_lines.append((0,0,{
-                   'type': 'dest',
-                   'name': 'Discount ' + product_name,
-                   'credit' : prettyFloat(discount),
-                   'price': 0.0,
-                   'account_id': invoice_browse.account_id.id ,
-                   'date_maturity': date_due,
-                   'amount_currency': diff_currency_p \
-                        and -1*discount_currency or False,
-                   'currency_id': diff_currency_p \
-                        and currency_id or False,
-                   'ref': 'discount journal',
-                   'period_id':period_id,
-                   'partner_id':partner_id,
-                   'product_id':product_id,
-                }))
+                # move_lines.append((0,0,{
+                #    'type': 'dest',
+                #    'name': 'Discount ' + product_name,
+                #    'credit' : prettyFloat(discount),
+                #    'price': 0.0,
+                #    'account_id': invoice_browse.account_id.id ,
+                #    'date_maturity': date_due,
+                #    'amount_currency': diff_currency_p \
+                #         and -1*discount_currency or False,
+                #    'currency_id': diff_currency_p \
+                #         and currency_id or False,
+                #    'ref': 'discount journal',
+                #    'period_id':period_id,
+                #    'partner_id':partner_id,
+                #    'product_id':product_id,
+                # }))
 
         return move_lines
 
