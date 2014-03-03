@@ -72,5 +72,36 @@
 			<field name="args" eval="'()'"/>
 		</record>   
 
+
+		<!-- config parameters -->
+        <record id="sage_petro_EXCH_HOST" model="ir.config_parameter">
+            <field name="key">sage_petro.EXCH_HOST</field>
+            <field name="value">127.0.0.1</field>
+        </record>		
+
+        <record id="sage_petro_EXCH_DB" model="ir.config_parameter">
+            <field name="key">sage_petro.EXCH_DB</field>
+            <field name="value">card</field>
+        </record>		
+
+        <record id="sage_petro_EXCH_USER" model="ir.config_parameter">
+            <field name="key">sage_petro.EXCH_USER</field>
+            <field name="value">postgres</field>
+        </record>		
+
+        <record id="sage_petro_EXCH_PASS" model="ir.config_parameter">
+            <field name="key">sage_petro.EXCH_PASS</field>
+            <field name="value">123456</field>
+        </record>		
+
+        <record id="sage_petro_LOYALTY_PRODUCT_ID" model="ir.config_parameter">
+            <field name="key">sage_petro.LOYALTY_PRODUCT_ID</field>
+            <field name="value">2</field>
+        </record>		
+        <record id="sage_petro_PAYMENT_PRODUCT_ID" model="ir.config_parameter">
+            <field name="key">sage_petro.PAYMENT_PRODUCT_ID</field>
+            <field name="value">4</field>
+        </record>		
+
     </data>
 </openerp>
