@@ -4,24 +4,35 @@ import psycopg2
 from openerp import netsvc
 import logging
 _logger = logging.getLogger(__name__)
+import openerp.tools
+from openerp.tools.translate import _
 
-EXCH_HOST = "127.0.0.1"
-EXCH_DB = "card"
-EXCH_USER = "postgres"
-EXCH_PASS = "123456"
-LOYALTY_PRODUCT_ID = 2
-PAYMENT_PRODUCT_ID = 4
+
 
 class res_partner(osv.osv):
-	_description = 'Partner'
-	_name = "res.partner"
-	_inherit = "res.partner"
-	con = None
-	cur = None
-	payment_process = False 
+	EXCH_HOST 			= ""
+	EXCH_DB 			= ""
+	EXCH_USER 			= ""
+	EXCH_PASS 			= ""
+	LOYALTY_PRODUCT_ID 	= 0
+	PAYMENT_PRODUCT_ID 	= 0
+
+	_description 		= 'Partner'
+	_name 				= "res.partner"
+	_inherit 			= "res.partner"
+	con 				= None
+	cur 				= None
+	payment_process 	= False 
 
 	def connect_petro(self, cr, uid, context=None):
-		conn_string2 = "host='"+EXCH_HOST+"' dbname='" + EXCH_DB + "' user='"+EXCH_USER+"' password='"+EXCH_PASS+"'"
+		self.EXCH_HOST 				= self.pool.get('ir.config_parameter').get_param(cr, uid, 'sage_petro.EXCH_HOST')
+		self.EXCH_DB 				= self.pool.get('ir.config_parameter').get_param(cr, uid, 'sage_petro.EXCH_DB')
+		self.EXCH_USER 				= self.pool.get('ir.config_parameter').get_param(cr, uid, 'sage_petro.EXCH_USER')
+		self.EXCH_PASS 				= self.pool.get('ir.config_parameter').get_param(cr, uid, 'sage_petro.EXCH_PASS')
+		self.LOYALTY_PRODUCT_ID 	= self.pool.get('ir.config_parameter').get_param(cr, uid, 'sage_petro.LOYALTY_PRODUCT_ID')
+		self.PAYMENT_PRODUCT_ID 	= self.pool.get('ir.config_parameter').get_param(cr, uid, 'sage_petro.PAYMENT_PRODUCT_ID')
+
+		conn_string2 = "host='"+self.EXCH_HOST+"' dbname='" + self.EXCH_DB + "' user='"+self.EXCH_USER+"' password='"+self.EXCH_PASS+"'"
 		self.con = psycopg2.connect(conn_string2)
 		self.cur = self.con.cursor()
 		return True
@@ -187,15 +198,15 @@ class res_partner(osv.osv):
 
 		#prepare common variable
 		company_id 		= self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
-		product_id 		= PAYMENT_PRODUCT_ID
+		product_id 		= int(self.PAYMENT_PRODUCT_ID)
 		product 		= self.pool.get('product.product').browse(cr, uid, product_id, context=context)
-		journal_ids = self.pool.get('account.journal').search(cr, uid,[('type', '=', 'sale'), ('company_id', '=', company_id)],limit=1)
+		journal_ids 	= self.pool.get('account.journal').search(cr, uid,[('type', '=', 'sale'), ('company_id', '=', company_id)],limit=1)
 		if not journal_ids:
 			raise osv.except_osv(_('Error!'),
 				_('Please define sales journal for this company.')  )
 		sale_journal_id = journal_ids[0]
 
-		journal_ids = self.pool.get('account.journal').search(cr, uid,[('type', '=', 'purchase'), ('company_id', '=', company_id)],limit=1)
+		journal_ids 	= self.pool.get('account.journal').search(cr, uid,[('type', '=', 'purchase'), ('company_id', '=', company_id)],limit=1)
 		if not journal_ids:
 			raise osv.except_osv(_('Error!'),
 				_('Please define purchase journal for this company.')  )
@@ -393,11 +404,16 @@ class res_partner(osv.osv):
 		rows = self.cur.fetchall()
 
 		old_pos_group_id = -1
-		inv_lines = []
-		company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
-		product_id 		= LOYALTY_PRODUCT_ID
+		inv_lines 		= []
+		company_id 		= self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+
+		product_id 		= int(self.LOYALTY_PRODUCT_ID)
 		product 		= self.pool.get('product.product').browse(cr, uid, product_id, context=context)
-		journal_ids = self.pool.get('account.journal').search(cr, uid,[('type', '=', 'sale'), ('company_id', '=', company_id)],limit=1)
+		if not product:
+			raise osv.except_osv(_('Error!'),
+				_('Cannot find product id:%s' % (product_id))  )
+
+		journal_ids 	= self.pool.get('account.journal').search(cr, uid,[('type', '=', 'sale'), ('company_id', '=', company_id)],limit=1)
 		if not journal_ids:
 			raise osv.except_osv(_('Error!'),
 				_('Please define sales journal for this company.')  )
@@ -410,9 +426,9 @@ class res_partner(osv.osv):
 		purchase_journal_id = journal_ids[0]
 
 		date_invoice 	= datetime.now().strftime('%Y-%m-%d')
-		partner_id = 0
-		ap_account_id = 0
-		ar_account_id = 0
+		partner_id 		= 0
+		ap_account_id 	= 0
+		ar_account_id 	= 0
 		
 		i=0
 
@@ -464,7 +480,8 @@ class res_partner(osv.osv):
 			if operation == "accum":
 				if P_POS_GROUP_ID != old_pos_group_id and i!=0:
 					print 'creating customer invoice ...'
-					self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id, company_id)
+					invoice_id = self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id, company_id)
+					self.invoice_confirm(cr, uid, invoice_id, context)
 					inv_lines=[]
 
 				inv_lines.append(
@@ -488,7 +505,8 @@ class res_partner(osv.osv):
 			elif operation=="remove":
 				if P_POS_GROUP_ID != old_pos_group_id and i != 0:
 					print 'creating supplier invoice ...'
-					self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id, company_id)
+					invoice_id = self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id, company_id)
+					self.invoice_confirm(cr, uid, invoice_id, context)
 					inv_lines=[]
 
 				inv_lines.append(
@@ -522,11 +540,13 @@ class res_partner(osv.osv):
 
 		if partner_id != 0 and ar_account_id !=0 and operation == "accum":
 			print 'creating last customer invoice ...'
-			self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id, company_id)
+			invoice_id = self.create_customer_invoice( cr, uid, date_invoice, partner_id, ar_account_id, inv_lines, sale_journal_id, company_id)
+			self.invoice_confirm(cr, uid, invoice_id, context)
 			inv_lines=[]
 		elif partner_id != 0 and ap_account_id !=0 and operation=="remove":
 			print 'creating last supplier invoice ...'
-			self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id, company_id)
+			invoice_id = self.create_supplier_invoice( cr, uid, date_invoice, partner_id, ap_account_id, inv_lines, purchase_journal_id, company_id)
+			self.invoice_confirm(cr, uid, invoice_id, context)
 			inv_lines=[]				
 
 		# selesai proses , set p_date_exchange = now
@@ -650,12 +670,10 @@ class res_partner(osv.osv):
 
 	#additional columns 
 	_columns = {
-        'card_no': fields.char('Card Number'),
-		'at_limit': fields.integer('Alert Limit', translate=True),
-		'nt_limit': fields.integer('Notification Limit', translate=True),
-		#'pos_group_id' : fields.many2one("sage_petro.pos_group", "POS Group")
-		'pos_group_id' : fields.integer("POS Group")
-		#'client_id': fields.integer("Client ID")
+        'card_no'		: fields.char('Card Number'),
+		'at_limit'		: fields.integer('Alert Limit', translate=True),
+		'nt_limit'		: fields.integer('Notification Limit', translate=True),
+		'pos_group_id' 	: fields.integer("POS Group ID")
 	}
 res_partner()
 
