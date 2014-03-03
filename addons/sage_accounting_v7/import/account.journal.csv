@@ -1,21 +1,21 @@
-id,code,company_id/id,sequence_id/id,name,type
-__export__.account_journal_7,BNK11,__export__.res_company_2,__export__.account_journal_20,Cash GHS,Cash
-__export__.account_journal_17,BNK12,__export__.res_company_2,__export__.account_journal_20_1,Cash USD,Cash
-__export__.account_journal_18,BNK21,__export__.res_company_2,account_check_writing.sequence_check_number,Cheque GHS,Bank and Checks
-__export__.account_journal_19,BNK22,__export__.res_company_2,account_check_writing.sequence_check_number,Cheque USD,Bank and Checks
-__export__.account_journal_20,BNK31,__export__.res_company_2,account_voucher.seq_bank_rec_voucher,Bank Transfer GHS,Bank and Checks
-__export__.account_journal_22,BNK32,__export__.res_company_2,account_voucher.seq_bank_rec_voucher,Bank Transfer USD,Bank and Checks
-__export__.account_journal_4,ECNJ,__export__.res_company_2,__export__.account_journal_17_1,Purchase Refund Journal,Purchase Refund
-__export__.account_journal_2,EXJ,__export__.res_company_2,__export__.account_journal_15,Purchase Journal,Purchase
-__export__.account_journal_32,EXREF,__export__.res_company_2,__export__.account_journal_65,Ex Ref Journal,Sale
-__export__.account_journal_5,MISC,__export__.res_company_2,__export__.account_journal_18_1,Miscellaneous Journal,General
-__export__.account_journal_23,MISC$,__export__.res_company_2,account.sequence_miscellaneous_journal,Miscellaneous Journal USD,Purchase
-__export__.account_journal_2300,NPA,__export__.res_company_2,sage_accounting_v7.sequence_npa_journal,NPA Journal,General
-__export__.account_journal_6,OPEJ,__export__.res_company_2,__export__.account_journal_19_1,Opening Entries Journal,Opening/Closing Situation
-__export__.account_journal_29,PCG,__export__.res_company_2,account_voucher.seq_cash_pay_voucher,Petty Cash,General
-__export__.account_journal_1,SAJ,__export__.res_company_2,__export__.account_journal_14,Sales Journal,Sale
-__export__.account_journal_30,SAJ(c,__export__.res_company_2,__export__.account_journal_61,Sales Journal(copy),Sale
-__export__.account_journal_3,SCNJ,__export__.res_company_2,__export__.account_journal_16,Sales Refund Journal,Sale Refund
-__export__.account_journal_2310,STJ,__export__.res_company_2,stock.stock_journal_sequence,Stock Journal,General
-__export__.account_journal_9,xxxxx,__export__.res_company_2,__export__.account_journal_46,Ex_Ref Test,General
-__export__.account_journal_14,zzzzz,__export__.res_company_2,__export__.account_journal_52,Old Ex Ref Journal,Sale
+code,company_id/id,default_credit_account_id/id,default_debit_account_id/id,name,type
+BNK11,__export__.res_company_2,__export__.account_account_950000,__export__.account_account_950000,Cash GHS,Cash
+BNK12,__export__.res_company_2,__export__.account_account_1260000,__export__.account_account_960000,Cash USD,Cash
+BNK21,__export__.res_company_2,__export__.account_account_950000,__export__.account_account_950000,Cheque GHS,Bank and Checks
+BNK22,__export__.res_company_2,__export__.account_account_1260000,__export__.account_account_960000,Cheque USD,Bank and Checks
+BNK31,__export__.res_company_2,__export__.account_account_950000,__export__.account_account_950000,Bank Transfer GHS,Bank and Checks
+BNK32,__export__.res_company_2,__export__.account_account_1260000,__export__.account_account_960000,Bank Transfer USD,Bank and Checks
+ECNJ,__export__.res_company_2,__export__.account_account_480000,__export__.account_account_1880000,Purchase Refund Journal,Purchase Refund
+EXJ,__export__.res_company_2,__export__.account_account_1880000,__export__.account_account_480000,Purchase Journal,Purchase
+EXREF,__export__.res_company_2,__export__.account_account_1960000,__export__.account_account_890000,Ex Ref Journal,Sale
+MISC,__export__.res_company_2,__export__.account_account_1970000,__export__.account_account_300000,Miscellaneous Journal,General
+MISC$,__export__.res_company_2,__export__.account_account_1890000,__export__.account_account_2610000,Miscellaneous Journal USD,Purchase
+NPA,__export__.res_company_2,__export__.account_account_1960000,__export__.account_account_890000,NPA Journal,General
+OPEJ,__export__.res_company_2,__export__.account_account_2110000,__export__.account_account_2450000,Opening Entries Journal,Opening/Closing Situation
+PCG,__export__.res_company_2,__export__.account_account_3030000,__export__.account_account_1800000,Petty Cash,General
+SAJ,__export__.res_company_2,__export__.account_account_190000,__export__.account_account_800000,Sales Journal,Sale
+SAJ(c,__export__.res_company_2,__export__.account_account_190000,__export__.account_account_800000,Sales Journal(copy),Sale
+SCNJ,__export__.res_company_2,__export__.account_account_800000,__export__.account_account_190000,Sales Refund Journal,Sale Refund
+STJ,__export__.res_company_2,__export__.account_account_480000,__export__.account_account_2450000,Stock Journal,General
+xxxxx,__export__.res_company_2,__export__.account_account_2250000,__export__.account_account_890000,Ex_Ref Test,General
+zzzzz,__export__.res_company_2,__export__.account_account_1960000,__export__.account_account_890000,Old Ex Ref Journal,Sale
