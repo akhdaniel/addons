@@ -166,7 +166,9 @@ class res_partner(osv.osv):
 		return True
 
 
+	######################################################################################
 	#write partner => push to temp DB
+	######################################################################################
 	def write(self, cr, uid, ids, vals, context=None):
 		if isinstance(ids, (int, long)):
 			ids = [ids]
@@ -183,20 +185,26 @@ class res_partner(osv.osv):
 
 		return result
 
-	#read TRANSACTION raw data from temp DB, create invoices
-	#according to OPERATION_ID, prepaid/postpaid trans
+	######################################################################################
+	# read TRANSACTION raw data from temp DB, create invoices
+	# according to OPERATION_ID, prepaid/postpaid trans
+	######################################################################################
 	def read_trans(self, cr, uid, context=None):
 		_logger.info("reading TRANSACTION")
 		self.connect_petro(cr, uid, context)
 
+		##################################################################################
 		# cari record yang p_date>p_date_exchange:
 		# p_date = timestamp dari petro ketika dia update/create record
 		# p_date_exchange = timestamp openerp ketika selesai proses record ini
+		##################################################################################
 		sql = """SELECT * FROM erpexchange."TRANSACTIONS" WHERE "P_DATE">"P_DATE_EXCHANGE" OR "P_DATE_EXCHANGE" IS NULL"""
 		self.cur.execute(sql)
 
 
-		#prepare common variable
+		##################################################################################
+		# prepare common variable
+		##################################################################################
 		company_id 		= self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
 		product_id 		= int(self.PAYMENT_PRODUCT_ID)
 		product 		= self.pool.get('product.product').browse(cr, uid, product_id, context=context)
@@ -218,6 +226,9 @@ class res_partner(osv.osv):
 		ap_account_id 	= 0
 		ar_account_id 	= 0		
 
+		##################################################################################
+		# loop every transaction records 
+		##################################################################################
 		rows = self.cur.fetchall()
 		for row in rows:
 			"""
@@ -241,7 +252,9 @@ class res_partner(osv.osv):
 			sale_inv_lines = []
 			purchase_inv_lines = []
 
+			#############################################################################
 			# create Journal Entries/ atau Invoice berdasarkan record transaksi 
+			#############################################################################
 			P_DATETIME 						= row[0]
 			P_CLIENT_ID						= row[1]
 			P_POS_NUMBER					= row[2]
@@ -257,13 +270,18 @@ class res_partner(osv.osv):
 			P_COMMENT						= row[12]
 			P_POS_NAME						= P_POS_NUMBER
 
-			qty 		= P_AMOUNT
+			qty 							= P_AMOUNT
 
 
-			#coming from each record 
-			prepaid 	= True
+			#############################################################################
+			#coming from each record's client_id (partner) and find the service_type
+			#############################################################################
+			prepaid 	= False
 			postpaid 	= False  
 
+			#############################################################################
+			# look for OPERATION_ID = 1
+			#############################################################################
 			if P_OPERATION_ID == 1:
 
 				#get partner for card User
@@ -274,17 +292,34 @@ class res_partner(osv.osv):
 				partner_id = partner.id
 				ar_account_id = partner.property_account_receivable.id
 
+				if partner.service_type == 'postpaid':
+					postpaid = True 
+				elif partner.service_type == 'prepaid':
+					prepaid = True
+				else:
+					raise osv.except_osv(_('Error!'),
+						">>> partner service type not postpaid nor prepaid, skipping %s...." % 
+						(partner.name))
+					continue
+
+				########################################################################
 				#get partner by pos_group_id : OMCs, temporary
-				omc_partner = self.find_partner_by_pos_group_id(cr,uid, 4 ) 
+				########################################################################
+				omc_pos_group_id	= 4 
+				omc_partner 		= self.find_partner_by_pos_group_id(cr,uid, omc_pos_group_id ) 
 				if not omc_partner:
-					_logger.error( 'not found partner for OMC .')
+					raise osv.except_osv(_('Error!'),
+						_('not found partner for OMC ')  )
 					return
 				omc_partner_id = omc_partner.id
 				ap_account_id = omc_partner.property_account_payable.id
 
+				########################################################################
 				#setup inv_lines
+				########################################################################
 				sale_inv_lines.append(
 					(0,0,{
+
 						'name': "%s %s" % ( product.name , P_POS_NAME),
 						'origin':  'interface records',
 						'sequence':  '',
@@ -318,42 +353,88 @@ class res_partner(osv.osv):
 					})
 				)
 
+				########################################################################
 				#create customer invoice for this CLIENT_ID
+				########################################################################
 				if prepaid:
 					print "prepaid processing..."
+
+					####################################################################
 					#create sales invoice to card user
-					invoice_id = self.create_customer_invoice(cr, uid, date_invoice, partner_id, ar_account_id, sale_inv_lines , sale_journal_id, company_id, context)
+					invoice_id = self.create_customer_invoice(cr, uid, date_invoice, 
+						partner_id, ar_account_id, sale_inv_lines , sale_journal_id, 
+						company_id, context)
+					####################################################################
+
+					####################################################################
 					#confirm invoice
+					####################################################################
 					self.invoice_confirm(cr, uid, invoice_id, context)
 
+					####################################################################
 					#create payment from deposit, first cari jurnal deposit dulu
-					journal_ids = self.pool.get('account.journal').search(cr, uid,[('code', '=', 'DEP'), ('company_id', '=', company_id)],limit=1)
+					####################################################################
+					journal_ids = self.pool.get('account.journal').search(cr, uid,
+						[('code', '=', 'DEP'), ('company_id', '=', company_id)],limit=1)
 					if not journal_ids:
-						_logger.error('Please define deposit journal  with code "DEP" and type bank for this company.')
-						return
+						raise osv.except_osv(_('Error!'),
+							"Please define deposit journal  with code 'DEP' and type bank for this company." )
+
 					dep_journal = self.pool.get('account.journal').browse(cr,uid, journal_ids[0])
-					voucher_id = self.create_payment(cr, uid, invoice_id, partner_id, qty*P_ACTUAL_PRICE, dep_journal, company_id, context)
+					voucher_id = self.create_payment(cr, uid, invoice_id, partner_id, 
+						qty*P_ACTUAL_PRICE, dep_journal, company_id, context)
 
 					self.payment_process = True 
 					self.payment_confirm( cr, uid, voucher_id, context)
 					self.payment_process = False
 
+					####################################################################
 					#create purchase invoice to OMC
-					invoice_id=self.create_supplier_invoice(cr, uid, date_invoice, omc_partner_id, ap_account_id, purchase_inv_lines , purchase_journal_id, company_id, context)
+					####################################################################
+					invoice_id=self.create_supplier_invoice(cr, uid, date_invoice, 
+						omc_partner_id, ap_account_id, purchase_inv_lines , 
+						purchase_journal_id, company_id, context)
+
+					####################################################################
 					#confirm invoice
+					####################################################################
 					self.invoice_confirm(cr, uid, invoice_id, context)
 
 				elif postpaid:
 					print "prepaid processing..."
+					####################################################################
 					#create sales invoice to card user
-					self.create_customer_invoice(cr, uid, date_invoice, partner_id, ar_account_id, sale_inv_lines , sale_journal_id, company_id, context)
+					####################################################################
+					invoice_id = self.create_customer_invoice(cr, uid, date_invoice, partner_id, 
+						ar_account_id, sale_inv_lines , sale_journal_id, 
+						company_id, context)
+
+					####################################################################
+					#confirm invoice
+					####################################################################
+					self.invoice_confirm(cr, uid, invoice_id, context)
+
+
+					####################################################################
 					#create purchase invoice to OMC
-					self.create_supplier_invoice(cr, uid, date_invoice, omc_partner_id, ap_account_id, purchase_inv_lines , purchase_journal_id, company_id, context)
+					####################################################################
+					invoice_id = self.create_supplier_invoice(cr, uid, date_invoice, omc_partner_id, 
+						ap_account_id, purchase_inv_lines , purchase_journal_id, 
+						company_id, context)
+					
+					####################################################################
+					#confirm invoice
+					####################################################################
+					self.invoice_confirm(cr, uid, invoice_id, context)
 
+			#############################################################################
 			#end if operation id
+			#############################################################################
 
 
+			#############################################################################
 			# selesai proses , set p_date_exchange = now
+			#############################################################################
 			sql = """UPDATE erpexchange."TRANSACTIONS" SET "P_DATE_EXCHANGE"='%s' WHERE "P_GUID"='%s'""" % (
 				datetime.now(), P_GUID)
 			self.cur.execute(sql)
@@ -364,8 +445,10 @@ class res_partner(osv.osv):
 
 		return True 
 
+	####################################################################################
 	#read BONUSES transaction from temp db, create invoices
 	#according to OPERATION_ID
+	####################################################################################
 	def read_bonus(self, cr, uid, context=None):
 		_logger.info("reading BONUSES")
 		self.connect_petro(cr, uid, context)
@@ -375,7 +458,9 @@ class res_partner(osv.osv):
 			self.con.close()		
 		return True 
 
+	####################################################################################
 	#actual read BONUSES process
+	####################################################################################
 	def read_bonus_by_operation(self, cr, uid, operation, context=None):
 
 		if operation == "accum":
@@ -558,7 +643,9 @@ class res_partner(osv.osv):
 		#psycopg2.close()
 		return True
 
+	####################################################################################
 	#create customer invoice
+	####################################################################################
 	def create_customer_invoice(self, cr, uid, date_invoice, partner_id, account_id, lines , journal_id, company_id, context=None):
 		invoice_id = self.pool.get('account.invoice').create(cr,uid,{
 		    'date_invoice' : date_invoice,
@@ -572,7 +659,9 @@ class res_partner(osv.osv):
 		print "created customer invoice id:%d" % (invoice_id)
 		return invoice_id
 
+	####################################################################################
 	#create supplier invoice
+	####################################################################################
 	def create_supplier_invoice(self, cr, uid, date_invoice, partner_id, account_id, lines , journal_id, company_id, context=None ):
 		invoice_id = self.pool.get('account.invoice').create(cr,uid,{
 		    'date_invoice' : date_invoice,
@@ -586,9 +675,11 @@ class res_partner(osv.osv):
 		print "created supplier invoice id:%d" % (invoice_id)
 		return invoice_id
 
+	####################################################################################
 	#create payment 
 	#invoice_id: yang mau dibayar
 	#journal_id: payment method
+	####################################################################################
 	def create_payment(self, cr, uid, invoice_id, partner_id, amount, journal, company_id, context=None):
 		voucher_lines = []
 
@@ -628,8 +719,10 @@ class res_partner(osv.osv):
 		print "created payment id:%d" % (voucher_id)
 		return voucher_id
 
+	####################################################################################
 	#mencari partner berdasarkan POS_GROUP_ID, 
 	#untuk partner OMC
+	####################################################################################
 	def find_partner_by_pos_group_id(self, cr, uid, pos_group_id, context=None ):
 		partner_obj = self.pool.get('res.partner')
 		partner_ids = partner_obj.search(cr, uid, [
@@ -642,8 +735,10 @@ class res_partner(osv.osv):
 		else:
 			return False
 
+	####################################################################################
 	#mencari partner berdasarkan CLIENT_ID 
 	#untuk partner retail cusomter postpaid/prepaid
+	####################################################################################
 	def find_partner_by_client_id(self, cr, uid, client_id, context=None ):
 		partner_obj = self.pool.get('res.partner')
 		partner_ids = partner_obj.search(cr, uid, [
@@ -656,30 +751,34 @@ class res_partner(osv.osv):
 		else:
 			return False
 
+	####################################################################################
 	#set open/validate
+	####################################################################################
 	def invoice_confirm(self, cr, uid, id, context=None):
 		wf_service = netsvc.LocalService('workflow')
 		wf_service.trg_validate(uid, 'account.invoice', id , 'invoice_open', cr)
 		return True
 
+	####################################################################################
 	#set done
+	####################################################################################
 	def payment_confirm(self, cr, uid, vid, context=None):
 		wf_service = netsvc.LocalService('workflow')
 		wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
 		return True
 
+	####################################################################################
 	#additional columns 
+	####################################################################################
 	_columns = {
         'card_no'		: fields.char('Card Number'),
 		'at_limit'		: fields.integer('Alert Limit', translate=True),
 		'nt_limit'		: fields.integer('Notification Limit', translate=True),
-		'pos_group_id' 	: fields.integer("POS Group ID")
+		'pos_group_id' 	: fields.integer("POS Group ID"),
+		'service_type'	: fields.selection([('none','None'),
+							('loyalty', 'Loyalty'),
+							('postpaid', 'Postpaid'),
+							('prepaid', 'Prepaid')], string="Service Type")
 	}
 res_partner()
 
-# class pos_group(osv.osv):
-# 	_name = "sage_petro.pos_group"
-# 	_columns = {
-# 		'name': fields.integer("Number"),
-# 	}
-# pos_group()
