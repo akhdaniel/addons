@@ -1,2 +1,1 @@
-#init
 import sync

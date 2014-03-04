@@ -27,16 +27,23 @@ Requirements and Installation:
 ------------------------------
 * manually create PetroPlus temporary DB tables to be accessed by their interface software
   SQL script is located at sql folder
-* 
+
+Version 1.0
+* partners service type: postpaid, prepaid, loyalty, none
+* account.xml
+
+Version 0.0
+* first 
 
 """,
-    'version': '0.9',
+    'version': '1.0',
     'depends': ['base','account'],
     'author': 'vitraining.com',
     'category': 'Tools', # i.e a technical module, not shown in Application install menu
     'url': 'http://www.vitraining.com/',
     'data': [ 
-        'partner.xml'
+        'partner.xml',
+        'account.xml',
     ],
     'installable': True,
     'auto_install': False,
