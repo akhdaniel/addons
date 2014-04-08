@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_wizard_recruitment">
+            <field name="name">Print Report Recruitment</field>
+            <field name="model">hr_report.recruitment</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form col="4" string="Report" version="7.0">
+                    <group>
+                        <field name="report"/>         
+                    </group>
+                    <group>
+                        <field name="year_id" attrs="{'required':[('report','=','data_seleksi')],'invisible': [('report','!=','data_seleksi')]}"/>
+                        <field name="department" attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>
+                    </group>
+                    <group>
+                        <field name='star_date' attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>
+                        <field name='end_date' attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>   
+                    </group> 
+                    <footer>
+                <button string='export' type='object' name='eksport_report'/>
+                or
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="reports_recruitment">
+            <field name="name">Print Report Recruitment</field>
+            <field name="res_model">hr_report.recruitment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,</field>
+            <field name="target">new</field>
+        </record> 
+        
+        <menuitem name="Print Report Recruitment" action="reports_recruitment" id="menu_report_recruitment" parent="base.menu_crm_case_job_req_main" sequence="28"/>
+
+    </data>
+</openerp>
