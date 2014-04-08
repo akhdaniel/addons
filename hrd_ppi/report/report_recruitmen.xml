@@ -1,6 +1,23 @@
 <openerp>
     <data>
         <!-- daftar seleksi pelamar-->
+		
+		<record id="view_seleksi_pelamar_filter" model="ir.ui.view">
+            <field name="name">seleksi_pelamar</field>
+            <field name="model">hr.seleksi_pelamar</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Seleksi Pelamar">
+                    <group expand="0" string="Group By...">
+                        <filter string="Tahun" name='tahun' icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
+                        <filter string="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
+                        <filter string="Bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
+                        <filter string="jabatan" icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+		
         <record model="ir.actions.act_window" id="daftar_seleksi_pelamar">
                 <field name="name">Daftar Seleksi Pelamar</field>
                 <field name="res_model">hr.seleksi_pelamar</field>
@@ -39,23 +56,22 @@
                     </field>
         </record> 
 
-        <record id="view_seleksi_pelamar_filter" model="ir.ui.view">
-            <field name="name">seleksi_pelamar</field>
-            <field name="model">hr.seleksi_pelamar</field>
+        <!-- lapran pemenuhan recruitment -->
+		<record id="view_pemenuhan_pelamar_filter" model="ir.ui.view">
+            <field name="name">Laporan_pemenuhan</field>
+            <field name="model">hr_pemenuhan</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
-                <search string="Seleksi Pelamar">
+                <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Tahun" name='tahun' icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
-                        <filter string="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
-                        <filter string="Bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
-                        <filter string="jabatan" icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
+                        <filter string="No Permintaan" name='no_permintaan' icon="terp-personal" domain="[]" context="{'group_by':'no_pmintaan'}"/>
+                        <filter string="department" name="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
+                        <filter string="posisi" name='posisi' icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
                     </group>
                 </search>
              </field>
         </record>
-
-        <!-- lapran pemenuhan recruitment -->
+		
         <record model="ir.actions.act_window" id="laporan_pemenuhan_recrutiment">
             <field name="name">Laporan Pemenuhan Recruitment</field>
             <field name="res_model">hr_pemenuhan</field>
@@ -87,22 +103,25 @@
                 </field>
             </record>
 
-        <record id="view_pemenuhan_pelamar_filter" model="ir.ui.view">
-            <field name="name">Laporan_pemenuhan</field>
-            <field name="model">hr_pemenuhan</field>
+        <!-- daftar pemenuhan kebutuhan bulanan/harian-->
+		
+		<record id="view_pemenuhan_kebutuhan_filter" model="ir.ui.view">
+            <field name="name">List Pemenuhan</field>
+            <field name="model">hr.pemenuhan_kebutuhan</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="No Permintaan" name='no_permintaan' icon="terp-personal" domain="[]" context="{'group_by':'no_pmintaan'}"/>
-                        <filter string="department" name="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
-                        <filter string="posisi" name='posisi' icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
+                        <filter string="Jenis Permohonan" name='jenis_permohonan' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Divisi" name='divisi' icon="terp-personal" domain="[]" 
+                            context="{'group_by':'div'}"/>
+                        <filter string="department" name='department' icon="terp-personal" domain="[]" context="{'group_by':'dept'}"/>
+                        <filter string="Bagian" name="bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
                     </group>
                 </search>
              </field>
         </record>
 
-        <!-- daftar pemenuhan kebutuhan bulanan/harian-->
         <record model="ir.actions.act_window" id="list_pemenuhan">
             <field name="name">Daftar Pemenuhan Kebutuhan</field>
             <field name="res_model">hr.pemenuhan_kebutuhan</field>
@@ -137,24 +156,22 @@
                 </field>
         </record>
 
-        <record id="view_pemenuhan_kebutuhan_filter" model="ir.ui.view">
-            <field name="name">List Pemenuhan</field>
-            <field name="model">hr.pemenuhan_kebutuhan</field>
+        <!-- sumary kebutuhan bulanan-->
+		
+		<record id="view_sumary_kebutuhan" model="ir.ui.view">
+            <field name="name">sumary Kebutuhan Bulanan</field>
+            <field name="model">hr.sumary_kebutuhan</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Jenis Permohonan" name='jenis_permohonan' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
-                        <filter string="Divisi" name='divisi' icon="terp-personal" domain="[]" 
-                            context="{'group_by':'div'}"/>
-                        <filter string="department" name='department' icon="terp-personal" domain="[]" context="{'group_by':'dept'}"/>
-                        <filter string="Bagian" name="bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
+                        <filter string="Jenis Permohonan" name='jen_perm' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
                     </group>
                 </search>
              </field>
         </record>
-
-        <!-- sumary kebutuhan bulanan-->
+		
         <record model="ir.actions.act_window" id="sumary_pemenuhan">
             <field name="name">sumary Kebutuhan Bulanan</field>
             <field name="res_model">hr.sumary_kebutuhan</field>
@@ -190,10 +207,12 @@
                 </graph>
             </field>
         </record>
-        
-        <record id="view_sumary_kebutuhan" model="ir.ui.view">
-            <field name="name">sumary Kebutuhan Bulanan</field>
-            <field name="model">hr.sumary_kebutuhan</field>
+
+        <!-- sumary kebutuhan harian-->
+		
+		<record id="view_sumary_kebutuhan_haarian" model="ir.ui.view">
+            <field name="name">sumary</field>
+            <field name="model">hr.sumary_kebutuhan_harian</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
@@ -205,7 +224,6 @@
              </field>
         </record>
 
-        <!-- sumary kebutuhan harian-->
         <record model="ir.actions.act_window" id="sumary_pemenuhan_harian">
             <field name="name">sumary Kebutuhan Harian</field>
             <field name="res_model">hr.sumary_kebutuhan_harian</field>
@@ -242,21 +260,22 @@
             </field>
         </record>
         
-        <record id="view_sumary_kebutuhan_haarian" model="ir.ui.view">
-            <field name="name">sumary</field>
-            <field name="model">hr.sumary_kebutuhan_harian</field>
+        <!-- Laporan Permintaan Recruitment -->
+		<record id="search_laporan_recruitment" model="ir.ui.view">
+            <field name="name">Laporan Permintaan Recruitment</field>
+            <field name="model">hr.lap_permintaan_karyawan</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
-                <search string="Progres Recruitment">
+                <search string="Laporan Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Jenis Permohonan" name='jen_perm' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Tahun" name='tahun' icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
                         <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                        <filter string="posisi" name='posisi' icon="terp-personal" domain="[]" context="{'group_by':'posisi'}"/>
                     </group>
                 </search>
              </field>
         </record>
 
-        <!-- Laporan Permintaan Recruitment -->
         <record model="ir.actions.act_window" id="laporan_permintaan_recruitment">
             <field name="name">Laporan Permintaan Recruitment</field>
             <field name="res_model">hr.lap_permintaan_karyawan</field>
@@ -284,21 +303,6 @@
                         <field name='tahun'/>
                     </tree>
                 </field>
-        </record>
-
-        <record id="search_laporan_recruitment" model="ir.ui.view">
-            <field name="name">Laporan Permintaan Recruitment</field>
-            <field name="model">hr.lap_permintaan_karyawan</field>
-            <field name="type">search</field>
-            <field name="arch" type="xml">
-                <search string="Laporan Recruitment">
-                    <group expand="0" string="Group By...">
-                        <filter string="Tahun" name='tahun' icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
-                        <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
-                        <filter string="posisi" name='posisi' icon="terp-personal" domain="[]" context="{'group_by':'posisi'}"/>
-                    </group>
-                </search>
-             </field>
         </record>
 
         <!-- monitoring recruitment -->
@@ -356,6 +360,7 @@
                     </tree>
                 </field>
         </record>
+		
     <menuitem name="Data Report Recruitmnt"
         id="menu_hr_report"
         parent="base.menu_crm_case_job_req_main"
