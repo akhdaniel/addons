@@ -4,18 +4,9 @@ from datetime import date
 from datetime import datetime
 from time import strptime
 from time import strftime
-#import time
-#from datetime import timedelta
-#from dateutil import relativedelta
+from openerp.osv.osv import object_proxy
+from openerp.tools.translate import _
 
-#from openerp import netsvc
-#from openerp.osv import fields, osv
-#from openerp import tools
-#from openerp.tools.translate import _
-#import openerp.addons.decimal_precision as dp
-
-#from openerp.tools.safe_eval import safe_eval as eval
-#import math,pprint
 
 PERMOHONAN_STATES =[
 	('draft','Draft'),
@@ -27,15 +18,70 @@ class permohonan_recruit(osv.osv):
     _inherit = 'hr.job'
     
     def action_draft(self,cr,uid,ids,context=None): 
+        self.write(cr,uid,ids,{'status_rec':'new'},context=context)
     	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[0][0]},context=context)
-    	
+
     def action_submit(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[1][0]},context=context) 	
+        #function for number automatic
+        objk = self.browse(cr,uid,ids)[0]
+        obj = self.pool.get('hr.job')
+        obj_src = obj.search(cr,uid,[])
+        obj_brw = obj.browse(cr,uid,obj_src)
+        no1 = 0
+        for job in obj_brw :
+            no = job.no_permohonan
+            if no >= no1 :
+                no1 = job.no_permohonan
+        no_sum = no1 + 1
+        self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[1][0],'no_permohonan' : no_sum},context=context)
+        #function for create laporan permintaan Recruitment
+        #import pdb;pdb.set_trace()
+        year =datetime.now().year
+        obj_lap = self.pool.get('hr.lap_permintaan_karyawan')
+        obj_lap.create(cr,uid,{
+                    'dep' : objk.department_id.name,
+                    'posisi': objk.name,
+                    'jumlah' : objk.no_of_recruitment,
+                    'wkt_penempatan' : objk.wkt_pemohon, 
+                    'pengalaman' :objk.pengalaman,
+                    'usia' : objk.usia,
+                    'jenis_kelamin' : objk.kelamin,
+                    'status' : objk.sts_prk,
+                    'domisili' : objk.domisili_id.name,
+                    'tahun' : year,
+                    })
+    	return True  	
 
     def action_verify(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[2][0]},context=context)
  
     def action_in_progress(self,cr,uid,ids,context=None): 
+        self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
+        obj = self.browse(cr,uid,ids)[0]
+        department = obj.department_id.name
+        date =obj.wkt_pemohon
+        dates = datetime.strptime(date,"%Y-%m-%d").year
+        jenis_per = obj.jenis_permohonan
+        #import pdb;pdb.set_trace()
+        if jenis_per == 'Bulanan' :
+            objk = self.pool.get('hr.sumary_kebutuhan')
+            obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
+            obj_brw = objk.browse(cr,uid,obj_src)
+        elif jenis_per == 'Harian' :
+            objk = self.pool.get('hr.sumary_kebutuhan_harian')
+            obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
+            obj_brw = objk.browse(cr,uid,obj_src)
+        if obj_brw ==[] :
+            objk.create(cr,uid,{
+                    'tahun' : dates,
+                    'bul_har': jenis_per,
+                    'dep' : department,
+                    'jum_kebutuhan' : obj.no_of_recruitment, 
+                    })
+        else :
+            for sumary in obj_brw :
+                jum_sumary = sumary.jum_kebutuhan + obj.no_of_recruitment
+                objk.write(cr,uid,[sumary.id],{'jum_kebutuhan': jum_sumary},context=context)
     	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[3][0]},context=context)
     	
     def scroll_no(self, cr, uid, ids, no, args, context=None):
@@ -54,9 +100,9 @@ class permohonan_recruit(osv.osv):
         'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','Jurusan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'pengalaman':fields.integer('Pengalaman (min-th)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],string='Usia (max)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]},required=True),
         'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],string='Jenis Kelamin',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-        'wkt_pemohon':fields.date('Permintaan Pemohon',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'wkt_pemohon':fields.date('Permintaan Pemohon',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]},required=True),
         'wkt_rekruter':fields.date('Kesanggupan Rekruter'),
         'catatan':fields.char('Realisasi Penempatan',128,states={'draft':[('readonly',True)], 'submit':[('readonly',True)]}),
         'catatan2':fields.text('Catatan'),
@@ -75,11 +121,17 @@ class permohonan_recruit(osv.osv):
         'bol_kelamin':fields.boolean('Jenis Kelamin'),
         'bol_domisili':fields.boolean('Domisili'),
         'bol_tempat_lahir_id':fields.boolean('Tempat Lahir'),
-        'applicant_ids':fields.one2many('hr.applicant','app_id','Daftar Pelamar',readonly=True), 
+        'applicant_ids':fields.one2many('hr.applicant','app_id','Daftar Pelamar'), 
         'salary_proposed_botom_margin': fields.float('Standar Gaji Perusahaan', help="Batas range terendah"), 
         'salary_proposed_top_margin': fields.float('Standar Gaji Perusahaan', help="Batas range tertinggi"),   
         'no_of_recruitment': fields.float('Expected in Recruitment', help='Number of new employees you expect to recruit.',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'department_id': fields.many2one('hr.department', 'Department',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'no_permohonan' : fields.integer('No Permohonan',readonly=True),   
+        'category_ids' : fields.char('aa'), 
+        'divisi_id' : fields.many2one('hr.divisi','Divisi',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}), 
+        'bagian_id' : fields.many2one('hr.bagian','Bagian',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'level_id' :fields.many2one('hr.level','Level',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),   
+        'status_rec' : fields.selection([('new','new'),('filter','filter'),('execute','execute'),('in_progres','in progres'),('pending','pending')],string='Status Record'),  
             }
 
     _defaults = {
@@ -93,8 +145,82 @@ class permohonan_recruit(osv.osv):
         'bol_sts_prk':True,
         'bol_kelamin':True, 
         'bol_domisili':True,  
-        'bol_tempat_lahir_id':True,     
+        'bol_tempat_lahir_id':True,  
+        'status_rec' : "new",
+        #'no_permohonan' : lambda obj , cr , uid , context: obj.pool.get('ir.sequence').get(cr, uid, 'hr.job'),   
                  }  
+
+    def new_recruitment(self,cr,uid,ids,context=None):
+        self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
+        hasil = self.browse(cr,uid,ids)[0]
+        jbtn = hasil.name
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        for hr_pem in hr_pem_brw :
+            if hr_pem.status == "pending" or hr_pem.status == "In Progres":
+                hr_pemi.write(cr,uid,[hr_pem.id],{'status':"Done"},context=context) 
+        hr_list_pem_bul = self.pool.get('hr.pemenuhan_kebutuhan')
+        hr_list_pem_src = hr_list_pem_bul.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_list_pem_brw = hr_list_pem_bul.browse(cr,uid,hr_list_pem_src,context=context)
+        for hr_list in hr_list_pem_brw :
+            if hr_list.status_pemenuhan == "pending" or hr_list.status_pemenuhan == "In Process":
+                hr_list_pem_bul.write(cr,uid,[hr_list.id],{'status_pemenuhan':'Done'},context=context)    
+        return True
+
+    def pending(self,cr,uid,ids,context=None):
+        #import pdb;pdb.set_trace()
+        hasil=self.browse(cr,uid,ids)[0]
+        jbtn = hasil.name
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        for hr_pem in hr_pem_brw :
+            if hr_pem.status == "In Progres" :
+                hr_pemi.write(ce,uid,[hr_pem.id,{'status':'pending'}])
+            if hr_pem.status == "pending" :
+                self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
+            else :
+                raise osv.except_osv(_('Warning!'),_('Status Calon Pelamar Masih In Progres'))
+        return True
+
+    def cancel_recruitment(self,cr,uid,ids,context=None):
+        hasil=self.browse(cr,uid,ids)[0]
+        jbtn = hasil.name
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        x = False
+        for hr_pem in hr_pem_brw :
+            if hr_pem.status == "pending" :
+                hire = hr_pem.id
+                x = True
+            if hr_pem.status == "In Progres" :
+                hr_pemi.write(cr,uid,[hr_pem.id],{'status':"Cancel Recruitment"},context=context)
+        if x == True:
+            hr_pemi.write(cr,uid,[hire],{'status':"Cancel Recruitment"},context=context)
+        #function for list pemenuhan kebutuhan recruitment bulanan
+        hr_list_pem_bul = self.pool.get('hr.pemenuhan_kebutuhan')
+        hr_list_pem_src = hr_list_pem_bul.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_list_pem_brw = hr_list_pem_bul.browse(cr,uid,hr_list_pem_src,context=context)
+        for hr_list in hr_list_pem_brw :
+            if hr_list.status_penempatan == "Next Process" :
+                hr_list_pem_bul.write(cr,uid,[hr_list.id],{'status_penempatan':'cancel Recruitment','status_pemenuhan':'Cancel Recruitment'},context=context)
+        self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
+        partner=self.pool.get('hr.recruitment.stage')  
+        pero=partner.search(cr,uid,[])     
+        pers=partner.browse(cr,uid,pero,context)  
+        obj_app=self.pool.get('hr.applicant')
+        for exe in hasil.applicant_ids:
+            #x = x + 1
+            sta_id = exe.stat - 1
+            obj_app.write(cr,uid,[exe.id],{'stat':sta_id})
+            for ini in pers :
+                asu = ini.sequence
+                if asu == 1 :
+                    asu = ini.id                  
+                    obj_app.write(cr,uid,[exe.id for exe in hasil.applicant_ids],{'stage_id':asu})
+        return True
 
     def cici(self,cr, uid,ids, context=None): 
         per=self.browse(cr,uid,ids,context)[0] 
@@ -162,34 +288,158 @@ class permohonan_recruit(osv.osv):
         pero=partner.search(cr,uid,filt)
         if job_b_name == False:
             for xux in partner.browse(cr,uid,pero): 
-                partner.write(cr,uid,pero,{'app_id':per.id},context=context)
+                partner.write(cr,uid,pero,{'app_id':per.id,'dep_app':per.department_id.id},context=context)
         elif job_b_name:
             ada = partner.browse(cr,uid,pero)
             for rr in ada:
                 if rr.job_id.name==job_name :
-                    partner.write(cr,uid,[rr.id],{'app_id': rr.job_id.id},context=context)                              
-                                                                                                                                                
+                    partner.write(cr,uid,[rr.id],{'app_id': rr.job_id.id,'dep_app':rr.department_id.id},context=context)                              
+        self.write(cr,uid,ids,{'status_rec':'execute'},context=context)                                                                                                                                        
         return True  
 
     def execute(self,cr, uid,ids, context=None): 
-        #import pdb;pdb.set_trace()
         hasil=self.browse(cr,uid,ids,context)[0] 
         job_applicant_ids=hasil.applicant_ids[0]    
         obj_app=self.pool.get('hr.applicant')
         hasil_app=obj_app.browse(cr,uid,ids,context)[0]
-
+        no_per = hasil.no_permohonan
         partner=self.pool.get('hr.recruitment.stage')  
         pero=partner.search(cr,uid,[])     
         pers=partner.browse(cr,uid,pero,context)
-        
-        for exe in hasil.applicant_ids:
-            for ini in pers :
+        year =str(datetime.now().year)
+        hr_status = self.pool.get('hr.seleksi_pelamar')
+        values=False
+        x = 0
+        n = 1000
+        for ini in pers :
                 asu = ini.sequence
-                if asu == 2 :
-                    asu = ini.id                  
-                    obj_app.write(cr,uid,[exe.id for exe in hasil.applicant_ids],{'stage_id':asu})
+                if asu > 1 and asu < n :
+                    n = ini.sequence  
+                    nn = ini.id
+        for exe in hasil.applicant_ids:
+            stat_ids = exe.stat + 1
+            obj_app.write(cr,uid,[exe.id],{'stat':stat_ids})                  
+            obj_app.write(cr,uid,[exe.id],{'stage_id':nn})
+        for exe in hasil.applicant_ids:
+            values = hr_status.create(cr,uid,{
+                    'applicant_id' :exe.id,
+                    'nama': exe.partner_name,
+                    'pendidikan': exe.type_id.name,
+                    'jurusan' : exe.jurusan_id.name,
+                    'tgl_lahir' : exe.tgl_lahir,
+                    'usia': exe.age,
+                    'sumber': exe.source_id.name,
+                    'ref' : exe.ref,
+                    'department' : exe.department_id.name,
+                    'jabatan' :exe.job_id.name,
+                    'ref_jab':exe.app_id.name,
+                    'tahun' : year,
+                    'stat' : exe.stat,
+                    })
+        obj1 = self.browse(cr,uid,ids)[0]
+        year = str(datetime.now().year)
+        mont = str(datetime.now().month)
+        day = str(datetime.now().day)
+        date = mont + '/' + day + '/' + year 
+        hr_status = self.pool.get('hr_pemenuhan')
+        #for exe in hasil.applicant_ids:
+        values = hr_status.create(cr,uid,{
+                'no_pmintaan' : obj1.no_permohonan,
+                'tgl_permintaan' : obj1.wkt_pemohon,
+                'department' : obj1.department_id.name,
+                'jabatan' : obj1.name,
+                'jml_prmintaan' : obj1.no_of_recruitment,
+                'jml_kandidat' : x,
+                'status' : 'In Progres',
+                })
+        #function for list pemenuhan recruitment
+        hr_status = self.pool.get('hr.pemenuhan_kebutuhan')
+        values = hr_status.create(cr,uid,{
+                'bul_har' : obj1.jenis_permohonan,
+                'div' : obj1.divisi_id.name,
+                'dept' : obj1.department_id.name,
+                'bagian' : obj1.bagian_id.name,
+                'jabatan' : obj1.name,
+                'level' : obj1.level_id.name,
+                'tgl_permohonan' : obj1.wkt_pemohon,
+                'jumlah_kebutuhan' : obj1.no_of_recruitment,
+                'status_pemenuhan' : "In Process",
+                'kekurangan_pmenuhan' : obj1.no_of_recruitment,
+                })
+        self.write(cr,uid,ids,{'status_rec':'in_progres'},context=context)
+        hr_monitor = self.pool.get('hr.monitoring_recruitment')
+        for exe in hasil.applicant_ids:
+            value = hr_monitor.create(cr,uid,{
+                'name' : exe.partner_name,
+                'dep'  : obj1.department_id.name,
+                'test1_hrd' : 'Not Yet',
+                'test2_hrd' : 'Not Yet',
+                'test1_usr' : 'Not Yet',
+                'test2_usr' : 'Not Yet',
+                'approval' : 'Not Yet',
+                'tes_kesehatan' : 'Not Yet',
+                'status' : 'open'
+                })
+        years = str(datetime.now().year)
+        hr_sumary = self.pool.get('hr.sumary_monitoring')
+        hr_sumary_src = hr_sumary.search(cr,uid,[('tahun','=',years),('dep','=',obj1.department_id.name,)])
+        hr_sumary_brw = hr_sumary.browse(cr,uid,hr_sumary_src)
+        x = 0
+        if hr_sumary_brw == [] :
+            for exe in hasil.applicant_ids:
+                x = x + 1
+            value = hr_sumary.create(cr,uid,{
+                'dep'  : obj1.department_id.name,
+                'qty' : x,
+                'test1' : x,
+                'tahun' : years,
+                    })
+        else :
+            for exe in hasil.applicant_ids:
+                x = x + 1
+            for xxx in hr_sumary_brw :
+                qty = xxx.qty + x
+                test = xxx.test1 + x
+                hr_sumary.write(cr,uid,[xxx.id],{'qty':qty,'test1':test},context=context)
+        return True  
+
+    '''def daf_pelamar(self, cr,uid,ids, context=None):
+        import pdb;pdb.set_trace()
+        if context is None:
+                context= {}
+        context = dict(context, mail_create_nolog=True)
+        hr_status = self.pool.get('hr.daf_pelamar')
+        model_data = self.pool.get('ir.model.data')
+        act_window = self.pool.get('ir.actions.act_window')
+        hasil=self.browse(cr,uid,ids,context)[0] 
+        values = False
+        year =datetime.now().year
+        for obj in hasil.applicant_ids:
+            #values = {}
+            stat_id = obj.stat
+            name = obj.partner_name
+            hr_search = hr_status.search(cr,uid,[('stat','=',stat_id),('name','=',name)])
+            hr_brw = hr_status.browse(cr,uid,hr_search)
+            #if hr_brw == True :
+        for obj in hasil.applicant_ids:
+            values = hr_status.create(cr,uid,{
+                'applicant_id' :obj.id,
+                'name': name,
+                'pendidikan': obj.type_id.name,
+                'jurusan' : obj.jurusan_id.name,
+                'tanggal_lahir' : obj.tgl_lahir,
+                'usia': obj.age,
+                'sumber': obj.source_id.name,
+                'ref' : obj.ref,
+                'department' : obj.department_id.name,
+                'jabatan' :obj.job_id.name,
+                'tahun' : year,
+                #'stat' : 
+                })
+        self.write(cr, uid, [obj.id], {'st_pelamar': values}, context=context)
+        self.case_close(cr, uid, [obj.id], context)
         return True                         				 
-      
+    '''  
     def _check_sal(self, cr, uid, ids):
         for sal in self.browse(cr, uid, ids):
             sal_src = self.search(cr, uid, [('salary_proposed_botom_margin', '>', sal.salary_proposed_top_margin), ('salary_proposed_top_margin', '<', sal.salary_proposed_botom_margin)])
@@ -200,6 +450,29 @@ class permohonan_recruit(osv.osv):
     _constraints = [(_check_sal, 'Standar gaji max tidak boleh lebih kecil dari standar gaji min!', ['salary_proposed_botom_margin','salary_proposed_top_margin']),]
 
 permohonan_recruit()
+
+class divisi(osv.osv):
+    _name ='hr.divisi'
+
+    _columns = {
+        'name' : fields.char('Divisi'), 
+    }
+divisi()
+
+class bagian(osv.osv):
+    _name ='hr.bagian'
+
+    _columns = {
+        'name' : fields.char('Bagian'), 
+    }
+divisi()
+
+class level(osv.osv):
+    _name = 'hr.level'
+
+    _columns = {
+        'name' : fields.char('Level')
+    }
 
 class hr_survey(osv.osv):
     _name='hr.survey'
@@ -323,8 +596,8 @@ class hr_applicant(osv.osv):
                 for pr in lele:   
                     prod_ids6.append((0,0, {'name':pr.name,'alamat':pr.alamat,'jabatan':pr.jabatan,'telepon':pr.telepon}))  
                 emp_id = hr_employee.create(cr,uid,{'name': applicant.partner_name or applicant.name,
-                                                     'job_id': applicant.job_id.id,
-                                                     'department_id': applicant.department_id.id,
+                                                     'job_id': applicant.app_id.id,
+                                                     'department_id' : applicant.dep_app.id,
                                                      'gender':applicant.kelamin,
                                                      'place_of_birth' : applicant.kota_id.name,
                                                      'birthday' : applicant.tgl_lahir,
@@ -372,23 +645,50 @@ class hr_applicant(osv.osv):
                                                      'marital':applicant.status,
                                                      'mobile_phone':applicant.partner_phone,
                                                      'gol_id':applicant.empgol_id.id,
+                                                     'work_location2':applicant.lokasi_id,
+                                                     'ptkp_id':applicant.ptkp.id,
                                                     })
-                
-                
+                    
                 self.write(cr, uid, [applicant.id], {'emp_id': emp_id}, context=context)
                 self.case_close(cr, uid, [applicant.id], context)
             else:
                 raise osv.except_osv(_('Warning!'), _('You must define Applied Job for this applicant.'))
-
         action_model, action_id = model_data.get_object_reference(cr, uid, 'hr', 'open_view_employee_list')
         dict_act_window = act_window.read(cr, uid, action_id, [])
         if emp_id:
             dict_act_window['res_id'] = emp_id
         dict_act_window['view_mode'] = 'form,tree'
+        #function for record status pemenuhan recruitment
+        objk = self.browse(cr,uid,ids)[0]
+        jbtn = objk.app_id.name
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        year = str(datetime.now().year)
+        mont = str(datetime.now().month)
+        day = str(datetime.now().day)
+        date = mont + '/' + day + '/' + year 
+        for hr_pem in hr_pem_brw :
+            if hr_pem.status == "pending" : 
+                hr_pemi.write(cr, uid, [hr_pem.id], {'status':"Done",'per_masuk':date}, context=context)  
+        hr_pem_keb = self.pool.get('hr.pemenuhan_kebutuhan')
+        hr_pem_keb_src = hr_pem_keb.search(cr,uid,[('status_penempatan','=','Next Process'),('jabatan','=',jbtn)])
+        hr_pem_keb_brw = hr_pem_keb.browse(cr,uid,hr_pem_keb_src,context=context)
+        for hhh in hr_pem_keb_brw :
+            hr_pem_keb.write(cr,uid,[hhh.id],{'status_penempatan':'Done'})
+        bul_har = objk.app_id.jenis_permohonan
+        dep = objk.app_id.department_id.name
+        date = objk.app_id.wkt_pemohon
+        year = datetime.strptime(date,"%Y-%m-%d").year
+        sum_keb = self.pool.get('hr.sumary_kebutuhan')
+        obj_src_sum_keb = sum_keb.search(cr,uid,[('tahun','=',year),('dep','=',dep),('bul_har','=',bul_har)])
+        obj_brw_sum_keb = sum_keb.browse(cr,uid,obj_src_sum_keb)
+        for sumary in obj_brw_sum_keb :
+            jum = sumary.jum_terpenuhi + 1
+            sum_keb.write(cr,uid,[sumary.id],{'jum_terpenuhi':jum},context=context)
         return True
 
     def holiday(self, cr,uid,ids,vals,context=None):
-        import pdb;pdb.set_trace()
         val='validate'
         obj = self.pool.get('hr.holidays')        
         src = obj.search(cr,uid,[('state','=',val)])
@@ -424,12 +724,121 @@ class hr_applicant(osv.osv):
                     wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
                     wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
         return True
-
+    '''
+    def close(self, cr, uid, ids, vals, context=None):
+        """for cancel recruitment
+        """
+        hasil=self.browse(cr,uid,ids)[0]
+        jbtn = hasil.app_id.name
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        for hr_pem in hr_pem_brw :
+            if hr_pem.status == "In Proggres" :
+                hr_pemi.write(cr,uid,[hr_pem.id],{'status':"Close"})
+        #function for list pemenuhan kebutuhan recruitment bulanan
+        hr_list_pem_bul = self.pool.get('hr.pemenuhan_kebutuhan')
+        hr_list_pem_src = hr_list_pem_bul.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_list_pem_brw = hr_list_pem_bul.browse(cr,uid,hr_list_pem_src,context=context)
+        for hr_list in hr_list_pem_bul :
+            if hr_list.status_pemenuhan == "In Process" :
+                hr_list_pem_bul.write(cr,uid,[hr_list.id],{'status_pemenuhan','=','Cancel Recruitment'})
+        res = super(hr_applicant, self).case_cancel(cr, uid, ids, context)
+        self.write(cr, uid, ids, {'probability': 0.0})
+        return res 
+    '''
     def case_cancel(self, cr, uid, ids,vals, context=None):
         """Overrides cancel for crm_case for setting probability
         """
+        hasil=self.browse(cr,uid,ids)[0]
+        names = hasil.partner_name
+        stat = hasil.stat - 1
+        hr_status = self.pool.get('hr.seleksi_pelamar')
+        hr_search = hr_status.search(cr,uid,[('nama','=',names),('stat','=',stat)])
+        hr_brws = hr_status.browse(cr,uid,hr_search)[0]
+        values=False
+        for men in hasil.meeting_ids :
+            date = men.date
+            if men.stat == 'interview1' :
+                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
+            elif men.stat == "interview2" :
+                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
+        if hasil.stage_id.sequence == 2 :
+            hr_status.write(cr, uid, [hr_brws.id], {'status': 'Ditolak','kehadiran':'Hadir','keputusan':'NOK'}, context=context)                
+        elif hasil.stage_id.sequence == 90 :
+            hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Ditolak','kehadiran':'Hadir','keputusan':'NOK'}, context=context)
         res = super(hr_applicant, self).case_cancel(cr, uid, ids, context)
         self.write(cr, uid, ids, {'probability': 0.0})
+        hr_monitor = self.pool.get('hr.monitoring_recruitment')
+        hr_monitor_src = hr_monitor.search(cr,uid,[('name','=',hasil.partner_name)])
+        hr_monitor_brw = hr_monitor.browse(cr,uid, hr_monitor_src)
+        for monit in hr_monitor_brw :
+            if monit.status == 'open' :
+                if hasil.stage_id.sequence == 10 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test1_hrd':'failed','test2_hrd':'','test1_usr':'','test2_usr':'','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 20 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test2_hrd':'failed','test1_usr':'','test2_usr':'','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 80 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test1_usr':'failed','test2_usr':'','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 90 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test2_usr':'failed','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 100 :
+                    hr_monitor.write(cr,uid,[monit.id],{'approval':'failed','tes_kesehatan':'','status':'closed'})
+        year =str(datetime.now().year)
+        hr_sumary = self.pool.get('hr.sumary_monitoring')
+        hr_sumary_src = hr_sumary.search(cr,uid,[('dep','=',hasil.dep_app.name),('tahun','=',year)])
+        hr_sumary_brw = hr_sumary.browse(cr,uid,hr_sumary_src)
+        for mon in hr_sumary_brw :
+            if hasil.stage_id.sequence == 95 :
+                inter = mon.approval + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[moni.id],{'tes_kesehatan':inter,'qty':qty})    
+        return res 
+
+    def tidak_hadir(self, cr, uid, ids,vals, context=None):
+        """Overrides cancel for crm_case for setting probability
+        """
+        hasil=self.browse(cr,uid,ids)[0]
+        names = hasil.partner_name
+        stat = hasil.stat - 1
+        hr_status = self.pool.get('hr.seleksi_pelamar')
+        hr_search = hr_status.search(cr,uid,[('nama','=',names),('stat','=',stat)])
+        hr_brws = hr_status.browse(cr,uid,hr_search)[0]
+        values=False
+        for men in hasil.meeting_ids :
+            date = men.date
+            if men.stat == 'interview1' :
+                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
+            elif men.stat == "interview2" :
+                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
+        if hasil.stage_id.name == "First Interview" :
+            hr_status.write(cr, uid, [hr_brws.id], {'status': 'Ditolak','kehadiran':'Tidak Hadir','keputusan':'NOK'}, context=context)                
+        elif hasil.stage_id.name == "Second Interview" :
+            hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Ditolak','kehadiran':'Tidak Hadir','keputusan':'NOK'}, context=context)
+        res = super(hr_applicant, self).case_cancel(cr, uid, ids, context)
+        self.write(cr, uid, ids, {'probability': 0.0})
+        hr_monitor = self.pool.get('hr.monitoring_recruitment')
+        hr_monitor_src = hr_monitor.search(cr,uid,[('name','=',hasil.partner_name)])
+        hr_monitor_brw = hr_monitor.browse(cr,uid, hr_monitor_src)
+        for monit in hr_monitor_brw :
+            if monit.status == 'open' :
+                if hasil.stage_id.sequence == 10 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test1_hrd':'failed','test2_hrd':'','test1_usr':'','test2_usr':'','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 20 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test2_hrd':'failed','test1_usr':'','test2_usr':'','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 80 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test1_usr':'failed','test2_usr':'','approval':'','tes_kesehatan':'','status':'closed'})
+                elif hasil.stage_id.sequence == 90 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test2_usr':'failed','approval':'','tes_kesehatan':'','status':'closed'})
+        year =str(datetime.now().year)
+        hr_sumary = self.pool.get('hr.sumary_monitoring')
+        hr_sumary_src = hr_sumary.search(cr,uid,[('dep','=',hasil.dep_app.name),('tahun','=',year)])
+        hr_sumary_brw = hr_sumary.browse(cr,uid,hr_sumary_src)
+        for mon in hr_sumary_brw :
+            if hasil.stage_id.sequence == 95 :
+                inter = mon.approval + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[moni.id],{'tes_kesehatan':inter,'qty':qty})    
         return res 
         
     def _compute_age(self, cr, uid, ids, age, tgl_lahir, arg, context=None):
@@ -541,31 +950,125 @@ class hr_applicant(osv.osv):
        brow = country_id1_obj.browse(cr, uid, country_id2, context=context).code_telp
        return {'value':{'telp2': brow}}
     
+    #fungsi untuk menentukan kesimpulan diterima atau di tolak
     def simpul(self, cr, uid,ids,vals,context=None):   
         hasil=self.browse(cr,uid,ids)[0]
-        #hasil2=hasil.kesimpulan
         partner=self.pool.get('hr.recruitment.stage')  
         pero=partner.search(cr,uid,[])     
         pers=partner.browse(cr,uid,pero,context)
-        stg2=float(hasil.stage_id.sequence)+1
+        #stg2=float(hasil.stage_id.sequence)+1
+        stg3=hasil.stage_id.sequence
+        names = hasil.partner_name
+        stat = hasil.stat - 1
+        hr_status = self.pool.get('hr.seleksi_pelamar')
+        hr_search = hr_status.search(cr,uid,[('nama','=',names),('stat','=',stat)])
+        hr_brws = hr_status.browse(cr,uid,hr_search)[0]
+        values=False
+        meet = False
+        st = 1000
+        for men in hasil.meeting_ids :
+            date = men.date
+            if meet == False :
+                meet = men.date
+            if men.stat == 'interview1' :
+                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
+            elif men.stat == "interview2" :
+                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
+        if hasil.stage_id.sequence == 20 :
+            hr_status.write(cr, uid, [hr_brws.id], {'status': 'Diterima','kehadiran':'Hadir'}, context=context)                
+        elif hasil.stage_id.sequence == 90 :
+            hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Diterima','kehadiran':'Hadir','keputusan':'OK'}, context=context)
         for line in pers: 
             stage=line.sequence
-            #if stage == 100 :
-               # stgs=line.id
-                #if hasil2 == 'Ditolak':         
-                    #vals=stg                       
-                    #return self.write(cr,uid,ids,{'stage_id': stgs},context=context)   
-            if stage == stg2 :
-                stg=line.id
-                #if hasil2 == 'Dapat_Diterima':   
-                    #vals=stg                             
-                return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
-        #return self.write(cr,uid,ids,{'stage_id': stgs},context=context)    
-    
-    #def write(self, cr, uid, ids, vals, context=None):      
-        #vals=self.simpul(cr, uid, ids, vals, context=None)
-        #result= super(hr_applicant,self).write (cr, uid, ids,vals, context)
-        #return result 
+            if stg3 < stage and st > stage :
+                stg=line.id                       
+                self.write(cr,uid,ids,{'stage_id': stg},context=context)  
+                st = stage
+        obj_perm = self.pool.get('hr.job')
+        obj_prsrc = obj_perm.search(cr,uid,[('state','=','in_progress')])
+        obj_prbrws = obj_perm.browse(cr,uid,obj_prsrc)
+        jbtn = hasil.app_id.name
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',jbtn)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        y = 0
+        for hr_pem in hr_pem_brw :
+            no = hr_pem.no_pmintaan
+            for hr_job in obj_prbrws :
+                no_id = hr_job.no_permohonan
+                if no == no_id :
+                    y = y + 1
+            if hr_pem.aktifitas == False :              
+                aktf = 'Proses Recruitment' + str(y)
+                hr_pemi.write(cr, uid, [hr_pem.id], {'aktifitas':aktf}, context=context)
+            if hr_pem.tgl_seleksi == False :
+                hr_pemi.write(cr, uid, [hr_pem.id], {'tgl_seleksi':meet}, context=context)
+            if hr_pem.status != "Done" and hasil.stage_id.sequence == 90 :        
+                jum_diterima = hr_pem.jml_diterima + 1
+                hr_pemi.write(cr,uid, [hr_pem.id],{'jml_diterima':jum_diterima,'status':'pending'},context=context) 
+        #function for list pemenuhan kebutuhan recruitment bulanan
+        stages = hasil.stage_id.sequence
+        if stages == 90 :
+            obj_job = self.pool.get('hr.job')
+            obj_jobs = obj_perm.search(cr,uid,[('state','=','in_progress'),('name','=',jbtn)])
+            obj_jobb = obj_perm.browse(cr,uid,obj_prsrc)
+            for hr_job in obj_jobb :
+                obj_job.write(cr,uid,[hr_job.id],{'status_rec':'pending'})
+        hr_pem_keb = self.pool.get('hr.pemenuhan_kebutuhan')
+        hr_pem_keb_src = hr_pem_keb.search(cr,uid,[('status_pemenuhan','=','In Process'),('jabatan','=',jbtn)])
+        hr_pem_keb_brw = hr_pem_keb.browse(cr,uid,hr_pem_keb_src,context=context)
+        for hhh in hr_pem_keb_brw :
+            jum_terpenuhi = hhh.jumlah_terpenuhi
+            jum_kekurangan = hhh.jumlah_kebutuhan
+            if hhh.status_pemenuhan != "Done" and hasil.stage_id.sequence == 90 :        
+                jum_terpenuhi = hhh.jumlah_terpenuhi + 1
+                jum_kekurangan = hhh.kekurangan_pmenuhan - 1
+            hr_pem_keb.write(cr,uid,[hhh.id],{'status_wawancara':'OK','jumlah_terpenuhi':jum_terpenuhi,'kekurangan_pmenuhan':jum_kekurangan,'status_penempatan':'Next Process','status_pemenuhan':'Done'})
+        #fungsi for monitoring progres recruitment
+        hr_monitor = self.pool.get('hr.monitoring_recruitment')
+        hr_monitor_src = hr_monitor.search(cr,uid,[('name','=',hasil.partner_name)])
+        hr_monitor_brw = hr_monitor.browse(cr,uid, hr_monitor_src)
+        for monit in hr_monitor_brw :
+            if monit.status == 'open' :
+                if hasil.stage_id.sequence == 10 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test1_hrd':'done'})
+                elif hasil.stage_id.sequence == 20 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test2_hrd':'done'})
+                elif hasil.stage_id.sequence == 80 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test1_usr':'done'})
+                elif hasil.stage_id.sequence == 90 :
+                    hr_monitor.write(cr,uid,[monit.id],{'test2_usr':'done'})
+                elif hasil.stage_id.sequence == 93 :
+                    hr_monitor.write(cr,uid,[monit.id],{'approval':'done'})
+                elif hasil.stage_id.sequence == 95 :
+                    hr_monitor.write(cr,uid,[monit.id],{'tes_kesehatan':'done'})
+        year =str(datetime.now().year)
+        hr_sumary = self.pool.get('hr.sumary_monitoring')
+        hr_sumary_src = hr_sumary.search(cr,uid,[('dep','=',hasil.dep_app.name),('tahun','=',year)])
+        hr_sumary_brw = hr_sumary.browse(cr,uid,hr_sumary_src)
+        #import pdb;pdb.set_trace()
+        for mon in hr_sumary_brw :
+            if hasil.stage_id.sequence == 10 :
+                inter = mon.wawancara_hrd + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[mon.id],{'wawancara_hrd':inter,'qty':qty})
+            elif hasil.stage_id.sequence == 20 :
+                inter = mon.wawancara1_usr + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[mon.id],{'wawancara1_usr':inter,'qty':qty})
+            elif hasil.stage_id.sequence == 80 :
+                inter = mon.wawancara2_usr + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[mon.id],{'wawancara2_usr':inter,'qty':qty})
+            elif hasil.stage_id.sequence == 90 :
+                inter = mon.approval + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[mon.id],{'approval':inter,'qty':qty})
+            elif hasil.stage_id.sequence == 95 :
+                inter = mon.approval + 1
+                qty = mon.qty + 1
+                hr_sumary.write(cr,uid,[mon.id],{'tes_kesehatan':inter,'qty':qty})    
+        return True
     
     def onchange_job(self, cr, uid, ids, job, context=None):
         if job:
@@ -638,6 +1141,7 @@ class hr_applicant(osv.osv):
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
 		'app_id' : fields.many2one('hr.job','Job'),
+        'dep_app' : fields.many2one('hr.department', 'Department'),
         'salary_proposed': fields.float('Proposed Salary'),
         'salary_proposed_botom_margin': fields.float('Standar Gaji', help="Batas range terendah"), 
         'salary_proposed_top_margin': fields.float('Standar Gaji', help="Batas range tertinggi"), 
@@ -646,7 +1150,10 @@ class hr_applicant(osv.osv):
         "meeting_ids" : fields.many2many("crm.meeting","meeting_rel","meeting_id","applicant_id",string="Jadwal Interview",readonly=True, domain="[('status','=',True)]"),
         'daf_pelamar_ids' : fields.one2many('hr.daf_pelamar','applicant_id','Daftar Pelamar'),
         'ref' :fields.char('Ref'),
-        'lokasi_id' : fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor',required=True), 
+        'lokasi_id'  : fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor',required=True), 
+        'ptkp' : fields.many2one('hr.ptkp','Status Pajak', required=True),
+        'stat': fields.float('stat'),
+        'st_pelamar' :fields.many2one('hr.seleksi_pelamar','status')
         }
 
     _sql_constraints = [
@@ -655,48 +1162,73 @@ class hr_applicant(osv.osv):
     _defaults = {
         'lokasi_id' : 'karawang'
     }
-    def daftar_seleksi_pelamar(self,cr,uid,ids,vals,context=None) :
+    # fungsi untuk mengisi status ids
+    '''def status_pelamar(self, cr, uid, ids, context=None):
+        import pdb;pdb.set_trace()
         if context is None:
             context = {}
-        hr_seleksi_pelamar = self.pool.get('hr.seleksi_pelamar')
+        context = dict(context, mail_create_nolog=True) 
+        hr_status = self.pool.get('hr.status_pelamar')
         model_data = self.pool.get('ir.model.data')
         act_window = self.pool.get('ir.actions.act_window')
-        emp_id = False
-        for applicant in self.browse(cr, uid, ids, context=context):
-            address_id = False
-            if applicant.partner_id:
-                address_id = self.pool.get('res.partner').address_get(cr,uid,[applicant.partner_id.id],['contact'])['contact']
-            if applicant.job_id:
-                applicant.job_id.write({'no_of_recruitment': applicant.job_id.no_of_recruitment - 1})
-                #import pdb;pdb.set_trace()
-                emp_id = hr_seleksi_pelamar.create(cr,uid,{'name': applicant.partner_name or applicant.name,
-                                                         'type_id':applicant.type_id.id,
-                                                         'jurusan_id':applicant.jurusan_id.id, 
-                                                         'birthday' : applicant.tgl_lahir,
-                                                         'usia' :applicant.age,  
-                                                         'sumber' : applicant.source_id.id,    
-                                                         'ref' : applicant.ref,
-                                                         'department' : applicant.department_id.id,
-                                                         'bagian' : applicant.job_id.id,
-                                                         'jabatan': applicant.job_id.id,                                                        
-                                                        })    
-                self.write(cr, uid, [applicant.id], {'emp_id': emp_id}, context=context)
-                self.case_close(cr, uid, [applicant.id], context)
-            else:
-                raise osv.except_osv(_('Warning!'), _('You must define Applied Job for this applicant.'))
-
-            #action_model, action_id = model_data.get_object_reference(cr, uid, 'hr', 'open_view_employee_list')
-            dict_act_window = act_window.read(cr, uid, action_id, [])
-        if emp_id:
-            dict_act_window['res_id'] = emp_id
-        dict_act_window['view_mode'] = 'form,tree'
-        return dict_act_window
-
-
-
-
+        values = False
+        for obj in self.browse(cr,uid,ids, context=context):
+            #values = {}
+            values = hr_status.create(cr,uid,{
+                'applicant_id': obj.id,
+                'status': obj.stage_id.name,
+                'kondisi' : 'Diterima',
+                })
+            self.write(cr, uid, [obj.id], {'st_pelamar': values}, context=context)
+            self.case_close(cr, uid, [obj.id], context)
+        return True  
+    '''
+    def daf_pelamar(self, cr,uid,ids, context=None):
+        #import pdb;pdb.set_trace()
+        if context is None:
+                context= {}
+        context = dict(context, mail_create_nolog=True)
+        hr_status = self.pool.get('hr.daf_pelamar')
+        model_data = self.pool.get('ir.model.data')
+        act_window = self.pool.get('ir.actions.act_window')
+        values = False
+        year =datetime.now().year
+        for obj in self.browse(cr,uid,ids, context=context):
+            #values = {}
+            stat_id = obj.stat
+            name = obj.partner_name
+            hr_search = hr_status.search(cr,uid,[('stat','=',stat_id),('name','=',name)])
+            hr_brw = hr_status.browse(cr,uid,hr_search)
+            if hr_brw == True :
+                values = hr_status.create(cr,uid,{
+                    'applicant_id' :obj.id,
+                    'name': obj.name,
+                    'pendidikan': obj.type_id.id,
+                    'jurusan' : obj.jurusan_id.id,
+                    'tanggal_lahir' : obj.tgl_lahir,
+                    'usia': obj.age,
+                    'sumber': obj.source_id.id,
+                    'ref' : obj.ref,
+                    'department' : obj.department_id.id,
+                    'jabatan' :obj.job_id.id,
+                    'tahun' : year,
+                    #'stat' : 
+                    })
+                self.write(cr, uid, [obj.id], {'st_pelamar': values}, context=context)
+                self.case_close(cr, uid, [obj.id], context)
+        return True  
 hr_applicant()
 
+'''class status_pelamar(osv.osv):
+    _name = "hr.status_pelamar"
+
+    _columns = {
+        'applicant_id' :fields.many2one('hr.applicant'),
+        'status' : fields.char('status Pelamar'),
+        'kondisi' : fields.char('Kondisi'),
+    }
+status_pelamar()
+'''
 class daftar_pelamar(osv.osv):
     _name = 'hr.daf_pelamar'
 
@@ -720,6 +1252,8 @@ class daftar_pelamar(osv.osv):
         'status_user' : fields.char('status User'),
         'keputusan' : fields.char('Keputusan'),
         'tanggal_kputusan' : fields.char('Tanggal Keputusan'),
+        'stat' : fields.float('stat'),
+        'tahun' : fields.integer('tahun'),
     }
 
 class susunan_keluarga1(osv.osv):
@@ -1030,6 +1564,7 @@ class meeting(osv.osv):
     _columns = {
         "applicant_ids" : fields.many2many("hr.applicant","meeting_rel","applicant_id","meeting_id","Nama Pelamar"),
         'status' :fields.boolean ('Aktif'),
+        'stat' : fields.selection([('interview1','Interview HRD'),('interview2','Interview User'),('not','Bukan Interview')],'status Meeting',required=True)
     }
 
     _defaults = {
@@ -1037,7 +1572,6 @@ class meeting(osv.osv):
     }
 
     def status(self, cr, uid, ids, context=None):
-        import pdb;pdb.set_trace()
         date_now =datetime.now().month#.strftime("%Y-%m-%d").month
         year =datetime.now().year#strftime("%Y-%m-%d").year
         day =datetime.now().day#strftime("%Y-%m-%d").day
@@ -1053,12 +1587,14 @@ class meeting(osv.osv):
                 self.write(cr,uid,ids,{'status':False},context=context)   
         return True
 
-meeting()    
+
+meeting()  
 
 class daftar_seleksi(osv.osv):
     _name = 'hr.seleksi_pelamar'
 
     _columns = {
+    'applicant_id':fields.many2one('hr.applicant'),
     'nama' :fields.char('Name'),
     'tgl_seleksi' : fields.date('Tgl Selek Hrd'),
     'tgl_seleksi1' : fields.date('Tgl Selek Usr'),
@@ -1072,10 +1608,13 @@ class daftar_seleksi(osv.osv):
     'department' : fields.char('Department'),
     'bagian' : fields.char('Bagian'),
     'jabatan': fields.char('Jabatan'),
+    'ref_jab' : fields.char('ref Jabatan'),
     'status' : fields.char('Status Hrd'),
     'status1' : fields.char('Status User'),
     'keputusan':fields.char('Keputusan'),
     'tgl_keputusan':fields.date('Tgl Keputusan'),
+    'tahun' : fields.char('Tahun'),
+    'stat' : fields.float('stat'),
     }
 daftar_seleksi()
 
@@ -1088,88 +1627,113 @@ class pemenuhan_rcruit(osv.osv):
         'department' : fields.char('Department'),
         'jabatan' : fields.char('Jabatan'),
         'jml_prmintaan' : fields.integer('Jumlah Permintaan'),
-        'aktifitas' : fields.char('Aktifitas Pemanggilan'),
-        'tgl_seleksi' : fields.date('Tgl Seleksi'),
+        'aktifitas' : fields.char('Aktifitas'),
+        'tgl_seleksi' : fields.date('Tanggal Seleksi'),
         'jml_kandidat' : fields.integer("jumlah Kandidat"),
         'jml_diterima' : fields.integer('Jumlah Ditrima'),
         'per_masuk' : fields.char('Permohonan Masuk'),
         'status' : fields.char('Status'),
         'ket' : fields.char('Keterangan'),
             }
-pemenuhan_rcruit()                
 
-class progress_recruti(osv.osv):
-    _name = 'hr_progres'
+pemenuhan_rcruit() 
+
+class pemenuhan_kebutuhan(osv.osv):
+    _name = 'hr.pemenuhan_kebutuhan'
+            
+    _columns = {
+        'bul_har':fields.char('Bulanan/Harian'),
+        'div' :fields.char('Divison'),
+        'dept' : fields.char('Department'),
+        'bagian' : fields.char('Bagian'),
+        'jabatan' : fields.char('Jabatan'),
+        'level' : fields.char("Level"),
+        'tgl_permohonan' : fields.date("Tgl Prmohonan"),
+        'status_wawancara' : fields.char('Status Wawancara'),
+        'status_pemenuhan' :fields.char('Status Pemenuhan'),
+        'jumlah_kebutuhan' :fields.integer('Jumlah Kebutuhan'),
+        'jumlah_terpenuhi' :fields.integer("Jumlah Terpenuhi"),
+        'kekurangan_pmenuhan':fields.integer('Kekurangan Kebutuhan', readonly=True),
+        'status_penempatan' :fields.char('status Penempatan'),
+        'ket' :fields.char('Kterangan'),
+        'review' : fields.char('Review'),
+        }  
+
+pemenuhan_kebutuhan()  
+
+class sumary_kebutuhan(osv.osv):
+    _name = 'hr.sumary_kebutuhan'
 
     _columns = {
-        'tanggal':fields.date('Tanggal'),
-        'posisi' :fields.char('Posisi'),
-        'pemanggilan' :fields.char('Pemanggilan'),
-        'status_hrd' : fields.char('Status Hrd'),
-        'status_usr' :fields.char('Status User'),
-        'persentase':fields.char('%'),
+        'tahun' : fields.char('Tahun'),
+        'bul_har':fields.char('Jenis Permohonan'),
+        'dep' :fields.char('Department'),
+        'jum_kebutuhan' : fields.float('Jumlah Kebutuhan'), 
+        'jum_terpenuhi' : fields.float('Jumlah Terpenuhi'),
         'ket' : fields.char('Ket'),
     }
-progress_recruti()    
+sumary_kebutuhan()
 
-class pemenuhan(osv.osv):
-        _name = 'hr_detail_pemenuhan'
+class sumary_kebutuhan(osv.osv):
+    _name = 'hr.sumary_kebutuhan_harian'
 
-        _columns = {
-            'posisi' :fields.char('Posisi'),
-            'tgl_permintaan' : fields.date('Tanggal Permintaan'),
-            'jml_prmintaan' : fields.integer('Jumlah Permintaan'),
-            'jml_kandidat' : fields.integer('Jumlah Kandidat'),
-            'pemenuhan' : fields.integer('Pmenuhan'),
-            'persentase' : fields.float('%'),
-            'kekurangan' : fields.integer('Kekurangan'),
-            'waktu_rposes' : fields.integer('Waktu Proses'),
-            'keterangan' : fields.char('Keterangan'),
-        }
-pemenuhan()    
+    _columns = {
+        'tahun' : fields.char('Tahun'),
+        'bul_har':fields.char('Jenis Permohonan'),
+        'dep' :fields.char('Department'),
+        'jum_kebutuhan' : fields.float('Jumlah Kebutuhan'), 
+        'jum_terpenuhi' : fields.float('Jumlah Terpenuhi'),
+        'ket' : fields.char('Ket'),
+    }
+sumary_kebutuhan()       
 
-class pemenuhan_kebutuhan_harian(osv.osv):
-        _name = 'hr.pemenuhan_kebutuhan_harian'
+class lap_permintaan_karyawan(osv.osv):
+    _name = 'hr.lap_permintaan_karyawan'
 
-        _columns = {
-            'bul_har':fields.char('Bulanan/Harian'),
-            'div' :fields.char('Divison'),
-            'dept' : fields.char('Department'),
-            'bagian' : fields.char('Bagian'),
-            'jabatan' : fields.char('Jabatan'),
-            'level' : fields.char("Level"),
-            'tgl_permohonan' : fields.date("Tgl Prmohonan"),
-            'status_wawancara' : fields.char('Status Wawancara'),
-            'status_pemenuhan' :fields.char('Status Pemenuhan'),
-            'jumlah_kebutuhan' :fields.char('Jumlah Kebutuhan'),
-            'jumlah_terpenuhi' :fields.integer("Jumlah Terpenuhi"),
-            'kekurangan_pmenuhan':fields.integer('Kekurangan Pemenuhan'),
-            'status_penempatan' :fields.char('status Pemenuhan'),
-            'ket' :fields.char('Kterangan'),
-            'review' : fields.char('Review'),
+    _columns = {
+        'dep' : fields.char('Departmen'),
+        'posisi' : fields.char('Posisi'),
+        'jumlah' : fields.integer('Jumlah'),
+        'wkt_penempatan' : fields.date('wkt Penempatan'),
+        'pengalaman' : fields.integer('Pengalaman'),
+        'usia' :fields.integer("Usia"),
+        'jenis_kelamin' : fields.char('Jenis Kelamin'),
+        'status' :fields.char('Status Pernikahan'),
+        'domisili' : fields.char('Domisili'),
+        'tahun' :fields.integer('Tahuh'),
+    }     
+lap_permintaan_karyawan()
 
-        }
-pemenuhan_kebutuhan_harian()        
+class monitoring_recruitment(osv.osv):
+    _name = 'hr.monitoring_recruitment'
 
-class pemenuhan_kebutuhan_bulanan(osv.osv):
-        _name = 'hr.pemenuhan_kebutuhan_bulanan'
+    _columns = {
+        'name' : fields.char('Nama'),
+        'dep' : fields.char('Department'),
+        'test1_hrd' : fields.char('Test Tertlis HRD'),
+        'test2_hrd' : fields.char('Test Wawancara HRD'),
+        'test1_usr' : fields.char('Test Wawancara USR 1'),
+        'test2_usr' : fields.char('Test Wawancara USR 2'),
+        'approval' : fields.char('Management Approval'),
+        'tes_kesehatan' : fields.char('Test Kesehatan'),
+        'ket' :fields.char('Keterangan'),
+        'status': fields.char('status'),
+    }
+monitoring_recruitment()
 
-        _columns = {
-            'bulanan':fields.char('Bulanan'),
-            'div' :fields.char('Divison'),
-            'dept' : fields.char('Department'),
-            'bagian' : fields.char('Bagian'),
-            'jabatan' : fields.char('Jabatan'),
-            'level' : fields.char("Level"),
-            'tgl_permohonan' : fields.date("Tgl Prmohonan"),
-            'status_wawancara' : fields.char('Status Wawancara'),
-            'status_pemenuhan' :fields.char('Status Pemenuhan'),
-            'jumlah_kebutuhan' :fields.char('Jumlah Kebutuhan'),
-            'jumlah_terpenuhi' :fields.integer("Jumlah Terpenuhi"),
-            'kekurangan_pmenuhan':fields.integer('Kekurangan Pemenuhan'),
-            'status_penempatan' :fields.char('status Pemenuhan'),
-            'ket' :fields.char('Kterangan'),
-            'review' : fields.char('Review'),
+class sumary_monitoring(osv.osv):
+    _name = 'hr.sumary_monitoring'
 
-        }
-pemenuhan_kebutuhan_bulanan()     
+    _columns = {
+        'dep' : fields.char('Department'),
+        'qty' : fields.integer ('Qty Total'),
+        'test1' : fields.integer('Test Tertulis'),
+        'wawancara_hrd' :fields.integer('Wawancara HRD'),
+        'wawancara1_usr' :fields.integer('Wawancara1 User'),
+        'wawancara2_usr' :fields.integer('Wawancara 2 User'),
+        'approval' :fields.integer('Mgnt Approval'),
+        'tes_kesehatan' : fields.integer('Tes Kesehatan'),
+        'pending' :fields.integer ('Pending'),
+        'tahun' :fields.char('Tahun'),
+    }
+sumary_monitoring()

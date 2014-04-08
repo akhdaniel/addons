@@ -83,7 +83,7 @@ class employee(osv.osv):
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
         'clas_id':fields.many2one('hr_employs.clas','Class'),
-        'title_id':fields.many2one('hr.title','Title',required=True),
+        'title_id':fields.many2one('hr.title','Title'),
         'extitle_id':fields.many2one('hr.extitle','Ex Title'),
         'gol_id':fields.many2one('hr_employs.gol','Golongan'),
         'wfield_id':fields.many2one('hr_employs.wfield','Bidang Pekerjaan'),
@@ -109,7 +109,7 @@ class employee(osv.osv):
         'address_id2': fields.many2one('res.partner', 'Nama Kantor'),
         'work_location2': fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang'),('proyek','Proyek')],'Alamat Kantor',required=True), 
         'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
-        'ptkp_id': fields.many2one('hr.ptkp','Status Pajak'),
+        'ptkp_id': fields.many2one('hr.ptkp','Status Pajak', required=True),
         'npwp':fields.char('NPWP',size=20),
         'bid_id':fields.many2one('hr_recruit.bidang','Bidang'), 
         'wage':fields.float('Proposed Salary'), 
@@ -117,14 +117,16 @@ class employee(osv.osv):
         'npkj' :fields.integer('NPKJ', help='Nomor Kepesertaan Jamsostek'), 
         'remaining_leaves' :fields.float('Remaining Legal Leavs',readonly=True),  
         'tgl_masuk' :fields.date('Tanggal Masuk'),
+        'hierarcy_history' : fields.one2many('hr.hierarcy_history','employee_id','Hieracy History'),
         }
-        
-    _defaults = {
+
+    _defaults = {    
         'nik': lambda self, cr, uid, context={}: self.pool.get('ir.sequence').get(cr, uid, 'hr.employee'),
         'jenis_id': 'KTP',
         'tgl_masuk' : lambda *a: time.strftime('%Y-%m-%d'),
                 }
-               
+    
+        
     def onchange_alamat(self, cr, uid, ids, address_id2, context=None):
         result = {}
         result2 = {}
@@ -140,6 +142,18 @@ class employee(osv.osv):
         return {'value': {'work_location2': False,'work_phone': False,'work_email': False}}               
 
 employee()
+
+class hierarcy_history(osv.osv):
+    _name = 'hr.hierarcy_history'
+
+    _columns= {
+        'employee_id' : fields.many2one('hr.employee'),
+        'status_karyawan' : fields.selection([('aktif','Aktif'),('tidak_aktif','Tidak Aktif')],'Status Karyawan'),
+        'status_kerja' : fields.char('Status Pegawai'),
+        'golongan' :fields.many2one('hr_employs.gol','Golongan'),
+        'jabatan' : fields.many2one('hr.job','Jabatan'),
+        'dept_track' :fields.many2one('hr.department','Department'),
+    }
 
 class susunan_keluarga1(osv.osv):
     _name='hr_employee.suskel1'

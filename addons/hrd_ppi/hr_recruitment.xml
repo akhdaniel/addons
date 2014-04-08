@@ -1,7 +1,17 @@
 
 <openerp>
     <data>
-      <record id="view_hr_job_form2" model="ir.ui.view">
+        <!--record forcecreate='1' id='seq_type_hr_job' model='ir.sequence.type'>
+            <field name='name'>hr_job</field>
+            <field name='code'>hr.job</field>
+        </record>
+        <record forcecreate='1' id='seq_type_hr_job1' model='ir.sequence'>
+            <field name='name'>hr_job</field>
+            <field name='code'>hr.job</field>
+            <field name='prefix'>00</field>
+            <field name='suffix'></field>
+        </record-->
+        <record id="view_hr_job_form2" model="ir.ui.view">
             <field name="name">hr.job.form</field>
             <field name="model">hr.job</field>
             <field name="inherit_id" ref="hr.view_hr_job_form"/>
@@ -63,6 +73,8 @@
                         </group-->
                         <group colspan="2">
                             <field name="jenis_permohonan"/> 
+                            <field name='no_permohonan'/>
+                            <field name='status_rec'/>
                         </group>
 
                         <label for="name" class="oe_edit_only"/>
@@ -75,7 +87,8 @@
                     </div>                    
                     <div class='oe_title'/>
                 </xpath>                
-
+                <!--field name='category_ids' position='replace'/>
+                <field name='alias_name' position='replace'/-->
                 <field name="no_of_employee" position="before">
                     <label for="salary_proposed_botom_margin" groups="hrd_ppi.group_hr_manager"/>
                     <div groups="hrd_ppi.group_hr_manager">
@@ -123,6 +136,8 @@
 
                 </field>
                 <field name="department_id" position="replace">
+                    <field name="bagian_id"/>
+                    <field name="divisi_id"/>
                     <field name="department_id"/>
                 </field>
                 <field name="department_id" position="after">                                        
@@ -163,13 +178,29 @@
                     <field name="catatan2"/>
                     </div>             
                     <button string="Filter" type="object" 
-                        states="in_progress" name="cici"
-                        groups="hrd_ppi.group_hr_training_head" 
-                        class="oe_highlight" attrs="{'invisible':[('bol_name','=',True)]}"/> 
+                        name="cici" status_rec="filter"
+                        groups="hrd_ppi.group_hr_training_head"  
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','filter')]}"/> 
                     <button string="Execute" type="object" 
-                        states="in_progress" name="execute"
+                        status_rec="execute" name="execute"
                         groups="hrd_ppi.group_hr_training_head" 
-                        class="oe_highlight" attrs="{'invisible':[('bol_name','=',True)]}"/>     
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','execute')]}"/> 
+                    <button string="New Recruitment" type="object" 
+                        status_rec="pending" name="new_recruitment" 
+                        groups="hrd_ppi.group_hr_training_head" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','pending')]}" /> 
+                    <button string="New Recruitment" type="object" 
+                        status_rec="pending" name="new_recruitment" 
+                        groups="hrd_ppi.group_hr_training_head" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','in_progres')]}" />  
+                    <button string="Cancel Recruitment" type="object" 
+                        status_rec="in_progres" name="cancel_recruitment"
+                        groups="hrd_ppi.group_hr_training_head" 
+                        class="oe_highlight" />  
+                    <button string="Pending" type="object" 
+                        status_rec="pending" name="pending" 
+                        groups="hrd_ppi.group_hr_training_head" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','pending')]}" />   
                 <notebook colspan="4">                      
                         <page string="Daftar Pelamar" name="Pelamar" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_training_head" >
                             <field view_mode="tree,form" name="applicant_ids" nolabel="1">
