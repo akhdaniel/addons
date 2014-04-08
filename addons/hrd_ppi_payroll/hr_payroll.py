@@ -211,17 +211,16 @@ class hr_payslip(osv.osv):
                             attendances['number_of_days'] += 1.0
                             attendances['number_of_hours'] += working_hours_on_day
                         ### tidak cuti, cek apakah dia masuk absen?
-                    if real_working_hours_on_day >= 0.000000000000000001 and not isNonWorkingDay:
+                    if real_working_hours_on_day >= 0.000000000000000001 and not isNonWorkingDay and leave_type == False :
                         presences['number_of_days'] += 1.0
                         presences['number_of_hours'] += working_hours_on_day
             leaves = [value for key,value in leaves.items()]
             leave = [value for key,value in leave.items()]
             luar = [value for key,value in luar.items()]
-            import pdb;pdb.set_trace()
             if leaves == [] :
                 attendances['number_of_days'] = attendances['number_of_days'] - 0
             else :    
-                attendances['number_of_days'] = attendances['number_of_days'] - leaves[leave_type]['number_of_days']
+                attendances['number_of_days'] = attendances['number_of_days'] - leaves[0]['number_of_days']
             res += [attendances] + leaves + leave + luar + [presences] 
         coos = self.line2(cr, uid, contract_ids,date_to,date_from,context=None) 
         return res + coos
@@ -363,7 +362,7 @@ class hr_payslip(osv.osv):
                             ### hitung overtime: masukkan di field number_of_hours
                             overtime =  real_working_hours_on_day - working_hours_on_day
                             if overtime >= 4 :
-                                overtimes['number_of_days'] += 1.0
+                                #overtimes['number_of_days'] += 1.0
                                 uang_makan_lembur['number_of_days'] += 1.0
 
                             """
@@ -374,8 +373,8 @@ class hr_payslip(osv.osv):
 
                             if employee.title_id.urutan < 100:
 
-                            """       
-                            if leave_type == "Libur Nasional" and isNonWorkingDay :
+                            """     
+                            if leave_type == "Libur Nasional" :
                                 if real_working_hours_on_day < 8:
                                     jam1 = 0
                                     jam2 = 0
@@ -533,7 +532,12 @@ class hr_payslip(osv.osv):
                             cod= line['code']
                             if cod == "GROSS" :
                                 tj =line['amount']
-                                self.write(cr, uid, [payslip.id], {'gros_sebelum':tj}, context=context)        
+                                self.write(cr, uid, [payslip.id], {'gros_sebelum':tj}, context=context)   
+            for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
+                cod= line['code']   
+                if cod == 'OVERTIME' :
+                    coo =line['amount']
+                    self.write(cr,uid, [payslip.id], {'overtime': coo}, context=context)                      
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']   
                 if cod == "GROSS":
@@ -554,8 +558,7 @@ class hr_payslip(osv.osv):
             coos = self.funct(cr,uid,ids,context=None)    
             self.write(cr, uid, [payslip.id], {'total':coos}, context=context)
             coos = self.pkp(cr,uid,ids,context=None)  
-            self.write(cr, uid, [payslip.id], {'pkp':coos}, context=context)
-            coos = self.check_tunj_pajak(cr,uid,ids,context=None) 
+            #coos = self.check_tunj_pajak(cr,uid,ids,context=None) 
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']   
                 if cod == "GROSS":
@@ -602,8 +605,8 @@ class hr_payslip(osv.osv):
         return totals
 
     def tunj_pajak(self,cr,uid,ids,context=None) :
-        obj =self.browse(cr,uid,ids)
-        employee = employee_id.id
+        obj =self.browse(cr,uid,ids)[0]
+        employee = obj.employee_id.id
         basic = obj.basic
         inc = obj.incentive
         ovr = obj.overtime
@@ -613,11 +616,12 @@ class hr_payslip(osv.osv):
         bonus = obj.bonus
         year =datetime.now().year
         date = obj.date_from
-        bulan = datetime.strptime(dates,"%Y-%m-%d").month
+        bulan = datetime.strptime(date,"%Y-%m-%d").month
         bln = bulan - 1
         gros = obj.gros_sebelum 
+        grs =obj.gros
         #hitung pajak tanpa alw
-        obj_psl = self.poo.get('hr.payslip')
+        obj_psl = self.pool.get('hr.payslip')
         obj_src = obj_psl.search(cr,uid,[('employee_id','=',employee)])
         obj_brw = obj_psl.browse(cr,uid,obj_src)
         pjk_tnp_alw = (basic * 13) + inc + ovr + rap + rap_ovr + thr + bonus
@@ -625,14 +629,15 @@ class hr_payslip(osv.osv):
         for xxx in obj_brw :
             dates= xxx.date_from
             data = datetime.strptime(dates,"%Y-%m-%d").year
-            mon = datetime.strptime(dates,"%y-%m-%d").month
+            mon = datetime.strptime(dates,"%Y-%m-%d").month
             if data == year :
                 if bln == mon :
                     pjk_tnp_alw = xxx.tampung1 + gross
         self.write(cr,uid,ids,{'tampung1': pjk_tnp_alw},context=context)
-        pot_jab = (pjk_tnp_alw * obj.contract_id.type_id.biaya_jabatan)/100       
+        pot_jab = (pjk_tnp_alw * obj.contract_id.type_id.biaya_jabatan)/100   
+        tht = ((basic * 13) * (obj.contract_id.type_id.tht +  obj.contract_id.type_id.ttht))/100       
         ptkp = obj.employee_id.ptkp_id.nominal_tahun
-        pkp = pjk_tnp_alw - (pot_jab + ptkp )
+        pkp = pjk_tnp_alw - (pot_jab + ptkp +tht )
         hpkp = pkp
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
@@ -653,12 +658,12 @@ class hr_payslip(osv.osv):
                     pkp = pkp - mak
         self.write(cr,uid,ids,{'tj_pjk':tj_pjk},context=context)
         #hitung pajak dengan alw
-        pajak_alw = (gros - basic - tunj_pajak) + (basic * 13)
-        alw = gros - basic - tunj_pajak
+        pajak_alw = (grs - basic - obj.tunj_pajak) + (basic * 13)
+        alw = grs - basic - obj.tunj_pajak
         for xxx in obj_brw :
-            dates = xxx.date.date_from
+            dates = xxx.date_from
             waktu = datetime.strptime(dates,"%Y-%m-%d").year
-            mont = datetime.strptime(dates,"%y-%m-%d").month
+            mont = datetime.strptime(dates,"%Y-%m-%d").month
             if waktu == year :
                 if mont == bln :
                     pajak_alw = xxx.tampung2 + alw
@@ -680,9 +685,10 @@ class hr_payslip(osv.osv):
                 mak = hitung.nominal_max
                 pajak = hitung.pajak   
                 if hpkp <= mak :
-                    tj_pjk_alw = (( pkp * pajak )/100) + tj_pjk_alw
+                    tj_pjk_alw = (( pkp * pajak )/100) + tj_pjk_alw                 
+                    if pkp != 0 :
+                        pembagi = pajak
                     pkp = 0
-                    pembagi = pajak
                 elif hpkp >= mak :
                     tj_pjk_alw = ( mak * pajak )/100 + tj_pjk_alw
                     pkp = pkp - mak
@@ -697,56 +703,66 @@ class hr_payslip(osv.osv):
         gros = obj.gros - obj.basic
         basic = obj.basic * 13
         year =datetime.now().year
-        bulan = datetime.strptime(dates,"%Y-%m-%d").month
+        date = obj.date_from
+        bulan = datetime.strptime(date,"%Y-%m-%d").month
         bln = bulan - 1
         pjk = basic + gros
-        obj_psl = self.poo.get('hr.payslip')
+        employee = obj.employee_id.id
+        obj_psl = self.pool.get('hr.payslip')
         obj_src = obj_psl.search(cr,uid,[('employee_id','=',employee)])
         obj_brw = obj_psl.browse(cr,uid,obj_src)
         for xxx in obj_brw :
             dates= xxx.date_from
             data = datetime.strptime(dates,"%Y-%m-%d").year
-            mon = datetime.strptime(dates,"%y-%m-%d").month
+            mon = datetime.strptime(dates,"%Y-%m-%d").month
             if data == year :
                 if bln == mon :
-                   pjk = xxx.tampung1 + gross
+                   pjk = xxx.tampung_pajak + gros
+        self.write(cr,uid,ids,{'tampung_pajak':pjk},context=context)
         pjkp = pjk
-        pot_jab = (pajak * obj.contract_id.type_id.biaya_jabatan)/100 
+        pot_jab = (pjk * obj.contract_id.type_id.biaya_jabatan)/100 
         tht = (basic * (obj.contract_id.type_id.tht +  obj.contract_id.type_id.ttht))/100    
         ptkp = obj.employee_id.ptkp_id.nominal_tahun  
         pajak = 0
+        pkp = pjk - (pot_jab + tht + ptkp)
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         objk = self_obj.browse(cr,uid,src_obj)
         if pkp <= 0 :
             pajak = 0
         elif pkp > 0 :
+            #import pdb;pdb.set_trace()
             for hitung in objk :
                 minimal = hitung.nominal_min
                 mak = hitung.nominal_max
-                pajak = hitung.pajak   
-                if pjkp <= mak :
-                    pajak = (( pjk * pajak )/100) + pjk
-                    pjk = 0
-                    pembagi = persen
-                elif pjkp >= mak :
-                    pajak = ( mak * pajak )/100 + pjk
-                    pjk = pjk - mak
-        pajak = pajak / 13
-        return pajak   
+                persen = hitung.pajak   
+                if pkp <= mak :
+                    pajak = (( pkp * persen )/100) + pajak
+                    pkp = 0
+                    pajak = pajak / 13
+                    return self.write(cr, uid,ids, {'pkp':pajak}, context=context)
+                elif pkp >= mak :
+                    pajak = ( mak * persen )/100 + pajak
+                    pkp = pkp - mak
+        return True
 
     def check_tunj_pajak (self,cr,uid,ids,context=None) :
         #untuk cek tunjangan pajak dan fungsi nilai up
-        obj = self.browse(cr,uid,ids)
-        pajak = obj.pajak
+        obj = self.browse(cr,uid,ids)[0]
+        pajak = obj.pkp
         tunj_pajak = obj.tunj_pajak
-        pjk_no_alw = obj. pjk_no_alw
+        pjk_no_alw = obj.tampung1
         cek = pajak - tunj_pajak
         while cek < pjk_no_alw :
-            tunj_pajak = tunj_pajak + 1
-        self.write(cr,uid,ids,{'tunj_pajak': tunj_pajak},context=context)
-        coo = self.pkp(cr,uid,ids,context=None) 
-        self.write(cr,uid,ids,{'pkp':coo},context=context)
+            tpj = tunj_pajak
+            tunj_pajak = obj.tunj_pajak * 1.5
+            self.write(cr,uid,ids,{'tunj_pajak': tunj_pajak},context=context)
+            coo = self.pkp(cr,uid,ids,context=None) 
+            cek2 = obj.pkp - obj.tunj_pajak
+            if cek2 > pjk_no_alw :
+                self.write(cr,uid,ids,{'tunj_pajak': tunj_pajak},context=context)
+                coo = self.pkp(cr,uid,ids,context=None) 
+            cek = obj.pkp - obj.tunj_pajak
         return True
         
     def libur (self,cr,uid,ids,context=None):
@@ -793,9 +809,9 @@ class hr_payslip(osv.osv):
         'rapel' : fields.float('rapel'),
         'rapel_over' : fields.float('rapel overtime'),
         'thr' : fields.float('THR'),
-        'tampung1' : fields.float('tampung'),
-        'tampung2' :fields.float('tampung'),
-        'tampung_pajak' :fields.float('tampung'),
+        'tampung1' : fields.float('tampung1'),
+        'tampung2' :fields.float('tampung2'),
+        'tampung_pajak' :fields.float('tampung_pajak'),
         'tj_pjk' :fields.float('Tunjangan Pajak Tanda alw')
     } 
                      
@@ -953,7 +969,8 @@ class hr_holidays(osv.osv):
                     day_too= record.date_to
                     day_took = datetime.strptime(day_too, DATETIME_FORMAT ).month
                     if days != day_took :
-                        raise osv.except_osv(_('Warning!'),_('Pengajuan Cuti Harus Pada Bulan Yang Sama.')) 
+                        x=5
+                        #raise osv.except_osv(_('Warning!'),_('Pengajuan Cuti Harus Pada Bulan Yang Sama.')) 
         return True
         
     def _aac(self, cr, uid, ids, name, args, context=None):
@@ -1037,11 +1054,56 @@ class hr_employee(osv.osv):
                     yyy  += xyz   
                     zz += xxx               
             result[reim.id] =zz + yyy
-        return result       
-    
+        return result      
+         
+    def lembur(self,cr,uid,ids,context=None):
+        self.write(cr,uid,ids,{'status_lembur':'lembur'},context=context)
+        return True
+
+    def tidak_lembur(self,cr,uid,ids,status_lembur,context=None):
+        self.write(cr,uid,ids,{'status_lembur':'tidak_lembur'},context=context)
+        return True   
+
     _columns = {
         'alokasi' : fields.function(_aloc,string='Alokasi Cuti Tahunan'),
         'cuti_tahunan': fields.function(_cuti, string='Jatah Cuti Tahunan'),
+        'status_lembur' : fields.selection([('lembur','Lembur'),('tidak_lembur','Tidak Lembur')],'Status Lembur'),
+    }
+
+    _defaults = {
+        'status_lembur' : 'tidak_lembur'
     }
     
 hr_employee()
+
+class hr_attendance(osv.osv):
+    _name = "hr.attendance"
+    _inherit = "hr.attendance"
+    _description = "Attendance"
+
+    def statuss(self, cr, uid, arg, field, ids, context=None):
+        import pdb;pdb.set_trace()
+        obj=self.browse(cr,uid,ids)[0]
+        status = obj.employee_id.status_lembur
+        if status == 'lembur':
+            self.write(cr,uid,ids,{'status':'Lembur'},context=None)
+        else :
+            self.write(cr,uid,ids,{'status':'Tidak Lembur'},context=None)
+        return True
+
+    _columns ={
+        'status' : fields.function(statuss,type='char',string='Status Lembur',store=True, readonly=True, help='jika di centang maka lembur and jika tidak maka tidak lembur')
+
+    }
+    '''def status_lembur(self,cr,uid,employee_id,context=None):
+        obj=self.browse(cr,uid,ids)[0]
+        #status = obj.employee_id.status_lembur
+        status = employee_id.status_lembur
+        if status == 'lembur' and obj.action == 'sign_in':
+            self.write(cr,uid,ids,{'status':True},context=None)
+        else :
+            self.write(cr,uid,ids,{'status':False},context=None)
+        return True
+    '''
+    
+hr_attendance()
