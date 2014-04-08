@@ -131,7 +131,7 @@ class permohonan_recruit(osv.osv):
         'divisi_id' : fields.many2one('hr.divisi','Divisi',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}), 
         'bagian_id' : fields.many2one('hr.bagian','Bagian',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'level_id' :fields.many2one('hr.level','Level',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),   
-        'status_rec' : fields.selection([('new','new'),('filter','filter'),('execute','execute'),('in_progres','in progres'),('pending','pending')],string='Status Record'),  
+        'status_rec' : fields.selection([('new','new'),('filter','filter'),('execute','execute'),('in_progres','in progres'),('pending','pending')],string='Status Record',readony=True),  
             }
 
     _defaults = {
