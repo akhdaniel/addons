@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 
-access_hr_job,hr.job,model_hr_job,group_hr_user,1,0,0,0
+access_hr_job,hr.job,model_hr_job,group_hr_user,1,1,0,0
 access_hr_recruit_nilai_interview,hr_recruit.nilai_interview,model_hr_recruit_nilai_interview,group_hr_user,1,1,1,0
 access_hr_recruit_agama,hr_recruit.agama,model_hr_recruit_agama,group_hr_user,1,1,1,0
 access_hr_recruit_kota,hr_recruit.kota,model_hr_recruit_kota,group_hr_user,1,1,1,0
@@ -15,6 +15,7 @@ access_hr_recruit_rwt_krj,hr_recruit.rwt_krj,model_hr_recruit_rwt_krj,group_hr_u
 access_hr_recruit_kon1,hr_recruit.kon1,model_hr_recruit_kon1,group_hr_user,1,1,1,0
 access_hr_recruit_kon2,hr_recruit.kon2,model_hr_recruit_kon2,group_hr_user,1,1,1,0
 access_hr_applicant,hr.applicant,model_hr_applicant,group_hr_user,1,1,1,0
+
 
 access_hr_job_manager,hr.job,model_hr_job,group_hr_manager,1,1,1,1
 access_hr_recruit_pendidikan_manager,hr_recruit.pendidikan_manager,model_hr_recruit_pendidikan,group_hr_manager,1,1,1,0

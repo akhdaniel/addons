@@ -7,7 +7,7 @@
             model="hr.payslip"
             name="pph"
             rml="hrd_ppi/report/pph/pph.rml"
-            string="print PPH21"
+            string="print  PPH21"
             auto="False" 
             header="False" />
     </data>
