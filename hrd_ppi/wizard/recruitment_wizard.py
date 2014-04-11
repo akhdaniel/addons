@@ -18,6 +18,7 @@ class report_recruit(osv.osv_memory):
 			('sumary_monitoring_progres','Sumary Monitoring Progres Interview')), 'Report',required=True),
 		'year_id' : fields.many2one('report.tahun','Tahun'),
 		'department' : fields.many2one('hr.department','Department'),
+		'divisi' : fields.many2one('hr.divisi','Divisi'),
 		'star_date' : fields.date('Mulai Dari'),
 		'end_date' : fields.date('Sampai'),
 	}
@@ -36,9 +37,9 @@ class report_recruit(osv.osv_memory):
 	def eksport_report(self, cr, uid, ids, context=None):
 		data = []
 		val = self.browse(cr,uid,ids)[0]
-		rpt = val.report
-		year = val.year_id.name
+		rpt = val.report		
 		if rpt == 'data_seleksi' :
+			year = str(val.year_id.name)
 			#ambil semua data yang berkaitan dengan data seleksi pelamar
 			obj_seleksi = self.pool.get('hr.seleksi_pelamar')
 			src = obj_seleksi.search(cr,uid,[('tahun','=',year)])
@@ -69,7 +70,10 @@ class report_recruit(osv.osv_memory):
 			star = val.star_date
 			end = val.end_date
 			obj_pemenuhan = self.pool.get('hr_pemenuhan')
-			src = obj_pemenuhan.search(cr,uid,[('department','=',dept),('tgl_permintaan','>=',star),('tgl_permintaan','<=',end)])
+			if dept == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('tgl_permintaan','>=',star),('tgl_permintaan','<=',end)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('department','=',dept),('tgl_permintaan','>=',star),('tgl_permintaan','<=',end)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
 			for rpts in brw_data :
 				data.append([rpts.no_pmintaan, rpts.tgl_permintaan, rpts.department, rpts.jabatan, rpts.jml_prmintaan,rpts.aktifitas,
@@ -86,11 +90,215 @@ class report_recruit(osv.osv_memory):
 			datas['csv'] = data
 			return {
 				'type': 'ir.actions.report.xml',
-				'report_name': 'pemenuhan.recruitment',
+				'report_name': 'pemenuhan.recruitmen',
 				'nodestroy': True,
 				'datas': datas,
 				}
 			
+		if rpt == 'list_pemenuhan_harian' :
+			div = val.divisi.name
+			star = val.star_date
+			end = val.end_date
+			obj_pemenuhan = self.pool.get('hr.pemenuhan_kebutuhan')
+			if div == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('bul_har','=','Harian'),('tgl_permohonan','>=',star),('tgl_permohonan','<=',end)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('bul_har','=','Harian'),('div','=',div),('tgl_permohonan','>=',star),('tgl_permohonan','<=',end)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([rpts.bul_har, rpts.div, rpts.dept, rpts.bagian, rpts.jabatan,rpts.level,
+					rpts.tgl_permohonan, rpts.status_wawancara, rpts.status_pemenuhan, rpts.jumlah_kebutuhan, rpts.jumlah_terpenuhi,
+					rpts.kekurangan_pmenuhan, rpts.status_penempatan, rpts.ket, rpts.review])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'pemenuhan.kebutuhan.harian',
+				'nodestroy': True,
+				'datas': datas,
+				}
+
+		if rpt == 'list_pemenuhan_bulanan' :
+			div = val.divisi.name
+			star = val.star_date
+			end = val.end_date
+			obj_pemenuhan = self.pool.get('hr.pemenuhan_kebutuhan')
+			if div == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('bul_har','=','Bulanan'),('tgl_permohonan','>=',star),('tgl_permohonan','<=',end)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('bul_har','=','Bulanan'),('div','=',div),('tgl_permohonan','>=',star),('tgl_permohonan','<=',end)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([rpts.bul_har, rpts.div, rpts.dept, rpts.bagian, rpts.jabatan,rpts.level,
+					rpts.tgl_permohonan, rpts.status_wawancara, rpts.status_pemenuhan, rpts.jumlah_kebutuhan, rpts.jumlah_terpenuhi,
+					rpts.kekurangan_pmenuhan, rpts.status_penempatan, rpts.ket, rpts.review])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'pemenuhan.kebutuhan.harian',
+				'nodestroy': True,
+				'datas': datas,
+				}
+
+		if rpt == 'sumary_kebutuhan_harian' :
+			dep = val.department.name
+			year = str(val.year_id.name)
+			obj_pemenuhan = self.pool.get('hr.sumary_kebutuhan_harian')
+			if dep == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('tahun','=',year)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([rpts.tahun, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.ket])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'sumary.kebutuhan.harian',
+				'nodestroy': True,
+				'datas': datas,
+				}
+
+		if rpt == 'sumary_kebutuhan_bulanan' :
+			dep = val.department.name
+			year = str(val.year_id.name)
+			obj_pemenuhan = self.pool.get('hr.sumary_kebutuhan')
+			if dep == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('tahun','=',year)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([rpts.tahun, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.ket])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'sumary.kebutuhan.harian',
+				'nodestroy': True,
+				'datas': datas,
+				}
+
+		if rpt == 'permintaan_recruitment' :
+			dep = val.department.name
+			year = val.year_id.name
+			obj_pemenuhan = self.pool.get('hr.lap_permintaan_karyawan')
+			if dep == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('tahun','=',year)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([ rpts.tahun, rpts.dep, rpts.posisi, rpts.jumlah, rpts.wkt_penempatan, rpts.pengalaman, rpts.usia, rpts.jenis_kelmain,
+					rpts.status, rpts.domisili,])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'laporan.permintaan.recruitment',
+				'nodestroy': True,
+				'datas': datas,
+				}
+
+		if rpt == 'detail_monitoring_progres' :
+			dep = val.department.name
+			year = str(val.year_id.name)
+			obj_pemenuhan = self.pool.get('hr.monitoring_recruitment')
+			if dep == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('tahun','=',year)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([ rpts.tahun, rpts.name, rpts.dep, rpts.test1_hrd, rpts.test2_hrd, rpts.test1_usr, rpts.test2_usr,
+				 rpts.approval, rpts.tes_kesehatan, rpts.ket, rpts.status])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'detail.monitoring.progres',
+				'nodestroy': True,
+				'datas': datas,
+				}
+
+		if rpt == 'sumary_monitoring_progres' :
+			dep = val.department.name
+			year = str(val.year_id.name)
+			obj_pemenuhan = self.pool.get('hr.sumary_monitoring')
+			if dep == "All" :
+				src = obj_pemenuhan.search(cr,uid,[('tahun','=',year)])
+			else :
+				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
+			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			for rpts in brw_data :
+				data.append([ rpts.tahun, rpts.dep, rpts.qty, rpts.test1, rpts.wawancara_hrd, rpts.wawancara1_usr, rpts.wawancara2_usr,
+				 rpts.approval, rpts.tes_kesehatan, rpts.pending])
+	
+			if context is None:
+				context = {}
+		
+			#persiapan parameter untuk excel report
+			nilai = self.read(cr,uid,ids)[0]
+			datas = {'ids':[nilai['id']]}
+			datas['model'] = 'hr_report.recruitment'
+			datas['form'] = nilai
+			datas['csv'] = data
+			return {
+				'type': 'ir.actions.report.xml',
+				'report_name': 'sumary.monitoring.progres.recruitment',
+				'nodestroy': True,
+				'datas': datas,
+				}
 report_recruit()
 
 class year(osv.osv_memory):
