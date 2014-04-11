@@ -13,11 +13,27 @@
                     </group>
                     <group>
                         <field name="year_id" attrs="{'required':[('report','=','data_seleksi')],'invisible': [('report','!=','data_seleksi')]}"/>
+                        <field name="year_id" attrs="{'required':[('report','=','sumary_kebutuhan_harian')],'invisible': [('report','!=','sumary_kebutuhan_harian')]}"/>
+                        <field name="year_id" attrs="{'required':[('report','=','sumary_kebutuhan_bulanan')],'invisible': [('report','!=','sumary_kebutuhan_bulanan')]}"/>
+                        <field name="year_id" attrs="{'required':[('report','=','permintaan_recruitment')],'invisible': [('report','!=','permintaan_recruitment')]}"/>
+                        <field name="year_id" attrs="{'required':[('report','=','detail_monitoring_progres')],'invisible': [('report','!=','detail_monitoring_progres')]}"/>
+                        <field name="year_id" attrs="{'required':[('report','=','sumary_monitoring_progres' )],'invisible': [('report','!=','sumary_monitoring_progres' )]}"/>
                         <field name="department" attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>
+                        <field name="department" attrs="{'invisible': [('report','!=','sumary_kebutuhan_harian')]}"/>
+                        <field name="department" attrs="{'invisible': [('report','!=','sumary_kebutuhan_bulanan')]}"/>
+                        <field name="department" attrs="{'invisible': [('report','!=','permintaan_recruitment')]}"/>
+                        <field name="department" attrs="{'invisible': [('report','!=','detail_monitoring_progres')]}"/>
+                        <field name="department" attrs="{'invisible': [('report','!=','sumary_monitoring_progres' )]}"/>
+                        <field name="divisi" attrs="{'invisible': [('report','!=','list_pemenuhan_harian')]}"/>
+                        <field name="divisi" attrs="{'invisible': [('report','!=','list_pemenuhan_bulanan')]}"/>
                     </group>
                     <group>
                         <field name='star_date' attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>
-                        <field name='end_date' attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>   
+                        <field name='end_date' attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/> 
+                        <field name='star_date' attrs="{'invisible': [('report','!=','list_pemenuhan_harian')]}"/>
+                        <field name='end_date' attrs="{'invisible': [('report','!=','list_pemenuhan_harian')]}"/>  
+                        <field name='star_date' attrs="{'invisible': [('report','!=','list_pemenuhan_bulanan')]}"/>
+                        <field name='end_date' attrs="{'invisible': [('report','!=','list_pemenuhan_bulanan')]}"/>  
                     </group> 
                     <footer>
                 <button string='export' type='object' name='eksport_report'/>
