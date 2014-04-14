@@ -396,7 +396,7 @@
             parent='list_pemenuhan_rec' 
             sequence='32' action='sumary_pemenuhan_harian'/>
 
-    <menuitem name="Laporan Monitoring Sasaran Mutu"
+    <!--menuitem name="Laporan Monitoring Sasaran Mutu"
         id='laporan_monitoring'
         parent='menu_hr_report' 
         sequence='34'/>
@@ -409,7 +409,7 @@
         <menuitem name="Detail Monitoring Sasaran Mutu"
         id='detail_laporan_monitoring'
         parent='laporan_monitoring' 
-        sequence='36' action="sumary_monitoring_recruitment" />
+        sequence='36' action="sumary_monitoring_recruitment" /-->
 
     <menuitem name="Laporan Permintaan Recruitment"
         id='laporan_permintaan_karyawan'

@@ -149,6 +149,7 @@ class hierarcy_history(osv.osv):
     _columns= {
         'employee_id' : fields.many2one('hr.employee'),
         'status_karyawan' : fields.selection([('aktif','Aktif'),('tidak_aktif','Tidak Aktif')],'Status Karyawan'),
+        'tgl' : fields.date('Tanggal Perubahan'),
         'status_kerja' : fields.char('Status Pegawai'),
         'golongan' :fields.many2one('hr_employs.gol','Golongan'),
         'jabatan' : fields.many2one('hr.job','Jabatan'),
