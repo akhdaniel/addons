@@ -1642,7 +1642,7 @@ class pemenuhan_kebutuhan(osv.osv):
     _name = 'hr.pemenuhan_kebutuhan'
             
     _columns = {
-        'bul_har':fields.char('Bulanan/Harian'),
+        'bul_har':fields.char('Jenis Kebutuhan'),
         'div' :fields.char('Divison'),
         'dept' : fields.char('Department'),
         'bagian' : fields.char('Bagian'),
@@ -1655,7 +1655,7 @@ class pemenuhan_kebutuhan(osv.osv):
         'jumlah_terpenuhi' :fields.integer("Jumlah Terpenuhi"),
         'kekurangan_pmenuhan':fields.integer('Kekurangan Kebutuhan', readonly=True),
         'status_penempatan' :fields.char('status Penempatan'),
-        'ket' :fields.char('Kterangan'),
+        'ket' :fields.char('Keterangan'),
         'review' : fields.char('Review'),
         }  
 
@@ -1718,6 +1718,7 @@ class monitoring_recruitment(osv.osv):
         'tes_kesehatan' : fields.char('Test Kesehatan'),
         'ket' :fields.char('Keterangan'),
         'status': fields.char('status'),
+        'tahun' :fields.char('Tahun'),
     }
 monitoring_recruitment()
 
