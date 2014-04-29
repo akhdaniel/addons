@@ -1,1 +1,1 @@
-import hr_training
+import hierarcy
