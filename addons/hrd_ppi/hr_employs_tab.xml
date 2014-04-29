@@ -309,14 +309,16 @@
                                     </group>
                                 </page>
                                                                     
-                        <page string="Hierarchy History List">             
+                        <page string="Hierarchy History List">       
                             <field view_mode="tree" name='hierarcy_history' nolabel="1">
                                 <tree>
+                                    <field name='tgl'/>
                                     <field name='status_karyawan'/> 
                                     <field name='status_kerja'/> 
                                     <field name='golongan'/> 
                                     <field name='jabatan'/> 
                                     <field name='dept_track'/> 
+                                    <field name='lokasi'/>
                                 </tree>
                             </field>           
                         </page>           
