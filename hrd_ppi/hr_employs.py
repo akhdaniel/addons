@@ -55,6 +55,7 @@ class employee(osv.osv):
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
         'birthday':fields.date('Tanggal Lahir'),
+        #'loc_birthday' : fields.many2one('hr_recruit.kota','Kab./kota'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No ID',20),
         'no_pass':fields.char('No Passport',30),
@@ -88,7 +89,7 @@ class employee(osv.osv):
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
         'clas_id':fields.many2one('hr_employs.clas','Class'),
-        'title_id':fields.many2one('hr.title','Title'),
+        'title_id':fields.many2one('hr.title','Title/Jabatan'),
         'extitle_id':fields.many2one('hr.extitle','Ex Title'),
         'gol_id':fields.many2one('hr_employs.gol','Golongan'),
         'wfield_id':fields.many2one('hr_employs.wfield','Bidang Pekerjaan'),
@@ -123,6 +124,9 @@ class employee(osv.osv):
         'remaining_leaves' :fields.float('Remaining Legal Leavs',readonly=True),  
         'tgl_masuk' :fields.date('Tanggal Masuk'),
         'hierarcy_history' : fields.one2many('hr.hierarcy_history','employee_id','Hieracy History'),
+        'work_email' : fields.char('Email Kantor'),
+        'work_phone' : fields.char('Telepon Kantor'),
+        'coach_id' : fields.many2one('hr.employee', 'Pelatih'),
         }
 
     _defaults = {    
@@ -384,6 +388,7 @@ class employee_objects_proxy(object_proxy):
             if res_ids:
                 # check the new values and store them into a dictionary
                 new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
+        import pdb;pdb.set_trace()
         # compare the old and new values and create audittrail log if needed
         self.process_data(cr, uid_orig, pool, res_ids, model, method, old_values, new_values, field_list)
         return res

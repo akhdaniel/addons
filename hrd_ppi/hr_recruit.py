@@ -297,8 +297,11 @@ class permohonan_recruit(osv.osv):
         self.write(cr,uid,ids,{'status_rec':'execute'},context=context)                                                                                                                                        
         return True  
 
-    def execute(self,cr, uid,ids, context=None): 
+    def execute(self,cr, uid,ids, context=None):
         hasil=self.browse(cr,uid,ids,context)[0] 
+        execute = hasil.applicant_ids
+        if execute == [] :
+            raise osv.except_osv(_('Peringatan!'),_('Pelamar Tidak Boleh Kosong.'))
         job_applicant_ids=hasil.applicant_ids[0]    
         obj_app=self.pool.get('hr.applicant')
         hasil_app=obj_app.browse(cr,uid,ids,context)[0]
@@ -403,43 +406,6 @@ class permohonan_recruit(osv.osv):
                 hr_sumary.write(cr,uid,[xxx.id],{'qty':qty,'test1':test},context=context)
         return True  
 
-    '''def daf_pelamar(self, cr,uid,ids, context=None):
-        import pdb;pdb.set_trace()
-        if context is None:
-                context= {}
-        context = dict(context, mail_create_nolog=True)
-        hr_status = self.pool.get('hr.daf_pelamar')
-        model_data = self.pool.get('ir.model.data')
-        act_window = self.pool.get('ir.actions.act_window')
-        hasil=self.browse(cr,uid,ids,context)[0] 
-        values = False
-        year =datetime.now().year
-        for obj in hasil.applicant_ids:
-            #values = {}
-            stat_id = obj.stat
-            name = obj.partner_name
-            hr_search = hr_status.search(cr,uid,[('stat','=',stat_id),('name','=',name)])
-            hr_brw = hr_status.browse(cr,uid,hr_search)
-            #if hr_brw == True :
-        for obj in hasil.applicant_ids:
-            values = hr_status.create(cr,uid,{
-                'applicant_id' :obj.id,
-                'name': name,
-                'pendidikan': obj.type_id.name,
-                'jurusan' : obj.jurusan_id.name,
-                'tanggal_lahir' : obj.tgl_lahir,
-                'usia': obj.age,
-                'sumber': obj.source_id.name,
-                'ref' : obj.ref,
-                'department' : obj.department_id.name,
-                'jabatan' :obj.job_id.name,
-                'tahun' : year,
-                #'stat' : 
-                })
-        self.write(cr, uid, [obj.id], {'st_pelamar': values}, context=context)
-        self.case_close(cr, uid, [obj.id], context)
-        return True                         				 
-    '''  
     def _check_sal(self, cr, uid, ids):
         for sal in self.browse(cr, uid, ids):
             sal_src = self.search(cr, uid, [('salary_proposed_botom_margin', '>', sal.salary_proposed_top_margin), ('salary_proposed_top_margin', '<', sal.salary_proposed_botom_margin)])
