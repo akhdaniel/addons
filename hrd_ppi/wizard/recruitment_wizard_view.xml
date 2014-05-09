@@ -22,7 +22,9 @@
                         <field name='end_date' attrs="{'invisible': [('report','not in',['laporan_pemenuhan','list_pemenuhan_harian','list_pemenuhan_bulanan'])]}"/>  
                     </group> 
                     <footer>
-                <button string='export' type='object' name='eksport_report'/>
+                <button string='Excel' type='object' name='eksport_report'/>
+                or
+                <button string='PDF' type='object' name='eksport_report_pdf'/>
                 or
                 <button string="Cancel" class="oe_link" special="cancel" />
             </footer>
