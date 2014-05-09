@@ -29,8 +29,8 @@ class report_recruit(osv.osv):
 	_defaults = {
 		'report' :'data_seleksi',
 		#'year_id' :1,
-		#'department' : 1, 
-		#'divisi' : 1,
+		'department' : 1, 
+		'divisi' : 1,
 		'star_date' : lambda *a: datetime.date.today().strftime('%Y-%m-%d'),
 		'end_date' : lambda *a: datetime.date.today().strftime('%Y-%m-%d'),
 		'status' : 'done'
