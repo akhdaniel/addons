@@ -346,5 +346,6 @@ class year(osv.osv_memory):
 
 	_columns = {
 		'name' : fields.char('Tahun'),
+		'id' : fields.integer('id', readonly=True),
 	}
 year()	
