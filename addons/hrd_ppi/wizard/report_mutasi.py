@@ -222,7 +222,7 @@ class laporan_permintaan_recruitment(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-		              ('Tahun', 1, 70, 'text', lambda x, d, p: x[0]),
+		              ('No', 1, 70, 'text', lambda x, d, p: x[0]),
 		              ('Department', 1, 70, 'text', lambda x, d, p: x[1]),
 		              ('Posisi', 1, 70, 'text', lambda x, d, p: x[2]),
 		              ('Jumlah', 1, 70, 'text', lambda x, d, p: x[3]),
@@ -236,11 +236,11 @@ class laporan_permintaan_recruitment(report_xls):
 		]
 		
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
-		title = self.xls_row_template(cols_specs, ['Tahun','Department','Posisi','Jumlah','wkt Penempatan',
+		title = self.xls_row_template(cols_specs, ['No','Department','Posisi','Jumlah','wkt Penempatan',
 						'Pengalaman', 'Usia', 'Jenis Kelamin', 'Status', 'Domisili'])
-		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
+		self.xls_write_row_header(ws, 2, title, style, set_column_size=True)
 		 
-		row_count = 1
+		row_count = 3
 		for x in data['csv']:
 		    ws.write(row_count, 0, x[0])
 		    ws.write(row_count, 1, x[1])
@@ -356,3 +356,58 @@ class sumary_monitoring_progres_recruitment(report_xls):
 		pass
 
 sumary_monitoring_progres_recruitment('report.sumary.monitoring.progres.recruitment', 'hr_pemenuhan', 'addons/hrd_ppi/wizard/report_excel.mako', parser=ReportStatus, header=False)
+
+class daftar_pelamar(report_xls):
+
+	def generate_xls_report(self,parser,data,obj,wb):
+		ws = wb.add_sheet(('Detail Monitoring Progres'))
+		ws.panes_frozen = True
+		ws.remove_splits = True
+		ws.portrait = 0 # Landscape
+		ws.fit_width_to_pages = 1
+		cols_specs = [
+					  ('No', 1, 70, 'text', lambda x, d, p: x[0]),	
+		              ('Nama', 1, 70, 'text', lambda x, d, p: x[1]),
+		              ('Subjek', 1, 70, 'text', lambda x, d, p: x[2]),
+		              ('Posisi Diaplikasikan', 1, 70, 'text', lambda x, d, p: x[3]),
+		              ('Jenis Kelamin', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('Usia', 1, 70, 'text', lambda x, d, p: x[5]),
+		              ('Status', 1, 70, 'text', lambda x, d, p: x[6]),
+		              ('Pendidikan', 1, 70, 'text', lambda x, d, p: x[7]),
+		              ('Jurusan', 1, 70, 'text', lambda x, d, p: x[8]),
+		              ('Perguruan Tinggi', 1, 70, 'text', lambda x, d, p: x[9]),
+		              ('Pengalaman', 1, 70, 'text', lambda x, d, p: x[10]),
+		              ('AI. Domisili (Kota)', 1, 70, 'text', lambda x, d, p: x[11]),
+		              ('Phone', 1, 70, 'text', lambda x, d, p: x[12]),
+		              ('Email', 1, 70, 'text', lambda x, d, p: x[13]),
+		              
+		              
+		]
+		
+		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
+		title = self.xls_row_template(cols_specs, ['No','Nama','Subjek','Posisi Diaplikasikan','Jenis Kelamin','Usia',
+						'Status','Pendidikan','Jurusan','Perguruan Tinggi', 'Pengalaman','AI. Domisili (Kota)', 'Phone','Email',])
+		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
+		 
+		row_count = 1
+		for x in data['csv']:
+		    ws.write(row_count, 0, x[0])
+		    ws.write(row_count, 1, x[1])
+		    ws.write(row_count, 2, x[2])
+		    ws.write(row_count, 3, x[3])
+		    ws.write(row_count, 4, x[4])
+		    ws.write(row_count, 5, x[5])
+		    ws.write(row_count, 6, x[6])
+		    ws.write(row_count, 7, x[7])
+		    ws.write(row_count, 8, x[8])
+		    ws.write(row_count, 9, x[9])
+		    ws.write(row_count, 10, x[10])
+		    ws.write(row_count, 11, x[11])
+		    ws.write(row_count, 12, x[12])
+		    ws.write(row_count, 13, x[13])
+
+		    row_count += 1
+		     
+		pass
+
+daftar_pelamar('report.daftar.pelamar', 'hr_pemenuhan', 'addons/hrd_ppi/wizard/report_excel.mako', parser=ReportStatus, header=False)

@@ -4,3 +4,4 @@ import master_title
 import contract
 import wizard
 import report
+import attendee
