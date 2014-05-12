@@ -4,6 +4,14 @@ from openerp.osv import fields, osv
 class hr_contract(osv.osv):
     _name = 'hr.contract'
     _inherit = 'hr.contract'
+
+    _columns = {
+    	'active' : fields.boolean('status'),
+    }
+
+    _defaults = {
+    	'active' : True,
+    }
     
     def onchange_employee(self, cr, uid, ids, employee_id):
         employ  = self.pool.get('hr.employee').browse(cr,uid,[employee_id],)[0]
