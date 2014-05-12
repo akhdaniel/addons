@@ -388,7 +388,7 @@ class employee_objects_proxy(object_proxy):
             if res_ids:
                 # check the new values and store them into a dictionary
                 new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         # compare the old and new values and create audittrail log if needed
         self.process_data(cr, uid_orig, pool, res_ids, model, method, old_values, new_values, field_list)
         return res

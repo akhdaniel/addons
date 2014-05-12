@@ -100,7 +100,7 @@ class permohonan_recruit(osv.osv):
         'jurusan_ids':fields.one2many('hr_recruit.jurusan','permohonan_recruit_id','Jurusan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'pengalaman':fields.integer('Pengalaman (min-th)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],string='Usia (max)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]},required=True),
+        'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],string='Jenis Kelamin',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'wkt_pemohon':fields.date('Permintaan Pemohon',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]},required=True),
         'wkt_rekruter':fields.date('Kesanggupan Rekruter'),
@@ -614,7 +614,7 @@ class hr_applicant(osv.osv):
                                                      'work_location2':applicant.lokasi_id,
                                                      'ptkp_id':applicant.ptkp.id,
                                                     })
-                    
+                
                 self.write(cr, uid, [applicant.id], {'emp_id': emp_id}, context=context)
                 self.case_close(cr, uid, [applicant.id], context)
             else:
@@ -1117,7 +1117,7 @@ class hr_applicant(osv.osv):
         'daf_pelamar_ids' : fields.one2many('hr.daf_pelamar','applicant_id','Daftar Pelamar'),
         'ref' :fields.char('Ref'),
         'lokasi_id'  : fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor',required=True), 
-        'ptkp' : fields.many2one('hr.ptkp','Status Pajak', required=True),
+        'ptkp' : fields.many2one('hr.ptkp','Status Pajak'),
         'stat': fields.float('stat'),
         'st_pelamar' :fields.many2one('hr.seleksi_pelamar','status')
         }
