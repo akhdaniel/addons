@@ -1,0 +1,18 @@
+<openerp>
+    <data>
+        <!-- scheduler : process import -->
+        <record forcecreate="True" model="ir.cron" id="slave_cron_process_export">
+            <field name="name">Export Account Move and Delivery Orders and create ZIP file</field>
+            <field name="active">True</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">50</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'vit.sync.slave.uploader'"/>
+            <field name="function" eval="'cron_process_export'"/>
+            <field name="args" eval="'()'"/>
+        </record> 
+           
+    </data>
+</openerp>

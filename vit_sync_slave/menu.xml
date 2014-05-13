@@ -1,0 +1,20 @@
+<openerp>
+  <data>
+  
+    <record id="action_process_export" model="ir.actions.server">
+        <field name="name">Process Export</field>
+        <field name="condition">True</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">action = pool.get('vit.sync.slave.uploader').menu_process_export(cr, uid, context)</field>
+    </record>
+
+    <record id="ir_open_partial_move_wizard" model="ir.values">
+        <field eval="'client_action_multi'" name="key2"/>
+        <field eval="'account.move'" name="model"/>
+        <field name="name">Process Export</field>
+        <field eval="'ir.actions.server,%d'%action_process_export" name="value"/>
+    </record>
+
+ </data>
+</openerp>
