@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_chain_tree">
+            <field name="name">ea_import.chain.tree</field>
+            <field name="model">ea_import.chain</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Import Chain">
+                    <field name="name"/>
+                    <field name="input_file"/>
+                    <field name="header"/>
+                    <field name="link_ids" nolabel="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_chain_form">
+            <field name="name">ea_import.chain.tree</field>
+            <field name="model">ea_import.chain</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Import Chain" col="8">
+                    <group colspan="2" col="2">
+                        <field name="name" colspan="2"/>
+                        <field name="input_file" colspan="2"/>
+                        <field name="header" colspan="2"/>
+                        <field name="separator" colspan="2"/>    
+                        <field name="delimiter" colspan="2"/>
+                        <field name="charset" colspan="2"/>
+                        <button string="Import Data" type="object" name="import_to_db" icon="terp-stock_effects-object-colorize" colspan="2"/>
+                    </group>
+                    <group colspan="6">
+                        <field name="link_ids" nolabel="1" colspan="8" height="300" context="{'chain_id': active_id}"/>
+                    </group>
+                    <group colspan="8">
+                        <field name="result_ids" nolabel="1" colspan="8" height="600" context ="{'chain_id': active_id}"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="ea_import_chain_action">
+            <field name="name">Import Chain</field>
+            <field name="res_model">ea_import.chain</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ea_import_chain_tree"/>
+	    <field name="target">current</field>
+        </record>        
+
+
+        <menuitem name="Import Chains" id="ea_import_chain_menu" parent="ea_import_menu" action="ea_import_chain_action"/>
+    </data>
+</openerp>

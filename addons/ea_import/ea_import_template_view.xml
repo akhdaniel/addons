@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_template_tree">
+            <field name="name">ea_import.template.tree</field>
+            <field name="model">ea_import.template</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Import Template">
+                    <field name="name"/>
+                    <field name="target_model_id"/>
+                    <field name="test_input_file"/>
+                    <field name="update"/>
+                    <field name="update_current"/>
+                    <field name="create_new"/>
+                    <field name="line_ids" nolabel="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_template_form">
+            <field name="name">ea_import.template.form</field>
+            <field name="model">ea_import.template</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="ea_orders Update History" col="8">
+                    <group colspan="2" col="4">
+                        <field name="name" colspan="4"/>
+                        <field name="target_model_id" colspan="4"/>
+                        <separator colspan="4"/>
+                        <field name="update" colspan="2"/>
+                        <field name="update_current" colspan="2" attrs="{'invisible': [('update', '=', False)]}"/>
+                        <field name="create_new" colspan="4"/>
+                    </group>
+                    <group colspan="6">
+                        <field name="line_ids" nolabel="1" colspan="8" height="300" context="{'template_id': active_id, 'target_model_id': target_model_id}"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="ea_import_template_action">
+            <field name="name">Import Tool</field>
+            <field name="res_model">ea_import.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ea_import_template_tree"/>
+	    <field name="target">current</field>
+        </record>        
+
+
+        <menuitem name="Import Tool" id="ea_import_menu" parent="base.menu_administration"/>
+        <menuitem name="Templates" id="ea_import_template_menu" parent="ea_import_menu" action="ea_import_template_action"/>
+    </data>
+</openerp>
