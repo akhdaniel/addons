@@ -9,9 +9,93 @@
             <field name="arch" type="xml">
                 <field name="employee_id" position="replace">
                     <field name="employee_id" on_change="onchange_employee(employee_id)"/>
-                    <field name='active'/>
+                    <field name='status'/>
+                    <field name='stat'/>
+                </field>
+                <field name='date_end' position='replace'>
+                    <field name='date_end' on_change='onchange_tahun(date_end)' attrs="{'readonly': [('stat','=','open')]}"/>
                 </field>
             </field>
         </record>
+
+        <record id="hr_contract_view_tree2" model="ir.ui.view">
+            <field name="name">hr.contract.view.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Contracts"> 
+                    <field name='status'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_tree1" model="ir.ui.view">
+            <field name="name">hr.contract.view.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Contracts" position='attributes'> 
+                    <attribute name="colors">red:status==False</attribute>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="tab_form_view_contact">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="before">
+                    <group string="Informasi Kontrak">
+                        <label for="status_contract"/>
+                        <div>
+                            <field name="status_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="no_contract"/>
+                        <div>
+                            <field name="no_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="tanggal"/>
+                        <div>                          
+                            <field name="tanggal" class="oe_inline"/>
+                        </div>                     
+                        <label for="warning_hari"/>
+                        <div>                          
+                            <field name="warning_hari" class="oe_inline">Hari</field>
+                        </div> 
+                    </group>                   
+                </xpath>
+            </field>
+        </record>
+
+        <record forcecreate="1" id="ppi_status_contract" model="ir.cron">
+            <field name="name">Status Kontrak Non Aktif</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract'" name="model" />
+            <field eval="'status_employee'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-05-13 07:11:00"</field>
+        </record>
+
+        <record forcecreate="1" id="ppi_batas_contract" model="ir.cron">
+            <field name="name">Batas Aktif Kontrak Dalam Hari</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract'" name="model" />
+            <field eval="'duration_employee'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-05-13 07:11:00"</field>
+        </record>
+
     </data>
 </openerp>

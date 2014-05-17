@@ -26,15 +26,15 @@ class report_recruit(osv.osv):
 			('pending','Pending'),
 			('all','ALL')), 'Status'),
 	}
-	_defaults = {
-		'report' :'data_seleksi',
-		'year_id' :8,
-		'department' : 1, 
-		'divisi' : 1,
-		'star_date' : lambda *a: datetime.date.today().strftime('%Y-%m-%d'),
-		'end_date' : lambda *a: datetime.date.today().strftime('%Y-%m-%d'),
-		'status' : 'done'
-	}
+	#_defaults = {
+	#	'report' :'data_seleksi',
+	#	'year_id' :8,
+	#	'department' : 1, 
+	#	'divisi' : 1,
+	#	'star_date' : lambda *a: datetime.date.today().strftime('%Y-%m-%d'),
+	#	'end_date' : lambda *a: datetime.date.today().strftime('%Y-%m-%d'),
+	#	'status' : 'done'
+	#}
 
 
 	def eksport_report(self, cr, uid, ids, context=None):
