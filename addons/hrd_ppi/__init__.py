@@ -5,3 +5,4 @@ import contract
 import wizard
 import report
 import attendee
+import warning

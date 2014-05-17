@@ -55,7 +55,6 @@ class employee(osv.osv):
         'kota_id':fields.many2one('hr_recruit.kota','Tempat Lahir'),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
         'birthday':fields.date('Tanggal Lahir'),
-        #'loc_birthday' : fields.many2one('hr_recruit.kota','Kab./kota'),
         'country_id': fields.many2one('res.country', 'Kewarganegaraan'),
         'ktp':fields.char('No ID',20),
         'no_pass':fields.char('No Passport',30),
@@ -127,6 +126,7 @@ class employee(osv.osv):
         'work_email' : fields.char('Email Kantor'),
         'work_phone' : fields.char('Telepon Kantor'),
         'coach_id' : fields.many2one('hr.employee', 'Pelatih'),
+        #'status_contract' : fields.selection(([('aktif','Aktif'),('hampir_habis','Hampir Habis'),('nonaktif','Tidak Aktif')],'Jenis Kelamin'),
         }
 
     _defaults = {    
