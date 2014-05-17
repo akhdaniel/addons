@@ -6,7 +6,7 @@
         <field name="condition">True</field>
         <field name="model_id" ref="account.model_account_move"/>
         <field name="state">code</field>
-        <field name="code">action = pool.get('vit.sync.slave.uploader').menu_process_export(cr, uid, context)</field>
+        <field name="code">action = pool.get('vit.sync.slave.uploader').menu_process_am_export(cr, uid, context)</field>
     </record>
 
     <record id="ir_open_partial_move_wizard" model="ir.values">

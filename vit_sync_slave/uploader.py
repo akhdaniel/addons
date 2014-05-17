@@ -6,12 +6,16 @@ from openerp import netsvc
 import openerp.tools
 from openerp.tools.translate import _
 import csv
+import os
+import zipfile
+from shutil import make_archive
+import shutil
 
 _logger = logging.getLogger(__name__)
 
 class vit_sync_slave_uploader(osv.osv):
 	_name = "vit.sync.slave.uploader"
-	path = '/Users/akhmaddanielsembiring'
+	path = '/home/wn/papua'
 
 	####################################################################################
 	# proses import dari menu More..
@@ -20,6 +24,7 @@ class vit_sync_slave_uploader(osv.osv):
  		################################################################################
 		# id yg akan diproses
 		################################################################################
+		
 		active_ids 		= context['active_ids']
 		_logger.info('processing from menu. active_ids=%s' % (active_ids)) 
 		self.actual_process_am_export(cr, uid, active_ids, context)
@@ -61,8 +66,10 @@ class vit_sync_slave_uploader(osv.osv):
 	#	4. upload ke server via FTP/HTTP
 	####################################################################################
 	def actual_process_am_export(self, cr, uid, active_ids, context=None):
-		process_move(cr, uid, context)
-		zip_files(cr, uid, context)
+		self.process_move(cr, uid, active_ids, context)
+		self.zip_files(cr, uid, context)
+		import pdb;pdb.set_trace()
+		self.send_email (cr, uid, context)
 		return True
 
 	####################################################################################
@@ -73,7 +80,8 @@ class vit_sync_slave_uploader(osv.osv):
 	#	4. upload ke server via FTP/HTTP
 	####################################################################################
 	def actual_process_sm_export(self, cr, uid, active_ids, context=None):
-		process_stock_picking(cr, uid, context)
+		process_stock_picking(cr, uid, active_ids, context)
+
 		zip_files(cr, uid, context)
 		return True
 	
@@ -81,18 +89,17 @@ class vit_sync_slave_uploader(osv.osv):
 	#	1. cari account_move dan account_move_line yang exported = false
 	#	2. tulis ke file account_move.csv
 	####################################################################################
-	def process_move(self, cr, uid, context=None):
+	def process_move(self, cr, uid, active_ids, context=None):
 		#########################################################################
 		# open file csv and process account move
 		#########################################################################
-		with open(path + '/move.csv', 'wb') as f:
+		with open(self.path + '/move.csv', 'wb') as f:
 			writer = csv.writer(f)
 	
 			#########################################################################
 			# 1. process account move
 			#########################################################################
 			_logger.info('processing from cron. active_ids=%s' % (active_ids)) 
-			move_obj 	= self.pool.get('account.move')
 			writer.writerow([
 				'name',
 				'journal_id',
@@ -136,6 +143,8 @@ class vit_sync_slave_uploader(osv.osv):
 				'line.analytic_account_id.code',
 				'line.company_id.name'
 				])
+
+			move_obj 	= self.pool.get('account.move')
 			for move in move_obj.browse(cr,uid, active_ids, context):
 				
 				###############################################################
@@ -298,7 +307,19 @@ class vit_sync_slave_uploader(osv.osv):
 	# zip move.csv dan stock.csv
 	####################################################################################
 	def zip_files(self, cr, uid, context=None):
-		return True 
+		for root, dirs, files in os.walk(self.path):
+			for file in files:
+				my_archive = make_archive(file,'zip',"%s" % self.path)
+				_logger.info('Proses Zip file %s done di root=%s' % (file,self.path))
+
+				# my_archive = make_archive(file+"%s" % unicode(datetime.now()),'zip',"%s" % self.path)
+				# shutil.move(my_archive,self.path)
+				
+				# if make_archive(file,'zip',"%s" % self.path) != self.path:
+				# 		shutil.move(make_archive(file,'zip',"%s" % self.path),self.path)
+
+
+	
 
 	def send_email(self, cr, uid, context=None):
 		#kirim zip ke email 
@@ -307,11 +328,10 @@ class vit_sync_slave_uploader(osv.osv):
 		return True
 
 	def unzip_import():
+		return True
 
 		#unzip
 		#import : account_move account_move_line.
 		#import : stock_picking stock_picking_line
-
-
-
 vit_sync_slave_uploader()
+
