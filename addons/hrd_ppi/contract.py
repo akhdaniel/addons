@@ -25,9 +25,10 @@ class hr_contract(osv.osv):
         src_warning = warning_pool.search(cr,uid,[('name','=','kontrak')])
         brw_warning = warning_pool.browse(cr,uid,src_warning)[0]
         durasi = brw_warning.date_warning
-    	day_now = datetime.now()
-        day_end = datetime.strptime(dates,"%Y-%m-%d")
-        nb_of_days = (day_end - day_now).days + 1   
+        if dates != False :
+    		day_now = datetime.now()
+        	day_end = datetime.strptime(dates,"%Y-%m-%d")
+        	nb_of_days = (day_end - day_now).days + 1   
         if hari > durasi :
         	raise osv.except_osv(_('Peringatan!'),_('Kontrak Karyawan Tidak Boleh Duplikat'))
         else :
@@ -64,6 +65,10 @@ class hr_contract(osv.osv):
     _defaults = {
     	'status' : True,
     }
+
+    _sql_constraints = [
+    	('no_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
+    ]
 
     def onchange_employee(self, cr, uid, ids, employee_id):
         employ  = self.pool.get('hr.employee').browse(cr,uid,[employee_id],)[0]
@@ -143,6 +148,21 @@ class hr_contract(osv.osv):
             contract.append(employes.name)
         return super(hr_contract, self).unlink(cr, uid, ids, context)
 
+    def _check_dates(self, cr, uid, ids, context=None):
+    	dates =datetime.strftime(datetime.now(), "%Y-%m-%d")
+    	th = str(datetime.strptime(dates,"%Y-%m-%d").year)
+    	bl = str(datetime.strptime(dates,"%Y-%m-%d").month)
+    	hr = str(datetime.strptime(dates,"%Y-%m-%d").day)
+        for contract in self.read(cr, uid, ids, ['date_start', 'date_end'], context=context):
+             if contract['date_start'] and contract['date_end'] and contract['date_start'] > contract['date_end']:
+                 return False
+             if contract['date_start'] < dates :
+             	 return False 
+        return True
+
+    _constraints = [
+        (_check_dates, 'Kesalahan! Mulai Kontrak Harus Lebih Kecil Dari Habis Kontrak / Kontrak Mulai Tidak Boleh Lebih Kecil Dari Tanggal Sekarang.', ['date_start', 'date_end'])
+    ]
 hr_contract()
 
 class hr_employee_contract(osv.osv):
