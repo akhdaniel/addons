@@ -13,6 +13,7 @@ class hr_contract(osv.osv):
     _inherit = 'hr.contract'
 
     def create(self, cr, uid, values, context=None):
+    	import pdb;pdb.set_trace()
         employee_pool = self.pool.get('hr.employee')                 
         employee_id = values['employee_id']
         dates = values['date_end']
@@ -25,6 +26,9 @@ class hr_contract(osv.osv):
         src_warning = warning_pool.search(cr,uid,[('name','=','kontrak')])
         brw_warning = warning_pool.browse(cr,uid,src_warning)[0]
         durasi = brw_warning.date_warning
+    	day_now = datetime.now()
+        day_end = datetime.strptime(dates,"%Y-%m-%d")
+        nb_of_days = (day_end - day_now).days + 1   
         if hari > durasi :
         	raise osv.except_osv(_('Peringatan!'),_('Kontrak Karyawan Tidak Boleh Duplikat'))
         else :
@@ -35,7 +39,7 @@ class hr_contract(osv.osv):
 	                        )
 	        else :
 	        	employee_pool.write(cr, uid, [employee_id],
-	                        {'status_contract': True,'no_contract': name,'tanggal': dates, 'link_warning' : False}
+	                        {'status_contract': True,'no_contract': name,'tanggal': dates,'warning_hari': nb_of_days,'link_warning' : False}
 	                        )      
         return super(hr_contract, self).create(cr, uid, values, context)
 
@@ -119,6 +123,7 @@ class hr_contract(osv.osv):
 	    	return {'type': 'ir.actions.act_window_close'}
 
     def unlink(self, cr, uid, ids, context=None):
+    	#import pdb;pdb.set_trace()
         obj_cont = self.browse(cr,uid,ids)[0]
         employee_id = obj_cont.employee_id.id
         nama = obj_cont.name
@@ -135,6 +140,7 @@ class hr_contract(osv.osv):
         		obj_emp.write(cr,uid,[employee.id],{'link_warning':lama.id,'status_contract':False,'no_contract':False,'tanggal':False,
         			'warning_hari' : False})
         contract = []
+        import pdb;pdb.set_trace()
         for employes in self.browse(cr, uid, ids, context=context):
             contract.append(employes.name)
         return super(hr_contract, self).unlink(cr, uid, ids, context)
