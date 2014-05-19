@@ -56,19 +56,20 @@ class hr_contract(osv.osv):
     	return {'value':{'tahun':tahun}}
 
     _columns = {
+    	'name': fields.char('Contract Reference', size=64, required=True),
     	'status' : fields.boolean('Aktif'),
     	'employee_id': fields.many2one('hr.employee', "Employee",required=True),
     	'tahun' : fields.integer('tahun'),
     	'stat' : fields.char('status Kontak', readonly=True),
     	}
 
-    _defaults = {
-    	'status' : True,
-    }
-
     _sql_constraints = [
     	('no_contract_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
     ]
+
+    _defaults = {
+    	'status' : True,
+    }
 
     def onchange_employee(self, cr, uid, ids, employee_id):
         employ  = self.pool.get('hr.employee').browse(cr,uid,[employee_id],)[0]
