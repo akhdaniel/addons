@@ -64,7 +64,7 @@ class hr_contract(osv.osv):
     	}
 
     _sql_constraints = [
-    	('no_contract_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
+    	('no_contract_uniq','unique(wage)','No Kontrak Tidak Boleh Sama!')
     ]
 
     _defaults = {
