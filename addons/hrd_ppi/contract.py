@@ -13,7 +13,6 @@ class hr_contract(osv.osv):
     _inherit = 'hr.contract'
 
     def create(self, cr, uid, values, context=None):
-    	import pdb;pdb.set_trace()
         employee_pool = self.pool.get('hr.employee')                 
         employee_id = values['employee_id']
         dates = values['date_end']
@@ -140,7 +139,6 @@ class hr_contract(osv.osv):
         		obj_emp.write(cr,uid,[employee.id],{'link_warning':lama.id,'status_contract':False,'no_contract':False,'tanggal':False,
         			'warning_hari' : False})
         contract = []
-        import pdb;pdb.set_trace()
         for employes in self.browse(cr, uid, ids, context=context):
             contract.append(employes.name)
         return super(hr_contract, self).unlink(cr, uid, ids, context)
