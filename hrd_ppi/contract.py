@@ -119,7 +119,6 @@ class hr_contract(osv.osv):
 	    	return {'type': 'ir.actions.act_window_close'}
 
     def unlink(self, cr, uid, ids, context=None):
-    	#import pdb;pdb.set_trace()
         obj_cont = self.browse(cr,uid,ids)[0]
         employee_id = obj_cont.employee_id.id
         nama = obj_cont.name
@@ -136,7 +135,6 @@ class hr_contract(osv.osv):
         		obj_emp.write(cr,uid,[employee.id],{'link_warning':lama.id,'status_contract':False,'no_contract':False,'tanggal':False,
         			'warning_hari' : False})
         contract = []
-        import pdb;pdb.set_trace()
         for employes in self.browse(cr, uid, ids, context=context):
             contract.append(employes.name)
         return super(hr_contract, self).unlink(cr, uid, ids, context)
