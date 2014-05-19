@@ -67,7 +67,7 @@ class hr_contract(osv.osv):
     }
 
     _sql_constraints = [
-    	('no_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
+    	('no_contract_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
     ]
 
     def onchange_employee(self, cr, uid, ids, employee_id):
