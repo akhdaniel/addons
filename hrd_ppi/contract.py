@@ -118,16 +118,28 @@ class hr_contract(osv.osv):
     				obj_emp.write(cr, uid, [employee.id], {'warning_hari': nb_of_days, 'link_warning' : False})
 	    	return {'type': 'ir.actions.act_window_close'}
 
-	#def schedules_warning(self, cr, uid, ids, context=None):
-	#	schedule_pool = self.pool.get('warning.schedule')
-	#	schedule_src = schedule_pool.search(cr,uid,[('name','=','kontrak')])
-	#	schedule_brw = schedule_pool.browse(cr,uid,schedule_src)[0]
-	#	durasi = schedule_brw.date_warning
-	#	emp_pool = self.pool.get('hr.employee')
-	#	emp_src = emp_pool.search(cr,uid,[('warning_hari','<=',durasi)])
-	#	emp_brw = emp_pool.browse(cr,uid,emp_src)
-	#	for warning in emp_brw :
-
+    def unlink(self, cr, uid, ids, context=None):
+    	#import pdb;pdb.set_trace()
+        obj_cont = self.browse(cr,uid,ids)[0]
+        employee_id = obj_cont.employee_id.id
+        nama = obj_cont.name
+        obj_warning = self.pool.get('warning.schedule')
+	src_warning = obj_warning.search(cr,uid,[('name','=','kontrak')])
+	brw_warning = obj_warning.browse(cr,uid,src_warning)
+	lama = brw_warning[0]
+        obj_emp = self.pool.get('hr.employee')
+        src_emp = obj_emp.search(cr,uid,[('id','=',employee_id)])
+        src_brw = obj_emp.browse(cr,uid,src_emp)
+        for employee in src_brw :
+        	namas = employee.no_contract
+        	if nama == namas :
+        		obj_emp.write(cr,uid,[employee.id],{'link_warning':lama.id,'status_contract':False,'no_contract':False,'tanggal':False,
+        			'warning_hari' : False})
+        contract = []
+        import pdb;pdb.set_trace()
+        for employes in self.browse(cr, uid, ids, context=context):
+            contract.append(employes.name)
+        return super(hr_contract, self).unlink(cr, uid, ids, context)
 
 hr_contract()
 
@@ -144,5 +156,4 @@ class hr_employee_contract(osv.osv):
 		'warning_schedule' :fields.many2one('warning.schedule',''),
 		'warning_hari' : fields.integer('Habis Kontrak(Hari)'),
 	}	
-
 hr_employee_contract()
