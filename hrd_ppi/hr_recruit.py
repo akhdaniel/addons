@@ -1630,12 +1630,29 @@ pemenuhan_kebutuhan()
 class sumary_kebutuhan(osv.osv):
     _name = 'hr.sumary_kebutuhan'
 
+    def _varian(self, cr, uid, ids, args, vals, context=None):
+        varian={}
+        for var in self.browse(cr,uid,ids, context=context):
+            varian[var.id] = var.jum_terpenuhi - var.jum_kebutuhan
+        return varian
+
+    def _percentage(self, cr, uid, ids, args, vals, context=None) :
+        percentage={}
+        for per in self.browse(cr,uid,ids, context=context):
+            if per.jum_terpenuhi * 100 == 0 :
+                percentage[per.id] = 0
+            else :
+                percentage[per.id] = (per.jum_terpenuhi * 100) / per.jum_kebutuhan
+        return percentage 
+
     _columns = {
         'tahun' : fields.char('Tahun'),
         'bul_har':fields.char('Jenis Permohonan'),
         'dep' :fields.char('Department'),
         'jum_kebutuhan' : fields.float('Jumlah Kebutuhan'), 
         'jum_terpenuhi' : fields.float('Jumlah Terpenuhi'),
+        'varian':fields.function(_varian, type='float',method=True, store=False,string='Variance'),
+        'percentage' : fields.function(_percentage, type='float',method=True,store=False,string='Persentase'),
         'ket' : fields.char('Ket'),
     }
 sumary_kebutuhan()
@@ -1643,12 +1660,29 @@ sumary_kebutuhan()
 class sumary_kebutuhan(osv.osv):
     _name = 'hr.sumary_kebutuhan_harian'
 
+    def _varian(self, cr, uid, ids, args, vals, context=None):
+        varian={}
+        for var in self.browse(cr,uid,ids, context=context):
+            varian[var.id] = var.jum_terpenuhi - var.jum_kebutuhan
+        return varian
+
+    def _percentage(self, cr, uid, ids, args, vals, context=None) :
+        percentage={}
+        for per in self.browse(cr,uid,ids, context=context):
+            if per.jum_terpenuhi * 100 == 0 :
+                percentage[per.id] = 0
+            else :
+                percentage[per.id] = (per.jum_terpenuhi * 100) / per.jum_kebutuhan
+        return percentage  
+
     _columns = {
         'tahun' : fields.char('Tahun'),
         'bul_har':fields.char('Jenis Permohonan'),
         'dep' :fields.char('Department'),
         'jum_kebutuhan' : fields.float('Jumlah Kebutuhan'), 
         'jum_terpenuhi' : fields.float('Jumlah Terpenuhi'),
+        'varian':fields.function(_varian, type='float',method=True, store=False,string='Variance'),
+        'percentage' : fields.function(_percentage, type='float',method=True,store=False,string='Persentase'),
         'ket' : fields.char('Ket'),
     }
 sumary_kebutuhan()       
