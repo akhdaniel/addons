@@ -177,7 +177,7 @@
             <field name="res_model">hr.sumary_kebutuhan</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,graph</field>
-            <field name="context">{'search_default_jen_perm':1, 'search_default_dept':1}</field>
+            <field name="context">{'search_default_dept':1}</field>
             <field name="search_view_id" ref="view_sumary_kebutuhan"/>
         </record> 
 
@@ -188,10 +188,11 @@
                 <field name="arch" type="xml">
                     <tree string="List Pemenuhan Recruitment" editable="bottom" >
                         <field name='tahun' readonly='1'/>
-                        <field name='bul_har' readonly='1'/>
                         <field name="dep" readonly='1'/>
                         <field name="jum_kebutuhan" readonly='1'/>
                         <field name="jum_terpenuhi" readonly='1'/>
+                        <field name='varian' readonly='1'/>
+                        <field name='percentage' readonly='1'/>
                         <field name='ket'/>
                     </tree>
                 </field>
@@ -217,7 +218,6 @@
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Jenis Permohonan" name='jen_perm' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
                         <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
                     </group>
                 </search>
@@ -229,7 +229,7 @@
             <field name="res_model">hr.sumary_kebutuhan_harian</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,graph</field>
-            <field name="context">{'search_default_jen_perm':1, 'search_default_dept':1}</field>
+            <field name="context">{'search_default_dept':1}</field>
             <field name="search_view_id" ref="view_sumary_kebutuhan"/>
         </record> 
 
@@ -240,10 +240,11 @@
                 <field name="arch" type="xml">
                     <tree string="List Pemenuhan Recruitment" editable="bottom" >
                         <field name='tahun' readonly='1'/>
-                        <field name='bul_har' readonly='1'/>
                         <field name="dep" readonly='1'/>
                         <field name="jum_kebutuhan" readonly='1'/>
                         <field name="jum_terpenuhi" readonly='1'/>
+                        <field name='varian' readonly='1'/>
+                        <field name='percentage' readonly='1'/>
                         <field name='ket'/>
                     </tree>
                 </field>
