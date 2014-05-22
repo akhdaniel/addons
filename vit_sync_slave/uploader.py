@@ -1,7 +1,7 @@
 import logging
 from osv import osv, fields
 import time
-from datetime import datetime
+import datetime
 from openerp import netsvc
 import openerp.tools
 from openerp.tools.translate import _
@@ -10,12 +10,14 @@ import os
 import zipfile
 from shutil import make_archive
 import shutil
+import base64
 
 _logger = logging.getLogger(__name__)
 
 class vit_sync_slave_uploader(osv.osv):
 	_name = "vit.sync.slave.uploader"
 	path = '/home/wn/papua'
+
 
 	####################################################################################
 	# proses import dari menu More..
@@ -68,8 +70,8 @@ class vit_sync_slave_uploader(osv.osv):
 	def actual_process_am_export(self, cr, uid, active_ids, context=None):
 		self.process_move(cr, uid, active_ids, context)
 		self.zip_files(cr, uid, context)
-		import pdb;pdb.set_trace()
-		self.send_email (cr, uid, context)
+		
+		# self.send_email (cr, uid, context)
 		return True
 
 	####################################################################################
@@ -307,31 +309,50 @@ class vit_sync_slave_uploader(osv.osv):
 	# zip move.csv dan stock.csv
 	####################################################################################
 	def zip_files(self, cr, uid, context=None):
+		#Cari Root File
 		for root, dirs, files in os.walk(self.path):
 			for file in files:
+				#Buat Zip Saat
 				my_archive = make_archive(file,'zip',"%s" % self.path)
 				_logger.info('Proses Zip file %s done di root=%s' % (file,self.path))
 
-				# my_archive = make_archive(file+"%s" % unicode(datetime.now()),'zip',"%s" % self.path)
-				# shutil.move(my_archive,self.path)
+				zipfile = open('/home/wn/move.csv.zip','r')
+				attachment_pool = self.pool.get('ir.attachment')
+
+				#Simpan Di ir.attachment
+				attachment_id = attachment_pool.create(cr, uid, {
+				  	'name': "move.csv.zip",
+            		'datas': base64.encodestring(zipfile.read()),
+            		'datas_fname': "move.csv.zip",
+            		'res_model': 'account.move',
+            		})
+				# import pdb;pdb.set_trace()
+				thread_pool = self.pool.get('mail.thread')
 				
-				# if make_archive(file,'zip',"%s" % self.path) != self.path:
-				# 		shutil.move(make_archive(file,'zip',"%s" % self.path),self.path)
+				#Cari Id untuk email master.kokarfi@gmail.com
+				partner_obj = self.pool.get('res.partner')
+				partner_id_server = partner_obj.search(cr,uid,[('name','=','master.kokarfi@gmail.com')])
 
+				#Buat String waktu untuk label 
+				t = datetime.datetime.now()
+				date_str = t.strftime('%m/%d/%Y')
+				subject = t.strftime('%m/%d/%Y %X')
 
+				#Kirim Variable dengan message_post()
+				# post_vars = {'subject': "Client move.csv.zip per %s" % subject,'body': "Ini adalah Pesan dari Clien per tanggal %s" % subject,'partner_ids': partner_id_server,'attachment_ids':[attachment_id],}
+				post_vars = {'subject': "move.csv.zip",'body': "Ini adalah Pesan dari Clien per tanggal %s" % subject,'partner_ids': partner_id_server,'attachment_ids':[attachment_id],}
+
+				thread_pool.message_post(cr, uid, False,type="comment",subtype="mt_comment",context=context,**post_vars)
+				
+				return attachment_id
 	
-
-	def send_email(self, cr, uid, context=None):
-		#kirim zip ke email 
-		#insert ke mail.mail, berikut attachmentnya
-		
-		return True
-
-	def unzip_import():
-		return True
+	def unzip_import(self, cr, uid, context=None):
+		import pdb;pdb.set_trace()
+		print "HELLO unzip_import"
+		_logger.info('Proses Unzip')
+		# return True
 
 		#unzip
 		#import : account_move account_move_line.
 		#import : stock_picking stock_picking_line
 vit_sync_slave_uploader()
-
