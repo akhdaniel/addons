@@ -216,7 +216,7 @@ class vit_sync_slave_uploader(osv.osv):
 				# set is_processed = True 
 				###############################################################
 				cr.execute("UPDATE account_move set is_exported='t', exported_date='%s' where id = %s" % 
-					(datetime.now(), move.id))
+					(datetime.datetime.now(), move.id))
 
 	####################################################################################
 	#	1. cari stock.picking.out dan move_lines yang exported = false
@@ -304,7 +304,7 @@ class vit_sync_slave_uploader(osv.osv):
 				# set is_processed = True 
 				###############################################################
 				cr.execute("UPDATE account_move set is_exported='t', exported_date='%s' where id = %s" % 
-					(datetime.now(), move.id))
+					(datetime.datetime.now(), move.id))
 	####################################################################################
 	# zip move.csv dan stock.csv
 	####################################################################################
