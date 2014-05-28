@@ -29,7 +29,7 @@ class vit_sync_slave_uploader(osv.osv):
  		################################################################################
 		# id yg akan diproses
 		################################################################################
-		
+		# import pdb;pdb.set_trace()
 		active_ids 		= context['active_ids']
 		_logger.info('processing from menu. active_ids=%s' % (active_ids)) 
 		self.actual_process_am_export(cr, uid, active_ids, context)
@@ -42,6 +42,7 @@ class vit_sync_slave_uploader(osv.osv):
 		# id yg akan diproses
 		################################################################################
 		active_ids 		= context['active_ids']
+
 		_logger.info('processing from menu. active_ids=%s' % (active_ids)) 
 		self.actual_process_sm_export(cr, uid, active_ids, context)
 
@@ -55,13 +56,17 @@ class vit_sync_slave_uploader(osv.osv):
  		################################################################################
 		# id yg akan diproses
 		################################################################################
+		move_obj = self.pool.get('account.move')
 		active_ids 	= move_obj.search(cr,uid,[('is_exported','=',False)], limit=10)
-		_logger.info('processing move_obj from cron. active_ids=%s' % (active_ids)) 
-		self.actual_process_am_export(cr, uid, active_ids, context)
-
-		active_ids 	= stock_move_obj.search(cr,uid,[('is_exported','=',False)], limit=10)
-		_logger.info('processing stock_move_obj from cron. active_ids=%s' % (active_ids)) 
-		self.actual_process_sm_export(cr, uid, active_ids, context)
+		_logger.info('CRON --> processing move_obj from cron. active_ids=%s' % (active_ids))
+		# import pdb;pdb.set_trace()
+		if active_ids != []:
+		 	for active_id in active_ids:
+		 		self.actual_process_am_export(cr, uid, [active_id], context)
+		_logger.info('CRON --> Tidak Ada Id yang akan di export = %s' % (active_ids))
+		# active_ids 	= stock_move_obj.search(cr,uid,[('is_exported','=',False)], limit=10)
+		# _logger.info('processing stock_move_obj from cron. active_ids=%s' % (active_ids)) 
+		# self.actual_process_sm_export(cr, uid, active_ids, context)
 
 	####################################################################################
 	# actual process
@@ -227,7 +232,8 @@ class vit_sync_slave_uploader(osv.osv):
 	#	2. tulis ke file stock.csv
 	####################################################################################
 	def process_stock_picking(self, cr, uid, context=None):
-		with open(path + '/move.csv', 'wb') as f:
+		self.cek_folder(cr, uid, context)
+		with open("%s/papua"%self.homedir  + '/stock.csv', 'wb') as f:
 			writer = csv.writer(f)
 	
 			#########################################################################
@@ -319,9 +325,8 @@ class vit_sync_slave_uploader(osv.osv):
 		for root, dirs, files in os.walk('%s/papua' % self.homedir):
 			for file in files:
 				#Buat Zip Saat
-				import pdb;pdb.set_trace()
 				my_archive = make_archive(file,'zip',"%s/papua" % self.homedir)
-				_logger.info('Proses Zip file %s done di root=%s' % (file,self.homedir))
+				_logger.info('CRON --> Proses Zip file %s done di root=%s' % (file,self.homedir))
 
 				zipfile = open('%s/move.csv.zip' % self.homedir,'r')
 				attachment_pool = self.pool.get('ir.attachment')
@@ -350,6 +355,7 @@ class vit_sync_slave_uploader(osv.osv):
 				post_vars = {'subject': "move.csv.zip",'body': "Ini adalah Pesan dari Clien per tanggal %s" % subject,'partner_ids': partner_id_server,'attachment_ids':[attachment_id],}
 
 				thread_pool.message_post(cr, uid, False,type="comment",subtype="mt_comment",context=context,**post_vars)
+				_logger.info('CRON --> Proses Pengirimiman move.zip ke master.kokarfi@gmail.com .. Done!! ' )
 				
 				return attachment_id
 	
@@ -357,7 +363,7 @@ class vit_sync_slave_uploader(osv.osv):
 	#Cek Folder dan Buat bila tidak ada
 	####################################################################################
 	def cek_folder(self, cr, uid, context=None):
-		if platform.system() == 'Linux':
+		if platform.system() == 'Linux' or platform.system() == 'Windows':
 			if not os.path.exists('%s/papua' % self.homedir):
 				os.mkdir('%s/papua' % self.homedir)
 				return True
