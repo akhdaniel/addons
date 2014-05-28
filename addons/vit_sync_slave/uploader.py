@@ -11,11 +11,14 @@ import zipfile
 from shutil import make_archive
 import shutil
 import base64
+import platform
+
 
 _logger = logging.getLogger(__name__)
 
 class vit_sync_slave_uploader(osv.osv):
 	_name = "vit.sync.slave.uploader"
+	homedir = os.path.expanduser('~')
 	path = '/home/wn/papua'
 
 
@@ -95,7 +98,8 @@ class vit_sync_slave_uploader(osv.osv):
 		#########################################################################
 		# open file csv and process account move
 		#########################################################################
-		with open(self.path + '/move.csv', 'wb') as f:
+		self.cek_folder(cr, uid, context)
+		with open("%s/papua"%self.homedir + '/move.csv', 'wb') as f:
 			writer = csv.writer(f)
 	
 			#########################################################################
@@ -309,14 +313,17 @@ class vit_sync_slave_uploader(osv.osv):
 	# zip move.csv dan stock.csv
 	####################################################################################
 	def zip_files(self, cr, uid, context=None):
+		##Cek folder dan buat folder bila belum ada##
+		self.cek_folder(cr, uid, context)
 		#Cari Root File
-		for root, dirs, files in os.walk(self.path):
+		for root, dirs, files in os.walk('%s/papua' % self.homedir):
 			for file in files:
 				#Buat Zip Saat
-				my_archive = make_archive(file,'zip',"%s" % self.path)
-				_logger.info('Proses Zip file %s done di root=%s' % (file,self.path))
+				import pdb;pdb.set_trace()
+				my_archive = make_archive(file,'zip',"%s/papua" % self.homedir)
+				_logger.info('Proses Zip file %s done di root=%s' % (file,self.homedir))
 
-				zipfile = open('/home/wn/move.csv.zip','r')
+				zipfile = open('%s/move.csv.zip' % self.homedir,'r')
 				attachment_pool = self.pool.get('ir.attachment')
 
 				#Simpan Di ir.attachment
@@ -345,6 +352,15 @@ class vit_sync_slave_uploader(osv.osv):
 				thread_pool.message_post(cr, uid, False,type="comment",subtype="mt_comment",context=context,**post_vars)
 				
 				return attachment_id
+	
+	####################################################################################
+	#Cek Folder dan Buat bila tidak ada
+	####################################################################################
+	def cek_folder(self, cr, uid, context=None):
+		if platform.system() == 'Linux':
+			if not os.path.exists('%s/papua' % self.homedir):
+				os.mkdir('%s/papua' % self.homedir)
+				return True
 	
 	def unzip_import(self, cr, uid, context=None):
 		import pdb;pdb.set_trace()
