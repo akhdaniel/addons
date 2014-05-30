@@ -18,3 +18,12 @@ class mail_message(osv.osv):
 		'is_imported': False 
 	}
 mail_message()
+
+
+class account_move(osv.osv):
+	_inherit = "account.move"
+	_columns = {
+		'shop_id' 		: fields.integer('Shop_id'),
+	}
+
+account_move()
