@@ -7,23 +7,64 @@ from time import strftime
 from openerp.osv.osv import object_proxy
 from openerp.tools.translate import _
 
+AVAILABLE_STATES = [
+    ('submit', 'Baru'),
+    ('approval', 'Proses Aproval'),
+    ('approval1', 'Aproval Tahap Akhir'),
+    ('in_progres', 'Sedang Dalam Proses'),
+]
 
 PERMOHONAN_STATES =[
 	('draft','Draft'),
 	('submit','Submit'),
 	('verify','Verify'),
 	('in_progress','In Progress')]
+
+class hr_recruitment_stage(osv.osv):
+    """ Aproval of Permohonan Recrutiment """
+    _name = "hr.job.approval"
+    _description = "Approval"
+    _order = 'sequence'
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, translate=True),
+        'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list of stages."),
+        'job_id':fields.many2one('hr.job', 'Specific to a Job', help="Jika ada proses aproval tambahan pada salah satu bidang pekerjaan."),
+        'state': fields.selection(AVAILABLE_STATES, 'Status', required=True, help="The related status for the stage. The status of your document will automatically change according to the selected stage. Example, a stage is related to the status 'Close', when your document reach this stage, it will be automatically closed."),
+        'fold': fields.boolean('Sembunyikan Jika Sudah Tidak Terpakai', help="Jika Aproval Sudah Tidak Terpakai Maka Centang View Ini."),
+        'requirements': fields.text('Requirements'),
+    }
+    _defaults = {
+        'sequence': 1,
+        'state': 'submit',
+        'fold': False,
+    }
+    _sql_constraints = [('sequence_uniq', 'unique(sequence)','Sequence Tidak Boleh Sama')]
+
 class permohonan_recruit(osv.osv):
     _name = 'hr.job'
     _inherit = 'hr.job'
     
-    def action_draft(self,cr,uid,ids,context=None): 
-        self.write(cr,uid,ids,{'status_rec':'new'},context=context)
-    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[0][0]},context=context)
+    #def action_draft(self,cr,uid,ids,context=None): 
+    #    self.write(cr,uid,ids,{'status_rec':'new'},context=context)
+    #	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[0][0]},context=context)
 
     def action_submit(self,cr,uid,ids,context=None): 
         #function for number automatic
+        import pdb;pdb.set_trace()
         objk = self.browse(cr,uid,ids)[0]
+        day_now = datetime.now()
+        name = objk.name
+        stg3=objk.state.sequence
+        partner=self.pool.get('hr.job.approval')  
+        pero=partner.search(cr,uid,['|',('job_id','=',False),('job_id','=',name)])     
+        pers=partner.browse(cr,uid,pero,context)
+        st= 1000
+        for line in pers: 
+            stage=line.sequence
+            if stg3 < stage and st > stage :
+                stg=line.id                       
+                self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
+                st = stage
         obj = self.pool.get('hr.job')
         obj_src = obj.search(cr,uid,[])
         obj_brw = obj.browse(cr,uid,obj_src)
@@ -33,7 +74,7 @@ class permohonan_recruit(osv.osv):
             if no >= no1 :
                 no1 = job.no_permohonan
         no_sum = no1 + 1
-        self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[1][0],'no_permohonan' : no_sum},context=context)
+        self.write(cr,uid,ids,{'no_permohonan' : no_sum, 'wkt_pemohon' : day_now},context=context)
         #function for create laporan permintaan Recruitment
         #import pdb;pdb.set_trace()
         year =datetime.now().year
@@ -53,15 +94,41 @@ class permohonan_recruit(osv.osv):
     	return True  	
 
     def action_verify(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[2][0]},context=context)
+        hasil=self.browse(cr,uid,ids)[0]
+        name = hasil.name
+        stg3=hasil.state.sequence
+        partner=self.pool.get('hr.job.approval')  
+        pero=partner.search(cr,uid,['|',('job_id','=',False),('job_id','=',name)])     
+        pers=partner.browse(cr,uid,pero,context)
+        st= 1000
+        for line in pers: 
+            stage=line.sequence
+            if stg3 < stage and st > stage :
+                stg=line.id                       
+                self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
+                st = stage
+    	return True
  
     def action_in_progress(self,cr,uid,ids,context=None): 
+        import pdb;pdb.set_trace()
         self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
         obj = self.browse(cr,uid,ids)[0]
         department = obj.department_id.name
         date =obj.wkt_pemohon
         dates = datetime.strptime(date,"%Y-%m-%d").year
         jenis_per = obj.jenis_permohonan
+        name = obj.name
+        stg3=obj.state.sequence
+        partner=self.pool.get('hr.job.approval')  
+        pero=partner.search(cr,uid,['|',('job_id','=',False),('job_id','=',name)])     
+        pers=partner.browse(cr,uid,pero,context)
+        st= 1000
+        for line in pers: 
+            stage=line.sequence
+            if stg3 < stage and st > stage :
+                stg=line.id                       
+                self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
+                st = stage
         #import pdb;pdb.set_trace()
         if jenis_per == 'Bulanan' :
             objk = self.pool.get('hr.sumary_kebutuhan')
@@ -82,13 +149,17 @@ class permohonan_recruit(osv.osv):
             for sumary in obj_brw :
                 jum_sumary = sumary.jum_kebutuhan + obj.no_of_recruitment
                 objk.write(cr,uid,[sumary.id],{'jum_kebutuhan': jum_sumary},context=context)
-    	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[3][0]},context=context)
+    	return True
     	
     def scroll_no(self, cr, uid, ids, no, args, context=None):
         res = []
         for x in range(15,51):
             res.append(x)
         return res
+
+    def selesai(self,cr,uid,ids,context=None):
+        obj = self.browse(cr,uid,ids)[0]
+        self.write(cr,uid,ids,{'state':1, 'states_id' : 'submit'},context=context)
 
     
     _columns= {
@@ -102,11 +173,11 @@ class permohonan_recruit(osv.osv):
         'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],string='Usia (max)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],string='Jenis Kelamin',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-        'wkt_pemohon':fields.date('Permintaan Pemohon',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]},required=True),
+        'wkt_pemohon':fields.date('Permintaan Pemohon',required=True),
         'wkt_rekruter':fields.date('Kesanggupan Rekruter'),
         'catatan':fields.char('Realisasi Penempatan',128,states={'draft':[('readonly',True)], 'submit':[('readonly',True)]}),
         'catatan2':fields.text('Catatan'),
-        'state': fields.selection(PERMOHONAN_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
+        #'state': fields.selection(AVAILABLE_STATES, 'Status', readonly=True, help="Gives the status of the recruitment."),  
         'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),    
         'survey_ids':fields.one2many('hr.survey1','job_id','Interview Form'),
         'survey_id': fields.many2one('survey', '', readonly=True, help="Choose an interview form for this job position and you will be able to print/answer this interview from all applicants who apply for this job"),     
@@ -132,10 +203,12 @@ class permohonan_recruit(osv.osv):
         'bagian_id' : fields.many2one('hr.bagian','Bagian',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'level_id' :fields.many2one('hr.level','Level',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),   
         'status_rec' : fields.selection([('new','new'),('filter','filter'),('execute','execute'),('in_progres','in progres'),('pending','pending')],readonly=True, string='Status Record'),  
+        'state':fields.many2one ('hr.job.approval','Stage',domain="['&', ('fold', '=', False), '|', ('job_id', '=', name), ('job_id', '=', False)]"),   
+        'states_id':fields.char('Status'),  
             }
 
     _defaults = {
-        'state': PERMOHONAN_STATES[0][0],
+        #'state': PERMOHONAN_STATES[0][0],
         'user_id': lambda obj, cr, uid, context: uid,
         'bol_name':True,
         'bol_type_id':True,
@@ -147,6 +220,8 @@ class permohonan_recruit(osv.osv):
         'bol_domisili':True,  
         'bol_tempat_lahir_id':True,  
         'status_rec' : "new",
+        'state' : 1,
+        'states_id' : 'submit',
         #'no_permohonan' : lambda obj , cr , uid , context: obj.pool.get('ir.sequence').get(cr, uid, 'hr.job'),   
                  }  
 

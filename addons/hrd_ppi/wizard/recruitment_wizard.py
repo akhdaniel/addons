@@ -14,7 +14,9 @@ class report_recruit(osv.osv):
 			('permintaan_recruitment','Laporan Permintaan Recruitment'),
 			('detail_monitoring_progres','Detail Monitoring Progres Interview'),
 			('sumary_monitoring_progres','Sumary Monitoring Progres Interview'),
-			('daftar_pelamar','Daftar Pelamar')), 'Report',required=True),
+			('daftar_pelamar','Daftar Pelamar'),
+			('detail_monitoring_sarmut','Detail Monitoring Sasaran Mutu'),
+			('sumary_monitoring_sarmut','Sumary Monitoring Sasaran Mutu')), 'Report',required=True),
 		'year_id' : fields.many2one('report.tahun','Tahun'),
 		'department' : fields.many2one('hr.department','Department'),
 		'divisi' : fields.many2one('hr.divisi','Divisi'),
@@ -84,8 +86,10 @@ class report_recruit(osv.osv):
 				else :
 					src = obj_pemenuhan.search(cr,uid,[('department','=',dept),('tgl_permintaan','>=',star),('tgl_permintaan','<=',end),('status','=',status)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([rpts.no_pmintaan, rpts.tgl_permintaan, rpts.department, rpts.jabatan, rpts.jml_prmintaan,rpts.aktifitas,
+				no = no + 1
+				data.append([no, rpts.no_pmintaan, rpts.tgl_permintaan, rpts.department, rpts.jabatan, rpts.jml_prmintaan,rpts.aktifitas,
 					rpts.tgl_seleksi, rpts.jml_kandidat, rpts.jml_diterima, rpts.per_masuk, rpts.status, rpts.ket])
 	
 			if context is None:
@@ -113,8 +117,10 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('bul_har','=','Harian'),('div','=',div),('tgl_permohonan','>=',star),('tgl_permohonan','<=',end)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([rpts.bul_har, rpts.div, rpts.dept, rpts.bagian, rpts.jabatan,rpts.level,
+				no = no + 1
+				data.append([no,rpts.bul_har, rpts.div, rpts.dept, rpts.bagian, rpts.jabatan,rpts.level,
 					rpts.tgl_permohonan, rpts.status_wawancara, rpts.status_pemenuhan, rpts.jumlah_kebutuhan, rpts.jumlah_terpenuhi,
 					rpts.kekurangan_pmenuhan, rpts.status_penempatan, rpts.ket, rpts.review])
 	
@@ -144,8 +150,10 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('bul_har','=','Bulanan'),('div','=',div),('tgl_permohonan','>=',star),('tgl_permohonan','<=',end)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([rpts.bul_har, rpts.div, rpts.dept, rpts.bagian, rpts.jabatan,rpts.level,
+				no = no + 1
+				data.append([no,rpts.bul_har, rpts.div, rpts.dept, rpts.bagian, rpts.jabatan,rpts.level,
 					rpts.tgl_permohonan, rpts.status_wawancara, rpts.status_pemenuhan, rpts.jumlah_kebutuhan, rpts.jumlah_terpenuhi,
 					rpts.kekurangan_pmenuhan, rpts.status_penempatan, rpts.ket, rpts.review])
 	
@@ -160,7 +168,7 @@ class report_recruit(osv.osv):
 			datas['csv'] = data
 			return {
 				'type': 'ir.actions.report.xml',
-				'report_name': 'pemenuhan.kebutuhan.harian',
+				'report_name': 'pemenuhan.kebutuhan.bulanan',
 				'nodestroy': True,
 				'datas': datas,
 				}
@@ -174,8 +182,10 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([rpts.tahun, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.ket])
+				no = no + 1
+				data.append([no, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.varian, rpts.percentage, rpts.ket])
 	
 			if context is None:
 				context = {}
@@ -202,8 +212,10 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([rpts.tahun, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.ket])
+				no = no + 1
+				data.append([no, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi,rpts.varian,rpts.percentage, rpts.ket])
 	
 			if context is None:
 				context = {}
@@ -216,7 +228,7 @@ class report_recruit(osv.osv):
 			datas['csv'] = data
 			return {
 				'type': 'ir.actions.report.xml',
-				'report_name': 'sumary.kebutuhan.harian',
+				'report_name': 'sumary.kebutuhan.bulanan',
 				'nodestroy': True,
 				'datas': datas,
 				}
@@ -261,8 +273,10 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([ rpts.tahun, rpts.name, rpts.dep, rpts.test1_hrd, rpts.test2_hrd, rpts.test1_usr, rpts.test2_usr,
+				no = no + 1
+				data.append([ no, rpts.name, rpts.dep, rpts.test1_hrd, rpts.test2_hrd, rpts.test1_usr, rpts.test2_usr,
 				 rpts.approval, rpts.tes_kesehatan, rpts.ket, rpts.status])
 	
 			if context is None:
@@ -290,7 +304,9 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
+				no = no + 1
 				data.append([ rpts.tahun, rpts.dep, rpts.qty, rpts.test1, rpts.wawancara_hrd, rpts.wawancara1_usr, rpts.wawancara2_usr,
 				 rpts.approval, rpts.tes_kesehatan, rpts.pending])
 	
@@ -502,8 +518,10 @@ class report_recruit(osv.osv):
 			else :
 				src = obj_pemenuhan.search(cr,uid,[('dep','=',dep),('tahun','=',year)])
 			brw_data = obj_pemenuhan.browse(cr,uid,src)
+			no = 0
 			for rpts in brw_data :
-				data.append([rpts.tahun, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.ket])
+				no = no + 1
+				data.append([no, rpts.dep, rpts.jum_kebutuhan, rpts.jum_terpenuhi, rpts.ket])
 	
 			if context is None:
 				context = {}

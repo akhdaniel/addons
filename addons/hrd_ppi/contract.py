@@ -17,10 +17,12 @@ class hr_contract(osv.osv):
         employee_id = values['employee_id']
         dates = values['date_end']
         name = values['name']
+        date_start = values['date_start']
         values['stat'] = 'open'
         src_emp = employee_pool.search(cr,uid,[('id','=',employee_id)])
         brw_emp = employee_pool.browse(cr,uid,src_emp)[0]
         hari = brw_emp.warning_hari
+        tanggal = brw_emp.tanggal
         warning_pool = self.pool.get('warning.schedule')
         src_warning = warning_pool.search(cr,uid,[('name','=','kontrak')])
         brw_warning = warning_pool.browse(cr,uid,src_warning)[0]
@@ -40,7 +42,15 @@ class hr_contract(osv.osv):
 	        else :
 	        	employee_pool.write(cr, uid, [employee_id],
 	                        {'status_contract': True,'no_contract': name,'tanggal': dates,'warning_hari': nb_of_days,'link_warning' : False}
-	                        )      
+	                        )     
+        import pdb;pdb.set_trace()
+        date_employee = datetime.strptime(tanggal,"%Y-%m-%d")
+        date_con = datetime.strptime(date_start,"%Y-%m-%d") 
+        tot_date = (date_con - date_employee).days                   
+        if tot_date <= 0 :
+            raise osv.except_osv(_('Peringatan!'),_('Tanggal Kontrak Tidak Boleh Kurang Dari Tanggal Kontrak Sebelumnya'))
+        else :
+            return super(hr_contract, self).create(cr, uid, values, context)
         return super(hr_contract, self).create(cr, uid, values, context)
 
     def onchange_tahun(self,cr,uid,ids, date_end, context=None):

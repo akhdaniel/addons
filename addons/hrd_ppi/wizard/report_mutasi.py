@@ -49,7 +49,7 @@ class seleksi_pelamar(report_xls):
 								 'ref Jabatan', 'Status Hrd', 'Status User', 'Keputusan', 'Tgl Keputusan'])
 		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
 		 
-		row_count = 4
+		row_count = 1
 		for x in data['csv']:
 		    ws.write(row_count, 0, x[0])
 		    ws.write(row_count, 1, x[1])
@@ -85,22 +85,23 @@ class pemenuhan_recruitmen(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-		              ('No Permintaan', 1, 70, 'text', lambda x, d, p: x[0]),
-		              ('Tanggal Permintaan', 1, 70, 'text', lambda x, d, p: x[1]),
-		              ('Department', 1, 70, 'text', lambda x, d, p: x[2]),
-		              ('Jabatan', 1, 70, 'text', lambda x, d, p: x[3]),
-		              ('Jumlah Permintaan', 1, 70, 'text', lambda x, d, p: x[4]),
-		              ('Aktifitas', 1, 70, 'text', lambda x, d, p: x[5]),
-		              ('Tanggal Seleksi', 1, 70, 'text', lambda x, d, p: x[6]),
-		              ('Jumlah Kandidat',1, 70, 'text', lambda x, d, p: x[7]),
-		              ('Jumlah Diterima', 1, 70, 'text', lambda x, d, p: x[8]),
-		              ('Permohonan Masuk', 1, 70, 'text', lambda x, d, p: x[9]),
-		              ('Status', 1, 70, 'text', lambda x, d, p: x[10]),
-		              ('Keterangan',  1, 70, 'text', lambda x, d, p: x[11]),
+					  ('No', 1, 30 , 'text', lambda x, d, p: x[0]),
+		              ('No Permintaan', 1, 70, 'text', lambda x, d, p: x[1]),
+		              ('Tanggal Permintaan', 1, 70, 'text', lambda x, d, p: x[2]),
+		              ('Department', 1, 70, 'text', lambda x, d, p: x[3]),
+		              ('Jabatan', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('Jumlah Permintaan', 1, 70, 'text', lambda x, d, p: x[5]),
+		              ('Aktifitas', 1, 100, 'text', lambda x, d, p: x[6]),
+		              ('Tanggal Seleksi', 1, 70, 'text', lambda x, d, p: x[7]),
+		              ('Jumlah Kandidat',1, 70, 'text', lambda x, d, p: x[8]),
+		              ('Jumlah Diterima', 1, 70, 'text', lambda x, d, p: x[9]),
+		              ('Permohonan Masuk', 1, 70, 'text', lambda x, d, p: x[10]),
+		              ('Status', 1, 70, 'text', lambda x, d, p: x[11]),
+		              ('Keterangan',  1, 70, 'text', lambda x, d, p: x[12]),
 		]
 		
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
-		title = self.xls_row_template(cols_specs, ['No Permintaan','Tanggal Permintaan','Department','Jabatan',
+		title = self.xls_row_template(cols_specs, ['No','No Permintaan','Tanggal Permintaan','Department','Jabatan',
         'Jumlah Permintaan','Aktifitas','Tanggal Seleksi','Jumlah Kandidat','Jumlah Diterima','Permohonan Masuk','Status','Keterangan'])
 		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
 		 
@@ -118,6 +119,7 @@ class pemenuhan_recruitmen(report_xls):
 		    ws.write(row_count, 9, x[9])
 		    ws.write(row_count, 10, x[10])
 		    ws.write(row_count, 11, x[11])
+		    ws.write(row_count, 12, x[12])
 
 		    row_count += 1
 		     
@@ -134,26 +136,27 @@ class pemenuhan_kebutuhan_harian(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-		              ('Jenis Kebutuhan', 1, 70, 'text', lambda x, d, p: x[0]),
-		              ('Division', 1, 70, 'text', lambda x, d, p: x[1]),
-		              ('Department', 1, 70, 'text', lambda x, d, p: x[2]),
-		              ('Bagian', 1, 70, 'text', lambda x, d, p: x[3]),
-		              ('Jabatan', 1, 70, 'text', lambda x, d, p: x[4]),
-		              ('Level', 1, 70, 'text', lambda x, d, p: x[5]),
-		              ('Tanggal Permohonan', 1, 70, 'text', lambda x, d, p: x[6]),
-		              ('Status Wawancara',1, 70, 'text', lambda x, d, p: x[7]),
-		              ('Status Pemenuhan', 1, 70, 'text', lambda x, d, p: x[8]),
-		              ('Jumlah Kebutuhan', 1, 70, 'text', lambda x, d, p: x[9]),
-		              ('Jumlah Terpenuhi', 1, 70, 'text', lambda x, d, p: x[10]),
-		              ('Kekuranga Kebutuhan',  1, 70, 'text', lambda x, d, p: x[11]),
-		              ('Keterangan',  1, 70, 'text', lambda x, d, p: x[12]),
-		              ('Review',  1, 70, 'text', lambda x, d, p: x[13]),
+					  ('NO', 1, 30, 'text', lambda x, d, p: x[0]),
+		              ('BULANAN/HARIAN', 1, 100, 'text', lambda x, d, p: x[1]),
+		              ('DIVISI', 1, 70, 'text', lambda x, d, p: x[2]),
+		              ('DEPARTEMEN', 1, 70, 'text', lambda x, d, p: x[3]),
+		              ('BAGIAN', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('JABATAN', 1, 70, 'text', lambda x, d, p: x[5]),
+		              ('LEVEL', 1, 70, 'text', lambda x, d, p: x[6]),
+		              ('TANGGAL PERMOHONAN', 1, 100, 'text', lambda x, d, p: x[7]),
+		              ('STATUS WAWANCARA',1, 100, 'text', lambda x, d, p: x[8]),
+		              ('STATUS PEMENUHAN', 1, 100, 'text', lambda x, d, p: x[9]),
+		              ('JUMLAH KEBUTUHAN', 1, 100, 'text', lambda x, d, p: x[10]),
+		              ('JUMLAH TERPENUHI', 1, 100, 'text', lambda x, d, p: x[11]),
+		              ('KEKURANGAN KEBUTUHAN',  1, 100, 'text', lambda x, d, p: x[12]),
+		              ('KETERANGAN',  1, 70, 'text', lambda x, d, p: x[13]),
+		              ('REVIEW',  1, 70, 'text', lambda x, d, p: x[14]),
 		]
 		
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
-		title = self.xls_row_template(cols_specs, ['Jenis Kebutuhan','Department','Bagian','Jabatan','Level',
-		'Tanggal Permohonan','Status Wawancara','Status Pemenuhan','Jumlah Kebutuhan','Jumlah Terpenuhi',
-		'Kekuranga Kebutuhan','Keterangan','Review'])
+		title = self.xls_row_template(cols_specs, ['NO','BULANAN/HARIAN','DIVISI','DEPARTEMEN','BAGIAN','JABATAN','LEVEL',
+		'TANGGAL PERMHONAN','STATUS WAWANCARA','STATUS PEMENUHAN','JUMLAH KEBUTUHAN','JUMLAH TERPENUHI',
+		'KEKURANGAN KEBUTUHAN','KETERANGAN','REVIEW'])
 		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
 		 
 		row_count = 1
@@ -172,12 +175,69 @@ class pemenuhan_kebutuhan_harian(report_xls):
 		    ws.write(row_count, 11, x[11])
 		    ws.write(row_count, 12, x[12])
 		    ws.write(row_count, 13, x[13])
+		    ws.write(row_count, 14, x[14])
 
 		    row_count += 1
 		     
 		pass
 
 pemenuhan_kebutuhan_harian('report.pemenuhan.kebutuhan.harian', 'hr_pemenuhan', 'addons/hrd_ppi/wizard/report_excel.mako', parser=ReportStatus, header=False)
+
+class pemenuhan_kebutuhan_bulanan(report_xls):
+
+	def generate_xls_report(self,parser,data,obj,wb):
+		ws = wb.add_sheet(('Pemenuhan Kebutuhan Bulanan'))
+		ws.panes_frozen = True
+		ws.remove_splits = True
+		ws.portrait = 0 # Landscape
+		ws.fit_width_to_pages = 1
+		cols_specs = [
+					  ('NO', 1, 30, 'text', lambda x, d, p: x[0]),
+		              ('BULANAN/HARIAN', 1, 100, 'text', lambda x, d, p: x[1]),
+		              ('DIVISI', 1, 70, 'text', lambda x, d, p: x[2]),
+		              ('DEPARTEMEN', 1, 70, 'text', lambda x, d, p: x[3]),
+		              ('BAGIAN', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('JABATAN', 1, 70, 'text', lambda x, d, p: x[5]),
+		              ('LEVEL', 1, 70, 'text', lambda x, d, p: x[6]),
+		              ('TANGGAL PERMOHONAN', 1, 100, 'text', lambda x, d, p: x[7]),
+		              ('STATUS WAWANCARA',1, 100, 'text', lambda x, d, p: x[8]),
+		              ('STATUS PEMENUHAN', 1, 100, 'text', lambda x, d, p: x[9]),
+		              ('JUMLAH KEBUTUHAN', 1, 100, 'text', lambda x, d, p: x[10]),
+		              ('JUMLAH TERPENUHI', 1, 100, 'text', lambda x, d, p: x[11]),
+		              ('KEKURANGAN KEBUTUHAN',  1, 100, 'text', lambda x, d, p: x[12]),
+		              ('KETERANGAN',  1, 70, 'text', lambda x, d, p: x[13]),
+		              ('REVIEW',  1, 70, 'text', lambda x, d, p: x[14]),
+		]
+		
+		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
+		title = self.xls_row_template(cols_specs, ['NO','BULANAN/HARIAN','DIVISI','DEPARTEMEN','BAGIAN','JABATAN','LEVEL',
+		'TANGGAL PERMHONAN','STATUS WAWANCARA','STATUS PEMENUHAN','JUMLAH KEBUTUHAN','JUMLAH TERPENUHI',
+		'KEKURANGAN KEBUTUHAN','KETERANGAN','REVIEW'])
+		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
+		 
+		row_count = 1
+		for x in data['csv']:
+		    ws.write(row_count, 0, x[0])
+		    ws.write(row_count, 1, x[1])
+		    ws.write(row_count, 2, x[2])
+		    ws.write(row_count, 3, x[3])
+		    ws.write(row_count, 4, x[4])
+		    ws.write(row_count, 5, x[5])
+		    ws.write(row_count, 6, x[6])
+		    ws.write(row_count, 7, x[7])
+		    ws.write(row_count, 8, x[8])
+		    ws.write(row_count, 9, x[9])
+		    ws.write(row_count, 10, x[10])
+		    ws.write(row_count, 11, x[11])
+		    ws.write(row_count, 12, x[12])
+		    ws.write(row_count, 13, x[13])
+		    ws.write(row_count, 14, x[14])
+
+		    row_count += 1
+		     
+		pass
+
+pemenuhan_kebutuhan_bulanan('report.pemenuhan.kebutuhan.bulanan', 'hr_pemenuhan', 'addons/hrd_ppi/wizard/report_excel.mako', parser=ReportStatus, header=False)
 
 class sumary_kebutuhan_harian(report_xls):
 
@@ -188,15 +248,17 @@ class sumary_kebutuhan_harian(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-		              ('Tahun', 1, 70, 'text', lambda x, d, p: x[0]),
+		              ('No', 1, 30, 'text', lambda x, d, p: x[0]),
 		              ('Department', 1, 70, 'text', lambda x, d, p: x[1]),
-		              ('Jumlah Kebutuhan', 1, 70, 'text', lambda x, d, p: x[2]),
-		              ('Jumlah Terpenuhi', 1, 70, 'text', lambda x, d, p: x[3]),
-		              ('Keterangan', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('Jumlah Kebutuhan', 1, 100, 'text', lambda x, d, p: x[2]),
+		              ('Jumlah Terpenuhi', 1, 100, 'text', lambda x, d, p: x[3]),
+		              ('Varian', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('Percentage', 1, 70, 'text', lambda x, d, p: x[5]),
+		              ('Keterangan', 1, 70, 'text', lambda x, d, p: x[6]),
 		]
 		
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
-		title = self.xls_row_template(cols_specs, ['Tahun','Department','Jumlah Kebutuhan','Jumlah Terpenuhi','Keterangan'])
+		title = self.xls_row_template(cols_specs, ['No','Department','Jumlah Kebutuhan','Jumlah Terpenuhi','Varian','Percentage','Keterangan'])
 		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
 		 
 		row_count = 1
@@ -206,12 +268,52 @@ class sumary_kebutuhan_harian(report_xls):
 		    ws.write(row_count, 2, x[2])
 		    ws.write(row_count, 3, x[3])
 		    ws.write(row_count, 4, x[4])
+		    ws.write(row_count, 5, x[5])
+		    ws.write(row_count, 6, x[6])
 
 		    row_count += 1
 		     
 		pass
 
 sumary_kebutuhan_harian('report.sumary.kebutuhan.harian', 'hr_pemenuhan', 'addons/hrd_ppi/wizard/report_excel.mako', parser=ReportStatus, header=False)
+
+class sumary_kebutuhan_bulanan(report_xls):
+
+	def generate_xls_report(self,parser,data,obj,wb):
+		ws = wb.add_sheet(('Pemenuhan Kebutuhan Bulanan'))
+		ws.panes_frozen = True
+		ws.remove_splits = True
+		ws.portrait = 0 # Landscape
+		ws.fit_width_to_pages = 1
+		cols_specs = [
+		              ('No', 1, 30, 'text', lambda x, d, p: x[0]),
+		              ('Department', 1, 70, 'text', lambda x, d, p: x[1]),
+		              ('Jumlah Kebutuhan', 1, 100, 'text', lambda x, d, p: x[2]),
+		              ('Jumlah Terpenuhi', 1, 100, 'text', lambda x, d, p: x[3]),
+		              ('Varian', 1, 70, 'text', lambda x, d, p: x[4]),
+		              ('Percentage', 1, 70, 'text', lambda x, d, p: x[5]),
+		              ('Keterangan', 1, 70, 'text', lambda x, d, p: x[6]),
+		]
+		
+		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
+		title = self.xls_row_template(cols_specs, ['No','Department','Jumlah Kebutuhan','Jumlah Terpenuhi','Varian','Percentage','Keterangan'])
+		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
+		 
+		row_count = 1
+		for x in data['csv']:
+		    ws.write(row_count, 0, x[0])
+		    ws.write(row_count, 1, x[1])
+		    ws.write(row_count, 2, x[2])
+		    ws.write(row_count, 3, x[3])
+		    ws.write(row_count, 4, x[4])
+		    ws.write(row_count, 5, x[5])
+		    ws.write(row_count, 6, x[6])
+
+		    row_count += 1
+		     
+		pass
+
+sumary_kebutuhan_bulanan('report.sumary.kebutuhan.bulanan', 'hr_pemenuhan', 'addons/hrd_ppi/wizard/report_excel.mako', parser=ReportStatus, header=False)
 
 class laporan_permintaan_recruitment(report_xls):
 
@@ -222,7 +324,7 @@ class laporan_permintaan_recruitment(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-		              ('No', 1, 70, 'text', lambda x, d, p: x[0]),
+		              ('No', 1, 30, 'text', lambda x, d, p: x[0]),
 		              ('Department', 1, 70, 'text', lambda x, d, p: x[1]),
 		              ('Posisi', 1, 70, 'text', lambda x, d, p: x[2]),
 		              ('Jumlah', 1, 70, 'text', lambda x, d, p: x[3]),
@@ -238,9 +340,9 @@ class laporan_permintaan_recruitment(report_xls):
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
 		title = self.xls_row_template(cols_specs, ['No','Department','Posisi','Jumlah','wkt Penempatan',
 						'Pengalaman', 'Usia', 'Jenis Kelamin', 'Status', 'Domisili'])
-		self.xls_write_row_header(ws, 2, title, style, set_column_size=True)
+		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
 		 
-		row_count = 3
+		row_count = 1
 		for x in data['csv']:
 		    ws.write(row_count, 0, x[0])
 		    ws.write(row_count, 1, x[1])
@@ -268,23 +370,23 @@ class detail_monitoring_progres(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-					  ('Tahun', 1, 70, 'text', lambda x, d, p: x[0]),	
+					  ('No', 1, 30, 'text', lambda x, d, p: x[0]),	
 		              ('Nama', 1, 70, 'text', lambda x, d, p: x[1]),
 		              ('Department', 1, 70, 'text', lambda x, d, p: x[2]),
-		              ('Test Tertlis HRD', 1, 70, 'text', lambda x, d, p: x[3]),
-		              ('Test Wawancara HRD', 1, 70, 'text', lambda x, d, p: x[4]),
-		              ('Test Wawancara USR 1', 1, 70, 'text', lambda x, d, p: x[5]),
-		              ('Test Wawancara USR 2', 1, 70, 'text', lambda x, d, p: x[6]),
-		              ('Management Approval', 1, 70, 'text', lambda x, d, p: x[7]),
-		              ('Test Kesehatan', 1, 70, 'text', lambda x, d, p: x[8]),
-		              ('Keterangan', 1, 70, 'text', lambda x, d, p: x[9]),
-		              ('Status', 1, 70, 'text', lambda x, d, p: x[10]),
+		              ('Test Tertlis HRD', 1, 100, 'text', lambda x, d, p: x[3]),
+		              ('Test Wawancara HRD', 1, 100, 'text', lambda x, d, p: x[4]),
+		              ('Test Wawancara USR 1', 1, 100, 'text', lambda x, d, p: x[5]),
+		              ('Test Wawancara USR 2', 1, 100, 'text', lambda x, d, p: x[6]),
+		              ('Management Approval', 1, 100, 'text', lambda x, d, p: x[7]),
+		              ('Test Kesehatan', 1, 100, 'text', lambda x, d, p: x[8]),
+		              ('Keterangan', 1, 100, 'text', lambda x, d, p: x[9]),
+		              ('Status', 1, 100, 'text', lambda x, d, p: x[10]),
 		              
 		              
 		]
 		
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
-		title = self.xls_row_template(cols_specs, ['Tahun', 'Nama', 'Department', 'Test Tertlis HRD','Test Wawancara HRD',
+		title = self.xls_row_template(cols_specs, ['No', 'Nama', 'Department', 'Test Tertlis HRD','Test Wawancara HRD',
 				'Test Wawancara USR 1', 'Test Wawancara USR 2',	'Management Approval',	'Test Kesehatan', 'Keterangan','Status',])
 		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
 		 
@@ -317,15 +419,15 @@ class sumary_monitoring_progres_recruitment(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-					  ('Tahun', 1, 70, 'text', lambda x, d, p: x[0]),	
+					  ('No', 1, 30, 'text', lambda x, d, p: x[0]),	
 		              ('Department', 1, 70, 'text', lambda x, d, p: x[1]),
 		              ('Qty Total', 1, 70, 'text', lambda x, d, p: x[2]),
-		              ('Test Tertlis', 1, 70, 'text', lambda x, d, p: x[3]),
-		              ('Wawancara HRD', 1, 70, 'text', lambda x, d, p: x[4]),
-		              ('Wawancara USR 1', 1, 70, 'text', lambda x, d, p: x[5]),
-		              ('Wawancara USR 2', 1, 70, 'text', lambda x, d, p: x[6]),
-		              ('Management Approval', 1, 70, 'text', lambda x, d, p: x[7]),
-		              ('Test Kesehatan', 1, 70, 'text', lambda x, d, p: x[8]),
+		              ('Test Tertlis HRD', 1, 100, 'text', lambda x, d, p: x[3]),
+		              ('Wawancara HRD', 1, 100, 'text', lambda x, d, p: x[4]),
+		              ('Wawancara USR 1', 1, 100, 'text', lambda x, d, p: x[5]),
+		              ('Wawancara USR 2', 1, 100, 'text', lambda x, d, p: x[6]),
+		              ('Management Approval', 1, 100, 'text', lambda x, d, p: x[7]),
+		              ('Test Kesehatan', 1, 90, 'text', lambda x, d, p: x[8]),
 		              ('Pending', 1, 70, 'text', lambda x, d, p: x[9]),
 		              
 		              
@@ -333,7 +435,7 @@ class sumary_monitoring_progres_recruitment(report_xls):
 		]
 		
 		style = xlwt.easyxf('pattern: pattern solid, fore_colour yellow;')
-		title = self.xls_row_template(cols_specs, ['Tahun', 'Department', 'Qty Total', 'Test Tertlis',
+		title = self.xls_row_template(cols_specs, ['No', 'Department', 'Qty Total', 'Test Tertlis',
 				'Wawancara HRD', 'Wawancara USR 1', 'Wawancara USR 2','Management Approval',	
 				'Test Kesehatan', 'Pending'])
 		self.xls_write_row_header(ws, 0, title, style, set_column_size=True)
@@ -366,7 +468,7 @@ class daftar_pelamar(report_xls):
 		ws.portrait = 0 # Landscape
 		ws.fit_width_to_pages = 1
 		cols_specs = [
-					  ('No', 1, 70, 'text', lambda x, d, p: x[0]),	
+					  ('No', 1, 30, 'text', lambda x, d, p: x[0]),	
 		              ('Nama', 1, 70, 'text', lambda x, d, p: x[1]),
 		              ('Subjek', 1, 70, 'text', lambda x, d, p: x[2]),
 		              ('Posisi Diaplikasikan', 1, 70, 'text', lambda x, d, p: x[3]),
