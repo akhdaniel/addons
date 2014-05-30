@@ -50,7 +50,6 @@ class permohonan_recruit(osv.osv):
 
     def action_submit(self,cr,uid,ids,context=None): 
         #function for number automatic
-        import pdb;pdb.set_trace()
         objk = self.browse(cr,uid,ids)[0]
         day_now = datetime.now()
         name = objk.name
@@ -110,7 +109,6 @@ class permohonan_recruit(osv.osv):
     	return True
  
     def action_in_progress(self,cr,uid,ids,context=None): 
-        import pdb;pdb.set_trace()
         self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
         obj = self.browse(cr,uid,ids)[0]
         department = obj.department_id.name
