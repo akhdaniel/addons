@@ -23,8 +23,8 @@ class vit_sync_master_attach(osv.osv):
 		# Akses Objek mail_message dan lalukan pencarian ids berdasarkan subjec/is_imported
 		##############################################################################
 		mail_message_obj 	= self.pool.get('mail.message')
-		mail_message_obj_ids = mail_message_obj.search(cr,uid,[('subject','=','move.csv.zip'),('is_imported','=',False)], limit=5)
-		
+		mail_message_obj_ids = mail_message_obj.search(cr,uid,[('subject','=','move.csv.zip'),('is_imported','=',False)], limit=1)
+		# import pdb;pdb.set_trace()
 		##############################################################################
 		# Cek List ids. Bila tidak kosong, Next ambil attachment_id  
 		##############################################################################
@@ -52,7 +52,7 @@ class vit_sync_master_attach(osv.osv):
 	# Read Csv 
 	#################################################################################
 	def read_csv(self, cr, uid, mail_message_obj_id, context=None):
-		
+		# import pdb;pdb.set_trace()
 		csvfile = open('%s/move_zip/move.csv' % self.homedir,'r')
 		##############################################################################
 		# Simpan Di base_import_import
@@ -69,7 +69,11 @@ class vit_sync_master_attach(osv.osv):
 		# params fields dan options untuk import csvnya
 		##############################################################################
 		# fields = ['name', 'journal_id/.id', 'period_id/.id', 'ref', 'date', 'to_check', 'line_id/name']
-		fields = ['name', 'journal_id', 'period_id', 'ref', 'date', 'to_check', 'line_id/name', 'line_id/quantity',
+		# Jika dari csv misalnya Header -- > Journal dan nilai Row Valuenya --> Non id ,
+		# Maka penulisan nilai fieldsnya cukup gunakan 'journal_id' , bila nilai row nya id
+		# Tambahkan /.id seperti shop_id ('shop_id' : fields.many2one('sale.shop', 'Shop'),)
+		# pada csv nya berupa id ex: 1 , maka untuk validasinya fields nya --> 'shop_id/.id'
+		fields = ['name', 'journal_id', 'period_id', 'ref', 'date', 'to_check','shop_id/.id', 'line_id/name', 'line_id/quantity',
 				  False, False, 'line_id/debit', 'line_id/credit', 'line_id/account_id', False, 'line_id/ref',
 				  False, 'line_id/reconcile_id', False, False, False, False, False, 'line_id/journal_id', False, 'line_id/partner_id',
 				  False, False, False, False, 'line_id/centralisation', False, False, False, False, False, False, False,
