@@ -8,7 +8,7 @@
             <field name="interval_number">50</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
-            <field name="doall" eval="False"/>
+            <field name="doall" eval="True"/>
             <field name="model" eval="'vit.sync.slave.uploader'"/>
             <field name="function" eval="'cron_process_export'"/>
             <field name="args" eval="'()'"/>

@@ -56,14 +56,16 @@ class vit_sync_slave_uploader(osv.osv):
  		################################################################################
 		# id yg akan diproses
 		################################################################################
+		import pdb;pdb.set_trace()
 		move_obj = self.pool.get('account.move')
-		active_ids 	= move_obj.search(cr,uid,[('is_exported','=',False)], limit=10)
+		active_ids 	= move_obj.search(cr,uid,[('is_exported','=',False),('state','=','posted')], limit=1)
 		_logger.info('CRON --> processing move_obj from cron. active_ids=%s' % (active_ids))
 		# import pdb;pdb.set_trace()
 		if active_ids != []:
 		 	for active_id in active_ids:
 		 		self.actual_process_am_export(cr, uid, [active_id], context)
-		_logger.info('CRON --> Tidak Ada Id yang akan di export = %s' % (active_ids))
+		 	else:
+		 		_logger.info('CRON --> Tidak Ada Id yang akan di export = %s' % (active_ids))
 		# active_ids 	= stock_move_obj.search(cr,uid,[('is_exported','=',False)], limit=10)
 		# _logger.info('processing stock_move_obj from cron. active_ids=%s' % (active_ids)) 
 		# self.actual_process_sm_export(cr, uid, active_ids, context)
@@ -76,6 +78,8 @@ class vit_sync_slave_uploader(osv.osv):
 	#	4. upload ke server via FTP/HTTP
 	####################################################################################
 	def actual_process_am_export(self, cr, uid, active_ids, context=None):
+		# import pdb;pdb.set_trace()
+		self.update_shop_id(cr,uid,active_ids,context)
 		self.process_move(cr, uid, active_ids, context)
 		self.zip_files(cr, uid, context)
 		
@@ -95,11 +99,24 @@ class vit_sync_slave_uploader(osv.osv):
 		zip_files(cr, uid, context)
 		return True
 	
+	def update_shop_id(self,cr,uid,active_ids,context=None):
+		# import pdb;pdb.set_trace()
+		move_obj = self.pool.get('account.move')
+		pos_session_pool = self.pool.get('pos.session')
+		pos_config_pool = self.pool.get('pos.config')
+		
+		for move in move_obj.browse(cr,uid, active_ids, context):
+			#Dapat move.ref yang bisa direlasikan dengan pos.session untuk diperoleh config_id
+			pos_session_id = pos_session_pool.search(cr,uid,[('name','=',move.ref)],context=context)
+			for session in pos_session_pool.browse(cr,uid, pos_session_id, context):
+				cr.execute("UPDATE account_move set shop_id=%s where id = %s" % (str(session.config_id.id), active_ids[0]))
+				return True
+	
 	####################################################################################
 	#	1. cari account_move dan account_move_line yang exported = false
 	#	2. tulis ke file account_move.csv
 	####################################################################################
-	def process_move(self, cr, uid, active_ids, context=None):
+	def process_move(self, cr, uid, active_ids,context=None):
 		#########################################################################
 		# open file csv and process account move
 		#########################################################################
@@ -118,6 +135,7 @@ class vit_sync_slave_uploader(osv.osv):
 				'ref',
 				'date',
 				'to_check',
+				'shop_id',
 				'line.name',
 				'line.quantity',
 				'line.product_uom_id.name',
@@ -153,6 +171,7 @@ class vit_sync_slave_uploader(osv.osv):
 				'line.account_tax_id.name',
 				'line.analytic_account_id.code',
 				'line.company_id.name'
+			
 				])
 
 			move_obj 	= self.pool.get('account.move')
@@ -173,7 +192,8 @@ class vit_sync_slave_uploader(osv.osv):
 					move.period_id.code ,
 					move.ref,
 					move.date,
-					move.to_check
+					move.to_check,
+					move.shop_id
 				]
 				i = 0
 
@@ -181,7 +201,7 @@ class vit_sync_slave_uploader(osv.osv):
 					if i==0:
 						header = move_header
 					else:
-						header = ["","","","","",""]
+						header = ["","","","","","",""]
 					writer.writerow( header + [
 						line.name,
 						line.quantity,

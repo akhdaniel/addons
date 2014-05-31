@@ -12,9 +12,12 @@ class account_move(osv.osv):
 	_inherit = "account.move"
 	_columns = {
 		'is_exported'	: fields.boolean('Is Exported?'),
-		'exported_date'	: fields.datetime('Export Date')
+		'exported_date'	: fields.datetime('Export Date'),
+		'shop_id'	: fields.integer('Shop')
 	}
+	
 	_defaults = {
-		'is_exported': False 
+		'is_exported': False,
 	}
+
 account_move()
