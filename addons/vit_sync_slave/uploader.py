@@ -56,11 +56,11 @@ class vit_sync_slave_uploader(osv.osv):
  		################################################################################
 		# id yg akan diproses
 		################################################################################
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		move_obj = self.pool.get('account.move')
 		active_ids 	= move_obj.search(cr,uid,[('is_exported','=',False),('state','=','posted')], limit=1)
 		_logger.info('CRON --> processing move_obj from cron. active_ids=%s' % (active_ids))
-		# import pdb;pdb.set_trace()
+		
 		if active_ids != []:
 		 	for active_id in active_ids:
 		 		self.actual_process_am_export(cr, uid, [active_id], context)
@@ -388,8 +388,9 @@ class vit_sync_slave_uploader(osv.osv):
 				os.mkdir('%s/papua' % self.homedir)
 				return True
 	
+
+	
 	def unzip_import(self, cr, uid, context=None):
-		import pdb;pdb.set_trace()
 		print "HELLO unzip_import"
 		_logger.info('Proses Unzip')
 		# return True
