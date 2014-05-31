@@ -8,6 +8,7 @@
 	            <field name="state" position="after">
 	            	<field name="is_exported" />
 	            	<field name="exported_date" />
+	            	<field name="shop_id" />
 	            </field>
 		    </field>
 		</record>
