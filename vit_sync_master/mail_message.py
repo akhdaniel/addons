@@ -23,7 +23,8 @@ mail_message()
 class account_move(osv.osv):
 	_inherit = "account.move"
 	_columns = {
-		'shop_id' 		: fields.integer('Shop_id'),
+		# 'shop_id' 		: fields.integer('Shop_id'),
+		'shop_id' : fields.many2one('sale.shop', 'Shop'),
 	}
 
 account_move()
