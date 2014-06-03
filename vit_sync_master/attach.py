@@ -74,7 +74,7 @@ class vit_sync_master_attach(osv.osv):
 		# Maka penulisan nilai fieldsnya cukup gunakan 'journal_id' , bila nilai row nya id
 		# Tambahkan /.id seperti shop_id ('shop_id' : fields.many2one('sale.shop', 'Shop'),)
 		# pada csv nya berupa id ex: 1 , maka untuk validasinya fields nya --> 'shop_id/.id'
-		fields = ['name', 'journal_id', 'period_id', 'ref', 'date', 'to_check','shop_id/.id', 'line_id/name', 'line_id/quantity',
+		fields = ['name', 'journal_id', 'period_id', 'ref', 'date', 'to_check','shop_id/.id', 'state', 'line_id/name', 'line_id/quantity',
 				  False, False, 'line_id/debit', 'line_id/credit', 'line_id/account_id', False, 'line_id/ref',
 				  False, 'line_id/reconcile_id', False, False, False, False, False, 'line_id/journal_id', False, 'line_id/partner_id',
 				  False, False, False, False, 'line_id/centralisation', False, False, False, False, False, False, False,
