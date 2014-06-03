@@ -153,6 +153,7 @@ class vit_sync_slave_uploader(osv.osv):
 				'date',
 				'to_check',
 				'shop_id',
+				'state',
 				'line.name',
 				'line.quantity',
 				'line.product_uom_id.name',
@@ -210,7 +211,8 @@ class vit_sync_slave_uploader(osv.osv):
 					move.ref,
 					move.date,
 					move.to_check,
-					self.get_shop_id(cr, uid,context)
+					self.get_shop_id(cr, uid,context),
+					move.state
 				]
 				i = 0
 
@@ -218,7 +220,7 @@ class vit_sync_slave_uploader(osv.osv):
 					if i==0:
 						header = move_header
 					else:
-						header = ["","","","","","",""]
+						header = ["","","","","","","",""]
 					writer.writerow( header + [
 						line.name,
 						line.quantity,
@@ -319,60 +321,6 @@ class vit_sync_slave_uploader(osv.osv):
 					self.get_shop_id(cr, uid,context)
 					
 					])
-
-				# move_header = [
-				# 	move.name,
-				# 	move.journal_id.name,
-				# 	move.period_id.code ,
-				# 	move.ref,
-				# 	move.date,
-				# 	move.to_check
-				# ]
-				# i = 0
-
-				# for line in move.line_id:
-				# 	if i==0:
-				# 		header = move_header
-				# 	else:
-				# 		header = ["","","","","",""]
-				# 	writer.writerow( header + [
-				# 		line.name,
-				# 		line.quantity,
-				# 		line.product_uom_id.name ,
-				# 		line.product_id.name,
-				# 		line.debit,
-				# 		line.credit,
-				# 		line.account_id.code,
-				# 		#line.move_id.name,
-				# 		line.narration,
-				# 		line.ref,
-				# 		line.statement_id.name ,
-				# 		line.reconcile_id.name ,
-				# 		line.reconcile_partial_id.name ,
-				# 		#line.reconcile,
-				# 		line.amount_currency,
-				# 		line.amount_residual_currency,
-				# 		line.amount_residual,
-				# 		line.currency_id.code ,
-				# 		line.journal_id.code ,
-				# 		#line.period_id. ,
-				# 		line.blocked,
-				# 		line.partner_id.name,
-				# 		line.date_maturity,
-				# 		line.date,
-				# 		line.date_created,
-				# 		line.analytic_lines,
-				# 		line.centralisation,
-				# 		line.balance,
-				# 		line.state,
-				# 		line.tax_code_id.code,
-				# 		line.tax_amount,
-				# 		line.invoice.name,
-				# 		line.account_tax_id.name,
-				# 		line.analytic_account_id.code,
-				# 		line.company_id.name 
-				# 	])
-				# 	i= i +1 
 
 				###############################################################
 				# set is_processed = True 
