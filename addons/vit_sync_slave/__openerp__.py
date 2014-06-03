@@ -26,6 +26,7 @@ ada function cron_process_export() yang dipanggil periodic dari jobs
         'account_move.xml',
         'stock_picking_out.xml',
         'scheduler.xml',
-        'menu.xml'
+        'menu.xml',
+        'stock_move.xml'
     ],
 }
