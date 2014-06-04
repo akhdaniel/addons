@@ -1,7 +1,7 @@
 <openerp>
     <data>
     	<!-- Scehedule warning-->
-        <record id="warning1" model="warning.schedule">
+        <!--record id="warning1" model="warning.schedule">
 	            <field name="name">kontrak</field>
 	            <field name="date_warning">30</field>
 	    </record>
@@ -12,7 +12,7 @@
 	    <record id="warning3" model="warning.schedule">
 	            <field name="name">iso</field>
 	            <field name="date_warning">30</field>
-	    </record>
+	    </record-->
 
 	    <!-- working days staf -->
 	    <record model="resource.calendar" id="working_hours_ppi_staff" >
