@@ -1811,3 +1811,52 @@ class sumary_monitoring(osv.osv):
         'tahun' :fields.char('Tahun'),
     }
 sumary_monitoring()
+
+class sarmut(osv.osv):
+        _name = 'hr.sarmut'
+
+        _columns = {
+            'divisi':fields.char('Divisi', readonly=True),
+            'department' : fields.char('Department', readonly=True),
+            'bagian' : fields.char('bagian', readonly=True),
+            'jabatan' : fields.char('Jabatan', readonly=True),
+            'jum_ygdibutuhkan' : fields.integer('Jumlah Yang Dibutuhkan', readonly=True),
+            'level' : fields.char('Level', readonly=True),
+            'tgl_per_user' :fields.date('Tanggal', readonly=True),
+            'per_atasan_usr' : fields.char('Persetujuan Atasan User', readonly=True),
+            'waktu1' : fields.integer('Waktu Proses1', readonly=True),
+            'per_dir' :fields.date('Persetujuan Direktur', readonly=True),
+            'waktu2' : fields.integer('Waktu Proses2', readonly=True),
+            'per_dir_fin' : fields.date('Persetujuan Direktur Fin & ADM', readonly=True),
+            'waktu3' : fields.integer('Waktu Proses3', readonly=True),
+            'diterima_recruitment' : fields.date('Diterima Recruitment', readonly=True),
+            'waktu4' : fields.integer('Waktu Proses4', readonly=True),
+            'wawancara1' : fields.date('Wawancara1', readonly=True),
+            'jum_nwd' : fields.integer('Jumlah NWD', readonly=True),
+            'waktu_tot' : fields.integer('Waktu Total', readonly=True),
+            'status' : fields.char('Status', readonly=True),
+            'ket' : fields.char('Keterangan', readonly=True),
+            'tahun' : fields.char('Tahun'),
+
+        }
+sarmut()
+
+class sumary_sarmut(osv.osv):
+    _name= 'hr.sumary_sarmut'
+
+    _columns = {
+        'jabatan' : fields.char('Jabatan'),
+        'jumlah_permohonan' : fields.integer('Jumlah Permohonan', readonly=True),
+        'jum_ygdibutuhkan' : fields.integer('Jumlah Yang Dibutuhkan', readonly=True),
+        'jum_waktu_pros' : fields.integer('jumlah Waktu Proses Persetujuan', readonly=True),
+        'rata_waktu_pros' :fields.integer('Rata-Rata Waktu Proses Persetujuan', readonly=True),
+        'jum_waktu_wawancara' :fields.integer('Jumlah Proses Waktu Tunggu Wawancara Pertama', readonly=True),
+        'rata_waktu_wawancara' : fields.integer('Rata-Rata Proses Waktu Tunggu Wawancara Pertama', readonly=True),
+        'jum_nwd' : fields.integer('Jumlah NWD', readonly=True),
+        'tot_waktu_proses' : fields.integer('Total Waktu Proses', readonly=True),
+        'rata_waktu_pemenuhan' : fields.integer('Rata-Rata Waktu Pemenuhan', readonly=True),
+        'target' : fields.integer('Target(Hari)', readonly=True),
+        'status' : fields.char('Status', readonly=True),
+        'ket' : fields.char('Keterangan'),
+        'tahun' : fields.char('tahun')
+    }

@@ -361,6 +361,75 @@
                     </tree>
                 </field>
         </record>
+
+        <!--Sarmut HRD-->
+        <record model="ir.actions.act_window" id="sasaran_mutu">
+            <field name="name">Sasaran Mutu HRD </field>
+            <field name="res_model">hr.sarmut</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record> 
+
+        <record id="view_sarmut" model="ir.ui.view">
+                <field name="name">Sasaran Mutu HRD</field>
+                <field name="model">hr.sarmut</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Sasaran  Mutu HRD">
+                        <field name='divisi'/>
+                        <field name='department'/>
+                        <field name='bagian'/>
+                        <field name='jabatan'/> 
+                        <field name='jum_ygdibutuhkan'/>
+                        <field name='level'/>
+                        <field name='tgl_per_user' />
+                        <field name='per_atasan_usr'  />
+                        <field name='waktu1'/>
+                        <field name='per_dir' />
+                        <field name='waktu2'/>
+                        <field name='per_dir_fin'/>
+                        <field name='waktu3'/>
+                        <field name='diterima_recruitment'/>
+                        <field name='waktu4'/>
+                        <field name='wawancara1'/>
+                        <field name='jum_nwd'/>
+                        <field name='waktu_tot'/>
+                        <field name='status'/>
+                        <field name='ket'/>
+                    </tree>
+                </field>
+        </record>
+
+         <!--Sumary Sarmut HRD-->
+        <record model="ir.actions.act_window" id="sumary_sasaran_mutu">
+            <field name="name">Sumary Sasaran Mutu HRD </field>
+            <field name="res_model">hr.sumary_sarmut</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record> 
+
+        <record id="view_sumary_sarmut" model="ir.ui.view">
+                <field name="name">Sumary Sasaran Mutu HRD</field>
+                <field name="model">hr.sumary_sarmut</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Sasaran  Mutu HRD">
+                        <field name='jabatan'/> 
+                        <field name='jumlah_permohonan'/>
+                        <field name='jum_ygdibutuhkan'/>
+                        <field name='jum_waktu_pros' />
+                        <field name='rata_waktu_pros'  />
+                        <field name='jum_waktu_wawancara'/>
+                        <field name='rata_waktu_wawancara' />
+                        <field name='jum_nwd'/>
+                        <field name='tot_waktu_proses'/>
+                        <field name='rata_waktu_pemenuhan'/>
+                        <field name='target'/>
+                        <field name='status'/>
+                        <field name='ket'/>
+                    </tree>
+                </field>
+        </record>
 		
     <menuitem name="Data Report Recruitmnt"
         id="menu_hr_report"
@@ -436,6 +505,21 @@
             id='sumary_monitoring'
             parent='monitoring_interview' 
             sequence='38' action="sumary_monitoring_recruitment"/>
+    
+    <menuitem name="Sasaran Mutu HRD"
+        id='sarmutu'
+        parent='menu_hr_report'
+        sequence='39'/>
+    
+        <menuitem name='Detail Sasaran Mutu HRD'
+            id='detail_sarmut'
+            parent='sarmutu'
+            sequence='40' action='sasaran_mutu'/>
+
+        <menuitem name='Sumary Sasaran Mutu HRD'
+            id='sumary_sarmut'
+            parent='sarmutu'
+            sequence='41' action='sumary_sasaran_mutu'/>
 
     </data>
 </openerp>

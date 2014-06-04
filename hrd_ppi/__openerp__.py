@@ -25,6 +25,8 @@ Human Resource PT.PPI
             'report/hierarcy_view.xml',
             'wizard/recruitment_wizard_view.xml',
             'warning_view.xml',
+            'contract_structure.xml',
+            'report/employee_info.xml'
             ],
     'data': [],
     'installable':True,
