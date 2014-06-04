@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<report id="employee_info_report" string="Biodata Karyawan" model="hr.employee" name="employee.info.report" rml="hrd_ppi/report/employee.rml" />
+	</data>
+</openerp>
