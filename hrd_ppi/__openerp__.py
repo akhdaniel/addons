@@ -22,11 +22,10 @@ Human Resource PT.PPI
             'hr_applicant_view.xml',
             'hr_contract_view.xml',
             'report/report_recruitmen.xml',
-            'report/hierarcy_view.xml',
             'wizard/recruitment_wizard_view.xml',
             'warning_view.xml',
             'contract_structure.xml',
-            'report/employee_info.xml'
+            'report/employee_info.xml',
             ],
     'data': [],
     'installable':True,
