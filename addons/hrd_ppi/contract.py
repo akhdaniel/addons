@@ -78,9 +78,9 @@ class hr_contract(osv.osv):
         'kelompok_sift' : fields.many2one('hr.contract.schedule','Kelompok Sift'),
     	}
 
-    _sql_constraints = [
-    	('no_contract_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
-    ]
+    #_sql_constraints = [
+    #	('no_contract_uniq','unique(name)','No Kontrak Tidak Boleh Sama!')
+    #]
 
     _defaults = {
     	'status' : True,
