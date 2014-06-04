@@ -200,7 +200,7 @@
             </field>
         </record>              
         
-        <!-- Approval Tree View -->
+    <!-- Approval Tree View -->
     <record model="ir.ui.view" id="hr_job_approval_tree">
         <field name="name">hr.job.approval.tree</field>
         <field name="model">hr.job.approval</field>
