@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="man_pp_tree">
+			<field name="name">man_pp_tree</field>
+			<field name="model">hr.employee</field>
+			<field name="arch" type="xml">
+				<tree string="man_pp_tree">
+					<field name="name" sum="Jumlah Employee"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="man_power_search" model="ir.ui.view">
+			<field name="name">Man Power Profile</field>
+			<field name="model">hr.employee</field>
+			<field name="arch" type="xml">
+				<search string="Man Power Profile">
+					<group expand="0" string="Grouped By...">
+						<filter string="Alamat Kantor" name="man_pp_kantor" domain="[]" context="{'group_by':'work_location2'}"/>
+						<filter string="Department" name="man_pp_dept" domain="[]" context="{'group_by':'department_id'}"/>
+						<filter string="Jenis Kelamin" name="man_pp_kelamin" domain="[]" context="{'group_by':'kelamin'}"/>
+						<field name="kelamin" select="1"/>
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="act_man_pow">
+                <field name="name">Man Power Profile</field>
+                <field name="res_model">hr.employee</field>
+                <!-- <field name="view_type">form</field> -->
+                <field name="view_mode">tree</field>
+                <field name="context">{'search_default_man_pp_kantor':1, 'search_default_man_pp_kelamin':1,'search_default_man_pp_dept':1}</field>
+                <field name="search_view_id" ref="man_power_search"/>
+                <field name="view_id" ref="man_pp_tree"/> 
+        </record>
+
+		<menuitem name="Employee" id="hrd_ppi_employee_report" parent="hrd_ppi_main_reporting"/>
+
+		<menuitem name="Man Power Profile" id="hrd_ppi_man_power" parent="hrd_ppi_employee_report" action="act_man_pow"/>
+	</data>
+</openerp>
