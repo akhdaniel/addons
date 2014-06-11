@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 <data>
 
@@ -198,7 +198,6 @@
 
      <!-- ALL JOBS REQUESTS -->
  
-
 	<!-- system MENU -->
     <menuitem action="action_hr_recruit" id="hr_menu_recruit" parent="base.menu_crm_case_job_req_main" name="Permohonan recruitment" sequence="20" groups="group_hr_department,group_hr_user,group_hr_training_head"/>           
     <menuitem parent="hr.menu_hr_configuration" name="Tools" id="base.menu_tools" sequence="120" groups="base.group_tool_user"/>  
@@ -214,5 +213,7 @@
 	<menuitem action="action_fasilitas" parent="base.menu_tools" name="Master Fasilitas" id="master_fasilitas" sequence="202" groups="base.group_tool_user"/>
 	<menuitem action="action_kota" parent="base.menu_tools" name="Master Kota" id="master_Kota" sequence="203" groups="base.group_tool_user"/>
 	<menuitem action="action_prov" parent="base.menu_tools" name="Master Provinsi" id="master_prov" sequence="203" groups="base.group_tool_user"/>
+    <menuitem name="Reporting" id="hrd_ppi_main_reporting" parent="hr.menu_hr_root" sequence="30"/>
+
 </data>
 </openerp>

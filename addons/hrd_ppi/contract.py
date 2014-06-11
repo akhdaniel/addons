@@ -52,9 +52,55 @@ class hr_contract(osv.osv):
             else :
                 return super(hr_contract, self).create(cr, uid, values, context)
         date_star = values['date_start']
-        dates =datetime.strftime(datetime.now(), "%Y-%m-%d")
-        if date_star < dates :
+        datess =datetime.strftime(datetime.now(), "%Y-%m-%d")
+        if date_star < datess :
             raise osv.except_osv(_('Peringatan!'),_('Tanggal Mulai Kontrak Tidak Boleh Kurang Dari Tanggal Sekarang'))
+        status_kontrak = values['type_id']
+        type_obj = self.pool.get('hr.contract.type')
+        type_src = type_obj.search(cr,uid,[('name','=','Kontrak')])
+        type_brw = type_obj.browse(cr,uid,type_src)[0].id
+        dat_en = values['date_end']
+        dat_st = values['date_start']
+        end = datetime.strptime(dat_st,"%Y-%m-%d").year
+        jumlah = 12 - datetime.strptime(dat_st,"%Y-%m-%d").month
+        years = datetime.now().year
+        holi = self.pool.get('hr.holidays')
+        aloc = {}
+        if status_kontrak == type_brw :
+            jum = datetime.strptime(dat_en,"%Y-%m-%d").month - datetime.strptime(dat_st,"%Y-%m-%d").month
+            if end > years : 
+                aloc = {
+                        'name': _("Alokasi Cuti %s") % years,
+                        'employee_id':employee_id,
+                        'type':'add',       #Allocation-> 'add'
+                        'holiday_status_id':1,
+                        'number_of_days_temp': jumlah,
+                        #'holiday_type':'employee',
+                        'notes':""
+                        }
+                holi.create(cr,uid,aloc,context=context)
+            else :
+                aloc = {
+                        'name': _("Alokasi Cuti %s") % years,
+                        'employee_id':employee_id,
+                        'type':'add',       #Allocation-> 'add'
+                        'holiday_status_id':1,
+                        'number_of_days_temp': jum,
+                        #'holiday_type':'employee',
+                        'notes':""
+                        }
+                holi.create(cr,uid,aloc,context=context)
+        else :
+            aloc = {
+                    'name': _("Alokasi Cuti %s") % years,
+                    'employee_id':employee_id,
+                    'type':'add',       #Allocation-> 'add'
+                    'holiday_status_id':1,
+                    'number_of_days_temp': jumlah,
+                    #'holiday_type':'employee',
+                    'notes':""
+                    }
+            holi.create(cr,uid,aloc,context=context)
         return super(hr_contract, self).create(cr, uid, values, context)
 
     def onchange_tahun(self,cr,uid,ids, date_end, context=None):
@@ -189,9 +235,9 @@ class hr_employee_contract(osv.osv):
 		'link_warning1':fields.related('link_warning',type='many2one',
 			relation='warning.schedule', string='link'),
 		'link_warning' : fields.many2one('warning.schedule','link'),
-		'status_contract' : fields.boolean('Status Kontrak',readonly=True),
-		'no_contract' : fields.char('No Kontrak', readonly=True),
-		'tanggal' : fields.date('Tanggal Kaladuarsa',readonly=True),
+		'status_contract' : fields.boolean('Status Kontrak'),
+		'no_contract' : fields.char('No Kontrak'),
+		'tanggal' : fields.date('Tanggal Kaladuarsa'),
 		'warning_schedule' :fields.many2one('warning.schedule',''),
 		'warning_hari' : fields.integer('Habis Kontrak(Hari)'),
 	}	

@@ -237,5 +237,10 @@
         parent="menu_sift_kerja"
         action="hr_sift_roling_act"
         sequence="1"/>
+
+    <!-- jenis karyawan kontrak -->
+        <record id="employee_contract" model="hr.contract.type">
+                <field name="name">Kontrak</field>
+        </record>
     </data>
 </openerp>

@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <search string="Seleksi Pelamar">
                     <group expand="0" string="Group By...">
-                        <filter string="Tahun" name='tahun' icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
+                        <filter string="Tahun" name="tahun" icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
                         <filter string="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
                         <filter string="Bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
                         <filter string="jabatan" icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
@@ -32,26 +32,26 @@
                     <field name="model">hr.seleksi_pelamar</field>
                     <field name="type">tree</field>
                     <field name="arch" type="xml">
-                        <tree string="Daftar Seleksi Pelamar" editable="bottom" >
-                            <field name="nama" readonly='1'/>
-                            <field name="tgl_seleksi" readonly='1' />
-                            <field name="tgl_seleksi1" readonly='1' />
-                            <field name="pendidikan" readonly='1' />
-                            <field name="jurusan" readonly='1' /> 
-                            <field name="tgl_lahir" readonly='1' />    
-                            <field name="usia" readonly='1' />
-                            <field name="sumber" readonly='1' />
-                            <field name="ref" readonly='1' />
-                            <field name="kehadiran" readonly='1' />
-                            <field name="department" readonly='1' />
-                            <field name="bagian" readonly='1' />  
-                            <field name="jabatan" readonly='1' /> 
-                            <field name='ref_jab' readonly='1'/> 
-                            <field name="status" readonly='1' />
-                            <field name="status1" readonly='1' />  
-                            <field name="keputusan" readonly='1' />  
-                            <field name="tgl_keputusan" readonly='1' />  
-                            <field name="tahun" readonly='1' />
+                        <tree string="Daftar Seleksi Pelamar" editable="bottom">
+                            <field name="nama" readonly="1"/>
+                            <field name="tgl_seleksi" readonly="1"/>
+                            <field name="tgl_seleksi1" readonly="1"/>
+                            <field name="pendidikan" readonly="1"/>
+                            <field name="jurusan" readonly="1"/> 
+                            <field name="tgl_lahir" readonly="1"/>    
+                            <field name="usia" readonly="1"/>
+                            <field name="sumber" readonly="1"/>
+                            <field name="ref" readonly="1"/>
+                            <field name="kehadiran" readonly="1"/>
+                            <field name="department" readonly="1"/>
+                            <field name="bagian" readonly="1"/>  
+                            <field name="jabatan" readonly="1"/> 
+                            <field name="ref_jab" readonly="1"/> 
+                            <field name="status" readonly="1"/>
+                            <field name="status1" readonly="1"/>  
+                            <field name="keputusan" readonly="1"/>  
+                            <field name="tgl_keputusan" readonly="1"/>  
+                            <field name="tahun" readonly="1"/>
                         </tree>
                     </field>
         </record> 
@@ -64,9 +64,9 @@
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="No Permintaan" name='no_permintaan' icon="terp-personal" domain="[]" context="{'group_by':'no_pmintaan'}"/>
+                        <filter string="No Permintaan" name="no_permintaan" icon="terp-personal" domain="[]" context="{'group_by':'no_pmintaan'}"/>
                         <filter string="department" name="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
-                        <filter string="posisi" name='posisi' icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
+                        <filter string="posisi" name="posisi" icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
                     </group>
                 </search>
              </field>
@@ -87,18 +87,18 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Laporan Pemenuhan Recruitment" editable="bottom">
-                        <field name="no_pmintaan" readonly='1' />
-                        <field name="tgl_permintaan" readonly='1'/>
-                        <field name="department" readonly='1'/>
-                        <field name="jabatan" readonly='1'/>
-                        <field name="jml_prmintaan" readonly='1'/>
-                        <field name="aktifitas" readonly='1'/> 
-                        <field name="tgl_seleksi" readonly='1'/>    
-                        <field name="jml_kandidat" readonly='1'/>
-                        <field name='jml_diterima' readonly='1'/>
-                        <field name="per_masuk" readonly='1'/>
-                        <field name="status" readonly='1'/>
-                        <field name="ket" />   
+                        <field name="no_pmintaan" readonly="1"/>
+                        <field name="tgl_permintaan" readonly="1"/>
+                        <field name="department" readonly="1"/>
+                        <field name="jabatan" readonly="1"/>
+                        <field name="jml_prmintaan" readonly="1"/>
+                        <field name="aktifitas" readonly="1"/> 
+                        <field name="tgl_seleksi" readonly="1"/>    
+                        <field name="jml_kandidat" readonly="1"/>
+                        <field name="jml_diterima" readonly="1"/>
+                        <field name="per_masuk" readonly="1"/>
+                        <field name="status" readonly="1"/>
+                        <field name="ket"/>   
                     </tree>
                 </field>
             </record>
@@ -112,10 +112,9 @@
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Jenis Permohonan" name='jenis_permohonan' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
-                        <filter string="Divisi" name='divisi' icon="terp-personal" domain="[]" 
-                            context="{'group_by':'div'}"/>
-                        <filter string="department" name='department' icon="terp-personal" domain="[]" context="{'group_by':'dept'}"/>
+                        <filter string="Jenis Permohonan" name="jenis_permohonan" icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Divisi" name="divisi" icon="terp-personal" domain="[]" context="{'group_by':'div'}"/>
+                        <filter string="department" name="department" icon="terp-personal" domain="[]" context="{'group_by':'dept'}"/>
                         <filter string="Bagian" name="bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
                     </group>
                 </search>
@@ -137,21 +136,21 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="List Pemenuhan Recruitment" editable="bottom">
-                        <field name="bul_har" readonly='1'/>
-                        <field name="div" readonly='1'/>
-                        <field name="dept" readonly='1'/>
-                        <field name="bagian" readonly='1'/>
-                        <field name="jabatan" readonly='1'/>
-                        <field name="level" readonly='1'/> 
-                        <field name="tgl_permohonan" readonly='1'/>    
-                        <field name="status_wawancara" readonly='1'/>
-                        <field name='status_pemenuhan' readonly='1'/>
-                        <field name='jumlah_kebutuhan' readonly='1'/>
-                        <field name="jumlah_terpenuhi" readonly='1'/>
-                        <field name='kekurangan_pmenuhan' readonly='1'/>
-                        <field name='status_penempatan' readonly='1'/>
-                        <field name='ket'/>
-                        <field name='review'/>   
+                        <field name="bul_har" readonly="1"/>
+                        <field name="div" readonly="1"/>
+                        <field name="dept" readonly="1"/>
+                        <field name="bagian" readonly="1"/>
+                        <field name="jabatan" readonly="1"/>
+                        <field name="level" readonly="1"/> 
+                        <field name="tgl_permohonan" readonly="1"/>    
+                        <field name="status_wawancara" readonly="1"/>
+                        <field name="status_pemenuhan" readonly="1"/>
+                        <field name="jumlah_kebutuhan" readonly="1"/>
+                        <field name="jumlah_terpenuhi" readonly="1"/>
+                        <field name="kekurangan_pmenuhan" readonly="1"/>
+                        <field name="status_penempatan" readonly="1"/>
+                        <field name="ket"/>
+                        <field name="review"/>   
                     </tree>
                 </field>
         </record>
@@ -165,8 +164,8 @@
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Jenis Permohonan" name='jen_perm' icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
-                        <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                        <filter string="Jenis Permohonan" name="jen_perm" icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Department" name="dept" icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
                     </group>
                 </search>
              </field>
@@ -186,14 +185,14 @@
                 <field name="model">hr.sumary_kebutuhan</field>
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
-                    <tree string="List Pemenuhan Recruitment" editable="bottom" >
-                        <field name='tahun' readonly='1'/>
-                        <field name="dep" readonly='1'/>
-                        <field name="jum_kebutuhan" readonly='1'/>
-                        <field name="jum_terpenuhi" readonly='1'/>
-                        <field name='varian' readonly='1'/>
-                        <field name='percentage' readonly='1'/>
-                        <field name='ket'/>
+                    <tree string="List Pemenuhan Recruitment" editable="bottom">
+                        <field name="tahun" readonly="1"/>
+                        <field name="dep" readonly="1"/>
+                        <field name="jum_kebutuhan" readonly="1"/>
+                        <field name="jum_terpenuhi" readonly="1"/>
+                        <field name="varian" readonly="1"/>
+                        <field name="percentage" readonly="1"/>
+                        <field name="ket"/>
                     </tree>
                 </field>
         </record>
@@ -203,7 +202,7 @@
             <field name="model">hr.sumary_kebutuhan</field>
             <field name="arch" type="xml">
                   <graph string="Cases By Stage and Estimates" type="bar">   
-                    <field name='dep'/>           
+                    <field name="dep"/>           
                     <field name="jum_kebutuhan"/>
                 </graph>
             </field>
@@ -218,7 +217,7 @@
             <field name="arch" type="xml">
                 <search string="Progres Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                        <filter string="Department" name="dept" icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
                     </group>
                 </search>
              </field>
@@ -238,14 +237,14 @@
                 <field name="model">hr.sumary_kebutuhan_harian</field>
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
-                    <tree string="List Pemenuhan Recruitment" editable="bottom" >
-                        <field name='tahun' readonly='1'/>
-                        <field name="dep" readonly='1'/>
-                        <field name="jum_kebutuhan" readonly='1'/>
-                        <field name="jum_terpenuhi" readonly='1'/>
-                        <field name='varian' readonly='1'/>
-                        <field name='percentage' readonly='1'/>
-                        <field name='ket'/>
+                    <tree string="List Pemenuhan Recruitment" editable="bottom">
+                        <field name="tahun" readonly="1"/>
+                        <field name="dep" readonly="1"/>
+                        <field name="jum_kebutuhan" readonly="1"/>
+                        <field name="jum_terpenuhi" readonly="1"/>
+                        <field name="varian" readonly="1"/>
+                        <field name="percentage" readonly="1"/>
+                        <field name="ket"/>
                     </tree>
                 </field>
         </record>
@@ -255,7 +254,7 @@
             <field name="model">hr.sumary_kebutuhan_harian</field>
             <field name="arch" type="xml">
                   <graph string="Cases By Stage and Estimates" type="bar">   
-                    <field name='dep'/>           
+                    <field name="dep"/>           
                     <field name="jum_kebutuhan"/>
                 </graph>
             </field>
@@ -269,9 +268,9 @@
             <field name="arch" type="xml">
                 <search string="Laporan Recruitment">
                     <group expand="0" string="Group By...">
-                        <filter string="Tahun" name='tahun' icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
-                        <filter string="Department" name='dept' icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
-                        <filter string="posisi" name='posisi' icon="terp-personal" domain="[]" context="{'group_by':'posisi'}"/>
+                        <filter string="Tahun" name="tahun" icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
+                        <filter string="Department" name="dept" icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                        <filter string="posisi" name="posisi" icon="terp-personal" domain="[]" context="{'group_by':'posisi'}"/>
                     </group>
                 </search>
              </field>
@@ -292,16 +291,16 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Laporan Permintaan Recruitment">
-                        <field name='dep' />
-                        <field name='posisi' />
+                        <field name="dep"/>
+                        <field name="posisi"/>
                         <field name="jumlah"/>
-                        <field name="wkt_penempatan" />
-                        <field name="pengalaman" />
-                        <field name='usia'/>
-                        <field name='jenis_kelamin'/>
-                        <field name='status'/>
-                        <field name='domisili'/>
-                        <field name='tahun'/>
+                        <field name="wkt_penempatan"/>
+                        <field name="pengalaman"/>
+                        <field name="usia"/>
+                        <field name="jenis_kelamin"/>
+                        <field name="status"/>
+                        <field name="domisili"/>
+                        <field name="tahun"/>
                     </tree>
                 </field>
         </record>
@@ -319,17 +318,17 @@
                 <field name="model">hr.monitoring_recruitment</field>
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
-                    <tree string="Monitoring Recruitment"  editable="bottom" >
-                        <field name='name' readonly='1'/> 
-                        <field name='dep'  readonly='1'/> 
-                        <field name='test1_hrd' readonly='1'/>  
-                        <field name='test2_hrd' readonly='1'/> 
-                        <field name='test1_usr' readonly='1'/> 
-                        <field name='test2_usr'  readonly='1'/> 
-                        <field name='approval' readonly='1' /> 
-                        <field name='tes_kesehatan' readonly='1'/>  
-                        <field name='ket'/> 
-                        <field name='status'/>
+                    <tree string="Monitoring Recruitment" editable="bottom">
+                        <field name="name" readonly="1"/> 
+                        <field name="dep" readonly="1"/> 
+                        <field name="test1_hrd" readonly="1"/>  
+                        <field name="test2_hrd" readonly="1"/> 
+                        <field name="test1_usr" readonly="1"/> 
+                        <field name="test2_usr" readonly="1"/> 
+                        <field name="approval" readonly="1"/> 
+                        <field name="tes_kesehatan" readonly="1"/>  
+                        <field name="ket"/> 
+                        <field name="status"/>
                     </tree>
                 </field>
         </record>
@@ -348,16 +347,16 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Sumary Monitoring Recruitment">
-                        <field name='tahun'/>
-                        <field name='dep' />
-                        <field name='qty'/>
-                        <field name='test1'/> 
-                        <field name='wawancara_hrd'/>
-                        <field name='wawancara1_usr' />
-                        <field name='wawancara2_usr' />
-                        <field name='approval' />
-                        <field name='tes_kesehatan'/>
-                        <field name='pending' />
+                        <field name="tahun"/>
+                        <field name="dep"/>
+                        <field name="qty"/>
+                        <field name="test1"/> 
+                        <field name="wawancara_hrd"/>
+                        <field name="wawancara1_usr"/>
+                        <field name="wawancara2_usr"/>
+                        <field name="approval"/>
+                        <field name="tes_kesehatan"/>
+                        <field name="pending"/>
                     </tree>
                 </field>
         </record>
@@ -376,26 +375,26 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Sasaran  Mutu HRD">
-                        <field name='divisi'/>
-                        <field name='department'/>
-                        <field name='bagian'/>
-                        <field name='jabatan'/> 
-                        <field name='jum_ygdibutuhkan'/>
-                        <field name='level'/>
-                        <field name='tgl_per_user' />
-                        <field name='per_atasan_usr'  />
-                        <field name='waktu1'/>
-                        <field name='per_dir' />
-                        <field name='waktu2'/>
-                        <field name='per_dir_fin'/>
-                        <field name='waktu3'/>
-                        <field name='diterima_recruitment'/>
-                        <field name='waktu4'/>
-                        <field name='wawancara1'/>
-                        <field name='jum_nwd'/>
-                        <field name='waktu_tot'/>
-                        <field name='status'/>
-                        <field name='ket'/>
+                        <field name="divisi"/>
+                        <field name="department"/>
+                        <field name="bagian"/>
+                        <field name="jabatan"/> 
+                        <field name="jum_ygdibutuhkan"/>
+                        <field name="level"/>
+                        <field name="tgl_per_user"/>
+                        <field name="per_atasan_usr"/>
+                        <field name="waktu1"/>
+                        <field name="per_dir"/>
+                        <field name="waktu2"/>
+                        <field name="per_dir_fin"/>
+                        <field name="waktu3"/>
+                        <field name="diterima_recruitment"/>
+                        <field name="waktu4"/>
+                        <field name="wawancara1"/>
+                        <field name="jum_nwd"/>
+                        <field name="waktu_tot"/>
+                        <field name="status"/>
+                        <field name="ket"/>
                     </tree>
                 </field>
         </record>
@@ -414,57 +413,36 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Sasaran  Mutu HRD">
-                        <field name='jabatan'/> 
-                        <field name='jumlah_permohonan'/>
-                        <field name='jum_ygdibutuhkan'/>
-                        <field name='jum_waktu_pros' />
-                        <field name='rata_waktu_pros'  />
-                        <field name='jum_waktu_wawancara'/>
-                        <field name='rata_waktu_wawancara' />
-                        <field name='jum_nwd'/>
-                        <field name='tot_waktu_proses'/>
-                        <field name='rata_waktu_pemenuhan'/>
-                        <field name='target'/>
-                        <field name='status'/>
-                        <field name='ket'/>
+                        <field name="jabatan"/> 
+                        <field name="jumlah_permohonan"/>
+                        <field name="jum_ygdibutuhkan"/>
+                        <field name="jum_waktu_pros"/>
+                        <field name="rata_waktu_pros"/>
+                        <field name="jum_waktu_wawancara"/>
+                        <field name="rata_waktu_wawancara"/>
+                        <field name="jum_nwd"/>
+                        <field name="tot_waktu_proses"/>
+                        <field name="rata_waktu_pemenuhan"/>
+                        <field name="target"/>
+                        <field name="status"/>
+                        <field name="ket"/>
                     </tree>
                 </field>
         </record>
 		
-    <menuitem name="Data Report Recruitmnt"
-        id="menu_hr_report"
-        parent="base.menu_crm_case_job_req_main"
-        sequence="27"/> 
+    <menuitem name="Recruitment" id="menu_hr_report" parent="hrd_ppi_main_reporting" sequence="27"/> 
 
-    <menuitem name="Daftar Seleksi Pelamar" 
-        id="daftar_pelamar"
-        parent="menu_hr_report"
-        sequence="28" action="daftar_seleksi_pelamar"/>   
+    <menuitem name="Daftar Seleksi Pelamar" id="daftar_pelamar" parent="menu_hr_report" sequence="28" action="daftar_seleksi_pelamar"/>   
 
-    <menuitem name="Laporan Pemenuhan Recruitment" 
-        id="pemenuhan_recrutiment"
-        parent="menu_hr_report"
-        sequence="29" action="laporan_pemenuhan_recrutiment"/> 
+    <menuitem name="Laporan Pemenuhan Recruitment" id="pemenuhan_recrutiment" parent="menu_hr_report" sequence="29" action="laporan_pemenuhan_recrutiment"/> 
 
-    <menuitem name="List Pemenuhan Recruitment"
-        id='list_pemenuhan_rec'
-        parent='menu_hr_report' 
-        sequence='30'/>
+    <menuitem name="List Pemenuhan Recruitment" id="list_pemenuhan_rec" parent="menu_hr_report" sequence="30"/>
 
-        <menuitem name='Kebutuhan Harian/Bulanan'
-            id='kebutuhan_harian'
-            parent='list_pemenuhan_rec' 
-            sequence='31' action='list_pemenuhan'/>
+        <menuitem name="Kebutuhan Harian/Bulanan" id="kebutuhan_harian" parent="list_pemenuhan_rec" sequence="31" action="list_pemenuhan"/>
 
-        <menuitem name='Sumary Kebutuhan Bulanan'
-            id='sumary_kebutuhan_harian'
-            parent='list_pemenuhan_rec' 
-            sequence='32' action='sumary_pemenuhan'/>
+        <menuitem name="Sumary Kebutuhan Bulanan" id="sumary_kebutuhan_harian" parent="list_pemenuhan_rec" sequence="32" action="sumary_pemenuhan"/>
 
-        <menuitem name='Sumary Kebutuhan Harian'
-            id='sumary_kebutuhan_harian1'
-            parent='list_pemenuhan_rec' 
-            sequence='32' action='sumary_pemenuhan_harian'/>
+        <menuitem name="Sumary Kebutuhan Harian" id="sumary_kebutuhan_harian1" parent="list_pemenuhan_rec" sequence="32" action="sumary_pemenuhan_harian"/>
 
     <!--menuitem name="Laporan Monitoring Sasaran Mutu"
         id='laporan_monitoring'
@@ -481,45 +459,24 @@
         parent='laporan_monitoring' 
         sequence='36' action="sumary_monitoring_recruitment" /-->
 
-    <menuitem name="Laporan Permintaan Recruitment"
-        id='laporan_permintaan_karyawan'
-        parent='menu_hr_report' 
-        sequence='35' action='laporan_permintaan_recruitment'/>
+    <menuitem name="Laporan Permintaan Recruitment" id="laporan_permintaan_karyawan" parent="menu_hr_report" sequence="35" action="laporan_permintaan_recruitment"/>
 
     <!--menuitem name="Daftar Pelamar"
         id='daftar_pelamar1'
         parent='menu_hr_report' 
         sequence='36' action='crm_case_tree_view_job'/-->
 
-    <menuitem name="Laporan Monitoring Progres Interview"
-        id='monitoring_interview'
-        parent='menu_hr_report' 
-        sequence='36'/>
+    <menuitem name="Laporan Monitoring Progres Interview" id="monitoring_interview" parent="menu_hr_report" sequence="36"/>
 
-        <menuitem name='Detail Monitoring'
-            id='detail_monitoring'
-            parent='monitoring_interview' 
-            sequence='37' action="monitoring_recruitment"/>
+        <menuitem name="Detail Monitoring" id="detail_monitoring" parent="monitoring_interview" sequence="37" action="monitoring_recruitment"/>
 
-        <menuitem name='Sumary Monitoring'
-            id='sumary_monitoring'
-            parent='monitoring_interview' 
-            sequence='38' action="sumary_monitoring_recruitment"/>
+        <menuitem name="Sumary Monitoring" id="sumary_monitoring" parent="monitoring_interview" sequence="38" action="sumary_monitoring_recruitment"/>
     
-    <menuitem name="Sasaran Mutu HRD"
-        id='sarmutu'
-        parent='menu_hr_report'
-        sequence='39'/>
+    <menuitem name="Sasaran Mutu HRD" id="sarmutu" parent="menu_hr_report" sequence="39"/>
     
-        <menuitem name='Detail Sasaran Mutu HRD'
-            id='detail_sarmut'
-            parent='sarmutu'
-            sequence='40' action='sasaran_mutu'/>
+        <menuitem name="Detail Sasaran Mutu HRD" id="detail_sarmut" parent="sarmutu" sequence="40" action="sasaran_mutu"/>
 
-        <menuitem name='Sumary Sasaran Mutu HRD'
-            id='sumary_sarmut'
-            parent='sarmutu'
-            sequence='41' action='sumary_sasaran_mutu'/>
+        <menuitem name="Sumary Sasaran Mutu HRD" id="sumary_sarmut" parent="sarmutu" sequence="41" action="sumary_sasaran_mutu"/>
 
     </data>
 </openerp>
