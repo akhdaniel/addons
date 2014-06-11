@@ -39,6 +39,23 @@ class hr_overtime(osv.osv):
     _description = "Overtime"
     _order = "date_from asc"
 
+    def _hitung_lembur(self, cr, uid, ids, arg, vals, context=None):
+        jumlah={}
+        obj = self.browse(cr,uid,ids)[0]
+        jam = obj.jam_lembur
+        overtime_type = obj.overtime_type.jam_ids
+        x = 0
+        for over in overtime_type :
+            sampai = float(over.sampai)
+            dari = float(over.name)
+            if jam >= sampai and sampai != 0.0:
+                tot = (sampai - dari + 1) * over.pengali
+            elif sampai == 0.0 and jam >= dari:
+                tot = (jam - (dari - 1)) * over.pengali
+            x = x + tot
+        jumlah[obj.id] = x
+        return jumlah
+
     def _employee_get(obj, cr, uid, context=None):
         ids = obj.pool.get('hr.employee').search(cr, uid, [('user_id', '=', uid)], context=context)
         if ids:
@@ -67,8 +84,11 @@ class hr_overtime(osv.osv):
         'number_of_hours': fields.function(_compute_number_of_hours, method=True, string='Number of Hours', store=True),
         #'department_id':fields.related('employee_id', 'department_id', string='Department', type='many2one', relation='hr.department', readonly=True),
         'manager_id2': fields.many2one('hr.employee', 'Second Approval', readonly=True, help='This area is automaticly filled by the user who validate the leave with second level (If Leave type need second validation)'),
-        'overtime_type_id': fields.many2one("hr.overtime.type", "Overtime Type", required=True,readonly=True, states={'draft':[('readonly',False)]}),
+        'overtime_type_id': fields.many2one("hr.overtime.type", "Type Lembur", required=True,readonly=True, states={'draft':[('readonly',False)]}),
         'department_id' : fields.many2one('hr.department', 'Department'),
+        'overtime_type' : fields.many2one('hr.overtime.jam','Jenis Lembur',required=True),
+        'total_jam':fields.function(_hitung_lembur,type='float',store=True, readonly=True,string='Total Jam Lembur'),
+        'jam_lembur':fields.float("Jumlah Jam Lembur"),
     }
     _defaults = {
         'employee_id': _employee_get,
@@ -148,3 +168,28 @@ class hr_overtime(osv.osv):
         return True
 
 hr_overtime()
+
+class overtime_jam(osv.osv):
+    _name = 'hr.overtime.jam'
+    _description = 'pengali jam lembur'
+
+    _columns = {
+        'name' : fields.char('Nama Perhitungan Lembur'),
+        'jam_ids' : fields.one2many('hr.jam','overtime_jam', 'Perhitungan Jam')  
+    }
+overtime_jam()
+
+class jam(osv.osv):
+    _name = 'hr.jam'
+
+    _columns ={
+        'name' :fields.selection([('1','Jam 1'),('2','Jam 2'),('3','Jam 3'),('4','Jam 4'),('5','Jam 5'),('6','Jam 6'),('7','Jam 7'),
+            ('8','Jam 8'),('9','Jam 9'),('10','Jam 10'),('11','Jam 11'),('12','Jam 12'),('13','Jam 13'),('14','Jam 14'),('15','Jam 15')
+            ,('16','Jam 16'),('17','Jam 17'),('18','Jam 18'),('19','Jam 19'),('20','Jam 20'),('21','Jam 21'),('22','Jam 22'),('23','Jam 23'),('24','Jam 24')], 'Jam Ke'),
+        'sampai' :fields.selection([('1','Jam 1'),('2','Jam 2'),('3','Jam 3'),('4','Jam 4'),('5','Jam 5'),('6','Jam 6'),('7','Jam 7'),
+            ('8','Jam 8'),('9','Jam 9'),('10','Jam 10'),('11','Jam 11'),('12','Jam 12'),('13','Jam 13'),('14','Jam 14'),('15','Jam 15')
+            ,('16','Jam 16'),('17','Jam 17'),('18','Jam 18'),('19','Jam 19'),('20','Jam 20'),('21','Jam 21'),('22','Jam 22'),('23','Jam 23'),('24','Jam 24')], 'Sampai Jam Ke'),
+        'pengali' :fields.float('Pengali'),
+        'overtime_jam' :fields.many2one('hr.overtime.jam'),
+    }
+jam()
