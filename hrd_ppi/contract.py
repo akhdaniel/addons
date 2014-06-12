@@ -126,6 +126,7 @@ class hr_contract(osv.osv):
 
     _defaults = {
     	'status' : True,
+        'wage' : 2500000,
     }
 
     def onchange_employee(self, cr, uid, ids, employee_id):
