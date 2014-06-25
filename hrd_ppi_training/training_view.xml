@@ -32,13 +32,12 @@
                     <field name="state"/>  
                 </tree>
             </field>
-        </record>        
+        </record>         
         
         <record id="hr_training2_view_tree" model="ir.ui.view">
             <field name="name">hr_training.train.view.tree</field>
             <field name="model">hr_training.train</field>
             <field name="type">tree</field>
-            <field name="domain">[('state','=',approve)]</field>
             <field name="arch" type="xml">
                 <tree string="Rencana Training">
                     <field name="employee_id"/>
@@ -56,7 +55,7 @@
             <field name="name">hr_training.analisa.view.form</field>
             <field name="model">hr_training.analisa</field>
             <field name="type">form</field>
-            <field name="arch" type="xml">                
+            <field name="arch" type="xml">       
                 <form string="hr_training.analisa.analisa_id" version="7.0">     
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
@@ -99,12 +98,15 @@
                 </header>
                 <group>
                 <group >
-                     <field name="paket_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                     <field name='tes'/>
+                     <field name='pp' attrs="{'invisible': [('tes','!=','SIO')]}"/>
+                     <field name='pt' attrs="{'invisible': [('tes','!=','SIO')]}"/>
+                     <field name="paket_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>
                      <field name="bulan" attrs="{'readonly': [('state','!=', 'draft')]}"/>
                      <field name="user_id"/>
                 </group>
                 <group >
-                    <field name="department_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                    
+                    <field name="department_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>                    
                 </group>    
                 </group>
                     <!--group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}>
@@ -114,11 +116,14 @@
                 <group>         
                     <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/>
                     <group> 
-                    <field name="no"/>
-                    <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                    <field name="no" attrs="{'invisible': [('tes','=','SIO')]}"/>
+                    <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>
                     <!--field name="subject"/-->
-                    <field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
-                    <field name="nama" attrs="{'readonly': [('state','!=', 'draft')]}"/> 
+                    <field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>                  
+                    <field name="nama" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/> 
+                    <field name='penyelenggara' attrs="{'invisible' : [('tes','!=','Eksternal')]}"/>
+                    <field name='nama_sertifikat' attrs="{'invisible': [('tes','!=','SIO')]}"/>
+                    <field name='iso' attrs="{'invisible': [('tes','!=','SIO')]}"/>
                     <field name="tanggal" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
                     </group>
                     <group>
@@ -143,165 +148,67 @@
                          
                     <notebook colspan="4">
                           <page string="Karyawan" name="karyawan">
-                            <field view_mode="tree,form" name="employee_ids" nolabel="1">
+                            <field view_mode="tree,form" name="employee_ids" nolabel="1" attrs="{'invisible': [('tes','=','SIO')]}">
                                 <tree>
                                     <field name="employee_id"/> 
                                     <field name="job_id"/>
-                                    <!--field name="department_id"/--> 
+                                    <field name="department_id"/> 
                                     <field name="nonik"/>                                    
                                     <field name="evaluasi_id"/>
                                     <field name="rekomendasi_id"/> 
-                                    <field name="bukti_ids"/> 
-                                    <!--field name="email"/-->                                                       
+                                    <field name="bukti_id"/>                                                      
                                 </tree>
                                 <form>
                                     <group>
-                                        <field name="employee_id"/>  
-                                        <field name="state" invisible="True" widget="handle"/> 
-                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
+                                        <field name='tanggal1' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                        <field name='nama_penilai' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                        <field name='jabatan_penilai' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                        <field name="employee_id" attrs="{'readonly': [('state','=', 'evaluation')]}"/>  
+                                        <field name="state" invisible="0"/>
+                                        <field name='persentase_penguasaan' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                        <field name='kesimpulan' attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
                                         <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
                                     </group>
-                                    <group>    
-                                    <field view_mode="form" name="bukti_ids" attrs="{'invisible':[('state','!=','evaluation')]}">
-                                        <form>     
-                                            <field name="name"/>                                                           
-                                        </form>
-                                    </field>
+                                    <group> 
+                                    <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}">
+                                            <tree>
+                                                <field name='name'/>
+                                                <field name='skor'/>
+                                            </tree>
+                                            <form>
+                                                <field name='name'/>
+                                                <field name='skor'/>
+                                            </form>
+                                        </field> 
+                                    <field name='bukti_id' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
                                     </group>        
                                 </form>
                             </field>
-                        </page>	
+                            <field view_mode="tree,form" name="sio_ids" nolabel="1" attrs="{'invisible': [('tes','!=','SIO')]}">
+                                <tree>
+                                    <field name='employee_id'/>
+                                    <field name='nik'/>
+                                    <field name='department_id'/>
+                                    <field name='bukti'/>
+                                    <field name='berlaku'/>
+                                    <field name='state'/>
+                                </tree>
+                                <form>
+                                    <field name='employee_id'/>
+                                    <field name='nik'/>
+                                    <field name='department_id'/>
+                                    <field name='bukti' attrs="{'invisible': [('state','!=','evluation')]}"/>
+                                    <field name='berlaku'/>
+                                    <field name='state'/>
+                                    <button string='schedule' type='object' name='schedule_iso'/>
+                                </form>
+                            </field>
+                        </page>
                     </notebook>
-
                 </form>
             </field>
         </record>
 
-         <record id="hr_training_view_form2" model="ir.ui.view">
-            <field name="name">hr_training.analisa.view.form</field>
-            <field name="model">hr_training.analisa</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">                
-                <form string="Eksternal" version="7.0">     
-                <header>                            
-                    <button string="Send for Approval" type="workflow" 
-                        states="draft" name="signal_verify"
-                        groups="hrd_ppi.group_hr_user" 
-                        class="oe_highlight" /> 
-
-                    <button string="Approve" type="workflow"  
-                        states="verify" name="signal_approve"
-                        groups="hrd_ppi.group_hr_training_head"
-                        class="oe_highlight"  />  
-
-                    <button string="Cancel" type="workflow"  
-                        groups="hrd_ppi.group_hr_training_head"
-                        states="verify" name="signal_cancel"/>
-                        
-                    <button string="Reject" type="workflow"  
-                        groups="hrd_ppi.group_hr_training_head"
-                        states="verify,approve2" name="signal_reject"/>     
-                    
-                    <button string="Second Approve" type="workflow"  
-                        states="approve" name="signal_approve_hr_department"
-                        groups="hrd_ppi.group_hr_manager"
-                        class="oe_highlight"  />  
-                        
-                    <button string="Reject" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
-                        states="approve" name="signal_reject"/>                                               
-
-                    <!--button string="Reject" type="workflow"  
-                        groups="hrd_ppi.group_hr_manager"
-                        states="approve2" name="signal_reject"/-->
-
-                    <button string="Start Evaluation" type="workflow"  
-                        groups="hrd_ppi.group_hr_training_head"
-                        states="approve2" name="signal_evaluation" 
-                        class="oe_highlight" /> 
-                        
-                    <field name="state" widget="statusbar" statusbar_visible="draft,verify,approve,approve2,evaluation" attrs="{'invisible': [('state','=', 'reject')]}" class="oe_inline"/>
-                </header>                    
-                <group>
-                <group >
-                     <field name="paket_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                     <field name="bulan" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                     <!--field name="tes" attrs="{'readonly': [('state','!=', 'draft')]}"/-->
-                </group>
-                <group >
-                    <field name="department_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                    
-                </group>    
-                </group>
-                    <!--group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}>
-                    </group>
-                    <group string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}">
-                    </group-->
-                <group>         
-                    <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/>
-                    <group> 
-                    <field name="no"/>
-                    <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                    <!--field name="subject"/-->
-                    <field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
-                    <field name="penyelenggara" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                    <field name="presentasi" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                    <field name="tanggal" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
-                    </group>
-                    <group>
-                        <label for="durasi" string="Durasi" />
-                            <div>
-                                
-                                    <field name="date_from" on_change="onchange_date_from(date_to, date_from)" attrs="{'invisible': [('state','=', 'draft')]}" class="oe_inline"/><label string=" s/d " class="oe_inline"/>
-                                    <field name="date_to" on_change="onchange_date_from(date_to, date_from)"  attrs="{'invisible': [('state','=', 'draft')]}" class="oe_inline"/>
-                                
-                                <div>
-                                    <field name="durasi" attrs="{'invisible': [('state','=', 'draft')]}" class="oe_inline"/> Hari
-                                </div>
-                            </div>                                                                            
-                    
-                    
-                    <!--field name="number_of_days" attrs="{'invisible': [('state','=', 'draft')]}" groups="hrd_ppi.group_hr_manager"/-->
-                    
-                    <field name="catatan" />
-                    <field name="description" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                    </group>    
-                </group>      
-                         
-                    <notebook colspan="4">
-                          <page string="Karyawan" name="karyawan">
-                            <field view_mode="tree,form" name="employee_ids" nolabel="1">
-                                <tree>
-                                    <field name="employee_id"/> 
-                                    <field name="job_id"/>
-                                    <!--field name="department_id"/--> 
-                                    <field name="nonik"/>                                    
-                                    <field name="evaluasi_id"/>
-                                    <field name="rekomendasi_id"/> 
-                                    <field name="bukti_ids"/> 
-                                    <!--field name="email"/-->                                                       
-                                </tree>
-                                <form>
-                                    <group>
-                                        <field name="employee_id"/>  
-                                        <field name="state" invisible="0"/> 
-                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
-                                        <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
-                                    </group>
-                                    <group>    
-                                    <field view_mode="form" name="bukti_ids" attrs="{'invisible':[('state','!=','evaluation')]}">
-                                        <form>     
-                                            <field name="name"/>                                                           
-                                        </form>
-                                    </field>
-                                    </group>        
-                                </form>
-                            </field>
-                        </page> 
-                    </notebook>
-
-                </form>
-            </field>
-        </record>        
         
         <record id="view_training_filter2" model="ir.ui.view">
             <field name="name">Training</field>
@@ -314,25 +221,6 @@
                         <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
                         <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
                         <filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/>
-                        <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
-                    </group>
-                </search>
-             </field>
-         </record>
-         
-         <record id="view_training_filter3" model="ir.ui.view">
-            <field name="name">Daftar Peserta Pelatihan</field>
-            <field name="model">hr_training.train</field>
-            <field name="type">search</field>
-            <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
-            <field name="arch" type="xml">
-                <search string="Daftar Peserta Pelatihan">
-                    <group expand="0" string="Group By...">
-                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject'}"/>
-                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
-                        <!--filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/-->
-                        <!--filter string="Internal/Eksternal" icon="terp-personal+" domain="[]" context="{'group_by':'is_internal'}"/-->
-                        <filter string="Karyawan" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'employee_id'}"/>
                         <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
                     </group>
                 </search>
@@ -376,38 +264,94 @@
             <field name="padding">3</field>
         </record>      
         
-        <!--record forcecreate="1" id="seq_type_training_employees" model="ir.sequence.type">
-            <field name="name">Training Participants</field>
-            <field name="code">hr.employee</field>
+<!-- ################# form non Training #################### -->
+        
+        <record id="hr_nontraining" model="ir.ui.view">
+            <field name="name">hr.non_training.view.tree</field>
+            <field name="model">hr.non_training</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name='id'/>
+                    <field name="subject_id"/>
+                    <field name="penyelenggara"/>
+                    <field name='tanggal'/> 
+                </tree>
+            </field>
+        </record>       
+
+        <record id="hr_nontraining1" model="ir.ui.view">
+            <field name="name">hr.non_training.view.form</field>
+            <field name="model">hr.non_training</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">       
+                <form string="Non Training">
+                    <field name='id'/>
+                    <field name="subject_id"/>
+                    <field name='penyelenggara'/>
+                    <field name='tanggal'/>  
+                    <notebook colspan="4">
+                        <page string="Karyawan" name="karyawan">
+                            <field view_mode="tree,form" name="employee_ids" nolabel="1" >
+                                <tree>
+                                    <field name='employee_id'/>
+                                    <field name='nik'/>
+                                    <field name='tgl_msk'/>
+                                    <field name='clas_id'/>
+                                    <field name='department_id'/>
+                                    <field name='work_location2'/>
+                                    <field name='bukti'/>
+                                    <field name='ket'/>
+                                </tree>
+                                <form>
+                                    <field name='employee_id'/>
+                                    <field name='bukti'/>
+                                    <field name='ket'/>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
         </record>
-        
-        <record  forcecreate="1" id="seq_training_employees" model="ir.sequence">
-            <field name="name">Training Participants</field>
-            <field name="code">hr.employee</field>
-            <field name="prefix"></field>
-            <field name="padding">3</field>
-        </record-->   
 
-<!--record id="view_training_readonly" model="ir.ui.view">
-    <field name="name">Training form</field>
-    <field name="model">hr_training.analisa</field>
-    <field name="inherit_id" ref="hrd_ppi_training.hr_training_view_form"/>
-    <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department'),ref('hrd_ppi.group_hr_user'),ref('hrd_ppi.group_hr_manager')])]"/>
-    <field name="arch" type="xml">
-        <field name='date_from' position="attributes">
-            <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
-        </field>        
-        <field name='date_to' position="attributes">
-            <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
-        </field>
-        <field name='durasi' position="attributes">
-            <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
-        </field>
-             
-    </field>
-</record-->
+        <!-- detail peserta non training -->
 
-        
+        <record id="hr_non_training" model="ir.ui.view">
+            <field name="name">Detail Non Training</field>
+            <field name="model">hr_non.emp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Detail Peserta Non Training'>
+                    <field name="employee_id"/>
+                    <field name='nik'/>
+                    <field name='tgl_msk'/>
+                    <field name='clas_id'/> 
+                    <field name="department_id"/>                                                            
+                    <field name="work_location2"/> 
+                    <field name="subject_id"/>
+                    <field name="penyelenggara"/>  
+                    <field name="tanggal"/>
+                    <field name="bukti"/>
+                    <field name='ket'/>
+                </tree>
+            </field>
+        </record>
+
+        <record forcecreate="1" id="ppi_schedule_iso" model="ir.cron">
+            <field name="name">Schedule Iso</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.training_sio'" name="model" />
+            <field eval="'schedule_iso'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-06-9 17:00:00"</field>
+        </record>
+
     </data>
 </openerp>
     

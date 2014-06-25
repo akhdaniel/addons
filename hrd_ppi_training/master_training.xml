@@ -14,25 +14,6 @@
 	        <field name="name">Others</field>	    	
 		</record>
 		
-		<!--Evaluations-->
-	    <record id="hr_ppi_training_eval1" model="hr_training.evaluasi_training">
-	        <field name="name">Exelence</field>	    	
-		</record>
-	    <record id="hr_ppi_training_eval2" model="hr_training.evaluasi_training">
-	        <field name="name">Good</field>	    	
-		</record>
-	    <record id="hr_ppi_training_eval3" model="hr_training.evaluasi_training">
-	        <field name="name">Fair</field>	    	
-		</record>
-	    <record id="hr_ppi_training_eval4" model="hr_training.evaluasi_training">
-	        <field name="name">Poor</field>	    	
-		</record>
-		
-		<!--Subject-->
-		<!--record id="hr_ppi_training_sub1" model='hr_training.subject'>
-	        <field name="name">MANAGING PEOPLE EFFECTIVELY - EXECUTIVE</field>	 
-	        <field name="code">TRS01</field>   	
-		</record-->
 		<record id="hr_ppi_training_sub2" model='hr_training.subject'>
 	        <field name="name">MANAGING PEOPLE EFFECTIVELY - MID MGR</field>	 
 	        <field name="code">TRS02</field>   	
