@@ -7,11 +7,7 @@
             <field name="name">hr.turnover.report.tree</field>
             <field name="model">hr.turnover.report</field>
             <field name="arch" type="xml">
-            <tree string="Turnover Analysis" create="false">
-                <field name="department_id" invisible="1"/>
-                <field name="bln" invisible="1"/>
-                <field name="th" invisible="1"/>
-                <field name="total" invisible="1"/>
+            <tree string="Turnover Analysis Tree" create="false">
                 <field name="nbr" sum="# Employee"/>
              </tree>
             </field>
@@ -20,7 +16,7 @@
             <field name="name">hr.turnover.report.graph</field>
             <field name="model">hr.turnover.report</field>
             <field name="arch" type="xml">
-                <graph orientation="vertical" string="Turnover Analysis" type="bar">
+                <graph orientation="vertical" string="Turnover Analysis Graph" type="bar">
                     <field name="department_id"/>
                     <field name="nbr" operator="+"/>
                 </graph>
