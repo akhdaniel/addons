@@ -48,8 +48,7 @@
             </field>
         </record>
 
-<!-- Leads by user and section Search View -->
-        
+<!-- Manpower Profile by user and section Search View -->        
         <record id="view_hr_manpower_report_filter" model="ir.ui.view">
             <field name="name">hr.manpower.report.select</field>
             <field name="model">hr.manpower.report</field>
