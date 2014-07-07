@@ -1076,34 +1076,3 @@ class hr_employee(osv.osv):
     
 hr_employee()
 
-class hr_attendance(osv.osv):
-    _name = "hr.attendance"
-    _inherit = "hr.attendance"
-    _description = "Attendance"
-
-    def statuss(self, cr, uid, arg, field, ids, context=None):
-        import pdb;pdb.set_trace()
-        obj=self.browse(cr,uid,ids)[0]
-        status = obj.employee_id.status_lembur
-        if status == 'lembur':
-            self.write(cr,uid,ids,{'status':'Lembur'},context=None)
-        else :
-            self.write(cr,uid,ids,{'status':'Tidak Lembur'},context=None)
-        return True
-
-    _columns ={
-        'status' : fields.function(statuss,type='char',string='Status Lembur',store=True, readonly=True, help='jika di centang maka lembur and jika tidak maka tidak lembur')
-
-    }
-    '''def status_lembur(self,cr,uid,employee_id,context=None):
-        obj=self.browse(cr,uid,ids)[0]
-        #status = obj.employee_id.status_lembur
-        status = employee_id.status_lembur
-        if status == 'lembur' and obj.action == 'sign_in':
-            self.write(cr,uid,ids,{'status':True},context=None)
-        else :
-            self.write(cr,uid,ids,{'status':False},context=None)
-        return True
-    '''
-    
-hr_attendance()
