@@ -6,9 +6,13 @@
 			<field name='type'>form</field>
 			<field name='arch' type='xml'>
 				<form string='Warning Schedule'>
-					<field name='name'/>
-					<field name='date_warning'/>
-					<field name='warning_kontrak' attrs="{'invisible': [('name','!=','kontrak')]}"/>
+					<group>
+						<field name='name'/>
+						<field name='date_warning'/>
+					</group>
+					<group>
+						<field name='warning_kontrak' attrs="{'invisible': [('name','!=','kontrak')]}"/>
+					</group>
 				</form>
 			</field>
 		</record>

@@ -101,6 +101,12 @@ class hr_contract(osv.osv):
                     'notes':""
                     }
             holi.create(cr,uid,aloc,context=context)
+        obj_contract = self.pool.get('hr.contract')
+        con_src = obj_contract.search(cr,uid,[('employee_id','=',employee_id)])
+        con_brw = obj_contract.browse(cr,uid,con_src)
+        tgl = datetime.now()
+        if con_brw == [] :
+            employee_pool.write(cr, uid, [employee_id],{'tgl_msk': tgl})
         return super(hr_contract, self).create(cr, uid, values, context)
 
     def onchange_tahun(self,cr,uid,ids, date_end, context=None):
@@ -122,6 +128,7 @@ class hr_contract(osv.osv):
     	'tahun' : fields.integer('tahun'),
     	'stat' : fields.char('status Kontak', readonly=True),
         'kelompok_sift' : fields.many2one('hr.contract.schedule','Kelompok Sift'),
+        'proyek' : fields.one2many('hr.contract_proyek','contract_id','Kontrak Proyek'),
     	}
 
     _defaults = {
@@ -229,16 +236,48 @@ class hr_contract(osv.osv):
     ]
 hr_contract()
 
+class proyek(osv.osv):
+    _name = 'hr.contract_proyek'
+
+    _columns = {
+        'nama' :fields.char('Nama Proyek'),
+        'employee_id' : fields.many2one('hr.employee','Karyawan'),
+        'lokasi' : fields.char('Lokasi Proyek'),
+        'mulai' : fields.date('Mulai Proyek'),
+        'sampai' : fields.date('Sampai'),
+        'jam_kerja' : fields.many2one('resource.calendar','Jam Kerja'),
+        'tunjangan_proyek' : fields.integer('Tunjangan Proyek(%)'),
+        'tunjangan_lain':fields.many2one('hr.tunjangan_proyek','Tujangan Lainya'),
+        'contract_id' :fields.many2one('hr.contract','contract'),
+        'status' :fields.boolean('Status Proyek'),
+    }
+
+    _defaults ={
+        'status' : True 
+    }
+
+class tunjangan_proyek(osv.osv):
+    _name = 'hr.tunjangan_proyek'
+
+    _columns = {
+        'name': fields.char('nama tunjangan'),
+        'umak': fields.integer('Uang makan'),
+        'lembur1': fields.integer('Uang Lembur Hari Biasa'),
+        'lembur2': fields.integer('Uang Lembur Hari Libur'),
+        'umak_lembur': fields.integer('Uang Makan Lembur'),
+    }
+
 class hr_employee_contract(osv.osv):
 	_inherit = "hr.employee"
 
 	_columns = {
+        'tgl_msk' :fields.date('Tanggal Masuk Kerja'),
 		'link_warning1':fields.related('link_warning',type='many2one',
 			relation='warning.schedule', string='link'),
 		'link_warning' : fields.many2one('warning.schedule','link'),
 		'status_contract' : fields.boolean('Status Kontrak'),
 		'no_contract' : fields.char('No Kontrak'),
-		'tanggal' : fields.date('Tanggal Kaladuarsa'),
+		'tanggal' : fields.date('Tanggal Kadaluarsa'),
 		'warning_schedule' :fields.many2one('warning.schedule',''),
 		'warning_hari' : fields.integer('Habis Kontrak(Hari)'),
 	}	

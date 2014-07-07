@@ -12,7 +12,6 @@ Human Resource PT.PPI
             'action.xml',
             'hr_recruitment.xml',
             'hr_applicant_view.xml',           
-            'ppi_workflow.xml',
             'hr_employs_tab.xml',  
             'grade_structure.xml',   
             'title_structure.xml',
@@ -24,6 +23,7 @@ Human Resource PT.PPI
             'wizard/recruitment_wizard_view.xml',
             'warning_view.xml',
             'contract_structure.xml',
+            'report/employee_report.xml',
             'report/report_recruitmen.xml',
             'report/employee_info.xml'
             ],

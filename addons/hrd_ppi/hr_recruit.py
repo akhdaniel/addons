@@ -14,11 +14,11 @@ AVAILABLE_STATES = [
     ('in_progres', 'Sedang Dalam Proses'),
 ]
 
-PERMOHONAN_STATES =[
-	('draft','Draft'),
-	('submit','Submit'),
-	('verify','Verify'),
-	('in_progress','In Progress')]
+#PERMOHONAN_STATES =[
+#	('draft','Draft'),
+#	('submit','Submit'),
+#	('verify','Verify'),
+#	('in_progress','In Progress')]
 
 class hr_recruitment_stage(osv.osv):
     """ Aproval of Permohonan Recrutiment """
@@ -46,7 +46,7 @@ class permohonan_recruit(osv.osv):
     
     #def action_draft(self,cr,uid,ids,context=None): 
     #    self.write(cr,uid,ids,{'status_rec':'new'},context=context)
-    #	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[0][0]},context=context)
+   # 	return self.write(cr,uid,ids,{'state':PERMOHONAN_STATES[0][0]},context=context)
 
     def action_submit(self,cr,uid,ids,context=None): 
         #function for number automatic

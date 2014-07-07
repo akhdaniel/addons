@@ -11,6 +11,7 @@
                     <field name="employee_id" on_change="onchange_employee(employee_id)"/>
                     <field name='status'/>
                     <field name='stat'/>
+                    <!--button string='schedule' type='object' name='duration_employee'/-->
                 </field>
                 <field name='date_end' position='replace'>
             <!--field name='date_end' on_change='onchange_tahun(date_end)' attrs="{'readonly': [('stat','=','open')]}"/-->
@@ -18,6 +19,27 @@
                 </field>
                 <field name='working_hours' position='before'>
                     <field name='kelompok_sift' on_change='onchange_sift(kelompok_sift)'/>
+                </field>
+                <field name='notes' position='after'>
+                    <field name='proyek'>
+                        <tree>
+                            <field name='nama'/>
+                            <field name='lokasi'/>
+                            <field name='mulai'/>
+                            <field name='sampai'/>
+                            <field name='jam_kerja'/>
+                            <field name='status'/>
+                        </tree>
+                        <form>
+                            <field name='nama'/>
+                            <field name='lokasi'/>
+                            <field name='mulai'/>
+                            <field name='sampai'/>
+                            <field name='jam_kerja'/>
+                            <field name='tunjangan_proyek'/>
+                            <field name='tunjangan_lain'/>
+                        </form>
+                    </field>
                 </field>
             </field>
         </record>
@@ -52,6 +74,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='active_group']" position="before">
                     <group string="Informasi Kontrak">
+                        <field name='tgl_msk'/>
                         <label for="status_contract"/>
                         <div>
                             <field name="status_contract" class="oe_inline"/> 
