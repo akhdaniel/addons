@@ -25,6 +25,7 @@
                 <field name="action" position='replace'>
                     <field name='binary_action' />
                 </field>
+                <field name="action_desc" position='replace'/>
             </field>
         </record>
         <record id="view_attendance_tree_with_ff" model="ir.ui.view">
