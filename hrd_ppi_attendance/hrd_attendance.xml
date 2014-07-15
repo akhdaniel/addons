@@ -13,7 +13,7 @@
             </field>
         </record>
 
-<!-- Attendance Form -->
+<!-- Attendance Form >
         <record id='view_attendance_form' model='ir.ui.view'>
             <field name='name'>Attandance with FF ID</field>
             <field name='model'>hr.attendance</field>
@@ -37,7 +37,7 @@
                     <field name='fingerprint_code'/>
                 </field>
             </field>
-        </record>
+        </record-->
 
     </data>
 </openerp>
