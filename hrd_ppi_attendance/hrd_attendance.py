@@ -22,7 +22,7 @@ class hr_attendance(osv.osv):
 		em = self.pool.get('hr.employee')
 		ff = em.search(cr, uid, [('fingerprint_code','=',int(vals['fingerprint_code'])),], context=context)
 		if ff == []:
-			raise osv.except_osv(_('Fingerprint Error!'), _("Kode Fingerprint tidak ada!"))
+			raise osv.except_osv(_('Fingerprint Error!'), _(("Fingerprint ID : %s tidak ada!") % (vals['fingerprint_code']) ))
 		vals['employee_id']=ff[0]
 		vals['name_date']=vals['name'][:10]
 		if vals['binary_action'] == '0':
