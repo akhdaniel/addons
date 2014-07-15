@@ -64,17 +64,10 @@ class hr_attendance(osv.osv):
 		else :
 			return super(hr_attendance,self).create(cr,uid,vals,context=context)
 
-	#Sudah embed di hrd_ppi_payroll
-	# def _altern_si_so(self, cr, uid, ids, context=None):
-	# 	""" Alternance sign_in/sign_out check.
-	# 		PPI: All data added, restriction removed
-	# 	"""
-	# 	return super(hr_attendance,self)._altern_si_so(cr,uid,ids,context=context)
-
 	_columns = {
 		"fingerprint_code" : fields.integer('Fingerprint ID', required=True, help="Fingerprint ID"),
 		"binary_action": fields.selection([('1','Sign In'),('0','Sign Out'), ('action','Action')],'Cek In & Cek Out', required=True),
-		"no_mesin" : fields.char('No Mesin',size=4, help="Apakah dimport?", required=True, readonly=True),
+		"no_mesin" : fields.char('No Mesin',size=4, help="Apakah dimport?", required=True),
 		"name_date": fields.char('Date', readonly=True),
 	}
 
