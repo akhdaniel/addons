@@ -25,12 +25,12 @@ class hr_attendance(osv.osv):
 			raise osv.except_osv(_('Fingerprint Error!'), _(("Fingerprint ID : %s tidak ada!") % (vals['fingerprint_code']) ))
 		vals['employee_id']=ff[0]
 		vals['name_date']=vals['name'][:10]
-		if vals['binary_action'] == '0':
+		if vals['binary_action'] == '1':
 			vals['action']='sign_in'
-		elif vals['binary_action'] == '1':
+		elif vals['binary_action'] == '0':
 			vals['action']='sign_out'
-		elif vals['binary_action'] == 'action':
-			vals['action']='action'
+		# elif vals['binary_action'] == 'action':
+		# 	vals['action']='action'
 		return vals
 		
 	def create(self, cr, uid, vals, context=None):
@@ -64,7 +64,7 @@ class hr_attendance(osv.osv):
 		else :
 			return super(hr_attendance,self).create(cr,uid,vals,context=context)
 
-	#Sudah embed di hrd_ppi_payroll
+	# Sudah ada di hrd_ppi_payroll
 	# def _altern_si_so(self, cr, uid, ids, context=None):
 	# 	""" Alternance sign_in/sign_out check.
 	# 		PPI: All data added, restriction removed
@@ -73,7 +73,7 @@ class hr_attendance(osv.osv):
 
 	_columns = {
 		"fingerprint_code" : fields.integer('Fingerprint ID', required=True, help="Fingerprint ID"),
-		"binary_action": fields.selection([('0','Sign In'),('1','Sign Out')],'Kehadiran', required=True),
+		"binary_action": fields.selection([('1','Sign In'),('0','Sign Out')],'Kehadiran', required=True),
 		"no_mesin" : fields.char('No Mesin',size=4, help="Apakah dimport?", required=True),
 		"name_date": fields.char('Date', readonly=True),
 	}
