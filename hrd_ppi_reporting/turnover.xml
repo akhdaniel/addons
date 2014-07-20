@@ -9,11 +9,7 @@
             <field name="arch" type="xml">
             <tree string="Turnover Analysis Tree" create="false">
                 <field name="nbr" sum="# Employee"/>
-                <field name="status" invisible="1"/>
-                <field name="department_id" invisible="1"/>
-                <field name="th" invisible="1"/>
-                <field name="bln" invisible="1"/>
-             </tree>
+            </tree>
             </field>
         </record>
         <record id="view_hr_turnover_report_graph_d" model="ir.ui.view">
