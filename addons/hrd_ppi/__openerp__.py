@@ -23,7 +23,6 @@ Human Resource PT.PPI
             'wizard/recruitment_wizard_view.xml',
             'warning_view.xml',
             'contract_structure.xml',
-            'report/employee_report.xml',
             'report/report_recruitmen.xml',
             'report/employee_info.xml'
             ],
