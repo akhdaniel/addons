@@ -170,6 +170,15 @@ class hr_contract(osv.osv):
     		self.write(cr,uid,ids,{'status':False, 'stat' : 'Close'},context=context)
     	return True
 
+    def status_tunj_proyek(self, cr, uid, ids=None, context=None):
+        dates =datetime.strftime(datetime.now(), "%Y-%m-%d")
+        obj_tunj = self.pool.get('hr.contract_proyek')
+        src_tunj = obj_tunj.search(cr,uid,[('sampai','<',dates),('status','=',True)])
+        brw_tunj = obj_tunj.browse(cr,uid,src_tunj)
+        for tunjangan in brw_tunj :
+            obj_tunj.write(cr,uid,[tunjangan.id],{'status':False},context=context)
+        return True
+
     def duration_employee(self, cr, uid, ids=None, context=None):
 		if context is None :
     			context = {}
