@@ -65,22 +65,6 @@ class hr_holidays(osv.osv):
                 self.write(cr, uid, [record.id], {'manager_id2': manager})
             else:
                 self.write(cr, uid, [record.id], {'manager_id': manager})
-            # if record.holiday_type == 'employee' and record.type == 'remove':
-            #     meeting_obj = self.pool.get('crm.meeting')
-            #     meeting_vals = {
-            #         'name': record.name or _('Leave Request'),
-            #         'categ_ids': record.holiday_status_id.categ_id and [(6,0,[record.holiday_status_id.categ_id.id])] or [],
-            #         'duration': record.number_of_days_temp * 8,
-            #         'description': record.notes,
-            #         'user_id': record.user_id.id,
-            #         'date': record.date_from,
-            #         'end_date': record.date_to,
-            #         'date_deadline': record.date_to,
-            #         'state': 'open',            # to block that meeting date in the calendar
-            #     }
-            #     meeting_id = meeting_obj.create(cr, uid, meeting_vals)
-            #     self._create_resource_leave(cr, uid, [record], context=context)
-            #     self.write(cr, uid, ids, {'meeting_id': meeting_id})
             if record.holiday_type == 'lokasi':
                 emp_ids = obj_emp.search(cr, uid, [('work_location2','=' ,record.lokasi_id)])
                 leave_ids = []
@@ -300,7 +284,7 @@ class hr_holidays(osv.osv):
         values = {}
         for emp in employs:
             no_contract = emp.no_contract
-            tgl = emp.Tanggal
+            tgl = emp.tanggal
             date = datetime.strptime(tgl,"%Y-%m-%d").year
             #src_contract = obj_contract.search(cr, uid, [('employee_id','=',emp.id),('is_have_allocation','=',1),], context=context)
             if no != False :
