@@ -11,7 +11,6 @@
                     <field name="employee_id" on_change="onchange_employee(employee_id)"/>
                     <field name='status'/>
                     <field name='stat'/>
-                    <button string='schedule' type='object' name='status_tunj_proyek'/>
                 </field>
                 <field name='date_end' position='replace'>
             <!--field name='date_end' on_change='onchange_tahun(date_end)' attrs="{'readonly': [('stat','=','open')]}"/-->
