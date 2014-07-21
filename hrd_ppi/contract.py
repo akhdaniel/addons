@@ -303,7 +303,7 @@ class hr_contract_sift(osv.osv):
         #'tetap': fields.boolean('Status Sift',help='Jika Di centang Maka Sift Akan Tetap')
     }
 
-    def pindah_sift(self, cr, uid, ids, context=None):
+    def pindah_sift(self, cr, uid, ids=None, context=None):
         sift_obj = self.pool.get('hr.contract.schedule')
         sift_src = sift_obj.search(cr,uid,[])
         sift_brw = sift_obj.browse(cr,uid,sift_src)
@@ -321,9 +321,10 @@ class hr_contract_sift(osv.osv):
             sift_obj.write(cr, uid,[sf.id],{'sift_roling': stfs},context=context)
         return True
 
-    def working_schedule(self,cr,uid,ids,context=None):
+    def working_schedule(self,cr,uid,ids=None,context=None):
+        import pdb;pdb.set_trace()
         con_obj = self.pool.get('hr.contract')
-        con_src = con_obj.search(cr,uid,[('status','=',True)])
+        con_src = con_obj.search(cr,uid,[('status','=',True),('kelompok_sift','!=',False)])
         con_brw = con_obj.browse(cr,uid,con_src)
         for contract in con_brw :
             sift = contract.kelompok_sift.sift_roling.schedule.id

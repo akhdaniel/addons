@@ -173,8 +173,6 @@
                     <group>
                         <field name="name"/>
                         <field name="sift_roling"/>
-                        <button string='test' type='object' name='working_schedule'/>
-                        <buTton string='name' type='object' name='pindah_sift'/>
                     </group>
                 </group>
             </form>
