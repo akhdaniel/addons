@@ -52,12 +52,6 @@ class hr_holidays(osv.osv):
     _name = "hr.holidays"
     _description = "Leave"
     _inherit = "hr.holidays"
-    
-    def unlink(self, cr, uid, ids, context=None):
-        for rec in self.browse(cr, uid, ids, context=context):
-            if rec.state not in ['draft', 'cancel', 'confirm']:
-                raise osv.except_osv(_('Warning!'),_('teu bisa ngadelet ai maneh.')%(rec.state))
-        return super(hr_holidays, self).unlink(cr, uid, ids, context)
 
     def holidays_validate(self, cr, uid, ids, context=None):
         self.check_holidays(cr, uid, ids, context=context)
@@ -71,23 +65,23 @@ class hr_holidays(osv.osv):
                 self.write(cr, uid, [record.id], {'manager_id2': manager})
             else:
                 self.write(cr, uid, [record.id], {'manager_id': manager})
-            if record.holiday_type == 'employee' and record.type == 'remove':
-                meeting_obj = self.pool.get('crm.meeting')
-                meeting_vals = {
-                    'name': record.name or _('Leave Request'),
-                    'categ_ids': record.holiday_status_id.categ_id and [(6,0,[record.holiday_status_id.categ_id.id])] or [],
-                    'duration': record.number_of_days_temp * 8,
-                    'description': record.notes,
-                    'user_id': record.user_id.id,
-                    'date': record.date_from,
-                    'end_date': record.date_to,
-                    'date_deadline': record.date_to,
-                    'state': 'open',            # to block that meeting date in the calendar
-                }
-                meeting_id = meeting_obj.create(cr, uid, meeting_vals)
-                self._create_resource_leave(cr, uid, [record], context=context)
-                self.write(cr, uid, ids, {'meeting_id': meeting_id})
-            elif record.holiday_type == 'lokasi':
+            # if record.holiday_type == 'employee' and record.type == 'remove':
+            #     meeting_obj = self.pool.get('crm.meeting')
+            #     meeting_vals = {
+            #         'name': record.name or _('Leave Request'),
+            #         'categ_ids': record.holiday_status_id.categ_id and [(6,0,[record.holiday_status_id.categ_id.id])] or [],
+            #         'duration': record.number_of_days_temp * 8,
+            #         'description': record.notes,
+            #         'user_id': record.user_id.id,
+            #         'date': record.date_from,
+            #         'end_date': record.date_to,
+            #         'date_deadline': record.date_to,
+            #         'state': 'open',            # to block that meeting date in the calendar
+            #     }
+            #     meeting_id = meeting_obj.create(cr, uid, meeting_vals)
+            #     self._create_resource_leave(cr, uid, [record], context=context)
+            #     self.write(cr, uid, ids, {'meeting_id': meeting_id})
+            if record.holiday_type == 'lokasi':
                 emp_ids = obj_emp.search(cr, uid, [('work_location2','=' ,record.lokasi_id)])
                 leave_ids = []
                 for emp in obj_emp.browse(cr, uid, emp_ids):
@@ -158,7 +152,7 @@ class hr_holidays(osv.osv):
         'holiday_type': fields.selection([('employee','By Employee'),('lokasi','Lokasi')], 'Allocation Mode', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}, help='By Employee: Allocation/Request for individual Employee, By Employee Tag: Allocation/Request for group of employees in category', required=True),
         'lokasi_id': fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
         'category_id': fields.many2one('hr.employee.category', "Employee Tag"),
-        #'name': fields.char('Description', size=64,required=True),
+        'agama':fields.many2one('hr_recruit.agama','Agama'),
     }
 	
     _sql_constraints = [
@@ -299,28 +293,52 @@ class hr_holidays(osv.osv):
         employee_ids = self.pool.get('hr.employee')
         src = employee_ids.search(cr, uid, [])
         employs = employee_ids.browse(cr, uid, src)
-        obj_contract = self.pool.get('hr.contract')
+        #obj_contract = self.pool.get('hr.contract')
         #obj_holi = self.pool.get('hr.holidays.status')
         #src_holi = obj_holi.search(cr, uid, [('is_1_year','=',True)],)
-        
+        years = datetime.now().year
         values = {}
         for emp in employs:
-            src_contract = obj_contract.search(cr, uid, [('employee_id','=',emp.id),('is_have_allocation','=',1),], context=context)
-            if src_contract:
+            no_contract = emp.no_contract
+            tgl = emp.Tanggal
+            date = datetime.strptime(tgl,"%Y-%m-%d").year
+            #src_contract = obj_contract.search(cr, uid, [('employee_id','=',emp.id),('is_have_allocation','=',1),], context=context)
+            if no != False :
+                if date == years :
+                    end_date = datetime.strptime(tgl,"%Y-%m-%d").month
+                    values = {
+                        'name': _("Alokasi Cuti %s") % _(D_y),
+                        'employee_id':emp.id,
+                        'type':'add',       #Allocation-> 'add'
+                        'holiday_status_id':1,
+                        'number_of_days_temp':end_date,
+                        #'holiday_type':'employee',
+                        'notes':""
+                        }
+                else :
+                    values = {
+                        'name': _("Alokasi Cuti %s") % _(D_y),
+                        'employee_id':emp.id,
+                        'type':'add',       #Allocation-> 'add'
+                        'holiday_status_id':1,
+                        'number_of_days_temp':12,
+                        #'holiday_type':'employee',
+                        'notes':""
+                        }
+            else :
                 values = {
-                    'name': _("Alokasi Cuti %s") % _(D_y),
-                    'employee_id':emp.id,
-                    'type':'add',       #Allocation-> 'add'
-                    'holiday_status_id':1,
-                    'number_of_days_temp':12,
-                    #'holiday_type':'employee',
-                    'notes':""
-                    }
-                self.create(cr,uid,values,context=context)
+                        'name': _("Alokasi Cuti %s") % _(D_y),
+                        'employee_id':emp.id,
+                        'type':'add',       #Allocation-> 'add'
+                        'holiday_status_id':1,
+                        'number_of_days_temp':12,
+                        #'holiday_type':'employee',
+                        'notes':""
+                        }
+            self.create(cr,uid,values,context=context)
         return True    
 
-    def leave_allocation_5(self, cr, uid, ids=None, context=None):
-        
+    def leave_allocation_5(self, cr, uid, ids=None, context=None):       
         """ Override to avoid automatic logging of creation """
         if context is None:
             context = {}
@@ -329,10 +347,6 @@ class hr_holidays(osv.osv):
         obj_contract = self.pool.get('hr.contract')
         c_src = obj_contract.search(cr, uid, [],)
         contracts  = obj_contract.browse(cr, uid, c_src,)
-
-        #obj_holi = self.pool.get('hr.holidays.status')
-        #src_holi = obj_holi.search(cr, uid, [('is_5_years','=',True)],)
-        
         for contract in contracts:
             values = {}
             date_from = contract.date_start
@@ -352,25 +366,11 @@ class hr_holidays(osv.osv):
                             'type':'add',
                             'holiday_status_id':3,
                             'number_of_days_temp':22,
-                            #'holiday_type':'employee',
                             'notes':""
                             }
                         self.create(cr,uid,values,context=context)
         return True 
-    '''
-    def purge_leave(self, cr, uid, ids, context=None):
-        D_name = D_y #- 1
-        cuti_th_lalu = _("Alokasi Cuti %s") % _(D_name)
-        A = self.search(cr, uid, [('name','=',cuti_th_lalu),],)
-        B = self.browse(cr, uid, A,)
-        self.holidays_refuse(cr, uid, [x.id for x in B], context=context)
-        return True
-      
-    def approveall(self, cr, uid, ids, context=None):
-        A = self.search(cr, uid, [('state','=','confirm'),('type','=','add'),],)
-        B = self.browse(cr, uid, A,)
-        return self.write(cr, uid, [x.id for x in B], {'state':'validate'})
-    '''
+
 hr_holidays()
 
 class hr_contract_type(osv.osv):

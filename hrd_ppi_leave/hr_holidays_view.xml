@@ -88,6 +88,7 @@
 					                    <field name="holiday_type" on_change="onchange_type(holiday_type)"/>
                                         <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
                                         <field name='employee_id' attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>
+                                        <field name='agama'/>
                                         <field name="state"/>
                                 	</tree>
                                 </field>
@@ -113,16 +114,6 @@
             	</tree>
             </field>
         </record>
-
-		<!--record id="action_hr_public_holiday" model="ir.actions.act_window">
-            <field name="name">Public Holidays</field>
-            <field name="res_model">hr.holidays</field>
-            <field name="view_type">form</field>
-            <field name="view_id" ref="hr_public_holiday_tree"/>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('is_libur','=',True)]</field>
-            <field name="help">You will find here the list of public holidays</field>
-        </record-->
         
          <record id="view_holiday_new_calendar" model="ir.ui.view">
             <field name="name">Calendar Event</field>
@@ -200,18 +191,6 @@
             </field>
         </record>
 
-        <!--record model="ir.ui.view" id="allocation_leave_new2">
-            <field name="name">Allocation Request</field>
-            <field name="model">hr.holidays</field>
-            <field name="inherit_id" ref="hr.holidays.allocation_leave_new"/>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','category')]}" position="replace"/>  
-                <field name="holiday_type" on_change="onchange_type(holiday_type)" position="after">
-                    <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/> 
-                </field>
-            </field>
-        </record-->
         <!-- Holidays: Allocation Request via button-->
         <record model="ir.ui.view" id="allocation_leave_new~1">
             <field name="name">Allocation Request</field>
@@ -227,57 +206,7 @@
                 </field>
             </field>
         </record>    
-                <!--header-->
-                    <!--button name="leave_allocation_5" type="object" string="5 Years leave allocation"/>
-                    <button name="leave_allocation_annual" type="object" string="Annual leave allocation" group="base.user_root"/>
-                    <button name="purge_leave" type="object" string="Delete Allocation"/>
-                    <button name="approveall" type="object" string="Approve All"/-->
-                <!--/header>
-
-                <field name="department_id" position="after">                   
-                   <group colspan="2" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_user" >
-                    <div class="oe_right oe_button_box">
-                    <label for="is_edit" string="kunci ?" />
-                    <field name="is_edit" />
-                    </div>
-                    </group>
-                </field>     
-
-
-                <field name="name" position="replace">
-                    <field name="name" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>
-
-                <field name="number_of_days_temp" position="replace">
-                    <field name="number_of_days_temp" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>
-
-                <field name="holiday_status_id" position="replace">
-                    <field name="holiday_status_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>
-
-                <field name="number_of_days_temp" position="replace">
-                    <field name="number_of_days_temp" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>
-
-                <field name="holiday_type" position="replace">
-                    <field name="holiday_type" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>
-
-                <field name="employee_id" position="replace">
-                    <field name="employee_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>
-
-                <field name="department_id" position="replace">
-                    <field name="department_id" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field> 
-
-                <field name="notes" position="replace">
-                    <field name="notes" attrs="{'readonly': [('is_edit','=',True)]}"/>
-                </field>                             
-
-            </field>
-        </record-->
+               
         
         <!-- Holidays: Allocation Request-->
         <record forcecreate="1" id="ppi_annual_leave" model="ir.cron">
@@ -291,7 +220,7 @@
             <field eval="'hr.holidays'" name="model" />
             <field eval="'leave_allocation_annual'" name="function" />
             <field eval="'()'" name="args" />
-            <field name="nextcall">"2014-01-01 00:00:00"</field>
+            <field name="nextcall">"2014-01-01 17:00:00"</field>
         </record>
         <!--record forcecreate="1" id="libur1" model="hr.holidays.status">
             <field name="name">Cuti Tahunan</field>
@@ -312,7 +241,7 @@
             <field eval="'hr.holidays'" name="model" />
             <field eval="'leave_allocation_5'" name="function" />
             <field eval="'()'" name="args" />
-            <field name="nextcall">"2014-01-01 00:00:00"</field>
+            <field name="nextcall">"2014-01-01 17:00:00"</field>
         </record>
 		
 		<record forcecreate="1" id="ppi_hapus_cuti" model="ir.cron">
@@ -326,7 +255,7 @@
             <field eval="'hr.holidays'" name="model" />
             <field eval="'hapus_cuti'" name="function" />
             <field eval="'()'" name="args" />
-            <field name="nextcall">"2014-06-01 00:00:00"</field>
+            <field name="nextcall">"2014-07-01 17:00:00"</field>
         </record>
 
         <record forcecreate="1" id="ppi_cal_even" model="ir.cron">
@@ -340,13 +269,21 @@
             <field eval="'hr.holidays'" name="model" />
             <field eval="'holiday'" name="function" />
             <field eval="'()'" name="args" />
-            <field name="nextcall">"2014-06-01 00:00:00"</field>
+            <field name="nextcall">"2014-06-01 17:00:00"</field>
         </record>
       
         <record id='hr_holiday_status1' model='hr.holidays.status'>
             <field name='name'>Cuti Tahunan</field>
             <field name='color_name'>red</field>            
-        </record>    
+        </record> 
+        <record id='hr_holiday_status2' model='hr.holidays.status'>
+            <field name='name'>Cuti Masal</field>
+            <field name='color_name'>red</field>            
+        </record> 
+        <record id='hr_holiday_status3' model='hr.holidays.status'>
+            <field name='name'>Cuti Hari Raya</field>
+            <field name='color_name'>red</field>            
+        </record>   
     </data>
 </openerp>
    
