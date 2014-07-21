@@ -18,11 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import datetime
-
 import netsvc
 from osv import fields, osv
 from tools.translate import _
+from openerp import tools
+import math
+import time
+from datetime import date
+from datetime import datetime
+from datetime import timedelta
+from dateutil import relativedelta
+from dateutil.relativedelta import relativedelta
+
 
 class hr_overtime_type(osv.osv):
     _name = "hr.overtime.type"
@@ -42,18 +49,34 @@ class hr_overtime(osv.osv):
     def _hitung_lembur(self, cr, uid, ids, arg, vals, context=None):
         jumlah={}
         obj = self.browse(cr,uid,ids)[0]
-        jam = obj.jam_lembur
+        xjam = float(obj.jam_lembur)
+        xjamin = int(xjam)
+        xjams = xjam - xjamin
+        con = (xjams*100)/60
+        jam = xjamin + con
         overtime_type = obj.overtime_type.jam_ids
         x = 0
+        tot = 0
         for over in overtime_type :
             sampai = float(over.sampai)
             dari = float(over.name)
-            if jam >= sampai and sampai != 0.0:
-                tot = (sampai - dari + 1) * over.pengali
-            elif sampai == 0.0 and jam >= dari:
-                tot = (jam - (dari - 1)) * over.pengali
-            x = x + tot
+            if sampai == 0.0 :
+                sampai = float(10000000)
+            if dari != 0.0 and jam > 0:
+                nx = sampai - dari + 1
+                if jam >= nx :
+                    tot = nx * over.pengali
+                elif jam <= nx :
+                    tot = jam * over.pengali
+                jam = jam - nx 
+                x = x + tot
+        xtot = x
+        xin = int(x)
+        xjum = xtot - xin
+        xpem = (xjum*60)/100
+        x = xin + xpem
         jumlah[obj.id] = x
+        self.write(cr,uid,ids,{'total_jam1':x})
         return jumlah
 
     def _employee_get(obj, cr, uid, context=None):
@@ -75,20 +98,24 @@ class hr_overtime(osv.osv):
             'State', readonly=True, help='When the overtim request is created the state is \'Draft\'.\n It is confirmed by the user and request is sent to admin, the state is \'Waiting Approval\'.\
             If the admin accepts it, the state is \'Approved\'. If it is refused, the state is \'Refused\'.'),
         'user_id':fields.related('employee_id', 'user_id', type='many2one', relation='res.users', string='User', store=True),
-        'date_from': fields.datetime('Start Date', readonly=True, states={'draft':[('readonly',False)]}),
-        'date_to': fields.datetime('End Date', readonly=True, states={'draft':[('readonly',False)]}),
-        'employee_id': fields.many2one('hr.employee', "Employee", select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
+        'date_from': fields.datetime('Mulai Lembur dari', readonly=True, states={'draft':[('readonly',False)]}),
+        'date_to': fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
+        'employee_id': fields.many2one('hr.employee', "Karyawan", select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
         'manager_id': fields.many2one('hr.employee', 'First Approval', invisible=False, readonly=True),
-        'notes': fields.text('Reasons',readonly=True, states={'draft':[('readonly',False)]}),
-        'number_of_hours_temp': fields.float('Number of Hours', readonly=True, states={'draft':[('readonly',False)]}),
+        'notes': fields.text('Catatan',readonly=True, states={'draft':[('readonly',False)]}),
+        'number_of_hours_temp': fields.float('Jam Terealisasikan'),#states={'draft':[('readonly',False)]}),
         'number_of_hours': fields.function(_compute_number_of_hours, method=True, string='Number of Hours', store=True),
         #'department_id':fields.related('employee_id', 'department_id', string='Department', type='many2one', relation='hr.department', readonly=True),
         'manager_id2': fields.many2one('hr.employee', 'Second Approval', readonly=True, help='This area is automaticly filled by the user who validate the leave with second level (If Leave type need second validation)'),
         'overtime_type_id': fields.many2one("hr.overtime.type", "Type Lembur", required=True,readonly=True, states={'draft':[('readonly',False)]}),
         'department_id' : fields.many2one('hr.department', 'Department'),
         'overtime_type' : fields.many2one('hr.overtime.jam','Jenis Lembur',required=True),
-        'total_jam':fields.function(_hitung_lembur,type='float',store=True, readonly=True,string='Total Jam Lembur'),
+        'total_jam':fields.function(_hitung_lembur,type='float',store=False, readonly=True,string='Total Jam Lembur'),
+        'total_jam1':fields.float('jumlah_jam'),
         'jam_lembur':fields.float("Jumlah Jam Lembur"),
+        'lembur_dari':fields.datetime('Perintah Lembur dari Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
+        'lembur_sampai':fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
+        'tanggal':fields.char('tanggal'),
     }
     _defaults = {
         'employee_id': _employee_get,
@@ -103,12 +130,16 @@ class hr_overtime(osv.osv):
     # TODO: can be improved using resource calendar method
     def _get_number_of_hours(self, date_from, date_to):
         """Returns a float equals to the timedelta between two dates given as string."""
-
+        #import pdb;pdb.set_trace()
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
-        from_dt = datetime.datetime.strptime(date_from, DATETIME_FORMAT)
-        to_dt = datetime.datetime.strptime(date_to, DATETIME_FORMAT)
+        from_dt = datetime.strptime(date_from, DATETIME_FORMAT)
+        to_dt = datetime.strptime(date_to, DATETIME_FORMAT)
         timedelta = to_dt - from_dt
-        diff_day = timedelta.days + float(timedelta.seconds) / 86400
+        diff_day1 =float(timedelta.seconds) / 3600
+        diff_day2 = int(timedelta.seconds) / 3600
+        diff = diff_day1 - diff_day2
+        diff1 = (diff*60)/100
+        diff_day = diff_day2 + diff1
         return diff_day
 
     def unlink(self, cr, uid, ids, context=None):
@@ -119,10 +150,53 @@ class hr_overtime(osv.osv):
         return super(hr_overtime, self).unlink(cr, uid, ids, context)
 
     def onchange_date_from(self, cr, uid, ids, date_to, date_from):
-        result = {}
-        result['value'] = {
-            'number_of_hours_temp': 0,
-        }
+        """
+        If there are no date set for date_to, automatically set one 8 hours later than
+        the date_from.
+        Also update the number_of_days.
+        """
+        # date_to has to be greater than date_from
+        if (date_from and date_to) and (date_from > date_to):
+            raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
+
+        result = {'value': {}}
+
+        # No date_to set so far: automatically compute one 8 hours later
+        if date_from and not date_to:
+            date_to_with_delta = datetime.strptime(date_from, tools.DEFAULT_SERVER_DATETIME_FORMAT) #+ datetime.timedelta(hours=8)
+            result['value']['date_to'] = str(date_to_with_delta)
+
+        # Compute and update the number of days
+        if (date_to and date_from) and (date_from <= date_to):
+            diff_day = self._get_number_of_hours(date_from, date_to)
+            result['value']['number_of_hours_temp'] = round(math.floor(diff_day))
+        else:
+            result['value']['number_of_hours_temp'] = 0
+
+        return result
+
+    def onchange_date_to(self, cr, uid, ids, date_to, date_from):
+        """
+        Update the number_of_days.
+        """
+
+        # date_to has to be greater than date_from
+        if (date_from and date_to) and (date_from > date_to):
+            raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
+
+        result = {'value': {}}
+
+        # Compute and update the number of days
+        if (date_to and date_from) and (date_from <= date_to):
+            diff_day = self._get_number_of_hours(date_from, date_to)
+            result['value']['number_of_hours_temp'] = diff_day#round(math.floor(diff_day))
+        else:
+            result['value']['number_of_hours_temp'] = 0
+        date_y =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").year
+        date_m =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").month
+        date_d =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").day
+        dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
+        result['value']['tanggal'] = dates
         return result
 
     def set_to_draft(self, cr, uid, ids, *args):
@@ -193,3 +267,88 @@ class jam(osv.osv):
         'overtime_jam' :fields.many2one('hr.overtime.jam'),
     }
 jam()
+
+class hr_attendance(osv.osv):
+    '''
+    PPI Absensi
+    '''
+    _name = "hr.attendance"
+    _inherit = "hr.attendance"
+    _description = "Attendance for PPI" 
+
+    def _fill_attendance(self, cr, uid, vals, context=None):
+        em = self.pool.get('hr.employee')
+        ff = em.search(cr, uid, [('fingerprint_code','=',int(vals['fingerprint_code'])),], context=context)
+        if ff == []:
+            raise osv.except_osv(_('Fingerprint Error!'), _("Kode Fingerprint tidak ada!"))
+        vals['employee_id']=ff[0]
+        vals['name_date']=vals['name'][:10]
+        if vals['binary_action'] == '0':
+            vals['action']='sign_in'
+        elif vals['binary_action'] == '1':
+            vals['action']='sign_out'
+        elif vals['binary_action'] == 'action':
+            vals['action']='action'
+        return vals
+        
+    def create(self, cr, uid, vals, context=None):
+        #fungsi cek lembur
+        date = vals['name']
+        aksi = vals["binary_action"]
+        date_akhir = datetime.strptime(date,"%Y-%m-%d %H:%M:%S")
+        date_y = datetime.strptime(date,"%Y-%m-%d %H:%M:%S").year
+        date_m = datetime.strptime(date,"%Y-%m-%d %H:%M:%S").month
+        date_d = datetime.strptime(date,"%Y-%m-%d %H:%M:%S").day
+        dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
+        employee = vals["employee_id"]
+        import pdb;pdb.set_trace()
+        if aksi == '1':
+            obj = self.pool.get('hr.overtime')
+            src = obj.search(cr,uid,[('employee_id','=',employee),('tanggal','=',dates),('state','=','validate')])
+            brw = obj.browse(cr,uid,src)
+            for over in brw :
+                mulai = over.date_from
+                sampai = over.date_to
+                sampai_akhir = datetime.strptime(sampai,"%Y-%m-%d %H:%M:%S")
+                if date_akhir >= sampai_akhir :
+                    number = over.number_of_hours_temp
+                    obj.write(cr,uid,[over.id],{'jam_lembur':number })
+                else :
+                    date_mulai = datetime.strptime(mulai,"%Y-%m-%d %H:%M:%S")
+                    number = date_akhir - date_mulai
+                    diff_day1 =float(number.seconds) / 3600
+                    diff_day2 = int(number.seconds) / 3600
+                    diff = diff_day1 - diff_day2
+                    diff1 = (diff*60)/100
+                    diff_day = diff_day2 + diff1
+                    obj.write(cr,uid,[over.id],{'jam_lembur':diff_day})
+        vals = self._fill_attendance(cr, uid, vals, context=None)
+        # cari login lebih awal dan logout lebih akhir
+        newestID = self.search(cr, uid, [('employee_id', '=', vals['employee_id']), ('name_date', '=',vals['name_date']), ('name', '>',vals['name']), ('action', '=', 'sign_in')], limit=1, order='name ASC')
+            # menghindari dobel login karena old name < inputed name
+        newerID = self.search(cr, uid, [('employee_id', '=', vals['employee_id']), ('name_date', '=',vals['name_date']), ('name', '<',vals['name']), ('action', '=', 'sign_in')], limit=1, order='name ASC')
+        latestID = self.search(cr, uid, [('employee_id', '=', vals['employee_id']), ('name_date', '=',vals['name_date']), ('name', '<',vals['name']), ('action', '=', 'sign_out')], limit=1, order='name DESC')
+            # menghindari dobel logout karena old name > inputed name
+        laterID = self.search(cr, uid, [('employee_id', '=', vals['employee_id']), ('name_date', '=',vals['name_date']), ('name', '>',vals['name']), ('action', '=', 'sign_out')], limit=1, order='name DESC')
+        # delete login awal and logout akhir
+        if newerID and (vals['action'] =='sign_in'):
+            vals ['name'] = self.browse(cr, uid, newerID, context=None)[0].name
+            # self.unlink(cr, uid, newerID, context=None)
+            cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(newerID),))
+        if newestID and (vals['action'] =='sign_in'):
+            # self.unlink(cr, uid, newestID, context=None)
+            cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(newestID),))
+        if laterID and (vals['action'] =='sign_out'):
+            vals ['name']= self.browse(cr, uid, laterID, context=None)[0].name
+            # self.unlink(cr, uid, laterID, context=None)
+            cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(laterID),))
+        if latestID and (vals['action'] =='sign_out'):
+            # self.unlink(cr, uid, latestID, context=None)
+            cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(latestID),))
+        # jika diimport / no mesin exist
+        if any('no_mesin' in att for att in vals) and vals['no_mesin'] <> '0':
+            new_id = super(hr_attendance,self).create(cr,uid,vals,context=context)
+            return new_id
+        else :
+            return super(hr_attendance,self).create(cr,uid,vals,context=context)
+hr_attendance()
