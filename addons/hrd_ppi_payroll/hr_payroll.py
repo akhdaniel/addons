@@ -354,7 +354,7 @@ class hr_payslip(osv.osv):
             jumlah_biasa = 0 
             jumlah_libur = 0
             tot_semua = 0    
-            incentives = 0
+            incent = 0
             for day in range(0, nb_of_days):
             	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
@@ -438,8 +438,8 @@ class hr_payslip(osv.osv):
                                     tot_semua = jumlah_biasa + jumlah_libur
                         elif contract.jenis_lembur == 'incentive' or no_urut >= 200 : 
                             if isNonWorkingDay and real_working_hours_on_day > 4 and no_urut <= 399 :
-                                incentives += 1
-                                if incentives <= 2 and lave_type != 'Cuti Masal' : #and leave_type !=:
+                                incent += 1
+                                if incent <= 2 and lave_type != 'Cuti Masal' : #and leave_type !=:
                                     incentives['number_of_days'] += 1.0
                                     incentive =  real_working_hours_on_day - working_hours_on_day
                                     if incentive >= 4 :
