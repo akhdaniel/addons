@@ -44,10 +44,11 @@ class hr_contract(osv.osv):
             
     _columns = {
         #'gol' :fields.function(incentive,string='fungsi',type='char'),
-        'master_gaji_id':fields.many2one('hr.master_gaji', "Incentive"),
+        'master_gaji_id':fields.many2one('hr.master_gaji', "Lokasi Kerja"),
         'makan':fields.related('master_gaji_id','makan',type='float',relation='hr.master_gaji',string='Uang Makan',readonly=True),
         'transport':fields.related('master_gaji_id','transport',type='float',relation='hr.master_gaji',string='Uang Transport',readonly=True),
         'jenis_lembur' : fields.selection([('incentive','Incentive'),('overtime','Overtime')], 'Jenis Lembur'),
+        
     }
 hr_contract()    
     
@@ -55,7 +56,7 @@ class master_gaji(osv.osv):
     _name="hr.master_gaji"
     
     _columns = {
-        "name" : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'),('9','9')],'Pilih Golongan'),
+        "name" : fields.char('Lokasi Kerja'),
         "makan" :fields.float("Uang Makan"),
         "transport" : fields.float("Uang Transportasi"),
     }

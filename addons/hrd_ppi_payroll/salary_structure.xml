@@ -1,66 +1,6 @@
 <openerp>
 	<data>
-	<!-- working days -->
-	    <record model="resource.calendar" id="working_hours_ppi_staff" >
-	    	<field name="name">PPI Staff Working Hours</field>
-	    </record>
-
-    <!-- detail working days -->
-	    <record model="resource.calendar.attendance" id="working_hours_mon" >
-	    	<field name="name">mon</field>
-	    	<field name="dayofweek">0</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>
-	    <record model="resource.calendar.attendance" id="working_hours_tue" >
-	    	<field name="name">tue</field>
-	    	<field name="dayofweek">1</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>	    
-
-	    <record model="resource.calendar.attendance" id="working_hours_wed" >
-	    	<field name="name">wed</field>
-	    	<field name="dayofweek">2</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>
-
-	    <record model="resource.calendar.attendance" id="working_hours_thu" >
-	    	<field name="name">thu</field>
-	    	<field name="dayofweek">3</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>
-
-	    <record model="resource.calendar.attendance" id="working_hours_fri" >
-	    	<field name="name">fri</field>
-	    	<field name="dayofweek">4</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>
-
-	    <record model="resource.calendar.attendance" id="working_hours_sat" >
-	    	<field name="name">sat</field>
-	    	<field name="dayofweek">5</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>
-
-	    <record model="resource.calendar.attendance" id="working_hours_sun" >
-	    	<field name="name">sun</field>
-	    	<field name="dayofweek">6</field>
-	    	<field name="hour_from">9</field>
-	    	<field name="hour_to">17</field>
-	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
-	    </record>
-				<!--salary Category-->
+		<!--salary Category-->
 		<record id="IGN" model="hr.salary.rule.category">
             <field name="name">Ignore</field>
             <field name="code">IGN</field>
@@ -311,6 +251,42 @@
 			<field name="sequence">33</field>
 	        <field name="amount_python_compute">result = payslip.tunj_pajak </field>
 	    </record>	
+	    <record id="hr_payroll_rules_gaji" model="hr.salary.rule">
+	        <field name="name">TUNJANGAN 5 TAHUN</field>
+	        <field name="code">GDK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="sequence">20</field>
+	        <field name="amount_python_compute">result = payslip.komisi * contract.wage</field>
+	    </record>
+		<record id="hr_payroll_rules_tujangan_proyek" model="hr.salary.rule">
+	        <field name="name">TUNJANGAN PROYEK</field>
+	        <field name="code">TJP</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="sequence">21</field>
+	        <field name="amount_python_compute">result = (payslip.tunj_proyek * contract.wage)/100</field>
+	    </record>
+	    <record id="hr_payroll_rules_umak_proyek" model="hr.salary.rule">
+	        <field name="name">UANG MAKAN PROYEK</field>
+	        <field name="code">UMP</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="sequence">22</field>
+	        <field name="amount_python_compute">result = payslip.uang_makan_proyek </field>
+	    </record>
+	    <record id="hr_payroll_rules_lembur_proyek" model="hr.salary.rule">
+	        <field name="name">LEMBUR PROYEK</field>
+	        <field name="code">LPR</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+	        <field name="sequence">22</field>
+	        <field name="amount_python_compute">result = payslip.lembur_proyek </field>
+	    </record>
 	   
 	    <!-- deduction -->
 	    <record id="hr_payroll_rules_pot_absen" model="hr.salary.rule">
@@ -493,15 +469,6 @@
 	        <field name="sequence">140</field>
 	        <field name="amount_python_compute">result = -payslip.pkp  </field>
 	    </record> 	    	    	      	  
-		<record id="hr_payroll_rules_gaji" model="hr.salary.rule">
-	        <field name="name">TUNJANGAN 5 TAHUN</field>
-	        <field name="code">GDK</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
-	        <field name="condition_select">none</field>
-	        <field name="amount_select">code</field>
-	        <field name="sequence">20</field>
-	        <field name="amount_python_compute">result = payslip.komisi * contract.wage</field>
-	    </record>
 
     <!-- SALARY RULE INPUT -->	 	     
 	    <record id="hr_payroll_rules_input_others" model="hr.rule.input">
@@ -730,7 +697,10 @@
 	        ref('hr_payroll_rules_Adj_Leave_Alw'),   			
 	        ref('hr_payroll_rules_Adj_MEAL'),  				
 	        ref('hr_payroll_rules_Adj_Medical'),  	
-	        ref('hr_payroll_rules_Adj_TRANSPORT'),    	
+	        ref('hr_payroll_rules_Adj_TRANSPORT'),  
+	        ref('hr_payroll_rules_tujangan_proyek'), 
+	        ref('hr_payroll_rules_umak_proyek'),  	
+	        ref('hr_payroll_rules_lembur_proyek'),
              ])]" name="rule_ids"/>
 	    </record>
 		

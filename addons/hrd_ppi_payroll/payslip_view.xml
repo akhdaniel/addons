@@ -36,6 +36,7 @@
                 </tree>                      
             </field>
         </record> 
+
         <record id="hr_contract_view_form1" model="ir.ui.view">
             <field name="name">hr.contract.view.form</field>
             <field name="model">hr.contract</field>
@@ -149,12 +150,17 @@
 
                 <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
                     <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
-                </button>               
+                </button> 
+                <field name='contract_id' position='before'> 
+                    <field name='tunj_proyek'/>
+                    <field name='uang_makan_proyek'/>
+                </field>              
                 <field name="number_of_days" sum="Total Working Days" position="replace">
                     <field name="number_of_days"/>
                 </field>                
             </field>
         </record>
+
         <record id="view_hr_payslip_tree" model="ir.ui.view">
             <field name="name">hr.payslip.tree</field>
             <field name="model">hr.payslip</field>
@@ -165,6 +171,7 @@
                 </tree>
             </field>
         </record>
+
         <record model="ir.ui.view" id="tab_form_view">
             <field name="name">employe</field>
             <field name="model">hr.employee</field>
@@ -180,24 +187,9 @@
                         <label for="cuti_tahunan"/>
                         <div>                          
                             <field name="cuti_tahunan" class="oe_inline"/> days
-                        </div>
-                        <label for='status_lembur'/>
-                        <!--div>
-                            <field name='status_lembur' class='oe_inline'/>
-                        </div-->                        
+                        </div>                     
                     </group>                   
                 </xpath>
-            </field>
-        </record>
-        <record model="ir.ui.view" id="tab_form_view1">
-            <field name="name">attendance</field>
-            <field name="model">hr.attendance</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="hr_attendance.view_attendance_form"/>
-            <field name="arch" type="xml">
-                <field name='action_desc' position='after'>
-                    <field name='status'/>
-                </field>
             </field>
         </record>
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user"/>
