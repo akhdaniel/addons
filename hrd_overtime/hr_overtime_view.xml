@@ -54,8 +54,15 @@
             <field name="type">form</field>
             <field name="priority">1</field>
             <field name="arch" type="xml">
-                <form string="Overtime Request">
-                        <field name="name" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" />
+                <form string="Overtime Request">   
+                        <!--group>      
+                        <field name="lembur_dari" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" />
+                        <field name="lembur_sampai" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" />
+                        </group-->
+                        <field name='tanggal'/>
+                        <group>
+                        <field name="name" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" /> 
+                        </group>
                         <notebook colspan="4">
                             <page string="General">
                                 <field name="overtime_type_id"/>
@@ -64,7 +71,8 @@
                                 <field name="department_id"/>
                                 <newline/>
                                 <field name="date_from" on_change="onchange_date_from(date_to, date_from)" required="1"/>
-                                <field name="date_to" on_change="onchange_date_from(date_to, date_from)" required="1"/>
+                                <field name="date_to" on_change="onchange_date_to(date_to, date_from)" required="1"/>
+                                <field name="number_of_hours_temp"/>
                                 <field name="jam_lembur"/>
                                 <field name='total_jam'/>
                                 <newline/>
@@ -238,5 +246,17 @@
             parent="lembur"
             action="lembur_act"
             sequence="1"/>
+    
+    <record id='lembur' model='hr.overtime.type'>
+        <field name='name'>Lembur</field>
+        <field name='active'>True</field>
+        <field name='double_validation'>True</field>
+    </record>
+    
+    <record id='lembur_proyek' model='hr.overtime.type'>
+        <field name='name'>Lembur Proyek</field>
+        <field name='active'>True</field>
+        <field name='double_validation'>True</field>
+    </record>        
     </data>
 </openerp>
