@@ -628,6 +628,9 @@ class hr_payslip(osv.osv):
         day_to = datetime.strptime(date_to,"%Y-%m-%d")
         obj = self.pool.get('hr.contract')
         obj_src = obj.search(cr,uid,[('id','=', kontrak)])
+        tunjangan = 0
+        jum_umak = 0
+        total_over = 0
         for kont in obj.browse(cr,uid,obj_src):
             tunjangan = kont.proyek
             for kontrak in tunjangan :
@@ -640,9 +643,10 @@ class hr_payslip(osv.osv):
                     umak = kontrak.tunjangan_lain.umak
                     over_biasa = kontrak.tunjangan_lain.lembur1
                     over_libur = kontrak.tunjangan_lain.lembur2
-        jum_umak = umak * jum
-        total_over = (jum_over * over_biasa) + (jum_libur * over_libur)
-        return self.write(cr,uid,ids,{'tunj_proyek':tunjangan,'uang_makan_proyek': jum_umak,'lembur_proyek':total_over})
+                    jum_umak = umak * jum
+                    total_over = (jum_over * over_biasa) + (jum_libur * over_libur)
+                    self.write(cr,uid,ids,{'tunj_proyek':tunjangan,'uang_makan_proyek': jum_umak,'lembur_proyek':total_over})
+        return True
 
     def funct(self,cr,uid,ids,context=None) :
         xxx=self.browse(cr,uid,ids)[0]
@@ -677,6 +681,7 @@ class hr_payslip(osv.osv):
         return totals
 
     def tunj_pajak(self,cr,uid,ids,context=None) :
+        pembagi = 0
         obj =self.browse(cr,uid,ids)[0]
         employee = obj.employee_id.id
         basic = obj.basic
