@@ -162,7 +162,7 @@ class permohonan_recruit(osv.osv):
     
     _columns= {
         'name': fields.char('Job Name', size=128, required=True, select=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian')],string='Jenis Permohonan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Karyawan','Karyawan')],string='Jenis Permohonan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'no':fields.char('Nomor',20),
         'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],string='Status',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
@@ -197,8 +197,8 @@ class permohonan_recruit(osv.osv):
         'department_id': fields.many2one('hr.department', 'Department',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'no_permohonan' : fields.integer('No Permohonan',readonly=True),   
         'category_ids' : fields.char('aa'), 
-        'divisi_id' : fields.many2one('hr.divisi','Divisi',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}), 
-        'bagian_id' : fields.many2one('hr.bagian','Bagian',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'divisi_id' : fields.many2one('hr.department','Divisi',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}), 
+        'bagian_id' : fields.many2one('hr.department','Bagian',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'level_id' :fields.many2one('hr.level','Level',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),   
         'status_rec' : fields.selection([('new','new'),('filter','filter'),('execute','execute'),('in_progres','in progres'),('pending','pending')],readonly=True, string='Status Record'),  
         'state':fields.many2one ('hr.job.approval','Stage',domain="['&', ('fold', '=', False), '|', ('job_id', '=', name), ('job_id', '=', False)]"),   
@@ -223,6 +223,17 @@ class permohonan_recruit(osv.osv):
         #'no_permohonan' : lambda obj , cr , uid , context: obj.pool.get('ir.sequence').get(cr, uid, 'hr.job'),   
                  }  
 
+    def onchange_department_id(self, cr, uid, ids, department_id):
+        result={};result['divisi_id'] =False ;result['bagian_id']=False
+        dept_obj = self.pool.get('hr.department')
+        parentID = dept_obj.browse(cr,uid,department_id).parent_id
+        if parentID : 
+            result['divisi_id'] = parentID.id
+        parent2ID = dept_obj.browse(cr,uid,parentID.id).parent_id
+        if parent2ID : 
+            result['bagian_id']=parent2ID.id
+        return {'value':result}
+        
     def new_recruitment(self,cr,uid,ids,context=None):
         self.write(cr,uid,ids,{'status_rec':'filter'},context=context)
         hasil = self.browse(cr,uid,ids)[0]
