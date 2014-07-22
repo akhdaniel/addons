@@ -28,7 +28,7 @@
                         <label for="name" class="oe_edit_only"/>
                         <h1>
                             <div>
-                                <field name="bol_name" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/> 
+                                <field name="bol_name" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/> 
                                 <field name="name" nolabel="1" class="oe_inline"/>
                             </div>
                         </h1>
@@ -97,13 +97,13 @@
                     <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')]}"/>
 
                      <div>
-                        <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="type_id" class="oe_inline" />
                     </div>
                     <field name="type_id" nolabel="1"/>
 
                     <div>
-                        <field name="bol_jurusan_ids" nolabel="1" attrs="{'invisible':[('state','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <field name="bol_jurusan_ids" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
                         <label for="jurusan_ids" class="oe_inline" />
                     </div>
                     <field view_mode="tree" name="jurusan_ids" nolabel="1">
