@@ -11,7 +11,7 @@ AVAILABLE_STATES = [
     ('submit', 'Baru'),
     ('approval', 'Proses Aproval'),
     ('approval1', 'Aproval Tahap Akhir'),
-    ('in_progres', 'Sedang Dalam Proses'),
+    ('in_progress', 'Sedang Dalam Proses'),
 ]
 
 #PERMOHONAN_STATES =[
