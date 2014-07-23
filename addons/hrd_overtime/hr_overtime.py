@@ -301,7 +301,6 @@ class hr_attendance(osv.osv):
         date_d = datetime.strptime(date,"%Y-%m-%d %H:%M:%S").day
         dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
         employee = vals["employee_id"]
-        import pdb;pdb.set_trace()
         if aksi == '1':
             obj = self.pool.get('hr.overtime')
             src = obj.search(cr,uid,[('employee_id','=',employee),('tanggal','=',dates),('state','=','validate')])
