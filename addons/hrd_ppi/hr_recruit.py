@@ -1784,7 +1784,7 @@ class lap_permintaan_karyawan(osv.osv):
         'jenis_kelamin' : fields.char('Jenis Kelamin'),
         'status' :fields.char('Status Pernikahan'),
         'domisili' : fields.char('Domisili'),
-        'tahun' :fields.integer('Tahuh'),
+        'tahun' :fields.integer('Tahun'),
     }     
 lap_permintaan_karyawan()
 
