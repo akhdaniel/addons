@@ -5,7 +5,7 @@ from openerp import tools
 class hr_manpower_report(osv.Model):
 	_name = 'hr.manpower.report'
 	_auto = False
-	_description = 'Manpower Reports'
+	_description = 'PPI Manpower Reports'
 
 	_columns = {
 		'work_location2': fields.selection([('karawang','Karawang'),('tanggerang','Tangerang'),('proyek','Proyek')],'Alamat Kantor', readonly=True), 

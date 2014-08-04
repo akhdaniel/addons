@@ -130,10 +130,10 @@
        </record>
 
 <!-- Menu Items -->
-        <menuitem name="Human Resources" id="menu_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting"/>
-        <menuitem name="Manpower Profile by Gender" id="menu_manpower_profile_g" action="manpower_report_act_g" parent="menu_report_ppi"/>
-        <menuitem name="Manpower Profile by Age" id="menu_manpower_profile_a" action="manpower_report_act_a" parent="menu_report_ppi"/>
-        <menuitem name="Manpower Profile by Department" id="menu_manpower_profile_d" action="manpower_report_act_d" parent="menu_report_ppi"/>
+        <menuitem name="Human Resources" id="menu_hr_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting"/>
+        <menuitem name="Manpower Profile by Gender" id="menu_manpower_profile_g" action="manpower_report_act_g" parent="menu_hr_report_ppi"/>
+        <menuitem name="Manpower Profile by Age" id="menu_manpower_profile_a" action="manpower_report_act_a" parent="menu_hr_report_ppi"/>
+        <menuitem name="Manpower Profile by Department" id="menu_manpower_profile_d" action="manpower_report_act_d" parent="menu_hr_report_ppi"/>
 
     </data>
 </openerp>

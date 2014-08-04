@@ -23,6 +23,7 @@ hr_employee()
 class hr_turnover_report(osv.Model):
 	_name = 'hr.turnover.report'
 	_auto = False
+	_description = 'PPI Employee Turnover Reports'
 
 	_columns = {
 		'department_id' : fields.many2one('hr.department', 'Department', readonly=True),
@@ -50,8 +51,8 @@ class hr_turnover_report(osv.Model):
 				SELECT
 					e.id,
 					e.department_id,
-					to_char(date_trunc('year',coalesce(e.date_inactive,e.tgl_msk)), 'YYYY') as th,
-					to_char(date_trunc('month',coalesce(e.date_inactive,e.tgl_msk)), 'MM') as bln,
+					to_char(date_trunc('year',coalesce(e.date_inactive,e.create_date)), 'YYYY') as th,
+					to_char(date_trunc('month',coalesce(e.date_inactive,e.create_date)), 'MM') as bln,
 					CASE WHEN r.active = TRUE  THEN 1 END as masuk,
 					CASE WHEN r.active = FALSE THEN 1 END as keluar,
 					CASE WHEN r.active = TRUE  THEN 'masuk' ELSE

@@ -77,7 +77,7 @@
             <field name="act_window_id" ref="turnover_report_act_d"/>
        </record>
 
-        <menuitem name="Turnover" id="menu_turnover_d" action="turnover_report_act_d" parent="menu_report_ppi"/>
+        <menuitem name="Turnover" id="menu_turnover_d" action="turnover_report_act_d" parent="menu_hr_report_ppi"/>
 
     </data>
 </openerp>
