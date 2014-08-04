@@ -87,6 +87,6 @@
        </record-->
 
 <!-- Menu Items -->
-        <menuitem name="Absensi" id="menu_absensi" action="absensi_report_act" parent="menu_report_ppi"/>
+        <menuitem name="Absensi" id="menu_absensi" action="absensi_report_act" parent="menu_hr_report_ppi"/>
     </data>
 </openerp>

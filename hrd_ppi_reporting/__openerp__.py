@@ -11,6 +11,7 @@ Human Resource PT.PPI Reporting
         'manpower.xml',
         'turnover.xml',
         'absensi.xml',
+        'payroll.xml',
     ],
     'data' : [],
     'installable':True,

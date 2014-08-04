@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<!-- Tree & graph views -->
+        <record id="view_trsfr_bnk_lst_report_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.transfer.bank.list.report.tree</field>
+            <field name="model">hr.payslip.transfer.bank.list.report</field>
+            <field name="arch" type="xml">
+            <tree string="Transfer Bank List" create="false">
+                <field name="employee"/>
+                <field name="name"/>
+                <field name="acc_number"/>
+                <field name="bank_name"/>
+                <field name="city"/>
+                <field name="net"/>
+             </tree>
+            </field>
+        </record>
+
+<!-- Manpower Profile by user and section Search View -->        
+        <record id="view_trsfr_bnk_lst_report_filter" model="ir.ui.view">
+            <field name="name">hr.payslip.transfer.bank.list.report.select</field>
+            <field name="model">hr.payslip.transfer.bank.list.report</field>
+            <field name="arch" type="xml">
+                <search string="Transfer Bank List">
+                  <field name="employee"/>
+                  <field name="name"/>
+                  <field name="acc_number"/>
+                  <field name="bulan" invisible='1'/>
+                  <field name="tahun" invisible='1'/>
+                  <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', 'ilike', time.strftime('%%Y'))]"/>
+                  <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', 'ilike', time.strftime('%%m'))]"/>
+                  <separator/>
+                  <group expand="1" string="Group By...">
+                        <filter string="Tahun" name="itahun" icon="terp-go-today" domain="[]" context="{'group_by':'tahun'}" />
+                        <filter string="Bulan" name="ibulan" icon="terp-go-today" domain="[]" context="{'group_by':'bulan'}" />
+                        <filter string="Employee" name="iemployee" icon="terp-personal+" domain="[]" context="{'group_by':'employee'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!-- Manpower Actions -->
+        <record id="trsfr_bnk_lst_report_act" model="ir.actions.act_window">
+           <field name="name">Transfer Bank List</field>
+           <field name="res_model">hr.payslip.transfer.bank.list.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree</field>
+           <field name="context">{'search_default_th_skr': 0,'search_default_bln_skr': 1,'search_default_itahun': 1, 'search_default_ibulan': 1, 'search_default_iemployee': 1, 'group_by_no_leaf':0, 'group_by':[]}</field>
+           <!-- <field name="domain">[]</field> -->
+       </record>
+       <record model="ir.actions.act_window.view" id="trsfr_bnk_lst_report_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_trsfr_bnk_lst_report_tree"/>
+            <field name="act_window_id" ref="trsfr_bnk_lst_report_act"/>
+       </record>
+
+<!-- Menu Items -->
+        <menuitem name="Payroll" id="menu_payslip_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting"/>
+        <menuitem name="Transfer Bank List" id="menu_payslip_trsfr_bnk_lst" action="trsfr_bnk_lst_report_act" parent="menu_payslip_report_ppi"/>
+
+    </data>
+</openerp>

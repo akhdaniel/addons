@@ -5,7 +5,7 @@ from openerp import tools
 class hr_absensi_report(osv.Model):
 	_name = 'hr.absensi.report'
 	_auto = False
-	_description = 'Absensi'
+	_description = 'PPI Absensi'
 
 	_columns = {
 		'employee_id': fields.many2one('hr.employee', "Employee", readonly=True),
