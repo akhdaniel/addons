@@ -51,8 +51,8 @@
                                 </field>
                             </group>
                         </page>	
-                        <page string="Training Lainya" name='trains_lainya'>
-                            <group colspan='2' string='TRAINING LAINYA'>
+                        <page string="Training Lainnya" name='trains_lainya'>
+                            <group colspan='2' string='TRAINING LAINNYA'>
                                 <field view_mode='tree,form' name='training_lainya' nolabel='1'>
                                     <tree>
                                         <field name='train'/>
