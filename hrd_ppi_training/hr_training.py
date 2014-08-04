@@ -548,7 +548,6 @@ class sio(osv.osv):
         durasi = lama.date_warning
         obj = self.pool.get('hr.training_sio')
         src = obj.search(cr,uid,[('status','=',True),('state','=','evaluation')])
-        import pdb;pdb.set_trace()
         for warning in obj.browse(cr, uid, src) :
             tgl = warning.berlaku
             day_now = datetime.now()
