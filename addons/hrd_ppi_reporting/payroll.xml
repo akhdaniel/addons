@@ -14,6 +14,8 @@
                 <field name="bank_name"/>
                 <field name="city"/>
                 <field name="net"/>
+                <field name="bulan" invisible='1'/>
+                <field name="tahun" invisible='1'/>
              </tree>
             </field>
         </record>
@@ -27,8 +29,8 @@
                   <field name="employee"/>
                   <field name="name"/>
                   <field name="acc_number"/>
-                  <field name="bulan" invisible='1'/>
-                  <field name="tahun" invisible='1'/>
+                  <field name="bulan"/>
+                  <field name="tahun"/>
                   <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', 'ilike', time.strftime('%%Y'))]"/>
                   <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', 'ilike', time.strftime('%%m'))]"/>
                   <separator/>
