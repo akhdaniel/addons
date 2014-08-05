@@ -8,6 +8,7 @@
             <field name="model">hr.payslip.transfer.bank.list.report</field>
             <field name="arch" type="xml">
             <tree string="Transfer Bank List" create="false">
+                <field name="nik"/>
                 <field name="employee"/>
                 <field name="name"/>
                 <field name="acc_number"/>
@@ -26,13 +27,14 @@
             <field name="model">hr.payslip.transfer.bank.list.report</field>
             <field name="arch" type="xml">
                 <search string="Transfer Bank List">
+                  <field name="nik"/>
                   <field name="employee"/>
-                  <field name="name"/>
-                  <field name="acc_number"/>
                   <field name="bulan"/>
                   <field name="tahun"/>
-                  <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', 'ilike', time.strftime('%%Y'))]"/>
-                  <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', 'ilike', time.strftime('%%m'))]"/>
+                  <field name="name"/>
+                  <field name="acc_number"/>
+                  <!-- <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', '=', time.strftime('%%Y'))]"/>
+                  <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', '=', time.strftime('%%m'))]"/> -->
                   <separator/>
                   <group expand="1" string="Group By...">
                         <filter string="Tahun" name="itahun" icon="terp-go-today" domain="[]" context="{'group_by':'tahun'}" />

@@ -11,6 +11,7 @@ class hr_payslip_transfer_bank_list_report(osv.Model):
 	_description = 'PPI Transfer Bank List'
 
 	_columns = {
+		'nik' : fields.char('NIK'),
 		'employee' : fields.char('Employee Name'),
 		'bank_name' : fields.char('Bank'),
 		'name' : fields.char('Account Name'),		
@@ -34,7 +35,8 @@ class hr_payslip_transfer_bank_list_report(osv.Model):
 			CREATE OR REPLACE VIEW hr_payslip_transfer_bank_list_report AS (
 				SELECT
 					p.id,
-					nik || ' - ' || name_related as employee, 
+					nik,
+					name_related as employee, 
 					bank_name,
 					rp.name, 
 					acc_number, 

@@ -52,8 +52,8 @@
             <field name="arch" type="xml">
                 <search string="Absensi Analysis">
                     <separator/>
-                    <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', 'ilike', time.strftime('%%Y'))]"/>
-                    <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', 'ilike', time.strftime('%%m'))]"/>
+                    <!-- <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', '=', time.strftime('%%Y'))]"/>
+                    <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', '=', time.strftime('%%m'))]"/> -->
                     <field name='tahun'/>
                     <field name='bulan'/>
                     <field name='employee_id'/>
@@ -70,7 +70,7 @@
            <field name="res_model">hr.absensi.report</field>
            <field name="view_type">form</field>
            <field name="view_mode">tree</field>
-           <field name="context">{'search_default_th_skr': 1,'search_default_bln_skr': 1,'search_default_employee_id_g': 1,'group_by_no_leaf':0, 'group_by':[]}</field>
+           <field name="context">{'search_default_employee_id_g': 1,'group_by_no_leaf':0, 'group_by':[]}</field>
            <field name="domain">[]</field>
        </record>
        <record model="ir.actions.act_window.view" id="manpower_report_tree_g">
@@ -79,12 +79,6 @@
             <field name="view_id" ref="view_hr_absensi_report_tree"/>
             <field name="act_window_id" ref="absensi_report_act"/>
        </record>
-       <!--record model="ir.actions.act_window.view" id="manpower_report_graph">
-            <field name="sequence" eval="2"/>
-            <field name="view_mode">graph</field>
-            <field name="view_id" ref="view_hr_absensi_report_graph"/>
-            <field name="act_window_id" ref="absensi_report_act"/>
-       </record-->
 
 <!-- Menu Items -->
         <menuitem name="Absensi" id="menu_absensi" action="absensi_report_act" parent="menu_hr_report_ppi"/>
