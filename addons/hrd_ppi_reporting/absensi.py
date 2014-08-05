@@ -49,7 +49,7 @@ class hr_absensi_report(osv.Model):
 		cr.execute("""
 			CREATE OR REPLACE VIEW hr_absensi_report AS (
 				SELECT 
-					id, 
+					min(id) as id, 
 					employee_id,bulan,tahun,
 					case when date_part('day',name) = 1 then 1 else case when 1 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t1,
 					case when date_part('day',name) = 2 then 1 else case when 2 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t2,
@@ -84,7 +84,8 @@ class hr_absensi_report(osv.Model):
 					case when date_part('day',name) = 31 then 1 else case when 31 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t31
 				FROM(
 					SELECT
-						a.id,h.id as hid,
+						min(a.id) as id,
+						h.id as hid,
 						date_to,date_from,
 						a.name,
 						coalesce(a.employee_id,h.employee_id) employee_id,
@@ -103,7 +104,10 @@ class hr_absensi_report(osv.Model):
 						WHERE type='remove' AND state = 'validate') h
 					ON a.employee_id = h.employee_id AND a.name ::DATE BETWEEN h.date_from ::DATE AND h.date_to ::DATE 
 					WHERE (action='sign_in' OR action is NULL)
+					GROUP BY 
+						h.id,date_to,date_from,a.name,coalesce(a.employee_id,h.employee_id)
 				)AS t1
+				GROUP BY employee_id,bulan,tahun,name,date_to,date_from
 			)""")
 
 
