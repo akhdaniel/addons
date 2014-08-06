@@ -53,6 +53,19 @@ class hr_holidays(osv.osv):
     _description = "Leave"
     _inherit = "hr.holidays"
 
+    def create(self, cr, uid, values, context=None):
+        """ Override to avoid automatic logging of creation """
+        if context is None:
+            context = {}
+        context = dict(context, mail_create_nolog=True)
+        date_from = values['date_from']
+        date_to = values['date_to']
+        month_from=datetime.strptime(date_from,'%Y-%m-%d %H:%M:%S').month
+        month_to=datetime.strptime(date_to,'%Y-%m-%d %H:%M:%S').month
+        if month_from != month_to :
+            raise osv.except_osv(_('Warning!'),_('Bulan Harus Sama'))
+        return super(hr_holidays, self).create(cr, uid, values, context=context)
+
     def holidays_validate(self, cr, uid, ids, context=None):
         self.check_holidays(cr, uid, ids, context=context)
         obj_emp = self.pool.get('hr.employee')
@@ -228,7 +241,10 @@ class hr_holidays(osv.osv):
             raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
 
         result = {'value': {}}
-
+        month_from=datetime.strptime(date_from,'%Y-%m-%d %H:%M:%S').month
+        month_to=datetime.strptime(date_to,'%Y-%m-%d %H:%M:%S').month
+        if month_from != month_to :
+            raise osv.except_osv(_('Warning!'),_('Bulan Harus Sama'))
         # Compute and update the number of days
         if (date_to and date_from) and (date_from <= date_to) and libur_bersih2 == False:
             diff_day = self._get_number_of_days2(date_from, date_to)
@@ -250,7 +266,10 @@ class hr_holidays(osv.osv):
             raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
 
         result = {'value': {}}
-
+        month_from=datetime.strptime(date_from,'%Y-%m-%d %H:%M:%S').month
+        month_to=datetime.strptime(date_to,'%Y-%m-%d %H:%M:%S').month
+        if month_from != month_to :
+            raise osv.except_osv(_('Warning!'),_('Bulan Harus Sama'))
         # Compute and update the number of days
         if (date_to and date_from) and (date_from <= date_to) and libur_bersih2 == False:
             diff_day = self._get_number_of_days2(date_from, date_to)
