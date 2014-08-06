@@ -291,6 +291,7 @@
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
                     <tree string="Laporan Permintaan Recruitment">
+                        <field name='no'/>
                         <field name="dep"/>
                         <field name="posisi"/>
                         <field name="jumlah"/>
@@ -301,6 +302,7 @@
                         <field name="status"/>
                         <field name="domisili"/>
                         <field name="tahun"/>
+                        <field name='stat'/>
                     </tree>
                 </field>
         </record>
