@@ -115,7 +115,7 @@
 												<field name="kodepos1" placeholder="Zip"/>                         
 												<field name='telp2'/>
 												
-												<field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' placeholder="From Employee"/>
+												<!--field name="address_home_id" context="{'show_address': 1}" options='{"always_reload": True, "highlight_first_line": True}' placeholder="From Employee"/-->
 											</group>      
 										</group>
 									</group>	

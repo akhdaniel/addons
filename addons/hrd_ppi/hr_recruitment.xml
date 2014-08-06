@@ -11,9 +11,9 @@
                     <button string="Send For Approval" type="object" name='action_submit' attrs="{'invisible': [('states_id','!=','submit')]}"/>
                     <button string='Approval' type='object' name='action_verify' attrs="{'invisible': [('states_id','!=','approval')]}"/>
                     <button string='Approval' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}"/>
-                    <button string='Cancel' type='object' name='selesai'/>
-                    <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progres')]}"/>    
-                    <field name='state' widget='statusbar'/>      
+                    <button string='Cancel' type='object' name='cancel'/>
+                    <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}"/>    
+                    <!-- <field name='state' widget='statusbar'/>       -->
                     <!--field name='states_id' widget='statusbar'/-->           
                 </header> 
                 <xpath expr="//div[@class='oe_title']" version="7.0" position="replace">                  

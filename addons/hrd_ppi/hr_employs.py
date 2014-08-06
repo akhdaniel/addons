@@ -97,7 +97,7 @@ class employee(osv.osv):
         'susunan_kel2_ids':fields.one2many('hr_employee.suskel2','employee_id','Susunan Keluarga'),
         'rwt_pend_ids':fields.one2many('hr_employee.rwt_pend','employee_id','Riwayat Pendidikan'),
         'bahasa_ids':fields.one2many('hr_employee.bahasa','employee_id','Bahasa'),
-        'rwt_krj_ids':fields.one2many('hr_employee.rwt_krj','employee_id','Rwayat Pekerjaan'),
+        'rwt_krj_ids':fields.one2many('hr_employee.rwt_krj','employee_id','Riwayat Pekerjaan'),
         'koneksi1_ids':fields.one2many('hr_employee.kon1','employee_id','Koneksi Internal'),
         'koneksi2_ids':fields.one2many('hr_employee.kon2','employee_id','Koneksi Eksternal'),
         'blood':fields.selection([('A','A'),('B','B'),('AB','AB'),('O','O')],'Gol Darah'),
@@ -125,7 +125,7 @@ class employee(osv.osv):
         'hierarcy_history' : fields.one2many('hr.hierarcy_history','employee_id','Hieracy History'),
         'work_email' : fields.char('Email Kantor'),
         'work_phone' : fields.char('Telepon Kantor'),
-        'coach_id' : fields.many2one('hr.employee', 'Pelatih'),
+        'coach_id' : fields.many2one('hr.employee', '',readonly=True),
         #'status_contract' : fields.selection(([('aktif','Aktif'),('hampir_habis','Hampir Habis'),('nonaktif','Tidak Aktif')],'Jenis Kelamin'),
         }
 

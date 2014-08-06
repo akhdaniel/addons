@@ -61,7 +61,8 @@ class permohonan_recruit(osv.osv):
         for line in pers: 
             stage=line.sequence
             if stg3 < stage and st > stage :
-                stg=line.id                       
+                stg=line.id   
+                statuse=line.name                    
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
         obj = self.pool.get('hr.job')
@@ -89,6 +90,8 @@ class permohonan_recruit(osv.osv):
                     'status' : objk.sts_prk,
                     'domisili' : objk.domisili_id.name,
                     'tahun' : year,
+                    'no': no_sum,
+                    'stat' : statuse
                     })
     	return True  	
 
@@ -103,9 +106,15 @@ class permohonan_recruit(osv.osv):
         for line in pers: 
             stage=line.sequence
             if stg3 < stage and st > stage :
-                stg=line.id                       
+                stg=line.id  
+                stats = line.name                     
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
+        import pdb;pdb.set_trace()
+        lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
+        lap_src = lap_obj.search(cr,uid,[('no','=',hasil.no_permohonan)])
+        for lap in lap_obj.browse(cr,uid,lap_src) :
+            lap_obj.write(cr,uid,[lap.id],{'stat' : stats},context=context)
     	return True
  
     def action_in_progress(self,cr,uid,ids,context=None): 
@@ -124,7 +133,8 @@ class permohonan_recruit(osv.osv):
         for line in pers: 
             stage=line.sequence
             if stg3 < stage and st > stage :
-                stg=line.id                       
+                stg=line.id    
+                stat = line.name                   
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
         #import pdb;pdb.set_trace()
@@ -147,6 +157,10 @@ class permohonan_recruit(osv.osv):
             for sumary in obj_brw :
                 jum_sumary = sumary.jum_kebutuhan + obj.no_of_recruitment
                 objk.write(cr,uid,[sumary.id],{'jum_kebutuhan': jum_sumary},context=context)
+        lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
+        lap_src = lap_obj.search(cr,uid,[('no','=',obj.no_permohonan)])
+        for lap in lap_obj.browse(cr,uid,lap_src) :
+            lap_obj.write(cr,uid,[lap.id],{'stat' : stat},context=context)
     	return True
     	
     def scroll_no(self, cr, uid, ids, no, args, context=None):
@@ -157,8 +171,17 @@ class permohonan_recruit(osv.osv):
 
     def selesai(self,cr,uid,ids,context=None):
         obj = self.browse(cr,uid,ids)[0]
+        lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
+        lap_src = lap_obj.search(cr,uid,[('no','=',obj.no_permohonan)])
+        for lap in lap_obj.browse(cr,uid,lap_src) :
+            lap_obj.write(cr,uid,[lap.id],{'stat' : 'selesai'},context=context)
         self.write(cr,uid,ids,{'state':1, 'states_id' : 'submit'},context=context)
+        return True
 
+    def cancel(self,cr,uid,ids,context=None):
+        obj = self.browse(cr,uid,ids)[0]
+        self.write(cr,uid,ids,{'state':1, 'states_id' : 'submit'},context=context)
+        return True
     
     _columns= {
         'name': fields.char('Job Name', size=128, required=True, select=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
@@ -1785,6 +1808,8 @@ class lap_permintaan_karyawan(osv.osv):
         'status' :fields.char('Status Pernikahan'),
         'domisili' : fields.char('Domisili'),
         'tahun' :fields.integer('Tahun'),
+        'no' : fields.integer('No Permohonan'),
+        'stat' : fields.char('Status'),
     }     
 lap_permintaan_karyawan()
 
