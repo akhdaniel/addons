@@ -101,7 +101,7 @@ class hr_payslip_monthly_list_report(osv.Model):
 				FROM hr_payslip_line l
 				JOIN hr_salary_rule_category c ON l.category_id=c.id
 				JOIN hr_payslip p ON p.id=l.slip_id
-				WHERE amount != 0 AND c.code in ('BASIC','ALW','DED')
+				WHERE amount != 0 AND c.code in ('BASIC','ALW','DED') AND state = 'done'
 			)""")
 
 hr_payslip_monthly_list_report()
