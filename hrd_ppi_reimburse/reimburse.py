@@ -34,9 +34,22 @@ class reimburse(osv.osv):
             'reimburse.mt_reimburse_confirmed': lambda self, cr, uid, obj, ctx=None: obj['state'] == 'verify',
             }
         }, 
+
+    def create(self, cr, uid, values, context=None):
+        """ Override to avoid automatic logging of creation """
+        if context is None:
+            context = {}
+        context = dict(context, mail_create_nolog=True)
+        name=values['employee_id']
+        thn = values['tahun']
+        obj = self.pool.get('reimburse')
+        src = obj.search(cr,uid,[('employee_id','=',name),('tahun','=',thn),('state','=','approve2')])
+        import pdb;pdb.set_trace()
+        for reim in obj.browse(cr,uid,src) :
+            raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
+        return super(reimburse, self).create(cr, uid, values, context=context)
     
     def employe(self, cr, uid,ids,vals,name,context=None):  
-        #import pdb;pdb.set_trace()
         result ={}
         xyz = self.browse(cr,uid,ids)[0]
         for xxx in self.browse(cr,uid,ids):
@@ -47,7 +60,7 @@ class reimburse(osv.osv):
                 if tipe == 'remove' :
                     yyy = xxx.employee_id.name
                     contract_obj = self.pool.get('hr.contract')
-                    co_id = contract_obj.search(cr, uid,[('employee_id', '=', yyy)],context=context) 
+                    co_id = contract_obj.search(cr, uid,[('employee_id', '=', yyy),('status','=',True)],context=context) 
                     if co_id != [] :
                         ob= contract_obj.browse(cr, uid, co_id, context=context)[0] 
                     else :
@@ -56,15 +69,17 @@ class reimburse(osv.osv):
                     obcd=ob.department_id.id 
                     if jeje == 'obat':  
                         result[xxx.id]=ob.jatah_reimburse_pengobatan 
-        year =str(datetime.now().year)
-        remove = 'remove'
-        approve2 = 'approve2'
-        reim_obj = self.pool.get('reimburse')
-        reim_src = reim_obj.search(cr,uid,[('type','=',remove),('state','=',approve2),('tahun','=',year)],context=context)
-        if reim_src == [] or xyz.type == 'add' :
-            obj = reim_obj.browse(cr,uid,reim_src,context=context)[0]
-        else:
-            raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
+        # year =str(datetime.now().year)
+        # remove = 'remove'
+        # approve2 = 'approve2'
+        # reim_obj = self.pool.get('reimburse')
+        # reim_src = reim_obj.search(cr,uid,[('type','=',remove),('state','=',approve2),('tahun','=',year),('employee_id','=',xyz.employee_id.id)],context=context)
+        # import pdb;pdb.set_trace()
+        # if reim_src == [] or xyz.type == 'add' :
+        #     obj = reim_obj.browse(cr,uid,reim_src,context=context)
+        # else:
+        #     #raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
+        #     obj = reim_obj.browse(cr,uid,reim_src,context=context)
         return result       
     
     def _employee_get(self, cr, uid, context=None):
@@ -131,13 +146,6 @@ class reimburse(osv.osv):
        #         raise osv.except_osv(_('Warning!'),_('Anda tidak bisa menghapus reimburse ketika statusnya %s.')%(rec.state))
         #return super(reimburse, self).unlink(cr, uid, ids, context)         
 
-    def create(self, cr, uid, values, context=None):
-        """ Override to avoid automatic logging of creation """
-        if context is None:
-            context = {}
-        context = dict(context, mail_create_nolog=True)
-        return super(reimburse, self).create(cr, uid, values, context=context)
-
     def check_reimburse(self, cr, uid, ids, context=None):
         #import pdb;pdb.set_trace()    
         obj=self.browse(cr,uid,ids)[0]
@@ -173,11 +181,11 @@ class reimburse(osv.osv):
         #    raise osv.except_osv(_('Warning!'), _('Sedang menunggu Approval management'))            
         return True    
 
-    def reimburse_alloc(self,cr,uid, ids=None,context=None):
-        import pdb;pdb.set_trace()
-        employee_ids = self.pool.get('hr.employee')
-        src = employee_ids.search(cr,uid, [])
-        employs = employee_ids.browse(cr, uid, src)
+    def reimburse_alloc(self,cr,uid, ids=None,context=None):      
+        year = str(datetime.now().year)
+        contract_obj = self.pool.get('hr.contract')
+        co_id = contract_obj.search(cr, uid,[('status','=',True)],context=context) 
+        employs = contract_obj.browse(cr, uid, co_id)
         values={}
         values1={}
         for xxx in employs:
@@ -198,20 +206,11 @@ class reimburse(osv.osv):
             '''
             values = {
                 'jenis':'obat',
-                #'Keterangan': _("Reimburse Allocation for %s") % _(xxx.name), 
-                'employee_id':xxx.id,
+                'employee_id':xxx.employee_id.id,
+                'tahun': year,
                 'keterangan':"tes"
                 }
             self.create(cr,uid,values,context=context)
-            #values = {
-             #   'jenis':'rawat',
-                #'Keterangan': _("Reimburse Allocation for %s") % _(xxx.name),
-                #'nominal': result,
-                #'tahun':time.strftime('%Y'),  
-              #  'employee_id':xxx.id,
-               # 'keterangan':"tes"
-                #}
-            #self.create(cr,uid,values,context=context)
         return True
         
 reimburse()
@@ -403,7 +402,7 @@ class hr_contract(osv.osv):
         year =datetime.now().year
         month =datetime.now().month
         result = {}
-        for r in self.browse(cr, uid, ids, context=context):
+        for re in self.browse(cr, uid, ids, context=context):
             if dt_yr == year : 
                 bulan = float(13 - dt_bln)      
             elif dten_yr == year and dt_yr == year :
@@ -412,12 +411,12 @@ class hr_contract(osv.osv):
                     bulan = float(dten_bln)
             else :
                 bulan = float(12)         
-            if wag:
-                jatah = float(((bulan/12)*typ) * wag)
+            #if wag:
+            jatah = float(((bulan/12)*typ) * wag)
         if jatah <= rec.type_id.range_pengobatan :
-            result [r.id]= jatah
+            result [re.id]= jatah
         else :
-            result [r.id]= rec.type_id.range_pengobatan
+            result [re.id]= rec.type_id.range_pengobatan
         return result    
         
     def _hitung_reimburse_rawat(self, cr, uid, ids, wage, jatah_reimburse_perawatan, arg, context=None):
@@ -426,8 +425,8 @@ class hr_contract(osv.osv):
         wag=rec.wage
         result = {}
         for r in self.browse(cr, uid, ids, context=context):
-            if wag:
-                jatah = typ * wag
+            #if wag:
+            jatah = typ * wag
             result [r.id]= jatah
         return result          
     
