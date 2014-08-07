@@ -20,7 +20,7 @@
 	    <record id="hr_payroll_rules_overtime_meal" model="hr.salary.rule">
 	        <field name="name">OVERTIME MEAL</field>
 	        <field name="code">OT_MEAL</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">3</field>
@@ -38,7 +38,7 @@
 	    <record id="hr_payroll_rules_incentive_meal" model="hr.salary.rule">
 	        <field name="name">INCENTIVES MEAL</field>
 	        <field name="code">INC_MEAL</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">5</field>
@@ -47,7 +47,7 @@
 	    <record id="hr_payroll_rules_meal" model="hr.salary.rule">
 	        <field name="name">MEAL ALLOWANCE</field>
 	        <field name="code">MEAL</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">6</field>
@@ -56,7 +56,7 @@
 	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
 	        <field name="name">TRANSPORT ALLOWANCE</field>
 	        <field name="code">TRANSPORT</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">7</field>
@@ -65,7 +65,7 @@
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN JAMSOSTEK</field>
 	        <field name="code">T_JMS</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">8</field>
@@ -74,7 +74,7 @@
 	    <record id="hr_payroll_rules_medical_allowance_obat" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALW (OBAT)</field>
 	        <field name="code">MAO</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">9</field>
@@ -83,7 +83,7 @@
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALW (PERAWATAN RS)</field>
 	        <field name="code">MAR</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">10</field>
@@ -92,7 +92,7 @@
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
 	        <field name="name">THT</field>
 	        <field name="code">THT</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">11</field>
@@ -272,7 +272,7 @@
 	    <record id="hr_payroll_rules_umak_proyek" model="hr.salary.rule">
 	        <field name="name">UANG MAKAN PROYEK</field>
 	        <field name="code">UMP</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">22</field>
@@ -281,7 +281,7 @@
 	    <record id="hr_payroll_rules_lembur_proyek" model="hr.salary.rule">
 	        <field name="name">LEMBUR PROYEK</field>
 	        <field name="code">LPR</field>
-	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="category_id" ref="hr_payroll.GROSS"/>
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 	        <field name="sequence">22</field>
