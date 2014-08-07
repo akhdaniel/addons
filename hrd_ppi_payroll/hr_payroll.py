@@ -518,7 +518,7 @@ class hr_payslip(osv.osv):
             # overwrite field in payslip for tunjangan pajak and pajak
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 cod= line['code']
-                if cod == "NET":
+                if cod == "Total":
                     coo =line['amount']      
                     self.write(cr, uid, [payslip.id], {'net':coo}, context=context)     
                 if cod == "POT_ABSEN":
@@ -805,6 +805,10 @@ class hr_payslip(osv.osv):
         self_obj=self.pool.get('hr.pkp')
         src_obj=self_obj.search(cr,uid,[])
         objk = self_obj.browse(cr,uid,src_obj)
+        emp_obj = self.pool.get('hr.employee')
+        emp_src = emp_obj.search(cr,uid,[('name','=',obj.employee_id.name)])
+        for emp in emp_obj.browse(cr,uid,emp_src):
+            npwp = emp.npwp
         if pkp <= 0 :
             pajak = 0
         elif pkp > 0 :
@@ -817,7 +821,11 @@ class hr_payslip(osv.osv):
                     pajak = (( pkp * persen )/100) + pajak
                     pkp = 0
                     pajak = pajak / 13
-                    return self.write(cr, uid,ids, {'pkp':pajak}, context=context)
+                    if npwp == False :
+                        pajak = pajak * 1.2
+                        return self.write(cr, uid,ids, {'pkp':pajak}, context=context)
+                    else :
+                        return self.write(cr, uid,ids, {'pkp':pajak}, context=context)
                 elif pkp >= mak :
                     pajak = ( mak * persen )/100 + pajak
                     pkp = pkp - mak
@@ -859,7 +867,7 @@ class hr_payslip(osv.osv):
          
 
     _columns = {
-        'net' : fields.float("Net"),
+        'net' : fields.float("Total"),
         'komisi': fields.float("komisi"),
         'reimburse_obat':fields.float('Total Reimburse Obat'),
         'reimburse_rawat':fields.float('Total Reimburse Rawat'),
