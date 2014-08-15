@@ -6,6 +6,7 @@ access_hr_hierarcy_history_manager,hr_hierarcy_history_manager,hrd_ppi.model_hr_
 access_hr_train_keahlian_manager,hr_train_keahlian_manager,hrd_ppi_training.model_hr_train_keahlian,base.group_hr_manager,1,1,0,0
 access_hr_training_lainya_manager,hr_training_lainya_manager,hrd_ppi_training.model_hr_training_lainya,base.group_hr_manager,1,1,0,0
 access_hr_training_train_manager,hr_training_train_manager,hrd_ppi_training.model_hr_training_train,base.group_hr_manager,1,1,0,0
+access_hr_training_sio_manager,hr_training_sio_manager,hrd_ppi_training.model_hr_training_sio,base.group_hr_manager,1,1,0,0
 
 access_reimburse_hr_user,reimburse_hr_user,hrd_ppi_reimburse.model_reimburse,base.group_hr_user,1,0,0,0
 access_hr_non_emp_hr_user,hr_non_emp_hr_user,hrd_ppi_training.model_hr_non_emp,base.group_hr_user,1,0,0,0
@@ -13,6 +14,7 @@ access_hr_hierarcy_history_hr_user,hr_hierarcy_history_hr_user,hrd_ppi.model_hr_
 access_hr_train_keahlian_hr_user,hr_train_keahlian_hr_user,hrd_ppi_training.model_hr_train_keahlian,base.group_hr_user,1,0,0,0
 access_hr_training_lainya_hr_user,hr_training_lainya_hr_user,hrd_ppi_training.model_hr_training_lainya,base.group_hr_user,1,0,0,0
 access_hr_training_train_hr_user,hr_training_train_hr_user,hrd_ppi_training.model_hr_training_train,base.group_hr_user,1,0,0,0
+access_hr_training_sio_hr_user,hr_training_sio_hr_user,hrd_ppi_training.model_hr_training_sio,base.group_hr_user,1,0,0,0
 
 access_reimburse_user,reimburse_user,hrd_ppi_reimburse.model_reimburse,base.group_user,1,0,0,0
 access_hr_non_emp_user,hr_non_emp_user,hrd_ppi_training.model_hr_non_emp,base.group_user,1,0,0,0
@@ -27,6 +29,7 @@ access_hr_employee_bahasa_user,hr_employee_bahasa_user,hrd_ppi.model_hr_employee
 access_hr_employee_rwt_krj_user,hr_employee_rwt_krj_user,hrd_ppi.model_hr_employee_rwt_krj,base.group_user,1,0,0,0
 access_hr_employee_kon1_user,hr_employee_kon1_user,hrd_ppi.model_hr_employee_kon1,base.group_user,1,0,0,0
 access_hr_employee_kon2_user,hr_employee_kon2_user,hrd_ppi.model_hr_employee_kon2,base.group_user,1,0,0,0
+access_hr_training_sio_user,hr_training_sio_user,hrd_ppi.model_hr_training_sio,base.group_user,1,0,0,0
 
 access_reimburse_coo,reimburse_coo,hrd_ppi_reimburse.model_reimburse,group_hr_coo,1,0,0,0
 access_hr_non_emp_coo,hr_non_emp_coo,hrd_ppi_training.model_hr_non_emp,group_hr_coo,1,0,0,0
@@ -41,6 +44,7 @@ access_hr_employee_bahasa_coo,hr_employee_bahasa_coo,hrd_ppi.model_hr_employee_b
 access_hr_employee_rwt_krj_coo,hr_employee_rwt_krj_coo,hrd_ppi.model_hr_employee_rwt_krj,group_hr_coo,1,0,0,0
 access_hr_employee_kon1_coo,hr_employee_kon1_coo,hrd_ppi.model_hr_employee_kon1,group_hr_coo,1,0,0,0
 access_hr_employee_kon2_coo,hr_employee_kon2_coo,hrd_ppi.model_hr_employee_kon2,group_hr_coo,1,0,0,0
+access_hr_training_sio_coo,hr_training_sio_coo,hrd_ppi.model_hr_training_sio,group_hr_coo,1,0,0,0
 
 access_reimburse_dept,reimburse_dept,hrd_ppi_reimburse.model_reimburse,group_hr_dept,1,0,0,0
 access_hr_non_emp_dept,hr_non_emp_dept,hrd_ppi_training.model_hr_non_emp,group_hr_dept,1,0,0,0
@@ -55,3 +59,4 @@ access_hr_employee_bahasa_dept,hr_employee_bahasa_dept,hrd_ppi.model_hr_employee
 access_hr_employee_rwt_krj_dept,hr_employee_rwt_krj_dept,hrd_ppi.model_hr_employee_rwt_krj,group_hr_dept,1,0,0,0
 access_hr_employee_kon1_dept,hr_employee_kon1_dept,hrd_ppi.model_hr_employee_kon1,group_hr_dept,1,0,0,0
 access_hr_employee_kon2_dept,hr_employee_kon2_dept,hrd_ppi.model_hr_employee_kon2,group_hr_dept,1,0,0,0
+access_hr_training_sio_dept,hr_training_sio_dept,hrd_ppi.model_hr_training_sio,group_hr_dept,1,0,0,0
