@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+    <record id="group_hr_dept" model="res.groups">
+        <field name="name">HR Admin Department</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),(4, ref('hrd_ppi.group_hr_department'))]"/>  
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+    <record id="group_hr_coo" model="res.groups">
+        <field name="name">COO - CFO - Direktur - Presiden Direktur - Komisaris</field>
+        <field name="implied_ids" eval="[(4, ref('group_hr_dept'))]"/> 
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+    <record id="property_rule_employee_info_user" model="ir.rule">
+        <field name="name">Read Own Employee Info</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="perm_create" eval="False"/>
+    </record>   
+
+    <record id="property_rule_employee_view_only_all" model="ir.rule">
+        <field name="name">View All Employee</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('base.group_hr_manager')),(4,ref('group_hr_coo'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_create" eval="False"/>
+    </record> 
+
+    <record id="property_rule_employee_info_useradmin2" model="ir.rule">
+        <field name="name">Useradmin HRD Employee Access</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('base.group_hr_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <record id="property_rule_employee_info_dept" model="ir.rule">
+        <field name="name">Department Employee Access</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="domain_force">[('department_id','child_of',user.dept_related)]</field>
+        <field name="groups" eval="[(4,ref('group_hr_dept'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="perm_create" eval="False"/>
+    </record>
+
+</data>
+</openerp>
