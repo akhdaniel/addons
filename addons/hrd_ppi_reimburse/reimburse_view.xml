@@ -170,29 +170,21 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-                <page string="HR Settings" position="inside"> 
-                    <xpath expr="//group[@name='active_group']" position="before">
-                    <group string="Tunjangan Kesehatan" >
-                        <!--field name="sisa_reimburse_rs" class="oe_inline"/-->
-                        <field name='total_tunjangan_pengobatan'/>
-                        <field name='total_pemakaian_pengobatan'/>
-                        <field name="sisa_reimburse_pengobatan" class="oe_inline"/>
-                        <field name='total_reimburse_rs'/>
-                        </group>
+                <page string="HR Settings" position="replace"> 
+                    <page string="HR Settings" groups="base.group_hr_user,base.group_user">
                         <group>
-                        <!--field name="reimburse_ids" view_mode="tree" widget="one2many_list" nolabel="1">
-                            <tree colspan="4" string="Reimburse List" colors="blue:state == 'approve2'">
-                                <field name="jenis"/>  
-                                <field name="tahun"/>
-                                <field name="tanggal"/>
-                                <field name="nominal"/>
-                                <field name="nomin"/>
-                                <field name="keterangan"/>
-                                <field name="state"/>                 
-                            </tree>                        
-                        </field-->                        
-                    </group>
-                    </xpath>
+                            <group string="Active" name="active_group">
+                                <field name="active"/>
+                            </group>
+                            <group string="Tunjangan Kesehatan" >
+                                <!--field name="sisa_reimburse_rs" class="oe_inline"/-->
+                                <field name='total_tunjangan_pengobatan'/>
+                                <field name='total_pemakaian_pengobatan'/>
+                                <field name="sisa_reimburse_pengobatan" class="oe_inline"/>
+                                <field name='total_reimburse_rs'/>
+                            </group>
+                        </group>
+                    </page>
                 </page>    
             </field>
         </record>   
