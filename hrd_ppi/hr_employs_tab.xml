@@ -24,7 +24,7 @@
                 <field name="category_ids" widget="many2many_tags" placeholder="e.g. Part Time" groups="base.group_hr_user" position='replace'/>
                 <field name='address_home_id' position='replace'/>
                 <page string="Public Information" position="replace"> 
-                    <page string="Job &amp; Public Information">				
+                    <page string="Job &amp; Public Information" groups="base.group_user">				
                                 <group>
                                     <group string="Contact Information">
                                        <field name="address_id2" on_change="onchange_alamat(address_id2)" />
@@ -52,7 +52,7 @@
                             </page>
                        </page>     
                    <page string="Personal Information" position="replace">                    
-                         <page string="Personal Information" groups="base.group_hr_user">
+                         <page string="Personal Information" groups="base.group_hr_user,base.group_user">
 							<group>
                                     <group string="Informasi Pribadi">
                                         <group >

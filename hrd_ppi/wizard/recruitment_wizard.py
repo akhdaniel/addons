@@ -1,7 +1,7 @@
 from openerp.osv import fields, osv
 import datetime
 
-class report_recruit(osv.osv):
+class report_recruit(osv.osv_memory):
 	_name = "hr_report.recruitment"
 
 	_columns = {
