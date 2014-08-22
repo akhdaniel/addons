@@ -9,10 +9,8 @@
 			<field name="inherit_id" ref="hrd_ppi.tab_form_view"/>
 			<field name="arch" type="xml">
 					<field name='user_id' position="after">
-						<label for='dept_related' string='Department/Akses Level'/>
-						<div>
-							<field name='dept_related'/> / <field name='acc_level'/>
-						</div>
+					<field name='dept_related'/>
+					<field name='acc_level'/>
 					</field>
 			</field>
 		</record> 

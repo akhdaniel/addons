@@ -256,13 +256,15 @@
     <menuitem name="Permohonan Recruitment"
         id="menu_permohonan_recruitment"
         parent="hr.menu_hr_configuration"
-        sequence="40"/>
+        sequence="40"
+        groups="base.group_hr_user"/>
 
     <menuitem
         id="menu_hr_recruitment_permohonan"
         name="Approval Permohonan Recruitment"
         parent="menu_permohonan_recruitment"
         action="hr_job_approval_act"
-        sequence="1"/>
+        sequence="1"
+        groups="base.group_hr_user"/>
     </data>
 </openerp>

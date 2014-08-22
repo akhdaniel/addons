@@ -58,12 +58,15 @@ class hr_holidays(osv.osv):
         if context is None:
             context = {}
         context = dict(context, mail_create_nolog=True)
-        date_from = values['date_from']
-        date_to = values['date_to']
-        month_from=datetime.strptime(date_from,'%Y-%m-%d %H:%M:%S').month
-        month_to=datetime.strptime(date_to,'%Y-%m-%d %H:%M:%S').month
-        if month_from != month_to :
-            raise osv.except_osv(_('Warning!'),_('Bulan Harus Sama'))
+        import pdb;pdb.set_trace()
+        tipe = values['type']
+        if tipe == 'remove' :
+            date_from = values['date_from']
+            date_to = values['date_to']
+            month_from=datetime.strptime(date_from,'%Y-%m-%d %H:%M:%S').month
+            month_to=datetime.strptime(date_to,'%Y-%m-%d %H:%M:%S').month
+            if month_from != month_to :
+                raise osv.except_osv(_('Warning!'),_('Bulan Harus Sama'))
         return super(hr_holidays, self).create(cr, uid, values, context=context)
 
     def holidays_validate(self, cr, uid, ids, context=None):
