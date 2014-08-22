@@ -168,13 +168,16 @@
             <field name="model">hr.holidays</field>
             <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
             <field name="arch" type="xml">
-                <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','category')]}" position="replace"/>  
-                <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}" position="replace"/>
-                <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1" position="replace">
-                    <field name="holiday_type" on_change="onchange_type(holiday_type)"/>    
-                    <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>  
-                    <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
-                </field>
+                    <field name="name" position="before">
+                        <field name="type" attrs="{'readonly':[('type','!=','luar kota')]}"/>
+                    </field>
+                    <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','category')]}" position="replace"/>  
+                    <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}" position="replace"/>
+                    <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1" position="replace">
+                        <field name="holiday_type" on_change="onchange_type(holiday_type)"/>    
+                        <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>  
+                        <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
+                    </field>
             </field>
         </record>
 
@@ -197,16 +200,18 @@
             <field name="model">hr.holidays</field>
             <field name="inherit_id" ref="hr_holidays.allocation_leave_new"/>
             <field name="arch" type="xml">
-                <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','category')]}" position="replace"/>  
-                <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}" position="replace"/>
-                <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1" position="replace">
-                    <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1"/>    
-                    <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>  
-                    <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
-                </field>
+                    <field name="name" position="before">
+                        <field name="type" attrs="{'readonly':[('type','!=','luar kota')]}"/>
+                    </field>
+                    <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','category')]}" position="replace"/>  
+                    <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}" position="replace"/>
+                    <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1" position="replace">
+                        <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1"/>    
+                        <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>  
+                        <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
+                    </field>
             </field>
         </record>    
-               
         
         <!-- Holidays: Allocation Request-->
         <record forcecreate="1" id="ppi_annual_leave" model="ir.cron">
