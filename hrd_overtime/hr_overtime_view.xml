@@ -156,7 +156,7 @@
         <menuitem
             name="Overtime"
             parent="hr.menu_hr_root"
-            id="menu_open_ask_overtime" groups = "base.group_hr_manager,base.group_hr_user"
+            id="menu_open_ask_overtime" groups="base.group_hr_manager,base.group_hr_user"
             sequence="5"/>
             
         <record model="ir.actions.act_window" id="open_ask_overtime">
@@ -182,7 +182,7 @@
         </record>
         
         <menuitem name="Permohonan Lembur" parent="menu_open_ask_overtime" id="menu_open_ask_overtime_new"
-             action="open_ask_overtime" groups = "base.group_hr_manager,base.group_hr_user"/>    
+             action="open_ask_overtime" groups="base.group_hr_manager,base.group_hr_user"/>    
 
         <record model="ir.ui.view" id="lembur_tree">
         <field name="name">hr.overtime.jam.tree</field>
