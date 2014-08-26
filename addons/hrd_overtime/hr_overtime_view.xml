@@ -236,14 +236,14 @@
     </record>
 
         <menuitem name="Lembur"
-        id="lembur"
+        id="lemburs"
         parent="hr.menu_hr_configuration"
         sequence="42"/>
 
         <menuitem
             id="lembur1"
             name="Perhitungan Jam Lembur"
-            parent="lembur"
+            parent="lemburs"
             action="lembur_act"
             sequence="1"/>
     
