@@ -44,7 +44,6 @@ class reimburse(osv.osv):
         thn = values['tahun']
         obj = self.pool.get('reimburse')
         src = obj.search(cr,uid,[('employee_id','=',name),('tahun','=',thn),('state','=','approve2')])
-        import pdb;pdb.set_trace()
         for reim in obj.browse(cr,uid,src) :
             raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
         return super(reimburse, self).create(cr, uid, values, context=context)
