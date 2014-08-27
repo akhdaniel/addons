@@ -58,7 +58,6 @@ class hr_holidays(osv.osv):
         if context is None:
             context = {}
         context = dict(context, mail_create_nolog=True)
-        import pdb;pdb.set_trace()
         tipe = values['type']
         if tipe == 'remove' :
             date_from = values['date_from']
