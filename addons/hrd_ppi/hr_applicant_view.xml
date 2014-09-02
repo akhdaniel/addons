@@ -173,7 +173,7 @@
             <field name="source_id" position="after"> 
                 <field name="ref"/>              
                 <newline/>
-                <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_training_head">                                
+                <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_training_head,base.group_hr_user">
                 <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
                 <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight" />
                 <button name="tidak_hadir" string="Tidak Hadir" type="object" states="open,pending" class="oe_highlight" />

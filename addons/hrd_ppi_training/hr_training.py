@@ -24,7 +24,7 @@ class bukti(osv.osv):
     _columns={
         'name':fields.binary('Sertifikat'),  
         'employee_id' : fields.many2one('hr.employee','Nama Karyawan'),
-        'train_id':fields.many2one('hr_training.train','Nama Training'),
+        'train_id':fields.many2one('hr_training.train','Nama Pelatihan'),
             }
 bukti()   
 
@@ -138,9 +138,9 @@ class train(osv.osv):
         'job_id' :fields.related('employee_id','job_id',type='many2one',relation='hr.job',string='Jabatan'),
         'department_id' : fields.related('employee_id','department_id',type='many2one',relation='hr.department',string='Departemen',store=True),
         'paket_id': fields.related('analisa_id','paket_id',type='char',relation='hr_training.analisa',string='Paket Pelatihan'),
-        'analisa_id':fields.many2one('hr_training.analisa','Nama Training'),
-        'subject_id':fields.related('analisa_id','subject_id',type='many2one',relation='hr_training.subject',string='Nama Training',store=True),
-        'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Training',store=True), 
+        'analisa_id':fields.many2one('hr_training.analisa','Nama Pelatihan'),
+        'subject_id':fields.related('analisa_id','subject_id',type='many2one',relation='hr_training.subject',string='Nama Pelatihan',store=True),
+        'subject':fields.related('analisa_id','subject',type='char',relation='hr_training.analisa',string='Nama Pelatihan',store=True), 
         'evaluasi_id':fields.one2many('hr_training.evaluasi_training','eval_id','Topik Pelatihan'),
         'rekomendasi_id':fields.many2one('hr_training.rekomendasi_training','Rekomendasi Atasan'),
         'lama' : fields.related('analisa_id','lama',type='char',relation='hr_training.analisa',string='Lama'),
@@ -200,8 +200,8 @@ class employee(osv.osv):
 
     _columns ={
         'train_ids':one2many_mod2('hr_training.train','employee_id', readonly=True), 
-        'non_train' : fields.one2many('hr_non.emp','employee_id','Non Training'),
-        'training_lainya' : fields.one2many('hr.training_lainya','employee_id','Training Lainya'),
+        'non_train' : fields.one2many('hr_non.emp','employee_id','Non Pelatihan'),
+        'training_lainya' : fields.one2many('hr.training_lainya','employee_id','Pelatihan Lainya'),
         'sio_ids' : one2many_mod2('hr.training_sio','employee_id','Sertifikat SIO', readonly = True),
         'sio_id' : fields.one2many('hr.train_keahlian','employee_id','Keahlian Yang Harus Dimiliki'),
         }
@@ -263,7 +263,7 @@ class analisa(osv.osv):
         sio_src = sio_obj.search(cr,uid,[('analisa_id','=',kode)])
         for sio in sio_obj.browse(cr,uid,sio_src):
             sio_obj.write(cr,uid,[sio.id],{'state':state,'status': True})
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         tes = obj.tes
         if tes == 'SIO' :
             for employee in obj.sio_ids :
@@ -289,9 +289,10 @@ class analisa(osv.osv):
     def _get_number_of_days(self, date_from, date_to):
         """Returns a float equals to the timedelta between two dates given as string."""
         #import pdb;pdb.set_trace()
+        import pdb;pdb.set_trace()
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
-        from_dt = datetime.datetime.strptime(date_from, DATETIME_FORMAT)
-        to_dt = datetime.datetime.strptime(date_to, DATETIME_FORMAT)
+        from_dt = datetime.strptime(date_from, DATETIME_FORMAT)
+        to_dt = datetime.strptime(date_to, DATETIME_FORMAT)
         timedelta = to_dt - from_dt
         diff_day = timedelta.days + float(timedelta.seconds) / 86400
         return diff_day              
@@ -311,7 +312,7 @@ class analisa(osv.osv):
         # No date_to set so far: automatically compute one 8 hours later
         if date_from and not date_to:
             #import pdb;pdb.set_trace()
-            date_to_with_delta = datetime.datetime.strptime(date_from, tools.DEFAULT_SERVER_DATETIME_FORMAT) + datetime.timedelta(hours=8)
+            date_to_with_delta = datetime.strptime(date_from, tools.DEFAULT_SERVER_DATETIME_FORMAT) + datetime.timedelta(hours=8)
             result['value']['date_to'] = str(date_to_with_delta)
 
         # Compute and update the number of days
@@ -364,7 +365,7 @@ class analisa(osv.osv):
         'employee_id':fields.many2one('hr.employee','Nama Peserta'),
         'department_id': fields.many2one('hr.department', 'Department'),
         'bulan':fields.selection([('Januari','Januari'),('Februari','Februari'),('Maret','Maret'),('April','April'),('Mei','Mei'),('Juni','Juni'),('Juli','Juli'),('Agustus','Agustus'),('September','September'),('Oktober','Oktober'),('November','November'),('Desember','Desember')],'Bulan'),
-        'tes': fields.selection([('Internal','Internal'),('Eksternal','Eksternal'),('SIO','SIO'),('non_training','Non Training')],'Jenis Training',readonly=True),
+        'tes': fields.selection([('Internal','Internal'),('Eksternal','Eksternal'),('SIO','SIO'),('non_training','Non Training')],'Jenis Pelatihan',readonly=True),
         'presentasi':fields.char('Presentasi Pelatihan',60),
         'no':fields.char('Nomor', 10, readonly=True),
         'paket_id':fields.many2one('hr_training.paket','Paket Pelatihan'),
@@ -436,7 +437,7 @@ class paket(osv.osv):
     _name='hr_training.paket'
     
     _columns={
-        'name':fields.char('Paket Training',35,required=True),  
+        'name':fields.char('Paket Pelatihan',35,required=True),  
         'code':fields.char('Kode',5),
             }
 paket()   
@@ -445,7 +446,7 @@ class subject(osv.osv):
     _name='hr_training.subject'
     
     _columns={
-        'name':fields.char('Nama Training',50,required=True),
+        'name':fields.char('Nama Pelatihan',50,required=True),
         'code':fields.char('Kode',5),
             }
 subject()  
@@ -454,7 +455,7 @@ class rekomendasi_training(osv.osv):
     _name='hr_training.rekomendasi_training'
     
     _columns={
-        'name':fields.char('Rekomendasi Training',50,required=True),  
+        'name':fields.char('Rekomendasi Pelatihan',50,required=True),  
             }
 rekomendasi_training()      
 
@@ -495,7 +496,7 @@ class non_training(osv.osv):
         return super(non_training, self).unlink(cr, uid, ids, context)
 
     _columns = {
-        'id':fields.integer('No Training'),
+        'id':fields.integer('No Pelatihan'),
         'subject_id' : fields.many2one('hr_training.subject','Judul Seminar'),
         'penyelenggara' : fields.char('Penyelanggara'),
         'tanggal' : fields.datetime('Tanggal Mulai'),
@@ -526,7 +527,7 @@ class training_lainya(osv.osv):
 
     _columns ={
         'employee_id' : fields.many2one('hr.employee','Karyawan'),
-        'train' : fields.char('Nama Training'),
+        'train' : fields.char('Nama Pelatihan'),
         'penyelenggara' : fields.char('Penyelenggara'),
         'tgl_mulai' : fields.date("Tanggal Mulai"),
         'tgl_berakhir' : fields.date('Tanggal Berakhir'),
@@ -567,7 +568,7 @@ class sio(osv.osv):
         'berlaku' :fields.date('Masa Berlaku',required=True),
         'nama_sertifikat' : fields.related('analisa_id','nama_sertifikat', type='many2one', readonly=True, relation='sertifikat', string='Sertifikat'),
         'iso' : fields.related('analisa_id','iso', type='many2one', readonly=True, relation='iso', string='Nama SIO'),
-        'analisa_id':fields.many2one('hr_training.analisa','Nama Training'),
+        'analisa_id':fields.many2one('hr_training.analisa','Nama Pelatihan'),
         'link_warning':fields.many2one('warning.schedule'),
         'warning_hari' : fields.integer('Kadaluarsa'),
         'status':fields.boolean('status'),

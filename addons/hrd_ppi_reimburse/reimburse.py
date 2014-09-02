@@ -42,10 +42,19 @@ class reimburse(osv.osv):
         context = dict(context, mail_create_nolog=True)
         name=values['employee_id']
         thn = values['tahun']
+        tipe = values['type']
+        if tipe == 'add' :
+            tot_peng = values['nomin']
         obj = self.pool.get('reimburse')
-        src = obj.search(cr,uid,[('employee_id','=',name),('tahun','=',thn),('state','=','approve2')])
+        src = obj.search(cr,uid,[('type','=', 'remove'),('employee_id','=',name),('tahun','=',thn),('state','=','approve2')])
         for reim in obj.browse(cr,uid,src) :
-            raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
+            if tipe == 'remove':
+                raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
+            total = reim.employee_id.sisa_reimburse_pengobatan
+            if total < tot_peng :
+                raise osv.except_osv(_('Warning!'), _('tunjangan pengobatan anda sudah habis')) 
+        if tipe == 'add' and src == [] :
+            raise osv.except_osv(_('Warning!'), _('Anda tidak memiliki Tunjangan Pengobatan')) 
         return super(reimburse, self).create(cr, uid, values, context=context)
     
     def employe(self, cr, uid,ids,vals,name,context=None):  
@@ -125,9 +134,9 @@ class reimburse(osv.osv):
         'keterangan':fields.char('Keterangan',200),
         'bukti':fields.binary('Bukti File',),
         'state': fields.selection(REIMBURSE_STATES, 'Status', readonly=True, help="Gives the status of the reimburse."),  
-        'type': fields.selection([('remove','Permohonan Reimburse'),('add','Alokasi Reimburse')], 'Tipe Reimburse', required=True, readonly=True, states={'draft':[('readonly',False)], 'verify':[('readonly',False)]}, select=True),  
+        'type': fields.selection([('remove','Alokasi Reimburse'),('add','Permohonan Reimburse')], 'Tipe Reimburse', required=True, readonly=True, states={'draft':[('readonly',False)], 'verify':[('readonly',False)]}, select=True),  
         'parent_id': fields.many2one('reimburse', 'Parent'),      
-        "tahun" : fields.char("Tahun",readonly=True),
+        "tahun" : fields.char("Tahun"),
             }
     _defaults = {
         'employee_id': _employee_get,
@@ -159,7 +168,7 @@ class reimburse(osv.osv):
         x = 1
         y = 1
         year =str(datetime.now().year)
-       # import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         for record in brw:
             #if record.type == 'remove' and record.tahun == year :    
              #   y = 3
@@ -174,8 +183,8 @@ class reimburse(osv.osv):
             raise osv.except_osv(_('Warning!'), _('Anda tidak memiliki Tunjangan Pengobatan')) 
         elif x == 2 :
             raise osv.except_osv(_('Warning!'), _('tunjangan pengobatan anda sudah habis'))
-        elif y == 2 :
-            raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))   
+        #elif y == 2 :
+            #raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))   
         #elif y == 3 :
         #    raise osv.except_osv(_('Warning!'), _('Sedang menunggu Approval management'))            
         return True    

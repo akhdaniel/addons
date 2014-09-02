@@ -4,10 +4,10 @@
 
     <record id="group_hr_dept" model="res.groups">
         <field name="name">HR Admin Department</field>
-        <field name="implied_ids" eval="[(4, ref('base.group_user')),(4, ref('hrd_ppi.group_hr_department'))]"/>  
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),(4, ref('hrd_ppi.group_hr_department')),(4, ref('hrd_ppi.group_hr_user'))]"/>  
         <field name="category_id" ref="base.module_category_human_resources"/>
         <field name="menu_access" eval="[(4, ref('base.menu_crm_case_job_req_main')),
-            (4, ref('hr_recruitment.menu_crm_case_categ0_act_job')),(4, ref('hrd_ppi.hr_menu_recruit')),
+            (4, ref('hrd_ppi.hr_menu_recruit')),
             (4, ref('hrd_overtime.menu_open_ask_overtime')),(4, ref('hrd_overtime.menu_open_ask_overtime_new'))]"/>
     </record>
 
@@ -23,6 +23,17 @@
         <field name="model_id" ref="model_hr_employee"/>
         <field name="domain_force">[(1,'=',1)]</field>
         <field name="groups" eval="[(4,ref('base.group_hr_manager')),(4,ref('group_hr_coo'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="perm_create" eval="False"/>
+    </record> 
+
+    <record id="property_rule_employee_access" model="ir.rule">
+        <field name="name">View Employee</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_unlink" eval="False"/>
@@ -46,9 +57,9 @@
         <field name="domain_force">[('department_id','child_of',[user.dept_related.id])]</field>
         <field name="groups" eval="[(4,ref('group_hr_dept'))]"/>
         <field name="perm_read" eval="True"/>
-        <field name="perm_write" eval="False"/>
-        <field name="perm_unlink" eval="False"/>
-        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_create" eval="True"/>
     </record>
 
 <!--     <record id="property_rule_approval_recruitment" model="ir.rule">
