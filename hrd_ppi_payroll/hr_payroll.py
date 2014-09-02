@@ -376,6 +376,7 @@ class hr_payslip(osv.osv):
                             transport['number_of_days'] += 1.0
                     else :
                         for kon in proyek_many :
+                            #import pdb;pdb.set_trace()
                             tgl_sampai = kon.sampai
                             tgl_mulai = kon.mulai
                             tgl_mulai = datetime.strptime(tgl_mulai,"%Y-%m-%d") 

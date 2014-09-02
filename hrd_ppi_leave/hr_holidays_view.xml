@@ -49,7 +49,7 @@
             <field name="arch" type="xml">
                 <header position="replace">
                 <header>
-                    <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
+                    <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_hr_manager,hrd_ppi.groups_hr_aprove_dep1" class="oe_highlight"/>
                     <button string="Validate" name="second_validate" states="validate1" type="workflow" groups="base.group_hr_manager" class="oe_highlight"/>
                     <button string="Refuse" name="refuse" states="confirm,validate1,validate" type="workflow" groups="base.group_hr_manager"/>
                     <button string="Reset to New" name="set_to_draft" states="refuse" type="object" groups="base.group_hr_user"/>

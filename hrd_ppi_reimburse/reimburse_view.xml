@@ -11,17 +11,17 @@
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        groups="hrd_ppi.group_hr_user" 
+                        groups="hrd_ppi.group_hr_user,base.group_hr_user" 
                         class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_aprove_dep1"
                         class="oe_highlight"  />  
                         
                     <button string="Second Approve" type="workflow"  
                         states="approve" name="signal_approve2"
-                        groups="hrd_ppi.group_hr_manager"
+                        groups="hrd_ppi.group_hr_manager,base.group_hr_manager"
                         class="oe_highlight"  />                          
 
                     <button string="Cancel" type="workflow"  
@@ -41,6 +41,8 @@
                 <sheet>
                 <group>
                 <group>
+                    <field name='type'/>
+                     <field name="tahun"/>
                      <field name="jenis"/>
                      <field name="tanggal"/>
                      <field name="nomin"/>
@@ -67,21 +69,21 @@
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        class="oe_highlight" /> 
+                        class="oe_highlight" groups="base.group_hr_user,hrd_ppi.group_hr_department"/> 
 
-                    <button string="Send" type="object" 
-                         name="reimburse_alloc"/> 
+                    <!--button string="Send" type="object" 
+                         name="reimburse_alloc"/--> 
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        class="oe_highlight"  />  
+                        class="oe_highlight" groups="base.group_hr_manager,hrd_ppi.group_hr_aprove_dep1" />  
                         
                     <button string="Second Approve" type="workflow"  
                         states="approve" name="signal_approve2"
-                        class="oe_highlight"  />                          
+                        class="oe_highlight" groups="base.group_hr_manager" />                          
 
-                    <button string="Cancel" type="workflow"  
-                        states="verify" name="signal_cancel"/>
+                    <!--button string="Cancel" type="workflow"  
+                        states="verify" name="signal_cancel"/-->
                         
                     <button string="Reject" type="workflow"  
                         states="verify" name="signal_reject"/>    
@@ -94,6 +96,7 @@
                 <sheet>
                 <group>
                 <group >
+                    <field name='type'/>
                      <field name="jenis" readonly="1" /> <!-- attrs="{'readonly':[('state','=','draft')]}"/-->
                      <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1" readonly='1'/>
                      <field name="tahun"  attrs="{'readonly': [('state','!=','draft')]}"/>
