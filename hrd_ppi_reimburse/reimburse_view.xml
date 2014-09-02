@@ -268,7 +268,7 @@
 
     <menuitem name="Tunjangan Kesehatan" parent="hr.menu_hr_root" id="menu_reimburse" sequence="15" /> 
     <menuitem action="action_hr_permohonan_reimburse" id="hr_menu_permohonan_reimburse" parent="menu_reimburse" name="Permohonan Tunjangan Kesehatan" /> 
-    <menuitem action="action_hr_alokasi_reimburse" id="hr_menu_alokasi_reimburse" parent="menu_reimburse" name="Alokasi Tunjangan Kesehatan" groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_user"/> 
+    <menuitem action="action_hr_alokasi_reimburse" id="hr_menu_alokasi_reimburse" parent="menu_reimburse" name="Alokasi Tunjangan Kesehatan" groups="base.group_hr_manager,base.group_hr_user"/> 
 
     </data>
 </openerp>
