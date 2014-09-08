@@ -53,6 +53,10 @@ class hr_holidays(osv.osv):
     _description = "Leave"
     _inherit = "hr.holidays"
 
+    def action_draft(self, cr, uid, ids, context=None):
+        obj = self.browse(cr,uid,ids)
+        return self.write(cr,uid,ids,{'state':'confirm'},context=context)
+
     def create(self, cr, uid, values, context=None):
         """ Override to avoid automatic logging of creation """
         if context is None:

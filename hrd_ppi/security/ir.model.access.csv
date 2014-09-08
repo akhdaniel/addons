@@ -14,7 +14,6 @@ access_hr_recruit_bahasa,hr_recruit.bahasa,model_hr_recruit_bahasa,group_hr_user
 access_hr_recruit_rwt_krj,hr_recruit.rwt_krj,model_hr_recruit_rwt_krj,group_hr_user,1,1,1,0
 access_hr_recruit_kon1,hr_recruit.kon1,model_hr_recruit_kon1,group_hr_user,1,1,1,0
 access_hr_recruit_kon2,hr_recruit.kon2,model_hr_recruit_kon2,group_hr_user,1,1,1,0
-access_hr_applicant,hr.applicant,model_hr_applicant,group_hr_user,1,1,1,0
 
 
 access_hr_job_manager,hr.job,model_hr_job,group_hr_manager,1,1,1,1
@@ -54,7 +53,6 @@ access_hr_recruit_bahasa_department,hr_recruit.bahasa_department,model_hr_recrui
 access_hr_recruit_rwt_krj_department,hr_recruit.rwt_krj_department,model_hr_recruit_rwt_krj,group_hr_department,1,0,0,0
 access_hr_recruit_kon1_department,hr_recruit.kon1_department,model_hr_recruit_kon1,group_hr_department,1,0,0,0
 access_hr_recruit_kon2_department,hr_recruit.kon2_department,model_hr_recruit_kon2,group_hr_department,1,0,0,0
-access_hr_applicant_department,hr.applicant,model_hr_applicant,group_hr_department,1,1,0,0
 
 access_hr_job_employee,hr.job,model_hr_job,group_hr_employee,1,0,0,0
 access_hr_recruit_pendidikan_employee,hr_recruit.pendidikan,model_hr_recruit_pendidikan,group_hr_employee,1,0,0,0
@@ -218,8 +216,6 @@ access_hr_title_man,hr.title,model_hr_title,group_hr_manager,1,1,1,1
 
 access_hr_employs_gol_man,hr_employs.gol,model_hr_employs_gol,group_hr_manager,1,1,1,1
 access_hr_employs_gol_user,hr_employs.gol,model_hr_employs_gol,group_hr_user,1,0,0,0
-
-access_hr_applicant_dep,hr.applicant,model_hr_applicant,group_hr_department,1,1,0,0
 
 access_crm_meeting_dep,crm.meeting,model_crm_meeting,group_hr_department,1,0,0,0
 

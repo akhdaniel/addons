@@ -4,7 +4,7 @@ class hr_employee(osv.osv):
     _inherit = "hr.employee"
 
     _columns = {
-        'acc_level': fields.integer('Access Level',readonly=True),
+        'acc_level': fields.integer('Access Level'),
         'dept_related' :fields.many2one('hr.department','Related Department',readonly=True),
         }
 
