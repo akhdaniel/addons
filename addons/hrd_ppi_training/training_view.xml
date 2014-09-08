@@ -102,7 +102,7 @@
                      <field name='pt' attrs="{'invisible': [('tes','!=','SIO')]}"/>
                      <field name="paket_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>
                      <field name="bulan" attrs="{'readonly': [('state','!=', 'draft')]}"/>
-                     <field name="user_id"/>
+                     <field name="user_id"  on_change='onchange_dep(user_id)'/>
                 </group>
                 <group >
                     <field name="department_id"/>                    
