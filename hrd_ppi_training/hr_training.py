@@ -361,6 +361,17 @@ class analisa(osv.osv):
                 obj.unlink(cr, uid, ana.id, context=context)
         return super(analisa, self).unlink(cr, uid, ids, context)
 
+    def onchange_dep(self,cr,uid,ids,user_id,context=None):
+        obj = self.pool.get('hr.employee')
+        src = obj.search(cr,uid,[('user_id','=',user_id)])
+        brw = obj.browse(cr,uid,src)
+        dep = False
+        for department in brw :
+            dep = department.department_id.id
+        return {'value': {
+            'department_id' : dep,
+        }}
+
     _columns= {
         'employee_id':fields.many2one('hr.employee','Nama Peserta'),
         'department_id': fields.many2one('hr.department', 'Department', readonly=True),
@@ -371,7 +382,7 @@ class analisa(osv.osv):
         'paket_id':fields.many2one('hr_training.paket','Paket Pelatihan'),
         'subject_id':fields.many2one('hr_training.subject','Nama Pelatihan',required=True, store=True),
         'penyelenggara':fields.char('Lembaga Penyelenggara',128),
-        'mgt_id':fields.many2one('hr_training.mgt_company','MGT Company'),
+        'mgt_id':fields.many2one('hr_training.mgt_company','MGTonchang Company'),
         'nama':fields.char('Nama Trainer',50,),
         'tanggal':fields.date('Tanggal Penyelenggaraan'),
         'catatan':fields.char('Catatan Umum',60,),
