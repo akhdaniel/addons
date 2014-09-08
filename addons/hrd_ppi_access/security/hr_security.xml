@@ -38,7 +38,18 @@
         <field name="perm_write" eval="False"/>
         <field name="perm_unlink" eval="False"/>
         <field name="perm_create" eval="False"/>
-    </record> 
+    </record>
+
+<!--     <record id="property_rule_employee_access_training" model="ir.rule">
+        <field name="name">View Employee Training</field>
+        <field name="model_id" ref="hrd_ppi_training.model_hr_training_train"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="perm_create" eval="False"/>
+    </record> -->
 
     <record id="property_rule_employee_info_useradmin2" model="ir.rule">
         <field name="name">Useradmin HRD Employee Access</field>
@@ -61,6 +72,33 @@
         <field name="perm_unlink" eval="True"/>
         <field name="perm_create" eval="True"/>
     </record>
+
+    <record id="property_rule_holidays_department" model="ir.rule">
+        <field name="name">Holidays department</field>
+        <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4,ref('group_hr_dept'))]"/>
+    </record>
+
+    <record id="admin_dep_recruitment_filter" model="ir.rule">
+        <field name='name'>Filter Department recruitment</field>
+        <field name="model_id" ref="hrd_ppi.model_hr_job"/>
+        <field name="domain_force">[('department_id','child_of',[user.dept_related.id])]</field>
+        <field name="groups" eval="[(4,ref('group_hr_dept'))]"/>
+    </record>
+
+    <record id="acces_level" model="ir.rule">
+        <field name='name'>Access Level</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="domain_force">[('acc_level','&lt;=',user.acc_level)]</field>
+        <field name="groups" eval="[(4,ref('group_hr_dept'))]"/>
+    </record> 
+<!--     <record id="property_rule_holidays_department_rule" model="ir.rule">
+        <field name="name">Holidays department rule</field>
+        <field name="model_id" ref="hr_holidays.model_hr_holidays"/>
+        <field name="domain_force">[('department_id','child_of',[user.dept_related.id])]</field>
+        <field name="groups" eval="[(4,ref('group_hr_dept'))]"/>
+    </record> -->
 
 <!--     <record id="property_rule_approval_recruitment" model="ir.rule">
         <field name="name">approval recruitment</field>

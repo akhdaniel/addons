@@ -363,7 +363,7 @@ class analisa(osv.osv):
 
     _columns= {
         'employee_id':fields.many2one('hr.employee','Nama Peserta'),
-        'department_id': fields.many2one('hr.department', 'Department'),
+        'department_id': fields.many2one('hr.department', 'Department', readonly=True),
         'bulan':fields.selection([('Januari','Januari'),('Februari','Februari'),('Maret','Maret'),('April','April'),('Mei','Mei'),('Juni','Juni'),('Juli','Juli'),('Agustus','Agustus'),('September','September'),('Oktober','Oktober'),('November','November'),('Desember','Desember')],'Bulan'),
         'tes': fields.selection([('Internal','Internal'),('Eksternal','Eksternal'),('SIO','SIO'),('non_training','Non Training')],'Jenis Pelatihan',readonly=True),
         'presentasi':fields.char('Presentasi Pelatihan',60),
@@ -578,6 +578,7 @@ class sio(osv.osv):
     _defaults = {
         'status' : True,
         'warning_hari' : 100000, 
+        'berlaku': fields.date.context_today,
     }
 
 
