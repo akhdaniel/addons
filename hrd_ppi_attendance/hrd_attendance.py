@@ -73,9 +73,10 @@ class hr_attendance(osv.osv):
 
 	_columns = {
 		"fingerprint_code" : fields.integer('Fingerprint ID', required=True, help="Fingerprint ID"),
-		"binary_action": fields.selection([('1','Sign In'),('0','Sign Out')],'Kehadiran', required=True),
+		"binary_action": fields.selection([('1','Sign In'),('0','Sign Out'),('2','Other')],'Kehadiran', required=True),
 		"no_mesin" : fields.char('No Mesin',size=4, help="Apakah dimport?", required=True),
 		"name_date": fields.char('Date', readonly=True),
+		'action_desc': fields.many2one("hr.action.reason", "Action Reason", help='Specifies the reason for Signing In/Signing Out in case of extra hours.'),
 	}
 
 	_defaults = {
