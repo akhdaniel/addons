@@ -10,7 +10,7 @@
                 <header>                              
                     <button string="Send For Approval" type="object" name='action_submit' attrs="{'invisible': [('states_id','!=','submit')]}" groups="hrd_ppi.group_hr_department,base.group_hr_user"/>
                     <button string='Approval' type='object' name='action_verify' attrs="{'invisible': [('states_id','!=','approval')]}" groups="hrd_ppi.group_hr_aprove_dep1"/>
-                    <button string='Approval' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}" groups="hrd_ppi.group_hr_aprove_coo"/>
+                    <button string='Approval' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}" groups="hrd_ppi.group_hr_aprove_coo,base.group_hr_manager"/>
                     <button string='Cancel' type='object' name='cancel'/>
                     <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}" groups="base.group_hr_user"/>    
                     <!-- <field name='state' widget='statusbar'/>       -->

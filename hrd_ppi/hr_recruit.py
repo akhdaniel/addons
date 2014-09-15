@@ -138,8 +138,9 @@ class permohonan_recruit(osv.osv):
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
         #import pdb;pdb.set_trace()
+        obj_brw = []
+        objk = self.pool.get('hr.sumary_kebutuhan')
         if jenis_per == 'Bulanan' :
-            objk = self.pool.get('hr.sumary_kebutuhan')
             obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
             obj_brw = objk.browse(cr,uid,obj_src)
         elif jenis_per == 'Harian' :

@@ -26,6 +26,7 @@ access_hr_peraturan_tentang_manager,peraturan_tentang_manager,hrd_ppi_training.m
 access_hr_sertifikat_manager,sertifikat_manager,hrd_ppi_training.model_sertifikat,base.group_hr_manager,1,1,1,1
 access_hr_iso_manager,iso_manager,hrd_ppi_training.model_iso,base.group_hr_manager,1,1,1,1
 access_hr_training_sio_manager,hr_training_sio_manager,hrd_ppi_training.model_hr_training_sio,base.group_hr_manager,1,1,1,1
+access_hr_daf_pelamar_manager,hr_daf_pelamar_manager,hrd_ppi.model_hr_daf_pelamar,base.group_hr_manager,1,1,1,1
 
 access_reimburse_hr_user,reimburse_hr_user,hrd_ppi_reimburse.model_reimburse,base.group_hr_user,1,1,1,1
 access_hr_non_emp_hr_user,hr_non_emp_hr_user,hrd_ppi_training.model_hr_non_emp,base.group_hr_user,1,1,1,1
@@ -106,6 +107,36 @@ access_hr_employee_rwt_krj_coo,hr_employee_rwt_krj_coo,hrd_ppi.model_hr_employee
 access_hr_employee_kon1_coo,hr_employee_kon1_coo,hrd_ppi.model_hr_employee_kon1,group_hr_coo,1,0,0,0
 access_hr_employee_kon2_coo,hr_employee_kon2_coo,hrd_ppi.model_hr_employee_kon2,group_hr_coo,1,0,0,0
 access_hr_training_sio_coo,hr_training_sio_coo,hrd_ppi_training.model_hr_training_sio,group_hr_coo,1,0,0,0
+access_hr_contract_coo,hr_contract_coo,hr_contract.model_hr_contract,group_hr_coo,1,0,0,0
+access_hr_contract_proyek_coo,hr_contract_proyek_coo,hrd_ppi.model_hr_contract_proyek,group_hr_coo,1,0,0,0
+access_hr_contract_type_coo,hr_contract_type_coo,hr_contract.model_hr_contract_type,group_hr_coo,1,0,0,0
+access_hr_job_coo,hr_job_coo,hrd_ppi.model_hr_job,group_hr_coo,1,1,0,0
+access_hr_applicant_coo,hr_applicant_coo,hrd_ppi.model_hr_applicant,group_hr_coo,1,0,0,0
+access_hr_recruit_bahasa_coo,hr_recruit_bahasa_coo,hrd_ppi.model_hr_recruit_bahasa,group_hr_coo,1,0,0,0
+access_hr_recruit_kon2_coo,hr_recruit_kon2_coo,hrd_ppi.model_hr_recruit_kon2,group_hr_coo,1,0,0,0
+access_hr_recruit_rwt_krj_coo,hr_recruit_rwt_krj_coo,hrd_ppi.model_hr_recruit_rwt_krj,group_hr_coo,1,0,0,0
+access_hr_applicant_hasil_wawancara_coo,hr_applicant_hasil_wawancara_coo,hrd_ppi.model_hr_applicant_hasil_wawancara,group_hr_coo,1,0,0,0
+access_hr_recruit_suskel2_coo,hr_recruit_suskel2_coo,hrd_ppi.model_hr_recruit_suskel2,group_hr_coo,1,0,0,0
+access_hr_fasilitas_coo,hr_fasilitas_coo,hrd_ppi.model_hr_fasilitas,group_hr_coo,1,0,0,0
+access_hr_recruit_kon1_coo,hr_recruit_kon1_coo,hrd_ppi.model_hr_recruit_kon1,group_hr_coo,1,0,0,0
+access_hr_recruit_rwt_pend_coo,hr_recruit_rwt_pend_coo,hrd_ppi.model_hr_recruit_rwt_pend,group_hr_coo,1,0,0,0
+access_hr_fasilitas2_coo,hr_fasilitas2_coo,hrd_ppi.model_hr_fasilitas2,group_hr_coo,1,0,0,0
+access_hr_survey_coo,hr_survey_coo,hrd_ppi.model_hr_survey,group_hr_coo,1,0,0,0
+access_hr_recruit_suskel1_coo,hr_recruit_suskel1_coo,hrd_ppi.model_hr_recruit_suskel1,group_hr_coo,1,0,0,0
+access_hr_recruit_jurusan_coo,hr_recruit_jurusan_coo,hrd_ppi.model_hr_recruit_jurusan,group_hr_coo,1,0,0,0
+access_hr_survey1_coo,hr_survey1_coo,hrd_ppi.model_hr_survey1,group_hr_coo,1,0,0,0
+access_hr_job_approval_coo,hr_job_approval_coo,hrd_ppi.model_hr_job_approval,group_hr_coo,1,0,0,0
+access_hr_training_analisa_coo,hr_training_analisa_coo,hrd_ppi_training.model_hr_training_analisa,group_hr_coo,1,0,0,0
+access_hr_training_evaluasi_training_coo,hr_training_evaluasi_training_coo,hrd_ppi_training.model_hr_training_evaluasi_training,group_hr_coo,1,0,0,0
+access_hr_training_train_coo,hr_training_train_coo,hrd_ppi_training.model_hr_training_train,group_hr_coo,1,0,0,0
+access_hr_non_training_coo,hr_non_training_coo,hrd_ppi_training.model_hr_non_training,group_hr_coo,1,0,0,0
+access_hr_overtime_coo,hr_overtime_coo,hrd_overtime.model_hr_overtime,group_hr_coo,1,1,0,0
+access_hr_overtime_jam_coo,hr_overtime_jam_coo,hrd_overtime.model_hr_overtime_jam,group_hr_coo,1,0,0,0
+access_hr_jam_coo,hr_jam_coo,hrd_overtime.model_hr_jam,group_hr_coo,1,0,0,0
+access_hr_overtime_type_coo,hr_overtime_type_coo,hrd_overtime.model_hr_overtime_type,group_hr_coo,1,0,0,0
+access_hr_holidays_coo,hr_holidays_coo,hrd_ppi_leave.model_hr_holidays,group_hr_coo,1,0,0,0
+access_hr_attendance_coo,hr_attendance_coo,hrd_overtime.model_hr_attendance,group_hr_coo,1,0,0,0
+access_hr_payslip_coo,hr_payslip_coo,hrd_ppi_payroll.model_hr_payslip,group_hr_coo,1,0,0,0
 
 access_reimburse_dept,reimburse_dept,hrd_ppi_reimburse.model_reimburse,group_hr_dept,1,0,0,0
 access_hr_non_emp_dept,hr_non_emp_dept,hrd_ppi_training.model_hr_non_emp,group_hr_dept,1,0,0,0
@@ -149,4 +180,4 @@ access_hr_peraturan_tentang_hr_dept,peraturan_tentang_hr_dept,hrd_ppi_training.m
 access_hr_sertifikat_hr_dept,sertifikat_hr_dept,hrd_ppi_training.model_sertifikat,group_hr_dept,1,1,1,1
 access_hr_iso_hr_dept,iso_hr_dept,hrd_ppi_training.model_iso,group_hr_dept,1,1,1,1
 access_hr_training_sio_hr_dept,hr_training_sio_hr_dept,hrd_ppi_training.model_hr_training_sio,group_hr_dept,1,1,1,1
-access_hr_applicant_hr_dept,hr_applicant_hr_dept,hrd_ppi.model_hr_applicant,group_hr_dept,0,0,0,0
+access_hr_applicant_hr_dept,hr_applicant_hr_dept,hrd_ppi.model_hr_applicant,group_hr_dept,1,1,0,0

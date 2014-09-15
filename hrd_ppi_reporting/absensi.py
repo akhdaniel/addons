@@ -51,41 +51,50 @@ class hr_absensi_report(osv.Model):
 				SELECT 
 					a.id,
 					a.employee_id,
-					date_part('MONTH', name) as bulan,
-					date_part('YEAR', name) as tahun,
-					case when date_part('day',name) = 1 then 1 end as t1,
-					case when date_part('day',name) = 2 then 1 end as t2,
-					case when date_part('day',name) = 3 then 1 end as t3,
-					case when date_part('day',name) = 4 then 1 end as t4,
-					case when date_part('day',name) = 5 then 1 end as t5,
-					case when date_part('day',name) = 6 then 1 end as t6,
-					case when date_part('day',name) = 7 then 1 end as t7,
-					case when date_part('day',name) = 8 then 1 end as t8,
-					case when date_part('day',name) = 9 then 1 end as t9,
-					case when date_part('day',name) = 10 then 1 end as t10,
-					case when date_part('day',name) = 11 then 1 end as t11,
-					case when date_part('day',name) = 12 then 1 end as t12,
-					case when date_part('day',name) = 13 then 1 end as t13,
-					case when date_part('day',name) = 14 then 1 end as t14,
-					case when date_part('day',name) = 15 then 1 end as t15,
-					case when date_part('day',name) = 16 then 1 end as t16,
-					case when date_part('day',name) = 17 then 1 end as t17,
-					case when date_part('day',name) = 18 then 1 end as t18,
-					case when date_part('day',name) = 19 then 1 end as t19,
-					case when date_part('day',name) = 20 then 1 end as t20,
-					case when date_part('day',name) = 21 then 1 end as t21,
-					case when date_part('day',name) = 22 then 1 end as t22,
-					case when date_part('day',name) = 23 then 1 end as t23,
-					case when date_part('day',name) = 24 then 1 end as t24,
-					case when date_part('day',name) = 25 then 1 end as t25,
-					case when date_part('day',name) = 26 then 1 end as t26,
-					case when date_part('day',name) = 27 then 1 end as t27,
-					case when date_part('day',name) = 28 then 1 end as t28,
-					case when date_part('day',name) = 29 then 1 end as t29,
-					case when date_part('day',name) = 30 then 1 end as t30,
-					case when date_part('day',name) = 31 then 1 end as t31
+					date_part('MONTH', a.name) as bulan,
+					date_part('YEAR', a.name) as tahun,
+					case when date_part('day',a.name) = 1 then 1 else case when 1 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t1,
+					case when date_part('day',a.name) = 2 then 1 else case when 2 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t2,
+					case when date_part('day',a.name) = 3 then 1 else case when 3 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t3,
+					case when date_part('day',a.name) = 4 then 1 else case when 4 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t4,
+					case when date_part('day',a.name) = 5 then 1 else case when 5 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t5,
+					case when date_part('day',a.name) = 6 then 1 else case when 6 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t6,
+					case when date_part('day',a.name) = 7 then 1 else case when 7 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t7,
+					case when date_part('day',a.name) = 8 then 1 else case when 8 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t8,
+					case when date_part('day',a.name) = 9 then 1 else case when 9 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t9,
+					case when date_part('day',a.name) = 10 then 1 else case when 10 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t10,
+					case when date_part('day',a.name) = 11 then 1 else case when 11 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t11,
+					case when date_part('day',a.name) = 12 then 1 else case when 12 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t12,
+					case when date_part('day',a.name) = 13 then 1 else case when 13 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t13,
+					case when date_part('day',a.name) = 14 then 1 else case when 14 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t14,
+					case when date_part('day',a.name) = 15 then 1 else case when 15 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t15,
+					case when date_part('day',a.name) = 16 then 1 else case when 16 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t16,
+					case when date_part('day',a.name) = 17 then 1 else case when 17 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t17,
+					case when date_part('day',a.name) = 18 then 1 else case when 18 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t18,
+					case when date_part('day',a.name) = 19 then 1 else case when 19 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t19,
+					case when date_part('day',a.name) = 20 then 1 else case when 20 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t20,
+					case when date_part('day',a.name) = 21 then 1 else case when 21 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t21,
+					case when date_part('day',a.name) = 22 then 1 else case when 22 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t22,
+					case when date_part('day',a.name) = 23 then 1 else case when 23 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t23,
+					case when date_part('day',a.name) = 24 then 1 else case when 24 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t24,
+					case when date_part('day',a.name) = 25 then 1 else case when 25 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t25,
+					case when date_part('day',a.name) = 26 then 1 else case when 26 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t26,
+					case when date_part('day',a.name) = 27 then 1 else case when 27 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t27,
+					case when date_part('day',a.name) = 28 then 1 else case when 28 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t28,
+					case when date_part('day',a.name) = 29 then 1 else case when 29 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t29,
+					case when date_part('day',a.name) = 30 then 1 else case when 30 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t30,
+					case when date_part('day',a.name) = 31 then 1 else case when 31 between date_part('day',date_from) and date_part('day',date_to) then 2 end end as t31
 				FROM
 					hr_attendance a
+				LEFT JOIN
+					(SELECT
+						employee_id,
+						date_to,
+						date_from
+					FROM
+						hr_holidays
+					WHERE type='remove' AND state = 'validate') h
+				ON a.employee_id = h.employee_id  AND a.name ::DATE BETWEEN h.date_from ::DATE AND h.date_to ::DATE
 				WHERE (action='sign_in' OR action is NULL)
 		)""")
 

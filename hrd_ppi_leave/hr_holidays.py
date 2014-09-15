@@ -143,7 +143,7 @@ class hr_holidays(osv.osv):
                         wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
                         wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
                         wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
-        return True    
+        return True   
 
     _columns = {
         'bln_libur_id':fields.many2one('hr.bln_libur',''),
