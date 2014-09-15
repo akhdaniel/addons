@@ -67,7 +67,7 @@
                             <page string="General">
                                 <field name="overtime_type_id"/>
                                 <field name='overtime_type'/>
-                                <field name="employee_id" required="1"/>
+                                <field name="employee_id" on_change="onchange_dep1(employee_id)" required="1"/>
                                 <field name="department_id"/>
                                 <newline/>
                                 <field name="date_from" on_change="onchange_date_from(date_to, date_from)" required="1"/>
@@ -75,10 +75,11 @@
                                 <field name="number_of_hours_temp"/>
                                 <field name="jam_lembur"/>
                                 <field name='total_jam'/>
+                                <field name='users_id'/>
                                 <newline/>
                                 <field name="manager_id"/>
                                 <field name="manager_id2"/>
-                                <separator string="Reasons" colspan="4"/>
+                                <separator string="Status" colspan="4"/>
                                 <field name="notes" nolabel="1" colspan="4"/>
                                 <newline/>
                                 <field name="state" colspan="2"/>
@@ -103,7 +104,7 @@
             <field name="arch" type="xml">
                 <tree colors="red:state in ('refuse');blue:state in (' draft');black:state in ('confirm','validate','validate1')" string="Overtime Summary">
                     <field name="employee_id"/>
-                    <field name="department_id" invisible="1"/>
+                    <field name="department_id"/>
                     <field name="name"/>
                     <field name="overtime_type_id"/>
                     <field name="number_of_hours" string="Number of hours" sum='Number of hours'/>

@@ -371,7 +371,7 @@ class hr_payslip(osv.osv):
                     proyek_many = contract.proyek
                     if proyek_many == [] :
                         if real_working_hours_on_day >= 4 :    
-                            uang_makan_proyek['number_of_days'] += 1.0
+                            uang_makan['number_of_days'] += 1.0
                         if real_working_hours_on_day >= 0.000000000000001 : 
                             transport['number_of_days'] += 1.0
                     else :

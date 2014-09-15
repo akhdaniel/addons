@@ -41,16 +41,16 @@
                 <sheet>
                 <group>
                 <group>
-                    <field name='type'/>
-                     <field name="tahun"/>
-                     <field name="jenis"/>
-                     <field name="tanggal"/>
-                     <field name="nomin"/>
+                    <field name='type' invisible="1"/>
+                     <field name="tahun" invisible="1"/>
+                     <field name="jenis" attrs="{'readonly': [('state','!=','draft')]}"/>
+                     <field name="tanggal" attrs="{'readonly': [('state','!=','draft')]}"/>
+                     <field name="nomin" attrs="{'readonly': [('state','!=','draft')]}"/>
                 </group>
                 <group>
-                    <field name="employee_id"/>
+                    <field name="employee_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="department_id"/>
-                    <field name="bukti"/>  
+                    <field name="bukti" attrs="{'readonly': [('state','!=','draft')]}"/>  
                      <field name="keterangan"/>                                      
                 </group>    
                  </group>
@@ -96,16 +96,16 @@
                 <sheet>
                 <group>
                 <group >
-                    <field name='type'/>
+                    <field name='type' invisible="1"/>
                      <field name="jenis" readonly="1" /> <!-- attrs="{'readonly':[('state','=','draft')]}"/-->
                      <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1" readonly='1'/>
-                     <field name="tahun"  attrs="{'readonly': [('state','!=','draft')]}"/>
+                     <field name="tahun" invisible="1"/>
                      <field name="employee_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                 </group>
                 <group >
                     
-                    <field name="department_id" attrs="{'readonly': [('state','!=','draft')]}"/>/>
-                    <field name="keterangan"  attrs="{'readonly': [('state','!=','draft')]}"/>/>                                      
+                    <field name="department_id"/>
+                    <field name="keterangan"  attrs="{'readonly': [('state','!=','draft')]}"/>                                    
                 </group>    
                  </group>
                  </sheet>

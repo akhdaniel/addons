@@ -91,6 +91,17 @@ class hr_overtime(osv.osv):
             result[hol.id] = hol.number_of_hours_temp         
         return result
 
+    def onchange_dep1(self,cr,uid,ids,employee_id,context=None):
+        obj = self.pool.get('hr.employee')
+        src = obj.search(cr,uid,[('id','=',employee_id)])
+        brw = obj.browse(cr,uid,src)
+        dep = False
+        for department in brw :
+            dep = department.department_id.id
+        return {'value': {
+            'department_id' : dep,
+        }}
+
     _columns = {
         'name': fields.char('Description', required=True, size=64),
         'state': fields.selection([('draft', 'Draft'), ('confirm', 'Waiting Approval'), ('refuse', 'Refused'), 
@@ -98,6 +109,7 @@ class hr_overtime(osv.osv):
             'State', readonly=True, help='When the overtim request is created the state is \'Draft\'.\n It is confirmed by the user and request is sent to admin, the state is \'Waiting Approval\'.\
             If the admin accepts it, the state is \'Approved\'. If it is refused, the state is \'Refused\'.'),
         'user_id':fields.related('employee_id', 'user_id', type='many2one', relation='res.users', string='User', store=True),
+        'users_id':fields.many2one('res.users', 'Creator','Masukan User ID Anda',readonly=True),
         'date_from': fields.datetime('Mulai Lembur dari', readonly=True, states={'draft':[('readonly',False)]}),
         'date_to': fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
         'employee_id': fields.many2one('hr.employee', "Karyawan", select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
@@ -120,7 +132,7 @@ class hr_overtime(osv.osv):
     _defaults = {
         'employee_id': _employee_get,
         'state': 'draft',
-        'user_id': lambda obj, cr, uid, context: uid,
+        'users_id': lambda obj, cr, uid, context: uid,
     }
     _sql_constraints = [
         ('date_check', "CHECK ( number_of_hours_temp > 0 )", "The number of hours must be greater than 0 !"),
