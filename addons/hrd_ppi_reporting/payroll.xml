@@ -63,7 +63,7 @@
        </record>
 
 <!-- Menu Items -->
-        <menuitem name="Payroll" id="menu_payslip_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting" groups="base.group_hr_manager,base.group_hr_user"/>
+        <menuitem name="Payroll" id="menu_payslip_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting"/>
         <menuitem name="Transfer Bank List" id="menu_payslip_trsfr_bnk_lst" action="trsfr_bnk_lst_report_act" parent="menu_payslip_report_ppi"/>
 
 
