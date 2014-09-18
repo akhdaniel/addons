@@ -75,5 +75,54 @@
 		</record>
 
 
+
+		<!-- record work center-->
+		<record id="mrp_workcenter_cutting" model="mrp.workcenter">
+			<field name="name">CUTTING</field>
+			<field name="resource_type">user</field>
+			<field name="code">CT</field>
+		</record>		
+
+		<record id="mrp_workcenter_makloon" model="mrp.workcenter">
+			<field name="name">MAKLOON</field>
+			<field name="resource_type">user</field>
+			<field name="code">MK</field>
+		</record>		
+		<record id="mrp_workcenter_acc" model="mrp.workcenter">
+			<field name="name">ACCESSORIES</field>
+			<field name="resource_type">user</field>
+			<field name="code">ACC</field>
+		</record>		
+
+		<!-- mrp.routing -->
+		<record id="mrp_routing_baju" model="mrp.routing">
+			<field name="name">BAJU</field>
+			<field name="code">BAJU</field>
+		</record>
+		<record id="mrp_routing_workcenter_cutting" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Cutting</field>
+			<field name="sequence">10</field>
+			<field name="workcenter_id" ref="mrp_workcenter_cutting"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_acc" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Accessories</field>
+			<field name="sequence">20</field>
+			<field name="workcenter_id" ref="mrp_workcenter_acc"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_makloon" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Makloon</field>
+			<field name="sequence">30</field>
+			<field name="workcenter_id" ref="mrp_workcenter_makloon"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+
     </data>
 </openerp>
