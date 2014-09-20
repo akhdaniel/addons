@@ -1,0 +1,104 @@
+ <openerp>
+    <data>   
+		<record id="action_lph_list" model="ir.actions.act_window">
+			<field name="name">List LPH</field>
+			<field name="res_model">vit_dist_payment.lph</field>
+			<field name="view_mode">tree,form,calendar</field>
+			<field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a LPH
+              </p>				
+				<p>Click tombol create to create new LPH</p>
+			</field>
+		</record>
+
+        <record id="view_lph_tree" model="ir.ui.view">
+            <field name="name">vit_dist_payment_lph_tree</field>
+            <field name="model">vit_dist_payment.lph</field>
+            <field name="arch" type="xml">
+            	<tree string="list lph">
+	                <field name="name"/>
+	                <field name="date"/>       
+	                <field name="user_id"/>       
+	                <field name="based_route_id"/>       
+	                <field name="state"/>   
+	            </tree>    
+            </field>
+        </record>
+
+        <record id="view_lph_form" model="ir.ui.view">
+            <field name="name">vit_dist_payment_lph_form</field>
+            <field name="model">vit_dist_payment.lph</field>
+            <field name="arch" type="xml">
+            	<form string="lph form" version="7.0">
+
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+						 	 states="draft" />
+						<button string="Finished" type="object" name="action_done" class="oe_highlight"
+						 	 states="open" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	 states="open" />
+            			<field name="state" widget="statusbar" />
+            		</header>
+
+            		<sheet>
+            			<h1>
+				            <field name="name" readonly="1"/>
+				        </h1>
+
+			            <group>
+			            	<group>
+				                <field name="date"/>       
+				                <field name="user_id"/>       
+				            </group>
+				            <group>
+				                <field name="based_route_id"/>       
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<page string="Invoices">
+					            <field name="lph_line_ids">
+					            	<tree string="Invoices">
+						                <field name="number"/>       
+						                <field name="partner_id"/>       
+						                <field name="date_invoice"/>       
+						                <field name="date_due"/>       
+						                <field name="amount_untaxed"/>       
+						                <field name="amount_tax"/>       
+						                <field name="amount_total"/>       
+						                <field name="residual"/>       
+						                <field name="state"/>       
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+        <!-- menu LPH -->
+		<menuitem id="lph"
+			 action="action_lph_list"
+			 name="LPH"
+			 sequence="20"
+			 parent="account.menu_finance_receivables"/>
+
+        <!-- Sequences for LPH -->
+        <record id="seq_type_lph" model="ir.sequence.type">
+            <field name="name">LPH</field>
+            <field name="code">lph</field>
+        </record>
+
+        <record id="seq_sj" model="ir.sequence">
+            <field name="name">LPH</field>
+            <field name="code">lph</field>
+            <field name="prefix">LPH/%(y)s/%(month)s/</field>
+            <field name="padding">5</field>
+        </record>
+
+
+    </data>
+</openerp>
