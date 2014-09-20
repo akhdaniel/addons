@@ -16,7 +16,7 @@
             <field name="name">vit_dist_payment_lph_tree</field>
             <field name="model">vit_dist_payment.lph</field>
             <field name="arch" type="xml">
-            	<tree string="list lph">
+            	<tree string="list lph" colors="grey:state=='done'; blue:state=='draft'">
 	                <field name="name"/>
 	                <field name="date"/>       
 	                <field name="user_id"/>       
@@ -78,6 +78,52 @@
 			    </form>
             </field>
         </record>
+
+
+		<!-- ini definisi search lph -->
+        <record id="view_lph_filter" model="ir.ui.view">
+            <field name="name">lph.filter</field>
+            <field name="model">vit_dist_payment.lph</field>
+            <field name="arch" type="xml">
+                <search string="Search LPH">
+
+                    <filter icon="terp-mail-message-new" 
+                        string="Draft" 
+                    	 name="draft" domain="[('state','=','draft')]"/>
+                    <filter icon="terp-mail-message-new" 
+                        string="In Progress" 
+                    	 name="in_progress" domain="[('state','=','open')]"/>
+                    <filter icon="terp-mail-message-new" 
+                        string="Done" 
+                    	 name="done" domain="[('state','=','done')]"/>
+
+                    <separator/>
+                    
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="date"/>
+                    <field name="based_route_id"/>
+                    
+                    <group expand="1" string="Group By...">
+                        <filter string="Salesman" 
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'user_id'}"/>
+                        <filter string="Status" 
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'state'}"/>
+                        <filter string="Date" 
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'date'}"/>
+                        <filter string="Base Route" 
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'based_route_id'}"/>
+
+                    </group>                                        
+
+                </search>
+            </field>
+        </record>
+
 
         <!-- menu LPH -->
 		<menuitem id="lph"
