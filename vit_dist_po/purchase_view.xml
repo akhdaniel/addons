@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="seq_create_po" model="ir.sequence.type">
+            <field name="name">NoBukti</field>
+            <field name="code">purchase.order.seq</field>
+        </record>
+        <record id="seq_c_po" model="ir.sequence">
+            <field name="name">NoBukti</field>
+            <field name="code">purchase.order.seq</field>
+            <field name="prefix"></field>
+            <field name="padding">7</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="purchase_order_form_custom" model="ir.ui.view">
+            <field name="name">purchase.order.form.custom</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <form string="Purchase Order" version="7.0" position="replace">
+                    <form string="Purchase Order" version="7.0">
+                        <header>
+                            <button name="wkf_send_rfq" states="draft" string="Send by Email" type="object" context="{'send_rfq':True}" class="oe_highlight"/>
+                            <button name="wkf_send_rfq" states="sent" string="Send by Email" type="object" context="{'send_rfq':True}"/>
+                            <button name="print_quotation" string="Print" type="object" states="draft" class="oe_highlight" groups="base.group_user"/>
+                            <button name="print_quotation" string="Print" type="object" states="sent" groups="base.group_user"/>
+                            <button name="purchase_confirm" states="draft" string="Confirm Order"/>
+                            <button name="purchase_confirm" states="sent" string="Confirm Order" class="oe_highlight"/>
+                            <button name="wkf_send_rfq" states="confirmed" string="Resend Purchase Order" type="object" class="oe_highlight"/>
+                            <button name="action_cancel" states="approved,except_picking,except_invoice" string="Cancel Order" type="object" />
+                            <button name="picking_ok" states="except_picking" string="Manually Corrected"/>
+                            <button name="invoice_ok" states="except_invoice" string="Manually Corrected"/>
+                            <button name="purchase_approve" states="confirmed" string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager"/>
+                            <button name="view_picking" string="Receive Products" type="object" attrs="{'invisible': ['|', ('shipped','=',True), ('state','!=', 'approved')]}" class="oe_highlight"/>
+                            <button name="view_invoice" string="Receive Invoice" type="object" attrs="{'invisible': ['|', ('invoice_method','=','picking'), '|', ('state','!=', 'approved'), ('invoiced','=',True) ]}" class="oe_highlight"/>
+                            <button name="action_cancel_draft" states="cancel,sent,confirmed" string="Set to Draft" type="object" />
+                            <button name="purchase_cancel" states="draft,confirmed,sent" string="Cancel Order"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,sent,approved,done" statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue"}' readonly="1"/>
+                        </header>
+                        <div class="oe_title">
+                            <h1>
+                                <label string="Request for Quotation " attrs="{'invisible': [('state','not in',('draft','sent'))]}"/>
+                                <label string="Purchase Order " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
+                                <field name="name" class="oe_inline" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group >
+                            <group col="8">
+                                <group>
+                                    <label for="partner_code" string="Supplier"/>
+                                    <div>
+                                        <field name="partner_code" class="oe_inline"/>  -  
+                                        <field name="partner_id" class="oe_inline" on_change="onchange_partner_id(partner_id,date_order,location_id)" context=" {'search_default_supplier':1,'default_supplier':1,'default_customer':0}" domain="[('supplier','=',True)]"/>
+                                    </div>
+                                    <field name="location_id" on_change="onchange_partner_id(partner_id,date_order,location_id)" groups="stock.group_locations"/>
+                                </group>
+                                <group>
+                                    <field name="partner_ref"/>
+                                    <field domain="[('type','=','purchase')]" name="pricelist_id" groups="product.group_purchase_pricelist" on_change="onchange_pricelist(pricelist_id, context)"/>
+                                    <field name="currency_id" invisible='1'/>
+                                    <field name="journal_id" invisible='1'/>
+                                    <field name="date_order" attrs="{'readonly': True }"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="origin" attrs="{'invisible': [('origin','=',False)]}"/>
+                                <field name="warehouse_id" attrs="{'invisible':True}" on_change="onchange_warehouse_id(warehouse_id)" widget="selection" groups="stock.group_locations"/>
+                                <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                            </group>
+                            <group col="8" class="oe_subtotal_footer">
+                                <field name="r1" class="oe_inline"/>
+                                <field name="percent_r1" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4)"/> 
+                                <field name="volume_r1" class="oe_inline"/> 
+                                <field name="weight_r1" class="oe_inline"/> 
+                                <newline/>
+                                <field name="r2" class="oe_inline"/> <field name="percent_r2" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r2" class="oe_inline"/> <field name="weight_r2" class="oe_inline"/><newline/>
+                                <field name="r3" class="oe_inline"/> <field name="percent_r3" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r3" class="oe_inline"/> <field name="weight_r3" class="oe_inline"/><newline/>
+                                <field name="r4" class="oe_inline"/> <field name="percent_r4" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r4" class="oe_inline"/> <field name="weight_r4" class="oe_inline"/><newline/>
+                            </group>
+                            <group>
+                            </group>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="volume_tot"/>
+                                <field name="weight_tot"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Purchase Order">
+                                <field name="order_line">
+                                    <tree string="Purchase Order Lines" editable="botom">
+                                        <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
+                                        <field name="barcode" readonly="1"/>
+                                        <field name="int_code" readonly="1"/>
+                                        <field name="name" invisible="1"/>
+                                        <field name="date_planned" readonly="1" invisible="1"/>
+                                        <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                        <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
+                                        <field name="suggested_order" readonly="1"/>                    
+                                        <field name="adjustment" on_change="onchange_adj(adjustment, suggested_order,product_uom,price_unit)"/>
+                                        <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
+                                        <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
+                                        <field name="price_unit" readonly="1"/>
+                                        <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]" invisible="1"/>
+                                        <field name="price_subtotal"/>                
+                                        <field name="prod_weight" readonly="1"/>             
+                                        <field name="prod_volume" readonly="1"/>
+                                        <field name="avgMT" readonly="1"/>
+                                        <field name="avgGT" readonly="1"/>
+                                        <field name="bufMT" readonly="1"/>
+                                        <field name="bufGT" readonly="1"/>
+                                        <field name="sales_3m" readonly="1"/>                   
+                                        <field name="stock_current" readonly="1"/>                  
+                                        <field name="ending_inv" readonly="1"/>                 
+                                        <field name="in_transit" readonly="1"/>                 
+                                        <field name="stock_cover" readonly="1"/>                    
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline">
+                                        <label for="amount_total"/>
+                                        <button name="button_dummy"
+                                            states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                    </div>
+                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <div class="oe_clear"/>
+                                <field name="notes" class="oe_inline" placeholder="Keterangan"/>
+                            </page>
+                            <page string="Incoming Shipments &amp; Invoices">
+                                <group>
+                                    <group>
+                                        <field name="dest_address_id" string="Customer Address" on_change="onchange_dest_address_id(dest_address_id)" groups="stock.group_locations"/>
+                                        <field name="minimum_planned_date"/>
+                                        <field name="shipped" groups="base.group_no_one"/>
+                                    </group>
+                                    <group>
+                                        <field name="invoice_method"/>
+                                        <field name="invoiced"/>
+                                        <field name="payment_term_id" widget="selection"/>
+                                        <field name="fiscal_position" attrs="{'readonly': [('invoiced','=', True)]}" />
+                                        <!-- We do not need these fields anymore, the information is in open chatter -->
+                                        <field name="validator" groups="base.group_no_one"/>
+                                        <field name="date_approve" groups="base.group_no_one"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    </form>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_split_in_lots_custom" model="ir.ui.view">
+            <field name="name">Split in Serial Numbers Inherit</field>
+            <field name="model">stock.move.split</field>
+            <field name="inherit_id" ref="stock.view_split_in_lots"/>
+            <field name="arch" type="xml">
+                <field name="prodlot_id" position="after">
+                    <field name="expire"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
