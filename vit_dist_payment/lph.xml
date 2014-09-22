@@ -20,7 +20,8 @@
 	                <field name="name"/>
 	                <field name="date"/>       
 	                <field name="user_id"/>       
-	                <field name="based_route_id"/>       
+                    <field name="based_route_id"/>       
+	                <field name="total"/>       
 	                <field name="state"/>   
 	            </tree>    
             </field>
@@ -35,8 +36,8 @@
             		<header>
 						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
 						 	 states="draft" />
-						<button string="Finished" type="object" name="action_done" class="oe_highlight"
-						 	 states="open" />
+						<!--button string="Finished" type="object" name="action_done" class="oe_highlight"
+						 	 states="open" FINISHNYA DARI PAYMENT /-->
 						<button string="Cancel" type="object" name="action_draft"
 						 	 states="open" />
             			<field name="state" widget="statusbar" />
@@ -53,7 +54,7 @@
 				                <field name="user_id"/>       
 				            </group>
 				            <group>
-				                <field name="based_route_id"/>       
+				                <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)"/>       
 				            </group>
 				        </group>
 
@@ -65,15 +66,22 @@
 						                <field name="partner_id"/>       
 						                <field name="date_invoice"/>       
 						                <field name="date_due"/>       
+                                        <field name="state"/>       
 						                <field name="amount_untaxed"/>       
 						                <field name="amount_tax"/>       
 						                <field name="amount_total"/>       
 						                <field name="residual"/>       
-						                <field name="state"/>       
 						            </tree>
 						        </field>
 						    </page>
 						</notebook>
+
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="total" widget="monetary"/>
+                        </group>
+                        <div class="oe_clear">
+                        </div>
+
 					</sheet>
 			    </form>
             </field>
