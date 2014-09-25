@@ -22,6 +22,7 @@ Manage :
     'data': [
         'lph.xml',
         'invoice.xml',
+        'voucher.xml'
     ],
     'active': False,
     'installable': True,

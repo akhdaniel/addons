@@ -21,7 +21,9 @@
 	                <field name="date"/>       
 	                <field name="user_id"/>       
                     <field name="based_route_id"/>       
-	                <field name="total"/>       
+                    <field name="voucher_id"/>       
+                    <field name="total"/>       
+	                <field name="balance"/>       
 	                <field name="state"/>   
 	            </tree>    
             </field>
@@ -36,8 +38,8 @@
             		<header>
 						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
 						 	 states="draft" />
-						<!--button string="Finished" type="object" name="action_done" class="oe_highlight"
-						 	 states="open" FINISHNYA DARI PAYMENT /-->
+						<button string="Finished" type="object" name="action_done" class="oe_highlight"
+						 	 states="open" />
 						<button string="Cancel" type="object" name="action_draft"
 						 	 states="open" />
             			<field name="state" widget="statusbar" />
@@ -55,13 +57,16 @@
 				            </group>
 				            <group>
 				                <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)"/>       
+                                <field name="voucher_id" 
+                                    domain="[('lph_ids','=',False),('state', '=','done')]"/>       
+                                <field name="voucher_total" widget="monetary"/>       
 				            </group>
 				        </group>
 
 			            <notebook>
 			            	<page string="Invoices">
 					            <field name="lph_line_ids">
-					            	<tree string="Invoices">
+					            	<tree string="Invoices" colors="blue:state=='open'; grey:state=='paid'">
 						                <field name="number"/>       
 						                <field name="partner_id"/>       
 						                <field name="date_invoice"/>       
@@ -78,6 +83,8 @@
 
                         <group class="oe_subtotal_footer oe_right">
                             <field name="total" widget="monetary"/>
+                            <field name="total_paid" widget="monetary"/>
+                            <field name="balance" widget="monetary"/>
                         </group>
                         <div class="oe_clear">
                         </div>
