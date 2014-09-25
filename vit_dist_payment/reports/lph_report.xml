@@ -1,7 +1,7 @@
 <openerp>
     <data>
 		<report id="lph_report" 
-			 string="Print LPH Report" 
+			 string="Print LPH" 
 			 model="vit_dist_payment.lph" 
 			 name="lph.report" 
 			 rml="vit_dist_payment/reports/lph_report.rml" 
