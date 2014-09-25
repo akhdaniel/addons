@@ -1,0 +1,13 @@
+<openerp>
+    <data>
+		<report id="voucher_report" 
+			 string="Print Voucher" 
+			 model="vit_dist_payment.voucher" 
+			 name="voucher.report" 
+			 rml="vit_dist_payment/reports/voucher_report.rml" 
+		/>
+		
+
+    </data>
+</openerp>
+
