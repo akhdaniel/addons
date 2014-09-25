@@ -3,23 +3,48 @@ from openerp.osv import fields,osv
 import openerp.addons.product.product
 import openerp.addons.decimal_precision as dp
 import time
+from openerp.tools.translate import _
 
 class lph(osv.osv):
 	_name 		= "vit_dist_payment.lph"
 
-	def hitung(self,lph_line_ids):
+	def hitung_total(self,lph_line_ids):
 		total = 0.0
 		for lphl in lph_line_ids:
 			total = total + lphl.amount_total 
 		return total 
 
+	def hitung_balance(self,lph_line_ids):
+		total = 0.0
+		for lphl in lph_line_ids:
+			total = total + lphl.residual 
+		return total 
+
+	def hitung_paid(self,lph_line_ids):
+		total = 0.0
+		for lphl in lph_line_ids:
+			total = total + ( lphl.amount_total - lphl.residual )
+		return total 
+
 	def _calc_total(self, cr, uid, ids, field, arg, context=None):
 		results = {}
 		lphs = self.browse(cr, uid, ids, context=context) 
-
 		for lph in lphs:
-			results[lph.id] = self.hitung(lph.lph_line_ids)
+			results[lph.id] = self.hitung_total(lph.lph_line_ids)
+		return results
 
+	def _calc_balance(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		lphs = self.browse(cr, uid, ids, context=context)
+		for lph in lphs:
+			results[lph.id] = self.hitung_balance(lph.lph_line_ids)
+		return results
+
+	def _calc_paid(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		lphs = self.browse(cr, uid, ids, context=context)
+		for lph in lphs:
+			results[lph.id] = self.hitung_paid(lph.lph_line_ids)
 		return results
 
 	_columns 	= {
@@ -36,6 +61,8 @@ class lph(osv.osv):
 			domain="[('state','=','open')]",
 			required=True),
         'total'           : fields.function(_calc_total, type="float", string="Total"),
+        'balance'         : fields.function(_calc_balance, type="float", string="Balance"),
+        'total_paid'      : fields.function(_calc_paid, type="float", string="Total Paid"),
         'state'           : fields.selection([
             ('draft', 'Draft'),
             ('open', 'On Progress'),
@@ -43,6 +70,9 @@ class lph(osv.osv):
             ], 'Status', readonly=True, 
             help="Gives the status of the quotation or sales order.", 
             select=True),
+       	'voucher_id'	  : fields.many2one('vit_dist_payment.voucher', 'Voucher'),
+       	'voucher_total'	  : fields.related('voucher_id', 'total' , type="float", 
+       		relation="vit_dist_payment.voucher", string="Voucher Total", store=True)
 	}
 
 	def create(self, cr, uid, vals, context=None):
@@ -83,6 +113,10 @@ class lph(osv.osv):
 		return self.write(cr,uid,ids,{'state':'open'},context=context)
 
 	def action_done(self,cr,uid,ids,context=None):
+		lph = self.browse(cr, uid, ids[0], context=context )
+		if lph.voucher_total != lph.total_paid:
+			raise osv.except_osv(_('Validate Error'),_("Amount Voucher is not equal to LPH Total Paid ") ) 
+
 		return self.write(cr,uid,ids,{'state':'done'},context=context)
 
 	def action_draft(self,cr,uid,ids,context=None):
