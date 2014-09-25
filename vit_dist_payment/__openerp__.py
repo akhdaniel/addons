@@ -22,7 +22,8 @@ Manage :
     'data': [
         'lph.xml',
         'invoice.xml',
-        'voucher.xml'
+        'voucher.xml',
+        "report/lph_session.xml",        
     ],
     'active': False,
     'installable': True,
