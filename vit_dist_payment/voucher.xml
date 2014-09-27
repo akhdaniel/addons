@@ -1,0 +1,112 @@
+ <openerp>
+    <data>
+
+        <record id="view_voucher_tree" model="ir.ui.view">
+            <field name="name">vit_dist_payment_voucher_tree</field>
+            <field name="model">vit_dist_payment.voucher</field>
+            <field name="arch" type="xml">
+                <tree string="list Voucher" colors="grey:state=='done'; blue:state=='draft'">
+                    <field name="name"/>
+                    <field name="received_from"/>
+                    <field name="date"/>
+                    <field name="total"/>
+                    <field name="state"/>
+                    <field name="has_lph"/>
+                </tree>    
+            </field>
+        </record>
+
+        <record id="view_voucher_form" model="ir.ui.view">
+            <field name="name">vit_dist_payment_voucher_form</field>
+            <field name="model">vit_dist_payment.voucher</field>
+            <field name="arch" type="xml">
+                <form string="Voucher Form" version="7.0">
+                    <header>
+                        <button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+                              states="draft" />
+                        <button string="Finish" type="object" name="action_done" class="oe_highlight"
+                              states="open" />
+                        <button string="Cancel" type="object" name="action_draft"
+                              states="open" />
+
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="received_from"/>       
+                                <field name="date"/>       
+                            </group>
+                            <group>
+                                <field name="has_lph"/>       
+                                <field name="state"/>       
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Lines">
+                                <field name="voucher_line_ids">
+                                    <tree string="Lines" editable="bottom">
+                                        <field name="account_id"/>       
+                                        <field name="description"/>       
+                                        <field name="amount"/>       
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="LPH">
+                                <field name="lph_ids" readonly="1" />       
+                            </page>
+
+
+                        </notebook>
+
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="total" widget="monetary"/>       
+                        </group>
+                        <div class="oe_clear">
+                        </div>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Sequences for LPH -->
+        <record id="seq_type_lph" model="ir.sequence.type">
+            <field name="name">Receipt Voucher</field>
+            <field name="code">voucher</field>
+        </record>
+
+        <record id="seq_lph" model="ir.sequence">
+            <field name="name">Receipt Voucher</field>
+            <field name="code">voucher</field>
+            <field name="prefix">V/%(y)s/%(month)s/</field>
+            <field name="padding">5</field>
+        </record>
+
+        <!-- action list voucher -->
+        <record id="action_voucher_list" model="ir.actions.act_window">
+            <field name="name">List Voucher</field>
+            <field name="res_model">vit_dist_payment.voucher</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a voucher
+              </p>                
+                <p>Click tombol create to create new voucher</p>
+            </field>
+        </record>
+
+        <!-- menu voucher -->
+        <menuitem id="voucher"
+             action="action_voucher_list"
+             name="Receipt Voucher"
+             sequence="21"
+             parent="account.menu_finance_receivables"/>
+
+    </data>
+</openerp>
