@@ -58,9 +58,6 @@
 
 
 		<!-- menu items -->
-	    <menuitem id="set_tax_numbering" 
-    	 parent="account.menu_finance_receivables" name="Set Tax Numbering" sequence="50" 
-    	 action="set_tax_numbering_wizard" />
 	    <menuitem id="tax_numbering" 
     	 parent="account.next_id_27" name="Tax Numbering" sequence="50" 
     	 action="action_tax_numbering_list" />

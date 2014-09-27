@@ -84,10 +84,9 @@ class set_tax_numbering_wizard(osv.TransientModel):
 		for wz_inv in wizard.invoice_ids:
 			invoice_obj.write(cr, uid, wz_inv.invoice_id.id, {'tax_number': wz_inv.tax_number}, context)
 			last_tax_number =  wz_inv.tax_number # prefix.number
-			last_tax_number =  wz_inv.tax_number # prefix.number
 
 		############################################################################
-		# update tax numbering current
+		# update tax numbering to the current number 
 		# ambil nomor terakhir, hilangkan prefix
 		# set current_no = nomor terakhir + 1
 		############################################################################
