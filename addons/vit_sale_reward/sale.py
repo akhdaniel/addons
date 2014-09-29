@@ -92,7 +92,7 @@ class sale_order(osv.osv):
 
 		point             = so.point or 0
 		pr_obj            = self.pool.get('vit_sale_reward.partner_reward')
-		pr_obj.point_trx(cr, uid, so.partner_id.id, point, 'out', '%s - CANCEL' % (so.name), context=context)
+		pr_obj.point_trx(cr, uid, so.partner_id.id, -point, 'out', '%s - CANCEL' % (so.name), context=context)
 
 
 		return res
