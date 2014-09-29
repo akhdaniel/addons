@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="view_partner_tree_point" model="ir.ui.view">
+		    <field name="name">res_partner_tree_point</field>
+		    <field name="model">res.partner</field>
+		    <field name="inherit_id" ref="base.view_partner_tree"/>
+		    <field name="arch" type="xml">
+	            <field name="email" position="after">
+	            	<field name="point" />
+	            </field>
+		    </field>
+		</record>
+
+        <record id="view_partner_form_point" model="ir.ui.view">
+            <field name="name">res.partner.form.point</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<page string="Internal Notes" position="after">
+            		<page string="Reward Point Transactions">
+			            <field name="partner_reward_ids">
+			            	<tree string="Reward Point Transactions">
+				            	<field name="date" />
+				            	<field name="type" />
+				            	<field name="point" />
+				            	<field name="source" />
+			            	</tree>
+			            </field>
+
+
+			        </page>
+                </page>            	
+
+			</field>
+		</record>
+
+	</data>
+</openerp>
