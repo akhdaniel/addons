@@ -13,7 +13,7 @@ class master_gift(osv.osv):
         'name'       : fields.char('Name', required=True),
         'product_id' : fields.many2one('product.product','Bonus Product', required=True),
         'qty'        : fields.float('Bonus Qty', digits_compute=dp.get_precision('Product Unit of Measure'), required=True),
-        'multiple'   : fields.boolean('Multiples'),
+        'multiple'   : fields.boolean('Multiple Apply'),
         'is_active'  : fields.boolean('Active?'),
         'date_from'  : fields.date('Start Date'),
         'date_to'    : fields.date('End Date'),
@@ -25,6 +25,7 @@ class master_gift(osv.osv):
     _defaults = {
         'qty'        : 1,
         'multiple'   : True,
+        'is_active'  : True,
         'date_from'  : lambda *a : time.strftime("%Y-%m-%d") ,
         'date_to'    : lambda *a : time.strftime("%Y-%m-%d") ,
     }  
