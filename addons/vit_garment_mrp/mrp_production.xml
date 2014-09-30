@@ -1,0 +1,43 @@
+<openerp>
+	<data>
+        <record id="mrp_production_form_view_grade_b" model="ir.ui.view">
+            <field name="name">mrp.production.form.grade.b</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+            	<page string="Finished Products" position="after">
+            		<page string="Grade B/ Waste">
+            			<group>
+		        			<group string="Grade B Products">
+		            			<field name="move_created_ids3" nolabel="1" options="{'reload_on_button': true}">
+		            				<tree string="Grade B Products">
+		            					<field name="product_id" />
+		            					<field name="product_qty" />
+		            					<field name="product_uom" />
+                                        <field name="state" invisible="1"/>
+		            				</tree>
+		            			</field>
+		            		</group>
+		            		<group string="Waste Products">
+		            			<field name="move_created_ids4" nolabel="1" options="{'reload_on_button': true}">
+		            				<tree string="Waste Products">
+		            					<field name="product_id" />
+		            					<field name="product_qty" />
+		            					<field name="product_uom" />
+                                        <field name="state" invisible="1"/>
+		            				</tree>
+		            			</field>
+		            		</group>
+		            	</group>
+            		</page>
+            	</page>
+
+            	<xpath expr="//form/sheet/notebook/page[@string='Consumed Products']/group/group/field[@name='move_lines']/tree/field[@name='product_qty']"
+            		 position="after">
+                    <field name="product_qty_onhand"/>
+            	</xpath>
+
+            </field>
+        </record>
+	</data>
+</openerp>
