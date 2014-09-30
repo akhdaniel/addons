@@ -14,18 +14,23 @@
 							</h1>
 						</div>
 			            <group>
-			            	<group>
+			            	<group string="Reward Setting">
 				                <field name="so_total"/>       
 				                <field name="point"/>       
-				                <field name="amount"/>       
+				                <field name="amount"/>  
+				                <field name="multiple"/>       
+				            </group>
+
+				            <group string="Accounting">
+				                <field name="journal_id"/>       
 				                <field name="debit_account_id"/>       
 				                <field name="credit_account_id"/>       
 				            </group>
-				            <group>
+				            
+				            <group string="Validation">
 				                <field name="date_from"/>       
 				                <field name="date_to"/>       
 				                <field name="is_active"/>       
-				                <field name="multiple"/>       
 				            </group>
 				        </group>
 
