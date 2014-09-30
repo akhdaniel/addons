@@ -16,11 +16,14 @@ class master_reward(osv.osv):
         'so_total'   : fields.float('Total Sale Order', required=True),
         'point'      : fields.float('Reward Point', required=True),
         'amount'     : fields.float('Amount', required=True),
-        'multiple'   : fields.boolean('Multiple Apply'),        
+        'multiple'   : fields.boolean('Multiple Apply'),   
+        'journal_id' : fields.many2one('account.journal', 'Journal', required=True),     
         'credit_account_id'    : fields.many2one('account.account', 'Credit Account', 
-        required=True, domain="[('type','!=','view')]" ),
+            required=True,
+            domain="[('type','!=','view')]" ),
         'debit_account_id'     : fields.many2one('account.account', 'Debit Account', 
-        required=True, domain="[('type','!=','view')]"),
+            required=True,
+            domain="[('type','!=','view')]"),
     }
 
     _defaults = {

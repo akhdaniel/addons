@@ -1,6 +1,7 @@
 from openerp import tools
 from openerp.osv import fields,osv
 import openerp.addons.decimal_precision as dp
+from openerp import netsvc
 import time
 import logging
 from openerp.tools.translate import _
@@ -70,7 +71,44 @@ class sale_order(osv.osv):
 			#########################################################################
 			# create account move utk point
 			#########################################################################
+			if context==None:
+				context={}
+			context['account_period_prefer_normal']= True
+			period_id 	= self.pool.get('account.period').find(cr,uid, so.date_order, context)[0]
+
+
+			debit = {
+				'date'       : so.date_order,
+				'name'       : so.name,
+				'ref'        : 'Reward Point %s' % (so.name),
+				'partner_id' : so.partner_id.id,
+				'account_id' : reward.debit_account_id.id,
+				'debit'      : reward.amount * point ,
+				'credit'     : 0.0 
+			}
+			credit = {
+				'date'       : so.date_order,
+				'name'       : so.name,
+				'ref'        : 'Reward Point %s' % (so.name),
+				'partner_id' : so.partner_id.id,
+				'account_id' : reward.credit_account_id.id,
+				'debit'      : 0.0 ,
+				'credit'     : reward.amount * point ,
+			}
+
+			lines = [(0,0,debit), (0,0,credit)]
+
 			am_obj            = self.pool.get('account.move')
+			am_data = {
+				'journal_id'   : reward.journal_id.id,
+				'date'         : so.date_order,
+				'ref'          : 'Reward Point %s' % (so.name),
+				'period_id'    : period_id,
+				'line_id'      : lines ,
+			}
+
+			am_id = am_obj.create(cr, uid, am_data, context=context)
+			am_obj.button_validate(cr, uid, [am_id], context=context)
 
 
 
