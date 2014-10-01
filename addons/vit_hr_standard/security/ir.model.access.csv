@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hr_employee_anak,hr.employee.anak,model_hr_employee_anak,group_hr_recruitment,1,1,1,1
+access_hr_employee_agama,hr.employee.agama,model_hr_employee_agama,group_hr_recruitment,1,1,1,1
+access_hr_employee_pendidikan,hr.employee.pendidikan,model_hr_employee_pendidikan,group_hr_recruitment,1,1,1,1
+access_hr_employee_sekolah,hr.employee.sekolah,model_hr_employee_sekolah,group_hr_recruitment,1,1,1,1
+access_hr_employee_jurusan,hr.employee.jurusan,model_hr_employee_jurusan,group_hr_recruitment,1,1,1,1
+access_hr_applicant_action,hr.applicant.action,model_hr_applicant_action,group_hr_recruitment,1,1,1,1
+
+access_hr_employee_status,hr.employee.status,model_hr_employee_status,group_hr_recruitment,1,1,1,1
+access_hr_employee_ktp,hr.employee.ktp,model_hr_employee_ktp,group_hr_recruitment,1,1,1,1
+access_hr_employee_npwp,hr.employee.npwp,model_hr_employee_npwp,group_hr_recruitment,1,1,1,1
+access_hr_employee_jamsostek,hr.employee.jamsostek,model_hr_employee_jamsostek,group_hr_recruitment,1,1,1,1
+access_hr_employee_insurance,hr.employee.insurance,model_hr_employee_insurance,group_hr_recruitment,1,1,1,1

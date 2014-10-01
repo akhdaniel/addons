@@ -1,0 +1,46 @@
+<openerp>
+    <data>
+
+        <record model="ir.actions.act_window" id="ktp_list_action">
+            <field name="name">KTP</field>
+            <field name="res_model">hr.employee.ktp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Sorry... No record now...</p></field>
+        </record>
+
+        <record model="ir.actions.act_window" id="npwp_list_action">
+            <field name="name">NPWP</field>
+            <field name="res_model">hr.employee.npwp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Sorry... No record now...</p></field>
+        </record>
+
+        <record model="ir.actions.act_window" id="jamsostek_list_action">
+            <field name="name">Jamsostek</field>
+            <field name="res_model">hr.employee.jamsostek</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Sorry... No record now...</p></field>
+        </record>
+
+        <record model="ir.actions.act_window" id="insurance_list_action">
+            <field name="name">Insurance</field>
+            <field name="res_model">hr.employee.insurance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Sorry... No record now...</p></field>
+        </record>
+
+    <menuitem action="ktp_list_action" parent="hr.menu_hr_configuration" name="Identifications" id="master_ktp" sequence="10" groups="base.group_hr_user"/>
+    <menuitem action="npwp_list_action" parent="hr.menu_hr_configuration" name="NPWP" id="master_npwp" sequence="11" groups="base.group_hr_user"/>
+    <menuitem action="jamsostek_list_action" parent="hr.menu_hr_configuration" name="Jamsostek" id="master_jamsostek" sequence="12" groups="base.group_hr_user"/>
+    <menuitem action="insurance_list_action" parent="hr.menu_hr_configuration" name="Insurance" id="master_insurance" sequence="13" groups="base.group_hr_user"/>            
+
+    </data>    
+</openerp>
