@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	<record id="group_sales_salesman" model="res.groups">
+		<field name="name">Sales / Salesman</field>
+	</record>
+	
+</data>
+</openerp>

@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+        <record model="ir.ui.view" id="custom_fleet">
+            <field name="name">Kendaraan</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_form"/>
+            <field name="arch" type="xml">
+                <field name="color" position="after">
+                        <field name="volume"/>
+                        <field name="tonase"/>
+                </field>   
+                <field name="driver_id" position="replace">
+                        <field name="driver_id2"/>
+                </field>  
+            </field>
+        </record>  
+
+
+<!-- Surat Jalan -->
+        <record id="view_sj_tree" model="ir.ui.view">
+            <field name="name">Picking List</field>
+            <field name="model">surat.jalan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Picking List">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="based_route_id"/>                    
+                    <field name="car_id"/>
+                    <field name="location_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_sj_form" model="ir.ui.view">
+            <field name="name">Picking list</field>
+            <field name="model">surat.jalan</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">\
+                <form string="Picking List" version="7.0">
+                <header> 
+<!--                     <button
+                        name="compute_discount"
+                        string="Save &amp; Sent "
+                        type="object" states="draft"
+                        class="oe_highlight"/>   -->                                             
+                    <button string="Deliver" type="object" 
+                        states="draft" name="action_on_deliver"
+                        groups="stock.group_stock_user,stock.group_stock_manager" 
+                        class="oe_highlight" />                 
+                                             
+                    <button string="Delivered" type="object" 
+                        states="on_deliver" name="action_return"
+                        groups="stock.group_stock_user,stock.group_stock_manager" 
+                        class="oe_highlight" />
+
+
+                    <field name="state" widget="statusbar"/>
+
+                </header>
+                <sheet>
+<!--                 <form string="Surat Jalan"> -->
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="based_route_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="location_id"/>                     
+                        </group>
+                        <group >
+                            
+                            <field name="car_id" on_change="onchange_volume(car_id)" attrs="{'readonly': [('state','!=','draft')]}" /> 
+                            <field name="driver_id2" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="volume" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="weight" attrs="{'readonly': [('state','!=','draft')]}"/> 
+                            <field name="vol_in_list" invisible="True"/>                     
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Invoice List">
+                            <field view_mode="tree,form" name="inv_ids" nolabel="1"/>
+
+                        </page>
+                    </notebook>            
+<!--                 </form> -->  
+                </sheet>  
+            </form>
+            </field>
+        </record>        
+
+        <record id="action_sj" model="ir.actions.act_window">
+            <field name="name">Picking List</field>
+            <field name="res_model">surat.jalan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sj_tree"/>
+<!--             <field name="search_view_id" ref="view_partner_pricelist_items_search"/> -->
+        </record>
+
+        <menuitem action="action_sj" id="menu_action_sj" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/>      
+
+
+        <!-- Sequences for picking list -->
+        <record id="seq_type_sj" model="ir.sequence.type">
+            <field name="name">Picking List</field>
+            <field name="code">surat.jalan</field>
+        </record>
+
+        <record id="seq_sj" model="ir.sequence">
+            <field name="name">Picking List</field>
+            <field name="code">surat.jalan</field>
+            <field name="prefix">SJ </field>
+            <field name="padding">5</field>
+        </record>
+
+            
+
+    </data>
+</openerp>

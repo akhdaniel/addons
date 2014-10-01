@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="workflow" id="wkf_sj">
+            <field name="name">Picking List</field>
+            <field name="osv">surat.jalan</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!--nodes recruitment-->
+        <record model="workflow.activity" id="act_draft">
+            <field name="wkf_id" ref="wkf_sj"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_on_deliver">
+            <field name="wkf_id" ref="wkf_sj"/>
+            <field name="name">on_deliver</field>
+            <field name="kind">function</field>
+            <field name="action">action_on_deliver()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_return">
+            <field name="wkf_id" ref="wkf_sj"/>
+            <field name="flow_stop">True</field>
+            <field name="name">return</field>
+            <field name="kind">function</field>
+            <field name="action">action_return()</field>
+        </record>
+                
+
+        <!--Transition-->
+        <record model="workflow.transition" id="t_draft">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_on_deliver"/>
+            <field name="signal">signal_on_deliver</field>
+        </record>
+        
+        
+        <record model="workflow.transition" id="t_on_deliver">
+            <field name="act_from" ref="act_on_deliver"/>
+            <field name="act_to" ref="act_return"/>
+            <field name="signal">signal_return</field>
+        </record>
+        
+
+    </data> 
+</openerp>
