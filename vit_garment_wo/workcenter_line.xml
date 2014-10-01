@@ -94,6 +94,18 @@
 			<field name="code">ACC</field>
 		</record>		
 
+		<record id="mrp_workcenter_inspect" model="mrp.workcenter">
+			<field name="name">INSPECT</field>
+			<field name="resource_type">user</field>
+			<field name="code">INS</field>
+		</record>		
+
+		<record id="mrp_workcenter_packing" model="mrp.workcenter">
+			<field name="name">PACKING</field>
+			<field name="resource_type">user</field>
+			<field name="code">PAK</field>
+		</record>		
+
 		<!-- mrp.routing -->
 		<record id="mrp_routing_baju" model="mrp.routing">
 			<field name="name">BAJU</field>
@@ -123,6 +135,21 @@
 			<field name="cycle_nbr">1</field>
 			<field name="hour_nbr">1</field>
 		</record>		
-
+		<record id="mrp_routing_workcenter_inspect" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Inspect</field>
+			<field name="sequence">40</field>
+			<field name="workcenter_id" ref="mrp_workcenter_inspect"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_packing" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Packing</field>
+			<field name="sequence">50</field>
+			<field name="workcenter_id" ref="mrp_workcenter_packing"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
     </data>
 </openerp>
