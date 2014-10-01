@@ -1,0 +1,14 @@
+<openerp>
+	<data>
+        <record id="view_purchase_requisition_form_filter" model="ir.ui.view">
+            <field name="name">purchase_requisition.view_purchase_requisition_form.filter</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_id']" position="attributes">
+	        		<attribute name="domain">[('purchase_ok','=',True)]</attribute>
+	        	</xpath>	       
+            </field>
+        </record>
+	</data>
+</openerp>
