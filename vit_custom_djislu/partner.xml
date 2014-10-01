@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="product_custom _field_partner">
+            <field name="name">Product Custom DJI SLU Partner</field>
+            <!-- <field name="priority" eval="30"/> -->
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <page string="Accounting" position="after">
+                    <page string="Limit Hutang Per Supplier" attrs="{'invisible': [('customer','=',False)]}">
+                        <field name="limit_ids" mode="tree">
+                            <tree string="List Hutang Per Supplier" editable="bottom">
+                                <field name="partner_id"/>
+                                <field name="limit"/>
+                                <field name="payable"/>                                
+                                <field name="type_id"/>
+                                <field name="employee_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+<!--                 <page string="Accounting" position="after">
+                    <page string="Alamat Lainnya">
+                        <group>
+                        <field name="address_2"/>
+                        <field name="address_3" />
+                        </group>
+                    </page>
+                    
+                </page>   -->              
+
+                     <field name="category_id" position="replace">
+                        <field name="category_id" widget="many2many_tags" placeholder="Category"/>
+                        <field name="type_partner_id" placeholder="Grup Harga"/>
+                    </field>     
+
+<!--                     <field name="comment" position="replace">
+                        <group colspan="4">
+                        <field name="address_2"/>
+                        </group>
+                        <group colspan="4">
+                        <field name="address_3" />
+                        </group>
+
+                    </field>    -->
+
+                    <field name="name" position="before">
+                        <field name="code" placeholder="Kode Partner"/>
+                    </field>   
+<!--                     <field name="property_payment_term" position="replace">
+                        <field name="cust_term_id"/>
+                    </field>        
+                    <field name="property_supplier_payment_term" position="replace">
+                        <field name="supp_term_id"/> 
+                    </field> -->     
+                    <field name="website" position="after">
+                        <field name="tax_id"/>
+                        <field name="name_tax"/>
+                        <field name="address_tax"/>
+                        <field name="date_tax"/>
+
+                    </field>         
+                     <field name="active" position="after">
+                        <field name="trouble"/>
+                        <field name="pareto"/>
+                    </field>   
+                     <field name="date" position="after">
+                        <field name="property_stock_customer" domain="[('usage','=','internal')]" string="Location"/>
+                       <!--  <field name="location_id"/> -->
+                        <field name="based_route_id"/>
+                    </field>
+                    <field name="ref" position="before">
+                        <field name="address_2" />
+                    </field>                                            
+                     <field name="active" position="before">
+                        <group colspan="2">
+                        <field name="address_3" />
+                        </group>
+                    </field>                           
+                     <field name="email" position="after">
+                        <group colspan="2">
+                            <field name="longitude"/>
+                            <field name="latitude"/>
+                        </group>
+                    </field> 
+                     <field name="credit_limit" position="after">
+                        <field name="one_bill_sys"/>
+                    </field>
+
+            </field>        
+        </record>
+
+
+        <!-- Tree View  -->
+
+        <record model="ir.ui.view" id="product_custom _field_partner_tree">
+            <field name="name">Product Custom DJI SLU Partner Tree</field>
+            <!-- <field name="priority" eval="30"/> -->
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                     <field name="name" position="before">
+                        <field name="code"/>
+                    </field> 
+                     <field name="name" position="after">
+                        <field name="street"/>
+                        <field name="city"/>
+                        <field name="type_partner_id"/>
+                        <field name="category_id"/>
+                        
+                        <field name="trouble" invisible="1"/>
+                        <field name="pareto" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                    </field>
+                    <field name="email" position="replace"/>  
+
+            </field>        
+        </record>
+
+
+        <record id="view_channel_tree" model="ir.ui.view">
+            <field name="name">Grup Harga</field>
+            <field name="model">master.type.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Master Grup Harga" editable="top">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+<!--                     <field name="date"/> -->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_partner_channel" model="ir.actions.act_window">
+            <field name="name">Master Grup Harga</field>
+            <field name="res_model">master.type.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_channel_tree"/>
+<!--             <field name="search_view_id" ref="view_partner_pricelist_items_search"/> -->
+        </record>
+
+        <menuitem action="action_partner_channel"
+            name="Master Grup Harga"
+            id="menu_action_channel"
+            parent="base.menu_base_config"/>
+
+ <!-- call plan menu -->   
+
+        <record id="view_master_call_plan" model="ir.ui.view">
+            <field name="name">Call Plan</field>
+            <field name="model">master.call.plan</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Call Plan">
+                    <field name="based_route_id"/>
+                    <field name="day"/>
+                    <field name="employee_id"/>
+                    
+                        <notebook colspan="4">
+                            <page string="Customer">                    
+                                <field view_mode="tree" name='partner_ids' nolabel="1">
+                                    <tree editable="top">
+                                        <field name="no"/>
+                                        <field name='partner_id'/>
+                                    </tree> 
+                                </field> 
+                            </page>
+                        </notebook>                                 
+                </form>
+            </field>
+        </record>
+
+        <record id="view_master_call_plan_tree" model="ir.ui.view">
+            <field name="name">Call Plan</field>
+            <field name="model">master.call.plan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Call Plan">
+                    <field name="based_route_id"/>
+                    <field name="day"/>
+                    <field name="employee_id"/>  
+                    <field name="partner_ids" string="Jumlah Customer"/>                             
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_call_plan_search" model="ir.ui.view">
+            <field name="name">call plan search</field>
+            <field name="model">master.call.plan</field>
+            <field name="arch" type="xml">
+                <search string="Pricelist items">
+                    <filter string="Salesman" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Hari" context="{'group_by': 'day'}"/>
+                    <filter string="Rute" context="{'group_by': 'based_route_id'}"/>
+                </search>
+            </field>
+        </record>  
+
+        <record id="action_master_call_plan" model="ir.actions.act_window">
+            <field name="name">Call Plan</field>
+            <field name="res_model">master.call.plan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_master_call_plan_tree"/>
+            <field name="search_view_id" ref="view_call_plan_search"/>
+        </record>
+
+        <menuitem action="action_master_call_plan" id="menu_action_master_call_plan" parent="base.menu_base_config"/>    
+
+
+ <!-- Target Salesman -->   
+
+        <record id="view_master_target_salesman" model="ir.ui.view">
+            <field name="name">Target Salesman</field>
+            <field name="model">master.target.salesman</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Target Salesman">
+                    <group colspan="2">
+                    <field name="no"/>
+                    </group>
+                    <group colspan="2">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    </group>
+                    
+                        <notebook colspan="4">
+                            <page string="Target Sales">                    
+                                <field view_mode="tree" name='target_ids' nolabel="1">
+                                    <tree editable="top">
+                                        <field name="employee_id"/>
+                                        <field name='partner_id'/>
+                                        <field name='sales'/>
+                                        <field name='ao'/>
+                                        <field name='el'/>
+                                    </tree> 
+                                </field> 
+                            </page>
+                        </notebook>                                 
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_master_target_salesman_tree" model="ir.ui.view">
+            <field name="name">Target Salesman</field>
+            <field name="model">master.target.salesman</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Target Salesman">
+                    <field name="no"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                               
+                </tree>
+            </field>
+        </record>
+
+<!--         <record id="view_call_plan_search" model="ir.ui.view">
+            <field name="name">call plan search</field>
+            <field name="model">master.target.salesman</field>
+            <field name="arch" type="xml">
+                <search string="Pricelist items">
+                    <filter string="Salesman" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Hari" context="{'group_by': 'day'}"/>
+                    <filter string="Cycle" context="{'group_by': 'jadwal'}"/>
+                    <filter string="detail Cycle" context="{'group_by': 'jadwal2'}"/>
+                </search>
+            </field>
+        </record>   -->
+
+        <record id="action_master_target_salesman" model="ir.actions.act_window">
+            <field name="name">Target Salesman</field>
+            <field name="res_model">master.target.salesman</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_master_target_salesman_tree"/>
+<!--             <field name="search_view_id" ref="view_call_plan_search"/> -->
+        </record>
+
+        <menuitem action="action_master_target_salesman" id="menu_action_master_target_salesman" parent="base.menu_base_config"/>  
+
+<!-- Based Route  -->
+        <record id="view_master_based_route_tree" model="ir.ui.view">
+            <field name="name">Based Route</field>
+            <field name="model">master.based.route</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Based Route" editable="bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                               
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_master_based_route" model="ir.actions.act_window">
+            <field name="name">Based Route</field>
+            <field name="res_model">master.based.route</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_master_based_route_tree"/>
+<!--             <field name="search_view_id" ref="view_call_plan_search"/> -->
+        </record>
+
+        <menuitem action="action_master_based_route" id="manu_action_master_based_route" parent="base.menu_base_config"/>
+
+<!-- type salesmen  -->
+        <record id="view_type_salesman_tree" model="ir.ui.view">
+            <field name="name">Type Salesman</field>
+            <field name="model">type.salesman</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Type Salesman" editable="bottom">
+                    <field name="no"/>
+                    <field name="name"/>
+                               
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_type_salesman" model="ir.actions.act_window">
+            <field name="name">Type Salesman</field>
+            <field name="res_model">type.salesman</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_type_salesman_tree"/>
+<!--             <field name="search_view_id" ref="view_call_plan_search"/> -->
+        </record>
+
+        <menuitem action="action_type_salesman" id="manu_action_type_salesman" parent="base.menu_base_config"/>
+    </data>
+</openerp>
