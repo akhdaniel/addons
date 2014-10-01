@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<openerp>
+    <data> 
+	    <record model="ir.ui.view" id="view_purchase_requisition_form_multi">
+	        <field name="name">view.purchase.requisition.form.multi</field>
+	        <field name="model">purchase.requisition</field>
+	        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+	        <field name="priority" eval="17"/>
+	        <field name="arch" type="xml">
+                
+                <button name="tender_in_progress" position="after">
+                	<button name="tender_open" states="draft" string="Send to Purchasing" type="object" class="oe_highlight"/>
+                </button>
+                <button name="tender_in_progress" position="replace"/>
+                	<!--button name="tender_in_progress" states="open" 
+                		groups="purchase_requisition.group_purchase_requisition_manager"
+                		string="Send to Suppliers" type="object" class="oe_highlight"/>
+                </button-->
+
+	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_uom_id']" position="attributes">
+	        		<attribute name="string">Unit of Measure</attribute>
+	        		<attribute name="options">{'limit': 10, 'create': false, 'create_edit': false}</attribute>
+	        	</xpath>
+	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_id']" position="attributes">
+	        		<attribute name="options">{'limit': 10, 'create': false, 'create_edit': false}</attribute>
+	        	</xpath>	        	
+	            <xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_uom_id']" position="after">
+	            	<field name="partner_ids" widget="many2many_tags" domain="[('is_company','=',True)]" options="{'limit': 10, 'create': false, 'create_edit': false}" style="width: 10%%"/>
+	           	 	<field name="state"/>
+	           	 	<button name="%(action_purchase_order_info)d" string="Purchase Orders" type="action" icon="gtk-justify-fill"/>	                                
+				</xpath>
+	            <!--xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/form[@string='Products']/group/field[@name='product_uom_id']" position="attributes">
+	        		<attribute name="string">Unit of Measure</attribute>
+	        	</xpath-->
+	        		        		                   
+	            <!--xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/form[@string='Products']/group" position="after">
+	            	<group>
+	            	<notebook>
+                    	<page string="Purchase Orders">
+	            			<field name="po_line_ids" readonly="True">
+                         		<tree>
+                          			<field name="order_id"/>
+                          			<field name="partner_id"/>
+                          			<field name="state"/>
+                         		</tree>
+                    		</field>
+                    	</page>
+                	</notebook>
+                	</group>
+	            </xpath--> 
+	            
+	            <!--xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/form[@string='Products']/group/field[@name='product_uom_id']" position="after">
+	            	<field name="partner_ids" widget="many2many_tags" domain="[('is_company','=',True)]"  options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+	            	<field name="id" invisible="1"/>
+	            	<field name="selected_flag" on_change="selected_flag_onchange(selected_flag)" groups="purchase.group_purchase_user"/>
+	            </xpath-->	
+	            
+	            <xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_id']" position="before">
+	            	<field name="id" invisible="1"/>
+	            	<field name="selected_flag" on_change="selected_flag_onchange(selected_flag)"  nolabel="1" groups="purchase.group_purchase_user"/>
+	            </xpath>	 	                           
+	            
+	            <xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']" position="before">
+	        		<field name="all_selected" on_change="all_selected_onchange(all_selected,line_ids)" groups="purchase.group_purchase_user"/>
+	        		<label for="all_selected" string="Select All"  groups="purchase.group_purchase_user"/>
+	        	</xpath>
+	        	<!--xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/form[@string='Products']/group/field[@name='product_uom_id']" position="attributes">
+	            	<attribute name="options">{'limit': 10, 'create': false, 'create_edit': false}</attribute>
+	            </xpath-->
+	            
+	            <!--xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/form[@string='Products']/group/field[@name='product_id']" position="attributes">
+	            	<attribute name="on_change">onchange_product_id(product_id,product_uom_id)</attribute>
+	            	<attribute name="options">{'limit': 10, 'create': false, 'create_edit': false}</attribute>
+	            </xpath-->
+	        	
+	        	<!--xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']" position="attributes">   
+	        		<attribute name="editable" eval="False"/>     		 
+	        	</xpath-->
+	        	
+	        		
+	        	<!-- Quotation Table -->
+	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/separator[@string='Quotations']" position="attributes">   
+	        		<attribute name="invisible">1</attribute>
+	        	</xpath>	        	
+	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='purchase_ids']" position="replace">        		 
+	        	</xpath>
+	        	
+	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/div/button[@string='Request a Quotation']" position="attributes">
+	            	<attribute name="type">object</attribute>
+	            	<attribute name="name">action_createPO</attribute>	          	
+	            </xpath>
+			</field>
+	    </record>
+
+
+	</data>
+</openerp>

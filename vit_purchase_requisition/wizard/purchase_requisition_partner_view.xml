@@ -1,0 +1,21 @@
+<openerp>
+	<data>
+        <record id="view_purchase_requisition_partner_ext" model="ir.ui.view">
+            <field name="name">Purchase Requisition</field>
+            <field name="model">purchase.requisition.partner</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_partner"/>
+            <field name="arch" type="xml">           	
+                <xpath expr="/form/group/field[@name='partner_id']" position="before">
+                	<field name="group_flag"/>
+                	<field name="overwrite" on_change="overwrite_onchange(overwrite)"/>	                  	
+         		</xpath>
+         		<xpath expr="/form/group/field[@name='partner_id']" position="before">
+                	<field name="all_supplier_flag" attrs="{'invisible':[('overwrite','=',False)]}" on_change="onchange_related_flag(all_supplier_flag,context)"/>	  
+         		</xpath>
+         		<xpath expr="/form/group/field[@name='partner_id']" position="attributes">
+                	 <attribute name="attrs">{'invisible':[('overwrite','=',False)],'required':[('overwrite','=',True)]}</attribute>          	
+         		</xpath>        		 
+            </field>
+        </record>
+	</data>
+</openerp>
