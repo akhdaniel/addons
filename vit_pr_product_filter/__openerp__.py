@@ -1,10 +1,8 @@
 {
-	"name": "Information", 
+	"name": "PR Product Filter", 
 	"version": "1.0", 
 	"depends": [
-		"base",
-		"board",
-		"purchase_requisition_multi_supplier",
+		"vit_purchase_requisition",
 	], 
 	"author": "vitraining.com", 
 	"category": "Purchase", 
