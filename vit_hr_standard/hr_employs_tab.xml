@@ -1,0 +1,348 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="tab_form_view2">
+            <field name="name">employee</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <label for="category_ids" class="oe_edit_only" groups="base.group_hr_user" position="before">
+                    <field name="nik" placeholder="Number of Employee (NIK)" groups="base.group_hr_user"/>
+                </label>
+                    <field name="job_id" position="after">
+                        <field name="type_salesman_id"/>
+                        <field name="location_id"/>
+                    </field>
+
+                        <page string="Personal Information" position="replace">                    
+                         <page string="Personal Information" groups="base.group_hr_user">
+                            <group> 
+                                <group string="Citizenship &amp; Other Info"> 
+                                    <field name="country_id" options="{&quot;no_open&quot;: True}"/> 
+                                    <field name="ktp_id"  groups="base.group_hr_user"/>
+
+                                    <field name="sim_a"/>
+                                    <field name="sim_b"/>
+                                    <field name="passport_id" groups="base.group_hr_user"/> 
+                                    <field name="bank_account_id"/> 
+                                    <field name="npwp_id" groups="base.group_hr_user"/> 
+                                    <field name="tax_id"/> 
+                                    <field name="jamsostek_id" groups="base.group_hr_user"/>
+                                    
+                                </group> 
+                                <group string="Contact Information"> 
+                                    <field name="address_home_id" invisible="0"/> 
+
+                                    <field name="alamat"/>
+                                    <field name="pos_code"/>
+                                    <field name="city"/>
+                                    <field name="emergency_contact"/>   
+                                    <field name="personal_email"/>                                            
+                                </group> 
+                                <group string="Education"> 
+                                    <field name="pendidikan_id"/> 
+                                    <field name="sekolah_id"/>
+                                    <field name="jurusan_id"/>
+                                    <field name="thn_lulus"/>   
+                                    <field name="ipk"/>                                            
+                                </group> 
+                                <group string="Birth">
+                                 <field name="birthday"/> 
+                                </group> 
+                                <group string="Status"> 
+                                    <field name="agama_id"/>
+                                    <field name="gender"/>
+                                    <field name="mother"/>
+                                    <!--field name="status_id"/-->
+                                    <field name="marital" invisible="1"/>
+                                    <field name="wifename"/> 
+                                    <field name="lahir"/>
+                                </group>   
+                                <group string=".">
+                                    <field name="anak_ids" view_mode="tree,form">
+                                        <tree>
+                                            <field name="name"/>
+                                            <field name="lahir"/>
+                                        </tree> 
+                                        <form string="Children">
+                                            <group>
+                                                <field name="no"/>
+                                                <field name="name"/>
+                                            </group>
+                                            <group>    
+                                                <field name="gender"/>
+                                                <field name="lahir"/>
+                                            </group>   
+                                        </form>
+                                    </field> 
+                                    <field name="insurance_id"/>    
+                                    </group>                              
+                            </group> 
+                        </page>    
+                    </page>
+             </field>                                                   
+        </record>
+                              
+        <record id="view_employee_tree2" model="ir.ui.view">
+            <field name="name">hr.employee.tree</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="before">
+                        <field name="nik"/>
+                    </field>
+                    <field name="work_phone" position="replace">
+                        <field name="mobile_phone"/>
+                        <field name="gender"/>
+                    </field>                    
+                    <field name="work_email" position="replace">
+                        <field name="work_location"/>
+                    </field>                    
+
+
+                    <field name="parent_id" position="replace">
+                        <field name="ktp_id"/>
+                        <field name="birthday"/>
+                        <field name="alamat"/>
+                        <field name="tax_id"/>
+                        <field name="pendidikan_id"/> 
+                        <field name="jurusan_id"/>
+                        <field name="agama_id"/>
+                     </field>   
+<!--                     <field name="parent_id" position="replace">
+
+                    </field>   -->  
+            </field>
+        </record>
+
+<!-- Applicant -->
+    <record model="ir.ui.view" id="crm_case_form_view_job2">
+        <field name="name">Jobs-Recruitment Form</field>
+        <field name="model">hr.applicant</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="arch" type="xml">     
+
+            <field name="name" position="replace">
+                <field name="name" placeholder="Job Code"/>
+            </field>
+            <field name="user_id" position="replace">
+                <field name="user_id" readonly="1"/>
+            </field>      
+
+            <field name="title_action" position="replace">
+                <field view_mode="tree,form" name="action_ids" >
+                    <tree>
+                        <field name='date'/>
+                        <field name='appreciation'/>
+                    </tree>
+                    <form>
+                        <field name='date'/>
+                        <field name='appreciation'/>
+                    </form>
+                </field>                  
+            </field>                  
+            <field name="priority" position="replace"/>
+            <field name="date_action" position="replace"/>
+  
+            <group string="Contract" position="replace">
+                    <group string="Contract" attrs="{'invisible':[('state','not in',('pending','done'))]}" groups="base.group_hr_manager">
+                        <label for="salary_expected"/>
+                        <div>
+                            <field name="salary_expected" class="oe_inline"/>
+                            <span class="oe_inline" attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                            <field name="salary_expected_extra" class="oe_inline" placeholder="Extra advantages..."/>
+                        </div>
+                        <label for="salary_proposed"/>
+                        <div>
+                            <field name="salary_proposed" class="oe_inline"/>
+                            <span class="oe_inline" attrs="{'invisible':[('salary_proposed_extra','=',False)]}"> + </span>
+                            <field name="salary_proposed_extra" class="oe_inline" placeholder="Extra advantages..."/>
+                        </div>
+                    </group>
+            </group>                                   
+        </field>
+    </record>
+
+        <record model="ir.ui.view" id="ktp_form_view">
+            <field name="name">KTP</field>
+            <field name="model">hr.employee.ktp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="KTP">
+                    <group>
+                        <field name="name"/>
+                        <field name="no"/>
+                        <field name="expired"/>
+                    </group>
+                    <group>    
+                        <field name="address"/>
+                        <field name="pos_code"/>
+                        <field name="city"/>
+                    </group>   
+                </form>     
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ktp_tree_view">
+            <field name="name">KTP</field>
+            <field name="model">hr.employee.ktp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="KTP">
+                        <field name="name"/>
+                        <field name="no"/>
+                        <field name="expired"/>
+                        <field name="address"/>
+                        <field name="pos_code"/>
+                        <field name="city"/> 
+                </tree>     
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="npwp_form_view">
+            <field name="name">NPWP</field>
+            <field name="model">hr.employee.npwp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="NPWP">
+                    <group>
+                        <field name="name"/>
+                        <field name="no"/>
+                        <field name="tax_id"/> 
+                    </group>
+                    <group>                         
+                        <field name="date"/>   
+                        <field name="address"/>
+                        <field name="pkp"/>
+                    </group>                         
+                </form>     
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="npwp_tree_view">
+            <field name="name">NPWP</field>
+            <field name="model">hr.employee.npwp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="NPWP">
+                        <field name="name"/>
+                        <field name="no"/>
+                        <field name="date"/>   
+                        <field name="address"/>
+                        <field name="tax_id"/>
+                </tree>     
+            </field>
+        </record>
+s
+        <record model="ir.ui.view" id="jamsostek_form_view">
+            <field name="name">Jamsostek</field>
+            <field name="model">hr.employee.jamsostek</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="jamsostek">
+                    <group>
+                        <field name="name"/>
+                        <field name="no"/>
+                    </group>
+                    <group>                         
+                        <field name="date"/>   
+                    </group>   
+                </form>     
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="jamsostek_tree_view">
+            <field name="name">Jamsostek</field>
+            <field name="model">hr.employee.jamsostek</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Jamsostek">
+                        <field name="name"/>
+                        <field name="no"/>
+                        <field name="date"/>   
+                </tree>     
+            </field>
+        </record> 
+
+        <record model="ir.ui.view" id="insurance_form_view">
+            <field name="name">Insurance</field>
+            <field name="model">hr.employee.insurance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Insurance">
+                    <group>
+                        <field name="name"/>
+                        <field name="no"/>
+                    </group>
+                    <group>                         
+                        <field name="date"/>  
+                        <field name="date2"/> 
+                        <field name="class"/>
+                    </group>   
+                </form>     
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="insurance_tree_view">
+            <field name="name">Insurance</field>
+            <field name="model">hr.employee.insurance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Insurance">
+                        <field name="name"/>
+                        <field name="no"/>
+                        <field name="date"/>  
+                        <field name="date2"/> 
+                        <field name="class"/>
+                </tree>     
+            </field>
+        </record>               
+
+        <!-- payslip -->
+<!--         <record id="view_hr_payslip_form99" model="ir.ui.view">
+            <field name="name">hr.payslip.form2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml"> 
+              
+                <field name='name' position='after'> 
+                    <field name='net'/> 
+                    <field name='gross'/>
+                    <field name='basic'/>
+                    <field name='thr'/>
+                    <field name='transport'/> 
+                    <field name='um'/>
+                    <field name='ul'/>
+                    <field name='total_lembur'/>
+                </field>
+             
+            </field>
+        </record> -->
+
+        <record id="view_hr_payslip_tree2" model="ir.ui.view">
+            <field name="name">hr.payslip.tree2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+  
+                    <field name="name" position="replace"/>
+
+                    <field name="state" position="before">
+                        <field name='basic'/>
+                        <field name='thr'/>
+                        <field name='transport'/> 
+                        <field name='um'/>
+                        <field name='ul'/>
+                        <field name='total_lembur'/>
+                        <field name='gross'/> 
+                        <field name='net'/>                        
+                    </field>                    
+
+
+
+            </field>
+        </record>        
+
+    </data>
+</openerp>

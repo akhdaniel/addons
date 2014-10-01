@@ -1,0 +1,156 @@
+<openerp>
+	<data>
+       <record id="hr_payroll_rules_overtime_staff" model="hr.salary.rule">
+	        <field name="name">Overtime Staff</field>
+	        <field name="code">OTS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">2</field>
+	        <field name="amount_python_compute">result = worked_days.OVT.number_of_hours*18750</field>
+	    </record>
+	    <record id="hr_payroll_rules_overtime_non_staff" model="hr.salary.rule">
+	        <field name="name">Overtime Non Staff</field>
+	        <field name="code">OTNS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">3</field>
+	        <field name="amount_python_compute">result = worked_days.OVT.number_of_hours*7000 </field>
+	    </record>
+	    <record id="hr_payroll_rules_meal_driver" model="hr.salary.rule">
+	        <field name="name">Meal Driver</field>
+	        <field name="code">MLD</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">4</field>
+	        <field name="amount_python_compute">result = worked_days.ATT.number_of_days*7500 </field>
+	    </record>
+	    <record id="hr_payroll_rules_meal_staff" model="hr.salary.rule">
+	        <field name="name">Meal Staff</field>
+	        <field name="code">MLS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">4</field>
+	        <field name="amount_python_compute">result = worked_days.ATT.number_of_days*15000 </field>
+	    </record>
+	    <record id="hr_payroll_rules_meal_non_staff" model="hr.salary.rule">
+	        <field name="name">Meal Non Staff</field>
+	        <field name="code">MLNS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">4</field>
+	        <field name="amount_python_compute">result = worked_days.ATT.number_of_days*7500 </field>
+	    </record>	    
+
+	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
+	        <field name="name">Transport</field>
+	        <field name="code">TRP</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">fix</field>
+			<field name="sequence">5</field>
+	        <field name="amount_fix">1500000</field>
+	    </record>    
+	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
+	        <field name="name">Jamsostek JHT TK 2%</field>
+	        <field name="code">JHTTK</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">30</field>
+	        <field name="amount_python_compute">result = -contract.wage * 0.02</field>
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
+	        <field name="name">Jamsostek JHT 3,7%</field>
+	        <field name="code">JHTPH</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">31</field>
+	        <field name="amount_python_compute">result = contract.wage * 0.37</field>
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek3" model="hr.salary.rule">
+	        <field name="name">Jamsostek JKK 0,24%</field>
+	        <field name="code">JKK</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">32</field>
+	        <field name="amount_python_compute">result = contract.wage * 0.0024</field>
+	    </record>
+	    <record id="hr_payroll_rules_jamsostek4" model="hr.salary.rule">
+	        <field name="name">Jamsostek JKM 0,3%</field>
+	        <field name="code">JKM</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">33</field>
+	        <field name="amount_python_compute">result = contract.wage * 0.003</field>
+	    </record>	    	    	    
+	    <record id="hr_payroll_rules_unpaid_leave" model="hr.salary.rule">
+	        <field name="name">Unpaid Leave</field>
+	        <field name="code">UL</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">python</field>
+	        <field name="condition_python">result = worked_days.Unpaid and worked_days.Unpaid.number_of_days or False</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">35</field>
+	        <field name="amount_python_compute">result = (worked_days.Unpaid.number_of_days / worked_days.WORK100.number_of_days)* -contract.wage</field>
+	    </record>
+	    <record id="hr_payroll_rules_bonus" model="hr.salary.rule">
+	        <field name="name">Insentive/Bonus</field>
+	        <field name="code">BNS</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">11</field>
+	        <field name="amount_python_compute">result = inputs.BNS.amount </field>
+	    </record>
+	    <record id="hr_payroll_rules_thr" model="hr.salary.rule">
+	        <field name="name">Tunjangan Hari Raya</field>
+	        <field name="code">THR</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">range</field>
+	        <field name="condition_range">inputs.THR.amount</field>
+	        <field name="condition_range_min">1</field>
+	        <field name="condition_range_max">1000000000</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">12</field>
+	        <field name="amount_python_compute">result = inputs.THR.amount </field>
+	    </record>
+    <!-- SALARY RULE INPUT -->	 	     
+	    <record id="hr_payroll_rules_input_bonus" model="hr.rule.input">
+	        <field name="name">Insentive/Bonus</field>
+	        <field name="code">BNS</field>
+			<field name="sequence">11</field>	
+	        <field name="input_id" ref="hr_payroll_rules_bonus"/>	    	
+		</record>	    
+		<record id="hr_payroll_rules_input_thr" model="hr.rule.input">
+	        <field name="name">Tunjangan Hari Raya</field>
+	        <field name="code">THR</field>
+			<field name="sequence">21</field>	
+	        <field name="input_id" ref="hr_payroll_rules_thr"/>	    	
+		</record>
+  
+
+		<!-- salary structure -->
+	    <record model="hr.payroll.structure" id="structure_tiket_staff" >
+	    	<field name="name">Tiket Staff Salary Structure</field>
+	    	<field name="code">TIKET_STAFF</field>
+        	<field name="parent_id" ref="hr_payroll.structure_base"/>
+	        <field name="company_id" ref="base.main_company"/>
+            <field eval="[(6, 0, [ref('hr_payroll_rules_overtime_staff'), 
+            ref('hr_payroll_rules_transport'),
+            ref('hr_payroll_rules_jamsostek'), 
+            ref('hr_payroll_rules_unpaid_leave'), 
+            ref('hr_payroll_rules_bonus'), 
+            ref('hr_payroll_rules_thr'), 
+             ])]" name="rule_ids"/>
+	    </record>
+
+	</data>
+</openerp>		    
