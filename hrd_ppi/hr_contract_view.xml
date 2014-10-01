@@ -198,14 +198,14 @@
     <menuitem name="Sift Kerja"
         id="menu_sift_kerja"
         parent="hr.menu_hr_configuration"
-        sequence="41"/>
+        sequence="41" groups="base.group_hr_manager,base.group_hr_user"/>
 
     <menuitem
         id="menu_sift_kerja1"
         name="Pengelompokan Sift Kerja"
         parent="menu_sift_kerja"
         action="hr_sift_act"
-        sequence="1"/>
+        sequence="1" groups="base.group_hr_manager,base.group_hr_user"/>
 
          <!-- Sift Kerja Tree -->
     <record model="ir.ui.view" id="hr_sift_roling_tree">
@@ -256,7 +256,7 @@
         name="Urutan Sift Kerja"
         parent="menu_sift_kerja"
         action="hr_sift_roling_act"
-        sequence="1"/>
+        sequence="1" groups="base.group_hr_manager,base.group_hr_user"/>
 
     <!-- jenis karyawan kontrak -->
         <record id="employee_contract" model="hr.contract.type">

@@ -122,7 +122,7 @@ class employee(osv.osv):
         'npkj' :fields.integer('NPKJ', help='Nomor Kepesertaan Jamsostek'), 
         'remaining_leaves' :fields.float('Remaining Legal Leavs',readonly=True),  
         'tgl_masuk' :fields.date('Tanggal Masuk'),
-        'hierarcy_history' : fields.one2many('hr.hierarcy_history','employee_id','Hieracy History'),
+        'hierarcy_history' : fields.one2many('hr.hierarcy_history','employee_id','Hieracy History', readonly=True),
         'work_email' : fields.char('Email Kantor'),
         'work_phone' : fields.char('Telepon Kantor'),
         'coach_id' : fields.many2one('hr.employee', '',readonly=True),

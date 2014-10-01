@@ -134,7 +134,7 @@
             <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
             <field name="arch" type="xml"> 
                 <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" position="replace">
-                    <button string="Approve" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>
+                    <button string="Approve" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager,hrd_ppi_access.group_hr_payroll"/>
                 </button>    
 
                 <!--button string="Refund" name="refund_sheet" states="confirm,done" type='object' position="replace">
@@ -145,7 +145,7 @@
                 </button>
 
                 <button string="Compute Sheet" name="compute_sheet" type="object" states="draft" class="oe_highlight" position="replace">
-                    <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_user"/>
+                    <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_user,hrd_ppi_access.group_hr_payroll"/>
                 </button>
 
                 <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
@@ -188,8 +188,8 @@
                 </xpath>
             </field>
         </record>
-        <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user"/>
-        <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user"/>
-        <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user"/>
+        <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
+        <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
+        <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
     </data>
 </openerp>

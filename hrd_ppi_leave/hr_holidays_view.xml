@@ -50,9 +50,10 @@
                 <form string="Leave Request" version="7.0" position="replace">
                 <form string="Leave Request" version="7.0">
                 <header>
-                    <button string="Approve" name="validate" states="confirm" type="workflow" groups="hrd_ppi.group_hr_aprove_dep2" class="oe_highlight"/>
-                    <button string="Validate" name="second_validate" states="validate1" type="workflow" groups="base.group_hr_manager,hrd_ppi.group_hr_aprove_presdir" class="oe_highlight"/>
-                    <button string="Refuse" name="refuse" states="confirm" type="workflow" groups="hrd_ppi.group_hr_aprove_dep1"/>
+                    <!-- <button string="Approve" name="validate" states="confirm" type="workflow" groups="hrd_ppi.group_hr_aprove_dep2" class="oe_highlight"/> -->
+                    <button string="Approve" name="holidays_first_validate" states="confirm" type="object" groups="hrd_ppi.group_hr_aprove_dep2" class="oe_highlight"/>
+                    <button string="Validate" name="holidays_validate" states="validate1" type="object" groups="base.group_hr_manager,hrd_ppi.group_hr_aprove_presdir" class="oe_highlight"/>
+                    <button string="Refuse" name="refuse" states="confirm" type="workflow" groups="hrd_ppi.group_hr_aprove_dep2"/>
                     <button string="Refuse" name="refuse" states="validate1,validate" type="workflow" groups="base.group_hr_manager"/>
                     <button string="Reset to New" name="set_to_draft" states="refuse" type="object" groups="base.group_hr_user"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}'/>
@@ -78,8 +79,8 @@
                             <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')], 'readonly':[('state','!=','draft'), ('state','!=','confirm')]}"/>
                         </group>
                         <group>
-                            <field name="holiday_type" on_change="onchange_type(holiday_type)" attrs="{'readonly':[('state','!=','draft')]}" width="130" string="Mode" context="{'employee_id':employee_id}" />
-                            <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" on_change="onchange_employee(employee_id)"/>
+                            <field name="holiday_type" on_change="onchange_type(holiday_type)" width="130" string="Mode" attrs="{'readonly':[('state','!=','aaa')]}" context="{'employee_id':employee_id}" /> 
+                            <field name="employee_id" on_change="onchange_dep1(employee_id,department_id)" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" />
                             <field name="department_id" attrs="{'readonly':[('holiday_type','=','category')]}"/>
                         </group>
                     </group>
@@ -198,7 +199,7 @@
                     <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','category')]}" position="replace"/>  
                     <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}" position="replace"/>
                     <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1" position="replace">
-                        <field name="holiday_type" on_change="onchange_type(holiday_type)"/>    
+                        <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="0"/>    
                         <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>  
                         <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
                     </field>
@@ -246,8 +247,8 @@
                             </div>
                         </group>
                         <group>  
-                            <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','=','employee')]}" position="replace"/>
-                            <field name="holiday_type" on_change="onchange_type(holiday_type)" readonly="1"/>    
+                            <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'invisible':[('holiday_type','!=','qqq')]}" position="replace"/>
+                            <field name="holiday_type" on_change="onchange_type(holiday_type)" attrs="{'readonly':[('state','!=','draft')]}"/>    
                             <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')], 'invisible':[('holiday_type','=','lokasi')]}"/>  
                             <field name="lokasi_id" attrs="{'required':[('holiday_type','=','lokasi')], 'invisible':[('holiday_type','=','employee')]}"/>
                             <field name="department_id" attrs="{'invisible':[('holiday_type','=','category')]}"/>
@@ -360,6 +361,10 @@
         </record> 
         <record id='hr_holiday_status3' model='hr.holidays.status'>
             <field name='name'>Cuti Hari Raya</field>
+            <field name='color_name'>red</field>            
+        </record>
+        <record id='hr_holiday_status4' model='hr.holidays.status'>
+            <field name='name'>Libur Nasional</field>
             <field name='color_name'>red</field>            
         </record>
         <!--workflow-->

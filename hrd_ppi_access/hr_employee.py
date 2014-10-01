@@ -4,7 +4,7 @@ class hr_employee(osv.osv):
     _inherit = "hr.employee"
 
     _columns = {
-        'acc_level': fields.integer('Access Level'),
+        'acc_level': fields.many2one('hr.acc_level','Access Level'),
         'dept_related' :fields.many2one('hr.department','Related Department',readonly=True),
         }
 
@@ -21,3 +21,12 @@ class hr_employee(osv.osv):
         	}}
 
 hr_employee()
+
+class hr_acc_level(osv.osv):
+    _name= "hr.acc_level"
+
+    _columns = {
+        "name" : fields.integer("Access Level"),
+        "parent_id" : fields.many2one("hr.acc_level", "Parent", select=True),
+        }
+hr_acc_level()

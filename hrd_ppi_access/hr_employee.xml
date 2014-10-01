@@ -15,5 +15,24 @@
 			</field>
 		</record> 
 
+        <record model="ir.actions.act_window" id="action_master_act_level">
+                <field name="name">Master Access Level</field>
+                <field name="res_model">hr.acc_level</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="action_master_acc_level_tree">
+                <field name="name">Master Access Level</field>
+                <field name="model">hr.acc_level</field>
+                <field name="view_type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Master Title'>
+                        <field name='name'/>
+                        <field name='parent_id'/>
+                    </tree>
+                </field>
+        </record>
+        <menuitem parent="base.menu_tools" name="Master Access Level" id="base.acc_level" action="action_master_act_level" groups="base.group_hr_user"/>
 	</data>
 </openerp>

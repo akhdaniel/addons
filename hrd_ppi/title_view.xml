@@ -37,7 +37,7 @@
                     </tree>
                 </field>
         </record>
-        <menuitem parent="base.menu_tools" name="Master Title" id="base.title" action="action_master_title" groups="base.group_tool_manager"/>
-        <menuitem parent="base.menu_tools" name="Master ExTitle" id="base.extitle" action="action_master_extitle" groups="base.group_tool_manager"/>
+        <menuitem parent="base.menu_tools" name="Master Title" id="base.title" action="action_master_title" groups="base.group_tool_manager,base.group_hr_manager,base.group_hr_user"/>
+        <menuitem parent="base.menu_tools" name="Master ExTitle" id="base.extitle" action="action_master_extitle" groups="base.group_tool_manager,base.group_hr_manager,base.group_hr_user"/>
     </data>
 </openerp>
