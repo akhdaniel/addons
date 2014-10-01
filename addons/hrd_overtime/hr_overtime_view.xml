@@ -67,6 +67,7 @@
                             <page string="General">
                                 <field name="overtime_type_id"/>
                                 <field name='overtime_type'/>
+                                <!-- <field name='tanggal'/> -->
                                 <field name="employee_id" on_change="onchange_dep1(employee_id)" required="1"/>
                                 <field name="department_id"/>
                                 <newline/>

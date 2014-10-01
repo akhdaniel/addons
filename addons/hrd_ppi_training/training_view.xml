@@ -89,7 +89,7 @@
                         states="approve2" name="signal_reject"/-->
 
                     <button string="Start Evaluation" type="workflow"  
-                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user"
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_manager"
                         states="approve2" name="signal_evaluation" 
                         class="oe_highlight" /> 
                         
@@ -105,7 +105,7 @@
                      <field name="user_id"  on_change='onchange_dep(user_id)'/>
                 </group>
                 <group >
-                    <field name="department_id"/>                    
+                    <field name="department_id" invisible="1"/>                    
                 </group>    
                 </group>
                     <!--group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}>

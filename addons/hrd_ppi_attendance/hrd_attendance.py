@@ -55,8 +55,30 @@ class hr_attendance(osv.osv):
 			# self.unlink(cr, uid, laterID, context=None)
 			cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(laterID),))
 		if latestID and (vals['action'] =='sign_out'):
+			#execute to overtime disini
 			# self.unlink(cr, uid, latestID, context=None)
 			cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(latestID),))
+		# execute to overtime
+		if (vals['action'] == 'sign_out') and laterID == [] :
+			import pdb;pdb.set_trace()
+			dates = vals['name'] 
+			ye = datetime.strptime(dates,"%Y-%m-%d %H:%M:%S")
+			date_now = ye.strftime("%Y-%m-%d")
+			obj_over = self.pool.get('hr.overtime')
+			obj_src = obj_over.search(cr,uid, [('employee_id','=',vals['employee_id']),('tanggal','=',date_now),('state','=','validate')])
+			for overtime in obj_over.browse(cr,uid,obj_src) :
+				dates_to = datetime.strptime(overtime.date_to,"%Y-%m-%d %H:%M:%S")
+				dates_from = datetime.strptime(overtime.date_from,"%Y-%m-%d %H:%M:%S")
+				if ye >= dates_to :
+					obj_over.write(cr, uid, [overtime.id], {'jam_lembur': overtime.number_of_hours_temp})					
+				else :
+					timedelta = ye - dates_from
+					diff_day1 =float(timedelta.seconds) / 3600
+					diff_day2 = int(timedelta.seconds) / 3600
+					diff = diff_day1 - diff_day2
+					diff1 = (diff*60)/100
+					diff_day = diff_day2 + diff1
+					obj_over.write(cr, uid, [overtime.id], {'jam_lembur': diff_day})
 		# jika diimport / no mesin exist
 		if any('no_mesin' in att for att in vals) and vals['no_mesin'] <> '0':
 			new_id = super(hr_attendance,self).create(cr,uid,vals,context=context)

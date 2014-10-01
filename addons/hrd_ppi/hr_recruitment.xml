@@ -125,28 +125,28 @@
                     </div>             
                     <button string="Filter" type="object" 
                         name="cici" status_rec="filter"
-                        groups="hrd_ppi.group_hr_training_head"  
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user"  
                         class="oe_highlight" attrs="{'invisible':[('status_rec','!=','filter')]}"/> 
                     <button string="Execute" type="object" 
                         status_rec="execute" name="execute"
-                        groups="hrd_ppi.group_hr_training_head" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
                         class="oe_highlight" attrs="{'invisible':[('status_rec','!=','execute')]}"/> 
                     <button string="New Recruitment" type="object" 
                         status_rec="pending" name="new_recruitment" 
-                        groups="hrd_ppi.group_hr_training_head" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
                         class="oe_highlight" attrs="{'invisible':[('status_rec','!=','pending')]}" /> 
                     <button string="New Recruitment" type="object" 
                         status_rec="pending" name="new_recruitment" 
-                        groups="hrd_ppi.group_hr_training_head" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
                         class="oe_highlight" attrs="{'invisible':[('status_rec','!=','in_progres')]}" />  
                     <button string="Cancel Recruitment" type="object"
                         attrs="{'invisible':[('status_rec','=','new')]}" 
                         status_rec="in_progres" name="cancel_recruitment"
-                        groups="hrd_ppi.group_hr_training_head" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
                         class="oe_highlight" />  
                     <button string="Pending" type="object" 
                         status_rec="pending" name="pending" 
-                        groups="hrd_ppi.group_hr_training_head" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
                         class="oe_highlight" attrs="{'invisible':[('status_rec','!=','pending')]}" />   
                 <notebook colspan="4">                      
                         <page string="Daftar Pelamar" name="Pelamar" attrs="{'invisible':[('states_id','!=','in_progress')]}">

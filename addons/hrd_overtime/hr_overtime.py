@@ -133,6 +133,7 @@ class hr_overtime(osv.osv):
         'employee_id': _employee_get,
         'state': 'draft',
         'users_id': lambda obj, cr, uid, context: uid,
+        'tanggal' : fields.date.context_today,
     }
     _sql_constraints = [
         ('date_check', "CHECK ( number_of_hours_temp > 0 )", "The number of hours must be greater than 0 !"),
@@ -208,7 +209,7 @@ class hr_overtime(osv.osv):
         date_m =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").month
         date_d =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").day
         dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
-        result['value']['tanggal'] = dates
+        #result['value']['tanggal'] = dates
         return result
 
     def set_to_draft(self, cr, uid, ids, *args):

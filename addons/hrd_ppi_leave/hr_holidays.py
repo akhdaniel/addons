@@ -72,13 +72,26 @@ class hr_holidays(osv.osv):
                 raise osv.except_osv(_('Warning!'),_('Bulan Harus Sama'))
         return super(hr_holidays, self).create(cr, uid, values, context=context)
 
+    def holidays_first_validate(self, cr, uid, ids, context=None):
+        self.check_holidays(cr, uid, ids, context=context)
+        obj_emp = self.pool.get('hr.employee')
+        ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
+        manager = ids2 and ids2[0] or False
+        self.holidays_first_validate_notificate(cr, uid, ids, context=context)
+        objk = self.browse(cr,uid,ids)[0] 
+        if objk.employee_id.user_id.id == uid :
+            return True
+        else :
+            return self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})
+
     def holidays_validate(self, cr, uid, ids, context=None):
         self.check_holidays(cr, uid, ids, context=context)
         obj_emp = self.pool.get('hr.employee')
         ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
         manager = ids2 and ids2[0] or False
-        self.write(cr, uid, ids, {'state':'validate'})
         data_holiday = self.browse(cr, uid, ids)
+        if data_holiday[0].employee_id.user_id.id != uid :        
+            self.write(cr, uid, ids, {'state':'validate'})
         for record in data_holiday:
             if record.double_validation:
                 self.write(cr, uid, [record.id], {'manager_id2': manager})
@@ -109,7 +122,6 @@ class hr_holidays(osv.osv):
         return True
 
     def holiday(self, cr,uid,ids=None,context=None):
-        #import pdb;pdb.set_trace()
         val='validate'
         obj = self.pool.get('hr.holidays')        
         src = obj.search(cr,uid,[('state','=',val)])
@@ -162,6 +174,18 @@ class hr_holidays(osv.osv):
         ('type_value', "CHECK( (holiday_type='employee' AND employee_id IS NOT NULL) or (holiday_type='category' AND category_id IS NOT NULL)) or (holiday_type='lokasi' AND category_id IS NOT NULL)", 
          "The employee or employee category of this request is missing. Please make sure that your user login is linked to an employee."),
     ]   
+
+    def onchange_dep1(self,cr,uid,ids,employee_id,department_id,context=None):
+        obj = self.pool.get('hr.employee')
+        src = obj.search(cr,uid,[('id','=',employee_id)])
+        brw = obj.browse(cr,uid,src)
+        dep = False
+        for department in brw :
+            dep = department.department_id.id
+        return {'value': {
+            'department_id' : dep,
+        }}
+
     def hapus_cuti(self,cr,uid,ids=None,context=None):
         dates=time.strftime('%Y-%m-%d')
         year1=datetime.strptime(dates,"%Y-%m-%d").year
@@ -186,7 +210,6 @@ class hr_holidays(osv.osv):
     
     def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
         result = {}
-        # cfimport pdb;pdb.set_trace()
         if holiday_status_id:
             hol_obj = self.pool.get('hr.holidays.status')
             result['libur_bersih2'] = hol_obj.browse(cr, uid, holiday_status_id, context=context).libur_bersih

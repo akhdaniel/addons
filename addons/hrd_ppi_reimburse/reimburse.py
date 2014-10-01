@@ -40,9 +40,11 @@ class reimburse(osv.osv):
         if context is None:
             context = {}
         context = dict(context, mail_create_nolog=True)
+        import pdb;pdb.set_trace()
         name=values['employee_id']
         thn = values['tahun']
         tipe = values['type']
+        jenis = values['jenis']
         if tipe == 'add' :
             tot_peng = values['nomin']
         obj = self.pool.get('reimburse')
@@ -53,7 +55,7 @@ class reimburse(osv.osv):
             total = reim.employee_id.sisa_reimburse_pengobatan
             if total < tot_peng :
                 raise osv.except_osv(_('Warning!'), _('tunjangan pengobatan anda sudah habis')) 
-        if tipe == 'add' and src == [] :
+        if tipe == 'add' and src == [] and jenis != 'rawat':
             raise osv.except_osv(_('Warning!'), _('Anda tidak memiliki Tunjangan Pengobatan')) 
         return super(reimburse, self).create(cr, uid, values, context=context)
     

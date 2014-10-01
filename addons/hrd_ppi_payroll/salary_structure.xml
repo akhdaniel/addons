@@ -6,6 +6,52 @@
             <field name="code">IGN</field>
         </record>
 
+    	<!--mengubah fungsi python gross di donfiguarsi payrol -> base for new structure-->
+
+		<record id="TOTAL" model="hr.salary.rule.category">
+            <field name="name">Total</field>
+            <field name="code">Total</field>
+        </record>
+
+		<record id="hr_rule_basic" model="hr.salary.rule">
+            <field name="name">Basic</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">BASIC</field>
+            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+        </record>
+
+        <record id="hr_rule_net" model="hr.salary.rule">
+            <field name="name">Total</field>
+            <field name="sequence" eval="200"/>
+            <field name="code">Total</field>
+            <field name="category_id" ref="TOTAL"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
+            <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
+        </record>
+
+        <record id="hr_rule_taxable" model="hr.salary.rule">
+            <field name="name">Gross</field>
+            <field name="sequence" eval="100"/>
+            <field name="code">GROSS</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.NET</field>
+        </record>
+
+        <record id="structure_base1" model="hr.payroll.structure">
+            <field name="code">BASE</field>
+            <field name="name">Base for new structures PPI</field>
+            <field eval="[(6, 0, [ref('hr_rule_basic'), ref('hr_rule_taxable'),ref('hr_rule_net')])]" name="rule_ids"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+
     <!-- salary rule -->
         <!-- Allowance -->
         <record id="hr_payroll_rules_overtime" model="hr.salary.rule">
@@ -650,7 +696,7 @@
 	    <record model="hr.payroll.structure" id="structure_ppi_staff" >
 	    	<field name="name">PPI Staff Salary Structure</field>
 	    	<field name="code">PPI_STAFF</field>
-        	<field name="parent_id" ref="hr_payroll.structure_base"/>
+        	<field name="parent_id" ref="structure_base1"/>
 	        <field name="company_id" ref="base.main_company"/>
             <field eval="[(6, 0, [ref('hr_payroll_rules_pot_absen'), 
             ref('hr_payroll_rules_overtime'), 
@@ -703,7 +749,7 @@
 	        ref('hr_payroll_rules_lembur_proyek'),
              ])]" name="rule_ids"/>
 	    </record>
-		
+
         <!--Master PTKP-->
 		<record id="hr_master_ptkp_t0" model="hr.ptkp">
 	        <field name="kode">T0</field> 
