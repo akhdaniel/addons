@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="manufacture_order" 
+        string="Manufacture Order With Signature" 
+        model="mrp.production" 
+        name="mrp.production" 
+        rml="vit_mr_print_sign/report/manufacture_order.rml" 
+        auto="False" 
+        header="True"/>          
+    </data> 
+</openerp>
