@@ -37,7 +37,15 @@ class account_invoice_dp(osv.osv):
             type='many2one',
             relation='account.account',
             string='Account',
+            store=True),
+        'date': fields.related(
+            'account_move_line_id',
+            'date',
+            type='date',
+            relation='account.account',
+            string='Date',
             store=True)
+
     }
 account_invoice_dp()
 
@@ -312,6 +320,61 @@ class account_invoice(osv.osv):
         'sale_dp_account_id' : fields.related('company_id', 'sale_dp_account_id' , type="many2one", 
             relation="account.account", string="Sale DP COA")
     }
+
+    #####################################################################################
+    # cari journal dp partner ini , kalau ada masukkan ke dp line
+    #####################################################################################
+    def fill_sale_dp(self,cr,uid,ids,context=None):
+        return self.fill_dp(cr,uid,ids,'sale',context=None)
+
+    def fill_purchase_dp(self,cr,uid,ids,context=None):
+        return self.fill_dp(cr,uid,ids,'purchase',context=None)
+
+    def fill_dp(self,cr,uid,ids,type,context=None):
+
+        aml_obj =self.pool.get('account.move.line')
+        inv_obj =self.pool.get('account.invoice')
+
+        for inv in self.browse(cr, uid, ids, context=context):
+
+            if type=='sale':
+                cond = [('account_id','ilike', 'Uang Muka'), 
+                             ('is_used','=',False), 
+                             ('credit','>',0), 
+                             ('partner_id','=', inv.partner_id.id)]
+            elif type=='purchase':
+                cond = [('account_id','ilike', 'Uang Muka'), 
+                             ('is_used','=',False), 
+                             ('debit','>',0), 
+                             ('partner_id','=', inv.partner_id.id)]
+
+            aml_ids = aml_obj.search(cr, uid, cond, context=context)
+
+            if aml_ids:
+
+                cr.execute("delete from account_invoice_dp where invoice_id=%d" % (inv.id) )
+
+                amls = aml_obj.browse(cr, uid, aml_ids, context=context)
+                dp_lines = [ (0,0,{ 'account_move_line_id': aml.id , 
+                                    'amount' : aml.credit + aml.debit
+                    }) for aml in amls]
+
+                data = { 'dp_line' : dp_lines }
+                inv_obj.write(cr, uid, [inv.id], data, context=context)
+        
+        return True 
+
+    def create(self, cr, uid, vals, context=None):
+        res = super(account_invoice, self).create(cr, uid, vals, context=context)    
+        inv = self.browse(cr, uid, res, context=context)
+        if inv.type=='out_invoice': #sales
+            self.fill_sale_dp(cr, uid, [res], context=context)
+        elif inv.type=='in_invoice': #purchase
+            self.fill_purchase_dp(cr, uid, [res], context=context)
+
+        return res
+
+
 account_invoice()
 
 class account_move_line(osv.osv):
@@ -322,7 +385,6 @@ class account_move_line(osv.osv):
     _columns = {
         'is_used': fields.boolean('Is Used', required=False, default=False),
 
-        #'is_used': fields.function(_find_is_used, type="boolean", string="Is Used?", store=True),
     }
 account_move_line()
 

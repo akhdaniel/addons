@@ -11,6 +11,8 @@
         <field name="arch" type="xml">
             <page string="Payments" position="after">
                 <page string="Down Payments">
+                	<button name="fill_sale_dp" type="object" string="Fill Down Payments"
+                	    states="draft"/>
                     <field name="dp_line" nolabel="1" widget="one2many_list" >
 						<tree string="DP Journal Lines" editable="bottom">
 							<field name="account_move_line_id" 
@@ -19,6 +21,7 @@
 							 ('is_used','=',False), 
 							 ('credit','>',0), 
 							 ('partner_id','=', parent.partner_id)]"/>
+							<field name="date" />
 							<field name="account_id" />
 							<field name="amount" />
 						</tree>
@@ -46,12 +49,17 @@
             <field name="arch" type="xml">
                 <page string="Payments" position="after">
                     <page string="Down Payments">
+	                	<button name="fill_purchase_dp" type="object" 
+	                		 string="Fill Down Payments"
+	                	     states="draft"/>
+
                         <field name="dp_line" nolabel="1" widget="one2many_list" >
 							<tree string="DP Journal Lines" editable="bottom">
 								<field name="account_move_line_id"
 								 on_change="account_move_line_change2(account_move_line_id)"  
 								 domain="[ ('account_id','ilike','Uang Muka'), ('is_used','=',False), ('debit','>',0), ('partner_id','=',parent.partner_id)]"
 								/>
+								<field name="date" />
 								<field name="account_id" />
 								<field name="amount" />
 							</tree>		                    
