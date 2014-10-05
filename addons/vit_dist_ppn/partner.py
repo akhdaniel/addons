@@ -6,4 +6,6 @@ class partner(osv.osv):
 	_columns = {
 		'npwp'	: fields.char('NPWP'),
 		'pkp'	: fields.boolean('PKP'),
+		'nppkp'              : fields.char('NPPKP'),
+		
 	}

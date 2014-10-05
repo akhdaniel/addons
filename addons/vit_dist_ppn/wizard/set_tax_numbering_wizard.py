@@ -28,13 +28,15 @@ class set_tax_numbering_wizard(osv.TransientModel):
 		tax_numbering_obj = self.pool.get('vit_dist_ppn.tax_numbering')
 		tids = tax_numbering_obj.search(cr, uid, [('year','=',datetime.date.today().year)] , context)
 		if not tids:
-			raise orm.except_orm(_('Error'), _('Please set Tax Numbering for the current year'))
+			raise osv.except_osv(_('Error'), _('Please set Tax Numbering for the current year'))
 		tax_numbering = tax_numbering_obj.browse(cr, uid, tids[0], context)
 		tax_number    = int(tax_numbering.current_no)
 		prefix        = tax_numbering.prefix
 
 		############################################################################
-		# cari invoice sesuai kriteria tanggal wizard
+		# cari invoice sesuai kriteria tanggal wizard,
+		# hanya out_invoice / customer 
+		# yang belum ada nomor seri fatktur pajaknya
 		############################################################################
 		invoice_obj = self.pool.get('account.invoice')
 		invoice_ids = invoice_obj.search(cr, uid, 
@@ -42,7 +44,8 @@ class set_tax_numbering_wizard(osv.TransientModel):
 				('date_invoice',    '>=', date_start),
 				('date_invoice' ,   '<=', date_end ), 
 				('state',           '=' , 'open'),
-				('tax_number',      '=' , False )
+				('tax_number',      '=' , False ),
+				('type',            '=' , 'out_invoice')
 			], 
 			context)
 

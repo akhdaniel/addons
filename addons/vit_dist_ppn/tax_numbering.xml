@@ -56,10 +56,13 @@
 
 
 
+		<!-- menu items -->
+	    <menuitem id="value_added_tax" 
+    	 parent="account.menu_finance_receivables" name="Value Added Tax" sequence="50"  />
 
 		<!-- menu items -->
 	    <menuitem id="tax_numbering" 
-    	 parent="account.next_id_27" name="Tax Numbering" sequence="50" 
+    	 parent="value_added_tax" name="Tax Numbering" sequence="50" 
     	 action="action_tax_numbering_list" />
 
 	</data>

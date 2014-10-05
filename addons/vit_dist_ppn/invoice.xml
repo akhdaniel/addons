@@ -18,9 +18,24 @@
 			<field name="model">account.invoice</field>
 			<field name="inherit_id" ref="account.invoice_form" />
 			<field name="arch" type="xml">
-				<field name="account_id" position="after">
-					<field name="tax_number" />
-				</field>
+				<page string="Payments" position="after">
+					<page string="VAT">
+						<group>
+							<group string="VAT">
+								<field name="tax_number" />
+								<field name="espt_export" />
+								<field name="espt_export_date" />
+							</group>
+
+							<group string="Strikes">
+								<field name="harga_jual" />
+								<field name="penggantian"/>
+								<field name="uang_muka"  />
+								<field name="termijn"    />
+							</group>
+						</group>
+					</page>
+				</page>
 			</field>
 		</record>
 

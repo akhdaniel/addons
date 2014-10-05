@@ -17,9 +17,11 @@
 	"data": [
 		"tax_numbering.xml",
 		"wizard/set_tax_numbering_wizard.xml",
+		"wizard/espt_wizard.xml",
 		"invoice.xml",
 		"partner.xml",
 		"reports/faktur_pajak.xml",
+		"company.xml",
 	],
 	"installable": True,
 	"auto_install": False,
