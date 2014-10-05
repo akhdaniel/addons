@@ -10,7 +10,7 @@
 			<field name="target">new</field> 
 		</record>
 
-		<record model="ir.ui.view" id="create_attendee_form_view">
+		<record model="ir.ui.view" id="set_tax_numbering_wizard_form">
 			<field name="name">vit_dist_ppn.set_tax_numbering_wizard.form</field>
 			<field name="model">vit_dist_ppn.set_tax_numbering_wizard</field>
 			<field name="type">form</field>
@@ -48,9 +48,11 @@
 			</field>
 		</record>	
 
-	    <menuitem id="set_tax_numbering" 
-    	 parent="account.menu_finance_receivables" name="Set Tax Numbering" sequence="50" 
+
+	    <menuitem id="set_tax_numbering_menu" 
+    	 parent="value_added_tax" name="Set Tax Numbering" sequence="50" 
     	 action="set_tax_numbering_wizard" />
+
 			
 	</data>
 </openerp>
