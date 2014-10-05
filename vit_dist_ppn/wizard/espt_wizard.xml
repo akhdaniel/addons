@@ -1,0 +1,56 @@
+<openerp>
+	<data>
+
+        <!-- wizard action -->
+		<record model="ir.actions.act_window" id="export_espt_wizard"> 
+			<field name="name">Export e-SPT</field>
+			<field name="res_model">vit_dist_ppn.espt_wizard</field> 
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field> 
+		</record>
+
+		<record model="ir.ui.view" id="export_espt_wizard_form">
+			<field name="name">vit_dist_ppn.espt_wizard.form</field>
+			<field name="model">vit_dist_ppn.espt_wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Set Tax Numbering" version="7.0">
+					<group>
+						<field name="date_start" on_change="onchange_date_start(date_start, date_end)"/>
+						<field name="date_end"   on_change="onchange_date_start(date_start, date_end)"/>
+					</group>
+					<field name="invoice_ids" mode="tree">
+						<tree string="Invoices">
+							<field name="invoice_id"/>
+							<field name="amount"/>
+							<field name="customer"/>
+							<field name="npwp"/>
+							<field name="date"/>
+							<field name="tax_number"/>
+						</tree>
+					</field>
+
+					<footer>
+						<button type="special" 
+							 special="cancel" 
+							 string="Cancel" 
+							 icon="gtk-cancel"/>
+						
+						<button type="object" 
+							 name="export_espt"
+							 string="Export e-SPT" 
+							 icon="gtk-ok"
+							 />
+					</footer>
+				</form>
+			</field>
+		</record>	
+
+
+	    <menuitem id="export_espt_menu" 
+    	 parent="value_added_tax" name="Export e-SPT" sequence="60" 
+    	 action="export_espt_wizard" />
+			
+	</data>
+</openerp>
