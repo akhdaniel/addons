@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="work_order" 
+        string="Work Order With Signature" 
+        model="mrp.production.workcenter.line" 
+        name="mrp.production.workcenter.line" 
+        rml="vit_wo_print/report/work_order.rml" 
+        auto="False" 
+        header="True"/>          
+    </data> 
+</openerp>
