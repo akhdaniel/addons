@@ -77,6 +77,10 @@ class hr_overtime(osv.osv):
         x = xin + xpem
         jumlah[obj.id] = x
         self.write(cr,uid,ids,{'total_jam1':x})
+        #input tanggal
+        tgl = datetime.strptime(obj.date_to,"%Y-%m-%d %H:%M:%S")
+        tanggal = tgl.strftime("%Y-%m-%d")
+        self.write(cr,uid,ids,{'tanggal' : tanggal},context=context)
         return jumlah
 
     def _employee_get(obj, cr, uid, context=None):
@@ -115,7 +119,7 @@ class hr_overtime(osv.osv):
         'employee_id': fields.many2one('hr.employee', "Karyawan", select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
         'manager_id': fields.many2one('hr.employee', 'First Approval', invisible=False, readonly=True),
         'notes': fields.text('Catatan',readonly=True, states={'draft':[('readonly',False)]}),
-        'number_of_hours_temp': fields.float('Jam Terealisasikan'),#states={'draft':[('readonly',False)]}),
+        'number_of_hours_temp': fields.float('Perkiraan Jam Lembur'),#states={'draft':[('readonly',False)]}),
         'number_of_hours': fields.function(_compute_number_of_hours, method=True, string='Number of Hours', store=True),
         #'department_id':fields.related('employee_id', 'department_id', string='Department', type='many2one', relation='hr.department', readonly=True),
         'manager_id2': fields.many2one('hr.employee', 'Second Approval', readonly=True, help='This area is automaticly filled by the user who validate the leave with second level (If Leave type need second validation)'),
@@ -124,7 +128,7 @@ class hr_overtime(osv.osv):
         'overtime_type' : fields.many2one('hr.overtime.jam','Jenis Lembur',required=True),
         'total_jam':fields.function(_hitung_lembur,type='float',store=False, readonly=True,string='Total Jam Lembur'),
         'total_jam1':fields.float('jumlah_jam'),
-        'jam_lembur':fields.float("Jumlah Jam Lembur"),
+        'jam_lembur':fields.float("Jam Lembur Terealisasi"),
         'lembur_dari':fields.datetime('Perintah Lembur dari Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
         'lembur_sampai':fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
         'tanggal':fields.char('tanggal'),
@@ -133,7 +137,6 @@ class hr_overtime(osv.osv):
         'employee_id': _employee_get,
         'state': 'draft',
         'users_id': lambda obj, cr, uid, context: uid,
-        'tanggal' : fields.date.context_today,
     }
     _sql_constraints = [
         ('date_check', "CHECK ( number_of_hours_temp > 0 )", "The number of hours must be greater than 0 !"),
@@ -169,8 +172,8 @@ class hr_overtime(osv.osv):
         Also update the number_of_days.
         """
         # date_to has to be greater than date_from
-        if (date_from and date_to) and (date_from > date_to):
-            raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
+        # if (date_from and date_to) and (date_from > date_to):
+        #     raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
 
         result = {'value': {}}
 
@@ -194,8 +197,8 @@ class hr_overtime(osv.osv):
         """
 
         # date_to has to be greater than date_from
-        if (date_from and date_to) and (date_from > date_to):
-            raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
+        # if (date_from and date_to) and (date_from > date_to):
+        #     raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
 
         result = {'value': {}}
 
@@ -205,11 +208,11 @@ class hr_overtime(osv.osv):
             result['value']['number_of_hours_temp'] = diff_day#round(math.floor(diff_day))
         else:
             result['value']['number_of_hours_temp'] = 0
-        date_y =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").year
-        date_m =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").month
-        date_d =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").day
-        dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
-        #result['value']['tanggal'] = dates
+        # date_y =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").year
+        # date_m =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").month
+        # date_d =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").day
+        # dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
+        # result['value']['tanggal'] = dates
         return result
 
     def set_to_draft(self, cr, uid, ids, *args):

@@ -367,12 +367,7 @@
             <field name='name'>Libur Nasional</field>
             <field name='color_name'>red</field>            
         </record>
-        <!--workflow-->
-<!--         <record model="workflow.transition" id="holiday_draft2confirm"> 
-            <field name="act_from" ref="act_draft" />
-            <field name="act_to" ref="act_confirm" />
-            <field name='signal'>Signal_validate</field>
-        </record> -->
+
     </data>
 </openerp>
    

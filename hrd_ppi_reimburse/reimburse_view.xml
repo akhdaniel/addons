@@ -97,7 +97,7 @@
                 <group>
                 <group >
                     <field name='type' invisible="1"/>
-                     <field name="jenis" readonly="1" /> <!-- attrs="{'readonly':[('state','=','draft')]}"/-->
+                     <field name="jenis" invisible="1" /> <!-- attrs="{'readonly':[('state','=','draft')]}"/-->
                      <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1" readonly='1'/>
                      <field name="tahun" invisible="1"/>
                      <field name="employee_id" attrs="{'readonly': [('state','!=','draft')]}"/>

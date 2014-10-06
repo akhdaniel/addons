@@ -110,7 +110,7 @@ class permohonan_recruit(osv.osv):
                 stats = line.name                     
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
         lap_src = lap_obj.search(cr,uid,[('no','=',hasil.no_permohonan)])
         for lap in lap_obj.browse(cr,uid,lap_src) :
@@ -1214,8 +1214,8 @@ class hr_applicant(osv.osv):
         'country_id2':fields.many2one('res.country','Negara'),
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
-		'app_id' : fields.many2one('hr.job','Job'),
-        'dep_app' : fields.many2one('hr.department', 'Department'),
+		'app_id' : fields.many2one('hr.job','Job Selection', readonly=True),
+        'dep_app' : fields.many2one('hr.department', 'Department', readonly=True),
         'salary_proposed': fields.float('Proposed Salary'),
         'salary_proposed_botom_margin': fields.float('Standar Gaji', help="Batas range terendah"), 
         'salary_proposed_top_margin': fields.float('Standar Gaji', help="Batas range tertinggi"), 

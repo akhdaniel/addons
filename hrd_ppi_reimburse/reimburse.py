@@ -40,7 +40,6 @@ class reimburse(osv.osv):
         if context is None:
             context = {}
         context = dict(context, mail_create_nolog=True)
-        import pdb;pdb.set_trace()
         name=values['employee_id']
         thn = values['tahun']
         tipe = values['type']

@@ -41,12 +41,13 @@
                                         <field name='bukti_id'/>                                    
                                     </tree>
                                     <form> 
-                                    <group>    
-                                        <field name='analisa_id'/>                             
-                                    </group>
-                                    <group>                                                                            
-                                        <field name='bukti_id'/>
-                                    </group>     
+                                        <field name='tanggal1'/>
+                                        <field name='nama_penilai'/>
+                                        <field name='jabatan_penilai'/>
+                                        <field name="employee_id"/>  
+                                        <field name='persentase_penguasaan'/>
+                                        <field name='kesimpulan'/> 
+                                        <field name="rekomendasi_id"/> 
                                     </form>
                                 </field>
                             </group>

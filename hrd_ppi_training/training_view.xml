@@ -118,7 +118,7 @@
                     <field name="no" attrs="{'invisible': [('tes','=','SIO')]}"/>
                     <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>
                     <!--field name="subject"/-->
-                    <field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>                  
+                    <!--field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/-->                  
                     <field name="nama" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/> 
                     <field name='penyelenggara' attrs="{'invisible' : [('tes','!=','Eksternal')]}"/>
                     <field name='nama_sertifikat' attrs="{'invisible': [('tes','!=','SIO')]}"/>
@@ -129,8 +129,8 @@
                         <label for="durasi" string="Durasi" />
                             <div>
                                 
-                                    <field name="date_from" on_change="onchange_date_from(date_to, date_from)" attrs="{'invisible': [('state','=', 'draft')]}" class="oe_inline"/><label string=" s/d " class="oe_inline"/>
-                                    <field name="date_to" on_change="onchange_date_from(date_to, date_from)"  attrs="{'invisible': [('state','=', 'draft')]}" class="oe_inline"/>
+                                    <field name="date_from" on_change="onchange_date_from(date_to, date_from)" attrs="{'required': [('state','=', 'verify')],'invisible': [('state','=', 'draft')]}" class="oe_inline"/><label string=" s/d " class="oe_inline"/>
+                                    <field name="date_to" on_change="onchange_date_from(date_to, date_from)"  attrs="{'required': [('state','=', 'verify')],'invisible': [('state','=', 'draft')]}" class="oe_inline"/>
                                 
                                 <div>
                                     <field name="durasi" attrs="{'invisible': [('state','=', 'draft')]}" class="oe_inline"/> Hari

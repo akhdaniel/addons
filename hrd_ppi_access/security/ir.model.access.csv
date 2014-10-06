@@ -28,7 +28,10 @@ access_hr_iso_manager,iso_manager,hrd_ppi_training.model_iso,base.group_hr_manag
 access_hr_training_sio_manager,hr_training_sio_manager,hrd_ppi_training.model_hr_training_sio,base.group_hr_manager,1,1,1,1
 access_hr_daf_pelamar_manager,hr_daf_pelamar_manager,hrd_ppi.model_hr_daf_pelamar,base.group_hr_manager,1,1,1,1
 access_hr_bln_libur_manager,hr_bln_libur_manager,hrd_ppi_leave.model_hr_bln_libur,base.group_hr_manager,1,1,1,1
-
+access_hr_extitle_manager,hr_extitle_manager,hrd_ppi.model_hr_extitle,base.group_hr_manager,1,1,1,1
+access_hr_employs_clas_manager,hr_employs_clas_manager,hrd_ppi.model_hr_employs_clas,base.group_hr_manager,1,1,1,1
+access_hr_employs_wfield_manager,hr_employs_wfield_manager,hrd_ppi.model_hr_employs_wfield,base.group_hr_manager,1,1,1,1
+access_hr_employs_pansion_manager,hr_employs_pansion_manager,hrd_ppi.model_hr_employs_pansion,base.group_hr_manager,1,1,1,1
 
 access_reimburse_hr_user,reimburse_hr_user,hrd_ppi_reimburse.model_reimburse,base.group_hr_user,1,1,1,1
 access_hr_non_emp_hr_user,hr_non_emp_hr_user,hrd_ppi_training.model_hr_non_emp,base.group_hr_user,1,1,1,1
@@ -80,6 +83,19 @@ access_hr_sertifikat_hr_user,sertifikat_hr_user,hrd_ppi_training.model_sertifika
 access_hr_training_sio_hr_user,hr_training_sio_hr_user,hrd_ppi_training.model_hr_training_sio,base.group_hr_user,1,1,1,1
 access_hr_ptkp_hr_user,hr_ptkp_hr_user,hrd_ppi_payroll.model_hr_ptkp,base.group_hr_user,1,1,1,1
 access_hr_pkp_hr_user,hr_pkp_hr_user,hrd_ppi_payroll.model_hr_pkp,base.group_hr_user,1,1,1,1
+access_hr_recruit_agama_user,hr_recruit_agama_user,hrd_ppi.model_hr_recruit_agama,base.group_hr_user,1,1,1,1
+access_survey_page_user,survey_page_user,survey.model_survey_page,base.group_hr_user,1,1,1,1
+access_survey_history_user,survey_history_user,survey.model_survey_history,base.group_hr_user,1,1,1,1
+access_survey_question_user,survey_question_user,survey.model_survey_question,base.group_hr_user,1,1,1,1
+access_survey_answer_user,survey_answer_user,survey.model_survey_answer,base.group_hr_user,1,1,1,1
+access_survey_response_user,survey_response_user,survey.model_survey_response,base.group_hr_user,1,1,1,1
+access_survey_question_column_heading_user,survey_question_column_heading_user,survey.model_survey_question_column_heading,base.group_hr_user,1,1,1,
+access_survey_response_line,survey_response_line_user,survey.model_survey_response_line,base.group_hr_user,1,1,1,1
+access_survey_response_answer,survey_response_answer_user,survey.model_survey_response_answer,base.group_hr_user,1,1,1,1
+access_hr_extitle_user,hr_extitle_user,hrd_ppi.model_hr_extitle,base.group_hr_user,1,1,1,1
+access_hr_employs_clas_user,hr_employs_clas_user,hrd_ppi.model_hr_employs_clas,base.group_hr_user,1,1,1,1
+access_hr_employs_wfield_user,hr_employs_wfield_user,hrd_ppi.model_hr_employs_wfield,base.group_hr_user,1,1,1,1
+access_hr_employs_pansion_user,hr_employs_pansion_user,hrd_ppi.model_hr_employs_pansion,base.group_hr_user,1,1,1,1
 
 access_reimburse_user,reimburse_user,hrd_ppi_reimburse.model_reimburse,base.group_user,1,0,0,0
 access_hr_non_emp_user,hr_non_emp_user,hrd_ppi_training.model_hr_non_emp,base.group_user,1,0,0,0
@@ -188,6 +204,7 @@ access_hr_sertifikat_hr_dept,sertifikat_hr_dept,hrd_ppi_training.model_sertifika
 access_hr_iso_hr_dept,iso_hr_dept,hrd_ppi_training.model_iso,group_hr_dept,1,1,1,1
 access_hr_applicant_hr_dept,hr_applicant_hr_dept,hrd_ppi.model_hr_applicant,group_hr_dept,1,1,0,0
 access_hr_training_analisa_dept,hr_training_analisa_dep,hrd_ppi_training.model_hr_training_analisa,group_hr_dept,1,1,1,1
+access_hr_recruitment_degree_dept,hr_recruitment_degree_dep,hr_recruitment.model_hr_recruitment_degree,group_hr_dept,1,1,1,1
 
 access_hr_holiday_app_dep2,hr_holiday_app_dep2,hrd_ppi_leave.model_hr_holidays,hrd_ppi.group_hr_aprove_dep2,1,1,1
 

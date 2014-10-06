@@ -355,6 +355,7 @@ class hr_payslip(osv.osv):
             jumlah_libur = 0
             tot_semua = 0    
             incent = 0
+            #import pdb;pdb.set_trace()
             for day in range(0, nb_of_days):
             	# cek dari jadwal kerja, berapa jam sehari employee bekerja            	
                 working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)
@@ -415,12 +416,14 @@ class hr_payslip(osv.osv):
                     urut_title=float(urut_title)
                    # import pdb;pdb.set_trace()
                     if real_working_hours_on_day > 0:
+                        #import pdb;pdb.set_trace()
                         if contract.jenis_lembur == 'overtime' or no_urut < 100 :
                             datas = day_from + timedelta(days=day)
                             yr = datas.year
                             bln = datas.month
                             hr = datas.day
-                            tanggal = str(yr) + "-" + str(bln) + "-" + str(hr)
+                            #tanggal = str(yr) + "-" + str(bln) + "-" + str(hr)
+                            tanggal = datas.strftime("%Y-%m-%d")
                             obj_over = self.pool.get('hr.overtime')
                             src_over = obj_over.search(cr,uid,[('employee_id','=',employee_id),('tanggal','=',tanggal),('state','=','validate')])
                             for overt in obj_over.browse(cr,uid,src_over) :

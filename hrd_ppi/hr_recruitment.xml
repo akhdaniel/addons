@@ -11,8 +11,11 @@
                     <button string="Send For Approval" type="object" name='action_submit' attrs="{'invisible': [('states_id','!=','submit')]}" groups="hrd_ppi.group_hr_department,base.group_hr_user"/>
                     <button string='Approval' type='object' name='action_verify' attrs="{'invisible': [('states_id','!=','approval')]}" groups="hrd_ppi.group_hr_aprove_dep1"/>
                     <button string='Approval' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}" groups="hrd_ppi.group_hr_aprove_coo,base.group_hr_manager"/>
-                    <button string='Cancel' type='object' name='cancel'/>
-                    <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}" groups="base.group_hr_user"/>    
+                    <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval')]}" 
+                    group="hrd_ppi.group_hr_aprove_dep1"/>
+                    <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval1')]}"
+                    groups="hrd_ppi.group_hr_aprove_coo,base.group_hr_manager"/>
+                    <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}" groups="base.group_hr_user,base.group_hr_manager"/>    
                     <!-- <field name='state' widget='statusbar'/>       -->
                     <!--field name='states_id' widget='statusbar'/-->           
                 </header> 
@@ -21,8 +24,8 @@
                         <group colspan="2">
                             <field name="jenis_permohonan"/> 
                             <field name='no_permohonan'/>
-                            <field name='status_rec'/>
-                            <field name='states_id'/>
+                            <field name='status_rec' invisible="1"/>
+                            <field name='states_id' invisible="1"/>
                         </group>
 
                         <label for="name" class="oe_edit_only"/>

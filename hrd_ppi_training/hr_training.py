@@ -289,7 +289,6 @@ class analisa(osv.osv):
     def _get_number_of_days(self, date_from, date_to):
         """Returns a float equals to the timedelta between two dates given as string."""
         #import pdb;pdb.set_trace()
-        import pdb;pdb.set_trace()
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
         from_dt = datetime.strptime(date_from, DATETIME_FORMAT)
         to_dt = datetime.strptime(date_to, DATETIME_FORMAT)
@@ -312,7 +311,7 @@ class analisa(osv.osv):
         # No date_to set so far: automatically compute one 8 hours later
         if date_from and not date_to:
             #import pdb;pdb.set_trace()
-            date_to_with_delta = datetime.strptime(date_from, tools.DEFAULT_SERVER_DATETIME_FORMAT) + datetime.timedelta(hours=8)
+            date_to_with_delta = datetime.strptime(date_from, tools.DEFAULT_SERVER_DATETIME_FORMAT) #+ datetime.timedelta(hours=8)
             result['value']['date_to'] = str(date_to_with_delta)
 
         # Compute and update the number of days
@@ -382,7 +381,7 @@ class analisa(osv.osv):
         'paket_id':fields.many2one('hr_training.paket','Paket Pelatihan'),
         'subject_id':fields.many2one('hr_training.subject','Nama Pelatihan',required=True, store=True),
         'penyelenggara':fields.char('Lembaga Penyelenggara',128),
-        'mgt_id':fields.many2one('hr_training.mgt_company','MGTonchang Company'),
+        'mgt_id':fields.many2one('hr_training.mgt_company','MGT Company'),
         'nama':fields.char('Nama Trainer',50,),
         'tanggal':fields.date('Tanggal Penyelenggaraan'),
         'catatan':fields.char('Catatan Umum',60,),
