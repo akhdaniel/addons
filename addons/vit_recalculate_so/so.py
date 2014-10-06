@@ -40,7 +40,17 @@ class sale_order(osv.osv):
 	        		cr.execute('delete from sale_order_line where id = %d' %(id))
 	        	else:
 	        		cr.execute('update sale_order_line set price_unit=%f, discount=%f, qty_hand=%s, outgoing =%s, forecast=%s  where id=%d' %(price,discount,qty_available,outgoing_qty,virtual_available,id))
+       
+
         self.write(cr,uid,ids,{'order_line':[(0,0,{'name':'-'})]},context=context)    		
+        
+
+        for so2 in self.browse(cr, uid, ids, context=context):
+        	for line in so2.order_line:
+	        	id = line.id	
+	        	if line.name == "-":
+	        		cr.execute('delete from sale_order_line where id = %d' %(id))
+	     
         return True
         
 sale_order()
