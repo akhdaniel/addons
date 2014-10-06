@@ -60,7 +60,6 @@ class hr_attendance(osv.osv):
 			cr.execute('DELETE FROM hr_attendance WHERE id IN %s ',(tuple(latestID),))
 		# execute to overtime
 		if (vals['action'] == 'sign_out') and laterID == [] :
-			import pdb;pdb.set_trace()
 			dates = vals['name'] 
 			ye = datetime.strptime(dates,"%Y-%m-%d %H:%M:%S")
 			date_now = ye.strftime("%Y-%m-%d")
