@@ -1,0 +1,32 @@
+<openerp>
+	<data>
+		<!-- action list espt -->
+		<record id="action_espt_list" model="ir.actions.act_window">
+			<field name="name">List e-SPT</field>
+			<field name="res_model">vit_dist_ppn.espt</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="view_espt_tree" model="ir.ui.view">
+		    <field name="name">vit_dist_ppn_espt_tree</field>
+		    <field name="model">vit_dist_ppn.espt</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list espt">
+					<field name="invoice_id" />
+					<field name="amount"     />
+					<field name="date"       />
+					<field name="tax_number" />
+					<field name="customer"   />
+					<field name="npwp"	    />	            
+		        </tree>    
+		    </field>
+		</record>
+
+	    <menuitem id="list_espt_menu" 
+    	 parent="value_added_tax" name="List e-SPT" sequence="70" 
+    	 action="action_espt_list" />
+
+
+
+	</data>
+</openerp>

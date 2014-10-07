@@ -1,7 +1,7 @@
 {
 	"name": "PPN Distributor", 
 	"version": "1.0", 
-	"depends": ["base","sale","account"], 
+	"depends": ["base","sale","account","web"], 
 	"author": "vitraining.com", 
 	"category": "Purchasing", 
 	"description": """\
@@ -22,7 +22,12 @@
 		"partner.xml",
 		"reports/faktur_pajak.xml",
 		"company.xml",
+		"espt.xml",
 	],
+	# "js" : ["static/src/js/export_espt.js"],
+	# "qweb" : ["static/src/xml/export_espt.xml"],
+
+
 	"installable": True,
 	"auto_install": False,
 }
