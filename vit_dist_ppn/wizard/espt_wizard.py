@@ -1,7 +1,11 @@
 from osv import osv,fields
 from openerp.tools.translate import _
 import datetime 
+import csv,xlwt
 
+#####################################################################################
+# class wizard
+#####################################################################################
 class espt_wizard(osv.TransientModel): 
 	_name = 'vit_dist_ppn.espt_wizard' 
 
@@ -9,8 +13,7 @@ class espt_wizard(osv.TransientModel):
 		'date_start' : fields.date('Invoice Date Start'),
 		'date_end'   : fields.date('Invoice Date End'),
         'invoice_ids' : fields.one2many('vit_dist_ppn.espt_invoice_wizard',
-                        'wizard_id', 'Attendees'),		
-
+                        'wizard_id', 'Attendees'),
 	}
 
 	_defaults = {
@@ -18,6 +21,9 @@ class espt_wizard(osv.TransientModel):
 		'date_end'    : lambda *a : (datetime.date(datetime.date.today().year, datetime.date.today().month + 1, 1) - datetime.timedelta(days = 1)).strftime('%Y-%m-%d'),	
 	}
 
+	#####################################################################################
+	# cari invoice sesuai kriteria
+	#####################################################################################
 	def find_invoices(self, cr, uid, date_start, date_end):
 		res = {}
 		context={}
@@ -57,24 +63,62 @@ class espt_wizard(osv.TransientModel):
 		res = {'value' : {'invoice_ids': invoice_data} }
 		return res
 
+	#####################################################################################
+	# tanggal awal berubah
+	#####################################################################################
 	def onchange_date_start(self, cr, uid, ids, date_start, date_end):
 		results = self.find_invoices(cr, uid, date_start, date_end)
 		return results		
 
+	#####################################################################################
+	# tanggal akhir berubah
+	#####################################################################################
 	def onchange_date_end(self, cr, uid, ids, date_start, date_end):
 		results = self.find_invoices(cr, uid, date_start, date_end)
 		return results
 
+	#####################################################################################
+	# export to CSV file and download
+	#####################################################################################
 	def export_espt(self, cr, uid, ids, context=None):
+		
 		invoice_obj = self.pool.get('account.invoice')
+		espt_obj    = self.pool.get('vit_dist_ppn.espt')
+
 		wizard = self.browse(cr, uid, ids[0], context=context) 
+		content = []
+
+		#####################################################################################
+		# prepare espt data
+		#####################################################################################
+		cr.execute('delete from vit_dist_ppn_espt')
+
 		for wz_inv in wizard.invoice_ids:
 			data = {'espt_export' : True, 
 				'espt_export_date': datetime.date.today().strftime('%Y-%m-%d') }
 			invoice_obj.write(cr, uid, [wz_inv.invoice_id.id], data, context=context)
 
-		return {}
 
+			esdata = {
+				'invoice_id' : wz_inv.invoice_id.id, 
+				'amount'     : wz_inv.amount, 
+				'date'       : wz_inv.date, 
+				'tax_number' : wz_inv.tax_number,
+				'customer'   : wz_inv.invoice_id.partner_id.name,
+				'npwp'		 : wz_inv.invoice_id.partner_id.npwp
+			}
+			espt_obj.create(cr, uid, esdata, context=context)
+		
+		return {
+	        'res_model': 'vit_dist_ppn.espt',
+	        'type': 'ir.actions.act_window',
+	        'view_mode': 'tree',
+	        'context': context,
+		}
+
+#####################################################################################
+# untuk nampung wizard lines
+#####################################################################################
 class espt_invoice_wizard(osv.TransientModel):
 	_name = 'vit_dist_ppn.espt_invoice_wizard' 
 	_columns = {
