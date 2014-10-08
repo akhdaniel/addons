@@ -143,7 +143,7 @@ class master_discount(osv.osv):
 		'is_percent' : fields.boolean('Is Percent'),
 		'is_flat' : fields.boolean('Flat'),
 		'type' :fields.selection([('regular','Regular Discount'),('promo','Promo Discount'),('extra','Extra Discount'),('cash','Cash Discount'),('mix','Mix Discount')],string='Type Discount',required=True),
-		'min_qty_product' : fields.float('Min. Product',digits_compute=dp.get_precision('Product Unit of Measure')),
+		'min_qty_product' : fields.float('Min. Product Item',digits_compute=dp.get_precision('Product Unit of Measure')),
 		'multi2' : fields.boolean('Value Condition'),
 		'multi3' : fields.boolean('Multiples for New Product'),
 		# 'multi_sel' : fields.selection([('general','General Multiples'),('specific','Specific Multiples for New Product')],string="Multiples"),
@@ -151,6 +151,7 @@ class master_discount(osv.osv):
 		'qty2_2' : fields.float('Bonus Qty', digits_compute=dp.get_precision('Product Unit of Measure')),
 		'qty2' : fields.function(_qty_all_2,type="float",string='Bonus Qty',digits_compute=dp.get_precision('Product Unit of Measure')),
 		'is_category': fields.boolean('Category Condition'),
+		'location_id' : fields.many2one('stock.location','Location'),
 
 		} 
 
@@ -163,14 +164,15 @@ class master_discount(osv.osv):
 	def create(self, cr, uid, vals, context=None):
 		viv = vals['partner_id']
 		viv_t = vals['type']
+		viv_l = vals[location_id]
 		viva = self.pool.get('master.discount')
-		viva_s = viva.search(cr,uid,[('partner_id','=',viv),('type','=',viv_t)])
+		viva_s = viva.search(cr,uid,[('partner_id','=',viv),('type','=',viv_t),('location_id','=',viv_l)])
 		vival = viva.browse(cr,uid,viva_s)
 
 		for v in vival:
 			vivals = v.is_active
 			if vivals :
-				raise osv.except_osv(_('Error!'), _('Promo untuk Principle dan Type discount ini ada yang masih aktif!'))
+				raise osv.except_osv(_('Error!'), _('Promo untuk Principle, Lokasi dan Type discount ini ada yang masih aktif!'))
 
 		return super(master_discount, self).create(cr, uid, vals, context=context)   
 

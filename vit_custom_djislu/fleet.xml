@@ -28,8 +28,10 @@
                 <tree string="Picking List">
                     <field name="name"/>
                     <field name="date"/>
+                    <field name="user_id" invisible="0"/>
                     <field name="based_route_id"/>                    
                     <field name="car_id"/>
+                    <field name="driver_id2"/>
                     <field name="location_id"/>
                     <field name="state"/>
                 </tree>
@@ -50,14 +52,15 @@
                         class="oe_highlight"/>   -->                                             
                     <button string="Deliver" type="object" 
                         states="draft" name="action_on_deliver"
-                        groups="stock.group_stock_user,stock.group_stock_manager" 
-                        class="oe_highlight" />                 
+                        groups="stock.group_stock_user,stock.group_stock_manager"/>                 
                                              
                     <button string="Delivered" type="object" 
                         states="on_deliver" name="action_return"
-                        groups="stock.group_stock_user,stock.group_stock_manager" 
-                        class="oe_highlight" />
+                        groups="stock.group_stock_user,stock.group_stock_manager"/>
 
+                    <button string="Set to Draft" type="object" 
+                        states="on_deliver" name="action_draft"
+                        groups="stock.group_stock_user,stock.group_stock_manager"/>
 
                     <field name="state" widget="statusbar"/>
 
@@ -72,7 +75,7 @@
                             <field name="location_id"/>                     
                         </group>
                         <group >
-                            
+                            <field name="user_id"/>
                             <field name="car_id" on_change="onchange_volume(car_id)" attrs="{'readonly': [('state','!=','draft')]}" /> 
                             <field name="driver_id2" attrs="{'readonly': [('state','!=','draft')]}"/>
                             <field name="volume" attrs="{'readonly': [('state','!=','draft')]}"/>
@@ -82,15 +85,70 @@
                     </group>
                     <notebook colspan="4">
                         <page string="Invoice List">
-                            <field view_mode="tree,form" name="inv_ids" nolabel="1"/>
+                            <field view_mode="tree,form" name="inv_ids" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}">
+                                <tree string="Faktur" editable="bottom">
+                                    <field name="partner_id" readonly="True"/>
+                                    <!-- <field name="number"/> -->
+                                    <field name="origin" readonly="True"/>
+                                    <field name="date_invoice" readonly="True"/>
+                                    <field name="volume" sum="Total Volume"/>
+                                    <field name="state"/>
+                                    <field name="note"/>
 
+                                    <button name="invoice_open" icon="STOCK_APPLY" states="deliver,ttf" string="Validate" class="oe_highlight" groups="base.group_user" attrs="{'invisible':[('state', 'in', ('draft','open','cancel','paid'))]}"/>
+
+                                    <button name="action_ttf" states="deliver" icon="STOCK_MISSING_IMAGE" string="TTF" type="object"/>
+
+
+                                    <button name="258" type="action" states="open" icon="STOCK_REVERT_TO_SAVED" string="CN Conf" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'open')]}"/>
+
+                                    <button name="invoice_cancel" states="deliver,ttf" icon="STOCK_CANCEL" string="Cancel" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'open')]}"/>
+
+                                    <button name="action_cancel_draft" icon="STOCK_NEW" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
+                                </tree>  
+                            </field>      
                         </page>
-                    </notebook>            
+                        <page string="Product List">                          
+                            <field view_mode="tree" name="list_product_ids" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}">
+                                <tree string="List" editable="bottom">
+                                <field name="product_id"/>
+                                <field name="big_qty"/>
+                                <field name="big_uom"/>
+                                <field name="small_qty"/>
+                                <field name="small_uom"/>
+                            </tree>
+                            </field>    
+                        </page>                      
+                    </notebook>   
+                    <field name="note" nolabel="1" placeholder="Note..."/>        
 <!--                 </form> -->  
                 </sheet>  
             </form>
             </field>
         </record>        
+
+        <record id="view_sj_search" model="ir.ui.view">
+            <field name="name">surat.jalan.search</field>
+            <field name="model">surat.jalan</field>
+            <field name="arch" type="xml">
+                <search string="Accounts">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="Code"/>
+                    <filter icon="terp-sale" string="Draft" domain="[('state','=','draft')]"/>
+                    <filter icon="terp-sale" string="Delivery" domain="[('type','=','on_deliver')]"/>
+                    <filter icon="terp-sale" string="Return" domain="[('type','=','return')]"/>
+                    <filter name="mypicking" string="My Picking List" domain="[('user_id','=',uid)]" help="My Picking List" invisible="0"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Based Route" icon="terp-folder-orange" domain="" context="{'group_by':'based_route_id'}"/>
+                        <filter string="Location" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'location_id'}"/>
+                        <filter string="User" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'user_id'}"/>
+                        <filter string="state" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'state'}"/>
+                        <filter string="Car" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'car_id'}"/>
+                        <filter string="Driver" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'driver_id2'}"/>
+
+                    </group>
+                </search>
+            </field>
+        </record>
 
         <record id="action_sj" model="ir.actions.act_window">
             <field name="name">Picking List</field>
@@ -98,7 +156,16 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_sj_tree"/>
-<!--             <field name="search_view_id" ref="view_partner_pricelist_items_search"/> -->
+            <field name="search_view_id" ref="view_sj_search"/>
+            <field name="context">{'contact_display': 'partner_address', 'search_default_mypicking': 1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Sorry....
+              </p><p>
+                No record now...
+              </p>
+            </field>
+
         </record>
 
         <menuitem action="action_sj" id="menu_action_sj" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/>      
