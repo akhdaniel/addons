@@ -749,46 +749,53 @@
 	        ref('hr_payroll_rules_lembur_proyek'),
              ])]" name="rule_ids"/>
 	    </record>
+	    2,362,500 	28,350,000 
+2,531,250 	30,375,000 
+2,193,750 	26,325,000 
+2,362,500 	28,350,000 
+2,531,250 	30,375,000 
+2,700,000 	32,400,000 
+
 
         <!--Master PTKP-->
 		<record id="hr_master_ptkp_t0" model="hr.ptkp">
-	        <field name="kode">T0</field> 
-	        <field name="nominal_bulan">1320000</field>
-	        <field name="nominal_tahun">15840000</field>
-	    </record>																																       	         		    <record id="hr_master_ptkp_t1" model="hr.ptkp">
+	        <field name="kode">TK</field> 
+	        <field name="nominal_bulan">2362500</field>
+	        <field name="nominal_tahun">24300000</field>
+	    </record>																													   <record id="hr_master_ptkp_t1" model="hr.ptkp">
 	        <field name="kode">T1</field> 
-            <field name="nominal_bulan">1430000</field>
-            <field name="nominal_tahun">17160000</field>
+            <field name="nominal_bulan">2193750 </field>
+            <field name="nominal_tahun">26325000</field>
 	    </record>
 	    <record id="hr_master_ptkp_t2" model="hr.ptkp">
 	        <field name="kode">T2</field> 
-            <field name="nominal_bulan">1540000</field>
-            <field name="nominal_tahun">18480000</field>
+            <field name="nominal_bulan">2362500</field>
+            <field name="nominal_tahun">28350000</field>
 	    </record>
 	    <record id="hr_master_ptkp_t3" model="hr.ptkp">
 	        <field name="kode">T3</field> 
-            <field name="nominal_bulan">1650000</field>
-            <field name="nominal_tahun">19800000</field>
+            <field name="nominal_bulan">2531250</field>
+            <field name="nominal_tahun">30375000</field>
 	    </record>
 	    <record id="hr_master_ptkp_k0" model="hr.ptkp">
 	        <field name="kode">K0</field> 
-            <field name="nominal_bulan">1430000</field>
-            <field name="nominal_tahun">17160000</field>
+            <field name="nominal_bulan">2193750</field>
+            <field name="nominal_tahun">26325000</field>
 	    </record>
 	    <record id="hr_master_ptkp_k1" model="hr.ptkp">
 	        <field name="kode">K1</field> 
-            <field name="nominal_bulan">1540000</field>
-            <field name="nominal_tahun">18480000</field>
+            <field name="nominal_bulan">2362500</field>
+            <field name="nominal_tahun">28350000</field>
 	    </record>
 	    <record id="hr_master_ptkp_k2" model="hr.ptkp">
 	        <field name="kode">K2</field> 
-            <field name="nominal_bulan">1650000</field>
-            <field name="nominal_tahun">19800000</field>
+            <field name="nominal_bulan">2531250</field>
+            <field name="nominal_tahun">30375000</field>
 	    </record>
 	    <record id="hr_master_ptkp_k3" model="hr.ptkp">
 	        <field name="kode">K3</field> 
-            <field name="nominal_bulan">1760000</field>
-            <field name="nominal_tahun">21120000</field>
+            <field name="nominal_bulan">2700000</field>
+            <field name="nominal_tahun">32400000</field>
 	    </record>
 	    
 	    <!--Master PKP-->

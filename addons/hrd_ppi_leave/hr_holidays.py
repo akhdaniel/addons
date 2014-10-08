@@ -79,10 +79,10 @@ class hr_holidays(osv.osv):
         manager = ids2 and ids2[0] or False
         self.holidays_first_validate_notificate(cr, uid, ids, context=context)
         objk = self.browse(cr,uid,ids)[0] 
-        if objk.employee_id.user_id.id == uid :
-            return True
-        else :
-            return self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})
+        # if objk.employee_id.user_id.id == uid :
+        #     return True
+        # else :
+        return self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})
 
     def holidays_validate(self, cr, uid, ids, context=None):
         self.check_holidays(cr, uid, ids, context=context)
@@ -90,8 +90,8 @@ class hr_holidays(osv.osv):
         ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
         manager = ids2 and ids2[0] or False
         data_holiday = self.browse(cr, uid, ids)
-        if data_holiday[0].employee_id.user_id.id != uid :        
-            self.write(cr, uid, ids, {'state':'validate'})
+        #if data_holiday[0].employee_id.user_id.id != uid :        
+        self.write(cr, uid, ids, {'state':'validate'})
         for record in data_holiday:
             if record.double_validation:
                 self.write(cr, uid, [record.id], {'manager_id2': manager})
@@ -165,7 +165,7 @@ class hr_holidays(osv.osv):
         'limit_cuti':fields.related('holiday_status_id','limit_cuti',type='boolean',relation='hr.holidays.status',string='Limit Cuti',readonly=True),
         'is_edit':fields.boolean('Kunci ?',required=True),
         'holiday_type': fields.selection([('employee','By Employee'),('lokasi','Lokasi')], 'Allocation Mode', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}, help='By Employee: Allocation/Request for individual Employee, By Employee Tag: Allocation/Request for group of employees in category', required=True),
-        'lokasi_id': fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
+        'lokasi_id': fields.selection([('karawang','Bandung'),('tanggerang','Jakarta')],'Alamat Kantor', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
         'category_id': fields.many2one('hr.employee.category', "Employee Tag"),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
     }
