@@ -24,6 +24,7 @@
 	'partner.xml',
     'sales.xml',
     'fleet.xml',
+    'invoice.xml',
 	'groups/groups.xml',
     'workflow/picking_list_workflow.xml',],
     'data': [],
