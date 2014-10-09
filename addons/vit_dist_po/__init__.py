@@ -1,1 +1,1 @@
-import purchase,product
+import purchase

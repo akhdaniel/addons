@@ -33,7 +33,6 @@ For PT.DJISLU
     'depends': ['purchase','product'],
     'data': [
         'purchase_view.xml',
-        'product_view.xml',
     ],
     'test': [
     ],
