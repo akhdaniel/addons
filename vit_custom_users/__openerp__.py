@@ -30,7 +30,7 @@ Location assign for Users
     """,
     'author': 'vitraining.com',
     'website': 'http://www.vitraining.com',
-    'depends': ['purchase','product','vit_dist_po'],
+    'depends': ['purchase','product'],
     'data': [
         # 'security/hr_security.xml',
         'res_user_view.xml',
