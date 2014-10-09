@@ -7,18 +7,27 @@
         string="Faktur" 
         model="sale.order" 
         name="so" 
-        rml="vit_faktur_and picking_print/report/so.rml" 
+        rml="vit_faktur_and_picking_print/report/so.rml" 
         auto="False" 
         header="False"/>  
 
         <report 
         id="picking" 
-        string="Picking List" 
+        string="Picking List." 
         model="surat.jalan" 
         name="picking" 
-        rml="vit_faktur_and picking_print/report/picking.rml" 
+        rml="vit_faktur_and_picking_print/report/picking.rml" 
         auto="False" 
         header="False"/> 
        
+        <report 
+        id="invoice2" 
+        string="Faktur" 
+        model="account.invoice" 
+        name="invoice2" 
+        rml="vit_faktur_and_picking_print/report/invoice2.rml" 
+        auto="False" 
+        header="False"/> 
+
     </data> 
 </openerp>

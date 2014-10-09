@@ -5,4 +5,4 @@ class invoice2(report_sxw.rml_parse):
         super(invoice2, self).__init__(cr, uid, name, context) 
         self.localcontext.update({ 'time': time, }) 
         
-report_sxw.report_sxw('report.invoice2', 'surat.jalan', 'addons/vit_faktur_and_picking_print/report/invoice2.rml', parser=invoice2,) 
+report_sxw.report_sxw('report.invoice2', 'account.invoice', 'addons/vit_faktur_and_picking_print/report/invoice2.rml', parser=invoice2,) 
