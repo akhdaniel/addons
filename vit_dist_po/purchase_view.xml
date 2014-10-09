@@ -48,13 +48,11 @@
                         </div>
                         <group >
                             <group col="8">
-                                <group>
-                                    <label for="partner_code" string="Supplier"/>
-                                    <div>
-                                        <field name="partner_code" class="oe_inline"/>  -  
-                                        <field name="partner_id" class="oe_inline" on_change="onchange_partner_id(partner_id,date_order,location_id)" context=" {'search_default_supplier':1,'default_supplier':1,'default_customer':0}" domain="[('supplier','=',True)]"/>
-                                    </div>
-                                    <field name="location_id" on_change="onchange_partner_id(partner_id,date_order,location_id)" groups="stock.group_locations"/>
+                                <group> 
+                                    <field name="partner_id" class="oe_inline" invisible="True"/>
+                                    <field name="partner_x" class="oe_inline" on_change="onchange_partner_x(partner_x,date_order)"/>
+                                    <field name="location_id" groups="stock.group_locations" invisible="True"/>
+                                    <field name="loc_x" on_change="onchange_locx(loc_x,location_id)" groups="stock.group_locations"/>
                                 </group>
                                 <group>
                                     <field name="partner_ref"/>
@@ -70,51 +68,61 @@
                                 <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                             </group>
                             <group col="8" class="oe_subtotal_footer">
-                                <field name="r1" class="oe_inline"/>
-                                <field name="percent_r1" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4)"/> 
-                                <field name="volume_r1" class="oe_inline"/> 
-                                <field name="weight_r1" class="oe_inline"/> 
-                                <newline/>
+                                <field name="r1" class="oe_inline"/> <field name="percent_r1" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r1" class="oe_inline"/><field name="weight_r1" class="oe_inline"/> <newline/>
                                 <field name="r2" class="oe_inline"/> <field name="percent_r2" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r2" class="oe_inline"/> <field name="weight_r2" class="oe_inline"/><newline/>
                                 <field name="r3" class="oe_inline"/> <field name="percent_r3" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r3" class="oe_inline"/> <field name="weight_r3" class="oe_inline"/><newline/>
                                 <field name="r4" class="oe_inline"/> <field name="percent_r4" class="oe_inline" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4)"/> <field name="volume_r4" class="oe_inline"/> <field name="weight_r4" class="oe_inline"/><newline/>
-                            </group>
-                            <group>
-                            </group>
-                            <group class="oe_subtotal_footer oe_right">
-                                <field name="volume_tot"/>
-                                <field name="weight_tot"/>
+                                <button name="act_calculate" states="draft" type="object" string="Calculate" class="oe_highlight"/>
+                                <group colspan="3"/>
+                                <group colspan="2">
+                                <div>
+                                    <field name="volume_tot" class="oe_subtotal_footer_separator oe_inline"/></div>
+                                </group>
+                                <group colspan="2">
+                                <div>
+                                    <field name="weight_tot" class="oe_subtotal_footer_separator oe_inline"/></div>
+                                </group>
                             </group>
                         </group>
                         <notebook>
                             <page string="Purchase Order">
                                 <field name="order_line">
                                     <tree string="Purchase Order Lines" editable="botom">
-                                        <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
+                                        <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" invisible="1"/>
+                                        <field name="name" readonly="1"/>
                                         <field name="barcode" readonly="1"/>
-                                        <field name="int_code" readonly="1"/>
-                                        <field name="name" invisible="1"/>
+                                        <field name="int_code" string="Intern. Ref." readonly="1"/>
                                         <field name="date_planned" readonly="1" invisible="1"/>
                                         <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                                         <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
                                         <field name="suggested_order" readonly="1"/>                    
-                                        <field name="adjustment" on_change="onchange_adj(adjustment, suggested_order,product_uom,price_unit)"/>
-                                        <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
+                                        <field name="adjustment" on_change="onchange_adj(product_id,adjustment, suggested_order,product_uom,price_unit,parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume)"/>
+                                        <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+                                        <field name="qty2" invisible="1"/>
                                         <field name="product_uom" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
                                         <field name="price_unit" readonly="1"/>
                                         <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]" invisible="1"/>
                                         <field name="price_subtotal"/>                
-                                        <field name="prod_weight" readonly="1"/>             
-                                        <field name="prod_volume" readonly="1"/>
+                                        <field name="prod_weight" />             
+                                        <field name="prod_volume" />
                                         <field name="avgMT" readonly="1"/>
                                         <field name="avgGT" readonly="1"/>
                                         <field name="bufMT" readonly="1"/>
                                         <field name="bufGT" readonly="1"/>
-                                        <field name="sales_3m" readonly="1"/>                   
-                                        <field name="stock_current" readonly="1"/>                  
-                                        <field name="ending_inv" readonly="1"/>                 
-                                        <field name="in_transit" readonly="1"/>                 
-                                        <field name="stock_cover" readonly="1"/>                    
+                                        <field name="sales_3m" />   
+                                        <field name="sales_3m2" invisible="1"/>                   
+                                        <field name="stock_current" />                
+                                        <field name="stock_current2" invisible="1"/>                  
+                                        <field name="ending_inv" />                   
+                                        <field name="ending_inv2" invisible="1"/>                 
+                                        <field name="in_transit" />               
+                                        <field name="in_transit2" invisible="1"/>                 
+                                        <field name="stock_cover"/>                
+                                        <field name="stock_cover2" invisible="1"/>
+                                        <field name="W1" />                 
+                                        <field name="W2" />                    
+                                        <field name="W3" />                    
+                                        <field name="W4" />                       
                                     </tree>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right">
@@ -122,13 +130,19 @@
                                     <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <div class="oe_subtotal_footer_separator oe_inline">
                                         <label for="amount_total"/>
-                                        <button name="button_dummy"
-                                            states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                        <!-- <button name="button_dummy"
+                                            states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/> -->
                                     </div>
                                     <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                 </group>
                                 <div class="oe_clear"/>
                                 <field name="notes" class="oe_inline" placeholder="Keterangan"/>
+                            </page>
+                            <page string="User's Location">
+                                <field name="location_ids" readonly="1"/>
+                            </page>
+                            <page string="User's Principals">
+                                <field name="principal_ids" readonly="1"/>
                             </page>
                             <page string="Incoming Shipments &amp; Invoices">
                                 <group>
@@ -142,7 +156,6 @@
                                         <field name="invoiced"/>
                                         <field name="payment_term_id" widget="selection"/>
                                         <field name="fiscal_position" attrs="{'readonly': [('invoiced','=', True)]}" />
-                                        <!-- We do not need these fields anymore, the information is in open chatter -->
                                         <field name="validator" groups="base.group_no_one"/>
                                         <field name="date_approve" groups="base.group_no_one"/>
                                     </group>
@@ -157,7 +170,7 @@
                 </form>
             </field>
         </record>
-
+<!-- 
         <record id="view_split_in_lots_custom" model="ir.ui.view">
             <field name="name">Split in Serial Numbers Inherit</field>
             <field name="model">stock.move.split</field>
@@ -165,6 +178,18 @@
             <field name="arch" type="xml">
                 <field name="prodlot_id" position="after">
                     <field name="expire"/>
+                </field>
+            </field>
+        </record> -->
+
+        <record id="stock_partial_picking_form_custom" model="ir.ui.view">
+            <field name="name">vit - Add on expire Inherit</field>
+            <field name="model">stock.partial.picking</field>
+            <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="prodlot_id" position="replace">
+                    <field name="prodlot_id" on_change="onchange_prodlot_id(prodlot_id)" domain="[('product_id', '=', product_id)]" invisible="context.get('hide_tracking',False)" attrs="{'required':[('tracking','=',True), ('quantity', '!=', 0)]}" groups="stock.group_production_lot" context="{'default_product_id':product_id}"/>
+                    <field name="expired" invisible="context.get('hide_tracking',False)" attrs="{'required':[('tracking','=',True), ('quantity', '!=', 0)]}" groups="stock.group_production_lot"/>
                 </field>
             </field>
         </record>
