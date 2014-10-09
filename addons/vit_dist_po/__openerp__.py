@@ -30,7 +30,7 @@ For PT.DJISLU
     """,
     'author': 'vitraining.com',
     'website': 'http://www.vitraining.com',
-    'depends': ['purchase','product'],
+    'depends': ['purchase','product','vit_custom_users'],
     'data': [
         'purchase_view.xml',
     ],
