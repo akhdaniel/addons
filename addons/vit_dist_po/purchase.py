@@ -293,8 +293,8 @@ class purchase_order(osv.osv):
             'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
             'payment_term_id': supplier.property_supplier_payment_term.id or False,
             'partner_code'  : supplier.code,
-            'volume_tot'    : tot_v,
-            'weight_tot'    : tot_w,
+            # 'volume_tot'    : tot_v,
+            # 'weight_tot'    : tot_w,
             'partner_id'    : partner_x,
             }}
 
