@@ -25,16 +25,10 @@ except ImportError:
 
 import web.http as openerpweb
 
-from web.controllers.main import ExcelExport
+from web.controllers.main import Export
 
-
-class ExcelExportView(ExcelExport):
-    _cp_path = '/web/export/xls_view'
-
-    def __getattribute__(self, name):
-        if name == 'fmt':
-            raise AttributeError()
-        return super(ExcelExportView, self).__getattribute__(name)
+class EsptExport(Export):
+    _cp_path = '/web/espt/export'
 
     @openerpweb.httprequest
     def index(self, req, data, token):

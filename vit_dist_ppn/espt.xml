@@ -12,12 +12,26 @@
 		    <field name="model">vit_dist_ppn.espt</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list espt">
-					<field name="invoice_id" />
-					<field name="amount"     />
-					<field name="date"       />
-					<field name="tax_number" />
-					<field name="customer"   />
-					<field name="npwp"	    />	            
+					<!--field name="invoice_id" /--> 							
+					<field name="kode_pajak" />							
+					<field name="kode_transaksi" />						
+					<field name="kode_status" />							
+					<field name="kode_dokumen" />							
+					<field name="flag_vat" />								
+					<field name="npwp_nomor_paspor" />						
+					<field name="nama_lawan_transaksi" />					
+					<field name="nomor_faktur_dokumen" />					
+					<field name="jenis_dokumen" />							
+					<field name="nomor_faktur_pengganti_retur" />			
+					<field name="jenis_dokumen_dokumen_pengganti_retur" />
+					<field name="tanggal_faktur_dokumen" />				
+					<field name="tanggal_ssp" />							
+					<field name="masa_pajak" />							
+					<field name="tahun_pajak" />							
+					<field name="pembetulan" />							
+					<field name="dpp" />									
+					<field name="ppn" />									
+					<field name="ppn_bm" />													           
 		        </tree>    
 		    </field>
 		</record>
