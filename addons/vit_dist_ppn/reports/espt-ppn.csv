@@ -1,0 +1,4 @@
+Kode Pajak;Kode Transaksi;Kode Status;Kode Dokumen;Flag VAT;NPWP / Nomor Paspor;Nama Lawan Transaksi;Nomor Faktur / Dokumen;Jenis Dokumen;Nomor Faktur Pengganti / Retur;Jenis Dokumen Dokumen Pengganti / Retur;Tanggal Faktur / Dokumen;Tanggal SSP;Masa Pajak;Tahun Pajak;Pembetulan;DPP;PPN;PPnBM
+B;1;1;2;1;;PT EMS(KANTOR POS)BEA CUKAI;102975;1;;;05/08/2014;05/08/2014;808;2014;0;1350000;135000;0
+B;1;1;2;1;;PT.LOTTE SHOPING INDONESIA;010.000-14.04224275;1;;;12/08/2014;12/08/2014;808;2014;0;874547;87455;0
+A;2;1;1;0;2,84603E+13;ALLSBON;010.002-14.93153396;0;;;11/08/2014;;808;2014;0;60960000;6096000;0

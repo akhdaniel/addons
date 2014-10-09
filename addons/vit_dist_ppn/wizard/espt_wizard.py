@@ -100,12 +100,27 @@ class espt_wizard(osv.TransientModel):
 
 
 			esdata = {
-				'invoice_id' : wz_inv.invoice_id.id, 
-				'amount'     : wz_inv.amount, 
-				'date'       : wz_inv.date, 
-				'tax_number' : wz_inv.tax_number,
-				'customer'   : wz_inv.invoice_id.partner_id.name,
-				'npwp'		 : wz_inv.invoice_id.partner_id.npwp
+				'invoice_id' 							: wz_inv.invoice_id.id, 
+				'kode_pajak'							: 'B',
+				'kode_transaksi'						: '1',
+				'kode_status'							: '1',
+				'kode_dokumen'							: '1',
+				'flag_vat'								: '1',
+				'npwp_nomor_paspor'						: wz_inv.invoice_id.partner_id.npwp or '00000000',
+				'nama_lawan_transaksi'					: wz_inv.invoice_id.partner_id.name,
+				'nomor_faktur_dokumen'					: wz_inv.tax_number,
+				'jenis_dokumen'							: '1',
+				'nomor_faktur_pengganti_retur'			: '',
+				'jenis_dokumen_dokumen_pengganti_retur' : '',
+				'tanggal_faktur_dokumen'				: wz_inv.invoice_id.date_invoice,
+				'tanggal_ssp'							: wz_inv.date, 
+				'masa_pajak'							: datetime.date.today().strftime('%Y'),
+				'tahun_pajak'							: datetime.date.today().strftime('%Y'),
+				'pembetulan'							: '',
+				'dpp'									: wz_inv.invoice_id.amount_untaxed, 
+				'ppn'									: wz_inv.invoice_id.amount_tax,
+				'ppn_bm'								: '',
+
 			}
 			espt_obj.create(cr, uid, esdata, context=context)
 		
