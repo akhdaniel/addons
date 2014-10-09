@@ -1,0 +1,24 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+
+        <report 
+        id="so" 
+        string="Faktur" 
+        model="sale.order" 
+        name="so" 
+        rml="vit_faktur_and picking_print/report/so.rml" 
+        auto="False" 
+        header="False"/>  
+
+        <report 
+        id="picking" 
+        string="Picking List" 
+        model="surat.jalan" 
+        name="picking" 
+        rml="vit_faktur_and picking_print/report/picking.rml" 
+        auto="False" 
+        header="False"/> 
+       
+    </data> 
+</openerp>
