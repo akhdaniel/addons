@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_users_form_for_accs" model="ir.ui.view">
+            <field name="name">res.users.accs.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <page string="Access Rights" position="after">
+                    <page string="User's Location">
+                        <field name="location_ids"/>
+                    </page>
+                    <page string="User's Principals">
+                        <field name="principal_ids"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+<!--         <record id="purchase_order_form_custom_1" model="ir.ui.view">
+            <field name="name">purchase.order.location.form.custom</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="vit_dist_po.purchase_order_form_custom"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" class="oe_inline" on_change="onchange_partner_id(partner_id,date_order,location_id)" context=" {'search_default_supplier':1,'default_supplier':1,'default_customer':0}" domain="[('supplier','=',True)]" widget="selection"/>
+                    <field name="partner_x" class="oe_inline" on_change="onchange_partner_id(partner_x,date_order,location_id)" context=" {'search_default_supplier':1,'default_supplier':1,'default_customer':0}" domain="[('supplier','=',True)]" widget="selection"/>
+                </field>
+
+                <field name="location_id" position="replace">
+                    <field name="loc_x"  groups="stock.group_locations" />
+                    <field name="location_id" groups="stock.group_locations" />
+                </field>
+                <page string="Purchase Order" position="after">
+                    <page string="User's Location">
+                        <field name="loc_x"/>
+                        <field name="location_ids" readonly="1"/>
+                    </page>
+                    <page string="User's Principals">
+                        <field name="principal_ids" readonly="1"/>
+                    </page>
+                </page>
+            </field>
+        </record>  -->
+
+    </data>
+</openerp>
