@@ -37,7 +37,7 @@
                     <button name="invoice_open" states="proforma2" string="Validate" groups="base.group_user"/>
 
 <!--                     <button name="invoice_proforma2" states="draft" string="PRO-FORMA" groups="account.group_proforma_invoices"/> -->
-                    <button name="258" type="action" string="Refund Invoice" states="open,proforma2,paid" groups="base.group_user"/>
+                    <button name="258" type="action" string="Refund/CN" states="open,proforma2,paid" groups="base.group_user"/>
 <!--                     <button name="invoice_cancel" states="draft,deliver,open,ttf" string="Cancel Invoice" groups="base.group_no_one"/> -->
                     <button name="action_cancel_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
                     <button name="272" type="action" string="Re-Open" groups="account.group_account_invoice" attrs="{'invisible':['|', ('state','&lt;&gt;','paid'), ('reconciled', '=', True)]}" help="This button only appears when the state of the invoice is 'paid' (showing that it has been fully reconciled) and auto-computed boolean 'reconciled' is False (depicting that it's not the case anymore). In other words, the invoice has been dereconciled and it does not fit anymore the 'paid' state. You should press this button to re-open it and let it continue its normal process after having resolved the eventual exceptions it may have created."/>
@@ -120,7 +120,7 @@
 
 
 <!-- Supplier Inv -->
-        <record model="ir.ui.view" id="custom_invoice_supp">
+<!--         <record model="ir.ui.view" id="custom_invoice_supp">
             <field name="name">Invoice Custom DJI SLU</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
@@ -129,7 +129,7 @@
                 <header position="replace">
                     <header>
                         <button name="invoice_open" states="draft,proforma2,cn_conf,deliver" string="Validate" class="oe_highlight" groups="account.group_account_invoice"/>
-<!--                         <button name="invoice_open" states="draft,proforma2,cn_conf,deliver" string="CN Confirmation" class="oe_highlight" groups="account.group_account_invoice"/> -->
+                        <button name="invoice_open" states="draft,proforma2,cn_conf,deliver" string="CN Confirmation" class="oe_highlight" groups="account.group_account_invoice"/>
                         <button name="invoice_cancel" states="draft,proforma2,cn_conf,deliver" string="Cancel Invoice" class="oe_highlight" groups="account.group_account_invoice"/>
                         <button name="258" type="action" string="CN Confirmation" states="open,paid" groups="account.group_account_invoice"/>
                         <button name="invoice_cancel" states="draft,proforma2,cn_conf,deliver" string="Cancel Invoice" groups="account.group_account_invoice"/>
@@ -139,7 +139,7 @@
                     </header> 
                 </header>
             </field>
-        </record> 
+        </record>  -->
 <!-- location -->
         <record model="ir.ui.view" id="custom_location">
             <field name="name">Invoice Custom DJI SLU</field>
