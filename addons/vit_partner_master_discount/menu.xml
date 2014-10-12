@@ -1,0 +1,24 @@
+<openerp>
+	<data>
+		<!-- action list master_gift -->
+		<record id="action_master_disc_list" model="ir.actions.act_window">
+			<field name="name">List Partner Discount Master</field>
+			<field name="res_model">vit_master_disc</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Click to add a master discount
+		      </p>				
+				<p>Click create button to create new master discount</p>
+			</field>
+		</record>
+
+		<!-- menu master_gift -->
+		<menuitem id="master_disc"
+			 action="action_master_disc_list"
+			 name="Master Discount"
+			 sequence="210"
+			 parent="base.menu_base_config"/>
+
+	</data>
+</openerp>
