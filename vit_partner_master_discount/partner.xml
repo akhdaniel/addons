@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="view_partner_form_vit2" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<field name="category_id" position="replace">
+            		<field name="category_id"  widget="many2many_tags" placeholder="Tags..." on_change="onchange_category_id(category_id)"  />
+            	</field>
+			</field>
+		</record>
+
+<!--         <record id="view_partner_form_vit" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<page string="Internal Notes" position="after">
+            		<page string="Discount Point" name="mutif">
+            			<group>
+            				<field name="discount"/>
+				            <field name="point"/>
+				        </group>
+			        </page>
+                </page>
+			</field>
+		</record> -->
+
+<!--         <record id="view_res_partner_filter2" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Search Partner" position="inside">
+                     <field name="code" string="Kode" filter_domain="[('code','ilike', self)]"/>
+                   <xpath expr="//field[@name='namess']" position="after">
+                       <field name="code" string="Kode" filter_domain="[('code','ilike', self)]"/>
+                   </xpath>
+                   <field name="name" position="after">
+                        <field name="code" string="Kode" filter_domain="[('code','ilike', self)]"/>
+                    </field>
+               </search>
+            </field>
+        </record> -->
+
+    </data>
+</openerp>
