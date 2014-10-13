@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="so_sign" 
+        string="SO with Signature Mutif" 
+        model="sale.order" 
+        name="so_sign" 
+        rml="vit_so_print_mutif/report/so_sign.rml" 
+        auto="False" 
+        header="True"/>         
+    </data> 
+</openerp>
