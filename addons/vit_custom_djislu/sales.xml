@@ -128,7 +128,7 @@
                                         <field name="invoice_lines" />
                                     </div>
                                 </form>
-                                <tree string="Sales Order Lines" editable="top">
+                                <tree string="Sales Order Lines" editable="top" version="7.0">
                                     <field name="sequence" widget="handle"/>
                                     <field name="state" invisible="1"/>
                                     <field name="th_weight" invisible="1"/>
@@ -147,26 +147,31 @@
                                     <field name="tax_id" groups="base.group_sale_salesman_all_leads" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" invisible="1"/>                                   
                                     <field name="price_unit" readonly="False" />
                                     <field name="gross_tot" invisible="1"/>
+                                    <field name="r_func" invisible="1"/>
                                     <field name="disc_value"/>
                                     <field name="discount" groups="sale.group_discount_per_so_line,base.group_sale_salesman_all_leads"/>
                                     <field name="r_flat" invisible="1"/> 
 
+                                    <field name="p_func" invisible="1"/>
                                     <field name="p_disc_value"/>
                                     <field name="p_disc_pre"/>
                                     <field name="p_flat" invisible="1"/> 
 
+                                    <field name="x_func" invisible="1"/>
                                     <field name="p_disc_value_x"/>
                                     <field name="p_disc_pre_x"/> 
                                     <field name="x_flat" invisible="1"/>
 
+                                    <field name="c_func" invisible="1"/>
                                     <field name="p_disc_value_c"/>
                                     <field name="p_disc_pre_c"/> 
                                     <field name="c_flat" invisible="1"/>
 
+                                    <field name="m_func" invisible="1"/>
                                     <field name="p_disc_value_m"/>
                                     <field name="p_disc_pre_m"/> 
                                     <field name="m_flat" invisible="1"/>
-                                    <field name="qty_awal" invisible="0"/>
+                                    <field name="qty_awal" invisible="1"/>
                                     <field name="price_subtotal"/>
                                    <!--  <field name="tes"/> -->
                                 </tree>    
