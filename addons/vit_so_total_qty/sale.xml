@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="view_order_form_prod_qty" model="ir.ui.view">
+		            <field name="name">sale.order.form_prod_qty</field>
+		            <field name="model">sale.order</field>
+		             <field name="inherit_id" ref="sale.view_order_form" />
+		            <field name="arch" type="xml">
+		            	 <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}" position="after">
+		            	 	 <field name="qty_total" widget="monetary" />
+		            	 </field>
+		            </field>
+		</record>
+	</data>
+</openerp>
