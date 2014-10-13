@@ -10,7 +10,7 @@
 			<field name="arch" type="xml">
 					<field name='user_id' position="after">
 					<field name='dept_related'/>
-					<!--field name='acc_level'/-->
+					<field name='acc_level'/>
 					</field>
 			</field>
 		</record> 
