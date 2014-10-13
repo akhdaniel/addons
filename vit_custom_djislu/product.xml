@@ -18,7 +18,12 @@
                 <field name="sale_ok" position="before">
                         <field name="bonus"/>
                         <label for="bonus"/>
-                </field>       
+                </field>  
+
+                <field name="uos_id" position="after">
+                        <field name="ratio_uos"/>
+                </field> 
+
                 <page string="Accounting" position="after">
                     <page string="Multiples UoM">
                     <group string="Multiples UoM">
@@ -42,12 +47,31 @@
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_product_tree_view"/>
             <field name="arch" type="xml">
-                <field name="default_code" position="before">
+                <tree string="Products" position="replace">
+                    <tree colors="red:virtual_available&lt;0;blue:virtual_available&gt;=0 and state in ('draft', 'end', 'obsolete');black:virtual_available&gt;=0 and state not in ('draft', 'end', 'obsolete')" string="Products">
                         <field name="barcode"/>
-
-                </field>
-                <field name="price" position="replace"/>
-                <field name="lst_price" position="replace"/>
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="categ_id" invisible="1"/>
+                        <field name="type" invisible="1"/>
+                        <field name="variants" groups="product.group_product_variant"/>
+                        <field name="qty_available" string="Small Qty on Hand"/>
+                        <field name="virtual_available" string="Small Forcasted Qty"/>
+                        <field name="uom_id" string="Small UoM" groups="product.group_uom"/>                        
+                        <field name="onhand_big"/>
+                        <field name="forecasted_big"/>
+                        <field name="uos_id" string="Big UoM"/>
+                        <field name="ratio_uos"/>
+                        
+                        <field name="lst_price" string="Sale Price" groups="stock.group_stock_manager"/>
+                        <field name="price" invisible="not context.get('pricelist',False)"/>
+                        <field name="standard_price" string="Cost Price" groups="stock.group_stock_manager"/>
+                        <field name="total_sale_price" groups="stock.group_stock_manager"/>
+                        <field name="total_cost_price" groups="stock.group_stock_manager"/>
+                        <field name="state"/>
+                        <field name="company_id" groups="base.group_multi_company" invisible="1"/>               
+                    </tree>
+                </tree>
             </field>
         </record>
 
@@ -161,7 +185,7 @@
                                 </group>
 
                                 <group>
-                                    <field name="product_id" domain="[('bonus','=', True)"/>                            
+                                    <field name="product_id" domain="[('bonus','=', True)]"/>                            
                                 <label for="qty"/>
                                 <div>
                                     <field name="qty" class="oe_inline" invisible="1"/>

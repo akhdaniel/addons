@@ -44,7 +44,7 @@ class surat_jalan(osv.osv):
 		#kembalikan status semua invoice ke draft
 		for line in fl.inv_ids:
 			acc = self.pool.get('account.invoice')
-			ass = acc.write(cr,uid,[line.id],{'state':'draft'},context=context)
+			ass = acc.write(cr,uid,[line.id],{'state':'draft','button_hidden':False},context=context)
 
 		#hapus/reset ulang semua product list
 		for line2 in fl.list_product_ids:
@@ -55,23 +55,46 @@ class surat_jalan(osv.osv):
 		
 	def action_on_deliver(self,cr,uid,ids,context=None):
 		#import pdb;pdb.set_trace() 
+		mv_obj = self.pool.get('stock.move')
+		acc = self.pool.get('account.invoice')
+
 		fl = self.browse(cr, uid, ids[0], context=context)
 		ls = self.pool.get('list.product')
 
 		flo =fl.car_id.volume
+		flo2 = fl.car_id.tonase
+
 		val =  0.0
+		brt = 0.0
 		for line in fl.inv_ids:
 			val += line.volume
-		tval = val	
+			brt += line.weight
+
 		gap = val-flo
-		if tval > flo :			
-			raise osv.except_osv(_('Jumlah volume barang lebih besar dari kapasitas kendaraan!!'), _('Kapasitas kendaraan %s m3, Jumlah di list %s m3, Kurangi %s m3 lagi!') % (flo,tval,gap))
+		gap2 = brt - flo2
+
+		if val > flo :			
+			raise osv.except_osv(_('Jumlah volume barang lebih besar dari kapasitas kendaraan!!'), _('Kapasitas kendaraan %s m3, Jumlah di list %s m3, Kurangi %s m3 lagi!') % (flo,val,gap))
+
+		if brt > flo2 :			
+			raise osv.except_osv(_('Jumlah berat barang lebih besar dari kapasitas kendaraan!!'), _('Kapasitas kendaraan %s kg, Jumlah di list %s kg, Kurangi %skg lagi!') % (flo2,brt,gap2))	
+
 		else :
-			#import pdb;pdb.set_trace()
-			self.write(cr,uid,ids,{'state':SJ_STATES[1][0],'vol_in_list':tval},context=context)
 			for line2 in fl.inv_ids:
-				acc = self.pool.get('account.invoice')
-				ass = acc.write(cr,uid,[line2.id],{'state':'deliver'},context=context)		
+
+				inv_ori = line2.origin
+
+				mv = mv_obj.search(cr,uid,[('origin','=',inv_ori)],context=context)
+				mv_id = mv_obj.browse(cr,uid,mv[0])
+
+				if mv_id.id :
+
+					mv_obj.write(cr,uid,mv_id.id,{'state':'done'},context=context)
+
+
+
+				ass = acc.write(cr,uid,[line2.id],{'state':'deliver','button_hidden':True},context=context)	
+
 
 			#tampilkan semua product yang ada di list invoice
 			#tampung semua product di tab invoice
@@ -106,9 +129,17 @@ class surat_jalan(osv.osv):
 									'small_uom' : sm_uom,
 									'surat_jalan_id':ids[0]})	
 
+			self.write(cr,uid,ids[0],{'state':'on_deliver'},context=context)		
+
 		return  True	
 
 	def action_return(self,cr,uid,ids,context=None): 
+		fl = self.browse(cr, uid, ids[0], context=context)
+		inv = self.pool.get('account.invoice')
+
+		for line in fl.inv_ids:		
+			inv.write(cr,uid,line.id,{'button_hidden':False},context=context)
+
 		return self.write(cr,uid,ids,{'state':SJ_STATES[2][0]},context=context)
 
 	#default shop sesuai cabang di master employee log in
@@ -127,10 +158,23 @@ class surat_jalan(osv.osv):
 		'name': fields.char('Code',readonly=True),
 		'car_id': fields.many2one('fleet.vehicle','Car',required=True),
 		'based_route_id' : fields.many2one('master.based.route','Route',required=True),
-		'date':fields.date('Date',required=True),
+		'date':fields.date('Date',required=True,readonly=True),
 		'location_id' : fields.many2one('stock.location','Location',required=True,readonly=True),
 		'user_id': fields.many2one('res.users','Creator',readonly=True),
-		'inv_ids' : fields.many2many('account.invoice','picking_rel','surat_jalan_id','invoice_id',domain=[('type','in',['out_refund','out_invoice'])],string='Invoice List'),
+		'inv_ids' : fields.many2many('account.invoice','picking_rel','surat_jalan_id','invoice_id',
+			domain="[('type','in',['out_refund','out_invoice']),\
+			('state','=','draft'),\
+			('based_route_id','=',based_route_id),\
+			('location_id','=',location_id)]",
+			string='Invoice List'),
+		# 'inv_ids' : fields.many2many('account.invoice','picking_rel','surat_jalan_id','invoice_id',
+		# 	domain="[('type','in',['out_refund','out_invoice']),\
+		# 	('state','=','draft'),\
+		# 	('date_invoice','=',date),\
+		# 	('based_route_id','=',based_route_id),\
+		# 	('location_id','=',location_id),\
+		# 	('user_id2','=',user_id)]",
+		# 	string='Invoice List'),
 		'volume' : fields.float('Capacity (Volume) m3',help="Dalam Satuan m3 (meter kubik)",readonly=True,store=True),
 		'weight' : fields.float('Capacity (weight) Kg',help='Dalam Satuan Kg',readonly=True),
 		'vol_in_list' : fields.float("Volume Total in List "),

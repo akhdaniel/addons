@@ -152,7 +152,7 @@ class sale_order_line(osv.osv):
 		'qty_small':fields.float('Small Qty',digits_compute=dp.get_precision('Product Unit of Measure')),
 		'qty_big':fields.float('Big Qty',digits_compute= dp.get_precision('Product UoS'),required=True),	
 
-		'tes' :fields.float('tes'),				
+		'qty_awal' :fields.float('Qty Awal'),				
 
 	}
 
@@ -431,13 +431,31 @@ class sale_order(osv.osv):
 		return result.keys()
 
 	def create(self, cr, uid, vals, context=None):
-
+		#import pdb;pdb.set_trace()
 		viv = vals['partner_id']
 		vivals = self.pool.get('res.partner').browse(cr,uid,viv).trouble
+
+		sol = self.pool.get('sale.order.line')
+
 		if vivals :
 			raise osv.except_osv(_('Error!'), _('Customer ini sudah ditandai sebagai customer yang bermasalah!'))
 		if vals.get('name','/')=='/':
 			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'
+
+		#for x in vals['order_line']:
+			# x1 = x[2]['qty_small']
+			# x2 = x[2]['qty_big']
+			# id_uos = x[2]['product_uos']
+
+			# #cari detailnya di product.uom
+			# uom_obj = self.pool.get('product.uom')
+			# uom_sr = uom_obj.search(cr,uid,[('id','=',id_uos)])
+			# uos = uom_obj.browse(cr,uid,uom_sr)[0]
+			# uos_fct = uos.factor_inv
+
+			# qty_awal = x1+(x2*uos_fct)
+
+			# sol.create(cr,uid,{'qty_awal':qty_awal,'order_id':vals[0],},context=context)
 		return super(sale_order, self).create(cr, uid, vals, context=context)	
 
 	#default shop sesuai cabang di master employee log in
@@ -485,10 +503,11 @@ class sale_order(osv.osv):
 		res['date_invoice']=order.date_order
 		res['nik']=order.nik
 		res['volume']=order.volume_tot
+		res['weight']=order.tonase_tot
 		return res
 	
 
-	#hitung kubikasi per SO
+	#hitung kubikasi dan tonase per SO
 	def _compute_volume(self, cr, uid, ids, field_name, arg, context=None):
 		res = {}
 		order = self.browse(cr, uid, ids, context=context)[0]
@@ -496,33 +515,27 @@ class sale_order(osv.osv):
 			'volume_tot': 0.0,
 				}
 		val =  0.0
+		brt = 0.00
 		for line in order.order_line:
-			t_line = line.volume*line.product_uom_qty
+			t_line = line.volume * line.product_uom_qty
+
+			#tonase
+			ton = line.product_id.weight * line.product_uom_qty
+
 			val += t_line
+			brt += ton
+
+		#self.write(cr,uid,ids[0],{'tonase_tot':brt},context=context)
+
 		res[order.id]['volume_tot'] = val
+		res[order.id]['tonase_tot'] = brt
 		return res
-
-	#hitung berat total per SO
-	def compute_tonase(self, cr, uid, ids, field_name, arg, context=None):
-		import pdb;pdb.set_trace()
-		res = {}
-		for order in self.browse(cr, uid, ids, context=context):
-			res[orde.id] = {
-				'ton': 0.0,
-				}
-		vala =  0.0
-		for line in order.order_line:
-			wh = line.th_weight
-			vala += wh
-		res[order.id]['ton'] = vala
-		return res	
-
 
 	_columns = {
 		'partner_id2' : fields.many2one('limit.customer','Principal',domain="[('partner_id2','=',partner_id)]",required=True),
 		'discount2' : fields.float('Promo',readonly=True),	
 		'volume_tot' : fields.function(_compute_volume,string="Total Volume", type="float",multi="sums"),
-		'ton' : fields.function(compute_tonase,string="Weight Total", type="float",multi="sums"),
+		'tonase_tot' : fields.function(_compute_volume,string="Total Weight", type="float",multi="sums"),
 
 		'date_order': fields.date('Date', required=True, readonly=True, select=True),
 		'warehouse_id' : fields.many2one('stock.warehouse','Location',readonly=True),
@@ -559,13 +572,6 @@ class sale_order(osv.osv):
 				'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
 			},
 			multi='sums', help="The total amount."),
-		#'company_id': fields.many2one('res.company', 'Company', required=True, select=True),
-		'company_id': fields.many2one('res.company', 'Company'),
-		'partner_comp_id': fields.many2one('res.partner', 'Company',),
-		# 'order_policy': fields.selection([
-		# 		('prepaid','Buat invoice sebelum di kirim'),('manual', 'On Demand'),('picking','On Delivery Order'),
-		# 	], 'Create Invoice', required=True, readonly=True,)# states={'draft': [('readonly', False)], 'sent': [('readonly', False)]},
-			#help="""This field controls how invoice and delivery operations are synchronized."""),
 
 			}
 
@@ -575,8 +581,7 @@ class sale_order(osv.osv):
 		'user_id': lambda obj, cr, uid, context: uid,
 		'order_policy':'prepaid',
 		'nik':_get_nik,
-		'partner_comp_id':_default_company_user,
-		#'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'sale.order', context=c),
+
 		}	
 
 	def onchange_partner_id(self, cr, uid, ids, part, context=None):
@@ -3527,10 +3532,16 @@ class sale_order(osv.osv):
 			qt_m = l.product_uom.id
 			qtu = l.product_uos_qty
 			qtu_u = l.product_uos.id
-			state = 'done'			
-			
+			state = 'done'	
+			state2 = 'waiting'
+			state3 = 'confirmed'	
+			state4 = 'assigned'	
+
 			# barang masuk
-			cr.execute ('select sum(product_qty) from stock_move where location_id = %s and product_id = %s and state = %s',(loca,prod,state))
+			cr.execute ('select sum(product_qty) from stock_move '\
+				'where location_id = %s '\
+				'and product_id = %s '\
+				'and (state = %s or state = %s or state = %s or state = %s)',(loca,prod,state,state2,state3,state4))
 			oz = cr.fetchone()
 			zoz = list(oz or 0)#karena dlm bentuk tuple di list kan dulu
 			zozo = zoz[0]
@@ -3538,23 +3549,26 @@ class sale_order(osv.osv):
 				zozo = 0.00   
 
 			#barang keluar
-			cr.execute ('select sum(product_qty) from stock_move where location_dest_id = %s and product_id = %s and state = %s',(loca,prod,state))
+			cr.execute ('select sum(product_qty) from stock_move '\
+				'where location_dest_id = %s '\
+				'and product_id = %s '\
+				'and (state = %s or state = %s or state = %s or state = %s)',(loca,prod,state,state2,state3,state4))
 			uz = cr.fetchone()
 			zuz = list(uz or 0)#karena dlm bentuk tuple di list kan dulu
 			zuzu = zuz[0]
 			if zuzu is None:
 				zuzu = 0.00    
 
-			qty_on_hand_in = zuzu
-			qty_on_hand_out = zozo
+			qty_future_in = zuzu
+			qty_future_out = zozo
 
-			#onhand = barang masuk di kurangi barang keluar
-			qty_on_hand = qty_on_hand_in - qty_on_hand_out
+			#onfuture = barang masuk di kurangi barang keluar
+			qty_future = qty_future_in - qty_future_out
 
 
-			res = qty_on_hand - qt
+			res = qty_future - qt
 			if res < 0 :
-				raise osv.except_osv(_('Error'), _('Qty untuk barang %s di gudang %s hanya tersedia %s %s') % (prod_name,lin.location_id.name,qty_on_hand,l.product_uom.name))
+				raise osv.except_osv(_('Error'), _('Qty untuk barang %s di gudang %s hanya tersedia %s %s') % (prod_name,lin.location_id.name,qty_future,l.product_uom.name))
 				return False	
 			if res >= 0 :
 				move = mv_obj.create(cr, uid,{'product_id':prod,
@@ -3567,7 +3581,7 @@ class sale_order(osv.osv):
 									'product_uos_qty':qtu,														
 									'product_qty':qt,
 									'product_uom':qt_m,										
-									'state':'done'										
+									'state':'assigned'										
 									})			
 
 		#cek ar di customer terkait

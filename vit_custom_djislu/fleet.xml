@@ -70,7 +70,7 @@
                     <group>
                         <group>
                             <field name="name"/>
-                            <field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="date" readonly="True"/>
                             <field name="based_route_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                             <field name="location_id"/>                     
                         </group>
@@ -92,6 +92,7 @@
                                     <field name="origin" readonly="True"/>
                                     <field name="date_invoice" readonly="True"/>
                                     <field name="volume" sum="Total Volume"/>
+                                    <field name="weight" sum="Total Weight"/>
                                     <field name="state"/>
                                     <field name="note"/>
 

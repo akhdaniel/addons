@@ -10,17 +10,106 @@ class account_invoice(osv.osv):
 	_inherit = "account.invoice"
 
 
+	def action_cancel(self, cr, uid, ids, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+
+		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
+		jur = self.pool.get('account.journal')
+		mv_obj = self.pool.get('stock.move')
+		inv_line = self.pool.get('account.invoice.line')
+
+		account_move_obj = self.pool.get('account.move')
+		invoices = self.read(cr, uid, ids, ['move_id', 'payment_ids'])
+		move_ids = [] # ones that we will need to remove
+		for i in invoices:
+			if i['move_id']:
+				move_ids.append(i['move_id'][0])
+			if i['payment_ids']:
+				account_move_line_obj = self.pool.get('account.move.line')
+				pay_ids = account_move_line_obj.browse(cr, uid, i['payment_ids'])
+				for move_line in pay_ids:
+					if move_line.reconcile_partial_id and move_line.reconcile_partial_id.line_partial_ids:
+						raise osv.except_osv(_('Error!'), _('You cannot cancel an invoice which is partially paid. You need to unreconcile related payment entries first.'))
+		
+		va = self.browse(cr,uid,ids)[0]
+		ori = va.origin
+		nm = va.name
+		orinm = ori
+		if ori != False and nm != False :
+			orinm = ori+nm
+		jut = va.journal_id.type
+		loca = va.location_id2.id
+
+		if jut == 'sale_refund' : # sales refund journal
+			for x in va.invoice_line:
+				prod = x.product_id.id
+				prod_name = x.name
+				uom_id = x.uom_id.id
+				cf = x.uos_id.factor_inv
+				uos_qty = x.quantity
+				uos_id = x.uos_id.id
+
+				mv_obj.create(cr, uid,{'product_id':prod,
+									'name':prod_name,
+									'origin':orinm,
+									'location_id':9,#customer
+									'location_dest_id':loca,
+									'date_expacted':skrg,
+									'product_uos':uos_id,
+									'product_uos_qty':uos_qty/cf,														
+									'product_qty':uos_qty,
+									'product_uom':uom_id,										
+									'state':'done',										
+									})	
+				#write qty supaya berbentik field(bukan field fungsi)
+				inv_line.write(cr,uid,x.id,{'quantity3':uos_qty},context=context)
+
+		mv = mv_obj.search(cr,uid,[('origin','=',ori)],context=context)
+		mv_id = mv_obj.browse(cr,uid,mv[0])
+		#ubah stock move atas invoice ini ke draft
+		if mv_id.id :
+			mv_obj.write(cr,uid,mv_id.id,{'state':'draft'},context=context)
+
+		for y in va.invoice_line:
+			qty = y.quantity
+			#write qty supaya berbentuk field(bukan field fungsi)
+			inv_line.write(cr,uid,y.id,{'quantity3':qty},context=context)
+
+		# First, set the invoices as cancelled and detach the move ids
+		self.write(cr, uid, ids, {'state':'cancel', 'move_id':False})
+		if move_ids:
+			# second, invalidate the move(s)
+			account_move_obj.button_cancel(cr, uid, move_ids, context=context)
+			# delete the move this invoice was pointing to
+			# Note that the corresponding move_lines and move_reconciles
+			# will be automatically deleted too
+			account_move_obj.unlink(cr, uid, move_ids, context=context)
+		self._log_event(cr, uid, ids, -1.0, 'Cancel Invoice')
+		return True
+
 	def invoice_validate(self, cr, uid, ids, context=None):
 		#import pdb;pdb.set_trace()
 		jur = self.pool.get('account.journal')
 		mv_obj = self.pool.get('stock.move')
 		inv_line = self.pool.get('account.invoice.line')
+		so_obj = self.pool.get('sale.order')
 
 		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
 
 		va = self.browse(cr,uid,ids)[0]
 		jut = va.journal_id.type
 		loca = va.location_id2.id
+		ori = va.origin
+
+		if jut == 'sale' :
+			if ori :
+				sos = so_obj.search(cr,uid,[('name','=',ori)])
+				so = so_obj.browse(cr,uid,sos)[0]
+
+				so_obj.write(cr,uid,so.id,{'state':'done'},context=context)
+
 		if jut == 'sale_refund' : # sales refund journal
 			for x in va.invoice_line:
 				prod = x.product_id.id
@@ -38,7 +127,7 @@ class account_invoice(osv.osv):
 									'date_expacted':skrg,
 									'product_uos':uos_id,
 									'product_uos_qty':uos_qty/cf,														
-									'product_qty':uos_qty,
+									'product_qty':uos_qty,#qty reealnya disini krn sdh menjadi fieldfungsi
 									'product_uom':uom_id,										
 									'state':'done',										
 									})	
@@ -64,7 +153,21 @@ class account_invoice(osv.osv):
 
 	def action_deliver(self,cr,uid,ids,context=None): 
 		#import pdb;pdb.set_trace()
-		return self.write(cr,uid,ids,{'state':'deliver'},context=context)
+		mv_obj = self.pool.get('stock.move')
+
+		inv = self.browse(cr,uid,ids)
+
+		inv_ori = inv.origin
+
+		mv = mv_obj.search(cr,uid,[('origin','=',inv_ori)],context=context)
+		mv_id = mv_obj.browse(cr,uid,mv[0])
+
+		if mv_id :
+			mv_obj.write(cr,uid,mv_id,{'state':'done'},context=context)
+
+		self.write(cr,uid,ids,{'state':'deliver'},context=context)
+
+		return True
 
 	def action_ttf(self,cr,uid,ids,context=None): 
 		#import pdb;pdb.set_trace()
@@ -113,7 +216,8 @@ class account_invoice(osv.osv):
 			\n* The \'Open\' status is used when user create invoice,a invoice number is generated.Its in open status till user does not pay invoice. \
 			\n* The \'Paid\' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled. \
 			\n* The \'Cancelled\' status is used when user cancel invoice.'),	
-		'note' : fields.char('Note',readonly=True),		
+		'note' : fields.char('Note',readonly=True),	
+		'button_hidden' : fields.boolean('Button Hidden'),	
 		}
 
 
@@ -164,7 +268,7 @@ class account_invoice_line(osv.osv):
 		res = {}
 		#import pdb;pdb.set_trace()
 		for line in self.browse(cr, uid, ids):
-			t_qty = round((line.qty*line.uos_id.factor_inv) + (line.quantity2*line.uom_id.factor_inv),3)
+			t_qty = round((line.qty*line.uos_id.factor_inv) + (line.quantity2),3)
 			res[line.id] = t_qty
 		return res
 
@@ -269,7 +373,9 @@ class account_invoice_refund(osv.osv_memory):
 				if form.description:
 					description = form.description.name
 				else:
-					description = inv.name
+					description = inv.origin
+				if inv.origin:
+					numb = 	inv.origin
 
 				if not period:
 					raise osv.except_osv(_('Insufficient Data!'), \
@@ -280,7 +386,7 @@ class account_invoice_refund(osv.osv_memory):
 				inv_obj.write(cr, uid, [refund.id], {'date_due': date,
 												'check_total': inv.check_total})
 				inv_obj.button_compute(cr, uid, refund_id)
-
+				#import pdb;pdb.set_trace()
 				created_inv.append(refund_id[0])
 				if mode in ('cancel', 'modify'):
 					movelines = inv.move_id.line_id
@@ -302,6 +408,7 @@ class account_invoice_refund(osv.osv_memory):
 										writeoff_journal_id = inv.journal_id.id,
 										writeoff_acc_id=inv.account_id.id
 										)
+
 					if mode == 'modify':
 						invoice = inv_obj.read(cr, uid, [inv.id],
 									['name', 'type', 'number', 'reference',
@@ -324,7 +431,9 @@ class account_invoice_refund(osv.osv_memory):
 							'invoice_line': invoice_lines,
 							'tax_line': tax_lines,
 							'period_id': period,
-							'name': description
+							'name': description,
+							'origin': numb,
+							'comment': numb
 						})
 						for field in ('partner_id', 'account_id', 'currency_id',
 										 'payment_term', 'journal_id'):
@@ -345,6 +454,9 @@ class account_invoice_refund(osv.osv_memory):
 			invoice_domain = eval(result['domain'])
 			invoice_domain.append(('id', 'in', created_inv))
 			result['domain'] = invoice_domain
+
+			inv_obj.write(cr,uid,refund.id,{'origin':numb},context=context)
+
 			return result
 
 	def invoice_refund(self, cr, uid, ids, context=None):
@@ -355,11 +467,11 @@ class account_invoice_refund(osv.osv_memory):
 		sr = gr.search(cr,uid,[('id','=',idd)])
 		st = gr.browse(cr,uid,sr)[0].state
 		nt = gr.browse(cr,uid,sr)[0].note
-		gr.write(cr,uid,idd,{'note':'CN Confirmation'})
 
 		if st not in ['open','paid'] or nt == 'CN Confirmation' :
 			raise osv.except_osv(_('Error!'), _('CN Confirmation/Refund hanya dapat dilakukan jika status faktur dalam kondisi Open dan belum pernah CN Confirmation'))
-			return False			
+			return False
+		gr.write(cr,uid,idd,{'note':'CN Confirmation'})				
 
 		return self.compute_refund(cr, uid, ids, data_refund, context=context)
 	

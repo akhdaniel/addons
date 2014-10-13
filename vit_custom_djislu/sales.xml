@@ -61,7 +61,6 @@
                     <group>
                         <group>
                             <field name="partner_code" invisible="True"/>
-                            <field name="partner_comp_id" context="{'contact_display':'partner'}" invisible="True"/>
                             <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}" attrs="{'readonly': [('state','!=','draft')]}"/>
                             <field name="partner_id2" attrs="{'readonly': [('state','!=','draft')]}"/>
                             <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}"/>
@@ -97,9 +96,8 @@
                                                 <field name="qty_big"/> 
                                                 <field name="product_uos" invisible="True"/>
                                             </div>                                            
-                                            <label for="product_uom_qty" string="Small Qty"/>
+                                            <label for="qty_small" string="Small Qty"/>
                                             <div>
-                                                <field context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" name="product_uom_qty" class="oe_inline" on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" string="Small Qty" invisible="True"/>
                                                 <field name="qty_small"/>
                                                 <field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button" on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, context)" invisible="1"/>
                                             </div>
@@ -121,7 +119,7 @@
                                         <group invisible="1">
                                             <field name="tax_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" invisible="1"/>
                                             <field name="type" invisible="1"/>
-
+                                            <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" string="Small Qty" invisible="True"/>
                                             <field name="address_allotment_id" invisible="1"/>
                                         </group>
                                     </group>
@@ -130,7 +128,7 @@
                                         <field name="invoice_lines" />
                                     </div>
                                 </form>
-                                <tree string="Sales Order Lines" editable="bottom">
+                                <tree string="Sales Order Lines" editable="top">
                                     <field name="sequence" widget="handle"/>
                                     <field name="state" invisible="1"/>
                                     <field name="th_weight" invisible="1"/>
@@ -144,7 +142,7 @@
                                     <field name="product_uos" groups="product.group_uos" string="Big UoM"/>
                                     <field name="uos2" readonly="True" invisible="True"/>
                                     <field name="qty_small"/>
-                                    <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" string="Small Qty" invisible="1"/>
+                                    <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" string="Small Qty" invisible="True"/>
                                     <field name="product_uom" on_change="product_uom_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, context)" groups="product.group_uom" options="{&quot;no_open&quot;: True}" string="Small UoM"/>                                   
                                     <field name="tax_id" groups="base.group_sale_salesman_all_leads" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" invisible="1"/>                                   
                                     <field name="price_unit" readonly="False" />
@@ -168,6 +166,7 @@
                                     <field name="p_disc_value_m"/>
                                     <field name="p_disc_pre_m"/> 
                                     <field name="m_flat" invisible="1"/>
+                                    <field name="qty_awal" invisible="0"/>
                                     <field name="price_subtotal"/>
                                    <!--  <field name="tes"/> -->
                                 </tree>    
@@ -193,7 +192,6 @@
                             <group>
                                 <!-- <field name="picking_policy"/> -->
                                 <group name="sales_person" groups="base.group_user">
-                                    <!-- <field name="ton"/> -->
                                     <field name="nik"/>
                                     <field name="user_id" readonly="True" string="Salesman"/>
                                     <field groups="base.group_no_one" name="origin"/>
@@ -203,7 +201,8 @@
                                     <field name="due_date" invisible="0"/>
                                     <field name="fiscal_position" widget="selection" invisible="True"/>
                                     <field name="property_payment_term"/>
-                                    <field name="volume_tot"/>
+                                    <field name="volume_tot" attrs="{'invisible': [('state','=','draft')]}"/>
+                                    <field name="tonase_tot" attrs="{'invisible': [('state','=','draft')]}"/>
                                     <field name="company_id" widget="selection" groups="base.group_multi_company" invisible="False"/>
                                 </group>
                                 <group>
