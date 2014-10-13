@@ -13,6 +13,11 @@
             <field name="code">Total</field>
         </record>
 
+        <record id="tot_allwoance" model="hr.salary.rule.category">
+        	<field name="name">Total Allowance</field>
+        	<field name="code">Total_allowance</field>
+        </record>
+
 		<record id="hr_rule_basic" model="hr.salary.rule">
             <field name="name">Basic</field>
             <field name="sequence" eval="1"/>
@@ -35,13 +40,13 @@
         </record>
 
         <record id="hr_rule_taxable" model="hr.salary.rule">
-            <field name="name">Gross</field>
+            <field name="name">Total Allowance</field>
             <field name="sequence" eval="100"/>
-            <field name="code">GROSS</field>
-            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="code">Total Allowance</field>
+            <field name="category_id" ref="tot_allwoance"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.NET</field>
+            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.NET + categories.GROSS</field>
         </record>
 
         <record id="structure_base1" model="hr.payroll.structure">
@@ -749,13 +754,6 @@
 	        ref('hr_payroll_rules_lembur_proyek'),
              ])]" name="rule_ids"/>
 	    </record>
-	    2,362,500 	28,350,000 
-2,531,250 	30,375,000 
-2,193,750 	26,325,000 
-2,362,500 	28,350,000 
-2,531,250 	30,375,000 
-2,700,000 	32,400,000 
-
 
         <!--Master PTKP-->
 		<record id="hr_master_ptkp_t0" model="hr.ptkp">

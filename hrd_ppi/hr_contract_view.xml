@@ -20,6 +20,7 @@
                     <field name='kelompok_sift' on_change='onchange_sift(kelompok_sift)'/>
                 </field>
                 <field name='notes' position='after'>
+                    <separator string="Kontrak Proyek"/>
                     <field name='proyek'>
                         <tree>
                             <field name='nama'/>

@@ -250,12 +250,12 @@ class permohonan_recruit(osv.osv):
     def onchange_department_id(self, cr, uid, ids, department_id):
         result={};result['divisi_id'] =False ;result['bagian_id']=False
         dept_obj = self.pool.get('hr.department')
-        parentID = dept_obj.browse(cr,uid,department_id).parent_id
+        parentID = dept_obj.browse(cr,uid,department_id).parent_id.id
         if parentID : 
-            result['divisi_id'] = parentID.id
-        parent2ID = dept_obj.browse(cr,uid,parentID.id).parent_id
-        if parent2ID : 
-            result['bagian_id']=parent2ID.id
+            result['divisi_id'] = parentID
+            parent2ID = dept_obj.browse(cr,uid,parentID).parent_id.id
+            if parent2ID : 
+                result['bagian_id']=parent2ID
         return {'value':result}
         
     def new_recruitment(self,cr,uid,ids,context=None):
@@ -607,8 +607,14 @@ class hr_applicant(osv.osv):
         return super(hr_applicant, self).create(cr, uid, vals, context)
  
     def write(self, cr, uid, ids, vals, context=None):
+        #import pdb;pdb.set_trace()
         if vals.get('name', False):
             vals['name'] = vals['name'].title()
+        obj = self.browse(cr,uid,ids)[0]
+        #name = obj.partner_name
+        #name_update = vals['partner_name']
+        #if name != name_update :
+        #    raise osv.except_osv(_('Peringatan!'),_('Nama Pelamar Tidak Bisa Di Ubah.')) 
         return super(hr_applicant, self).write(cr, uid, ids, vals, context)
     
     def case_close_with_emp(self, cr, uid, ids,vals, context=None):
@@ -829,18 +835,19 @@ class hr_applicant(osv.osv):
         stat = hasil.stat - 1
         hr_status = self.pool.get('hr.seleksi_pelamar')
         hr_search = hr_status.search(cr,uid,[('nama','=',names),('stat','=',stat)])
-        hr_brws = hr_status.browse(cr,uid,hr_search)[0]
+        hr_brws = hr_status.browse(cr,uid,hr_search)
         values=False
-        for men in hasil.meeting_ids :
-            date = men.date
-            if men.stat == 'interview1' :
-                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
-            elif men.stat == "interview2" :
-                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
-        if hasil.stage_id.sequence == 2 :
-            hr_status.write(cr, uid, [hr_brws.id], {'status': 'Ditolak','kehadiran':'Hadir','keputusan':'NOK'}, context=context)                
-        elif hasil.stage_id.sequence == 90 :
-            hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Ditolak','kehadiran':'Hadir','keputusan':'NOK'}, context=context)
+        for seleksi in hr_brws :
+            for men in hasil.meeting_ids :
+                date = men.date
+                if men.stat == 'interview1' :
+                    hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
+                elif men.stat == "interview2" :
+                    hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
+            if hasil.stage_id.sequence == 2 :
+                hr_status.write(cr, uid, [hr_brws.id], {'status': 'Ditolak','kehadiran':'Hadir','keputusan':'NOK'}, context=context)                
+            elif hasil.stage_id.sequence == 90 :
+                hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Ditolak','kehadiran':'Hadir','keputusan':'NOK'}, context=context)
         res = super(hr_applicant, self).case_cancel(cr, uid, ids, context)
         self.write(cr, uid, ids, {'probability': 0.0})
         hr_monitor = self.pool.get('hr.monitoring_recruitment')
@@ -877,18 +884,19 @@ class hr_applicant(osv.osv):
         stat = hasil.stat - 1
         hr_status = self.pool.get('hr.seleksi_pelamar')
         hr_search = hr_status.search(cr,uid,[('nama','=',names),('stat','=',stat)])
-        hr_brws = hr_status.browse(cr,uid,hr_search)[0]
+        hr_brws = hr_status.browse(cr,uid,hr_search)
         values=False
-        for men in hasil.meeting_ids :
-            date = men.date
-            if men.stat == 'interview1' :
-                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
-            elif men.stat == "interview2" :
-                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
-        if hasil.stage_id.name == "First Interview" :
-            hr_status.write(cr, uid, [hr_brws.id], {'status': 'Ditolak','kehadiran':'Tidak Hadir','keputusan':'NOK'}, context=context)                
-        elif hasil.stage_id.name == "Second Interview" :
-            hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Ditolak','kehadiran':'Tidak Hadir','keputusan':'NOK'}, context=context)
+        for seleksi in hr_brws : 
+            for men in hasil.meeting_ids :
+                date = men.date
+                if men.stat == 'interview1' :
+                    hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
+                elif men.stat == "interview2" :
+                    hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
+            if hasil.stage_id.name == "First Interview" :
+                hr_status.write(cr, uid, [hr_brws.id], {'status': 'Ditolak','kehadiran':'Tidak Hadir','keputusan':'NOK'}, context=context)                
+            elif hasil.stage_id.name == "Second Interview" :
+                hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Ditolak','kehadiran':'Tidak Hadir','keputusan':'NOK'}, context=context)
         res = super(hr_applicant, self).case_cancel(cr, uid, ids, context)
         self.write(cr, uid, ids, {'probability': 0.0})
         hr_monitor = self.pool.get('hr.monitoring_recruitment')
@@ -1036,28 +1044,34 @@ class hr_applicant(osv.osv):
         stat = hasil.stat - 1
         hr_status = self.pool.get('hr.seleksi_pelamar')
         hr_search = hr_status.search(cr,uid,[('nama','=',names),('stat','=',stat)])
-        hr_brws = hr_status.browse(cr,uid,hr_search)[0]
+        hr_brws = hr_status.browse(cr,uid,hr_search)
         values=False
         meet = False
         st = 1000
-        for men in hasil.meeting_ids :
-            date = men.date
-            if meet == False :
-                meet = men.date
-            if men.stat == 'interview1' :
-                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
-            elif men.stat == "interview2" :
-                hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
-        if hasil.stage_id.sequence == 20 :
-            hr_status.write(cr, uid, [hr_brws.id], {'status': 'Diterima','kehadiran':'Hadir'}, context=context)                
-        elif hasil.stage_id.sequence == 90 :
-            hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Diterima','kehadiran':'Hadir','keputusan':'OK'}, context=context)
+        for seleksi in hr_brws :
+            for men in hasil.meeting_ids :
+                date = men.date
+                if meet == False :
+                    meet = men.date
+                if men.stat == 'interview1' :
+                    hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi':date}, context=context)
+                elif men.stat == "interview2" :
+                    hr_status.write(cr, uid, [hr_brws.id], {'tgl_seleksi1':date}, context=context)
+            if hasil.stage_id.sequence == 20 :
+                hr_status.write(cr, uid, [hr_brws.id], {'status': 'Diterima','kehadiran':'Hadir'}, context=context)                
+            elif hasil.stage_id.sequence == 90 :
+                hr_status.write(cr, uid, [hr_brws.id], {'status1': 'Diterima','kehadiran':'Hadir','keputusan':'OK'}, context=context)
         for line in pers: 
             stage=line.sequence
             if stg3 < stage and st > stage :
-                stg=line.id                       
-                self.write(cr,uid,ids,{'stage_id': stg},context=context)  
-                st = stage
+                if line.department_id == False :
+                    stg=line.id                       
+                    self.write(cr,uid,ids,{'stage_id': stg},context=context)  
+                    st = stage
+                elif line.department_id.id == hasil.dep_app.id :
+                    stg=line.id                       
+                    self.write(cr,uid,ids,{'stage_id': stg},context=context)  
+                    st = stage
         obj_perm = self.pool.get('hr.job')
         obj_prsrc = obj_perm.search(cr,uid,[('state','=','in_progress')])
         obj_prbrws = obj_perm.browse(cr,uid,obj_prsrc)
@@ -1214,7 +1228,7 @@ class hr_applicant(osv.osv):
         'country_id2':fields.many2one('res.country','Negara'),
         'kode1' :fields.char('Kode Pos'),
         'kode2' :fields.char('Kode Pos'),
-		'app_id' : fields.many2one('hr.job','Job Selection', readonly=True),
+		'app_id' : fields.many2one('hr.job','Job Selection'),
         'dep_app' : fields.many2one('hr.department', 'Department', readonly=True),
         'salary_proposed': fields.float('Proposed Salary'),
         'salary_proposed_botom_margin': fields.float('Standar Gaji', help="Batas range terendah"), 

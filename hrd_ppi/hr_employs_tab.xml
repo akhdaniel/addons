@@ -36,10 +36,10 @@
                                     <group string="Position">
                                         <field name="clas_id"/>
                                         <field name="department_id" on_change="onchange_department_id(department_id)"/>
-                                        <field name="title_id"/>
+                                        <!-- <field name="title_id"/> -->
+                                        <field name="job_id" options='{"no_open": True}' domain="[('state','!=','old')]" context="{'form_view_ref': 'hr.view_hr_job_employee_form'}"/>
                                         <field name="extitle_id"/>
                                         <field name="gol_id"/>
-                                        <field name="job_id" options='{"no_open": True}' domain="[('state','!=','old')]" context="{'form_view_ref': 'hr.view_hr_job_employee_form'}"/>
                                         <field name="wfield_id"/>
                                         <field name="pansion_id"/>
                                     </group>

@@ -53,6 +53,16 @@ class hr_holidays(osv.osv):
     _description = "Leave"
     _inherit = "hr.holidays"
 
+    def check_holidays(self, cr, uid, ids, context=None):
+        holi_status_obj = self.pool.get('hr.holidays.status')
+        for record in self.browse(cr, uid, ids):
+            if record.holiday_type == 'employee' and record.type == 'remove':
+                if record.employee_id and record.holiday_status_id.limit_cuti == True:
+                    leaves_rest = holi_status_obj.get_days( cr, uid, [record.holiday_status_id.id], record.employee_id.id, False)[record.holiday_status_id.id]['remaining_leaves']
+                    if leaves_rest < record.number_of_days_temp:
+                        raise osv.except_osv(_('Warning!'), _('There are not enough %s allocated for employee %s; please create an allocation request for this leave type.') % (record.holiday_status_id.name, record.employee_id.name))
+        return True
+
     def action_draft(self, cr, uid, ids, context=None):
         obj = self.browse(cr,uid,ids)
         return self.write(cr,uid,ids,{'state':'confirm'},context=context)
@@ -165,7 +175,7 @@ class hr_holidays(osv.osv):
         'limit_cuti':fields.related('holiday_status_id','limit_cuti',type='boolean',relation='hr.holidays.status',string='Limit Cuti',readonly=True),
         'is_edit':fields.boolean('Kunci ?',required=True),
         'holiday_type': fields.selection([('employee','By Employee'),('lokasi','Lokasi')], 'Allocation Mode', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}, help='By Employee: Allocation/Request for individual Employee, By Employee Tag: Allocation/Request for group of employees in category', required=True),
-        'lokasi_id': fields.selection([('karawang','Bandung'),('tanggerang','Jakarta')],'Alamat Kantor', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
+        'lokasi_id': fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor', readonly=True, states={'draft':[('readonly',False)], 'confirm':[('readonly',False)]}),
         'category_id': fields.many2one('hr.employee.category', "Employee Tag"),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
     }
