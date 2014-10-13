@@ -8,6 +8,122 @@ class product_product(osv.osv):
 	
 	_inherit = "product.product"
 
+	def _get_qty_onhand_big(self, cr, uid, ids, field_names, arg=None, context=None):
+		if not ids: return {}
+
+		res = {}
+		for sm in self.browse(cr, uid, ids, context=context):
+			#import pdb;pdb.set_trace()
+			if sm.uos_id.id :
+				ratio = sm.uos_id.factor_inv
+			if not sm.uos_id.id :
+				ratio = 1
+			qty = sm.qty_available
+			product = sm.id
+			state = 'done'
+
+			if 'location' in context.keys():
+				location = context['location']
+
+				cr.execute ('select sum(product_qty) from stock_move '\
+					'where location_dest_id = %s '\
+					'and product_id = %s '\
+					'and state = %s',(location,product,state))
+				oz = cr.fetchone()
+				zoz = list(oz or 0)#karena dlm bentuk tuple di list kan dulu
+				zozo = zoz[0]
+				if zozo is None:
+					zozo = 0.00
+					
+				cr.execute ('select sum(product_qty) from stock_move '\
+					'where location_id = %s '\
+					'and product_id = %s '\
+					'and state = %s',(location,product,state))
+				az = cr.fetchone()
+				zaz = list(az or 0)
+				zaza = zaz[0] 
+				if zaza is None:
+					zaza = 0.00           
+				zazo = zozo-zaza
+				try:
+					value = zazo/ratio
+				except ValueError:
+					value = 0
+
+				res[sm.id] = value
+				t_sale = zazo*sm.list_price
+				t_cost = zazo*sm.standard_price
+
+			else :
+				try:
+					value = qty/ratio
+				except ValueError:
+					value = 0
+				res[sm.id] = value
+				t_sale = qty*sm.list_price
+				t_cost = qty*sm.standard_price
+
+			self.write(cr,uid,sm.id,{'total_sale_price':t_sale,'total_cost_price':t_cost},context=context)	
+				
+		return res
+
+	def _get_qty_forcasted_big(self, cr, uid, ids, field_names, arg=None, context=None):
+		if not ids: return {}
+
+		res = {}
+		for sm in self.browse(cr, uid, ids, context=context):
+			#import pdb;pdb.set_trace()
+			if sm.uos_id.id :
+				ratio = sm.uos_id.factor_inv
+			if not sm.uos_id.id :
+				ratio = 1
+			qty = sm.qty_available
+			product = sm.id
+			state = 'done'
+			state2 = 'waiting'
+			state3 = 'confirmed'	
+			state4 = 'assigned'	
+
+			if 'location' in context.keys():
+				location = context['location']
+
+				cr.execute ('select sum(product_qty) from stock_move '\
+					'where location_dest_id = %s '\
+					'and product_id = %s '\
+					'and (state = %s or state = %s or state = %s or state = %s)',
+					(location,product,state,state2,state3,state4))
+				oz = cr.fetchone()
+				zoz = list(oz or 0)#karena dlm bentuk tuple di list kan dulu
+				zozo = zoz[0]
+				if zozo is None:
+					zozo = 0.00
+					
+				cr.execute ('select sum(product_qty) from stock_move '\
+					'where location_id = %s '\
+					'and product_id = %s '\
+					'and (state = %s or state = %s or state = %s or state = %s)',
+					(location,product,state,state2,state3,state4))
+				az = cr.fetchone()
+				zaz = list(az or 0)
+				zaza = zaz[0] 
+				if zaza is None:
+					zaza = 0.00           
+				zazo = zozo-zaza
+				try:
+					value = zazo/ratio
+				except ValueError:
+					value = 0
+
+				res[sm.id] = value
+
+			else :
+				try:
+					value = qty/ratio
+				except ValueError:
+					value = 0
+				res[sm.id] = value
+				
+		return res
 
 	_columns  = {
 		'default_code' : fields.char('Internal Reference', size=64, select=True, required=True),
@@ -18,10 +134,12 @@ class product_product(osv.osv):
 		'list_price2' : fields.float('Harga MT'),
 		'ppn' : fields.boolean('PPn ?'),
 		'bonus' : fields.boolean('Bonus'),
-
 		'uom_ids' : fields.one2many('master.uom','product_id','List UoM'),
-
-
+		'onhand_big':fields.function(_get_qty_onhand_big,string ='Big Qty on Hand',readonly=True),
+		'forecasted_big':fields.function(_get_qty_forcasted_big,string ='Big Forcasted Qty',readonly=True),
+		'total_sale_price': fields.float(string="Total Sale Price",readonly=True),
+		'total_cost_price': fields.float(string="Total Cost Price",readonly=True),
+		'ratio_uos': fields.related('uos_id','factor_inv',relation="product.uom",type="float",readonly=True,string="Ratio")
 			}
 	_sql_constraints = [
 	   ('default_code_uniq', 'unique (default_code)', 'Internal Reference sudah ada!'),('barcode_uniq', 'unique (barcode)', 'Barcode sudah ada !')
@@ -164,7 +282,7 @@ class master_discount(osv.osv):
 	def create(self, cr, uid, vals, context=None):
 		viv = vals['partner_id']
 		viv_t = vals['type']
-		viv_l = vals[location_id]
+		viv_l = vals['location_id']
 		viva = self.pool.get('master.discount')
 		viva_s = viva.search(cr,uid,[('partner_id','=',viv),('type','=',viv_t),('location_id','=',viv_l)])
 		vival = viva.browse(cr,uid,viva_s)
