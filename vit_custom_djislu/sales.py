@@ -56,7 +56,7 @@ class sale_order_line(osv.osv):
 			discv4 = line.p_disc_value_c/uom
 			discv5 = line.p_disc_value_m/uom
 			#reg discount
-			pri = (line.price_unit-discv) * (1 - (line.discount or 0.0) / 100.0)
+			pri = ((line.price_unit-discv) * (1 - (line.discount or 0.0) / 100.0))
 			#promo discount
 
 			pric = ((pri - discv2) * (1 - (line.p_disc_pre or 0.0) / 100.0))
@@ -69,45 +69,6 @@ class sale_order_line(osv.osv):
 			#mix discount
 
 			price = ((pric3 - discv5) * (1 - (line.p_disc_pre_m or 0.0) / 100.0))	
-
-			# #harus di bagi uom qty dulu
-			# dis = line.disc_value
-			# dis2 = line.p_disc_value
-			# dis3 = line.p_disc_value_x
-			# dis4 = line.p_disc_value_c
-			# dis5 = line.p_disc_value_m
-
-
-			# if line.p_discount == 0.00:
-			# 	per1 == 0.00
-			# per1 = gro*line.p_discount/100
-
-			# if line.p_disc_pre == 0.00:
-			# 	per2 == 0.00
-			# per2 = gro*line.p_disc_pre/100
-
-			# if line.p_disc_pre_x == 0.00:
-			# 	per1 == 0.00
-			# per_1 = gro*line.p_disc_pre/100
-
-			# if line.p_disc_pre == 0.00:
-			# 	per1 == 0.00
-			# per_1 = gro*line.p_disc_pre/100
-
-			# #reg discount
-			# pr = gro - dis - (gro*line.p_disc_pre/100) #* (1 - (line.discount or 0.0) / 100.0)
-			# #promo discount
-
-			# pric = ((pri - discv2) * (1 - (line.p_disc_pre or 0.0) / 100.0))
-			# #xtra discount
-
-			# pric2 = ((pric - discv3) * (1 - (line.p_disc_pre_x or 0.0) / 100.0))
-			# #cash discount
-
-			# pric3 = ((pric2 - discv4) * (1 - (line.p_disc_pre_c or 0.0) / 100.0))
-			# #mix discount
-
-			# price = ((pric3 - discv5) * (1 - (line.p_disc_pre_m or 0.0) / 100.0))
 			
 			gross = self.write(cr, uid,line.id, {'gross_tot': gro},context=context)	
 			#import pdb;pdb.set_trace()				
@@ -117,34 +78,38 @@ class sale_order_line(osv.osv):
 			self.write(cr,uid,line.id,{'tes':taxes['total']},context=context)
 		return res
 
-
 	_columns = {
 		'volume' : fields.float('Volume (m3)'),
 		'volume2' : fields.related('product_id','volume',string ='Vlm'),
 		'coeff' : fields.float('Ratio Uos'),
 		'uos2' :fields.char('Satuan Besar'),
-		'tax_id': fields.many2many('account.tax', 'sale_order_tax', 'order_line_id', 'tax_id', 'Taxes'),
-		'disc_value' : fields.float('R.Disc (Price)'),
+		'tax_id': fields.many2many('account.tax', 'sale_order_tax', 'order_line_id', 'tax_id', 'Taxes'),		
 		'gross_tot' : fields.float('Gross Total'),
-		'discount': fields.float('R.Disc (%)', digits_compute= dp.get_precision('Discount'), readonly=True, states={'draft': [('readonly', False)]}),
 		'price_subtotal': fields.function(_amount_line, string='Subtotal', digits_compute= dp.get_precision('Account')),
 		'partner_id' : fields.many2one('res.partner','Principle'),# field bayangan principle sesuai dg sale order
 		#'product_id': fields.many2one('product.product', 'Product', domain="[('seller_ids[0].name.id','=',order_id)]", change_default=True),
-		#regular disc		
+		#regular disc	
+		'r_func' : fields.float(string="Reg.Price"),
+		'disc_value' : fields.float('R.Disc (Price)'),
+		'discount': fields.float('R.Disc (%)', digits_compute= dp.get_precision('Discount'), readonly=True, states={'draft': [('readonly', False)]}),	
 		'r_flat' : fields.boolean('R.Flat'),
 		#promo discount
+		'p_func' : fields.float(string="Pro.Price"),
 		'p_disc_value' : fields.float('P.Disc (Price)'),
 		'p_disc_pre' : fields.float('P.Disc (%)',digits_compute= dp.get_precision('Discount')),
 		'p_flat' : fields.boolean('P.Flat'),
 		#extra discount
+		'x_func' : fields.float(string="Ext.Price"),
 		'p_disc_value_x' : fields.float('X.Disc (Price)'),
 		'p_disc_pre_x' : fields.float('X.Disc (%)',digits_compute= dp.get_precision('Discount')),
 		'x_flat' : fields.boolean('X.Flat'),
 		#cash discount
+		'c_func' : fields.float(string="Csh.Price"),
 		'p_disc_value_c' : fields.float('C.Disc (Price)'),
 		'p_disc_pre_c' : fields.float('C.Disc (%)',digits_compute= dp.get_precision('Discount')),
 		'c_flat' : fields.boolean('C.Flat'),
 		#mix  discount
+		'm_func' : fields.float(string="Mx.Price"),
 		'p_disc_value_m' : fields.float('M.Disc (Price)'),
 		'p_disc_pre_m' : fields.float('M.Disc (%)',digits_compute= dp.get_precision('Discount')),
 		'm_flat' : fields.boolean('M.Flat'),	
@@ -756,7 +721,7 @@ class sale_order(osv.osv):
 
 		#looping semua disc yang ada/sesuai
 		for gb in disc_browse :
-			
+			#import pdb;pdb.set_trace()
 			type_disc = gb.type
 			nma = gb.name
 			qty_p = gb.qty
@@ -3518,6 +3483,7 @@ class sale_order(osv.osv):
 
 		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
 		lin = self.browse(cr,uid,ids)[0]
+		sol_obj= self.pool.get('sale.order.line')
 
 		####################################################################
 		#Cek dulu qty product di gudang yang bersangkutan
@@ -3582,7 +3548,54 @@ class sale_order(osv.osv):
 									'product_qty':qt,
 									'product_uom':qt_m,										
 									'state':'assigned'										
-									})			
+									})
+
+			r_fl = l.r_flat
+			p_fl = l.p_flat
+			x_fl = l.x_flat
+			c_fl = l.r_flat
+			m_fl = l.r_flat
+
+			gros = l.gross_tot
+
+			r_value = l.disc_value
+			p_value = l.p_disc_value
+			x_value = l.p_disc_value_x
+			c_value = l.p_disc_value_c
+			m_value = l.p_disc_value_m
+
+			r_percent = l.discount
+			p_percent = l.p_disc_pre
+			x_percent = l.p_disc_pre_x
+			c_percent = l.p_disc_pre_c
+			m_percent = l.p_disc_pre_m
+
+			if r_fl :
+				rr = r_value+(gros*r_percent/100)
+			if not r_fl :
+				rr = r_value+(gros*r_percent/100)	
+
+			if p_fl :
+				pp = p_value+(gros*p_percent/100)
+			if not p_fl :
+				pp = p_value+((gros-rr)*p_percent/100)
+
+			if x_fl :
+				xx = x_value+(gros*x_percent/100)
+			if not x_fl :
+				xx = x_value+((gros-pp)*x_percent/100)
+
+			if c_fl :
+				cc = c_value+(gros*c_percent/100)
+			if not c_fl :
+				cc = c_value+((gros-xx)*c_percent/100)
+
+			if m_fl :
+				mm = m_value+(gros*m_percent/100)
+			if not m_fl :
+				mm = m_value+((gros-cc)*m_percent/100)
+
+			sol_obj.write(cr,uid,l.id,{'r_func':rr,'p_func':pp,'x_func':xx,'c_func':cc,'m_func':mm},context=context)
 
 		#cek ar di customer terkait
 		ar = self.browse(cr,uid,ids)[0]

@@ -247,7 +247,7 @@ class stock_location(osv.osv):
 	_inherit = "stock.location"
 
 	_columns = {
-		'code': fields.char('Kode', size=13,required=True),
+		'code': fields.char('Code', size=13,required=True),
 
 		}
 
