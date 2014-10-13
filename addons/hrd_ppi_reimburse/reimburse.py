@@ -18,8 +18,6 @@ import psycopg2
 REIMBURSE_STATES =[
 	('draft','Draft'),
 	('verify','Verify'),
-	('reject','Reject'),
-	('approve','Approve'),
 	('approve2','Second Approve'),
                    ]
 
@@ -112,15 +110,12 @@ class reimburse(osv.osv):
 
     def action_verify(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[1][0]},context=context)
- 
-    def action_reject(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[2][0]},context=context) 
     	
     def action_approve(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[3][0]},context=context)   
+    	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[2][0]},context=context)   
     	 
     def action_approve2(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[4][0]},context=context)
+    	return self.write(cr,uid,ids,{'state':REIMBURSE_STATES[3][0]},context=context)
 
     
     _columns={

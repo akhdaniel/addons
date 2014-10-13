@@ -112,7 +112,7 @@ class employee(osv.osv):
 	    'country_id1':fields.many2one('res.country','Negara'),
         'country_id2':fields.many2one('res.country','Negara'),
         'address_id2': fields.many2one('res.partner', 'Nama Kantor'),
-        'work_location2': fields.selection([('karawang','Bandung'),('tanggerang','Jakarta')],'Lokasi Kerja',required=True), 
+        'work_location2': fields.selection([('karawang','Karawang'),('tanggerang','Jakarta')],'Lokasi Kerja',required=True), 
         'usia':fields.function(_compute_age, type='integer', obj='hr.employee', method=True, store=False, string='Usia (Thn)', readonly=True),        
         'ptkp_id': fields.many2one('hr.ptkp','Status Pajak', required=True),
         'npwp':fields.char('NPWP',size=20),

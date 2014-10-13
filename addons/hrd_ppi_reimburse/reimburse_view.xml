@@ -11,12 +11,12 @@
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        groups="hrd_ppi.group_hr_user,base.group_hr_user" 
+                        groups="hrd_ppi.group_hr_aprove_dep1" 
                         class="oe_highlight" /> 
 
                     <button string="Approve" type="workflow"  
                         states="verify" name="signal_approve"
-                        groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_aprove_dep1"
+                        groups="base.group_hr_manager"
                         class="oe_highlight"  />  
                         
                     <button string="Second Approve" type="workflow"  

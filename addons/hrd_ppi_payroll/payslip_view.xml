@@ -153,7 +153,7 @@
                 </button> 
                 <field name="number_of_days" sum="Total Working Days" position="replace">
                     <field name="number_of_days"/>
-                </field>                
+                </field>          
             </field>
         </record>
 
@@ -191,5 +191,20 @@
         <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
         <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
         <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
+
+<!--     <record id="view_hr_employee_grade_form2" model="ir.ui.view">
+            <field name="name">hr.payroll.structure.form</field>
+            <field name="model">hr.payroll.structure</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+            <field name="arch" type="xml">     
+                <field name='parent_id' position='after'>
+                    <label string="Cut Off" fonts="bold"/>
+                    <div>
+                        <field name="start_date" class="oe_inline"/><label string="-" class="oe_inline"/>
+                        <field name="end_date" class="oe_inline"/>
+                    </div>
+                </field>
+            </field>
+    </record> -->
     </data>
 </openerp>

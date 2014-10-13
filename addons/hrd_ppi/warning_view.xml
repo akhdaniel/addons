@@ -9,8 +9,6 @@
 					<group>
 						<field name='name'/>
 						<field name='date_warning'/>
-					</group>
-					<group>
 						<field name='warning_kontrak' attrs="{'invisible': [('name','!=','kontrak')]}"/>
 					</group>
 				</form>

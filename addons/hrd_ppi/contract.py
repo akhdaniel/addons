@@ -322,7 +322,6 @@ class hr_contract_sift(osv.osv):
         return True
 
     def working_schedule(self,cr,uid,ids=None,context=None):
-        import pdb;pdb.set_trace()
         con_obj = self.pool.get('hr.contract')
         con_src = con_obj.search(cr,uid,[('status','=',True),('kelompok_sift','!=',False)])
         con_brw = con_obj.browse(cr,uid,con_src)
