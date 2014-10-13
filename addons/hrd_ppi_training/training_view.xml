@@ -196,8 +196,8 @@
                                     <field name='employee_id'/>
                                     <field name='nik'/>
                                     <field name='department_id'/>
-                                    <field name='bukti' attrs="{'invisible': [('state','!=','evluation')]}"/>
-                                    <field name='berlaku' attrs="{'invisible': [('state','!=','evluation')]}"/>
+                                    <field name='bukti' attrs="{'invisible': [('state','!=','evaluation')]}"/>
+                                    <field name='berlaku' attrs="{'invisible': [('state','!=','evaluation')]}"/>
                                     <field name='state'/>
                                 </form>
                             </field>
