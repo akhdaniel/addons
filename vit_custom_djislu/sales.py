@@ -121,9 +121,9 @@ class sale_order_line(osv.osv):
 
 	}
 
-	# _defaults ={
-	# 	'partner_id':_get_principle,
-	# 	}	
+	_defaults = {
+		'qty_awal': 0.0,
+		}	
 
 	def _get_line_qty2_big(self, cr, uid, line, context=None):
 
@@ -407,21 +407,21 @@ class sale_order(osv.osv):
 		if vals.get('name','/')=='/':
 			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'
 
-		#for x in vals['order_line']:
-			# x1 = x[2]['qty_small']
-			# x2 = x[2]['qty_big']
-			# id_uos = x[2]['product_uos']
+		for x in vals['order_line']:
+			x1 = x[2]['qty_small']
+			x2 = x[2]['qty_big']
+			id_uos = x[2]['product_uos']
 
-			# #cari detailnya di product.uom
-			# uom_obj = self.pool.get('product.uom')
-			# uom_sr = uom_obj.search(cr,uid,[('id','=',id_uos)])
-			# uos = uom_obj.browse(cr,uid,uom_sr)[0]
-			# uos_fct = uos.factor_inv
+			#cari detailnya di product.uom
+			uom_obj = self.pool.get('product.uom')
+			uom_sr = uom_obj.search(cr,uid,[('id','=',id_uos)])
+			uos = uom_obj.browse(cr,uid,uom_sr)[0]
+			uos_fct = uos.factor_inv
 
-			# qty_awal = x1+(x2*uos_fct)
+			qty_awal = x1+(x2*uos_fct)
 
-			# sol.create(cr,uid,{'qty_awal':qty_awal,'order_id':vals[0],},context=context)
-		return super(sale_order, self).create(cr, uid, vals, context=context)	
+			x[2]['qty_awal'] = qty_awal
+		return super(sale_order, self).create(cr, uid, vals, context=context)
 
 	#default shop sesuai cabang di master employee log in
 	def _get_default_werehouse(self, cr, uid, context=None):

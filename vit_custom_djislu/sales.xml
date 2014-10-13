@@ -101,7 +101,7 @@
                                                 <field name="qty_small"/>
                                                 <field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button" on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, context)" invisible="1"/>
                                             </div>
-                                        
+                                            <field name="qty_awal" invisible="1"/>
                                                                                      
                                             <field name="gross_tot" invisible="1"/>
                                             <field name="price_unit" invisible="1"/>
@@ -149,6 +149,7 @@
                                     <field name="gross_tot" invisible="1"/>
                                     <field name="r_func" invisible="1"/>
                                     <field name="disc_value"/>
+                                    <field name="qty_awal" invisible="1"/>
                                     <field name="discount" groups="sale.group_discount_per_so_line,base.group_sale_salesman_all_leads"/>
                                     <field name="r_flat" invisible="1"/> 
 
@@ -171,7 +172,7 @@
                                     <field name="p_disc_value_m"/>
                                     <field name="p_disc_pre_m"/> 
                                     <field name="m_flat" invisible="1"/>
-                                    <field name="qty_awal" invisible="1"/>
+                                    
                                     <field name="price_subtotal"/>
                                    <!--  <field name="tes"/> -->
                                 </tree>    
