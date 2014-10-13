@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="stock_picking" 
+        string="Delivery Slip With Sign" 
+        model="stock.picking.out" 
+        name="stock_picking" 
+        rml="vit_garmen_surat_jalan/report/stock_picking.rml" 
+        auto="False" 
+        header="True"/>          
+    </data> 
+</openerp>
