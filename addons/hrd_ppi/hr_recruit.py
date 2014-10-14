@@ -110,7 +110,7 @@ class permohonan_recruit(osv.osv):
                 stats = line.name                     
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
         lap_src = lap_obj.search(cr,uid,[('no','=',hasil.no_permohonan)])
         for lap in lap_obj.browse(cr,uid,lap_src) :
@@ -668,7 +668,6 @@ class hr_applicant(osv.osv):
                 prod_ids6=[]
                 for pr in lele:   
                     prod_ids6.append((0,0, {'name':pr.name,'alamat':pr.alamat,'jabatan':pr.jabatan,'telepon':pr.telepon}))  
-                import pdb;pdb.set_trace()
                 emp_id = hr_employee.create(cr,uid,{'name': applicant.partner_name or applicant.name,
                                                      'job_id': applicant.app_id.id,
                                                      'department_id' : applicant.dep_app.id,
