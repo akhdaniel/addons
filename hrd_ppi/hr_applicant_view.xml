@@ -30,7 +30,7 @@
             </button-->  
 
 
-            <field name="partner_name" position="replace">
+            <field name="partner_name" position="after">
                 <label for='stage_id' string="Status"/>
                 <field name="stage_id"/>
                 <label for='empgol_id' string="Golongan" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
@@ -39,7 +39,6 @@
                 <field name="lokasi_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
                 <label for="lokasi_id" string="PTKP" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
                 <field name="ptkp" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
-                <field name="partner_name" attrs="{'required':[('state','!=','done')]}"/>
             </field>
 
             <!--div class="oe_right oe_button_box" position="replace"/-->
