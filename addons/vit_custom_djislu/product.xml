@@ -135,7 +135,7 @@
             <field name="model">master.discount</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Master Discount">
+                <tree colors="gray:is_active == False" string="Master Discount">
                     <field name="type"/> 
                     <field name="partner_id"/>
                     <field name="name"/>
@@ -143,7 +143,7 @@
                     <field name="date_to"/>
                     <field name="is_active"/>
                     <field name="multi"/>
-                    <!-- <field name="condition2_ids"/> -->
+                    <field name="is_category" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -276,13 +276,37 @@
             </field>
         </record>        
 
+        <record id="view_discount_search" model="ir.ui.view">
+            <field name="name">Discount</field>
+            <field name="model">master.discount</field>
+            <field name="arch" type="xml">
+                <search string="Discount">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="Name"/>
+                    <filter icon="terp-sale" string="Regular" domain="[('type','=','regular')]"/>
+                    <filter icon="terp-sale" string="Promo" domain="[('type','=','promo')]"/>
+                    <filter icon="terp-sale" string="Extra" domain="[('type','=','extra')]"/>
+                    <filter icon="terp-sale" string="Cash" domain="[('type','=','cash')]"/>
+                    <filter icon="terp-sale" string="Mix" domain="[('type','=','mix')]"/>                    
+                    <filter name="active" string="Active" domain="[('is_active','=',True)]" help="Active Discount" invisible="0"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Location" icon="terp-folder-orange" domain="" context="{'group_by':'location_id'}"/>
+                        <filter string="Principle" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'partner_id'}"/>
+                        <filter string="Multiples" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'multi'}"/>
+                        <filter string="Category" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'is_category'}"/>
+                        <filter string="Type" icon="terp-stock_symbol-selection" domain="" context="{'group_by':'type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="action_master_discount" model="ir.actions.act_window">
             <field name="name">Master Discount</field>
             <field name="res_model">master.discount</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_master_discount_tree"/>
-<!--             <field name="search_view_id" ref="view_partner_pricelist_items_search"/> -->
+            <field name="search_view_id" ref="view_discount_search"/>
+            <field name="context">{'search_default_active': 1}</field>
         </record>
 
         <menuitem action="action_master_discount" id="menu_action_masters_discount" parent="menu_action_masters"/>
