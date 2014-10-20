@@ -98,10 +98,13 @@ class hr_holidays(osv.osv):
             dep = objk.department_id.manager_id.id
         state =objk.state
         if objk.type != "add" and objk.holiday_type != 'lokasi':
-            if objk.employee_id.department_id.name != "HRD" and objk.employee_id.id != dep :
+            #import pdb;pdb.set_trace()
+            if objk.employee_id.department_id.name != "HRD" :
                 if ids2[0] == emp and emp == dep :
                     raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))  
                 if brw.user_id.approve_presdir == True :
+                    raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))
+                if brw.department_id.name == "HRD" and objk.department_id.name != "HRD" and objk.employee_id.id != dep :
                     raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))
                 self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})
             else :
@@ -181,7 +184,7 @@ class hr_holidays(osv.osv):
             if dep != "" :
                 dep = holiday.department_id.manager_id.id
             if holiday.type != "add" and holiday.holiday_type != 'lokasi':
-                if holiday.employee_id.department_id.name != "HRD" and holiday.employee_id.id != holiday.department_id.manager_id.id :
+                if holiday.employee_id.department_id.name != "HRD"  :
                     if ids2[0] == emp and emp == dep :
                         raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval')) 
                     if brw.user_id.approve_presdir == True :
@@ -264,7 +267,7 @@ class hr_holidays(osv.osv):
         }}
 
     def hapus_cuti(self,cr,uid,ids=None,context=None):
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         dates=time.strftime('%Y-%m-%d')
         year1=datetime.strptime(dates,"%Y-%m-%d").year
         month1=datetime.strptime(dates,"%Y-%m-%d").month
@@ -452,7 +455,7 @@ class hr_holidays(osv.osv):
             leave_ids.append(self.create(cr, uid, values, context=None))
             # self.create(cr,uid,values,context=context)
         wf_service = netsvc.LocalService("workflow")
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         for leave_id in leave_ids:
             wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
             wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
@@ -468,7 +471,7 @@ class hr_holidays(osv.osv):
         obj_contract = self.pool.get('hr.contract')
         c_src = obj_contract.search(cr, uid, [],)
         contracts  = obj_contract.browse(cr, uid, c_src,)
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         for contract in contracts:
             values = {}
             date_from = contract.date_start
