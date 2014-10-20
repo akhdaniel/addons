@@ -9,8 +9,9 @@ from openerp.tools.translate import _
 
 AVAILABLE_STATES = [
     ('submit', 'Baru'),
-    ('approval', 'Proses Aproval'),
-    ('approval1', 'Aproval Tahap Akhir'),
+    ('approval', 'Proses Department'),
+    ('approval1', 'Aproval HR'),
+    ('approval2', 'Approval Presdir'),
     ('in_progress', 'Sedang Dalam Proses'),
 ]
 
@@ -28,7 +29,8 @@ class hr_recruitment_stage(osv.osv):
     _columns = {
         'name': fields.char('Name', size=64, required=True, translate=True),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list of stages."),
-        'job_id':fields.many2one('hr.job', 'Specific to a Job', help="Jika ada proses aproval tambahan pada salah satu bidang pekerjaan."),
+        #'job_id':fields.many2one('hr.job', 'Specific to a Job', help="Jika ada proses aproval tambahan pada salah satu bidang pekerjaan."),
+        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Karyawan','Karyawan')],string='Jenis Permohonan'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', required=True, help="The related status for the stage. The status of your document will automatically change according to the selected stage. Example, a stage is related to the status 'Close', when your document reach this stage, it will be automatically closed."),
         'fold': fields.boolean('Sembunyikan Jika Sudah Tidak Terpakai', help="Jika Aproval Sudah Tidak Terpakai Maka Centang View Ini."),
         'requirements': fields.text('Requirements'),
@@ -52,10 +54,10 @@ class permohonan_recruit(osv.osv):
         #function for number automatic
         objk = self.browse(cr,uid,ids)[0]
         day_now = datetime.now()
-        name = objk.name
+        name = objk.jenis_permohonan
         stg3=objk.state.sequence
         partner=self.pool.get('hr.job.approval')  
-        pero=partner.search(cr,uid,['|',('job_id','=',False),('job_id','=',name)])     
+        pero=partner.search(cr,uid,['|',('jenis_permohonan','=',False),('jenis_permohonan','=',name)])     
         pers=partner.browse(cr,uid,pero,context)
         st= 1000
         for line in pers: 
@@ -97,10 +99,10 @@ class permohonan_recruit(osv.osv):
 
     def action_verify(self,cr,uid,ids,context=None): 
         hasil=self.browse(cr,uid,ids)[0]
-        name = hasil.name
+        name = hasil.jenis_permohonan
         stg3=hasil.state.sequence
         partner=self.pool.get('hr.job.approval')  
-        pero=partner.search(cr,uid,['|',('job_id','=',False),('job_id','=',name)])     
+        pero=partner.search(cr,uid,['|',('jenis_permohonan','=',False),('jenis_permohonan','=',name)])     
         pers=partner.browse(cr,uid,pero,context)
         st= 1000
         for line in pers: 
@@ -110,7 +112,6 @@ class permohonan_recruit(osv.osv):
                 stats = line.name                     
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
-        #import pdb;pdb.set_trace()
         lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
         lap_src = lap_obj.search(cr,uid,[('no','=',hasil.no_permohonan)])
         for lap in lap_obj.browse(cr,uid,lap_src) :
@@ -124,10 +125,10 @@ class permohonan_recruit(osv.osv):
         date =obj.wkt_pemohon
         dates = datetime.strptime(date,"%Y-%m-%d").year
         jenis_per = obj.jenis_permohonan
-        name = obj.name
+        name = obj.jenis_permohonan
         stg3=obj.state.sequence
         partner=self.pool.get('hr.job.approval')  
-        pero=partner.search(cr,uid,['|',('job_id','=',False),('job_id','=',name)])     
+        pero=partner.search(cr,uid,['|',('jenis_permohonan','=',False),('jenis_permohonan','=',name)])     
         pers=partner.browse(cr,uid,pero,context)
         st= 1000
         for line in pers: 
@@ -171,6 +172,7 @@ class permohonan_recruit(osv.osv):
 
     def selesai(self,cr,uid,ids,context=None):
         obj = self.browse(cr,uid,ids)[0]
+        names = obj.name
         lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
         lap_src = lap_obj.search(cr,uid,[('no','=',obj.no_permohonan)])
         for lap in lap_obj.browse(cr,uid,lap_src) :
@@ -185,6 +187,7 @@ class permohonan_recruit(osv.osv):
     
     _columns= {
         'name': fields.char('Job Name', size=128, required=True, select=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'kunci': fields.boolean(''),
         'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Karyawan','Karyawan')],string='Jenis Permohonan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'no':fields.char('Nomor',20),
         'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],string='Status',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
@@ -224,7 +227,7 @@ class permohonan_recruit(osv.osv):
         'bagian_id' : fields.many2one('hr.department','Bagian',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'level_id' :fields.many2one('hr.level','Level',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),   
         'status_rec' : fields.selection([('new','new'),('filter','filter'),('execute','execute'),('in_progres','in progres'),('pending','pending')],readonly=True, string='Status Record'),  
-        'state':fields.many2one ('hr.job.approval','Stage',domain="['&', ('fold', '=', False), '|', ('job_id', '=', name), ('job_id', '=', False)]"),   
+        'state':fields.many2one ('hr.job.approval','Stage',domain="['&', ('fold', '=', False), '|', ('jenis_permohonan', '=', jenis_permohonan), ('jenis_permohonan', '=', False)]"),   
         'states_id':fields.char('Status'),  
             }
 
@@ -423,7 +426,7 @@ class permohonan_recruit(osv.osv):
         n = 1000
         for ini in pers :
                 asu = ini.sequence
-                if asu > 1 and asu < n :
+                if asu > 0 and asu < n :
                     n = ini.sequence  
                     nn = ini.id
         for exe in hasil.applicant_ids:
@@ -986,23 +989,24 @@ class hr_applicant(osv.osv):
                                                 return self.write(cr,uid,ids,{'stage_id': stg},context=context)                         
         return self.write(cr,uid,ids,{'stage_id': stgs},context=context)
     '''
-    def interview(self, cr, uid,vals, context=None):
-        #appl=self.browse(cr,uid,ids)[0]
-        app=vals["job_id"]
-        apps=self.pool.get('hr.survey1')
-        appss=apps.search(cr,uid,[('job_id.id','=',app)])
-        ap=apps.browse(cr,uid,appss,context)
-        res=[]
-        for pr in ap:
-            if pr.surveys_id.state == "open":
-                #prs=pr.survey_id.id
-                prs=pr.surveys_id.id
-                res.append((0,0, {'name':prs})) 
-        vals['surv_ids']=res
-        return vals
+    # def interview(self, cr, uid,vals, context=None):
+    #     import pdb;pdb.set_trace()
+    #     #appl=self.browse(cr,uid,ids)[0]
+    #     app=vals["job_id"]
+    #     apps=self.pool.get('hr.survey1')
+    #     appss=apps.search(cr,uid,[('job_id.id','=',app)])
+    #     ap=apps.browse(cr,uid,appss,context)
+    #     res=[]
+    #     for pr in ap:
+    #         if pr.surveys_id.state == "open":
+    #             #prs=pr.survey_id.id
+    #             prs=pr.surveys_id.id
+    #             res.append((0,0, {'name':prs})) 
+    #     vals['surv_ids']=res
+    #     return vals
            
     def create(self, cr, uid, vals, context=None):       
-        vals=self.interview(cr, uid, vals, context=None)
+        #vals=self.interview(cr, uid, vals, context=None)
         result= super(hr_applicant,self).create (cr, uid, vals, context=None)
         return result
         
@@ -1027,8 +1031,9 @@ class hr_applicant(osv.osv):
     #fungsi untuk menentukan kesimpulan diterima atau di tolak
     def simpul(self, cr, uid,ids,vals,context=None):   
         hasil=self.browse(cr,uid,ids)[0]
+        dept = hasil.dep_app.id
         partner=self.pool.get('hr.recruitment.stage')  
-        pero=partner.search(cr,uid,[])     
+        pero=partner.search(cr,uid,['|',('department_id','=',False),('department_id','=',dept)])     
         pers=partner.browse(cr,uid,pero,context)
         #stg2=float(hasil.stage_id.sequence)+1
         stg3=hasil.stage_id.sequence

@@ -8,13 +8,16 @@
             <field name="arch" type="xml">
 
                 <header>                              
-                    <button string="Send For Approval" type="object" name='action_submit' attrs="{'invisible': [('states_id','!=','submit')]}" groups="hrd_ppi.group_hr_department,base.group_hr_user"/>
-                    <button string='Approval' type='object' name='action_verify' attrs="{'invisible': [('states_id','!=','approval')]}" groups="hrd_ppi.group_hr_aprove_dep1"/>
-                    <button string='Approval' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}" groups="hrd_ppi.group_hr_aprove_coo,base.group_hr_manager"/>
+                    <button string="Send For Approval" type="object" name='action_submit' attrs="{'invisible': [('states_id','!=','submit')]}" groups="hrd_ppi.group_hr_admins"/>
+                    <button string='Approval department' type='object' name='action_verify' attrs="{'invisible': [('states_id','!=','approval')]}" groups="hrd_ppi.group_hr_aprove_dep1"/>
+                    <button string='Approval HR' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}" groups="base.group_hr_manager"/>
+                    <button string='Approval Presdir' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval2')]}" groups="hrd_ppi.group_hr_aprove_presdir"/>
                     <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval')]}" 
                     group="hrd_ppi.group_hr_aprove_dep1"/>
                     <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval1')]}"
-                    groups="hrd_ppi.group_hr_aprove_coo,base.group_hr_manager"/>
+                    groups="base.group_hr_manager"/>
+                    <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval2')]}"
+                    groups="hrd_ppi.group_hr_aprove_coo"/>
                     <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}" groups="base.group_hr_user,base.group_hr_manager"/>    
                     <!-- <field name='state' widget='statusbar'/>       -->
                     <!--field name='states_id' widget='statusbar'/-->           
@@ -32,7 +35,8 @@
                         <h1>
                             <div>
                                 <field name="bol_name" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/> 
-                                <field name="name" nolabel="1" class="oe_inline"/>
+                                <field name="name" nolabel="1" class="oe_inline" attrs="{'readonly':[('kunci','=',True)]}"/>
+                                <field name="kunci" groups="base.group_hr_user"/>
                             </div>
                         </h1>
                     </div>                    
@@ -212,7 +216,7 @@
             <tree string="Stages">
                 <field name="sequence" invisible="1"/>
                 <field name="name"/>
-                <field name="job_id"/>
+                <field name="jenis_permohonan"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -227,7 +231,7 @@
                 <group string="Stage Definition">
                     <group>
                         <field name="name"/>
-                        <field name="job_id"/>
+                        <field name="jenis_permohonan"/>
                     </group>
                     <group>
                         <field name="state"/>
@@ -238,6 +242,17 @@
                 <separator string="Requirements"/>
                 <field name="requirements"/>
             </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_recruitment_stage_tree2">
+        <field name="name">hr.recruitment.stage.tree</field>
+        <field name="model">hr.recruitment.stage</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_tree"/>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="sequence"/>
+            </tree>
         </field>
     </record>
 

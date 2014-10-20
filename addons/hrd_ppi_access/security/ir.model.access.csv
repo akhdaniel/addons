@@ -96,6 +96,7 @@ access_hr_extitle_user,hr_extitle_user,hrd_ppi.model_hr_extitle,base.group_hr_us
 access_hr_employs_clas_user,hr_employs_clas_user,hrd_ppi.model_hr_employs_clas,base.group_hr_user,1,1,1,1
 access_hr_employs_wfield_user,hr_employs_wfield_user,hrd_ppi.model_hr_employs_wfield,base.group_hr_user,1,1,1,1
 access_hr_employs_pansion_user,hr_employs_pansion_user,hrd_ppi.model_hr_employs_pansion,base.group_hr_user,1,1,1,1
+access_resource_calendar_leavess_user,resource_calendar_leavess_user,resource.model_resource_calendar_leaves,base.group_hr_user,1,1,1,1
 
 access_reimburse_user,reimburse_user,hrd_ppi_reimburse.model_reimburse,base.group_user,1,0,0,0
 access_hr_non_emp_user,hr_non_emp_user,hrd_ppi_training.model_hr_non_emp,base.group_user,1,0,0,0
@@ -111,7 +112,7 @@ access_hr_employee_rwt_krj_user,hr_employee_rwt_krj_user,hrd_ppi.model_hr_employ
 access_hr_employee_kon1_user,hr_employee_kon1_user,hrd_ppi.model_hr_employee_kon1,base.group_user,1,0,0,0
 access_hr_employee_kon2_user,hr_employee_kon2_user,hrd_ppi.model_hr_employee_kon2,base.group_user,1,0,0,0
 access_hr_training_sio_user,hr_training_sio_user,hrd_ppi_training.model_hr_training_sio,base.group_user,1,0,0,0
-access_hr_holidays_user,hr_holidays_user,hrd_ppi_leave.model_hr_holidays,base.group_user,1,1,1,0
+access_hr_holidays_user,hr_holidays_user,hrd_ppi_leave.model_hr_holidays,base.group_user,1,0,0,0
 access_hr_overtime_jam_user,hr_overtime_jam_user,hrd_overtime.model_hr_overtime_jam,base.group_user,1,1,1,1
 access_hr_jam_user,hr_jam_user,hrd_overtime.model_hr_jam,base.group_user,1,1,1,1
 access_hr_bln_libur,h_bln_libur_user,hrd_ppi_leave.model_hr_bln_libur,base.group_user,1,1,1,1
@@ -157,10 +158,13 @@ access_hr_overtime_coo,hr_overtime_coo,hrd_overtime.model_hr_overtime,group_hr_c
 access_hr_overtime_jam_coo,hr_overtime_jam_coo,hrd_overtime.model_hr_overtime_jam,group_hr_coo,1,0,0,0
 access_hr_jam_coo,hr_jam_coo,hrd_overtime.model_hr_jam,group_hr_coo,1,0,0,0
 access_hr_overtime_type_coo,hr_overtime_type_coo,hrd_overtime.model_hr_overtime_type,group_hr_coo,1,0,0,0
-access_hr_holidays_coo,hr_holidays_coo,hrd_ppi_leave.model_hr_holidays,group_hr_coo,1,0,0,0
+access_hr_holidays_coo,hr_holidays_coo,hrd_ppi_leave.model_hr_holidays,group_hr_coo,1,1,1,1
 access_hr_attendance_coo,hr_attendance_coo,hrd_overtime.model_hr_attendance,group_hr_coo,1,0,0,0
 access_hr_payslip_coo,hr_payslip_coo,hrd_ppi_payroll.model_hr_payslip,group_hr_coo,1,0,0,0
 access_hr_employee_coo,hr_employee_coo,hrd_ppi.model_hr_employee,group_hr_coo,1,1,0,0
+access_hr_sumary_kebutuhan_coo,hr_sumary_kebutuhan_coo,hrd_ppi.model_hr_sumary_kebutuhan,group_hr_coo,1,1,0,0
+access_hr_lap_permintaan_karyawan_coo,hr_lap_permintaan_karyawan_coo,hrd_ppi.model_hr_lap_permintaan_karyawan,group_hr_coo,1,1,0,0
+access_hr_holidays_status_hr_coo,hr_holidays_status_hr_coo,hrd_ppi_leave.model_hr_holidays_status,group_hr_coo,1,1,0,0
 
 access_reimburse_dept,reimburse_dept,hrd_ppi_reimburse.model_reimburse,group_hr_dept,1,0,0,0
 access_hr_non_emp_dept,hr_non_emp_dept,hrd_ppi_training.model_hr_non_emp,group_hr_dept,1,0,0,0

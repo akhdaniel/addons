@@ -86,23 +86,48 @@ class hr_holidays(osv.osv):
         self.check_holidays(cr, uid, ids, context=context)
         obj_emp = self.pool.get('hr.employee')
         ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
+        brw =obj_emp.browse(cr,uid,ids2)[0]
         manager = ids2 and ids2[0] or False
         self.holidays_first_validate_notificate(cr, uid, ids, context=context)
         objk = self.browse(cr,uid,ids)[0] 
-        # if objk.employee_id.user_id.id == uid :
-        #     return True
-        # else :
-        return self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})
+        if objk.department_id.manager_id == False :
+                raise osv.except_osv(_('Warning!'),_('Manager Tidak Boleh Kosong')) 
+        emp = objk.employee_id.id
+        dep = objk.department_id.manager_id
+        if dep :
+            dep = objk.department_id.manager_id.id
+        state =objk.state
+        if objk.type != "add" and objk.holiday_type != 'lokasi':
+            if objk.employee_id.department_id.name != "HRD" and objk.employee_id.id != dep :
+                if ids2[0] == emp and emp == dep :
+                    raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))  
+                if brw.user_id.approve_presdir == True :
+                    raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))
+                self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})
+            else :
+                if brw.user_id.approve_presdir == False :
+                    raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval')) 
+                else :
+                    self.write(cr, uid, ids, {'state':'validate1', 'manager_id': manager})   
+        else :
+                self.write(cr, uid, [objk.id], {'state': 'validate1', 'manager_id': manager})
+        return True
 
     def holidays_validate(self, cr, uid, ids, context=None):
         self.check_holidays(cr, uid, ids, context=context)
         obj_emp = self.pool.get('hr.employee')
         ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
+        brw =obj_emp.browse(cr,uid,ids2)[0]
         manager = ids2 and ids2[0] or False
         data_holiday = self.browse(cr, uid, ids)
-        #if data_holiday[0].employee_id.user_id.id != uid :        
-        self.write(cr, uid, ids, {'state':'validate'})
+        #if data_holiday[0].employee_id.user_id.id != uid :         
         for record in data_holiday:
+            if record.department_id.manager_id == False :
+                raise osv.except_osv(_('Warning!'),_('Manager Tidak Boleh Kosong')) 
+            employ = record.employee_id.id
+            dep = record.department_id.manager_id
+            if dep :
+                dep = record.department_id.manager_id.id
             if record.double_validation:
                 self.write(cr, uid, [record.id], {'manager_id2': manager})
             else:
@@ -129,6 +154,48 @@ class hr_holidays(osv.osv):
                     wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
                     wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
                     wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
+            if record.type != "add" and record.holiday_type != 'lokasi':
+                if record.employee_id.department_id.name != "HRD" and record.employee_id.id != dep :
+                    if ids2[0] == employ and employ == dep :
+                        raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))
+                    if brw.user_id.approve_presdir == True :
+                        raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))
+                else :
+                    if brw.user_id.approve_presdir == False and employ == ids2[0] :
+                        raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval')) 
+                self.write(cr, uid, ids, {'state':'validate'})
+            else :
+                self.write(cr, uid, [record.id], {'state': 'validate', 'manager_id': manager})
+        return True
+
+    def holidays_refuse(self, cr, uid, ids, context=None):
+        obj_emp = self.pool.get('hr.employee')
+        ids2 = obj_emp.search(cr, uid, [('user_id', '=', uid)])
+        brw =obj_emp.browse(cr,uid,ids2)[0]
+        manager = ids2 and ids2[0] or False
+        for holiday in self.browse(cr, uid, ids, context=context):
+            if holiday.department_id.manager_id == False :
+                raise osv.except_osv(_('Warning!'),_('Manager Tidak Boleh Kosong')) 
+            emp = holiday.employee_id.id
+            dep = holiday.department_id.manager_id
+            if dep != "" :
+                dep = holiday.department_id.manager_id.id
+            if holiday.type != "add" and holiday.holiday_type != 'lokasi':
+                if holiday.employee_id.department_id.name != "HRD" and holiday.employee_id.id != holiday.department_id.manager_id.id :
+                    if ids2[0] == emp and emp == dep :
+                        raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval')) 
+                    if brw.user_id.approve_presdir == True :
+                        raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))
+                else :
+                    if brw.user_id.approve_presdir == False :
+                        raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval')) 
+                if holiday.state == 'validate1':
+                    self.write(cr, uid, [holiday.id], {'state': 'refuse', 'manager_id': manager})
+                else:
+                    self.write(cr, uid, [holiday.id], {'state': 'refuse', 'manager_id': manager})
+            else :
+                self.write(cr, uid, [holiday.id], {'state': 'refuse', 'manager_id': manager})
+        #self.holidays_cancel(cr, uid, ids, context=context)
         return True
 
     def holiday(self, cr,uid,ids=None,context=None):
@@ -179,7 +246,7 @@ class hr_holidays(osv.osv):
         'category_id': fields.many2one('hr.employee.category', "Employee Tag"),
         'agama':fields.many2one('hr_recruit.agama','Agama'),
     }
-	
+    
     _sql_constraints = [
         ('type_value', "CHECK( (holiday_type='employee' AND employee_id IS NOT NULL) or (holiday_type='category' AND category_id IS NOT NULL)) or (holiday_type='lokasi' AND category_id IS NOT NULL)", 
          "The employee or employee category of this request is missing. Please make sure that your user login is linked to an employee."),
@@ -197,6 +264,7 @@ class hr_holidays(osv.osv):
         }}
 
     def hapus_cuti(self,cr,uid,ids=None,context=None):
+        import pdb;pdb.set_trace()
         dates=time.strftime('%Y-%m-%d')
         year1=datetime.strptime(dates,"%Y-%m-%d").year
         month1=datetime.strptime(dates,"%Y-%m-%d").month
@@ -210,9 +278,9 @@ class hr_holidays(osv.osv):
         obj = self_obj.browse(cr,uid,src_obj)     
         for hapus in obj :
             date_from = hapus.date_from
-            year=datetime.strptime(date_from,'%Y-%m-%d').year
-            month=datetime.strptime(date_from,'%Y-%m-%d').month
-            day=datetime.strptime(date_from,'%Y-%m-%d').day            
+            year=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").year
+            month=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").month
+            day=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").day            
             if year == years :
                 self.write(cr, uid,ids, {'state': nilai}, context=context)
                 self.unlink(cr,uid,ids,context=None)
@@ -331,53 +399,64 @@ class hr_holidays(osv.osv):
         if context is None:
             context = {}
         context = dict(context, mail_create_nolog=True) 
-
         employee_ids = self.pool.get('hr.employee')
         src = employee_ids.search(cr, uid, [])
         employs = employee_ids.browse(cr, uid, src)
-        #obj_contract = self.pool.get('hr.contract')
-        #obj_holi = self.pool.get('hr.holidays.status')
-        #src_holi = obj_holi.search(cr, uid, [('is_1_year','=',True)],)
         years = datetime.now().year
         values = {}
+        date = -1
+        hol_id = 1
+        leave_ids = []
+        hol_brw = self.pool.get('hr.holidays.status')
+        hol_src = hol_brw.search(cr,uid,[('name','=','Cuti Tahunan')])
+        for holid in hol_brw.browse(cr,uid,hol_src) :
+            hol_id = holid.id
         for emp in employs:
             no_contract = emp.no_contract
             tgl = emp.tanggal
-            date = datetime.strptime(tgl,"%Y-%m-%d").year
-            #src_contract = obj_contract.search(cr, uid, [('employee_id','=',emp.id),('is_have_allocation','=',1),], context=context)
-            if no != False :
+            if  tgl != False :
+                date = datetime.strptime(tgl,"%Y-%m-%d").year
+            if no_contract != False :
                 if date == years :
                     end_date = datetime.strptime(tgl,"%Y-%m-%d").month
                     values = {
                         'name': _("Alokasi Cuti %s") % _(D_y),
                         'employee_id':emp.id,
                         'type':'add',       #Allocation-> 'add'
-                        'holiday_status_id':1,
+                        'holiday_status_id':hol_id,
                         'number_of_days_temp':end_date,
                         #'holiday_type':'employee',
-                        'notes':""
+                        'notes':"",
                         }
                 else :
                     values = {
                         'name': _("Alokasi Cuti %s") % _(D_y),
                         'employee_id':emp.id,
                         'type':'add',       #Allocation-> 'add'
-                        'holiday_status_id':1,
+                        'holiday_status_id':hol_id,
                         'number_of_days_temp':12,
                         #'holiday_type':'employee',
-                        'notes':""
+                        'notes':"",
                         }
             else :
                 values = {
                         'name': _("Alokasi Cuti %s") % _(D_y),
                         'employee_id':emp.id,
                         'type':'add',       #Allocation-> 'add'
-                        'holiday_status_id':1,
+                        'holiday_status_id':hol_id,
                         'number_of_days_temp':12,
                         #'holiday_type':'employee',
-                        'notes':""
+                        'notes':"",
                         }
-            self.create(cr,uid,values,context=context)
+            #import pdb;pdb.set_trace()
+            leave_ids.append(self.create(cr, uid, values, context=None))
+            # self.create(cr,uid,values,context=context)
+        wf_service = netsvc.LocalService("workflow")
+        import pdb;pdb.set_trace()
+        for leave_id in leave_ids:
+            wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
+            wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
+            wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
         return True    
 
     def leave_allocation_5(self, cr, uid, ids=None, context=None):       
@@ -389,6 +468,7 @@ class hr_holidays(osv.osv):
         obj_contract = self.pool.get('hr.contract')
         c_src = obj_contract.search(cr, uid, [],)
         contracts  = obj_contract.browse(cr, uid, c_src,)
+        import pdb;pdb.set_trace()
         for contract in contracts:
             values = {}
             date_from = contract.date_start

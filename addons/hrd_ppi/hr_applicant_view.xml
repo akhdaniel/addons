@@ -6,30 +6,14 @@
     <record model="ir.ui.view" id="crm_case_form_view_job2">
         <field name="name">Jobs-Recruitment Form</field>
         <field name="model">hr.applicant</field>
-        <!--field name="model">hr.applicant</field>
-        <field name="model">ir.needaction_mixin</field>
-        <field name="model">mail.thread</field-->
         <field name="type">form</field>
         <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
         <field name="arch" type="xml">
-            <!--field name="partner_name" position="after">
-                    <field name="survey_id" placeholder="Select Interview" domain="[('type','=','Human Resources')]" attrs="{'invisible':['|',('survey_id','=',False),('state','=','draft'),('state','=','pending'),('state','=','cancel'),('state','=','done')]}"/-->
-            <!--header>          
-                <button string="Filter Applicant" name="coco" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
-            </header-->
-
             <button name="case_close_with_emp"  position="replace">
                 <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
                         groups="hrd_ppi.group_hr_training_head" 
                         class="oe_highlight" attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
             </button>
-            <!--button name="case_cancel" position="replace">
-                 <button name="case_cancel" string="Batalkan Recruitmen" type="object"
-                         class="oe_highlight"
-                        groups="hrd_ppi.group_hr_training_head" />
-            </button-->  
-
-
             <field name="partner_name" position="after">
                 <label for='stage_id' string="Status"/>
                 <field name="stage_id"/>
@@ -405,29 +389,18 @@
              </field>   
         </field>
     </record>
-     <!--record model="ir.ui.view" id="survey_form">
-            <field name="name">survey_form</field>
-            <field name="model">survey</field>
-            <field name="inherit_id" ref="survey.survey_form"/>
-            <field name="arch" type="xml">
-                <field name="response_user" position="after">
-                    <field name="job_id"/>
-                    <field name='tgl_int'/>
-                </field>
-            </field>
-    </record--> 
-    
-     <!--record id="seq_type_library_sub_resource" model="ir.sequence.type">
-            <field name="name">No</field>
-            <field name="code">hr_recruit.rwt_krj</field>
-        </record>
 
-        <record id="seq_library_sub_resource" model="ir.sequence">
-            <field name="name">No</field>
-            <field name="code">hr_recruit.rwt_krj</field>
-            <field name="prefix"></field>
-            <field name="padding">1</field>
-        </record-->
+    <record id="view_crm_filter" model="ir.ui.view">
+        <field name="name">Jobs - Recruitment Search</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.view_crm_case_jobs_filter"/>
+        <field name="arch" type="xml">
+            <search string="Search Jobs">
+                <filter string="Status Hire" name="employee" domain="[('emp_id','=',False)]"/>
+           </search>
+        </field>
+    </record>
+
     <record id="view_country_form" model="ir.ui.view">
             <field name="name">res.country.form</field>
             <field name="model">res.country</field>
@@ -645,7 +618,7 @@
     </record>     
 
     <!--edit kanban-->
-    <!--record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
+    <record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
             <field name="name">Hr Applicants kanban R</field>
             <field name="model">hr.applicant</field>
             <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
@@ -721,7 +694,7 @@
                 </kanban>
                 </kanban>
             </field>
-        </record-->
+        </record>
 
 
     </data>
