@@ -29,8 +29,8 @@ class hr_recruitment_stage(osv.osv):
     _columns = {
         'name': fields.char('Name', size=64, required=True, translate=True),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list of stages."),
-        #'job_id':fields.many2one('hr.job', 'Specific to a Job', help="Jika ada proses aproval tambahan pada salah satu bidang pekerjaan."),
-        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Karyawan','Karyawan')],string='Jenis Permohonan'),
+        'job_id':fields.many2one('hr.job', 'Specific to a Job', help="Jika ada proses aproval tambahan pada salah satu bidang pekerjaan."),
+        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Manager_dep','manager_dep'),('manager_hr','manager HR')],string='Jenis Permohonan'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', required=True, help="The related status for the stage. The status of your document will automatically change according to the selected stage. Example, a stage is related to the status 'Close', when your document reach this stage, it will be automatically closed."),
         'fold': fields.boolean('Sembunyikan Jika Sudah Tidak Terpakai', help="Jika Aproval Sudah Tidak Terpakai Maka Centang View Ini."),
         'requirements': fields.text('Requirements'),
@@ -131,6 +131,7 @@ class permohonan_recruit(osv.osv):
         pero=partner.search(cr,uid,['|',('jenis_permohonan','=',False),('jenis_permohonan','=',name)])     
         pers=partner.browse(cr,uid,pero,context)
         st= 1000
+        obj_brw = []
         for line in pers: 
             stage=line.sequence
             if stg3 < stage and st > stage :
@@ -139,29 +140,29 @@ class permohonan_recruit(osv.osv):
                 self.write(cr,uid,ids,{'state': stg, 'states_id' : line.state},context=context)  
                 st = stage
         #import pdb;pdb.set_trace()
-        if jenis_per == 'Bulanan' :
-            objk = self.pool.get('hr.sumary_kebutuhan')
-            obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
-            obj_brw = objk.browse(cr,uid,obj_src)
-        elif jenis_per == 'Harian' :
-            objk = self.pool.get('hr.sumary_kebutuhan_harian')
-            obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
-            obj_brw = objk.browse(cr,uid,obj_src)
-        if obj_brw ==[] :
-            objk.create(cr,uid,{
-                    'tahun' : dates,
-                    'bul_har': jenis_per,
-                    'dep' : department,
-                    'jum_kebutuhan' : obj.no_of_recruitment, 
-                    })
-        else :
-            for sumary in obj_brw :
-                jum_sumary = sumary.jum_kebutuhan + obj.no_of_recruitment
-                objk.write(cr,uid,[sumary.id],{'jum_kebutuhan': jum_sumary},context=context)
-        lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
-        lap_src = lap_obj.search(cr,uid,[('no','=',obj.no_permohonan)])
-        for lap in lap_obj.browse(cr,uid,lap_src) :
-            lap_obj.write(cr,uid,[lap.id],{'stat' : stat},context=context)
+        # if jenis_per == 'Bulanan' :
+        #     objk = self.pool.get('hr.sumary_kebutuhan')
+        #     obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
+        #     obj_brw = objk.browse(cr,uid,obj_src)
+        # elif jenis_per == 'Harian' :
+        #     objk = self.pool.get('hr.sumary_kebutuhan_harian')
+        #     obj_src = objk.search(cr,uid,[('tahun','=',dates),('dep','=',department),('bul_har','=',jenis_per)])
+        #     obj_brw = objk.browse(cr,uid,obj_src)
+        # if obj_brw ==[] :
+        #     objk.create(cr,uid,{
+        #             'tahun' : dates,
+        #             'bul_har': jenis_per,
+        #             'dep' : department,
+        #             'jum_kebutuhan' : obj.no_of_recruitment, 
+        #             })
+        # else :
+        #     for sumary in obj_brw :
+        #         jum_sumary = sumary.jum_kebutuhan + obj.no_of_recruitment
+        #         objk.write(cr,uid,[sumary.id],{'jum_kebutuhan': jum_sumary},context=context)
+        # lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
+        # lap_src = lap_obj.search(cr,uid,[('no','=',obj.no_permohonan)])
+        # for lap in lap_obj.browse(cr,uid,lap_src) :
+        #     lap_obj.write(cr,uid,[lap.id],{'stat' : stat},context=context)
     	return True
     	
     def scroll_no(self, cr, uid, ids, no, args, context=None):
@@ -188,7 +189,7 @@ class permohonan_recruit(osv.osv):
     _columns= {
         'name': fields.char('Job Name', size=128, required=True, select=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'kunci': fields.boolean(''),
-        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Karyawan','Karyawan')],string='Jenis Permohonan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+        'jenis_permohonan':fields.selection([('Bulanan','Bulanan'),('Harian','Harian'),('Manager_dep','manager Dep'),('manager_hr','manager HR')],string='Jenis Permohonan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'no':fields.char('Nomor',20),
         'status_jabatan':fields.selection([('P','Pengganti'),('T','Tambahan'),('JB','Jabatan Baru')],string='Status',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',required=True,states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
@@ -255,9 +256,10 @@ class permohonan_recruit(osv.osv):
         parentID = dept_obj.browse(cr,uid,department_id).parent_id
         if parentID : 
             result['divisi_id'] = parentID.id
-        parent2ID = dept_obj.browse(cr,uid,parentID.id).parent_id
-        if parent2ID : 
-            result['bagian_id']=parent2ID.id
+        import pdb;pdb.set_trace()
+        parent2ID = dept_obj.browse(cr,uid,parentID.id)
+        if parentID.id : 
+            result['bagian_id']=parent2ID.parent_id.id
         return {'value':result}
         
     def new_recruitment(self,cr,uid,ids,context=None):
