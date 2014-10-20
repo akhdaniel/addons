@@ -6,4 +6,3 @@ import wizard
 import report
 import attendee
 import warning
-import fetchmails
