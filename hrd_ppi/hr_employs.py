@@ -318,107 +318,107 @@ class pansion(osv.osv):
             }
 pansion()
 
-# class employee_objects_proxy(object_proxy):
+class employee_objects_proxy(object_proxy):
 
-#     def get_value_text(self, cr, uid, pool, resource_pool, method, field, value):
-#         field_obj = (resource_pool._all_columns.get(field)).column
-#         if field_obj._type in ('one2many','many2many'):
-#             data = pool.get(field_obj._obj).name_get(cr, uid, value)
-#             #return the modifications on x2many fields as a list of names
-#             res = map(lambda x:x[1], data)
-#         elif field_obj._type == 'many2one':
-#             #return the modifications on a many2one field as its value returned by name_get()
-#             res = value and value[1] or value
-#         else:
-#             res = value
-#         return res
+    def get_value_text(self, cr, uid, pool, resource_pool, method, field, value):
+        field_obj = (resource_pool._all_columns.get(field)).column
+        if field_obj._type in ('one2many','many2many'):
+            data = pool.get(field_obj._obj).name_get(cr, uid, value)
+            #return the modifications on x2many fields as a list of names
+            res = map(lambda x:x[1], data)
+        elif field_obj._type == 'many2one':
+            #return the modifications on a many2one field as its value returned by name_get()
+            res = value and value[1] or value
+        else:
+            res = value
+        return res
 
-#     def log_fct(self, cr, uid_orig, model, method, fct_src, *args, **kw):
-#         """
-#         Logging function: This function is performing the logging operation
-#         @param model: Object whose values are being changed
-#         @param method: method to log: create, read, write, unlink, action or workflow action
-#         @param fct_src: execute method of Object proxy
+    def log_fct(self, cr, uid_orig, model, method, fct_src, *args, **kw):
+        """
+        Logging function: This function is performing the logging operation
+        @param model: Object whose values are being changed
+        @param method: method to log: create, read, write, unlink, action or workflow action
+        @param fct_src: execute method of Object proxy
 
-#         @return: Returns result as per method of Object proxy
-#         """
-#         pool = pooler.get_pool(cr.dbname)
-#         resource_pool = pool.get(model)
-#         model_pool = pool.get('ir.model')
-#         model_ids = model_pool.search(cr, SUPERUSER_ID, [('model', '=', model)])
-#         model_id = model_ids and model_ids[0] or False
-#         assert model_id, _("'%s' Model does not exist..." %(model))
-#         model = model_pool.browse(cr, SUPERUSER_ID, model_id)
+        @return: Returns result as per method of Object proxy
+        """
+        pool = pooler.get_pool(cr.dbname)
+        resource_pool = pool.get(model)
+        model_pool = pool.get('ir.model')
+        model_ids = model_pool.search(cr, SUPERUSER_ID, [('model', '=', model)])
+        model_id = model_ids and model_ids[0] or False
+        assert model_id, _("'%s' Model does not exist..." %(model))
+        model = model_pool.browse(cr, SUPERUSER_ID, model_id)
 
-#         # fields to log. currently only used by log on read()
-#         field_list = []
-#         old_values = new_values = {}
-#         #else: # method is write, action or workflow actions
-#         #import pdb;pdb.set_trace()
-#         if method == 'create':
-#             res = fct_src(cr, uid_orig, model.model, method, *args, **kw)
-#             if res:
-#                 res_ids = [res]
-#                 new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
-#         else :
-#             res_ids = []
-#             if args:
-#                 res_ids = args[0]
-#                 if isinstance(res_ids, (long, int)):
-#                     res_ids = [res_ids]
-#             if res_ids:
-#                 # store the old values into a dictionary
-#                 old_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
-#             # process the original function, workflow trigger...
-#             res = fct_src(cr, uid_orig, model.model, method, *args, **kw)
-#             if method == 'copy':
-#                 res_ids = [res]
-#             if res_ids:
-#                 # check the new values and store them into a dictionary
-#                 new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
-#         #import pdb;pdb.set_trace()
-#         # compare the old and new values and create audittrail log if needed
-#         self.process_data(cr, uid_orig, pool, res_ids, model, method, old_values, new_values, field_list)
-#         return res
+        # fields to log. currently only used by log on read()
+        field_list = []
+        old_values = new_values = {}
+        #else: # method is write, action or workflow actions
+        #import pdb;pdb.set_trace()
+        if method == 'create':
+            res = fct_src(cr, uid_orig, model.model, method, *args, **kw)
+            if res:
+                res_ids = [res]
+                new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
+        else :
+            res_ids = []
+            if args:
+                res_ids = args[0]
+                if isinstance(res_ids, (long, int)):
+                    res_ids = [res_ids]
+            if res_ids:
+                # store the old values into a dictionary
+                old_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
+            # process the original function, workflow trigger...
+            res = fct_src(cr, uid_orig, model.model, method, *args, **kw)
+            if method == 'copy':
+                res_ids = [res]
+            if res_ids:
+                # check the new values and store them into a dictionary
+                new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
+        #import pdb;pdb.set_trace()
+        # compare the old and new values and create audittrail log if needed
+        self.process_data(cr, uid_orig, pool, res_ids, model, method, old_values, new_values, field_list)
+        return res
 
-#     def get_data(self, cr, uid, pool, res_ids, model, method):
-#         #import pdb;pdb.set_trace()
-#         data = {}
-#         #import pdb;pdb.set_trace()
-#         resource_pool = pool.get(model.model)
-#         # read all the fields of the given resources in super admin mode
-#         #import pdb;pdb.set_trace()
-#         #import pdb;pdb.set_trace()
-#         for resource in resource_pool.read(cr, SUPERUSER_ID, res_ids, resource_pool._all_columns):
-#             values = {}
-#             values_text = {}
-#             resource_id = resource['id']
-#             # loop on each field on the res_ids we just have read
-#             for field in resource:
-#                 if field in ('__last_update', 'id'):
-#                     continue
-#                 values[field] = resource[field]
-#                 # get the textual value of that field for this record
-#                 values_text[field] = self.get_value_text(cr, SUPERUSER_ID, pool, resource_pool, method, field, resource[field])
+    def get_data(self, cr, uid, pool, res_ids, model, method):
+        #import pdb;pdb.set_trace()
+        data = {}
+        #import pdb;pdb.set_trace()
+        resource_pool = pool.get(model.model)
+        # read all the fields of the given resources in super admin mode
+        #import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
+        for resource in resource_pool.read(cr, SUPERUSER_ID, res_ids, resource_pool._all_columns):
+            values = {}
+            values_text = {}
+            resource_id = resource['id']
+            # loop on each field on the res_ids we just have read
+            for field in resource:
+                if field in ('__last_update', 'id'):
+                    continue
+                values[field] = resource[field]
+                # get the textual value of that field for this record
+                values_text[field] = self.get_value_text(cr, SUPERUSER_ID, pool, resource_pool, method, field, resource[field])
 
-#                 field_obj = resource_pool._all_columns.get(field).column
-#                 if field_obj._type in ('one2many','many2many'):
-#                     # check if an audittrail rule apply in super admin mode
-#                     #if self.check_rules(cr, SUPERUSER_ID, field_obj._obj, method):
-#                         # check if the model associated to a *2m field exists, in super admin mode
-#                     x2m_model_ids = pool.get('ir.model').search(cr, SUPERUSER_ID, [('model', '=', field_obj._obj)])
-#                     x2m_model_id = x2m_model_ids and x2m_model_ids[0] or False
-#                     assert x2m_model_id, _("'%s' Model does not exist..." %(field_obj._obj))
-#                     x2m_model = pool.get('ir.model').browse(cr, SUPERUSER_ID, x2m_model_id)
-#                     field_resource_ids = list(set(resource[field]))
-#                     if model.model == x2m_model.model:
-#                         # we need to remove current resource_id from the many2many to prevent an infinit loop
-#                         if resource_id in field_resource_ids:
-#                             field_resource_ids.remove(resource_id)
-#                     data.update(self.get_data(cr, SUPERUSER_ID, pool, field_resource_ids, x2m_model, method))
-#             #import pdb;pdb.set_trace()
-#             data[(model.id, resource_id)] = {'text':values_text, 'value': values}
-#         return data 
+                field_obj = resource_pool._all_columns.get(field).column
+                if field_obj._type in ('one2many','many2many'):
+                    # check if an audittrail rule apply in super admin mode
+                    #if self.check_rules(cr, SUPERUSER_ID, field_obj._obj, method):
+                        # check if the model associated to a *2m field exists, in super admin mode
+                    x2m_model_ids = pool.get('ir.model').search(cr, SUPERUSER_ID, [('model', '=', field_obj._obj)])
+                    x2m_model_id = x2m_model_ids and x2m_model_ids[0] or False
+                    assert x2m_model_id, _("'%s' Model does not exist..." %(field_obj._obj))
+                    x2m_model = pool.get('ir.model').browse(cr, SUPERUSER_ID, x2m_model_id)
+                    field_resource_ids = list(set(resource[field]))
+                    if model.model == x2m_model.model:
+                        # we need to remove current resource_id from the many2many to prevent an infinit loop
+                        if resource_id in field_resource_ids:
+                            field_resource_ids.remove(resource_id)
+                    data.update(self.get_data(cr, SUPERUSER_ID, pool, field_resource_ids, x2m_model, method))
+            #import pdb;pdb.set_trace()
+            data[(model.id, resource_id)] = {'text':values_text, 'value': values}
+        return data 
 
 #     def prepare_audittrail_log_line(self, cr, uid, pool, model, resource_id, method, old_values, new_values, field_list=None):
 #         if field_list is None:

@@ -6,4 +6,5 @@ class res_users(osv.osv):
     _columns = {
         'acc_level': fields.integer('Access Level'),
         'dept_related' :fields.many2one('hr.department','Related Department'),
+        'approve_presdir' :fields.boolean("Approve Presdir"),
         }

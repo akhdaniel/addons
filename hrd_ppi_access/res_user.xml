@@ -10,6 +10,7 @@
                 <field name="company_id"  position="after">
                     <field name="dept_related"/>
                     <field name="acc_level"/>
+                    <field name='approve_presdir'/>
                 </field>
             </field>
         </record>
