@@ -433,7 +433,7 @@ class hr_payslip(osv.osv):
                                     if jumlah_ril >= 4 :
                                         uang_makan_lembur['number_of_days'] += 1
                                 elif overt.overtime_type_id.name == 'Lembur Proyek' :
-                                    import pdb;pdb.set_trace()
+                                    #import pdb;pdb.set_trace()
                                     if date.isoweekday() != 7 and leave_type == False :
                                         jumlah_biasa += overt.jam_lembur
                                     else :   
