@@ -56,7 +56,6 @@
                     <button string="Refuse" name="holidays_refuse" states="confirm" type="object" groups="hrd_ppi.group_hr_aprove_dep1,hrd_ppi.group_hr_aprove_presdir"/>
                     <button string="Refuse" name="holidays_refuse" states="validate1,validate" type="object" groups="base.group_hr_manager,hrd_ppi.group_hr_aprove_presdir"/>
                     <button string="Reset to New" name="set_to_draft" states="refuse" type="object" groups="base.group_hr_user,hrd_ppi.group_hr_aprove_presdir"/>
-                    <button string="test" name='hapus_cuti' type='object'/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}'/>
                 </header>
                 <sheet string="Leave Request">
