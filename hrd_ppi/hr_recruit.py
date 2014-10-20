@@ -256,7 +256,6 @@ class permohonan_recruit(osv.osv):
         parentID = dept_obj.browse(cr,uid,department_id).parent_id
         if parentID : 
             result['divisi_id'] = parentID.id
-        import pdb;pdb.set_trace()
         parent2ID = dept_obj.browse(cr,uid,parentID.id)
         if parentID.id : 
             result['bagian_id']=parent2ID.parent_id.id
