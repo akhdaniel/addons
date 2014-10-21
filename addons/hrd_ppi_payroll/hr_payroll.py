@@ -588,6 +588,7 @@ class hr_payslip(osv.osv):
         years = datetime.strptime(date,"%Y-%m-%d").year 
         months = datetime.strptime(date,"%Y-%m-%d").month
         basic = obj.contract_id.wage
+        percent = 0.0
         if months != 12 :
             total = obj.total
             gros = obj.gross * 12
@@ -597,6 +598,7 @@ class hr_payslip(osv.osv):
             tht_alw = (obj.contract_id.type_id.tht * (obj.contract_id.wage * 12))/100
             total_ptkp = pot_jab + status_pjk + tht_alw
             pkp = pjk12 - total_ptkp
+            import pdb;pdb.set_trace()
             obj_ptkp = self.pool.get('hr.pkp')
             src_ptkp = obj_ptkp.search(cr,uid,[])
             for ptkp in obj_ptkp.browse(cr,uid,src_ptkp):
