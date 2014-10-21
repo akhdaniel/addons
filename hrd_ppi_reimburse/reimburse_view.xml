@@ -176,6 +176,16 @@
                 <page string="HR Settings" position="replace"> 
                     <page string="HR Settings" groups="base.group_hr_user,base.group_user">
                         <group>
+				<group string="Cuti Tahunan">
+				        <label for="alokasi"/>
+				        <div>
+				            <field name="alokasi" class="oe_inline"/> days
+				        </div>
+				        <label for="cuti_tahunan"/>
+				        <div>                          
+				            <field name="cuti_tahunan" class="oe_inline"/> days
+				        </div>                     
+                    		</group>  
                             <group string="Active" name="active_group">
                                 <field name="active"/>
                             </group>
