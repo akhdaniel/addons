@@ -119,7 +119,7 @@ class hr_overtime(osv.osv):
         'employee_id': fields.many2one('hr.employee', "Karyawan", select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
         'manager_id': fields.many2one('hr.employee', 'First Approval', invisible=False, readonly=True),
         'notes': fields.text('Catatan',readonly=True, states={'draft':[('readonly',False)]}),
-        'number_of_hours_temp': fields.float('Perkiraan Jam Lembur'),#states={'draft':[('readonly',False)]}),
+        'number_of_hours_temp': fields.float('Perkiraan Jam Lembur', readonly =True),#states={'draft':[('readonly',False)]}),
         'number_of_hours': fields.function(_compute_number_of_hours, method=True, string='Number of Hours', store=True),
         #'department_id':fields.related('employee_id', 'department_id', string='Department', type='many2one', relation='hr.department', readonly=True),
         'manager_id2': fields.many2one('hr.employee', 'Second Approval', readonly=True, help='This area is automaticly filled by the user who validate the leave with second level (If Leave type need second validation)'),
