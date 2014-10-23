@@ -22,17 +22,23 @@
 
 {
     'name': 'PO Distributor',
-    'version': '1.1',
+    'version': '1.2',
     'category': 'Purchase Management',
     'summary': 'Purchase Orders for Distributor',
     'description': """
-For PT.DJISLU
+Add CMO to the Purchase Orders
     """,
     'author': 'vitraining.com',
     'website': 'http://www.vitraining.com',
-    'depends': ['purchase','product','vit_custom_users'],
+    'depends': [
+        'purchase',
+        'product',
+        'vit_custom_users',
+        'fleet'
+    ],
     'data': [
         'purchase_view.xml',
+        'stock_prod_lot.xml',
     ],
     'test': [
     ],
