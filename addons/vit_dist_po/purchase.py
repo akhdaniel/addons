@@ -42,7 +42,6 @@ class purchase_order_line(osv.osv):
     def _determin_qw12(self, cr, uid, ids, field_names, arg, context=None):
         result = {}
         lines = self.browse(cr, uid, ids, context=context)
-        # import pdb;pdb.set_trace()
         for line in lines:
             py = self._get_alias1(line,field_names)
             result[line.id] = py * line.product_qty or 0
@@ -208,48 +207,52 @@ class purchase_order(osv.osv):
 
     _columns = {
         'notes': fields.text('Keterangan'),
-        'r1'            : fields.date('From'),
-        'r2'            : fields.date('From'),
-        'r3'            : fields.date('From'),
-        'r4'            : fields.date('From'),
+        'r1'             : fields.date('From'),
+        'r2'             : fields.date('From'),
+        'r3'             : fields.date('From'),
+        'r4'             : fields.date('From'),
         'r1e'            : fields.date('To'),
         'r2e'            : fields.date('To'),
         'r3e'            : fields.date('To'),
         'r4e'            : fields.date('To'),
-        'percent_r1'    : fields.float('Percent'),
-        'percent_r2'    : fields.float('Percent'),
-        'percent_r3'    : fields.float('Percent'),
-        'percent_r4'    : fields.float('Percent'),
-        'qr1'           : fields.integer("Qty"),
-        'qr2'           : fields.integer("Qty"),
-        'qr3'           : fields.integer("Qty"),
-        'qr4'           : fields.integer("Qty"),
-        'volume_r1'     : fields.float('Volume'),
-        'volume_r2'     : fields.float('Volume'),
-        'volume_r3'     : fields.float('Volume'),
-        'volume_r4'     : fields.float('Volume'),
-        'weight_r1'     : fields.float('Weight'),
-        'weight_r2'     : fields.float('Weight'),
-        'weight_r3'     : fields.float('Weight'),
-        'weight_r4'     : fields.float('Weight'),
-        'fleet_id'      : fields.many2one('fleet.vehicle',"Vehicle"),
-        # 'volume'        : fields.float('Capacity(Volume)'),
-        # 'tonase'        : fields.float('Capacity(Weight)'),
-        'no_vehicle'    : fields.float('Total Truck'),
-        'volume_tot'    : fields.float('Total Volume'),
-        'weight_tot'    : fields.float('Total Weight'),
-        'effective_day' : fields.integer('Effective Day'),
-        'days_cover'    : fields.integer('Days Cover'),
-        'location_ids'  : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location'),
-        'principal_ids' : fields.many2many('res.partner','res_partner_po_rel','po_id','user_id',"User's Principal"),
-        'loc_x'         : fields.many2one('stock.location',"Destination",domain="[('id','in',location_ids[0][2])]",limit=2,required=True),
-        'partner_x'     : fields.many2one('res.partner',"Supplier",domain="[('id','in',principal_ids[0][2])]",required=True),
-        'sch_ids1'      : fields.one2many('purchase.order.schedule.r1','po_id1',"R1"), 
-        'sch_ids2'      : fields.one2many('purchase.order.schedule.r2','po_id2',"R2"), 
-        'sch_ids3'      : fields.one2many('purchase.order.schedule.r3','po_id3',"R3"), 
-        'sch_ids4'      : fields.one2many('purchase.order.schedule.r4','po_id4',"R4"), 
-        'periode'       : fields.char('Periode'),
-        'view_w1'       : fields.boolean('Show/hide'),
+        'percent_r1'     : fields.float('Percent'),
+        'percent_r2'     : fields.float('Percent'),
+        'percent_r3'     : fields.float('Percent'),
+        'percent_r4'     : fields.float('Percent'),
+        'volume_r1'      : fields.float('Volume'),
+        'volume_r2'      : fields.float('Volume'),
+        'volume_r3'      : fields.float('Volume'),
+        'volume_r4'      : fields.float('Volume'),
+        'weight_r1'      : fields.float('Weight'),
+        'weight_r2'      : fields.float('Weight'),
+        'weight_r3'      : fields.float('Weight'),
+        'weight_r4'      : fields.float('Weight'),
+        'qr1'            : fields.integer("Qty"),
+        'qr2'            : fields.integer("Qty"),
+        'qr3'            : fields.integer("Qty"),
+        'qr4'            : fields.integer("Qty"),
+        'fleet_id'       : fields.many2one('fleet.vehicle',"Vehicle"),
+        'no_vehicle'     : fields.float('Total Truck'),
+        'no_vehicle2'    : fields.float('Total Truck'),
+        'no_vehicle3'    : fields.float('Total Truck'),
+        'no_vehicle4'    : fields.float('Total Truck'),
+        'volume_tot'     : fields.float('Total Volume'),
+        'weight_tot'     : fields.float('Total Weight'),
+        'effective_day'  : fields.integer('Effective Day'),
+        'days_cover'     : fields.integer('Days Cover'),
+        'location_ids'   : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location'),
+        'principal_ids'  : fields.many2many('res.partner','res_partner_po_rel','po_id','user_id',"User's Principal"),
+        'loc_x'          : fields.many2one('stock.location',"Destination",domain="[('id','in',location_ids[0][2])]",limit=2,required=True),
+        'partner_x'      : fields.many2one('res.partner',"Supplier",domain="[('id','in',principal_ids[0][2])]",required=True),
+        'sch_ids1'       : fields.one2many('purchase.order.schedule.r1','po_id1',"R1"), 
+        'sch_ids2'       : fields.one2many('purchase.order.schedule.r2','po_id2',"R2"), 
+        'sch_ids3'       : fields.one2many('purchase.order.schedule.r3','po_id3',"R3"), 
+        'sch_ids4'       : fields.one2many('purchase.order.schedule.r4','po_id4',"R4"), 
+        'periode'        : fields.char('Periode'),
+        'view_w1'        : fields.boolean('Show/hide'),
+        'view_w2'        : fields.boolean('Show/hide'),
+        'view_w3'        : fields.boolean('Show/hide'),
+        'view_w4'        : fields.boolean('Show/hide'),
         }
 
     # def default_get(self, cr, uid, fields, context=None):
@@ -414,9 +417,9 @@ class purchase_order(osv.osv):
                 'product_qty'   : round(sgt_order),
                 'forecastMT'    : 0.00,
                 'forecastGT'    : 0.00,
-                }])
+                }])        
         return {'value': {
-            'order_line'        : order_lines,
+            'order_line'        : sorted(order_lines, key=lambda sku_order: sku_order[2]['stock_current'], reverse=False),
             'pricelist_id'      : supplier.property_product_pricelist_purchase.id or False,
             'fiscal_position'   : supplier.property_account_position and supplier.property_account_position.id or False,
             'payment_term_id'   : supplier.property_supplier_payment_term.id or False,
@@ -426,32 +429,30 @@ class purchase_order(osv.osv):
             # 'weight_tot'      : tot_w,
             }}
 
-
-    def onchange_rx(self, cr, uid, ids, percent_rx, fname, percent_r1, percent_r2, percent_r3, percent_r4, 
-            sch_ids1, r1, order_line, qr1, volume_r1, weight_r1, context=None):
-        if context is None:
-            context = {}
-        ptot = percent_r1+percent_r2+percent_r3+percent_r4
+    def onchange_rx(self, cr, uid, ids, p_rx, fname, p_r1, p_r2, p_r3, p_r4, 
+            sch_ids, order_line, qrx, v_rx, w_rx, context=None):
+        # if context is None:
+        #     context = {}
+        ptot = p_r1+p_r2+p_r3+p_r4
         if ptot>100:
             raise osv.except_osv(_('Error!'), _('Persentase lebih dari 100!'))       
         # if not r1:
         #     raise osv.except_osv(_('Warning!'), _('Isi R1!'))\
         if order_line[0][1] == False:
-            sumqty1=0;volr1=0;wgtr1=0
+            sumqty=0;volr=0;wgtr=0
             for x in order_line: 
-                sumqty1 += x[2]['product_qty']
-                wgtr1 += x[2]['prod_weight']
-                volr1 += x[2]['prod_volume']
+                sumqty += x[2]['product_qty']
+                wgtr += x[2]['prod_weight']
+                volr += x[2]['prod_volume']
         if ids != []:
-            sumqty1=0;volr1=0;wgtr1=0
+            sumqty=0;volr=0;wgtr=0
             for x in self.pool.get('purchase.order.line').browse(cr,uid,[x[1] for x in order_line],): 
-                sumqty1 += x.product_qty
-                volr1 += x.prod_volume
-                wgtr1 += x.prod_weight
+                sumqty += x.product_qty
+                volr += x.prod_volume
+                wgtr += x.prod_weight
         # Fix bug for replace ids
-        toremove = self.pool.get('purchase.order.schedule.r1').search(cr,uid,[('id','in',[x[1] for x in sch_ids1])],)
-        self.pool.get('purchase.order.schedule.r1').unlink(cr,uid,toremove,)
-        #here
+        # toremove = self.pool.get('purchase.order.schedule.r1').search(cr,uid,[('id','in',[x[1] for x in sch_ids1])],)
+        # self.pool.get('purchase.order.schedule.r1').unlink(cr,uid,toremove,)
         # sch_ids1=[]
         # dat=datetime.strptime(r1, '%Y-%m-%d')
         # for i in range(3):
@@ -464,24 +465,24 @@ class purchase_order(osv.osv):
         #         'p1'        : percent_rx/3.00 or 0.00,
         #         'vol1'      : percent_rx/100.00*volr1/3.00 or 0.00,
         #         'wgt1'      : percent_rx/100.00*wgtr1/3.00 or 0.00}])
-        if fname == '1':
+        if fname == '1':       
             return {'value':{
-                'qr1'       : percent_rx/100.00*sumqty1 or 0,
-                'volume_r1' : percent_rx/100.00*volr1 or 0,
-                'weight_r1' : percent_rx/100.00*wgtr1 or 0,}}
-                # 'sch_ids1'  : sch_ids1}}
+                # 'qr1'       : p_rx/100.00*sumqty or 0,
+                # 'sch_ids1'  : sch_ids1,
+                'volume_r1' : p_rx/100.00*volr or 0,
+                'weight_r1' : p_rx/100.00*wgtr or 0,}}
         if fname == '2':
             return {'value':{
-                'volume_r2':vol_tot,
-                'weight_r2':wgt_tot,}}
+                'volume_r2':p_rx/100.00*volr or 0,
+                'weight_r2':p_rx/100.00*wgtr or 0,}}
         if fname == '3':
             return {'value':{
-                'volume_r3':vol_tot,
-                'weight_r3':wgt_tot,}}
+                'volume_r3':p_rx/100.00*volr or 0,
+                'weight_r3':p_rx/100.00*wgtr or 0,}}
         if fname == '4':
             return {'value':{
-                'volume_r4':vol_tot,
-                'weight_r4':wgt_tot,}}
+                'volume_r4':p_rx/100.00*volr or 0,
+                'weight_r4':p_rx/100.00*wgtr or 0,}}
 
     def act_calculate(self, cr, uid, ids, context=None):
         data = self.read(cr,uid,ids[0],)
@@ -571,6 +572,9 @@ class purchase_order(osv.osv):
         'location_ids':_get_default_loc,
         'principal_ids':_get_default_principal,
         'view_w1':True,
+        'view_w2':True,
+        'view_w3':True,
+        'view_w4':True,
         # 'r1': fields.date.context_today, TODO: copy for r2-r4
         }
 
@@ -581,7 +585,7 @@ class purchase_order_schedule_r1(osv.Model):
 
     _columns={
         'name'      : fields.date("Date",required=True),
-        'alias'     : fields.selection([('1','W1.1'),('2','W1.2'),('3','W1.3'),('4','W1.4'),('5','W1.5'),('6','W1.6')],"Name"),
+        'alias'     : fields.selection([('nol','W1.1'),('1','W1.2'),('2','W1.3'),('3','W1.4'),('4','W1.5'),('5','W1.6')],"Name"),
         'po_id1'    : fields.many2one('purchase.order',"PO"),
         'fleet_id'  : fields.many2many('fleet.vehicle','r1_fleet_rel','r1','fleet_id',string="Vehicle"),
         'volume'    : fields.float('Capacity (Volume)'),
@@ -603,32 +607,34 @@ class purchase_order_schedule_r1(osv.Model):
                 tonase+=self.pool.get('fleet.vehicle').browse(cr,uid,x).tonase
             return {'value':{'volume':volume,'tonase':tonase}}
 
-    def onchange_name(self, cr, uid, ids, name, name1s, alias, sch_ids1, r1, r1e, context=None):
-        if name:
-            name1s = datetime.strptime(name, '%Y-%m-%d')
-            name1s = name1s.strftime("%A")
-            if r1:
-                name = datetime.strptime(name, '%Y-%m-%d')
-                r1   = datetime.strptime(r1, '%Y-%m-%d')
-                if name < r1:
+    def onchange_name(self, cr, uid, ids, namex, namexs, aliasx, sch_idsx, rx, rxe, context=None):
+        if namex:
+            namexs = datetime.strptime(namex, '%Y-%m-%d')
+            namexs = namexs.strftime("%A")
+            if rx:
+                namex = datetime.strptime(namex, '%Y-%m-%d')
+                rx   = datetime.strptime(rx, '%Y-%m-%d')
+                if namex < rx:
                     raise osv.except_osv(_('Error!'), _('Tanggal diluar range'))
-            if r1e:
-                r1e   = datetime.strptime(r1e, '%Y-%m-%d')
-                if name > r1e:
+            if rxe:
+                rxe   = datetime.strptime(rxe, '%Y-%m-%d')
+                if namex > rxe:
                     raise osv.except_osv(_('Error!'), _('Tanggal diluar range'))
-        return {'value':{'name1s':name1s, 'alias':str(len(sch_ids1)+1)}}
+            if sch_idsx == []:
+                return {'value':{'name1s':namexs, 'alias':'nol'}}
+            return {'value':{'name1s':namexs, 'alias':str(len(sch_idsx))}}
 
-    def onchange_percent(self, cr, uid, ids, p1, alias, percent_r1, order_line, context=None):
+    def onchange_percent(self, cr, uid, ids, px, aliasx, percent_rx, order_line, context=None):
         prod_volume=0;prod_weight=0;q11=0
         if order_line[0][1]:
             lines = self.pool.get('purchase.order.line').browse(cr,uid,[x[1] for x in order_line],)
             for line in lines:
-                prod_volume += line.prod_volume*p1/100
-                prod_weight += line.prod_weight*p1/100
+                prod_volume += line.prod_volume*px/100
+                prod_weight += line.prod_weight*px/100
         if not order_line[0][1]:
             for x in order_line:
-                prod_volume += x[2]['prod_volume']*p1/100
-                prod_weight += x[2]['prod_weight']*p1/100
+                prod_volume += x[2]['prod_volume']*px/100
+                prod_weight += x[2]['prod_weight']*px/100
         return {'value':{
                 'vol1':prod_volume,
                 'wgt1':prod_weight,}}
@@ -658,24 +664,38 @@ class purchase_order_schedule_r2(osv.Model):
     _name = 'purchase.order.schedule.r2'
 
     _columns={
+        'name2'      : fields.date("Date",required=True),
+        'alias2'     : fields.selection([('nol','W2.1'),('1','W2.2'),('2','W2.3'),('3','W2.4'),('4','W2.5'),('5','W2.6')],"Name"),
         'po_id2'    : fields.many2one('purchase.order',"PO"),
-        'name'     : fields.date("Date"),
-        'name2s'    : fields.char("Day",readonly=True),
-        'p2'        : fields.float('Q'),
+        'fleet_id2'  : fields.many2many('fleet.vehicle','r2_fleet_rel','r2','fleet_id',string="Vehicle"),
+        'volume2'    : fields.float('Capacity (Volume)'),
+        'tonase2'    : fields.float('Capacity (Weight)'),
+        'no_vehicle2': fields.float('Vehicle Required'),
+        'name2s'    : fields.char("Day"),
+        'p2'        : fields.float('Percent'),
         'vol2'      : fields.float('Volume'),
         'wgt2'      : fields.float('Weight'),
-        'v_tot2'    : fields.float('Total Volume'),
-        'w_tot2'    : fields.float('Total Weight'), 
-    }    
+        'moq_m32'    : fields.selection([('cukup','Cukup'),('kurang','Kurang'),('lebih','Lebih')],"MOQ Bds Kubikasi"),
+        'moq_kg2'    : fields.selection([('cukup','Cukup'),('kurang','Kurang'),('lebih','Lebih')],"MOQ Bds Tonase"),
+    }     
 
-    def onchange_percent(self, cr, uid, ids, v_tot2 ,w_tot2, p2, vol2, wgt2, context=None):
-        if context is None:
-            context = {}
-        vol_tot = p2*v_tot2/100 or 0.00
-        wgt_tot = p2*w_tot2/100 or 0.00
+    def onchange_name(self, cr, uid, ids, name2, name2s, alias2, sch_ids2, r2, r2e, context=None):
+        value = self.pool.get('purchase.order.schedule.r1').onchange_name(cr, uid, ids, name2, name2s, alias2, sch_ids2, r2, r2e, context=None)
         return {'value':{
-                'vol2':vol_tot,
-                'wgt2':wgt_tot,}} 
+                'name2s':value['value']['name1s'], 
+                'alias2':value['value']['alias'],}}
+
+    def onchange_percent(self, cr, uid, ids, p2, alias2, percent_r2, order_line, context=None):
+        value = self.pool.get('purchase.order.schedule.r1').onchange_percent(cr, uid, ids, p2, alias2, percent_r2, order_line, context=None)
+        return {'value':{
+                'vol2':value['value']['vol1'],
+                'wgt2':value['value']['wgt1'],}}
+
+    def onchange_fleet(self, cr, uid, ids, volume2, fleet_id2, tonase2, context=None): 
+        value = self.pool.get('purchase.order.schedule.r1').onchange_fleet(cr, uid, ids, volume2, fleet_id2, tonase2, context=None)
+        return {'value':{
+                'volume2':value['value']['volume'],
+                'tonase2':value['value']['tonase'],}}
 
 purchase_order_schedule_r2()
 
@@ -683,24 +703,38 @@ class purchase_order_schedule_r3(osv.Model):
     _name = 'purchase.order.schedule.r3'
 
     _columns={
+        'name3'      : fields.date("Date",required=True),
+        'alias3'     : fields.selection([('nol','W3.1'),('1','W3.2'),('2','W3.3'),('3','W3.4'),('4','W3.5'),('5','W3.6')],"Name"),
         'po_id3'    : fields.many2one('purchase.order',"PO"),
-        'name'     : fields.date("Date"),
-        'name3s'     : fields.char("Day",readonly=True),
-        'p3'        : fields.float('Q'),
+        'fleet_id3'  : fields.many2many('fleet.vehicle','r3_fleet_rel','r3','fleet_id',string="Vehicle"),
+        'volume3'    : fields.float('Capacity (Volume)'),
+        'tonase3'    : fields.float('Capacity (Weight)'),
+        'no_vehicle3': fields.float('Vehicle Required'),
+        'name3s'    : fields.char("Day"),
+        'p3'        : fields.float('Percent'),
         'vol3'      : fields.float('Volume'),
         'wgt3'      : fields.float('Weight'),
-        'v_tot3'    : fields.float('Total Volume'),
-        'w_tot3'    : fields.float('Total Weight'), 
-    }
-   
-    def onchange_percent(self, cr, uid, ids, v_tot3 ,w_tot3, p3, vol3, wgt3, context=None):
-        if context is None:
-            context = {}
-        vol_tot = p3*v_tot3/100 or 0.00
-        wgt_tot = p3*w_tot3/100 or 0.00
+        'moq_m33'    : fields.selection([('cukup','Cukup'),('kurang','Kurang'),('lebih','Lebih')],"MOQ Bds Kubikasi"),
+        'moq_kg3'    : fields.selection([('cukup','Cukup'),('kurang','Kurang'),('lebih','Lebih')],"MOQ Bds Tonase"),
+    }     
+
+    def onchange_name(self, cr, uid, ids, name3, name3s, alias3, sch_ids3, r3, r3e, context=None):
+        value = self.pool.get('purchase.order.schedule.r1').onchange_name(cr, uid, ids, name3, name3s, alias3, sch_ids3, r3, r3e, context=None)
         return {'value':{
-                'vol3':vol_tot,
-                'wgt3':wgt_tot,}} 
+                'name3s':value['value']['name1s'], 
+                'alias3':value['value']['alias'],}}
+
+    def onchange_percent(self, cr, uid, ids, p3, alias3, percent_r3, order_line, context=None):
+        value = self.pool.get('purchase.order.schedule.r1').onchange_percent(cr, uid, ids, p3, alias3, percent_r3, order_line, context=None)
+        return {'value':{
+                'vol3':value['value']['vol1'],
+                'wgt3':value['value']['wgt1'],}}
+
+    def onchange_fleet(self, cr, uid, ids, volume3, fleet_id3, tonase3, context=None): 
+        value = self.pool.get('purchase.order.schedule.r1').onchange_fleet(cr, uid, ids, volume3, fleet_id3, tonase3, context=None)
+        return {'value':{
+                'volume3':value['value']['volume'],
+                'tonase3':value['value']['tonase'],}}
 
 purchase_order_schedule_r3()
 
@@ -708,24 +742,38 @@ class purchase_order_schedule_r4(osv.Model):
     _name = 'purchase.order.schedule.r4'
 
     _columns={
+        'name4'      : fields.date("Date",required=True),
+        'alias4'     : fields.selection([('nol','W4.1'),('1','W4.2'),('2','W4.3'),('3','W4.4'),('4','W4.5'),('5','W4.6')],"Name"),
         'po_id4'    : fields.many2one('purchase.order',"PO"),
-        'names'     : fields.date("Date"),
-        'name4s'    : fields.char("Day",readonly=True),
-        'p4'        : fields.float('Q'),
+        'fleet_id4'  : fields.many2many('fleet.vehicle','r4_fleet_rel','r4','fleet_id',string="Vehicle"),
+        'volume4'    : fields.float('Capacity (Volume)'),
+        'tonase4'    : fields.float('Capacity (Weight)'),
+        'no_vehicle4': fields.float('Vehicle Required'),
+        'name4s'    : fields.char("Day"),
+        'p4'        : fields.float('Percent'),
         'vol4'      : fields.float('Volume'),
         'wgt4'      : fields.float('Weight'),
-        'v_tot4'    : fields.float('Total Volume'),
-        'w_tot4'    : fields.float('Total Weight'), 
-    }
+        'moq_m34'    : fields.selection([('cukup','Cukup'),('kurang','Kurang'),('lebih','Lebih')],"MOQ Bds Kubikasi"),
+        'moq_kg4'    : fields.selection([('cukup','Cukup'),('kurang','Kurang'),('lebih','Lebih')],"MOQ Bds Tonase"),
+    }     
 
-    def onchange_percent(self, cr, uid, ids, v_tot4 ,w_tot4, p4, vol4, wgt4, context=None):
-        if context is None:
-            context = {}
-        vol_tot = p4*v_tot4/100 or 0.00
-        wgt_tot = p4*w_tot4/100 or 0.00
+    def onchange_name(self, cr, uid, ids, name4, name4s, alias4, sch_ids4, r4, r4e, context=None):
+        value = self.pool.get('purchase.order.schedule.r1').onchange_name(cr, uid, ids, name4, name4s, alias4, sch_ids4, r4, r4e, context=None)
         return {'value':{
-                'vol4':vol_tot,
-                'wgt4':wgt_tot,}} 
+                'name4s':value['value']['name1s'], 
+                'alias4':value['value']['alias'],}}
+
+    def onchange_percent(self, cr, uid, ids, p4, alias4, percent_r4, order_line, context=None):
+        value = self.pool.get('purchase.order.schedule.r1').onchange_percent(cr, uid, ids, p4, alias4, percent_r4, order_line, context=None)
+        return {'value':{
+                'vol4':value['value']['vol1'],
+                'wgt4':value['value']['wgt1'],}}
+
+    def onchange_fleet(self, cr, uid, ids, volume4, fleet_id4, tonase4, context=None): 
+        value = self.pool.get('purchase.order.schedule.r1').onchange_fleet(cr, uid, ids, volume4, fleet_id4, tonase4, context=None)
+        return {'value':{
+                'volume4':value['value']['volume'],
+                'tonase4':value['value']['tonase'],}}
 
 purchase_order_schedule_r4()
 
