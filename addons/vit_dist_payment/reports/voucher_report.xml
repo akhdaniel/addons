@@ -5,6 +5,7 @@
 			 model="vit_dist_payment.voucher" 
 			 name="voucher.report" 
 			 rml="vit_dist_payment/reports/voucher_report.rml" 
+			 header="False"
 		/>
 		
 

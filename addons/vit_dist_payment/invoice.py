@@ -5,13 +5,13 @@ import time
 import logging
 _logger = logging.getLogger(__name__)
 
-class invoice(osv.osv):
-	_name 		= "account.invoice"
-	_inherit 	= "account.invoice"
-	_columns 	= {'based_route_id'  : fields.related(
-        	'partner_id',
-        	'based_route_id',
-        	type='many2one',
-        	store=True,
-        	relation='master.based.route', string='Route'),		
-	}
+class account_invoice(osv.osv):
+	_inherit = "account.invoice"
+	_name = "account.invoice"
+
+	_columns = {
+		'is_cn' : fields.related('journal_id','is_cn',type='boolean',relation='account.journal',string='CN Confirmation'),
+		'is_draft_lph' : fields.boolean('Is Draft'),
+			}
+
+account_invoice()
