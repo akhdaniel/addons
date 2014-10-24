@@ -191,19 +191,6 @@ class master_harga_jual(osv.osv):
 		'date_to' : fields.date('End Date',required=True),
 		}
 
-
-class master_condition(osv.osv):
-	_name = "master.condition"
-
-	_columns = {
-		'discount_id' : fields.many2one('master.discount','Diskon ID'),
-		'min_value' : fields.float('Nominal Min.'),
-		'max_value' : fields.float('Nominal Max'),
-		'value' : fields.float('Price Value'),
-		'presentase' : fields.float('Percent Value', digits_compute= dp.get_precision('Discount')),
-		'is_percent' : fields.boolean('Is Percent'),
-		}
-
 	
 class master_discount(osv.osv):
 	_name = "master.discount"
@@ -422,6 +409,7 @@ class master_condition5(osv.osv):
 
 class stock_move(osv.osv):
 	_inherit = "stock.move"
+	_name = "stock.move"
 
 	_columns = {
 		'origin': fields.char(size=64, string="Source"),
