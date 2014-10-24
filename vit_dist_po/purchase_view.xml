@@ -80,7 +80,7 @@
                                 <label for="no_vehicle"/>
                                 <div><field name='r1' required="1"/></div>
                                 <div><field name='r1e' required="1"/></div>
-                                <div><field name='percent_r1' on_change="onchange_rx(percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids1,r1, order_line,qr1,volume_r1,weight_r1)"/></div>
+                                <div><field name='percent_r1' on_change="onchange_rx(percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids1, order_line,qr1,volume_r1,weight_r1)"/></div>
                                 <div invisible="1"><field name='qr1'/></div>
                                 <div><field name='volume_r1'/></div>
                                 <div><field name='weight_r1'/></div>
@@ -107,16 +107,143 @@
                                 </div>
                             </group>
                         </group>
-                    
+                        <!-- Here -->
+                        <separator string="Week 2"/>
+                        <label for='view_w2'/><field name='view_w2'/>
+                        <group attrs="{'invisible':[('view_w2', '=', False)]}">
+                            <group col="7">
+                                <label for="r2"/>
+                                <label for="r2e"/>
+                                <label for="percent_r2"/>
+                                <label for="qr2" invisible="1"/>
+                                <label for="volume_r2"/>
+                                <label for="weight_r2"/>
+                                <!-- <label for="fleet_id"/> -->
+                                <label for="no_vehicle"/>
+                                <div><field name='r2' required="1"/></div>
+                                <div><field name='r2e' required="1"/></div>
+                                <div><field name='percent_r2' on_change="onchange_rx(percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids2, order_line,qr2,volume_r2,weight_r2)"/></div>
+                                <div invisible="1"><field name='qr2'/></div>
+                                <div><field name='volume_r2'/></div>
+                                <div><field name='weight_r2'/></div>
+                                <div><field name='no_vehicle2' /></div>
+                            </group>
+                            <group/>
+                            <group>
+                                <div >
+                                    <field name="sch_ids2" view_mode="tree">
+                                        <tree editable="button" colors="blue:'cukup' not in [moq_m32]"> <!-- bds kg, in [moq_kg] -->
+                                            <field name="name2" on_change="onchange_name(name2, name2s, alias2, parent.sch_ids2, parent.r2, parent.r2e)"/>
+                                            <field name="name2s"/>
+                                            <field name="alias2"/>
+                                            <field name="p2" on_change="onchange_percent(p2, alias2, parent.percent_r2, parent.order_line)"/>
+                                            <field name="vol2"/>
+                                            <field name='wgt2'/>
+                                            <field name="fleet_id2" widget="many2many_tags" on_change="onchange_fleet(volume2, fleet_id2, tonase2)" colspan='2'/>
+                                            <field name='volume2'/>
+                                            <field name='tonase2'/>
+                                            <field name="moq_m32"/>
+                                            <field name="moq_kg2"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                        </group>
+                         <!-- Here -->
+                        <separator string="Week 3"/>
+                        <label for='view_w3'/><field name='view_w3'/>
+                        <group attrs="{'invisible':[('view_w3', '=', False)]}">
+                            <group col="7">
+                                <label for="r3"/>
+                                <label for="r3e"/>
+                                <label for="percent_r3"/>
+                                <label for="qr3" invisible="1"/>
+                                <label for="volume_r3"/>
+                                <label for="weight_r3"/>
+                                <!-- <label for="fleet_id"/> -->
+                                <label for="no_vehicle"/>
+                                <div><field name='r3' required="1"/></div>
+                                <div><field name='r3e' required="1"/></div>
+                                <div><field name='percent_r3' on_change="onchange_rx(percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids3, order_line,qr3,volume_r3,weight_r3)"/></div>
+                                <div invisible="1"><field name='qr3'/></div>
+                                <div><field name='volume_r3'/></div>
+                                <div><field name='weight_r3'/></div>
+                                <div><field name='no_vehicle3' /></div>
+                            </group>
+                            <group/>
+                            <group>
+                                <div >
+                                    <field name="sch_ids3" view_mode="tree">
+                                        <tree editable="button" colors="blue:'cukup' not in [moq_m33]"> <!-- bds kg, in [moq_kg] -->
+                                            <field name="name3" on_change="onchange_name(name3, name3s, alias3, parent.sch_ids3, parent.r3, parent.r3e)"/>
+                                            <field name="name3s"/>
+                                            <field name="alias3"/>
+                                            <field name="p3" on_change="onchange_percent(p3, alias3, parent.percent_r3, parent.order_line)"/>
+                                            <field name="vol3"/>
+                                            <field name='wgt3'/>
+                                            <field name="fleet_id3" widget="many2many_tags" on_change="onchange_fleet(volume3, fleet_id3, tonase3)" colspan='2'/>
+                                            <field name='volume3'/>
+                                            <field name='tonase3'/>
+                                            <field name="moq_m33"/>
+                                            <field name="moq_kg3"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                        </group>
+                        
+                        <separator string="Week 4"/>
+                        <label for='view_w4'/><field name='view_w4'/>
+                        <group attrs="{'invisible':[('view_w4', '=', False)]}">
+                            <group col="7">
+                                <label for="r4"/>
+                                <label for="r4e"/>
+                                <label for="percent_r4"/>
+                                <label for="qr4" invisible="1"/>
+                                <label for="volume_r4"/>
+                                <label for="weight_r4"/>
+                                <!-- <label for="fleet_id"/> -->
+                                <label for="no_vehicle"/>
+                                <div><field name='r4' required="1"/></div>
+                                <div><field name='r4e' required="1"/></div>
+                                <div><field name='percent_r4' on_change="onchange_rx(percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids4, order_line,qr4,volume_r4,weight_r4)"/></div>
+                                <div invisible="1"><field name='qr4'/></div>
+                                <div><field name='volume_r4'/></div>
+                                <div><field name='weight_r4'/></div>
+                                <div><field name='no_vehicle4' /></div>
+                            </group>
+                            <group/>
+                            <group>
+                                <div >
+                                    <field name="sch_ids4" view_mode="tree">
+                                        <tree editable="button" colors="blue:'cukup' not in [moq_m34]"> <!-- bds kg, in [moq_kg] -->
+                                            <field name="name4" on_change="onchange_name(name4, name4s, alias4, parent.sch_ids4, parent.r4, parent.r4e)"/>
+                                            <field name="name4s"/>
+                                            <field name="alias4"/>
+                                            <field name="p4" on_change="onchange_percent(p4, alias4, parent.percent_r4, parent.order_line)"/>
+                                            <field name="vol4"/>
+                                            <field name='wgt4'/>
+                                            <field name="fleet_id4" widget="many2many_tags" on_change="onchange_fleet(volume4, fleet_id4, tonase4)" colspan='2'/>
+                                            <field name='volume4'/>
+                                            <field name='tonase4'/>
+                                            <field name="moq_m34"/>
+                                            <field name="moq_kg4"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                        </group>
+
                         <group >
                             <group string="Total">
                                 <field name="volume_tot" class="oe_subtotal_footer_separator"/>
                                 <field name="weight_tot" class="oe_subtotal_footer_separator"/>
                             </group>
                         </group>
+
                         <notebook>
                             <page string="Purchase Order">
-                                <field name="order_line" on_change="onchange_lines(volume_tot, weight_tot, order_line)">
+                                <field name="order_line" on_change="onchange_lines(volume_tot, weight_tot, order_line)" string="A">
                                     <tree string="Purchase Order Lines" editable="botom">
                                         <field name="int_code" string="Code" readonly="1"/>
                                         <field name="barcode" string="Barcode" readonly="1"/>
@@ -151,13 +278,12 @@
                                         <field name="stock_cover"/>                
                                         <field name="stock_cover2" invisible="1"/>
                                         <field name="w1" />      
-                                        <field name="w11" invisible="context.get('w11',False)"/>
-                                        <field name="w12" invisible="context.get('w12', False)"/>
-                                        <field name="w13" invisible="context.get('w13', False)"/>
-                                        <field name="w14" invisible="context.get('w14', False)"/>
-                                        <field name="w15" invisible="context.get('w15', False)"/>
-                                        <field name="w16" invisible="context.get('w16', False)"/>      
-                                          
+                                        <field name="w11"  attrs="{'invisible': [('w11','=', 0.00)]}" />
+                                        <field name="w12"  attrs="{'invisible': [('w12','=', 0.00)]}" />
+                                        <field name="w13"  attrs="{'invisible': [('w13','=', 0.00)]}" />
+                                        <field name="w14"  attrs="{'invisible': [('w14','=', 0.00)]}" />
+                                        <field name="w15"  attrs="{'invisible': [('w15','=', 0.00)]}" />
+                                        <field name="w16"  attrs="{'invisible': [('w16','=', 0.00)]}" />
                                         <!-- <field name="qw14" />  
                                         <field name="W2" />                    
                                         <field name="W3" />                    
@@ -192,20 +318,20 @@
                             </page>
                             <page string="W2" invisible="1">
                                 <group col="6">
-                                    <field name="r2" string="From"/><field string="to" name="r2e" class="oe_inline"/><newline/>
-                                    <field name="percent_r2" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r2" class="oe_subtotal_footer oe_inline"/><field name="weight_r2" class="oe_subtotal_footer oe_inline"/>
+                                   <!--  <field name="r2" string="From"/><field string="to" name="r2e" class="oe_inline"/><newline/>
+                                    <field name="percent_r2" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r2" class="oe_subtotal_footer oe_inline"/><field name="weight_r2" class="oe_subtotal_footer oe_inline"/> -->
                                 </group>
                             </page>
                             <page string="W3" invisible="1">
                                 <group col="6">
-                                    <field name="r3" string="From"/><field string="to" name="r3e" class="oe_inline"/><newline/>
-                                    <field name="percent_r3" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r3" class="oe_subtotal_footer oe_inline"/><field name="weight_r3" class="oe_subtotal_footer oe_inline"/>
+                                    <!-- <field name="r3" string="From"/><field string="to" name="r3e" class="oe_inline"/><newline/>
+                                    <field name="percent_r3" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r3" class="oe_subtotal_footer oe_inline"/><field name="weight_r3" class="oe_subtotal_footer oe_inline"/> -->
                                 </group>
                             </page>
                             <page string="W4" invisible="1">
                                 <group col="6">
-                                    <field name="r4" string="From"/><field string="to" name="r4e" class="oe_inline"/><newline/>
-                                    <field name="percent_r4" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r4" class="oe_subtotal_footer oe_inline"/><field name="weight_r4" class="oe_subtotal_footer oe_inline"/>
+                                    <!-- <field name="r4" string="From"/><field string="to" name="r4e" class="oe_inline"/><newline/>
+                                    <field name="percent_r4" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r4" class="oe_subtotal_footer oe_inline"/><field name="weight_r4" class="oe_subtotal_footer oe_inline"/> -->
                                 </group>
                             </page>
                             <page string="User's Location">
@@ -237,6 +363,7 @@
                                 </group>
                             </page>
                         </notebook>
+
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
                         <field name="message_ids" widget="mail_thread"/>
