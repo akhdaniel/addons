@@ -8,7 +8,30 @@ from openerp import netsvc
 
 class account_invoice(osv.osv):
 	_inherit = "account.invoice"
+	_name = "account.invoice"
 
+	# go from canceled state to draft state
+	def action_cancel_draft_2(self, cr, uid, ids, *args):
+		so_obj = self.pool.get('stock.move')
+		va = self.browse(cr,uid,ids)[0]
+		jut = va.journal_id.type
+		ori = va.origin
+		#import pdb;pdb.set_trace()
+		if jut == 'sale' :
+			sos = so_obj.search(cr,uid,[('origin','=',ori)])
+			if sos != []:
+
+				so = so_obj.browse(cr,uid,sos)[0]
+
+				so_obj.write(cr,uid,so.id,{'state':'assigned'})
+				
+		self.write(cr, uid, ids, {'state':'draft'})
+		wf_service = netsvc.LocalService("workflow")
+		for inv_id in ids:
+			wf_service.trg_delete(uid, 'account.invoice', inv_id, cr)
+			wf_service.trg_create(uid, 'account.invoice', inv_id, cr)
+
+		return True
 
 	def action_cancel(self, cr, uid, ids, context=None):
 		#import pdb;pdb.set_trace()
@@ -42,6 +65,17 @@ class account_invoice(osv.osv):
 		jut = va.journal_id.type
 		loca = va.location_id2.id
 
+		so_obj = self.pool.get('stock.move')
+
+		if jut == 'sale' :
+			if ori :
+				sos = so_obj.search(cr,uid,[('name','=',ori)])
+				if sos != []:
+
+					so = so_obj.browse(cr,uid,sos)[0]
+
+					so_obj.write(cr,uid,so.id,{'state':'draft'},context=context)
+
 		if jut == 'sale_refund' : # sales refund journal
 			for x in va.invoice_line:
 				prod = x.product_id.id
@@ -67,10 +101,11 @@ class account_invoice(osv.osv):
 				inv_line.write(cr,uid,x.id,{'quantity3':uos_qty},context=context)
 
 		mv = mv_obj.search(cr,uid,[('origin','=',ori)],context=context)
-		mv_id = mv_obj.browse(cr,uid,mv[0])
-		#ubah stock move atas invoice ini ke draft
-		if mv_id.id :
-			mv_obj.write(cr,uid,mv_id.id,{'state':'draft'},context=context)
+		if mv != [] :
+			mv_id = mv_obj.browse(cr,uid,mv[0])
+			#ubah stock move atas invoice ini ke draft
+			if mv_id.id :
+				mv_obj.write(cr,uid,mv_id.id,{'state':'draft'},context=context)
 
 		for y in va.invoice_line:
 			qty = y.quantity
@@ -101,14 +136,18 @@ class account_invoice(osv.osv):
 		va = self.browse(cr,uid,ids)[0]
 		jut = va.journal_id.type
 		loca = va.location_id2.id
-		ori = va.origin
+		ori = va.origin or ''
+		nama = va.name or ''
+
 
 		if jut == 'sale' :
 			if ori :
 				sos = so_obj.search(cr,uid,[('name','=',ori)])
-				so = so_obj.browse(cr,uid,sos)[0]
+				if sos != []:
 
-				so_obj.write(cr,uid,so.id,{'state':'done'},context=context)
+					so = so_obj.browse(cr,uid,sos)[0]
+
+					so_obj.write(cr,uid,so.id,{'state':'done'},context=context)
 
 		if jut == 'sale_refund' : # sales refund journal
 			for x in va.invoice_line:
@@ -121,7 +160,7 @@ class account_invoice(osv.osv):
 
 				mv_obj.create(cr, uid,{'product_id':prod,
 									'name':prod_name,
-									'origin':va.name,
+									'origin':ori+'-'+nama,
 									'location_id':9,#customer
 									'location_dest_id':loca,
 									'date_expacted':skrg,
@@ -218,6 +257,9 @@ class account_invoice(osv.osv):
 			\n* The \'Cancelled\' status is used when user cancel invoice.'),	
 		'note' : fields.char('Note',readonly=True),	
 		'button_hidden' : fields.boolean('Button Hidden'),	
+		'date_invoice': fields.date('Confirm Date', readonly=True, states={'draft':[('readonly',False)]}, select=True, help="Keep empty to use the current date"),
+		'date_so' : fields.date('Invoice Date', readonly=True, states={'draft':[('readonly',False)]}, select=True,),
+		'description': fields.many2one('master.reason','Reason'),
 		}
 
 
@@ -245,6 +287,7 @@ class account_invoice(osv.osv):
 
 class stock_location(osv.osv):
 	_inherit = "stock.location"
+	_name = "stock.location"
 
 	_columns = {
 		'code': fields.char('Code', size=13,required=True),
@@ -468,10 +511,10 @@ class account_invoice_refund(osv.osv_memory):
 		st = gr.browse(cr,uid,sr)[0].state
 		nt = gr.browse(cr,uid,sr)[0].note
 
-		if st not in ['open','paid'] or nt == 'CN Confirmation' :
+		if st not in ['open','paid'] or nt == 'CN Conf' :
 			raise osv.except_osv(_('Error!'), _('CN Confirmation/Refund hanya dapat dilakukan jika status faktur dalam kondisi Open dan belum pernah CN Confirmation'))
 			return False
-		gr.write(cr,uid,idd,{'note':'CN Confirmation'})				
+		gr.write(cr,uid,idd,{'note':'CN Conf'})				
 
 		return self.compute_refund(cr, uid, ids, data_refund, context=context)
 	

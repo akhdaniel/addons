@@ -47,7 +47,10 @@
             </header>    
                 <field name="user_id" position="before">
                         <field name="nik"/>
-                </field>                 
+                </field> 
+                <field name="date_invoice" position="before">
+                        <field name="date_so"/>
+                </field>                                 
                 <field name="user_id" position="after">
                         <field name="location_id"/>
                         <field name="based_route_id"/>
@@ -56,9 +59,12 @@
                     <field name="user_id2"/>
                     <field name="location_id2"/>                     
                 </field>     
+                <field name="origin" position="before">
+                    <field name="description" attrs="{'invisible':[('state', '=', 'draft')],'required': [('state','!=','draft')]}"/>  
+                </field>   
+
                 <field name="tax_line" position="before">
                     <group>
-
                         <group>
                             <field name="credit"/>
                             <field name="credit_limit"/>
@@ -66,7 +72,11 @@
                          <group>
                             <field name="volume"/>
                             <field name="weight"/>
-                        </group>    
+                        </group> 
+                         <group>
+                            <field name="state2" invisible="True"/>
+                            <field name="button_hidden" invisible="True"/>
+                        </group>                             
                     </group>                      
                 </field>
                     <page string="Invoice Lines" position="replace">
@@ -86,7 +96,7 @@
                                     <field name="price_unit"/>
                                     <field name="price_unit2" invisible="1"/>
                                     <field name="discount" groups="sale.group_discount_per_so_line"/>
-                                    <field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':parent.type}" domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
+                                    <field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':parent.type}" domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]" invisible="1"/>
                                     <field name="quantity" invisible="1"/>
                                     <field name="quantity3" invisible="1"/>
                                     <field name="qty_func" invisible="1"/>

@@ -465,7 +465,7 @@ class sale_order(osv.osv):
 		res=super(sale_order,self)._prepare_invoice(cr, uid, order, lines, context=context)
 		# if order.warehouse_id :
 		res['location_id']=order.location_id.id
-		res['date_invoice']=order.date_order
+		res['date_so']=order.date_order
 		res['nik']=order.nik
 		res['volume']=order.volume_tot
 		res['weight']=order.tonase_tot
@@ -3616,12 +3616,15 @@ class sale_order(osv.osv):
 			raise osv.except_osv(_('Warning!'),_('Jumlah Piutang Customer ini sudah melewati limit!'))
 
 		#Set due date = date order+termin
-		dt_o = lin.date_order
-		trm = lin.property_payment_term.line_ids[0].days
-		dd = datetime.datetime.strptime(dt_o,"%Y-%m-%d")	
-		du = dd + datetime.timedelta(days=trm)	
-		date_du = str(du)
-		self.write(cr,uid,ids[0],{'due_date':date_du},context=context)
+		tr = lin.property_payment_term.id
+		if tr :
+			trm = lin.property_payment_term.line_ids[0].days
+			if trm:
+				dt_o = lin.date_order		
+				dd = datetime.datetime.strptime(dt_o,"%Y-%m-%d")	
+				du = dd + datetime.timedelta(days=trm)	
+				date_du = str(du)
+				self.write(cr,uid,ids[0],{'due_date':date_du},context=context)
 
 		return {
 			'type': 'ir.actions.act_window',

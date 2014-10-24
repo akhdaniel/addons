@@ -24,7 +24,7 @@
                         <field name="ratio_uos"/>
                 </field> 
 
-                <page string="Accounting" position="after">
+<!--                 <page string="Accounting" position="after">
                     <page string="Multiples UoM">
                     <group string="Multiples UoM">
                         <field view_mode="tree,form" name="uom_ids" nolabel="1">
@@ -36,7 +36,7 @@
                     </group> 
                     </page>                    
    
-                </page>  
+                </page>   -->
 
             </field>
         </record>
@@ -126,7 +126,8 @@
 <!--             <field name="search_view_id" ref="view_partner_pricelist_items_search"/> -->
         </record>
 
-        <menuitem action="action_master_kode_harga" id="menu_action_masters_kode_harga" parent="menu_action_masters"/>
+<!-- di hide dulu -->
+       <!--  <menuitem action="action_master_kode_harga" id="menu_action_masters_kode_harga" parent="menu_action_masters"/> -->
 
 
 <!-- Master diskon -->

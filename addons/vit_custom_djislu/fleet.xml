@@ -44,17 +44,12 @@
             <field name="type">form</field>
             <field name="arch" type="xml">\
                 <form string="Picking List" version="7.0">
-                <header> 
-<!--                     <button
-                        name="compute_discount"
-                        string="Save &amp; Sent "
-                        type="object" states="draft"
-                        class="oe_highlight"/>   -->                                             
+                <header>                                             
                     <button string="Deliver" type="object" 
                         states="draft" name="action_on_deliver"
                         groups="stock.group_stock_user,stock.group_stock_manager"/>                 
                                              
-                    <button string="Delivered" type="object" 
+                    <button string="Done" type="object" 
                         states="on_deliver" name="action_return"
                         groups="stock.group_stock_user,stock.group_stock_manager"/>
 
@@ -72,8 +67,8 @@
                             <field name="name"/>
                             <field name="date" readonly="True"/>
                             <field name="based_route_id" attrs="{'readonly': [('state','!=','draft')]}"/>
-                            <field name="location_id"/>                     
-                        </group>
+                            <field name="location_id"/>                                                  
+                            </group>
                         <group >
                             <field name="user_id"/>
                             <field name="car_id" on_change="onchange_volume(car_id)" attrs="{'readonly': [('state','!=','draft')]}" /> 
@@ -94,35 +89,77 @@
                                     <field name="volume" sum="Total Volume"/>
                                     <field name="weight" sum="Total Weight"/>
                                     <field name="state"/>
+                                    <field name="button_hidden" invisible="True"/>
                                     <field name="note"/>
+                                    <field name="description" attrs="{'invisible':[('state', '=', 'draft')],'required': [('state','not in','draft','on_deliver')],'readonly':[('button_hidden','=',False)]}"/>
 
-                                    <button name="invoice_open" icon="STOCK_APPLY" states="deliver,ttf" string="Validate" class="oe_highlight" groups="base.group_user" attrs="{'invisible':[('state', 'in', ('draft','open','cancel','paid'))]}"/>
+                                    <button name="invoice_open" icon="STOCK_APPLY" states="deliver,ttf" string="Validate" class="oe_highlight" groups="base.group_user" attrs="{'invisible':['|',('state', 'in', ('draft','open','cancel','paid')),('button_hidden','=',False)]}"/>
 
-                                    <button name="action_ttf" states="deliver" icon="STOCK_MISSING_IMAGE" string="TTF" type="object"/>
+                                    <button name="action_ttf" states="deliver" icon="STOCK_MISSING_IMAGE" string="TTF" type="object" attrs="{'invisible':[('state','!=','on_deliver')]}"/>
 
 
-                                    <button name="258" type="action" states="open" icon="STOCK_REVERT_TO_SAVED" string="CN Conf" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'open')]}"/>
+                                    <button name="258" type="action" icon="STOCK_REVERT_TO_SAVED" string="CN Conf" groups="base.group_user" attrs="{'invisible':['|','|',('button_hidden','=',False),('state','!=','open'),('note','=','CN Conf')]}"/>
 
-                                    <button name="invoice_cancel" states="deliver,ttf" icon="STOCK_CANCEL" string="Cancel" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'open')]}"/>
+                                    <button name="invoice_cancel" states="deliver,ttf" icon="STOCK_CANCEL" string="Cancel" groups="base.group_user" attrs="{'invisible':[('state', '!=', 'ttf')]}"/>
 
-                                    <button name="action_cancel_draft" icon="STOCK_NEW" states="cancel" string="Reset to Draft" type="object" groups="base.group_user"/>
+                                    <button name="action_cancel_draft_2" icon="STOCK_NEW" string="Reset to Draft" type="object" groups="base.group_user" attrs="{'invisible':['|',('button_hidden','=',False),('state','!=','cancel')]}"/>
                                 </tree>  
                             </field>      
                         </page>
-                        <page string="Product List">                          
-                            <field view_mode="tree" name="list_product_ids" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}">
+
+                        <page string="Batch Number"> 
+                            <button
+                            name="view_product"
+                            string="Fill Product"
+                            type="object" states="draft"
+                            attrs="{'invisible':[('state', '!=', 'draft')]}"/>  
+                            <field view_mode="tree" name="move_ids" nolabel="1" readonly="True">
+                                <tree string="Batch Number" editable="bottom">
+                                    <field name="origin" readonly="True"/>
+                                    <field name="product_id" readonly="True"/>
+                                    <field name="product_qty" readonly="True" sum="Total Qty"/>
+                                    <field name="product_uom" readonly="True"/>
+                                     <field name="location_id" invisible="True"/>
+                                    <field name="prodlot_id" context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=?',product_id)]" on_change="onchange_lot_id(prodlot_id,product_qty, location_id, product_id, product_uom)" required="True"/>
+                                    <button name="410" states="draft,waiting,confirmed,assigned" string="Split" type="action" icon="gtk-justify-fill"/>
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field> 
+                        </page>
+
+                        <page string="Product List">                        
+                            <field view_mode="tree" name="list_product_ids" nolabel="1" readonly="True">
                                 <tree string="List" editable="bottom">
                                 <field name="product_id"/>
                                 <field name="big_qty"/>
                                 <field name="big_uom"/>
                                 <field name="small_qty"/>
                                 <field name="small_uom"/>
+                                <field name="prodlot_id"/>
                             </tree>
                             </field>    
-                        </page>                      
+                        </page> 
+
+
+<!--                         <page string="Batch Number"> 
+                            <button
+                            name="view_product"
+                            string="View Product"
+                            type="object" states="draft"
+                            attrs="{'invisible':[('state', '!=', 'draft')]}"/>                                                  
+                            <field view_mode="tree" name="move_id" nolabel="1">
+                                <tree string="Batch Number" editable="bottom">
+                                    <field name="move_id"/>
+                                    <field name="origin"/>
+                                    <field name="name"/>
+                                    <field name="product_qty"/>
+                                </tree>
+                            </field>    
+                        </page>   -->
+
+
                     </notebook>   
-                    <field name="note" nolabel="1" placeholder="Note..."/>        
-<!--                 </form> -->  
+                    <field name="note" nolabel="1" placeholder="Note..."/>         
                 </sheet>  
             </form>
             </field>
@@ -132,7 +169,7 @@
             <field name="name">surat.jalan.search</field>
             <field name="model">surat.jalan</field>
             <field name="arch" type="xml">
-                <search string="Accounts">
+                <search string="Picking List">
                     <field name="name" filter_domain="[('name','ilike',self)]" string="Code"/>
                     <filter icon="terp-sale" string="Draft" domain="[('state','=','draft')]"/>
                     <filter icon="terp-sale" string="Delivery" domain="[('type','=','on_deliver')]"/>
