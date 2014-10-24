@@ -276,13 +276,34 @@ class purchase_order(osv.osv):
             vals['name'] = poname
         #Cek jumlah q11 apakah melebihi w1    
         sumw=0;sumv=[]
+        sumw2=0;sumv2=[]
+        sumw3=0;sumv3=[]
+        sumw4=0;sumv4=[]
         # import pdb;pdb.set_trace()
         if len(vals['sch_ids1'])>0:
             for y in vals['sch_ids1']: sumw += y[2]['p1']
             for x in vals['sch_ids1']: sumv += x[2]['fleet_id'][0][2]
-        vals['no_vehicle'] = len(sumv)
+        if len(vals['sch_ids2'])>0:
+            for y in vals['sch_ids2']: sumw2 += y[2]['p2']
+            for x in vals['sch_ids2']: sumv2 += x[2]['fleet_id2'][0][2]
+        if len(vals['sch_ids2'])>0:
+            for y in vals['sch_ids3']: sumw3 += y[2]['p3']
+            for x in vals['sch_ids3']: sumv3 += x[2]['fleet_id3'][0][2]
+        if len(vals['sch_ids2'])>0:
+            for y in vals['sch_ids4']: sumw4 += y[2]['p4']
+            for x in vals['sch_ids4']: sumv4 += x[2]['fleet_id4'][0][2]
+        vals['no_vehicle']  = len(sumv)
+        vals['no_vehicle2'] = len(sumv2)
+        vals['no_vehicle3'] = len(sumv3)
+        vals['no_vehicle4'] = len(sumv4)
         if sumw > vals['percent_r1']:
             raise osv.except_osv(_('Error W1!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
+        if sumw2 > vals['percent_r2']:
+            raise osv.except_osv(_('Error W2!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
+        if sumw3 > vals['percent_r3']:
+            raise osv.except_osv(_('Error W3!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
+        if sumw4 > vals['percent_r4']:
+            raise osv.except_osv(_('Error W4!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
         return super(purchase_order, self).create(cr, uid, vals, context=context)    
 
     def onchange_partner_x(self, cr, uid, ids, partner_x, date_order, context=None):
