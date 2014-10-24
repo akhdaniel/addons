@@ -1,16 +1,17 @@
  <openerp>
     <data>
-        <record id="view_account_invoice_form_route" model="ir.ui.view">
-            <field name="name">account_invoice_form_route</field>
+
+        <!-- inherit invoice -->
+        <record model="ir.ui.view" id="lph_invoice">
+            <field name="name">Invoice</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-
-            	<field name="fiscal_position" position="after">
-            		<field name="based_route_id" readonly="1"/>
-            	</field>
-
+                <field name="journal_id" position="after"> 
+                    <field name="is_cn" invisible="True"/>
+                </field>               
             </field>
         </record>
+
     </data>
 </openerp>

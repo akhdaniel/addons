@@ -1,27 +1,18 @@
+<!--  <?xml version="1.0" encoding="utf-8"?> -->
  <openerp>
     <data>   
-		<record id="action_lph_list" model="ir.actions.act_window">
-			<field name="name">List LPH</field>
-			<field name="res_model">vit_dist_payment.lph</field>
-			<field name="view_mode">tree,form,calendar</field>
-			<field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Click to add a LPH
-              </p>				
-				<p>Click tombol create to create new LPH</p>
-			</field>
-		</record>
 
         <record id="view_lph_tree" model="ir.ui.view">
-            <field name="name">vit_dist_payment_lph_tree</field>
+            <field name="name">vit_dist_lph_tree</field>
             <field name="model">vit_dist_payment.lph</field>
+            <!-- <field name="priority">2</field> -->
             <field name="arch" type="xml">
             	<tree string="list lph" colors="grey:state=='done'; blue:state=='draft'">
 	                <field name="name"/>
 	                <field name="date"/>       
 	                <field name="user_id"/>       
                     <field name="based_route_id"/>       
-                    <field name="voucher_id"/>       
+<!--                     <field name="voucher_id"/>  -->      
                     <field name="total"/>       
 	                <field name="balance"/>       
 	                <field name="state"/>   
@@ -29,57 +20,78 @@
             </field>
         </record>
 
+        <record id="view_lph_payment_tree" model="ir.ui.view">
+            <field name="name">vit_dist_payment_lph_tree</field>
+            <field name="model">vit_dist_payment.lph</field>
+            <!-- <field name="priority">4</field> -->
+            <field name="arch" type="xml">
+                <tree string="list lph" colors="grey:state=='done'; blue:state=='draft'" create="false" >
+                    <field name="name"/>
+                    <field name="date"/>       
+                    <field name="user_id"/>       
+                    <field name="based_route_id"/>       
+                    <field name="voucher_id"/>       
+                    <field name="total"/>       
+                    <field name="balance"/>       
+                    <field name="state"/>   
+                </tree>    
+            </field>
+        </record>
+
         <record id="view_lph_form" model="ir.ui.view">
             <field name="name">vit_dist_payment_lph_form</field>
             <field name="model">vit_dist_payment.lph</field>
             <field name="arch" type="xml">
-            	<form string="lph form" version="7.0">
+                <form string="lph form" version="7.0">
 
-            		<header>
-						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
-						 	 states="draft" />
-						<button string="Finished" type="object" name="action_done" class="oe_highlight"
-						 	 states="open" />
-						<button string="Cancel" type="object" name="action_draft"
-						 	 states="open" />
-            			<field name="state" widget="statusbar" />
-            		</header>
+                    <header>
+                        <button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+                             states="draft" />
+                        <button string="Finished" type="object" name="action_done" class="oe_highlight"
+                             states="open" />
+                        <button string="Cancel" type="object" name="action_draft"
+                             states="open" />
+                        <field name="state" widget="statusbar" />
+                    </header>
 
-            		<sheet>
-            			<h1>
-				            <field name="name" readonly="1"/>
-				        </h1>
+                    <sheet>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
 
-			            <group>
-			            	<group>
-				                <field name="date"/>       
-				                <field name="user_id"/>       
-				            </group>
-				            <group>
-				                <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)"/>       
-                                <field name="voucher_id" 
-                                    domain="[('lph_ids','=',False),('state', '=','done')]"/>       
-                                <field name="voucher_total" widget="monetary"/>       
-				            </group>
-				        </group>
+                        <group>
+                            <group>
+                                <field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>       
+                                <field name="user_id" attrs="{'readonly': [('state','!=','draft')]}"/>       
+                            </group>
+                            <group>
+                                <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)" attrs="{'readonly': [('state','!=','draft')]}"/>       
+                                <field name="voucher_id" on_change="onchange_voucher_id(user_id,voucher_id,voucher_total)"
+                                    domain="[('lph_ids','=',False),('state', '=','open'),('received_from','=',user_id)]" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>       
+                                <field name="voucher_total" widget="monetary" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>      
+                            </group>
+                        </group>
 
-			            <notebook>
-			            	<page string="Invoices">
-					            <field name="lph_line_ids">
-					            	<tree string="Invoices" colors="blue:state=='open'; grey:state=='paid'">
-						                <field name="number"/>       
-						                <field name="partner_id"/>       
-						                <field name="date_invoice"/>       
-						                <field name="date_due"/>       
+                        <notebook>
+                            <page string="Invoices">
+                                <field name="lph_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                                    <tree string="Invoices" colors="blue:state=='open'; grey:state=='paid'" editable="bottom" create="false">
+                                        <field name="number"/>  
+                                        <field name="origin"/>      
+                                        <field name="partner_id"/>
+                                        <field name="date_invoice"/>       
+                                        <field name="date_due"/>       
                                         <field name="state"/>       
-						                <field name="amount_untaxed"/>       
-						                <field name="amount_tax"/>       
-						                <field name="amount_total"/>       
-						                <field name="residual"/>       
-						            </tree>
-						        </field>
-						    </page>
-						</notebook>
+                                        <field name="amount_untaxed"/>       
+                                        <field name="amount_tax"/>
+                                        <field name="amount_total"/>       
+                                        <field name="residual"/>
+                                        <field name="is_draft_lph" invisible="True"/>                                   
+                                        <button name="invoice_pay_customer" type="object" string="Pay" icon="terp-check" attrs="{'invisible': ['|',('is_draft_lph','=',False),('state','!=','open')]}"/>    
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
 
                         <group class="oe_subtotal_footer oe_right">
                             <field name="total" widget="monetary"/>
@@ -89,13 +101,13 @@
                         <div class="oe_clear">
                         </div>
 
-					</sheet>
-			    </form>
+                    </sheet>
+                </form>
             </field>
         </record>
 
 
-		<!-- ini definisi search lph -->
+        <!-- ini definisi search lph -->
         <record id="view_lph_filter" model="ir.ui.view">
             <field name="name">lph.filter</field>
             <field name="model">vit_dist_payment.lph</field>
@@ -104,13 +116,13 @@
 
                     <filter icon="terp-mail-message-new" 
                         string="Draft" 
-                    	 name="draft" domain="[('state','=','draft')]"/>
+                         name="draft" domain="[('state','=','draft')]"/>
                     <filter icon="terp-mail-message-new" 
                         string="In Progress" 
-                    	 name="in_progress" domain="[('state','=','open')]"/>
+                         name="in_progress" domain="[('state','=','open')]"/>
                     <filter icon="terp-mail-message-new" 
                         string="Done" 
-                    	 name="done" domain="[('state','=','done')]"/>
+                         name="done" domain="[('state','=','done')]"/>
 
                     <separator/>
                     
@@ -122,16 +134,16 @@
                     <group expand="1" string="Group By...">
                         <filter string="Salesman" 
                             icon="terp-personal" domain="[]" 
-                        	 context="{'group_by':'user_id'}"/>
+                             context="{'group_by':'user_id'}"/>
                         <filter string="Status" 
                             icon="terp-personal" domain="[]" 
-                        	 context="{'group_by':'state'}"/>
+                             context="{'group_by':'state'}"/>
                         <filter string="Date" 
                             icon="terp-personal" domain="[]" 
-                        	 context="{'group_by':'date'}"/>
+                             context="{'group_by':'date'}"/>
                         <filter string="Base Route" 
                             icon="terp-personal" domain="[]" 
-                        	 context="{'group_by':'based_route_id'}"/>
+                             context="{'group_by':'based_route_id'}"/>
 
                     </group>                                        
 
@@ -139,6 +151,43 @@
             </field>
         </record>
 
+        <record id="action_lph_list_payment" model="ir.actions.act_window">
+            <field name="name">List LPH Payment</field>
+            <field name="res_model">vit_dist_payment.lph</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            
+            <field name="view_id" ref="view_lph_payment_tree"/>
+             <!-- <field eval="False" name="view_id"/> -->
+            
+            <field name="domain">[('state','!=','draft')]</field>
+            <field name="context">{'default_state':'open'}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Belum ada LPH yang On Progress
+              </p>              
+                <p>Buat dulu LPH di Menu LPH..!</p>
+            </field>
+        </record>
+
+        <record id="action_lph_list" model="ir.actions.act_window">
+            <field name="name">List LPH</field>
+            <field name="res_model">vit_dist_payment.lph</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            
+            <field name="view_id" ref="view_lph_tree"/>
+             <!-- <field eval="False" name="view_id"/> -->
+             <field name="domain">[('state','=','draft')]</field>
+            <field name="context">{'default_state':'draft'}</field>
+            
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a LPH
+              </p>              
+                <p>Click tombol create to create new LPH</p>
+            </field>
+        </record>
 
         <!-- menu LPH -->
 		<menuitem id="lph"
@@ -146,6 +195,13 @@
 			 name="LPH"
 			 sequence="20"
 			 parent="account.menu_finance_receivables"/>
+
+        <!-- menu Payment LPH -->
+        <menuitem id="lph_payments"
+             action="action_lph_list_payment"
+             name="LPH Payment"
+             sequence="22"
+             parent="account.menu_finance_receivables"/>
 
         <!-- Sequences for LPH -->
         <record id="seq_type_lph" model="ir.sequence.type">
@@ -159,6 +215,19 @@
             <field name="prefix">LPH/%(y)s/%(month)s/</field>
             <field name="padding">5</field>
         </record>
+
+
+     <!-- inherit journal -->
+        <record model="ir.ui.view" id="account_jornal_inherit">
+            <field name="name">Journal</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml"> 
+                <field name="centralisation" position="before"> 
+                    <field name="is_cn" attrs="{'invisible': [('type','!=','sale_refund')]}"/>
+                </field>               
+            </field>
+        </record> 
 
 
     </data>
