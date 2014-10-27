@@ -132,6 +132,7 @@ class hr_overtime(osv.osv):
         'lembur_dari':fields.datetime('Perintah Lembur dari Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
         'lembur_sampai':fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
         'tanggal':fields.char('tanggal'),
+        'istirahat' : fields.float("istirahat")
     }
     _defaults = {
         'employee_id': _employee_get,
@@ -144,7 +145,7 @@ class hr_overtime(osv.osv):
     ]
 
     # TODO: can be improved using resource calendar method
-    def _get_number_of_hours(self, date_from, date_to):
+    def _get_number_of_hours(self, date_from, date_to, istirahat):
         """Returns a float equals to the timedelta between two dates given as string."""
         #import pdb;pdb.set_trace()
         DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -155,7 +156,15 @@ class hr_overtime(osv.osv):
         diff_day2 = int(timedelta.seconds) / 3600
         diff = diff_day1 - diff_day2
         diff1 = (diff*60)/100
-        diff_day = diff_day2 + diff1
+        diff_day_awal = diff_day2 + diff1 - istirahat 
+        diff_int = int(diff_day_awal)
+        pembulatan_dif = diff_day_awal - diff_int
+        if pembulatan_dif <= 0.15 :
+            diff_day = float(diff_int)
+        elif pembulatan_dif >=0.16 and pembulatan_dif <= 0.45 : 
+            diff_day = float(diff_int) + 0.30 
+        elif pembulatan_dif >= 0.46 :
+            diff_day = float(diff_int) + 1 
         return diff_day
 
     def unlink(self, cr, uid, ids, context=None):
@@ -165,7 +174,7 @@ class hr_overtime(osv.osv):
                 raise Exception(_('You cannot delete a overtime which is not in draft state !'))
         return super(hr_overtime, self).unlink(cr, uid, ids, context)
 
-    def onchange_date_from(self, cr, uid, ids, date_to, date_from):
+    def onchange_date_from1(self, cr, uid, ids, date_to, date_from, istirahat):
         """
         If there are no date set for date_to, automatically set one 8 hours later than
         the date_from.
@@ -184,28 +193,27 @@ class hr_overtime(osv.osv):
 
         # Compute and update the number of days
         if (date_to and date_from) and (date_from <= date_to):
-            diff_day = self._get_number_of_hours(date_from, date_to)
+            diff_day = self._get_number_of_hours(date_from, date_to, istirahat)
             result['value']['number_of_hours_temp'] = round(math.floor(diff_day))
         else:
             result['value']['number_of_hours_temp'] = 0
 
         return result
 
-    def onchange_date_to(self, cr, uid, ids, date_to, date_from):
+    def onchange_date_to1(self, cr, uid, ids, date_to, date_from, istirahat):
         """
         Update the number_of_days.
         """
-
         # date_to has to be greater than date_from
         # if (date_from and date_to) and (date_from > date_to):
         #     raise osv.except_osv(_('Warning!'),_('The start date must be anterior to the end date.'))
-
+        obj = self.browse(cr,uid,ids)
         result = {'value': {}}
 
         # Compute and update the number of days
         if (date_to and date_from) and (date_from <= date_to):
-            diff_day = self._get_number_of_hours(date_from, date_to)
-            result['value']['number_of_hours_temp'] = diff_day#round(math.floor(diff_day))
+            diff_day = self._get_number_of_hours(date_from, date_to,istirahat)
+            result['value']['number_of_hours_temp'] = diff_day #round(math.floor(diff_day))
         else:
             result['value']['number_of_hours_temp'] = 0
         # date_y =  datetime.strptime(date_to,"%Y-%m-%d %H:%M:%S").year

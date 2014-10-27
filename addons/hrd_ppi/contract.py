@@ -66,6 +66,7 @@ class hr_contract(osv.osv):
         years = datetime.now().year
         holi = self.pool.get('hr.holidays')
         aloc = {}
+        import pdb;pdb.set_trace()
         if status_kontrak == type_brw :
             jum = datetime.strptime(dat_en,"%Y-%m-%d").month - datetime.strptime(dat_st,"%Y-%m-%d").month
             if end > years : 
