@@ -60,6 +60,22 @@ class permohonan_recruit(osv.osv):
         pero=partner.search(cr,uid,['|',('jenis_permohonan','=',False),('jenis_permohonan','=',name)])     
         pers=partner.browse(cr,uid,pero,context)
         st= 1000
+        # emp_obj = self.pool.get('hr.employee')
+        # emp_src = emp_obj.search(cr,uid,[('user_id','=',uid)])
+        # emp_brw = emp_obj.browse(cr,uid,emp_src)
+        # dep_obj = self.pool.get('hr.departmen')
+        # employees = []
+        # for emps in emp_brw :
+        #     import pdb;pdb.set_trace()
+        #     cek = True
+        #     dep = emps.department_id.id
+        #     while cek == True :
+        #         employees = dep
+        #         dep = dept_obj.browse(cr,uid,dep).parent_id
+        #         if dep == False :
+        #             cek = False
+        #     if objk.department_id.id not in employees :
+        #         raise osv.except_osv(_('Peringatan!'), _('Anda Tidak Bisa Approval'))
         for line in pers: 
             stage=line.sequence
             if stg3 < stage and st > stage :
@@ -724,7 +740,7 @@ class hr_applicant(osv.osv):
                                                      'gol_id':applicant.empgol_id.id,
                                                      'work_location2':applicant.lokasi_id,
                                                      'ptkp_id':applicant.ptkp.id,
-                                                     'fingerprint_code':1,
+                                                     'fingerprint_code': applicant.fingerprint_code2,
                                                     })
                 
                 self.write(cr, uid, [applicant.id], {'emp_id': emp_id}, context=context)
@@ -1233,7 +1249,8 @@ class hr_applicant(osv.osv):
         'lokasi_id'  : fields.selection([('karawang','Karawang'),('tanggerang','Tanggerang')],'Alamat Kantor'), 
         'ptkp' : fields.many2one('hr.ptkp','Status Pajak'),
         'stat': fields.float('stat'),
-        'st_pelamar' :fields.many2one('hr.seleksi_pelamar','status')
+        'st_pelamar' :fields.many2one('hr.seleksi_pelamar','status'),
+        'fingerprint_code2' : fields.integer('Fingeprint code'),
         }
 
     _sql_constraints = [

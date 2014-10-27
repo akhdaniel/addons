@@ -70,9 +70,10 @@
                                 <!-- <field name='tanggal'/> -->
                                 <field name="employee_id" on_change="onchange_dep1(employee_id)" required="1"/>
                                 <field name="department_id"/>
+                                <field name="istirahat"/> 
                                 <newline/>
-                                <field name="date_from" on_change="onchange_date_from(date_to, date_from)" required="1"/>
-                                <field name="date_to" on_change="onchange_date_to(date_to, date_from)" required="1"/>
+                                <field name="date_from" on_change="onchange_date_from1(date_to, date_from,istirahat)" required="1"/>
+                                <field name="date_to" on_change="onchange_date_to1(date_to, date_from,istirahat)" required="1"/>
                                 <field name="number_of_hours_temp"/>
                                 <field name="jam_lembur"/>
                                 <field name='total_jam'/>

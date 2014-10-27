@@ -14,11 +14,17 @@
                         groups="hrd_ppi.group_hr_training_head" 
                         class="oe_highlight" attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
             </button>
+            <button name="action_makeMeeting"  position="replace">
+                <button name="action_makeMeeting" type="object"
+                        string="Schedule Meeting" help="Schedule interview with this applicant" groups="base.group_hr_user"/>
+            </button>
             <field name="partner_name" position="after">
                 <label for='stage_id' string="Status"/>
                 <field name="stage_id"/>
                 <label for='empgol_id' string="Golongan" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
                 <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head" />
+                 <label for='fingerprint_code2' string="fingerprint ID" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="fingerprint_code2" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head" />
                 <label for="lokasi_id" string="Lokasi Kerja" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
                 <field name="lokasi_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
                 <label for="lokasi_id" string="PTKP" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
@@ -485,7 +491,7 @@
         <field name="inherit_id" ref="hrd_ppi.crm_case_form_view_job2"/>
         <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department')])]"/>
         <field name="arch" type="xml">
-
+z
             <field name='kelamin' position="attributes">
                 <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
             </field>        
