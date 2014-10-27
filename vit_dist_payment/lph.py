@@ -51,9 +51,9 @@ class lph(osv.osv):
 	_columns 	= {
 		'name'			  : fields.char('Number'),
 		'date'			  : fields.date('Date'),
-        'user_id'		  : fields.many2one('res.users', 'Salesman', select=True,required=True),
-        'based_route_id'  : fields.many2one('master.based.route','Route',required=True),		
-        'lph_line_ids'    : fields.many2many(
+		'user_id'		  : fields.many2one('res.users', 'Salesman', select=True,required=True),
+		'based_route_id'  : fields.many2one('master.based.route','Route',required=True),		
+		'lph_line_ids'    : fields.many2many(
 			'account.invoice',   	# 'other.object.name' dengan siapa dia many2many
 			'lph_invoice',          # 'relation object'
 			'lph_id',               # 'actual.object.id' in relation table
@@ -65,18 +65,18 @@ class lph(osv.osv):
 			('is_draft_lph','=',False),\
 			('based_route_id','=',based_route_id)]",
 			required=True),
-        'total'           : fields.function(_calc_total, type="float", string="Total"),
-        'balance'         : fields.function(_calc_balance, type="float", string="Balance"),
-        'total_paid'      : fields.function(_calc_paid, type="float", string="Total Paid"),
-        'state'           : fields.selection([
-            ('draft', 'Draft'),
-            ('open', 'On Progress'),
-            ('done', 'Done'),
-            ], 'Status', readonly=True, 
-            select=True),
-       	'voucher_id'	  : fields.many2one('vit_dist_payment.voucher', 'Voucher'),
-       	'voucher_total'	  : fields.related('voucher_id', 'total' , type="float", 
-       		relation="vit_dist_payment.voucher", string="Voucher Total", store=True)
+		'total'           : fields.function(_calc_total, type="float", string="Total"),
+		'balance'         : fields.function(_calc_balance, type="float", string="Balance"),
+		'total_paid'      : fields.function(_calc_paid, type="float", string="Total Paid"),
+		'state'           : fields.selection([
+			('draft', 'Draft'),
+			('open', 'On Progress'),
+			('done', 'Done'),
+			], 'Status', readonly=True, 
+			select=True),
+		'voucher_id'	  : fields.many2one('vit_dist_payment.voucher', 'Voucher'),
+		'voucher_total'	  : fields.related('voucher_id', 'total' , type="float", 
+			relation="vit_dist_payment.voucher", string="Voucher Total", store=True)
 	}
 
 	def create(self, cr, uid, vals, context=None):
@@ -142,7 +142,23 @@ class lph(osv.osv):
 				if id_st == 'open' :
 					inv_obj.write(cr,uid,id_inv,{'is_draft_lph':True},context=context)
 		self.write(cr,uid,ids,{'state':'open'},context=context)
-		return True
+		#return True
+		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_dist_payment', 'view_lph_tree')
+		view_id = view_ref and view_ref[1] or False,		
+		return {
+			'name' : _('Temporary View'),
+			'view_type': 'form',
+			'view_mode': 'tree',			
+			'res_model': 'vit_dist_payment.lph',
+			'res_id': ids[0],
+			'type': 'ir.actions.act_window',
+			'view_id': view_id,
+			'target': 'current',
+			'domain' : "[('state','=','draft')]",
+			#'context': "{'default_state':'open'}",#
+			'nodestroy': False,
+			}
+
 
 	def action_done(self,cr,uid,ids,context=None):
 		lph = self.browse(cr, uid, ids[0], context=context )

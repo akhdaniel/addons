@@ -7,16 +7,16 @@
             <field name="model">vit_dist_payment.lph</field>
             <!-- <field name="priority">2</field> -->
             <field name="arch" type="xml">
-            	<tree string="list lph" colors="grey:state=='done'; blue:state=='draft'">
-	                <field name="name"/>
-	                <field name="date"/>       
-	                <field name="user_id"/>       
+                <tree string="list lph" colors="grey:state=='done'; blue:state=='draft'">
+                    <field name="name"/>
+                    <field name="date"/>       
+                    <field name="user_id"/>       
                     <field name="based_route_id"/>       
 <!--                     <field name="voucher_id"/>  -->      
                     <field name="total"/>       
-	                <field name="balance"/>       
-	                <field name="state"/>   
-	            </tree>    
+                    <field name="balance"/>       
+                    <field name="state"/>   
+                </tree>    
             </field>
         </record>
 
@@ -65,7 +65,8 @@
                                 <field name="user_id" attrs="{'readonly': [('state','!=','draft')]}"/>       
                             </group>
                             <group>
-                                <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)" attrs="{'readonly': [('state','!=','draft')]}"/>       
+<!--                                 <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)" attrs="{'readonly': [('state','!=','draft')]}"/>  -->    
+                                <field name="based_route_id" attrs="{'readonly': [('state','!=','draft')]}"/>   
                                 <field name="voucher_id" on_change="onchange_voucher_id(user_id,voucher_id,voucher_total)"
                                     domain="[('lph_ids','=',False),('state', '=','open'),('received_from','=',user_id)]" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>       
                                 <field name="voucher_total" widget="monetary" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>      
@@ -190,11 +191,11 @@
         </record>
 
         <!-- menu LPH -->
-		<menuitem id="lph"
-			 action="action_lph_list"
-			 name="LPH"
-			 sequence="20"
-			 parent="account.menu_finance_receivables"/>
+        <menuitem id="lph"
+             action="action_lph_list"
+             name="LPH"
+             sequence="20"
+             parent="account.menu_finance_receivables"/>
 
         <!-- menu Payment LPH -->
         <menuitem id="lph_payments"
