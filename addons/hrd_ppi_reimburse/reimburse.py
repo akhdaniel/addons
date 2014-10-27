@@ -416,11 +416,12 @@ class hr_contract(osv.osv):
             else :
                 bulan = float(12)         
             #if wag:
-            jatah = float(((bulan/12)*typ) * wag)
-        if jatah <= rec.type_id.range_pengobatan :
-            result [re.id]= jatah
+            total = wag * typ
+            jatah = float((wag * typ) * (bulan/12))
+        if total >= rec.type_id.range_pengobatan :
+            result [re.id]= float(rec.type_id.range_pengobatan * (bulan/12))
         else :
-            result [re.id]= rec.type_id.range_pengobatan
+            result [re.id]= jatah
         return result    
         
     def _hitung_reimburse_rawat(self, cr, uid, ids, wage, jatah_reimburse_perawatan, arg, context=None):
