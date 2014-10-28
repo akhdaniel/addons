@@ -28,6 +28,15 @@ class bukti(osv.osv):
             }
 bukti()   
 
+class waktu_perencanaan(osv.osv):
+    _name = "hr.training.waktu"
+
+    _columns = {
+        'date_from' :  fields.date("Date From"),
+        'date_to' : fields.date("Date To"),
+        'ket' : fields.text("Ket"),
+        'analisa_id':fields.many2one('hr_training.analisa','Nama Pelatihan'),
+    }
 
 class train(osv.osv):
     _name = 'hr_training.train'
@@ -109,6 +118,8 @@ class train(osv.osv):
         obj_simpul = self.pool.get('hr_training.evaluasi_training')
         src_simpul = obj_simpul.search(cr,uid,[('eval_id','=',ID)])
         brw_simpul = obj_simpul.browse(cr,uid,src_simpul)
+        obj_penilaian = self.pool.get("keefektifan.pelatihan")
+        src_penilaian = obj_penilaian.search(cr,uid,[])
         nilai = 0
         x = 0
         date = datetime.now()
@@ -119,16 +130,11 @@ class train(osv.osv):
             total = 0
         else :
             total =(nilai*100)/(x * 10)
-        if total >= 90 :
-            self.write(cr,uid,ids,{'kesimpulan':'sangat_efektif'})
-        elif total >= 70 :
-            self.write(cr,uid,ids,{'kesimpulan':'efektif'})
-        elif total >= 50 :
-            self.write(cr,uid,ids,{'kesimpulan':'cukup_efektif'})
-        elif total >= 30 :
-            self.write(cr,uid,ids,{'kesimpulan':'kurang_efektif'})
-        else :
-            self.write(cr,uid,ids,{'kesimpulan':'tidak_efektif'})
+        for penilaian in obj_penilaian.browse(cr,uid,src_penilaian) :
+            _from = penilaian._from
+            _to = penilaian._to
+            if total >= _from and total <= _to :
+                self.write(cr,uid,ids,{'kesimpulan2':penilaian.id})
         self.write(cr,uid,ids,{'tanggal1': date})
         result[ID]= total
         return result
@@ -160,9 +166,12 @@ class train(osv.osv):
         'persentase_penguasaan': fields.function(_persentase,type='float',obj='hr_training.train',method=True,string='Persentase Penguasaan topik Pelatihan (%)',readonly=True),
         #'kesimpulan' : fields.many2one('hr_training.kesimpulan','Kesimpulan Penilaian'),
         'kesimpulan' : fields.selection([('sangat_efektif','Sangat Efektif'),('efektif','efektif'),('cukup_efektif','Cukup Efektif'),('kurang_efektif','Kurang Efektif'),('tidak_efektif','Tidak Efektif')],'Kesimpulan'),
+        'kesimpulan2' : fields.many2one("keefektifan.pelatihan","Kesimpulan",readonly=True),
         'tanggal1' : fields.date('tanggal', readonly=True),
         'nama_penilai':fields.many2one('hr.employee','Nama Penilai',readonly=True),
         'jabatan_penilai':fields.related('nama_penilai','job_id',type='many2one',relation='hr.job',string='Jabatan',readonly=True),
+        'jenis_train' : fields.related('analisa_id','tes', type='char', relation='hr_training.analisa', string='Jenis Training'),
+        'memo':fields.text("Catatan"),
         }
 
     _defaults = {
@@ -173,7 +182,7 @@ class train(osv.osv):
         }
 
     def create(self, cr, uid, vals, context=None):    
-        emp = self.pool.get('hr.employee')         
+        emp = self.pool.get('hr.employee')      
         vals['email'] = emp.browse(cr,uid,vals['employee_id']).work_email        
         return super(train, self).create(cr, uid, vals, context) 
 
@@ -247,8 +256,22 @@ class analisa(osv.osv):
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)''' 
     	
     def action_approve_hr_department(self,cr,uid,ids,context=None): 
-    	return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
-    	
+        obj=self.browse(cr,uid,ids)[0]
+        if obj.tes == "Internal" :
+            kode=obj.id; state=TRAINING_STATES[5][0] 
+            train_obj = self.pool.get('hr_training.train')
+            sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
+            tr = train_obj.browse(cr,uid,sr)
+            obj_penilai = self.pool.get("penilaian.pelatih")
+            for xids in tr:
+                employee = xids.employee_id.id
+                analisa = xids.analisa_id.id
+                obj_penilai.create(cr,uid,{'name': employee,'analisa_id':analisa})
+                train_obj.write(cr, uid, [xids.id], {'state':state, 'ket':'Aktif'})
+    	    return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)
+        else :
+    	   return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
+
     def action_evaluation(self,cr,uid,ids,context=None):
         obj=self.browse(cr,uid,ids)[0]
         kode=obj.id; state=TRAINING_STATES[5][0] 
@@ -256,12 +279,19 @@ class analisa(osv.osv):
         train_obj = self.pool.get('hr_training.train')
         sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
         tr = train_obj.browse(cr,uid,sr)
+        obj_penilai = self.pool.get("penilaian.pelatih")
         for xids in tr:
+            employee = xids.employee_id.id
+            analisa = xids.analisa_id.id
+            obj_penilai.create(cr,uid,{'name': employee,'analisa_id':analisa})
             train_obj.write(cr, uid, [xids.id], {'state':state, 'ket':'Aktif'})
         # for Training SIO
         sio_obj = self.pool.get('hr.training_sio')
         sio_src = sio_obj.search(cr,uid,[('analisa_id','=',kode)])
         for sio in sio_obj.browse(cr,uid,sio_src):
+            employee = sio.employee_id.id
+            analisa = sio.analisa_id.id
+            obj_penilai.create(cr,uid,{'name': employee,'analisa_id':analisa})
             sio_obj.write(cr,uid,[sio.id],{'state':state,'status': True})
         #import pdb;pdb.set_trace()
         tes = obj.tes
@@ -387,10 +417,12 @@ class analisa(osv.osv):
         'catatan':fields.char('Catatan Umum',60,),
         'lama':fields.char('Lama',25),
         'durasi':fields.integer('Durasi',store=True),
-        'employee_ids':fields.one2many('hr_training.train','analisa_id','Nama Karyawan'),    
-        'sio_ids':fields.one2many('hr.training_sio','analisa_id','Nama Karyawan'),    
+        'employee_ids':fields.one2many('hr_training.train','analisa_id','Nama Karyawan'),  
+        'penilai_ids':fields.one2many('penilaian.pelatih','analisa_id','Nama Karyawan'),  
+        'sio_ids':fields.one2many('hr.training_sio','analisa_id','Nama Karyawan'),
+        'date_ids':fields.one2many('hr.training.waktu','analisa_id','Schedule Perencanaan'),    
         'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Gives the status of the training."),  
-        'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda'),
+        'user_id' : fields.many2one('res.users', 'Creator','Masukan User ID Anda', readonly=True),
         'description' : fields.text('Deskripsi Pelatihan'),
         'subject': fields.char("Nama Pelatihan", readonly=True),
         'date_from': fields.datetime('Tanggal Mulai',),
@@ -400,7 +432,8 @@ class analisa(osv.osv):
         'pt' :fields.many2one('peraturan.tentanng','Peraturan Tentang'), 
         'nama_sertifikat' :fields.many2one('sertifikat','Nama Sertifikat',),
         'iso' : fields.many2one('iso','Nama SIO'),
-        'tempat_pelatihan': fields.char('Templat Pelatihan'),   
+        'tempat_pelatihan': fields.char('Templat Pelatihan'),  
+        'budget_info': fields.float('Budget Info'), 
             }
             
     _defaults = {
@@ -482,11 +515,19 @@ class evaluasi_training(osv.osv):
     
     _columns={        
         'name' : fields.char('Topik-topik Pelatihan'),
+        'name2':fields.many2one('train.topik','Topik-topik Pelatihan'),
         'skor' : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'),('9','9'),('10','10')],'Score Penguasaan Topik Pelatihan'),
         'eval_id':fields.many2one('hr_training.train'),  
             }
 evaluasi_training()       
  
+class train_topik(osv.osv) :
+    _name='train.topik'
+
+    _columns = {
+        "name":fields.char('Topik Pelatihan'),
+    }  
+
  ##################################
  ##### Clas Untuk Non Training ####
  ##################################
@@ -582,8 +623,8 @@ class sio(osv.osv):
         'link_warning':fields.many2one('warning.schedule'),
         'warning_hari' : fields.integer('Kadaluarsa'),
         'status':fields.boolean('status'),
-        'state': fields.selection(TRAINING_STATES, 'Statuses', readonly=True, help="Status Training"),
-
+        'state': fields.selection(TRAINING_STATES, 'Status', readonly=True, help="Status Training"),
+        'memo' : fields.text('catatan'),
         }
     _defaults = {
         'status' : True,
@@ -599,3 +640,70 @@ class warning_schedule(osv.osv):
     _columns = {
         'warning_sio' :fields.one2many('hr.training_sio','link_warning','SIO Yang Akan Berakhir', readonly=True),
     }
+warning_schedule()
+
+class keefektifan_pelatihan(osv.osv):
+    _name = "keefektifan.pelatihan"
+
+    _columns = {
+        "name" : fields.char("Penilaian"),
+        "_from" : fields.integer("Dari"),
+        "_to" : fields.integer("Sampai"),
+    }
+
+class penilaian_pelatih(osv.osv):
+    _name = "penilaian.pelatih"
+
+    def _persentase(self, cr, uid, ids, arg,field, context=None):
+        result = {}
+        obj = self.browse(cr,uid,ids)[0]
+        ID = obj.id
+        obj_simpul = self.pool.get('hr_training.evaluasi_training_penilai')
+        src_simpul = obj_simpul.search(cr,uid,[('eval_id','=',ID)])
+        brw_simpul = obj_simpul.browse(cr,uid,src_simpul)
+        obj_penilaian = self.pool.get("keefektifan.pelatihan")
+        src_penilaian = obj_penilaian.search(cr,uid,[])
+        nilai = 0
+        x = 0
+        date = datetime.now()
+        for sim in  brw_simpul :
+            nilai += float(sim.skor)
+            x += 1
+        if brw_simpul == [] :
+            total = 0
+        else :
+            total =(nilai*100)/(x * 10)
+        for penilaian in obj_penilaian.browse(cr,uid,src_penilaian) :
+            _from = penilaian._from
+            _to = penilaian._to
+            if total >= _from and total <= _to :
+                self.write(cr,uid,ids,{'kesimpulan3':penilaian.id})
+        result[ID]= total
+        return result
+
+    _columns = {
+        "name" : fields.many2one('hr.employee',"Karyawan"),
+        'job_id' :fields.related('name','job_id',type='many2one',relation='hr.job',string='Jabatan'),
+        'department_id' : fields.related('name','department_id',type='many2one',relation='hr.department',string='Departemen',store=True),
+        'evaluasi_ids':fields.one2many('hr_training.evaluasi_training_penilai','eval_id','Topik Pelatihan'),
+        'persentase':fields.function(_persentase,string='Persentase',readonly=True),
+        'kesimpulan3' : fields.many2one("keefektifan.pelatihan","Kesimpulan",readonly=True),  
+        'analisa_id':fields.many2one('hr_training.analisa','Nama Pelatihan'),      
+    }
+
+class evaluasi_training_penilai(osv.osv):
+    _name='hr_training.evaluasi_training_penilai'
+    
+    _columns={        
+        'name2':fields.many2one('train.topik','Topik-topik Pelatihan'),
+        'skor' : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'),('9','9'),('10','10')],'Score Penguasaan Topik Pelatihan'),
+        'eval_id':fields.many2one('penilaian.pelatih'),  
+            }
+evaluasi_training()       
+ 
+class train_topik_penilai(osv.osv) :
+    _name='train.topik.penilai'
+
+    _columns = {
+        "name":fields.char('Topik Pelatihan'),
+    }  

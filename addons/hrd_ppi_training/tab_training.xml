@@ -38,7 +38,8 @@
                                         <field name="date_to"/>
                                         <field name="durasi"/>
                                         <field name="penyelenggara"/>
-                                        <field name='bukti_id'/>                                    
+                                        <field name='bukti_id'/> 
+                                        <field name='jenis_train'/>                                   
                                     </tree>
                                     <form> 
                                         <field name='tanggal1'/>
@@ -47,7 +48,8 @@
                                         <field name="employee_id"/>  
                                         <field name='persentase_penguasaan'/>
                                         <field name='kesimpulan'/> 
-                                        <field name="rekomendasi_id"/> 
+                                        <!-- <field name="rekomendasi_id"/> --> 
+                                        <field name="memo"/>
                                     </form>
                                 </field>
                             </group>
@@ -92,6 +94,7 @@
                                         <field name='analisa_id'/>
                                         <field name='bukti'/>
                                         <field name='berlaku'/>
+                                        <field name="memo"/>
                                     </form>
                                 </field>
                             </group>
