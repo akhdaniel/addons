@@ -60,26 +60,31 @@
                 <header>                            
                     <button string="Send for Approval" type="workflow" 
                         states="draft" name="signal_verify"
-                        groups="hrd_ppi.group_hr_user,base.group_hr_user" 
+                        groups="hrd_ppi.group_hr_admins" 
                         class="oe_highlight" /> 
 
-                    <button string="Approve" type="workflow"  
+                    <button string="Approve Dept" type="workflow"  
                         states="verify" name="signal_approve"
                         groups="hrd_ppi.group_hr_aprove_dep1"
                         class="oe_highlight"  />  
 
-                    <button string="Cancel" type="workflow"  
-                        states="verify" name="signal_cancel"/>
+                    <!-- <button string="Cancel" type="workflow"  
+                        states="verify" name="signal_cancel"/> -->
                         
                     <button string="Reject" type="workflow"
                         groups="hrd_ppi.group_hr_aprove_dep1"  
                         states="verify,approve2" name="signal_reject"/>     
                     
-                    <button string="Second Approve" type="workflow"  
+                    <button string="Approve HRD" type="workflow"  
                         states="approve" name="signal_approve_hr_department"
-                        groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_aprove_dep2"
-                        class="oe_highlight"  />  
-                        
+                        groups="base.group_hr_manager"
+                        class="oe_highlight"/>  
+                    
+                    <button string="Approve Presdir" type="workflow"  
+                        groups="hrd_ppi.group_hr_aprove_presdir"
+                        states="approve2" name="signal_evaluation" 
+                        class="oe_highlight" /> 
+
                     <button string="Reject" type="workflow"  
                         groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_aprove_dep2"
                         states="approve" name="signal_reject"/>                                               
@@ -87,11 +92,6 @@
                     <!--button string="Reject" type="workflow"  
                         groups="hrd_ppi.group_hr_manager"
                         states="approve2" name="signal_reject"/-->
-
-                    <button string="Start Evaluation" type="workflow"  
-                        groups="hrd_ppi.group_hr_training_head,base.group_hr_manager"
-                        states="approve2" name="signal_evaluation" 
-                        class="oe_highlight" /> 
                         
                     <field name="state" widget="statusbar" statusbar_visible="draft,verify,approve,approve2,evaluation" attrs="{'invisible': [('state','=', 'reject')]}" class="oe_inline"/>
                 </header>
@@ -123,7 +123,8 @@
                     <field name='penyelenggara' attrs="{'invisible' : [('tes','!=','Eksternal')]}"/>
                     <field name='nama_sertifikat' attrs="{'invisible': [('tes','!=','SIO')]}"/>
                     <field name='iso' attrs="{'invisible': [('tes','!=','SIO')]}"/>
-                    <field name="tanggal" attrs="{'readonly': [('state','!=', 'draft')]}"/>                   
+                    <field name="tanggal" attrs="{'readonly': [('state','!=', 'draft')]}"/>    
+                    <field name="budget_info" attrs="{'readonly': [('state','=', 'evaluation')]}"/>               
                     </group>
                     <group>
                         <label for="durasi" string="Durasi" />
@@ -155,7 +156,7 @@
                                     <field name="nonik"/>                                    
                                     <field name="evaluasi_id"/>
                                     <field name="rekomendasi_id"/> 
-                                    <field name="bukti_id"/>                                                      
+                                    <field name="bukti_id"/>                                                
                                 </tree>
                                 <form>
                                     <group>
@@ -165,21 +166,22 @@
                                         <field name="employee_id" attrs="{'readonly': [('state','=', 'evaluation')]}"/>  
                                         <field name="state" invisible="0"/>
                                         <field name='persentase_penguasaan' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
-                                        <field name='kesimpulan' attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
-                                        <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
+                                        <field name='kesimpulan2' attrs="{'invisible': [('state','!=', 'evaluation')]}"/> 
+                                        <!-- <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/>  -->
                                     </group>
                                     <group> 
                                     <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}">
                                             <tree>
-                                                <field name='name'/>
+                                                <field name='name2'/>
                                                 <field name='skor'/>
                                             </tree>
                                             <form>
-                                                <field name='name'/>
+                                                <field name='name2'/>
                                                 <field name='skor'/>
                                             </form>
                                         </field> 
                                     <field name='bukti_id' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                    <field name="memo"/>
                                     </group>        
                                 </form>
                             </field>
@@ -198,7 +200,52 @@
                                     <field name='department_id'/>
                                     <field name='bukti' attrs="{'invisible': [('state','!=','evaluation')]}"/>
                                     <field name='berlaku' attrs="{'invisible': [('state','!=','evaluation')]}"/>
+                                    <field name="memo"/>
                                     <field name='state'/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Schedule Perencanaan" name="schedule_perencanaan">
+                            <field view_mode="tree,form" name="date_ids" nolabel="1">
+                                <tree>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="ket"/>
+                                </tree>
+                                <form>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="ket"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Evaluasi Penilaian Pelatihan" name="evaluasi_penilaian_pelatihan" attrs="{'invisible': [('state','!=', 'evaluation')]}">
+                            <field view_mode="tree,form" name="penilai_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="job_id"/>
+                                    <field name="department_id"/>
+                                    <field name="persentase"/> 
+                                    <field name="kesimpulan3"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="persentase"/>
+                                        <field name="kesimpulan3"/>
+                                    </group>
+                                    <group>
+                                        <field name="evaluasi_ids" >
+                                            <tree>
+                                                <field name='name2'/>
+                                                <field name='skor'/>
+                                            </tree>
+                                            <form>
+                                                <field name='name2'/>
+                                                <field name='skor'/>
+                                            </form>
+                                        </field> 
+                                    </group>
                                 </form>
                             </field>
                         </page>
@@ -261,6 +308,7 @@
             <field name="prefix"></field>
             <field name="padding">3</field>
         </record>      
+
         
 <!-- ################# form non Training #################### -->
         
@@ -336,6 +384,64 @@
             </field>
         </record>
 
+        <!--Master Penilaian-->
+
+        <!-- Approval Tree View -->
+        <record model="ir.ui.view" id="hr_penilaian_training_tree">
+            <field name="name">keefektifan.pelatihan.tree</field>
+            <field name="model">keefektifan.pelatihan</field>
+            <field name="arch" type="xml">
+                <tree string="Keefektifan Training">
+                    <field name="_from"/>
+                    <field name="_to"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Approval Form View -->
+        <record model="ir.ui.view" id="hr_penilaian_pelatihan_form">
+            <field name="name">keefektifan.pelatihan.form</field>
+            <field name="model">keefektifan.pelatihan</field>
+            <field name="arch" type="xml">
+                <form string="Keefektifan Pelatihan">
+                    <field name="_from"/>
+                    <field name="_to"/>
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_penilaian_training" model="ir.actions.act_window">
+            <field name="name">Keefektifan Training</field>
+            <field name="res_model">keefektifan.pelatihan</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="hr_penilaian_training_tree"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new stage in the recruitment process.
+              </p><p>
+                Don't forget to specify the department if your recruitment process
+                is different according to the job position.
+              </p>
+            </field>
+        </record>
+
+        <menuitem name="Training"
+        id="penilaian_training"
+        parent="hr.menu_hr_configuration"
+        sequence="40"
+        groups="base.group_hr_user"/>
+
+        <menuitem
+        id="menu_hr_penilaian_training"
+        name="Master Keefektifan"
+        parent="penilaian_training"
+        action="hr_penilaian_training"
+        sequence="1"
+        groups="base.group_hr_user"/>
+
+        <!-- Schedule -->
         <record forcecreate="1" id="ppi_schedule_iso" model="ir.cron">
             <field name="name">Schedule Iso</field>
             <field eval="1" name="active" />
