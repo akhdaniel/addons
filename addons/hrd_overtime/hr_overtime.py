@@ -107,7 +107,7 @@ class hr_overtime(osv.osv):
         }}
 
     _columns = {
-        'name': fields.char('Description', required=True, size=64),
+        'name': fields.char('Description', required=True,readonly=True,states={'draft':[('readonly',False)]}, size=64),
         'state': fields.selection([('draft', 'Draft'), ('confirm', 'Waiting Approval'), ('refuse', 'Refused'), 
             ('validate1', 'Waiting Second Approval'), ('validate', 'Approved'), ('cancel', 'Cancelled')],
             'State', readonly=True, help='When the overtim request is created the state is \'Draft\'.\n It is confirmed by the user and request is sent to admin, the state is \'Waiting Approval\'.\
@@ -119,20 +119,20 @@ class hr_overtime(osv.osv):
         'employee_id': fields.many2one('hr.employee', "Karyawan", select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
         'manager_id': fields.many2one('hr.employee', 'First Approval', invisible=False, readonly=True),
         'notes': fields.text('Catatan',readonly=True, states={'draft':[('readonly',False)]}),
-        'number_of_hours_temp': fields.float('Perkiraan Jam Lembur'),#states={'draft':[('readonly',False)]}),
+        'number_of_hours_temp': fields.float('Perkiraan Jam Lembur',readonly=True,states={'draft':[('readonly',False)]}),#states={'draft':[('readonly',False)]}),
         'number_of_hours': fields.function(_compute_number_of_hours, method=True, string='Number of Hours', store=True),
         #'department_id':fields.related('employee_id', 'department_id', string='Department', type='many2one', relation='hr.department', readonly=True),
         'manager_id2': fields.many2one('hr.employee', 'Second Approval', readonly=True, help='This area is automaticly filled by the user who validate the leave with second level (If Leave type need second validation)'),
         'overtime_type_id': fields.many2one("hr.overtime.type", "Type Lembur", required=True,readonly=True, states={'draft':[('readonly',False)]}),
-        'department_id' : fields.many2one('hr.department', 'Department'),
-        'overtime_type' : fields.many2one('hr.overtime.jam','Jenis Lembur',required=True),
+        'department_id' : fields.many2one('hr.department', 'Department',readonly=True,states={'draft':[('readonly',False)]}),
+        'overtime_type' : fields.many2one('hr.overtime.jam','Jenis Lembur',required=True,readonly=True, states={'draft':[('readonly',False)]}),
         'total_jam':fields.function(_hitung_lembur,type='float',store=False, readonly=True,string='Total Jam Lembur'),
         'total_jam1':fields.float('jumlah_jam'),
         'jam_lembur':fields.float("Jam Lembur Terealisasi"),
         'lembur_dari':fields.datetime('Perintah Lembur dari Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
         'lembur_sampai':fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
         'tanggal':fields.char('tanggal'),
-        'istirahat' : fields.float("istirahat")
+        'istirahat' : fields.float("istirahat",readonly=True, states={'draft':[('readonly',False)]})
     }
     _defaults = {
         'employee_id': _employee_get,
