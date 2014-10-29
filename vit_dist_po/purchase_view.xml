@@ -48,8 +48,8 @@
                         </div>
                         <group >
                             <group> 
-                                    <field name="partner_x" on_change="onchange_partner_x(partner_x,date_order)"/>
-                                    <field name="loc_x" on_change="onchange_locx(loc_x,location_id)" groups="stock.group_locations"/>
+                                    <field name="partner_x" on_change="onchange_partner_x(partner_x,date_order)" options="{'create': False, 'create_edit': False}"/>
+                                    <field name="loc_x" on_change="onchange_locx(loc_x,location_id)" groups="stock.group_locations" options="{'create': False, 'create_edit': False}"/>
                                     <field name="partner_id" class="oe_inline" invisible="True"/>
                                     <field name="location_id" groups="stock.group_locations" invisible="True"/>
                                     <field name="partner_ref"/>
@@ -78,8 +78,8 @@
                                 <label for="weight_r1"/>
                                 <!-- <label for="fleet_id"/> -->
                                 <label for="no_vehicle"/>
-                                <div><field name='r1' required="1"/></div>
-                                <div><field name='r1e' required="1"/></div>
+                                <div><field name='r1' /></div>
+                                <div><field name='r1e' /></div>
                                 <div><field name='percent_r1' on_change="onchange_rx(percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids1, order_line,qr1,volume_r1,weight_r1)"/></div>
                                 <div invisible="1"><field name='qr1'/></div>
                                 <div><field name='volume_r1'/></div>
@@ -120,8 +120,8 @@
                                 <label for="weight_r2"/>
                                 <!-- <label for="fleet_id"/> -->
                                 <label for="no_vehicle"/>
-                                <div><field name='r2' required="1"/></div>
-                                <div><field name='r2e' required="1"/></div>
+                                <div><field name='r2' /></div>
+                                <div><field name='r2e' /></div>
                                 <div><field name='percent_r2' on_change="onchange_rx(percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids2, order_line,qr2,volume_r2,weight_r2)"/></div>
                                 <div invisible="1"><field name='qr2'/></div>
                                 <div><field name='volume_r2'/></div>
@@ -162,8 +162,8 @@
                                 <label for="weight_r3"/>
                                 <!-- <label for="fleet_id"/> -->
                                 <label for="no_vehicle"/>
-                                <div><field name='r3' required="1"/></div>
-                                <div><field name='r3e' required="1"/></div>
+                                <div><field name='r3' /></div>
+                                <div><field name='r3e' /></div>
                                 <div><field name='percent_r3' on_change="onchange_rx(percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids3, order_line,qr3,volume_r3,weight_r3)"/></div>
                                 <div invisible="1"><field name='qr3'/></div>
                                 <div><field name='volume_r3'/></div>
@@ -204,8 +204,8 @@
                                 <label for="weight_r4"/>
                                 <!-- <label for="fleet_id"/> -->
                                 <label for="no_vehicle"/>
-                                <div><field name='r4' required="1"/></div>
-                                <div><field name='r4e' required="1"/></div>
+                                <div><field name='r4' /></div>
+                                <div><field name='r4e' /></div>
                                 <div><field name='percent_r4' on_change="onchange_rx(percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids4, order_line,qr4,volume_r4,weight_r4)"/></div>
                                 <div invisible="1"><field name='qr4'/></div>
                                 <div><field name='volume_r4'/></div>
@@ -233,7 +233,6 @@
                                 </div>
                             </group>
                         </group>
-
                         <group >
                             <group string="Total">
                                 <field name="volume_tot" class="oe_subtotal_footer_separator"/>
@@ -243,7 +242,7 @@
 
                         <notebook>
                             <page string="Purchase Order">
-                                <field name="order_line" on_change="onchange_lines(volume_tot, weight_tot, order_line)" string="A">
+                                <field name="order_line" on_change="onchange_lines(volume_tot, weight_tot, order_line)" context="{'sch_ids1':sch_ids1}" string="A">
                                     <tree string="Purchase Order Lines" editable="botom">
                                         <field name="int_code" string="Code" readonly="1"/>
                                         <field name="barcode" string="Barcode" readonly="1"/>
@@ -267,27 +266,40 @@
                                         <field name="forecastGT" on_change="onchange_line(product_id, adjustment, suggested_order, product_uom, price_unit,parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT)"/>
                                         <field name="bufMT" readonly="1"/>
                                         <field name="bufGT" readonly="1"/>
-                                        <field name="sales_3m" />   
-                                        <field name="sales_3m2" invisible="1"/>                   
-                                        <field name="stock_current" />                
-                                        <field name="stock_current2" invisible="1"/>                  
-                                        <field name="ending_inv" />                   
-                                        <field name="ending_inv2" invisible="1"/>                 
-                                        <field name="in_transit" />               
-                                        <field name="in_transit2" invisible="1"/>                 
+                                        <field name="sales_3m" />                     
+                                        <field name="stock_current" />                               
+                                        <field name="ending_inv" />                               
+                                        <field name="in_transit" />                               
                                         <field name="stock_cover"/>                
-                                        <field name="stock_cover2" invisible="1"/>
+
                                         <field name="w1" />      
-                                        <field name="w11"  attrs="{'invisible': [('w11','=', 0.00)]}" />
-                                        <field name="w12"  attrs="{'invisible': [('w12','=', 0.00)]}" />
-                                        <field name="w13"  attrs="{'invisible': [('w13','=', 0.00)]}" />
-                                        <field name="w14"  attrs="{'invisible': [('w14','=', 0.00)]}" />
-                                        <field name="w15"  attrs="{'invisible': [('w15','=', 0.00)]}" />
-                                        <field name="w16"  attrs="{'invisible': [('w16','=', 0.00)]}" />
-                                        <!-- <field name="qw14" />  
-                                        <field name="W2" />                    
-                                        <field name="W3" />                    
-                                        <field name="W4" />     -->                   
+                                        <field name="w11" attrs="{'invisible': [('w11','=', 0.00)]}" />
+                                        <field name="w12" attrs="{'invisible': [('w12','=', 0.00)]}" />
+                                        <field name="w13" attrs="{'invisible': [('w13','=', 0.00)]}" />
+                                        <field name="w14" attrs="{'invisible': [('w14','=', 0.00)]}" />
+                                        <field name="w15" attrs="{'invisible': [('w15','=', 0.00)]}" />
+                                        <field name="w16" attrs="{'invisible': [('w16','=', 0.00)]}" />
+                                        <field name="w2" />  
+                                        <field name="w21" attrs="{'invisible': [('w21','=', 0.00)]}" />
+                                        <field name="w22" attrs="{'invisible': [('w22','=', 0.00)]}" />
+                                        <field name="w23" attrs="{'invisible': [('w23','=', 0.00)]}" />
+                                        <field name="w24" attrs="{'invisible': [('w24','=', 0.00)]}" />
+                                        <field name="w25" attrs="{'invisible': [('w25','=', 0.00)]}" />
+                                        <field name="w26" attrs="{'invisible': [('w26','=', 0.00)]}" />  
+                                        <field name="w3" />      
+                                        <field name="w31" attrs="{'invisible': [('w31','=', 0.00)]}" />
+                                        <field name="w32" attrs="{'invisible': [('w32','=', 0.00)]}" />
+                                        <field name="w33" attrs="{'invisible': [('w33','=', 0.00)]}" />
+                                        <field name="w34" attrs="{'invisible': [('w34','=', 0.00)]}" />
+                                        <field name="w35" attrs="{'invisible': [('w35','=', 0.00)]}" />
+                                        <field name="w36" attrs="{'invisible': [('w36','=', 0.00)]}" />
+                                        <field name="w4" />  
+                                        <field name="w41" attrs="{'invisible': [('w41','=', 0.00)]}" />
+                                        <field name="w42" attrs="{'invisible': [('w42','=', 0.00)]}" />
+                                        <field name="w43" attrs="{'invisible': [('w43','=', 0.00)]}" />
+                                        <field name="w44" attrs="{'invisible': [('w44','=', 0.00)]}" />
+                                        <field name="w45" attrs="{'invisible': [('w45','=', 0.00)]}" />
+                                        <field name="w46" attrs="{'invisible': [('w46','=', 0.00)]}" />                  
                                     </tree>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right">
@@ -303,37 +315,7 @@
                                 <div class="oe_clear"/>
                                 <field name="notes" class="oe_inline" placeholder="Keterangan"/>
                             </page>
-                            <page string="W1"  invisible="1">
-                                <group col="12">
-                                    <group>
-                                        <!-- <field name="r1" string="From"/>
-                                        <field string="to" name="r1e"/> -->
-                                    </group>
-                                    <group>
-                                        <!-- <field name="percent_r1" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/>
-                                        <field name="volume_r1" class="oe_subtotal_footer oe_inline"/><field name="weight_r1" class="oe_subtotal_footer oe_inline"/> -->
-                                    </group>
-                                </group>
-                                
-                            </page>
-                            <page string="W2" invisible="1">
-                                <group col="6">
-                                   <!--  <field name="r2" string="From"/><field string="to" name="r2e" class="oe_inline"/><newline/>
-                                    <field name="percent_r2" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r2" class="oe_subtotal_footer oe_inline"/><field name="weight_r2" class="oe_subtotal_footer oe_inline"/> -->
-                                </group>
-                            </page>
-                            <page string="W3" invisible="1">
-                                <group col="6">
-                                    <!-- <field name="r3" string="From"/><field string="to" name="r3e" class="oe_inline"/><newline/>
-                                    <field name="percent_r3" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r3" class="oe_subtotal_footer oe_inline"/><field name="weight_r3" class="oe_subtotal_footer oe_inline"/> -->
-                                </group>
-                            </page>
-                            <page string="W4" invisible="1">
-                                <group col="6">
-                                    <!-- <field name="r4" string="From"/><field string="to" name="r4e" class="oe_inline"/><newline/>
-                                    <field name="percent_r4" on_change="onchange_percent(volume_tot ,weight_tot ,percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4)" class="oe_subtotal_footer"/> <field name="volume_r4" class="oe_subtotal_footer oe_inline"/><field name="weight_r4" class="oe_subtotal_footer oe_inline"/> -->
-                                </group>
-                            </page>
+                            
                             <page string="User's Location">
                                 <field name="location_ids" readonly="False"/>
                             </page>
