@@ -3,89 +3,102 @@ from openerp.tools.translate import _
 import time
 import openerp.addons.decimal_precision as dp
 from datetime import timedelta, date, datetime
+from lxml import etree
 
 class purchase_order_line(osv.osv):
     _name       = 'purchase.order.line'
     _inherit    = 'purchase.order.line'
     _order      = 'stock_current'
 
-    def _get_alias1(self,line,field):
-        px=0;
-        if field == 'w11':
-            for x in line.order_id.sch_ids1:
-                px += x.alias == '1' and x.p1/100.00
-        if field == 'w12':
-            for x in line.order_id.sch_ids1:
-                px += x.alias == '2' and x.p1/100.00
-        if field == 'w13':
-            for x in line.order_id.sch_ids1:
-                px += x.alias == '3' and x.p1/100.00
-        if field == 'w14':
-            for x in line.order_id.sch_ids1:
-                px += x.alias == '4' and x.p1/100.00
-        if field == 'w15':
-            for x in line.order_id.sch_ids1:
-                px += x.alias == '5' and x.p1/100.00
-        if field == 'w16':
-            for x in line.order_id.sch_ids1:
-                px += x.alias == '6' and x.p1/100.00
-        return px
-
-    def _determin_qw11(self, cr, uid, ids, field_names, arg, context=None):
-        result = {}
-        lines = self.browse(cr, uid, ids, context=context)
-        for line in lines:
-            px = self._get_alias1(line,field_names)
-            result[line.id] = px * line.product_qty or 0
-        return result
-
-    def _determin_qw12(self, cr, uid, ids, field_names, arg, context=None):
-        result = {}
-        lines = self.browse(cr, uid, ids, context=context)
-        for line in lines:
-            py = self._get_alias1(line,field_names)
-            result[line.id] = py * line.product_qty or 0
-        return result
-
-    def _determin_qw13(self, cr, uid, ids, field_names, arg, context=None):
-        result = {}
-        lines = self.browse(cr, uid, ids, context=context)
-        for line in lines:
-            pz = self._get_alias1(line,field_names)
-            result[line.id] = pz * line.product_qty or 0
-        return result
-
-    def _determin_qw14(self, cr, uid, ids, field_names, arg, context=None):
-        result = {}
-        lines = self.browse(cr, uid, ids, context=context)
-        for line in lines:
-            px = self._get_alias1(line,field_names)
-            result[line.id] = px * line.product_qty or 0
-        return result
-
-    def _determin_qw15(self, cr, uid, ids, field_names, arg, context=None):
-        result = {}
-        lines = self.browse(cr, uid, ids, context=context)
-        # import pdb;pdb.set_trace()
-        for line in lines:
-            py = self._get_alias1(line,field_names)
-            result[line.id] = py * line.product_qty or 0
-        return result
-
-    def _determin_qw16(self, cr, uid, ids, field_names, arg, context=None):
-        result = {}
-        lines = self.browse(cr, uid, ids, context=context)
-        for line in lines:
-            pz = self._get_alias1(line,field_names)
-            result[line.id] = pz * line.product_qty or 0
-        return result
-
-    def _determin_w1(self, cr, uid, ids, field_names, arg, context=None):
+    def _determin_w(self, cr, uid, ids, field_names, arg, context=None):
         result = {}
         lines = self.browse(cr, uid, ids, context=context)
         for line in lines: 
-            result[line.id] = line.product_qty * line.order_id.percent_r1/100 or 0
+            result[line.id] = { 'w1' : line.product_qty * line.order_id.percent_r1/100 or 0,
+                                'w2' : line.product_qty * line.order_id.percent_r2/100 or 0,
+                                'w3' : line.product_qty * line.order_id.percent_r3/100 or 0,
+                                'w4' : line.product_qty * line.order_id.percent_r4/100 or 0,}
         return result    
+
+    def _get_aliasw1(self,line,fields):
+        pxi={}
+        for x in line.order_id.sch_ids1:
+            pxi.update({x.alias : x.p1/100.00})
+        return pxi
+
+    def _get_aliasw2(self,line,fields):
+        pxj={}
+        for x2 in line.order_id.sch_ids2:
+            pxj.update({x2.alias2 : x2.p2/100.00})
+        return pxj
+
+    def _get_aliasw3(self,line,fields):
+        pxk={}
+        for x3 in line.order_id.sch_ids3:
+            pxk.update({x3.alias3 : x3.p3/100.00})
+        return pxk
+
+    def _get_aliasw4(self,line,fields):
+        pxl={}
+        for x4 in line.order_id.sch_ids4:
+            pxl.update({x4.alias4 : x4.p4/100.00})
+        return pxl
+
+    def _determin_qw1(self, cr, uid, ids, field_names, arg, context=None):
+        result = {}
+        px={}
+        lines = self.browse(cr, uid, ids, context=context)
+        for line in lines:
+            px[line.id] = self._get_aliasw1(line,field_names)
+            result[line.id] = { 'w11' : 'nol' in px[line.id] and px[line.id]['nol'] * line.product_qty or 0,
+                                'w12' : '1' in px[line.id] and px[line.id]['1'] * line.product_qty or 0,
+                                'w13' : '2' in px[line.id] and px[line.id]['2'] * line.product_qty or 0,
+                                'w14' : '3' in px[line.id] and px[line.id]['3'] * line.product_qty or 0,
+                                'w15' : '4' in px[line.id] and px[line.id]['4'] * line.product_qty or 0,
+                                'w16' : '5' in px[line.id] and px[line.id]['5'] * line.product_qty or 0,}
+        return result
+
+    def _determin_qw2(self, cr, uid, ids, field_names, arg, context=None):
+        result = {}
+        p2={}
+        lines = self.browse(cr, uid, ids, context=context)
+        for line in lines:
+            p2[line.id] = self._get_aliasw2(line,field_names)
+            result[line.id] = { 'w21' : 'nol' in p2[line.id] and p2[line.id]['nol'] * line.product_qty or 0,
+                                'w22' : '1' in p2[line.id] and p2[line.id]['1'] * line.product_qty or 0,
+                                'w23' : '2' in p2[line.id] and p2[line.id]['2'] * line.product_qty or 0,
+                                'w24' : '3' in p2[line.id] and p2[line.id]['3'] * line.product_qty or 0,
+                                'w25' : '4' in p2[line.id] and p2[line.id]['4'] * line.product_qty or 0,
+                                'w26' : '5' in p2[line.id] and p2[line.id]['5'] * line.product_qty or 0,}
+        return result
+
+    def _determin_qw3(self, cr, uid, ids, field_names, arg, context=None):
+        result = {}
+        p3={}
+        lines = self.browse(cr, uid, ids, context=context)
+        for line in lines:
+            p3[line.id] = self._get_aliasw3(line,field_names)
+            result[line.id] = { 'w31' : 'nol' in p3[line.id] and p3[line.id]['nol'] * line.product_qty or 0,
+                                'w32' : '1' in p3[line.id] and p3[line.id]['1'] * line.product_qty or 0,
+                                'w33' : '2' in p3[line.id] and p3[line.id]['2'] * line.product_qty or 0,
+                                'w34' : '3' in p3[line.id] and p3[line.id]['3'] * line.product_qty or 0,
+                                'w35' : '4' in p3[line.id] and p3[line.id]['4'] * line.product_qty or 0,
+                                'w36' : '5' in p3[line.id] and p3[line.id]['5'] * line.product_qty or 0,}
+        return result
+
+    def _determin_qw4(self, cr, uid, ids, field_names, arg, context=None):
+        result = {}
+        p4={}
+        lines = self.browse(cr, uid, ids, context=context)
+        for line in lines:
+            p4[line.id] = self._get_aliasw4(line,field_names)
+            result[line.id] = { 'w41' : 'nol' in p4[line.id] and p4[line.id]['nol'] * line.product_qty or 0,
+                                'w42' : '1' in p4[line.id] and p4[line.id]['1'] * line.product_qty or 0,
+                                'w43' : '2' in p4[line.id] and p4[line.id]['2'] * line.product_qty or 0,
+                                'w44' : '3' in p4[line.id] and p4[line.id]['3'] * line.product_qty or 0,
+                                'w45' : '4' in p4[line.id] and p4[line.id]['4'] * line.product_qty or 0,
+                                'w46' : '5' in p4[line.id] and p4[line.id]['5'] * line.product_qty or 0,}
+        return result
 
     _columns = {
         'suggested_order'   : fields.float('Suggested Order', digits_compute=dp.get_precision('Product Unit of Measure')),
@@ -99,10 +112,6 @@ class purchase_order_line(osv.osv):
         'bufGT'             : fields.float('Buffer GT', readonly=True),
         'barcode'           : fields.char('Barcode'),
         'int_code'          : fields.char('Internal Reference'),
-        # 'W1'                : fields.function(_determin_wx_from_precent_rx,type='float',string='W1',store=False),
-        'W2'                : fields.float(string='W2'),
-        'W3'                : fields.float(string='W3'),
-        'W4'                : fields.float(string='W4'),
         'sales_3m'          : fields.float('Sales 3 Months'),
         'stock_current'     : fields.float('Stock Current'),
         'ending_inv'        : fields.float('Ending Inventory'),
@@ -116,13 +125,34 @@ class purchase_order_line(osv.osv):
         'stock_cover2'      : fields.float('Stock Cover2',readonly=True),
         'forecastMT'        : fields.float('Forecast MT',required=True),
         'forecastGT'        : fields.float('Forecast GT',required=True),
-        'w1'                : fields.function(_determin_w1,type='float',string='W1',store=False),
-        'w11'               : fields.function(_determin_qw11,type='float',string='W1.1',store=False),
-        'w12'               : fields.function(_determin_qw12,type='float',string='W1.2',store=False),
-        'w13'               : fields.function(_determin_qw13,type='float',string='W1.3',store=False),
-        'w14'               : fields.function(_determin_qw14,type='float',string='W1.4',store=False),
-        'w15'               : fields.function(_determin_qw15,type='float',string='W1.5',store=False),
-        'w16'               : fields.function(_determin_qw16,type='float',string='W1.6',store=False),
+        'w1'                : fields.function(_determin_w,type='float',string='W1',store=False,multi='wx'),
+        'w2'                : fields.function(_determin_w,type='float',string='W2',store=False,multi='wx'),
+        'w3'                : fields.function(_determin_w,type='float',string='W3',store=False,multi='wx'),
+        'w4'                : fields.function(_determin_w,type='float',string='W4',store=False,multi='wx'),
+        'w11'               : fields.function(_determin_qw1,type='float',string='W1.1',store=False,multi='qwx'),
+        'w12'               : fields.function(_determin_qw1,type='float',string='W1.2',store=False,multi='qwx'),
+        'w13'               : fields.function(_determin_qw1,type='float',string='W1.3',store=False,multi='qwx'),
+        'w14'               : fields.function(_determin_qw1,type='float',string='W1.4',store=False,multi='qwx'),
+        'w15'               : fields.function(_determin_qw1,type='float',string='W1.5',store=False,multi='qwx'),
+        'w16'               : fields.function(_determin_qw1,type='float',string='W1.6',store=False,multi='qwx'),
+        'w21'               : fields.function(_determin_qw2,type='float',string='W2.1',store=False,multi='qwy'),
+        'w22'               : fields.function(_determin_qw2,type='float',string='W2.2',store=False,multi='qwy'),
+        'w23'               : fields.function(_determin_qw2,type='float',string='W2.3',store=False,multi='qwy'),
+        'w24'               : fields.function(_determin_qw2,type='float',string='W2.4',store=False,multi='qwy'),
+        'w25'               : fields.function(_determin_qw2,type='float',string='W2.5',store=False,multi='qwy'),
+        'w26'               : fields.function(_determin_qw2,type='float',string='W2.6',store=False,multi='qwy'),
+        'w31'               : fields.function(_determin_qw3,type='float',string='W3.1',store=False,multi='qwz'),
+        'w32'               : fields.function(_determin_qw3,type='float',string='W3.2',store=False,multi='qwz'),
+        'w33'               : fields.function(_determin_qw3,type='float',string='W3.3',store=False,multi='qwz'),
+        'w34'               : fields.function(_determin_qw3,type='float',string='W3.4',store=False,multi='qwz'),
+        'w35'               : fields.function(_determin_qw3,type='float',string='W3.5',store=False,multi='qwz'),
+        'w36'               : fields.function(_determin_qw3,type='float',string='W3.6',store=False,multi='qwz'),
+        'w41'               : fields.function(_determin_qw4,type='float',string='W4.1',store=False,multi='qwo'),
+        'w42'               : fields.function(_determin_qw4,type='float',string='W4.2',store=False,multi='qwo'),
+        'w43'               : fields.function(_determin_qw4,type='float',string='W4.3',store=False,multi='qwo'),
+        'w44'               : fields.function(_determin_qw4,type='float',string='W4.4',store=False,multi='qwo'),
+        'w45'               : fields.function(_determin_qw4,type='float',string='W4.5',store=False,multi='qwo'),
+        'w46'               : fields.function(_determin_qw4,type='float',string='W4.6',store=False,multi='qwo'),
     }
 
     def onchange_line(self, cr, uid, ids, product_id, adjustment, suggested_order, product_uom, price_unit,
@@ -139,27 +169,27 @@ class purchase_order_line(osv.osv):
         adjustment      = adjustment or 0.00
         suggested_order = (forecastMT + forecastGT + bufMT + bufGT - stock_current - in_transit) or 0.00
         qty             = adjustment + suggested_order
-        prod_vol        = self.pool.get('product.product').browse(cr,uid,product_id,).volume
-        prod_wgt        = self.pool.get('product.product').browse(cr,uid,product_id,).weight
+        prd             = self.pool.get('product.product').browse(cr,uid,product_id,)
+        prod_vol        = prd.volume
+        prod_wgt        = prd.weight
         factor          = self.pool.get('product.uom').browse(cr,uid,product_uom,).factor
         ratio           = 1/factor
         wgt_tot         = prod_wgt * qty * ratio 
         vol_tot         = prod_vol * qty * ratio 
-        ps              = qty * price_unit
+        # ps              = qty * price_unit
         end_inv         = qty + stock_current + in_transit - sales_3m
         if sales_3m > 0.00 and end_inv > 0.00 : 
             stk_cover   = end_inv / sales_3m * 4
-        prd             = self.pool.get('product.product').browse(cr,uid,product_id,)
-        price_unit      = prd.product_tmpl_id.standard_price
+        # price_unit      = prd.product_tmpl_id.standard_price
         return {'value':{
                         'product_qty'       : round(qty) or 0.00,
-                        'price_subtotal'    : ps or 0.00, 
+                        # 'price_subtotal'    : ps or 0.00, 
                         'ending_inv'        : end_inv or 0.00, 
                         'stock_cover'       : stk_cover,
                         'prod_weight'       : wgt_tot or 0.00,
                         'prod_volume'       : vol_tot or 0.00,
                         'suggested_order'   : round(suggested_order),
-                        'price_unit'        : price_unit or 0.00,
+                        # 'price_unit'        : price_unit or 0.00,
                         # 'qty2'            : qty,
                         # 'ending_inv2'     : end_inv, 
                         # 'stock_cover2'    : stk_cover or 0.00, 
@@ -253,6 +283,7 @@ class purchase_order(osv.osv):
         'view_w2'        : fields.boolean('Show/hide'),
         'view_w3'        : fields.boolean('Show/hide'),
         'view_w4'        : fields.boolean('Show/hide'),
+        # 'columns_exixst1': fields.char("c.exixt"),
         }
 
     # def default_get(self, cr, uid, fields, context=None):
@@ -279,7 +310,6 @@ class purchase_order(osv.osv):
         sumw2=0;sumv2=[]
         sumw3=0;sumv3=[]
         sumw4=0;sumv4=[]
-        # import pdb;pdb.set_trace()
         if len(vals['sch_ids1'])>0:
             for y in vals['sch_ids1']: sumw += y[2]['p1']
             for x in vals['sch_ids1']: sumv += x[2]['fleet_id'][0][2]
@@ -305,6 +335,28 @@ class purchase_order(osv.osv):
         if sumw4 > vals['percent_r4']:
             raise osv.except_osv(_('Error W4!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
         return super(purchase_order, self).create(cr, uid, vals, context=context)    
+
+    def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, context=None):
+        return {
+            'name': order_line.name or '',
+            'product_id': order_line.product_id.id,
+            'product_qty': order_line.product_qty,
+            'product_uos_qty': order_line.product_qty,
+            'product_uom': order_line.product_uom.id,
+            'product_uos': order_line.product_uom.id,
+            'date': self.date_to_datetime(cr, uid, order.date_order, context),
+            'date_expected': self.date_to_datetime(cr, uid, order_line.date_planned, context),
+            'location_id': order.partner_id.property_stock_supplier.id,
+            'location_dest_id': order.location_id.id,
+            'picking_id': picking_id,
+            'partner_id': order.dest_address_id.id or order.partner_id.id,
+            'move_dest_id': order_line.move_dest_id.id,
+            'state': 'draft',
+            'type':'in',
+            'purchase_line_id': order_line.id,
+            'company_id': order.company_id.id,
+            'price_unit': order_line.price_unit
+        }
 
     def onchange_partner_x(self, cr, uid, ids, partner_x, date_order, context=None):
         # poname = '/'
@@ -348,7 +400,12 @@ class purchase_order(osv.osv):
             BGT=0.00;BMT=0.00;sgt_order=0.00;adj=0.00;cs=0.00;it=0.00
             ratio=1/prd.uom_po_id.factor
 
-            cr.execute('SELECT AVG(il.quantity3) '\
+            ''' 
+            Range tanggal pertama 3 bln lalu s/d tgl terakhir bulan lalu
+            (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '1 day')::date as lastday_lastmounth,
+            (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '3 MONTH')::date as firstday_last3mounth
+            '''
+            cr.execute('SELECT SUM(il.quantity3) '\
                 'FROM account_invoice ai '\
                 'JOIN res_partner rp on ai.partner_id=rp.id '\
                 'JOIN res_partner_res_partner_category_rel m2m on m2m.partner_id = rp.id   '\
@@ -357,7 +414,9 @@ class purchase_order(osv.osv):
                 'JOIN product_uom uom on il.uos_id = uom.id  '\
                 'JOIN product_uom_categ puc on puc.id=uom.category_id   '\
                 'WHERE state = \'paid\'  '\
-                'AND il.product_id = ' +str(prd.id)+ 'AND ai.date_invoice >= (CURRENT_DATE - (INTERVAL \'3 months\'))  '\
+                'AND il.product_id = ' +str(prd.id)+ 
+                ' AND ai.date_invoice BETWEEN (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'3 MONTH\')::date '\
+                ' AND (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'1 day\')::date '\
                 'AND rpc.name like \'%GT%\' '+clause )
             SOGT = cr.fetchone()
             if SOGT != (None,) : 
@@ -365,7 +424,7 @@ class purchase_order(osv.osv):
                 if GT != 0 : 
                     BGT = GT/2 
             
-            cr.execute('SELECT AVG(il.quantity3) '\
+            cr.execute('SELECT SUM(il.quantity3) '\
                 'FROM account_invoice ai '\
                 'JOIN res_partner rp on ai.partner_id=rp.id '\
                 'JOIN res_partner_res_partner_category_rel m2m on m2m.partner_id = rp.id   '\
@@ -374,7 +433,9 @@ class purchase_order(osv.osv):
                 'JOIN product_uom uom on il.uos_id = uom.id  '\
                 'JOIN product_uom_categ puc on puc.id=uom.category_id   '\
                 'WHERE state = \'paid\'  '\
-                'AND il.product_id = ' +str(prd.id)+ 'AND ai.date_invoice >= (CURRENT_DATE - (INTERVAL \'3 months\'))  '\
+                'AND il.product_id = ' +str(prd.id)+ 
+                ' AND ai.date_invoice BETWEEN (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'3 MONTH\')::date '\
+                ' AND (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'1 day\')::date '\
                 'AND rpc.name like \'%MT%\' '+ clause )
             SOMT = cr.fetchone()
             if SOMT != (None,) : 
@@ -410,13 +471,15 @@ class purchase_order(osv.osv):
             tot_bufer = BMT+BGT
             sgt_order = s3m+tot_bufer-cs-it
 
-            print MT;print BGT;print GT;print cs;print sgt_order
-            price   = prd.product_tmpl_id.standard_price 
+            # price   = prd.product_tmpl_id.standard_price 
             tot_v   = tot_v+prd.volume
             tot_w   = tot_w+prd.weight
+
+            #standard_price
+            price = prd.price_get('standard_price', context=context)[prd.id] / prd.uom_po_id.factor
+
             order_lines.append([0,0,{'product_id': prd.id or False, 
                 'name'          : prd.name or '',
-                'product_uom'   : prd.uom_po_id.id or False,
                 'date_planned'  : date_order,
                 'sales_3m'      : round(s3m),
                 'avgMT'         : round(MT),
@@ -679,6 +742,10 @@ class purchase_order_schedule_r1(osv.Model):
     #             self.pool.get("purchase.order.line").write(cr,uid,x.id,{'qty_left':0.00})
     #     return self.write(cr,uid,ids,{'sch1_detail':prod_line1})
 
+    _defaults = {
+    'alias' : 'nol',
+    }
+
 purchase_order_schedule_r1()
 
 class purchase_order_schedule_r2(osv.Model):
@@ -822,3 +889,86 @@ purchase_order_schedule_r4()
 #         return True
 
 # po_schedule_r1_detail()
+
+#----------------------------------------------------------
+# Stock Picking
+#----------------------------------------------------------
+class stock_picking(osv.osv):
+    _name = "stock.picking"
+    _inherit = "stock.picking"
+
+    def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id,
+        invoice_vals, context=None):
+        """ Builds the dict containing the values for the invoice line
+            @param group: True or False
+            @param picking: picking object
+            @param: move_line: move_line object
+            @param: invoice_id: ID of the related invoice
+            @param: invoice_vals: dict used to created the invoice
+            @return: dict that will be used to create the invoice line
+        """
+        if group:
+            name = (picking.name or '') + '-' + move_line.name
+        else:
+            name = move_line.name
+        origin = move_line.picking_id.name or ''
+        if move_line.picking_id.origin:
+            origin += ':' + move_line.picking_id.origin
+
+        if invoice_vals['type'] in ('out_invoice', 'out_refund'):
+            account_id = move_line.product_id.property_account_income.id
+            if not account_id:
+                account_id = move_line.product_id.categ_id.\
+                        property_account_income_categ.id
+        else:
+            account_id = move_line.product_id.property_account_expense.id
+            if not account_id:
+                account_id = move_line.product_id.categ_id.\
+                        property_account_expense_categ.id
+        if invoice_vals['fiscal_position']:
+            fp_obj = self.pool.get('account.fiscal.position')
+            fiscal_position = fp_obj.browse(cr, uid, invoice_vals['fiscal_position'], context=context)
+            account_id = fp_obj.map_account(cr, uid, fiscal_position, account_id)
+        # set UoS if it's a sale and the picking doesn't have one
+        uos_id = move_line.product_uos and move_line.product_uos.id or False
+        if not uos_id and invoice_vals['type'] in ('out_invoice', 'out_refund'):
+            uos_id = move_line.product_uom.id
+        
+        if invoice_vals['type'] == 'in_invoice':
+            small_qty = move_line.product_uos_qty * (move_line.product_uos.factor or 1)
+        
+        # import pdb;pdb.set_trace()
+        return {
+            'name': name,
+            'origin': origin,
+            'invoice_id': invoice_id,
+            'uos_id': uos_id,
+            'uom_id': move_line.product_id.product_tmpl_id.uom_id.id,
+            'product_id': move_line.product_id.id,
+            'account_id': account_id,
+            'price_unit': self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type']),
+            'discount': self._get_discount_invoice(cr, uid, move_line),
+            'quantity2': 0,#move_line.product_uos_qty or move_line.product_qty,
+            'qty': move_line.product_uos_qty,
+            'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
+            'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
+        }
+
+    def _get_price_unit_invoice(self, cr, uid, move_line, type, context=None):
+        """ Gets price unit for invoice
+        @param move_line: Stock move lines
+        @param type: Type of invoice
+        @return: The price unit for the move line
+        """
+        if context is None:
+            context = {}
+
+        if type in ('in_invoice', 'in_refund'):
+            # Take the user company and pricetype
+            context['currency_id'] = move_line.company_id.currency_id.id
+            amount_unit = move_line.product_id.price_get('standard_price', context=context)[move_line.product_id.id]
+            return amount_unit
+        else:
+            return move_line.product_id.list_price
+
+stock_picking()
