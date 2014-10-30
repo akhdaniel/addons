@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="incoming_shipment" 
+        string="Incoming Shipment With Signature." 
+        model="stock.picking.in" 
+        name="incoming_shipment" 
+        rml="vit_print_shipment/report/incoming_shipment.rml" 
+        auto="False" 
+        header="False"/>          
+    </data> 
+</openerp>
