@@ -105,7 +105,6 @@ class purchase_order_line(osv.osv):
         'adjustment'        : fields.float('Adjustment', digits_compute=dp.get_precision('Product Unit of Measure'), required=True),
         'prod_weight'       : fields.float('Weight'),
         'prod_volume'       : fields.float('Volume'),
-        'uom_karton_qty'    : fields.float('Qty Box', required=True),
         'avgMT'             : fields.float('Avg MT', readonly=True),
         'avgGT'             : fields.float('Avg GT', readonly=True),
         'bufMT'             : fields.float('Buffer MT', readonly=True),
