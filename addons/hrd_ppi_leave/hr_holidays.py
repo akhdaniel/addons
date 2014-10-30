@@ -388,7 +388,6 @@ class hr_holidays(osv.osv):
         elif (date_to and date_from) and (date_from <= date_to) and libur_bersih2 == True:
             diff_day = self._get_number_of_days(date_from, date_to)
             result['value']['number_of_days_temp'] = round(math.floor(diff_day))+1
-            
            
         else:
             diff_day = self._get_number_of_days2(date_from, date_to)
@@ -417,6 +416,7 @@ class hr_holidays(osv.osv):
         for emp in employs:
             no_contract = emp.no_contract
             tgl = emp.tanggal
+            date = False
             if  tgl != False :
                 date = datetime.strptime(tgl,"%Y-%m-%d").year
             if no_contract != False :
@@ -431,6 +431,8 @@ class hr_holidays(osv.osv):
                         #'holiday_type':'employee',
                         'notes':"",
                         }
+                    leave_ids.append(self.create(cr, uid, values, context=None))
+                    #employee_ids.write(cr,uid,['emp.id'],{'sisa':sisa)
                 else :
                     values = {
                         'name': _("Alokasi Cuti %s") % _(D_y),
@@ -441,21 +443,19 @@ class hr_holidays(osv.osv):
                         #'holiday_type':'employee',
                         'notes':"",
                         }
-            else :
-                values = {
-                        'name': _("Alokasi Cuti %s") % _(D_y),
-                        'employee_id':emp.id,
-                        'type':'add',       #Allocation-> 'add'
-                        'holiday_status_id':hol_id,
-                        'number_of_days_temp':12,
-                        #'holiday_type':'employee',
-                        'notes':"",
-                        }
-            #import pdb;pdb.set_trace()
-            leave_ids.append(self.create(cr, uid, values, context=None))
+                    leave_ids.append(self.create(cr, uid, values, context=None))
+            # else :
+            #     values = {
+            #             'name': _("Alokasi Cuti %s") % _(D_y),
+            #             'employee_id':emp.id,
+            #             'type':'add',       #Allocation-> 'add'
+            #             'holiday_status_id':hol_id,
+            #             'number_of_days_temp':12,
+            #             #'holiday_type':'employee',
+            #             'notes':"",
+            #             }
             # self.create(cr,uid,values,context=context)
         wf_service = netsvc.LocalService("workflow")
-        #import pdb;pdb.set_trace()
         for leave_id in leave_ids:
             wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
             wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
@@ -471,30 +471,61 @@ class hr_holidays(osv.osv):
         obj_contract = self.pool.get('hr.contract')
         c_src = obj_contract.search(cr, uid, [],)
         contracts  = obj_contract.browse(cr, uid, c_src,)
-        #import pdb;pdb.set_trace()
+        leave_ids = []
         for contract in contracts:
-            values = {}
-            date_from = contract.date_start
-            if contract.is_have_allocation: 
-                E_y = datetime.strptime(date_from,"%Y-%m-%d").year
-                E_m = datetime.strptime(date_from,"%Y-%m-%d").month
-                E_d = datetime.strptime(date_from,"%Y-%m-%d").day 
-                #set cuti 22 hari saat masa kerja n*5 tahun, 
-                #n=1,2,... ;masa kerja dihitung dari awal kontrak
-                dy = (D_y - E_y)
-                ddy = dy % 5
-                if dy >= 5: 
-                    if ddy == 0 and (D_m >= E_m) and (D_d >= E_d):
-                        values = {
-                            'name': _("Alokasi Cuti 5 Tahunan tahun %s") % _(D_y),
-                            'employee_id':contract.employee_id.id,
-                            'type':'add',
-                            'holiday_status_id':3,
-                            'number_of_days_temp':22,
-                            'notes':""
-                            }
-                        self.create(cr,uid,values,context=context)
+            if contract.status == True :
+                values = {}
+                date_from = contract.date_start
+                if contract.is_have_allocation: 
+                    E_y = datetime.strptime(date_from,"%Y-%m-%d").year
+                    E_m = datetime.strptime(date_from,"%Y-%m-%d").month
+                    E_d = datetime.strptime(date_from,"%Y-%m-%d").day 
+                    #set cuti 22 hari saat masa kerja n*5 tahun, 
+                    #n=1,2,... ;masa kerja dihitung dari awal kontrak
+                    dy = (D_y - E_y)
+                    ddy = dy % 5
+                    if dy >= 5: 
+                        if ddy == 0 and (D_m >= E_m) and (D_d >= E_d):
+                            values = {
+                                'name': _("Alokasi Cuti 5 Tahunan tahun %s") % _(D_y),
+                                'employee_id':contract.employee_id.id,
+                                'type':'add',
+                                'holiday_status_id':3,
+                                'number_of_days_temp':22,
+                                'notes':""
+                                }
+                            leave_ids.append(self.create(cr, uid, values, context=None))
+        wf_service = netsvc.LocalService("workflow")
+        for leave_id in leave_ids:
+            wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
+            wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'validate', cr)
+            wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'second_validate', cr)
         return True 
+
+    def hapus_cuti_5(self,cr,uid,ids=None,context=None):
+        import pdb;pdb.set_trace()
+        dates=time.strftime('%Y-%m-%d')
+        year1=int(datetime.strptime(dates,"%Y-%m-%d").year)
+        month1=datetime.strptime(dates,"%Y-%m-%d").month
+        day1=datetime.strptime(dates,"%Y-%m-%d").day
+        nilai = 'draft'
+        tipe='add'
+        palidate='validate'
+        self_obj=self.pool.get('hr.holidays')
+        src_obj=self_obj.search(cr,uid,[('type','=',tipe),('holiday_status_id','=','Compensatory Days'),('state','=',palidate)])
+        obj = self_obj.browse(cr,uid,src_obj)     
+        for hapus in obj :
+            date_from = hapus.date_from
+            year=int(datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").year) + 2
+            month=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").month
+            day=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").day     
+            yrs = year % year1       
+            if yrs == 0 : 
+                self_obj.write(cr, uid,[hapus.id], {'state':'confirm'}, context=context)
+                #wf_service = netsvc.LocalService("workflow")
+                #wf_service.trg_validate(uid, 'hr.holidays', hapus.id, 'refuse', cr)
+                self.unlink(cr,uid,[hapus.id],context=None)
+        return True
 
 hr_holidays()
 
