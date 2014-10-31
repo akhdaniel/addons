@@ -7,16 +7,16 @@
             <field name="model">vit_dist_payment.lph</field>
             <!-- <field name="priority">2</field> -->
             <field name="arch" type="xml">
-                <tree string="list lph" colors="grey:state=='done'; blue:state=='draft'">
-                    <field name="name"/>
-                    <field name="date"/>       
-                    <field name="user_id"/>       
+            	<tree string="list lph" colors="grey:state=='done'; blue:state=='draft'">
+	                <field name="name"/>
+	                <field name="date"/>       
+	                <field name="user_id"/>       
                     <field name="based_route_id"/>       
 <!--                     <field name="voucher_id"/>  -->      
                     <field name="total"/>       
-                    <field name="balance"/>       
-                    <field name="state"/>   
-                </tree>    
+	                <field name="balance"/>       
+	                <field name="state"/>   
+	            </tree>    
             </field>
         </record>
 
@@ -76,7 +76,7 @@
                         <notebook>
                             <page string="Invoices">
                                 <field name="lph_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
-                                    <tree string="Invoices" colors="blue:state=='open'; grey:state=='paid'" editable="bottom" create="false">
+                                    <tree string="Invoices" colors="blue:state=='open'; grey:state=='paid'" editable="bottom" >
                                         <field name="number"/>  
                                         <field name="origin"/>      
                                         <field name="partner_id"/>
@@ -191,11 +191,11 @@
         </record>
 
         <!-- menu LPH -->
-        <menuitem id="lph"
-             action="action_lph_list"
-             name="LPH"
-             sequence="20"
-             parent="account.menu_finance_receivables"/>
+		<menuitem id="lph"
+			 action="action_lph_list"
+			 name="LPH"
+			 sequence="20"
+			 parent="account.menu_finance_receivables"/>
 
         <!-- menu Payment LPH -->
         <menuitem id="lph_payments"

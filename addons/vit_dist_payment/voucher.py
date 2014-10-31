@@ -4,6 +4,7 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
+from openerp.tools import float_compare
 from openerp import netsvc
 
 
@@ -110,9 +111,12 @@ class account_voucher(osv.osv):
 		bayar = amount
 
 		selisih = bayar-total_hutang
+		if selisih > 0.00 :
+			selisih = 0.00
+
 		res2 = {
 			'value' : {
-				'writeoff_amount' : selisih
+				'w_amount' : selisih
 						}
 				}
 
@@ -151,14 +155,18 @@ class account_voucher(osv.osv):
 			vals['value']['amount'] = 0
 			amount = 0
 		res1 = self.onchange_partner_id(cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context)
+		res_acc = res1['value']['account_id']
 
 		total_hutang = context['default_amount']
 		bayar = amount
 
 		selisih = bayar-total_hutang
+		if selisih > 0.00 :
+			selisih = 0.00
 		res2 = {
 			'value' : {
-				'writeoff_amount' : selisih
+				'w_amount' : selisih,
+				'account_id' : res_acc
 						}
 				}
 		#import pdb;pdb.set_trace()
@@ -167,102 +175,157 @@ class account_voucher(osv.osv):
 
 		for key in res.keys():
 			vals[key].update(res[key])
+
 		return res
-
-	def _get_writeoff_amount(self, cr, uid, ids, name, args, context=None):
-		#import pdb;pdb.set_trace()
-		if not ids: return {}
-		currency_obj = self.pool.get('res.currency')
-		res = {}
-		debit = credit = 0.0
-		for voucher in self.browse(cr, uid, ids, context=context):
-			sign = voucher.type == 'payment' and -1 or 1
-			for l in voucher.line_dr_ids:
-				debit += l.amount
-			for l in voucher.line_cr_ids:
-				credit += l.amount
-			currency = voucher.currency_id or voucher.company_id.currency_id
-			res[voucher.id] =  currency_obj.round(cr, uid, currency, voucher.amount - sign * (credit - debit))
-		return res
-
-	def _compute_writeoff_amount1(self, cr, uid, line_dr_ids, line_cr_ids, amount, type):
-		
-		debit = credit = 0.0
-		sign = type == 'payment' and -1 or 1
-		for l in line_dr_ids:
-			debit += l['amount']
-		for l in line_cr_ids:
-			credit += l['amount']
-		
-		val = amount
-		return val
-
-	def _compute_writeoff_amount2(self, cr, uid, line_dr_ids, line_cr_ids, amount, type):
-		
-		debit = credit = 0.0
-		sign = type == 'payment' and -1 or 1
-		for l in line_dr_ids:
-			debit += l['amount']
-		for l in line_cr_ids:
-			credit += l['amount']
-		
-		val = credit
-		return val
-
-	def _compute_writeoff_amount3(self, cr, uid, line_dr_ids, line_cr_ids, amount, type):
-		
-		debit = credit = 0.0
-		sign = type == 'payment' and -1 or 1
-		for l in line_dr_ids:
-			debit += l['amount']
-		for l in line_cr_ids:
-			credit += l['amount']
-		
-		val =debit
-		return val		
-
-	def onchange_line_ids(self, cr, uid, ids, line_dr_ids, line_cr_ids, amount, voucher_currency, type, context=None):
-		#import pdb;pdb.set_trace()
-		context = context or {}
-		if not line_dr_ids and not line_cr_ids:
-			return {'value':{'writeoff_amount': 0.0}}
-		line_osv = self.pool.get("account.voucher.line")
-		line_dr_ids = resolve_o2m_operations(cr, uid, line_osv, line_dr_ids, ['amount'], context)
-		line_cr_ids = resolve_o2m_operations(cr, uid, line_osv, line_cr_ids, ['amount'], context)
-		#compute the field is_multi_currency that is used to hide/display options linked to secondary currency on the voucher
-		is_multi_currency = False
-		#loop on the voucher lines to see if one of these has a secondary currency. If yes, we need to see the options
-		for voucher_line in line_dr_ids+line_cr_ids:
-			line_id = voucher_line.get('id') and self.pool.get('account.voucher.line').browse(cr, uid, voucher_line['id'], context=context).move_line_id.id or voucher_line.get('move_line_id')
-			if line_id and self.pool.get('account.move.line').browse(cr, uid, line_id, context=context).currency_id:
-				is_multi_currency = True
-				break
-		return {'value': {
-			'writeoff_amount': self._compute_writeoff_amount(cr, uid, line_dr_ids, line_cr_ids, amount, type), 
-			#'w_amount': self._compute_writeoff_amount1(cr, uid, line_dr_ids, line_cr_ids, amount, type), 
-			'w_amount2': self._compute_writeoff_amount2(cr, uid, line_dr_ids, line_cr_ids, amount, type), 
-			'w_amount3': self._compute_writeoff_amount3(cr, uid, line_dr_ids, line_cr_ids, amount, type), 
-			'is_multi_currency': is_multi_currency}}
 
 
 	_columns = {
 		'writeoff_ids' : fields.one2many('writeoff','voucher_id','Write Off List'),
-		'writeoff_amount': fields.float('Difference Amount',readonly=True, help="Computed as the difference between the amount stated in the voucher and the sum of allocation on the voucher lines."),
-		'w_amount': fields.float('Diff Amount',),
-		#'w_amount': fields.function(_get_writeoff_amount, string='Diff Amount', type='float'),
-		#'w_amount2': fields.function(_get_writeoff_amount, string='Diff Amount 2', type='float'),
-		#'w_amount3': fields.function(_get_writeoff_amount, string='Diff Amount 3', type='float'),
+		'w_amount': fields.float('Difference Amount',),
+
 	}
+
+
+	def writeoff_move_line_get2(self, cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=None):
+		'''
+		Set a dict to be use to create the writeoff move line.
+
+		:param voucher_id: Id of voucher what we are creating account_move.
+		:param line_total: Amount remaining to be allocated on lines.
+		:param move_id: Id of account move where this line will be added.
+		:param name: Description of account move line.
+		:param company_currency: id of currency of the company to which the voucher belong
+		:param current_currency: id of currency of the voucher
+		:return: mapping between fieldname and value of account move line to create
+		:rtype: dict
+		'''
+		currency_obj = self.pool.get('res.currency')
+		move_line = {}
+
+		voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
+		current_currency_obj = voucher.currency_id or voucher.journal_id.company_id.currency_id
+		#import pdb;pdb.set_trace()
+		#if currency_obj.is_zero(cr, uid, current_currency_obj, line_total):
+
+			# for x in voucher.writeoff_ids:
+
+			# 	move_l = {
+			# 		'name': x.name,
+			# 		'account_id': x.account_id.id,
+			# 		'move_id': move_id,
+			# 		'partner_id': voucher.partner_id.id,
+			# 		'date': voucher.date,
+			# 		'credit': x.amount > 0 and x.amount or 0.0,
+			# 		'debit': x.amount < 0 and -x.amount or 0.0,
+			# 		'amount_currency': company_currency <> current_currency and (sign * -1 * voucher.writeoff_amount) or False,
+			# 		'currency_id': company_currency <> current_currency and current_currency or False,
+			# 		'analytic_account_id': voucher.analytic_id and voucher.analytic_id.id or False,
+			# 	}
+
+			# 	move_line.update({x.id:move_l})
+		move_line =voucher.writeoff_ids	
+		return move_line
+
+	def action_move_line_create(self, cr, uid, ids, context=None):
+		'''
+		Confirm the vouchers given in ids and create the journal entries for each of them
+		'''
+		if context is None:
+			context = {}
+		move_pool = self.pool.get('account.move')
+		move_line_pool = self.pool.get('account.move.line')
+		for voucher in self.browse(cr, uid, ids, context=context):
+			if voucher.move_id:
+				continue
+			company_currency = self._get_company_currency(cr, uid, voucher.id, context)
+			current_currency = self._get_current_currency(cr, uid, voucher.id, context)
+			# we select the context to use accordingly if it's a multicurrency case or not
+			context = self._sel_context(cr, uid, voucher.id, context)
+			# But for the operations made by _convert_amount, we always need to give the date in the context
+			ctx = context.copy()
+			ctx.update({'date': voucher.date})
+			# Create the account move record.
+			move_id = move_pool.create(cr, uid, self.account_move_get(cr, uid, voucher.id, context=context), context=context)
+			# Get the name of the account_move just created
+			name = move_pool.browse(cr, uid, move_id, context=context).name
+			# Create the first line of the voucher
+			move_line_id = move_line_pool.create(cr, uid, self.first_move_line_get(cr,uid,voucher.id, move_id, company_currency, current_currency, context), context)
+			move_line_brw = move_line_pool.browse(cr, uid, move_line_id, context=context)
+			line_total = move_line_brw.debit - move_line_brw.credit
+			rec_list_ids = []
+			if voucher.type == 'sale':
+				line_total = line_total - self._convert_amount(cr, uid, voucher.tax_amount, voucher.id, context=ctx)
+			elif voucher.type == 'purchase':
+				line_total = line_total + self._convert_amount(cr, uid, voucher.tax_amount, voucher.id, context=ctx)
+			# Create one move line per voucher line where amount is not 0.0
+			line_total, rec_list_ids = self.voucher_move_line_create(cr, uid, voucher.id, line_total, move_id, company_currency, current_currency, context)
+
+			# Create the writeoff line if needed
+			ml_writeoff = self.writeoff_move_line_get(cr, uid, voucher.id, line_total, move_id, name, company_currency, current_currency, context)
+
+			ml_writeoff2 = self.writeoff_move_line_get2(cr, uid, voucher.id, line_total, move_id, name, company_currency, current_currency, context)	
+			#import pdb;pdb.set_trace()
+			if ml_writeoff2 == []:
+				if ml_writeoff:
+					move_line_pool.create(cr, uid, ml_writeoff, context)
+			
+			if ml_writeoff2 != []:
+				m_line={}
+				wo_amt = 0.0
+				for x in ml_writeoff2:
+					wo_amt += x.amount
+					m_line = {
+						'name':x.name,
+						'credit': x.amount < 0 and -x.amount or 0.0,
+						'debit': x.amount > 0 and x.amount or 0.0,
+						'account_id':x.account_id.id,
+						'date':ctx['date'],
+						'journal_id':context['journal_id'],
+						'period_id':context['period_id'],
+						'move_id':move_id,
+						'partner_id':move_line_brw.partner_id.id,
+					}
+					move_line_pool.create(cr, uid, m_line, context)	
+
+				# We automatically reconcile the account move lines.
+				reconcile = False
+				# import pdb;pdb.set_trace()				
+				# for rec_ids in rec_list_ids:
+				# 	for rr in rec_ids:
+				# 		r_id = self.pool.get('account.move.line').browse(cr,uid,rr)
+				# 		r_debit = r_id.debit
+				# 		if r_debit != 0.00:
+				# 			new_debit = r_debit- wo_amt
+				# 			self.pool.get('account.move.line').write(cr,uid,rr,{'debit':new_debit})
+				# 	if len(rec_ids) >= 2:
+				# 		reconcile = move_line_pool.reconcile_partial(cr, uid, rec_ids, writeoff_acc_id=voucher.writeoff_acc_id.id, writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
+
+			# We post the voucher.
+			self.write(cr, uid, [voucher.id], {
+				'move_id': move_id,
+				'state': 'posted',
+				'number': name,
+			})
+			if voucher.journal_id.entry_posted:
+				move_pool.post(cr, uid, [move_id], context={})
+			# We automatically reconcile the account move lines.
+			reconcile = False
+
+			for rec_ids in rec_list_ids:
+				if len(rec_ids) >= 2:
+					reconcile = move_line_pool.reconcile_partial(cr, uid, rec_ids, writeoff_acc_id=voucher.writeoff_acc_id.id, writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
+		
+		return True
 
 	def button_proforma_voucher(self, cr, uid, ids, context=None):
 		
 		context = context or {}
-		wf_service = netsvc.LocalService("workflow")
 
 		inv_id = context['invoice_id']
-		#def_amount = context['default_amount']
+		def_amt = context['default_amount']
 
-		def_amount = self.pool.get('account.voucher').browse(cr,uid,ids[0]).amount
+		vo_obj = self.pool.get('account.voucher')
+		def_amount = vo_obj.browse(cr,uid,ids[0]).amount
 		st = "'open'"
 		# inv_obj = self.pool.get('account.invoice')
 		# inv_src = inv_obj.search(cr,uid,[('id','=',inv_id)])[0]
@@ -274,12 +337,15 @@ class account_voucher(osv.osv):
 			'where lphi.invoice_id ='+str(inv_id)+' '\
 			'and vlph.state = '+st)		
 		fet = cr.fetchone()
+		
+		if not fet :
+			raise osv.except_osv(_('Error!!'), _('Pembayaran harus dilakukan melalui menu LPH Payment!'))
 		id_lph = fet[0]
 
 		lph_obj = self.pool.get('vit_dist_payment.lph')
 		lph_src = lph_obj.search(cr,uid,[('id','=',id_lph)])
 		lph_brw = lph_obj.browse(cr,uid,lph_src)[0]
-		#import pdb;pdb.set_trace()
+		
 		if lph_brw.voucher_id.id :
 			v_total = lph_brw.voucher_id.total
 		else :
@@ -292,64 +358,53 @@ class account_voucher(osv.osv):
 		if acum_paid > v_total :
 			raise osv.except_osv(_('Error!!'), _('Total pembayaran atas faktur ini:\n \
 			 Rp. %s \n \
-			 sudah melewati nominal voucher: \n \
+			 Sudah melewati nominal voucher: \n \
 			 Rp. %s. \n \
 			 Nominal yang bisa di input max: \n \
-			 Rp. %s !') % (acum_paid,v_total,recom_paid))					
+			 Rp. %s !') % (acum_paid,v_total,recom_paid))
 
+		#jika write off pastikan amount yg di bayar+jml amount writeoff = total hutang
+		v_id = vo_obj.browse(cr,uid,ids[0])
+		if v_id.writeoff_ids != []:
+			writeoff_total = 0.00
+			for x in v_id.writeoff_ids:
+				am = x.amount
+				writeoff_total += am
+			difference = def_amt-def_amount
+			if difference != writeoff_total :
+				return {'type': 'ir.actions.act_window_close'}
+				raise osv.except_osv(_('Error!!'), _('Different amount tidak sama dengan total write off!'))
+
+			elif difference == writeoff_total :
+				mv_ac = self.browse(cr,uid,ids)[0].line_cr_ids
+				for amo in mv_ac:
+					if amo.amount != 0.00:
+						balance = amo.amount_unreconciled
+
+				# for wo in v_id.writeoff_ids:
+				# 	nm = wo.name
+				# 	rp = wo.amount
+				# 	acc = wo.account_id.id
+			#import pdb;pdb.set_trace()
+			cr.execute('select id from account_voucher_line where '\
+				'amount_unreconciled = '+str(def_amt)+' '\
+				'and reconcile = False  '\
+				'and voucher_id='+str(v_id.id)+'')	
+			hsl = cr.fetchone()
+			hsl_line = hsl[0]
+			self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)
+
+					
+					
+		elif v_id.writeoff_ids == [] :
+			writeoff_total = 0.00
+		#self.write(cr,uid,ids[0],{'amount':writeoff_total+def_amount},context=context)
+
+		wf_service = netsvc.LocalService("workflow")
 		for vid in ids:
 			wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
-		return {'type': 'ir.actions.act_window_close'}
-
-	# def writeoff_move_line_get(self, cr, uid, voucher_id, line_total, move_id, name, company_currency, current_currency, context=None):
-	# 	'''
-	# 	Set a dict to be use to create the writeoff move line.
-
-	# 	:param voucher_id: Id of voucher what we are creating account_move.
-	# 	:param line_total: Amount remaining to be allocated on lines.
-	# 	:param move_id: Id of account move where this line will be added.
-	# 	:param name: Description of account move line.
-	# 	:param company_currency: id of currency of the company to which the voucher belong
-	# 	:param current_currency: id of currency of the voucher
-	# 	:return: mapping between fieldname and value of account move line to create
-	# 	:rtype: dict
-	# 	'''
-	# 	currency_obj = self.pool.get('res.currency')
-	# 	move_line = {}
-
-	# 	voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
-	# 	current_currency_obj = voucher.currency_id or voucher.journal_id.company_id.currency_id
-
-	# 	if not currency_obj.is_zero(cr, uid, current_currency_obj, line_total):
-	# 		import pdb;pdb.set_trace()
-	# 		diff = line_total
-	# 		account_id = False
-	# 		write_off_name = ''
-	# 		if voucher.payment_option == 'with_writeoff':
-	# 			account_id = voucher.writeoff_acc_id.id
-	# 			write_off_name = voucher.comment
-	# 		elif voucher.type in ('sale', 'receipt'):
-	# 			account_id = voucher.partner_id.property_account_receivable.id
-	# 		else:
-	# 			account_id = voucher.partner_id.property_account_payable.id
-	# 		sign = voucher.type == 'payment' and -1 or 1
-
-
-	# 		for ml in voucher.writeoff_ids :
-	# 			move_line = {
-	# 				'name': ml.name or name, #write_off_name or name,
-	# 				'account_id': ml.account_id.id,#account_id,
-	# 				'move_id': move_id,
-	# 				'partner_id': voucher.partner_id.id,
-	# 				'date': voucher.date,
-	# 				'credit': diff > 0 and diff or 0.0,
-	# 				'debit': diff < 0 and -diff or 0.0,
-	# 				'amount_currency': company_currency <> current_currency and (sign * -1 * voucher.writeoff_amount) or False,
-	# 				'currency_id': company_currency <> current_currency and current_currency or False,
-	# 				'analytic_account_id': voucher.analytic_id and voucher.analytic_id.id or False,
-	# 			}
-
-	# 	return move_line		
+			return {'type': 'ir.actions.act_window_close'}
+	
 
 class writeoff(osv.osv):
 	_name = 'writeoff'
@@ -362,22 +417,3 @@ class writeoff(osv.osv):
 	}
 
 writeoff()
-
-def resolve_o2m_operations(cr, uid, target_osv, operations, fields, context):
-	results = []
-	for operation in operations:
-		result = None
-		if not isinstance(operation, (list, tuple)):
-			result = target_osv.read(cr, uid, operation, fields, context=context)
-		elif operation[0] == 0:
-			# may be necessary to check if all the fields are here and get the default values?
-			result = operation[2]
-		elif operation[0] == 1:
-			result = target_osv.read(cr, uid, operation[1], fields, context=context)
-			if not result: result = {}
-			result.update(operation[2])
-		elif operation[0] == 4:
-			result = target_osv.read(cr, uid, operation[1], fields, context=context)
-		if result != None:
-			results.append(result)
-	return results
