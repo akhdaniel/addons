@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+  <template pageSize="(595.0,421.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="30.0" y1="14.0" width="551" height="814"/>
+      <frame id="first" x1="30.0" y1="14.0" width="551" height="400"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -295,7 +295,7 @@
     <para style="P7">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="140.0,140.0,271.0" rowHeights="50" style="Table8">
+    <blockTable colWidths="140.0,140.0,271.0" rowHeights="40" style="Table8">
       <tr>
         <td>
           <para style="P1">Admin,</para>
