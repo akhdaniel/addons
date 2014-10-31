@@ -113,13 +113,15 @@
             <field name="name">Write Off</field>
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form"/>
-            <field name="arch" type="xml">   
+            <field name="arch" type="xml">  
+                <field name="writeoff_amount" position="replace"> 
+                        <field name="writeoff_amount" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible':[('w_amount','&lt;',0)]}"/>
+                </field>        
                 <field name="payment_option" position="after">
-                    <!-- <field name="w_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/> -->
-<!--                     <field name="w_amount2" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                    <field name="w_amount3" widget="monetary" options="{'currency_field': 'currency_id'}"/> -->
+                    <field name="w_amount" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'invisible':[('w_amount','>=',0)]}" readonly="True"/>
                     <group colspan="4">
-                        <field name="writeoff_ids" view_mode="tree" nolabel="1" attrs="{'invisible':['|', ('payment_option','!=','with_writeoff'), ('writeoff_amount','=',0)], 'required':[('payment_option','=','with_writeoff')]}" domain="[('type','=','other')]">
+
+                        <field name="writeoff_ids" view_mode="tree" nolabel="1" attrs="{'invisible':[('w_amount','>=',0)], 'required':[('w_amount','=',0)]}" >
                             <tree string="Write Off List" editable="bottom">
                                 <field name="name"/>
                                 <field name="amount"/>

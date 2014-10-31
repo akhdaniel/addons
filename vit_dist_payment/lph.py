@@ -60,10 +60,10 @@ class lph(osv.osv):
 			'invoice_id',           # 'other.object.id' in relation table
 			'Invoice',              # 'Field Name'
 			domain="[('state','=','open'),\
-			('is_cn','=',False),\
 			('user_id','=',user_id),\
 			('is_draft_lph','=',False),\
 			('based_route_id','=',based_route_id)]",
+			#('is_cn','=',False),\
 			required=True),
 		'total'           : fields.function(_calc_total, type="float", string="Total"),
 		'balance'         : fields.function(_calc_balance, type="float", string="Balance"),
