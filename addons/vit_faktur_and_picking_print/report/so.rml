@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+  <template pageSize="(595.0,360.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="7.0" y1="1.0" width="581" height="840"/>
+      <frame id="first" x1="7.0" y1="1.0" width="581" height="358"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -120,10 +120,9 @@
     <paraStyle name="P15" fontName="Helvetica-Bold" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="P16" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="CENTER" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="P17" fontName="Helvetica" fontSize="6.0" leading="8" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P18" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P19" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P20" fontName="Helvetica-Bold" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
-    <paraStyle name="P21" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P18" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P19" fontName="Helvetica-Bold" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="P20" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -166,24 +165,20 @@
           </para>
         </td>
         <td>
-          <para style="P19">
+          <para style="P18">
             <font color="white"> </font>
           </para>
         </td>
         <td>
           <para style="P8">No Faktur</para>
           <para style="P9">Tanggal</para>
-          <para style="P9">Jatuh Tempo</para>
           <para style="P9">TOP</para>
+          <para style="P9">Jatuh Tempo</para>
         </td>
         <td>
           <para style="P8">[[o.name]]</para>
           <para style="P9">[[ formatLang(o.date_order,date = True) ]]</para>
-          <para style="P9">[[ formatLang(o.due_date,date = True) ]]</para>
           <para style="P9">[[ (o.payment_term and o.payment_term.name) or '' ]]</para>
-          <para style="P8">
-            <font color="white"> </font>
-          </para>
         </td>
       </tr>
     </blockTable>
@@ -204,9 +199,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="terp_default_8">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="84.0,160.0,132.0,74.0,131.0" style="Table9">
       <tr>
         <td>
@@ -241,12 +233,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P18">
-      <font color="white"> </font>
-    </para>
-    <para style="terp_default_8">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="93.0,37.0,38.0,48.0,36.0,23.0,35.0,22.0,37.0,23.0,37.0,23.0,35.0,25.0,70.0" repeatRows="1" style="Table4">
       <tr>
         <td>
@@ -274,22 +260,22 @@
           <para style="P15">(%)</para>
         </td>
         <td>
-          <para style="P20">Extra Disc</para>
+          <para style="P19">Extra Disc</para>
         </td>
         <td>
-          <para style="P20">(%)</para>
+          <para style="P19">(%)</para>
         </td>
         <td>
-          <para style="P20">Cash Disc</para>
+          <para style="P19">Cash Disc</para>
         </td>
         <td>
-          <para style="P20">(%)</para>
+          <para style="P19">(%)</para>
         </td>
         <td>
-          <para style="P20">Mix Disc</para>
+          <para style="P19">Mix Disc</para>
         </td>
         <td>
-          <para style="P20">(%)</para>
+          <para style="P19">(%)</para>
         </td>
         <td>
           <para style="P14">Total</para>
@@ -348,7 +334,7 @@
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="392.0,62.0,10.0,117.0" style="Table6">
+    <blockTable colWidths="391.0,62.0,10.0,117.0" style="Table6">
       <tr>
         <td>
           <para style="P3">
@@ -376,7 +362,9 @@
           <para style="P1">
             <font color="white"> </font>
           </para>
-          <para style="P3">Ket:</para>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
           <para style="P1">
             <font color="white"> </font>
           </para>
@@ -393,34 +381,11 @@
       </tr>
       <tr>
         <td>
+          <para style="P3">Ket:</para>
           <para style="P1">*Penagihan Hanya dilakukan dengan faktur asli</para>
           <para style="P1">*Pembayaran dengan BG dianggap lunas jika BG cair</para>
           <para style="P1">*Komplain kekurangan tidak dilayani jika faktur telah di tanda tangani</para>
           <para style="P1">*Faktur pajak diterbitkan sesuai tanggal terima barang</para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
           <para style="terp_default_9">
             <font color="white"> </font>
           </para>
@@ -537,6 +502,8 @@
         </td>
       </tr>
     </blockTable>
-    <para style="terp_default_9"/>
+    <para style="terp_default_9">
+      <font color="white"> </font>
+    </para>
   </story>
 </document>
