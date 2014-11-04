@@ -656,7 +656,6 @@ class penilaian_pelatih(osv.osv):
 
     def _persentase(self, cr, uid, ids, arg,field, context=None):
         result = {}
-        import pdb;pdb.set_trace()
         obj = self.browse(cr,uid,ids)[0]
         ID = obj.id
         #### penilaian materi training ####
