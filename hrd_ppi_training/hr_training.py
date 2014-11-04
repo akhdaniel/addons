@@ -671,12 +671,11 @@ class penilaian_pelatih(osv.osv):
         total = 0
         date = datetime.now()
         for sim in  brw_simpul :
-            nilai += float(sim.skor)
+            nilai += sim.skor
             x += 1
         for train in src_train :
-            nilai += float(sim.skor)
+            nilai += sim.skor
             x += 1
-	x = float(x)
         total = nilai / x 
         if total < 3 :
             rekomendasi = "TIDAK"
