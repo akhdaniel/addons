@@ -229,12 +229,9 @@
                                     <field name="kesimpulan3"/>
                                 </tree>
                                 <form>
-                                    <group>
-                                        <field name="name"/>
-                                        <field name="persentase"/>
-                                        <field name="kesimpulan3"/>
-                                    </group>
-                                    <group>
+                                    <sheet>
+                                    <group colspan="1">
+                                        <field name="name"/>                                
                                         <field name="evaluasi_ids" >
                                             <tree>
                                                 <field name='name2'/>
@@ -245,7 +242,28 @@
                                                 <field name='skor'/>
                                             </form>
                                         </field> 
+                                        <field name="evaluasi_ids2" >
+                                            <tree>
+                                                <field name='name2'/>
+                                                <field name='skor'/>
+                                            </tree>
+                                            <form>
+                                                <field name='name2'/>
+                                                <field name='skor'/>
+                                            </form>
+                                        </field> 
                                     </group>
+                                    <div class="oe_title">
+                                        <label for='komentar_materi' string="Apa komentar / saran anda mengenai materi / isi program training yang disampaikan ?"/>
+                                        <field name='komentar_materi'/>
+                                        <label for='komentar_trainer' string="Apa komentar / saran anda mengenai Trainer yang menyampaikan materi training tersebut diatas?"/>
+                                        <field name='komentar_trainer'/>
+                                        <label for='rekomendasi' string="Rekomendasi"/>
+                                        <field name='rekomendasi'/>
+                                        <label for='alasan' string="Alasan Anda Merekomendasikan/Tidak Merekomendasikan"/>
+                                        <field name='alasan'/>
+                                    </div>
+                                </sheet>
                                 </form>
                             </field>
                         </page>

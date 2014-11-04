@@ -656,37 +656,46 @@ class penilaian_pelatih(osv.osv):
 
     def _persentase(self, cr, uid, ids, arg,field, context=None):
         result = {}
+        import pdb;pdb.set_trace()
         obj = self.browse(cr,uid,ids)[0]
         ID = obj.id
+        #### penilaian materi training ####
         obj_simpul = self.pool.get('hr_training.evaluasi_training_penilai')
         src_simpul = obj_simpul.search(cr,uid,[('eval_id','=',ID)])
         brw_simpul = obj_simpul.browse(cr,uid,src_simpul)
-        obj_penilaian = self.pool.get("keefektifan.pelatihan")
-        src_penilaian = obj_penilaian.search(cr,uid,[])
+        #### penilaian trainer ####
+        obj_train = self.pool.get('hr_training.evaluasi_training_trainer')
+        src_train = obj_train.search(cr,uid,[('eval_id','=',ID)])
+        brw_train = obj_train.browse(cr,uid,src_train)
         nilai = 0
         x = 0
+        total = 0
         date = datetime.now()
         for sim in  brw_simpul :
             nilai += float(sim.skor)
             x += 1
-        if brw_simpul == [] :
-            total = 0
+        for train in src_train :
+            nilai += float(sim.skor)
+            x += 1
+        total = nilai / x 
+        if total < 3 :
+            rekomendasi = "TIDAK"
         else :
-            total =(nilai*100)/(x * 10)
-        for penilaian in obj_penilaian.browse(cr,uid,src_penilaian) :
-            _from = penilaian._from
-            _to = penilaian._to
-            if total >= _from and total <= _to :
-                self.write(cr,uid,ids,{'kesimpulan3':penilaian.id})
-        result[ID]= total
+            rekomendasi = "YA"
+        result[ID]= rekomendasi
         return result
 
     _columns = {
         "name" : fields.many2one('hr.employee',"Karyawan"),
         'job_id' :fields.related('name','job_id',type='many2one',relation='hr.job',string='Jabatan'),
         'department_id' : fields.related('name','department_id',type='many2one',relation='hr.department',string='Departemen',store=True),
-        'evaluasi_ids':fields.one2many('hr_training.evaluasi_training_penilai','eval_id','Topik Pelatihan'),
-        'persentase':fields.function(_persentase,string='Persentase',readonly=True),
+        'evaluasi_ids':fields.one2many('hr_training.evaluasi_training_penilai','eval_id',"EVALUASI MATERI TRAINING"),
+        'evaluasi_ids2':fields.one2many('hr_training.evaluasi_training_trainer','eval_id',"EVALUASI TRAINER"),
+        'komentar_materi':fields.text(''),
+        'komentar_trainer':fields.text(''),
+        'rekomendasi':fields.function(_persentase,type="char",readonly=True),
+        'alasan':fields.text(""),
+        'persentase':fields.char('aa'),
         'kesimpulan3' : fields.many2one("keefektifan.pelatihan","Kesimpulan",readonly=True),  
         'analisa_id':fields.many2one('hr_training.analisa','Nama Pelatihan'),      
     }
@@ -695,15 +704,32 @@ class evaluasi_training_penilai(osv.osv):
     _name='hr_training.evaluasi_training_penilai'
     
     _columns={        
-        'name2':fields.many2one('train.topik','Topik-topik Pelatihan'),
-        'skor' : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8'),('9','9'),('10','10')],'Score Penguasaan Topik Pelatihan'),
+        'name2':fields.many2one('train.topik.penilai','EVALUASI'),
+        'skor' : fields.selection([('1','1'),('2','2'),('3','3'),('4','4')],'Score'),
         'eval_id':fields.many2one('penilaian.pelatih'),  
             }
-evaluasi_training()       
+evaluasi_training()    
+
+class evaluasi_training_trainer(osv.osv):
+    _name='hr_training.evaluasi_training_trainer'
+    
+    _columns={        
+        'name2':fields.many2one('train.topik.penilai2','EVALUASI'),
+        'skor' : fields.selection([('1','1'),('2','2'),('3','3'),('4','4')],'Score'),
+        'eval_id':fields.many2one('penilaian.pelatih'),  
+            }
+evaluasi_training()      
  
 class train_topik_penilai(osv.osv) :
     _name='train.topik.penilai'
 
     _columns = {
-        "name":fields.char('Topik Pelatihan'),
+        "name":fields.char('Topik Evaluasi'),
+    }  
+
+class train_topik_penilai(osv.osv) :
+    _name='train.topik.penilai2'
+
+    _columns = {
+        "name":fields.char('Topik Evaluasi'),
     }  
