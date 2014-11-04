@@ -1035,6 +1035,8 @@ class hr_employee(osv.osv):
         yyy=0.0
         result={}
         zz=0.0
+        D = datetime.strftime(datetime.now(), "%Y-%m-%d") #type:int
+        D_y = datetime.strptime(D,"%Y-%m-%d").year
         for reim in self.browse(cr,uid,ids):
             xxx=reim.name
             search_obj=holiday_obj.search(cr,uid,[('employee_id','=',xxx)])
@@ -1043,11 +1045,14 @@ class hr_employee(osv.osv):
                 xyz=hol.number_of_days
                 xxx=hol.temp
                 ccc=hol.holiday_status_id.name
+                date = hol.date_from
+                years = datetime.strptime(date,'%Y-%m-%d %H:%M:%S').year
                 stt = hol.state
-                if stt == 'validate' and ccc == 'Cuti Tahunan':
+                if stt == 'validate' and ccc == 'Cuti Tahunan' and years == D_y :
                     yyy  += xyz   
                     zz += xxx                
-            result[reim.id] =zz
+            result[reim.id] =zz 
+            self.write(cr,uid,ids,{'alokasi1': zz})
         return result   
     
     def _cuti(self, cr, uid, ids, name, args, context=None):
@@ -1055,6 +1060,9 @@ class hr_employee(osv.osv):
         yyy=0.0
         result={}
         zz=0.0
+        D = datetime.strftime(datetime.now(), "%Y-%m-%d") #type:int
+        D_y = datetime.strptime(D,"%Y-%m-%d").year
+        resul = 0
         for reim in self.browse(cr,uid,ids):
             xxx=reim.name
             search_obj=holiday_obj.search(cr,uid,[('employee_id','=',xxx)])
@@ -1064,10 +1072,15 @@ class hr_employee(osv.osv):
                 xxx=hol.temp
                 ccc=hol.holiday_status_id.name
                 stt = hol.state
-                if stt == 'validate' and ccc == 'Cuti Tahunan':
+                stat = hol.ket
+                date = hol.date_from
+                years = datetime.strptime(date,'%Y-%m-%d %H:%M:%S').year
+                if stt == 'validate' and ccc == 'Cuti Tahunan' and years == D_y :
                     yyy  += xyz   
                     zz += xxx               
-            result[reim.id] =zz + yyy
+            result[reim.id] =zz + reim.sisa  + yyy
+            resul = zz + reim.sisa  + yyy
+            self.write(cr,uid,ids,{'cuti_tahunan1': resul})
         return result      
          
     def lembur(self,cr,uid,ids,context=None):
@@ -1081,7 +1094,10 @@ class hr_employee(osv.osv):
     _columns = {
         'alokasi' : fields.function(_aloc,string='Alokasi Cuti Tahunan'),
         'cuti_tahunan': fields.function(_cuti, string='Jatah Cuti Tahunan'),
+        'alokasi1' : fields.integer('Alokasi Cuti Tahunan'),
+        'cuti_tahunan1': fields.integer('Jatah Cuti Tahunan'),
         'status_lembur' : fields.selection([('lembur','Lembur'),('tidak_lembur','Tidak Lembur')],'Status Lembur'),
+        'sisa' : fields.integer("Sisa"),
     }
 
     _defaults = {

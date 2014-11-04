@@ -42,5 +42,16 @@
             </field>
         </record>
 
+        <record forcecreate="1" id="seq_type_id" model="ir.sequence.type">
+            <field name="name">HR Employee</field>
+            <field name="code">hr.employee</field>
+        </record>
+
+        <record forcecreate="1" id="seq_id" model="ir.sequence">
+            <field name="name">HR Employee</field>
+            <field name="code">hr.employee</field>
+            <field name="prefix"></field>
+            <field name="suffix"></field>
+        </record>
     </data>
 </openerp>

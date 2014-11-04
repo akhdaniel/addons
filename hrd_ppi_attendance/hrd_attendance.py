@@ -10,6 +10,10 @@ class employee(osv.osv):
 		'fingerprint_code' : fields.integer('Fingerprint ID', required=True),
 	}
 
+	_sql_constraints = [
+	    ('sequence_uniq', 'unique(fingerprint_code)','Fingerprint ID Tidak Boleh Sama')
+	]
+    
 class hr_attendance(osv.osv):
 	'''
 	PPI Absensi

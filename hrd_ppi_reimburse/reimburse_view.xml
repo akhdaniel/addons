@@ -187,6 +187,39 @@
                                 <field name='total_reimburse_rs'/>
                             </group>
                         </group>
+                        <group string="Informasi Kontrak">
+                        <field name='tgl_msk'/>
+                        <label for="status_contract"/>
+                        <div>
+                            <field name="status_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="no_contract"/>
+                        <div>
+                            <field name="no_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="tanggal"/>
+                        <div>                          
+                            <field name="tanggal" class="oe_inline"/>
+                        </div>                     
+                        <label for="warning_hari"/>
+                        <div>                          
+                            <field name="warning_hari" class="oe_inline">Hari</field>
+                        </div> 
+                    </group>  
+                    <group string="Cuti Tahunan">
+                        <label for="sisa"/>
+                        <div>
+                            <field name="sisa"/>
+                        </div>
+                        <label for="alokasi"/>
+                        <div>
+                            <field name="alokasi" class="oe_inline"/> days
+                        </div>
+                        <label for="cuti_tahunan"/>
+                        <div>                          
+                            <field name="cuti_tahunan" class="oe_inline"/> days
+                        </div>                     
+                    </group>            
                     </page>
                 </page>    
             </field>

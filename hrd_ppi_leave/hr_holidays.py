@@ -15,6 +15,7 @@ import math,pprint
 
 class bln_libur(osv.osv):
     _name="hr.bln_libur"
+
     
     _columns = {
         'hol_ids':fields.one2many('hr.holidays','bln_libur_id','Tanggal Libur'),
@@ -266,26 +267,15 @@ class hr_holidays(osv.osv):
         }}
 
     def hapus_cuti(self,cr,uid,ids=None,context=None):
-        #import pdb;pdb.set_trace()
-        dates=time.strftime('%Y-%m-%d')
-        year1=datetime.strptime(dates,"%Y-%m-%d").year
-        month1=datetime.strptime(dates,"%Y-%m-%d").month
-        day1=datetime.strptime(dates,"%Y-%m-%d").day
-        years =year1 - 1
-        nilai = 'draft'
-        tipe='add'
-        palidate='validate'
-        self_obj=self.pool.get('hr.holidays')
-        src_obj=self_obj.search(cr,uid,[('type','=',tipe),('state','=',palidate)])
-        obj = self_obj.browse(cr,uid,src_obj)     
-        for hapus in obj :
-            date_from = hapus.date_from
-            year=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").year
-            month=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").month
-            day=datetime.strptime(date_from,"%Y-%m-%d %H:%M:%S").day            
-            if year == years :
-                self.write(cr, uid,ids, {'state': nilai}, context=context)
-                self.unlink(cr,uid,ids,context=None)
+        obj = self.pool.get('hr.employee')
+        src = obj.search(cr,uid,[])
+        for employe in obj.browse(cr,uid,src) :
+            alok = employe.alokasi1
+            cuti = employe.cuti_tahunan1
+            if cuti > alok :
+                sisa = cuti - alok
+                sisa_cuti = employe.sisa - sisa
+                obj.write(cr,uid,[employe.id],{'sisa': sisa_cuti})
         return True
     
     def onchange_hol_status(self, cr, uid, ids, holiday_status_id, context=None):
@@ -416,10 +406,13 @@ class hr_holidays(osv.osv):
             no_contract = emp.no_contract
             tgl = emp.tanggal
             date = False
+            alok = emp.cuti_tahunan1
             if  tgl != False :
                 date = datetime.strptime(tgl,"%Y-%m-%d").year
             if no_contract != False :
                 if date == years :
+                    if alok > 0 :
+                        employee_ids.write(cr,uid,[emp.id],{'sisa':alok})
                     end_date = datetime.strptime(tgl,"%Y-%m-%d").month
                     values = {
                         'name': _("Alokasi Cuti %s") % _(D_y),
@@ -431,8 +424,9 @@ class hr_holidays(osv.osv):
                         'notes':"",
                         }
                     leave_ids.append(self.create(cr, uid, values, context=None))
-                    #employee_ids.write(cr,uid,['emp.id'],{'sisa':sisa)
                 else :
+                    if alok > 0 :
+                        employee_ids.write(cr,uid,[emp.id],{'sisa':alok})
                     values = {
                         'name': _("Alokasi Cuti %s") % _(D_y),
                         'employee_id':emp.id,
@@ -442,18 +436,10 @@ class hr_holidays(osv.osv):
                         #'holiday_type':'employee',
                         'notes':"",
                         }
+                    if alok > 0 :
+                        employee_ids.write(cr,uid,['emp.id'],{'sisa':alok})
                     leave_ids.append(self.create(cr, uid, values, context=None))
-            # else :
-            #     values = {
-            #             'name': _("Alokasi Cuti %s") % _(D_y),
-            #             'employee_id':emp.id,
-            #             'type':'add',       #Allocation-> 'add'
-            #             'holiday_status_id':hol_id,
-            #             'number_of_days_temp':12,
-            #             #'holiday_type':'employee',
-            #             'notes':"",
-            #             }
-            # self.create(cr,uid,values,context=context)
+                    employee_ids.write(cr,uid,[emp.id],{'sisa':alok})
         wf_service = netsvc.LocalService("workflow")
         for leave_id in leave_ids:
             wf_service.trg_validate(uid, 'hr.holidays', leave_id, 'confirm', cr)
@@ -502,7 +488,7 @@ class hr_holidays(osv.osv):
         return True 
 
     def hapus_cuti_5(self,cr,uid,ids=None,context=None):
-        #import pdb;pdb.set_trace()
+        import pdb;pdb.set_trace()
         dates=time.strftime('%Y-%m-%d')
         year1=int(datetime.strptime(dates,"%Y-%m-%d").year)
         month1=datetime.strptime(dates,"%Y-%m-%d").month
