@@ -66,7 +66,10 @@ class hr_contract(osv.osv):
         years = datetime.now().year
         holi = self.pool.get('hr.holidays')
         aloc = {}
-        import pdb;pdb.set_trace()
+        obj_stat = self.pool.get('hr.holidays.status')
+        src_stat = obj_stat.search(cr,uid,[('name','=','Cuti Tahunan')])
+        for status_holi in obj_stat.browse(cr,uid,src_stat) :
+            aloc_cuti = status_holi.id
         if status_kontrak == type_brw :
             jum = datetime.strptime(dat_en,"%Y-%m-%d").month - datetime.strptime(dat_st,"%Y-%m-%d").month
             if end > years : 
@@ -74,7 +77,7 @@ class hr_contract(osv.osv):
                         'name': _("Alokasi Cuti %s") % years,
                         'employee_id':employee_id,
                         'type':'add',       #Allocation-> 'add'
-                        'holiday_status_id':1,
+                        'holiday_status_id':aloc_cuti,
                         'number_of_days_temp': jumlah,
                         #'holiday_type':'employee',
                         'notes':""
@@ -85,7 +88,7 @@ class hr_contract(osv.osv):
                         'name': _("Alokasi Cuti %s") % years,
                         'employee_id':employee_id,
                         'type':'add',       #Allocation-> 'add'
-                        'holiday_status_id':1,
+                        'holiday_status_id':aloc_cuti,
                         'number_of_days_temp': jum,
                         #'holiday_type':'employee',
                         'notes':""
@@ -96,7 +99,7 @@ class hr_contract(osv.osv):
                     'name': _("Alokasi Cuti %s") % years,
                     'employee_id':employee_id,
                     'type':'add',       #Allocation-> 'add'
-                    'holiday_status_id':1,
+                    'holiday_status_id':aloc_cuti,
                     'number_of_days_temp': jumlah,
                     #'holiday_type':'employee',
                     'notes':""

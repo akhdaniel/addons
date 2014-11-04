@@ -344,7 +344,7 @@ class permohonan_recruit(osv.osv):
             obj_app.write(cr,uid,[exe.id],{'stat':sta_id})
             for ini in pers :
                 asu = ini.sequence
-                if asu == 1 :
+                if asu == 0 :
                     asu = ini.id                  
                     obj_app.write(cr,uid,[exe.id for exe in hasil.applicant_ids],{'stage_id':asu})
         return True
