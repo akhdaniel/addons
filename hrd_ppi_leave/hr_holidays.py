@@ -15,7 +15,6 @@ import math,pprint
 
 class bln_libur(osv.osv):
     _name="hr.bln_libur"
-
     
     _columns = {
         'hol_ids':fields.one2many('hr.holidays','bln_libur_id','Tanggal Libur'),
@@ -503,7 +502,7 @@ class hr_holidays(osv.osv):
         return True 
 
     def hapus_cuti_5(self,cr,uid,ids=None,context=None):
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         dates=time.strftime('%Y-%m-%d')
         year1=int(datetime.strptime(dates,"%Y-%m-%d").year)
         month1=datetime.strptime(dates,"%Y-%m-%d").month
