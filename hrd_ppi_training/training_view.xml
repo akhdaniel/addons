@@ -225,7 +225,6 @@
                                     <field name="name"/>
                                     <field name="job_id"/>
                                     <field name="department_id"/>
-                                    <field name="persentase"/> 
                                     <field name="kesimpulan3"/>
                                 </tree>
                                 <form>
