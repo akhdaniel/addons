@@ -27,7 +27,7 @@
     'invoice.xml',
     'groups/groups.xml',
     'workflow/picking_list_workflow.xml',],
-    'data': [],
+    'data': ['security/ir.model.access.csv'],
     'active': False,
     'installable': True,
     'application': True,

@@ -668,8 +668,10 @@ class sale_order(osv.osv):
 				'sale.order.line': (_get_order, ['price_unit', 'tax_id','product_uom_qty'], 10),
 			},
 			multi='sums', help="The total amount."),
-
+		'x_field':fields.boolean('x'),
 			}
+
+		
 
 	_defaults ={
 		'loc_code' : _get_default_lo,
@@ -731,8 +733,6 @@ class sale_order(osv.osv):
 		# 		channel = c.type_partner_id.id			
 
 		line = lin.order_line
-
-		princip = self.pool.get('master.discount1')
 		xx = self.pool.get('sale.order.line')
 
 		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)	
@@ -743,9 +743,12 @@ class sale_order(osv.osv):
 		#buat dari dua field, setelah di compute jadi satu field
 		#
 		#####################################################################
+
 		cd = lin.loc_code
 		nam = lin.name
-		self.write(cr, uid, vals[0], {'name': cd+nam,'name_bayangan':nam}, context=context)
+		self.write(cr, uid, vals[0], {'name_bayangan':nam}, context=context)
+		if not lin.x_field :
+			self.write(cr, uid, vals[0], {'name': cd+nam,'x_field':True}, context=context)
 
 
 ########################################################################################################################################################################
@@ -3621,7 +3624,8 @@ class sale_order(osv.osv):
 		####################################################################
 				
 		loca = lin.location_id.id
-		mv_obj = self.pool.get('stock.move')	
+		mv_obj = self.pool.get('stock.move')
+		sub_tot = 0.00	
 		for l in lin.order_line:
 			prod = l.product_id.id
 			prod_name = l.name
@@ -3633,6 +3637,8 @@ class sale_order(osv.osv):
 			state2 = 'waiting'
 			state3 = 'confirmed'	
 			state4 = 'assigned'	
+			sub_t = l.price_subtotal
+			sub_tot += sub_t
 
 			# barang masuk
 			cr.execute ('select sum(product_qty) from stock_move '\
@@ -3680,53 +3686,9 @@ class sale_order(osv.osv):
 									'product_uom':qt_m,										
 									'state':'assigned'										
 									})
-
-			r_fl = l.r_flat
-			p_fl = l.p_flat
-			x_fl = l.x_flat
-			c_fl = l.r_flat
-			m_fl = l.r_flat
-
-			gros = l.gross_tot
-
-			r_value = l.disc_value
-			p_value = l.p_disc_value
-			x_value = l.p_disc_value_x
-			c_value = l.p_disc_value_c
-			m_value = l.p_disc_value_m
-
-			r_percent = l.discount1
-			p_percent = l.p_disc_pre
-			x_percent = l.p_disc_pre_x
-			c_percent = l.p_disc_pre_c
-			m_percent = l.p_disc_pre_m
-
-			if r_fl :
-				rr = r_value+(gros*r_percent/100)
-			if not r_fl :
-				rr = r_value+(gros*r_percent/100)	
-
-			if p_fl :
-				pp = p_value+(gros*p_percent/100)
-			if not p_fl :
-				pp = p_value+((gros-rr)*p_percent/100)
-
-			if x_fl :
-				xx = x_value+(gros*x_percent/100)
-			if not x_fl :
-				xx = x_value+((gros-pp)*x_percent/100)
-
-			if c_fl :
-				cc = c_value+(gros*c_percent/100)
-			if not c_fl :
-				cc = c_value+((gros-xx)*c_percent/100)
-
-			if m_fl :
-				mm = m_value+(gros*m_percent/100)
-			if not m_fl :
-				mm = m_value+((gros-cc)*m_percent/100)
-
-			sol_obj.write(cr,uid,l.id,{'r_func':rr,'p_func':pp,'x_func':xx,'c_func':cc,'m_func':mm},context=context)
+		if sub_tot != lin.amount_untaxed:
+			raise osv.except_osv(_('Error!'),_('Total rupiah faktur tidak sama dengan total rupiah line faktur! \n '\
+				'Klik "Recalculate"'))
 
 		#cek ar di customer terkait
 		ar = self.browse(cr,uid,ids)[0]
@@ -3768,58 +3730,3 @@ class sale_order(osv.osv):
 			'target': 'current',
 			'nodestroy': True,
 		}
-
-	def update_so(self, cr, uid, ids, context=None):
-
-		lin = self.browse(cr,uid,ids)[0]
-		sol_obj= self.pool.get('sale.order.line')
-
-		for l in lin.order_line:
-			r_fl = l.r_flat
-			p_fl = l.p_flat
-			x_fl = l.x_flat
-			c_fl = l.r_flat
-			m_fl = l.r_flat
-
-			gros = l.gross_tot
-
-			r_value = l.disc_value
-			p_value = l.p_disc_value
-			x_value = l.p_disc_value_x
-			c_value = l.p_disc_value_c
-			m_value = l.p_disc_value_m
-
-			r_percent = l.discount1
-			p_percent = l.p_disc_pre
-			x_percent = l.p_disc_pre_x
-			c_percent = l.p_disc_pre_c
-			m_percent = l.p_disc_pre_m
-
-			if r_fl :
-				rr = r_value+(gros*r_percent/100)
-			if not r_fl :
-				rr = r_value+(gros*r_percent/100)	
-
-			if p_fl :
-				pp = p_value+(gros*p_percent/100)
-			if not p_fl :
-				pp = p_value+((gros-rr)*p_percent/100)
-
-			if x_fl :
-				xx = x_value+(gros*x_percent/100)
-			if not x_fl :
-				xx = x_value+((gros-pp)*x_percent/100)
-
-			if c_fl :
-				cc = c_value+(gros*c_percent/100)
-			if not c_fl :
-				cc = c_value+((gros-xx)*c_percent/100)
-
-			if m_fl :
-				mm = m_value+(gros*m_percent/100)
-			if not m_fl :
-				mm = m_value+((gros-cc)*m_percent/100)
-
-			sol_obj.write(cr,uid,l.id,{'r_func':rr,'p_func':pp,'x_func':xx,'c_func':cc,'m_func':mm},context=context)
-
-		return True
