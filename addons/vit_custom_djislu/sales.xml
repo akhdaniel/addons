@@ -54,8 +54,9 @@
                         <label string="Draft SO " attrs="{'invisible': [('state','not in',('draft','sent'))]}"/>
                         <label string="Sales Order " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
                         <div>
-                        <field name="loc_code" class="oe_inline" attrs="{'invisible': [('state','!=','draft')]}"/>    
+                        <field name="loc_code" class="oe_inline" attrs="{'invisible': ['|',('state','!=','draft'),('x_field','=',True)]}"/>    
                         <field name="name" class="oe_inline" readonly="1"/>
+                        <field name="x_field" class="oe_inline" invisible="1"/>
                         </div>
                     </h1>
                     <group>
@@ -189,11 +190,16 @@
                                 <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
 
                                 <div class="oe_subtotal_footer_separator oe_inline">
+                                    <div>
+                                        <group>
+                                    <button name="compute_discount" type="object" string="Recalculate" states="sent"/>
                                     <label for="amount_total"/>
+
                                     <button name="button_dummy" states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                               </group>
+                                </div>
                                 </div>
                                 <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                <button name="compute_discount" type="object" string="update total" states="sent" class="oe_edit_only oe_link"/>
                             </group>
                             <group colspan="2">
                                 <field name="credit"/>
