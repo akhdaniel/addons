@@ -15,6 +15,7 @@ TRAINING_STATES =[
 	('verify','Verify'),
 	('approve','Approve'),
 	('approve2','Second Approve'),
+    ('in_progress','In Progress'),
 	('reject','Reject'),
 	('evaluation','Evaluation')]
 	
@@ -254,6 +255,9 @@ class analisa(osv.osv):
     	
     '''def action_reject_hr_department(self,cr,uid,ids,context=None): 
     	return self.write(cr,uid,ids,{'state':TRAINING_STATES[2][0]},context=context)''' 
+
+    def action_in_prgress(self,cr,uid,ids,context=None):
+        return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context)
     	
     def action_approve_hr_department(self,cr,uid,ids,context=None): 
         obj=self.browse(cr,uid,ids)[0]
@@ -268,13 +272,13 @@ class analisa(osv.osv):
                 analisa = xids.analisa_id.id
                 obj_penilai.create(cr,uid,{'name': employee,'analisa_id':analisa})
                 train_obj.write(cr, uid, [xids.id], {'state':state, 'ket':'Aktif'})
-    	    return self.write(cr,uid,ids,{'state':TRAINING_STATES[5][0]},context=context)
+    	    return self.write(cr,uid,ids,{'state':TRAINING_STATES[4][0]},context=context)
         else :
     	   return self.write(cr,uid,ids,{'state':TRAINING_STATES[3][0]},context=context)
 
     def action_evaluation(self,cr,uid,ids,context=None):
         obj=self.browse(cr,uid,ids)[0]
-        kode=obj.id; state=TRAINING_STATES[5][0] 
+        kode=obj.id; state=TRAINING_STATES[6][0] 
         # for Training internal and external     
         train_obj = self.pool.get('hr_training.train')
         sr = train_obj.search(cr,uid,[('analisa_id','=',kode)])
@@ -671,10 +675,10 @@ class penilaian_pelatih(osv.osv):
         total = 0
         date = datetime.now()
         for sim in  brw_simpul :
-            nilai += sim.skor
+            nilai += int(sim.skor)
             x += 1
-        for train in src_train :
-            nilai += sim.skor
+        for train in brw_train :
+            nilai += int(train.skor)
             x += 1
         if x != 0 and nilai != 0 :
             total = nilai / x 
