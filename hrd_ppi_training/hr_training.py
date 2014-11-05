@@ -676,7 +676,8 @@ class penilaian_pelatih(osv.osv):
         for train in src_train :
             nilai += sim.skor
             x += 1
-        total = nilai / x 
+        if x != 0 and nilai != 0 :
+            total = nilai / x 
         if total < 3 :
             rekomendasi = "TIDAK"
         else :
