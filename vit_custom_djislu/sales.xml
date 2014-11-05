@@ -148,33 +148,40 @@
                                     <field name="price_unit" readonly="False" />
                                     <field name="gross_tot" invisible="1"/>
                                     <field name="r_func" invisible="1"/>
-                                    <field name="disc_value"/>
+                                    <field name="r_calc" invisible="0"/>
+
+                                    <field name="disc_value" invisible="1"/>
                                     <field name="qty_awal" invisible="1"/>
-                                    <field name="discount" groups="sale.group_discount_per_so_line,base.group_sale_salesman_all_leads"/>
+                                    <field name="discount1" nvisible="1"/>
+                                    <field name="p_calc" invisible="0"/>
                                     <field name="r_flat" invisible="1"/> 
 
-                                    <field name="p_func" invisible="1"/>
-                                    <field name="p_disc_value"/>
-                                    <field name="p_disc_pre"/>
-                                    <field name="p_flat" invisible="1"/> 
 
+                                    <field name="p_func" invisible="1"/>
+                                    <field name="p_disc_value" invisible="1"/>
+                                    <field name="p_disc_pre"/>
+                                    <field name="p_flat" invisible="1"/>
+                     
                                     <field name="x_func" invisible="1"/>
-                                    <field name="p_disc_value_x"/>
+                                    <field name="p_disc_value_x" invisible="1"/>
+                                    <field name="x_calc" invisible="0"/>
                                     <field name="p_disc_pre_x"/> 
                                     <field name="x_flat" invisible="1"/>
 
                                     <field name="c_func" invisible="1"/>
-                                    <field name="p_disc_value_c"/>
+                                    <field name="p_disc_value_c" invisible="1"/>
+                                    <field name="c_calc" invisible="0"/>
                                     <field name="p_disc_pre_c"/> 
                                     <field name="c_flat" invisible="1"/>
 
                                     <field name="m_func" invisible="1"/>
-                                    <field name="p_disc_value_m"/>
+                                    <field name="p_disc_value_m" invisible="1"/>
+                                    <field name="m_calc" invisible="0"/>
                                     <field name="p_disc_pre_m"/> 
                                     <field name="m_flat" invisible="1"/>
                                     
                                     <field name="price_subtotal"/>
-                                   <!--  <field name="tes"/> -->
+                                    <!-- <field name="tes"/> -->
                                 </tree>    
                             </field>
                             <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
@@ -183,9 +190,10 @@
 
                                 <div class="oe_subtotal_footer_separator oe_inline">
                                     <label for="amount_total"/>
-                                    <button name="button_dummy" states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                    <button name="button_dummy" states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
                                 </div>
                                 <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <button name="compute_discount" type="object" string="update total" states="sent" class="oe_edit_only oe_link"/>
                             </group>
                             <group colspan="2">
                                 <field name="credit"/>

@@ -15,6 +15,92 @@ import sets
 class sale_order_line(osv.osv):
 	_inherit = "sale.order.line"
 
+	def _get_reg_disc_tot(self,cr,uid,ids,field,args,context=None):
+		result = {}
+		#import pdb;pdb.set_trace()
+		for res in self.browse(cr,uid,ids):
+			r_disc= 0.00
+			if res.disc_value != 0.00:
+				r_disc = res.disc_value
+			elif res.discount1 != 0.00:
+				if res.r_flat:
+					r_disc = res.gross_tot * res.discount1/100	
+				elif not res.r_flat:
+					r_disc = res.gross_tot * res.discount1/100		
+			else:
+				r_disc= 0.00
+			result[res.id] = r_disc
+			self.write(cr,uid,res.id,{'r_func':r_disc},context=context)
+		return result
+
+	def _get_pro_disc_tot(self,cr,uid,ids,field,args,context=None):
+		result = {}
+		for res in self.browse(cr,uid,ids):
+			p_disc= 0.00
+			if res.p_disc_value != 0.00:
+				p_disc = res.p_disc_value
+			elif res.p_disc_pre != 0.00:
+				if res.p_flat:
+					p_disc = res.gross_tot * res.p_disc_pre/100	
+				elif not res.r_flat:
+					p_disc = (res.gross_tot-res.r_func )* res.p_disc_pre/100			
+			else:
+				p_disc= 0.00
+			result[res.id] = p_disc
+			self.write(cr,uid,res.id,{'p_func':p_disc},context=context)
+		return result
+
+	def _get_ext_disc_tot(self,cr,uid,ids,field,args,context=None):
+		result = {}
+		for res in self.browse(cr,uid,ids):
+			x_disc= 0.00
+			if res.p_disc_value_x != 0.00:
+				x_disc = res.p_disc_value_x
+			elif res.p_disc_pre_x != 0.00:
+				if res.x_flat:
+					x_disc = res.gross_tot * res.p_disc_pre_x/100	
+				elif not res.x_flat:
+					x_disc = (res.gross_tot-res.r_func-res.p_func )* res.p_disc_pre_p/100			
+			else:
+				x_disc= 0.00
+			result[res.id] = x_disc
+			self.write(cr,uid,res.id,{'x_func':x_disc},context=context)
+		return result
+
+	def _get_cas_disc_tot(self,cr,uid,ids,field,args,context=None):
+		result = {}
+		for res in self.browse(cr,uid,ids):
+			c_disc= 0.00
+			if res.p_disc_value_c != 0.00:
+				c_disc = res.p_disc_value_c
+			elif res.p_disc_pre_c != 0.00:
+				if res.c_flat:
+					c_disc = res.gross_tot * res.p_disc_pre_c/100	
+				elif not res.c_flat:
+					c_disc = (res.gross_tot-res.r_func-res.p_func-res.x_func )* res.p_disc_pre_c/100			
+			else:
+				c_disc= 0.00
+			result[res.id] = c_disc
+			self.write(cr,uid,res.id,{'c_func':c_disc},context=context)
+		return result
+
+	def _get_mix_disc_tot(self,cr,uid,ids,field,args,context=None):
+		result = {}
+		for res in self.browse(cr,uid,ids):
+			m_disc= 0.00
+			if res.p_disc_value_m != 0.00:
+				m_disc = res.p_disc_value_m
+			elif res.p_disc_pre_m != 0.00:
+				if res.m_flat:
+					m_disc = res.gross_tot * res.p_disc_pre_m/100	
+				elif not res.m_flat:
+					m_disc = (res.gross_tot-res.r_func-res.p_func-res.c_func )* res.p_disc_pre_m/100			
+			else:
+				m_disc= 0.00
+			result[res.id] = m_disc
+			self.write(cr,uid,res.id,{'m_func':m_disc},context=context)
+		return result		
+
 	def _amount_line(self, cr, uid, ids, field_name, arg, context=None):
 			
 		tax_obj = self.pool.get('account.tax')
@@ -47,29 +133,34 @@ class sale_order_line(osv.osv):
 			if uom == 0.00:
 				uom = 1
 
-			uos = sm_uom + bg
-
+			uos = sm_uom + bg			
 			#harus di bagi uom qty dulu
-			discv = line.disc_value /uom
-			discv2 = line.p_disc_value/uom
-			discv3 = line.p_disc_value_x/uom
-			discv4 = line.p_disc_value_c/uom
-			discv5 = line.p_disc_value_m/uom
+			discv = line.r_calc /uom
+			discv2 = line.p_calc/uom
+			discv3 = line.x_calc/uom
+			discv4 = line.c_calc/uom
+			discv5 = line.m_calc/uom
+			#import pdb;pdb.set_trace()				
+
 			#reg discount
-			pri = ((line.price_unit-discv) * (1 - (line.discount or 0.0) / 100.0))
+			pri = line.price_unit-discv #* (1 - (line.discount11 or 0.0) / 100.0))
+
+
 			#promo discount
+			pric = pri - discv2 #* (1 - (line.p_disc_pre or 0.0) / 100.0))
+		
 
-			pric = ((pri - discv2) * (1 - (line.p_disc_pre or 0.0) / 100.0))
 			#xtra discount
+			pric2 = pric - discv3
 
-			pric2 = ((pric - discv3) * (1 - (line.p_disc_pre_x or 0.0) / 100.0))
-			#cash discount
 
-			pric3 = ((pric2 - discv4) * (1 - (line.p_disc_pre_c or 0.0) / 100.0))
-			#mix discount
+			# #cash discount
+			pric3 = pric2 - discv4
 
-			price = ((pric3 - discv5) * (1 - (line.p_disc_pre_m or 0.0) / 100.0))	
-			
+
+			# #mix discount
+			price = pric3 - discv5
+
 			gross = self.write(cr, uid,line.id, {'gross_tot': gro},context=context)	
 			#import pdb;pdb.set_trace()				
 			taxes = tax_obj.compute_all(cr, uid, line.tax_id, price, uom, line.product_id, line.order_id.partner_id)
@@ -77,7 +168,6 @@ class sale_order_line(osv.osv):
 			res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
 			self.write(cr,uid,line.id,{'tes':taxes['total']},context=context)
 		return res
-
 	_columns = {
 		'volume' : fields.float('Volume (m3)'),
 		'volume2' : fields.related('product_id','volume',string ='Vlm'),
@@ -91,33 +181,40 @@ class sale_order_line(osv.osv):
 		#regular disc	
 		'r_func' : fields.float(string="Reg.Price"),
 		'disc_value' : fields.float('R.Disc (Price)'),
-		'discount': fields.float('R.Disc (%)', digits_compute= dp.get_precision('Discount'), readonly=True, states={'draft': [('readonly', False)]}),	
+		'discount1': fields.float('R.Disc (%)', digits_compute= dp.get_precision('discount')),	
 		'r_flat' : fields.boolean('R.Flat'),
-		#promo discount
+		'r_calc' : fields.function(_get_reg_disc_tot,type="float",string='R.Disc (Price)'),
+		#promo discount1
 		'p_func' : fields.float(string="Pro.Price"),
 		'p_disc_value' : fields.float('P.Disc (Price)'),
-		'p_disc_pre' : fields.float('P.Disc (%)',digits_compute= dp.get_precision('Discount')),
+		'p_disc_pre' : fields.float('P.Disc (%)',digits_compute= dp.get_precision('discount')),
 		'p_flat' : fields.boolean('P.Flat'),
-		#extra discount
+		'p_calc': fields.function(_get_pro_disc_tot,type="float",string='P.Disc (Price)'),
+		#extra discount1
 		'x_func' : fields.float(string="Ext.Price"),
 		'p_disc_value_x' : fields.float('X.Disc (Price)'),
-		'p_disc_pre_x' : fields.float('X.Disc (%)',digits_compute= dp.get_precision('Discount')),
+		'p_disc_pre_x' : fields.float('X.Disc (%)',digits_compute= dp.get_precision('discount')),
 		'x_flat' : fields.boolean('X.Flat'),
-		#cash discount
+		'x_calc': fields.function(_get_ext_disc_tot,type="float",string='X.Disc (Price)'),
+		#cash discount1
 		'c_func' : fields.float(string="Csh.Price"),
 		'p_disc_value_c' : fields.float('C.Disc (Price)'),
-		'p_disc_pre_c' : fields.float('C.Disc (%)',digits_compute= dp.get_precision('Discount')),
+		'p_disc_pre_c' : fields.float('C.Disc (%)',digits_compute= dp.get_precision('discount')),
 		'c_flat' : fields.boolean('C.Flat'),
-		#mix  discount
+		'c_calc': fields.function(_get_cas_disc_tot,type="float",string='C.Disc (Price)'),
+		#mix  discount1
 		'm_func' : fields.float(string="Mx.Price"),
 		'p_disc_value_m' : fields.float('M.Disc (Price)'),
-		'p_disc_pre_m' : fields.float('M.Disc (%)',digits_compute= dp.get_precision('Discount')),
-		'm_flat' : fields.boolean('M.Flat'),	
+		'p_disc_pre_m' : fields.float('M.Disc (%)',digits_compute= dp.get_precision('discount')),
+		'm_flat' : fields.boolean('M.Flat'),
+		'm_calc': fields.function(_get_mix_disc_tot,type="float",string='M.Disc (Price)'),	
 
 		'qty_small':fields.float('Small Qty',digits_compute=dp.get_precision('Product Unit of Measure')),
 		'qty_big':fields.float('Big Qty',digits_compute= dp.get_precision('Product UoS'),required=True),	
 
-		'qty_awal' :fields.float('Qty Awal'),				
+		'qty_awal' :fields.float('Qty Awal'),	
+
+		'tes': fields.float('Tes'),			
 
 	}
 
@@ -369,10 +466,15 @@ class sale_order(osv.osv):
 	_name = "sale.order"
 	#_rec_name = "partner_id2"
 
-	def _amount_alll(self, cr, uid, ids, field_name, arg, context=None):
+	def _amount_line_tax(self, cr, uid, line, context=None):
+		val = 0.0
+		for c in self.pool.get('account.tax').compute_all(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, line.product_id, line.order_id.partner_id)['taxes']:
+			val += c.get('amount', 0.0)
+		return val
+
+	def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
 		cur_obj = self.pool.get('res.currency')
 		res = {}
-		#import pdb;pdb.set_trace()
 		for order in self.browse(cr, uid, ids, context=context):
 			res[order.id] = {
 				'amount_untaxed': 0.0,
@@ -381,6 +483,28 @@ class sale_order(osv.osv):
 			}
 			val = val1 = 0.0
 			cur = order.pricelist_id.currency_id
+			#import pdb;pdb.set_trace()
+			for line in order.order_line:
+				val1 += line.price_subtotal
+				val += self._amount_line_tax(cr, uid, line, context=context)
+
+			res[order.id]['amount_tax'] = cur_obj.round(cr, uid, cur, val)
+			res[order.id]['amount_untaxed'] = cur_obj.round(cr, uid, cur, val1)
+			res[order.id]['amount_total'] = res[order.id]['amount_untaxed'] + res[order.id]['amount_tax']
+		return res
+
+	def amount(self, cr, uid, ids, arg, context=None):
+		cur_obj = self.pool.get('res.currency')
+		res = {}
+		for order in self.browse(cr, uid, ids, context=context):
+			res[order.id] = {
+				'amount_untaxed': 0.0,
+				'amount_tax': 0.0,
+				'amount_total': 0.0,
+			}
+			val = val1 = 0.0
+			cur = order.pricelist_id.currency_id
+			
 			for line in order.order_line:
 				val1 += line.price_subtotal
 				val += self._amount_line_tax(cr, uid, line, context=context)
@@ -454,7 +578,7 @@ class sale_order(osv.osv):
 
 		return nik
 
-    #default company per user
+	#default company per user
 	def _default_company_user(self, cr, uid, context=None):
 		user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
 		return user.company_id.partner_id.id
@@ -496,9 +620,16 @@ class sale_order(osv.osv):
 		res[order.id]['tonase_tot'] = brt
 		return res
 
+	def _get_order(self, cr, uid, ids, context=None):
+		result = {}
+		#import pdb;pdb.set_trace()
+		for line in self.pool.get('sale.order.line').browse(cr, uid, ids, context=context):
+			result[line.order_id.id] = True
+		return result.keys()
+
 	_columns = {
 		'partner_id2' : fields.many2one('limit.customer','Principal',domain="[('partner_id2','=',partner_id)]",required=True),
-		'discount2' : fields.float('Promo',readonly=True),	
+		'discount12' : fields.float('Promo',readonly=True),	
 		'volume_tot' : fields.function(_compute_volume,string="Total Volume", type="float",multi="sums"),
 		'tonase_tot' : fields.function(_compute_volume,string="Total Weight", type="float",multi="sums"),
 
@@ -519,22 +650,22 @@ class sale_order(osv.osv):
 
 		'due_date' : fields.date('Due Date',readonly=True),
 		#'company_id': fields.many2one('res.company', 'Company', required=True, select=True,),
-		'amount_untaxed': fields.function(_amount_alll, digits_compute=dp.get_precision('Account'), string='Untaxed Amount',
+		'amount_untaxed': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Untaxed Amount',
 			store={
 				'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-				'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+				'sale.order.line': (_get_order, ['price_unit', 'tax_id','product_uom_qty'], 10),
 			},
 			multi='sums', help="The amount without tax.", track_visibility='always'),
-		'amount_tax': fields.function(_amount_alll, digits_compute=dp.get_precision('Account'), string='Taxes',
+		'amount_tax': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Taxes',
 			store={
 				'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-				'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+				'sale.order.line': (_get_order, ['price_unit', 'tax_id','product_uom_qty'], 10),
 			},
 			multi='sums', help="The tax amount."),
-		'amount_total': fields.function(_amount_alll, digits_compute=dp.get_precision('Account'), string='Total',
+		'amount_total': fields.function(_amount_all, digits_compute=dp.get_precision('Account'), string='Total',
 			store={
 				'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
-				'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
+				'sale.order.line': (_get_order, ['price_unit', 'tax_id','product_uom_qty'], 10),
 			},
 			multi='sums', help="The total amount."),
 
@@ -582,7 +713,7 @@ class sale_order(osv.osv):
 	def compute_discount(self,cr, uid, vals=None, context=None): 
 
 		rr = self.browse(cr,uid,vals,context)
-		
+
 		if context is None:
 			context = {}
 
@@ -601,7 +732,7 @@ class sale_order(osv.osv):
 
 		line = lin.order_line
 
-		princip = self.pool.get('master.discount')
+		princip = self.pool.get('master.discount1')
 		xx = self.pool.get('sale.order.line')
 
 		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)	
@@ -859,9 +990,9 @@ class sale_order(osv.osv):
 									gtot = sale2.gross_tot										
 									
 									if is_p :#percent true
-										#isi discount % di tiap product (objek sale order line#)
+										#isi discount1 % di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -874,9 +1005,9 @@ class sale_order(osv.osv):
 									if not is_p :#percent false
 										lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
 										p_price = value/lt
-										#isi discount pot harga di tiap product (objek sale order line#)
+										#isi discount1 pot harga di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -896,9 +1027,9 @@ class sale_order(osv.osv):
 									gtot = sale2.gross_tot										
 									#import pdb;pdb.set_trace()
 									if is_p :#percent true
-										#isi discount % di tiap product (objek sale order line#)
+										#isi discount1 % di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -909,9 +1040,9 @@ class sale_order(osv.osv):
 											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 									if not is_p :#percent false
-										#isi discount pot harga di tiap product (objek sale order line#)
+										#isi discount1 pot harga di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -947,9 +1078,9 @@ class sale_order(osv.osv):
 									gtot = sale2.gross_tot										
 									
 									if is_p :#percent true
-										#isi discount % di tiap product (objek sale order line#)
+										#isi discount1 % di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -962,9 +1093,9 @@ class sale_order(osv.osv):
 									if not is_p :#percent false
 										lt = len(gr_tot_mx)#hitung jumlah list sebagai pembagi jika pot harga
 										p_price = value/lt
-										#isi discount pot harga di tiap product (objek sale order line#)
+										#isi discount1 pot harga di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -985,9 +1116,9 @@ class sale_order(osv.osv):
 									gtot = sale2.gross_tot										
 									#import pdb;pdb.set_trace()
 									if is_p :#percent true
-										#isi discount % di tiap product (objek sale order line#)
+										#isi discount1 % di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -998,9 +1129,9 @@ class sale_order(osv.osv):
 											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 				
 									if not is_p :#percent false
-										#isi discount pot harga di tiap product (objek sale order line#)
+										#isi discount1 pot harga di tiap product (objek sale order line#)
 										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 										elif type_disc == 'promo':
 											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 										elif type_disc == 'extra':
@@ -1112,9 +1243,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1127,9 +1258,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1142,9 +1273,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1155,9 +1286,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1183,9 +1314,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1198,9 +1329,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1213,9 +1344,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1226,9 +1357,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1260,9 +1391,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1275,9 +1406,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1290,9 +1421,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1303,9 +1434,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1333,9 +1464,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1348,9 +1479,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1363,9 +1494,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1376,9 +1507,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1410,9 +1541,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1425,9 +1556,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1440,9 +1571,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1453,9 +1584,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1481,9 +1612,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1496,9 +1627,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1511,9 +1642,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1524,9 +1655,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1558,9 +1689,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1573,9 +1704,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1588,9 +1719,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1601,9 +1732,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1631,9 +1762,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1646,9 +1777,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1661,9 +1792,9 @@ class sale_order(osv.osv):
 												if pr_prod :				
 
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1674,9 +1805,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1743,9 +1874,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1758,9 +1889,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1772,9 +1903,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1785,9 +1916,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1812,9 +1943,9 @@ class sale_order(osv.osv):
 											if qty_tot >= minq and qty_tot <= maxq:		
 												if not pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1827,9 +1958,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1841,9 +1972,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1854,9 +1985,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1888,9 +2019,9 @@ class sale_order(osv.osv):
 												if not pr_prod :										
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1903,9 +2034,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1917,9 +2048,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1930,9 +2061,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1960,9 +2091,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1975,9 +2106,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -1989,9 +2120,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2002,9 +2133,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2117,9 +2248,9 @@ class sale_order(osv.osv):
 											if not pr_prod :												
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2132,9 +2263,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = value/lt
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2147,9 +2278,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2160,9 +2291,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2188,9 +2319,9 @@ class sale_order(osv.osv):
 											if not pr_prod :												
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2203,9 +2334,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = value/lt
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2218,9 +2349,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2231,9 +2362,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 							
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2265,9 +2396,9 @@ class sale_order(osv.osv):
 											if not pr_prod :													
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2280,9 +2411,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = (value/lt)*km_so[0]
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2295,9 +2426,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2308,9 +2439,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2338,9 +2469,9 @@ class sale_order(osv.osv):
 											if not pr_prod :													
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2353,9 +2484,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = (value/lt)*km_so[0]
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2368,9 +2499,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2381,9 +2512,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 							
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2448,9 +2579,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2463,9 +2594,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2477,9 +2608,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2490,9 +2621,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2517,9 +2648,9 @@ class sale_order(osv.osv):
 											if qty_tot >= minq and qty_tot <= maxq:		
 												if not pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2532,9 +2663,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2546,9 +2677,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2559,9 +2690,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2592,9 +2723,9 @@ class sale_order(osv.osv):
 												if not pr_prod :										
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2607,9 +2738,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2621,9 +2752,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2634,9 +2765,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2664,9 +2795,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2679,9 +2810,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2693,9 +2824,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2706,9 +2837,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -2821,9 +2952,9 @@ class sale_order(osv.osv):
 											if not pr_prod :												
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2836,9 +2967,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = value/lt
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2851,9 +2982,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2864,9 +2995,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2892,9 +3023,9 @@ class sale_order(osv.osv):
 											if not pr_prod :												
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2907,9 +3038,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = value/lt
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2922,9 +3053,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2935,9 +3066,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 							
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2969,9 +3100,9 @@ class sale_order(osv.osv):
 											if not pr_prod :													
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2984,9 +3115,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = (value/lt)*km_so[0]
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -2999,9 +3130,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -3012,9 +3143,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -3042,9 +3173,9 @@ class sale_order(osv.osv):
 											if not pr_prod :													
 													
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -3057,9 +3188,9 @@ class sale_order(osv.osv):
 												if not is_p :#percent false
 													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 													p_price = (value/lt)*km_so[0]
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -3072,9 +3203,9 @@ class sale_order(osv.osv):
 											if pr_prod :				
 
 												if is_p :#percent true
-													#isi discount % di tiap product (objek sale order line#)
+													#isi discount1 % di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -3085,9 +3216,9 @@ class sale_order(osv.osv):
 														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 							
 												if not is_p :#percent false
-													#isi discount pot harga di tiap product (objek sale order line#)
+													#isi discount1 pot harga di tiap product (objek sale order line#)
 													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 													elif type_disc == 'promo':
 														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 													elif type_disc == 'extra':
@@ -3151,9 +3282,9 @@ class sale_order(osv.osv):
 												if not pr_prod :												
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3166,9 +3297,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3180,9 +3311,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3193,9 +3324,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3220,9 +3351,9 @@ class sale_order(osv.osv):
 											if qty_tot >= minq and qty_tot <= maxq:		
 												if not pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3235,9 +3366,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3249,9 +3380,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3262,9 +3393,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3295,9 +3426,9 @@ class sale_order(osv.osv):
 												if not pr_prod :										
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3310,9 +3441,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3324,9 +3455,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3337,9 +3468,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3367,9 +3498,9 @@ class sale_order(osv.osv):
 												if not pr_prod :													
 														
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3382,9 +3513,9 @@ class sale_order(osv.osv):
 													if not is_p :#percent false
 														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3396,9 +3527,9 @@ class sale_order(osv.osv):
 
 												if pr_prod :				
 													if is_p :#percent true
-														#isi discount % di tiap product (objek sale order line#)
+														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3409,9 +3540,9 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
 								
 													if not is_p :#percent false
-														#isi discount pot harga di tiap product (objek sale order line#)
+														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
 														elif type_disc == 'promo':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
 														elif type_disc == 'extra':
@@ -3435,7 +3566,7 @@ class sale_order(osv.osv):
 
 		return True	
 
-	#reset semua discount ke nol dan hilangkan semua bonus productnya
+	#reset semua discount1 ke nol dan hilangkan semua bonus productnya
 	def reset_discount(self, cr, uid, ids, context=None):
 		lin = self.browse(cr,uid,ids)[0]
 		xx = self.pool.get("sale.order.line")
@@ -3443,7 +3574,7 @@ class sale_order(osv.osv):
 		for sett in lin.order_line:
 			xx.write(cr, uid,sett.id, {
 									'disc_value': 0.00,
-									'discount': 0.00,
+									'discount1': 0.00,
 									'p_disc_value': 0.00,
 									'p_disc_pre':0.00,
 									'p_disc_value_x': 0.00,
@@ -3564,7 +3695,7 @@ class sale_order(osv.osv):
 			c_value = l.p_disc_value_c
 			m_value = l.p_disc_value_m
 
-			r_percent = l.discount
+			r_percent = l.discount1
 			p_percent = l.p_disc_pre
 			x_percent = l.p_disc_pre_x
 			c_percent = l.p_disc_pre_c
@@ -3636,4 +3767,59 @@ class sale_order(osv.osv):
 			'view_id': view_id,
 			'target': 'current',
 			'nodestroy': True,
-		}					
+		}
+
+	def update_so(self, cr, uid, ids, context=None):
+
+		lin = self.browse(cr,uid,ids)[0]
+		sol_obj= self.pool.get('sale.order.line')
+
+		for l in lin.order_line:
+			r_fl = l.r_flat
+			p_fl = l.p_flat
+			x_fl = l.x_flat
+			c_fl = l.r_flat
+			m_fl = l.r_flat
+
+			gros = l.gross_tot
+
+			r_value = l.disc_value
+			p_value = l.p_disc_value
+			x_value = l.p_disc_value_x
+			c_value = l.p_disc_value_c
+			m_value = l.p_disc_value_m
+
+			r_percent = l.discount1
+			p_percent = l.p_disc_pre
+			x_percent = l.p_disc_pre_x
+			c_percent = l.p_disc_pre_c
+			m_percent = l.p_disc_pre_m
+
+			if r_fl :
+				rr = r_value+(gros*r_percent/100)
+			if not r_fl :
+				rr = r_value+(gros*r_percent/100)	
+
+			if p_fl :
+				pp = p_value+(gros*p_percent/100)
+			if not p_fl :
+				pp = p_value+((gros-rr)*p_percent/100)
+
+			if x_fl :
+				xx = x_value+(gros*x_percent/100)
+			if not x_fl :
+				xx = x_value+((gros-pp)*x_percent/100)
+
+			if c_fl :
+				cc = c_value+(gros*c_percent/100)
+			if not c_fl :
+				cc = c_value+((gros-xx)*c_percent/100)
+
+			if m_fl :
+				mm = m_value+(gros*m_percent/100)
+			if not m_fl :
+				mm = m_value+((gros-cc)*m_percent/100)
+
+			sol_obj.write(cr,uid,l.id,{'r_func':rr,'p_func':pp,'x_func':xx,'c_func':cc,'m_func':mm},context=context)
+
+		return True
