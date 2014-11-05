@@ -309,30 +309,30 @@ class purchase_order(osv.osv):
         sumw2=0;sumv2=[]
         sumw3=0;sumv3=[]
         sumw4=0;sumv4=[]
-        if len(vals['sch_ids1'])>0:
+        if vals['sch_ids1']:
             for y in vals['sch_ids1']: sumw += y[2]['p1']
             for x in vals['sch_ids1']: sumv += x[2]['fleet_id'][0][2]
-        if len(vals['sch_ids2'])>0:
+        if vals['sch_ids2']:
             for y in vals['sch_ids2']: sumw2 += y[2]['p2']
             for x in vals['sch_ids2']: sumv2 += x[2]['fleet_id2'][0][2]
-        if len(vals['sch_ids2'])>0:
+        if vals['sch_ids2']:
             for y in vals['sch_ids3']: sumw3 += y[2]['p3']
             for x in vals['sch_ids3']: sumv3 += x[2]['fleet_id3'][0][2]
-        if len(vals['sch_ids2'])>0:
+        if vals['sch_ids2']:
             for y in vals['sch_ids4']: sumw4 += y[2]['p4']
             for x in vals['sch_ids4']: sumv4 += x[2]['fleet_id4'][0][2]
         vals['no_vehicle']  = len(sumv)
         vals['no_vehicle2'] = len(sumv2)
         vals['no_vehicle3'] = len(sumv3)
         vals['no_vehicle4'] = len(sumv4)
-        if sumw > vals['percent_r1']:
-            raise osv.except_osv(_('Error W1!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
-        if sumw2 > vals['percent_r2']:
-            raise osv.except_osv(_('Error W2!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
-        if sumw3 > vals['percent_r3']:
-            raise osv.except_osv(_('Error W3!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
-        if sumw4 > vals['percent_r4']:
-            raise osv.except_osv(_('Error W4!'), _('Jumlah persentase breakdown melebihi persentase per minggu'))
+        if sumw != vals['percent_r1']:
+            raise osv.except_osv(_('Error W1!'), _('Jumlah persentase breakdown tidak sama dengan persentase per minggu'))
+        if sumw2 != vals['percent_r2']:
+            raise osv.except_osv(_('Error W2!'), _('Jumlah persentase breakdown tidak sama dengan persentase per minggu'))
+        if sumw3 != vals['percent_r3']:
+            raise osv.except_osv(_('Error W3!'), _('Jumlah persentase breakdown tidak sama dengan persentase per minggu'))
+        if sumw4 != vals['percent_r4']:
+            raise osv.except_osv(_('Error W4!'), _('Jumlah persentase breakdown tidak sama dengan persentase per minggu'))
         return super(purchase_order, self).create(cr, uid, vals, context=context)    
 
     def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, context=None):
@@ -651,6 +651,42 @@ class purchase_order(osv.osv):
         if loc_x:
             return {'value':{'location_id':loc_x,}}
 
+    # import pdb;pdb.set_trace()
+    #TODO: implement messages system
+    def wkf_confirm_order(self, cr, uid, ids, context=None):
+        todo = []
+        for po in self.browse(cr, uid, ids, context=context):
+            valw1=0;valw2=0;valw3=0;valw4=0;
+            if po.sch_ids1:
+                for pw1 in po.sch_ids1: valw1 += pw1.p1
+            if po.sch_ids2:
+                for pw2 in po.sch_ids2: valw2 += pw2.p2
+            if po.sch_ids3:
+                for pw3 in po.sch_ids3: valw3 += pw3.p3
+            if po.sch_ids4:
+                for pw4 in po.sch_ids4: valw4 += pw4.p4
+            if valw1 != po.percent_r1:
+                raise osv.except_osv(_('Error Week 1!'), _('Jumlah persentase breakdown harus sama dengan persentase per minggu'))
+            if valw2 != po.percent_r2:
+                raise osv.except_osv(_('Error Week 2!'), _('Jumlah persentase breakdown harus sama dengan persentase per minggu'))
+            if valw3 != po.percent_r3:
+                raise osv.except_osv(_('Error Week 3!'), _('Jumlah persentase breakdown harus sama dengan persentase per minggu'))
+            if valw4 != po.percent_r4:
+                raise osv.except_osv(_('Error Week 4!'), _('Jumlah persentase breakdown harus sama dengan persentase per minggu'))
+            if po.percent_r1 + po.percent_r2 + po.percent_r3 + po.percent_r4 != 100:
+                raise osv.except_osv(_('Total!'), _('Jumlah persentase harus sama dengan 100%'))
+
+            if not po.order_line:
+                raise osv.except_osv(_('Error!'),_('You cannot confirm a purchase order without any purchase order line.'))
+            for line in po.order_line:
+                if line.state=='draft':
+                    todo.append(line.id)
+
+        self.pool.get('purchase.order.line').action_confirm(cr, uid, todo, context)
+        for id in ids:
+            self.write(cr, uid, [id], {'state' : 'confirmed', 'validator' : uid})
+        return True
+
     _defaults = {
         'location_ids':_get_default_loc,
         'principal_ids':_get_default_principal,
@@ -896,6 +932,26 @@ class stock_picking(osv.osv):
     _name = "stock.picking"
     _inherit = "stock.picking"
 
+    def action_process(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        """Open the partial picking wizard"""
+        import pdb;pdb.set_trace()
+        context.update({
+            'active_model': self._name,
+            'active_ids': ids,
+            'active_id': len(ids) and ids[0] or False
+        })
+        return {
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'stock.partial.picking',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': context,
+            'nodestroy': True,
+        }
+
     def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id,
         invoice_vals, context=None):
         """ Builds the dict containing the values for the invoice line
@@ -936,7 +992,6 @@ class stock_picking(osv.osv):
         if invoice_vals['type'] == 'in_invoice':
             small_qty = move_line.product_uos_qty * (move_line.product_uos.factor or 1)
         
-        # import pdb;pdb.set_trace()
         return {
             'name': name,
             'origin': origin,
@@ -953,6 +1008,7 @@ class stock_picking(osv.osv):
             'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
         }
 
+    '''
     def _get_price_unit_invoice(self, cr, uid, move_line, type, context=None):
         """ Gets price unit for invoice
         @param move_line: Stock move lines
@@ -969,5 +1025,6 @@ class stock_picking(osv.osv):
             return amount_unit
         else:
             return move_line.product_id.list_price
+    '''
 
 stock_picking()
