@@ -45,6 +45,13 @@
             <field name="kind">function</field>
             <field name="action">action_approve_hr_department()</field>
         </record>
+
+        <record model="workflow.activity" id="act3_approve_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">in_prgress</field>
+            <field name="kind">function</field>
+            <field name="action">action_in_prgress()</field>
+        </record>
                 
         <record model="workflow.activity" id="act_evaluation_training">
             <field name="wkf_id" ref="wkf_hr_ppi_training"/>
@@ -97,8 +104,20 @@
             <field name="signal">signal_reject</field>
         </record>
 
-        <record model="workflow.transition" id="t_evaluation_training">
+        <record model="workflow.transition" id="t4_in_progress">
             <field name="act_from" ref="act2_approve_training"/>
+            <field name="act_to" ref="act3_approve_training"/>
+            <field name="signal">signal_in_progress</field>
+        </record>
+
+        <record model="workflow.transition" id="t5_reject_training">
+            <field name="act_from" ref="act3_approve_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+
+        <record model="workflow.transition" id="t_evaluation_training">
+            <field name="act_from" ref="act3_approve_training"/>
             <field name="act_to" ref="act_evaluation_training"/>
             <field name="signal">signal_evaluation</field>
         </record>
