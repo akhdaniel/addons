@@ -35,11 +35,13 @@ Add CMO to the Purchase Orders
         'product',
         'vit_custom_users',
         'fleet',
-        'web_m2x_options'
+        'web_m2x_options',
+        'report_webkit'
     ],
     'data': [
         'purchase_view.xml',
         'stock_prod_lot.xml',
+        'report/purchase_order.xml',
     ],
     'test': [
     ],

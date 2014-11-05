@@ -1,0 +1,13 @@
+<openerp>
+	<data>
+
+    <report auto="False"
+	    id="report_purchase_order"
+	    model="purchase.order"
+	    name="vit.purchase.order.webkit"
+	    file="vit_dist_po/report/purchase_order.mako"
+	    string="Purchase Order Lines Detail"
+	    report_type="webkit"/>
+
+	</data>
+</openerp>
