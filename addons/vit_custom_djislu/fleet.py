@@ -105,7 +105,7 @@ class surat_jalan(osv.osv):
 		acc = self.pool.get('account.invoice')
 		mvp_obj = self.pool.get('stock.move.pick')
 
-		fl = self.browse(cr, uid, ids[0], context=context)
+		fl = self.browse(cr, uid, ids[0], context=context)#FFFFFF#FFFFFF
 
 		flo =fl.car_id.volume
 		flo2 = fl.car_id.tonase
