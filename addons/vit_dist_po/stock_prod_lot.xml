@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="stock.view_split_in_lots"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/field[@name='line_ids']/tree/field[@name='name']" position="after">
-                    <field name="expire" on_change="onchange_expire(name,expire)"/>
+                    <field name="expire"/>
                 </xpath>
             </field>
         </record>
@@ -18,10 +18,13 @@
             <field name="model">stock.partial.picking</field>
             <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
             <field name="arch" type="xml">
-                <field name="prodlot_id" position="replace">
+                <field name="prodlot_id" position="attributes">
+                    <attribute name='required'>1</attribute>
+                </field>
+                <!-- <field name="prodlot_id" position="replace">
                     <field name="prodlot_id" on_change="onchange_prodlot_id(prodlot_id)" domain="[('product_id', '=', product_id)]" invisible="context.get('hide_tracking',False)" attrs="{'required':[('quantity', '!=', 0)]}" groups="stock.group_production_lot" context="{'default_product_id':product_id}"/>
                     <field name="expired" invisible="context.get('hide_tracking',False)" attrs="{'required':[('tracking','=',True), ('quantity', '!=', 0)]}" groups="stock.group_production_lot"/>
-                </field>
+                </field> -->
             </field>
         </record>
 
