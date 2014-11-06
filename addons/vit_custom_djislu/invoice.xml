@@ -166,6 +166,7 @@
                 </xpath>
             </field>
         </record>
+
 <!-- location -->
         <record model="ir.ui.view" id="custom_location">
             <field name="name">Invoice Custom DJI SLU</field>
@@ -180,6 +181,33 @@
 
             </field>
         </record>  
+
+<!-- location -->
+        <record model="ir.ui.view" id="custom_shop">
+            <field name="name">Invoice Custom Shop</field>
+            <field name="model">sale.shop</field>
+            <field name="inherit_id" ref="sale.view_shop_form"/>
+            <field name="arch" type="xml">
+                <label for="name" position="before">
+                    <group colspan="2">
+                        <field name="code"/>
+                    </group>    
+                </label>
+
+            </field>
+        </record> 
+
+<!-- account move -->
+        <record model="ir.ui.view" id="view_location _stock_move">
+            <field name="name">Account Move Loction</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="after">
+                    <field name="location_id"/>
+                </field>                    
+            </field>
+        </record>
 
     </data>
 </openerp>

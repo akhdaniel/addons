@@ -71,13 +71,14 @@
                         <group>
                             <field name="date_order"/>
                             <field name="client_order_ref"/>
+                          <!--   <field name="shop_id2" /> -->
                             <field name="location_id" />
                            <!--  <field name="company_id"/> -->
                             <field domain="[('type','=','sale')]" name="pricelist_id" groups="product.group_sale_pricelist" on_change="onchange_pricelist_id(pricelist_id,order_line)" invisible="True"/>
                             <field name="currency_id" invisible="1"/>
                         </group>                          
-                        <group invisible="True">
-                            <field name="shop_id" groups="base.group_no_one" on_change="onchange_shop_id(shop_id, context)" widget="selection" invisible="True"/>
+                        <group invisible="True">                            
+                            <field name="shop_id" groups="base.group_no_one" on_change="onchange_shop_id(shop_id, context)" widget="selection"/>
                         </group>                      
                     </group>
 

@@ -355,7 +355,7 @@ class surat_jalan(osv.osv):
 		'car_id': fields.many2one('fleet.vehicle','Car',required=True),
 		'based_route_id' : fields.many2one('master.based.route','Route',required=True),
 		'date':fields.date('Date',required=True,readonly=True),
-		'location_id' : fields.many2one('stock.location','Location',required=True,readonly=True),
+		'location_id' : fields.many2one('sale.shop','Location',required=True,readonly=True),
 		'user_id': fields.many2one('res.users','Creator',readonly=True),
 		'inv_ids' : fields.many2many('account.invoice','picking_rel','surat_jalan_id','invoice_id',
 			domain="[('type','=','out_invoice'),\

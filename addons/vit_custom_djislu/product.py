@@ -256,7 +256,7 @@ class master_discount(osv.osv):
 		'qty2_2' : fields.float('Bonus Qty', digits_compute=dp.get_precision('Product Unit of Measure')),
 		'qty2' : fields.function(_qty_all_2,type="float",string='Bonus Qty',digits_compute=dp.get_precision('Product Unit of Measure')),
 		'is_category': fields.boolean('Category Condition'),
-		'location_id' : fields.many2one('stock.location','Location'),
+		'location_id' : fields.many2one('sale.shop','Location'),
 
 		} 
 
