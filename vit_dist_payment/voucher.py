@@ -107,7 +107,10 @@ class account_voucher(osv.osv):
 			res1[key].update(vals[key])
 
 		#import pdb;pdb.set_trace()
-		total_hutang = context['default_amount']
+		total_hutang = 0.00
+		if 'default_amount' in context.keys():
+			total_hutang = context['default_amount']
+			
 		bayar = amount
 
 		selisih = bayar-total_hutang
@@ -156,8 +159,9 @@ class account_voucher(osv.osv):
 			amount = 0
 		res1 = self.onchange_partner_id(cr, uid, ids, partner_id, journal_id, amount, currency_id, ttype, date, context)
 		res_acc = res1['value']['account_id']
-
-		total_hutang = context['default_amount']
+		total_hutang = 0.00
+		if 'default_amount' in context.keys():
+			total_hutang = context['default_amount']
 		bayar = amount
 
 		selisih = bayar-total_hutang
@@ -182,6 +186,7 @@ class account_voucher(osv.osv):
 	_columns = {
 		'writeoff_ids' : fields.one2many('writeoff','voucher_id','Write Off List'),
 		'w_amount': fields.float('Difference Amount',),
+		'location_id': fields.many2one('sale.shop','Location',),
 
 	}
 
@@ -225,6 +230,48 @@ class account_voucher(osv.osv):
 			# 	move_line.update({x.id:move_l})
 		move_line =voucher.writeoff_ids	
 		return move_line
+
+	def account_move_get(self, cr, uid, voucher_id, context=None):
+		'''
+		This method prepare the creation of the account move related to the given voucher.
+
+		:param voucher_id: Id of voucher for which we are creating account_move.
+		:return: mapping between fieldname and value of account move to create
+		:rtype: dict
+		'''
+		seq_obj = self.pool.get('ir.sequence')
+		voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
+		if voucher.number:
+			name = voucher.number
+		elif voucher.journal_id.sequence_id:
+			if not voucher.journal_id.sequence_id.active:
+				raise osv.except_osv(_('Configuration Error !'),
+					_('Please activate the sequence of selected journal !'))
+			c = dict(context)
+			c.update({'fiscalyear_id': voucher.period_id.fiscalyear_id.id})
+			name = seq_obj.next_by_id(cr, uid, voucher.journal_id.sequence_id.id, context=c)
+		else:
+			raise osv.except_osv(_('Error!'),
+						_('Please define a sequence on the journal.'))
+		if not voucher.reference:
+			ref = name.replace('/','')
+		else:
+			ref = voucher.reference
+
+		loc_id = 1
+		for vv in voucher.line_cr_ids:
+			if vv.amount != 0.0:
+				loc_id = vv.move_line_id.invoice.location_id.id
+		move = {
+			'name': name,
+			'journal_id': voucher.journal_id.id,
+			'narration': voucher.narration,
+			'date': voucher.date,
+			'ref': ref,
+			'period_id': voucher.period_id.id,
+			'location_id': loc_id,
+		}
+		return move
 
 	def action_move_line_create(self, cr, uid, ids, context=None):
 		'''
@@ -301,10 +348,17 @@ class account_voucher(osv.osv):
 				# 		reconcile = move_line_pool.reconcile_partial(cr, uid, rec_ids, writeoff_acc_id=voucher.writeoff_acc_id.id, writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
 
 			# We post the voucher.
+			#import pdb;pdb.set_trace()	
+			# loc_id = 1
+			# for vv in voucher.line_cr_ids:
+			# 	if vv.amount != 0.0:
+			# 		loc_id = vv.move_line_id.invoice.location_id.id
+			#import pdb;pdb.set_trace()		
 			self.write(cr, uid, [voucher.id], {
 				'move_id': move_id,
 				'state': 'posted',
 				'number': name,
+				#'location_id': loc_id,
 			})
 			if voucher.journal_id.entry_posted:
 				move_pool.post(cr, uid, [move_id], context={})
