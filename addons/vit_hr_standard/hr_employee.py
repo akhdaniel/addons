@@ -24,8 +24,8 @@ class employee(osv.osv):
         'mother':fields.char('Name of Biological Mother'),
         'type_salesman_id': fields.many2one('type.salesman','Type Salesman', ondelete='cascade'),
         'warehouse_id' : fields.many2one('stock.warehouse','Cabang', ondelete='cascade'),
-        'location_id' : fields.many2one('stock.location','Location', ondelete='cascade'),
-
+        'location_id' : fields.many2one('sale.shop','Location', ondelete='cascade'),
+        #'shop_id' : fields.many2one('sale.shop','Location', ondelete='cascade'),
         'agama_id':fields.many2one('hr.employee.agama','Religion'),
         'anak_ids':fields.one2many('hr.employee.anak','employee_id','Children'),
         'pendidikan_id':fields.many2one('hr.employee.pendidikan','Current Education'),
