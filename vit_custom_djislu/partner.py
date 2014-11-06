@@ -62,7 +62,7 @@ class res_partner(osv.osv):
 		'trouble' : fields.boolean('Trouble'),
 		'pareto' : fields.boolean('Pareto'),
 		'warehouse_id' : fields.many2one('stock.warehouse','Cabang', ondelete='cascade'),
-		'location_id' : fields.many2one('stock.location','Location', ondelete='cascade'),
+		'location_id' : fields.many2one('sale.shop','Location', ondelete='cascade'),
 		'type_partner_id' : fields.many2one('master.type.partner','Group Price',change_default=True,required=True, ondelete='cascade'),
 
 		'latitude' : fields.float('Latitude'),

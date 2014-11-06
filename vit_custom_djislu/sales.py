@@ -548,7 +548,7 @@ class sale_order(osv.osv):
 		return super(sale_order, self).create(cr, uid, vals, context=context)
 
 	#default shop sesuai cabang di master employee log in
-	def _get_default_werehouse(self, cr, uid, context=None):
+	def _get_default_shop2(self, cr, uid, context=None):
 		
 		emplo = self.pool.get('hr.employee').search(cr,uid,[('user_id','=',uid)])
 		if not emplo:
@@ -627,6 +627,7 @@ class sale_order(osv.osv):
 			result[line.order_id.id] = True
 		return result.keys()
 
+
 	_columns = {
 		'partner_id2' : fields.many2one('limit.customer','Principal',domain="[('partner_id2','=',partner_id)]",required=True),
 		'discount12' : fields.float('Promo',readonly=True),	
@@ -643,7 +644,8 @@ class sale_order(osv.osv):
 		'nik' :fields.char('Kode Sales',readonly=True),
 
 		'partner_code':fields.related('partner_id','code',type="char",string=' ',readonly="True"),
-		'location_id' : fields.many2one('stock.location','Location',readonly=True),
+		#'location_id' : fields.many2one('stock.location','Location',readonly=True),
+		'location_id' : fields.many2one('sale.shop','Location',readonly=True),
 
 		'loc_code': fields.char('Code',sixe=15,readonly=True),
 		'name_bayangan': fields.char('Nm', readonly=True),
@@ -675,7 +677,7 @@ class sale_order(osv.osv):
 
 	_defaults ={
 		'loc_code' : _get_default_lo,
-		'location_id' : _get_default_werehouse,
+		'location_id' : _get_default_shop2,
 		'user_id': lambda obj, cr, uid, context: uid,
 		'order_policy':'prepaid',
 		'nik':_get_nik,
