@@ -76,9 +76,14 @@
                         states="verify" name="signal_reject"/>     
                     
                     <button string="Approve HRD" type="workflow"  
-                        states="approve" name="signal_approve_hr_department"
+                        name="signal_approve_hr_department"
                         groups="base.group_hr_manager"
-                        class="oe_highlight"/>  
+                        class="oe_highlight" attrs="{'invisible': ['|',('tes','=', 'Internal'),('state','!=','approve')]}"/>  
+
+                    <button string="Approve HRD" type="workflow"  
+                        name="signal_approve_hr_department2"
+                        groups="base.group_hr_manager"
+                        class="oe_highlight" attrs="{'invisible': ['|',('tes','!=', 'Internal'),('state','!=','approve')]}"/>  
                     
                     <button string="Approve Presdir" type="workflow"  
                         groups="hrd_ppi.group_hr_aprove_presdir"

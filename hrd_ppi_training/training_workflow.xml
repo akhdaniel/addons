@@ -91,6 +91,12 @@
             <field name="act_to" ref="act2_approve_training"/>
             <field name="signal">signal_approve_hr_department</field>
         </record>
+
+        <record model="workflow.transition" id="t3_approve_training">
+            <field name="act_from" ref="act_approve_training"/>
+            <field name="act_to" ref="act3_approve_training"/>
+            <field name="signal">signal_approve_hr_department2</field>
+        </record>
         
         <record model="workflow.transition" id="t2_reject_training">
             <field name="act_from" ref="act_approve_training"/>
