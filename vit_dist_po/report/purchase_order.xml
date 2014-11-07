@@ -5,7 +5,7 @@
 	    id="report_purchase_order"
 	    model="purchase.order"
 	    name="vit.purchase.order.webkit"
-	    file="vit_dist_po2/report/purchase_order.mako"
+	    file="vit_dist_po/report/purchase_order.mako"
 	    string="PO / RFQ"
 	    report_type="webkit"
 	    webkit_header="ir_header_webkit_vit0"
