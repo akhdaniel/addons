@@ -66,8 +66,8 @@
                         <field name="pareto"/>
                     </field>   
                      <field name="date" position="after">
-                        <field name="property_stock_customer" domain="[('usage','=','internal')]" string="Location"/>
-                       <!--  <field name="location_id"/> -->
+                       <!--  <field name="property_stock_customer" domain="[('usage','=','internal')]" string="Location"/> -->
+                        <field name="location_id"/>
                         <field name="based_route_id"/>
                     </field>
                     <field name="ref" position="before">
@@ -153,22 +153,35 @@
             <field name="model">master.call.plan</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Call Plan">
-                    <field name="based_route_id"/>
-                    <field name="day"/>
-                    <field name="employee_id"/>
-                    
+                
+                <form string="Call Plan" version="7.0">
+                    <sheet>
+                        <group>
+                        <group>
+                            <field name="based_route_id"/>
+                            <field name="day"/>
+                        </group>
+                        <group> 
+                            <field name="is_active"/> 
+                            <field name="user_id"/>   
+                            <field name="employee_id" on_change="onchange_salesman(employee_id, based_route_id,partner_ids)"/>
+                        </group>    
+                        </group>
                         <notebook colspan="4">
                             <page string="Customer">                    
                                 <field view_mode="tree" name='partner_ids' nolabel="1">
                                     <tree editable="top">
-                                        <field name="no"/>
-                                        <field name='partner_id'/>
-                                    </tree> 
+                                        <field name="code"/>
+                                        <field name='name'/>
+                                        <field name='street'/>
+                                        <field name='city'/>
+                                    </tree>
                                 </field> 
                             </page>
-                        </notebook>                                 
+                        </notebook>     
+                    </sheet>                            
                 </form>
+            
             </field>
         </record>
 
@@ -177,11 +190,13 @@
             <field name="model">master.call.plan</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Call Plan">
+                <tree string="Call Plan" colors="grey:is_active==False; black:is_active==True">
                     <field name="based_route_id"/>
                     <field name="day"/>
+                    <field name="user_id"/>
                     <field name="employee_id"/>  
-                    <field name="partner_ids" string="Jumlah Customer"/>                             
+                    <field name="partner_ids" string="Jumlah Customer"/> 
+                    <field name="is_active" invisible="1"/>                             
                 </tree>
             </field>
         </record>
@@ -192,9 +207,11 @@
             <field name="model">master.call.plan</field>
             <field name="arch" type="xml">
                 <search string="Pricelist items">
+                    <filter string="Active" name="is_act" domain="[('is_active','=',True)]"/>
                     <filter string="Salesman" context="{'group_by': 'employee_id'}"/>
                     <filter string="Hari" context="{'group_by': 'day'}"/>
                     <filter string="Rute" context="{'group_by': 'based_route_id'}"/>
+                    <filter string="Creator" context="{'group_by': 'user_id'}"/>
                 </search>
             </field>
         </record>  
@@ -206,6 +223,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_master_call_plan_tree"/>
             <field name="search_view_id" ref="view_call_plan_search"/>
+            <field name="context">{"search_default_is_act":1}</field>
         </record>
 
         <menuitem action="action_master_call_plan" id="menu_action_master_call_plan" parent="base.menu_base_config"/>    
@@ -218,15 +236,18 @@
             <field name="model">master.target.salesman</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Target Salesman">
-                    <group colspan="2">
-                    <field name="no"/>
-                    </group>
-                    <group colspan="2">
-                    <field name="date_from"/>
-                    <field name="date_to"/>
-                    </group>
-                    
+                <form string="Target Salesman" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                            </group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
                         <notebook colspan="4">
                             <page string="Target Sales">                    
                                 <field view_mode="tree" name='target_ids' nolabel="1">
@@ -239,7 +260,8 @@
                                     </tree> 
                                 </field> 
                             </page>
-                        </notebook>                                 
+                        </notebook>  
+                    </sheet>                                       
                 </form>
             </field>
         </record>
@@ -251,26 +273,24 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Target Salesman">
-                    <field name="no"/>
+                    <field name="name"/>
+                    <field name="user_id"/>
                     <field name="date_from"/>
-                    <field name="date_to"/>
-                               
+                    <field name="date_to"/>                            
                 </tree>
             </field>
         </record>
 
-<!--         <record id="view_call_plan_search" model="ir.ui.view">
-            <field name="name">call plan search</field>
+        <record id="view_target_search" model="ir.ui.view">
+            <field name="name">Target search</field>
             <field name="model">master.target.salesman</field>
             <field name="arch" type="xml">
                 <search string="Pricelist items">
-                    <filter string="Salesman" context="{'group_by': 'employee_id'}"/>
-                    <filter string="Hari" context="{'group_by': 'day'}"/>
-                    <filter string="Cycle" context="{'group_by': 'jadwal'}"/>
-                    <filter string="detail Cycle" context="{'group_by': 'jadwal2'}"/>
+                    <field name="name" filter_domain="[('name','ilike',self)]"/>
+                    <filter string="Creator" context="{'group_by': 'user_id'}"/>                    
                 </search>
             </field>
-        </record>   -->
+        </record>  
 
         <record id="action_master_target_salesman" model="ir.actions.act_window">
             <field name="name">Target Salesman</field>
@@ -278,7 +298,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_master_target_salesman_tree"/>
-<!--             <field name="search_view_id" ref="view_call_plan_search"/> -->
+            <field name="search_view_id" ref="view_target_search"/>
         </record>
 
         <menuitem action="action_master_target_salesman" id="menu_action_master_target_salesman" parent="base.menu_base_config"/>  
@@ -332,5 +352,19 @@
         </record>
 
         <menuitem action="action_type_salesman" id="manu_action_type_salesman" parent="base.menu_base_config"/>
+
+        <!-- Sequences for target alesmn -->
+        <record id="seq_target_salesman" model="ir.sequence.type">
+            <field name="name">Master Target Salesman</field>
+            <field name="code">master.target.salesman</field>
+        </record>
+
+        <record id="seq_ts" model="ir.sequence">
+            <field name="name">Master Target Salesman</field>
+            <field name="code">master.target.salesman</field>
+            <field name="prefix">%(y)s/%(month)s/</field>
+            <field name="padding">5</field>
+        </record>
+
     </data>
 </openerp>

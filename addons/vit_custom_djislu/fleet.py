@@ -52,7 +52,8 @@ class surat_jalan(osv.osv):
 
 	def onchange_volume(self,cr,uid,ids,car_id,context=None):
 		result={}
-		#import pdb;pdb.set_trace()
+		if not car_id:
+			return results
 		fle = self.pool.get('fleet.vehicle')
 		flee = fle.search(cr,uid,[('id','=',car_id)])
 		fleet = fle.browse(cr,uid,flee)[0].volume
