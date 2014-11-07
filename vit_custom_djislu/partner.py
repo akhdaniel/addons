@@ -42,7 +42,7 @@ class res_partner(osv.osv):
 
 
 	_columns  = {
-		'code' : fields.char('Kode', size=64, required=True),
+		'code' : fields.char('Code', size=64, required=True),
 		#'type_customer_id' : fields.many2one('master.type.customer','Type Customer'),
 		'limit_ids' : fields.one2many('limit.customer','partner_id2','Limit', ondelete='cascade'),
 		'cust_term_id' : fields.many2one('master.term','Customer Term', ondelete='cascade'),
@@ -170,7 +170,7 @@ class master_type_partner(osv.osv):
 	_name = "master.type.partner"
 
 	_columns = {
-		'code' : fields.char('code',size=64,required=True),
+		'code' : fields.char('Code',size=64,required=True),
 		'name' : fields.char('Name',size=128),
 		'parent_id' : fields.many2one('master.type.partner','Parent', select=True, ondelete='cascade'),
 		#'date' : fields.date('Tanggal Berlaku'),
@@ -181,20 +181,61 @@ class master_based_route(osv.osv):
 	_name = "master.based.route"
 
 	_columns = {
-		'code' : fields.char('code',size=64,required=True),
+		'code' : fields.char('Code',size=64,required=True),
 		'name' : fields.char('Ruote',size=128,required=True),
 		}
 
 class master_call_plan(osv.osv): 
 	_name = "master.call.plan"
+	_rec_name = "day"
 
 	_columns = {
+		'user_id' : fields.many2one('res.users','Creator',readonly=True),
 		'based_route_id' : fields.many2one('master.based.route','Based Route', required=True, ondelete='cascade'),
 		'employee_id' : fields.many2one('hr.employee','Salesman', required=True, ondelete='cascade'),
 		'day' : fields.selection([('senin','Senin'),('selasa','Selasa'),('rabu','Rabu'),('kamis','Kamis'),('jumat','Jumat'),('sabtu','Sabtu')],'Day', required=True),
-		'partner_ids' : fields.one2many('res.partner.route','master_call_plan_id','Customer'),
-
+		'partner_ids' : fields.many2many('res.partner',
+			'call_plan_rel',
+			'pertner_id',
+			'call_plan_id',
+			domain="[('customer','=',True),\
+			('based_route_id','=',based_route_id)]",		
+			string='Customer'),
+		'is_active': fields.boolean('Active'),
 		}
+		
+
+	_defaults = {  
+		'user_id': lambda obj, cr, uid, context: uid,
+		'is_active' : True,
+		}
+
+	def onchange_salesman(self, cr, uid, ids, employee_id, based_route_id, partner_ids,context=None):
+		#import pdb;pdb.set_trace()
+		results = {}
+		if not employee_id or not based_route_id:
+			return results
+		
+		cr.execute('SELECT rp.id from limit_customer lc '\
+			'LEFT JOIN res_partner rp ON lc.partner_id2 = rp.id '\
+			'LEFT JOIN hr_employee he ON he.id = lc.employee_id '\
+			'WHERE rp.based_route_id ='+ str(based_route_id)+' '\
+			'AND lc.employee_id = '+ str(employee_id))
+
+		p_id = []
+		for cs in cr.dictfetchall():
+			p_id.append(cs['id'])
+		part_obj = self.pool.get('res.partner')
+		part_ids = part_obj.search(cr, uid, [('id','in',p_id)], context=context)
+
+		#insert many2many records
+		partner_ids = [(6,0,part_ids)]
+		results = {
+			'value' : {
+				'partner_ids' : partner_ids
+			}
+		}
+		return results
 
 class res_partner_route(osv.osv):
 	_name = "res.partner.route"
@@ -206,22 +247,31 @@ class res_partner_route(osv.osv):
 	}        
 
 class master_target_salesman(osv.osv):
-		_name = "master.target.salesman"
-		_res_name = "no"
+	_name = "master.target.salesman"
 
-		_columns = {
-			'no' : fields.char('No',size=32, required=True),
-			'date_from' : fields.date('Start Date',required=True),
-			'date_to' : fields.date('End Date',required=True),
-			'target_ids' : fields.one2many('master.target.salesman.detail','master_target_salesman_id','Target'),
+	def create(self, cr, uid, vals, context=None):
+		if vals.get('name','/')=='/':
+			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'master_target_salesman') or '/'
+		return super(master_target_salesman, self).create(cr, uid, vals, context=context)
+
+	_columns = {
+		'name' : fields.char('No',size=32, readonly=True),
+		'user_id' : fields.many2one('res.users','Creator',readonly=True),
+		'date_from' : fields.date('Start Date',required=True),
+		'date_to' : fields.date('End Date',required=True),
+		'target_ids' : fields.one2many('master.target.salesman.detail','master_target_salesman_id','Target'),
+	}
+	_defaults = {
+		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.target.salesman'),    
+		'user_id': lambda obj, cr, uid, context: uid,
 		}
 
 class master_target_salesman_detail(osv.osv):
 	_name = "master.target.salesman.detail"
 
 	_columns = {
-		'employee_id' : fields.many2one('hr.employee','Salesman', ondelete='cascade'),
-		'partner_id' : fields.many2one('res.partner','Supplier',domain=[('supplier','=',1)]),
+		'employee_id' : fields.many2one('hr.employee','Salesman', ondelete='cascade', required=True),
+		'partner_id' : fields.many2one('res.partner','Supplier',domain=[('supplier','=',1)], required=True),
 		'master_target_salesman_id' : fields.many2one('master.target.salesman','Target'),
 		'sales' : fields.float('Sales'),
 		'ao' : fields.float('AO'),
