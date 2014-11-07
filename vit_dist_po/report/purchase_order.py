@@ -13,5 +13,5 @@ class purchase_webkit(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.webkit.purchase.order',
                       'purchase.order', 
-                      'vit_dist_po/report/purchase_order.mako',
+                      'vit_dist_po2/report/purchase_order.mako',
                       parser=purchase_webkit)

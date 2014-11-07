@@ -41,6 +41,7 @@ Add CMO to the Purchase Orders
     'data': [
         'purchase_view.xml',
         'stock_prod_lot.xml',
+        'report/po_webkit_header.xml',
         'report/purchase_order.xml',
     ],
     'test': [
