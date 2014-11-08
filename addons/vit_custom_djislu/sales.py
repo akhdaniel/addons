@@ -745,12 +745,13 @@ class sale_order(osv.osv):
 		#buat dari dua field, setelah di compute jadi satu field
 		#
 		#####################################################################
-
+		#import pdb;pdb.set_trace()
 		cd = lin.loc_code
 		nam = lin.name
-		self.write(cr, uid, vals[0], {'name_bayangan':nam}, context=context)
+		
 		if not lin.x_field :
-			self.write(cr, uid, vals[0], {'name': cd+nam,'x_field':True}, context=context)
+			#self.write(cr, uid, vals[0], {}, context=context)
+			self.write(cr, uid, vals[0], {'name_bayangan':nam,'name': cd+nam,'x_field':True}, context=context)
 
 
 ########################################################################################################################################################################
@@ -3603,7 +3604,7 @@ class sale_order(osv.osv):
 		#reset ulang nomor So agar tidak berubah
 		nm = lin.name_bayangan
 		#ubah state ke draft
-		self.write(cr, uid, ids[0], {'state': 'draft','name':nm,}, context=context)
+		self.write(cr, uid, ids[0], {'state': 'draft'}, context=context)
 
 		return True
 
