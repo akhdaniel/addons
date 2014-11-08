@@ -3625,7 +3625,7 @@ class sale_order(osv.osv):
 		#Cek dulu qty product di gudang yang bersangkutan
 		####################################################################
 				
-		loca = lin.location_id.id
+		loca = lin.location_id.warehouse_id.lot_stock_id.id
 		mv_obj = self.pool.get('stock.move')
 		sub_tot = 0.00	
 		for l in lin.order_line:

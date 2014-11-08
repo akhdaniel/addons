@@ -195,7 +195,7 @@
                     <field name="day"/>
                     <field name="user_id"/>
                     <field name="employee_id"/>  
-                    <field name="partner_ids" string="Jumlah Customer"/> 
+                    <field name="partner_ids" string="Jumlah Customer" invisible="1"/> 
                     <field name="is_active" invisible="1"/>                             
                 </tree>
             </field>
