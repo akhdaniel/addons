@@ -54,7 +54,7 @@
                         <label string="Draft SO " attrs="{'invisible': [('state','not in',('draft','sent'))]}"/>
                         <label string="Sales Order " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
                         <div>
-                        <field name="loc_code" class="oe_inline" attrs="{'invisible': ['|',('state','!=','draft'),('x_field','=',True)]}"/>    
+                        <field name="loc_code" class="oe_inline" attrs="{'invisible': ['|',('state','!=','draft'),('x_field','=',True)]}"/>   
                         <field name="name" class="oe_inline" readonly="1"/>
                         <field name="x_field" class="oe_inline" invisible="1"/>
                         </div>
