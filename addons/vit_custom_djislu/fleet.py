@@ -72,6 +72,8 @@ class surat_jalan(osv.osv):
 			inv_ori = line.origin
 
 			mv = mv_obj.search(cr,uid,[('origin','=',inv_ori)],context=context)
+			if mv == []:
+				raise osv.except_osv(_('Error!!'), _('Faktur harus dibuat melalui SO!'))			
 			mv_id = mv_obj.browse(cr,uid,mv[0])
 
 			if mv_id.id :
