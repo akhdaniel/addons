@@ -365,7 +365,7 @@ class hr_employee(osv.osv):
         year =str(datetime.now().year)
         totals = 0
         for tunjangan in reimb :
-            if tunjangan.tahun == year and tunjangan.jenis=='rawat' and tunjangan.type == 'add':
+            if tunjangan.tahun == year and tunjangan.jenis=='rawat' and tunjangan.type == 'add' and tunjangan.state == 'approve2':
                 if tunjangan.nomin == False :
                     total = 0 + totals
                 else :   
