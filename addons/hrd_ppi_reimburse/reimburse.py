@@ -50,7 +50,7 @@ class reimburse(osv.osv):
             if tipe == 'remove':
                 raise osv.except_osv(_('Warning!'), _('Anda sudah memiliki alokasi tunjangan pengobatan'))
             total = reim.employee_id.sisa_reimburse_pengobatan
-            if total < tot_peng and jenis == 'obat': :
+            if total < tot_peng and jenis == 'obat':
                 raise osv.except_osv(_('Warning!'), _('tunjangan pengobatan anda sudah habis')) 
         if tipe == 'add' and src == [] and jenis != 'rawat':
             raise osv.except_osv(_('Warning!'), _('Anda tidak memiliki Tunjangan Pengobatan')) 
