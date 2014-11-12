@@ -29,26 +29,14 @@ class surat_jalan(osv.osv):
 			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'surat.jalan') or '/'
 		return super(surat_jalan, self).create(cr, uid, vals, context=context)
 
-	# def write(self, cr, uid, ids, vals, context=None):
-	# 	import pdb;pdb.set_trace()
-	# 	if context is None:
-	# 		context = {}
-
-	# 	mv_obj = self.pool.get('stock.move')
-	# 	sj = self.browse(cr,uid,ids[0],context=context)
-
-	# 	mv = sj.move_ids
-
-	# 	for x in mv:
-	# 		mv_ori = x.origin
-	# 		mv_id = x.id
-	# 		prod = x.prodlot_id.id
-	# 		mv_search = mv_obj.search(cr,uid,[('origin','=',mv_ori)])
-	# 		mv_br = mv_obj.browse(cr,uid,mv_search)
-	# 		mv_obj.write(cr,uid,x.id,{'prodlot_id':prod})
-
-
-		# return super(surat_jalan, self).write(cr, uid, ids, vals, context=context)
+	def unlink(self, cr, uid, ids, context=None):
+		if context is None:
+			context = {}
+		"""Allows to delete in draft state"""
+		for rec in self.browse(cr, uid, ids, context=context):
+			if rec.state != 'draft':
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+		return super(surat_jalan, self).unlink(cr, uid, ids, context=context)
 
 	def onchange_volume(self,cr,uid,ids,car_id,context=None):
 		result={}

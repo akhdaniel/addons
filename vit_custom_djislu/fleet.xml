@@ -80,7 +80,7 @@
                     </group>
                     <notebook colspan="4">
                         <page string="Invoice List">
-                            <field view_mode="tree,form" name="inv_ids" nolabel="1" attrs="{'readonly': [('state','!=','draft')]}">
+                            <field view_mode="tree,form" name="inv_ids" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
                                 <tree string="Faktur" editable="bottom">
                                     <field name="partner_id" readonly="True"/>
                                     <!-- <field name="number"/> -->
@@ -91,7 +91,7 @@
                                     <field name="state"/>
                                     <field name="button_hidden" invisible="True"/>
                                     <field name="note"/>
-                                    <field name="description" attrs="{'invisible':[('state', '=', 'draft')],'required': [('state','not in','draft','on_deliver')],'readonly':[('button_hidden','=',False)]}"/>
+                                    <field name="description" attrs="{'invisible':['|',('description','=',False),('state', '=', 'draft')],'required': [('state','not in','draft','on_deliver')],'readonly':[('button_hidden','=',False)]}" widget="selection"/>
 
                                     <button name="invoice_open" icon="STOCK_APPLY" states="deliver,ttf" string="Validate" class="oe_highlight" groups="base.group_user" attrs="{'invisible':['|',('state', 'in', ('draft','open','cancel','paid')),('button_hidden','=',False)]}"/>
 
