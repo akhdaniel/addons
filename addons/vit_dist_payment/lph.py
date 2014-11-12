@@ -48,6 +48,15 @@ class lph(osv.osv):
 			results[lph.id] = self.hitung_paid(lph.lph_line_ids)
 		return results
 
+	def unlink(self, cr, uid, ids, context=None):
+		if context is None:
+			context = {}
+		"""Allows to delete in draft states"""
+		for rec in self.browse(cr, uid, ids, context=context):
+			if rec.state != 'draft':
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+		return super(lph, self).unlink(cr, uid, ids, context=context)
+
 	_columns 	= {
 		'name'			  : fields.char('Number'),
 		'date'			  : fields.date('Date'),

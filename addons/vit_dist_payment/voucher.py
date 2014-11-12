@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class voucher(osv.osv):
 	_name 		= "vit_dist_payment.voucher"
-	_order = 'name desc'
+	_order	 	= 'name desc'
 
 	def hitung_total(self,voucher_line_ids):
 		total = 0.0
@@ -35,6 +35,15 @@ class voucher(osv.osv):
 			if v.lph_ids:
 				results[v.id] = True
 		return results
+
+	def unlink(self, cr, uid, ids, context=None):
+		if context is None:
+			context = {}
+		"""Allows to delete in draft states"""
+		for rec in self.browse(cr, uid, ids, context=context):
+			if rec.state != 'draft':
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+		return super(voucher, self).unlink(cr, uid, ids, context=context)
 
 	_columns 	= {
 		#'received_from' : fields.char('Received From'),
