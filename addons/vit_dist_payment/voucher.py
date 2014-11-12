@@ -40,9 +40,10 @@ class voucher(osv.osv):
 		if context is None:
 			context = {}
 		"""Allows to delete in draft states"""
+		#import pdb;pdb.set_trace()
 		for rec in self.browse(cr, uid, ids, context=context):
-			if rec.state != 'draft':
-				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+			if rec.state != 'draft' or rec.has_lph == True:
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft dan belum pernah digunakan di form LPH'))
 		return super(voucher, self).unlink(cr, uid, ids, context=context)
 
 	_columns 	= {

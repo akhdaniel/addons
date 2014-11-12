@@ -7,7 +7,7 @@ from openerp.tools.translate import _
 
 class lph(osv.osv):
 	_name 		= "vit_dist_payment.lph"
-	_order = 'name desc'
+	_order 		= 'name desc'
 
 	def hitung_total(self,lph_line_ids):
 		total = 0.0
@@ -52,9 +52,13 @@ class lph(osv.osv):
 		if context is None:
 			context = {}
 		"""Allows to delete in draft states"""
+		
 		for rec in self.browse(cr, uid, ids, context=context):
 			if rec.state != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+			for st in rec.lph_line_ids:
+				if st.state != 'open':
+					raise osv.except_osv(_('Error!'), _('Data tidak bisa dihapus! \n Ada list faktur yang sudah dibayar'))	
 		return super(lph, self).unlink(cr, uid, ids, context=context)
 
 	_columns 	= {
