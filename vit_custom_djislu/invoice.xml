@@ -44,7 +44,10 @@
                     <!--button name="253" string="Print Invoice" type="action" states="open,paid,proforma,sale,proforma2"/-->
                     <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,paid" statusbar_colors="{&quot;proforma&quot;:&quot;blue&quot;,&quot;proforma2&quot;:&quot;blue&quot;}"/>
                 </header>            
-            </header>    
+            </header>  
+                <field name="partner_id" position="after">
+                        <field name="partner_id2"/>
+                </field>               
                 <field name="user_id" position="before">
                         <field name="nik"/>
                 </field> 
