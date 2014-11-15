@@ -131,7 +131,7 @@
                                     </div>
                                 </form>
                                 <tree string="Sales Order Lines" editable="bottom" version="7.0">
-                               <!--  <tree string="Sales Order Lines" version="7.0"> -->
+                                <!-- <tree string="Sales Order Lines" version="7.0"> -->
                                     <field name="sequence" widget="handle"/>
                                     <field name="state" invisible="1"/>
                                     <field name="th_weight" invisible="1"/>

@@ -13,7 +13,8 @@
                             <tree string="List Hutang Per Supplier" editable="bottom">
                                 <field name="partner_id"/>
                                 <field name="limit"/>
-                                <field name="payable"/>                                
+                                <field name="payable"/> 
+                                <field name="payable_field" invisible="True"/>                               
                                 <field name="type_id"/>
                                 <field name="employee_id"/>
                             </tree>
