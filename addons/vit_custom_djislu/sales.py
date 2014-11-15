@@ -3712,7 +3712,22 @@ class sale_order(osv.osv):
 
 		#jika jumlah piutang + SO yg di ajukan melebihi limit
 		if m_tot > lim_ar:
-			raise osv.except_osv(_('Warning!'),_('Jumlah Piutang Customer ini sudah melewati limit!'))
+			raise osv.except_osv(_('Warning!'),_('Jumlah piutang (global) customer ini sudah melewati limit!'))
+
+		#cek limit piutang persupplier 
+		cr.execute('SELECT payable_field,lc.limit from limit_customer lc '\
+			'where partner_id2=%s and partner_id=%s',(lin.partner_id.id,lin.partner_id2.partner_id.id))
+		dpt = cr.fetchone()
+		ttl = dpt[0]
+		lmt = dpt[1]
+		ttlplus = ttl+lin.amount_total
+		slsh = ttlplus-lmt
+		if lmt >= 1.00 :
+			if ttlplus > lmt:
+				raise osv.except_osv(_('Warning!'),_('Jumlah piutang customer ini sudah melewati limit dari supplier %s !\n '\
+					'Limit = %s  \n '\
+					'Piutang saat ini = %s \n '\
+					'Selisih = %s' ) % (lin.partner_id2.partner_id.name,lmt,ttl,slsh))
 
 		#Set due date = date order+termin
 		tr = lin.property_payment_term.id

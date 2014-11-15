@@ -106,11 +106,11 @@ class limit_customer(osv.osv):
 			#res = {}
 			else:
 				tota = list(tot or 0)#karena dlm bentuk tuple di list kan dulu
-				total = tota[0]
-				
-				my = self.browse(cr, uid, ids, context=context)
-				#for lmt in my:
+				total = tota[0]			
 				results[x.id] = total[0]
+
+			self.write(cr,uid,x.id,{'payable_field':total[0]},context=context)
+
 		return results		
 
 	_columns ={
@@ -124,6 +124,7 @@ class limit_customer(osv.osv):
 		'type_id' : fields.many2one('master.type.cust.supp','Type',required=True, ondelete='cascade'),
 		'employee_id' : fields.many2one('hr.employee','Salesman',required=True, ondelete='cascade'),
 		'name' : fields.related('partner_id','name',type='char',string='Name'),
+		'payable_field':fields.float('AR'),
 		
 		}			
 
