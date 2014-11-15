@@ -235,13 +235,13 @@ class account_invoice(osv.osv):
 		'location_id2' : fields.many2one('sale.shop','Location Admin',readonly=True),
 		'credit' : fields.related('partner_id','credit',type="float",string="Total Receivable ",readonly="True"),
 		'credit_limit' : fields.related('partner_id','credit_limit',type="float",string="Total Limit",readonly="True"),
-
+		'partner_id2':fields.many2one('res.partner',string='Supplier',domain=[('supplier','=',True)],readonly=True, states={'draft':[('readonly',False)]}),
 		'nik' :fields.char('Sales Code',readonly=True),
 
 		'volume' : fields.float('Volume',readonly=True),
 		'weight' : fields.float('Weight',readonly=True),
 
-		'based_route_id': fields.related('partner_id','based_route_id',relation='master.based.route',type='many2one',string='Based Route'),
+		'based_route_id': fields.related('partner_id','based_route_id',relation='master.based.route',type='many2one',string='Based Route',readonly=True, states={'draft':[('readonly',False)]}),
 
 		'state': fields.selection([
 			('draft','Draft'),
@@ -533,9 +533,19 @@ class account_invoice_refund(osv.osv_memory):
 
 	_columns = {
 	   #'description': fields.char('Reason', size=128, required=True),
-	   'description': fields.many2one('master.reason','Reason', required=True),
+		'description': fields.many2one('master.reason','Reason', required=True),
+	}
+	def _get_reason(self, cr, uid, context=None):
+		if context is None:
+			context = {}
+		res = self.pool.get('account.invoice').browse(cr,uid,context.get('active_id')).description.id
+		return res
+
+	_defaults = {
+		'description': _get_reason,
 	}
 
+	
 	def compute_refund(self, cr, uid, ids, mode='refund', context=None):
 
 		inv_obj = self.pool.get('account.invoice')
@@ -555,6 +565,7 @@ class account_invoice_refund(osv.osv_memory):
 			date = False
 			period = False
 			description = False
+			numb=False
 			company = res_users_obj.browse(cr, uid, uid, context=context).company_id
 			journal_id = form.journal_id.id
 			for inv in inv_obj.browse(cr, uid, context.get('active_ids'), context=context):
@@ -590,12 +601,9 @@ class account_invoice_refund(osv.osv_memory):
 								period = res[0]
 				else:
 					date = inv.date_invoice
-				if form.description:
-					description = form.description.name
-				else:
-					description = inv.origin
 				if inv.origin:
-					numb = 	inv.origin
+					numb = inv.origin
+					description = inv.origin
 
 				if not period:
 					raise osv.except_osv(_('Insufficient Data!'), \
@@ -651,9 +659,7 @@ class account_invoice_refund(osv.osv_memory):
 							'invoice_line': invoice_lines,
 							'tax_line': tax_lines,
 							'period_id': period,
-							'name': description,
-							'origin': numb,
-							'comment': numb
+							'name': description,						
 						})
 						for field in ('partner_id', 'account_id', 'currency_id',
 										 'payment_term', 'journal_id'):
@@ -675,7 +681,7 @@ class account_invoice_refund(osv.osv_memory):
 			invoice_domain.append(('id', 'in', created_inv))
 			result['domain'] = invoice_domain
 
-			inv_obj.write(cr,uid,refund.id,{'origin':numb},context=context)
+			#inv_obj.write(cr,uid,refund.id,{'origin':numb},context=context)
 
 			return result
 

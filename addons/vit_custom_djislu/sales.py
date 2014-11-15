@@ -593,7 +593,9 @@ class sale_order(osv.osv):
 		res['nik']=order.nik
 		res['volume']=order.volume_tot
 		res['weight']=order.tonase_tot
-		return res
+		res2={'partner_id2':order.partner_id2.partner_id.id}
+		result = dict(res.items()+res2.items()) 
+		return result
 	
 
 	#hitung kubikasi dan tonase per SO
@@ -3689,7 +3691,8 @@ class sale_order(osv.osv):
 									'product_uom':qt_m,										
 									'state':'assigned'										
 									})
-		if sub_tot != lin.amount_untaxed:
+		#import pdb;pdb.set_trace()
+		if round(sub_tot,2) != lin.amount_untaxed:
 			raise osv.except_osv(_('Error!'),_('Total rupiah faktur tidak sama dengan total rupiah line faktur! \n '\
 				'Klik "Recalculate"'))
 

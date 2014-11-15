@@ -79,62 +79,53 @@ class res_partner(osv.osv):
 	]
 
 class limit_customer(osv.osv):
-
 	_name = "limit.customer"
+
+	def _get_limit_per_supplier(self, cr, uid, ids, field_names, arg, context=None):
+		
+		llc_p = self.browse(cr,uid,ids)
+		lc = []
+		for cc in llc_p:
+			lc.append(cc.partner_id.id)
+
+		lcc = tuple(lc)
+		#import pdb;pdb.set_trace()
+		results = {}
+		for x in self.browse(cr,uid,ids,context=context):
+			cr.execute("""SELECT SUM(residual)
+							FROM account_invoice
+							WHERE partner_id =%s
+							AND partner_id2=""" + str(x.partner_id.id) + """
+						  """,
+					   ((x.partner_id2.id),))
+
+			tot = cr.fetchall()
+			
+			if tot == [] :
+				results[x.id] = 0.0
+			#res = {}
+			else:
+				tota = list(tot or 0)#karena dlm bentuk tuple di list kan dulu
+				total = tota[0]
+				
+				my = self.browse(cr, uid, ids, context=context)
+				#for lmt in my:
+				results[x.id] = total[0]
+		return results		
 
 	_columns ={
 		'partner_id2' : fields.many2one('res.partner','Customer',domain=[('supplier','=',True)],required=True, ondelete='cascade'),    
 		'partner_id' : fields.many2one('res.partner','Supplier',domain=[('supplier','=',True)],required=True, ondelete='cascade'),    
 		'limit' : fields.float('Limit',required=True),
-		'payable' : fields.float('Hutang',readonly=True),
+		'payable' : fields.function(_get_limit_per_supplier,type="float",string='Receivable',required=True),
+		#'payable' : fields.float('Hutang',readonly=True),
 		'type_partner_id' : fields.many2one('master.type.partner','Group Price', ondelete='cascade'),
 		'type_cust' : fields.selection([('gt','GT'),('mt','MT')],'Type'),
 		'type_id' : fields.many2one('master.type.cust.supp','Type',required=True, ondelete='cascade'),
 		'employee_id' : fields.many2one('hr.employee','Salesman',required=True, ondelete='cascade'),
 		'name' : fields.related('partner_id','name',type='char',string='Name'),
 		
-
-
 		}			
-
-# class master_type_customer(osv.osv):
-
-# 	_name = "master.type.customer"
-# 	_rec_name = "code"
-
-# 	_columns = {
-# 		'code' : fields.char('Code', size=64, required=True),
-# 		'name' : fields.char('Name', size=128, required=True),
-# 		'is_active' : fields.boolean('is_active'),
-# 		'with_so' : fields.boolean('With SO'),
-
-# 		}
-
-# class mastera_group_customer(osv.osv):
-
-# 	_name =	"master.group.customer"
-# 	_rec_name = "code"
-
-# 	_columns = {
-# 		'code' : fields.char('Code', size=64, required=True),
-# 		'name' : fields.char('Name', size=128, required=True),
-# 		'cabang_id' : fields.char('slu.cabang','Branch'),
-
-# 		}	
-
-# class master_cabang(osv.osv):
-
-# 	_name = "master.cabang"
-# 	_rec_name = "code"
-
-# 	_columns = {
-# 		'code' : fields.char('Code', size=64, required=True),
-# 		'name' : fields.char('Name', size=128, required=True),
-#         'address' : fields.char('Alamat'),
-#         'city': fields.char('Kota'),	
-#         'tax_id' : fields.many2one('hr.employee.npwp','NPWP'),		
-
-# 		}
 
 class master_term(osv.osv):
 	_name = "master.term"
@@ -145,14 +136,6 @@ class master_term(osv.osv):
 
 	}
 
-# class master_area(osv.osv):
-# 	_name = "master.area"	
-
-# 	_columns = {
-# 		'code' : fields.char('Code', size=64, required=True),
-# 		'name' : fields.char('Name', size=128, required=True),	
-# 		'cabang_id' : fields.many2one('master.cabang','Branch'),
-# 		}
 
 class master_tax(osv.osv):
 	_name= "master.tax"
