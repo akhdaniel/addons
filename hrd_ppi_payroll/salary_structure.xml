@@ -22,7 +22,7 @@
             <field name="name">Basic</field>
             <field name="sequence" eval="1"/>
             <field name="code">BASIC</field>
-            <field name="category_id" ref="hr_payroll.BASIC"/>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.wage</field>
@@ -35,7 +35,7 @@
             <field name="category_id" ref="TOTAL"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
-            <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.DED</field>
+            <field name="amount_python_compute">result = categories.Total_allowance + categories.DED</field>
             <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
         </record>
 
@@ -114,7 +114,7 @@
 	        <field name="amount_python_compute">result = worked_days.TRANSPORT.number_of_days * contract.transport</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
-	        <field name="name">TUNJANGAN JAMSOSTEK</field>
+	        <field name="name">TUNJANGAN BPJS</field>
 	        <field name="code">T_JMS</field>
 	        <field name="category_id" ref="hr_payroll.NET"/>
 	        <field name="condition_select">none</field>
@@ -494,7 +494,7 @@
 	        <field name="amount_python_compute">result = -inputs.Adj_TRANSPORT.amount</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek" model="hr.salary.rule">
-	        <field name="name">POTONGAN JAMSOSTEK</field>
+	        <field name="name">POTONGAN BPJS</field>
 	        <field name="code">P_JA</field>
 	        <field name="category_id" ref="hr_payroll.DED"/>
 	        <field name="condition_select">none</field>
