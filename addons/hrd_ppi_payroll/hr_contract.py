@@ -12,7 +12,6 @@ class hr_contract(osv.osv):
         #    no = xxx.no
         #    if no <= 100 :
         #        gol = 1
-        import pdb;pdb.set_trace()
         oobj = self.browse(cr,uid,ids)[0]
         employee = int(oobj.employee_id.gol_id.no)
         if employee <= 100 :
@@ -129,8 +128,14 @@ class hr_contract_type(osv.osv):
         "max_biaya_jabatan":fields.float('Nominal Max (Rp)'),
         "tht":fields.float('Kontribusi Perusahaan (%)'),
         'ttht':fields.float('Kontribusi Karyawan (%)'),
-        'range_pengobatan' :fields.float('Batas Pengobatan',help='batas maksimal pengobatan')		
+        'max_tht':fields.float('Nominal Max (Rp)'),
+        'range_pengobatan' :fields.float('Batas Pengobatan',help='batas maksimal pengobatan'),
+        'type_perhitungan_pajak' : fields.selection([('net','NET'),('gross_up','Gross Up'),('mix','MIX')],'Type perhitungan Pajak',required=True)	
      } 
+
+    _defaults = {
+        'type_perhitungan_pajak' : 'mix',
+    }
 hr_contract_type()
 
 class pkp(osv.osv):

@@ -68,21 +68,24 @@
                     <group colspan="4">
                         <group string="BPJS">
                             <field name="jams1"/>
-                            <field name="jams2"/>
-                            
+                            <field name="jams2"/>    
                         </group>
-                       <group string="Reimburse" >                      
+                        <group string="Reimburse" >                      
                             <field name="reimburse_pengobatan" />                        
                             <field name="range_pengobatan" />                          
-                       </group>
-                       <group string="Biaya Jabatan">
+                        </group>
+                        <group string="Biaya Jabatan">
                             <field name="biaya_jabatan"/>
                             <field name="max_biaya_jabatan"/>
-                       </group>
-                       <group string="THT">
+                        </group>
+                        <group string="THT">
                             <field name="tht"/>
                             <field name="ttht"/>
-                       </group>
+                            <field name="max_tht"/>
+                        </group>
+                        <group string="Type Perhitungan Pajak">
+                            <field name="type_perhitungan_pajak"/>
+                        </group>
                     </group>          
                   </field>                       
             </field>
@@ -151,6 +154,16 @@
                 <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
                     <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
                 </button> 
+               <!--  <field name='contract_id' position='after'>
+                    <field name='total_tp'/>
+                    <field name='total_ttp'/>
+                    <field name='pot_absen'/>
+                    <field name='pkp'/>
+                    <field name='year'/>
+                    <field name='gross_tetap'/>
+                    <field name='gross_ttetap'/>
+                    <field name='tunj_pajak_code'/>
+                </field> -->
                 <field name="number_of_days" sum="Total Working Days" position="replace">
                     <field name="number_of_days"/>
                 </field>          
@@ -192,19 +205,15 @@
         <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
         <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
 
-<!--     <record id="view_hr_employee_grade_form2" model="ir.ui.view">
-            <field name="name">hr.payroll.structure.form</field>
-            <field name="model">hr.payroll.structure</field>
-            <field name="inherit_id" ref="hr_payroll.view_hr_employee_grade_form"/>
+        <record id="hr_salary_rule_form2" model="ir.ui.view">
+            <field name="name">hr.salary.rule.form</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
             <field name="arch" type="xml">     
-                <field name='parent_id' position='after'>
-                    <label string="Cut Off" fonts="bold"/>
-                    <div>
-                        <field name="start_date" class="oe_inline"/><label string="-" class="oe_inline"/>
-                        <field name="end_date" class="oe_inline"/>
-                    </div>
+                <field name='appears_on_payslip' position='after'>
+                    <field name='bonus'/>
                 </field>
             </field>
-    </record> -->
+        </record>
     </data>
 </openerp>
