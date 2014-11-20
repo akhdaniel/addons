@@ -194,7 +194,7 @@
                                 <div class="oe_subtotal_footer_separator oe_inline">
                                     <div>
                                         <group>
-                                    <button name="compute_discount" type="object" string="Recalculate" states="sent"/>
+                                    <button name="recalculate" type="object" string="Recalculate" states="sent"/>
                                     <label for="amount_total"/>
 
                                     <button name="button_dummy" states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
