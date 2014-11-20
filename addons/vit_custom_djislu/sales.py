@@ -3574,7 +3574,17 @@ class sale_order(osv.osv):
 
 		return True	
 
-	#reset semua discount1 ke nol dan hilangkan semua bonus productnya
+	def recalculate(self,cr, uid, vals=None, context=None):
+		order = self.browse(cr,uid,vals)[0]
+		line = order.order_line
+		for ln in line:
+			#import pdb;pdb.set_trace()
+			gross = ln.disc_value
+			self.pool.get('sale.order.line').write(cr,uid,ln.id,{'price_unit':ln.price_unit,},context=context)
+
+		return True
+
+	#reset semua discount ke nol dan hilangkan semua bonus productnya
 	def reset_discount(self, cr, uid, ids, context=None):
 		lin = self.browse(cr,uid,ids)[0]
 		xx = self.pool.get("sale.order.line")
@@ -3646,10 +3656,10 @@ class sale_order(osv.osv):
 			sub_tot += sub_t
 
 			# barang masuk
-			cr.execute ('select sum(product_qty) from stock_move '\
-				'where location_id = %s '\
-				'and product_id = %s '\
-				'and (state = %s or state = %s or state = %s or state = %s)',(loca,prod,state,state2,state3,state4))
+			cr.execute ('SELECT sum(product_qty) FROM stock_move '\
+				'WHERE location_id = %s '\
+				'AND product_id = %s '\
+				'AND (state = %s OR state = %s OR state = %s OR state = %s)',(loca,prod,state,state2,state3,state4))
 			oz = cr.fetchone()
 			zoz = list(oz or 0)#karena dlm bentuk tuple di list kan dulu
 			zozo = zoz[0]
@@ -3657,10 +3667,10 @@ class sale_order(osv.osv):
 				zozo = 0.00   
 
 			#barang keluar
-			cr.execute ('select sum(product_qty) from stock_move '\
-				'where location_dest_id = %s '\
-				'and product_id = %s '\
-				'and (state = %s or state = %s or state = %s or state = %s)',(loca,prod,state,state2,state3,state4))
+			cr.execute ('SELECT sum(product_qty) FROM stock_move '\
+				'WHERE location_dest_id = %s '\
+				'AND product_id = %s '\
+				'AND (state = %s or state = %s OR state = %s or state = %s)',(loca,prod,state,state2,state3,state4))
 			uz = cr.fetchone()
 			zuz = list(uz or 0)#karena dlm bentuk tuple di list kan dulu
 			zuzu = zuz[0]
@@ -3715,8 +3725,8 @@ class sale_order(osv.osv):
 			raise osv.except_osv(_('Warning!'),_('Jumlah piutang (global) customer ini sudah melewati limit!'))
 
 		#cek limit piutang persupplier 
-		cr.execute('SELECT payable_field,lc.limit from limit_customer lc '\
-			'where partner_id2=%s and partner_id=%s',(lin.partner_id.id,lin.partner_id2.partner_id.id))
+		cr.execute('SELECT payable_field,lc.limit FROM limit_customer lc '\
+			'WHERE partner_id2=%s AND partner_id=%s',(lin.partner_id.id,lin.partner_id2.partner_id.id))
 		dpt = cr.fetchone()
 		ttl = dpt[0]
 		lmt = dpt[1]
