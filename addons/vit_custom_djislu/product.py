@@ -2,6 +2,8 @@ from openerp.osv import fields,osv
 import time
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+import time
 
 ########Product##############
 class product_product(osv.osv):
@@ -125,6 +127,30 @@ class product_product(osv.osv):
 				
 		return res
 
+	#cari harga sale price di master harga jual
+	def _get_sale_price(self, cr, uid, ids, field_names, arg, context=None):
+
+		result = {}
+		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
+
+		for x in self.browse(cr,uid,ids):
+			cr.execute("""SELECT mhj.small_price
+							FROM  master_harga_jual mhj
+							LEFT JOIN master_type_partner mtp on mhj.type_partner_id = mtp.id
+							WHERE is_reference = True
+							AND %s >= mhj.date_from 
+							AND %s <= mhj.date_to 
+							AND mhj.product_id = """ + str(x.id) + """
+				  		""",(skrg,skrg))
+
+			hj = cr.fetchone()
+			if hj is not None:
+				result[x.id]=hj[0]
+			else:
+				result[x.id]= 0.00
+
+		return result
+
 	_columns  = {
 		'default_code' : fields.char('Internal Reference', size=64, select=True, required=True),
 		'new_product' : fields.boolean('New Product?'),
@@ -139,7 +165,9 @@ class product_product(osv.osv):
 		'forecasted_big':fields.function(_get_qty_forcasted_big,string ='Big Forcasted Qty',readonly=True),
 		'total_sale_price': fields.float(string="Total Sale Price",readonly=True),
 		'total_cost_price': fields.float(string="Total Cost Price",readonly=True),
-		'ratio_uos': fields.related('uos_id','factor_inv',relation="product.uom",type="float",readonly=True,string="Ratio")
+		'ratio_uos': fields.related('uos_id','factor_inv',relation="product.uom",type="float",readonly=True,string="Ratio"),
+		'sale_price': fields.function(_get_sale_price,type='float',string='Sales Price'),
+
 			}
 	_sql_constraints = [
 	   ('default_code_uniq', 'unique (default_code)', 'Internal Reference sudah ada!'),('barcode_uniq', 'unique (barcode)', 'Barcode sudah ada !')
@@ -181,6 +209,7 @@ class master_code_price(osv.osv):
 
 class master_harga_jual(osv.osv):
 	_name = "master.harga.jual"
+	_rec_name = "product_id"
 
 	_columns = {
 		'product_id' : fields.many2one('product.product',required=True, string="Code"),

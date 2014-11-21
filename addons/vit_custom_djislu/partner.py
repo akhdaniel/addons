@@ -1,4 +1,5 @@
 from openerp.osv import fields,osv
+from openerp.tools.translate import _
 
 class res_partner(osv.osv):
 
@@ -153,10 +154,22 @@ class master_tax(osv.osv):
 class master_type_partner(osv.osv):
 	_name = "master.type.partner"
 
+	def create(self, cr, uid, vals, context=None):
+		#import pdb;pdb.set_trace()
+		if 'is_reference' in vals.keys():
+			viv = vals['is_reference']
+			viva = self.search(cr,uid,[('is_reference','=',True)])
+
+			if viva != [] :
+				raise osv.except_osv(_('Error!'), _('Referensi untuk harga jual product sudah dipakai!'))
+
+		return super(master_type_partner, self).create(cr, uid, vals, context=context) 
+
 	_columns = {
 		'code' : fields.char('Code',size=64,required=True),
-		'name' : fields.char('Name',size=128),
+		'name' : fields.char('Name',size=128,required=True),
 		'parent_id' : fields.many2one('master.type.partner','Parent', select=True, ondelete='cascade'),
+		'is_reference' : fields.boolean('Ref for Sale Price'),
 		#'date' : fields.date('Tanggal Berlaku'),
 		} 
 
