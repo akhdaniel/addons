@@ -24,6 +24,10 @@
                         <field name="ratio_uos"/>
                 </field> 
 
+                <field name="list_price" position="replace">
+                        <field name="sale_price" string="Sale Price" groups="stock.group_stock_manager"/>
+                </field> 
+
 <!--                 <page string="Accounting" position="after">
                     <page string="Multiples UoM">
                     <group string="Multiples UoM">
@@ -63,7 +67,8 @@
                         <field name="uos_id" string="Big UoM"/>
                         <field name="ratio_uos"/>
                         
-                        <field name="lst_price" string="Sale Price" groups="stock.group_stock_manager"/>
+                        <field name="lst_price" string="Sale Price" groups="stock.group_stock_manager" invisible="1"/>
+                        <field name="sale_price" string="Sale Price" groups="stock.group_stock_manager"/>
                         <field name="price" invisible="not context.get('pricelist',False)"/>
                         <field name="standard_price" string="Cost Price" groups="stock.group_stock_manager"/>
                         <field name="total_sale_price" groups="stock.group_stock_manager"/>
@@ -75,11 +80,35 @@
             </field>
         </record>
 
+        <record id="view_masters_form" model="ir.ui.view">
+            <field name="name">Harga Jual</field>
+            <field name="model">master.harga.jual</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Master Harga Jual" version="7.0">
+                    <sheet>
+                        <group colspan="2">
+                            <group>
+                                <field name="product_id"/>
+                                <field name="type_partner_id"/>
+                                <field name="big_price"/>
+                                <field name="small_price"/>
+                            </group>
+                            <group>                               
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
         <record id="view_masters" model="ir.ui.view">
             <field name="name">harga.jual.tree</field>
             <field name="model">master.harga.jual</field>
             <field name="arch" type="xml">
-                <tree string="Master Harga Jual" editable="top">
+                <tree string="Master Harga Jual">
                     <field name="product_id"/>
                     <field name="type_partner_id"/>
                     <field name="big_price"/>
