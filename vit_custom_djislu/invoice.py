@@ -535,10 +535,13 @@ class account_invoice_refund(osv.osv_memory):
 	   #'description': fields.char('Reason', size=128, required=True),
 		'description': fields.many2one('master.reason','Reason', required=True),
 	}
+	
 	def _get_reason(self, cr, uid, context=None):
+		res={}
 		if context is None:
 			context = {}
-		res = self.pool.get('account.invoice').browse(cr,uid,context.get('active_id')).description.id
+		elif context.get('active_id'):
+			res = self.pool.get('account.invoice').browse(cr,uid,context.get('active_id',False)).description.id 
 		return res
 
 	_defaults = {
