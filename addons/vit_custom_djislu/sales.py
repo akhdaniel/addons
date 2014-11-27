@@ -3701,7 +3701,7 @@ class sale_order(osv.osv):
 									'product_uom':qt_m,										
 									'state':'assigned'										
 									})
-		#import pdb;pdb.set_trace()
+		
 		if round(sub_tot,2) != lin.amount_untaxed:
 			raise osv.except_osv(_('Error!'),_('Total rupiah faktur tidak sama dengan total rupiah line faktur! \n '\
 				'Klik "Recalculate"'))
@@ -3727,9 +3727,13 @@ class sale_order(osv.osv):
 		#cek limit piutang persupplier 
 		cr.execute('SELECT payable_field,lc.limit FROM limit_customer lc '\
 			'WHERE partner_id2=%s AND partner_id=%s',(lin.partner_id.id,lin.partner_id2.partner_id.id))
-		dpt = cr.fetchone()
-		ttl = dpt[0]
-		lmt = dpt[1]
+		dpt = cr.fetchall()
+		#import pdb;pdb.set_trace()
+		ttl = dpt[0][0]
+		lmt = dpt[0][1]
+		if lmt is None:
+			lmt = 0.00
+		
 		ttlplus = ttl+lin.amount_total
 		slsh = ttlplus-lmt
 		if lmt >= 1.00 :
