@@ -391,83 +391,89 @@ class account_voucher(osv.osv):
 		vo_obj = self.pool.get('account.voucher')
 		def_amount = vo_obj.browse(cr,uid,ids[0]).amount
 		st = "'open'"
-		# inv_obj = self.pool.get('account.invoice')
-		# inv_src = inv_obj.search(cr,uid,[('id','=',inv_id)])[0]
-		# inv_br = inv_obj.browse(cr,uid,inv_src)
+		if vo_obj.browse(cr,uid,ids[0]).type == 'receipt':
+			# inv_obj = self.pool.get('account.invoice')
+			# inv_src = inv_obj.search(cr,uid,[('id','=',inv_id)])[0]
+			# inv_br = inv_obj.browse(cr,uid,inv_src)
 
-		#cr.execute('select lph_id from lph_invoice where invoice_id ='+str(inv_id))
-		cr.execute('select lph_id from lph_invoice lphi '\
-			'left join vit_dist_payment_lph vlph on vlph.id = lphi.lph_id '\
-			'where lphi.invoice_id ='+str(inv_id)+' '\
-			'and vlph.state = '+st)		
-		fet = cr.fetchone()
-		
-		if not fet :
-			raise osv.except_osv(_('Error!!'), _('Pembayaran harus dilakukan melalui menu LPH Payment!'))
-		id_lph = fet[0]
-
-		lph_obj = self.pool.get('vit_dist_payment.lph')
-		lph_src = lph_obj.search(cr,uid,[('id','=',id_lph)])
-		lph_brw = lph_obj.browse(cr,uid,lph_src)[0]
-		
-		if lph_brw.voucher_id.id :
-			v_total = lph_brw.voucher_id.total
-		else :
-			v_total = 0.0
-		
-		t_paid = lph_brw.total_paid
-		acum_paid = t_paid + def_amount
-		recom_paid = v_total - t_paid
-
-		if acum_paid > v_total :
-			raise osv.except_osv(_('Error!!'), _('Total pembayaran atas faktur ini:\n \
-			 Rp. %s \n \
-			 Sudah melewati nominal voucher: \n \
-			 Rp. %s. \n \
-			 Nominal yang bisa di input max: \n \
-			 Rp. %s !') % (acum_paid,v_total,recom_paid))
-
-		#jika write off pastikan amount yg di bayar+jml amount writeoff = total hutang
-		v_id = vo_obj.browse(cr,uid,ids[0])
-		if v_id.writeoff_ids != []:
-			writeoff_total = 0.00
-			for x in v_id.writeoff_ids:
-				am = x.amount
-				writeoff_total += am
-			difference = def_amt-def_amount
-			if difference != writeoff_total :
-				return {'type': 'ir.actions.act_window_close'}
-				raise osv.except_osv(_('Error!!'), _('Different amount tidak sama dengan total write off!'))
-
-			elif difference == writeoff_total :
-				mv_ac = self.browse(cr,uid,ids)[0].line_cr_ids
-				for amo in mv_ac:
-					if amo.amount != 0.00:
-						balance = amo.amount_unreconciled
-
-				# for wo in v_id.writeoff_ids:
-				# 	nm = wo.name
-				# 	rp = wo.amount
-				# 	acc = wo.account_id.id
+			#cr.execute('select lph_id from lph_invoice where invoice_id ='+str(inv_id))
+			cr.execute('select lph_id from lph_invoice lphi '\
+				'left join vit_dist_payment_lph vlph on vlph.id = lphi.lph_id '\
+				'where lphi.invoice_id ='+str(inv_id)+' '\
+				'and vlph.state = '+st)		
+			fet = cr.fetchone()
 			#import pdb;pdb.set_trace()
-			cr.execute('select id from account_voucher_line where '\
-				'amount_unreconciled = '+str(def_amt)+' '\
-				'and reconcile = False  '\
-				'and voucher_id='+str(v_id.id)+'')	
-			hsl = cr.fetchone()
-			hsl_line = hsl[0]
-			self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)
+			if not fet :
+				raise osv.except_osv(_('Error!!'), _('Pembayaran harus dilakukan melalui menu LPH Payment!'))
+			id_lph = fet[0]
 
-					
-					
-		elif v_id.writeoff_ids == [] :
-			writeoff_total = 0.00
-		#self.write(cr,uid,ids[0],{'amount':writeoff_total+def_amount},context=context)
+			lph_obj = self.pool.get('vit_dist_payment.lph')
+			lph_src = lph_obj.search(cr,uid,[('id','=',id_lph)])
+			lph_brw = lph_obj.browse(cr,uid,lph_src)[0]
+			
+			if lph_brw.voucher_id.id :
+				v_total = lph_brw.voucher_id.total
+			else :
+				v_total = 0.0
+			
+			t_paid = lph_brw.total_paid
+			acum_paid = t_paid + def_amount
+			recom_paid = v_total - t_paid
 
-		wf_service = netsvc.LocalService("workflow")
-		for vid in ids:
-			wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
-			return {'type': 'ir.actions.act_window_close'}
+			if acum_paid > v_total :
+				raise osv.except_osv(_('Error!!'), _('Total pembayaran atas faktur ini:\n \
+				 Rp. %s \n \
+				 Sudah melewati nominal voucher: \n \
+				 Rp. %s. \n \
+				 Nominal yang bisa di input max: \n \
+				 Rp. %s !') % (acum_paid,v_total,recom_paid))
+
+			#jika write off pastikan amount yg di bayar+jml amount writeoff = total hutang
+			v_id = vo_obj.browse(cr,uid,ids[0])
+			if v_id.writeoff_ids != []:
+				writeoff_total = 0.00
+				for x in v_id.writeoff_ids:
+					am = x.amount
+					writeoff_total += am
+				difference = def_amt-def_amount
+				if difference != writeoff_total :
+					return {'type': 'ir.actions.act_window_close'}
+					raise osv.except_osv(_('Error!!'), _('Different amount tidak sama dengan total write off!'))
+
+				elif difference == writeoff_total :
+					mv_ac = self.browse(cr,uid,ids)[0].line_cr_ids
+					for amo in mv_ac:
+						if amo.amount != 0.00:
+							balance = amo.amount_unreconciled
+
+					# for wo in v_id.writeoff_ids:
+					# 	nm = wo.name
+					# 	rp = wo.amount
+					# 	acc = wo.account_id.id
+				#import pdb;pdb.set_trace()
+				cr.execute('select id from account_voucher_line where '\
+					'amount_unreconciled = '+str(def_amt)+' '\
+					'and reconcile = False  '\
+					'and voucher_id='+str(v_id.id)+'')	
+				hsl = cr.fetchone()
+				hsl_line = hsl[0]
+				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)
+
+						
+						
+			elif v_id.writeoff_ids == [] :
+				writeoff_total = 0.00
+
+			wf_service = netsvc.LocalService("workflow")
+			for vid in ids:
+				wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
+				
+		else:
+			wf_service = netsvc.LocalService("workflow")
+			for vid in ids:
+				wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
+
+		return {'type': 'ir.actions.act_window_close'}
 	
 
 class writeoff(osv.osv):
