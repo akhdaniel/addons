@@ -1,0 +1,41 @@
+<openerp>
+	<data>
+
+        <record model="ir.actions.act_window" id="dosen_list_action">
+            <field name="name">Dosen</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="view_id" ref="partner_tree_view3"/>  -->
+            <field name="domain">[('is_dosen','=',True)]</field>
+            <field name="context">{'default_is_dosen':True}</field>
+<!--             <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field> -->
+        </record>
+
+        <!-- Dosen Information Form View -->
+        <record model="ir.ui.view" id="view_teacher_teacher_form">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+            	<field name="coach_id" position="after">
+            		<newline/>
+                    <field name="is_dosen"/>
+                </field>
+            
+                <page string="HR Settings" position="before">
+                    <page string="Jadwal Mengajar" attrs="{'invisible':[('is_dosen','=',False)]}">
+                        <form string="Jadwal Mengajar" version="7.0">
+                            <sheet>
+                                <field name="master_jadwal_ids" view_mode="tree" nolabel="1"/>
+                            </sheet>
+                        </form>
+                    </page>                    
+                </page> 
+            </field>
+        </record>
+
+
+	</data>
+</openerp>	
