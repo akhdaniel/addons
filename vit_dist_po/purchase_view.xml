@@ -2,17 +2,115 @@
 <openerp>
     <data>
 
-        <record id="seq_create_po" model="ir.sequence.type">
-            <field name="name">NoBukti</field>
-            <field name="code">purchase.order.seq</field>
+        <record model="ir.ui.view" id="view_product_form_expiry_hide_dates">
+            <field name="name">stock.production.lot.hide.dates</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="product_expiry.view_move_form_expiry" />
+            <field name="arch" type="xml">
+                <field name="use_date" position="replace">
+                    <field name="use_date" invisible="1"/>
+                </field>
+                <field name="removal_date" position="replace">
+                    <field name="removal_date" invisible="1"/>
+                </field>
+            </field>
         </record>
-        <record id="seq_c_po" model="ir.sequence">
+
+        <!-- <record model="ir.ui.view" id="view_move_form_expiry">
+            <field name="name">stock.production.lot.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form" />
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="life_date" />
+                    <field name="use_date" />
+                    <field name="removal_date" />
+                    <field name="alert_date" />
+                    <separator colspan="4" />
+                </field>
+            </field>
+        </record> -->
+                
+        <record id="seq_create_po" forcecreate="1" model="ir.sequence.type">
             <field name="name">NoBukti</field>
-            <field name="code">purchase.order.seq</field>
+            <field name="code">purchase.order.vit.seq</field>
+        </record>
+        <record id="seq_c_po" forcecreate="1" model="ir.sequence">
+            <field name="name">NoBukti</field>
+            <field name="code">purchase.order.vit.seq</field>
             <field name="prefix"></field>
             <field name="padding">7</field>
             <field name="company_id" eval="False"/>
         </record>
+
+        <record id="act_schedule_po_detail" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="context">{}</field>
+            <field name="domain">[('state','in',('draft','sent','confirmed'))]</field>
+            <field name="view_mode">tree,form,graph,calendar</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a request for quotation.
+              </p><p>
+                The quotation contains the history of the discussion/negociation
+                you had with your supplier. Once confirmed, a request for
+                quotation is converted into a purchase order.
+              </p><p>
+                Most propositions of purchase orders are created automatically
+                by OpenERP based on inventory needs.
+              </p>
+            </field>
+        </record>
+
+<!--         <record forcecreate="1" id="seq_rx_po" model="ir.sequence.type">  
+            <field name="name">PO RX</field>
+            <field name="code">code.cumul.seq</field>
+        </record>
+        <record forcecreate="1" id="seq_c_rx_po" model="ir.sequence">
+            <field name="name">PORX</field>
+            <field name="code">code.cumul.seq</field>
+            <field name="padding" eval="7"/>
+            <field name="prefix"></field>
+            <field name="suffix"></field>
+        </record>
+
+        <record id="view_schedule_po_filter" model="ir.ui.view">
+            <field name="name">purchase.order.schedule.cumul.list.select</field>
+            <field name="model">purchase.order.schedule.cumul</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Order">
+                    <field name="po_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter name="partner_x" string="Principal" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'partner_x'}"/>
+                    </group>
+                </search>
+            </field>
+        </record> 
+
+        <record id="act_schedule_po_detail" model="ir.actions.act_window">
+            <field name="name">purchase.order.schedule.cumul.act</field>
+            <field name="res_model">purchase.order.schedule.cumul</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_partner_x':0,'search_default_po_id': active_id}</field>
+        </record>
+        
+        
+        <record id="view_po_cumul_tree" model="ir.ui.view">
+            <field name="name">purchase.order.schedule.r1.detail.tree</field>
+            <field name="model">purchase.order.schedule.cumul</field>
+            <field name="arch" type="xml">
+                <tree string="SCH DETAIL" create="false">
+                    <field name="po_id" invisible='1'/>
+                    <field name="partner_x" invisible='0'/>
+                    <field name="t2"/>
+                    <field name="fleet"/>
+                </tree>
+            </field>
+        </record>  -->
 
         <record id="purchase_order_form_custom" model="ir.ui.view">
             <field name="name">purchase.order.form.custom</field>
@@ -46,18 +144,24 @@
                                 <field name="name" class="oe_inline" readonly="1"/>
                             </h1>
                         </div>
-                        <group >
-                            <group> 
+                        <group>
+                            <group style="width: 550px;"> 
+                                <label for="partner_x"/>
+                                <div>
                                     <field name="partner_x" on_change="onchange_partner_x(partner_x,date_order)" options="{'create': False, 'create_edit': False}"/>
-                                    <field name="loc_x" on_change="onchange_locx(loc_x,location_id)" groups="stock.group_locations" options="{'create': False, 'create_edit': False}"/>
-                                    <field name="partner_id" class="oe_inline" invisible="True"/>
-                                    <field name="location_id" groups="stock.group_locations" invisible="True"/>
-                                    <field name="partner_ref"/>
-                                    <field domain="[('type','=','purchase')]" name="pricelist_id" groups="product.group_purchase_pricelist" on_change="onchange_pricelist(pricelist_id, context)"/>
-                                    <field name="currency_id" invisible='1'/>
-                                    <field name="journal_id" invisible='1'/>
-                                    <field name="date_order" attrs="{'readonly': True }"/>
-                                    <!-- <field name='periode'/> -->
+                                    <field name="warning" style="color: red !important;" readonly="1" attrs="{'invisible': [('warning','=',False)]}"/>
+                                </div>
+                                <field name="loc_x" on_change="onchange_locx(loc_x,location_id)" groups="stock.group_locations" options="{'create': False, 'create_edit': False}"/>
+                                <field name="partner_id" class="oe_inline" invisible="True"/>
+                                <field name="location_id" groups="stock.group_locations" invisible="True"/>
+                                <field name="partner_ref"/>
+                                <field domain="[('type','=','purchase')]" name="pricelist_id" groups="product.group_purchase_pricelist" on_change="onchange_pricelist(pricelist_id, context)"/>
+                                <field name="currency_id" invisible='1'/>
+                                <field name="journal_id" invisible='1'/>
+                                <group col='5' colspan="2">
+                                <field name="date_order" attrs="{'readonly': True }"/>
+                                </group>
+                                <!-- <field name='periode'/> -->
                             </group>
                             <group>
                                 <field name="origin" attrs="{'invisible': [('origin','=',False)]}"/>
@@ -66,254 +170,64 @@
                             </group>
                         </group>
 
-                        <separator string="Week 1"/>
-                        <label for='view_w1'/><field name='view_w1'/>
-                        <group attrs="{'invisible':[('view_w1', '=', False)]}">
-                            <group col="7">
-                                <label for="r1"/>
-                                <label for="r1e"/>
-                                <label for="percent_r1"/>
-                                <label for="qr1" invisible="1"/>
-                                <label for="volume_r1"/>
-                                <label for="weight_r1"/>
-                                <!-- <label for="fleet_id"/> -->
-                                <label for="no_vehicle"/>
-                                <div><field name='r1' /></div>
-                                <div><field name='r1e' /></div>
-                                <div><field name='percent_r1' on_change="onchange_rx(percent_r1,'1',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids1, order_line,qr1,volume_r1,weight_r1)"/></div>
-                                <div invisible="1"><field name='qr1'/></div>
-                                <div><field name='volume_r1'/></div>
-                                <div><field name='weight_r1'/></div>
-                                <div><field name='no_vehicle' /></div>
-                            </group>
-                            <group/>
-                            <group>
-                                <div >
-                                    <field name="sch_ids1" view_mode="tree">
-                                        <tree editable="button" colors="blue:'cukup' not in [moq_m3]"> <!-- bds kg, in [moq_kg] -->
-                                            <field name="name" on_change="onchange_name(name, name1s, alias, parent.sch_ids1, parent.r1, parent.r1e)"/>
-                                            <field name="name1s"/>
-                                            <field name="alias"/>
-                                            <field name="p1" on_change="onchange_percent(p1, alias, parent.percent_r1, parent.order_line)"/>
-                                            <field name="vol1"/>
-                                            <field name='wgt1'/>
-                                            <field name="fleet_id" widget="many2many_tags" on_change="onchange_fleet(volume, fleet_id, tonase)" colspan='2'/>
-                                            <field name='volume'/>
-                                            <field name='tonase'/>
-                                            <field name="moq_m3"/>
-                                            <field name="moq_kg"/>
-                                        </tree>
-                                    </field>
-                                </div>
-                            </group>
-                        </group>
-                        <!-- Here -->
-                        <separator string="Week 2"/>
-                        <label for='view_w2'/><field name='view_w2'/>
-                        <group attrs="{'invisible':[('view_w2', '=', False)]}">
-                            <group col="7">
-                                <label for="r2"/>
-                                <label for="r2e"/>
-                                <label for="percent_r2"/>
-                                <label for="qr2" invisible="1"/>
-                                <label for="volume_r2"/>
-                                <label for="weight_r2"/>
-                                <!-- <label for="fleet_id"/> -->
-                                <label for="no_vehicle"/>
-                                <div><field name='r2' /></div>
-                                <div><field name='r2e' /></div>
-                                <div><field name='percent_r2' on_change="onchange_rx(percent_r2,'2',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids2, order_line,qr2,volume_r2,weight_r2)"/></div>
-                                <div invisible="1"><field name='qr2'/></div>
-                                <div><field name='volume_r2'/></div>
-                                <div><field name='weight_r2'/></div>
-                                <div><field name='no_vehicle2' /></div>
-                            </group>
-                            <group/>
-                            <group>
-                                <div >
-                                    <field name="sch_ids2" view_mode="tree">
-                                        <tree editable="button" colors="blue:'cukup' not in [moq_m32]"> <!-- bds kg, in [moq_kg] -->
-                                            <field name="name2" on_change="onchange_name(name2, name2s, alias2, parent.sch_ids2, parent.r2, parent.r2e)"/>
-                                            <field name="name2s"/>
-                                            <field name="alias2"/>
-                                            <field name="p2" on_change="onchange_percent(p2, alias2, parent.percent_r2, parent.order_line)"/>
-                                            <field name="vol2"/>
-                                            <field name='wgt2'/>
-                                            <field name="fleet_id2" widget="many2many_tags" on_change="onchange_fleet(volume2, fleet_id2, tonase2)" colspan='2'/>
-                                            <field name='volume2'/>
-                                            <field name='tonase2'/>
-                                            <field name="moq_m32"/>
-                                            <field name="moq_kg2"/>
-                                        </tree>
-                                    </field>
-                                </div>
-                            </group>
-                        </group>
-                         <!-- Here -->
-                        <separator string="Week 3"/>
-                        <label for='view_w3'/><field name='view_w3'/>
-                        <group attrs="{'invisible':[('view_w3', '=', False)]}">
-                            <group col="7">
-                                <label for="r3"/>
-                                <label for="r3e"/>
-                                <label for="percent_r3"/>
-                                <label for="qr3" invisible="1"/>
-                                <label for="volume_r3"/>
-                                <label for="weight_r3"/>
-                                <!-- <label for="fleet_id"/> -->
-                                <label for="no_vehicle"/>
-                                <div><field name='r3' /></div>
-                                <div><field name='r3e' /></div>
-                                <div><field name='percent_r3' on_change="onchange_rx(percent_r3,'3',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids3, order_line,qr3,volume_r3,weight_r3)"/></div>
-                                <div invisible="1"><field name='qr3'/></div>
-                                <div><field name='volume_r3'/></div>
-                                <div><field name='weight_r3'/></div>
-                                <div><field name='no_vehicle3' /></div>
-                            </group>
-                            <group/>
-                            <group>
-                                <div >
-                                    <field name="sch_ids3" view_mode="tree">
-                                        <tree editable="button" colors="blue:'cukup' not in [moq_m33]"> <!-- bds kg, in [moq_kg] -->
-                                            <field name="name3" on_change="onchange_name(name3, name3s, alias3, parent.sch_ids3, parent.r3, parent.r3e)"/>
-                                            <field name="name3s"/>
-                                            <field name="alias3"/>
-                                            <field name="p3" on_change="onchange_percent(p3, alias3, parent.percent_r3, parent.order_line)"/>
-                                            <field name="vol3"/>
-                                            <field name='wgt3'/>
-                                            <field name="fleet_id3" widget="many2many_tags" on_change="onchange_fleet(volume3, fleet_id3, tonase3)" colspan='2'/>
-                                            <field name='volume3'/>
-                                            <field name='tonase3'/>
-                                            <field name="moq_m33"/>
-                                            <field name="moq_kg3"/>
-                                        </tree>
-                                    </field>
-                                </div>
-                            </group>
-                        </group>
-                        
-                        <separator string="Week 4"/>
-                        <label for='view_w4'/><field name='view_w4'/>
-                        <group attrs="{'invisible':[('view_w4', '=', False)]}">
-                            <group col="7">
-                                <label for="r4"/>
-                                <label for="r4e"/>
-                                <label for="percent_r4"/>
-                                <label for="qr4" invisible="1"/>
-                                <label for="volume_r4"/>
-                                <label for="weight_r4"/>
-                                <!-- <label for="fleet_id"/> -->
-                                <label for="no_vehicle"/>
-                                <div><field name='r4' /></div>
-                                <div><field name='r4e' /></div>
-                                <div><field name='percent_r4' on_change="onchange_rx(percent_r4,'4',percent_r1,percent_r2,percent_r3,percent_r4,sch_ids4, order_line,qr4,volume_r4,weight_r4)"/></div>
-                                <div invisible="1"><field name='qr4'/></div>
-                                <div><field name='volume_r4'/></div>
-                                <div><field name='weight_r4'/></div>
-                                <div><field name='no_vehicle4' /></div>
-                            </group>
-                            <group/>
-                            <group>
-                                <div >
-                                    <field name="sch_ids4" view_mode="tree">
-                                        <tree editable="button" colors="blue:'cukup' not in [moq_m34]"> <!-- bds kg, in [moq_kg] -->
-                                            <field name="name4" on_change="onchange_name(name4, name4s, alias4, parent.sch_ids4, parent.r4, parent.r4e)"/>
-                                            <field name="name4s"/>
-                                            <field name="alias4"/>
-                                            <field name="p4" on_change="onchange_percent(p4, alias4, parent.percent_r4, parent.order_line)"/>
-                                            <field name="vol4"/>
-                                            <field name='wgt4'/>
-                                            <field name="fleet_id4" widget="many2many_tags" on_change="onchange_fleet(volume4, fleet_id4, tonase4)" colspan='2'/>
-                                            <field name='volume4'/>
-                                            <field name='tonase4'/>
-                                            <field name="moq_m34"/>
-                                            <field name="moq_kg4"/>
-                                        </tree>
-                                    </field>
-                                </div>
-                            </group>
-                        </group>
-                        <group >
-                            <group string="Total">
-                                <field name="volume_tot" class="oe_subtotal_footer_separator"/>
-                                <field name="weight_tot" class="oe_subtotal_footer_separator"/>
-                            </group>
-                        </group>
-
                         <notebook>
                             <page string="Purchase Order">
-                                <field name="order_line" on_change="onchange_lines(volume_tot, weight_tot, order_line)" context="{'sch_ids1':sch_ids1}" string="A">
-                                    <tree string="Purchase Order Lines" editable="botom">
-                                        <field name="int_code" string="Code" readonly="1"/>
-                                        <field name="barcode" string="Barcode" readonly="1"/>
-                                        <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,0,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" invisible="1"/>
-                                        <field name="name" readonly="1"/>
-                                        <field name="date_planned" readonly="1" invisible="1"/>
+                                <h4>Range Date :  </h4><field class="oe_inline" name="datestart"/> <field class="oe_inline" name="dateend"/>
+                                <field name="order_line" string="Order Lines" on_change="onchange_lines_sum_vol_wgt(order_line)">
+                                    <tree string="Purchase Order Lines" editable="bottom">
+                                        <field name="int_code" readonly="1"/>
+                                        <field name="barcode" readonly="1"/>
+                                        <field name="product_id"
+                                            on_change="onchange_product_id(parent.pricelist_id,product_id,0,
+                                            product_uom,parent.partner_x, parent.date_order,parent.fiscal_position,
+                                            date_planned,name,price_unit,context)"/>
+                                        <field name="name" string="Nama Barang" invisible="1"/>
+                                        <field name="date_planned" invisible="1"/>
                                         <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                                         <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
-                                        <field name="suggested_order" string="Suggest"/>                    
-                                        <field name="adjustment" on_change="onchange_line(product_id, adjustment, suggested_order, product_uom, price_unit,parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT)"/>
-                                        <field name="product_qty" on_change="onchange_product_id(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id,parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
-                                        <field name="product_uom" string="Unit" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" readonly="1"/>
-                                        <field name="price_unit" readonly="0"/>
+                                        <field name="suggested_order"/>                    
+                                        <field name="adjustment" on_change="onchange_line(product_id, small_qty, small_uom, adjustment, suggested_order, product_uom, parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT, price_unit)"/>
+                                        <field name="product_uom" string="Satuan Besar" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
+                                        <field name="small_qty" on_change="onchange_qty_kecil(product_id, product_uom, small_qty, small_uom, forecastMT,forecastGT, bufMT, bufGT, stock_current,in_transit, adjustment)"/>
+                                        <field name="small_uom" />
+                                        <field name="product_qty" string="Final Order" readonly='1'/>
+                                        <field name="price_unit" string="Harga Beli" />
                                         <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]" invisible="1"/>
                                         <field name="price_subtotal"/>                
-                                        <field name="prod_weight" />             
-                                        <field name="prod_volume" />
-                                        <field name="avgMT"  string="Average MT" readonly="1"/>
-                                        <field name="avgGT" string="Average GT" readonly="1"/>
-                                        <field name="forecastMT" on_change="onchange_line(product_id, adjustment, suggested_order, product_uom, price_unit,parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT)"/>
-                                        <field name="forecastGT" on_change="onchange_line(product_id, adjustment, suggested_order, product_uom, price_unit,parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT)"/>
-                                        <field name="bufMT" readonly="1"/>
-                                        <field name="bufGT" readonly="1"/>
-                                        <field name="sales_3m" />                     
-                                        <field name="stock_current" />                               
+                                        <field name="prod_weight" invisible="1"/>             
+                                        <field name="prod_volume" invisible="1"/>
+                                        <field name="avgMT"  readonly="1"/>
+                                        <field name="avgGT" readonly="1"/>
+                                        <field name="sales_3m" readonly="1"/>                     
+                                        <field name="forecastMT" on_change="onchange_mtgt(product_id, product_uom, small_qty, small_uom, stock_current, in_transit, forecastMT, forecastGT, bufMT, bufGT, adjustment, sales_3m, stock_cover, price_unit)"/>
+                                        <field name="forecastGT" on_change="onchange_mtgt(product_id, product_uom, small_qty, small_uom, stock_current, in_transit, forecastMT, forecastGT, bufMT, bufGT, adjustment, sales_3m, stock_cover, price_unit)"/>
+                                        <field name="bufMT" />
+                                        <field name="bufGT" />
+                                        <field name="stock_current" readonly="1"/>                               
                                         <field name="ending_inv" />                               
-                                        <field name="in_transit" />                               
-                                        <field name="stock_cover"/>                
-
-                                        <field name="w1" />      
-                                        <field name="w11" attrs="{'invisible': [('w11','=', 0.00)]}" />
-                                        <field name="w12" attrs="{'invisible': [('w12','=', 0.00)]}" />
-                                        <field name="w13" attrs="{'invisible': [('w13','=', 0.00)]}" />
-                                        <field name="w14" attrs="{'invisible': [('w14','=', 0.00)]}" />
-                                        <field name="w15" attrs="{'invisible': [('w15','=', 0.00)]}" />
-                                        <field name="w16" attrs="{'invisible': [('w16','=', 0.00)]}" />
-                                        <field name="w2" />  
-                                        <field name="w21" attrs="{'invisible': [('w21','=', 0.00)]}" />
-                                        <field name="w22" attrs="{'invisible': [('w22','=', 0.00)]}" />
-                                        <field name="w23" attrs="{'invisible': [('w23','=', 0.00)]}" />
-                                        <field name="w24" attrs="{'invisible': [('w24','=', 0.00)]}" />
-                                        <field name="w25" attrs="{'invisible': [('w25','=', 0.00)]}" />
-                                        <field name="w26" attrs="{'invisible': [('w26','=', 0.00)]}" />  
-                                        <field name="w3" />      
-                                        <field name="w31" attrs="{'invisible': [('w31','=', 0.00)]}" />
-                                        <field name="w32" attrs="{'invisible': [('w32','=', 0.00)]}" />
-                                        <field name="w33" attrs="{'invisible': [('w33','=', 0.00)]}" />
-                                        <field name="w34" attrs="{'invisible': [('w34','=', 0.00)]}" />
-                                        <field name="w35" attrs="{'invisible': [('w35','=', 0.00)]}" />
-                                        <field name="w36" attrs="{'invisible': [('w36','=', 0.00)]}" />
-                                        <field name="w4" />  
-                                        <field name="w41" attrs="{'invisible': [('w41','=', 0.00)]}" />
-                                        <field name="w42" attrs="{'invisible': [('w42','=', 0.00)]}" />
-                                        <field name="w43" attrs="{'invisible': [('w43','=', 0.00)]}" />
-                                        <field name="w44" attrs="{'invisible': [('w44','=', 0.00)]}" />
-                                        <field name="w45" attrs="{'invisible': [('w45','=', 0.00)]}" />
-                                        <field name="w46" attrs="{'invisible': [('w46','=', 0.00)]}" />                  
+                                        <field name="in_transit" readonly="1"/>                               
+                                        <field name="stock_cover"/>   
+                                        <field name='update_readonly' invisible='1'/>           
                                     </tree>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right">
-                                    <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <div class="oe_subtotal_footer_separator oe_inline">
-                                        <label for="amount_total"/>
-                                        <button name="button_dummy"
-                                            states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
-                                    </div>
-                                    <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <group>
+                                    <group class="oe_subtotal_footer oe_left">
+                                            <field name="volume_tot"/>
+                                            <field name="weight_tot"/>
+                                            <button invisible='1' name="button_total"
+                                                states="draft" string="(update volume)" type="object" class="oe_edit_only oe_link" colspan='2'/>
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right oe_inline">
+                                        <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                        <div class="oe_subtotal_footer_separator oe_inline">
+                                            <label for="amount_total"/>
+                                            <button invisible='0' name="button_dummy"
+                                                states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                        </div>
+                                        <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    </group>
                                 </group>
-                                <div class="oe_clear"/>
-                                <field name="notes" class="oe_inline" placeholder="Keterangan"/>
                             </page>
                             
                             <page string="User's Location">
@@ -321,8 +235,9 @@
                             </page>
                             <page string="User's Principals">
                                 <field name="principal_ids" readonly="False" view_mode="tree">
-                                    <tree editable="bottom">
+                                    <tree>
                                         <field name='name'/>
+                                        <field name='phone'/>
                                         <field name='type_partner_id'/>
                                     </tree>
                                 </field>
@@ -344,7 +259,365 @@
                                     </group>
                                 </group>
                             </page>
+
+                            <!-- <page string="Summary Plan Kedatangan Barang">
+                                <h2><button name="%(act_schedule_po_detail)d" type="action" string="Export to Excel" class="oe_link" icon="terp-account"/></h2>
+                                <field name="sch_ids_cumul"/>
+                            </page> -->
                         </notebook>
+
+                        <div class="oe_clear"/>
+
+                        <!-- <group>
+                            <div style="width : 100px;">
+                                <group col="3">
+                                    <field name='datestart' on_change="onchange_contribution(order_line)"/><div><field name='dateend' class="oe_inline"/></div>
+                                </group>
+                            </div>
+                        </group> -->
+
+                        <notebook>
+                            <page string="Plan">
+                                <group>
+                                
+                                <group col="22" class="vi_group">                                        
+                                        <div class="vi_col_sep"> 
+                                        </div>
+                                        <group class="vi_sum_col"/>
+                                        
+                                        <div class="vi_sum_col">
+                                            <h4>Q 01</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 02</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 03</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 04</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 05</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 06</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 07</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 08</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 09</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 10</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 11</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 12</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q13</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 14</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 15</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 16</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 17</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 18</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <h4>Q 19</h4>
+                                        </div>
+                                        <div class="vi_sum_col2">
+                                            <h4>Q 20</h4>
+                                        </div>
+                                </group>
+                                <newline/>
+
+                                <group col="22" class="vi_group">
+                                        <group class="vi_col_sep">
+                                                 <field name="period_id" on_change="onchange_periode(order_line,sch_ids)"/>
+                                            <!-- <group style="width: 250px;">
+                                            </group> -->
+                                        </group>
+                                        <div col="1" class="vi_sum_col">
+                                                <h4>Tanggal</h4>
+                                        </div>
+                                        
+                                        <div class="vi_sum_col">
+                                            <field name='w1'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w2'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w3'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w4'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w5'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w6'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w7'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w8'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w9'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w10'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w11'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w12'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w13'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w14'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w15'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w16'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w17'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w18'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='w19'/>
+                                        </div>
+                                        <div style="width: 130px !important;">
+                                            <field name='w20'/>
+                                        </div>
+                                </group>
+                                <newline/>
+
+                                <group col="22" class="vi_group">
+                                        <group class="vi_col_sep"/>
+                                        <div col="1" class="vi_sum_col">
+                                            <h4>Kendaraan</h4>
+                                        </div>
+                                        
+                                        <div class="vi_sum_col">
+                                            <field name='fleet1' on_change="onchange_fleet('w1','kubika1','tonase1', fleet1, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet2' on_change="onchange_fleet('w2','kubika2','tonase2', fleet2, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet3' on_change="onchange_fleet('w3','kubika3','tonase3', fleet3, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet4' on_change="onchange_fleet('w4','kubika4','tonase4', fleet4, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet5' on_change="onchange_fleet('w5','kubika5','tonase5', fleet5, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet6' on_change="onchange_fleet('w6','kubika6','tonase6', fleet6, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet7' on_change="onchange_fleet('w7','kubika7','tonase7', fleet7, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet8' on_change="onchange_fleet('w8','kubika8','tonase8', fleet8, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet9' on_change="onchange_fleet('w9','kubika9','tonase9', fleet9, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet10' on_change="onchange_fleet('w10','kubika10','tonase10', fleet10, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet11' on_change="onchange_fleet('w11','kubika11','tonase11', fleet11, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet12' on_change="onchange_fleet('w12','kubika12','tonase12', fleet12, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet13' on_change="onchange_fleet('w13','kubika13','tonase13', fleet13, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet14' on_change="onchange_fleet('w14','kubika14','tonase14', fleet14, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet15' on_change="onchange_fleet('w15','kubika15','tonase15', fleet15, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet16' on_change="onchange_fleet('w16','kubika16','tonase16', fleet16, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet17' on_change="onchange_fleet('w17','kubika17','tonase17', fleet17, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet18' on_change="onchange_fleet('w18','kubika18','tonase18', fleet18, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                            <field name='fleet19' on_change="onchange_fleet('w19','kubika19','tonase19', fleet19, sch_ids)"/>
+                                        </div>
+                                        <div class="vi_sum_col2">
+                                            <field name='fleet20' on_change="onchange_fleet('w20','kubika20','tonase20', fleet20, sch_ids)"/>
+                                        </div>
+                                </group>
+                                <newline/>
+
+                                <group class="vi_group" col="22">
+                                        <group class="vi_col_sep">
+                                            <!-- <button name="add_prod" states="draft" string="Add Products" type="object" /> -->
+                                        </group>
+                                        <div col="1" class="vi_sum_col">
+                                                <h4>Kubikasi</h4>
+                                                <h4>Tonase</h4>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika1'/>
+                                                <field name='tonase1'/>
+                                        </div>                                        
+                                        <div class="vi_sum_col">
+                                                <field name='kubika2'/>
+                                                <field name='tonase2'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika3'/>
+                                                <field name='tonase3'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika4'/>
+                                                <field name='tonase4'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika5'/>
+                                                <field name='tonase5'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika6'/>
+                                                <field name='tonase6'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika7'/>
+                                                <field name='tonase7'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika8'/>
+                                                <field name='tonase8'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika9'/>
+                                                <field name='tonase9'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika10'/>
+                                                <field name='tonase10'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika11'/>
+                                                <field name='tonase11'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika12'/>
+                                                <field name='tonase12'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika13'/>
+                                                <field name='tonase13'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika14'/>
+                                                <field name='tonase14'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika15'/>
+                                                <field name='tonase15'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika16'/>
+                                                <field name='tonase16'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika17'/>
+                                                <field name='tonase17'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika18'/>
+                                                <field name='tonase18'/>
+                                        </div>
+                                        <div class="vi_sum_col">
+                                                <field name='kubika19'/>
+                                                <field name='tonase19'/>
+                                        </div>
+                                        <div class="vi_sum_col2">
+                                                <field name='kubika20'/>
+                                                <field name='tonase20'/>
+                                        </div>
+                                </group>
+                                <newline/>
+
+                                <div class="vi_group">
+                                    <field name="sch_ids" view_mode="tree,form">
+                                        <tree editable="bottom">
+                                            <field name='int_code'/>
+                                            <field name='barcode'/>
+                                            <field name='product_id' invisible="0" options="{'create': False, 'create_edit': False}"/>
+                                            <field name='product_uom'/>
+                                            <field name='wtot' invisible="1"/>
+                                            <field name='w1' on_change="onchange_check_w('Q1',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>                                        
+                                            <field name='w2' on_change="onchange_check_w('Q2',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w3' on_change="onchange_check_w('Q3',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w4' on_change="onchange_check_w('Q4',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w5' on_change="onchange_check_w('Q5',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w6' on_change="onchange_check_w('Q6',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w7' on_change="onchange_check_w('Q7',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w8' on_change="onchange_check_w('Q8',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w9' on_change="onchange_check_w('Q9',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w10' on_change="onchange_check_w('Q10',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w11' on_change="onchange_check_w('Q11',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w12' on_change="onchange_check_w('Q12',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w13' on_change="onchange_check_w('Q13',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w14' on_change="onchange_check_w('Q14',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w15' on_change="onchange_check_w('Q15',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w16' on_change="onchange_check_w('Q16',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w17' on_change="onchange_check_w('Q17',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w18' on_change="onchange_check_w('Q18',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w19' on_change="onchange_check_w('Q19',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                            <field name='w20' on_change="onchange_check_w('Q20',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                                </group>
+                            </page>
+                        </notebook>
+
+                    <div class="oe_clear"/>
+                    <field name="notes" class="oe_inline" placeholder="Keterangan"/>
 
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers"/>
@@ -352,6 +625,31 @@
                     </div>
                     </form>
                 </form>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_form_add_jenis" model="ir.ui.view">
+            <field name="name">fleet.vehicle.form.jenis</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_form"/>
+            <field name="arch" type="xml">
+                <label for="tag_ids" position="before">
+                    <label for="jenis" class="oe_edit_only"/>
+                    <h2>
+                        <field name="jenis" class="oe_inline"/>
+                    </h2>
+                </label>
+            </field>
+        </record>
+
+        <record id="product_normal_form_view_add_p_x" model="ir.ui.view">
+            <field name="name">product.product.form.partnerx</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="uom_po_id" position="after">
+                    <field name="principal_id"/>
+                </field>
             </field>
         </record>
 

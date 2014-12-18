@@ -1,0 +1,25 @@
+.openerp .vi_sum_col {
+  width: 94px !important;
+  float: right;
+}
+.openerp .vi_sum_col2 {
+  width: 130px !important;
+  float: right;
+}
+.openerp .vi_group {
+  width: 2802px !important;
+  float: right;
+}
+.openerp .vi_col_sep {
+  width: 474px !important;
+  float: right;
+}
+.openerp .vi_group2 {
+  width: 3120px !important;
+  padding: 0px;
+  float: right;
+}
+/*.openerp .vi_sum_head{
+  width: 100px !important;  
+  padding: 0px !important;
+}*/
