@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    
+    <!-- Customer Aging search/filters -->
+    <record model="ir.ui.view" id="vit_view_customer_aging_search">
+      <field name="name">customer.aging.search</field>
+      <field name="model">vit.partner.aging.customer</field>
+      <field name="type">search</field>
+      <field name="arch" type="xml">
+        	<search string="Customer Aging">
+        	  <filter string="Total not Zero" name="not_zero" help="" domain="[('total','!=',0)]" />
+        	  <field name="partner_id" string="Customer" />
+        	  <field name="total" sum="Total"/>
+        	  <group expand="0" string="Group By...">
+        	     <filter string="Partner" name="group_by_partner" domain="[]" context="{'group_by':'partner_id'}"/>
+        	  </group>
+        	  
+        	</search>
+        </field>
+      </record>
+    
+    <!-- Customer Aging tree -->
+    <record model="ir.ui.view" id="vit_view_customer_aging_tree">
+      <field name="name">customer.aging.tree</field>
+      <field name="model">vit.partner.aging.customer</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Customer Aging" colors="red: total &gt; 0;">
+		  <field name="total" invisible="1" />
+		  <field name="partner_id" string="Customer" />
+		  <field name="total" sum="Total" />
+		  <field name="days_due_01to30" sum="Total" />
+		  <field name="days_due_31to60" sum="Total" />
+		  <field name="days_due_61to90" sum="Total" />
+		  <field name="days_due_91to120" sum="Total" />
+		  <field name="days_due_121togr" sum="Total" />
+      <field name="max_days_overdue" sum="Total" invisible="1"/>
+      <field name="current" sum="Total" invisible="1"/>
+		</tree>
+      </field>
+    </record>
+
+
+    
+    <!-- Customer Aging Action -->
+    <record id="vit_action_customer_aging" model="ir.actions.act_window">
+      <field name="name">Customer Aging</field>
+      <field name="res_model">vit.partner.aging.customer</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="vit_view_customer_aging_tree" />
+      <field name="view_mode">tree,form</field>
+      <field name="limit">99999999</field>
+	  <field name="context">{"search_default_group_by_partner":1,"search_default_not_zero":1}</field>  
+      <field name="help"></field>
+     </record>
+
+        <record id="vit_run_account_aging_wizard" model="ir.ui.view">
+            <field name="name">aging.wizard</field>
+            <field name="model">vit.account.aging.wizard</field>
+            <field name="arch" type="xml">
+            	<form string="Generate Aging">
+                    <field name="cut_off"/>  
+<!--                     <button special="cancel" string="_Cancel" icon='gtk-cancel' colspan="2" /> -->
+                    <button name="%(vit_action_customer_aging)d" type="action"  string="View Aging" icon="gtk-ok" />                    
+                </form>                                             
+            </field>
+        </record>      
+
+
+        	<act_window name=" Vit Customer Aging"            
+            res_model="vit.account.aging.wizard"
+            view_mode="form"
+            target="new"
+            context="{'search_default_group_by_partner':1,'search_default_not_zero':1}"
+            id="action_account_aging_wizard"/>
+	
+    
+    <!-- Customer Aging Menuitem -->
+    <menuitem action="action_account_aging_wizard" id="menu_customer_aging" parent="account.menu_finance_receivables"
+	      sequence="22" />    
+
+      
+    
+  </data>
+</openerp>
