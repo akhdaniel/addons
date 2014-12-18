@@ -44,7 +44,7 @@
     <!-- Supplier Aging action -->
     <record id="action_supplier_aging" 
 	    model="ir.actions.act_window">
-      <field name="name">Vit Supplier Aging</field>
+      <field name="name">Supplier Aging</field>
       <field name="res_model">vit.partner.aging.supplier</field>
       <field name="view_type">form</field>
       <field name="view_id" ref="view_supplier_aging_tree"/>
