@@ -36,7 +36,10 @@ Add CMO to the Purchase Orders
         'vit_custom_users',
         'fleet',
         'web_m2x_options',
-        'report_webkit'
+        'report_webkit',
+        'vit_custom_djislu',
+        'web_printscreen_zb',
+        'product_expiry',
     ],
     'data': [
         'purchase_view.xml',
@@ -47,6 +50,11 @@ Add CMO to the Purchase Orders
     'test': [
     ],
     'demo': [
+    ],
+    'css':[
+        'static/src/css/distcustom.css',
+    ],
+    'js' : [
     ],
     'installable': True,
     'auto_install': False,
