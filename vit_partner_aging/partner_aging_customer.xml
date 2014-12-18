@@ -26,20 +26,20 @@
       <field name="model">vit.partner.aging.customer</field>
       <field name="type">tree</field>
       <field name="arch" type="xml">
-		<tree create="false" delete="false" string="Customer Aging" colors="red: total &gt; 0;">
-		  <field name="total" invisible="1" />
-		  <field name="partner_id" string="Customer" />
-		  <field name="total" sum="Total" />
-		  <field name="days_due_01to30" sum="Total" />
-		  <field name="days_due_31to60" sum="Total" />
-		  <field name="days_due_61to90" sum="Total" />
-		  <field name="days_due_91to120" sum="Total" />
-		  <field name="days_due_121togr" sum="Total" />
-      <field name="max_days_overdue" sum="Total" invisible="1"/>
-      <field name="current" sum="Total" invisible="1"/>
-		</tree>
-      </field>
-    </record>
+    		<tree create="false" delete="false" string="Customer Aging" colors="red: total &gt; 0;">
+    		  <field name="total" invisible="1" />
+    		  <field name="partner_id" string="Customer" />
+    		  <field name="total" sum="Total" />
+    		  <field name="days_due_01to30" sum="Total" />
+    		  <field name="days_due_31to60" sum="Total" />
+    		  <field name="days_due_61to90" sum="Total" />
+    		  <field name="days_due_91to120" sum="Total" />
+    		  <field name="days_due_121togr" sum="Total" />
+          <field name="max_days_overdue" sum="Total" invisible="1"/>
+          <field name="current" sum="Total" invisible="1"/>
+    		</tree>
+        </field>
+      </record>
 
 
     
@@ -68,7 +68,7 @@
         </record>      
 
 
-        	<act_window name=" Vit Customer Aging"            
+        	<act_window name="Customer Aging"            
             res_model="vit.account.aging.wizard"
             view_mode="form"
             target="new"
