@@ -13,6 +13,7 @@ class vit_partner_aging_supplier(osv.Model):
   
     _name = 'vit.partner.aging.supplier'
     _auto = False
+    _order = 'partner_id'
 
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner', readonly=True),

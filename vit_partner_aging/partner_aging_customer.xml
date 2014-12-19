@@ -26,7 +26,7 @@
       <field name="model">vit.partner.aging.customer</field>
       <field name="type">tree</field>
       <field name="arch" type="xml">
-    		<tree create="false" delete="false" string="Customer Aging" colors="red: total &gt; 0;">
+    		<tree create="false" delete="false" string="Customer Aging" colors="red: total &lt; 0;">
     		  <field name="total" invisible="1" />
     		  <field name="partner_id" string="Customer" />
     		  <field name="total" sum="Total" />
@@ -51,7 +51,7 @@
       <field name="view_id" ref="vit_view_customer_aging_tree" />
       <field name="view_mode">tree,form</field>
       <field name="limit">99999999</field>
-	  <field name="context">{"search_default_group_by_partner":1,"search_default_not_zero":1}</field>  
+	  <field name="context">{"search_default_not_zero":1}</field>  
       <field name="help"></field>
      </record>
 

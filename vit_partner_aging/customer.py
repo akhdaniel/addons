@@ -24,6 +24,7 @@ class vit_account_aging_wizard(osv.osv_memory):
 class vit_partner_aging_customer(osv.Model):
 	_name = 'vit.partner.aging.customer'
 	_auto = False
+	_order = 'partner_id'
 
 
 	_columns = {
