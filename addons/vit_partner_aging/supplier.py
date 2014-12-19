@@ -45,27 +45,27 @@ class vit_partner_aging_supplier(osv.Model):
                 SUM(days_due_91to120) AS days_due_91to120, SUM(days_due_121togr) AS days_due_121togr,
                 SUM(max_days_overdue) AS max_days_overdue, SUM(current) AS current from 
 
-                    (SELECT DaysDue.id as id,SUM(debit-credit) AS total,DaysDue.partner_id,DaysDue.ref,days_due,move_id,
+                    (SELECT DaysDue.id as id,SUM(credit-debit) AS total,DaysDue.partner_id,DaysDue.ref,days_due,move_id,
 
-                        CASE WHEN (days_due BETWEEN 1 and 30) THEN debit-credit 
+                        CASE WHEN (days_due BETWEEN 1 and 30) THEN credit-debit
                         ELSE 0 END  AS "days_due_01to30",
 
-                        CASE WHEN (days_due BETWEEN 31 and 60) THEN debit-credit  
+                        CASE WHEN (days_due BETWEEN 31 and 60) THEN credit-debit  
                         ELSE 0 END  AS "days_due_31to60",
 
-                        CASE WHEN (days_due BETWEEN 61 and 90) THEN debit-credit  
+                        CASE WHEN (days_due BETWEEN 61 and 90) THEN credit-debit  
                         ELSE 0 END  AS "days_due_61to90",
 
-                        CASE WHEN (days_due BETWEEN 91 and 120) THEN debit-credit  
+                        CASE WHEN (days_due BETWEEN 91 and 120) THEN credit-debit  
                         ELSE 0 END  AS "days_due_91to120",  
                         
-                        CASE WHEN days_due >= 121 THEN debit-credit
+                        CASE WHEN days_due >= 121 THEN credit-debit
                         ELSE 0 END  AS "days_due_121togr",
 
-                        CASE WHEN days_due < 0 or days_due is null THEN debit-credit
+                        CASE WHEN days_due < 0 or days_due is null THEN credit-debit
                         ELSE 0 END  AS "max_days_overdue",
 
-                        CASE WHEN days_due <= 0 THEN debit-credit
+                        CASE WHEN days_due <= 0 THEN credit-debit
                         ELSE 0 END  AS "current"
 
                         FROM 
