@@ -6,28 +6,29 @@
 ######################################################################
 
 {
-    "name" : "Partner Aging on Screen",
-    "version" : "1.0",
-    "author" : 'vitraining.com',
-    "summary": "Aging as a view on Screen",
-    "description" : """
-This module creates new AR and AP views.
+    'name' : 'Partner Aging on Screen',
+    'version' : '1.0',
+    'author' : 'vitraining.com',
+    'summary': 'Aging as a view on Screen',
+    'description': """
+*This module creates new AR and AP views.
 """,
     'maintainer': 'vitraining.com',
     'website': 'http://www.vitraining.com',
-    "category": 'Accounting & Finance',
-    "images" : [],
-    "depends" : ["base","account_accountant"],
-    "data" : [
+    'category': 'Accounting & Finance',
+    'images' : [],
+    'depends' : ['base','account_accountant'],
+    'data' : [
               'partner_aging_supplier.xml',
               'partner_aging_customer.xml',
-    ],
-    "test" : [
-    ],
-    "auto_install": False,
-    "application": False,
-    "installable": True,
+            ],
+    'test' : [],
+    'auto_install': False,
+
+    'active': False,
+    'installable': True,
+    'application': True,
+
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
