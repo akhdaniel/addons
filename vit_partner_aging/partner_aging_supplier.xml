@@ -48,7 +48,7 @@
       <field name="res_model">vit.partner.aging.supplier</field>
       <field name="view_type">form</field>
       <field name="view_id" ref="view_supplier_aging_tree"/>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree</field>
       <field name="limit">99999999</field>
        <field name="context">{"search_default_not_zero":1}</field> 
       <field name="help"></field>
