@@ -2,6 +2,21 @@
 <openerp>
     <data>
 
+        <!-- Holidays: Holidays per 5 year-->
+        <record forcecreate="1" id="dist_po_del_quot" model="ir.cron">
+            <field name="name">Delete PO Quotation Daily</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'purchase.order'" name="model" />
+            <field eval="'hapus_quotation'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall" eval="time.strftime('%Y-%m-%d 23:59:59')" />
+        </record>
+
         <record model="ir.ui.view" id="view_product_form_expiry_hide_dates">
             <field name="name">stock.production.lot.hide.dates</field>
             <field name="model">stock.production.lot</field>
@@ -64,53 +79,6 @@
               </p>
             </field>
         </record>
-
-<!--         <record forcecreate="1" id="seq_rx_po" model="ir.sequence.type">  
-            <field name="name">PO RX</field>
-            <field name="code">code.cumul.seq</field>
-        </record>
-        <record forcecreate="1" id="seq_c_rx_po" model="ir.sequence">
-            <field name="name">PORX</field>
-            <field name="code">code.cumul.seq</field>
-            <field name="padding" eval="7"/>
-            <field name="prefix"></field>
-            <field name="suffix"></field>
-        </record>
-
-        <record id="view_schedule_po_filter" model="ir.ui.view">
-            <field name="name">purchase.order.schedule.cumul.list.select</field>
-            <field name="model">purchase.order.schedule.cumul</field>
-            <field name="arch" type="xml">
-                <search string="Search Purchase Order">
-                    <field name="po_id"/>
-                    <group expand="0" string="Group By...">
-                        <filter name="partner_x" string="Principal" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'partner_x'}"/>
-                    </group>
-                </search>
-            </field>
-        </record> 
-
-        <record id="act_schedule_po_detail" model="ir.actions.act_window">
-            <field name="name">purchase.order.schedule.cumul.act</field>
-            <field name="res_model">purchase.order.schedule.cumul</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="context">{'search_default_partner_x':0,'search_default_po_id': active_id}</field>
-        </record>
-        
-        
-        <record id="view_po_cumul_tree" model="ir.ui.view">
-            <field name="name">purchase.order.schedule.r1.detail.tree</field>
-            <field name="model">purchase.order.schedule.cumul</field>
-            <field name="arch" type="xml">
-                <tree string="SCH DETAIL" create="false">
-                    <field name="po_id" invisible='1'/>
-                    <field name="partner_x" invisible='0'/>
-                    <field name="t2"/>
-                    <field name="fleet"/>
-                </tree>
-            </field>
-        </record>  -->
 
         <record id="purchase_order_form_custom" model="ir.ui.view">
             <field name="name">purchase.order.form.custom</field>
@@ -583,10 +551,11 @@
 
                                 <div class="vi_group">
                                     <field name="sch_ids" view_mode="tree,form">
+                                    <!-- <field name="sch_ids" view_mode="tree,form" on_change="onchange_sch_ids(sch_ids)"> -->
                                         <tree editable="bottom">
                                             <field name='int_code'/>
                                             <field name='barcode'/>
-                                            <field name='product_id' invisible="0" options="{'create': False, 'create_edit': False}"/>
+                                            <field name='product_id' options="{'create': False, 'create_edit': False}"/>
                                             <field name='product_uom'/>
                                             <field name='wtot' invisible="1"/>
                                             <field name='w1' on_change="onchange_check_w('Q1',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>                                        

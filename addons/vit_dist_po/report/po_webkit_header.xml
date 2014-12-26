@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
         <!-- <record id="ir_property_vit" model="ir.property">
             <field name="fields_id" ref="field_ir_act_report_xml_webkit_header"/>
             <field eval="&quot;&quot;&quot;webkit_header_vit&quot;&quot;&quot;" name="name"/>
