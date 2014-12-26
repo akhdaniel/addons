@@ -35,6 +35,7 @@ Add CMO to the Purchase Orders
         'product',
         'vit_custom_users',
         'fleet',
+        'stock',
         'web_m2x_options',
         'report_webkit',
         'vit_custom_djislu',

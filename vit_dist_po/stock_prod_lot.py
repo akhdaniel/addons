@@ -91,22 +91,23 @@ stock_partial_picking_line()
 
 class stock_production_lot(osv.osv):
 
-    # def name_get(self, cr, uid, ids, context=None):
-    #     if not ids:
-    #         return []
-    #     reads = self.read(cr, uid, ids, ['name', 'prefix', 'ref', 'life_date'], context)
-    #     res = []
-    #     for record in reads:
-    #         name = record['name']
-    #         prefix = record['prefix']
-    #         if prefix:
-    #             name = prefix + '/' + name
-    #         if record['ref']:
-    #             name = '%s [%s]' % (name, record['ref'])
-    #         if record['life_date']:
-    #             name = '%s (ED: %s)' % (name, record['life_date'][:10])
-    #         res.append((record['id'], name))
-    #     return res
+    def name_get(self, cr, uid, ids, context=None):
+        if not ids:
+            return []
+        reads = self.read(cr, uid, ids, ['name', 'life_date'], context)
+        # reads = self.read(cr, uid, ids, ['name', 'prefix', 'ref', 'life_date'], context)
+        res = []
+        for record in reads:
+            name = record['name']
+            # prefix = record['prefix']
+            # if prefix:
+            #     name = prefix + '/' + name
+            # if record['ref']:
+            #     name = '%s [%s]' % (name, record['ref'])
+            if record['life_date']:
+                name = '%s [E.D.: %s]' % (name, record['life_date'][:10])
+            res.append((record['id'], name))
+        return res
 
     _name = 'stock.production.lot'
     _inherit = 'stock.production.lot'

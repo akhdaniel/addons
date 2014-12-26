@@ -13,17 +13,22 @@
             </field>
         </record>
 
-<!--         <record id="stock_partial_picking_form_custom" model="ir.ui.view">
-            <field name="name">vit - Add on expire Inherit</field>
-            <field name="model">stock.partial.picking</field>
-            <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+        <record id="view_production_lot_tree_custom" model="ir.ui.view">
+            <field name="name">stock production lot tree Inherit</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
             <field name="arch" type="xml">
-                <field name="prodlot_id" position="attributes">
-                    <attribute name='required'>1</attribute>
-                </field>
+                <xpath expr="/tree/field[@name='name']" position="after">
+                    <field name="life_date"/>
+                </xpath>
             </field>
-        </record> -->
+        </record>
+
+    </data>
+</openerp>
         
+        <!-- Add ED on onchange date -->
+        <!-- 
         <record id="stock_partial_picking_form_addED" model="ir.ui.view">
             <field name="name">stock.partial.picking.add_ed</field>
             <field name="model">stock.partial.picking</field>
@@ -38,18 +43,4 @@
                 </xpath>
             </field>
         </record>
-
-
-        <record id="view_production_lot_tree_custom" model="ir.ui.view">
-            <field name="name">stock production lot tree Inherit</field>
-            <field name="model">stock.production.lot</field>
-            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
-            <field name="arch" type="xml">
-                <xpath expr="/tree/field[@name='name']" position="after">
-                    <field name="life_date"/>
-                </xpath>
-            </field>
-        </record>
-
-    </data>
-</openerp>
+         -->

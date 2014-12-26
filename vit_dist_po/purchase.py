@@ -64,10 +64,71 @@ class product_product(osv.osv):
 
 product_product()
 
+
+class purchase_order_schedule(osv.Model):
+    _name = 'purchase.order.schedule'
+    _rec_name = 'product_id'
+
+
+    _columns={
+        # 'name'              : fields.char("Nama Barang",readonly=True),
+        'int_code'          : fields.char(_('Kode'),readonly=True),
+        'barcode'           : fields.char("Barcode",readonly=True),
+        'po_id'             : fields.many2one('purchase.order',"PO", ondelete='cascade'),
+        'product_id'        : fields.many2one('product.product',string="Nama Barang", readonly=True, required=True, domain="[('principal_id','=',parent.partner_id),]"),
+        'product_uom'       : fields.many2one('product.uom', readonly=True, string=_('Satuan')),
+        'wtot'              : fields.float('Qty Total'),
+        'w1'                : fields.float('Q 01'),
+        'w2'                : fields.float('Q 02'),
+        'w3'                : fields.float('Q 03'),
+        'w4'                : fields.float('Q 04'),
+        'w5'                : fields.float('Q 05'),
+        'w6'                : fields.float('Q 06'),
+        'w7'                : fields.float('Q 07'),
+        'w8'                : fields.float('Q 08'),
+        'w9'                : fields.float('Q 09'),
+        'w10'               : fields.float('Q 10'),
+        'w11'               : fields.float('Q 11'),
+        'w12'               : fields.float('Q 12'),
+        'w13'               : fields.float('Q 13'),
+        'w14'               : fields.float('Q 14'),
+        'w15'               : fields.float('Q 15'),
+        'w16'               : fields.float('Q 16'),
+        'w17'               : fields.float('Q 17'),
+        'w18'               : fields.float('Q 18'),
+        'w19'               : fields.float('Q 19'),
+        'w20'               : fields.float('Q 20'),
+        # 'w21'               : fields.float('Q 21'),
+        # 'w22'               : fields.float('Q 22'),
+        # 'w23'               : fields.float('Q 23'),
+        # 'w24'               : fields.float('Q 24'),
+        # 'w25'               : fields.float('Q 25'),
+        # 'w26'               : fields.float('Q 26'),
+        # 'w27'               : fields.float('Q 27'),
+        # 'w28'               : fields.float('Q 28'),
+        # 'w29'               : fields.float('Q 29'),
+        # 'w30'               : fields.float('Q 30'),
+        # 'w31'               : fields.float('Q 31'),
+        }
+
+    def onchange_check_w(self, cr, uid, ids, Wn,wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20, context=None):
+        Wn=Wn or ''
+        wtot=wtot or 0.00;w1=w1 or 0.00;w2=w2 or 0.00;w3=w3 or 0.00;w4=w4 or 0.00;w5=w5 or 0.00;w6=w6 or 0.00;w7=w7 or 0.00;w8=w8 or 0.00;w9=w9 or 0.00;w10=w10 or 0.00;
+        w11=w11 or 0.00;w12=w12 or 0.00;w13=w13 or 0.00;w14=w14 or 0.00;w15=w15 or 0.00;w16=w16 or 0.00;w17=w17 or 0.00;w18=w18 or 0.00;w19=w19 or 0.00;w20=w20 or 0.00;
+        if wtot < w1+w2+w3+w4+w5+w6+w7+w8+w9+w10+w11+w12+w13+w14+w15+w16+w17+w18+w19+w20:
+            EA = 'Error '+ str(Wn) +'!'
+            EB = 'Value melebihi total quantity produk ('+str(wtot)+').'
+            raise osv.except_osv(_('%s') % (EA), _('%s') % (EB))
+        return {}
+
+purchase_order_schedule()
+
+
 class purchase_order_line(osv.osv):
     _name       = 'purchase.order.line'
     _inherit    = 'purchase.order.line'
     _order      = 'stock_current'
+
 
     def _upd_readonly(self, cr, uid, ids, field_name, arg, context):
         res = {}
@@ -122,12 +183,11 @@ class purchase_order_line(osv.osv):
         'product_id'        : fields.many2one('product.product', 'Product', 
             domain="[('principal_id','=',parent.partner_id),('purchase_ok','=',True),]", required=True, change_default=True),
         'update_readonly'   : fields.function(
-            _upd_readonly,
+            _upd_readonly, 
             type='boolean',
             method=True,
             store=False,
-            string='update readonly fields'),
-        
+            string='update readonly fields'),        
         # 'qty2'              : fields.float('Qty2',readonly=True),
         # 'sales_3m2'         : fields.float(_('Total AVG'),readonly=True, digits_compute=dp.get_precision('Product Price')),
         # 'stock_current2'    : fields.float('Stock Current2',readonly=True),
@@ -498,63 +558,6 @@ class purchase_order_line(osv.osv):
 
 purchase_order_line()
 
-class purchase_order_schedule(osv.Model):
-    _name = 'purchase.order.schedule'
-    _rec_name = 'product_id'
-
-    _columns={
-        # 'name'              : fields.char("Nama Barang",readonly=True),
-        'int_code'          : fields.char(_('Kode'),readonly=True),
-        'barcode'           : fields.char("Barcode",readonly=True),
-        'po_id'             : fields.many2one('purchase.order',"PO", ondelete='cascade'),
-        'product_id'        : fields.many2one('product.product',string="Nama Barang", readonly=True, required=True, domain="[('principal_id','=',parent.partner_id),]"),
-        'product_uom'       : fields.many2one('product.uom', readonly=True, string=_('Satuan')),
-        'wtot'              : fields.float('Qty Total'),
-        'w1'                : fields.float('Q 01'),
-        'w2'                : fields.float('Q 02'),
-        'w3'                : fields.float('Q 03'),
-        'w4'                : fields.float('Q 04'),
-        'w5'                : fields.float('Q 05'),
-        'w6'                : fields.float('Q 06'),
-        'w7'                : fields.float('Q 07'),
-        'w8'                : fields.float('Q 08'),
-        'w9'                : fields.float('Q 09'),
-        'w10'               : fields.float('Q 10'),
-        'w11'               : fields.float('Q 11'),
-        'w12'               : fields.float('Q 12'),
-        'w13'               : fields.float('Q 13'),
-        'w14'               : fields.float('Q 14'),
-        'w15'               : fields.float('Q 15'),
-        'w16'               : fields.float('Q 16'),
-        'w17'               : fields.float('Q 17'),
-        'w18'               : fields.float('Q 18'),
-        'w19'               : fields.float('Q 19'),
-        'w20'               : fields.float('Q 20'),
-        # 'w21'               : fields.float('Q 21'),
-        # 'w22'               : fields.float('Q 22'),
-        # 'w23'               : fields.float('Q 23'),
-        # 'w24'               : fields.float('Q 24'),
-        # 'w25'               : fields.float('Q 25'),
-        # 'w26'               : fields.float('Q 26'),
-        # 'w27'               : fields.float('Q 27'),
-        # 'w28'               : fields.float('Q 28'),
-        # 'w29'               : fields.float('Q 29'),
-        # 'w30'               : fields.float('Q 30'),
-        # 'w31'               : fields.float('Q 31'),
-        }
-
-    def onchange_check_w(self, cr, uid, ids, Wn,wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20, context=None):
-        Wn=Wn or ''
-        wtot=wtot or 0.00;w1=w1 or 0.00;w2=w2 or 0.00;w3=w3 or 0.00;w4=w4 or 0.00;w5=w5 or 0.00;w6=w6 or 0.00;w7=w7 or 0.00;w8=w8 or 0.00;w9=w9 or 0.00;w10=w10 or 0.00;
-        w11=w11 or 0.00;w12=w12 or 0.00;w13=w13 or 0.00;w14=w14 or 0.00;w15=w15 or 0.00;w16=w16 or 0.00;w17=w17 or 0.00;w18=w18 or 0.00;w19=w19 or 0.00;w20=w20 or 0.00;
-        if wtot < w1+w2+w3+w4+w5+w6+w7+w8+w9+w10+w11+w12+w13+w14+w15+w16+w17+w18+w19+w20:
-            EA = 'Error '+ str(Wn) +'!'
-            EB = 'Value melebihi total quantity produk ('+str(wtot)+').'
-            raise osv.except_osv(_('%s') % (EA), _('%s') % (EB))
-        return {}
-
-purchase_order_schedule()
-
 class purchase_order(osv.osv):
     _inherit = "purchase.order"
     _name = "purchase.order"
@@ -654,108 +657,109 @@ class purchase_order(osv.osv):
         # 'percent_r'      : fields.float('Contrib(%)'),
         # 'sch_ids_date'        : fields.one2many('purchase.order.date','po_id',"D"),
         # TODO: ini dipake buat report excel > 'sch_ids_cumul'  : fields.one2many('purchase.order.schedule.cumul','po_id',"Detail"),
-        'sch_ids'        : fields.one2many('purchase.order.schedule','po_id',"R"), 
+        'sch_ids'        : fields.one2many('purchase.order.schedule','po_id',"Schedule Detail"),
+        'order_lines_detail' : fields.one2many('purchase.order.line.detail','po_id',"Lines Detail"), 
         # "week_periode"  : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5')],"Week of Month"),
 
         'w1'                : fields.date('Tanggal'),
         'fleet1'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika1"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase1"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika1"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase1"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w2'                : fields.date('Q2'),
         'fleet2'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika2"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase2"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika2"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase2"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w3'                : fields.date('Q3'),
         'fleet3'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika3"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase3"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika3"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase3"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w4'                : fields.date('Q4'),
         'fleet4'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika4"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase4"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika4"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase4"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w5'                : fields.date('Q5'),
         'fleet5'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika5"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase5"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika5"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase5"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w6'                : fields.date('Q6'),
         'fleet6'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika6"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase6"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika6"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase6"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w7'                : fields.date('Q7'),
         'fleet7'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika7"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase7"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika7"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase7"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w8'                : fields.date('Q8'),
         'fleet8'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika8"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase8"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika8"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase8"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w9'                : fields.date('Q9'),
         'fleet9'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika9"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase9"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika9"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase9"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w10'               : fields.date('Q10'),
         "fleet10"           : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika10" : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase10"   : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika10" : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase10"   : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w11'               : fields.date('Q11'),
         'fleet11'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika11"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase11"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika11"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase11"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w12'               : fields.date('Q12'),
         'fleet12'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika12"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase12"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika12"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase12"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w13'               : fields.date('Q13'),
         'fleet13'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika13"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase13"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika13"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase13"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w14'               : fields.date('Q14'),
         'fleet14'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika14"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase14"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika14"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase14"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w15'               : fields.date('Q15'),
         'fleet15'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika15"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase15"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika15"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase15"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w16'               : fields.date('Q16'),
         'fleet16'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika16"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase16"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika16"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase16"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w17'               : fields.date('Q17'),
         'fleet17'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika17"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase17"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika17"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase17"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w18'               : fields.date('Q18'),
         'fleet18'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika18"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase18"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika18"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase18"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w19'               : fields.date('Q19'),
         'fleet19'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika19"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase19"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika19"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase19"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         
         'w20'               : fields.date('Q20'),
         'fleet20'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika20"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True),
-        "tonase20"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True),
+        "kubika20"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
+        "tonase20"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
         'warning'   : fields.char('Warning',help="warning"),
         }
 
@@ -770,6 +774,14 @@ class purchase_order(osv.osv):
         #     if not y[1]:
         #         q11 += y[2]['p1']
         # if q11 > percent_r1:
+
+    def hapus_quotation(self,cr,uid,ids=None,context=None):
+        # import pdb;pdb.set_trace()
+        ids = self.search(cr,uid,[('state','=','draft')],) 
+        if ids:
+            self.unlink(cr,uid,ids,context=None)
+        print ('po_scrapped_no '+str(ids))
+        return True
 
     def create(self, cr, uid, vals, context=None):
         emp = self.pool.get('hr.employee').search(cr,uid,[('user_id','=',uid)],)
@@ -1006,7 +1018,7 @@ class purchase_order(osv.osv):
 
             IT = cr.fetchone()
             it = (IT and IT[0]) or 0
-            # it = (it/ratio) pembelian sudah dalam karton, jadi g dibagi ratio
+            # it = (it/ratio) pembelian sudah dalam karton, jadi gg dibagi ratio
 
             BMT=1*MT
             tot_bufer = BMT+BGT
@@ -1039,7 +1051,7 @@ class purchase_order(osv.osv):
                 'ending_inv'    : end_inv,     
                 'in_transit'    : round(it),    
                 'stock_cover'   : stk_cover, 
-                'barcode'       : prd.barcode or '',
+                'barcode'       : prd.seller_ids[0].product_code or '',
                 'int_code'      : prd.default_code,
                 # 'suggested_order' : 0.00,         
                 # 'prod_weight'   : 0.00,  
@@ -1086,17 +1098,17 @@ class purchase_order(osv.osv):
                 fvalue[kn]='Lebih'
             elif cap_vol < kt:
                 fvalue[kn]='Kurang'
-            return {'value':fvalue}
+        return {'value':fvalue}
 
     def onchange_periode(self, cr, uid, ids, order_line, sch_ids, context=None):
         products=[]
         # if not order_line:
         #     raise osv.except_osv(_('Error!'), _('PO minimal memiliki 1 order'))
-        if sch_ids: 
-            # import pdb;pdb.set_trace()
-            return True
+        # if sch_ids: 
+        #     products=order_line
         prd_obj = self.pool.get('product.product')
         product_qty = 0.00
+        # import pdb;pdb.set_trace()
         for x in order_line:
             forecastMT  ='forecastMT' in x[2] and x[2]['forecastMT'] or 0.00 
             forecastGT  ='forecastGT' in x[2] and x[2]['forecastGT'] or 0.00
@@ -1125,6 +1137,12 @@ class purchase_order(osv.osv):
             # if x[2]['small_qty'] > 0:
             #     products.append([0,0,{'product_id':x[2]['product_id'],'product_uom':x[2]['small_uom'],'barcode':prod_id.barcode or '','int_code':prod_id.default_code or '','wtot':x[2]['small_qty']}])
         return {'value' : {'sch_ids' : products}}
+
+    # def onchange_sch_ids(self, cr, uid, ids,sch_ids,context=None):
+    #     import pdb;pdb.set_trace()
+    #     for sch in sch_ids:
+    #         print sch
+
 
     # def onchange_contrib(self, cr, uid, ids, nfields, percent_r1, percent_r2, percent_r3, percent_r4, percent_r5, order_line, context=None):
     #     products=[]
