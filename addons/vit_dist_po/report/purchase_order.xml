@@ -11,5 +11,15 @@
 	    webkit_header="ir_header_webkit_vit0"
 	    />
 
+    <report auto="False"
+	    id="report_plan_purchase_order"
+	    model="purchase.order"
+	    name="vit.plan.purchase.order.webkit"
+	    file="vit_dist_po/report/plan_purchase_order.mako"
+	    string="Plan Kedatangan Barang"
+	    report_type="webkit"
+	    webkit_header="ir_header_webkit_vit0"
+	    />
+
 	</data>
 </openerp>
