@@ -1555,13 +1555,17 @@ class fleet_vehicle(osv.Model):
         for record in self.browse(cr, user, ids, context=context):
             mydict = {
                       'id': record.id,
-                      'name': record.model_id.brand_id.name + (record.jenis and (' / ' + record.jenis) or '') + (record.license_plate != '-' and (' / ' + record.license_plate) or ''),
+                      'name': record.model_id.brand_id.name
                       }
+            if record.jenis:
+                mydict.update({'name':record.jenis + ' / ' + mydict['name']})
+            if record.license_plate and record.license_plate != '-':
+                mydict.update({'name':mydict['name'] + ' / ' + record.license_plate})
             result.append(_name_get(mydict))
         return result
 
     _columns = {
-        'jenis' : fields.char("Jenis",help="Daya angkut truk, seperti Engkel Tunggal, Tronton, Trinton, dll."),
+        'jenis' : fields.char("Jenis",required=True,help="Daya angkut truk, seperti Engkel Tunggal, Tronton, Trinton, dll."),
         }
 
     _defaults = {
