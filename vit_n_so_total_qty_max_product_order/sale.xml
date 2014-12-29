@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		  <record id="view_order_form_prod_qty2" model="ir.ui.view">
+                    <field name="name">sale.order.form_prod_qty2</field>
+                    <field name="model">sale.order</field>
+                     <field name="inherit_id" ref="sale.view_order_form" />
+                    <field name="arch" type="xml">
+                         <field name="order_line" position="after">
+                            <group>
+                                 <field name="qty_total_real_max_order" readonly="1" />
+                            </group>
+                            <group>
+                                 <field name="qty_total_price_max_order" options="{'currency_field': 'currency_id'}" widget='monetary' />
+                            </group>
+                             <!-- <field name="qty_total_price_max_order2"/> -->
+                         </field>
+                    </field>
+        </record>
+
+	</data>
+</openerp>
