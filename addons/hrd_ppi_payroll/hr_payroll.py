@@ -580,6 +580,7 @@ class hr_payslip(osv.osv):
                 tunjangan_pajak = self.tunjangan(cr,uid,ids,context=None)    
             total_bonus_tetap = 0.0
             total_bonus_ttetap = 0.0
+            tunj = 0.0
             for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context):
                 rule = line['salary_rule_id']
                 brw_rule = salary_obj.browse(cr,uid,[rule])[0]
@@ -591,7 +592,10 @@ class hr_payslip(osv.osv):
                 if cod == 'POT_ABSEN' :
                     self.write(cr,uid,ids,{'pot_absen':line['amount']},context=context)   
                 if cod == 'TPAJ' and brw_rule.category_id.name == "Gross" :
-                    self.write(cr,uid,ids,{'tunj_pajak_code':'Gross'},context=context)   
+                    self.write(cr,uid,ids,{'tunj_pajak_code':'Gross'},context=context) 
+                if cod == 'TPAJ' :
+                    tunj = line['amount']  
+            total_bonus_tetap = total_bonus_tetap - tunj
             self.write(cr,uid,ids,{'total_tp': total_bonus_tetap ,'total_ttp' : total_bonus_ttetap})      
             pajak = self.pajak(cr,uid,ids,context=None)              
             lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
@@ -664,8 +668,8 @@ class hr_payslip(osv.osv):
                         tunj_pajak = tp * recursive
                     else :
                         cek = False
-                    if pajak2 >= tunj_pajak :
-                        self.write(cr,uid,ids,{'pkp':pajak2, 'tunj_pajak' : pajak2})          
+                    if pajak2 >= tunj_pajak :  
+                        self.write(cr,uid,ids,{'pkp':pajak2, 'tunj_pajak' : pajak2})       
         else :
             pay_obj = self.pool.get('hr.payslip')
             pay_src = pay_obj.search(cr,uid,[('employee_id','=',employee),('state','=','done'),('year','=',years)])
@@ -676,14 +680,13 @@ class hr_payslip(osv.osv):
             tunj_pajak = 0.0
             tunj_pajak1 = 0.0
             jum_gross = 0.0
+            jum_gross1 = 0.0
             for pajak_year in pay_obj.browse(cr,uid,pay_src):
-                jum_gross = pajak_year.gross_tetap + pajak_year.gross_ttetap 
-                if pajak_year.tunj_pajak_code == 'Gross' :
-                    total_gross += jum_gross + pajak_year.tunj_pajak
-                else :
-                    total_gross += jum_gross 
+                jum_gross += pajak_year.gross_tetap + pajak_year.gross_ttetap 
                 x += 1
                 tunj_pajak1 += pajak_year.tunj_pajak
+            jum_gross1 = jum_gross
+            jum_gross = jum_gross + obj.gross_tetap + obj.gross_ttetap
             #potongan jabatan
             while cek == True and xx <= 100 :
                 total_gross1 = jum_gross + tunj_pajak
@@ -694,7 +697,7 @@ class hr_payslip(osv.osv):
                 if tht_alw >= obj.contract_id.type_id.max_tht :
                     tht_alw = obj.contract_id.type_id.max_tht
                 total_ptkp = pot_jab + status_pjk + tht_alw
-                pkp = total_gross - total_ptkp
+                pkp = total_gross1 - total_ptkp
                 obj_ptkp = self.pool.get('hr.pkp')
                 src_ptkp = obj_ptkp.search(cr,uid,[])
                 pajjak = 0.0
@@ -721,9 +724,9 @@ class hr_payslip(osv.osv):
                     else :
                         cek = False
                     if pajjak >= tunj_pajak :
-                        self.write(cr,uid,ids,{'pkp':pajjak, 'tunj_pajak' : pajjak})
-            pajak2 = obj.tunj_pajak - tunj_pajak1
-            self.write(cr,uid,ids,{'pkp':0.0, 'tunj_pajak' : pajak2})
+                        pajjak1 = pajjak 
+            pajak2 = pajjak1 - tunj_pajak1
+            self.write(cr,uid,ids,{'pkp':0.0, 'tunj_pajak' : pajak2,'tunj_pajak_tahun' : pajjak1})
         return True
 
     def pajak(self,cr,uid,ids,context=None) :
@@ -739,7 +742,7 @@ class hr_payslip(osv.osv):
         status_pjk = obj.employee_id.ptkp_id.nominal_tahun
         cek = True
         xx = 0
-        tunj_pajak = obj.tunj_pajak
+        tunj_pajak = 0.0
         recursive =1.0
         if year_contract == date_now :
             pengali = 13 - int(month_contract) 
@@ -748,9 +751,9 @@ class hr_payslip(osv.osv):
         if months != 12 :
             while cek == True and xx <= 100 :
                 if obj.contract_id.type_id.type_perhitungan_pajak != 'mix':
-                    total1 = obj.total_tp + obj.pot_absen + tunj_pajak
+                    total1 = obj.total_tp + obj.pot_absen + tunj_pajak 
                 else :
-                    total1 = obj.total_tp + obj.pot_absen    
+                    total1 = obj.total_tp + obj.pot_absen  + obj.tunj_pajak  
                 total2 = obj.total_ttp
                 basic = obj.contract_id.wage
                 pjk12 = (total1 * pengali) + total2 # total allowance di setahunkan
@@ -797,24 +800,30 @@ class hr_payslip(osv.osv):
         else :
             pay_obj = self.pool.get('hr.payslip')
             pay_src = pay_obj.search(cr,uid,[('employee_id','=',employee),('state','=','done'),('year','=',years)])
-            x = 0.0
-            total_allw = 0.0
+            x = 1.0
+            total_alw = 0.0
             pajak_total = 0.0
+            tot_Sementara = 0.0
+            pajjak1 = 0.0
             for pajak_year in pay_obj.browse(cr,uid,pay_src):
-                jum_alw = pajak_year.total_tp + pajak_year.total_ttp + pajak_year.pot_absen + pajak_year.tunj_pajak
+                jum_alw = pajak_year.total_tp + pajak_year.total_ttp + pajak_year.pot_absen 
                 total_alw += jum_alw
                 pajak_total += pajak_year.pkp
                 x += 1
+            tot_sementara = total_alw
+            total_alw = tot_sementara + obj.total_tp + obj.total_ttp + obj.pot_absen
+            if  obj.contract_id.type_id.type_perhitungan_pajak == 'mix' :
+                total_alw = tot_sementara + obj.total_tp + obj.total_ttp + obj.pot_absen + obj.tunj_pajak_tahun
             #potongan jabatan
             while cek == True and xx <= 100 :
-                pot_jab = (obj.contract_id.type_id.biaya_jabatan * total_allw)/100
+                pot_jab = (obj.contract_id.type_id.biaya_jabatan * total_alw)/100
                 if pot_jab >= obj.contract_id.type_id.max_biaya_jabatan :
                     pot_jab = obj.contract_id.type_id.max_biaya_jabatan 
                 tht_alw = (obj.contract_id.type_id.ttht * (obj.contract_id.wage * x))/100
                 if tht_alw >= obj.contract_id.type_id.max_tht :
                     tht_alw = obj.contract_id.type_id.max_tht
                 total_ptkp = pot_jab + status_pjk + tht_alw
-                pkp = (total_allw + tunj_pajak) - total_ptkp
+                pkp = (total_alw + tunj_pajak) - total_ptkp
                 obj_ptkp = self.pool.get('hr.pkp')
                 src_ptkp = obj_ptkp.search(cr,uid,[])
                 pajjak = 0.0
@@ -828,8 +837,8 @@ class hr_payslip(osv.osv):
                         pjk = pkp - ptkp.nominal_min
                         pajak = (pjk *percent)/100
                     pajjak = pajjak + pajak 
-                pajak2 = pajjak - pajak_total
                 if obj.contract_id.type_id.type_perhitungan_pajak == 'net' or obj.contract_id.type_id.type_perhitungan_pajak == 'mix' : 
+                    pajak2 = pajjak - pajak_total
                     self.write(cr,uid,ids,{'pkp':pajak2})
                     cek = False
                 elif obj.contract_id.type_id.type_perhitungan_pajak == 'gross_up':
@@ -837,14 +846,14 @@ class hr_payslip(osv.osv):
                     if pajjak >= tunj_pajak :
                         recursive = recursive + 0.001
                         if xx == 1 :
-                            tp = pajak2
+                            tp = pajjak
                         tunj_pajak = tp * recursive
                     else :
                         cek = False
                     if pajjak >= tunj_pajak :
-                        self.write(cr,uid,ids,{'pkp':pajak2, 'tunj_pajak' : pajak2})
+                        pajjak1 = pajjak 
             if obj.contract_id.type_id.type_perhitungan_pajak == 'gross_up' :
-                pajak2 = obj.pkp - pajak_total
+                pajak2 = pajjak1 - pajak_total
                 self.write(cr,uid,ids,{'pkp':pajak2, 'tunj_pajak' : pajak2})
         return True
 
@@ -905,7 +914,8 @@ class hr_payslip(osv.osv):
         'year' :fields.char("tahun"),
         'gross_tetap' : fields.float("gross Tetap"),
         'gross_ttetap':fields.float('gross T Tetap'),
-        'tunj_pajak_code':fields.char('Code')
+        'tunj_pajak_code':fields.char('Code'),
+        'tunj_pajak_tahun':fields.integer('tunjangan pajak setahun'),
     } 
                      
 hr_payslip()
