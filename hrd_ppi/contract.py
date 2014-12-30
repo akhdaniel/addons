@@ -71,6 +71,7 @@ class hr_contract(osv.osv):
         for status_holi in obj_stat.browse(cr,uid,src_stat) :
             aloc_cuti = status_holi.id
         if status_kontrak == type_brw :
+            import pdb;pdb.set_trace()
             jum = datetime.strptime(dat_en,"%Y-%m-%d").month - datetime.strptime(dat_st,"%Y-%m-%d").month
             if end > years : 
                 aloc = {
