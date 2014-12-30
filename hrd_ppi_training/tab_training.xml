@@ -116,7 +116,7 @@
             </field>       
         </record>
 
-        <record model="ir.ui.view" id="tabwarning_schedule_view">
+<!--         <record model="ir.ui.view" id="tabwarning_schedule_view">
             <field name="name">warning.schedule</field>
             <field name="model">warning.schedule</field>
             <field name="type">form</field>
@@ -135,7 +135,7 @@
                     </field>
                 </field>
             </field>
-        </record>
+        </record> -->
 
     </data>
 </openerp>
