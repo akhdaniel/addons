@@ -84,7 +84,7 @@ class employee(osv.osv):
         'telp1':fields.char('Telepon',50),
         'telp2':fields.char('Telepon',50),
         'status':fields.selection([('single','Single'),('married','Menikah'),('duda','Duda'),('janda','Janda')],'Status Pernikahan'),
-        'jml_anak':fields.integer('Jumlah Anak'),
+        'jml_anak':fields.integer('Jumlah Tanggungan'),
         'sjk_tanggal':fields.date('Sejak Tanggal'),        
         'employee_id' :fields.many2one('hr.employee'),
         'clas_id':fields.many2one('hr_employs.clas','Level'),

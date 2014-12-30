@@ -190,11 +190,17 @@ class permohonan_recruit(osv.osv):
     def selesai(self,cr,uid,ids,context=None):
         obj = self.browse(cr,uid,ids)[0]
         names = obj.name
+        no = obj.no_permohonan
         lap_obj = self.pool.get('hr.lap_permintaan_karyawan')
         lap_src = lap_obj.search(cr,uid,[('no','=',obj.no_permohonan)])
         for lap in lap_obj.browse(cr,uid,lap_src) :
             lap_obj.write(cr,uid,[lap.id],{'stat' : 'selesai'},context=context)
         self.write(cr,uid,ids,{'state':1, 'states_id' : 'submit'},context=context)
+        hr_pemi =self.pool.get('hr_pemenuhan')
+        hr_pem_src = hr_pemi.search(cr,uid,[('jabatan','=',names),('no_pmintaan','=', no)])
+        hr_pem_brw = hr_pemi.browse(cr,uid,hr_pem_src,context)
+        for hr_pem in hr_pem_brw :
+            hr_pemi.write(cr, uid, [hr_pem.id], {'status' : 'Done'}, context=context)
         return True
 
     def cancel(self,cr,uid,ids,context=None):
@@ -447,6 +453,7 @@ class permohonan_recruit(osv.osv):
                     n = ini.sequence  
                     nn = ini.id
         for exe in hasil.applicant_ids:
+            x += 1
             stat_ids = exe.stat + 1
             obj_app.write(cr,uid,[exe.id],{'stat':stat_ids})                  
             obj_app.write(cr,uid,[exe.id],{'stage_id':nn})
@@ -763,8 +770,9 @@ class hr_applicant(osv.osv):
         day = str(datetime.now().day)
         date = mont + '/' + day + '/' + year 
         for hr_pem in hr_pem_brw :
-            if hr_pem.status == "pending" : 
-                hr_pemi.write(cr, uid, [hr_pem.id], {'status':"Done",'per_masuk':date}, context=context)  
+            jml = hr_pem.jml_diterima + 1
+            if hr_pem.status == "In Progres" : 
+                hr_pemi.write(cr, uid, [hr_pem.id], {'per_masuk':date,'jml_diterima': jml }, context=context)  
         hr_pem_keb = self.pool.get('hr.pemenuhan_kebutuhan')
         hr_pem_keb_src = hr_pem_keb.search(cr,uid,[('status_penempatan','=','Next Process'),('jabatan','=',jbtn)])
         hr_pem_keb_brw = hr_pem_keb.browse(cr,uid,hr_pem_keb_src,context=context)

@@ -624,7 +624,7 @@ z
     </record>     
 
     <!--edit kanban-->
-    <record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
+<!--     <record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
             <field name="name">Hr Applicants kanban R</field>
             <field name="model">hr.applicant</field>
             <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
@@ -700,7 +700,7 @@ z
                 </kanban>
                 </kanban>
             </field>
-        </record>
+        </record> -->
 
 
     </data>

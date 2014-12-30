@@ -62,7 +62,6 @@
                                             <field name="birthday"/>
                                             <field name="usia"/>
                                             <field name='marital'/>
-                                            <!--field name="jml_anak" attrs="{'invisible':[('marital','=','single')]}"/-->
                                             <field name='sjk_tanggal' attrs="{'invisible':[('marital','=','single')]}"/> 
                                             <field name="mobile_phone"/>
                                             <!--field name="kota_id"/--> 
@@ -85,6 +84,7 @@
                                      <group string="Tax">
                                         <field name="ptkp_id"/>
                                         <field name="npwp"/>
+                                        <field name="jml_anak"/>
                                      </group>
                                      <newline/>
                                      <group string="Insurance">
