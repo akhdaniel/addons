@@ -75,8 +75,8 @@ class lph(osv.osv):
 			domain="[('state','=','open'),\
 			('user_id','=',user_id),\
 			('is_draft_lph','=',False),\
-			('based_route_id','=',based_route_id)]",
-			#('is_cn','=',False),\
+			('based_route_id','=',based_route_id),\
+			('note','=',False)]",
 			required=True),
 		'total'           : fields.function(_calc_total, type="float", string="Total"),
 		'balance'         : fields.function(_calc_balance, type="float", string="Balance"),
