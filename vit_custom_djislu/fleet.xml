@@ -90,13 +90,14 @@
                                     <field name="weight" sum="Total Weight"/>
                                     <field name="state"/>
                                     <field name="button_hidden" invisible="True"/>
-                                    <field name="note"/>
+                                    <field name="note" invisible="1"/>
                                     <field name="description" attrs="{'readonly':[('button_hidden','=',False)],'required': [('state','not in','draft','on_deliver')]}" widget="selection"/>
 
                                     <button name="invoice_open" icon="STOCK_APPLY" states="deliver,ttf" string="Validate" class="oe_highlight" groups="base.group_user" attrs="{'invisible':['|',('state', 'in', ('draft','open','cancel','paid')),('button_hidden','=',False)]}"/>
 
-                                    <button name="action_ttf" states="deliver" icon="STOCK_MISSING_IMAGE" string="TTF" type="object" attrs="{'invisible':[('state','!=','on_deliver')]}"/>
+                                    <button name="action_ttf" string="Not TTF" type="object" attrs="{'invisible':[('note','=','TTF')]}"/>
 
+                                    <button name="action_not_ttf" string="TTF" type="object" attrs="{'invisible':[('note','=',False)]}"/>
 
                                     <button name="258" type="action" icon="STOCK_REVERT_TO_SAVED" string="CN Conf" groups="base.group_user" attrs="{'invisible':['|','|',('button_hidden','=',False),('state','!=','open'),('note','=','CN Conf')]}"/>
 
@@ -172,8 +173,8 @@
                 <search string="Picking List">
                     <field name="name" filter_domain="[('name','ilike',self)]" string="Code"/>
                     <filter icon="terp-sale" string="Draft" domain="[('state','=','draft')]"/>
-                    <filter icon="terp-sale" string="Delivery" domain="[('type','=','on_deliver')]"/>
-                    <filter icon="terp-sale" string="Return" domain="[('type','=','return')]"/>
+                    <filter icon="terp-sale" string="Delivery" domain="[('state','=','on_deliver')]"/>
+                    <filter icon="terp-sale" string="Return" domain="[('state','=','return')]"/>
                     <filter name="mypicking" string="My Picking List" domain="[('user_id','=',uid)]" help="My Picking List" invisible="0"/>
                     <group expand="0" string="Group By...">
                         <filter string="Based Route" icon="terp-folder-orange" domain="" context="{'group_by':'based_route_id'}"/>

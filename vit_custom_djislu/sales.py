@@ -673,6 +673,7 @@ class sale_order(osv.osv):
 			},
 			multi='sums', help="The total amount."),
 		'x_field':fields.boolean('x'),
+		'street':fields.related('partner_id','street',type='char',string='Alamat',readonly=True),
 			}
 
 		
@@ -912,9 +913,12 @@ class sale_order(osv.osv):
 						jm = klp.qty
 						#jika di so line dan master sama
 						if ppr == ppr2:
-							#bilangan dibulatkan
-							#qty di SO /min qty di master
-							kl = int(jml / jm)
+							if jm == 0:
+								kl = 0
+							else :
+								#bilangan dibulatkan
+								#qty di SO /min qty di master
+								kl = int(jml / jm)
 							km_mtx.append(kl)
 				if gb.is_category:
 					for klp in kond5:
@@ -932,9 +936,12 @@ class sale_order(osv.osv):
 					jm2 = klp2.qty
 					#jika di so line dan master sama
 					if ppr == ppr2:
-						#bilangan dibulatkan
-						#qty di SO /min qty di master
-						kl2 = int(jml / jm2)
+						if jm2 == 0:
+							kl2 = 0
+						else :
+							#bilangan dibulatkan
+							#qty di SO /min qty di master
+							kl2 = int(jml / jm2)
 						km_mtx2.append(kl2)
 			km_so = sorted(km_mtx)
 			if km_so == []:#pencegahan jika array kosong
