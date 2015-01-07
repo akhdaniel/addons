@@ -47,6 +47,7 @@ Add CMO to the Purchase Orders
         'stock_prod_lot.xml',
         'report/po_webkit_header.xml',
         'report/purchase_order.xml',
+        'cron_job.xml',
     ],
     'test': [
     ],

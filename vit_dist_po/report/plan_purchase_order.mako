@@ -47,32 +47,9 @@
         %if o.sch_ids :
         <table  style="page-break-inside: avoid" class="list_table" width="100%" cellpadding="5" cellspacing="20">
             <thead>
-                <tr class="col1">
-                    <th colspan=5></th>
-                    <th class="aright">Q01</th>
-                    <th class="aright">Q02</th>
-                    <th class="aright">Q03</th>
-                    <th class="aright">Q04</th>
-                    <th class="aright">Q05</th>
-                    <th class="aright">Q06</th>
-                    <th class="aright">Q07</th>
-                    <th class="aright">Q08</th>
-                    <th class="aright">Q09</th>
-                    <th class="aright">Q10</th>
-                    <th class="aright">Q11</th>
-                    <th class="aright">Q12</th>
-                    <th class="aright">Q13</th>
-                    <th class="aright">Q14</th>
-                    <th class="aright">Q15</th>
-                    <th class="aright">Q16</th>
-                    <th class="aright">Q17</th>
-                    <th class="aright">Q18</th>
-                    <th class="aright">Q19</th>
-                    <th class="aright">Q20</th>
-                </tr>
                 <tr>
                     <td colspan=3></td>
-                    <td colspan=2>Jenis Kendaraan</td>
+                    <td colspan=2><b>Jenis Kendaraan</b></td>
                     <td class="aright">${o.fleet1.jenis  or ''}</td>
                     <td class="aright">${o.fleet2.jenis   or ''}</td>
                     <td class="aright">${o.fleet3.jenis   or ''}</td>
@@ -96,7 +73,7 @@
                 </tr>
                 <tr>
                     <td colspan=3></td>
-                    <td colspan=2>Kubikasi</td>
+                    <td colspan=2><b>Kubikasi</b></td>
                     <td class="aright">${o.kubika1  or ''}</td>
                     <td class="aright">${o.kubika2  or ''}</td>
                     <td class="aright">${o.kubika3  or ''}</td>
@@ -120,7 +97,7 @@
                 </tr>
                 <tr>
                     <td colspan=3></td>
-                    <td colspan=2>Tonnase</td>
+                    <td colspan=2><b>Tonnase</b></td>
                     <td class="aright">${o.tonase1  or ''}</td>
                     <td class="aright">${o.tonase2  or ''}</td>
                     <td class="aright">${o.tonase3  or ''}</td>
@@ -142,43 +119,38 @@
                     <td class="aright">${o.tonase19 or ''}</td>
                     <td class="aright">${o.tonase20 or ''}</td>
                 </tr>
-                <tr>
-                    <td colspan=3></td>
-                    <td colspan=2>Date</td>
-                    <td class="aright">${formatLang(o.w1  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w2  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w3  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w4  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w5  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w6  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w7  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w8  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w9  , date=True)}</td>
-                    <td class="aright">${formatLang(o.w10 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w11 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w12 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w13 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w14 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w15 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w16 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w17 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w18 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w19 , date=True)}</td>
-                    <td class="aright">${formatLang(o.w20 , date=True)}</td>
-                </tr>
                 <tr class="col1">
                     <th>No</th>
                     <th>Kode</th>
                     <th>Barcode</th>
                     <th>Nama Barang</th>
                     <th>Satuan</th>
-                    <th colspan=20></th>
+                    <th class="aright">${formatLang(o.w1  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w2  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w3  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w4  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w5  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w6  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w7  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w8  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w9  , date=True)}</th>
+                    <th class="aright">${formatLang(o.w10 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w11 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w12 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w13 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w14 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w15 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w16 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w17 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w18 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w19 , date=True)}</th>
+                    <th class="aright">${formatLang(o.w20 , date=True)}</th>
                 </tr>
             </thead>
             <tbody>
             <% sno=1 %>
             % for s in o.sch_ids:
-                <tr>
+                <tr style="page-break-inside:avoid !important;">
                     <td>${sno}</td>
                     <td>${s.int_code}</td>
                     <td>${s.barcode}</td>
@@ -210,10 +182,17 @@
             </tbody>
         </table> 
         %endif
-        
+    %if o.notes:
+        <br/>Keterangan :<br/>
+        <div>
+        <table width="500px">
+            <tr><td>${str(o.notes)}</td></tr>
+        </table> 
+        </div>
+    %endif
 
     </div>
-    <p style="page-break-after:always"></p>
+    <!-- <p style="page-break-after:always"></p> -->
 </body>
 </html>
 % endfor

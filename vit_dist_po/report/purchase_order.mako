@@ -26,7 +26,7 @@
             <tr>
                 <td width="15%">No. Bukti</td>
                 <td width="1%"> : </td>
-                <td class="title">${o.name} [ ${o.partner_ref or ''} ]</td>
+                <td class="title">${o.name}   [ ${o.partner_ref or ''} ]</td>
                 <td class="aright">Printed by ${user.name}</td>
             </tr>
             <tr>
@@ -140,10 +140,15 @@
             </tbody>
         </table> 
         %endif
-        
-
+    %if o.notes:
+    <br/>Keterangan :<br/>
+    <div>
+    <table width="500px">
+        <tr><td>${str(o.notes)}</td></tr>
+    </table> 
     </div>
-    <p style="page-break-after:always"></p>
+    %endif
+    </div>
 </body>
 </html>
 % endfor
