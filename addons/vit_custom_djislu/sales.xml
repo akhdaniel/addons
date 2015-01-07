@@ -24,9 +24,9 @@
                         <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice" groups="base.group_sale_salesman_all_leads,base.group_sale_manager"/>
 
                         <button name="invoice_corrected" states="invoice_except" string="Ignore Exception" groups="base.group_sale_salesman_all_leads,base.group_sale_manager"/>
-                        <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="base.group_sale_salesman_all_leads,base.group_sale_manager"/>
+<!--                         <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="base.group_sale_salesman_all_leads,base.group_sale_manager"/>
 
-                        <button name="action_quotation_send" string="Send by Email" type="object" states="sent" groups="base.group_sale_salesman_all_leads,base.group_sale_manager"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" states="sent" groups="base.group_sale_salesman_all_leads,base.group_sale_manager"/> -->
 
                         <button name="print_quotation" string="Print" type="object" states="draft" class="oe_highlight" groups="base.group_sale_salesman_all_leads,base.group_sale_manager" invisible="1"/>
 
@@ -63,6 +63,7 @@
                         <group>
                             <field name="partner_code" invisible="True"/>
                             <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}" attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="street" string=" "/>
                             <field name="partner_id2" attrs="{'readonly': [('state','!=','draft')]}"/>
                             <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}"/>
                             <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'delivery'}"/>

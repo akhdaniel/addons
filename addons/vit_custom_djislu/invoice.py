@@ -214,7 +214,11 @@ class account_invoice(osv.osv):
 
 	def action_ttf(self,cr,uid,ids,context=None): 
 		#import pdb;pdb.set_trace()
-		return self.write(cr,uid,ids,{'state':'ttf'},context=context)		
+		return self.write(cr,uid,ids,{'note':'TTF'},context=context)	
+
+	def action_not_ttf(self,cr,uid,ids,context=None): 
+		#import pdb;pdb.set_trace()
+		return self.write(cr,uid,ids,{'note':False},context=context)			
 
 	def action_cn(self,cr,uid,ids,context=None): 
 		#import pdb;pdb.set_trace()
