@@ -118,15 +118,7 @@
       <lineStyle kind="LINEABOVE" colorName="#dddddd" start="6,0" stop="6,0"/>
       <lineStyle kind="LINEBELOW" colorName="#eeeeee" start="6,-1" stop="6,-1"/>
     </blockTableStyle>
-    <blockTableStyle id="Table6">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-    </blockTableStyle>
     <blockTableStyle id="Table7">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-    </blockTableStyle>
-    <blockTableStyle id="Table8">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
@@ -241,10 +233,6 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Table16">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-    </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
@@ -257,22 +245,20 @@
     <paraStyle name="P7" fontName="Helvetica" fontSize="7.0" leading="9"/>
     <paraStyle name="P8" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER"/>
     <paraStyle name="P9" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
-    <paraStyle name="P10" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
-    <paraStyle name="P11" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P12" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P13" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P14" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P15" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P16" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P17" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P18" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P19" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P20" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P21" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER"/>
-    <paraStyle name="P22" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT"/>
-    <paraStyle name="P23" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
-    <paraStyle name="P24" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER"/>
-    <paraStyle name="P25" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT"/>
+    <paraStyle name="P11" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
+    <paraStyle name="P12" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER"/>
+    <paraStyle name="P13" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P14" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P15" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P16" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P17" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P18" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P19" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P20" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P21" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P22" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P23" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -294,18 +280,18 @@
     <blockTable colWidths="581.0" style="Table9">
       <tr>
         <td>
-          <para style="P15">[[jalan.user_id.company_id.name]]</para>
-          <para style="P13">[[jalan.user_id.company_id.street]]</para>
-          <para style="P13">[[jalan.user_id.company_id.street2]]</para>
-          <para style="P13">Tlp.[[jalan.user_id.company_id.phone]] Fax.0[[jalan.user_id.company_id.fax]]</para>
-          <para style="P13">NPWP.[[jalan.user_id.company_id.vat]]</para>
-          <para style="P14">
+          <para style="P19">[[jalan.user_id.company_id.name]]</para>
+          <para style="P17">[[jalan.user_id.company_id.street]]</para>
+          <para style="P17">[[jalan.user_id.company_id.street2]]</para>
+          <para style="P17">Tlp.[[jalan.user_id.company_id.phone]] Fax.0[[jalan.user_id.company_id.fax]]</para>
+          <para style="P17">NPWP.[[jalan.user_id.company_id.vat]]</para>
+          <para style="P18">
             <font color="white"> </font>
           </para>
         </td>
       </tr>
     </blockTable>
-    <para style="P10">[[ repeatIn(objects,'jalan') ]] Tanggal : [[jalan.date]]</para>
+    <para style="P13">[[ repeatIn(objects,'jalan') ]] Tanggal : [[jalan.date]]</para>
     <blockTable colWidths="83.0,83.0,83.0,83.0,83.0,61.0,105.0" style="Table1">
       <tr>
         <td>
@@ -359,9 +345,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="581.0" style="Table5">
       <tr>
         <td>
@@ -371,10 +354,7 @@
         </td>
       </tr>
     </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="19.0,104.0,55.0,102.0,231.0,68.0" style="Table3">
+    <blockTable colWidths="19.0,104.0,56.0,102.0,231.0,68.0" style="Table3">
       <tr>
         <td>
           <para style="P1">No</para>
@@ -396,11 +376,11 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="14.0,6.0,104.0,55.0,102.0,231.0,69.0" style="Table4">
+    <blockTable colWidths="13.0,6.0,104.0,56.0,102.0,231.0,69.0" style="Table4">
       <tr>
         <td>
-          <para style="P12">[[repeatIn(jalan.inv_ids,'line')]]</para>
-          <para style="P17" leftIndent="15" bulletIndent="0">
+          <para style="P16">[[repeatIn(jalan.inv_ids,'line')]]</para>
+          <para style="P21" leftIndent="15" bulletIndent="0">
             <bullet size="7.0">
               <seq id="L1"/>
             </bullet>
@@ -408,7 +388,7 @@
           </para>
         </td>
         <td>
-          <para style="P11">
+          <para style="P14">
             <font color="white"> </font>
           </para>
         </td>
@@ -429,21 +409,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="581.0" style="Table6">
-      <tr>
-        <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="116.0,116.0,116.0,116.0,116.0" style="Table7">
       <tr>
         <td>
@@ -534,15 +499,6 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="581.0" style="Table8">
-      <tr>
-        <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
     <para style="P6">Printed: [[ time.ctime() ]]</para>
     <para style="terp_default_9">
       <font color="white"> </font>
@@ -551,21 +507,18 @@
       <font color="white"> </font>
     </para>
     <pageBreak/>
-    <para style="P16">[[jalan.user_id.company_id.name]]</para>
-    <para style="P13">[[jalan.user_id.company_id.street]]</para>
-    <para style="P13">[[jalan.user_id.company_id.street2]]</para>
-    <para style="P13">Tlp.[[jalan.user_id.company_id.phone]] Fax.0[[jalan.user_id.company_id.fax]]</para>
-    <para style="P13">NPWP.[[jalan.user_id.company_id.vat]]</para>
+    <para style="P20">[[jalan.user_id.company_id.name]]</para>
+    <para style="P17">[[jalan.user_id.company_id.street]]</para>
+    <para style="P17">[[jalan.user_id.company_id.street2]]</para>
+    <para style="P17">Tlp.[[jalan.user_id.company_id.phone]] Fax.0[[jalan.user_id.company_id.fax]]</para>
+    <para style="P17">NPWP.[[jalan.user_id.company_id.vat]]</para>
     <blockTable colWidths="581.0" style="Table17">
       <tr>
         <td>
-          <para style="P10">[[ repeatIn(objects,'jalan') ]]Tanggal : [[jalan.date]]</para>
+          <para style="P13">[[ repeatIn(objects,'jalan') ]]Tanggal : [[jalan.date]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P10">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="83.0,83.0,83.0,83.0,83.0,61.0,105.0" style="Table12">
       <tr>
         <td>
@@ -625,7 +578,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="29.0,155.0,116.0,67.0,71.0,76.0,68.0" style="Table10">
+    <blockTable colWidths="29.0,155.0,116.0,67.0,70.0,76.0,68.0" style="Table10">
       <tr>
         <td>
           <para style="P2">No</para>
@@ -653,44 +606,39 @@
     <blockTable colWidths="25.0,4.0,155.0,116.0,67.0,70.0,76.0,68.0" style="Table11">
       <tr>
         <td>
-          <para style="P18" leftIndent="15" bulletIndent="0">
+          <para style="P22" leftIndent="15" bulletIndent="0">
             <bullet size="7.0">
-              <seq id="L25"/>
+              <seq id="L2"/>
             </bullet>
-            <font face="Helvetica"/>
-          </para>
-        </td>
-        <td>
-          <para style="P19">
             <font color="white"> </font>
           </para>
         </td>
         <td>
-          <para style="P20">
-            <font face="Helvetica" size="2.0">[[repeatIn(jalan.list_product_ids,'line2')]]</font>
+          <para style="P15">
+            <font color="white"> </font>
           </para>
-          <para style="P22">[[line2.product_id.name]]</para>
         </td>
         <td>
-          <para style="P23">[[line2.prodlot_id.name or '-']] | <font face="Helvetica" size="8.0">[[formatLang(line2.prodlot_id.life_date,date = True)]]</font></para>
+          <para style="P23">[[repeatIn(jalan.list_product_ids,'line2')]]</para>
+          <para style="P10">[[line2.product_id.name]]</para>
         </td>
         <td>
-          <para style="P23">[[line2.big_qty or '-']]</para>
+          <para style="P11">[[line2.prodlot_id.name or '-']] | <font face="Helvetica" size="8.0">[[formatLang(line2.prodlot_id.life_date,date = True)]]</font></para>
         </td>
         <td>
-          <para style="P24">[[line2.big_uom.name]]</para>
+          <para style="P11">[[line2.big_qty or '-']]</para>
         </td>
         <td>
-          <para style="P23">[[line2.small_qty or '-']]</para>
+          <para style="P12">[[line2.big_uom.name]]</para>
         </td>
         <td>
-          <para style="P24">[[line2.small_uom.name]]</para>
+          <para style="P11">[[line2.small_qty or '-']]</para>
+        </td>
+        <td>
+          <para style="P12">[[line2.small_uom.name]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="116.0,116.0,116.0,116.0,116.0" style="Table15">
       <tr>
         <td>
@@ -778,15 +726,6 @@
         </td>
         <td>
           <para style="P8">(…......................................)</para>
-        </td>
-      </tr>
-    </blockTable>
-    <blockTable colWidths="581.0" style="Table16">
-      <tr>
-        <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
-          </para>
         </td>
       </tr>
     </blockTable>
@@ -936,7 +875,7 @@
       <seqReset id="L1"/>
     </para>
     <para>
-      <seqReset id="L25"/>
+      <seqReset id="L2"/>
     </para>
   </story>
 </document>
