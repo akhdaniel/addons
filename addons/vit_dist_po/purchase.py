@@ -1,13 +1,15 @@
-from openerp.osv import fields, osv
+import time
+import re
+# import math
+# from lxml import etree
+from openerp.osv import fields, osv, expression
 from openerp import netsvc
 from openerp import tools
 from openerp.tools.translate import _
-import time
 import openerp.addons.decimal_precision as dp
 from datetime import timedelta, date, datetime
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP
 from openerp.tools.float_utils import float_compare
-# from lxml import etree
 
 class product_product(osv.osv):
     _name = "product.product"
@@ -52,6 +54,49 @@ class product_product(osv.osv):
                 res[i] = False
         return res
 
+    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
+        if not args:
+            args = []
+        if name:
+            positive_operators = ['=', 'ilike', '=ilike', 'like', '=like']
+            ids = []
+            if operator in positive_operators:
+                ids = self.search(cr, user, [('default_code','=',name)]+ args, limit=limit, context=context)
+                if not ids:
+                    ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
+            if not ids and operator not in expression.NEGATIVE_TERM_OPERATORS:
+                # Do not merge the 2 next lines into one single search, SQL search performance would be abysmal
+                # on a database with thousands of matching products, due to the huge merge+unique needed for the
+                # OR operator (and given the fact that the 'name' lookup results come from the ir.translation table
+                # Performing a quick memory merge of ids in Python will give much better performance
+                ids = set()
+                ids.update(self.search(cr, user, args + [('default_code',operator,name)], limit=limit, context=context))
+                if not limit or len(ids) < limit:
+                    # we may underrun the limit because of dupes in the results, that's fine
+                    ids.update(self.search(cr, user, args + [('name',operator,name)], limit=(limit and (limit-len(ids)) or False) , context=context))
+                ids = list(ids)
+            elif not ids and operator in expression.NEGATIVE_TERM_OPERATORS:
+                ids = self.search(cr, user, args + ['&', ('default_code', operator, name), ('name', operator, name)], limit=limit, context=context)
+            if not ids and operator in positive_operators:
+                ptrn = re.compile('(\[(.*?)\])')
+                res = ptrn.search(name)
+                if res:
+                    ids = self.search(cr, user, [('default_code','=', res.group(2))] + args, limit=limit, context=context)
+                #search bds external code
+                if not res:
+                    ids0 = []
+                    ext_kode = name.join('%%')
+                    sql_req = u'select product_id from product_supplierinfo where product_code ilike \''+ ext_kode + u'\' limit ' + str(limit)
+                    cr.execute(sql_req)
+                    cr_ids = cr.fetchall()
+                    if len(cr_ids) > 0:
+                        for x in cr_ids: ids0.append(x[0]) 
+                        ids = self.search(cr, user, [('id','in',ids0)]+ args, limit=limit, context=context)
+        else:
+            ids = self.search(cr, user, args, limit=limit, context=context)
+        result = self.name_get(cr, user, ids, context=context)
+        return result
+
     _columns = {
         'principal_id' : fields.function(
             _get_cur_principal_id,
@@ -68,7 +113,6 @@ product_product()
 class purchase_order_schedule(osv.Model):
     _name = 'purchase.order.schedule'
     _rec_name = 'product_id'
-
 
     _columns={
         # 'name'              : fields.char("Nama Barang",readonly=True),
@@ -129,16 +173,19 @@ class purchase_order_line(osv.osv):
     _inherit    = 'purchase.order.line'
     _order      = 'stock_current'
 
-
     def _upd_readonly(self, cr, uid, ids, field_name, arg, context):
         res = {}
+        value = {}
         suggested_order = 0.00
         product_qty     = 0.00
         ending_inv      = 0.00
         stock_cover     = 0.00
-        product_qty     = 0.00
+            
         if ids:    
             for i in self.browse(cr,uid,ids,):
+                # hanya update jika po masih draft
+                if i.state != 'draft' :
+                    continue
                 suggested_order = (i.forecastMT + i.forecastGT + i.bufMT + i.bufGT - i.stock_current - i.in_transit) 
                 suggested_order = suggested_order > 0.00 and suggested_order or 0.00
                 product_qty     = i.adjustment + suggested_order
@@ -149,15 +196,26 @@ class purchase_order_line(osv.osv):
                 ending_inv      = round(suggested_order + i.adjustment) + i.stock_current + i.in_transit - i.sales_3m
                 if round(i.sales_3m) > 0.00 and ending_inv > 0.00 : 
                     stock_cover   = ending_inv / round(i.sales_3m) * 4
+            
+                value = self.onchange_product_id(cr, uid, i.id, False, i.product_id.id, product_qty, i.product_uom.id, uid, False, False, False, False, False, i.order_id.datestart, i.order_id.dateend, context)['value']
                 self.write(cr,uid,i.id,{
+                    'int_code'      : value['int_code'],
+                    'barcode'       : value['barcode'],
+                    # 'product_uom'   : value['product_uom'], 
+                    'sales_3m'      : value['sales_3m'],
+                    'avgMT'         : value['avgMT'],
+                    'avgGT'         : value['avgGT'],
+                    'bufMT'         : value['bufMT'],
+                    'bufGT'         : value['bufGT'],
+                    'stock_current' : value['stock_current'],
+                    'in_transit'    : value['in_transit'],
                     'suggested_order': suggested_order,
-                    'product_qty': product_qty,
-                    'ending_inv': ending_inv,
-                    'stock_cover': stock_cover,
+                    'product_qty'   : product_qty,
+                    'ending_inv'    : ending_inv,
+                    'stock_cover'   : stock_cover,
                     })
                 res[i.id]=True
         return res
-
 
     _columns = {
         'suggested_order'   : fields.float(_('Saran Order'), readonly=True, digits_compute=dp.get_precision('Product Price')),
@@ -187,7 +245,7 @@ class purchase_order_line(osv.osv):
             type='boolean',
             method=True,
             store=False,
-            string='update readonly fields'),        
+            string='update readonly fields'),          
         # 'qty2'              : fields.float('Qty2',readonly=True),
         # 'sales_3m2'         : fields.float(_('Total AVG'),readonly=True, digits_compute=dp.get_precision('Product Price')),
         # 'stock_current2'    : fields.float('Stock Current2',readonly=True),
@@ -198,7 +256,7 @@ class purchase_order_line(osv.osv):
 
     def onchange_product_id(self, cr, uid, ids, pricelist_id, product_id, qty, uom_id,
             partner_id, date_order=False, fiscal_position_id=False, date_planned=False,
-            name=False, price_unit=False, context=None):
+            name=False, price_unit=False, datestart=False, dateend=False, context=None):
         """
         onchange handler of product_id.
         """
@@ -235,24 +293,23 @@ class purchase_order_line(osv.osv):
             name += '\n' + product.description_purchase
         res['value'].update({'name': name})
 
-        # # Force set satuan awal 
-        # if uom_id:
-        #     uom_id = product.uom_id.id
-
         # - set a domain on product_uom
         res['domain'] = {'product_uom': [('category_id','=',product.uom_id.category_id.id)]}
 
+        # UOM gg dicek karena diset > uom_po_id
+        # Force set satuan awal 
+        uom_id = product.uom_po_id.id
         # - check that uom and product uom belong to the same category
-        product_uom_po_id = product.uom_po_id.id
-        if not uom_id:
-            uom_id = product_uom_po_id
+        # product_uom_po_id = product.uom_po_id.id
+        # if not uom_id:
+        #     uom_id = product_uom_po_id
 
-        if product.uom_id.category_id.id != product_uom.browse(cr, uid, uom_id, context=context).category_id.id:
-            if context.get('purchase_uom_check') and self._check_product_uom_group(cr, uid, context=context):
-                res['warning'] = {'title': _('Warning!'), 'message': _('Selected Unit of Measure does not belong to the same category as the product Unit of Measure.')}
-            uom_id = product_uom_po_id
+        # if product.uom_id.category_id.id != product_uom.browse(cr, uid, uom_id, context=context).category_id.id:
+        #     if context.get('purchase_uom_check') and self._check_product_uom_group(cr, uid, context=context):
+        #         res['warning'] = {'title': _('Warning!'), 'message': _('Selected Unit of Measure does not belong to the same category as the product Unit of Measure.')}
+        #     uom_id = product_uom_po_id
 
-        res['value'].update({'product_uom': uom_id})
+        # res['value'].update({'product_uom': uom_id})
 
         # - determine product_qty and date_planned based on seller info
         if not date_order:
@@ -306,17 +363,22 @@ class purchase_order_line(osv.osv):
             clause2 = ' AND location_dest_id IN '+str(tuple(location_ids))
             clause3 = ' AND location_id IN '+str(tuple(location_ids))
             clause4 = ' AND sm.location_dest_id IN '+str(tuple(location_ids))
+        
         # only 1 product used
         MT= 0.00;GT=0.00;s3m=0.00
         BGT=0.00;BMT=0.00;sgt_order=0.00;adj=0.00;cs=0.00;it=0.00
         tot_w=0;tot_v=0;
         ratio=1/product.uom_po_id.factor
+        # Range tanggal pertama 3 bln lalu s/d tgl terakhir bulan lalu
+        #   date_trunc('MONTH',CURRENT_DATE) - INTERVAL '1 day')::date   as endday_lastmounth,
+        #   date_trunc('MONTH',CURRENT_DATE) - INTERVAL '3 MONTH')::date as firstday_last3mounth
+        clause_startdate = ' AND ai.date_invoice BETWEEN (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'3 MONTH\')::date '
+        clause_enddate   = ' AND (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'1 day\')::date '
+        # if exist datestart and dateend
+        if datestart and dateend:
+            clause_startdate = " AND ai.date_invoice BETWEEN to_date(\'%s\',\'YYYY-MM-DD\')" % datestart
+            clause_enddate   = " AND to_date(\'%s\',\'YYYY-MM-DD\')" % dateend
 
-        ''' 
-        Range tanggal pertama 3 bln lalu s/d tgl terakhir bulan lalu
-        (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '1 day')::date as lastday_lastmounth,
-        (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '3 MONTH')::date as firstday_last3mounth
-        '''
         cr.execute('SELECT SUM(il.quantity3) '\
             'FROM account_invoice ai '\
             'JOIN res_partner rp on ai.partner_id=rp.id '\
@@ -325,10 +387,8 @@ class purchase_order_line(osv.osv):
             'JOIN account_invoice_line il on ai.id=il.invoice_id  '\
             'JOIN product_uom uom on il.uos_id = uom.id  '\
             'JOIN product_uom_categ puc on puc.id=uom.category_id   '\
-            'WHERE state = \'paid\'  '\
-            'AND il.product_id = ' +str(product.id)+ 
-            ' AND ai.date_invoice BETWEEN (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'3 MONTH\')::date '\
-            ' AND (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'1 day\')::date '\
+            'WHERE state = \'paid\' '\
+            'AND il.product_id = ' +str(product.id)+ clause_startdate + clause_enddate +
             'AND rpc.name like \'%GT%\' '+clause )
         SOGT = cr.fetchone()
         if SOGT != (None,) : 
@@ -345,9 +405,7 @@ class purchase_order_line(osv.osv):
             'JOIN product_uom uom on il.uos_id = uom.id  '\
             'JOIN product_uom_categ puc on puc.id=uom.category_id   '\
             'WHERE state = \'paid\'  '\
-            'AND il.product_id = ' +str(product.id)+ 
-            ' AND ai.date_invoice BETWEEN (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'3 MONTH\')::date '\
-            ' AND (date_trunc(\'MONTH\',CURRENT_DATE) - INTERVAL \'1 day\')::date '\
+            'AND il.product_id = ' +str(product.id) + clause_startdate + clause_enddate +
             'AND rpc.name like \'%MT%\' '+ clause )
         SOMT = cr.fetchone()
         if SOMT != (None,) : 
@@ -398,7 +456,8 @@ class purchase_order_line(osv.osv):
 
         res['value'].update({
             'int_code'      : product.default_code or '',
-            'barcode'       : product.barcode or '',
+            'barcode'       : product.seller_ids[0].product_code or '', #or product.barcode
+            'product_qty'   : 0.00, 
             'suggested_order' : 0.00,         
             'prod_weight'   : 0.00,
             'prod_volume'   : 0.00,
@@ -555,6 +614,9 @@ class purchase_order_line(osv.osv):
                 'small_uom' : small_uom,
                 'product_qty':product_qty,}}
 
+    _defaults = {
+        'product_qty': lambda *a: 0.0,
+        }
 
 purchase_order_line()
 
@@ -652,8 +714,8 @@ class purchase_order(osv.osv):
         # 'sch_ids3_detail': fields.one2many('purchase.order.schedule.r3.detail','po_id',"R3 Detail"),
         # 'sch_ids4_detail': fields.one2many('purchase.order.schedule.r4.detail','po_id',"R4 Detail"),
         # 'sch_ids5_detail': fields.one2many('purchase.order.schedule.r5.detail','po_id',"R5 Detail"),
-        'datestart'             : fields.date('Date'),
-        'dateend'            : fields.date('To'),
+        'datestart'             : fields.date('Date', readonly=True, states={'draft':[('readonly',False)]}),
+        'dateend'            : fields.date('To', readonly=True, states={'draft':[('readonly',False)]}),
         # 'percent_r'      : fields.float('Contrib(%)'),
         # 'sch_ids_date'        : fields.one2many('purchase.order.date','po_id',"D"),
         # TODO: ini dipake buat report excel > 'sch_ids_cumul'  : fields.one2many('purchase.order.schedule.cumul','po_id',"Detail"),
@@ -870,6 +932,37 @@ class purchase_order(osv.osv):
             'price_unit': order_line.price_unit
         }
 
+    def _prepare_inv_line(self, cr, uid, account_id, order_line, context=None):
+        """Collects require data from purchase order line that is used to create invoice line
+        for that purchase order line
+        :param account_id: Expense account of the product of PO line if any.
+        :param browse_record order_line: Purchase order line browse record
+        :return: Value for fields of invoice lines.
+        :rtype: dict
+        
+        Edit: 
+        dict qty        : big qty
+             uos_id     : big uom
+             quantity2  : small qty
+             uom_id     : small uom
+
+            'quantity': order_line.product_qty, << jadi fungsi
+            'uos_id': order_line.product_uom.id or False, >> awal
+        """
+
+        return {
+            'name': order_line.name,
+            'account_id': account_id,
+            'price_unit': order_line.price_unit or 0.0,
+            'product_id': order_line.product_id.id or False,
+            'qty': order_line.product_qty or 0.0,
+            'uos_id': order_line.product_uom.id or False, 
+            'quantity2': order_line.small_qty,
+            'uom_id': order_line.small_uom.id or ((order_line.small_qty == 0.00) and order_line.product_id.uom_id.id) or False,
+            'invoice_line_tax_id': [(6, 0, [x.id for x in order_line.taxes_id])],
+            'account_analytic_id': order_line.account_analytic_id.id or False,
+        }
+
     def _create_pickings(self, cr, uid, order, order_lines, picking_id=False, context=None):
         # Delete lines that have not product qty
         """Creates pickings and appropriate stock moves for given order lines with, 
@@ -927,6 +1020,8 @@ class purchase_order(osv.osv):
         partner = self.pool.get('res.partner')
         supplier_address = partner.address_get(cr, uid, [partner_x], ['default'])
         supplier = partner.browse(cr, uid, partner_x)
+
+        '''
         order_lines = [];pid=[];tot_w=0;tot_v=0;location_ids = [];clause =' ';clause2 =' ';clause3 =' ';clause4 =' '
         ps = self.pool.get('product.supplierinfo').search(cr,uid,[('name','=',partner_x)],)
 
@@ -953,11 +1048,11 @@ class purchase_order(osv.osv):
             s3m=0.00;BGT=0.00;BMT=0.00;sgt_order=0.00;adj=0.00;cs=0.00;it=0.00
             ratio=1/prd.uom_po_id.factor
 
-            ''' 
-            Range tanggal pertama 3 bln lalu s/d tgl terakhir bulan lalu
-            (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '1 day')::date as lastday_lastmounth,
-            (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '3 MONTH')::date as firstday_last3mounth
-            '''
+             
+            # Range tanggal pertama 3 bln lalu s/d tgl terakhir bulan lalu
+            # (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '1 day')::date as lastday_lastmounth,
+            # (date_trunc('MONTH',CURRENT_DATE) - INTERVAL '3 MONTH')::date as firstday_last3mounth
+            
             cr.execute('SELECT SUM(il.quantity3) '\
                 'FROM account_invoice ai '\
                 'JOIN res_partner rp on ai.partner_id=rp.id '\
@@ -1061,9 +1156,11 @@ class purchase_order(osv.osv):
                 # 'forecastMT'    : 0.00,
                 # 'forecastGT'    : 0.00,
                 # 'small_qty'     : 0.00,
-                }])        
+                }]) 
+            '''
+
         return {'value': {
-            'order_line'        : sorted(order_lines, key=lambda sku_order: sku_order[2]['stock_current'], reverse=False),
+            # 'order_line'        : sorted(order_lines, key=lambda sku_order: sku_order[2]['stock_current'], reverse=False),
             'pricelist_id'      : supplier.property_product_pricelist_purchase.id or False,
             'fiscal_position'   : supplier.property_account_position and supplier.property_account_position.id or False,
             'payment_term_id'   : supplier.property_supplier_payment_term.id or False,

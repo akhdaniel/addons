@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Holidays: Holidays per 5 year-->
+        <record forcecreate="1" id="dist_po_del_quot" model="ir.cron">
+            <field name="name">Delete PO Quotation Daily</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'purchase.order'" name="model" />
+            <field eval="'hapus_quotation'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall" eval="time.strftime('%Y-%m-%d 23:59:59')" />
+        </record>
+
+    </data>
+</openerp>

@@ -2,21 +2,6 @@
 <openerp>
     <data>
 
-        <!-- Holidays: Holidays per 5 year-->
-        <record forcecreate="1" id="dist_po_del_quot" model="ir.cron">
-            <field name="name">Delete PO Quotation Daily</field>
-            <field eval="1" name="active" />
-            <field name="user_id" ref="base.user_root" />
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-            <field eval="False" name="doall" />
-            <field eval="'purchase.order'" name="model" />
-            <field eval="'hapus_quotation'" name="function" />
-            <field eval="'()'" name="args" />
-            <field name="nextcall" eval="time.strftime('%Y-%m-%d 23:59:59')" />
-        </record>
-
         <record model="ir.ui.view" id="view_product_form_expiry_hide_dates">
             <field name="name">stock.production.lot.hide.dates</field>
             <field name="model">stock.production.lot</field>
@@ -140,7 +125,7 @@
 
                         <notebook>
                             <page string="Purchase Order">
-                                <h4>Range Date :  </h4><field class="oe_inline" name="datestart"/> <field class="oe_inline" name="dateend"/>
+                                <B>Range Date :  </B><field class="oe_inline" name="datestart"/><B>  to  </B><field class="oe_inline" name="dateend"/>
                                 <field name="order_line" string="Order Lines" on_change="onchange_lines_sum_vol_wgt(order_line)">
                                     <tree string="Purchase Order Lines" editable="bottom">
                                         <field name="int_code" readonly="1"/>
@@ -148,33 +133,33 @@
                                         <field name="product_id"
                                             on_change="onchange_product_id(parent.pricelist_id,product_id,0,
                                             product_uom,parent.partner_x, parent.date_order,parent.fiscal_position,
-                                            date_planned,name,price_unit,context)"/>
-                                        <field name="name" string="Nama Barang" invisible="1"/>
-                                        <field name="date_planned" invisible="1"/>
-                                        <field name="company_id" groups="base.group_multi_company" widget="selection"/>
-                                        <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
-                                        <field name="suggested_order"/>                    
-                                        <field name="adjustment" on_change="onchange_line(product_id, small_qty, small_uom, adjustment, suggested_order, product_uom, parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT, price_unit)"/>
-                                        <field name="product_uom" string="Satuan Besar" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)"/>
-                                        <field name="small_qty" on_change="onchange_qty_kecil(product_id, product_uom, small_qty, small_uom, forecastMT,forecastGT, bufMT, bufGT, stock_current,in_transit, adjustment)"/>
-                                        <field name="small_uom" />
-                                        <field name="product_qty" string="Final Order" readonly='1'/>
-                                        <field name="price_unit" string="Harga Beli" />
-                                        <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]" invisible="1"/>
-                                        <field name="price_subtotal"/>                
-                                        <field name="prod_weight" invisible="1"/>             
-                                        <field name="prod_volume" invisible="1"/>
+                                            date_planned,name,price_unit, parent.datestart, parent.dateend,context)"/>
                                         <field name="avgMT"  readonly="1"/>
                                         <field name="avgGT" readonly="1"/>
                                         <field name="sales_3m" readonly="1"/>                     
-                                        <field name="forecastMT" on_change="onchange_mtgt(product_id, product_uom, small_qty, small_uom, stock_current, in_transit, forecastMT, forecastGT, bufMT, bufGT, adjustment, sales_3m, stock_cover, price_unit)"/>
-                                        <field name="forecastGT" on_change="onchange_mtgt(product_id, product_uom, small_qty, small_uom, stock_current, in_transit, forecastMT, forecastGT, bufMT, bufGT, adjustment, sales_3m, stock_cover, price_unit)"/>
                                         <field name="bufMT" />
                                         <field name="bufGT" />
                                         <field name="stock_current" readonly="1"/>                               
-                                        <field name="ending_inv" />                               
                                         <field name="in_transit" readonly="1"/>                               
+                                        <field name="ending_inv" />                               
                                         <field name="stock_cover"/>   
+                                        <field name="forecastMT" on_change="onchange_mtgt(product_id, product_uom, small_qty, small_uom, stock_current, in_transit, forecastMT, forecastGT, bufMT, bufGT, adjustment, sales_3m, stock_cover, price_unit)"/>
+                                        <field name="forecastGT" on_change="onchange_mtgt(product_id, product_uom, small_qty, small_uom, stock_current, in_transit, forecastMT, forecastGT, bufMT, bufGT, adjustment, sales_3m, stock_cover, price_unit)"/>
+                                        <field name="suggested_order"/>                    
+                                        <field name="adjustment" on_change="onchange_line(product_id, small_qty, small_uom, adjustment, suggested_order, product_uom, parent.volume_tot,parent.weight_tot,stock_current,in_transit,sales_3m,stock_cover,prod_weight,prod_volume,forecastMT,forecastGT, bufMT, bufGT, price_unit)"/>
+                                        <field name="small_qty" on_change="onchange_qty_kecil(product_id, product_uom, small_qty, small_uom, forecastMT,forecastGT, bufMT, bufGT, stock_current,in_transit, adjustment)"/>
+                                        <field name="small_uom" />
+                                        <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                        <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
+                                        <field name="product_uom" string="Satuan Besar" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" invisible='1'/>
+                                        <field name="product_qty" string="Final Order" readonly='1'/>
+                                        <field name="price_unit" string="Harga Beli" />
+                                        <field name="price_subtotal"/>                
+                                        <field name="name" string="Nama Barang" invisible="1"/>
+                                        <field name="date_planned" invisible="1"/>
+                                        <field name="taxes_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]" invisible="1"/>
+                                        <field name="prod_weight" invisible="1"/>             
+                                        <field name="prod_volume" invisible="1"/>
                                         <field name='update_readonly' invisible='1'/>           
                                     </tree>
                                 </field>
@@ -556,8 +541,8 @@
                                             <field name='int_code'/>
                                             <field name='barcode'/>
                                             <field name='product_id' options="{'create': False, 'create_edit': False}"/>
-                                            <field name='product_uom'/>
-                                            <field name='wtot' invisible="1"/>
+                                            <field name='product_uom' invisible='1'/>
+                                            <field name='wtot'/>
                                             <field name='w1' on_change="onchange_check_w('Q1',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>                                        
                                             <field name='w2' on_change="onchange_check_w('Q2',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
                                             <field name='w3' on_change="onchange_check_w('Q3',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
