@@ -13,8 +13,8 @@ class stock_partial_picking_line(osv.TransientModel):
         return True
 
     _columns = {
-        'ed_date' : fields.datetime("Expire Date", required=True),
-        'prodlot_id2' : fields.char(string='Serial Number', size=64, required=True, ),
+        'ed_date' : fields.datetime("Expire Date", required=False),
+        'prodlot_id2' : fields.char(string='Serial Number', size=64, required=False,),
     }
 
 # stock_partial_picking_line()
