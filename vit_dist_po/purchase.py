@@ -11,6 +11,16 @@ from datetime import timedelta, date, datetime
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP
 from openerp.tools.float_utils import float_compare
 
+
+class account_invoice(osv.osv):
+    _name = "account.invoice"
+    _inherit = "account.invoice"
+
+    _columns = {
+    'no_do' : fields.char('No. DO', readonly=True),
+    }
+account_invoice()
+
 class product_product(osv.osv):
     _name = "product.product"
     _inherit = "product.product"
@@ -62,8 +72,12 @@ class product_product(osv.osv):
             ids = []
             if operator in positive_operators:
                 ids = self.search(cr, user, [('default_code','=',name)]+ args, limit=limit, context=context)
+                #search bds barcode
                 if not ids:
-                    ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
+                    ids = self.search(cr, user, [('barcode','=',name)]+ args, limit=limit, context=context)
+                    # ean13 = default field
+                    if not ids:
+                        ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
             if not ids and operator not in expression.NEGATIVE_TERM_OPERATORS:
                 # Do not merge the 2 next lines into one single search, SQL search performance would be abysmal
                 # on a database with thousands of matching products, due to the huge merge+unique needed for the
@@ -83,15 +97,15 @@ class product_product(osv.osv):
                 if res:
                     ids = self.search(cr, user, [('default_code','=', res.group(2))] + args, limit=limit, context=context)
                 #search bds external code
-                if not res:
-                    ids0 = []
-                    ext_kode = name.join('%%')
-                    sql_req = u'select product_id from product_supplierinfo where product_code ilike \''+ ext_kode + u'\' limit ' + str(limit)
-                    cr.execute(sql_req)
-                    cr_ids = cr.fetchall()
-                    if len(cr_ids) > 0:
-                        for x in cr_ids: ids0.append(x[0]) 
-                        ids = self.search(cr, user, [('id','in',ids0)]+ args, limit=limit, context=context)
+                # if not res:
+                #     ids0 = []
+                #     ext_kode = name.join('%%')
+                #     sql_req = u'select product_id from product_supplierinfo where product_code ilike \''+ ext_kode + u'\' limit ' + str(limit)
+                #     cr.execute(sql_req)
+                #     cr_ids = cr.fetchall()
+                #     if len(cr_ids) > 0:
+                #         for x in cr_ids: ids0.append(x[0]) 
+                #         ids = self.search(cr, user, [('id','in',ids0)]+ args, limit=limit, context=context)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
@@ -120,8 +134,8 @@ class purchase_order_schedule(osv.Model):
         'barcode'           : fields.char("Barcode",readonly=True),
         'po_id'             : fields.many2one('purchase.order',"PO", ondelete='cascade'),
         'product_id'        : fields.many2one('product.product',string="Nama Barang", readonly=True, required=True, domain="[('principal_id','=',parent.partner_id),]"),
-        'product_uom'       : fields.many2one('product.uom', readonly=True, string=_('Satuan')),
-        'wtot'              : fields.float('Qty Total'),
+        # 'product_uom'       : fields.many2one('product.uom', readonly=True, string=_('Satuan')),
+        'wtot'              : fields.float('Qty',readonly=True),
         'w1'                : fields.float('Q 01'),
         'w2'                : fields.float('Q 02'),
         'w3'                : fields.float('Q 03'),
@@ -169,6 +183,22 @@ purchase_order_schedule()
 
 
 class purchase_order_line(osv.osv):
+    def _amount_line(self, cr, uid, ids, prop, arg, context=None):
+        res = {}
+        cur_obj=self.pool.get('res.currency')
+        tax_obj = self.pool.get('account.tax')
+        konversi = 0.00
+        qty = 0.00
+        import pdb;pdb.set_trace()
+        for line in self.browse(cr, uid, ids, context=context):
+            konversi = 1/line.product_uom.factor or 1.00
+            qty = line.product_qty2 / konversi
+            print qty
+            taxes = tax_obj.compute_all(cr, uid, line.taxes_id, line.price_unit, qty, line.product_id, line.order_id.partner_id)
+            cur = line.order_id.pricelist_id.currency_id
+            res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
+        return res
+
     _name       = 'purchase.order.line'
     _inherit    = 'purchase.order.line'
     _order      = 'stock_current'
@@ -186,21 +216,26 @@ class purchase_order_line(osv.osv):
                 # hanya update jika po masih draft
                 if i.state != 'draft' :
                     continue
-                suggested_order = (i.forecastMT + i.forecastGT + i.bufMT + i.bufGT - i.stock_current - i.in_transit) 
+                value = self.onchange_product_id(cr, uid, i.id, False, i.product_id.id, i.product_qty2, i.product_uom.id, uid, False, False, False, False, False, i.order_id.datestart, i.order_id.dateend, context)['value']
+                # jika readonly dari value, jika tidak dari database
+                suggested_order = (i.forecastMT + i.forecastGT + value['bufMT'] + value['bufGT'] - value['stock_current'] - value['in_transit']) 
                 suggested_order = suggested_order > 0.00 and suggested_order or 0.00
+                # <tes
                 product_qty     = i.adjustment + suggested_order
                 if (i.small_qty > 0.00) and i.small_uom :
                     product_qty = self._jumlah_qty_small_and_big(cr,uid,i.product_id.id, product_qty, i.product_uom.id, i.small_qty, i.small_uom.id, context=context)
                     
                 product_qty     = product_qty > 0.00 and product_qty or 0.00
-                ending_inv      = round(suggested_order + i.adjustment) + i.stock_current + i.in_transit - i.sales_3m
-                if round(i.sales_3m) > 0.00 and ending_inv > 0.00 : 
-                    stock_cover   = ending_inv / round(i.sales_3m) * 4
+                print product_qty
+                # tes>
+                product_qty     = i.product_qty2 or 0.00
+                ending_inv      = round(suggested_order + i.adjustment) + value['stock_current'] + value['in_transit'] - value['sales_3m']
+                if round(value['sales_3m']) > 0.00 and ending_inv > 0.00 : 
+                    stock_cover   = ending_inv / round(value['sales_3m']) * 4
             
-                value = self.onchange_product_id(cr, uid, i.id, False, i.product_id.id, product_qty, i.product_uom.id, uid, False, False, False, False, False, i.order_id.datestart, i.order_id.dateend, context)['value']
                 self.write(cr,uid,i.id,{
-                    'int_code'      : value['int_code'],
-                    'barcode'       : value['barcode'],
+                    'int_code'      : value['int_code'] or '',
+                    'barcode'       : value['barcode'] or '',
                     # 'product_uom'   : value['product_uom'], 
                     'sales_3m'      : value['sales_3m'],
                     'avgMT'         : value['avgMT'],
@@ -236,10 +271,11 @@ class purchase_order_line(osv.osv):
         'prod_volume'       : fields.float('Volume'),
         'barcode'           : fields.char(_('Barcode')),
         'int_code'          : fields.char(_('Kode')),
+        'product_qty2'      : fields.float(_("Qty Total")),
         'small_qty'         : fields.float(_("Qty Kecil")),
         'small_uom'         : fields.many2one('product.uom', _('Satuan Kecil')),
         'product_id'        : fields.many2one('product.product', 'Product', 
-            domain="[('principal_id','=',parent.partner_id),('purchase_ok','=',True),]", required=True, change_default=True),
+            domain="[('principal_id','=',parent.partner_id),('purchase_ok','=',True),('bonus','=',False),]", required=True, change_default=True),
         'update_readonly'   : fields.function(
             _upd_readonly, 
             type='boolean',
@@ -456,8 +492,9 @@ class purchase_order_line(osv.osv):
 
         res['value'].update({
             'int_code'      : product.default_code or '',
-            'barcode'       : product.seller_ids[0].product_code or '', #or product.barcode
+            'barcode'       : product.barcode or '', #product.seller_ids[0].product_code or '',
             'product_qty'   : 0.00, 
+            'product_qty2'   : 0.00, 
             'suggested_order' : 0.00,         
             'prod_weight'   : 0.00,
             'prod_volume'   : 0.00,
@@ -516,6 +553,7 @@ class purchase_order_line(osv.osv):
         res['value'].update({
                         # 'price_unit'        : price,
                         'product_qty'       : qty > 0 and round(qty) or 0.00,
+                        'product_qty2'      : qty > 0 and round(qty) or 0.00,
                         # 'price_subtotal'    : ps or 0.00, 
                         'ending_inv'        : end_inv or 0.00, 
                         'stock_cover'       : stk_cover,
@@ -549,7 +587,8 @@ class purchase_order_line(osv.osv):
         if suggested_order < 0 :
             res['value'].update({
                         'suggested_order'   : 0.00, 
-                        'product_qty'       : 0.00,                         
+                        'product_qty'       : 0.00,  
+                        'product_qty2'       : 0.00,                        
                         'prod_weight'       : 0.00,
                         'prod_volume'       : 0.00,
                         })
@@ -568,6 +607,7 @@ class purchase_order_line(osv.osv):
         res['value'].update({
                         'suggested_order'   : round(suggested_order), 
                         'product_qty'       : product_qty,
+                        'product_qty2'       : product_qty,
                         'ending_inv'        : end_inv or 0.00, 
                         'stock_cover'       : stk_cover,
                         'prod_weight'       : suggested_order > 0 and wgt_tot or 0.00,
@@ -612,7 +652,8 @@ class purchase_order_line(osv.osv):
             product_qty     = product_qty > 0.00 and product_qty or 0.00
             return {'value':{
                 'small_uom' : small_uom,
-                'product_qty':product_qty,}}
+                'product_qty':product_qty,
+                'product_qty2': product_qty,}}
 
     _defaults = {
         'product_qty': lambda *a: 0.0,
@@ -963,6 +1004,26 @@ class purchase_order(osv.osv):
             'account_analytic_id': order_line.account_analytic_id.id or False,
         }
 
+    def _prepare_order_picking(self, cr, uid, order, context=None):
+        # Penambahan location source dan dest.
+        # import pdb;pdb.set_trace()
+        cr.execute('SELECT id FROM stock_location where usage=\'supplier\' limit 1')
+        source= cr.fetchone()
+        source = source and source[0] or False
+        return {
+            'name': self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.in'),
+            'origin': order.name + ((order.origin and (':' + order.origin)) or ''),
+            'date': self.date_to_datetime(cr, uid, order.date_order, context),
+            'partner_id': order.partner_id.id,
+            'invoice_state': '2binvoiced' if order.invoice_method == 'picking' else 'none',
+            'type': 'in',
+            'purchase_id': order.id,
+            'company_id': order.company_id.id,
+            'move_lines' : [],
+            'location_id' : source,
+            'location_dest_id':order.location_id.id,
+        }
+
     def _create_pickings(self, cr, uid, order, order_lines, picking_id=False, context=None):
         # Delete lines that have not product qty
         """Creates pickings and appropriate stock moves for given order lines with, 
@@ -1204,32 +1265,32 @@ class purchase_order(osv.osv):
         # if sch_ids: 
         #     products=order_line
         prd_obj = self.pool.get('product.product')
-        product_qty = 0.00
-        # import pdb;pdb.set_trace()
+        # product_qty = 0.00
         for x in order_line:
-            forecastMT  ='forecastMT' in x[2] and x[2]['forecastMT'] or 0.00 
-            forecastGT  ='forecastGT' in x[2] and x[2]['forecastGT'] or 0.00
-            bufMT       ='bufMT' in x[2] and x[2]['bufMT'] or 0.00
-            bufGT       ='bufGT' in x[2] and x[2]['bufGT'] or 0.00
-            stock_current='stock_current' in x[2] and x[2]['stock_current'] or 0.00
-            in_transit  ='in_transit' in x[2] and x[2]['in_transit'] or 0.00
-            adjustment = 'adjustment' in x[2] and x[2]['adjustment'] or 0.00
             product_id  = 'product_id' in x[2] and x[2]['product_id'] or False
-            product_qty = 'product_qty' in x[2] and x[2]['product_qty'] or 0.00
-            product_uom = 'product_uom' in x[2] and x[2]['product_uom'] or False
-            small_qty   = 'small_qty' in x[2] and x[2]['small_qty'] or 0.00
-            small_uom   = 'small_uom' in x[2] and x[2]['small_uom'] or False
+            product_qty = 'product_qty2' in x[2] and x[2]['product_qty2'] or 0.00
+            # product_uom = 'product_uom' in x[2] and x[2]['product_uom'] or False
+            # forecastMT  ='forecastMT' in x[2] and x[2]['forecastMT'] or 0.00 
+            # forecastGT  ='forecastGT' in x[2] and x[2]['forecastGT'] or 0.00
+            # bufMT       ='bufMT' in x[2] and x[2]['bufMT'] or 0.00
+            # bufGT       ='bufGT' in x[2] and x[2]['bufGT'] or 0.00
+            # stock_current='stock_current' in x[2] and x[2]['stock_current'] or 0.00
+            # in_transit  ='in_transit' in x[2] and x[2]['in_transit'] or 0.00
+            # adjustment = 'adjustment' in x[2] and x[2]['adjustment'] or 0.00
+            # small_qty   = 'small_qty' in x[2] and x[2]['small_qty'] or 0.00
+            # small_uom   = 'small_uom' in x[2] and x[2]['small_uom'] or False
             
-            suggested_order = (forecastMT + forecastGT + bufMT + bufGT - stock_current - in_transit) 
-            suggested_order = suggested_order > 0.00 and suggested_order or 0.00
-            product_qty     = adjustment + suggested_order
-            if (small_qty > 0.00) and small_uom:
-                product_qty = self.pool.get('purchase.order.line')._jumlah_qty_small_and_big(cr,uid,product_id, product_qty, product_uom, small_qty, small_uom, context=context)
-            product_qty     = product_qty > 0 and product_qty or 0.00
-            prod_id = prd_obj.browse(cr,uid,x[2]['product_id'],)
-            # Append product dengan qty BIG QTY
-            if product_qty > 0:
-                products.append([0,0,{'product_id':x[2]['product_id'],'product_uom':x[2]['product_uom'],'barcode':prod_id.barcode or '','int_code':prod_id.default_code or '','wtot':product_qty}])
+            # suggested_order = (forecastMT + forecastGT + bufMT + bufGT - stock_current - in_transit) 
+            # suggested_order = suggested_order > 0.00 and suggested_order or 0.00
+            # product_qty     = adjustment + suggested_order
+            # if (small_qty > 0.00) and small_uom:
+            #     product_qty = self.pool.get('purchase.order.line')._jumlah_qty_small_and_big(cr,uid,product_id, product_qty, product_uom, small_qty, small_uom, context=context)
+            # product_qty     = product_qty > 0 and product_qty or 0.00
+            barcode = prd_obj.browse(cr,uid,x[2]['product_id'],).barcode or ''
+            default_code = prd_obj.browse(cr,uid,x[2]['product_id'],).default_code or ''
+            # Append product dengan qty total dalam satuan besar
+            if product_qty > 0.00:
+                products.append([0,0,{'product_id':product_id,'barcode': barcode ,'int_code':default_code,'wtot':product_qty}])
             # Append product dengan qty small qty
             # if x[2]['small_qty'] > 0:
             #     products.append([0,0,{'product_id':x[2]['product_id'],'product_uom':x[2]['small_uom'],'barcode':prod_id.barcode or '','int_code':prod_id.default_code or '','wtot':x[2]['small_qty']}])
