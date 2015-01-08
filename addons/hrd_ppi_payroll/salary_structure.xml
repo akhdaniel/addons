@@ -26,6 +26,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.wage</field>
+            <field name="bonus">none</field>
         </record>
 
         <record id="hr_rule_net" model="hr.salary.rule">
@@ -37,6 +38,7 @@
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = categories.Total_allowance + categories.DED</field>
             <field name="register_id" ref="hr_payroll.contrib_register_employees"/>
+            <field name="bonus">none</field>
         </record>
 
         <record id="hr_rule_taxable" model="hr.salary.rule">
@@ -47,6 +49,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = categories.BASIC + categories.ALW + categories.NET + categories.GROSS</field>
+            <field name="bonus">none</field>
         </record>
 
         <record id="structure_base1" model="hr.payroll.structure">
@@ -67,6 +70,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">2</field>
 	        <field name="amount_python_compute">result = ((((contract.wage + payslip.umak + payslip.ut + payslip.uml)*75)/100) /173) * worked_days.OVERTIME.number_of_hours </field>
+	        <field name="bonus">bonus_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_overtime_meal" model="hr.salary.rule">
 	        <field name="name">OVERTIME MEAL</field>
@@ -76,6 +80,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">3</field>
 	        <field name="amount_python_compute">result = worked_days.UANG_MAKAN_LEMBUR.number_of_days* contract.makan </field>
+	        <field name="bonus">bonus_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_incentive" model="hr.salary.rule">
 	        <field name="name">INCENTIVES</field>
@@ -85,6 +90,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">4</field>
 	        <field name="amount_python_compute">result = contract.wage/21 * worked_days.INCENTIVES.number_of_days </field>
+	    	<field name="bonus">bonus_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_incentive_meal" model="hr.salary.rule">
 	        <field name="name">INCENTIVES MEAL</field>
@@ -94,6 +100,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">5</field>
 	        <field name="amount_python_compute">result = worked_days.INC_MEAL.number_of_days * contract.makan </field>
+	    	<field name="bonus">bonus_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_meal" model="hr.salary.rule">
 	        <field name="name">MEAL ALLOWANCE</field>
@@ -103,6 +110,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">6</field>
 	        <field name="amount_python_compute">result = worked_days.UANG_MAKAN.number_of_days * contract.makan  </field>
+	    	<field name="bonus">bonus_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_transport" model="hr.salary.rule">
 	        <field name="name">TRANSPORT ALLOWANCE</field>
@@ -112,6 +120,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">7</field>
 	        <field name="amount_python_compute">result = worked_days.TRANSPORT.number_of_days * contract.transport</field>
+	    	<field name="bonus">bonus_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_jamsostek2" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN BPJS</field>
@@ -121,6 +130,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">8</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.jams2 / 100</field>
+	    	<field name="bonus">none</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance_obat" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALW (OBAT)</field>
@@ -130,6 +140,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">9</field>
 	        <field name="amount_python_compute">result = payslip.reimburse_obat</field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
 	        <field name="name">MEDICAL ALW (PERAWATAN RS)</field>
@@ -139,6 +150,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">10</field>
 	        <field name="amount_python_compute">result = payslip.reimburse_rawat</field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>   
 	    <record id="hr_payroll_rules_medical_allowance_rawat" model="hr.salary.rule">
 	        <field name="name">THT</field>
@@ -148,6 +160,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">11</field>
 	        <field name="amount_python_compute">result = contract.wage * contract.type_id.tht / 100</field>
+	    	<field name="bonus">none</field>
 	    </record>
 	    <record id="hr_payroll_rules_thr" model="hr.salary.rule">
 	        <field name="name">THR/THN</field>
@@ -157,6 +170,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">12</field>
 	        <field name="amount_python_compute">result = inputs.THR.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_bonus" model="hr.salary.rule">
 	        <field name="name">BONUS</field>
@@ -166,6 +180,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">13</field>
 	        <field name="amount_python_compute">result = inputs.BONUS.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>	
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
 	        <field name="name">RAPEL</field>
@@ -175,6 +190,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">18</field>
 	        <field name="amount_python_compute">result = inputs.RAPEL.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_rapel_overtime" model="hr.salary.rule">
 	        <field name="name">RAPEL OVERTIME</field>
@@ -184,6 +200,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">19</field>
 	        <field name="amount_python_compute">result = inputs.RAPEL_OVERTIME.amount </field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_pulsa" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN PULSA</field>
@@ -193,6 +210,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">20</field>
 	        <field name="amount_python_compute">result = inputs.PULSA.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_luar_kota" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN LUAR KOTA</field>
@@ -202,6 +220,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">21</field>
 	        <field name="amount_python_compute">result = inputs.LUAR_KOTA.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>		    
 	    <record id="hr_payroll_rules_tunjangan_driver" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN DRIVER</field>
@@ -211,6 +230,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">22</field>
 	        <field name="amount_python_compute">result = inputs.TUNJANGAN_DRIVER.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>    
 	    <record id="hr_payroll_rules_housing_alw" model="hr.salary.rule">
 	        <field name="name">HOUSING_ALW</field>
@@ -220,6 +240,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">23</field>
 	        <field name="amount_python_compute">result = inputs.HOUSING_ALW.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_opex" model="hr.salary.rule">
 	        <field name="name">OPEX</field>
@@ -229,6 +250,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">24</field>
 	        <field name="amount_python_compute">result = inputs.OPEX.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_cop_alw" model="hr.salary.rule">
 	        <field name="name">COP ALW</field>
@@ -238,6 +260,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">25</field>
 	        <field name="amount_python_compute">result = inputs.COP_ALW.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_lebih_bayar_pajak" model="hr.salary.rule">
 	        <field name="name">LEBIH_BAYAR_PAJAK</field>
@@ -247,6 +270,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">27</field>
 	        <field name="amount_python_compute">result = inputs.LEBIH_BAYAR_PAJAK.amount </field>
+	    	<field name="bonus">none</field>
 	    </record>	
 	    <record id="hr_payroll_rules_loan_repayment" model="hr.salary.rule">
 	        <field name="name">LOAN_REPAYMENT</field>
@@ -256,6 +280,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">29</field>
 	        <field name="amount_python_compute">result = inputs.LOAN_REPAYMENT.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_pot_koperasi" model="hr.salary.rule">
 	        <field name="name">POT_KOPERASI</field>
@@ -265,6 +290,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">30</field>
 	        <field name="amount_python_compute">result = inputs.POT_KOPERASI.amount </field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>	
 	    <record id="hr_payroll_rules_pot_spsi" model="hr.salary.rule">
 	        <field name="name">POT_SPSI</field>
@@ -274,6 +300,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">31</field>
 	        <field name="amount_python_compute">result = inputs.POT_SPSI.amount </field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>    
 	    <record id="hr_payroll_rules_pot_telepon" model="hr.salary.rule">
 	        <field name="name">POT_TELEPON</field>
@@ -283,6 +310,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">32</field>
 	        <field name="amount_python_compute">result = inputs.POT_TELEPON.amount </field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_others" model="hr.salary.rule">
 	        <field name="name">OTHERS</field>
@@ -292,6 +320,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">33</field>
 	        <field name="amount_python_compute">result = inputs.OTHERS.amount </field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>	
 	    <record id="hr_payroll_rules_tunjangan_pajak" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN PAJAK</field>
@@ -301,6 +330,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">33</field>
 	        <field name="amount_python_compute">result = payslip.tunj_pajak </field>
+	        <field name="bonus">bonus_tetap</field>
 	    </record>	
 	    <record id="hr_payroll_rules_gaji" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN 5 TAHUN</field>
@@ -310,6 +340,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">20</field>
 	        <field name="amount_python_compute">result = payslip.komisi * contract.wage</field>
+	    	<field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 		<record id="hr_payroll_rules_tujangan_proyek" model="hr.salary.rule">
 	        <field name="name">TUNJANGAN PROYEK</field>
@@ -319,6 +350,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">21</field>
 	        <field name="amount_python_compute">result = (payslip.tunj_proyek * contract.wage)/100</field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_umak_proyek" model="hr.salary.rule">
 	        <field name="name">UANG MAKAN PROYEK</field>
@@ -328,6 +360,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">22</field>
 	        <field name="amount_python_compute">result = payslip.uang_makan_proyek </field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	    <record id="hr_payroll_rules_lembur_proyek" model="hr.salary.rule">
 	        <field name="name">LEMBUR PROYEK</field>
@@ -337,6 +370,7 @@
 	        <field name="amount_select">code</field>
 	        <field name="sequence">22</field>
 	        <field name="amount_python_compute">result = payslip.lembur_proyek </field>
+	        <field name="bonus">bonus_tidak_tetap</field>
 	    </record>
 	   
 	    <!-- deduction -->

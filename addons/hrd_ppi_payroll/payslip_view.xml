@@ -154,7 +154,7 @@
                 <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
                     <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
                 </button> 
-<!--                 <field name='contract_id' position='after'>
+                <field name='contract_id' position='after'>
                     <field name='total_tp'/>
                     <field name='total_ttp'/>
                     <field name='pot_absen'/>
@@ -164,7 +164,7 @@
                     <field name='gross_ttetap'/>
                     <field name='tunj_pajak_code'/>
                     <field name='tunj_pajak_tahun'/>
-                </field> -->
+                </field>
                 <field name="number_of_days" sum="Total Working Days" position="replace">
                     <field name="number_of_days"/>
                 </field>          

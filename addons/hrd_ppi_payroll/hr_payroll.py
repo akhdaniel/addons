@@ -413,8 +413,9 @@ class hr_payslip(osv.osv):
                     #pprint.pprint(urut_title)
                     no_urut=float(no_urut)
                     #urut_title=float(urut_title)
-                   # import pdb;pdb.set_trace()
-                    if real_working_hours_on_day > 0:
+                    # import pdb;pdb.set_trace()
+                    #import pdb;pdb.set_trace()
+                    if real_working_hours_on_day >= 0:
                         #import pdb;pdb.set_trace()
                         if contract.jenis_lembur == 'overtime' or no_urut < 100 :
                             datas = day_from + timedelta(days=day)
@@ -433,7 +434,6 @@ class hr_payslip(osv.osv):
                                     if jumlah_ril >= 4 :
                                         uang_makan_lembur['number_of_days'] += 1
                                 elif overt.overtime_type_id.name == 'Lembur Proyek' :
-                                    #import pdb;pdb.set_trace()
                                     if date.isoweekday() != 7 and leave_type == False :
                                         jumlah_biasa += overt.jam_lembur
                                     else :   
@@ -797,6 +797,7 @@ class hr_payslip(osv.osv):
                         cek = False
                     if pajak2 >= tunj_pajak :
                         self.write(cr,uid,ids,{'pkp':pajak2, 'tunj_pajak' : pajak2})          
+            import pdb;pdb.set_trace() 
         else :
             pay_obj = self.pool.get('hr.payslip')
             pay_src = pay_obj.search(cr,uid,[('employee_id','=',employee),('state','=','done'),('year','=',years)])
