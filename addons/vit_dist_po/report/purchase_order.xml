@@ -21,5 +21,15 @@
 	    webkit_header="ir_header_webkit_vit0"
 	    />
 
+    <report auto="False"
+	    id="report_po_invo"
+	    model="account.invoice"
+	    name="vit.po.supp.invo.webkit"
+	    file="vit_dist_po/report/po_invo.mako"
+	    string="Faktur Pembelian"
+	    report_type="webkit"
+	    webkit_header="ir_header_webkit_vit0"
+	    />
+
 	</data>
 </openerp>

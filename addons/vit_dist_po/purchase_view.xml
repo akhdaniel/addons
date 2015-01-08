@@ -153,6 +153,7 @@
                                         <field name="account_analytic_id" groups="purchase.group_analytic_accounting" domain="[('type','not in',('view','template'))]"/>
                                         <field name="product_uom" string="Satuan Besar" groups="product.group_uom" on_change="onchange_product_uom(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order,parent.fiscal_position,date_planned,name,price_unit,context)" invisible='1'/>
                                         <field name="product_qty" string="Final Order" readonly='1'/>
+                                        <field name="product_qty2" invisible='1'/>
                                         <field name="price_unit" string="Harga Beli" />
                                         <field name="price_subtotal"/>                
                                         <field name="name" string="Nama Barang" invisible="1"/>
@@ -541,7 +542,6 @@
                                             <field name='int_code'/>
                                             <field name='barcode'/>
                                             <field name='product_id' options="{'create': False, 'create_edit': False}"/>
-                                            <field name='product_uom' invisible='1'/>
                                             <field name='wtot'/>
                                             <field name='w1' on_change="onchange_check_w('Q1',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>                                        
                                             <field name='w2' on_change="onchange_check_w('Q2',wtot,w1,w2,w3,w4,w5,w6,w7,w8,w9,w10,w11,w12,w13,w14,w15,w16,w17,w18,w19,w20)"/>
