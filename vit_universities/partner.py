@@ -78,7 +78,7 @@ class res_partner (osv.osv):
 		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
 		# 'nama_tengah':fields.char('Nama Tengah',size=60),
 		# 'nama_belakang':fields.char('Nama Tengah',size=60),
-		'jenis_kelamin':fields.selection([('laki_laki','Laki-Laki'),('perempuan','Perempuan')],'Jenis Kelamin'),
+		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
 		'tempat_lahir':fields.char('Tempat Lahir'),
 		'tanggal_lahir':fields.date('Tanggal Lahir'),
 		'status_mahasiswa':fields.selection(SESSION_STATES,'Status Mhs',required=True),                  

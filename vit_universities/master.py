@@ -292,11 +292,20 @@ class master_semester(osv.Model):
 	}
 
 class master_nilai(osv.Model):
-    _name = "master.nilai"
-    _description = "Master Bobot Nilai"
-    _columns = {
-        'name': fields.char('Nilai Huruf', size=3, required=True),
-        'bobot': fields.float('Nilai Angka',required=True,help="nilai angka harus antara 0 s/d 4"),
-        'min': fields.float("Nilai Minimal",required=True,help="nilai angka harus antara 0 s/d 100"),
-        'max': fields.float("Nilai Maximal",required=True,help="nilai angka harus antara 0 s/d 100"),
-    }	
+	_name = "master.nilai"
+	_description = "Master Bobot Nilai"
+	_columns = {
+		'name': fields.char('Nilai Huruf', size=3, required=True),
+		'bobot': fields.float('Nilai Angka',required=True,help="nilai angka harus antara 0 s/d 4"),
+		'min': fields.float("Nilai Minimal",required=True,help="nilai angka harus antara 0 s/d 100"),
+		'max': fields.float("Nilai Maximal",required=True,help="nilai angka harus antara 0 s/d 100"),
+	}	
+
+class master_yudisium(osv.Model):
+	_name = "master.yudisium"
+	_description = "Master Yudisium"
+	_columns = {
+		'name': fields.char('Yudisium', size=128, required=True),
+		'min': fields.float("IPK Min",required=True,help="nilai angka minimal Indeks Prestasi Komulatif"),
+		'max': fields.float("IPK Max",required=True,help="nilai angka maximal Indeks Prestasi Komulatif"),
+	}

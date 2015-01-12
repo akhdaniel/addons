@@ -58,7 +58,9 @@
                                 <!-- <field name="semester_id" widget="selection"/> -->
                                 <field name="kurikulum_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>
                             </group>
-                            <group>                   
+                            <group>   
+                                <field name="user_id"/>     
+                                <field name="sks_tot" invisible="1"/>          
                                 <field name="ips"/>                                
                             </group>    
                         </group>                        
@@ -130,7 +132,10 @@
                                 <field name="jurusan_id"/>
                                 <field name="prodi_id"/> 
                                 <newline/>
-                                <field name="ipk"/>                 
+                                <field name="ipk"/>
+                                <field name="t_sks" invisible="1"/>
+                                <field name="t_nilai" invisible="1"/>
+                                <field name="yudisium" invisible="1"/>                  
                             </group>                          
                         </group>
                         <notebook colspan="4">
@@ -139,8 +144,8 @@
                                     <tree>
                                         <field name="mata_kuliah_id"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="nilai_huruf"/> 
                                         <field name="nilai_angka" invisible="1"/> 
+                                        <field name="nilai_huruf"/>                                         
                                     </tree>                                   
                                 </field>
                            </page>

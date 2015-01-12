@@ -6,7 +6,8 @@
             <field name="model">account.invoice</field>
             <field name="arch" type="xml">
                 <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice">
-                    <field name="partner_id" string="Nama" groups="base.group_user"/>
+                    <field name="partner_id" string="Nama"/>
+                    <!-- <field name="partner_id" string="Nama" groups="base.group_user"/> -->
                     <field name="number" string="Nomor"/>
                     <field name="date_invoice" string="Tanggal"/>                   
                     <field name="reference" invisible="1"/>
@@ -32,7 +33,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="invoice_tree_mhs"/>
-            <field name="domain">[('partner_id','=',active_id)]</field>
+            <field name="domain">[('partner_id','=',active_id),('type','=','out_invoice')]</field>
             <field name="context">{'default_partner_id':active_id}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">

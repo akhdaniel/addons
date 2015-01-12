@@ -20,16 +20,38 @@ class operasional_krs (osv.Model):
 		if context is None:
 			context = {}
 		res = {}
-		#import pdb;pdb.set_trace()
+		
 		krs_id = self.browse(cr,uid,ids[0],context=context)
-		sks = 0.0
-		tot_n = 0.0
-		for det in krs_id.krs_detail_ids:
-			sks += det.sks
-			nilai = det.nilai_angka * det.sks
-			tot_n += nilai
+		partner = krs_id.partner_id.id
 
-		res[ids[0]] = tot_n/sks
+		cr.execute("""SELECT okd.id
+						FROM operasional_krs_detail okd
+						LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
+						WHERE ok.partner_id = %s
+						AND ok.state <> 'draft'"""%(partner))
+		dpt = cr.fetchall()
+		
+		det_id = []
+		for x in dpt:
+			x_id = x[0]
+			det_id.append(x_id)
+		#import pdb;pdb.set_trace()
+		det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
+		sks = 0
+		bobot_total = 0.00
+		
+		for det in det_sch:
+			sks += det.sks
+			bobot_total += (det.nilai_angka*det.sks)
+
+		self.write(cr,uid,ids[0],{'sks_tot':sks},context=context)
+
+		### ips = (total nilai angka*total sks) / total sks
+		if sks == 0:
+			ips = 0
+		else :
+			ips = round(bobot_total/sks,2)
+		res[ids[0]] = ips
 		return res
 	
 	_columns = {
@@ -49,11 +71,14 @@ class operasional_krs (osv.Model):
 		'view_ipk_ids' : fields.one2many('operasional.view_ipk','krs_id','Mata Kuliah'),
 		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum',required = True),
 		'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi',),
+		'user_id':fields.many2one('res.users','User',readonly=True),
+		'sks_tot' : fields.integer('Total SKS',readonly=True),
 			}    
 				 
 	_defaults={
 		'state' : 'draft', 
-		'kode': '/'
+		'kode': '/',
+		'user_id': lambda obj, cr, uid, context: uid,
 	}
 
 	def confirm(self, cr, uid, ids, context=None):
@@ -213,7 +238,7 @@ class transkrip(osv.Model):
 		det_obj = self.pool.get('operasional.krs_detail')
 		cr.execute("""SELECT okd.id
 						FROM operasional_krs ok 
-						LEFT JOIN operasional_krs_detail okd on ok.id = okd.krs_id
+						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
 						WHERE okd.state = 'done'
 						AND ok.partner_id ="""+ str(mhs_id))
 					   
@@ -261,9 +286,19 @@ class transkrip(osv.Model):
 
 			tot_sks += sks
 			tot_nil += nil_jml
-			
+		#import pdb;pdb.set_trace()
 		ipk = tot_nil/tot_sks
 		result[ids[0]] = ipk
+
+		#get yudisium
+		yud_obj = self.pool.get('master.yudisium')
+		yud_src = yud_obj.search(cr,uid,[('min','<=',ipk),('max','>=',ipk)],context=context)
+		if yud_src != [] :
+			yud = yud_src[0]
+			yudisium = yud_obj.browse(cr,uid,yud,context=context).name
+			self.write(cr,uid,ids[0],{'yudisium':yudisium},context=context)
+		self.write(cr,uid,ids[0],{'t_sks':tot_sks,'t_nilai':tot_nil},context=context)
+
 		return result
 
 	_columns={
@@ -278,12 +313,9 @@ class transkrip(osv.Model):
 		'prodi_id':fields.related('partner_id', 'prodi_id', type='many2one',relation='master.prodi', string='Program Studi',readonly=True),
 		'transkrip_detail_ids' : fields.function(_get_total_khs, type='many2many', relation="operasional.krs_detail", string="Total Mata Kuliah"), 
 		'ipk' : fields.function(_get_ipk,type='float',string='IPK'),
-		# 'transkrip_detail_ids' : fields.many2many(
-		# 	'operasional.krs_detail',
-		# 	'khs_transkrip_rel',
-		# 	'transkrip_id',
-		# 	'khs_id',
-		# 	'Mata Kuliah'),  
+		'yudisium' : fields.char('Yudisium',readonly=True),
+		't_sks' : fields.integer('Total SKS',readonly=True),
+		't_nilai' : fields.char('Total Nilai',readonly=True),
 			}    
 
 transkrip()
