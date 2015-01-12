@@ -3,7 +3,7 @@
 #
 {
     'name': 'Sistem Informasi Akademik Perguruan Tinggi',
-    'depends': ['base','hr','account'],
+    'depends': ['base','hr','account','account_voucher'],
     'author'  :'vitraining.com',
     "website" : "http://www.vitraining.com",
     'category': 'Tools',
@@ -20,5 +20,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
     		'employee.xml',
             'jadwal.xml',
             'kurikulum.xml',
-            'invoice.xml',],
+            'invoice.xml',
+            'pembayaran.xml',
+            'reports/report.xml'],
 }

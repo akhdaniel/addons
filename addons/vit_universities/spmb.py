@@ -26,10 +26,16 @@ class spmb_mahasiswa(osv.Model):
 
 		if par_ids == []:
 			return results
-		part_ids = tuple(par_ids)
-		cr.execute("""SELECT nilai_ujian,id
-						FROM res_partner
-						WHERE id in """+ str(part_ids))
+		if len(par_ids) == 1:
+			part_ids = par_ids[0]
+			cr.execute("""SELECT nilai_ujian,id
+							FROM res_partner
+							WHERE id = """+ str(part_ids))			
+		else:
+			part_ids = tuple(par_ids)
+			cr.execute("""SELECT nilai_ujian,id
+							FROM res_partner
+							WHERE id in """+ str(part_ids))
 				   
 		nlai = cr.fetchall()
 		nlai_sort = sorted(nlai)
@@ -63,8 +69,8 @@ class spmb_mahasiswa(osv.Model):
 		'name': fields.char('Kode',required=True,size=32),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required=True),
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True),		
+		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]",required=True),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),		
 		'kuota':fields.integer('Kuota',required=True),
 		'partner_ids':fields.many2many(
 			'res.partner',   	# 'other.object.name' dengan siapa dia many2many
@@ -104,33 +110,40 @@ class spmb_mahasiswa(osv.Model):
 			('jurusan_id','=',jurusan),
 			('prodi_id','=',prodi)], context=context)
 
-		if par_ids != []:
+		if par_ids == []:
+			return results
+		if len(par_ids) == 1:
+			part_ids = par_ids[0]
+			cr.execute("""SELECT nilai_ujian,id
+							FROM res_partner
+							WHERE id = """+ str(part_ids))			
+		else:
 			part_ids = tuple(par_ids)
 			cr.execute("""SELECT nilai_ujian,id
 							FROM res_partner
 							WHERE id in """+ str(part_ids))
 					   
-			nlai = cr.fetchall()
-			nlai_sort = sorted(nlai)
-			#urutkan dari yang terbesar dulu
-			nlai_sort.reverse()
-
-			x = 0
-			res = []
-			na = 0		
-			for nl in nlai_sort:
-				nli = nl[0]
-				idd = nl[1]
-				x += 1
-				if x == kuota :
-					na = nli			
-				if x > kuota :
-					break
-				res.append(idd)
-			#import pdb;pdb.set_trace()
-			#insert many2many records
-			calon_line_ids = [(6,0,res)]		
-			self.write(cr,uid,ids[0],{'partner_ids':calon_line_ids,'nilai_min':na,},context=context)
+		nlai = cr.fetchall()
+		nlai_sort = sorted(nlai)
+		#urutkan dari yang terbesar dulu
+		nlai_sort.reverse()
+		#import pdb;pdb.set_trace()
+		x = 0
+		res = []
+		na = 0		
+		for nl in nlai_sort:
+			nli = nl[0]
+			idd = nl[1]
+			x += 1
+			if x == kuota :
+				na = nli			
+			if x > kuota :
+				break
+			res.append(idd)
+		
+		#insert many2many records
+		calon_line_ids = [(6,0,res)]		
+		self.write(cr,uid,ids[0],{'partner_ids':calon_line_ids,'nilai_min':na,},context=context)
 		return True
 
 	def confirm(self,cr,uid,ids,context=None):
@@ -146,7 +159,35 @@ class spmb_mahasiswa(osv.Model):
 		for p in my_form.partner_ids:
 			st = p.status_mahasiswa
 			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
-			self.pool.get('res.partner').write(cr,uid,p.id,{'status_mahasiswa':'Mahasiswa','batas_nilai':nilai,'npm':t_id_final+f_id+j_id+p_id+se},context=context)
+			self.pool.get('res.partner').write(cr,uid,p.id,{
+				'status_mahasiswa':'Mahasiswa',
+				'batas_nilai':nilai,
+				'npm':t_id_final+f_id+j_id+p_id+se,
+				'user_id':uid},
+				context=context)	
+			
+			byr_obj = self.pool.get('master.pembayaran')
+			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id),
+				('fakultas_id','=',my_form.fakultas_id.id),
+				('jurusan_id','=',my_form.jurusan_id.id),
+				('prodi_id','=',my_form.prodi_id.id),
+				('state','=','confirm'),
+				('type','=','mahasiswa')])
+			
+			if byr_sch != []:
+				byr_bws = byr_obj.browse(cr,uid,byr_sch,context=context)[0]
+
+				#biaya_ids = []
+				for biaya in byr_obj.browse(cr,uid,byr_sch,context=context)[0].product_ids:
+					pel_id = biaya.id
+					#import pdb;pdb.set_trace()
+					#pel = biaya_ids.append(pel_id)
+					self.pool.get('account.invoice').create(cr,uid,{
+						'partner_id':p.id,
+						'type':'out_invoice',
+						'account_id':p.property_account_receivable.id,
+						'invoice_line':[(0, 0, {'product_id':pel_id,'name':biaya.name,'price_unit':biaya.list_price})],
+						},context=context)
 		self.write(cr,uid,ids,{'state':'done'},context=context)
 		return True	
 

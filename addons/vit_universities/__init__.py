@@ -8,3 +8,5 @@ import employee
 import jadwal
 import kurikulum
 import invoice
+import pembayaran
+import reports
