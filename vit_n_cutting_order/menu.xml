@@ -1,0 +1,53 @@
+<openerp>
+  <data>
+  
+    <record model="ir.actions.act_window" id="action_cutting_order" >
+        <field name="name">Cutting Order</field>
+        <field name="res_model">vit.cutting.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Cutting Order</p>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_makloon_order" >
+        <field name="name">Makloon Order</field>
+        <field name="res_model">vit.makloon.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Makloon Order</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_master_type" >
+        <field name="name">Master Type</field>
+        <field name="res_model">vit.master.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Master Type</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_category" >
+        <field name="name">Category</field>
+        <field name="res_model">vit.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Category</p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_vit2" parent="base.menu_mrp_root" name="Cutting" sequence="1" />
+    <menuitem id="menu_vit3" parent="menu_vit2" name="Cutting Orders" sequence="30" action="action_cutting_order" />
+
+    <menuitem id="menu_vit4" parent="base.menu_mrp_root" name="Makloon" sequence="1" />
+    <menuitem id="menu_vit5" parent="menu_vit4" name="Makloon Orders" sequence="30" action="action_makloon_order" />
+
+    <menuitem id="menu_master" parent="base.menu_mrp_root" name="Master" sequence="5" />
+    <menuitem id="menu_master2" parent="menu_master" name="Master Type" sequence="30" action="action_master_type" />
+    <menuitem id="menu_category" parent="menu_master" name="Category" sequence="10" action="action_category" />
+
+ </data>
+</openerp>
