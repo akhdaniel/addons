@@ -45,6 +45,8 @@ vit_consumed_line()
 class vit_usage_line(osv.osv):
 	_name = "vit.usage.line"
 	_description = 'Consumed Line'
+
+
 	_columns = {
 		'cutting_order_id': fields.many2one('vit.cutting.order', 'Cutting Reference',required=True, ondelete='cascade', select=True),
 		'type' : fields.selection([('main','Body'),('variation','Variation')], 'Component Type'),
@@ -82,6 +84,7 @@ class vit_cutting_order(osv.osv):
 	_name = "vit.cutting.order"
 	_description = 'Cutting Order'
 	_rec_name = 'name'
+	_order = 'name desc'
 		
 	def _calculate_order(self, cr, uid, ids, name, arg, context=None):
 		res = {}
@@ -204,39 +207,46 @@ class vit_cutting_order(osv.osv):
 		ls_id_list = []
 		for id_ls in loop_size:
 			mrp_bom_obj_by_id_ls = mrp_bom_obj.search(cr,uid,[('master_model_id','=',self_obj[0].type_product_id.model_product),('size','=',id_ls)])
-			# import pdb;pdb.set_trace()
+			
 			if mrp_bom_obj_by_id_ls ==[]:
 				raise osv.except_osv( 'Lengkapi BOM untuk produk ini, satu product memiliki 5 Ukuran [S,M,L,XL,XXL]' , 'Tidak Bisa Dikalkulasi/Proses')
 			ls_id_list.append(mrp_bom_obj_by_id_ls[0])
 		print ls_id_list
-
+		
 		bom_s_list = []
 		bom_s = mrp_bom_obj.browse(cr,uid,ls_id_list[0],context =context)
 		for bs in bom_s.bom_lines:
-			bom_s_list.append({'material' : bs.product_id.id, 'type' : bs.component_type ,'qty_total_material': bs.product_qty * self_obj[0].s_order, 'product_uom':bs.product_uom.id})
+			#hanya yang non accesories yang di append
+			if bs.component_type != 'accessories':
+				bom_s_list.append({'material' : bs.product_id.id, 'type' : bs.component_type ,'qty_total_material': bs.product_qty * self_obj[0].s_order, 'product_uom':bs.product_uom.id})
 
 		bom_m_list = []
 		bom_m = mrp_bom_obj.browse(cr,uid,ls_id_list[1],context =context)
 		for bm in bom_m.bom_lines:
-			bom_m_list.append({'material' : bm.product_id.name,'type' : bs.component_type , 'qty_total_material': bm.product_qty * self_obj[0].m_order})
+			if bm.component_type != 'accessories':
+				bom_m_list.append({'material' : bm.product_id.name,'type' : bs.component_type , 'qty_total_material': bm.product_qty * self_obj[0].m_order})
 
 		bom_l_list = []
 		bom_l = mrp_bom_obj.browse(cr,uid,ls_id_list[2],context =context)
 		for bl in bom_l.bom_lines:
-			bom_l_list.append({'material' : bl.product_id.name, 'type' : bs.component_type ,'qty_total_material': bl.product_qty * self_obj[0].l_order})
+			if bl.component_type != 'accessories':
+				bom_l_list.append({'material' : bl.product_id.name, 'type' : bs.component_type ,'qty_total_material': bl.product_qty * self_obj[0].l_order})
 
 		bom_xl_list = []
 		bom_xl = mrp_bom_obj.browse(cr,uid,ls_id_list[3],context =context)
 		for bx in bom_xl.bom_lines:
-			bom_xl_list.append({'material' : bx.product_id.name, 'type' : bs.component_type ,'qty_total_material': bx.product_qty * self_obj[0].xl_order})
+			if bx.component_type != 'accessories':
+				bom_xl_list.append({'material' : bx.product_id.name, 'type' : bs.component_type ,'qty_total_material': bx.product_qty * self_obj[0].xl_order})
 
 		bom_xxl_list = []
 		bom_xxl = mrp_bom_obj.browse(cr,uid,ls_id_list[4],context =context)
 		for bxxl in bom_xxl.bom_lines:
-			bom_xxl_list.append({'material' : bxxl.product_id.name, 'type' : bs.component_type ,'qty_total_material': bxxl.product_qty * self_obj[0].xxl_order})
+			if bxxl.component_type != 'accessories':
+				bom_xxl_list.append({'material' : bxxl.product_id.name, 'type' : bs.component_type ,'qty_total_material': bxxl.product_qty * self_obj[0].xxl_order})
 
 		x_list = []
 		for x in xrange(len(bom_s_list)):
+			#import pdb;pdb.set_trace()
 			# mat = bom_s_list[x]['material']+bom_m_list[x]['material']+bom_l_list[x]['material']+bom_xl_list[x]['material']+bom_xxl_list[x]['material']
 			mat = bom_s_list[x]['material']
 			tipe = bom_s_list[x]['type']
@@ -322,17 +332,36 @@ class vit_cutting_order(osv.osv):
 		makloon_obj = self.pool.get('vit.makloon.order').create(cr,uid,{'origin' : self.browse(cr,uid,ids[0],).id,
 																		'model'  : self.browse(cr,uid,ids[0],).type_product_id.model_product,
 																		})
-		for x in self.browse(cr,uid,ids[0],).consumed_line_ids:
-			if x.type == 'accessories':
-				continue
-			self.pool.get('vit.material.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'type':x.type})
-
-
-		for x in self.browse(cr,uid,ids[0],).consumed_line_ids:
-			if x.type != 'accessories':
-				continue
-			self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'type':x.type,'qty':x.qty_total_material})
 		
+		# for x in self.browse(cr,uid,ids[0],).consumed_line_ids:
+		# 	if x.type == 'accessories':
+		# 		continue
+		# 	self.pool.get('vit.material.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'type':x.type})
+		self_obj = self.browse(cr,uid,ids,context=context)
+		mrp_bom_obj = self.pool.get('mrp.bom')
+
+		loop_size = ['S','M','L','XL','XXL']
+		ls_id_list = []
+		for id_ls in loop_size:
+			mrp_bom_obj_by_id_ls = mrp_bom_obj.search(cr,uid,[('master_model_id','=',self_obj[0].type_product_id.model_product),('size','=',id_ls)])
+			
+			if mrp_bom_obj_by_id_ls ==[]:
+				raise osv.except_osv( 'Lengkapi BOM untuk produk ini, satu product memiliki 5 Ukuran [S,M,L,XL,XXL]' , 'Tidak Bisa Dikalkulasi/Proses')
+			ls_id_list.append(mrp_bom_obj_by_id_ls[0])
+		print ls_id_list
+		
+		bom_s_list = []
+		bom_s = mrp_bom_obj.browse(cr,uid,ls_id_list[0],context =context)
+
+		for x in self.browse(cr,uid,ids[0],).consumed_line_ids:			
+				#continue
+				self.pool.get('vit.material.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'type':x.type,'qty':x.qty_total_material})
+
+		#tambahan accesories langsung di BoM
+		for x in bom_s.bom_lines:
+			if x.component_type == 'accessories':
+				self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.product_id.id,'type':x.component_type})
+
 		## Update Field count_list_mo
 		self.write(cr,uid,ids,{'count_list_mo': 1},context=context)
 						  
@@ -431,13 +460,3 @@ class vit_cutting_order(osv.osv):
 
 	
 vit_cutting_order()
-
-
-
-
-
-
-
-
-
-		

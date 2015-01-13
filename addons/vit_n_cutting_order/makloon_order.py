@@ -36,6 +36,7 @@ class vit_makloon_order(osv.osv):
 	_name = "vit.makloon.order"
 	_description = 'Makloon Order'
 	_rec_name = 'name'
+	_order = 'name desc'
 		
 	def _calculate_order(self, cr, uid, ids, name, arg, context=None):
 		res = {}
