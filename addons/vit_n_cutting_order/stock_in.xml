@@ -1,0 +1,34 @@
+<openerp>
+    <data>
+
+      <!--   <record id="view_picking_in_tree_ndil" model="ir.ui.view">
+            <field name="name">stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <form name="partner_id" position="after"> 
+                    <field name="makloon_id"/>
+                </form>
+                <xpath expr="//field[@name='stock_journal_id']" position="before">
+                	<field name="makloon_id"/>
+               </xpath>
+            </field>
+        </record> -->
+        		
+        <record id="view_picking_in_form_endil" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+               <!--  <form name="purchase_id" position="after"> 
+                    <field name="makloon_id"/>
+                </form> -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="makloon_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+        

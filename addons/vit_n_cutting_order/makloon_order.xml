@@ -1,0 +1,161 @@
+<openerp>
+	<data>
+        <record id="view_vit_makloon_order_tree" model="ir.ui.view">
+            <field name="name">vit.makloon.order.tree</field>
+            <field name="model">vit.makloon.order</field>
+            <field name="arch" type="xml">
+                <tree string="List makloon Order">
+                    <field name="name" />
+                    <field name="origin" />
+                    <field name="state"/>                 
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_vit_makloon_order_form" model="ir.ui.view">
+            <field name="name">vit.makloon.order.form</field>
+            <field name="model">vit.makloon.order</field>
+            <field name="arch" type="xml">
+                <form string="Makloon Order" version="7.0">
+                    <header>
+                        <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                        <button name="action_inprogress" type="object" states="open" string="Send to Makloon" class="oe_highlight"/>
+                        <button name="action_receive" states="inprogres"  type="object" string="Receive" class="oe_highlight" />
+                        <button name="action_view_receive" states="tobereceived,done"  type="object" string="View Incoming" class="oe_highlight" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,inprogres,tobereceived,done"/>
+                    </header>
+                    <sheet>
+                    <h1>
+                        <label string="Surat Perintah Kerja (SPK) Makloon"/>
+                        <div class="oe_header_row">
+                            <h4 class="oe_view_title">
+                                 <field name="name" class="oe_inline" readonly="1"/>
+                            </h4>
+                        
+                         </div>
+                 
+                    </h1>
+                        <group>
+                            <group>                                
+                                <field name="partner_id" on_change="on_partner_id(partner_id, context)" domain="[('category_id','=','makloon')]"/>
+                                <field name="address"/>  
+                                <field name="date_taking"/> 
+                                <field name="date_end_completion"/>  
+                            </group>
+                            <group>
+                                <field name="origin" />
+                                <field name="model" />
+                                <field name="state_incoming" />
+                            </group>
+                        </group>
+                        <group>
+                             <group string="Material Requirement">
+                                <field name="material_req_line_ids" view_mode="tree,form" nolabel="1">
+                                    <tree>
+                                        <field name="material"/>
+                                        <field name="type"/>
+    
+                                    </tree>
+                                    <form>
+                                        <field name="material"/>
+                                        <field name="type"/>
+                                    </form>
+                    
+                                 </field>  
+                                </group>
+                    
+                        </group>
+                        <group>
+                            <notebook colspan="4" rowspan="4">
+                                <page string="Order Quantity">
+                                    <group col='5'>
+                                        <group col='1'>
+                                            <label for="s_order" />
+                                            <field name="s_order" nolabel="1" placeholder="S"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="m_order" />
+                                            <field name="m_order" nolabel="1" placeholder="L"/> 
+                                        </group>
+                                         <group col='1'>
+                                             <label for="l_order" />
+                                             <field name="l_order"  nolabel="1" placeholder="M"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="xl_order" />
+                                            <field name="xl_order"  nolabel="1" placeholder="XL"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="xxl_order" />
+                                            <field name="xxl_order"  nolabel="1" placeholder="XXL"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="qty_order" readonly="1"/>
+                                    </group>
+                                </page>
+                               
+                                <page string="Usage Material Accesories">
+                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1">
+                                    <tree  editable="bottom">
+                                        <field name="material"/>
+                                        <field name="type"/>
+                                        <field name="qty"/>
+    
+                                    </tree>
+                                    <form>
+                                        <field name="material"/>
+                                        <field name="type"/>
+                                        <field name="qty"/>
+                                    </form>
+                    
+                                 </field> 
+                                </page>
+                               
+                            </notebook>
+                        </group>
+        
+                       
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_makloon_tree" model="ir.actions.act_window">
+            <field name="name">Makloon Order Tree</field>
+            <field name="res_model">vit.makloon.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+           <!--  <field name="domain"></field>
+            <field name="context"></field> -->
+            <!-- <field name="search_view_id" ref="view_picking_in_search"/> -->
+        </record>
+
+        <record id="seq_create_spk_makloon" forcecreate="1" model="ir.sequence.type">
+            <field name="name">SPK Makloon</field>
+            <field name="code">vit.makloon.order.seq</field>
+        </record>
+        <record id="seq_c_spk_makloon" forcecreate="1" model="ir.sequence">
+            <field name="name">SPK</field>
+            <field name="code">vit.makloon.order.seq</field>
+            <field name="prefix"></field>
+            <field name="suffix">/SPK-MKL/VI/%(year)s</field>
+            <field name="padding">3</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="view_vit_makloon_order_filter" model="ir.ui.view">
+            <field name="name">vit.makloon.order.filter</field>
+            <field name="model">vit.makloon.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Makloon">
+                    <field name="name" />          
+                </search>
+            </field>
+        </record>
+    </data>
+</openerp>
+
