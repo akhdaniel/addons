@@ -1,0 +1,38 @@
+ <openerp>
+    <data>   
+
+        <record id="product_normal_form_view3" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="after">      
+                        <newline/>
+                        <field name="sort_size" invisible="1"/>
+                        <field name="kode_katalog" invisible="1"/>          
+                    </field> 
+                    <!-- <field name="name" position="before"> 
+                        <field name="type_product"/>           
+                    </field>     -->                                  
+            </field>
+        </record>
+
+
+        <record id="product_product_tree_view3" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="after">      
+                        <field name="sort_size" invisible="1"/>
+                        <field name="kode_katalog" invisible="1"/>
+                    </field>
+                   <!--  <field name="name" position="before"> 
+                        <field name="type_product"/>           
+                    </field>   -->                                      
+            </field>
+        </record>       
+
+
+    </data>
+</openerp>        
