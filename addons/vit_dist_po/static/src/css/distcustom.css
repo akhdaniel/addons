@@ -19,6 +19,9 @@
   padding: 0px;
   float: right;
 }
+.openerp .po_header {
+  width: 550px;
+}
 /*.openerp .th {
   padding: 0;
   text-align: center !important;

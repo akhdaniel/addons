@@ -2,6 +2,29 @@
 <openerp>
     <data>
 
+        <record id="invoice_supplier_form_po_price" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.po.price</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="vit_custom_djislu.custom_invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="uom_id" position="after">
+                    <field name="harga_po" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="dist_invoice_supplier_form">
+            <field name="name">Invoice Supplier distributor</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="no_do"/>
+                </field>
+            </field>
+        </record>
+
+
         <record model="ir.ui.view" id="view_product_form_expiry_hide_dates">
             <field name="name">stock.production.lot.hide.dates</field>
             <field name="model">stock.production.lot</field>
@@ -101,7 +124,7 @@
                             <group style="width: 550px;"> 
                                 <label for="partner_x"/>
                                 <div>
-                                    <field name="partner_x" on_change="onchange_partner_x(partner_x,date_order)" options="{'create': False, 'create_edit': False}"/>
+                                    <field name="partner_x" class="po_header_detail" on_change="onchange_partner_x(partner_x,date_order)" options="{'create': False, 'create_edit': False}"/>
                                     <field name="warning" style="color: red !important;" readonly="1" attrs="{'invisible': [('warning','=',False)]}"/>
                                 </div>
                                 <field name="loc_x" on_change="onchange_locx(loc_x,location_id)" groups="stock.group_locations" options="{'create': False, 'create_edit': False}"/>
@@ -199,18 +222,21 @@
                             <page string="Incoming Shipments &amp; Invoices">
                                 <group>
                                     <group>
-                                        <field name="dest_address_id" string="Customer Address" on_change="onchange_dest_address_id(dest_address_id)" groups="stock.group_locations"/>
-                                        <field name="minimum_planned_date"/>
-                                        <field name="shipped" groups="base.group_no_one"/>
+                                        <group style="width: 550px;">
+                                            <field name="dest_address_id" string="Customer Address" on_change="onchange_dest_address_id(dest_address_id)" groups="stock.group_locations"/>
+                                            <field name="minimum_planned_date"/>
+                                            <field name="shipped" groups="base.group_no_one"/>
+                                        </group>
+                                        <group style="width: 550px;">
+                                            <field name="invoice_method"/>
+                                            <field name="invoiced"/>
+                                            <field name="payment_term_id" widget="selection"/>
+                                            <field name="fiscal_position" attrs="{'readonly': [('invoiced','=', True)]}" />
+                                            <field name="validator" groups="base.group_no_one"/>
+                                            <field name="date_approve" groups="base.group_no_one"/>
+                                        </group>
                                     </group>
-                                    <group>
-                                        <field name="invoice_method"/>
-                                        <field name="invoiced"/>
-                                        <field name="payment_term_id" widget="selection"/>
-                                        <field name="fiscal_position" attrs="{'readonly': [('invoiced','=', True)]}" />
-                                        <field name="validator" groups="base.group_no_one"/>
-                                        <field name="date_approve" groups="base.group_no_one"/>
-                                    </group>
+                                    <group/>
                                 </group>
                             </page>
 
