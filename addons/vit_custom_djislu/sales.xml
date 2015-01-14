@@ -63,7 +63,8 @@
                         <group>
                             <field name="partner_code" invisible="True"/>
                             <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}" attrs="{'readonly': [('state','!=','draft')]}"/>
-                            <field name="street" string=" "/>
+                            <field name="street" string=" " attrs="{'invisible': [('state','=','draft')]}"/>
+                            <field name="street_onchange" string=" " attrs="{'invisible': [('state','!=','draft')]}"/>
                             <field name="partner_id2" attrs="{'readonly': [('state','!=','draft')]}"/>
                             <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}"/>
                             <field name="partner_shipping_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'delivery'}"/>
@@ -71,6 +72,7 @@
                         </group>
                         <group>
                             <field name="date_order"/>
+                            <field name="top_onchange" attrs="{'invisible': [('state','!=','draft')]}"/>
                             <field name="client_order_ref"/>
                           <!--   <field name="shop_id2" /> -->
                             <field name="location_id" />
@@ -223,7 +225,7 @@
                                     <field name="payment_term" widget="selection" invisible="True"/>
                                     <field name="due_date" invisible="0"/>
                                     <field name="fiscal_position" widget="selection" invisible="True"/>
-                                    <field name="property_payment_term"/>
+                                    <field name="property_payment_term" attrs="{'invisible': [('state','=','draft')]}"/>/>
                                     <field name="volume_tot" attrs="{'invisible': [('state','=','draft')]}"/>
                                     <field name="tonase_tot" attrs="{'invisible': [('state','=','draft')]}"/>
                                     <field name="company_id" widget="selection" groups="base.group_multi_company" invisible="False"/>

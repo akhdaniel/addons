@@ -214,7 +214,8 @@ class sale_order_line(osv.osv):
 
 		'qty_awal' :fields.float('Qty Awal'),	
 
-		'tes': fields.float('Tes'),			
+		'tes': fields.float('Tes'),	
+		#'product_id': fields.many2one('product.product', 'Product', domain="[('sale_ok', '=', True),()]", change_default=True),		
 
 	}
 
@@ -674,6 +675,8 @@ class sale_order(osv.osv):
 			multi='sums', help="The total amount."),
 		'x_field':fields.boolean('x'),
 		'street':fields.related('partner_id','street',type='char',string='Alamat',readonly=True),
+		'street_onchange':fields.char('Alamat'),
+		'top_onchange':fields.many2one('account.payment.term',string='ToP'),
 			}
 
 		
@@ -706,6 +709,8 @@ class sale_order(osv.osv):
 			'fiscal_position': fiscal_position,
 			'user_id': dedicated_salesman,
 			'term_id' : part.cust_term_id.id,
+			'street_onchange' : part.street,
+			'top_onchange': part.property_payment_term.id,
 			}
 		# if pricelist:
 		# 	val['pricelist_id'] = pricelist
