@@ -23,24 +23,24 @@
                 </xpath>
             </field>
         </record>
-
-    </data>
-</openerp>
         
         <!-- Add ED on onchange date -->
-        <!-- 
+        
         <record id="stock_partial_picking_form_addED" model="ir.ui.view">
             <field name="name">stock.partial.picking.add_ed</field>
             <field name="model">stock.partial.picking</field>
             <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/field[@name='move_ids']/tree/field[@name='prodlot_id']" position="attributes">
-                    <attribute name='invisible'>1</attribute>
+                    <attribute name='required'>1</attribute>
                 </xpath>
-                <xpath expr="/form/field[@name='move_ids']/tree/field[@name='product_uom']" position="after">
+                <!-- <xpath expr="/form/field[@name='move_ids']/tree/field[@name='product_uom']" position="after">
                     <field name="prodlot_id2"/>
                     <field name="ed_date" on_change="on_change_ed(ed_date,prodlot_id2,product_id)"/>
-                </xpath>
+                </xpath> -->
             </field>
         </record>
-         -->
+
+    </data>
+</openerp>
+        

@@ -10,6 +10,8 @@
                 <tree colors="grey:scrapped == True" string="Stock Moves">
                     <field name="product_id"/>
                     <field name="product_qty" on_change="onchange_quantity(product_id, product_qty, product_uom, product_uos)"/>
+                    <field name="product_qty_nett" />
+                    <field name="product_qty_diff"/>
                     <field name="product_uom" string="Unit of Measure" groups="product.group_uom" invisible="1" />
                     <field name="product_uos_qty" groups="product.group_uos" invisible="1" />
                     <field name="product_uos" groups="product.group_uos" invisible="1" />
@@ -41,7 +43,7 @@
                         icon="terp-accessories-archiver+"
                         states="draft,assigned,confirmed"/>
                       <field name="location_dest_id" groups="stock.group_locations" invisible="1" />
-                      <field name="state"/>
+                      <field name="state" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -56,13 +58,22 @@
                     <field name='location_dest_id'/>
                 </field>
                 <field name='move_lines' position="replace">
-                    <field name="move_lines" string="Stock Move" context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>                    
+                    <field name="move_lines" string="Stock Move" context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>
                 </field>
             </field>
+        </record>        
+
+        <record id="view_move_picking_form_nett_add" model="ir.ui.view">
+            <field name="name">stock.move.form.nett.addition</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <label for="product_uos_qty" position="before">
+                    <field name="product_qty_nett"/>
+                    <field name="product_qty_diff" readonly='True'/>
+                </label>
+            </field>
         </record>
-
-        
-
 
     </data>
 </openerp>

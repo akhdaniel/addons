@@ -1,21 +1,22 @@
 from openerp.osv import fields, osv
 from datetime import timedelta, date, datetime
 
-class stock_partial_picking_line(osv.TransientModel):
+# class stock_partial_picking_line(osv.TransientModel):
 
-    _name = "stock.partial.picking.line"
-    _inherit = "stock.partial.picking.line"
+#     _name = "stock.partial.picking.line"
+#     _inherit = "stock.partial.picking.line"
 
-    def on_change_ed(self, cr, uid, ids, ed_date,prodlot_id2,product_id, context=None):
-        if ed_date and product_id and prodlot_id2:
-            prod_lot = self.pool.get('stock.production.lot').create(cr,uid,{'name':prodlot_id2,'product_id':product_id,'life_date': ed_date}, context=context)
-            return {'value':{'prodlot_id':prod_lot}}
-        return True
+# Enable jika ingin create serial no. pada wizard receiving (fungsi dan fields)
+#     def on_change_ed(self, cr, uid, ids, ed_date,prodlot_id2,product_id, context=None):
+#         if ed_date and product_id and prodlot_id2:
+#             prod_lot = self.pool.get('stock.production.lot').create(cr,uid,{'name':prodlot_id2,'product_id':product_id,'life_date': ed_date}, context=context)
+#             return {'value':{'prodlot_id':prod_lot}}
+#         return True
 
-    _columns = {
-        'ed_date' : fields.datetime("Expire Date", required=False),
-        'prodlot_id2' : fields.char(string='Serial Number', size=64, required=False,),
-    }
+#     _columns = {
+#         'ed_date' : fields.datetime("Expire Date", required=False),
+#         'prodlot_id2' : fields.char(string='Serial Number', size=64, required=False,),
+#     }
 
 # stock_partial_picking_line()
 
@@ -87,7 +88,7 @@ class stock_partial_picking_line(osv.TransientModel):
 #         stock_picking.do_partial(cr, uid, [partial.picking_id.id], partial_data, context=context)
 #         return {'type': 'ir.actions.act_window_close'}
 
-stock_partial_picking_line()
+# stock_partial_picking_line()
 
 class stock_production_lot(osv.osv):
 

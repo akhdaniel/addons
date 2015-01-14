@@ -16,10 +16,41 @@ class account_invoice(osv.osv):
     _name = "account.invoice"
     _inherit = "account.invoice"
 
+    def _search_DO(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        for inv in self.browse(cr,uid,ids,):
+            pickings = ''
+            separator = ''
+            po_ids = self.pool.get('purchase.order').search(cr,uid,[('name','ilike',inv.origin)],)
+            if po_ids:
+                pick_ids = self.pool.get('stock.picking').search(cr,uid,[('purchase_id','=',po_ids)],)
+                for p in pick_ids:
+                    pickings += separator + str(self.pool.get('stock.picking').browse(cr,uid,p,).name or '')
+                    separator = ', '
+            res[inv.id] = pickings
+        return res
+
     _columns = {
-    'no_do' : fields.char('No. DO', readonly=True),
+        'no_do' : fields.function(
+            _search_DO,
+            type='char',
+            obj="stock.picking",
+            method=True,
+            store=True,
+            string='Drop Order(s)'),
     }
+
 account_invoice()
+
+class account_invoice_line(osv.osv):
+    _name = "account.invoice.line"
+    _inherit = "account.invoice.line"
+
+    _columns = {
+        'harga_po' : fields.float('PO Value',help='Harga beli PO (persatuan besar).', readonly=True),
+    }
+
+account_invoice_line()
 
 class product_product(osv.osv):
     _name = "product.product"
@@ -183,21 +214,21 @@ purchase_order_schedule()
 
 
 class purchase_order_line(osv.osv):
-    def _amount_line(self, cr, uid, ids, prop, arg, context=None):
-        res = {}
-        cur_obj=self.pool.get('res.currency')
-        tax_obj = self.pool.get('account.tax')
-        konversi = 0.00
-        qty = 0.00
-        import pdb;pdb.set_trace()
-        for line in self.browse(cr, uid, ids, context=context):
-            konversi = 1/line.product_uom.factor or 1.00
-            qty = line.product_qty2 / konversi
-            print qty
-            taxes = tax_obj.compute_all(cr, uid, line.taxes_id, line.price_unit, qty, line.product_id, line.order_id.partner_id)
-            cur = line.order_id.pricelist_id.currency_id
-            res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
-        return res
+    # def _amount_line(self, cr, uid, ids, prop, arg, context=None):
+    #     res = {}
+    #     cur_obj=self.pool.get('res.currency')
+    #     tax_obj = self.pool.get('account.tax')
+    #     konversi = 0.00
+    #     qty = 0.00
+    #     import pdb;pdb.set_trace()
+    #     for line in self.browse(cr, uid, ids, context=context):
+    #         konversi = 1/line.product_uom.factor or 1.00
+    #         qty = line.product_qty2 / konversi
+    #         print qty
+    #         taxes = tax_obj.compute_all(cr, uid, line.taxes_id, line.price_unit, qty, line.product_id, line.order_id.partner_id)
+    #         cur = line.order_id.pricelist_id.currency_id
+    #         res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
+    #     return res
 
     _name       = 'purchase.order.line'
     _inherit    = 'purchase.order.line'
@@ -504,7 +535,7 @@ class purchase_order_line(osv.osv):
             'avgGT'         : round(GT),
             'bufMT'         : round(BMT),
             'bufGT'         : round(BGT),
-            # 'price_unit'    : price, 
+            'price_unit'    : price, 
             'stock_current' : cs,      
             'ending_inv'    : end_inv,     
             'in_transit'    : round(it),    
@@ -732,10 +763,11 @@ class purchase_order(osv.osv):
         'weight_tot'     : fields.float('Total Weight',help='Total weight in kg', readonly=True),
         # 'effective_day'  : fields.integer('Effective Day'),
         'days_cover'     : fields.integer('Days Cover'),
-        'location_ids'   : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location'),
-        'principal_ids'  : fields.many2many('res.partner','res_partner_po_rel','po_id','user_id',"User's Principal"),
-        'loc_x'          : fields.many2one('stock.location',"Destination",domain="[('id','in',location_ids[0][2])]",required=True),
-        'partner_x'      : fields.many2one('res.partner',"Supplier",domain="[('id','in',principal_ids[0][2])]",required=True),
+        'location_ids'   : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location', readonly=True, states={'draft':[('readonly',False)]}),
+        'principal_ids'  : fields.many2many('res.partner','res_partner_po_rel','po_id','user_id',"User's Principal", readonly=True, states={'draft':[('readonly',False)]}),
+        'loc_x'          : fields.many2one('stock.location',"Destination",domain="[('id','in',location_ids[0][2]),('usage','<>','view'),]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
+        'partner_x'      : fields.many2one('res.partner',"Supplier",domain="[('id','in',principal_ids[0][2])]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]},
+            change_default=True, track_visibility='always',),
         # 'sch_ids1'       : fields.one2many('purchase.order.schedule.r1','po_id',"R1"), 
         # 'sch_ids2'       : fields.one2many('purchase.order.schedule.r2','po_id',"R2"), 
         # 'sch_ids3'       : fields.one2many('purchase.order.schedule.r3','po_id',"R3"), 
@@ -743,7 +775,7 @@ class purchase_order(osv.osv):
         # 'sch_ids5'       : fields.one2many('purchase.order.schedule.r5','po_id',"R5"), 
         # 'periode'        : fields.selection([('1','Jan'),('2','Feb'),('3','Mar'),('4','Apr'),('5','Mei'),('6','Jun'),
                                             # ('7','Jul'),('8','Aug'),('9','Sep'),('10','Oct'),('11','Nov'),('12','Dec')],"Periode"),
-        'period_id'          : fields.many2one('account.period',"Periode",required=True,domain=[('special','=',False)]),
+        'period_id'          : fields.many2one('account.period',"Periode",required=True,domain=[('special','=',False)], states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
         # 'th_periode'     : fields.char('Tahun', size=4, help="Tahun Periode"),
         # 'view_w1'        : fields.boolean('Show/hide'),
         # 'view_w2'        : fields.boolean('Show/hide'),
@@ -760,109 +792,109 @@ class purchase_order(osv.osv):
         # 'percent_r'      : fields.float('Contrib(%)'),
         # 'sch_ids_date'        : fields.one2many('purchase.order.date','po_id',"D"),
         # TODO: ini dipake buat report excel > 'sch_ids_cumul'  : fields.one2many('purchase.order.schedule.cumul','po_id',"Detail"),
-        'sch_ids'        : fields.one2many('purchase.order.schedule','po_id',"Schedule Detail"),
+        'sch_ids'        : fields.one2many('purchase.order.schedule','po_id',"Schedule Detail", readonly=True, states={'draft':[('readonly',False)]}),
         'order_lines_detail' : fields.one2many('purchase.order.line.detail','po_id',"Lines Detail"), 
         # "week_periode"  : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5')],"Week of Month"),
 
-        'w1'                : fields.date('Tanggal'),
-        'fleet1'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika1"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase1"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w1'                : fields.date('Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet1'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika1"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase1"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w2'                : fields.date('Q2'),
-        'fleet2'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika2"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase2"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w2'                : fields.date('Q2', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet2'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika2"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase2"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w3'                : fields.date('Q3'),
-        'fleet3'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika3"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase3"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w3'                : fields.date('Q3', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet3'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika3"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase3"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w4'                : fields.date('Q4'),
-        'fleet4'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika4"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase4"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w4'                : fields.date('Q4', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet4'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika4"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase4"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w5'                : fields.date('Q5'),
-        'fleet5'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika5"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase5"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w5'                : fields.date('Q5', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet5'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika5"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase5"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w6'                : fields.date('Q6'),
-        'fleet6'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika6"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase6"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w6'                : fields.date('Q6', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet6'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika6"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase6"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w7'                : fields.date('Q7'),
-        'fleet7'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika7"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase7"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w7'                : fields.date('Q7', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet7'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika7"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase7"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w8'                : fields.date('Q8'),
-        'fleet8'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika8"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase8"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w8'                : fields.date('Q8', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet8'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika8"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase8"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w9'                : fields.date('Q9'),
-        'fleet9'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika9"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase9"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w9'                : fields.date('Q9', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet9'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika9"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase9"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w10'               : fields.date('Q10'),
-        "fleet10"           : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika10" : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase10"   : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w10'               : fields.date('Q10', readonly=True, states={'draft':[('readonly',False)]}),
+        "fleet10"           : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika10" : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase10"   : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w11'               : fields.date('Q11'),
-        'fleet11'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika11"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase11"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w11'               : fields.date('Q11', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet11'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika11"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase11"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w12'               : fields.date('Q12'),
-        'fleet12'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika12"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase12"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w12'               : fields.date('Q12', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet12'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika12"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase12"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w13'               : fields.date('Q13'),
-        'fleet13'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika13"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase13"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w13'               : fields.date('Q13', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet13'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika13"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase13"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w14'               : fields.date('Q14'),
-        'fleet14'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika14"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase14"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w14'               : fields.date('Q14', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet14'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika14"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase14"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w15'               : fields.date('Q15'),
-        'fleet15'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika15"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase15"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w15'               : fields.date('Q15', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet15'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika15"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase15"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w16'               : fields.date('Q16'),
-        'fleet16'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika16"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase16"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w16'               : fields.date('Q16', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet16'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika16"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase16"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w17'               : fields.date('Q17'),
-        'fleet17'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika17"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase17"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w17'               : fields.date('Q17', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet17'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika17"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase17"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w18'               : fields.date('Q18'),
-        'fleet18'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika18"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase18"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w18'               : fields.date('Q18', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet18'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika18"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase18"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w19'               : fields.date('Q19'),
-        'fleet19'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika19"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase19"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w19'               : fields.date('Q19', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet19'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika19"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase19"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         
-        'w20'               : fields.date('Q20'),
-        'fleet20'            : fields.many2one('fleet.vehicle',"Kendaraan"),
-        "kubika20"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=False),
-        "tonase20"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=False),
+        'w20'               : fields.date('Q20', readonly=True, states={'draft':[('readonly',False)]}),
+        'fleet20'            : fields.many2one('fleet.vehicle',"Kendaraan", readonly=True, states={'draft':[('readonly',False)]}),
+        "kubika20"  : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Kubikasi", readonly=True, states={'draft':[('readonly',False)]}),
+        "tonase20"    : fields.selection([('Cukup','Cukup'),('Kurang','Kurang'),('Lebih','Lebih')],"Tonase", readonly=True, states={'draft':[('readonly',False)]}),
         'warning'   : fields.char('Warning',help="warning"),
         }
 
@@ -989,12 +1021,13 @@ class purchase_order(osv.osv):
 
             'quantity': order_line.product_qty, << jadi fungsi
             'uos_id': order_line.product_uom.id or False, >> awal
+            'price_unit': order_line.price_unit or 0.0, >> dikonversi ke harga satuan kecil
         """
-
+        faktor = order_line.product_uom.factor or 1.00
         return {
             'name': order_line.name,
             'account_id': account_id,
-            'price_unit': order_line.price_unit or 0.0,
+            'price_unit': order_line.price_unit * faktor or 0.0,
             'product_id': order_line.product_id.id or False,
             'qty': order_line.product_qty or 0.0,
             'uos_id': order_line.product_uom.id or False, 
@@ -1002,6 +1035,7 @@ class purchase_order(osv.osv):
             'uom_id': order_line.small_uom.id or ((order_line.small_qty == 0.00) and order_line.product_id.uom_id.id) or False,
             'invoice_line_tax_id': [(6, 0, [x.id for x in order_line.taxes_id])],
             'account_analytic_id': order_line.account_analytic_id.id or False,
+            'harga_po' : order_line.price_unit or 0.0,
         }
 
     def _prepare_order_picking(self, cr, uid, order, context=None):
