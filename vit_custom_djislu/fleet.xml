@@ -95,9 +95,9 @@
 
                                     <button name="invoice_open" icon="STOCK_APPLY" states="deliver,ttf" string="Validate" class="oe_highlight" groups="base.group_user" attrs="{'invisible':['|',('state', 'in', ('draft','open','cancel','paid')),('button_hidden','=',False)]}"/>
 
-                                    <button name="action_ttf" string="Not TTF" type="object" attrs="{'invisible':[('note','=','TTF')]}"/>
+                                    <button name="action_ttf" string="Not TTF" type="object" attrs="{'invisible':['|',('note','=','TTF'),('state','!=','open')]}"/>
 
-                                    <button name="action_not_ttf" string="TTF" type="object" attrs="{'invisible':[('note','=',False)]}"/>
+                                    <button name="action_not_ttf" string="TTF" type="object" attrs="{'invisible':['|',('state','!=','open'),('note','=',False)]}"/>
 
                                     <button name="258" type="action" icon="STOCK_REVERT_TO_SAVED" string="CN Conf" groups="base.group_user" attrs="{'invisible':['|','|',('button_hidden','=',False),('state','!=','open'),('note','=','CN Conf')]}"/>
 
