@@ -753,16 +753,14 @@ class sale_order(osv.osv):
 		#buat dari dua field, setelah di compute jadi satu field
 		#
 		#####################################################################
-		#import pdb;pdb.set_trace()
 		cd = lin.loc_code
 		nam = lin.name
 		
 		if not lin.x_field :
-			#self.write(cr, uid, vals[0], {}, context=context)
 			self.write(cr, uid, vals[0], {'name_bayangan':nam,'name': cd+nam,'x_field':True}, context=context)
 
 
-########################################################################################################################################################################
+		##########################################################################################################
 
 		#################################################
 		#diskon all
@@ -770,37 +768,39 @@ class sale_order(osv.osv):
 
 		disc_obj = self.pool.get("master.discount")
 
+		#import pdb;pdb.set_trace()
+
 		#cari di master disc yang masih berlaku (group price ada nilainya)
 		disc_search1 = disc_obj.search(cr,uid,[('partner_id','=',prin),
 												('date_from','<=',skrg),
 												('date_to','>=',skrg),
 												('is_active','=',True),
-												('group_price_id','=',channel),
-												('location_id','=',loc)],
+												('group_price_ids','=',channel),
+												('location_ids','in',loc)],
 												context=context)
 		# #cari di master disc yang masih berlaku (group price kosong/false)
 		disc_search2 = disc_obj.search(cr,uid,[('partner_id','=',prin),
 												('date_from','<=',skrg),
 												('date_to','>=',skrg),
 												('is_active','=',True),
-												('group_price_id','=',False),
-												('location_id','=',False)],		
+												('group_price_ids','=',False),
+												('location_ids','=',False)],		
 																						
 												context=context)	
 		disc_search3 = disc_obj.search(cr,uid,[('partner_id','=',prin),
 												('date_from','<=',skrg),
 												('date_to','>=',skrg),
 												('is_active','=',True),
-												('group_price_id','=',channel),
-												('location_id','=',False)],
+												('group_price_ids','=',channel),
+												('location_ids','=',False)],
 												context=context)
 
 		disc_search4 = disc_obj.search(cr,uid,[('partner_id','=',prin),
 												('date_from','<=',skrg),
 												('date_to','>=',skrg),
 												('is_active','=',True),
-												('group_price_id','=',False),
-												('location_id','=',loc)],												
+												('group_price_ids','=',False),
+												('location_ids','in',loc)],												
 												context=context)
 		disc_search = set(disc_search1 + disc_search2 + disc_search3 + disc_search4)
 		#import pdb;pdb.set_trace()

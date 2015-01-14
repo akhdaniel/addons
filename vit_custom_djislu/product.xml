@@ -193,9 +193,9 @@
                             <field name="date_to"/>                     
                         </group>
                         <group>
-                            <field name="location_id"/>
+                            <field name="location_ids" widget="many2many_tags"/>
                             <field name="partner_id"/>
-                            <field name="group_price_id"/>
+                            <field name="group_price_ids" widget="many2many_tags" placeholder="category pada partner"/>
                             <field name="multi"/>
                         </group>                                   
                         <group>

@@ -273,7 +273,7 @@ class master_discount(osv.osv):
 		'condition3_ids' : fields.one2many('master.condition3','discount_id','Product Condition 2'),
 		'condition4_ids' : fields.one2many('master.condition4','discount_id','Product Condition 3'),
 		'condition5_ids' : fields.one2many('master.condition5','discount_id','Product Condition 4'),
-		'group_price_id' : fields.many2one('res.partner.category','Group Price Category'),
+		'group_price_ids' : fields.many2many('res.partner.category', id1='discount_id', id2='category_id', string='Group Price Category'),
 		'is_percent' : fields.boolean('Is Percent'),
 		'is_flat' : fields.boolean('Flat'),
 		'type' :fields.selection([('regular','Regular Discount'),('promo','Promo Discount'),('extra','Extra Discount'),('cash','Cash Discount'),('mix','Mix Discount')],string='Type Discount',required=True),
@@ -285,8 +285,8 @@ class master_discount(osv.osv):
 		'qty2_2' : fields.float('Bonus Qty', digits_compute=dp.get_precision('Product Unit of Measure')),
 		'qty2' : fields.function(_qty_all_2,type="float",string='Bonus Qty',digits_compute=dp.get_precision('Product Unit of Measure')),
 		'is_category': fields.boolean('Category Condition'),
-		'location_id' : fields.many2one('sale.shop','Location'),
-
+		'location_ids' : fields.many2many('sale.shop',id1='discount_id',id2='location_id',string='Location'),
+		
 		} 
 
 	_defaults = {
@@ -442,4 +442,4 @@ class stock_move(osv.osv):
 
 	_columns = {
 		'origin': fields.char(size=64, string="Source"),
-		}    
+		}    	
