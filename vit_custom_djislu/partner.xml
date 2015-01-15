@@ -32,8 +32,8 @@
                 </page>   -->              
 
                      <field name="category_id" position="replace">
-                        <field name="category_id" widget="many2many_tags" placeholder="Category"/>
-                        <field name="type_partner_id" placeholder="Grup Harga"/>
+                        <field name="category_id" widget="many2many_tags" placeholder="Group Harga"/>
+                        <field name="type_partner_id" placeholder="Channel"/>
                     </field>     
 
 <!--                     <field name="comment" position="replace">
