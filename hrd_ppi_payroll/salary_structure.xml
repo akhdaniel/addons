@@ -26,7 +26,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">result = contract.wage</field>
-            <field name="bonus">none</field>
+            <field name="bonus">bonus_tetap</field>
         </record>
 
         <record id="hr_rule_net" model="hr.salary.rule">
@@ -180,7 +180,7 @@
 	        <field name="amount_select">code</field>
 			<field name="sequence">13</field>
 	        <field name="amount_python_compute">result = inputs.BONUS.amount </field>
-	    	<field name="bonus">bonus_tidak_tetap</field>
+	    	<field name="bonus">bonus_tetap</field>
 	    </record>	
 	    <record id="hr_payroll_rules_rapel" model="hr.salary.rule">
 	        <field name="name">RAPEL</field>
