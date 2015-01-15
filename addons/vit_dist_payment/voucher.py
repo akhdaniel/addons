@@ -321,20 +321,21 @@ class account_voucher(osv.osv):
 			ml_writeoff = self.writeoff_move_line_get(cr, uid, voucher.id, line_total, move_id, name, company_currency, current_currency, context)
 
 			ml_writeoff2 = self.writeoff_move_line_get2(cr, uid, voucher.id, line_total, move_id, name, company_currency, current_currency, context)	
-			#import pdb;pdb.set_trace()
+			
 			if ml_writeoff2 == []:
 				if ml_writeoff:
 					move_line_pool.create(cr, uid, ml_writeoff, context)
-			
-			if ml_writeoff2 != []:
+			#import pdb;pdb.set_trace()
+			#supplier inv payment
+			if ml_writeoff2 != [] and voucher.type == 'payment' :
 				m_line={}
 				wo_amt = 0.0
 				for x in ml_writeoff2:
 					wo_amt += x.amount
 					m_line = {
 						'name':x.name,
-						'credit': x.amount < 0 and -x.amount or 0.0,
-						'debit': x.amount > 0 and x.amount or 0.0,
+						'credit': x.amount > 0 and x.amount or 0.0,
+						'debit': x.amount < 0 and -x.amount or 0.0,
 						'account_id':x.account_id.id,
 						'date':ctx['date'],
 						'journal_id':context['journal_id'],
@@ -363,7 +364,28 @@ class account_voucher(osv.osv):
 			# for vv in voucher.line_cr_ids:
 			# 	if vv.amount != 0.0:
 			# 		loc_id = vv.move_line_id.invoice.location_id.id
-			#import pdb;pdb.set_trace()		
+
+			#customer inv payment
+			if ml_writeoff2 != [] and voucher.type == 'receipt' :
+				m_line={}
+				wo_amt = 0.0
+				for x in ml_writeoff2:
+					wo_amt += x.amount
+					m_line = {
+						'name':x.name,
+						'credit': x.amount < 0 and -x.amount or 0.0,						
+						'debit': x.amount > 0 and x.amount or 0.0,
+						'account_id':x.account_id.id,
+						'date':ctx['date'],
+						'journal_id':context['journal_id'],
+						'period_id':context['period_id'],
+						'move_id':move_id,
+						'partner_id':move_line_brw.partner_id.id,
+					}
+					move_line_pool.create(cr, uid, m_line, context)	
+
+				# We automatically reconcile the account move lines.
+				reconcile = False
 			self.write(cr, uid, [voucher.id], {
 				'move_id': move_id,
 				'state': 'posted',
@@ -391,7 +413,9 @@ class account_voucher(osv.osv):
 		vo_obj = self.pool.get('account.voucher')
 		def_amount = vo_obj.browse(cr,uid,ids[0]).amount
 		st = "'open'"
-		if vo_obj.browse(cr,uid,ids[0]).type == 'receipt':
+		
+		type_pay = vo_obj.browse(cr,uid,ids[0]).type
+		if type_pay =='receipt':
 			# inv_obj = self.pool.get('account.invoice')
 			# inv_src = inv_obj.search(cr,uid,[('id','=',inv_id)])[0]
 			# inv_br = inv_obj.browse(cr,uid,inv_src)
@@ -450,14 +474,52 @@ class account_voucher(osv.osv):
 					# 	nm = wo.name
 					# 	rp = wo.amount
 					# 	acc = wo.account_id.id
-				#import pdb;pdb.set_trace()
 				cr.execute('select id from account_voucher_line where '\
 					'amount_unreconciled = '+str(def_amt)+' '\
 					'and reconcile = False  '\
 					'and voucher_id='+str(v_id.id)+'')	
 				hsl = cr.fetchone()
 				hsl_line = hsl[0]
-				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)
+				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)						
+						
+			elif v_id.writeoff_ids == [] :
+				writeoff_total = 0.00
+
+			wf_service = netsvc.LocalService("workflow")
+			for vid in ids:
+				wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
+
+		elif type_pay =='payment':
+			#jika write off pastikan amount yg di bayar+jml amount writeoff = total hutang
+			v_id = vo_obj.browse(cr,uid,ids[0])
+			if v_id.writeoff_ids != []:
+				writeoff_total = 0.00
+				for x in v_id.writeoff_ids:
+					am = x.amount
+					writeoff_total += am
+				difference = def_amt-def_amount
+				if difference != writeoff_total :
+					return {'type': 'ir.actions.act_window_close'}
+					raise osv.except_osv(_('Error!!'), _('Different amount tidak sama dengan total write off!'))
+
+				elif difference == writeoff_total :
+					mv_ac = self.browse(cr,uid,ids)[0].line_cr_ids
+					for amo in mv_ac:
+						if amo.amount != 0.00:
+							balance = amo.amount_unreconciled
+
+					# for wo in v_id.writeoff_ids:
+					# 	nm = wo.name
+					# 	rp = wo.amount
+					# 	acc = wo.account_id.id
+				cr.execute('select id from account_voucher_line where '\
+					'amount_unreconciled = '+str(def_amt)+' '\
+					'and reconcile = False  '\
+					'and voucher_id='+str(v_id.id)+'')	
+				hsl = cr.fetchone()
+				hsl_line = hsl[0]
+				ttl = writeoff_total+def_amount
+				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':ttl,'reconcile':True},context=context)
 
 						
 						
@@ -467,6 +529,7 @@ class account_voucher(osv.osv):
 			wf_service = netsvc.LocalService("workflow")
 			for vid in ids:
 				wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
+
 				
 		else:
 			wf_service = netsvc.LocalService("workflow")
