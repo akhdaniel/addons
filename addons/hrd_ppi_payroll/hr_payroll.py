@@ -762,6 +762,7 @@ class hr_payslip(osv.osv):
                 if pot_jab >= obj.contract_id.type_id.max_biaya_jabatan :
                     pot_jab = obj.contract_id.type_id.max_biaya_jabatan
                 #tunjangan hari tua
+                import pdb;pdb.set_trace()
                 tht_alw = (obj.contract_id.type_id.ttht * (obj.contract_id.wage * pengali))/100
                 if tht_alw >= obj.contract_id.type_id.max_tht :
                     tht_alw = obj.contract_id.type_id.max_tht
@@ -797,7 +798,6 @@ class hr_payslip(osv.osv):
                         cek = False
                     if pajak2 >= tunj_pajak :
                         self.write(cr,uid,ids,{'pkp':pajak2, 'tunj_pajak' : pajak2})          
-            import pdb;pdb.set_trace() 
         else :
             pay_obj = self.pool.get('hr.payslip')
             pay_src = pay_obj.search(cr,uid,[('employee_id','=',employee),('state','=','done'),('year','=',years)])
