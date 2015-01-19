@@ -58,17 +58,19 @@ class vit_usage_line(osv.osv):
 
 
 	_defaults = {
-		'type': lambda *a: 'main',
+		#'type': lambda *a: 'main',
 		'state_normal': lambda *a: 'normal',
 	}
 
 	def on_change_product_id(self, cr, uid, ids, product_id, name, context=None):
 		uom = self.pool.get('vit.consumed.line').browse(cr, uid, product_id, context=context).material.uom_id.id
+		type_brg = self.pool.get('vit.consumed.line').browse(cr, uid, product_id, context=context).type
 		
 		if product_id!=False:
 			return {
 				'value' : {
 					'product_uom' : uom,
+					'type' : type_brg,
 				}
 			}
 		else:
@@ -416,8 +418,14 @@ class vit_cutting_order(osv.osv):
 		return self.write(cr, uid, ids, {'state':'finish_qc'}, context=context)
 
 	def action_create_makloon(self, cr, uid, ids, context=None):
+		#import pdb;pdb.set_trace()
 		makloon_obj = self.pool.get('vit.makloon.order').create(cr,uid,{'origin' : self.browse(cr,uid,ids[0],).id,
 																		'model'  : self.browse(cr,uid,ids[0],).type_product_id.model_product,
+																		's_order' : self.browse(cr,uid,ids[0],).s_qc,
+																		'm_order' : self.browse(cr,uid,ids[0],).m_qc,
+																		'l_order' : self.browse(cr,uid,ids[0],).l_qc,
+																		'xl_order' : self.browse(cr,uid,ids[0],).xl_qc,
+																		'xxl_order' : self.browse(cr,uid,ids[0],).xxl_qc,
 																		})
 		
 		# for x in self.browse(cr,uid,ids[0],).consumed_line_ids:

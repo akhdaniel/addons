@@ -43,7 +43,7 @@
                                 <field name="date_end_completion"/>  
                             </group>
                             <group>
-                                <field name="origin" />
+                                <field name="origin" readonly="1"/>
                                 <field name="model" />
                                 <field name="state_incoming" />
                             </group>

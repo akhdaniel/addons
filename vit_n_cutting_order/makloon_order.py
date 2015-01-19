@@ -147,6 +147,38 @@ class vit_makloon_order(osv.osv):
 			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'vit.makloon.order.seq') or '/'
 		return super(vit_makloon_order, self).create(cr, uid, vals, context=context)
 
+	def write(self, cr, uid, ids, vals, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		if isinstance(ids, (int, long)):
+			ids = [ids]
+		for x in self.browse(cr, uid, ids, context=context):
+			s_qc = x.origin.s_qc
+			m_qc = x.origin.m_qc
+			l_qc = x.origin.l_qc
+			xl_qc = x.origin.xl_qc
+			xxl_qc = x.origin.xxl_qc
+
+			#antisipasi penghitungan jmh yg di input untuk makloon harus di bawah atau sama dengan dr QC cutting
+			if 's_order' in vals :
+				if vals['s_order'] > s_qc :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran S yang di input untuk makloon melebihi proses QC Qutting!')
+			if 'm_order' in vals :
+				if vals['m_order'] > m_qc :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran M yang di input untuk makloon melebihi proses QC Qutting!')
+			if 'l_order' in vals :
+				if vals['l_order'] > l_qc :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran L yang di input untuk makloon melebihi proses QC Qutting!')
+			if 'xl_order' in vals :
+				if vals['xl_order'] > xl_qc :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XL yang di input untuk makloon melebihi proses QC Qutting!')
+			if 'xxl_order' in vals :
+				if vals['xxl_order'] > xxl_qc :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXL yang di input untuk makloon melebihi proses QC Qutting!')																				
+
+		return super(vit_makloon_order, self).write(cr, uid, ids, vals, context=context)
+
 	def action_confirm(self, cr, uid, ids, context=None):
 		#set to "confirmed" state
 		return self.write(cr, uid, ids, {'state':'open'}, context=context)
@@ -156,6 +188,7 @@ class vit_makloon_order(osv.osv):
 		return self.write(cr, uid, ids, {'state':'inprogres'}, context=context)
 
 	def action_view_receive(self, cr, uid, ids, context=None):
+		import pdb;pdb.set_trace()
 		### Fungsi-fungsi untuk mengarahkan ke result list
 		mod_obj = self.pool.get('ir.model.data')
 		act_obj = self.pool.get('ir.actions.act_window')
