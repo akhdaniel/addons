@@ -27,7 +27,16 @@ class vit_accessories_req_line(osv.osv):
 		'makloon_order_id': fields.many2one('vit.makloon.order', 'Makloon Reference',ondelete='cascade'),
 		'material': fields.many2one('product.product', 'Material'),
 		'type' : fields.selection([('main','Body'),('variation','Variation'),('accessories','Accessories')], 'Component Type'),
-		'qty'  : fields.float('Quantity'),        
+		'qty'  : fields.float('Quantity'),
+		'uom_id' : fields.many2one('product.uom','Satuan'),
+
+		#### fiel bayangan untuk mempermudah perhitungan di form makloon ####     
+		'size_s' : fields.float('Size S', readonly=True),
+		'size_m' : fields.float('Size M', readonly=True),
+		'size_l' : fields.float('Size L', readonly=True),
+		'size_xl' : fields.float('Size XL', readonly=True),
+		'size_xxl' : fields.float('Size XXL', readonly=True),
+		######################################################################
 	}
 
 
@@ -44,24 +53,57 @@ class vit_makloon_order(osv.osv):
 		res[qty[0].id] = qty[0].s_order +  qty[0].m_order +  qty[0].l_order +  qty[0].xl_order +  qty[0].xxl_order 
 		return res
 
+	def qty_acc_reload(self, cr, uid, ids, context=None):
+		# import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		else: 
+			my_obj = self.browse(cr,uid,ids[0],context=context)
+			s_odr = my_obj.s_order
+			m_odr = my_obj.m_order
+			l_odr = my_obj.l_order
+			xl_odr = my_obj.xl_order
+			xxl_odr = my_obj.xxl_order
+
+			acc_obj = self.pool.get('vit.accessories.req.line')
+			acc_sch = acc_obj.search(cr,uid,[('makloon_order_id','=',ids[0])],context=context)
+			acc_bro = acc_obj.browse(cr,uid,acc_sch,context=context)
+
+			#w: looping setiap baris accessories line
+			for x in acc_bro:
+				x_id = x.id
+
+				#w: qty ukuran = qty per ukuran(s,m,l,xl,xxl) pada bom * jml berdasarkan ukuran(s,m,l,xl,xxl) yg di input
+				qty_s = (x.size_s*s_odr)
+				qty_m = (x.size_m*m_odr)
+				qty_l = (x.size_l*l_odr)
+				qty_xl = (x.size_xl*xl_odr)
+				qty_xxl = (x.size_xxl*xxl_odr)
+
+				#w: setelah dapat total bahan per ukuran(s,m,l,xl,xxl), jumlahkan total ke lima ukuran tsb
+				qty_total = qty_s+qty_m+qty_l+qty_xl+qty_xxl
+				acc_obj.write(cr,uid,x_id,{'qty':qty_total},context=context)
+
+		return True
+
 	_columns = {
 		'name': fields.char('Order Makloon Reference', size=64, required=True,
-            readonly=True, select=True),
+			readonly=True, select=True),
 		'state': fields.selection([
-            ('draft', 'Draft'),
-            ('open', 'Open'),
-            ('inprogres', 'Inprogres'),
-            ('tobereceived', 'To Be Received'),
-            ('done', 'Done'),
-            ], 'Status', readonly=True, track_visibility='onchange',
-            help="", select=True),
+			('draft', 'Draft'),
+			('open', 'Open'),
+			('inprogres', 'Inprogres'),
+			('tobereceived', 'To Be Received'),
+			('done', 'Done'),
+			], 'Status', readonly=True, track_visibility='onchange',
+			help="", select=True),
 		'partner_id'	:fields.many2one('res.partner', 'Makloon', select=True, track_visibility='onchange',readonly=True,states={'draft': [('readonly', False)]}),
 		'date_taking': fields.datetime('Tanggal Pengambilan', select=True,readonly=True,states={'draft': [('readonly', False)]}),
 		'date_end_completion'	: fields.datetime('Tanggal Penyelesaian', select=True,readonly=True,states={'draft': [('readonly', False)]}),
 		'address' : fields.char('Alamat', size=128,readonly=True,states={'draft': [('readonly', False)]}),
 		# 'origin'  :fields.char('SPK Cutting', size=64),
 		'origin'	:fields.many2one('vit.cutting.order', 'SPK Cutting',readonly=True,states={'draft': [('readonly', False)]}),
-		'model'   :fields.char('Model', size=64,readonly=True,states={'draft': [('readonly', False)]}),
+		'model'   :fields.char('Model', size=64,readonly=True),#states={'draft': [('readonly', False)]}),
 		'material_req_line_ids': fields.one2many('vit.material.req.line', 'makloon_order_id', 'Material Requirements Lines'),
 		'accessories_req_line_ids': fields.one2many('vit.accessories.req.line', 'makloon_order_id', 'Accessories Requirements Lines'),
 		's_order' : fields.float('S',readonly=True,states={'draft': [('readonly', False)]}),
@@ -75,13 +117,13 @@ class vit_makloon_order(osv.osv):
 		'state_incoming' : fields.selection([
 			('not', 'Belum Create'),
 			('draft', 'Draft'),
-            ('cancel', 'Cancelled'),
-            ('auto', 'Waiting Another Operation'),
-            ('confirmed', 'Waiting Availability'),
-            ('assigned', 'Ready to Transfer'),
-            ('done', 'Transferred'),
-            ], 'Status Incoming', readonly=True, track_visibility='onchange',
-            help="", select=True),
+			('cancel', 'Cancelled'),
+			('auto', 'Waiting Another Operation'),
+			('confirmed', 'Waiting Availability'),
+			('assigned', 'Ready to Transfer'),
+			('done', 'Transferred'),
+			], 'Status Incoming', readonly=True, track_visibility='onchange',
+			help="", select=True),
 		# 'picking_ids': fields.one2many('stock.picking.in', 'makloon_order_id', 'Related Picking', readonly=True, help="This is a list of delivery orders that has been generated for this sales order."),
 
 
@@ -89,15 +131,15 @@ class vit_makloon_order(osv.osv):
 	}
 
 	_defaults = {
-        
-        'date_taking': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'date_end_completion': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'user_id': lambda self, cr, uid, c: uid,
-        'name': lambda obj, cr, uid, context: '/',
-        'state': 'draft',
-        'state_incoming': 'not',
+		
+		'date_taking': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'date_end_completion': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'user_id': lambda self, cr, uid, c: uid,
+		'name': lambda obj, cr, uid, context: '/',
+		'state': 'draft',
+		'state_incoming': 'not',
    
-    }
+	}
 
 
 	def create(self, cr, uid, vals, context=None):
@@ -288,4 +330,3 @@ vit_makloon_order()
 
 
 
-	
