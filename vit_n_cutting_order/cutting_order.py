@@ -19,7 +19,7 @@ class vit_consumed_line(osv.osv):
 		'material': fields.many2one('product.product', 'Material'),
 		'type' : fields.selection([('main','Body'),('variation','Variation'),('accessories','Accessories')], 'Component Type'),
 		'qty_total_material' : fields.float('Quantity Total'),
-        'product_uom': fields.many2one('product.uom', 'Product Unit of Measure', help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control"),
+		'product_uom': fields.many2one('product.uom', 'Product Unit of Measure', help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control"),
 
 	}
 
@@ -58,9 +58,9 @@ class vit_usage_line(osv.osv):
 
 
 	_defaults = {
-        'type': lambda *a: 'main',
-        'state_normal': lambda *a: 'normal',
-    }
+		'type': lambda *a: 'main',
+		'state_normal': lambda *a: 'normal',
+	}
 
 	def on_change_product_id(self, cr, uid, ids, product_id, name, context=None):
 		uom = self.pool.get('vit.consumed.line').browse(cr, uid, product_id, context=context).material.uom_id.id
@@ -118,15 +118,15 @@ class vit_cutting_order(osv.osv):
 
 	_columns = {
 		'name': fields.char('Order Cutting Reference', size=64, required=True,
-            readonly=True, select=True),
+			readonly=True, select=True),
 		'state': fields.selection([
-            ('draft', 'Draft'),
-            ('open', 'Open'),
-            ('inprogres', 'Inprogres'),
-            ('finish_cut', 'Cutting Finish'),
-            ('finish_qc', 'Done'),
-            ], 'Status', readonly=True, track_visibility='onchange',
-            help="", select=True),
+			('draft', 'Draft'),
+			('open', 'Open'),
+			('inprogres', 'Inprogres'),
+			('finish_cut', 'Cutting Finish'),
+			('finish_qc', 'Done'),
+			], 'Status', readonly=True, track_visibility='onchange',
+			help="", select=True),
 		'type_product_id' : fields.many2one('vit.master.type', 'Model / Type', required=True , readonly=True,states={'draft': [('readonly', False)]}),
 		'user_id'	:fields.many2one('res.users', 'Responsible',readonly=True,states={'draft': [('readonly', False)]}, select=True, track_visibility='onchange'),
 		'date_start_cutting': fields.datetime('Start Date', select=True, readonly=True,states={'draft': [('readonly', False)]}),
@@ -173,29 +173,108 @@ class vit_cutting_order(osv.osv):
 		'count_list_mo' : fields.integer('Jumlah Makloon Order'),
 		'count_list_internal_move' : fields.integer('Jumlah Internal Move'),
 
-
-
-  
 	}
 
 	_defaults = {
-        
-        'date_start_cutting': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'date_end_cutting': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'user_id': lambda self, cr, uid, c: uid,
-        'name': lambda obj, cr, uid, context: '/',
-        'state': 'draft',
-        'count_list_mo' : 0,
-        'count_list_internal_move' : 0,
-
-      
-    }
+		
+		'date_start_cutting': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'date_end_cutting': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'user_id': lambda self, cr, uid, c: uid,
+		'name': lambda obj, cr, uid, context: '/',
+		'state': 'draft',
+		'count_list_mo' : 0,
+		'count_list_internal_move' : 0,
+	}
 
 
 	def create(self, cr, uid, vals, context=None):
 		if vals.get('name','/')=='/':
 			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'vit.cutting.order.seq') or '/'
 		return super(vit_cutting_order, self).create(cr, uid, vals, context=context)
+
+	def write(self, cr, uid, ids, vals, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		if isinstance(ids, (int, long)):
+			ids = [ids]
+		for x in self.browse(cr, uid, ids, context=context):
+
+			#perhitungan reject cutting
+			if 's_cut' in vals :
+				s_order = x.s_order
+				s_cut_reject = s_order - vals['s_cut']
+				if s_cut_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran S yang di input cutting melebihi proses qty order!')
+				s_cut_rej = {'s_cut_rej':s_cut_reject}
+				vals = dict(vals.items()+s_cut_rej.items()) 
+			if 'm_cut' in vals :
+				m_order = x.m_order
+				m_cut_reject = m_order - vals['m_cut']
+				if m_cut_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran M yang di input cutting melebihi proses qty order!')
+				m_cut_rej = {'m_cut_rej':m_cut_reject}
+				vals = dict(vals.items()+m_cut_rej.items()) 	
+			if 'l_cut' in vals :
+				l_order = x.l_order
+				l_cut_reject = l_order - vals['l_cut']
+				if l_cut_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran L yang di input cutting melebihi proses qty order!')
+				l_cut_rej = {'l_cut_rej':l_cut_reject}
+				vals = dict(vals.items()+l_cut_rej.items())	
+			if 'xl_cut' in vals :
+				xl_order = x.xl_order
+				xl_cut_reject = xl_order - vals['xl_cut']
+				if xl_cut_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XL yang di input cutting melebihi proses qty order!')
+				xl_cut_rej = {'xl_cut_rej':xl_cut_reject}
+				vals = dict(vals.items()+xl_cut_rej.items())
+			if 'xxl_cut' in vals :
+				xxl_order = x.xxl_order
+				xxl_cut_reject = xxl_order - vals['xxl_cut']
+				if xxl_cut_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXL yang di input cutting melebihi proses qty order!')
+				xxl_cut_rej = {'xxl_cut_rej':xxl_cut_reject}
+				vals = dict(vals.items()+xxl_cut_rej.items())	
+
+			#perhitungan reject QC cutting
+			if 's_qc' in vals :
+				sqc_order = x.s_cut
+				s_qc_reject = sqc_order - vals['s_qc']
+				if s_qc_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran S yang di input QC cutting melebihi proses cutting!')
+				s_qc_rej = {'s_qc_rej':s_qc_reject}
+				vals = dict(vals.items()+s_qc_rej.items()) 
+			if 'm_qc' in vals :
+				mqc_order = x.m_cut
+				m_qc_reject = mqc_order - vals['m_qc']
+				if m_qc_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran M yang di input QC cutting melebihi proses cutting!')
+				m_qc_rej = {'m_qc_rej':m_qc_reject}
+				vals = dict(vals.items()+m_qc_rej.items()) 	
+			if 'l_qc' in vals :
+				lqc_order = x.l_cut
+				l_qc_reject = lqc_order - vals['l_qc']
+				if l_qc_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran L yang di input QC cutting melebihi proses cutting!')
+				l_qc_rej = {'l_qc_rej':l_qc_reject}
+				vals = dict(vals.items()+l_qc_rej.items()) 
+			if 'xl_qc' in vals :
+				xlqc_order = x.xl_cut
+				xl_qc_reject = xlqc_order - vals['xl_qc']
+				if xl_qc_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XL yang di input QC cutting melebihi proses cutting!')
+				xl_qc_rej = {'xl_qc_rej':xl_qc_reject}
+				vals = dict(vals.items()+xl_qc_rej.items()) 
+			if 'xxl_qc' in vals :
+				xxlqc_order = x.xxl_cut
+				xxl_qc_reject = xxlqc_order - vals['xxl_qc']
+				if xxl_qc_reject < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XL yang di input QC cutting melebihi proses cutting!')
+				xxl_qc_rej = {'xxl_qc_rej':xxl_qc_reject}
+				vals = dict(vals.items()+xxl_qc_rej.items()) 
+
+		return super(vit_cutting_order, self).write(cr, uid, ids, vals, context=context)
 
 	def calculate(self, cr, uid, ids, context=None):
 		
@@ -216,7 +295,7 @@ class vit_cutting_order(osv.osv):
 		bom_s_list = []
 		bom_s = mrp_bom_obj.browse(cr,uid,ls_id_list[0],context =context)
 		for bs in bom_s.bom_lines:
-			#hanya yang non accesories yang di append
+			#w: hanya yang non accesories yang di append
 			if bs.component_type != 'accessories':
 				bom_s_list.append({'material' : bs.product_id.id, 'type' : bs.component_type ,'qty_total_material': bs.product_qty * self_obj[0].s_order, 'product_uom':bs.product_uom.id})
 
@@ -224,34 +303,42 @@ class vit_cutting_order(osv.osv):
 		bom_m = mrp_bom_obj.browse(cr,uid,ls_id_list[1],context =context)
 		for bm in bom_m.bom_lines:
 			if bm.component_type != 'accessories':
-				bom_m_list.append({'material' : bm.product_id.name,'type' : bs.component_type , 'qty_total_material': bm.product_qty * self_obj[0].m_order})
+				bom_m_list.append({'material' : bm.product_id.id,'type' : bs.component_type , 'qty_total_material': bm.product_qty * self_obj[0].m_order})
 
 		bom_l_list = []
 		bom_l = mrp_bom_obj.browse(cr,uid,ls_id_list[2],context =context)
 		for bl in bom_l.bom_lines:
 			if bl.component_type != 'accessories':
-				bom_l_list.append({'material' : bl.product_id.name, 'type' : bs.component_type ,'qty_total_material': bl.product_qty * self_obj[0].l_order})
+				bom_l_list.append({'material' : bl.product_id.id, 'type' : bs.component_type ,'qty_total_material': bl.product_qty * self_obj[0].l_order})
 
 		bom_xl_list = []
 		bom_xl = mrp_bom_obj.browse(cr,uid,ls_id_list[3],context =context)
+
 		for bx in bom_xl.bom_lines:
 			if bx.component_type != 'accessories':
-				bom_xl_list.append({'material' : bx.product_id.name, 'type' : bs.component_type ,'qty_total_material': bx.product_qty * self_obj[0].xl_order})
+				bom_xl_list.append({'material' : bx.product_id.id, 'type' : bs.component_type ,'qty_total_material': bx.product_qty * self_obj[0].xl_order})
 
 		bom_xxl_list = []
 		bom_xxl = mrp_bom_obj.browse(cr,uid,ls_id_list[4],context =context)
 		for bxxl in bom_xxl.bom_lines:
 			if bxxl.component_type != 'accessories':
-				bom_xxl_list.append({'material' : bxxl.product_id.name, 'type' : bs.component_type ,'qty_total_material': bxxl.product_qty * self_obj[0].xxl_order})
+				bom_xxl_list.append({'material' : bxxl.product_id.id, 'type' : bs.component_type ,'qty_total_material': bxxl.product_qty * self_obj[0].xxl_order})
 
 		x_list = []
-		for x in xrange(len(bom_s_list)):
-			#import pdb;pdb.set_trace()
+		
+		#w: sorting dulu kombinasi BoM, agar struktur BoM_line sama di semua ukuran (s,m,l,xl,xxl)
+		sort_s 		= sorted(bom_s_list)
+		sort_m 		= sorted(bom_m_list)
+		sort_l 		= sorted(bom_l_list)
+		sort_xl 	= sorted(bom_xl_list)
+		sort_xxl 	= sorted(bom_xxl_list)
+
+		for x in xrange(len(sort_s)):
 			# mat = bom_s_list[x]['material']+bom_m_list[x]['material']+bom_l_list[x]['material']+bom_xl_list[x]['material']+bom_xxl_list[x]['material']
-			mat = bom_s_list[x]['material']
-			tipe = bom_s_list[x]['type']
-			qty = bom_s_list[x]['qty_total_material']+bom_m_list[x]['qty_total_material']+bom_l_list[x]['qty_total_material']+bom_xl_list[x]['qty_total_material']+bom_xxl_list[x]['qty_total_material']
-			uom = bom_s_list[x]['product_uom']
+			mat = sort_s[x]['material']
+			tipe = sort_s[x]['type']
+			qty = sort_s[x]['qty_total_material']+sort_m[x]['qty_total_material']+sort_l[x]['qty_total_material']+sort_xl[x]['qty_total_material']+sort_xxl[x]['qty_total_material']
+			uom = sort_s[x]['product_uom']
 			x_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
 		print x_list
 
@@ -287,7 +374,7 @@ class vit_cutting_order(osv.osv):
 	def action_inprogress(self, cr, uid, ids, context=None):
 		lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
 		lokasi_produksi = 'Lokasi Produksi'
-
+		#import pdb;pdb.set_trace()
 		lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
 		lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
 
@@ -356,11 +443,39 @@ class vit_cutting_order(osv.osv):
 		for x in self.browse(cr,uid,ids[0],).consumed_line_ids:			
 				#continue
 				self.pool.get('vit.material.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'type':x.type,'qty':x.qty_total_material})
+		
 
-		#tambahan accesories langsung di BoM
-		for x in bom_s.bom_lines:
-			if x.component_type == 'accessories':
-				self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.product_id.id,'type':x.component_type})
+		########################################################################################################
+		#w: tambahan accesories langsung dr BoM
+		#w: standard create makloon order dari yg ukuran S, sisanya(m,l,xl,xxl) pakai fungsi write
+		#w: di object vit.accessories.req.line di tambahkan field bayangan size_s,size_m,size_l,size_xl,size_xxl
+		#	untuk mempermudah perhitungan qty accessories di form makloon
+		########################################################################################################
+
+		#w: size S
+		for line in bom_s.bom_lines:
+			if line.component_type == 'accessories':
+				acc_line = self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':line.product_id.id,'type':line.component_type,'uom_id':line.product_uom.id,'size_s':line.product_qty})
+				# size M
+				bom_m = mrp_bom_obj.browse(cr,uid,ls_id_list[1],context =context)
+				for m in bom_m.bom_lines:
+					if line.product_id.id == m.product_id.id:
+						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_m':m.product_qty})
+				# size L
+				bom_l = mrp_bom_obj.browse(cr,uid,ls_id_list[2],context =context)
+				for l in bom_l.bom_lines:
+					if line.product_id.id == l.product_id.id:
+						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_l':l.product_qty})
+				# size XL
+				bom_xl = mrp_bom_obj.browse(cr,uid,ls_id_list[3],context =context)
+				for xl in bom_xl.bom_lines:
+					if line.product_id.id == xl.product_id.id:
+						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xl':xl.product_qty})
+				# size XXL
+				bom_xxl = mrp_bom_obj.browse(cr,uid,ls_id_list[4],context =context)
+				for xxl in bom_xxl.bom_lines:
+					if line.product_id.id == xxl.product_id.id:
+						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xxl':xxl.product_qty})
 
 		## Update Field count_list_mo
 		self.write(cr,uid,ids,{'count_list_mo': 1},context=context)

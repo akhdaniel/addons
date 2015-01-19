@@ -45,7 +45,7 @@
                     </h1>
                         <group>
                             <group>                                
-                                <field name="user_id"/>
+                                <field name="user_id" readonly="1"/>
                                 <field name="date_start_cutting"/> 
                                 <field name="date_end_cutting"/>  
                             </group>
@@ -61,8 +61,8 @@
                         </group>
                         <group>
                              <group string="Material">
-                                 <field name="consumed_line_ids" view_mode="tree,form" nolabel="1">
-                                    <tree>
+                                 <field name="consumed_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree editable="bottom">
                                      <field name="material"/>
                                      <!-- <field name="size"/> -->
                                      <field name="type"/>
@@ -113,7 +113,7 @@
                                     </group>
                                 </page>
                                 <page string="Usage Material">
-                                    <field name="usage_line_ids" widget="one2many_list" view_mode="tree,form" nolabel="1">
+                                    <field name="usage_line_ids" widget="one2many_list" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','not in',('draft','open'))]}">
                                     <tree  editable="bottom">
                                          <field name="product_id" on_change="on_change_product_id(product_id, context)"/>
                                          <field name="type"/>
@@ -172,23 +172,23 @@
                                        
                                         <group col='1'>
                                             <label for="s_cut_rej" />
-                                            <field name="s_cut_rej" nolabel="1" placeholder="S"/> 
+                                            <field name="s_cut_rej" nolabel="1" placeholder="S" readonly="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="m_cut_rej" />
-                                            <field name="m_cut_rej" nolabel="1" placeholder="L"/> 
+                                            <field name="m_cut_rej" nolabel="1" placeholder="L" readonly="1"/> 
                                         </group>
                                          <group col='1'>
                                              <label for="l_cut_rej" />
-                                             <field name="l_cut_rej"  nolabel="1" placeholder="M"/> 
+                                             <field name="l_cut_rej"  nolabel="1" placeholder="M" readonly="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="xl_cut_rej" />
-                                            <field name="xl_cut_rej"  nolabel="1" placeholder="XL"/> 
+                                            <field name="xl_cut_rej"  nolabel="1" placeholder="XL" readonly="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="xxl_cut_rej" />
-                                            <field name="xxl_cut_rej"  nolabel="1" placeholder="XXL"/>
+                                            <field name="xxl_cut_rej"  nolabel="1" placeholder="XXL" readonly="1"/>
                                         </group>
                                         
                                     </group>
@@ -241,23 +241,23 @@
                                        
                                         <group col='1'>
                                             <label for="s_qc_rej" />
-                                            <field name="s_qc_rej" nolabel="1" placeholder="S"/> 
+                                            <field name="s_qc_rej" nolabel="1" placeholder="S" readonly="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="m_qc_rej" />
-                                            <field name="m_qc_rej" nolabel="1" placeholder="L"/> 
+                                            <field name="m_qc_rej" nolabel="1" placeholder="L" readonly="1"/> 
                                         </group>
                                          <group col='1'>
                                              <label for="l_qc_rej" />
-                                             <field name="l_qc_rej"  nolabel="1" placeholder="M"/> 
+                                             <field name="l_qc_rej"  nolabel="1" placeholder="M" readonly="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="xl_qc_rej" />
-                                            <field name="xl_qc_rej"  nolabel="1" placeholder="XL"/> 
+                                            <field name="xl_qc_rej"  nolabel="1" placeholder="XL" readonly="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="xxl_qc_rej" />
-                                            <field name="xxl_qc_rej"  nolabel="1" placeholder="XXL"/>
+                                            <field name="xxl_qc_rej"  nolabel="1" placeholder="XXL" readonly="1"/>
                                         </group>
                                         
                                     </group>

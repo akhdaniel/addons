@@ -50,8 +50,8 @@
                         </group>
                         <group>
                              <group string="Material Requirement">
-                                <field name="material_req_line_ids" view_mode="tree,form" nolabel="1">
-                                    <tree>
+                                <field name="material_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree editable="bottom">
                                         <field name="material"/>
                                         <field name="type"/>
     
@@ -95,13 +95,21 @@
                                     </group>
                                 </page>
                                
-                                <page string="Usage Material Accesories">
-                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1">
+                                <page string="Usage Material Accesories" >
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <button name="qty_acc_reload" string="Load..Qty" type="object"/>
+                                    </group>
+                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
                                     <tree  editable="bottom">
                                         <field name="material"/>
                                         <field name="type"/>
                                         <field name="qty"/>
-    
+                                        <field name="uom_id"/>
+                                        <field name="size_s" invisible="1"/>
+                                        <field name="size_m" invisible="1"/>
+                                        <field name="size_l" invisible="1"/>
+                                        <field name="size_xl" invisible="1"/>
+                                        <field name="size_xxl" invisible="1"/>
                                     </tree>
                                     <form>
                                         <field name="material"/>
