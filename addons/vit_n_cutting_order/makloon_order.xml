@@ -7,6 +7,11 @@
                 <tree string="List makloon Order">
                     <field name="name" />
                     <field name="origin" />
+                    <field name="partner_id"/>
+                    <field name="model" />
+                    <field name="qty_order" string="Total Order"/>
+                    <field name="date_taking"/> 
+                    <field name="date_end_completion"/>                     
                     <field name="state"/>                 
                 </tree>
             </field>
@@ -37,7 +42,7 @@
                     </h1>
                         <group>
                             <group>                                
-                                <field name="partner_id" on_change="on_partner_id(partner_id, context)" domain="[('category_id','=','makloon')]"/>
+                                <field name="partner_id" on_change="on_partner_id(partner_id, context)" domain="[('category_id','=','makloon'),('supplier','=','True)]" required="1"/>
                                 <field name="address"/>  
                                 <field name="date_taking"/> 
                                 <field name="date_end_completion"/>  
@@ -46,11 +51,13 @@
                                 <field name="origin" readonly="1"/>
                                 <field name="model" />
                                 <field name="state_incoming" />
+                                <field name="is_receive" invisible="1"/>
+                                <field name="invoice_id" />
                             </group>
                         </group>
                         <group>
                              <group string="Material Requirement">
-                                <field name="material_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                                <field name="material_req_line_ids" view_mode="tree,form" nolabel="1" readonly="1">
                                     <tree editable="bottom">
                                         <field name="material"/>
                                         <field name="type"/>
@@ -119,7 +126,24 @@
                     
                                  </field> 
                                 </page>
-                               
+
+                                <page string="Grade B" >
+                                    <field name="grade_ids" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','=','done')]}">
+                                        <tree  editable="bottom">
+                                            <field name="date"/>
+                                            <field name="size_s"/>
+                                            <field name="size_m" />
+                                            <field name="size_l" />
+                                            <field name="size_xl" />
+                                            <field name="size_xxl" />
+                                        </tree>
+                                 </field> 
+                                </page>
+
+                                <page string="Int Move List" >
+                                    <field name="int_move_ids" nolabel="1"/>
+                                </page>  
+
                             </notebook>
                         </group>
         
@@ -150,7 +174,7 @@
             <field name="code">vit.makloon.order.seq</field>
             <field name="prefix"></field>
             <field name="suffix">/SPK-MKL/VI/%(year)s</field>
-            <field name="padding">3</field>
+            <field name="padding">4</field>
             <field name="company_id" eval="False"/>
         </record>
 

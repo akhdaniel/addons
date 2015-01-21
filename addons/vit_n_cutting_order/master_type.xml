@@ -30,6 +30,7 @@
                                 <field name="main_qty"/>
                                 <field name="variation_qty"/>
                                 <field name="cost_model"/>
+                                <field name="cost_model_cut"/>
                             </group>
                         </group>
                     </sheet>
