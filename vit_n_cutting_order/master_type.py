@@ -24,7 +24,8 @@ class vit_master_type(osv.osv):
 		'main_qty'		: fields.integer('Body'),
 		'variation_qty'	: fields.integer('Variation'),
 		'categ_id' : fields.char('Category'),
-		'cost_model': fields.float('Unit Price'),
+		'cost_model': fields.float('Makloon Price'),
+		'cost_model_cut' :fields.float('Cutting Price'),
 		'image': fields.binary('image',type="binary"),
 	}
 

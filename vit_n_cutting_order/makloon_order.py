@@ -39,7 +39,23 @@ class vit_accessories_req_line(osv.osv):
 		######################################################################
 	}
 
+class vit_grade(osv.Model):
+	_name = "vit.grade"
+	_rec_name = "date"
 
+	_columns = {
+		'makloon_order_id': fields.many2one('vit.makloon.order', 'Makloon Reference',ondelete='cascade'),
+		'date' : fields.date('Tanggal',required=True),
+		'size_s' : fields.integer('Size S'),
+		'size_m' : fields.integer('Size M'),
+		'size_l' : fields.integer('Size L'),
+		'size_xl' : fields.integer('Size XL'),
+		'size_xxl' : fields.integer('Size XXL'),
+	}
+
+	_defaults = {
+		'date' : fields.date.context_today,
+	}
 
 class vit_makloon_order(osv.osv):
 	_name = "vit.makloon.order"
@@ -50,7 +66,8 @@ class vit_makloon_order(osv.osv):
 	def _calculate_order(self, cr, uid, ids, name, arg, context=None):
 		res = {}
 		qty = self.browse(cr,uid,ids,context=context)
-		res[qty[0].id] = qty[0].s_order +  qty[0].m_order +  qty[0].l_order +  qty[0].xl_order +  qty[0].xxl_order 
+		for x in qty:
+			res[x.id] = x.s_order +  x.m_order +  x.l_order +  x.xl_order +  x.xxl_order 
 		return res
 
 	def qty_acc_reload(self, cr, uid, ids, context=None):
@@ -85,6 +102,37 @@ class vit_makloon_order(osv.osv):
 				acc_obj.write(cr,uid,x_id,{'qty':qty_total},context=context)
 
 		return True
+
+	def _get_int_move(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result = {}
+
+		my_form = self.browse(cr,uid,ids[0],context=context)
+		makloon_no = my_form.name
+		makloon_id = my_form.id
+
+		pick_obj = self.pool.get('stock.picking')
+		pick_ids = pick_obj.search(cr, uid, [
+			('origin','=',makloon_no)], context=context)
+		if pick_ids == []:
+			return result		
+		result[makloon_id] = pick_ids
+		return result
+
+	def _get_receive(self,cr,uid,ids,field,args,context=None):
+		result = {}
+		#mport pdb;pdb.set_trace()
+		#merubah state form makloon menjadi done
+		for res in self.browse(cr,uid,ids):
+			pick_obj = self.pool.get('stock.picking.in')
+			cari_pick =  pick_obj.search(cr,uid,[('origin','=',res.name)],context=context)
+			if cari_pick != [] :
+				pick_state = pick_obj.browse(cr,uid,cari_pick[0],context=context).state
+				if pick_state == 'done':
+					self.write(cr,uid,ids[0],{'state':'done'},context=context)
+
+		return result
 
 	_columns = {
 		'name': fields.char('Order Makloon Reference', size=64, required=True,
@@ -125,8 +173,10 @@ class vit_makloon_order(osv.osv):
 			], 'Status Incoming', readonly=True, track_visibility='onchange',
 			help="", select=True),
 		# 'picking_ids': fields.one2many('stock.picking.in', 'makloon_order_id', 'Related Picking', readonly=True, help="This is a list of delivery orders that has been generated for this sales order."),
-
-
+		'is_receive' : fields.function(_get_receive,type="boolean",string='Receive'),
+		'invoice_id': fields.many2one('account.invoice', 'Invoice',domain=[('type', '=','in_invoice')], readonly=True,),
+		'int_move_ids' : fields.function(_get_int_move, type='many2many', relation="stock.picking", string="Internal Move"),
+		'grade_ids' : fields. one2many('vit.grade','makloon_order_id', 'Grade'),
   
 	}
 
@@ -148,7 +198,7 @@ class vit_makloon_order(osv.osv):
 		return super(vit_makloon_order, self).create(cr, uid, vals, context=context)
 
 	def write(self, cr, uid, ids, vals, context=None):
-		#import pdb;pdb.set_trace()
+		
 		if context is None:
 			context = {}
 		if isinstance(ids, (int, long)):
@@ -160,35 +210,62 @@ class vit_makloon_order(osv.osv):
 			xl_qc = x.origin.xl_qc
 			xxl_qc = x.origin.xxl_qc
 
-			#antisipasi penghitungan jmh yg di input untuk makloon harus di bawah atau sama dengan dr QC cutting
+			#antisipasi penghitungan jmh yg di input untuk makloon harus di bawah atau sama dengan dr QC cutting dan tdk boleh minus
 			if 's_order' in vals :
 				if vals['s_order'] > s_qc :
 					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran S yang di input untuk makloon melebihi proses QC Qutting!')
+				elif vals['s_order'] < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran S yang di input tidak boleh minus!')					
 			if 'm_order' in vals :
 				if vals['m_order'] > m_qc :
 					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran M yang di input untuk makloon melebihi proses QC Qutting!')
+				elif vals['m_order'] < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran M yang di input tidak boleh minus!')					
 			if 'l_order' in vals :
 				if vals['l_order'] > l_qc :
 					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran L yang di input untuk makloon melebihi proses QC Qutting!')
+				elif vals['l_order'] < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran L yang di input tidak boleh minus!')
 			if 'xl_order' in vals :
 				if vals['xl_order'] > xl_qc :
 					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XL yang di input untuk makloon melebihi proses QC Qutting!')
+				elif vals['xl_order'] < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XL yang di input tidak boleh minus!')
 			if 'xxl_order' in vals :
 				if vals['xxl_order'] > xxl_qc :
 					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXL yang di input untuk makloon melebihi proses QC Qutting!')																				
+				elif vals['xxl_order'] < 0 :
+					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXL yang di input tidak boleh minus!')
 
 		return super(vit_makloon_order, self).write(cr, uid, ids, vals, context=context)
 
-	def action_confirm(self, cr, uid, ids, context=None):
+	def action_confirm(self, cr, uid, ids, context=None):																	
 		#set to "confirmed" state
-		return self.write(cr, uid, ids, {'state':'open'}, context=context)
+		self.write(cr, uid, ids, {'state':'open'}, context=context)
+		return True
 
 	def action_inprogress(self, cr, uid, ids, context=None):
-		#set to "confirmed" state
-		return self.write(cr, uid, ids, {'state':'inprogres'}, context=context)
+		#search jurnal purchase
+		jurnal = self.pool.get('account.journal').search(cr,uid,[('type','=','purchase')],context=context)[0]
+		#create juga supplier invoicenya
+		inv_makloon = self.pool.get('account.invoice').create(cr,uid,{'partner_id' : self.browse(cr,uid,ids[0],).partner_id.id,
+																'origin'  : self.browse(cr,uid,ids[0],).name,
+																'account_id' : self.browse(cr,uid,ids[0],).partner_id.property_account_payable.id,
+																'journal_id' : jurnal,
+																'type' : 'in_invoice',
+																})
+
+		#search product (id 1 bawaan dari openerp pasti product service)
+		prod_name = self.pool.get('product.product').browse(cr,uid,1,context=context).name		
+		self.pool.get('account.invoice.line').create(cr,uid,{'invoice_id' : inv_makloon,
+																'product_id':1,
+																'name':prod_name,
+																'price_unit':self.browse(cr,uid,ids[0],).origin.type_product_id.cost_model})			
+		#set to "inprogress" state
+		self.write(cr, uid, ids, {'state':'inprogres','invoice_id':inv_makloon}, context=context)
+		return True
 
 	def action_view_receive(self, cr, uid, ids, context=None):
-		import pdb;pdb.set_trace()
 		### Fungsi-fungsi untuk mengarahkan ke result list
 		mod_obj = self.pool.get('ir.model.data')
 		act_obj = self.pool.get('ir.actions.act_window')
