@@ -122,15 +122,18 @@ class vit_makloon_order(osv.osv):
 
 	def _get_receive(self,cr,uid,ids,field,args,context=None):
 		result = {}
-		#mport pdb;pdb.set_trace()
+		#import pdb;pdb.set_trace()
 		#merubah state form makloon menjadi done
 		for res in self.browse(cr,uid,ids):
 			pick_obj = self.pool.get('stock.picking.in')
 			cari_pick =  pick_obj.search(cr,uid,[('origin','=',res.name)],context=context)
 			if cari_pick != [] :
-				pick_state = pick_obj.browse(cr,uid,cari_pick[0],context=context).state
-				if pick_state == 'done':
-					self.write(cr,uid,ids[0],{'state':'done'},context=context)
+				pick_state = pick_obj.browse(cr,uid,cari_pick,context=context)
+				for x in pick_state :
+					if x.state != 'done':
+						return result
+
+				self.write(cr,uid,ids[0],{'state':'done'},context=context)
 
 		return result
 
@@ -391,10 +394,12 @@ class vit_makloon_order(osv.osv):
 					if stock_in_obj.state != 'cancel':
 						if stock_in_obj.state != 'auto':
 							if stock_in_obj.state != 'confirmed':
-								self.write(cr,uid,ids,{'state' : stock_in_obj.state},context=context)
+								x = 0
+								#w: jika int_move yg terakhir di looping draft, maka form makloon jd sraft juga
+								#self.write(cr,uid,ids,{'state' : stock_in_obj.state},context=context)
 		
-		if stock_in_obj.state == 'done':
-			self.write(cr,uid,ids,{'state' : stock_in_obj.state},context=context)
+		# if stock_in_obj.state == 'done':
+		# 	self.write(cr,uid,ids,{'state' : stock_in_obj.state},context=context)
 		return self.write(cr,uid,ids,{'state_incoming' : stock_in_obj.state},context=context)
 
 
