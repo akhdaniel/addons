@@ -26,7 +26,8 @@
                         <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
                         <button name="action_inprogress" type="object" states="open" string="Send to Makloon" class="oe_highlight"/>
                         <button name="action_receive" states="inprogres"  type="object" string="Receive" class="oe_highlight" />
-                        <button name="action_view_receive" states="tobereceived,done"  type="object" string="View Incoming" class="oe_highlight" />
+                        <button name="action_view_receive" states="tobereceived,grade,split,done"  type="object" string="View Incoming" class="oe_highlight" />
+                        <button name="action_split_grade" states="tobereceived"  type="object" string="Split Grade" class="oe_highlight" />
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,inprogres,tobereceived,done"/>
                     </header>
                     <sheet>
@@ -50,7 +51,7 @@
                             <group>
                                 <field name="origin" readonly="1"/>
                                 <field name="model" />
-                                <field name="state_incoming" />
+                                <field name="state_incoming" invisible="1"/>
                                 <field name="is_receive" invisible="1"/>
                                 <field name="invoice_id" />
                             </group>
@@ -127,8 +128,11 @@
                                  </field> 
                                 </page>
 
-                                <page string="Grade B" >
-                                    <field name="grade_ids" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','=','done')]}">
+                                <page string="Grade B" attrs="{'invisible':[('state','not in',('grade','split','done'))]}">
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <button name="action_finish_grade" states="grade"  type="object" string="Finish..Split"/>
+                                     </group>    
+                                    <field name="grade_ids" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','!=','grade')]}">
                                         <tree  editable="bottom">
                                             <field name="date"/>
                                             <field name="size_s"/>
@@ -136,6 +140,7 @@
                                             <field name="size_l" />
                                             <field name="size_xl" />
                                             <field name="size_xxl" />
+                                            <field name="picking_ids" readonly="1"/>
                                         </tree>
                                  </field> 
                                 </page>

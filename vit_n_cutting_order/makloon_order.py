@@ -51,6 +51,7 @@ class vit_grade(osv.Model):
 		'size_l' : fields.integer('Size L'),
 		'size_xl' : fields.integer('Size XL'),
 		'size_xxl' : fields.integer('Size XXL'),
+		'picking_ids' : fields.many2one('stock.picking','Internal Move'),
 	}
 
 	_defaults = {
@@ -145,6 +146,8 @@ class vit_makloon_order(osv.osv):
 			('open', 'Open'),
 			('inprogres', 'Inprogres'),
 			('tobereceived', 'To Be Received'),
+			('grade', 'Split Grade'),
+			('split', 'Finish Split'),
 			('done', 'Done'),
 			], 'Status', readonly=True, track_visibility='onchange',
 			help="", select=True),
@@ -402,6 +405,10 @@ class vit_makloon_order(osv.osv):
 		# 	self.write(cr,uid,ids,{'state' : stock_in_obj.state},context=context)
 		return self.write(cr,uid,ids,{'state_incoming' : stock_in_obj.state},context=context)
 
+	def action_split_grade(self, cr, uid, ids, context=None):																	
+		#set to "confirmed" state
+		self.write(cr, uid, ids, {'state':'grade'}, context=context)
+		return True
 
 	def on_partner_id(self, cr, uid, ids, partner_id, context=None):
 		if partner_id != False:
@@ -436,12 +443,3 @@ class vit_makloon_order(osv.osv):
 		}
 
 vit_makloon_order()
-
-
-
-
-
-
-
-
-
