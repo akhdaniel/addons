@@ -1,0 +1,15 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="tab_form_view2">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hrd_ppi.tab_form_view"/>
+            <field name="arch" type="xml">
+                <field name="extitle_id" position="replace">
+                    <field name='job_des'/>
+                </field>
+             </field>                                                   
+        </record>
+    </data>
+</openerp>

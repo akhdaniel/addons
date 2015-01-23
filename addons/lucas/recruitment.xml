@@ -1,0 +1,115 @@
+<openerp>
+    <data>
+ <!--        <record id="view_hr_job_form3" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hrd_ppi.view_hr_job_form2"/>
+            <field name="arch" type="xml">
+                <field name='jenis_permohonan' position='replace'>
+                    <field name='jenis_permohonan'/>
+                    <field name='job_position'/>
+                </field>                                                                                       
+            </field>      
+        </record> -->
+
+        <record id="hr_recruitment_stage_form2" model="ir.ui.view">
+            <field name="name">hr.recruitment.stage.form</field>
+            <field name="model">hr.recruitment.stage</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_form"/>
+            <field name="arch" type="xml">
+                <form string="Stage"  version="7.0" position='replace'>
+                    <group string="Stage Definition">
+                        <group>
+                            <field name="name"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="fold"/>
+                        </group>
+                        <group>
+                            <field view_mode="tree" name='job_id'>
+                                <tree editable='top'>
+                                    <field name='name'/>
+                                </tree>
+                            </field>
+                        </group>
+                    </group>
+                </form>                                                                                       
+            </field>      
+        </record>
+
+        <record model="ir.ui.view" id="hr_job_approval_tree2">
+            <field name="name">hr.job.approval.tree</field>
+            <field name="model">hr.job.approval</field>
+            <field name="inherit_id" ref="hrd_ppi.hr_job_approval_tree"/>
+            <field name="arch" type="xml">
+                <field name='jenis_permohonan' position='replace'/>
+                <field name='name' position='after'>
+                    <field name='job_id'/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_job_approval_form2">
+            <field name="name">hr.job.approval.form</field>
+            <field name="model">hr.job.approval</field>
+            <field name="inherit_id" ref="hrd_ppi.hr_job_approval_form"/>
+            <field name="arch" type="xml">
+                <form string="Stage"  version="7.0" position='replace'>
+                    <group string="Stage Definition">
+                        <group>
+                            <field name="name"/>
+                            <field name='job_id'/>
+                        </group>
+                        <group>
+                            <field name="state"/>
+                            <field name="sequence"/>
+                            <field name="fold"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_job_form3" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hrd_ppi.view_hr_job_form2"/>
+            <field name="arch" type="xml">
+                <header position='replace'>
+                    <header>    
+                        <header>
+                            <button string="Send For Approval" type="object" name='action_apporve' attrs="{'invisible': [('states_id','!=','submit')]}" />
+                            <button string="Approval" type="object" name='action_apporve' attrs="{'invisible': [('states_id','!=','approval')]}"/>
+                            <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval')]}"/>
+                            <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}"/>  
+                            <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+                        </header>
+                    </header>
+                </header> 
+                <field name='status_jabatan' position='before'>
+                    <field name='job_name'/>
+                </field>   
+            </field>
+        </record> 
+
+        <record model="ir.actions.act_window" id="action_hr_job_position1">
+            <field name="name">Master Job Position</field>
+            <field name="res_model">hr.job.position</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_job_stage">
+            <field name="name">Master Job stage</field>
+            <field name="res_model">hr.job.stage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_hr_job_position1" parent="base.menu_tools" name="Master Job Position" id="master_hr_job2" sequence="140"/>
+<!--         <menuitem action="action_hr_job_stage" parent="base.menu_tools" name="Master stage Job Position" id="master_hr_job3" sequence="140"/> -->
+        <menuitem id="master_hr_job3"  name="Master stage Job Position" parent="hr_recruitment.menu_hr_recruitment_recruitment" action="action_hr_job_stage" sequence="140"/>
+    </data>
+</openerp>
