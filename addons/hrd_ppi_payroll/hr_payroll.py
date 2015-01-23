@@ -382,15 +382,33 @@ class hr_payslip(osv.osv):
                             tgl_mulai = datetime.strptime(tgl_mulai,"%Y-%m-%d") 
                             tgl_asli = datetime.strptime(tgl_sampai,"%Y-%m-%d")
                             if tanggal <= tgl_asli and tanggal >= tgl_mulai:
+                                if tanggal.month <= 10 :
+                                    tgl_overtime = '0' + str(tanggal.month)
+                                else :
+                                    tgl_overtime = str(tanggal.month)
+                                thn_overtime = str(tanggal.year)
+                                tot_tgl_overtime = thn_overtime +'-'+tgl_overtime
+                                obj_over = self.pool.get('hr.overtime')
+                                src_over = obj_over.search(cr,uid,[('employee_id','=',contract.employee_id.id),('bulan','=',tot_tgl_overtime),('state','=','validate')])
+                                for overs in obj_over.browse(cr,uid,src_over):
+                                    date_to_lembur = overs.date_to
+                                    date_from_lembur = overs.date_from
+                                    jum_jam_lembur = overs.jam_lembur
+                                    total_lembur = jum_jam_lembur + real_working_hours_on_day
+                                    yr_ov = datetime.strptime(date_from_lembur,'%Y-%m-%d %H:%M:%S').year
+                                    bln_ov = datetime.strptime(date_from_lembur,'%Y-%m-%d %H:%M:%S').month
+                                    day_ov = datetime.strptime(date_from_lembur,'%Y-%m-%d %H:%M:%S').day
+                                    tot_ov = str(yr_ov) +'-'+str(bln_ov)+'-'+str(day_ov)
+                                    tgl_overtimes = datetime.strptime(tot_ov,'%Y-%m-%d')
+                                    yr_ov_to = datetime.strptime(date_to_lembur,'%Y-%m-%d %H:%M:%S').year
+                                    bln_ov_to = datetime.strptime(date_to_lembur,'%Y-%m-%d %H:%M:%S').month
+                                    day_ov_to = datetime.strptime(date_to_lembur,'%Y-%m-%d %H:%M:%S').day
+                                    tot_ov_to = str(yr_ov_to) +'-'+str(bln_ov_to)+'-'+str(day_ov_to)
+                                    tgl_overtimes_to = datetime.strptime(tot_ov_to,'%Y-%m-%d')
+                                    if total_lembur >= 14 and tgl_overtimes != tgl_overtimes_to and tanggal == tgl_overtimes :
+                                        uang_makan_lembur_proyek['number_of_days'] += 1.0
                                 if real_working_hours_on_day >= 4 :    
                                     uang_makan_proyek['number_of_days'] += 1.0
-                                if real_working_hours_on_day >= 14 :
-                                    #import pdb;pdb.set_trace() 
-                                    #yr = day_from + timedelta(days=day)
-                                    #obj_att = self.pool.get('hr.attendance')
-                                    #src_att = obj_att.search(cr,uid,[('employee_id','=',employee_id)])
-                                    #for xxx in obj_att.browse(cr,uid,src_att) :
-                                    uang_makan_lembur_proyek['number_of_days'] += 1.0  
                             elif real_working_hours_on_day >= 0.1 :
                                 transport['number_of_days'] += 1.0
                                 if real_working_hours_on_day >= 4 :
@@ -762,7 +780,6 @@ class hr_payslip(osv.osv):
                 if pot_jab >= obj.contract_id.type_id.max_biaya_jabatan :
                     pot_jab = obj.contract_id.type_id.max_biaya_jabatan
                 #tunjangan hari tua
-                import pdb;pdb.set_trace()
                 tht_alw = (obj.contract_id.type_id.ttht * (obj.contract_id.wage * pengali))/100
                 if tht_alw >= obj.contract_id.type_id.max_tht :
                     tht_alw = obj.contract_id.type_id.max_tht
