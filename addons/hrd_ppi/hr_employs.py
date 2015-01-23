@@ -327,7 +327,7 @@ class employee_objects_proxy(object_proxy):
             res = map(lambda x:x[1], data)
         elif field_obj._type == 'many2one':
             #return the modifications on a many2one field as its value returned by name_get()
-            res = value and value[1] or value
+            res = value #and value[1] or value
         else:
             res = value
         return res
@@ -341,6 +341,7 @@ class employee_objects_proxy(object_proxy):
 
         @return: Returns result as per method of Object proxy
         """
+        #import pdb;pdb.set_trace()
         pool = pooler.get_pool(cr.dbname)
         resource_pool = pool.get(model)
         model_pool = pool.get('ir.model')
@@ -353,7 +354,6 @@ class employee_objects_proxy(object_proxy):
         field_list = []
         old_values = new_values = {}
         #else: # method is write, action or workflow actions
-        #import pdb;pdb.set_trace()
         if method == 'create':
             res = fct_src(cr, uid_orig, model.model, method, *args, **kw)
             if res:
@@ -376,18 +376,15 @@ class employee_objects_proxy(object_proxy):
                 # check the new values and store them into a dictionary
                 new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
         #import pdb;pdb.set_trace()
-        # compare the old and new values and create audittrail log if needed
+        # compare the old and new values and create audittrail log if need
         self.process_data(cr, uid_orig, pool, res_ids, model, method, old_values, new_values, field_list)
         return res
 
     def get_data(self, cr, uid, pool, res_ids, model, method):
         #import pdb;pdb.set_trace()
         data = {}
-        #import pdb;pdb.set_trace()
         resource_pool = pool.get(model.model)
         # read all the fields of the given resources in super admin mode
-        #import pdb;pdb.set_trace()
-        #import pdb;pdb.set_trace()
         for resource in resource_pool.read(cr, SUPERUSER_ID, res_ids, resource_pool._all_columns):
             values = {}
             values_text = {}
@@ -402,6 +399,7 @@ class employee_objects_proxy(object_proxy):
 
                 field_obj = resource_pool._all_columns.get(field).column
                 if field_obj._type in ('one2many','many2many'):
+                    #import pdb;pdb.set_trace()
                     # check if an audittrail rule apply in super admin mode
                     #if self.check_rules(cr, SUPERUSER_ID, field_obj._obj, method):
                         # check if the model associated to a *2m field exists, in super admin mode
@@ -411,12 +409,15 @@ class employee_objects_proxy(object_proxy):
                     x2m_model = pool.get('ir.model').browse(cr, SUPERUSER_ID, x2m_model_id)
                     field_resource_ids = list(set(resource[field]))
                     if model.model == x2m_model.model:
+                        #import pdb;pdb.set_trace()
+                        if model.model != 'res.partner' and model.model != 'res.company' :
                         # we need to remove current resource_id from the many2many to prevent an infinit loop
-                        if resource_id in field_resource_ids:
-                            field_resource_ids.remove(resource_id)
-                    data.update(self.get_data(cr, SUPERUSER_ID, pool, field_resource_ids, x2m_model, method))
-            #import pdb;pdb.set_trace()
+                            if resource_id in field_resource_ids:
+                                field_resource_ids.remove(resource_id)
+                    if model.model != 'res.partner' and model.model != 'res.company' :
+                        data.update(self.get_data(cr, SUPERUSER_ID, pool, field_resource_ids, x2m_model, method))
             data[(model.id, resource_id)] = {'text':values_text, 'value': values}
+            #import pdb;pdb.set_trace()
         return data 
 
     def prepare_audittrail_log_line(self, cr, uid, pool, model, resource_id, method, old_values, new_values, field_list=None):
@@ -439,6 +440,7 @@ class employee_objects_proxy(object_proxy):
             field_obj = field_definition.column
             if model.model == 'hr.contract' :
                 if field_name == 'type_id' :
+                    import pdb;pdb.set_trace()
                     employee = key in new_values and new_values[key]['value'].get('employee_id')[1]
                     objk = pool.get('hr.employee')
                     src = objk.search(cr,uid,[('name','=',employee)])
@@ -575,8 +577,8 @@ class employee_objects_proxy(object_proxy):
 
     def execute_cr(self, cr, uid, model, method, *args, **kw):
         fct_src = super(employee_objects_proxy, self).execute_cr
-        #import pdb;pdb.set_trace()
         if model == 'hr.employee' and method == 'write' :
+
             return self.log_fct(cr, uid, model, method, fct_src, *args, **kw)
         if model == 'hr.contract':
             if method == 'write' or method == 'create' :
