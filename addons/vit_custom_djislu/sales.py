@@ -600,8 +600,8 @@ class sale_order(osv.osv):
 		res['nik']=order.nik
 		res['volume']=order.volume_tot
 		res['weight']=order.tonase_tot
-		res2={'partner_id2':order.partner_id2.partner_id.id}
-		result = dict(res.items()+res2.items()) 
+		#res2={'partner_id2':order.partner_id2.partner_id.id}
+		result = dict(res.items())#+res2.items()) 
 		return result
 	
 
@@ -875,6 +875,7 @@ class sale_order(osv.osv):
 					gr_tot += gt
 					qty_tot += uom
 					gr_tot_mx.append(prima)	
+
 					xx.write(cr,uid,x.id,{'product_uom_qty': uom,'product_uos_qty': uos},context=context)
 
 			#disc yang sesuai
@@ -3760,22 +3761,23 @@ class sale_order(osv.osv):
 		if m_tot > lim_ar:
 			raise osv.except_osv(_('Warning!'),_('Jumlah piutang (global) customer ini sudah melewati limit!'))
 
-		#cek limit piutang persupplier 
-		cr.execute('SELECT payable_field,lc.limit FROM limit_customer lc '\
-			'WHERE partner_id2=%s AND partner_id=%s',(lin.partner_id.id,lin.partner_id2.partner_id.id))
-		dpt = cr.fetchall()
-		#import pdb;pdb.set_trace()
-		ttl = dpt[0][0]
-		lmt = dpt[0][1]
-		if lmt is None:
-			lmt = 0.00
-		
-		ttlplus = ttl+lin.amount_total
-		slsh = ttlplus-lmt
-
 		#####################################################################################################################
 		#Protek limit piutang per supplier di disable, karena tidak ada supplier di form SO
 		#####################################################################################################################
+		#cek limit piutang persupplier 
+		# cr.execute('SELECT payable_field,lc.limit FROM limit_customer lc '\
+		# 	'WHERE partner_id2=%s AND partner_id=%s',(lin.partner_id.id,lin.partner_id2.partner_id.id))
+		# dpt = cr.fetchall()
+		# #import pdb;pdb.set_trace()
+		# ttl = dpt[0][0]
+		# lmt = dpt[0][1]
+		# if lmt is None:
+		# 	lmt = 0.00
+		
+		# ttlplus = ttl+lin.amount_total
+		# slsh = ttlplus-lmt
+
+
 		# if lmt >= 1.00 :
 		# 	if ttlplus > lmt:
 		# 		raise osv.except_osv(_('Warning!'),_('Jumlah piutang customer ini sudah melewati limit dari supplier %s !\n '\
