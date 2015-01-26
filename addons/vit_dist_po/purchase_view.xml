@@ -2,29 +2,6 @@
 <openerp>
     <data>
 
-        <record id="invoice_supplier_form_po_price" model="ir.ui.view">
-            <field name="name">account.invoice.supplier.form.po.price</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="vit_custom_djislu.custom_invoice_supplier_form"/>
-            <field name="arch" type="xml">
-                <field name="uom_id" position="after">
-                    <field name="harga_po" invisible="1"/>
-                </field>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="dist_invoice_supplier_form">
-            <field name="name">Invoice Supplier distributor</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_supplier_form"/>
-            <field name="arch" type="xml">
-                <field name="origin" position="after">
-                    <field name="no_do"/>
-                </field>
-            </field>
-        </record>
-
-
         <record model="ir.ui.view" id="view_product_form_expiry_hide_dates">
             <field name="name">stock.production.lot.hide.dates</field>
             <field name="model">stock.production.lot</field>
@@ -135,7 +112,7 @@
                                 <field name="currency_id" invisible='1'/>
                                 <field name="journal_id" invisible='1'/>
                                 <group col='5' colspan="2">
-                                <field name="date_order" attrs="{'readonly': True }"/>
+                                <field name="date_order"/>
                                 </group>
                                 <!-- <field name='periode'/> -->
                             </group>
@@ -339,7 +316,7 @@
                                         </div>
                                         
                                         <div class="vi_sum_col">
-                                            <field name='w1'/>
+                                            <field name='w1' on_change="onchange_w1(w1)"/>
                                         </div>
                                         <div class="vi_sum_col">
                                             <field name='w2'/>

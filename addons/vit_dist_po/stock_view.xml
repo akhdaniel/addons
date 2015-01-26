@@ -2,6 +2,23 @@
 <openerp>
     <data>
 
+<!-- stock move summary in receiving Tree View -->
+
+        <record id="view_stock_moves_summary_tree" model="ir.ui.view">
+            <field name="name">stock.moves.summary.tree</field>
+            <field name="model">stock.moves.summary</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Move Summary" create='false' colors="red:bad_product_qty &gt; 0.00">
+                    <field name="default_code"/>
+                    <field name="barcode"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="bad_product_qty"/>
+                 </tree>
+            </field>
+        </record>
+
+<!-- new incoming shipmet tree ref -->
         <record id="stock_view_move_picking_tree_hide" model="ir.ui.view">
             <field name="name">stock.move.tree.cust</field>
             <field name="model">stock.move</field>
@@ -10,8 +27,8 @@
                 <tree colors="grey:scrapped == True" string="Stock Moves">
                     <field name="product_id"/>
                     <field name="product_qty" on_change="onchange_quantity(product_id, product_qty, product_uom, product_uos)"/>
-                    <field name="product_qty_nett" />
-                    <field name="product_qty_diff"/>
+                    <!-- <field name="product_qty_nett" />
+                    <field name="product_qty_diff"/> -->
                     <field name="product_uom" string="Unit of Measure" groups="product.group_uom" invisible="1" />
                     <field name="product_uos_qty" groups="product.group_uos" invisible="1" />
                     <field name="product_uos" groups="product.group_uos" invisible="1" />
@@ -44,21 +61,32 @@
                         states="draft,assigned,confirmed"/>
                       <field name="location_dest_id" groups="stock.group_locations" invisible="1" />
                       <field name="state" invisible="1"/>
+                      <field name="is_bad"/>
                 </tree>
             </field>
         </record>
 
+<!-- incoming shipment form -->
         <record id="stock_view_picking_in_form_custom" model="ir.ui.view">
             <field name="name">Hide and add header</field>
             <field name="model">stock.picking.in</field>
             <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
+                <page string="Products" position='after'>
+                    <page string="Summary">
+                        <button name="query_summarize_stock_move" string="Refresh Summary" type="object"
+                        icon="gtk-refresh" states="draft,assigned,confirmed"/>
+                        <button name="summarize_stock_move" string="Refresh Summary 2" type="object"
+                        icon="gtk-refresh" states="draft,assigned,confirmed"/>
+                        <field name='move_summary_ids'/>
+                    </page>
+                </page>
                 <field name='stock_journal_id' position="after">
                     <field name='location_id'/>
                     <field name='location_dest_id'/>
                 </field>
                 <field name='move_lines' position="replace">
-                    <field name="move_lines" string="Stock Move" context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>
+                    <field name="move_lines" string="Stock Move" on_change='onchange_movelines(move_lines,context)' context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>
                 </field>
             </field>
         </record>        
@@ -69,11 +97,12 @@
             <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
                 <label for="product_uos_qty" position="before">
-                    <field name="product_qty_nett"/>
-                    <field name="product_qty_diff" readonly='True'/>
+                    <!-- <field name="product_qty_nett"/>
+                    <field name="product_qty_diff" readonly='True'/> -->
                 </label>
             </field>
         </record>
+
 
     </data>
 </openerp>

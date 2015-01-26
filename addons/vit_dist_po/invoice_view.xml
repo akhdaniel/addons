@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- Supplier Invoice Number -->
+        <record id="seq_create_supplier_invoice" forcecreate="1" model="ir.sequence.type">
+            <field name="name">Account invoice for supplier Seq.</field>
+            <field name="code">account.invoice.vit.seq</field>
+        </record>
+        <record id="seq_c_po" forcecreate="1" model="ir.sequence">
+            <field name="name">Account invoice for supplier</field>
+            <field name="code">account.invoice.vit.seq</field>
+            <field name="prefix"></field>
+            <field name="padding">8</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+<!-- Harga PO di supplier invoice -->
+        <record id="invoice_supplier_form_po_price" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form.po.price</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="vit_custom_djislu.custom_invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="uom_id" position="after">
+                    <field name="harga_po" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+<!-- Include No DO di supplier Invoice -->
+        <record model="ir.ui.view" id="dist_invoice_supplier_form">
+            <field name="name">Invoice Supplier distributor</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="no_do"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -12,46 +12,6 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 from openerp.tools.float_utils import float_compare
 
 
-class account_invoice(osv.osv):
-    _name = "account.invoice"
-    _inherit = "account.invoice"
-
-    def _search_DO(self, cr, uid, ids, field_name, arg, context):
-        res = {}
-        for inv in self.browse(cr,uid,ids,):
-            pickings = ''
-            separator = ''
-            po_ids = self.pool.get('purchase.order').search(cr,uid,[('name','ilike',inv.origin)],)
-            if po_ids:
-                pick_ids = self.pool.get('stock.picking').search(cr,uid,[('purchase_id','=',po_ids)],)
-                for p in pick_ids:
-                    pickings += separator + str(self.pool.get('stock.picking').browse(cr,uid,p,).name or '')
-                    separator = ', '
-            res[inv.id] = pickings
-        return res
-
-    _columns = {
-        'no_do' : fields.function(
-            _search_DO,
-            type='char',
-            obj="stock.picking",
-            method=True,
-            store=True,
-            string='Drop Order(s)'),
-    }
-
-account_invoice()
-
-class account_invoice_line(osv.osv):
-    _name = "account.invoice.line"
-    _inherit = "account.invoice.line"
-
-    _columns = {
-        'harga_po' : fields.float('PO Value',help='Harga beli PO (persatuan besar).', readonly=True),
-    }
-
-account_invoice_line()
-
 class product_product(osv.osv):
     _name = "product.product"
     _inherit = "product.product"
@@ -329,7 +289,6 @@ class purchase_order_line(osv.osv):
         """
         if context is None:
             context = {}
-
         res = {'value': {'price_unit': price_unit or 0.0, 'name': name or '', 'product_uom' : uom_id or False}}
         if not product_id:
             return res
@@ -403,16 +362,16 @@ class purchase_order_line(osv.osv):
             res['value'].update({'product_qty': qty})
 
         # - determine price_unit and taxes_id
-        if pricelist_id:
-            price = product_pricelist.price_get(cr, uid, [pricelist_id],
-                    product.id, qty or 1.0, partner_id or False, {'uom': uom_id, 'date': date_order})[pricelist_id]
-        else:
-            price = product.standard_price
+        # if pricelist_id:
+        #     price = product_pricelist.price_get(cr, uid, [pricelist_id],
+        #             product.id, qty or 1.0, partner_id or False, {'uom': uom_id, 'date': date_order})[pricelist_id]
+        # else:
+        #     price = product.standard_price
 
-        taxes = account_tax.browse(cr, uid, map(lambda x: x.id, product.supplier_taxes_id))
-        fpos = fiscal_position_id and account_fiscal_position.browse(cr, uid, fiscal_position_id, context=context) or False
-        taxes_ids = account_fiscal_position.map_tax(cr, uid, fpos, taxes)
-        res['value'].update({'price_unit': price, 'taxes_id': taxes_ids})
+        # taxes = account_tax.browse(cr, uid, map(lambda x: x.id, product.supplier_taxes_id))
+        # fpos = fiscal_position_id and account_fiscal_position.browse(cr, uid, fiscal_position_id, context=context) or False
+        # taxes_ids = account_fiscal_position.map_tax(cr, uid, fpos, taxes)
+        # res['value'].update({'price_unit': price, 'taxes_id': taxes_ids})
 
         #Tambahan code, barcode, dsb
         location_ids = [];clause =' ';clause2 =' ';clause3 =' ';clause4 =' '
@@ -435,7 +394,7 @@ class purchase_order_line(osv.osv):
         MT= 0.00;GT=0.00;s3m=0.00
         BGT=0.00;BMT=0.00;sgt_order=0.00;adj=0.00;cs=0.00;it=0.00
         tot_w=0;tot_v=0;
-        ratio=1/product.uom_po_id.factor
+        ratio=1/product.uom_po_id.factor or 1.00
         # Range tanggal pertama 3 bln lalu s/d tgl terakhir bulan lalu
         #   date_trunc('MONTH',CURRENT_DATE) - INTERVAL '1 day')::date   as endday_lastmounth,
         #   date_trunc('MONTH',CURRENT_DATE) - INTERVAL '3 MONTH')::date as firstday_last3mounth
@@ -511,10 +470,10 @@ class purchase_order_line(osv.osv):
         tot_v   = tot_v+product.volume
         tot_w   = tot_w+product.weight
 
-        #standard_price
-        # price   = product.product_tmpl_id.standard_price 
-        # price = product.price_get('standard_price', context=context)[product.id] / product.uom_po_id.factor
-
+        # override standard_price
+        # price = product.product_tmpl_id.standard_price 
+        price = product.price_get('standard_price', context=context)[product.id] * ratio
+        
         # end_inv & stk_cover
         stk_cover = 0.00
         end_inv         = cs + round(it) - round(s3m)
@@ -1040,9 +999,8 @@ class purchase_order(osv.osv):
 
     def _prepare_order_picking(self, cr, uid, order, context=None):
         # Penambahan location source dan dest.
-        # import pdb;pdb.set_trace()
         cr.execute('SELECT id FROM stock_location where usage=\'supplier\' limit 1')
-        source= cr.fetchone()
+        source = cr.fetchone()
         source = source and source[0] or False
         return {
             'name': self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.in'),
@@ -1068,6 +1026,7 @@ class purchase_order(osv.osv):
         todo_moves = []
         stock_move = self.pool.get('stock.move')
         wf_service = netsvc.LocalService("workflow")
+        mgids = []
         for order_line in order_lines:
             if not order_line.product_id:
                 continue
@@ -1076,11 +1035,18 @@ class purchase_order(osv.osv):
             if order_line.product_qty == 0.00:
                 continue
             if order_line.product_id.type in ('product', 'consu'):
-                #disini ditambah kondisi untuk qty kecil
+                # tambah stok move bayangan di move_group_ids
+                mgids.append((0,0,{'product_qty':order_line.product_qty,'product_id':order_line.product_id.id}))
+                
                 move = stock_move.create(cr, uid, self._prepare_order_line_move(cr, uid, order, order_line, picking_id, context=context))
                 if order_line.move_dest_id and order_line.move_dest_id.state != 'done':
                     order_line.move_dest_id.write({'location_id': order.location_id.id})
                 todo_moves.append(move)
+        
+        # tambah di stock piking in
+        # import pdb;pdb.set_trace()
+        self.pool.get('stock.picking.in').write(cr, uid, picking_id, {'move_group_ids':mgids}, context=context)
+        
         stock_move.action_confirm(cr, uid, todo_moves)
         stock_move.force_assign(cr, uid, todo_moves)
         wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
@@ -1507,6 +1473,10 @@ class purchase_order(osv.osv):
                 principal_ids.append(x[0])
             return [(6,0,principal_ids)]
         return False
+
+    def onchange_w1(self, cr, uid, ids, w1, context=None):
+        if not ids:
+            return {'value':{'minimum_planned_date':w1,}}
 
     def onchange_locx(self, cr, uid, ids, loc_x, location_id, context=None):
         if loc_x:

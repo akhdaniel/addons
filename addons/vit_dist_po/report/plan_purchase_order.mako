@@ -48,7 +48,7 @@
         <table  style="page-break-inside: avoid" class="list_table" width="100%" cellpadding="5" cellspacing="20">
             <thead>
                 <tr>
-                    <td colspan=3></td>
+                    <td colspan=2></td>
                     <td colspan=2><b>Jenis Kendaraan</b></td>
                     <td class="aright">${o.fleet1.jenis  or ''}</td>
                     <td class="aright">${o.fleet2.jenis   or ''}</td>
@@ -72,7 +72,7 @@
                     <td class="aright">${o.fleet20.jenis  or ''}</td>
                 </tr>
                 <tr>
-                    <td colspan=3></td>
+                    <td colspan=2></td>
                     <td colspan=2><b>Kubikasi</b></td>
                     <td class="aright">${o.kubika1  or ''}</td>
                     <td class="aright">${o.kubika2  or ''}</td>
@@ -96,7 +96,7 @@
                     <td class="aright">${o.kubika20 or ''}</td>
                 </tr>
                 <tr>
-                    <td colspan=3></td>
+                    <td colspan=2></td>
                     <td colspan=2><b>Tonnase</b></td>
                     <td class="aright">${o.tonase1  or ''}</td>
                     <td class="aright">${o.tonase2  or ''}</td>
@@ -124,7 +124,6 @@
                     <th>Kode</th>
                     <th>Barcode</th>
                     <th>Nama Barang</th>
-                    <th>Satuan</th>
                     <th class="aright">${formatLang(o.w1  , date=True)}</th>
                     <th class="aright">${formatLang(o.w2  , date=True)}</th>
                     <th class="aright">${formatLang(o.w3  , date=True)}</th>
@@ -155,7 +154,6 @@
                     <td>${s.int_code}</td>
                     <td>${s.barcode}</td>
                     <td>${s.product_id.name_template}</td>
-                    <td>${s.product_uom.name}</td>
                     <td class="aright">${formatLang(s.w1  or 0.00)}</td>
                     <td class="aright">${formatLang(s.w2  or 0.00)}</td>
                     <td class="aright">${formatLang(s.w3  or 0.00)}</td>

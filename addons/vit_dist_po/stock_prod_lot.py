@@ -153,14 +153,31 @@ stock_production_lot()
 
 # stock_partial_picking_line()
 
+class stock_move(osv.osv):
+    _name = "stock.move"
+    _inherit = "stock.move"
+
+    _columns = {
+        'is_bad': fields.boolean('Is Bad?'),
+    }
+
+    _default = {
+        'is_bad':False,
+    }
+
 class stock_move_split_lines_exist(osv.osv_memory):
     _inherit = "stock.move.split.lines"
     _name = "stock.move.split.lines"
-    #TODO:MOVE TO WIZARD
 
     _columns = {
         'expire': fields.datetime('Expire Date'),
-        }
+        'reason': fields.char('Alasan'),
+        'is_bad': fields.boolean('Is Bad?'),
+    }
+
+    _default = {
+        'is_bad':False,
+    }
 
 stock_move_split_lines_exist()
 
@@ -231,13 +248,14 @@ class split_in_production_lot(osv.osv_memory):
                             'life_date': line.expire},
                         context=context)
 
-                    move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state})
+                    move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state, 'is_bad':line.is_bad})
 
                     update_val = {}
                     if quantity_rest > 0:
                         update_val['product_qty'] = quantity_rest
                         update_val['product_uos_qty'] = uos_qty_rest
                         update_val['state'] = move.state
+                        # update_val['product_qty_nett'] = quantity_rest
                         move_obj.write(cr, uid, [move.id], update_val)
 
         return new_move

@@ -9,6 +9,8 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/field[@name='line_ids']/tree/field[@name='name']" position="after">
                     <field name="expire"/>
+                    <field name="reason"/>
+                    <field name="is_bad"/>
                 </xpath>
             </field>
         </record>
