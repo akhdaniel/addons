@@ -298,9 +298,9 @@ class master_discount(osv.osv):
 	def create(self, cr, uid, vals, context=None):
 		viv = vals['partner_id']
 		viv_t = vals['type']
-		viv_l = vals['location_id']
+		viv_l = vals['location_ids']
 		viva = self.pool.get('master.discount')
-		viva_s = viva.search(cr,uid,[('partner_id','=',viv),('type','=',viv_t),('location_id','=',viv_l)])
+		viva_s = viva.search(cr,uid,[('partner_id','=',viv),('type','=',viv_t)])#,('location_ids','in',viv_l)])
 		vival = viva.browse(cr,uid,viva_s)
 
 		for v in vival:
