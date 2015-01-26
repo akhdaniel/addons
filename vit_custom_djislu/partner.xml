@@ -32,7 +32,7 @@
                 </page>   -->              
 
                      <field name="category_id" position="replace">
-                        <field name="category_id" widget="many2many_tags" placeholder="Group Harga"/>
+                        <field name="category_id" widget="many2many_tags" placeholder="Group Harga" required="1"/>
                         <field name="type_partner_id" placeholder="Channel"/>
                     </field>     
 

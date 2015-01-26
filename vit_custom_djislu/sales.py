@@ -60,7 +60,7 @@ class sale_order_line(osv.osv):
 				if res.x_flat:
 					x_disc = res.gross_tot * res.p_disc_pre_x/100	
 				elif not res.x_flat:
-					x_disc = (res.gross_tot-res.r_func-res.p_func )* res.p_disc_pre_p/100			
+					x_disc = (res.gross_tot-res.r_func-res.p_func )* res.p_disc_pre_x/100			
 			else:
 				x_disc= 0.00
 			result[res.id] = x_disc
@@ -169,6 +169,7 @@ class sale_order_line(osv.osv):
 			self.write(cr,uid,line.id,{'tes':taxes['total']},context=context)
 		return res
 	_columns = {
+		'supplier_id' : fields.many2one('res.partner','Principal',domain=[('supplier','=',True)]),
 		'volume' : fields.float('Volume (m3)'),
 		'volume2' : fields.related('product_id','volume',string ='Vlm'),
 		'coeff' : fields.float('Ratio Uos'),
@@ -371,9 +372,11 @@ class sale_order_line(osv.osv):
 				result['product_uos'] = product_obj.uos_id.id
 				result['product_uos_qty'] = qty * product_obj.uos_coeff
 				uos_category_id = product_obj.uos_id.category_id.id
+				result['supplier_id'] = product_obj.principal_id.id or False
 			else:
 				result['product_uos'] = False
 				result['product_uos_qty'] = qty
+				result['supplier_id'] = product_obj.principal_id.id or False
 				uos_category_id = False
 			result['th_weight'] = qty * product_obj.weight
 			result['volume'] = qty * product_obj.volume
@@ -386,12 +389,14 @@ class sale_order_line(osv.osv):
 			result['product_uom_qty'] = qty_uos / product_obj.uos_coeff
 			result['th_weight'] = result['product_uom_qty'] * product_obj.weight
 			result['volume'] = result['product_uom_qty'] * product_obj.volume
+			result['supplier_id'] = product_obj.principal_id.id or False
 		elif uom: # whether uos is set or not
 			default_uom = product_obj.uom_id and product_obj.uom_id.id
 			q = product_uom_obj._compute_qty(cr, uid, uom, qty, default_uom)
 			if product_obj.uos_id:
 				result['product_uos'] = product_obj.uos_id.id
 				result['product_uos_qty'] = qty * product_obj.uos_coeff
+				result['supplier_id'] = product_obj.principal_id.id or False
 			else:
 				result['product_uos'] = False
 				result['product_uos_qty'] = qty
@@ -399,6 +404,7 @@ class sale_order_line(osv.osv):
 			result['volume'] = q * product_obj.volume        # Round the quantity up
 			result['coeff']= product_obj.uos_coeff
 			result['uos2']= product_obj.uos_id.name
+			result['supplier_id'] = product_obj.principal_id.id or False
 
 		if not uom2:
 			uom2 = product_obj.uom_id
@@ -632,7 +638,7 @@ class sale_order(osv.osv):
 
 
 	_columns = {
-		'partner_id2' : fields.many2one('limit.customer','Principal',domain="[('partner_id2','=',partner_id)]",required=True),
+		'partner_id2' : fields.many2one('limit.customer','Principal',domain="[('partner_id2','=',partner_id)]",required=False),
 		'discount12' : fields.float('Promo',readonly=True),	
 		'volume_tot' : fields.function(_compute_volume,string="Total Volume", type="float",multi="sums"),
 		'tonase_tot' : fields.function(_compute_volume,string="Total Weight", type="float",multi="sums"),
@@ -731,9 +737,12 @@ class sale_order(osv.osv):
 
 		#browse order line pada form SO yang aktif
 		lin = self.browse(cr,uid,vals)[0]
-		prin = lin.partner_id2.partner_id.id
-		#channel = lin.partner_id.type_partner_id.id
+
+		#rombak######################################
+		#prin = lin.partner_id2.partner_id.id
+		##############################################
 		channel = lin.partner_id.category_id[0].id
+		
 		loc = lin.location_id.id
 		# ch = lin.partner_id.limit_ids
 		# #cari cahnel sesuai supplier di customer tsb
@@ -766,93 +775,22 @@ class sale_order(osv.osv):
 		#diskon all
 		#################################################
 
-		disc_obj = self.pool.get("master.discount")
-
-		#import pdb;pdb.set_trace()
-
-		#cari di master disc yang masih berlaku (group price ada nilainya)
-		disc_search1 = disc_obj.search(cr,uid,[('partner_id','=',prin),
-												('date_from','<=',skrg),
-												('date_to','>=',skrg),
-												('is_active','=',True),
-												('group_price_ids','=',channel),
-												('location_ids','in',loc)],
-												context=context)
-		# #cari di master disc yang masih berlaku (group price kosong/false)
-		disc_search2 = disc_obj.search(cr,uid,[('partner_id','=',prin),
-												('date_from','<=',skrg),
-												('date_to','>=',skrg),
-												('is_active','=',True),
-												('group_price_ids','=',False),
-												('location_ids','=',False)],		
-																						
-												context=context)	
-		disc_search3 = disc_obj.search(cr,uid,[('partner_id','=',prin),
-												('date_from','<=',skrg),
-												('date_to','>=',skrg),
-												('is_active','=',True),
-												('group_price_ids','=',channel),
-												('location_ids','=',False)],
-												context=context)
-
-		disc_search4 = disc_obj.search(cr,uid,[('partner_id','=',prin),
-												('date_from','<=',skrg),
-												('date_to','>=',skrg),
-												('is_active','=',True),
-												('group_price_ids','=',False),
-												('location_ids','in',loc)],												
-												context=context)
-		disc_search = set(disc_search1 + disc_search2 + disc_search3 + disc_search4)
-		#import pdb;pdb.set_trace()
-		# disc_search = disc_obj.search(cr,uid,[('partner_id','=',prin),
-		# 									('date_from','<=',skrg),
-		# 									('date_to','>=',skrg),
-		# 									('is_active','=',True),
-		# 									'|','|',
-		# 									('group_price_id','=',channel),
-		# 									('location_id','=',loc),
-		# 									('group_price_id','=',False),
-		# 									('location_id','=',False),],
-		# 									context=context)	
 	
-		#disc yang sesuai
-		disc_browse = disc_obj.browse(cr,uid,sorted(disc_search)) 
-		
 		#looping sale order line yang aktif
-		gr_tot = 0.00
-		qty_tot = 0.00
-		gr_tot_mx = []
+		total_supp = []
+
 		for x in line :
-			#one2many principal/supplier pada product
+			#supllier perline so
+			supp_line = x.supplier_id.id
 			princ = x.product_id.seller_ids
 			prima = x.product_id.id
-			bns = x.product_id.bonus
+			princ_p = x.product_id.name			
+			if supp_line not in total_supp :
+				#tampung semua supplier yg ada di so line, terus gruping per supplier id
+				total_supp.append(supp_line)
+
 			princ_p = x.product_id.name
-			gt = x.gross_tot
-			#qty = sale.qty_big * sale.coeff + sale.qty_small		
-
-			bg = x.qty_big
-			ratio =  x.product_uos.factor_inv
-
-			sm = x.qty_small
-
-			uom = (sm)+ round(bg*ratio,3)
-			#uom =  bg_uos + sm
-			
-			gro = x.price_unit * uom
-
-			if uom == 0.00:
-				uom = 1
-
-			uos = bg + round(sm/ratio,3)
-			#uos = sm_uom + bg
-
-			gr_tot += gt
-			qty_tot += uom
-			gr_tot_mx.append(prima)	
-
-			xx.write(cr,uid,x.id,{'product_uom_qty': uom,'product_uos_qty': uos},context=context)
-
+			bns = x.product_id.bonus
 			#jika ada product bonus harus di hapus dulu
 			if bns :
 				raise osv.except_osv(_('Error'), _('Product %s merupakan product bonus!')%(princ_p))
@@ -864,1000 +802,448 @@ class sale_order(osv.osv):
 				#yang di akui sbg supplier hanya array yang pertama saja
 				princi = princ[0].name.id
 
-		#looping semua disc yang ada/sesuai
-		for gb in disc_browse :
-			#import pdb;pdb.set_trace()
-			type_disc = gb.type
-			nma = gb.name
-			qty_p = gb.qty
-			qty_p2 = gb.qty2
-			valu = gb.value
-			pre = gb.persentase
-			pree = str(pre)
-			is_p = gb.is_percent
-			flat = gb.is_flat
-			multi = gb.multi
-			multi2 = gb.multi2
-			is_categ = gb.is_category
+		#import pdb;pdb.set_trace()
 
-			if gb.product_id.id :
-				produc_id = gb.product_id.id
-				p_name = gb.product_id.name
-				us_id = gb.product_id.uos_id.id		
-				# uo_id = gb.uom_id2.id		
-				uo_id = gb.product_id.uom_id.id			
-				cf = gb.product_id.uos_id.factor_inv
-				us_qty = qty_p/cf	
+		disc_obj = self.pool.get("master.discount")
 
-			if gb.product_id2.id :
-				produc_id2 = gb.product_id2.id
-				p_name2 = gb.product_id2.name
-				us_id2 = gb.product_id2.uos_id.id		
-				#uo_id2 = gb.uom_id2.id	
-				uo_id2 = gb.product_id2.uom_id.id				
-				cf2 = gb.product_id2.uos_id.factor_inv
-				us_qty2 = qty_p2/cf2	
+		for discount_per_supp in total_supp:
+			prin = discount_per_supp
 
-			kond = gb.condition_ids
-			kond2 = gb.condition2_ids
-			kond5 = gb.condition5_ids
+			#cari di master disc yang masih berlaku (group price ada nilainya)
+			disc_search1 = disc_obj.search(cr,uid,[('partner_id','=',prin),
+													('date_from','<=',skrg),
+													('date_to','>=',skrg),
+													('is_active','=',True),
+													('group_price_ids','=',channel),
+													('location_ids','in',loc)],
+													context=context)
+			# #cari di master disc yang masih berlaku (group price kosong/false)
+			disc_search2 = disc_obj.search(cr,uid,[('partner_id','=',prin),
+													('date_from','<=',skrg),
+													('date_to','>=',skrg),
+													('is_active','=',True),
+													('group_price_ids','=',False),
+													('location_ids','=',False)],		
+																							
+													context=context)	
+			disc_search3 = disc_obj.search(cr,uid,[('partner_id','=',prin),
+													('date_from','<=',skrg),
+													('date_to','>=',skrg),
+													('is_active','=',True),
+													('group_price_ids','=',channel),
+													('location_ids','=',False)],
+													context=context)
 
-			km_mtx = []#array penampung utk menghitung multiple/kelipatan
-			km_mtx2 = []#array penampung utk menghitung multiple/kelipatan
-			for sale2 in line :
-				stot = sale2.gross_tot
-				#jml = sale2.qty_big * sale2.coeff + sale2.qty_small
-				jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-				#yang di tambah disc hanya yang sesuai dengan di master disc saja
-				ppr = sale2.product_id.id	
-				ppr_categ = sale2.product_id.categ_id.id				
-				#cek kodisi di master gift product
-				if not gb.is_category:
-					for klp in kond:
-						ppr2 = klp.product_id.id
-						jm = klp.qty
-						#jika di so line dan master sama
-						if ppr == ppr2:
-							if jm == 0:
-								kl = 0
-							else :
-								#bilangan dibulatkan
-								#qty di SO /min qty di master
-								kl = int(jml / jm)
-							km_mtx.append(kl)
-				if gb.is_category:
-					for klp in kond5:
-						ppr2 = klp.category_id.id
-						#jm = klp.qty
-						jm = 1
-						#jika di so line dan master sama
-						if ppr_categ == ppr2 and jml >= jm:
-							#bilangan dibulatkan
-							#qty di SO /min qty di master
-							kl = int(jml / jm)
-							km_mtx.append(kl)							
-				for klp2 in kond2:
-					ppr2 = klp2.product_id.id
-					jm2 = klp2.qty
-					#jika di so line dan master sama
-					if ppr == ppr2:
-						if jm2 == 0:
-							kl2 = 0
-						else :
-							#bilangan dibulatkan
-							#qty di SO /min qty di master
-							kl2 = int(jml / jm2)
-						km_mtx2.append(kl2)
-			km_so = sorted(km_mtx)
-			if km_so == []:#pencegahan jika array kosong
-				km_so = [0]
-			km_so2 = sorted(km_mtx2)
-			if km_so2 == []:#pencegahan jika array kosong
-				km_so2 = [0]
+			disc_search4 = disc_obj.search(cr,uid,[('partner_id','=',prin),
+													('date_from','<=',skrg),
+													('date_to','>=',skrg),
+													('is_active','=',True),
+													('group_price_ids','=',False),
+													('location_ids','in',loc)],												
+													context=context)
+			disc_search = set(disc_search1 + disc_search2 + disc_search3 + disc_search4)
 
-			#import pdb;pdb.set_trace()
-			if km_so != [0] and km_so2 == [0]:
-				km_tot = sorted(km_so2)
+			#looping sale order line yang aktif dan gruping persupplier
+			gr_tot = 0.00
+			qty_tot = 0.00
+			gr_tot_mx = []
 
-			if km_so == [0] and km_so2 != [0]:
-				km_tot = sorted(km_so)
+			for x in line :
 
-			if km_so == [0] and km_so2 == [0]:
-				km_tot = sorted(km_so)
+				if prin == x.supplier_id.id:
+					#one2many principal/supplier pada product
+					prima = x.product_id.id
+					gt = x.gross_tot
+					#qty = sale.qty_big * sale.coeff + sale.qty_small		
 
-			if km_so != [0] and km_so2 != [0]:
-				#mencari jumlah product yang sesuai dan tdk ada duplikasi
-				#z_tot = [(km_so) for x in km_so[:1] if x in km_so2 ][0] #[:1] membatasi looping cukup satu kali saja
-				z_tot = set(km_so+km_so2)
-				km_tot = sorted(z_tot)
+					bg = x.qty_big
+					ratio =  x.product_uos.factor_inv
 
-			qty_pp = qty_p*km_so[0]
+					sm = x.qty_small
 
-			if gb.multi3:
-				qty_pp2 = qty_p2*km_so2[0]	
-			if not gb.multi3:
-				qty_pp2 = qty_p2
-
-			##############################list kondisi value atau qty product##########################		
-			#jika menggunakan value/pot harga
-			#jika tidak ada kondisi barang
-			#import pdb;pdb.set_trace()
-			if gb.condition_ids == [] and gb.condition5_ids== [] and gb.condition2_ids ==[] :				
-				if multi2:
-					kond3 = gb.condition3_ids
-					pr_prod	 = gb.per_product				
-
-					for kond3_val in kond3:
-						minv = kond3_val.min_value
-						maxv = kond3_val.max_value
-						value = kond3_val.value
-						pres = kond3_val.presentase
-						is_p = kond3_val.is_percent
-
-
-						#cari kodisi tot yang sesuai dengan range yang mana
-						if gr_tot >= minv and gr_tot <= maxv:
-							# if gb.product_id.id :	
-							# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
-
-							if not pr_prod :				
-								#looping ulang sale order line untuk tambah diskon
-								for sale2 in line :
-									dd = sale2.gross_tot
-									jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
-									qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
-									grr = sale2.price_unit
-									gtot = sale2.gross_tot										
-									
-									if is_p :#percent true
-										#isi discount1 % di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-									if not is_p :#percent false
-										lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
-										p_price = value/lt
-										#isi discount1 pot harga di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-							if pr_prod :				
-								#looping ulang sale order line untuk tambah diskon
-								for sale2 in line :
-									dd = sale2.gross_tot
-									jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
-									qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
-									grr = sale2.price_unit
-									gtot = sale2.gross_tot										
-									#import pdb;pdb.set_trace()
-									if is_p :#percent true
-										#isi discount1 % di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-									if not is_p :#percent false
-										#isi discount1 pot harga di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)			
-				if not multi2:
-					kond4 = gb.condition4_ids
-					pr_prod	 = gb.per_product				
-
-					for kond4_val in kond4:
-						minq = kond4_val.min_qty
-						maxq = kond4_val.max_qty
-						value = kond4_val.value
-						pres = kond4_val.presentase
-						is_p = kond4_val.is_percent
-						#import pdb;pdb.set_trace()
-						#cari kodisi tot yang sesuai dengan range yang mana
-						if qty_tot >= minq and qty_tot <= maxq:
-
-							# if gb.product_id.id :	
-							# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
-		
-							if not pr_prod :				
-								#looping ulang sale order line untuk tambah diskon
-								for sale2 in line :
-									dd = sale2.gross_tot
-									jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
-									qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
-									grr = sale2.price_unit
-									gtot = sale2.gross_tot										
-									
-									if is_p :#percent true
-										#isi discount1 % di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-									if not is_p :#percent false
-										lt = len(gr_tot_mx)#hitung jumlah list sebagai pembagi jika pot harga
-										p_price = value/lt
-										#isi discount1 pot harga di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-
-							if pr_prod :				
-								#looping ulang sale order line untuk tambah diskon
-								for sale2 in line :
-									dd = sale2.gross_tot
-									jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
-									qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
-									grr = sale2.price_unit
-									gtot = sale2.gross_tot										
-									#import pdb;pdb.set_trace()
-									if is_p :#percent true
-										#isi discount1 % di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-				
-									if not is_p :#percent false
-										#isi discount1 pot harga di tiap product (objek sale order line#)
-										if type_disc == 'regular':
-											xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-										elif type_disc == 'promo':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-										elif type_disc == 'extra':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-										elif type_disc == 'cash':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-										elif type_disc == 'mix':
-											xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
-
-			################################List kondisi product nya#############################
-			kond = gb.condition_ids
-			kond5 = gb.condition5_ids
-			kond2 = gb.condition2_ids
-			min_qty = gb.min_qty_product
-			
-			#hitung jumlah kondisi barang di masternya sebagai perbandingan dg SO line
-			if (kond != [] or kond5 != []) and kond2 == [] :
-
-				
-				liss_master = []					
-
-				if not is_categ :
-					p_per_tot = 0.00
-					liss = []
-					for kondis in kond :
-						proo_id = kondis.product_id.id
-						pro_qty = kondis.qty
-						pro_uom = kondis.uom_id.id
-						liss_master.append(proo_id)
-
-						#import pdb;pdb.set_trace()
-						#list perbandingan di SO yng sesuai dg di master		
-						for lis in line :
-							prod_id = lis.product_id.id
-							prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
-							prod_uom = lis.product_uom	
-							#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
-							if prod_id == proo_id and prod_qty >= pro_qty :
-								liss.append(prod_id)
-								p_per = lis.price_subtotal
-								p_per_tot += p_per
-
-				if is_categ :
-					p_per_tot = 0.00
-					liss = []
-					for kondis in kond5 :
-						#proo_id = kondis.product_id.id
-						pro_categ = kondis.category_id.id
-						pro_qty = kondis.qty
-						pro_uom = kondis.uom_id.id
-						liss_master.append(pro_categ)
-
-
-						#list perbandingan di SO yng sesuai dg di master		
-						for lis in line :
-							prod_id = lis.product_id.id
-							prod_categ = lis.product_id.categ_id.id
-							prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
-							prod_uom = lis.product_uom	
-							#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
-							if pro_categ == prod_categ and prod_qty >= pro_qty :
-								liss.append(prod_categ)
-								p_per = lis.price_subtotal
-								p_per_tot += p_per
-		
-				#agar bisa di bandingkan sorting dulu dari yang terkecil
-				s_l = sorted(set(liss))
-				s_lm = sorted(liss_master)
-				#import pdb;pdb.set_trace()
-				if s_l == s_lm and gb.min_qty_product <= 0.00:
-					values = valu / len(s_l)
+					uom = (sm)+ round(bg*ratio,3)
+					#uom =  bg_uos + sm
 					
-					#looping ulang sale order line untuk tambah diskon
-					for sale2 in line :
+					gro = x.price_unit * uom
+
+					if uom == 0.00:
+						uom = 1
+
+					uos = bg + round(sm/ratio,3)
+					#uos = sm_uom + bg
+
+					gr_tot += gt
+					qty_tot += uom
+					gr_tot_mx.append(prima)	
+					xx.write(cr,uid,x.id,{'product_uom_qty': uom,'product_uos_qty': uos},context=context)
+
+			#disc yang sesuai
+			disc_browse = disc_obj.browse(cr,uid,sorted(disc_search)) 		
+			#looping semua disc yang ada/sesuai
+			for gb in disc_browse :
+				#import pdb;pdb.set_trace()
+				type_disc = gb.type
+				nma = gb.name
+				qty_p = gb.qty
+				qty_p2 = gb.qty2
+				valu = gb.value
+				pre = gb.persentase
+				pree = str(pre)
+				is_p = gb.is_percent
+				flat = gb.is_flat
+				multi = gb.multi
+				multi2 = gb.multi2
+				is_categ = gb.is_category
+
+				if gb.product_id.id :
+					produc_id = gb.product_id.id
+					p_name = gb.product_id.name
+					us_id = gb.product_id.uos_id.id		
+					# uo_id = gb.uom_id2.id		
+					uo_id = gb.product_id.uom_id.id			
+					cf = gb.product_id.uos_id.factor_inv
+					us_qty = qty_p/cf	
+
+				if gb.product_id2.id :
+					produc_id2 = gb.product_id2.id
+					p_name2 = gb.product_id2.name
+					us_id2 = gb.product_id2.uos_id.id		
+					#uo_id2 = gb.uom_id2.id	
+					uo_id2 = gb.product_id2.uom_id.id				
+					cf2 = gb.product_id2.uos_id.factor_inv
+					us_qty2 = qty_p2/cf2	
+
+				kond = gb.condition_ids
+				kond2 = gb.condition2_ids
+				kond5 = gb.condition5_ids
+
+				km_mtx = []#array penampung utk menghitung multiple/kelipatan
+				km_mtx2 = []#array penampung utk menghitung multiple/kelipatan
+				for sale2 in line :
+					if prin == sale2.supplier_id.id:
 						stot = sale2.gross_tot
+						#jml = sale2.qty_big * sale2.coeff + sale2.qty_small
 						jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-						dd = sale2.gross_tot
-						qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-						grr = sale2.price_unit
-						gtot = sale2.gross_tot	
-						ppr_categ = sale2.product_id.categ_id.id
 						#yang di tambah disc hanya yang sesuai dengan di master disc saja
-						if not is_categ:
-							ppr = sale2.product_id.id
-						if is_categ:
-							ppr = sale2.product_id.categ_id.id
-
-						#jika sesuai dg yang ada dlm matrix
-						if not is_categ :
-							if ppr in s_l :
-								if not gb.multi:
-									# if gb.product_id.id :	
-									# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
-									#jika menggunakan value/pot harga
-									if multi2:
-										kond3 = gb.condition3_ids
-										pr_prod	 = gb.per_product				
-
-										for kond3_val in kond3:
-											minv = kond3_val.min_value
-											maxv = kond3_val.max_value
-											value = kond3_val.value
-											pres = kond3_val.presentase
-											is_p = kond3_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if p_per_tot >= minv and p_per_tot <= maxv:	
-												if not pr_prod :												
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:		
-												if not pr_prod :												
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-								
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
-
-
-								if gb.multi :			
-
-									#sudah dapat kelipatannya write di line SO line nya
-									#jika menggunakan value/pot harga
-									if multi2:
-										kond3 = gb.condition3_ids
-										pr_prod	 = gb.per_product				
-
-										for kond3_val in kond3:
-											minv = kond3_val.min_value
-											maxv = kond3_val.max_value
-											value = kond3_val.value
-											vaval = value*km_so[0]
-											pres = kond3_val.presentase
-											is_p = kond3_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if gr_tot >= minv and gr_tot <= maxv:	
-												if not pr_prod :													
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = (value/lt)*km_so[0]
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											vaval = value*km_so[0]
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:
-												disc = value		
-												if not pr_prod :													
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = (value/lt)*km_so[0]
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-								
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
-						if is_categ :
-							if ppr_categ in s_l :
-								if not gb.multi:
-									# if gb.product_id.id :	
-									# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
-									#jika menggunakan value/pot harga
-									if multi2:
-										kond3 = gb.condition3_ids
-										pr_prod	 = gb.per_product				
-
-										for kond3_val in kond3:
-											minv = kond3_val.min_value
-											maxv = kond3_val.max_value
-											value = kond3_val.value
-											pres = kond3_val.presentase
-											is_p = kond3_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if gr_tot >= minv and gr_tot <= maxv:	
-												if not pr_prod :												
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:		
-												if not pr_prod :												
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-								
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
-
-
-								if gb.multi :			
-
-									#sudah dapat kelipatannya write di line SO line nya
-									#jika menggunakan value/pot harga
-									if multi2:
-										kond3 = gb.condition3_ids
-										pr_prod	 = gb.per_product				
-
-										for kond3_val in kond3:
-											minv = kond3_val.min_value
-											maxv = kond3_val.max_value
-											value = kond3_val.value
-											vaval = value*km_so[0]
-											pres = kond3_val.presentase
-											is_p = kond3_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if gr_tot >= minv and gr_tot <= maxv:	
-												if not pr_prod :													
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = (value/lt)*km_so[0]
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											vaval = value*km_so[0]
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:
-												disc = value		
-												if not pr_prod :													
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = (value/lt)*km_so[0]
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-								
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
-					if not gb.multi:
-						if gb.product_id.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
-					if gb.multi:
-						if gb.product_id.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
-					if gb.product_id2.id :	
-						pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
+						ppr = sale2.product_id.id	
+						ppr_categ = sale2.product_id.categ_id.id				
+						#cek kodisi di master gift product
+						if not gb.is_category:
+							for klp in kond:
+								ppr2 = klp.product_id.id
+								jm = klp.qty
+								#jika di so line dan master sama
+								if ppr == ppr2:
+									if jm == 0:
+										kl = 0
+									else :
+										#bilangan dibulatkan
+										#qty di SO /min qty di master
+										kl = int(jml / jm)
+									km_mtx.append(kl)
+						if gb.is_category:
+							for klp in kond5:
+								ppr2 = klp.category_id.id
+								#jm = klp.qty
+								jm = 1
+								#jika di so line dan master sama
+								if ppr_categ == ppr2 and jml >= jm:
+									#bilangan dibulatkan
+									#qty di SO /min qty di master
+									kl = int(jml / jm)
+									km_mtx.append(kl)							
+						for klp2 in kond2:
+							ppr2 = klp2.product_id.id
+							jm2 = klp2.qty
+							#jika di so line dan master sama
+							if ppr == ppr2:
+								if jm2 == 0:
+									kl2 = 0
+								else :
+									#bilangan dibulatkan
+									#qty di SO /min qty di master
+									kl2 = int(jml / jm2)
+								km_mtx2.append(kl2)
+				km_so = sorted(km_mtx)
+				if km_so == []:#pencegahan jika array kosong
+					km_so = [0]
+				km_so2 = sorted(km_mtx2)
+				if km_so2 == []:#pencegahan jika array kosong
+					km_so2 = [0]
 
 				#import pdb;pdb.set_trace()
-				if s_l != [] and s_lm != [] and gb.min_qty_product > 0.00:
-					#mencari jumlah product yang sesuai antara di list PO dan di master
-					#z = [(s_l) for x in s_l[:1] if x in s_lm ][0] #[:1] membatasi looping cukup satu kali saja
-					y = set(s_l+s_lm)
-					z = sorted(y)
-					jml_z = len(z)
+				if km_so != [0] and km_so2 == [0]:
+					km_tot = sorted(km_so2)
 
-					# if jml_z >= gb.min_qty_product:
-					if len(liss) >= gb.min_qty_product:
+				if km_so == [0] and km_so2 != [0]:
+					km_tot = sorted(km_so)
+
+				if km_so == [0] and km_so2 == [0]:
+					km_tot = sorted(km_so)
+
+				if km_so != [0] and km_so2 != [0]:
+					#mencari jumlah product yang sesuai dan tdk ada duplikasi
+					#z_tot = [(km_so) for x in km_so[:1] if x in km_so2 ][0] #[:1] membatasi looping cukup satu kali saja
+					z_tot = set(km_so+km_so2)
+					km_tot = sorted(z_tot)
+
+				qty_pp = qty_p*km_so[0]
+
+				if gb.multi3:
+					qty_pp2 = qty_p2*km_so2[0]	
+				if not gb.multi3:
+					qty_pp2 = qty_p2
+
+				##############################list kondisi value atau qty product##########################		
+				#jika menggunakan value/pot harga
+				#jika tidak ada kondisi barang
+				#import pdb;pdb.set_trace()
+				if gb.condition_ids == [] and gb.condition5_ids== [] and gb.condition2_ids ==[] :				
+					if multi2 and prin == sale2.supplier_id.id:
+						kond3 = gb.condition3_ids
+						pr_prod	 = gb.per_product				
+
+						for kond3_val in kond3:
+							minv = kond3_val.min_value
+							maxv = kond3_val.max_value
+							value = kond3_val.value
+							pres = kond3_val.presentase
+							is_p = kond3_val.is_percent
+
+
+							#cari kodisi tot yang sesuai dengan range yang mana
+							if gr_tot >= minv and gr_tot <= maxv:
+								# if gb.product_id.id :	
+								# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
+
+								if not pr_prod :				
+									#looping ulang sale order line untuk tambah diskon
+									for sale2 in line :
+										dd = sale2.gross_tot
+										jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
+										qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
+										grr = sale2.price_unit
+										gtot = sale2.gross_tot										
+										
+										#percent true
+										if is_p:
+												#isi discount1 % di tiap product (objek sale order line#)
+												if type_disc == 'regular':
+													xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+												elif type_disc == 'promo':
+													xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+												elif type_disc == 'extra':
+													xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+												elif type_disc == 'cash':
+													xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+												elif type_disc == 'mix':
+													xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+										if not is_p:#percent false
+											lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+											p_price = value/lt
+											#isi discount1 pot harga di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+								if pr_prod :				
+									#looping ulang sale order line untuk tambah diskon
+									for sale2 in line :
+										dd = sale2.gross_tot
+										jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
+										qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
+										grr = sale2.price_unit
+										gtot = sale2.gross_tot										
+										#import pdb;pdb.set_trace()
+										if is_p:#percent true
+											#isi discount1 % di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+										if not is_p:#percent false
+											#isi discount1 pot harga di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)			
+					
+					if not multi2:
+						kond4 = gb.condition4_ids
+						pr_prod	 = gb.per_product				
+
+						for kond4_val in kond4:
+							minq = kond4_val.min_qty
+							maxq = kond4_val.max_qty
+							value = kond4_val.value
+							pres = kond4_val.presentase
+							is_p = kond4_val.is_percent
+							#import pdb;pdb.set_trace()
+							#cari kodisi tot yang sesuai dengan range yang mana
+							if qty_tot >= minq and qty_tot <= maxq:
+
+								# if gb.product_id.id :	
+								# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
+			
+								if not pr_prod :				
+									#looping ulang sale order line untuk tambah diskon
+									for sale2 in line :
+										dd = sale2.gross_tot
+										jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
+										qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
+										grr = sale2.price_unit
+										gtot = sale2.gross_tot										
+										
+										if is_p and prin == sale2.supplier_id.id:#percent true
+											#isi discount1 % di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+										if not is_p and prin == sale2.supplier_id.id:#percent false
+											lt = len(gr_tot_mx)#hitung jumlah list sebagai pembagi jika pot harga
+											p_price = value/lt
+											#isi discount1 pot harga di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+
+								if pr_prod :				
+									#looping ulang sale order line untuk tambah diskon
+									for sale2 in line :
+										dd = sale2.gross_tot
+										jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small								
+										qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small	
+										grr = sale2.price_unit
+										gtot = sale2.gross_tot										
+										#import pdb;pdb.set_trace()
+										if is_p  and prin == sale2.supplier_id.id:#percent true
+											#isi discount1 % di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+					
+										if not is_p and prin == sale2.supplier_id.id:#percent false
+											#isi discount1 pot harga di tiap product (objek sale order line#)
+											if type_disc == 'regular':
+												xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+											elif type_disc == 'promo':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+											elif type_disc == 'extra':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+											elif type_disc == 'cash':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+											elif type_disc == 'mix':
+												xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
+
+				################################List kondisi product nya#############################
+				kond = gb.condition_ids
+				kond5 = gb.condition5_ids
+				kond2 = gb.condition2_ids
+				min_qty = gb.min_qty_product
+				
+				#hitung jumlah kondisi barang di masternya sebagai perbandingan dg SO line
+				if (kond != [] or kond5 != []) and kond2 == [] :
+
+					
+					liss_master = []					
+
+					if not is_categ :
+						p_per_tot = 0.00
+						liss = []
+						for kondis in kond :
+							proo_id = kondis.product_id.id
+							pro_qty = kondis.qty
+							pro_uom = kondis.uom_id.id
+							liss_master.append(proo_id)
+
+							#import pdb;pdb.set_trace()
+							#list perbandingan di SO yng sesuai dg di master		
+							for lis in line :
+								prod_id = lis.product_id.id
+								prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
+								prod_uom = lis.product_uom	
+								#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
+								if prod_id == proo_id and prod_qty >= pro_qty:
+									if prin == lis.supplier_id.id:
+										liss.append(prod_id)
+										p_per = lis.price_subtotal
+										p_per_tot += p_per
+
+					if is_categ :
+						p_per_tot = 0.00
+						liss = []
+						for kondis in kond5 :
+							#proo_id = kondis.product_id.id
+							pro_categ = kondis.category_id.id
+							pro_qty = kondis.qty
+							pro_uom = kondis.uom_id.id
+							liss_master.append(pro_categ)
+
+
+							#list perbandingan di SO yng sesuai dg di master		
+							for lis in line :
+								prod_id = lis.product_id.id
+								prod_categ = lis.product_id.categ_id.id
+								prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
+								prod_uom = lis.product_uom	
+								#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
+								if pro_categ == prod_categ and prod_qty >= pro_qty :
+									if prin == lis.supplier_id.id:
+										liss.append(prod_categ)
+										p_per = lis.price_subtotal
+										p_per_tot += p_per
+			
+					#agar bisa di bandingkan sorting dulu dari yang terkecil
+					s_l = sorted(set(liss))
+					s_lm = sorted(liss_master)
+					#import pdb;pdb.set_trace()
+					if s_l == s_lm and gb.min_qty_product <= 0.00:
 						values = valu / len(s_l)
-
+						
 						#looping ulang sale order line untuk tambah diskon
 						for sale2 in line :
 							stot = sale2.gross_tot
@@ -1865,20 +1251,1030 @@ class sale_order(osv.osv):
 							dd = sale2.gross_tot
 							qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
 							grr = sale2.price_unit
-							gtot = sale2.gross_tot								
+							gtot = sale2.gross_tot	
+							ppr_categ = sale2.product_id.categ_id.id
+							#yang di tambah disc hanya yang sesuai dengan di master disc saja
+							if not is_categ:
+								ppr = sale2.product_id.id
+							if is_categ:
+								ppr = sale2.product_id.categ_id.id
+
+							#jika sesuai dg yang ada dlm matrix
+							if not is_categ :
+								if ppr in s_l :
+									if not gb.multi and prin == sale2.supplier_id.id:
+										# if gb.product_id.id :	
+										# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
+
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if p_per_tot >= minv and p_per_tot <= maxv:	
+													if not pr_prod :												
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:		
+													if not pr_prod :												
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
+
+
+									if gb.multi and prin == sale2.supplier_id.id:			
+
+										#sudah dapat kelipatannya write di line SO line nya
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												vaval = value*km_so[0]
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :													
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												vaval = value*km_so[0]
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:
+													disc = value		
+													if not pr_prod :													
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
+							if is_categ :
+								if ppr_categ in s_l :
+									if not gb.multi and prin == sale2.supplier_id.id:
+										# if gb.product_id.id :	
+										# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
+
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :												
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:		
+													if not pr_prod :												
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
+
+
+									if gb.multi and prin == sale2.supplier_id.id:			
+
+										#sudah dapat kelipatannya write di line SO line nya
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												vaval = value*km_so[0]
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :													
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												vaval = value*km_so[0]
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:
+													disc = value		
+													if not pr_prod :													
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(s_lm)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod:				
+
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
+						if not gb.multi:
+							if gb.product_id.id :	
+								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
+
+						if gb.multi:
+							if gb.product_id.id :	
+								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
+						if gb.product_id2.id :	
+							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
+
+					#import pdb;pdb.set_trace()
+					if s_l != [] and s_lm != [] and gb.min_qty_product > 0.00:
+						#mencari jumlah product yang sesuai antara di list PO dan di master
+						#z = [(s_l) for x in s_l[:1] if x in s_lm ][0] #[:1] membatasi looping cukup satu kali saja
+						y = set(s_l+s_lm)
+						z = sorted(y)
+						jml_z = len(z)
+
+						# if jml_z >= gb.min_qty_product:
+						if len(liss) >= gb.min_qty_product:
+							values = valu / len(s_l)
+
+							#looping ulang sale order line untuk tambah diskon
+							for sale2 in line :
+								stot = sale2.gross_tot
+								jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
+								dd = sale2.gross_tot
+								qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
+								grr = sale2.price_unit
+								gtot = sale2.gross_tot								
+								#yang di tambah disc hanya yang sesuai dengan di master disc saja
+								if not is_categ:
+									ppr = sale2.product_id.id
+								if is_categ:
+									ppr = sale2.product_id.categ_id.id
+								#jika sesuai dg yang ada dlm matrix
+								if ppr in s_l :
+									if not gb.multi and prin == sale2.supplier_id.id:
+										# if gb.product_id.id :	
+										# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
+
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :												
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:		
+													if not pr_prod :				
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
+
+
+									if gb.multi and prin == sale2.supplier_id.id:			
+
+										#sudah dapat kelipatannya write di line SO line nya
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												vaval = value*km_so[0]
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :										
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												vaval = value*km_so[0]
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:
+													disc = value		
+													if not pr_prod :													
+															
+														if is_p:#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p:#percent false
+															lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p:#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
+							if not gb.multi:
+								if gb.product_id.id :	
+									pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
+
+							if gb.multi:
+								if gb.product_id.id :	
+									pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
+							if gb.product_id2.id :	
+								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
+
+				#hitung jumlah kondisi barang di masternya sebagai perbandingan dg SO line
+				# di master new product
+				#import pdb;pdb.set_trace()
+				if is_categ == False and kond != [] and kond2 != []:
+					
+					liss_master = []
+					liss = []
+					p_per_tot = 0.00				
+					for kondis in kond :
+						proo_id = kondis.product_id.id
+						pro_qty = kondis.qty
+						pro_uom = kondis.uom_id.id
+						liss_master.append(proo_id)
+
+						#list perbandingan di SO yng sesuai dg di master
+						
+						for lis in line :
+							prod_id = lis.product_id.id
+							prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
+							prod_uom = lis.product_uom	
+							#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
+							if prod_id == proo_id and prod_qty >= pro_qty :
+								if prin == lis.supplier_id.id:
+									liss.append(prod_id)
+									p_per = lis.gross_tot
+									p_per_tot += p_per
+
+					#kodisi product di condition2_ids
+					liss_master2 =[]
+					liss2 =[]
+					p_per_tot2 = 0.00			
+					for kondis2 in kond2 :
+						proo_id = kondis2.product_id.id
+						pro_qty = kondis2.qty
+						pro_uom = kondis2.uom_id.id
+						liss_master2.append(proo_id)							
+						
+						for lis in line :
+							prod_id = lis.product_id.id
+							prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
+							prod_uom = lis.product_uom	
+							#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
+							if prod_id == proo_id and prod_qty >= pro_qty :
+								if prin == lis.supplier_id.id:
+									liss2.append(prod_id)
+									p_per = lis.gross_tot
+									p_per_tot2 += p_per
+			
+					#agar bisa di bandingkan sorting dulu dari yang terkecil
+					s_l = sorted(liss)
+					s_l2 = sorted(liss2)
+					s_l3 = sorted(liss+liss2)
+
+					s_lm = sorted(liss_master)
+					s_lm2 = sorted(liss_master2)
+					s_lm3 = sorted(liss_master+liss_master2)
+
+					#import pdb;pdb.set_trace()
+
+					if s_l3 == s_lm3 and gb.min_qty_product <= 0.00 and s_lm != []:
+					
+						values = valu / len(s_l)
+						#looping ulang sale order line untuk tambah diskon
+						for sale2 in line :
+							stot = sale2.gross_tot
+							jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
+							dd = sale2.gross_tot
+							qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
+							grr = sale2.price_unit
+							gtot = sale2.gross_tot	
+
 							#yang di tambah disc hanya yang sesuai dengan di master disc saja
 							if not is_categ:
 								ppr = sale2.product_id.id
 							if is_categ:
 								ppr = sale2.product_id.categ_id.id
 							#jika sesuai dg yang ada dlm matrix
-							if ppr in s_l :
+							if ppr in s_lm3 :
 								if not gb.multi:
-									# if gb.product_id.id :	
-									# 	pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
 									#jika menggunakan value/pot harga
-									if multi2:
+									if multi2 and prin == sale2.supplier_id.id:
 										kond3 = gb.condition3_ids
 										pr_prod	 = gb.per_product				
 
@@ -1891,6 +2287,77 @@ class sale_order(osv.osv):
 
 											#cari kodisi tot yang sesuai dengan range yang mana
 											if gr_tot >= minv and gr_tot <= maxv:	
+												if not pr_prod :												
+														
+													if is_p:#percent true
+														#isi discount1 % di tiap product (objek sale order line#)
+														if type_disc == 'regular':
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														elif type_disc == 'promo':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+														elif type_disc == 'extra':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+														elif type_disc == 'cash':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+														elif type_disc == 'mix':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+													if not is_p:#percent false
+														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+														p_price = value/lt
+														#isi discount1 pot harga di tiap product (objek sale order line#)
+														if type_disc == 'regular':
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+														elif type_disc == 'promo':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+														elif type_disc == 'extra':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+														elif type_disc == 'cash':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+														elif type_disc == 'mix':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+												if pr_prod :				
+
+													if is_p:#percent true
+														#isi discount1 % di tiap product (objek sale order line#)
+														if type_disc == 'regular':
+															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+														elif type_disc == 'promo':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+														elif type_disc == 'extra':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+														elif type_disc == 'cash':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+														elif type_disc == 'mix':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+													if not is_p:#percent false
+														#isi discount1 pot harga di tiap product (objek sale order line#)
+														if type_disc == 'regular':
+															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+														elif type_disc == 'promo':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+														elif type_disc == 'extra':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+														elif type_disc == 'cash':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+														elif type_disc == 'mix':
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
+
+									if not multi2 and prin == sale2.supplier_id.id:
+										kond4 = gb.condition4_ids
+										pr_prod	 = gb.per_product				
+
+										for kond4_val in kond4:
+											minq = kond4_val.min_qty
+											maxq = kond4_val.max_qty
+											value = kond4_val.value
+											pres = kond4_val.presentase
+											is_p = kond4_val.is_percent
+
+											#cari kodisi tot yang sesuai dengan range yang mana
+											if qty_tot >= minq and qty_tot <= maxq:		
 												if not pr_prod :												
 														
 													if is_p :#percent true
@@ -1907,7 +2374,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = value/lt
 														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -1922,75 +2389,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:		
-												if not pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -2018,7 +2417,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
 
 
-								if gb.multi :			
+								if gb.multi and prin == sale2.supplier_id.id:			
 
 									#sudah dapat kelipatannya write di line SO line nya
 									#jika menggunakan value/pot harga
@@ -2036,7 +2435,7 @@ class sale_order(osv.osv):
 
 											#cari kodisi tot yang sesuai dengan range yang mana
 											if gr_tot >= minv and gr_tot <= maxv:	
-												if not pr_prod :										
+												if not pr_prod :													
 														
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
@@ -2052,7 +2451,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
 														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -2067,6 +2466,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
+
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -2124,7 +2524,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
 													if not is_p :#percent false
-														lt = len(km_tot)#hitung jumlah list sebagai pembagi jika pot harga
+														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
 														p_price = (value/lt)*km_so[0]
 														#isi discount1 pot harga di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -2139,6 +2539,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
+
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -2164,6 +2565,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
 														elif type_disc == 'mix':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
+
 						if not gb.multi:
 							if gb.product_id.id :	
 								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
@@ -2174,414 +2576,409 @@ class sale_order(osv.osv):
 						if gb.product_id2.id :	
 							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
 
-			#hitung jumlah kondisi barang di masternya sebagai perbandingan dg SO line
-			# di master new product
-			#import pdb;pdb.set_trace()
-			if is_categ == False and kond != [] and kond2 != []:
-				
-				liss_master = []
-				liss = []
-				p_per_tot = 0.00				
-				for kondis in kond :
-					proo_id = kondis.product_id.id
-					pro_qty = kondis.qty
-					pro_uom = kondis.uom_id.id
-					liss_master.append(proo_id)
+					#import pdb;pdb.set_trace()
+					if s_l3 == s_lm3 and gb.min_qty_product > 0.00 and s_lm != []:
+					#if s_l != [] and s_lm != [] and gb.min_qty_product > 0.00:
+						#mencari jumlah product yang sesuai antara di list PO dan di master
+						#z = [(s_l3) for x in s_l3[:1] if x in s_lm3 ][0] #[:1] membatasi looping cukup satu kali saja
+						y = set(s_l3+s_lm3)
+						z = sorted(y)
+						jml_z = len(z)
 
-					#list perbandingan di SO yng sesuai dg di master
-					
-					for lis in line :
-						prod_id = lis.product_id.id
-						prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
-						prod_uom = lis.product_uom	
-						#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
-						if prod_id == proo_id and prod_qty >= pro_qty :
-							liss.append(prod_id)
-							p_per = lis.gross_tot
-							p_per_tot += p_per
+						if jml_z >= gb.min_qty_product:
+							values = valu / len(s_l)
 
-				#kodisi product di condition2_ids
-				liss_master2 =[]
-				liss2 =[]
-				p_per_tot2 = 0.00			
-				for kondis2 in kond2 :
-					proo_id = kondis2.product_id.id
-					pro_qty = kondis2.qty
-					pro_uom = kondis2.uom_id.id
-					liss_master2.append(proo_id)							
-					
-					for lis in line :
-						prod_id = lis.product_id.id
-						prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
-						prod_uom = lis.product_uom	
-						#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
-						if prod_id == proo_id and prod_qty >= pro_qty :
-							liss2.append(prod_id)
-							p_per = lis.gross_tot
-							p_per_tot2 += p_per
-		
-				#agar bisa di bandingkan sorting dulu dari yang terkecil
-				s_l = sorted(liss)
-				s_l2 = sorted(liss2)
-				s_l3 = sorted(liss+liss2)
+							#looping ulang sale order line untuk tambah diskon
+							for sale2 in line :
+								stot = sale2.gross_tot
+								jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
+								dd = sale2.gross_tot
+								qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3)
+								grr = sale2.price_unit
+								gtot = sale2.gross_tot								
+								#yang di tambah disc hanya yang sesuai dengan di master disc saja
+								if not is_categ:
+									ppr = sale2.product_id.id
+								if is_categ:
+									ppr = sale2.product_id.categ_id.id
+								#jika sesuai dg yang ada dlm matrix
+								if ppr in z :
+									if not gb.multi and prin == sale2.supplier_id.id:
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
 
-				s_lm = sorted(liss_master)
-				s_lm2 = sorted(liss_master2)
-				s_lm3 = sorted(liss_master+liss_master2)
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
 
-				#import pdb;pdb.set_trace()
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :												
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
-				if s_l3 == s_lm3 and gb.min_qty_product <= 0.00 and s_lm != []:
-				
-					values = valu / len(s_l)
-					#looping ulang sale order line untuk tambah diskon
-					for sale2 in line :
-						stot = sale2.gross_tot
-						jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-						dd = sale2.gross_tot
-						qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-						grr = sale2.price_unit
-						gtot = sale2.gross_tot	
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
-						#yang di tambah disc hanya yang sesuai dengan di master disc saja
-						if not is_categ:
-							ppr = sale2.product_id.id
-						if is_categ:
-							ppr = sale2.product_id.categ_id.id
-						#jika sesuai dg yang ada dlm matrix
-						if ppr in s_lm3 :
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:		
+													if not pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)										
+
+									if gb.multi :			
+
+										#sudah dapat kelipatannya write di line SO line nya
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												vaval = value*km_so[0]
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :										
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												vaval = value*km_so[0]
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:
+													disc = value		
+													if not pr_prod :													
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
 							if not gb.multi:
-								#jika menggunakan value/pot harga
-								if multi2:
-									kond3 = gb.condition3_ids
-									pr_prod	 = gb.per_product				
+								if gb.product_id.id :	
+									pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
 
-									for kond3_val in kond3:
-										minv = kond3_val.min_value
-										maxv = kond3_val.max_value
-										value = kond3_val.value
-										pres = kond3_val.presentase
-										is_p = kond3_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if gr_tot >= minv and gr_tot <= maxv:	
-											if not pr_prod :												
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = value/lt
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
-
-								if not multi2:
-									kond4 = gb.condition4_ids
-									pr_prod	 = gb.per_product				
-
-									for kond4_val in kond4:
-										minq = kond4_val.min_qty
-										maxq = kond4_val.max_qty
-										value = kond4_val.value
-										pres = kond4_val.presentase
-										is_p = kond4_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if qty_tot >= minq and qty_tot <= maxq:		
-											if not pr_prod :												
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = value/lt
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-							
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
+							if gb.multi:
+								if gb.product_id.id :	
+									pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
+							if gb.product_id2.id :	
+								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
 
 
-							if gb.multi :			
+				if is_categ == True and kond5 != [] and kond2 != []:
+					
+					liss_master = []
+					liss = []
+					p_per_tot = 0.00				
+					for kondis in kond5 :
+						proo_id = kondis.product_id.id
+						pro_categ = kondis.category_id.id
+						pro_qty = kondis.qty
+						pro_uom = kondis.uom_id.id
+						liss_master.append(proo_id)
 
-								#sudah dapat kelipatannya write di line SO line nya
-								#jika menggunakan value/pot harga
-								if multi2:
-									kond3 = gb.condition3_ids
-									pr_prod	 = gb.per_product				
+						#list perbandingan di SO yng sesuai dg di master
+						
+						for lis in line :
+							prod_id = lis.product_id.id
+							prod_categ = kondis.product_id.category_id.id
+							prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
+							prod_uom = lis.product_uom	
+							#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
+							if prod_id == proo_id and prod_qty >= pro_qty :
+								if prin == sale2.supplier_id.id:
+									liss.append(prod_id)
+									p_per = lis.gross_tot
+									p_per_tot += p_per
 
-									for kond3_val in kond3:
-										minv = kond3_val.min_value
-										maxv = kond3_val.max_value
-										value = kond3_val.value
-										vaval = value*km_so[0]
-										pres = kond3_val.presentase
-										is_p = kond3_val.is_percent
+					#kodisi product di condition2_ids
+					liss_master2 =[]
+					liss2 =[]
+					p_per_tot2 = 0.00			
+					for kondis2 in kond2 :
+						proo_id = kondis2.product_id.id
+						pro_qty = kondis2.qty
+						pro_uom = kondis2.uom_id.id
+						liss_master2.append(proo_id)							
+						
+						for lis in line :
+							prod_id = lis.product_id.id
+							prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
+							prod_uom = lis.product_uom	
+							#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
+							if prod_id == proo_id and prod_qty >= pro_qty :
+								if prin == sale2.supplier_id.id:
+									liss2.append(prod_id)
+									p_per = lis.gross_tot
+									p_per_tot2 += p_per
+			
+					#agar bisa di bandingkan sorting dulu dari yang terkecil
+					s_l = sorted(liss)
+					s_l2 = sorted(liss2)
+					s_l3 = sorted(set(liss+liss2))
 
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if gr_tot >= minv and gr_tot <= maxv:	
-											if not pr_prod :													
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+					s_lm = sorted(liss_master)
+					s_lm2 = sorted(liss_master2)
+					s_lm3 = sorted(set(liss_master+liss_master2))
 
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = (value/lt)*km_so[0]
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+					#import pdb;pdb.set_trace()
 
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
-
-								if not multi2:
-									kond4 = gb.condition4_ids
-									pr_prod	 = gb.per_product				
-
-									for kond4_val in kond4:
-										minq = kond4_val.min_qty
-										maxq = kond4_val.max_qty
-										value = kond4_val.value
-										vaval = value*km_so[0]
-										pres = kond4_val.presentase
-										is_p = kond4_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if qty_tot >= minq and qty_tot <= maxq:
-											disc = value		
-											if not pr_prod :													
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = (value/lt)*km_so[0]
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-							
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
-
-					if not gb.multi:
-						if gb.product_id.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
-					if gb.multi:
-						if gb.product_id.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
-					if gb.product_id2.id :	
-						pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
-
-				#import pdb;pdb.set_trace()
-				if s_l3 == s_lm3 and gb.min_qty_product > 0.00 and s_lm != []:
-				#if s_l != [] and s_lm != [] and gb.min_qty_product > 0.00:
-					#mencari jumlah product yang sesuai antara di list PO dan di master
-					#z = [(s_l3) for x in s_l3[:1] if x in s_lm3 ][0] #[:1] membatasi looping cukup satu kali saja
-					y = set(s_l3+s_lm3)
-					z = sorted(y)
-					jml_z = len(z)
-
-					if jml_z >= gb.min_qty_product:
+					if s_l3 == s_lm3 and gb.min_qty_product <= 0.00 and s_lm != []:
+					
 						values = valu / len(s_l)
-
 						#looping ulang sale order line untuk tambah diskon
 						for sale2 in line :
 							stot = sale2.gross_tot
 							jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
 							dd = sale2.gross_tot
-							qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3)
+							qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
 							grr = sale2.price_unit
-							gtot = sale2.gross_tot								
+							gtot = sale2.gross_tot	
+
 							#yang di tambah disc hanya yang sesuai dengan di master disc saja
 							if not is_categ:
 								ppr = sale2.product_id.id
 							if is_categ:
 								ppr = sale2.product_id.categ_id.id
 							#jika sesuai dg yang ada dlm matrix
-							if ppr in z :
-								if not gb.multi:
+							if ppr in s_lm3 :
+								if not gb.multi and prin == sale2.supplier_id.id:
 									#jika menggunakan value/pot harga
 									if multi2:
 										kond3 = gb.condition3_ids
@@ -2627,6 +3024,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
+
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -2666,639 +3064,6 @@ class sale_order(osv.osv):
 
 											#cari kodisi tot yang sesuai dengan range yang mana
 											if qty_tot >= minq and qty_tot <= maxq:		
-												if not pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-								
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)										
-
-								if gb.multi :			
-
-									#sudah dapat kelipatannya write di line SO line nya
-									#jika menggunakan value/pot harga
-									if multi2:
-										kond3 = gb.condition3_ids
-										pr_prod	 = gb.per_product				
-
-										for kond3_val in kond3:
-											minv = kond3_val.min_value
-											maxv = kond3_val.max_value
-											value = kond3_val.value
-											vaval = value*km_so[0]
-											pres = kond3_val.presentase
-											is_p = kond3_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if gr_tot >= minv and gr_tot <= maxv:	
-												if not pr_prod :										
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = (value/lt)*km_so[0]
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											vaval = value*km_so[0]
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:
-												disc = value		
-												if not pr_prod :													
-														
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = (value/lt)*km_so[0]
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-								
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
-						if not gb.multi:
-							if gb.product_id.id :	
-								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
-						if gb.multi:
-							if gb.product_id.id :	
-								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
-						if gb.product_id2.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
-
-
-			if is_categ == True and kond5 != [] and kond2 != []:
-				
-				liss_master = []
-				liss = []
-				p_per_tot = 0.00				
-				for kondis in kond5 :
-					proo_id = kondis.product_id.id
-					pro_categ = kondis.category_id.id
-					pro_qty = kondis.qty
-					pro_uom = kondis.uom_id.id
-					liss_master.append(proo_id)
-
-					#list perbandingan di SO yng sesuai dg di master
-					
-					for lis in line :
-						prod_id = lis.product_id.id
-						prod_categ = kondis.product_id.category_id.id
-						prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
-						prod_uom = lis.product_uom	
-						#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
-						if prod_id == proo_id and prod_qty >= pro_qty :
-							liss.append(prod_id)
-							p_per = lis.gross_tot
-							p_per_tot += p_per
-
-				#kodisi product di condition2_ids
-				liss_master2 =[]
-				liss2 =[]
-				p_per_tot2 = 0.00			
-				for kondis2 in kond2 :
-					proo_id = kondis2.product_id.id
-					pro_qty = kondis2.qty
-					pro_uom = kondis2.uom_id.id
-					liss_master2.append(proo_id)							
-					
-					for lis in line :
-						prod_id = lis.product_id.id
-						prod_qty = round(lis.qty_big * lis.product_uos.factor_inv,3) + lis.qty_small
-						prod_uom = lis.product_uom	
-						#product jumlah list barang di SO harus sama dengan/lebih dari di master gift
-						if prod_id == proo_id and prod_qty >= pro_qty :
-							liss2.append(prod_id)
-							p_per = lis.gross_tot
-							p_per_tot2 += p_per
-		
-				#agar bisa di bandingkan sorting dulu dari yang terkecil
-				s_l = sorted(liss)
-				s_l2 = sorted(liss2)
-				s_l3 = sorted(set(liss+liss2))
-
-				s_lm = sorted(liss_master)
-				s_lm2 = sorted(liss_master2)
-				s_lm3 = sorted(set(liss_master+liss_master2))
-
-				#import pdb;pdb.set_trace()
-
-				if s_l3 == s_lm3 and gb.min_qty_product <= 0.00 and s_lm != []:
-				
-					values = valu / len(s_l)
-					#looping ulang sale order line untuk tambah diskon
-					for sale2 in line :
-						stot = sale2.gross_tot
-						jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-						dd = sale2.gross_tot
-						qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-						grr = sale2.price_unit
-						gtot = sale2.gross_tot	
-
-						#yang di tambah disc hanya yang sesuai dengan di master disc saja
-						if not is_categ:
-							ppr = sale2.product_id.id
-						if is_categ:
-							ppr = sale2.product_id.categ_id.id
-						#jika sesuai dg yang ada dlm matrix
-						if ppr in s_lm3 :
-							if not gb.multi:
-								#jika menggunakan value/pot harga
-								if multi2:
-									kond3 = gb.condition3_ids
-									pr_prod	 = gb.per_product				
-
-									for kond3_val in kond3:
-										minv = kond3_val.min_value
-										maxv = kond3_val.max_value
-										value = kond3_val.value
-										pres = kond3_val.presentase
-										is_p = kond3_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if gr_tot >= minv and gr_tot <= maxv:	
-											if not pr_prod :												
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = value/lt
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
-
-								if not multi2:
-									kond4 = gb.condition4_ids
-									pr_prod	 = gb.per_product				
-
-									for kond4_val in kond4:
-										minq = kond4_val.min_qty
-										maxq = kond4_val.max_qty
-										value = kond4_val.value
-										pres = kond4_val.presentase
-										is_p = kond4_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if qty_tot >= minq and qty_tot <= maxq:		
-											if not pr_prod :												
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = value/lt
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-							
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
-
-
-							if gb.multi :			
-
-								#sudah dapat kelipatannya write di line SO line nya
-								#jika menggunakan value/pot harga
-								if multi2:
-									kond3 = gb.condition3_ids
-									pr_prod	 = gb.per_product				
-
-									for kond3_val in kond3:
-										minv = kond3_val.min_value
-										maxv = kond3_val.max_value
-										value = kond3_val.value
-										vaval = value*km_so[0]
-										pres = kond3_val.presentase
-										is_p = kond3_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if gr_tot >= minv and gr_tot <= maxv:	
-											if not pr_prod :													
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = (value/lt)*km_so[0]
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
-
-								if not multi2:
-									kond4 = gb.condition4_ids
-									pr_prod	 = gb.per_product				
-
-									for kond4_val in kond4:
-										minq = kond4_val.min_qty
-										maxq = kond4_val.max_qty
-										value = kond4_val.value
-										vaval = value*km_so[0]
-										pres = kond4_val.presentase
-										is_p = kond4_val.is_percent
-
-										#cari kodisi tot yang sesuai dengan range yang mana
-										if qty_tot >= minq and qty_tot <= maxq:
-											disc = value		
-											if not pr_prod :													
-													
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-												if not is_p :#percent false
-													lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-													p_price = (value/lt)*km_so[0]
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-											if pr_prod :				
-
-												if is_p :#percent true
-													#isi discount1 % di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
-							
-												if not is_p :#percent false
-													#isi discount1 pot harga di tiap product (objek sale order line#)
-													if type_disc == 'regular':
-														xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
-													elif type_disc == 'promo':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
-													elif type_disc == 'extra':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
-													elif type_disc == 'cash':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
-													elif type_disc == 'mix':
-														xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
-
-					if not gb.multi:
-						if gb.product_id.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-					if gb.multi:
-						if gb.product_id.id :	
-							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
-					if gb.product_id2.id :	
-						pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
-
-				#import pdb;pdb.set_trace()
-				if s_l3 == s_lm3 and s_lm != [] and gb.min_qty_product > 0.00 :
-				#if s_l != [] and s_lm != [] and gb.min_qty_product > 0.00:
-					#mencari jumlah product yang sesuai antara di list PO dan di master
-					#z = [(s_l3) for x in s_l3[:1] if x in s_lm3 ][0] #[:1] membatasi looping cukup satu kali saja
-					y = set(s_l3+s_lm3)
-					z = sorted(y)
-					jml_z = len(z)
-
-					if jml_z >= gb.min_qty_product:
-						values = valu / len(s_l)
-
-						#looping ulang sale order line untuk tambah diskon
-						for sale2 in line :
-							stot = sale2.gross_tot
-							jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
-							dd = sale2.gross_tot
-							qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3)
-							grr = sale2.price_unit
-							gtot = sale2.gross_tot								
-							#yang di tambah disc hanya yang sesuai dengan di master disc saja
-							if not is_categ:
-								ppr = sale2.product_id.id
-							if is_categ:
-								ppr = sale2.product_id.categ_id.id
-							#jika sesuai dg yang ada dlm matrix
-							if ppr in z :
-								if not gb.multi:
-									#jika menggunakan value/pot harga
-									if multi2:
-										kond3 = gb.condition3_ids
-										pr_prod	 = gb.per_product				
-
-										for kond3_val in kond3:
-											minv = kond3_val.min_value
-											maxv = kond3_val.max_value
-											value = kond3_val.value
-											pres = kond3_val.presentase
-											is_p = kond3_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if gr_tot >= minv and gr_tot <= maxv:	
 												if not pr_prod :												
 														
 													if is_p :#percent true
@@ -3330,75 +3095,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
 
-													if not is_p :#percent false
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
-
-									if not multi2:
-										kond4 = gb.condition4_ids
-										pr_prod	 = gb.per_product				
-
-										for kond4_val in kond4:
-											minq = kond4_val.min_qty
-											maxq = kond4_val.max_qty
-											value = kond4_val.value
-											pres = kond4_val.presentase
-											is_p = kond4_val.is_percent
-
-											#cari kodisi tot yang sesuai dengan range yang mana
-											if qty_tot >= minq and qty_tot <= maxq:		
-												if not pr_prod :				
-													if is_p :#percent true
-														#isi discount1 % di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
-
-													if not is_p :#percent false
-														lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
-														p_price = value/lt
-														#isi discount1 pot harga di tiap product (objek sale order line#)
-														if type_disc == 'regular':
-															xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
-														elif type_disc == 'promo':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
-														elif type_disc == 'extra':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
-														elif type_disc == 'cash':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
-														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
-
-												if pr_prod :				
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -3423,9 +3120,10 @@ class sale_order(osv.osv):
 														elif type_disc == 'cash':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
 														elif type_disc == 'mix':
-															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)										
+															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)	
 
-								if gb.multi :			
+
+								if gb.multi and prin == sale2.supplier_id.id:			
 
 									#sudah dapat kelipatannya write di line SO line nya
 									#jika menggunakan value/pot harga
@@ -3443,7 +3141,7 @@ class sale_order(osv.osv):
 
 											#cari kodisi tot yang sesuai dengan range yang mana
 											if gr_tot >= minv and gr_tot <= maxv:	
-												if not pr_prod :										
+												if not pr_prod :													
 														
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
@@ -3474,6 +3172,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
+
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -3546,6 +3245,7 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
 
 												if pr_prod :				
+
 													if is_p :#percent true
 														#isi discount1 % di tiap product (objek sale order line#)
 														if type_disc == 'regular':
@@ -3571,15 +3271,339 @@ class sale_order(osv.osv):
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
 														elif type_disc == 'mix':
 															xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
+
 						if not gb.multi:
 							if gb.product_id.id :	
 								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
-
 						if gb.multi:
 							if gb.product_id.id :	
 								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
 						if gb.product_id2.id :	
 							pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
+
+					#import pdb;pdb.set_trace()
+					if s_l3 == s_lm3 and s_lm != [] and gb.min_qty_product > 0.00 :
+					#if s_l != [] and s_lm != [] and gb.min_qty_product > 0.00:
+						#mencari jumlah product yang sesuai antara di list PO dan di master
+						#z = [(s_l3) for x in s_l3[:1] if x in s_lm3 ][0] #[:1] membatasi looping cukup satu kali saja
+						y = set(s_l3+s_lm3)
+						z = sorted(y)
+						jml_z = len(z)
+
+						if jml_z >= gb.min_qty_product:
+							values = valu / len(s_l)
+
+							#looping ulang sale order line untuk tambah diskon
+							for sale2 in line :
+								stot = sale2.gross_tot
+								jml = round(sale2.qty_big * sale2.product_uos.factor_inv,3) + sale2.qty_small
+								dd = sale2.gross_tot
+								qtty = round(sale2.qty_big * sale2.product_uos.factor_inv,3)
+								grr = sale2.price_unit
+								gtot = sale2.gross_tot								
+								#yang di tambah disc hanya yang sesuai dengan di master disc saja
+								if not is_categ:
+									ppr = sale2.product_id.id
+								if is_categ:
+									ppr = sale2.product_id.categ_id.id
+								#jika sesuai dg yang ada dlm matrix
+								if ppr in z :
+									if not gb.multi and prin == sale2.supplier_id.id:
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :												
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:		
+													if not pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = value/lt
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':value,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':value,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':value,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':value,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':value,'m_flat':flat},context=context)										
+
+									if gb.multi and prin == sale2.supplier_id.id:			
+
+										#sudah dapat kelipatannya write di line SO line nya
+										#jika menggunakan value/pot harga
+										if multi2:
+											kond3 = gb.condition3_ids
+											pr_prod	 = gb.per_product				
+
+											for kond3_val in kond3:
+												minv = kond3_val.min_value
+												maxv = kond3_val.max_value
+												value = kond3_val.value
+												vaval = value*km_so[0]
+												pres = kond3_val.presentase
+												is_p = kond3_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if gr_tot >= minv and gr_tot <= maxv:	
+													if not pr_prod :										
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)																									
+
+										if not multi2:
+											kond4 = gb.condition4_ids
+											pr_prod	 = gb.per_product				
+
+											for kond4_val in kond4:
+												minq = kond4_val.min_qty
+												maxq = kond4_val.max_qty
+												value = kond4_val.value
+												vaval = value*km_so[0]
+												pres = kond4_val.presentase
+												is_p = kond4_val.is_percent
+
+												#cari kodisi tot yang sesuai dengan range yang mana
+												if qty_tot >= minq and qty_tot <= maxq:
+													disc = value		
+													if not pr_prod :													
+															
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)		
+
+														if not is_p :#percent false
+															lt = len(s_lm3)#hitung jumlah list sebagai pembagi jika pot harga
+															p_price = (value/lt)*km_so[0]
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':p_price,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':p_price,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':p_price,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':p_price,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':p_price,'m_flat':flat},context=context)
+
+													if pr_prod :				
+														if is_p :#percent true
+															#isi discount1 % di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': pres,'disc_value':0.00,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': pres,'p_disc_value':0.00,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': pres,'p_disc_value_x':0.00,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': pres,'p_disc_value_c':0.00,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': pres,'p_disc_value_m':0.00,'m_flat':flat},context=context)	
+									
+														if not is_p :#percent false
+															#isi discount1 pot harga di tiap product (objek sale order line#)
+															if type_disc == 'regular':
+																xx.write(cr, uid,sale2.id, {'discount1': 0.00,'disc_value':vaval,'r_flat':flat},context=context)
+															elif type_disc == 'promo':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre': 0.00,'p_disc_value':vaval,'p_flat':flat},context=context)
+															elif type_disc == 'extra':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_x': 0.00,'p_disc_value_x':vaval,'x_flat':flat},context=context)
+															elif type_disc == 'cash':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_c': 0.00,'p_disc_value_c':vaval,'c_flat':flat},context=context)
+															elif type_disc == 'mix':
+																xx.write(cr, uid,sale2.id, {'p_disc_pre_m': 0.00,'p_disc_value_m':vaval,'m_flat':flat},context=context)	
+							if not gb.multi:
+								if gb.product_id.id :	
+									pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_p,'product_uom_qty':qty_p,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})																																			
+
+							if gb.multi:
+								if gb.product_id.id :	
+									pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id,'qty_small':qty_pp,'product_uom_qty':qty_pp,'product_uom':uo_id,'order_id':vals[0],'name':nma+' '+p_name,'product_uos_qty':us_qty,'product_uos':us_id})
+							if gb.product_id2.id :	
+								pot_p = self.pool.get('sale.order.line').create(cr, uid,{'product_id':produc_id2,'qty_small':qty_pp2,'product_uom_qty':qty_pp2,'product_uom':uo_id2,'order_id':vals[0],'name':nma+' '+p_name2,'product_uos_qty':us_qty2,'product_uos':us_id2})				
 
 								
 		self.write(cr, uid, vals[0], {'state': 'sent'}, context=context)	
@@ -3748,12 +3772,16 @@ class sale_order(osv.osv):
 		
 		ttlplus = ttl+lin.amount_total
 		slsh = ttlplus-lmt
-		if lmt >= 1.00 :
-			if ttlplus > lmt:
-				raise osv.except_osv(_('Warning!'),_('Jumlah piutang customer ini sudah melewati limit dari supplier %s !\n '\
-					'Limit = %s  \n '\
-					'Piutang saat ini = %s \n '\
-					'Selisih = %s' ) % (lin.partner_id2.partner_id.name,lmt,ttl,slsh))
+
+		#####################################################################################################################
+		#Protek limit piutang per supplier di disable, karena tidak ada supplier di form SO
+		#####################################################################################################################
+		# if lmt >= 1.00 :
+		# 	if ttlplus > lmt:
+		# 		raise osv.except_osv(_('Warning!'),_('Jumlah piutang customer ini sudah melewati limit dari supplier %s !\n '\
+		# 			'Limit = %s  \n '\
+		# 			'Piutang saat ini = %s \n '\
+		# 			'Selisih = %s' ) % (lin.partner_id2.partner_id.name,lmt,ttl,slsh))
 
 		#Set due date = date order+termin
 		tr = lin.property_payment_term.id
