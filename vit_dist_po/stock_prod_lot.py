@@ -1,5 +1,6 @@
 from openerp.osv import fields, osv
 from datetime import timedelta, date, datetime
+from openerp.tools.translate import _
 
 # class stock_partial_picking_line(osv.TransientModel):
 
@@ -159,6 +160,9 @@ class stock_move(osv.osv):
 
     _columns = {
         'is_bad': fields.boolean('Is Bad?'),
+        'reason': fields.char('Alasan'),
+        'barcode' : fields.related('product_id','barcode',type="char",relation="product.product",string="Barcode",store=True),
+        'default_code' : fields.related('product_id','default_code',type="char",relation="product.product",string="Code",store=True),
     }
 
     _default = {
@@ -171,7 +175,7 @@ class stock_move_split_lines_exist(osv.osv_memory):
 
     _columns = {
         'expire': fields.datetime('Expire Date'),
-        'reason': fields.char('Alasan'),
+        'reason': fields.char('Alasan',required=True),
         'is_bad': fields.boolean('Is Bad?'),
     }
 
@@ -248,7 +252,7 @@ class split_in_production_lot(osv.osv_memory):
                             'life_date': line.expire},
                         context=context)
 
-                    move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state, 'is_bad':line.is_bad})
+                    move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state, 'is_bad':line.is_bad, 'reason':line.reason or ''})
 
                     update_val = {}
                     if quantity_rest > 0:

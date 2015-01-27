@@ -882,7 +882,9 @@ class purchase_order(osv.osv):
         uom_obj = self.pool.get('product.uom')
         if emp <> []:
             loc = self.pool.get('hr.employee').browse(cr,uid,emp,)[0].location_id.code
-            poname = str(loc or '') + 'FPH' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
+            # poname = str(loc or '') + 'FPH' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
+            # BDG-SPO/15-0000001
+            poname = str(loc[0:3] or '') + 'SPO' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
             vals['name'] = poname 
         vol=0;wei=0
         for il in vals['order_line']:
