@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
+        
 <!-- Supplier Invoice Number -->
         <record id="seq_create_supplier_invoice" forcecreate="1" model="ir.sequence.type">
             <field name="name">Account invoice for supplier Seq.</field>
             <field name="code">account.invoice.vit.seq</field>
         </record>
-        <record id="seq_c_po" forcecreate="1" model="ir.sequence">
+        <record id="seq_inv_po" forcecreate="1" model="ir.sequence">
             <field name="name">Account invoice for supplier</field>
             <field name="code">account.invoice.vit.seq</field>
             <field name="prefix"></field>

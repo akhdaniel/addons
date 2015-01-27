@@ -2,18 +2,57 @@
 <openerp>
     <data>
 
-<!-- stock move summary in receiving Tree View -->
+<!-- stock move summary in receiving Tree n Form View -->
 
         <record id="view_stock_moves_summary_tree" model="ir.ui.view">
             <field name="name">stock.moves.summary.tree</field>
             <field name="model">stock.moves.summary</field>
             <field name="arch" type="xml">
-                <tree string="Stock Move Summary" create='false' colors="red:bad_product_qty &gt; 0.00">
+                <tree string="Stock Move Summary" create='false' colors="blue:bad_product_qty &gt; 0.00">
                     <field name="default_code"/>
                     <field name="barcode"/>
                     <field name="product_id"/>
+                    <field name="po_qty"/>
                     <field name="product_qty"/>
                     <field name="bad_product_qty"/>
+                    <field name="office_qty"/>
+                 </tree>
+            </field>
+        </record>
+
+        <record id="view_stock_moves_summary_form" model="ir.ui.view">
+            <field name="name">stock.moves.summary.form</field>
+            <field name="model">stock.moves.summary</field>
+            <field name="arch" type="xml">
+                <form string="Stock Move Summary" version="7.0">
+                    <field name='pick_in_id' invisible='1'/>
+                    <group>
+                        <field name="default_code" readonly='True'/>
+                        <field name="barcode" class="oe_inline" readonly='True'/>
+                        <field name="product_id" class="oe_inline" readonly='True'/>
+                    </group>
+                    <group>
+                        <field name="po_qty" readonly='True'/>
+                        <field name="product_qty" readonly='True'/>
+                        <field name="office_qty" on_change="onchange_office_qty(po_qty,product_qty,office_qty)"/>
+                        <field name="gap_qty" readonly='True'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+<!-- stock move loss summary in receiving Tree View -->
+
+        <record id="view_stock_moves_loss_summary_tree" model="ir.ui.view">
+            <field name="name">stock.moves.loss.summary.tree</field>
+            <field name="model">stock.moves.loss.summary</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Move Summary" create='false'>
+                    <field name="default_code"/>
+                    <field name="barcode"/>
+                    <field name="product_id"/>
+                    <field name="bad_product_qty"/>
+                    <field name="reason"/>
                  </tree>
             </field>
         </record>
@@ -25,6 +64,8 @@
             <field eval="3" name="priority"/>
             <field name="arch" type="xml">
                 <tree colors="grey:scrapped == True" string="Stock Moves">
+                    <field name='barcode'/>
+                    <field name='default_code'/>
                     <field name="product_id"/>
                     <field name="product_qty" on_change="onchange_quantity(product_id, product_qty, product_uom, product_uos)"/>
                     <!-- <field name="product_qty_nett" />
@@ -61,7 +102,7 @@
                         states="draft,assigned,confirmed"/>
                       <field name="location_dest_id" groups="stock.group_locations" invisible="1" />
                       <field name="state" invisible="1"/>
-                      <field name="is_bad"/>
+                      <field name="is_bad" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -77,8 +118,11 @@
                         <button name="query_summarize_stock_move" string="Refresh Summary" type="object"
                         icon="gtk-refresh" states="draft,assigned,confirmed"/>
                         <button name="summarize_stock_move" string="Refresh Summary 2" type="object"
-                        icon="gtk-refresh" states="draft,assigned,confirmed"/>
+                        icon="gtk-refresh" states="draft,assigned,confirmed" invisible='1'/>
                         <field name='move_summary_ids'/>
+                    </page>
+                    <page string="Loss Summary">
+                        <field name='move_loss_summary_ids'/>
                     </page>
                 </page>
                 <field name='stock_journal_id' position="after">

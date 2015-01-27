@@ -7,14 +7,47 @@ class stock_moves_summary(osv.osv):
     
     _columns = {
         'pick_in_id' : fields.many2one('stock.picking.in',"Picking",ondelete='cascade'),
-        'product_qty' : fields.float("Good Quantity"),
-        'bad_product_qty' : fields.float("Bad Quantity"),
+        'product_qty' : fields.float("Qty DO"),
+        'bad_product_qty' : fields.float("Loss"),
         'product_id' : fields.many2one('product.product',"Products"),
         'barcode' : fields.related('product_id','barcode',type="char",relation="product.product",string="Barcode",store=True),
         'default_code' : fields.related('product_id','default_code',type="char",relation="product.product",string="Code",store=True),
+        'po_qty': fields.float("Qty PO"),
+        'office_qty': fields.float("Qty Office",required=True),
+        'gap_qty' : fields.float("Gap"),
     }
 
+    def onchange_office_qty(self, cr, uid, ids, po_qty, product_qty, office_qty, context=None):
+        do = product_qty or 0.00
+        of = office_qty or 0.00
+        self.write(cr,uid,ids,{'gap_qty':of-do})
+        return {'value':{'gap_qty':of-do}}
+
 stock_moves_summary()
+
+class stock_moves_loss_summary(osv.osv):
+    _name = "stock.moves.loss.summary"
+    _order = 'product_id'
+    
+    _columns = {
+        'pick_in_id' : fields.many2one('stock.picking.in',"Picking",ondelete='cascade'),
+        'bad_product_qty' : fields.float("Loss"),
+        'product_id' : fields.many2one('product.product',"Products"),
+        'barcode' : fields.related('product_id','barcode',type="char",relation="product.product",string="Barcode",store=True),
+        'default_code' : fields.related('product_id','default_code',type="char",relation="product.product",string="Code",store=True),
+        'reason': fields.char('Alasan'),
+    }
+
+stock_moves_loss_summary()
+
+class stock_picking(osv.osv):
+    _name = "stock.picking"
+    _inherit = "stock.picking"
+
+    _columns = {
+        'move_summary_ids' : fields.one2many('stock.moves.summary','pick_in_id',"Stock move(s)"),
+        'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
+    }
 
 class stock_picking_in(osv.osv):
     _name = "stock.picking.in"
@@ -22,12 +55,13 @@ class stock_picking_in(osv.osv):
 
     _columns = {
         'move_summary_ids' : fields.one2many('stock.moves.summary','pick_in_id',"Stock move(s)"),
+        'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
     }
 
     def query_summarize_stock_move(self,cr, uid,ids, context=None): 
         inship =self.browse(cr,uid,ids,context)[0] 
         mids   =[]
-        sum_move=[];data=[]
+        sum_move=[];sum_loss=[];data=[]
         if inship.move_lines:
             mids    =[x.id for x in inship.move_lines]
             mids    =str(mids)[1:-1]
@@ -45,28 +79,54 @@ class stock_picking_in(osv.osv):
                         FROM stock_move 
                         WHERE 
                             id in ("""+mids+""")
+                            AND picking_id = """+str(ids[0])+"""
                             AND is_bad = true
                         GROUP BY product_id) A
                         union all (
                         SELECT 
                             SUM(product_qty) as product_qty,
                             0 as bad_qty,
-                            product_id 
+                            product_id
                         FROM stock_move 
                         WHERE 
                             id in ("""+mids+""")
-                            AND is_bad is null or is_bad = false
+                            AND picking_id = """+str(ids[0])+"""
+                            AND (is_bad is null or is_bad = false)
                         GROUP BY product_id
                         )
                 ) as CUMUL
                 GROUP BY product_id
                 """)
             data = cr.fetchall()
+            po_line = str([l.id for l in inship.purchase_id.order_line])[1:-1]
+            cr.execute("SELECT SUM(product_qty) qty,product_id from purchase_order_line where id in ("+po_line+") group by product_id")
+            po = cr.fetchall()
             for x in data:
-                sum_move.append((0,0,{'product_qty':int(x[0]),'bad_product_qty':int(x[1]),'product_id':x[2]}))
+                po_qty = 0.00
+                for p in po:
+                    if p[1]==x[2] : po_qty = p[0]
+                sum_move.append((0,0,{'product_qty':int(x[0]),'bad_product_qty':int(x[1]),'product_id':x[2] or False, 'po_qty':po_qty, 'office_qty':0.00 }))
+            cr.execute("""
+                        SELECT 
+                            SUM(product_qty) as bad_qty,
+                            product_id,
+                            reason
+                        FROM stock_move 
+                        WHERE 
+                            id in ("""+mids+""")
+                            AND picking_id = """+str(ids[0])+"""
+                            AND is_bad = true
+                        GROUP BY product_id,reason
+                """)
+            data2 = cr.fetchall()
+            for x in data2:
+                sum_loss.append((0,0,{'reason':x[2] or '', 'bad_product_qty':int(x[0]),'product_id':x[1]}))
+            
         if inship.move_summary_ids:
             self.pool.get('stock.moves.summary').unlink(cr, uid, [x.id for x in inship.move_summary_ids], context=None)
-        self.write(cr,uid,ids[0],{'move_summary_ids':sum_move})
+        if inship.move_loss_summary_ids:
+            self.pool.get('stock.moves.loss.summary').unlink(cr, uid, [x.id for x in inship.move_loss_summary_ids], context=None)
+        self.write(cr,uid,ids[0],{'move_summary_ids':sum_move,'move_loss_summary_ids':sum_loss})
         return True
 
     def summarize_stock_move(self,cr, uid,ids, context=None): 
@@ -91,11 +151,3 @@ class stock_picking_in(osv.osv):
             self.pool.get('stock.moves.summary').unlink(cr, uid, [x.id for x in inship.move_summary_ids], context=None)
         self.write(cr,uid,ids[0],{'move_summary_ids':sum_move})
         return True
-
-class stock_picking(osv.osv):
-    _name = "stock.picking"
-    _inherit = "stock.picking"
-
-    _columns = {
-        'move_summary_ids' : fields.one2many('stock.moves.summary','pick_in_id',"Stock move(s)"),
-    }
