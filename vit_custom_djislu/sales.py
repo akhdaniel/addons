@@ -15,6 +15,17 @@ import sets
 class sale_order_line(osv.osv):
 	_inherit = "sale.order.line"
 
+	#mengakali field readonly yang di beri nilai melalui event onchange
+	def create(self, cr, uid, vals, context=None):
+		prod_id = vals['product_id']
+		prod_boj = self.pool.get('product.product').browse(cr,uid,prod_id,context=context)
+		uos = prod_boj.uom_po_id.id
+		uom = prod_boj.uom_id.id
+		supp = prod_boj.principal_id.id
+		uos_supp = {'product_uos':uos,'supplier_id':supp,'product_uom_qty':uom}
+		vals = dict(vals.items()+uos_supp.items()) 
+		return super(sale_order_line, self).create(cr, uid, vals, context=context)
+
 	def _get_reg_disc_tot(self,cr,uid,ids,field,args,context=None):
 		result = {}
 		#import pdb;pdb.set_trace()
@@ -121,10 +132,10 @@ class sale_order_line(osv.osv):
 			bg_uos = line.qty_big / cf
 			bg = line.qty_big
 
-			ratio =  line.product_uos.factor_inv
+			ratio =  line.product_id.uom_po_id.factor_inv#line.product_uos.factor_inv
 
 			sm = line.qty_small
-
+			
 			uom = (sm)+ round(bg*ratio,3)
 			#uom =  bg_uos + sm
 			
@@ -168,6 +179,8 @@ class sale_order_line(osv.osv):
 			res[line.id] = cur_obj.round(cr, uid, cur, taxes['total'])
 			self.write(cr,uid,line.id,{'tes':taxes['total']},context=context)
 		return res
+
+
 	_columns = {
 		'supplier_id' : fields.many2one('res.partner','Principal',domain=[('supplier','=',True)]),
 		'volume' : fields.float('Volume (m3)'),
@@ -527,7 +540,7 @@ class sale_order(osv.osv):
 		return result.keys()
 
 	def create(self, cr, uid, vals, context=None):
-		#import pdb;pdb.set_trace()
+		
 		viv = vals['partner_id']
 		vivals = self.pool.get('res.partner').browse(cr,uid,viv).trouble
 
@@ -537,21 +550,25 @@ class sale_order(osv.osv):
 			raise osv.except_osv(_('Error!'), _('Customer ini sudah ditandai sebagai customer yang bermasalah!'))
 		if vals.get('name','/')=='/':
 			vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'sale.order') or '/'
-
+		
 		for x in vals['order_line']:
 			x1 = x[2]['qty_small']
 			x2 = x[2]['qty_big']
-			id_uos = x[2]['product_uos']
 
-			#cari detailnya di product.uom
-			uom_obj = self.pool.get('product.uom')
-			uom_sr = uom_obj.search(cr,uid,[('id','=',id_uos)])
-			uos = uom_obj.browse(cr,uid,uom_sr)[0]
-			uos_fct = uos.factor_inv
+			#uos ambil langsung di master product
+			#id_uos = x[2]['product_uos']
+
+			prod_id = x[2]['product_id']
+			measure = self.pool.get('product.product').browse(cr,uid,prod_id,context=context)
+			id_uos = measure.uom_po_id.id
+			id_uom = measure.uom_id.id
+
+			uos_fct = measure.uom_po_id.factor_inv
 
 			qty_awal = x1+(x2*uos_fct)
 
 			x[2]['qty_awal'] = qty_awal
+ 
 		return super(sale_order, self).create(cr, uid, vals, context=context)
 
 	#default shop sesuai cabang di master employee log in

@@ -19,6 +19,9 @@ class res_partner(osv.osv):
 			#     ids = self.search(cr, user, [('shortcut', '=', name)]+ args, limit=limit)
 			if not ids:
 				ids = self.search(cr, user, [('name', operator, name)]+ args, limit=limit)
+				if not ids:
+					ids = self.search(cr, user, [('street', operator, name)]+ args, limit=limit)
+								
 			if not ids and len(name.split()) >= 2:
 				#Separating code and name of account for searching
 				operand1,operand2 = name.split(' ',1) #name can contain spaces e.g. OpenERP S.A.

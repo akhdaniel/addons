@@ -19,7 +19,7 @@
      'stock',
      'fleet',
      'vit_hr_standard'],
-    'update_xml':[
+     'update_xml':[
 	'product.xml',
 	'partner.xml',
     'sales.xml',
