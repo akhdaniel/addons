@@ -168,8 +168,22 @@ class surat_jalan(osv.osv):
 					raise osv.except_osv(_('Batch / Serial Number Kosong!!'), _('Kode dan nama barang %s dari nomor faktur %s, Batch / Serial Numbernya belum di isi !') % (prod,ori))	
 
 		self.write(cr,uid,ids[0],{'state':'on_deliver'},context=context)		
-
-		return True	
+		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_custom_djislu', 'view_sj_tree')
+		view_id = view_ref and view_ref[1] or False,
+		return {
+			'name' : _('Temporary View'),
+			'view_type': 'form',
+			'view_mode': 'tree',			
+			'res_model': 'surat.jalan',
+			'res_id': ids[0],
+			'type': 'ir.actions.act_window',
+			'view_id': view_id,
+			'target': 'current',
+			'domain' : "[('state','=','draft')]",
+			#'context': "{'default_state':'open'}",#
+			'nodestroy': False,
+			}
+	
 
 		#view sum product list
 	def view_product_list(self,cr,uid,ids,context=None):

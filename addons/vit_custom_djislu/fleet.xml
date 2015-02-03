@@ -33,7 +33,7 @@
                     <field name="car_id"/>
                     <field name="driver_id2"/>
                     <field name="location_id"/>
-                    <field name="state"/>
+                    <field name="state" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -189,13 +189,15 @@
             </field>
         </record>
 
+        <!-- state draft -->
         <record id="action_sj" model="ir.actions.act_window">
-            <field name="name">Picking List</field>
+            <field name="name">Draft</field>
             <field name="res_model">surat.jalan</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_sj_tree"/>
             <field name="search_view_id" ref="view_sj_search"/>
+            <field name="domain">[('state','=','draft')]</field>
             <field name="context">{'contact_display': 'partner_address', 'search_default_mypicking': 1}</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
@@ -207,7 +209,29 @@
 
         </record>
 
-        <menuitem action="action_sj" id="menu_action_sj" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/>      
+        <!-- state in progress dan done -->
+        <record id="action_sj_onprogress" model="ir.actions.act_window">
+            <field name="name">OnProgress/Done</field>
+            <field name="res_model">surat.jalan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sj_tree"/>
+            <field name="search_view_id" ref="view_sj_search"/>
+            <field name="domain">[('state','!=','draft')]</field>
+            <field name="context">{'contact_display': 'partner_address', 'search_default_mypicking': 1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Sorry....
+              </p><p>
+                No record now...
+              </p>
+            </field>
+
+        </record>        
+
+        <menuitem id="menu_action_sj" name="Picking List" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/>
+        <menuitem action="action_sj" id="menu_action_sj1" parent="menu_action_sj" sequence="10"/> 
+        <menuitem action="action_sj_onprogress" id="menu_action_sj2" parent="menu_action_sj" sequence="20"/>     
 
 
         <!-- Sequences for picking list -->

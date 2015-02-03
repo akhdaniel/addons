@@ -63,7 +63,7 @@
                         <group>
                             <field name="partner_code" invisible="True"/>
                             <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}" attrs="{'readonly': [('state','!=','draft')]}"/>
-                            <field name="street" string=" " attrs="{'invisible': [('state','=','draft')]}"/>
+                            <field name="street" string=" " attrs="{'invisible': [('state','=','draft')]}" />
                             <field name="street_onchange" string=" " attrs="{'invisible': [('state','!=','draft')]}"/>
                             <field name="partner_id2" attrs="{'readonly': [('state','!=','draft')]}" invisible="1"/>
                             <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}"/>
@@ -86,10 +86,67 @@
                     </group>
 
                     <notebook>
-                        <page string="Order Lines" invisible="0">
-                            <field name="order_line" view_mode="form,tree" attrs="{'readonly': [('state','!=','draft')]}">
-                                <form string="Sales Order Lines" version="7.0">
+                        <page string="Order Lines">
+                            <field name="order_line" view_mode="tree,form" attrs="{'readonly': [('state','!=','draft')]}">
+                                <tree string="Sales Order Lines" editable="bottom">
+                            <!-- <tree string="Sales Order Lines" version="7.0"> -->
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="th_weight" invisible="1"/>
+                                    <field name="coeff" invisible="True"/>
+                                    <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" groups="base.group_user" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"  domain="[('bonus','=', False)]" required="1"/>
+                                    <field name="name" attrs="{'readonly': [('state','!=','draft')]}" invisible="1"/>
+                                     <field name="supplier_id" options="{&quot;no_open&quot;: True}" readonly="1"/>
+                                    <field name="volume" invisible="1"/>
 
+                                    <field name="product_uos_qty" groups="product.group_uos" on_change="onchange_uos(coeff,product_uos_qty)" string="Big Qty" invisible="1"/>
+                                    <field name="qty_big"/>    
+                                    <field name="product_uos" string="Big UoM" options="{&quot;no_open&quot;: True}" readonly="1"/>
+                                    <field name="uos2" readonly="True" invisible="True"/>
+                                    <field name="qty_small"/>
+                                    <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" string="Small Qty" invisible="1"/>
+                                    <field name="product_uom" on_change="product_uom_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, context)" groups="product.group_uom" options="{&quot;no_open&quot;: True}" string="Small UoM" readonly="1"/>                                   
+                                    <field name="tax_id" groups="base.group_sale_salesman_all_leads" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" invisible="1"/>                                   
+                                    <field name="price_unit" readonly="1" />
+                                    <field name="gross_tot" invisible="1"/>
+                                    <field name="r_func" invisible="1"/>
+                                    <field name="r_calc" readonly="1"/>
+
+                                    <field name="disc_value" invisible="1"/>
+                                    <field name="qty_awal" invisible="1"/>
+                                    <field name="discount1" readonly="1"/>
+                                    <field name="p_calc" readonly="1"/>
+                                    <field name="r_flat" invisible="1"/> 
+
+
+                                    <field name="p_func" invisible="1"/>
+                                    <field name="p_disc_value" invisible="1"/>
+                                    <field name="p_disc_pre" readonly="1"/>
+                                    <field name="p_flat" invisible="1"/>
+                     
+                                    <field name="x_func" invisible="1"/>
+                                    <field name="p_disc_value_x" invisible="1"/>
+                                    <field name="x_calc" readonly="1"/>
+                                    <field name="p_disc_pre_x" readonly="1"/> 
+                                    <field name="x_flat" invisible="1"/>
+
+                                    <field name="c_func" invisible="1"/>
+                                    <field name="p_disc_value_c" invisible="1"/>
+                                    <field name="c_calc" readonly="1"/>
+                                    <field name="p_disc_pre_c" readonly="1"/> 
+                                    <field name="c_flat" invisible="1"/>
+
+                                    <field name="m_func" invisible="1"/>
+                                    <field name="p_disc_value_m" invisible="1"/>
+                                    <field name="m_calc" readonly="1"/>
+                                    <field name="p_disc_pre_m" readonly="1"/> 
+                                    <field name="m_flat" invisible="1"/>
+                                    
+                                    <field name="price_subtotal"/>
+                                    <!-- <field name="tes"/> -->
+                                </tree> 
+
+                                <form string="Sales Order Lines">
                                     <group colspan="2">
                                         <group>
                                             <field name="state" invisible="1"/>
@@ -134,63 +191,7 @@
                                         <field name="invoice_lines" />
                                     </div>
                                 </form>
-                                <tree string="Sales Order Lines" editable="bottom" version="7.0">
-                            <!-- <tree string="Sales Order Lines" version="7.0"> -->
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="state" invisible="1"/>
-                                    <field name="th_weight" invisible="1"/>
-                                    <field name="coeff" invisible="True"/>
-                                    <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" groups="base.group_user" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"  domain="[('bonus','=', False)]" invisible="1"/>
-                                    <field name="name" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                     <field name="supplier_id"/>
-                                    <field name="volume" invisible="1"/>
 
-                                    <field name="product_uos_qty" groups="product.group_uos" on_change="onchange_uos(coeff,product_uos_qty)" string="Big Qty" invisible="1"/>
-                                    <field name="qty_big"/>    
-                                    <field name="product_uos" groups="product.group_uos" string="Big UoM"/>
-                                    <field name="uos2" readonly="True" invisible="True"/>
-                                    <field name="qty_small"/>
-                                    <field name="product_uom_qty" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" string="Small Qty" invisible="1"/>
-                                    <field name="product_uom" on_change="product_uom_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, context)" groups="product.group_uom" options="{&quot;no_open&quot;: True}" string="Small UoM"/>                                   
-                                    <field name="tax_id" groups="base.group_sale_salesman_all_leads" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" invisible="1"/>                                   
-                                    <field name="price_unit" readonly="False" />
-                                    <field name="gross_tot" invisible="1"/>
-                                    <field name="r_func" invisible="1"/>
-                                    <field name="r_calc" invisible="0"/>
-
-                                    <field name="disc_value" invisible="1"/>
-                                    <field name="qty_awal" invisible="1"/>
-                                    <field name="discount1" nvisible="1"/>
-                                    <field name="p_calc" invisible="0"/>
-                                    <field name="r_flat" invisible="1"/> 
-
-
-                                    <field name="p_func" invisible="1"/>
-                                    <field name="p_disc_value" invisible="1"/>
-                                    <field name="p_disc_pre"/>
-                                    <field name="p_flat" invisible="1"/>
-                     
-                                    <field name="x_func" invisible="1"/>
-                                    <field name="p_disc_value_x" invisible="1"/>
-                                    <field name="x_calc" invisible="0"/>
-                                    <field name="p_disc_pre_x"/> 
-                                    <field name="x_flat" invisible="1"/>
-
-                                    <field name="c_func" invisible="1"/>
-                                    <field name="p_disc_value_c" invisible="1"/>
-                                    <field name="c_calc" invisible="0"/>
-                                    <field name="p_disc_pre_c"/> 
-                                    <field name="c_flat" invisible="1"/>
-
-                                    <field name="m_func" invisible="1"/>
-                                    <field name="p_disc_value_m" invisible="1"/>
-                                    <field name="m_calc" invisible="0"/>
-                                    <field name="p_disc_pre_m"/> 
-                                    <field name="m_flat" invisible="1"/>
-                                    
-                                    <field name="price_subtotal"/>
-                                    <!-- <field name="tes"/> -->
-                                </tree>    
                             </field>
                             <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
                                 <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
