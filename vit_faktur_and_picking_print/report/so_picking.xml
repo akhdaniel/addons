@@ -13,7 +13,7 @@
 
         <report 
         id="picking" 
-        string="Picking List." 
+        string="Picking List" 
         model="surat.jalan" 
         name="picking" 
         rml="vit_faktur_and_picking_print/report/picking.rml" 
