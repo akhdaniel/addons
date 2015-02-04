@@ -413,7 +413,7 @@ class account_voucher(osv.osv):
 		vo_obj = self.pool.get('account.voucher')
 		def_amount = vo_obj.browse(cr,uid,ids[0]).amount
 		st = "'open'"
-		
+
 		type_pay = vo_obj.browse(cr,uid,ids[0]).type
 		if type_pay =='receipt':
 			# inv_obj = self.pool.get('account.invoice')
@@ -426,7 +426,7 @@ class account_voucher(osv.osv):
 				'where lphi.invoice_id ='+str(inv_id)+' '\
 				'and vlph.state = '+st)		
 			fet = cr.fetchone()
-			#import pdb;pdb.set_trace()
+			
 			if not fet :
 				raise osv.except_osv(_('Error!!'), _('Pembayaran harus dilakukan melalui menu LPH Payment!'))
 			id_lph = fet[0]
@@ -481,7 +481,14 @@ class account_voucher(osv.osv):
 				hsl = cr.fetchone()
 				hsl_line = hsl[0]
 				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)						
-						
+				# import pdb;pdb.set_trace()
+				# for wo in v_id.writeoff_ids:
+				# 	wo_detail_obj = self.pool.get('writeoff.detail')
+				# 	amount = wo.amount
+				# 	name = wo.name
+				# 	account_id = wo.account_id.id
+					#wo_detail_obj.write(cr,uid,context[])
+
 			elif v_id.writeoff_ids == [] :
 				writeoff_total = 0.00
 
@@ -539,11 +546,12 @@ class account_voucher(osv.osv):
 		return {'type': 'ir.actions.act_window_close'}
 	
 
-class writeoff(osv.osv):
+class writeoff(osv.Model):
 	_name = 'writeoff'
 
 	_columns = {
 		'voucher_id' : fields.many2one('account.voucher','Voucher ID'),
+		'invoice_id' : fields.many2one('account.invoice','Invoice ID'),
 		'name' : fields.char('Description',required=True),
 		'amount' : fields.float('Amount',required=True),
 		'account_id' : fields.many2one('account.account','Counterpart Account',domain="[('type','=','other')]",required=True),

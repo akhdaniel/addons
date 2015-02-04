@@ -1,6 +1,6 @@
 {
-    'name': 'Distrbution Payment',
-    'version': '0.3',
+    'name': 'Distribution Payment',
+    'version': '0.4',
     'author'  :'vitraining.com',
     'category': 'Accounting',
     'description': """
@@ -14,6 +14,7 @@ Manage :
 * Pelunasan Invoice yang ada di LPH
    - input voucher no 
    - process, pay invoices 
+* Claim invoice to Supplier
 
 """,    
     'depends': ['base','sale', 
@@ -23,6 +24,7 @@ Manage :
         'lph.xml',
         'invoice.xml',
         'voucher.xml',
+
         "reports/lph_report.xml",        
         "reports/voucher_report.xml",  
         "security/ir.model.access.csv",      
