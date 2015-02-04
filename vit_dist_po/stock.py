@@ -1,6 +1,7 @@
 from openerp.osv import fields,osv
 from openerp import tools,netsvc
 import time
+from openerp.tools.translate import _
 
 #----------------------------------------------------------
 # Stock Picking
@@ -103,15 +104,16 @@ class stock_picking(osv.osv):
             return move_line.product_id.list_price
     '''
 
-    def test_bypass(self, cr, uid, ids, context=None):
-        """ Test whether the move lines are done or not.
-        @return: True or False
-        """
-        ok = False
-        for pick in self.pool.get('stock.picking.in').browse(cr, uid, ids, context=context):
-            if pick.state=='logistic_received':
-                ok = True
-        return ok
+    # def test_bypass(self, cr, uid, ids, context=None):
+    #     """ Test whether the move lines are done or not.
+    #     @return: True or False
+    #     """
+    #     import pdb;pdb.set_trace()
+    #     ok = False
+    #     for pick in self.pool.get('stock.picking.in').browse(cr, uid, ids, context=context):
+    #         if pick.state=='logistic_received':
+    #             ok = True
+    #     return ok
 
     # FIXME: needs refactoring, this code is partially duplicated in stock_move.do_partial()!
     def do_partial(self, cr, uid, ids, partial_datas, context=None):
@@ -258,20 +260,30 @@ class stock_picking(osv.osv):
                 # Then we finish the good picking
                 self.write(cr, uid, [pick.id], {'backorder_id': new_picking})
                 self.action_move(cr, uid, [new_picking], context=context)
+                
                 # workflow overide 
-                import pdb;pdb.set_trace()
                 if not context.get('bypass',False):
+                
                     wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_done', cr)
                 wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
+                
+                # workflow overide 
+                if pick.type == 'in':
+                    self.pool.get('stock.picking.in').write(cr,uid,pick.id,{'state': 'office_logistic_approved'})
+                
                 delivered_pack_id = new_picking
                 self.message_post(cr, uid, new_picking, body=_("Back order <em>%s</em> has been <b>created</b>.") % (pick.name), context=context)
             elif empty_picking:
                 delivered_pack_id = pick.id
             else:
                 self.action_move(cr, uid, [pick.id], context=context)
-                import pdb;pdb.set_trace()
                 if not context.get('bypass',False):
                     wf_service.trg_validate(uid, 'stock.picking', pick.id, 'button_done', cr)
+                
+                # workflow overide
+                if pick.type == 'in':
+                    self.pool.get('stock.picking.in').write(cr,uid,pick.id,{'state': 'office_logistic_approved'})
+                
                 delivered_pack_id = pick.id
 
             delivered_pack = self.browse(cr, uid, delivered_pack_id, context=context)
