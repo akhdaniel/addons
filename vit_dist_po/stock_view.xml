@@ -2,6 +2,53 @@
 <openerp>
     <data>
 
+<!-- Add and Split Menu in Warehouse-->
+        <record id="action_picking_tree4_gudang" model="ir.actions.act_window">
+            <field name="name">Incoming Shipments Gudang</field>
+            <field name="res_model">stock.picking.in</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','in'),('state','in',('draft','logistic_received'))]</field>
+            <field name="context">{'contact_display': 'partner_address', 'default_type': 'in'}</field>
+            <field name="search_view_id" ref="stock.view_picking_in_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create an incoming shipment. 
+              </p><p>
+                The Incoming Shipments is the list of all orders you will
+                receive from your suppliers. An incoming shipment contains a
+                list of products to be received according to the original
+                purchase order.
+              </p>
+            </field>
+        </record>
+        <record id="action_picking_tree4_office" model="ir.actions.act_window">
+            <field name="name">Incoming Shipments Office</field>
+            <field name="res_model">stock.picking.in</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','in'),('state','=','office_logistic_approved')]</field>
+            <field name="context">{'contact_display': 'partner_address', 'default_type': 'in'}</field>
+            <field name="search_view_id" ref="stock.view_picking_in_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create an incoming shipment. 
+              </p><p>
+                The Incoming Shipments is the list of all orders you will
+                receive from your suppliers. An incoming shipment contains a
+                list of products to be received according to the original
+                purchase order.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="action_picking_tree4_gudang" id="menu_action_picking_tree4_gudang_w" parent="stock.menu_stock_warehouse_mgmt" sequence="1"/>
+        <menuitem action="action_picking_tree4_office" id="menu_action_picking_tree4_office_w" parent="stock.menu_stock_warehouse_mgmt" sequence="1"/>
+
+        <!-- <menuitem action="stock.action_picking_tree6" id="stock.menu_action_picking_tree6" parent="stock.menu_stock_warehouse_mgmt" sequence="4" groups="stock.group_locations"/> -->
+
 <!-- stock move summary in receiving Tree n Form View -->
 
         <record id="view_stock_moves_summary_tree" model="ir.ui.view">
@@ -34,7 +81,8 @@
                     <group>
                         <field name="po_qty" readonly='True'/>
                         <field name="product_qty" readonly='True'/>
-                        <field name="office_qty" on_change="onchange_office_qty(po_qty,product_qty,office_qty)"/>
+                        <field name="office_qty"
+                            on_change="onchange_office_qty(po_qty,product_qty,office_qty)"/>
                         <field name="gap_qty" readonly='True'/>
                     </group>
                 </form>
@@ -113,12 +161,24 @@
             <field name="model">stock.picking.in</field>
             <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
+                <!-- <xpath expr="/form/header//button[@name='draft_force_assign']" position="replace">
+                </xpath> -->
+                <xpath expr="//button[@name='draft_validate']" position="after">
+                    <button name="logistik_confirm" states="assigned" string="Confirm &amp; Send to Office" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@name='action_process']" position="replace">
+                    <button name="action_process" states="logistic_received" string="Receive &amp; Send to Accounting" type="object" class="oe_highlight" context="{'bypass': True}"/>
+                    <button name="accountingapproved" string="Approve Accounting" states="office_logistic_approved" type="object" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" 
+                        statusbar_visible="draft,assigned,logistic_received,office_logistic_approved,accounting_approved,done" 
+                        statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
+                </xpath>
                 <page string="Products" position='after'>
                     <page string="Summary">
                         <button name="query_summarize_stock_move" string="Refresh Summary" type="object"
-                        icon="gtk-refresh" states="draft,assigned,confirmed"/>
-                        <button name="summarize_stock_move" string="Refresh Summary 2" type="object"
-                        icon="gtk-refresh" states="draft,assigned,confirmed" invisible='1'/>
+                        icon="gtk-refresh" states="draft,logistic_received,office_logistic_approved,assigned,confirmed"/>
                         <field name='move_summary_ids'/>
                     </page>
                     <page string="Loss Summary">
@@ -130,7 +190,8 @@
                     <field name='location_dest_id'/>
                 </field>
                 <field name='move_lines' position="replace">
-                    <field name="move_lines" string="Stock Move" on_change='onchange_movelines(move_lines,context)' context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>
+                    <field name="move_lines" string="Stock Move" context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>
+                    <!-- on_change='onchange_movelines(move_lines,context)'  -->
                 </field>
             </field>
         </record>        
@@ -147,6 +208,15 @@
             </field>
         </record>
 
+<!-- State visible in picking form -->
+        <!-- <record id="view_picking_in_states_added_form" model="ir.ui.view">
+            <field name="name">stock.picking.added.states.form</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+                
+            </field>
+        </record> -->
 
     </data>
 </openerp>

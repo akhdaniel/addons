@@ -41,16 +41,17 @@ Add CMO to the Purchase Orders
         'vit_custom_djislu',
         'web_printscreen_zb',
         'product_expiry',
-        # 'vit_receive_gross_nett'
     ],
     'data': [
+        'stock_view.xml',
         'purchase_view.xml',
         'stock_prod_lot.xml',
         'report/po_webkit_header.xml',
         'report/purchase_order.xml',
         'cron_job.xml',
-        'stock_view.xml',
         'invoice_view.xml',
+        'wizard/po_export_wizard_view.xml',
+        'stock_workflow.xml',
     ],
     'test': [
     ],
