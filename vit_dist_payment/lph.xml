@@ -87,11 +87,23 @@
                                         <field name="amount_tax"/>
                                         <field name="amount_total"/>       
                                         <field name="residual"/>
+                                        <field name="pay_estimates_date"/>
                                         <field name="is_draft_lph" invisible="True"/>                                   
                                         <button name="invoice_pay_customer" type="object" string="Pay" icon="terp-check" attrs="{'invisible': ['|',('is_draft_lph','=',False),('state','!=','open')]}"/>    
                                     </tree>
                                 </field>
                             </page>
+                            <page string="Write Off">
+                                <field name="writeoff_detail_ids" readonly="1">
+                                    <tree string="Write Off" editable="bottom" >
+                                        <field name="lph_id"/>  
+                                        <field name="invoice_number"/>      
+                                        <field name="name"/>
+                                        <field name="amount"/>       
+                                        <field name="account_id"/>         
+                                    </tree>
+                                </field>
+                            </page>                            
                         </notebook>
 
                         <group class="oe_subtotal_footer oe_right">
@@ -226,6 +238,7 @@
             <field name="arch" type="xml"> 
                 <field name="centralisation" position="before"> 
                     <field name="is_cn" attrs="{'invisible': [('type','!=','sale_refund')]}"/>
+                    <field name="is_claim" attrs="{'invisible': [('type','!=','sale_refund')]}"/>
                 </field>               
             </field>
         </record> 
