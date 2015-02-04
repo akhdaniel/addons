@@ -61,19 +61,21 @@ class lph(osv.osv):
 					raise osv.except_osv(_('Error!'), _('Data tidak bisa dihapus! \n Ada list faktur yang sudah dibayar'))	
 		return super(lph, self).unlink(cr, uid, ids, context=context)
 
-	def writeoff_detail_ids(self, cr, uid, ids, field_name, arg, context=None):
+	def _get_writeoff_detail(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
 			context = {}
 		result = {}
-		emp_id = self.browse(cr,uid,ids[0],context=context).id
 		#import pdb;pdb.set_trace()
-		jad_obj = self.pool.get('master.jadwal')
-		jad_ids = jad_obj.search(cr, uid, [
-			('employee_id','=',emp_id),
-			('is_active','=',True)], context=context)
-		if jad_ids == []:
-			return result		
-		result[emp_id] = jad_ids
+		cr.execute('select wo.id from writeoff wo '\
+			'left join lph_invoice li on li.invoice_id = wo.invoice_id  '\
+			'where li.lph_id ='+str(ids[0])+'')	
+		hsl = cr.fetchall()
+		if hsl != []:
+			id_writeoff = []
+			for x in hsl:
+				id_writeoff.append(x[0])
+			result[ids[0]] = id_writeoff
+
 		return result
 
 	_columns 	= {
@@ -105,8 +107,7 @@ class lph(osv.osv):
 		'voucher_id'	  : fields.many2one('vit_dist_payment.voucher', 'Voucher'),
 		'voucher_total'	  : fields.related('voucher_id', 'total' , type="float", 
 			relation="vit_dist_payment.voucher", string="Voucher Total", store=True),
-		#'writeoff_detail_ids': fields.function(_get_writeoff_detail, type='many2many', relation="writeoff", string="Write Off Detail"),    		
-		'writeoff_detail_ids' : fields.one2many('writeoff.detail','lph_id','Witeoff Lines',ondelete="cascade"),
+		'writeoff_detail_ids': fields.function(_get_writeoff_detail, type='many2many', relation="writeoff", string="Write Off Detail",readonly=True),    		
 	}
 
 	def create(self, cr, uid, vals, context=None):
@@ -236,14 +237,3 @@ class account_journal(osv.osv):
 	}
 
 account_journal()
-
-class writeoff_detail(osv.Model):
-	_name = 'writeoff.detail'
-
-	_columns = {
-		'lph_id' : fields.many2one('account.invoice','Invoice ID'),
-		'invoice_number' : fields.char('Number'),
-		'name' : fields.char('Description',required=True),
-		'amount' : fields.float('Amount',required=True),
-		'account_id' : fields.many2one('account.account','Counterpart Account',domain="[('type','=','other')]",required=True),
-	}	
