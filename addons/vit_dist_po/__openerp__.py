@@ -51,7 +51,7 @@ Add CMO to the Purchase Orders
         'cron_job.xml',
         'invoice_view.xml',
         'wizard/po_export_wizard_view.xml',
-        'stock_workflow.xml',
+        # 'stock_workflow.xml',
     ],
     'test': [
     ],
