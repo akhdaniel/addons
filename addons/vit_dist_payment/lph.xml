@@ -95,9 +95,9 @@
                             </page>
                             <page string="Write Off">
                                 <field name="writeoff_detail_ids" readonly="1">
-                                    <tree string="Write Off" editable="bottom" >
-                                        <field name="lph_id"/>  
-                                        <field name="invoice_number"/>      
+                                    <tree string="Write Off" >
+                                        <field name="invoice_id"/>  
+                                        <!-- <field name="voucher_id"/> -->      
                                         <field name="name"/>
                                         <field name="amount"/>       
                                         <field name="account_id"/>         

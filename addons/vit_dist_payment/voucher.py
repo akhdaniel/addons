@@ -411,14 +411,24 @@ class account_voucher(osv.osv):
 		def_amt = context['default_amount']
 
 		vo_obj = self.pool.get('account.voucher')
-		def_amount = vo_obj.browse(cr,uid,ids[0]).amount
+		v_id = vo_obj.browse(cr,uid,ids[0])
+		def_amount = v_id.amount
 		st = "'open'"
+		type_pay = v_id.type
 
-		type_pay = vo_obj.browse(cr,uid,ids[0]).type
+		#create juga di tabel writeoff agar muncul di tab writeoff detail lph
+		if v_id.writeoff_amount != 0:
+			if v_id.payment_option == 'with_writeoff':
+				wo_obj = self.pool.get('writeoff')
+				wo_obj.create(cr,uid,{
+					'name':v_id.comment,
+					'amount':v_id.writeoff_amount,
+					'account_id':v_id.writeoff_acc_id.id,
+					'invoice_id':context['invoice_id']},
+					#'voucher_id':ids[0]},
+					context=context)
+
 		if type_pay =='receipt':
-			# inv_obj = self.pool.get('account.invoice')
-			# inv_src = inv_obj.search(cr,uid,[('id','=',inv_id)])[0]
-			# inv_br = inv_obj.browse(cr,uid,inv_src)
 
 			#cr.execute('select lph_id from lph_invoice where invoice_id ='+str(inv_id))
 			cr.execute('select lph_id from lph_invoice lphi '\
@@ -470,24 +480,13 @@ class account_voucher(osv.osv):
 						if amo.amount != 0.00:
 							balance = amo.amount_unreconciled
 
-					# for wo in v_id.writeoff_ids:
-					# 	nm = wo.name
-					# 	rp = wo.amount
-					# 	acc = wo.account_id.id
 				cr.execute('select id from account_voucher_line where '\
 					'amount_unreconciled = '+str(def_amt)+' '\
 					'and reconcile = False  '\
 					'and voucher_id='+str(v_id.id)+'')	
 				hsl = cr.fetchone()
 				hsl_line = hsl[0]
-				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)						
-				# import pdb;pdb.set_trace()
-				# for wo in v_id.writeoff_ids:
-				# 	wo_detail_obj = self.pool.get('writeoff.detail')
-				# 	amount = wo.amount
-				# 	name = wo.name
-				# 	account_id = wo.account_id.id
-					#wo_detail_obj.write(cr,uid,context[])
+				self.pool.get('account.voucher.line').write(cr,uid,hsl_line,{'amount':def_amt,'reconcile':True},context=context)	
 
 			elif v_id.writeoff_ids == [] :
 				writeoff_total = 0.00
@@ -515,10 +514,6 @@ class account_voucher(osv.osv):
 						if amo.amount != 0.00:
 							balance = amo.amount_unreconciled
 
-					# for wo in v_id.writeoff_ids:
-					# 	nm = wo.name
-					# 	rp = wo.amount
-					# 	acc = wo.account_id.id
 				cr.execute('select id from account_voucher_line where '\
 					'amount_unreconciled = '+str(def_amt)+' '\
 					'and reconcile = False  '\
@@ -549,9 +544,20 @@ class account_voucher(osv.osv):
 class writeoff(osv.Model):
 	_name = 'writeoff'
 
+	def create(self, cr, uid, vals, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		else :
+			inv_id = context['invoice_id']
+			invoice = {'invoice_id':inv_id}
+			vals = dict(vals.items()+invoice.items()) 
+
+		return super(writeoff, self).create(cr, uid, vals, context=context)
+
 	_columns = {
-		'voucher_id' : fields.many2one('account.voucher','Voucher ID'),
-		'invoice_id' : fields.many2one('account.invoice','Invoice ID'),
+		'voucher_id' : fields.many2one('account.voucher','Voucher'),
+		'invoice_id' : fields.many2one('account.invoice','Invoice'),
 		'name' : fields.char('Description',required=True),
 		'amount' : fields.float('Amount',required=True),
 		'account_id' : fields.many2one('account.account','Counterpart Account',domain="[('type','=','other')]",required=True),
