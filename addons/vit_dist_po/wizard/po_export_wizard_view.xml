@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+      <record id="view_po_export_wizard_xls" model="ir.ui.view">
+        <field name="name">Export PO/RFQ</field>
+        <field name="model">po.export.wizard</field>
+        <field name="arch" type="xml">
+          <form string="export PO/RFQ" version="7.0">
+            <group style="width:400px;"> 
+              <!-- <field name="no"/> -->
+              <field name="type"/>
+            </group>
+            <footer>
+              <button icon="gtk-execute" name="po_xls_export" string="Export" type="object" class="oe_highlight"/>
+              <button string="Cancel" special="cancel" />
+            </footer>
+          </form>
+        </field>
+      </record>
+  
+  </data>
+</openerp>

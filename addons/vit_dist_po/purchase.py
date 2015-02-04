@@ -62,13 +62,13 @@ class product_product(osv.osv):
             positive_operators = ['=', 'ilike', '=ilike', 'like', '=like']
             ids = []
             if operator in positive_operators:
-                ids = self.search(cr, user, [('default_code','=',name)]+ args, limit=limit, context=context)
+                ids = self.search(cr, user, [('default_code',operator,name)]+ args, limit=limit, context=context)
                 #search bds barcode
                 if not ids:
-                    ids = self.search(cr, user, [('barcode','=',name)]+ args, limit=limit, context=context)
+                    ids = self.search(cr, user, [('barcode',operator,name)]+ args, limit=limit, context=context)
                     # ean13 = default field
-                    if not ids:
-                        ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
+                    # if not ids:
+                    #     ids = self.search(cr, user, [('ean13','=',name)]+ args, limit=limit, context=context)
             if not ids and operator not in expression.NEGATIVE_TERM_OPERATORS:
                 # Do not merge the 2 next lines into one single search, SQL search performance would be abysmal
                 # on a database with thousands of matching products, due to the huge merge+unique needed for the
@@ -722,9 +722,10 @@ class purchase_order(osv.osv):
         'weight_tot'     : fields.float('Total Weight',help='Total weight in kg', readonly=True),
         # 'effective_day'  : fields.integer('Effective Day'),
         'days_cover'     : fields.integer('Days Cover'),
-        'location_ids'   : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location', readonly=True, states={'draft':[('readonly',False)]}),
+        'location_ids'   : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location', readonly=True, states={'draft':[('readonly',False)]}, domain=[('usage','=','internal'),]),
         'principal_ids'  : fields.many2many('res.partner','res_partner_po_rel','po_id','user_id',"User's Principal", readonly=True, states={'draft':[('readonly',False)]}),
-        'loc_x'          : fields.many2one('stock.location',"Destination",domain="[('id','in',location_ids[0][2]),('usage','<>','view'),]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
+        'loc_x'          : fields.many2one('stock.location',"Cabang",domain="[('id','in',location_ids[0][2]),('usage','<>','view'),]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
+        'loc_real'       : fields.many2one('stock.location',"Destination",domain="[('location_id','=',loc_x),('usage','<>','view'),]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
         'partner_x'      : fields.many2one('res.partner',"Supplier",domain="[('id','in',principal_ids[0][2])]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]},
             change_default=True, track_visibility='always',),
         # 'sch_ids1'       : fields.one2many('purchase.order.schedule.r1','po_id',"R1"), 
@@ -752,7 +753,7 @@ class purchase_order(osv.osv):
         # 'sch_ids_date'        : fields.one2many('purchase.order.date','po_id',"D"),
         # TODO: ini dipake buat report excel > 'sch_ids_cumul'  : fields.one2many('purchase.order.schedule.cumul','po_id',"Detail"),
         'sch_ids'        : fields.one2many('purchase.order.schedule','po_id',"Schedule Detail", readonly=True, states={'draft':[('readonly',False)]}),
-        'order_lines_detail' : fields.one2many('purchase.order.line.detail','po_id',"Lines Detail"), 
+        # 'order_lines_detail' : fields.one2many('purchase.order.line.detail','po_id',"Lines Detail"), 
         # "week_periode"  : fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5')],"Week of Month"),
 
         'w1'                : fields.date('Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
@@ -869,6 +870,29 @@ class purchase_order(osv.osv):
         #         q11 += y[2]['p1']
         # if q11 > percent_r1:
 
+    
+    # def wkf_confirm_order(self, cr, uid, ids, context=None):
+    #     import pdb;pdb.set_trace()
+    #     return super(purchase_order,self).wkf_confirm_order(cr, uid, ids, context)
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        if not default:
+            default = {}
+        emp = self.pool.get('hr.employee').search(cr,uid,[('user_id','=',uid)],)
+        if emp <> []:
+            loc = self.pool.get('hr.employee').browse(cr,uid,emp,)[0].location_id.code
+            poname = str(loc[0:3] or '') + 'SPO' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
+        default.update({
+            'state':'draft',
+            'shipped':False,
+            'invoiced':False,
+            'invoice_ids': [],
+            'picking_ids': [],
+            'partner_ref': '',
+            'name': poname,
+        })
+        return super(purchase_order, self).copy(cr, uid, id, default, context)
+
     def hapus_quotation(self,cr,uid,ids=None,context=None):
         # import pdb;pdb.set_trace()
         ids = self.search(cr,uid,[('state','=','draft')],) 
@@ -884,7 +908,7 @@ class purchase_order(osv.osv):
             loc = self.pool.get('hr.employee').browse(cr,uid,emp,)[0].location_id.code
             # poname = str(loc or '') + 'FPH' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
             # BDG-SPO/15-0000001
-            poname = str(loc[0:3] or '') + 'SPO' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
+            poname = str(loc[0:3] or '') + '-SPO/' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
             vals['name'] = poname 
         vol=0;wei=0
         for il in vals['order_line']:
@@ -1028,7 +1052,7 @@ class purchase_order(osv.osv):
         todo_moves = []
         stock_move = self.pool.get('stock.move')
         wf_service = netsvc.LocalService("workflow")
-        mgids = []
+        # mgids = []
         for order_line in order_lines:
             if not order_line.product_id:
                 continue
@@ -1037,20 +1061,22 @@ class purchase_order(osv.osv):
             if order_line.product_qty == 0.00:
                 continue
             if order_line.product_id.type in ('product', 'consu'):
-                # tambah stok move bayangan di move_group_ids
-                mgids.append((0,0,{'product_qty':order_line.product_qty,'product_id':order_line.product_id.id}))
+                # # tambah stok move bayangan di move_group_ids
+                # mgids.append((0,0,{'product_qty':order_line.product_qty,'product_id':order_line.product_id.id}))
                 
                 move = stock_move.create(cr, uid, self._prepare_order_line_move(cr, uid, order, order_line, picking_id, context=context))
                 if order_line.move_dest_id and order_line.move_dest_id.state != 'done':
                     order_line.move_dest_id.write({'location_id': order.location_id.id})
                 todo_moves.append(move)
-        
-        # tambah di stock piking in
-        # import pdb;pdb.set_trace()
-        self.pool.get('stock.picking.in').write(cr, uid, picking_id, {'move_group_ids':mgids}, context=context)
+
+        # Ini gg dipake = field bayangan gg dibutuhin
+        # # tambah di stock piking in
+        # self.pool.get('stock.picking.in').write(cr, uid, picking_id, {'move_group_ids':mgids}, context=context)
         
         stock_move.action_confirm(cr, uid, todo_moves)
         stock_move.force_assign(cr, uid, todo_moves)
+        # import pdb;pdb.set_trace()
+        # di cek dulu(dipindah) sama workflow untuk logistik dan office logistik
         wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
         return [picking_id]
 
@@ -1461,7 +1487,7 @@ class purchase_order(osv.osv):
             for x in loc:
                 location_ids.append(x[0])
             return [(6, 0, location_ids)]
-        return False
+        return []
 
     def _get_default_principal(self, cr, uid, context=None):  
         if context is None:
@@ -1474,11 +1500,14 @@ class purchase_order(osv.osv):
             for x in prin:
                 principal_ids.append(x[0])
             return [(6,0,principal_ids)]
-        return False
+        return []
 
-    def onchange_w1(self, cr, uid, ids, w1, context=None):
+    def onchange_w1(self, cr, uid, ids, w1, order_line, context=None):
+        # import pdb;pdb.set_trace()
         if not ids:
-            return {'value':{'minimum_planned_date':w1,}}
+            for l in order_line:
+                l[2]['date_planned']=w1
+            return {'value':{'order_line':order_line,}}
 
     def onchange_locx(self, cr, uid, ids, loc_x, location_id, context=None):
         if loc_x:
@@ -1555,110 +1584,6 @@ class purchase_order(osv.osv):
         }
 
 purchase_order()
-
-
-#----------------------------------------------------------
-# Stock Picking
-#----------------------------------------------------------
-class stock_picking(osv.osv):
-    _name = "stock.picking"
-    _inherit = "stock.picking"
-
-    def action_process(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        """Open the partial picking wizard"""
-        context.update({
-            'active_model': self._name,
-            'active_ids': ids,
-            'active_id': len(ids) and ids[0] or False
-        })
-        return {
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'stock.partial.picking',
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-            'context': context,
-            'nodestroy': True,
-        }
-
-    def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id,
-        invoice_vals, context=None):
-        """ Builds the dict containing the values for the invoice line
-            @param group: True or False
-            @param picking: picking object
-            @param: move_line: move_line object
-            @param: invoice_id: ID of the related invoice
-            @param: invoice_vals: dict used to created the invoice
-            @return: dict that will be used to create the invoice line
-        """
-        if group:
-            name = (picking.name or '') + '-' + move_line.name
-        else:
-            name = move_line.name
-        origin = move_line.picking_id.name or ''
-        if move_line.picking_id.origin:
-            origin += ':' + move_line.picking_id.origin
-
-        if invoice_vals['type'] in ('out_invoice', 'out_refund'):
-            account_id = move_line.product_id.property_account_income.id
-            if not account_id:
-                account_id = move_line.product_id.categ_id.\
-                        property_account_income_categ.id
-        else:
-            account_id = move_line.product_id.property_account_expense.id
-            if not account_id:
-                account_id = move_line.product_id.categ_id.\
-                        property_account_expense_categ.id
-        if invoice_vals['fiscal_position']:
-            fp_obj = self.pool.get('account.fiscal.position')
-            fiscal_position = fp_obj.browse(cr, uid, invoice_vals['fiscal_position'], context=context)
-            account_id = fp_obj.map_account(cr, uid, fiscal_position, account_id)
-        # set UoS if it's a sale and the picking doesn't have one
-        uos_id = move_line.product_uos and move_line.product_uos.id or False
-        if not uos_id and invoice_vals['type'] in ('out_invoice', 'out_refund'):
-            uos_id = move_line.product_uom.id
-        
-        if invoice_vals['type'] == 'in_invoice':
-            small_qty = move_line.product_uos_qty * (move_line.product_uos.factor or 1)
-        
-        return {
-            'name': name,
-            'origin': origin,
-            'invoice_id': invoice_id,
-            'uos_id': uos_id,
-            'uom_id': move_line.product_id.product_tmpl_id.uom_id.id,
-            'product_id': move_line.product_id.id,
-            'account_id': account_id,
-            'price_unit': self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type']),
-            'discount': self._get_discount_invoice(cr, uid, move_line),
-            'quantity2': 0,#move_line.product_uos_qty or move_line.product_qty,
-            'qty': move_line.product_uos_qty,
-            'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
-            'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
-        }
-
-    '''
-    def _get_price_unit_invoice(self, cr, uid, move_line, type, context=None):
-        """ Gets price unit for invoice
-        @param move_line: Stock move lines
-        @param type: Type of invoice
-        @return: The price unit for the move line
-        """
-        if context is None:
-            context = {}
-
-        if type in ('in_invoice', 'in_refund'):
-            # Take the user company and pricetype
-            context['currency_id'] = move_line.company_id.currency_id.id
-            amount_unit = move_line.product_id.price_get('standard_price', context=context)[move_line.product_id.id]
-            return amount_unit
-        else:
-            return move_line.product_id.list_price
-    '''
-
-stock_picking()
 
 # class purchase_order_schedule_cumul(osv.Model):
 #     _name = 'purchase.order.schedule.cumul'

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- <record id="act_draft2logistik" model="workflow.activity">
+            <field name="wkf_id" ref="stock.wkf_picking"/>
+            <field name="name">logistic_checking</field>
+            <field name="kind">function</field>
+            <field name="action">logistik_confirm()</field>
+        </record>
+        <record id="act_logistik2office" model="workflow.activity">
+            <field name="wkf_id" ref="stock.wkf_picking"/>
+            <field name="name">logistic_office_checking</field>
+            <field name="kind">function</field>
+            <field name="action">send2office()</field>
+        </record> 
+        <record id="act_approve_accounting" model="workflow.activity">
+            <field name="wkf_id" ref="stock.wkf_picking"/>
+            <field name="name">accounting.cek</field>
+            <field name="kind">function</field>
+            <field name="action">test_finished()</field>
+        </record> -->
+
+        <record id="trans_assigned_move2_bypass" model="workflow.transition">
+            <field name="act_from" ref="stock.act_assigned"/>
+            <field name="act_to" ref="stock.act_move"/>
+            <field name="signal"></field>
+            <field name="condition">test_bypass()</field>
+        </record>
+        <!-- <record id="trans_acc_approve_move" model="workflow.transition">
+            <field name="act_from" ref="stock.act_move"/>
+            <field name="act_to" ref="act_approve_accounting"/>
+            <field name="condition">test_finished()</field>
+        </record>
+        <record id="stock.trans_move_done" model="workflow.transition">
+            <field name="act_from" ref="act_approve_accounting"/>
+            <field name="act_to" ref="stock.act_done"/>
+            <field name="condition">test_finished()</field>
+        </record>
+        <record id="stock.trans_draft_confirmed" model="workflow.transition">
+            <field name="act_from" ref="stock.act_draft"/>
+            <field name="act_to" ref="act_draft2logistik"/>
+            <field name="signal">logistik_confirm</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_office_logistik_assigned" model="workflow.transition">
+            <field name="act_from" ref="act_draft2logistik"/>
+            <field name="act_to" ref="act_logistik2office"/>
+            <field name="signal">send2office</field>
+            <field name="condition">True</field>
+        </record>
+        <record id="trans_office_logistik_ok" model="workflow.transition">
+            <field name="act_from" ref="act_logistik2office"/>
+            <field name="act_to" ref="stock.act_confirmed"/>
+            <field name="signal">office2move</field>
+            <field name="condition">True</field>
+        </record> -->
+
+    </data>
+</openerp>
