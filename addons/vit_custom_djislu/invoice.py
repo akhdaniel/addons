@@ -67,7 +67,7 @@ class account_invoice(osv.osv):
 		if ori != False and nm != False :
 			orinm = ori+nm
 		jut = va.journal_id.type
-		loca = va.location_id2.id
+		loca = va.location_id2.warehouse_id.lot_stock_id.id
 
 		so_obj = self.pool.get('stock.move')
 
@@ -139,7 +139,7 @@ class account_invoice(osv.osv):
 
 		va = self.browse(cr,uid,ids)[0]
 		jut = va.journal_id.type
-		loca = va.location_id2.id
+		loca = va.location_id2.warehouse_id.lot_stock_id.id
 		ori = va.origin or ''
 		nama = va.name or ''
 
@@ -152,7 +152,7 @@ class account_invoice(osv.osv):
 					so = so_obj.browse(cr,uid,sos)[0]
 
 					so_obj.write(cr,uid,so.id,{'state':'done'},context=context)
-
+		#import pdb;pdb.set_trace()
 		if jut == 'sale_refund' : # sales refund journal
 			for x in va.invoice_line:
 				prod = x.product_id.id
@@ -170,7 +170,7 @@ class account_invoice(osv.osv):
 									'date_expacted':skrg,
 									'product_uos':uos_id,
 									'product_uos_qty':uos_qty/cf,														
-									'product_qty':uos_qty,#qty reealnya disini krn sdh menjadi fieldfungsi
+									'product_qty':uos_qty,#qty realnya disini krn sdh menjadi fieldfungsi
 									'product_uom':uom_id,										
 									'state':'done',										
 									})	

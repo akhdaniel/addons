@@ -38,6 +38,24 @@
             </field>
         </record>
 
+        <record id="view_sj_tree2" model="ir.ui.view">
+            <field name="name">Picking List</field>
+            <field name="model">surat.jalan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Picking List" create="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="user_id" invisible="0"/>
+                    <field name="based_route_id"/>                    
+                    <field name="car_id"/>
+                    <field name="driver_id2"/>
+                    <field name="location_id"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="view_sj_form" model="ir.ui.view">
             <field name="name">Picking list</field>
             <field name="model">surat.jalan</field>
@@ -191,7 +209,7 @@
 
         <!-- state draft -->
         <record id="action_sj" model="ir.actions.act_window">
-            <field name="name">Draft</field>
+            <field name="name">Picking List</field>
             <field name="res_model">surat.jalan</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -211,11 +229,11 @@
 
         <!-- state in progress dan done -->
         <record id="action_sj_onprogress" model="ir.actions.act_window">
-            <field name="name">OnProgress/Done</field>
+            <field name="name">Delivery Checking</field>
             <field name="res_model">surat.jalan</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_sj_tree"/>
+            <field name="view_id" ref="view_sj_tree2"/>
             <field name="search_view_id" ref="view_sj_search"/>
             <field name="domain">[('state','!=','draft')]</field>
             <field name="context">{'contact_display': 'partner_address', 'search_default_mypicking': 1}</field>
@@ -229,9 +247,9 @@
 
         </record>        
 
-        <menuitem id="menu_action_sj" name="Picking List" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/>
-        <menuitem action="action_sj" id="menu_action_sj1" parent="menu_action_sj" sequence="10"/> 
-        <menuitem action="action_sj_onprogress" id="menu_action_sj2" parent="menu_action_sj" sequence="20"/>     
+        <!-- <menuitem id="menu_action_sj" name="Picking List" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/> -->
+        <menuitem action="action_sj" id="menu_action_sj1" parent="stock.menu_stock_warehouse_mgmt" sequence="6"/> 
+        <menuitem action="action_sj_onprogress" id="menu_action_sj2" parent="stock.menu_stock_warehouse_mgmt" sequence="7"/>     
 
 
         <!-- Sequences for picking list -->
