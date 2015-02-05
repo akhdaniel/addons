@@ -24,7 +24,7 @@ Manage :
         'lph.xml',
         'invoice.xml',
         'voucher.xml',
-
+	'claim.xml',
         "reports/lph_report.xml",        
         "reports/voucher_report.xml",  
         "security/ir.model.access.csv",      
