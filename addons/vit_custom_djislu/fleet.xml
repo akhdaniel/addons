@@ -139,7 +139,7 @@
                                     <field name="product_qty" readonly="True" sum="Total Qty"/>
                                     <field name="product_uom" readonly="True"/>
                                      <field name="location_id" invisible="True"/>
-                                    <field name="prodlot_id" context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=?',product_id)]" on_change="onchange_lot_id(prodlot_id,product_qty, location_id, product_id, product_uom)" options="{'limit': 8, 'create': false, 'create_edit': false}" required="True"/>
+                                    <field name="prodlot_id" context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=?',product_id),('is_bad','=',False)]" on_change="onchange_lot_id(prodlot_id,product_qty, location_id, product_id, product_uom)" options="{'limit': 8, 'create': false, 'create_edit': false}" required="True"/>
                                     <button name="410" states="draft,waiting,confirmed,assigned" string="Split" type="action" icon="gtk-justify-fill"/>
                                     <field name="state" invisible="1"/>
                                 </tree>
