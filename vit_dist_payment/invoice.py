@@ -11,7 +11,6 @@ class account_invoice(osv.osv):
 
 
 	def create(self, cr, uid, vals, context=None):
-		#import pdb;pdb.set_trace()
 		if 'is_claim' in vals:
 			if vals['is_claim'] == True:
 				jur_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','sale_refund'),('is_claim','=',True)],context=context)
@@ -20,17 +19,19 @@ class account_invoice(osv.osv):
 					jur_claim = {'journal_id': jur_id}
 				vals = dict(vals.items()+jur_claim.items()) 
 		elif 'is_claim' not in vals:
-			jur_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','sale_refund'),('is_claim','=',False)],context=context)
-			if jur_ids != []:
-				jur_id = jur_ids[0]
-				jur_claim = {'journal_id': jur_id}
-			vals = dict(vals.items()+jur_claim.items()) 				
+			#jika bukan dari SO
+			if 'origin' not in vals:
+				jur_ids = self.pool.get('account.journal').search(cr,uid,[('type','=','sale_refund'),('is_claim','=',False)],context=context)
+				if jur_ids != []:
+					jur_id = jur_ids[0]
+					jur_claim = {'journal_id': jur_id}
+				vals = dict(vals.items()+jur_claim.items()) 				
 		return super(account_invoice, self).create(cr, uid, vals, context=context)
 
 	def _get_journal(self, cr, uid, context=None):
 		if context is None:
 			context = {}
-		
+		#import pdb;pdb.set_trace()
 		type_inv = context.get('type', 'out_invoice')
 		user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
 		company_id = context.get('company_id', user.company_id.id)
