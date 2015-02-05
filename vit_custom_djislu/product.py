@@ -213,7 +213,7 @@ class master_harga_jual(osv.osv):
 
 	_columns = {
 		'product_id' : fields.many2one('product.product',required=True, string="Code"),
-		'type_partner_id' : fields.many2one('master.type.partner','Group Price',change_default=True,required=True),
+		'type_partner_id' : fields.many2one('res.partner.category','Group Price',change_default=True,required=True),
 		'big_price' : fields.float('Big Price',required=True),
 		'small_price' : fields.float('Small Price',required=True),
 		'date_from' : fields.date('Start Date',required=True),

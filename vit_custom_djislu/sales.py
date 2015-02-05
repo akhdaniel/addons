@@ -22,13 +22,29 @@ class sale_order_line(osv.osv):
 		uos = prod_boj.uom_po_id.id
 		uom = prod_boj.uom_id.id
 		supp = prod_boj.principal_id.id
-		uos_supp = {'product_uos':uos,'supplier_id':supp,'product_uom_qty':uom}
-		vals = dict(vals.items()+uos_supp.items()) 
+		#import pdb;pdb.set_trace()
+
+		group =  self.pool.get('sale.order').browse(cr,uid,vals['order_id']).partner_id.category_id[0].id  		
+		
+		price = self.pool.get('master.harga.jual')
+
+		#inisialisasi tanggal aktif(sekarang)
+		skrg = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
+
+		#cari  di tabel harga jual yang masih berlaku
+		u_price = price.search(cr,uid,[('product_id','=',prod_id),('type_partner_id','=',group),('date_from','<=',skrg),('date_to','>=',skrg)])
+		
+		u_prc = u_price[0]
+		list_prc = price.browse(cr,uid,u_prc)
+		small_price = list_prc.small_price 
+
+		uos_supp_price = {'product_uos':uos,'supplier_id':supp,'product_uom_qty':uom,'price_unit':small_price}
+		vals = dict(vals.items()+uos_supp_price.items()) 
 		return super(sale_order_line, self).create(cr, uid, vals, context=context)
 
 	def _get_reg_disc_tot(self,cr,uid,ids,field,args,context=None):
 		result = {}
-		#import pdb;pdb.set_trace()
+		
 		for res in self.browse(cr,uid,ids):
 			r_disc= 0.00
 			if res.disc_value != 0.00:
@@ -449,7 +465,7 @@ class sale_order_line(osv.osv):
 
 		cust = partner_obj.browse(cr,uid,partner_id)
 		prod_supplier = product_obj.seller_ids
-		group = cust.type_partner_id.id
+		group = cust.category_id[0].id
 
 		#jika product tidak mempunyai supplier
 		if prod_supplier == [] :
