@@ -55,13 +55,13 @@
             <field name="name">stock.moves.summary.tree</field>
             <field name="model">stock.moves.summary</field>
             <field name="arch" type="xml">
-                <tree string="Stock Move Summary" create='false' colors="blue:bad_product_qty &gt; 0.00">
-                    <field name="default_code"/>
-                    <field name="barcode"/>
-                    <field name="product_id"/>
-                    <field name="po_qty"/>
-                    <field name="product_qty"/>
-                    <field name="bad_product_qty"/>
+                <tree string="Stock Move Summary" editable="bottom" create='false' colors="blue:bad_product_qty &gt; 0.00">
+                    <field name="default_code" readonly='True'/>
+                    <field name="barcode" readonly='True'/>
+                    <field name="product_id" readonly='True'/>
+                    <field name="po_qty" readonly='True'/>
+                    <field name="product_qty" readonly='True'/>
+                    <field name="bad_product_qty" readonly='True'/>
                     <field name="office_qty"/>
                  </tree>
             </field>
@@ -95,7 +95,7 @@
             <field name="name">stock.moves.loss.summary.tree</field>
             <field name="model">stock.moves.loss.summary</field>
             <field name="arch" type="xml">
-                <tree string="Stock Move Summary" create='false'>
+                <tree string="Stock Move Summary" create='false' editable="bottom">
                     <field name="default_code"/>
                     <field name="barcode"/>
                     <field name="product_id"/>
@@ -106,12 +106,23 @@
         </record>
 
 <!-- new incoming shipmet tree ref -->
+        <record id="stock_move_tree_cust_search" model="ir.ui.view">
+            <field name="name">stock.move.tree.cust.select</field>
+            <field name="model">stock.move</field>
+            <field name="arch" type="xml">
+                <search string="Solvencias">
+                    <filter string="Hide Bad" name="hide_bad" domain="[('is_bad','is',False)]" help="..."/>
+                </search>
+            </field>
+        </record>
+
         <record id="stock_view_move_picking_tree_hide" model="ir.ui.view">
             <field name="name">stock.move.tree.cust</field>
             <field name="model">stock.move</field>
             <field eval="3" name="priority"/>
-            <field name="arch" type="xml">
-                <tree colors="grey:scrapped == True" string="Stock Moves">
+            <field name="context">{"search_default_hide_bad":1}</field>
+            <field name="arch" type="xml"> 
+                <tree colors="grey:scrapped == True; red:is_bad == True" string="Stock Moves">
                     <field name='default_code'/>
                     <field name='barcode'/>
                     <field name="product_id"/>
@@ -149,7 +160,7 @@
                         icon="terp-accessories-archiver+"
                         states="draft,assigned,confirmed"/>
                       <field name="location_dest_id" groups="stock.group_locations" invisible="1" />
-                      <field name="state" invisible="1"/>
+                      <field name="state" invisible="0"/>
                       <field name="is_bad" invisible="1"/>
                 </tree>
             </field>
@@ -161,24 +172,22 @@
             <field name="model">stock.picking.in</field>
             <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
-                <!-- <xpath expr="/form/header//button[@name='draft_force_assign']" position="replace">
-                </xpath> -->
-                <xpath expr="//button[@name='draft_validate']" position="after">
-                    <button name="logistik_confirm" states="assigned" string="Confirm &amp; Send to Office" type="object" class="oe_highlight"/>
+                <xpath expr="/form/header//button[@name='draft_validate']" position="after">
+                    <button name="logistik_confirm" states="logistik" string="Confirm &amp; Send to Office" type="object" class="oe_highlight"/>
                 </xpath>
                 <xpath expr="//button[@name='action_process']" position="replace">
-                    <button name="action_process" states="logistic_received" string="Receive &amp; Send to Accounting" type="object" class="oe_highlight" context="{'bypass': True}"/>
-                    <button name="accountingapproved" string="Approve Accounting" states="office_logistic_approved" type="object" class="oe_highlight"/>
-                </xpath>
+                    <button name="officeapproved" states="assigned" string="Receive &amp; Send to Accounting" type="object" class="oe_highlight" context="{'bypass': True}"/>
+                    <button name="accountingapproved" string="Approve Accounting" states="accounting" type="object" class="oe_highlight"/>
+                </xpath> 
                 <xpath expr="//field[@name='state']" position="replace">
                     <field name="state" widget="statusbar" 
-                        statusbar_visible="draft,assigned,logistic_received,office_logistic_approved,accounting_approved,done" 
+                        statusbar_visible="draft,logistik,assigned,accounting,done" 
                         statusbar_colors='{"shipping_except":"red","invoice_except":"red","waiting_date":"blue"}'/>
                 </xpath>
                 <page string="Products" position='after'>
                     <page string="Summary">
                         <button name="query_summarize_stock_move" string="Refresh Summary" type="object"
-                        icon="gtk-refresh" states="draft,logistic_received,office_logistic_approved,assigned,confirmed"/>
+                        icon="gtk-refresh" states="draft,logistik,assigned,confirmed"/>
                         <field name='move_summary_ids'/>
                     </page>
                     <page string="Loss Summary">
@@ -191,20 +200,31 @@
                 </field>
                 <field name='move_lines' position="replace">
                     <field name="move_lines" string="Stock Move" context="{'address_in_id': partner_id, 'picking_type': 'in', 'form_view_ref':'stock.view_move_picking_form', 'tree_view_ref':'stock_view_move_picking_tree_hide'}" options='{"reload_on_button": true}'/>
-                    <!-- on_change='onchange_movelines(move_lines,context)'  -->
                 </field>
             </field>
         </record>        
 
-        <record id="view_move_picking_form_nett_add" model="ir.ui.view">
+        <!-- <record id="view_move_picking_form_nett_add" model="ir.ui.view">
             <field name="name">stock.move.form.nett.addition</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
                 <label for="product_uos_qty" position="before">
-                    <!-- <field name="product_qty_nett"/>
-                    <field name="product_qty_diff" readonly='True'/> -->
+                    <field name="product_qty_nett"/>
+                    <field name="product_qty_diff" readonly='True'/>
                 </label>
+            </field>
+        </record> -->
+
+<!-- Stock bad Location  -->
+        <record id="view_stock_location_bad_form" model="ir.ui.view">
+            <field name="name">stock.location.bad.form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/group[@string='Additional Information']/field[@name='scrap_location']" position="after">
+                    <field name="bad_location"/>
+                </xpath>
             </field>
         </record>
 

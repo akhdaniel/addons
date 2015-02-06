@@ -43,10 +43,10 @@ class stock_production_lot(osv.osv):
 stock_production_lot()
 
 
-
 class stock_move(osv.osv):
     _name = "stock.move"
     _inherit = "stock.move"
+    _order = 'is_bad'
 
     _columns = {
         'is_bad': fields.boolean('Is Bad?'),
@@ -144,7 +144,12 @@ class split_in_production_lot(osv.osv_memory):
                             'reason':line.reason or ''},
                         context=context)
 
-                    move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state, 'is_bad':line.is_bad, 'reason':line.reason or ''})
+                    # is bad = True : move to bad stock
+                    move_datas = {'prodlot_id': prodlot_id, 'state':move.state, 'is_bad':line.is_bad, 'reason':line.reason or ''}
+                    if line.is_bad:
+                        [bad_stock] = self.pool.get('stock.location').search(cr,uid,[('location_id','=',move.location_dest_id.location_id.id),('bad_location','=',True)],limit=1)
+                        move_datas.update({'location_dest_id':bad_stock})
+                    move_obj.write(cr, uid, [current_move], move_datas)
 
                     update_val = {}
                     if quantity_rest > 0:

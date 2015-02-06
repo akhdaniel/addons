@@ -115,182 +115,6 @@ class stock_picking(osv.osv):
     #             ok = True
     #     return ok
 
-    # FIXME: needs refactoring, this code is partially duplicated in stock_move.do_partial()!
-    def do_partial(self, cr, uid, ids, partial_datas, context=None):
-        """ Makes partial picking and moves done.
-        @param partial_datas : Dictionary containing details of partial picking
-                          like partner_id, partner_id, delivery_date,
-                          delivery moves with product_id, product_qty, uom
-        @return: Dictionary of values
-        """
-        if context is None:
-            context = {}
-        else:
-            context = dict(context)
-        res = {}
-        move_obj = self.pool.get('stock.move')
-        product_obj = self.pool.get('product.product')
-        currency_obj = self.pool.get('res.currency')
-        uom_obj = self.pool.get('product.uom')
-        sequence_obj = self.pool.get('ir.sequence')
-        wf_service = netsvc.LocalService("workflow")
-        for pick in self.browse(cr, uid, ids, context=context):
-            new_picking = None
-            complete, too_many, too_few = [], [], []
-            move_product_qty, prodlot_ids, product_avail, partial_qty, product_uoms = {}, {}, {}, {}, {}
-            for move in pick.move_lines:
-                if move.state in ('done', 'cancel'):
-                    continue
-                partial_data = partial_datas.get('move%s'%(move.id), {})
-                product_qty = partial_data.get('product_qty',0.0)
-                move_product_qty[move.id] = product_qty
-                product_uom = partial_data.get('product_uom',False)
-                product_price = partial_data.get('product_price',0.0)
-                product_currency = partial_data.get('product_currency',False)
-                prodlot_id = partial_data.get('prodlot_id')
-                prodlot_ids[move.id] = prodlot_id
-                product_uoms[move.id] = product_uom
-                partial_qty[move.id] = uom_obj._compute_qty(cr, uid, product_uoms[move.id], product_qty, move.product_uom.id)
-                if move.product_qty == partial_qty[move.id]:
-                    complete.append(move)
-                elif move.product_qty > partial_qty[move.id]:
-                    too_few.append(move)
-                else:
-                    too_many.append(move)
-
-                # Average price computation
-                if (pick.type == 'in') and (move.product_id.cost_method == 'average'):
-                    product = product_obj.browse(cr, uid, move.product_id.id)
-                    move_currency_id = move.company_id.currency_id.id
-                    context['currency_id'] = move_currency_id
-                    qty = uom_obj._compute_qty(cr, uid, product_uom, product_qty, product.uom_id.id)
-
-                    if product.id not in product_avail:
-                        # keep track of stock on hand including processed lines not yet marked as done
-                        product_avail[product.id] = product.qty_available
-
-                    if qty > 0:
-                        new_price = currency_obj.compute(cr, uid, product_currency,
-                                move_currency_id, product_price, round=False)
-                        new_price = uom_obj._compute_price(cr, uid, product_uom, new_price,
-                                product.uom_id.id)
-                        if product_avail[product.id] <= 0:
-                            product_avail[product.id] = 0
-                            new_std_price = new_price
-                        else:
-                            # Get the standard price
-                            amount_unit = product.price_get('standard_price', context=context)[product.id]
-                            new_std_price = ((amount_unit * product_avail[product.id])\
-                                + (new_price * qty))/(product_avail[product.id] + qty)
-                        # Write the field according to price type field
-                        product_obj.write(cr, uid, [product.id], {'standard_price': new_std_price})
-
-                        # Record the values that were chosen in the wizard, so they can be
-                        # used for inventory valuation if real-time valuation is enabled.
-                        move_obj.write(cr, uid, [move.id],
-                                {'price_unit': product_price,
-                                 'price_currency_id': product_currency})
-
-                        product_avail[product.id] += qty
-
-            # every line of the picking is empty, do not generate anything
-            empty_picking = not any(q for q in move_product_qty.values() if q > 0)
-
-            for move in too_few:
-                product_qty = move_product_qty[move.id]
-                if not new_picking and not empty_picking:
-                    new_picking_name = pick.name
-                    self.write(cr, uid, [pick.id], 
-                               {'name': sequence_obj.get(cr, uid,
-                                            'stock.picking.%s'%(pick.type)),
-                               })
-                    pick.refresh()
-                    new_picking = self.copy(cr, uid, pick.id,
-                            {
-                                'name': new_picking_name,
-                                'move_lines' : [],
-                                'state':'draft',
-                            })
-                if product_qty != 0:
-                    defaults = {
-                            'product_qty' : product_qty,
-                            'product_uos_qty': product_qty, #TODO: put correct uos_qty
-                            'picking_id' : new_picking,
-                            'state': 'assigned',
-                            'move_dest_id': False,
-                            'price_unit': move.price_unit,
-                            'product_uom': product_uoms[move.id]
-                    }
-                    prodlot_id = prodlot_ids[move.id]
-                    if prodlot_id:
-                        defaults.update(prodlot_id=prodlot_id)
-                    move_obj.copy(cr, uid, move.id, defaults)
-                move_obj.write(cr, uid, [move.id],
-                        {
-                            'product_qty': move.product_qty - partial_qty[move.id],
-                            'product_uos_qty': move.product_qty - partial_qty[move.id], #TODO: put correct uos_qty
-                            'prodlot_id': False,
-                            'tracking_id': False,
-                        })
-
-            if new_picking:
-                move_obj.write(cr, uid, [c.id for c in complete], {'picking_id': new_picking})
-            for move in complete:
-                defaults = {'product_uom': product_uoms[move.id], 'product_qty': move_product_qty[move.id]}
-                if prodlot_ids.get(move.id):
-                    defaults.update({'prodlot_id': prodlot_ids[move.id]})
-                move_obj.write(cr, uid, [move.id], defaults)
-            for move in too_many:
-                product_qty = move_product_qty[move.id]
-                defaults = {
-                    'product_qty' : product_qty,
-                    'product_uos_qty': product_qty, #TODO: put correct uos_qty
-                    'product_uom': product_uoms[move.id]
-                }
-                prodlot_id = prodlot_ids.get(move.id)
-                if prodlot_ids.get(move.id):
-                    defaults.update(prodlot_id=prodlot_id)
-                if new_picking:
-                    defaults.update(picking_id=new_picking)
-                move_obj.write(cr, uid, [move.id], defaults)
-
-            # At first we confirm the new picking (if necessary)
-            if new_picking:
-                wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_confirm', cr)
-                # Then we finish the good picking
-                self.write(cr, uid, [pick.id], {'backorder_id': new_picking})
-                self.action_move(cr, uid, [new_picking], context=context)
-                
-                # workflow overide 
-                if not context.get('bypass',False):
-                
-                    wf_service.trg_validate(uid, 'stock.picking', new_picking, 'button_done', cr)
-                wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
-                
-                # workflow overide 
-                if pick.type == 'in':
-                    self.pool.get('stock.picking.in').write(cr,uid,pick.id,{'state': 'office_logistic_approved'})
-                
-                delivered_pack_id = new_picking
-                self.message_post(cr, uid, new_picking, body=_("Back order <em>%s</em> has been <b>created</b>.") % (pick.name), context=context)
-            elif empty_picking:
-                delivered_pack_id = pick.id
-            else:
-                self.action_move(cr, uid, [pick.id], context=context)
-                if not context.get('bypass',False):
-                    wf_service.trg_validate(uid, 'stock.picking', pick.id, 'button_done', cr)
-                
-                # workflow overide
-                if pick.type == 'in':
-                    self.pool.get('stock.picking.in').write(cr,uid,pick.id,{'state': 'office_logistic_approved'})
-                
-                delivered_pack_id = pick.id
-
-            delivered_pack = self.browse(cr, uid, delivered_pack_id, context=context)
-            res[pick.id] = {'delivered_picking': delivered_pack.id or False}
-
-        return res
-
 stock_picking()
 
 
@@ -307,7 +131,7 @@ class stock_moves_summary(osv.osv):
         'po_qty': fields.float("Qty DO"),
         'office_qty': fields.float("Qty Office",required=True),
         'gap_qty' : fields.float("Gap"),
-        # 'state':fields.related('pick_in_id','state',type="char",relation="stock.picking.in",string="State",store=True),
+        'state':fields.related('pick_in_id','state',type="selection",relation="stock.picking.in",string="State",store=True),
     }
 
     def onchange_office_qty(self, cr, uid, ids, po_qty, product_qty, office_qty, context=None):
@@ -323,12 +147,12 @@ class stock_moves_loss_summary(osv.osv):
     _order = 'product_id'
     
     _columns = {
-        'pick_in_id' : fields.many2one('stock.picking.in',"Picking",ondelete='cascade'),
-        'bad_product_qty' : fields.float("Loss"),
-        'product_id' : fields.many2one('product.product',"Products"),
-        'barcode' : fields.related('product_id','barcode',type="char",relation="product.product",string="Barcode",store=True),
-        'default_code' : fields.related('product_id','default_code',type="selection",relation="product.product",string="Code",store=True),
-        'reason': fields.char('Alasan'),
+        'pick_in_id' : fields.many2one('stock.picking.in',"Picking",ondelete='cascade',readonly=True),
+        'bad_product_qty' : fields.float("Loss",readonly=True),
+        'product_id' : fields.many2one('product.product',"Products",readonly=True),
+        'barcode' : fields.related('product_id','barcode',type="char",relation="product.product",string="Barcode",store=True,readonly=True),
+        'default_code' : fields.related('product_id','default_code',type="char",relation="product.product",string="Code",store=True,readonly=True),
+        'reason': fields.char('Alasan',readonly=True),
     }
 
 stock_moves_loss_summary()
@@ -342,34 +166,6 @@ class stock_picking(osv.osv):
         'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
     }
 
-    # overide fungsi done stock move karena ada status cek accounting
-    # def test_finished(self, cr, uid, ids):
-    #     """ Tests whether the move is in done or cancel state or not.
-    #     @return: True or False
-    #     """
-    #     '''Jika sudah approve accounting, move:done
-    #     Implement : overide workflow
-    #     '''
-    #     pick_in = self.pool.get('stock.picking.in').browse(cr,uid,ids[0],)
-    #     move_ids = self.pool.get('stock.move').search(cr, uid, [('picking_id', 'in', ids)])
-    #     for move in self.pool.get('stock.move').browse(cr, uid, move_ids):
-    #         if move.state not in ('done', 'cancel'):
-    #             if move.product_qty != 0.0:
-    #                 return False
-    #             elif pick_in.state == 'logistic_received':
-    #                 pick_in.write({'state': 'office_logistic_approved'})
-    #                 return False
-    #             else:
-    #                 move.write({'state': 'done'})
-    #     return True
-
-        # pick = self.browse(cr,uid,ids[0],)
-        # if pick.type == 'in' and pick.state == 'logistic_received':
-        #     self.pool.get('stock.picking.in').write(cr,uid,ids[0],{'state': 'office_logistic_approved'})
-        #     return False
-        # if pick.type == 'in' and pick.state == 'office_logistic_approved':
-        #     return False
-
 
 class stock_picking_in(osv.osv):
     _name = "stock.picking.in"
@@ -377,15 +173,29 @@ class stock_picking_in(osv.osv):
 
     def logistik_confirm(self, cr, uid, ids, context=None):
         """ Test oleh logistik.
-        @return: True or False
         """
-        return self.write(cr,uid,ids,{'state': 'logistic_received'})
+        self.write(cr,uid,ids,{'state':'assigned'})
+        return True
 
     def officeapproved(self, cr, uid, ids, context=None):
-        """ Test oleh office logs.
-        @return: True or False
+        """ Receive oleh office logs.
+        
+        Makes moves done. Send partial picking to accounting
+        @param partial_datas : Dictionary containing details of partial picking
+                          like partner_id, partner_id, delivery_date,
+                          delivery moves with product_id, product_qty, uom
+        @return: true or false
         """
-        return self.write(cr,uid,ids,{'state': 'office_logistic_approved'})
+        if context is None:
+            context = {}
+        else:
+            context = dict(context)
+        for move in self.browse(cr,uid,ids,)[0].move_lines:
+            if not move.prodlot_id:
+                raise osv.except_osv(_('Serial Number kosong!'), _('Isi S/N untuk produk \n%s.') % _(move.product_id.name_template))
+        self.action_move(cr, uid, ids, context=context)
+        self.write(cr,uid,ids,{'state': 'accounting'})           
+        return True 
 
     def accountingapproved(self, cr, uid, ids, context=None):
         print self.write(cr,uid,ids,{'state': 'done'})
@@ -395,20 +205,18 @@ class stock_picking_in(osv.osv):
         'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
         'state': fields.selection(
             [('draft', 'Draft'),
+            ('logistik', 'Receiving logistik'),
             ('auto', 'Waiting Another Operation'),
-            ('confirmed', 'Waiting Availability'),     
-            ('assigned', 'Ready to Receive'),  
-            ('logistic_received', 'Ready to Confirm'),
-            ('office_logistic_approved', 'Ready to Approve'),
+            ('confirmed', 'Waiting Availability'),
+            ('assigned', 'Ready to Receive by Office'),
+            ('accounting', 'Checking Accounting'),
             ('done', 'Received'),
             ('cancel', 'Cancelled'),],
             'Status', readonly=True, select=True,
             help="""* Draft: not confirmed yet and will not be scheduled until confirmed\n
                  * Waiting Another Operation: waiting for another move to proceed before it becomes automatically available (e.g. in Make-To-Order flows)\n
                  * Waiting Availability: still waiting for the availability of products\n
-                 * Ready to Receive: products reserved, waiting for confirmation in logistics.\n
-                 * Ready to Confirm: products confirmed in warehouse, waiting for confirmation in office logistics.\n
-                 * Ready to Approve: products confirmed in warehouse, noted, waiting for confirmation in Accounting.\n
+                 * Ready to Receive: products reserved, simply waiting for confirmation.\n
                  * Received: has been processed, can't be modified or cancelled anymore\n
                  * Cancelled: has been cancelled, can't be confirmed anymore"""),
     }
@@ -466,7 +274,7 @@ class stock_picking_in(osv.osv):
                 po_qty = 0.00
                 for p in po:
                     if p[1]==x[2] : po_qty = p[0]
-                sum_move.append((0,0,{'product_qty':int(x[0]),'bad_product_qty':int(x[1]),'product_id':x[2] or False, 'po_qty':po_qty, 'office_qty':int(x[0]) }))
+                sum_move.append((0,0,{'product_qty':int(x[0]),'bad_product_qty':int(x[1]),'product_id':x[2] or False, 'po_qty':po_qty, 'office_qty':po_qty }))
 
             cr.execute("""
                         SELECT 
@@ -516,3 +324,18 @@ class stock_picking_in(osv.osv):
     #         self.pool.get('stock.moves.summary').unlink(cr, uid, [x.id for x in inship.move_summary_ids], context=None)
     #     self.write(cr,uid,ids[0],{'move_summary_ids':sum_move})
     #     return True
+
+#----------------------------------------------------------
+# Stock Location
+#----------------------------------------------------------
+class stock_location(osv.osv):
+    _name = "stock.location"
+    _inherit = "stock.location"
+
+    _columns = {
+        'bad_location': fields.boolean('Bad Stock', help='Check this box to set as Bad Stock Location.'),
+    } 
+
+    _defaults = {
+        'bad_location': False,
+    }
