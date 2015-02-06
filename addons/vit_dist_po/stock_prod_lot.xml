@@ -35,7 +35,7 @@
                     <group>
                         <group>
                             <field name="is_bad"/>
-                            <field name="reason"/>
+                            <field name="reason" attrs="{'required' : [('is_bad', '=', True)]}"/>
                         </group>
                     </group>
                     <group />

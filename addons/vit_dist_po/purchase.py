@@ -204,6 +204,7 @@ class purchase_order_line(osv.osv):
             
         if ids:    
             for i in self.browse(cr,uid,ids,):
+                data = {}
                 # hanya update jika po masih draft
                 if i.state != 'draft' :
                     continue
@@ -223,7 +224,7 @@ class purchase_order_line(osv.osv):
                 ending_inv      = round(suggested_order + i.adjustment) + value['stock_current'] + value['in_transit'] - value['sales_3m']
                 if round(value['sales_3m']) > 0.00 and ending_inv > 0.00 : 
                     stock_cover   = ending_inv / round(value['sales_3m']) * 4
-            
+                
                 self.write(cr,uid,i.id,{
                     'int_code'      : value['int_code'] or '',
                     'barcode'       : value['barcode'] or '',
@@ -239,6 +240,7 @@ class purchase_order_line(osv.osv):
                     'product_qty'   : product_qty,
                     'ending_inv'    : ending_inv,
                     'stock_cover'   : stock_cover,
+                    'date_planned'  : i.order_id.date_order,
                     })
                 res[i.id]=True
         return res
@@ -725,7 +727,7 @@ class purchase_order(osv.osv):
         'location_ids'   : fields.many2many('stock.location','stock_loc_po_rel','po_id','location_id','Related Location', readonly=True, states={'draft':[('readonly',False)]}, domain=[('usage','=','internal'),]),
         'principal_ids'  : fields.many2many('res.partner','res_partner_po_rel','po_id','user_id',"User's Principal", readonly=True, states={'draft':[('readonly',False)]}),
         'loc_x'          : fields.many2one('stock.location',"Cabang",domain="[('id','in',location_ids[0][2]),('usage','<>','view'),]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
-        'loc_real'       : fields.many2one('stock.location',"Destination",domain="[('location_id','=',loc_x),('usage','<>','view'),]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
+        'loc_real'       : fields.many2one('stock.location',"Destination",domain="[('location_id','=',loc_x),('usage','<>','view'),('bad_location','=',False)]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]}),
         'partner_x'      : fields.many2one('res.partner',"Supplier",domain="[('id','in',principal_ids[0][2])]",required=True, states={'confirmed':[('readonly',True)], 'approved':[('readonly',True)],'done':[('readonly',True)]},
             change_default=True, track_visibility='always',),
         # 'sch_ids1'       : fields.one2many('purchase.order.schedule.r1','po_id',"R1"), 
@@ -874,24 +876,6 @@ class purchase_order(osv.osv):
     # def wkf_confirm_order(self, cr, uid, ids, context=None):
     #     import pdb;pdb.set_trace()
     #     return super(purchase_order,self).wkf_confirm_order(cr, uid, ids, context)
-
-    def copy(self, cr, uid, id, default=None, context=None):
-        if not default:
-            default = {}
-        emp = self.pool.get('hr.employee').search(cr,uid,[('user_id','=',uid)],)
-        if emp <> []:
-            loc = self.pool.get('hr.employee').browse(cr,uid,emp,)[0].location_id.code
-            poname = str(loc[0:3] or '') + 'SPO' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.vit.seq')
-        default.update({
-            'state':'draft',
-            'shipped':False,
-            'invoiced':False,
-            'invoice_ids': [],
-            'picking_ids': [],
-            'partner_ref': '',
-            'name': poname,
-        })
-        return super(purchase_order, self).copy(cr, uid, id, default, context)
 
     def hapus_quotation(self,cr,uid,ids=None,context=None):
         # import pdb;pdb.set_trace()
@@ -1077,7 +1061,8 @@ class purchase_order(osv.osv):
         stock_move.force_assign(cr, uid, todo_moves)
         # import pdb;pdb.set_trace()
         # di cek dulu(dipindah) sama workflow untuk logistik dan office logistik
-        wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
+        # wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
+        self.pool.get('stock.picking.in').write(cr, uid,picking_id,{'state': 'logistik'})
         return [picking_id]
 
     def onchange_partner_x(self, cr, uid, ids, partner_x, date_order, context=None):
@@ -1502,12 +1487,12 @@ class purchase_order(osv.osv):
             return [(6,0,principal_ids)]
         return []
 
-    def onchange_w1(self, cr, uid, ids, w1, order_line, context=None):
-        # import pdb;pdb.set_trace()
-        if not ids:
-            for l in order_line:
-                l[2]['date_planned']=w1
-            return {'value':{'order_line':order_line,}}
+    # def onchange_w1(self, cr, uid, ids, w1, order_line, context=None):
+    #     # import pdb;pdb.set_trace()
+    #     if not ids:
+    #         for l in order_line:
+    #             l[2]['date_planned']=w1
+    #         return {'value':{'order_line':order_line,}}
 
     def onchange_locx(self, cr, uid, ids, loc_x, location_id, context=None):
         if loc_x:

@@ -21,12 +21,12 @@
             <field name="action">test_finished()</field>
         </record> -->
 
-        <record id="trans_assigned_move2_bypass" model="workflow.transition">
+        <!-- <record id="trans_assigned_move2_bypass" model="workflow.transition">
             <field name="act_from" ref="stock.act_assigned"/>
             <field name="act_to" ref="stock.act_move"/>
             <field name="signal"></field>
             <field name="condition">test_bypass()</field>
-        </record>
+        </record> -->
         <!-- <record id="trans_acc_approve_move" model="workflow.transition">
             <field name="act_from" ref="stock.act_move"/>
             <field name="act_to" ref="act_approve_accounting"/>
