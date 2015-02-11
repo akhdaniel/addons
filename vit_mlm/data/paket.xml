@@ -1,0 +1,26 @@
+<openerp>
+	<data>
+		<!-- paket -->
+		<record id="paket1" model="mlm.paket">
+			<field name="code">1</field>
+			<field name="name">Silver</field>
+			<field name="price">950000</field>
+			<field name="hak_usaha">1</field>
+			<field name="description">1 Hak Usaha</field>
+		</record>
+		<record id="paket2" model="mlm.paket">
+			<field name="code">2</field>
+			<field name="name">Gold</field>
+			<field name="price">1900000</field>
+			<field name="hak_usaha">3</field>
+			<field name="description">3 Hak Usaha</field>
+		</record>
+		<record id="paket3" model="mlm.paket">
+			<field name="code">3</field>
+			<field name="name">Platinum</field>
+			<field name="price">2850000</field>
+			<field name="hak_usaha">7</field>
+			<field name="description">7 Hak Usaha</field>
+		</record>
+	</data>
+</openerp>

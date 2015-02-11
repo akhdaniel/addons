@@ -1,0 +1,19 @@
+<openerp>
+	<data>
+		<record id="view_paket_tree" model="ir.ui.view">
+		    <field name="name">mlm_paket_tree</field>
+		    <field name="model">mlm.paket</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list paket" >
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="price"/>
+		            <field name="hak_usaha"/>
+		            <field name="description"/>
+		        </tree>    
+		    </field>
+		</record>
+
+
+	</data>
+</openerp>

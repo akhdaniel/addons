@@ -1,0 +1,19 @@
+<openerp>
+	<data>
+		<record id="view_member_bonus_tree" model="ir.ui.view">
+		    <field name="name">mlm_member_bonus_tree</field>
+		    <field name="model">mlm.member_bonus</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list member_bonus" colors="grey:is_transfered==True">
+					<field name='member_id'/>
+					<field name='new_member_id'/>
+					<field name='amount'/>
+					<field name='trans_date'/>
+					<field name='bonus_id'	/>
+					<field name='description'/>		            
+					<field name='is_transfered'/>
+		        </tree>    
+		    </field>
+		</record>
+	</data>
+</openerp>
