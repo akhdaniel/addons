@@ -45,3 +45,18 @@ report_sxw.report_sxw('report.webkit.po.supplier.invo',
                       'account.invoice', 
                       'vit_dist_po/report/po_invo.mako',
                       parser=supplier_invo)
+
+
+class inship_fisik(report_sxw.rml_parse):
+  def __init__(self, cr, uid, name, context):
+    super(inship_fisik, self).__init__(cr, uid, name, context=context)
+    self.localcontext.update({
+        'time': time,
+        'cr':cr,
+        'uid': uid,
+    })        
+
+report_sxw.report_sxw('report.webkit.inship.fisik',
+                      'stock.picking.in', 
+                      'vit_dist_po/report/inship_fisik.mako',
+                      parser=inship_fisik)

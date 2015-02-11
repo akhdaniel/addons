@@ -38,6 +38,28 @@
                 </field>
             </field>
         </record>
+        
+<!-- Add and Split Menu in Warehouse-->
+        <record id="action_picking_tree4_gudang" model="ir.actions.act_window">
+            <field name="name">Incoming Shipments Gudang</field>
+            <field name="res_model">stock.picking.in</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','in'),('state','in',('draft','logistik'))]</field>
+            <field name="context">{'contact_display': 'partner_address', 'default_type': 'in'}</field>
+            <field name="search_view_id" ref="stock.view_picking_in_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create an incoming shipment. 
+              </p><p>
+                The Incoming Shipments is the list of all orders you will
+                receive from your suppliers. An incoming shipment contains a
+                list of products to be received according to the original
+                purchase order.
+              </p>
+            </field>
+        </record>
 
     </data>
 </openerp>

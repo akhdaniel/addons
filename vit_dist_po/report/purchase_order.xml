@@ -8,7 +8,7 @@
 	    file="vit_dist_po/report/purchase_order.mako"
 	    string="PO / RFQ"
 	    report_type="webkit"
-	    webkit_header="ir_header_webkit_vit0"
+	    webkit_header="ir_header_webkit_vit_l"
 	    />
 
     <report auto="False"
@@ -18,7 +18,7 @@
 	    file="vit_dist_po/report/plan_purchase_order.mako"
 	    string="Plan Kedatangan Barang"
 	    report_type="webkit"
-	    webkit_header="ir_header_webkit_vit0"
+	    webkit_header="ir_header_webkit_vit_l"
 	    />
 
     <report auto="False"
@@ -28,7 +28,17 @@
 	    file="vit_dist_po/report/po_invo.mako"
 	    string="Faktur Pembelian"
 	    report_type="webkit"
-	    webkit_header="ir_header_webkit_vit0"
+	    webkit_header="ir_header_webkit_vit_l"
+	    />
+
+    <report auto="False"
+	    id="report_bukti_inship_fisik"
+	    model="stock.picking.in"
+	    name="vit.inship.fisik.webkit"
+	    file="vit_dist_po/report/inship_fisik.mako"
+	    string="Bukti Penerimaan Barang"
+	    report_type="webkit"
+	    webkit_header="ir_header_webkit_vit_p"
 	    />
 
 	</data>
