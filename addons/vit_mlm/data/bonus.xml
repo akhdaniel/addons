@@ -1,0 +1,23 @@
+<openerp>
+	<data>
+		<!-- bonus -->
+
+		<record id="bonus1" model="mlm.bonus">
+			<field name="code">1</field>
+			<field name="name">Sponsor</field>
+		</record>
+		<record id="bonus2" model="mlm.bonus">
+			<field name="code">2</field>
+			<field name="name">Pasangan</field>
+		</record>
+		<record id="bonus3" model="mlm.bonus">
+			<field name="code">3</field>
+			<field name="name">Level</field>
+		</record>
+		<record id="bonus4" model="mlm.bonus">
+			<field name="code">4</field>
+			<field name="name">Point</field>
+		</record>
+
+	</data>
+</openerp>

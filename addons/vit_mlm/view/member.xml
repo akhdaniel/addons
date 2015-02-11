@@ -1,0 +1,107 @@
+<openerp>
+	<data>
+       <record id="view_member_form" model="ir.ui.view">
+            <field name="name">mlm_member_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<field name="website" position="after">
+                    <field name="path" readonly="True"/>
+            		<field name="code" readonly="True"/>
+                    <field name="sponsor_id" />
+                    <field name="paket_id" />
+            		<field name="is_affiliate" />
+            	</field>
+
+                <xpath expr="//form/sheet" position="before">
+                    <header>
+                        <button name="action_confirm" type="object" 
+                            class="oe_highlight"
+                            states="draft"
+                            string="Confirm"/>
+
+                        <button name="action_reject" type="object" 
+                            states="open"
+                            string="Reject"/>
+
+                        <button name="action_aktif" type="object" 
+                            class="oe_highlight"
+                            states="open"
+                            string="Diterima"/>
+
+                        <button name="action_cancel" type="object" 
+                            states="open"
+                            string="Cancel"/>
+
+                        <button name="action_nonaktif" type="object" 
+                            states="aktif"
+                            string="Eliminasi"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,aktif"/>
+                    </header>
+                </xpath>                
+
+                <xpath expr="//form/sheet/notebook/page[@string='Contacts']" position="attributes">
+                    <attribute name="string">Downlines</attribute>
+                </xpath>
+
+		        <notebook position="inside">
+                    <page string="Bonus">
+            			<field name="member_bonus_ids">
+            				<tree string="Bonus">
+                                <field name='new_member_id'/>
+                                <field name='level'/>
+                                <field name='amount'/>
+                                <field name='trans_date'/>
+                                <field name='bonus_id'  />
+                                <field name='description'/>                 
+                                <field name='is_transfered'/>		
+            				</tree>
+            			</field>
+                        <group>
+                            <field name="total_bonus_sponsor"/>
+                            <field name="total_bonus_pasangan"/>
+                            <field name="total_bonus_level"/>
+                            <field name="total_bonus_belanja"/>
+                            <hr colspan="4"/>
+                            <field name="total_bonus"/>
+                        </group>
+		            </page>
+
+		        </notebook>
+            </field>
+        </record>
+
+        <record id="view_member_tree" model="ir.ui.view">
+            <field name="name">res_partner_tree_mlm</field>
+            <field name="model">res.partner</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Members" toolbar="1">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="parent_id"/>
+                    <field name="sponsor_id"/>
+                    <field name="child_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_partner_tree_mlm" model="ir.ui.view">
+            <field name="name">res_partner_tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="colors">blue:state=='draft'; grey:state=='nonaktif'</attribute>
+                </tree>
+
+                <field name="email" position="after">
+                    <field name="sponsor_id"/>
+                    <field name="parent_id"/>
+                    <field name="state"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

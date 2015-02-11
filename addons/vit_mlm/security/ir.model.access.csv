@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_mlm_mlm_plan,access_mlm_mlm_plan,model_mlm_mlm_plan,,1,1,1,1
+access_mlm_member,access_mlm_member,model_mlm_member,,1,1,1,1
+access_mlm_bonus,access_mlm_bonus,model_mlm_bonus,,1,1,1,1
+access_mlm_member_bonus,access_mlm_member_bonus,model_mlm_member_bonus,,1,1,1,1
