@@ -950,9 +950,10 @@ class purchase_order(osv.osv):
         #         'weight_tot'    : wei,})
         
     def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, context=None):
-        # suggested_order = (order_line.forecastMT + order_line.forecastGT + order_line.bufMT + order_line.bufGT - order_line.stock_current - order_line.in_transit) 
-        # product_qty     = order_line.adjustment + suggested_order
-        # product_qty     = self.pool.get('purchase.order.line')._jumlah_qty_small_and_big(cr,uid,order_line.product_id.id, product_qty, order_line.product_uom.id, order_line.small_qty, order_line.small_uom.id, context=context)
+        '''Edit:
+            'price_unit': order_line.price_unit or 0.0, >> dikonversi ke harga satuan kecil
+        '''
+        faktor = order_line.product_uom.factor or 1.0
         return {
             'name': order_line.name or '',
             'product_id': order_line.product_id.id,
@@ -971,7 +972,7 @@ class purchase_order(osv.osv):
             'type':'in',
             'purchase_line_id': order_line.id,
             'company_id': order.company_id.id,
-            'price_unit': order_line.price_unit
+            'price_unit': order_line.price_unit * faktor
         }
 
     def _prepare_inv_line(self, cr, uid, account_id, order_line, context=None):
@@ -1012,8 +1013,9 @@ class purchase_order(osv.osv):
         cr.execute('SELECT id FROM stock_location where usage=\'supplier\' limit 1')
         source = cr.fetchone()
         source = source and source[0] or False
+        inship_vals = {'name':self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.in')}
         return {
-            'name': self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.in'),
+            'name': self.pool.get('stock.picking.in')._name_set(cr,uid,inship_vals),
             'origin': order.name + ((order.origin and (':' + order.origin)) or ''),
             'date': self.date_to_datetime(cr, uid, order.date_order, context),
             'partner_id': order.partner_id.id,

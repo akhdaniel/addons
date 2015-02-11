@@ -97,8 +97,8 @@
         		<td class="oe_right"><B>${o.amount_total}</B></td>
     		</tr>
     		<tr class="list_table">
-        		<td colspan="2">Harga Beli belum termasuk Pp.</td>
-        		<td class="oe_right">Printed : 2312313123123123 pm</td> 
+        		<td colspan="2">Harga Beli belum termasuk Ppn.</td>
+        		<td class="oe_right">Printed : ${time}</td> 
     			<td colspan="2"/>
     		</tr>
 		</table>

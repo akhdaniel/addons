@@ -10,25 +10,6 @@ class stock_picking(osv.osv):
     _name = "stock.picking"
     _inherit = "stock.picking"
 
-    # def action_process(self, cr, uid, ids, context=None):
-    #     if context is None:
-    #         context = {}
-    #     """Open the partial picking wizard"""
-    #     context.update({
-    #         'active_model': self._name,
-    #         'active_ids': ids,
-    #         'active_id': len(ids) and ids[0] or False
-    #     })
-    #     return {
-    #         'view_type': 'form',
-    #         'view_mode': 'form',
-    #         'res_model': 'stock.partial.picking',
-    #         'type': 'ir.actions.act_window',
-    #         'target': 'new',
-    #         'context': context,
-    #         'nodestroy': True,
-    #     }
-
     def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id,
         invoice_vals, context=None):
         """ Builds the dict containing the values for the invoice line
@@ -38,6 +19,9 @@ class stock_picking(osv.osv):
             @param: invoice_id: ID of the related invoice
             @param: invoice_vals: dict used to created the invoice
             @return: dict that will be used to create the invoice line
+
+            EDIT : add qty : qty big
+
         """
         if group:
             name = (picking.name or '') + '-' + move_line.name
@@ -65,55 +49,73 @@ class stock_picking(osv.osv):
         uos_id = move_line.product_uos and move_line.product_uos.id or False
         if not uos_id and invoice_vals['type'] in ('out_invoice', 'out_refund'):
             uos_id = move_line.product_uom.id
-        
-        if invoice_vals['type'] == 'in_invoice':
-            small_qty = move_line.product_uos_qty * (move_line.product_uos.factor or 1)
-        
+
         return {
             'name': name,
             'origin': origin,
             'invoice_id': invoice_id,
             'uos_id': uos_id,
-            'uom_id': move_line.product_id.product_tmpl_id.uom_id.id,
             'product_id': move_line.product_id.id,
             'account_id': account_id,
             'price_unit': self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type']),
             'discount': self._get_discount_invoice(cr, uid, move_line),
-            'quantity2': 0,#move_line.product_uos_qty or move_line.product_qty,
-            'qty': move_line.product_uos_qty,
+            'quantity': move_line.product_uos_qty or move_line.product_qty,
+            'qty': move_line.product_uos_qty or move_line.product_qty,
             'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
             'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
         }
 
-    '''
-    def _get_price_unit_invoice(self, cr, uid, move_line, type, context=None):
-        """ Gets price unit for invoice
-        @param move_line: Stock move lines
-        @param type: Type of invoice
-        @return: The price unit for the move line
-        """
-        if context is None:
-            context = {}
+    # def action_process(self, cr, uid, ids, context=None):
+    #     if context is None:
+    #         context = {}
+    #     """Open the partial picking wizard"""
+    #     context.update({
+    #         'active_model': self._name,
+    #         'active_ids': ids,
+    #         'active_id': len(ids) and ids[0] or False
+    #     })
+    #     return {
+    #         'view_type': 'form',
+    #         'view_mode': 'form',
+    #         'res_model': 'stock.partial.picking',
+    #         'type': 'ir.actions.act_window',
+    #         'target': 'new',
+    #         'context': context,
+    #         'nodestroy': True,
+    #     }
 
-        if type in ('in_invoice', 'in_refund'):
-            # Take the user company and pricetype
-            context['currency_id'] = move_line.company_id.currency_id.id
-            amount_unit = move_line.product_id.price_get('standard_price', context=context)[move_line.product_id.id]
-            return amount_unit
-        else:
-            return move_line.product_id.list_price
-    '''
+    # def _get_price_unit_invoice(self, cr, uid, move_line, type, context=None):
+    #     """ Gets price unit for invoice
+    #     @param move_line: Stock move lines
+    #     @param type: Type of invoice
+    #     @return: The price unit for the move line
+    #     """
+    #     if context is None:
+    #         context = {}
+
+    #     import pdb;pdb.set_trace()
+    #     if type in ('in_invoice', 'in_refund'):
+    #         # Take the user company and pricetype
+    #         context['currency_id'] = move_line.company_id.currency_id.id
+    #         amount_unit = move_line.product_id.price_get('standard_price', context=context)[move_line.product_id.id]
+    #         return amount_unit
+    #     else:
+    #         return move_line.product_id.list_price
 
     # def test_bypass(self, cr, uid, ids, context=None):
     #     """ Test whether the move lines are done or not.
     #     @return: True or False
     #     """
-    #     import pdb;pdb.set_trace()
     #     ok = False
     #     for pick in self.pool.get('stock.picking.in').browse(cr, uid, ids, context=context):
     #         if pick.state=='logistic_received':
     #             ok = True
     #     return ok
+
+    _columns = {
+        'move_summary_ids' : fields.one2many('stock.moves.summary','pick_in_id',"Stock move(s)"),
+        'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
+    }
 
 stock_picking()
 
@@ -157,23 +159,40 @@ class stock_moves_loss_summary(osv.osv):
 
 stock_moves_loss_summary()
 
-class stock_picking(osv.osv):
-    _name = "stock.picking"
-    _inherit = "stock.picking"
+# class stock_picking(osv.osv):
+#     _name = "stock.picking"
+#     _inherit = "stock.picking"
 
-    _columns = {
-        'move_summary_ids' : fields.one2many('stock.moves.summary','pick_in_id',"Stock move(s)"),
-        'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
-    }
+#     _columns = {
+#         'move_summary_ids' : fields.one2many('stock.moves.summary','pick_in_id',"Stock move(s)"),
+#         'move_loss_summary_ids' : fields.one2many('stock.moves.loss.summary','pick_in_id',"Stock move(s) Loss"),
+#     }
 
 
 class stock_picking_in(osv.osv):
     _name = "stock.picking.in"
-    _inherit = "stock.picking.in"        
+    _inherit = "stock.picking.in" 
+
+    def _name_set(self, cr, uid, vals):
+        name = vals.get('name') or ''
+        emp = self.pool.get('hr.employee').search(cr,uid,[('user_id','=',uid)],)
+        loc = self.pool.get('hr.employee').browse(cr,uid,emp,)[0].location_id.code or '---'
+        # BDG-SPB/15-0000001
+        name = str(loc[:3] or '') + '-SPB/' + time.strftime("%y") + '-' + self.pool.get('ir.sequence').get(cr, uid, 'picking.in.vit.seq')
+        return name       
+
+    def create(self, cr, uid, vals, context=None):
+        if vals.get('type')=='in':
+            vals['name'] = self._name_set(cr, uid, vals) 
+        new_id = super(stock_picking_in, self).create(cr, uid, vals, context)
+        return new_id
 
     def logistik_confirm(self, cr, uid, ids, context=None):
         """ Test oleh logistik.
         """
+        for move in self.browse(cr,uid,ids,)[0].move_lines:
+            if not move.prodlot_id:
+                raise osv.except_osv(_('Serial Number kosong!'), _('Isi S/N untuk produk \n%s.') % _(move.product_id.name_template))
         self.write(cr,uid,ids,{'state':'assigned'})
         return True
 
@@ -190,9 +209,6 @@ class stock_picking_in(osv.osv):
             context = {}
         else:
             context = dict(context)
-        for move in self.browse(cr,uid,ids,)[0].move_lines:
-            if not move.prodlot_id:
-                raise osv.except_osv(_('Serial Number kosong!'), _('Isi S/N untuk produk \n%s.') % _(move.product_id.name_template))
         self.action_move(cr, uid, ids, context=context)
         self.write(cr,uid,ids,{'state': 'accounting'})           
         return True 
