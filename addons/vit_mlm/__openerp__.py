@@ -1,9 +1,9 @@
 {
     'version': '0.2',
     'name': 'Aplikasi MLM',
-    'depends': ['base','account','product', 'hr', 'report','website'],
+    'depends': ['website', 'sale', 'base','account','product', 'hr', 'report'],
     'author'  :'vitraining.com',
-    'category': 'Accounting',
+    'category': 'Website',
     'data': [
       'menu/menu_configuration.xml',   
 
@@ -19,7 +19,7 @@
       'view/pages.xml',
       'view/paket.xml',
 
-
+      'security/group.xml',
       'security/ir.model.access.csv',
 
       'menu/menu_membership.xml',   

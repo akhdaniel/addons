@@ -76,6 +76,9 @@ class member(osv.osv):
 		'total_bonus_level' 		: fields.function(_total_bonus_level, string="Total Bonus Level"),
 		'total_bonus_belanja' 		: fields.function(_total_bonus_belanja, string="Total Bonus Belanja"),
 
+		'is_stockist'		: fields.boolean("Is Stockist?"),
+		'bbm'				: fields.char("BBM Pin"),
+
 	}
 	_defaults = {
 		'code'				: lambda obj, cr, uid, context: '/',		
@@ -264,12 +267,49 @@ class member(osv.osv):
 		####################################################################
 		# parent create()
 		#####################################################################
-
-		self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
+		if 'parent_id' in vals:
+			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
 
 		new_id = super(member, self).create(cr, uid, vals, context=context)
 
 		return new_id
+	
+	#########################################################################
+	# create : cek max downline, set path
+	#########################################################################
+	def create_user(self, cr, uid, member, context=None):
+		alias_id = 4
+
+		sql = "INSERT INTO ""res_users"" (""id"", ""partner_id"", \
+			""alias_id"", ""share"", ""active"", ""company_id"", \
+			""action_id"", ""display_employees_suggestions"", \
+			""default_section_id"", ""password"", \
+			""display_groups_suggestions"", ""signature"", \
+			""login"", ""create_uid"", ""write_uid"", \
+			""create_date"", ""write_date"") \
+			VALUES (nextval('res_users_id_seq'), \
+			%d, %d, false, true, %d, NULL, true, NULL, '', \
+			true, NULL, '%s', %d, %d, (now() at time zone 'UTC'), \
+			(now() at time zone 'UTC')) RETURNING id" % (member.id, alias_id,member.company_id,
+			 member.name.lower(),uid,uid)
+		res = cr.execute(sql)
+
+		user_id = cr.fetchall()
+
+		group =  self.pool.get('res.groups')
+		gids =group.search(cr, uid, [('name','in',['Employee','Contact Creation',
+			'MLM / Manager','MLM / User',
+			'Portal'])], context=context)
+
+		for gid in gids:
+			sql = "insert into res_groups_users_rel (uid,gid) values (%d, %d)" % (user_id[0][0], gid)
+			res = cr.execute(sql)
+
+		# default company
+		sql = "insert into res_company_users_rel (user_id,cid) values (%d, 1)"% (user_id[0][0])
+		res = cr.execute(sql)
+
+		return res 
 
 	def name_get(self, cr, uid, ids, context=None):
 		if context is None:
@@ -335,6 +375,10 @@ class member(osv.osv):
 		cr.execute("update res_partner set path_ltree = '%s' where id=%d" % 
 			(new_path, ids[0]) )
 
+		#########################################################################
+		# create user 
+		#########################################################################		
+		self.create_user(cr, uid, new_member, context=context)
 
 		#########################################################################
 		# process paket join, khusus binary plan saja
@@ -363,8 +407,6 @@ class member(osv.osv):
 		jc = 0
 		parent_index = 0
 
-		import pdb; pdb.set_trace()
-
 		for i in range(0, hak_usaha-1):
 
 			data = {
@@ -383,6 +425,8 @@ class member(osv.osv):
 				parent_id = child[parent_index]
 				parent_index = parent_index + 1
 				jc = 0
+
+			#confirm langsung 
 
 
 		return True 

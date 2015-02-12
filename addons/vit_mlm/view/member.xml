@@ -10,7 +10,8 @@
             		<field name="code" readonly="True"/>
                     <field name="sponsor_id" />
                     <field name="paket_id" />
-            		<field name="is_affiliate" />
+                    <field name="is_affiliate" />
+            		<field name="is_stockist" />
             	</field>
 
                 <xpath expr="//form/sheet" position="before">
