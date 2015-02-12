@@ -1,0 +1,11 @@
+<openerp>
+	<data noupdate="0">
+		<record id="group_mlm_manager" model="res.groups">
+			<field name="name">MLM / Manager</field>
+        </record>
+		<record id="group_mlm_user" model="res.groups">
+			<field name="name">MLM / User</field>
+        </record>
+     
+    </data>
+</openerp>
