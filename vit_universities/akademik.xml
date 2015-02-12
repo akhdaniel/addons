@@ -266,6 +266,18 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
 
+        <record model="ir.actions.act_window" id="dosen_list_action">
+            <field name="name">Dosen</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="view_id" ref="partner_tree_view3"/>  -->
+            <field name="domain">[('is_dosen','=',True)]</field>
+            <field name="context">{'default_is_dosen':True}</field>
+<!--             <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field> -->
+        </record>
+
           <record model="ir.ui.view" id="partner_tree_view">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
@@ -355,6 +367,24 @@
             <field name="context">{'default_status_mahasiswa':'alumni'}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field>
+        </record>
+
+        <record model="ir.ui.view" id="spmb_tree_view">
+            <field name="name">kurikulum.tree</field>
+            <field name="model">spmb.mahasiswa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar SPMB">
+                    <field name="name"/>
+                    <field name="tahun_ajaran_id"/>
+                    <field name="fakultas_id"/>
+                    <field name="jurusan_id"/>
+                    <field name="prodi_id"/>
+                    <field name="kuota"/>
+                    <field name="nilai_min"/>  
+                    <field name="state"/>                   
+                </tree>
+            </field>
         </record>
 
         <record model="ir.actions.act_window" id="spmb_list_action">
