@@ -40,7 +40,7 @@ class Member(http.Controller):
     @http.route('/mlm/member/create',  auth='user', website=True)
     def create(self, **kw):
         cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-        import pdb; pdb.set_trace()
+
         Users  = pool['res.users']
         user   = Users.browse(cr, uid, uid, context=context)
         parent = user.partner_id
