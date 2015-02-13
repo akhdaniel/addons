@@ -1,0 +1,39 @@
+<openerp>
+	<data>
+        <record id="view_conf_cutting_tree" model="ir.ui.view">
+            <field name="name">conf.cutting</field>
+            <field name="model">conf.cutting</field>
+            <field name="arch" type="xml">
+                <tree string="List Conf Cutting">
+                    <field name="loop_size"/>                
+                    <field name="categ_id"/>
+                    <field name="notes"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_conf_cutting_form" model="ir.ui.view">
+            <field name="name">conf.cutting.form</field>
+            <field name="model">conf.cutting</field>
+            <field name="arch" type="xml">
+                 <form string="Conf Cutting" version="7.0">
+                    <field name="loop_size"/>       
+                    <field name="categ_id"/>
+                    <field name="notes"/>
+                </form>
+                                      
+            </field>
+        </record>
+
+
+        <record id="view_conf_cutting_filter" model="ir.ui.view">
+            <field name="name">conf.cutting</field>
+            <field name="model">conf.cutting</field>
+            <field name="arch" type="xml">
+                <search string="Search Conf">
+                    <field name="categ_id" />          
+                </search>
+            </field>
+        </record>
+    </data>
+</openerp>
+

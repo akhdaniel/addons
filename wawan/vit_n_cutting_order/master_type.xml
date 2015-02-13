@@ -1,0 +1,82 @@
+<openerp>
+	<data>
+        <record id="view_vit_master_type_tree" model="ir.ui.view">
+            <field name="name">vit.master.type.tree</field>
+            <field name="model">vit.master.type</field>
+            <field name="arch" type="xml">
+                <tree string="List Master Type">
+                    <field name="model_product" />
+                    <field name="categ_id"/>
+                    <field name="main_qty"/>
+                    <field name="variation_qty"/>
+                    <field name="cost_model"/>                     
+                </tree>
+            </field>
+        </record>
+        <record id="view_vit_master_type_form" model="ir.ui.view">
+            <field name="name">vit.master.type.form</field>
+            <field name="model">vit.master.type</field>
+            <field name="arch" type="xml">
+                 <form string="Master Type" version="7.0">
+                    <sheet>
+                    <div>
+                        <field name="image" widget="image"  class="oe_avatar oe_left"/>
+                    </div>
+                        <group>
+                            <group>
+                                <field name="product_id" on_change="on_change_product_id(product_id, context)"/>
+                                <field name="model_product"/>
+                                 <field name="categ_id" />
+                                <field name="main_qty"/>
+                                <field name="variation_qty"/>
+                                <field name="cost_model"/>
+                                <field name="cost_model_cut"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    
+                </form>
+                                         
+            </field>
+        </record>
+
+        <record id="view_vit_category_tree" model="ir.ui.view">
+            <field name="name">vit.category.tree</field>
+            <field name="model">vit.category</field>
+            <field name="arch" type="xml">
+                <tree string="List Category">
+                    <field name="name" />                   
+                </tree>
+            </field>
+        </record>
+        <record id="view_vit_category_form" model="ir.ui.view">
+            <field name="name">vit.category.form</field>
+            <field name="model">vit.category</field>
+            <field name="arch" type="xml">
+                 <form string="Category" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    
+                </form>
+                                         
+            </field>
+        </record>
+
+
+        <record id="view_vit_master_type_filter" model="ir.ui.view">
+            <field name="name">vit.master.type.filter</field>
+            <field name="model">vit.master.type</field>
+            <field name="arch" type="xml">
+                <search string="Search Model">
+                    <field name="model_product" />          
+                </search>
+            </field>
+        </record>
+    </data>
+</openerp>
+
