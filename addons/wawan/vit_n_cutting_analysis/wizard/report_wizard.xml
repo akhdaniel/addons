@@ -1,0 +1,47 @@
+<openerp>
+	<data>
+		<!-- wizard action -->
+		<record model="ir.actions.act_window" id="run_report_wizard"> 
+			<field name="name">Run Report</field>
+			<field name="res_model">vit_n_cutting_analysis.report_wizard</field> 
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field> 
+		</record>
+
+		<!-- wizard form-->
+        <record id="view_report_wizard_form" model="ir.ui.view">
+            <field name="name">vit_n_cutting_analysis_report_form</field>
+            <field name="model">vit_n_cutting_analysis.report_wizard</field>
+            <field name="arch" type="xml">
+            	<form string="report_wizard form" version="7.0">
+            		<sheet>
+		            	<group string="Select report date">
+			                <field name="date_start"/>       
+			                <field name="date_end"/>       
+				        </group>
+					</sheet>
+					<footer>
+						<button type="special" 
+							 special="cancel" 
+							 string="Cancel" 
+							 icon="gtk-cancel"/>
+						
+						<button type="object" 
+							 name="fill_table"
+							 string="Run Report" 
+							 icon="gtk-ok"
+							 />				
+					</footer>
+			    </form>
+            </field>
+        </record>
+
+        <!-- wizrd menu -->
+	    <menuitem id="run_report" 
+    	 parent="base.next_id_65" name="Run PPIC Analysis" sequence="10" 
+    	 action="run_report_wizard" />
+
+
+	</data>
+</openerp>

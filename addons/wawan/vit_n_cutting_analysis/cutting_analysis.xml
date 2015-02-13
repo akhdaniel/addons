@@ -1,0 +1,235 @@
+<openerp>
+	<data>
+		<record id="action_cutting_analysis" model="ir.actions.act_window">
+			<field name="name">PPIC Analysis</field>
+			<field name="res_model">vit_n_cutting_analysis.cutting_analysis</field>
+			<field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_date_filter":1}</field>
+		</record>
+
+		<!-- tree -->
+		<record id="view_classname_tree2" model="ir.ui.view">
+		    <field name="name">cutting_analysis_tree</field>
+		    <field name="model">vit_n_cutting_analysis.cutting_analysis</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list sale_order_analysis">
+					<!-- <field name="model_forecast_type_id"/> 		 -->
+					<field name="date_start"/>
+					<field name="date_end"/>	
+					<field name="s_forcest"/> 	
+					<field name="m_forcest"/>	
+					<field name="l_forcest"/>	
+					<field name="xl_forcest"/>
+					<field name="xxl_forcest"/> 	
+					<field name="xxxl_forcest"/> 	
+					<field name="qty_forecast"/>
+					<field name="sisa"/>
+						
+					<field name="spk_id"/> 	
+					<field name="model_type_id"/> 	
+					<field name="s_cutting"/>
+					<field name="m_cutting"/>	
+					<field name="l_cutting"/>	
+					<field name="xl_cutting"/>
+					<field name="xxl_cutting"/> 	
+					<field name="xxxl_cutting"/>
+					<field name="qty_cutting"/>
+
+					<field name="s_real_cutting"/>
+					<field name="m_real_cutting"/>	
+					<field name="l_real_cutting"/>	
+					<field name="xl_real_cutting"/>
+					<field name="xxl_real_cutting"/> 	
+					<field name="xxxl_real_cutting"/>
+					<field name="qty_real_cutting"/>
+
+					<field name="s_qc_prod"/>
+					<field name="m_qc_prod"/>	
+					<field name="l_qc_prod"/>	
+					<field name="xl_qc_prod"/>
+					<field name="xxl_qc_prod"/> 	
+					<field name="xxxl_qc_prod"/>
+					<field name="qty_qc_prod"/>
+
+					<field name="s_mkl"/>
+					<field name="m_mkl"/>	
+					<field name="l_mkl"/>	
+					<field name="xl_mkl"/>
+					<field name="xxl_mkl"/> 	
+					<field name="xxxl_mkl"/>
+					<field name="qty_mkl"/>
+
+					<field name="s_sisa_mkl"/>
+					<field name="m_sisa_mkl"/>	
+					<field name="l_sisa_mkl"/>	
+					<field name="xl_sisa_mkl"/>
+					<field name="xxl_sisa_mkl"/> 	
+					<field name="xxxl_sisa_mkl"/>
+					<field name="qty_sisa_mkl"/>
+
+					<field name="s_finish"/>
+					<field name="m_finish"/>	
+					<field name="l_finish"/>	
+					<field name="xl_finish"/>
+					<field name="xxl_finish"/> 	
+					<field name="xxxl_finish"/>
+					<field name="qty_finish"/>					
+					
+
+
+		        </tree>    
+		    </field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_classname_form">
+		    <field name="name">view_classname_form</field>
+		    <field name="model">vit_n_cutting_analysis.cutting_analysis</field>
+		    <field name="arch" type="xml">
+		    	<form string="Cutting Analysis" version="7.0">
+		    		<sheet>
+		    			<group>
+			    			<group>
+					    		<!-- <field name="model_forecast_type_id"/> 		 -->
+								<field name="s_forcest"/> 	
+								<field name="m_forcest"/>	
+								<field name="l_forcest"/>	
+								<field name="xl_forcest"/>
+								<field name="xxl_forcest"/> 	
+								<field name="xxxl_forcest"/> 		
+								<field name="qty_forecast"/>
+								<field name="sisa"/>
+							</group> 
+							<group>
+								<field name="model_type_id"/> 	
+								<field name="spk_id"/> 	
+								<field name="s_cutting"/>
+								<field name="m_cutting"/>	
+								<field name="l_cutting"/>	
+								<field name="xl_cutting"/>
+								<field name="xxl_cutting"/> 	
+								<field name="xxxl_cutting"/>
+								<field name="qty_cutting"/>
+
+							</group>
+							<group>
+								<field name="s_real_cutting"/>
+								<field name="m_real_cutting"/>	
+								<field name="l_real_cutting"/>	
+								<field name="xl_real_cutting"/>
+								<field name="xxl_real_cutting"/> 	
+								<field name="xxxl_real_cutting"/>
+								<field name="qty_real_cutting"/>
+							</group>
+							<group>
+								<field name="s_qc_prod"/>
+								<field name="m_qc_prod"/>	
+								<field name="l_qc_prod"/>	
+								<field name="xl_qc_prod"/>
+								<field name="xxl_qc_prod"/> 	
+								<field name="xxxl_qc_prod"/>
+								<field name="qty_qc_prod"/>
+
+							</group>
+
+							<group>
+								<field name="s_mkl"/>
+								<field name="m_mkl"/>	
+								<field name="l_mkl"/>	
+								<field name="xl_mkl"/>
+								<field name="xxl_mkl"/> 	
+								<field name="xxxl_mkl"/>
+								<field name="qty_mkl"/>	
+
+							</group>
+
+							<group>
+								<field name="s_sisa_mkl"/>
+								<field name="m_sisa_mkl"/>	
+								<field name="l_sisa_mkl"/>	
+								<field name="xl_sisa_mkl"/>
+								<field name="xxl_sisa_mkl"/> 	
+								<field name="xxxl_sisa_mkl"/>
+								<field name="qty_sisa_mkl"/>	
+							</group>
+
+							
+							<group>
+								<field name="s_finish"/>
+								<field name="m_finish"/>	
+								<field name="l_finish"/>	
+								<field name="xl_finish"/>
+								<field name="xxl_finish"/> 	
+								<field name="xxxl_finish"/>
+								<field name="qty_finish"/>	
+							</group>
+						</group>	
+					</sheet>
+		    	</form>	
+		   	</field>
+		</record>				
+
+        <!-- graph -->
+        <!-- <record id="view_cutting_analysis_graph" model="ir.ui.view">
+            <field name="name">cutting_analysis.graph</field>
+            <field name="model">vit_n_cutting_analysis.cutting_analysis</field>
+            <field name="arch" type="xml">
+                <graph string="cutting_analysis" type="bar">
+                    <field name="categ_id"/>
+                    <field name="real_order" operator="+"/>
+                    <field name="unfilled" operator="+"/>
+                </graph>
+            </field>
+        </record> -->
+
+		<!-- filter -->
+		<record id="view_cutting_analysis_filter" model="ir.ui.view">
+		    <field name="name">cutting_analysis.filter</field>
+		    <field name="model">vit_n_cutting_analysis.cutting_analysis</field>
+		    <field name="arch" type="xml">
+		        <search string="Search">
+		            
+		            <field name="spk_id"/>
+
+		            <group expand="1" string="Group By...">
+		                <filter string="SPK" name="spk"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'spk_id'}"/>
+
+		               <!--  <filter string="Product" name="product"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>
+
+			            <filter string="SO" 
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'order_id'}"/>
+ -->
+		                <filter string="Date Filter" name="date_filter"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'date_start'}"/>
+
+		                <filter string="Model Type" name="model_type_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'model_type_id'}"/>
+
+		                	 
+		            </group>                                        
+		        </search>
+		    </field>
+		</record>
+
+		<!-- menu cutting alanysis -->
+		<menuitem id="base.next_id_65"
+			 name="Cutting"
+			 sequence="1"
+			 parent="base.menu_reporting"
+			/>
+
+		<menuitem id="menu_action_cutting_analysis"
+			 action="action_cutting_analysis"
+			 name="View PPIC Analysis"
+			 sequence="50"
+			 parent="base.next_id_65" />			
+	</data>
+</openerp>
+
