@@ -1,0 +1,154 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data>
+        <record id="aksesoris_header" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[
+            <html>
+               <head>
+                   <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+                   <script>
+                       function subst() {
+                       var vars={};
+                       var x=document.location.search.substring(1).split('&');
+                       for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                       var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                       for(var i in x) {
+                       var y = document.getElementsByClassName(x[i]);
+                       for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                           }
+                       }
+                   </script>
+                   <style type="text/css">
+                   
+                       ${css}
+                   </style>
+               </head>
+               <body style="border:0; margin: 0;" onload="subst()">
+                   <table class="header" style="border-top: 1px solid black; width: 100%">
+                       <tr >
+                           <td style="text-align:center;font-size:12;" >${ company.rml_footer }</td>
+                       </tr>
+                       <tr >
+                           <td style="text-align:center;font-size:12;" >Contact : ${ user.name }</td>
+                       </tr>
+                   </table> ${_debug or ''|n} </body>
+            </html>
+                        ]]></field>
+                        <field name="orientation">Portrait</field>
+                        <field name="format">A4</field>
+                        <field name="html"><![CDATA[
+            <html>
+               <head>
+                   <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+                   <script>
+                       function subst() {
+                       var vars={};
+                       var x=document.location.search.substring(1).split('&');
+                       for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                       var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                       for(var i in x) {
+                       var y = document.getElementsByClassName(x[i]);
+                       for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                           }
+                       }
+                   </script>
+                   <style type="text/css">
+                   
+                       ${css}
+                   </style>
+               </head>
+               <body style="border:0; margin: 0;" onload="subst()">
+                   <table class="header"> 
+                       <tr >
+                           <td style="text-align:left;font-size:12;" width="20%">${ helper.embed_image('png',company.logo,200,50)|n }</td>
+                           <td style="text-align:right;font-size:12;" width="80%"></br></br>${ company.rml_header1 }</td>
+                       </tr>
+                   </table> ${_debug or ''|n} </body>
+                   <p style="text-align:left;font-size:12;">${company.name}</p>
+            </html>]]>
+                        </field>
+                        <field eval="25.0" name="margin_top"/>
+                        <field eval="25.0" name="margin_bottom"/>
+                        <field name="css"><![CDATA[
+            
+            body, table, td, span, div {
+                font-family: Helvetica, Arial;
+            }
+            
+            body {
+            font-family:Arial;
+            font-size:9;
+            
+            }
+            .header {
+                margin-left:0;
+                text-align:left;
+                width:300px;
+                font-size:12;
+                border-bottom: 1px solid black;
+                width: 100%; 
+            }
+            .title {
+            font-size:16;
+            font-weight: bold;
+            }
+            .top{
+                    border-top: 1px solid black; 
+            }
+            .td_line_grey{
+                        border-bottom: 1px solid #ccc !important;
+                        text-align:left;
+                        font-size:12;"
+                        }
+            
+            .basic_table{
+            text-align:center;
+            border:1px solid lightGrey;
+            border-collapse: collapse;
+            }
+            .basic_table td {
+            border:1px solid lightGrey;
+            font-size:12;
+            
+            
+            }
+            
+            .list_table {
+ 
+            text-align:left;
+            border-bottom:1px solid black; 
+            font-size:12px;
+            font-weight: bold;       
+            
+            }       
+            .tr_bottom_line_dark_grey{
+                border-bottom: thin solid grey;
+                width:100%;
+            }
+            .tr_bottom_line_light_grey{
+                border-bottom: thin solid #CCCCCC;
+                width:100%;
+            }
+            .td_f12{
+                font-size:12px;
+            }
+        
+            ]]>
+                        </field>
+                        <field name="name">Aksesoris Webkit Header</field>
+        </record>
+
+
+        <report 
+        id="aksesoris_webkit" 
+        string="SPK Aksesoris" 
+        model="vit.makloon.order" 
+        name="vit.makloon.order.report" 
+        file="vit_n_cutting_order/report/aksesoris_webkit.mako"
+        webkit_header="aksesoris_header"
+        report_type="webkit"
+        
+        />
+  
+    </data> 
+</openerp>
