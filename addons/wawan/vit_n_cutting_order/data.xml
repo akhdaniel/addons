@@ -16,7 +16,7 @@
              <field name="uom_po_id" ref="product_uom_kgm"/>
         </record>
 
-        <record id="mutif" model="product.category">
+        <!-- <record id="mutif" model="product.category">
             <field name="name">Mutif</field>
         </record>
 
@@ -32,6 +32,6 @@
          <record forcecreate="True" model="conf.cutting" id="data_6">
             <field name="loop_size">6</field>
             <field name="categ_id" ref="litte_mutif"/>
-        </record>  
+        </record>   -->
     </data>
 </openerp>
