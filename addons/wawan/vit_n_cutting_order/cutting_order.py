@@ -417,7 +417,16 @@ class vit_cutting_order(osv.osv):
 		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('name','=',self_obj[0].type_product_id.model_product)])
 
 
-		len_size = self.conf_categ_id(cr,uid, self_obj[0].category,context)
+		# len_size = self.conf_categ_id(cr,uid, self_obj[0].category,context)
+		try:
+			self.conf_categ_id(cr,uid, self_obj[0].category,context)
+		except Exception, e:
+			raise osv.except_osv( 'Warning!' , 'Lakukan Pengaturan dulu di Configuration Cutting, Loop size : 5 dengan Category  : Mutif, dan Loop size : 6 dengan Category : Little Mutif')	
+		else:
+			len_size = self.conf_categ_id(cr,uid, self_obj[0].category,context)
+			
+		if self.conf_categ_id(cr,uid, self_obj[0].category,context) == []:
+			raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXXL yang di input QC cutting tidak boleh minus')	
 
 		if len_size == 5:
 			loop_size = ['S','M','L','XL','XXL']
@@ -669,9 +678,15 @@ class vit_cutting_order(osv.osv):
 	def action_inprogress(self, cr, uid, ids, context=None):
 		lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
 		lokasi_produksi = 'Lokasi Produksi'
+		# import pdb;pdb.set_trace()
+		try:
+			lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
+			lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		except Exception, e:
+			raise osv.except_osv('Tidak Ditemukan' , lokasi_barang_jadi+' atau'+ lokasi_produksi)	
+		
 		lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
 		lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
-
 		### Buat Internal Move Dari Gudang Jadi ke Produksi ####
 		########################################################
 		### Create Dahulu ######################################
@@ -709,6 +724,13 @@ class vit_cutting_order(osv.osv):
 	def action_finish_qc(self, cr, uid, ids, context=None):
 		lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
 		lokasi_produksi = 'Lokasi Produksi'
+
+
+		try:
+			lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
+			lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		except Exception, e:
+			raise osv.except_osv('Tidak Ditemukan' , lokasi_barang_jadi+' atau'+ lokasi_produksi)	
 
 		lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
 		lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
