@@ -78,6 +78,22 @@ class lph(osv.osv):
 
 		return result
 
+	def _get_voucher_lph(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result = {}
+		#import pdb;pdb.set_trace()
+		for x in self.browse(cr,uid,ids,context=context):
+			dn = "'draft'"
+			cr.execute('select id from vit_dist_payment_voucher where state != '+str(dn)+' and lph_id ='+str(x.id)+'')	
+			hsl = cr.fetchall()
+			if hsl != []:
+				id_lph = hsl[0]
+				result[x.id] = id_lph
+
+			#return result
+		return result	
+
 	_columns 	= {
 		'name'			  : fields.char('Number'),
 		'date'			  : fields.date('Date'),
@@ -104,10 +120,12 @@ class lph(osv.osv):
 			('done', 'Done'),
 			], 'Status', readonly=True, 
 			select=True),
-		'voucher_id'	  : fields.many2one('vit_dist_payment.voucher', 'Voucher'),
+		#'voucher_id'	  : fields.many2one('vit_dist_payment.voucher', 'Voucher'),
+		'voucher_id'	  : fields.function(_get_voucher_lph,type='many2one',relation='vit_dist_payment.voucher',string='Voucher',readonly=True),
 		'voucher_total'	  : fields.related('voucher_id', 'total' , type="float", 
-			relation="vit_dist_payment.voucher", string="Voucher Total", store=True),
-		'writeoff_detail_ids': fields.function(_get_writeoff_detail, type='many2many', relation="writeoff", string="Write Off Detail",readonly=True),    		
+			relation="vit_dist_payment.voucher", string="Voucher Total",readonly=True),
+		'writeoff_detail_ids': fields.function(_get_writeoff_detail, type='many2many', relation="writeoff", string="Write Off Detail",readonly=True), 
+		'type' : fields.selection([('lph','LPH'),('kontrabon','LPH Kontra Bon')],'Type'),  		
 	}
 
 	def create(self, cr, uid, vals, context=None):

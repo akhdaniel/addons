@@ -1,6 +1,6 @@
 {
     'name': 'Distribution Payment',
-    'version': '0.4',
+    'version': '0.5',
     'author'  :'vitraining.com',
     'category': 'Accounting',
     'description': """
