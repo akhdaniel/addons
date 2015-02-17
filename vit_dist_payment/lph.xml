@@ -30,7 +30,7 @@
                     <field name="date"/>       
                     <field name="user_id"/>       
                     <field name="based_route_id"/>       
-                    <field name="voucher_id"/>       
+                    <!-- <field name="voucher_id"/>  -->      
                     <field name="total"/>       
                     <field name="balance"/>       
                     <field name="state"/>   
@@ -66,10 +66,11 @@
                             </group>
                             <group>
 <!--                                 <field name="based_route_id" on_change="onchange_based_route(date, user_id, based_route_id)" attrs="{'readonly': [('state','!=','draft')]}"/>  -->    
-                                <field name="based_route_id" attrs="{'readonly': [('state','!=','draft')]}"/>   
-                                <field name="voucher_id" on_change="onchange_voucher_id(user_id,voucher_id,voucher_total)"
-                                    domain="[('lph_ids','=',False),('state', '=','open'),('received_from','=',user_id)]" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>       
-                                <field name="voucher_total" widget="monetary" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>      
+                                <field name="based_route_id" attrs="{'readonly': [('state','!=','draft')]}"/>  
+                                <field name="voucher_id" attrs="{'invisible': [('state','=','draft')]}"/>                                  
+<!--                                 <field name="voucher_id" on_change="onchange_voucher_id(user_id,voucher_id,voucher_total)"
+                                    domain="[('lph_ids','=',False),('state', '=','open'),('received_from','=',user_id)]" attrs="{'invisible': [('state','=','draft')],'readonly':[('state','=','done')]}"/>  -->      
+                                <field name="voucher_total" widget="monetary" attrs="{'invisible': [('state','=','draft')]}"/>      
                             </group>
                         </group>
 
@@ -191,14 +192,33 @@
             
             <field name="view_id" ref="view_lph_tree"/>
              <!-- <field eval="False" name="view_id"/> -->
-             <field name="domain">[('state','=','draft')]</field>
-            <field name="context">{'default_state':'draft'}</field>
+             <field name="domain">[('state','=','draft'),('type','=','lph')]</field>
+            <field name="context">{'default_state':'draft','default_type':'lph'}</field>
             
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
                 Click to add a LPH
               </p>              
                 <p>Click tombol create to create new LPH</p>
+            </field>
+        </record>
+
+        <record id="action_lph_list_kontrabon" model="ir.actions.act_window">
+            <field name="name">List LPH Kontrabon</field>
+            <field name="res_model">vit_dist_payment.lph</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            
+            <field name="view_id" ref="view_lph_tree"/>
+             <!-- <field eval="False" name="view_id"/> -->
+             <field name="domain">[('state','=','draft'),('type','=','kontrabon')]</field>
+            <field name="context">{'default_state':'draft','default_type':'kontrabon'}</field>
+            
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a LPH Kontrabon
+              </p>              
+                <p>Click tombol create to create new LPH Kontrabon</p>
             </field>
         </record>
 
@@ -209,11 +229,18 @@
 			 sequence="20"
 			 parent="account.menu_finance_receivables"/>
 
+        <!-- menu LPH kontrabon -->
+        <menuitem id="lph_kontrabon"
+             action="action_lph_list_kontrabon"
+             name="LPH Kontra Bon"
+             sequence="21"
+             parent="account.menu_finance_receivables"/>
+
         <!-- menu Payment LPH -->
         <menuitem id="lph_payments"
              action="action_lph_list_payment"
              name="LPH Payment"
-             sequence="22"
+             sequence="40"
              parent="account.menu_finance_receivables"/>
 
         <!-- Sequences for LPH -->
