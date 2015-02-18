@@ -20,7 +20,10 @@ class wisuda_mahasiswa(osv.Model):
 		par_ids = par_obj.search(cr, uid, [
 			('status_mahasiswa','=','Mahasiswa'),
 			('tahun_ajaran_id','=',tahun_ajaran_id),
-			('wisuda','=',tgl_wisuda)], context=context)
+			('wisuda','=',tgl_wisuda),
+			('tgl_lulus','=',False),
+			('judul','=',False),
+			], context=context)
 
 		#import pdb;pdb.set_trace()
 		res = []
@@ -43,7 +46,7 @@ class wisuda_mahasiswa(osv.Model):
 		'name': fields.char('Kode',required=True,size=32),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'tgl_wisuda':fields.date('Tanggal Wisuda',required=True),
-		'lokasi_wisuda':fields.char('Tempat Wisuda'),
+		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,required=True),
 		'kuota':fields.integer('Kuota',required=True),
 		'partner_ids':fields.many2many(
 			'res.partner',   	# 'other.object.name' dengan siapa dia many2many
@@ -71,13 +74,16 @@ class wisuda_mahasiswa(osv.Model):
 
 		par_ids = par_obj.search(cr, uid, [
 			('status_mahasiswa','=','Mahasiswa'),
-			('angkatan_id','=',angkatan),
-			('wisuda','=',tgl_wisuda)], context=context)
+			('tahun_ajaran_id','=',angkatan),
+			('wisuda','=',tgl_wisuda),
+			('tgl_lulus','!=',False),
+			('judul','!=',False),
+			], context=context)
 		res = []
 		x=0
 		for peserta in par_ids:
 			x += 1			
-			if x > kuota :
+			if x > my_form.kuota :
 				break
 			res.append(peserta)
 		#insert many2many records
@@ -101,4 +107,4 @@ class wisuda_mahasiswa(osv.Model):
 		for rec in self.browse(cr, uid, ids, context=context):
 			if rec.state != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
-		return super(spmb_mahasiswa, self).unlink(cr, uid, ids, context=context)
+		return super(wisuda_mahasiswa, self).unlink(cr, uid, ids, context=context)

@@ -16,8 +16,8 @@
                 </tree>
             </field>
         </record>
-        
-        <record id="wisuda_form_view" model="ir.ui.view">
+    
+        <record model="ir.ui.view" id="wisuda_form_view">
             <field name="name">wisuda.form</field>
             <field name="model">wisuda.mahasiswa</field>
             <field name="type">form</field>
