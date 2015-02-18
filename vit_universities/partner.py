@@ -88,7 +88,7 @@ class res_partner (osv.osv):
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',readonly=True),                
 		#'peserta_kelas_id':fields.many2one('master.peserta_kelas',string='Mahasiswa',),
-		'ipk':fields.float('IPK',digits=(2,2)),
+		'ipk':fields.float('IPK',digits=(2,2),readonly=True),
 		'judul':fields.text('Judul Tugas Akhir'),
 		'wisuda':fields.date('Tanggal Wisuda'),
 		'tgl_lulus':fields.date('Tanggal Lulus'),

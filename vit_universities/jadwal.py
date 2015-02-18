@@ -15,25 +15,21 @@ class master_jadwal (osv.Model):
 		jurusan = vals['jurusan_id']
 		prodi = vals['prodi_id']
 		semester = vals['semester_id']
+		ruangan = vals['ruangan_id']
+		hari = vals['hari']
+		sesi = vals['sesi']		
 		jad_obj = self.pool.get('master.jadwal')
 		jad_id = jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
 			('jurusan_id','=',jurusan),
 			('prodi_id','=',prodi),
 			('semester_id','=',semester),
-			('is_active','=',True)])
-
-		if jad_id != [] :
-			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
-
-		ruangan = vals['ruangan_id']
-		hari = vals['hari']
-		sesi = vals['sesi']
-		jad_id2 = jad_obj.search(cr,uid,[('ruangan_id','=',ruangan),
+			('ruangan_id','=',ruangan),	
 			('hari','=',hari),
 			('sesi','=',sesi),
-			('is_active','=',True)]) 
-		if jad_id2 != [] :
+			('is_active','=',True),])
+
+		if jad_id != [] :
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
 
 		return super(master_jadwal, self).create(cr, uid, vals, context=context)   

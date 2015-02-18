@@ -225,6 +225,8 @@ class master_prodi (osv.osv):
 		'name' :fields.char('Nama Program Studi',size=128, required = True),
 		'jurusan_id' :fields.many2one('master.jurusan',string='Jurusan',required = True),
 		'gelar_id' : fields.many2one('res.partner.title',string='Gelar',required=True),
+		'semester_id' : fields.many2one('master.semester','Max Semester',required = True),
+		'jenjang': fields.selection([('diploma','Diploma'),('sarjana','Sarjana'),('magister','Magister'),('doctor','Doctoral')],'Jenjang',required = True),
 			}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode program Studi tidak boleh sama')]         
@@ -286,9 +288,16 @@ biodata_keluarga()
 
 class master_semester(osv.Model):
 	_name = 'master.semester'
+	_order ="name"
 
 	_columns={
-		'name': fields.char('Semester',size=14,required=True),
+		'name': fields.integer('Semester',required=True),
+	}
+
+	_sql_constraints = [('name_uniq', 'unique(name)','Semester tidak boleh sama')]
+
+	_defaults ={
+		'name':1,
 	}
 
 class master_nilai(osv.Model):

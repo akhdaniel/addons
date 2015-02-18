@@ -142,7 +142,7 @@
             <field name="name">Program Studi</field>
             <field name="res_model">master.prodi</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data program studi.</p><p>disini belum ada data tentang program studi !</p></field>
         </record>
@@ -256,7 +256,7 @@
 
 
         <record model="ir.actions.act_window" id="template_pembayaran_list_action">
-            <field name="name"> Master Pembayaran</field>
+            <field name="name">Master Pembayaran</field>
             <field name="res_model">master.pembayaran</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -398,7 +398,7 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
 
-        <record model="ir.ui.view" id="wisuda_tree_view">
+<!--         <record model="ir.ui.view" id="wisuda_tree_view">
             <field name="name">wisuda.tree</field>
             <field name="model">wisuda.mahasiswa</field>
             <field name="type">tree</field>
@@ -412,7 +412,7 @@
                     <field name="state"/>                    
                 </tree>
             </field>
-        </record>        
+        </record>    -->     
         
         <record model="ir.actions.act_window" id="wisuda_list_action">
             <field name="name">Wisuda</field>
@@ -640,12 +640,39 @@
             <field name="model">master.prodi</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Program Studi" version="7.0" editable="bottom">
+                <tree string="Daftar Program Studi" version="7.0">
                     <field name="kode"/>
                     <field name="name"/>                    
                     <field name="jurusan_id"/>
+                    <field name="semester_id" widget="selection"/>
+                    <field name="jenjang"/>
                     <field name="gelar_id"/>
                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="prodi_form_view">
+            <field name="name">prodi.form</field>
+            <field name="model">master.prodi</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Program Studi" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="kode"/>
+                                <field name="name"/>                    
+                                <field name="jurusan_id"/>
+                            </group>
+
+                            <group >
+                                <field name="gelar_id"/>
+                                <field name="semester_id" widget="selection"/>
+                                <field name="jenjang"/> 
+                            </group>                          
+                        </group>
+                    </sheet>                     
+                </form>               
             </field>
         </record>
 
@@ -678,7 +705,7 @@
 
         <!-- Academic Years Information From View -->
         <record model="ir.ui.view" id="view_academic_year_form">
-            <field name="name">acdemic.year.form</field>
+            <field name="name">academic.year.form</field>
             <field name="model">academic.year</field>
             <field name="arch" type="xml">
                 <form string="Academic Years" version="7.0">

@@ -64,7 +64,8 @@ class operasional_krs (osv.Model):
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),         
 		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required = True),           
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
-		'semester_id':fields.many2one('master.semester','Semester',required = True),
+		'max_smt': fields.integer("Max Semester",),
+		'semester_id':fields.many2one('master.semester','Semester',domain="[('name','<=',max_smt)]",required = True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True), 
 		'krs_detail_ids' : fields.one2many('operasional.krs_detail','krs_id','Mata Kuliah'),
@@ -129,6 +130,7 @@ class operasional_krs (osv.Model):
 		fakultas_id = par_id.fakultas_id.id
 		jurusan_id = par_id.jurusan_id.id
 		prodi_id = par_id.prodi_id.id
+		max_smt = par_id.prodi_id.semester_id.name
 
 		results = {
 			'value' : {
@@ -138,6 +140,7 @@ class operasional_krs (osv.Model):
 				'fakultas_id' : fakultas_id,
 				'jurusan_id' : jurusan_id,
 				'prodi_id' : prodi_id,
+				'max_smt': max_smt,
 			}
 		}
 		return results 
@@ -227,8 +230,21 @@ class krs_detail (osv.Model):
 krs_detail()
 
  
-class transkrip(osv.Model):
+class operasional_transkrip(osv.Model):
 	_name='operasional.transkrip'
+
+	def create(self, cr, uid, vals, context=None):
+		#import pdb;pdb.set_trace() 
+		if 'partner_id' in vals:
+			mhs = vals['partner_id']
+			partner_brw = self.pool.get('res.partner').browse(cr,uid,mhs)
+			prodi = partner_brw.prodi_id.id
+			cek_mhs = self.search(cr,uid,[('partner_id','=',mhs),('prodi_id','=',prodi)])
+			if cek_mhs != []:
+				raise osv.except_osv(_('Error!'),
+				('Mahasiswa ini sudah mempunyai transkrip dengan program studi dan jenjang yang sama!'))				
+
+		return super(operasional_transkrip, self).create(cr, uid, vals, context=context)	 
 
 	def get_mk(self, cr, uid, ids, context=None):
 
@@ -286,9 +302,14 @@ class transkrip(osv.Model):
 
 			tot_sks += sks
 			tot_nil += nil_jml
-		#import pdb;pdb.set_trace()
+
 		ipk = tot_nil/tot_sks
 		result[ids[0]] = ipk
+
+		#update nilai IPK di di objek mahasiswa bersangkutan
+		nama_mahasiswa = self.browse(cr,uid,ids[0]).partner_id.id
+		partner_obj = self.pool.get('res.partner')
+		partner_obj.write(cr,uid,nama_mahasiswa,{'ipk':ipk},context=context)
 
 		#get yudisium
 		yud_obj = self.pool.get('master.yudisium')
@@ -318,4 +339,6 @@ class transkrip(osv.Model):
 		't_nilai' : fields.char('Total Nilai',readonly=True),
 			}    
 
-transkrip()
+	_sql_constraints = [('name_uniq', 'unique(name)','Kode Transkrip tidak boleh sama')]
+
+operasional_transkrip()

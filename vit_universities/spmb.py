@@ -39,12 +39,12 @@ class spmb_mahasiswa(osv.Model):
 				   
 		nlai = cr.fetchall()
 		nlai_sort = sorted(nlai)
+
 		#urutkan dari yang rerbesar dulu
 		nlai_sort.reverse()
 		x = 0
 		res = []
-		na = 0
-		
+		na = 0		
 		for nl in nlai_sort:
 			nli = nl[0]
 			idd = nl[1]
