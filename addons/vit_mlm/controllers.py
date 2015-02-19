@@ -25,10 +25,10 @@ class Member(http.Controller):
 		Country = http.request.env['res.country']
 		return http.request.render('website.member_view', {
 			'member': member,
-			'members': Member.search([]),
-			'pakets': Paket.search([]),
-			'states': State.search([]),
-			'countrys': Country.search([]),
+			# 'members': Member.search([]),
+			# 'pakets': Paket.search([]),
+			# 'states': State.search([]),
+			# 'countrys': Country.search([]),
 		})
 
 	@http.route('/mlm/member/json/<int:parent_id>',  auth='user', website=True)
@@ -152,8 +152,7 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/update',  auth='user', method='post', website=True)		
 	def update_member(self, **kwargs):
-		#import pdb; pdb.set_trace()
-		values={}
-		request.registry['res.partner'].write(request.cr, SUPERUSER_ID, [ int(kwargs['id']) ], kwargs, request.context)
-		return self.add_partner_response(values, kwargs)
-
+		# import pdb; pdb.set_trace()
+		id = int(kwargs['id'])
+		request.registry['res.partner'].write(request.cr, SUPERUSER_ID, [id], kwargs, request.context)
+		return request.redirect('/mlm/member/view/%d'% (id), code=301)

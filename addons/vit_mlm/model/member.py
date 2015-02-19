@@ -303,7 +303,7 @@ class member(osv.osv):
 
 		group =  self.pool.get('res.groups')
 		gids =group.search(cr, uid, [('name','in',['Employee','Contact Creation',
-			'MLM / Manager','MLM / User',
+			'MLM / User',
 			'Portal'])], context=context)
 
 		for gid in gids:
@@ -351,15 +351,23 @@ class member(osv.osv):
 		#########################################################################
 		# cek max downline sesuai mlm_plan
 		#########################################################################
-
 		new_member = self.browse(cr, uid, ids[0], context=context)
 		upline = new_member.parent_id
+
+		#########################################################################
+		# cek upline sudah state aktif?
+		#########################################################################
+		if upline and upline.state != 'aktif':
+			raise osv.except_osv(_('Warning'),_("Cannot confirm member, upline is not active") ) 
+
+		#########################################################################
+		# cek max downline si upline
+		#########################################################################
 		self.cek_max_downline(cr, uid, upline.id, context=context)
 
 		#########################################################################
 		# generate code and path
 		#########################################################################
-
 		if context is None:
 			context = {}
 		new_code = self.pool.get('ir.sequence').get(cr, uid, 'mlm.member') or '/'
@@ -380,17 +388,6 @@ class member(osv.osv):
 		cr.execute("update res_partner set path_ltree = '%s' where id=%d" % 
 			(new_path, ids[0]) )
 
-		#########################################################################
-		# create user 
-		#########################################################################		
-		self.create_user(cr, uid, new_member, context=context)
-
-		#########################################################################
-		# process paket join, khusus binary plan saja
-		#########################################################################		
-		if new_member.paket_id:
-			self.generate_sub_member(cr, uid, ids, context=context)
-
 		return ids[0]
 
 
@@ -398,16 +395,16 @@ class member(osv.osv):
 	# bentuk sub member akibat dari paket join (khusus binary plan)
 	#########################################################################
 	def generate_sub_member(self, cr, uid, ids, context=None):
-		mlm_plan = self.get_mlm_plan(cr, uid, context=context)
+		mlm_plan     = self.get_mlm_plan(cr, uid, context=context)
 		max_downline = mlm_plan.max_downline
 
-		new_member = self.browse(cr, uid, ids[0], context=context)
-		paket      = new_member.paket_id
-		hak_usaha  = paket.hak_usaha
-		child      = []
+		new_member   = self.browse(cr, uid, ids[0], context=context)
+		paket        = new_member.paket_id
+		hak_usaha    = paket.hak_usaha
+		child        = []
 
-		parent_id 	= new_member.id 
-		sponsor_id 	= new_member.sponsor_id.id
+		parent_id 	 = new_member.id 
+		sponsor_id 	 = new_member.sponsor_id.id
 
 		jc = 0
 		parent_index = 0
@@ -432,7 +429,7 @@ class member(osv.osv):
 				jc = 0
 
 			#confirm langsung 
-
+			self.write(cr, uid, new_sub_id, {'state':'aktif'}, context=context)
 
 		return True 
 
@@ -452,6 +449,21 @@ class member(osv.osv):
 	#set to "aktif" state
 	#########################################################################
 	def action_aktif(self,cr,uid,ids,context=None):
+
+		new_member = self.browse(cr, uid, ids[0], context=context)
+
+		#########################################################################
+		# create user 
+		#########################################################################		
+		self.create_user(cr, uid, new_member, context=context)
+
+		#########################################################################
+		# process paket join, khusus binary plan saja
+		#########################################################################		
+		if new_member.paket_id:
+			self.generate_sub_member(cr, uid, ids, context=context)
+
+
 		self.hitung_bonus_sponsor(cr, uid, ids, context=context)
 		self.hitung_bonus_level(cr, uid, ids, context=context)
 		return self.write(cr,uid,ids,{'state':MEMBER_STATES[3][0]},context=context)
