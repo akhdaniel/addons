@@ -5,9 +5,12 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <field name="parent_id" position="replace"/>
+
             	<field name="website" position="after">
                     <field name="path" readonly="True"/>
             		<field name="code" readonly="True"/>
+                    <field name="parent_id" />
                     <field name="sponsor_id" />
                     <field name="paket_id" />
                     <field name="is_affiliate" />
@@ -68,6 +71,10 @@
                             <field name="total_bonus"/>
                         </group>
 		            </page>
+
+                    <!--page string="Tree">
+                        <iframe src="/mlm/member/view/badu-36" style="width:100%; height:300px" />
+                    </page-->
 
 		        </notebook>
             </field>
