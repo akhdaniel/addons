@@ -448,12 +448,15 @@
         
         <div class="oe_structure">
             <div class="container">
+
+		        <div class="oe_structure"/>
 		
 		    	<a t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
 
 		        <div class="oe_structure"/>
 
                 <h1 t-esc="member.name"/>
+                <h2 t-esc="member.state_id.name"/>
 
 		        <div class="form-horizontal mt32">
 		        	<t t-call="website.member_form">

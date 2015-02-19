@@ -69,6 +69,7 @@ class member(osv.osv):
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
+		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=True),
 		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=True),
 		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade"),
 		'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
@@ -96,7 +97,10 @@ class member(osv.osv):
 	def get_mlm_plan(self, cr, uid, context=None):
 		cid = self.pool.get('res.company')._company_default_get(cr, uid, context=context)
 		company = self.pool.get('res.company').browse(cr, uid, cid, context=context)
-		return company.mlm_plan_id
+		mlm_plan = company.mlm_plan_id
+		if not mlm_plan:
+			raise osv.except_osv(_('Warning'),_("Please set Company's MLM Plan") ) 
+		return mlm_plan
 
 	#########################################################################
 	# cari bonus sponsor, kalau ada >0 , masukkan ke tabel partner_bonus
@@ -409,6 +413,8 @@ class member(osv.osv):
 		jc = 0
 		parent_index = 0
 
+		#import pdb; pdb.set_trace()
+
 		for i in range(0, hak_usaha-1):
 
 			data = {
@@ -429,7 +435,8 @@ class member(osv.osv):
 				jc = 0
 
 			#confirm langsung 
-			self.write(cr, uid, new_sub_id, {'state':'aktif'}, context=context)
+			self.action_aktif(cr, uid, [new_sub_id], context=context)
+			# self.write(cr, uid, new_sub_id, {'state':'aktif'}, context=context)
 
 		return True 
 

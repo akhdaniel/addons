@@ -132,7 +132,7 @@ class Member(http.Controller):
 				}
 				request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
 
-		return self.add_partner_response(values, kwargs)
+		return request.redirect('/mlm/member/view/%d'% (lead_id), code=301)
 
 	@http.route('/mlm/member/edit/<model("res.partner"):member>',  auth='user', website=True)
 	def edit(self, member, **kwargs):
