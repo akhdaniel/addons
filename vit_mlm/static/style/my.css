@@ -17,6 +17,7 @@ span {
   fill: #fff;
   stroke: steelblue;
   stroke-width: 3px;
+  cursor: pointer;
 }
 
 .node text { font: 12px sans-serif; 
@@ -28,3 +29,6 @@ span {
   stroke: #ccc;
   stroke-width: 2px;
 }
+
+
+

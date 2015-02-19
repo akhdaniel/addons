@@ -13,6 +13,11 @@ MEMBER_STATES =[('draft','Draft'),('open','Sedang Verifikasi'), ('reject','Ditol
 '''
 insstall
 
+Install the contrib package: 
+sudo apt-get install postgresql-contrib
+sudo /etc/init.d/postgresql restart
+
+masuk psql:
 CREATE extension ltree;
 ALTER table res_partner ADD column path_ltree ltree;
 CREATE INDEX path_gist_res_partner_idx ON res_partner USING GIST(path_ltree);

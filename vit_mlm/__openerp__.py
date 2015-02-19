@@ -23,6 +23,8 @@
       'security/ir.model.access.csv',
 
       'menu/menu_membership.xml',   
+
+      'static/src/d3.min.js',
       
     ],    
     'description': """
