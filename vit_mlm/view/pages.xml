@@ -268,7 +268,7 @@
 				</select>
 			</t>
 			<t t-if="readonly==1">
-				<div t-esc="member and member.parent_id and member.parent_id.name or ''" />
+				<input class="form-control" readonly="true" t-attf-value="#{member and member.parent_id and member.parent_id.name or ''}" />
 			</t>
 		</div>
 	</div>
@@ -276,28 +276,38 @@
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="sponsor_id">Sponsor ID</label>
 		<div class="col-md-7 col-sm-8">
-			<select class="form-control" required="True" name="sponsor_id" 
-				 t-attf-readonly="#{True if readonly==1 else False}">
-			    <option value="">Sponsor...</option>
-			    <t t-foreach="members or []" t-as="sponsor">
-			        <option t-att-value="sponsor.id" t-attf-selected="#{member and member.sponsor_id.id == sponsor.id}">
-			        	<t t-esc="sponsor.name"/>
-			        </option>
-			    </t>
-			</select>				 
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="sponsor_id" 
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">Sponsor...</option>
+				    <t t-foreach="members or []" t-as="sponsor">
+				        <option t-att-value="sponsor.id" t-attf-selected="#{member and member.sponsor_id.id == sponsor.id}">
+				        	<t t-esc="sponsor.name"/>
+				        </option>
+				    </t>
+				</select>		
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true" t-attf-value="#{member and member.sponsor_id and member.sponsor_id.name or ''}" />
+			</t>					 
 		</div>
 	</div>
 
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Paket</label>
 		<div class="col-md-7 col-sm-8">
-			<select class="form-control" required="True" name="paket_id" 
-				 t-attf-readonly="#{True if readonly==1 else False}">
-			    <option value="">Paket...</option>
-			    <t t-foreach="pakets or []" t-as="paket">
-			        <option t-att-value="paket.id" t-attf-selected="#{member and member.paket_id.id == paket.id}"><t t-esc="paket.name"/></option>
-			    </t>
-			</select>
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="paket_id" 
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">Paket...</option>
+				    <t t-foreach="pakets or []" t-as="paket">
+				        <option t-att-value="paket.id" t-attf-selected="#{member and member.paket_id.id == paket.id}"><t t-esc="paket.name"/></option>
+				    </t>
+				</select>
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true" t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
+			</t>				
 		</div>
 	</div>
 
@@ -346,26 +356,36 @@
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
 		<div class="col-md-7 col-sm-8">
-			<select class="form-control" required="True" name="country_id" 
-				 t-attf-readonly="#{True if readonly==1 else False}">
-			    <option value="">Country...</option>
-			    <t t-foreach="countrys or []" t-as="country">
-			        <option t-att-value="country.id" t-attf-selected="#{member and member.country_id.id == country.id}"><t t-esc="country.name"/></option>
-			    </t>
-			</select>
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="country_id" 
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">Country...</option>
+				    <t t-foreach="countrys or []" t-as="country">
+				        <option t-att-value="country.id" t-attf-selected="#{member and member.country_id.id == country.id}"><t t-esc="country.name"/></option>
+				    </t>
+				</select>
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true" t-attf-value="#{member and member.country_id and member.country_id.name or ''}" />
+			</t>			
 		</div>
 	</div>	
 
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
 		<div class="col-md-7 col-sm-8">
-			<select class="form-control" required="True" name="state_id" 
-				 t-attf-readonly="#{True if readonly==1 else False}">
-			    <option value="">State...</option>
-			    <t t-foreach="states or []" t-as="state">
-			        <option t-att-value="state.id" t-attf-selected="#{member and member.state_id.id == state.id}"><t t-esc="state.name"/></option>
-			    </t>
-			</select>
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="state_id" 
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">State...</option>
+				    <t t-foreach="states or []" t-as="state">
+				        <option t-att-value="state.id" t-attf-selected="#{member and member.state_id.id == state.id}"><t t-esc="state.name"/></option>
+				    </t>
+				</select>
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true" t-attf-value="#{member and member.state_id and member.state_id.name or ''}" />
+			</t>				
 		</div>
 	</div>
 
