@@ -13,6 +13,7 @@ class mlm_paket(osv.osv):
 		'code'		: fields.char('Code'),
 		'name'		: fields.char('Name'),
 		'price'		: fields.float('Price'),
+		'cashback'		: fields.float('Cashback'),
 		'hak_usaha'		: fields.integer('Hak Usaha'),
 		'description'	: fields.text('Description'),
 	}

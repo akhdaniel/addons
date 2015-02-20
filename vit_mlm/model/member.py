@@ -65,7 +65,6 @@ class member(osv.osv):
 
 		return results	
 
-
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
@@ -84,6 +83,11 @@ class member(osv.osv):
 
 		'is_stockist'		: fields.boolean("Is Stockist?"),
 		'bbm'				: fields.char("BBM Pin"),
+		'signature'			: fields.binary('Signature'),
+		'bank_no'			: fields.char("Bank Account Number"),
+		'bank_account_name'	: fields.char("Bank Account Name"),
+		'bank_name'			: fields.char("Bank Name"),
+		'bank_branch'		: fields.char("Bank Branch"),
 
 	}
 	_defaults = {
@@ -122,7 +126,7 @@ class member(osv.osv):
 		new_member 		= self.browse(cr, uid, ids[0], context=context)
 		sponsor 		= self.browse(cr, uid, new_member.sponsor_id.id, context=context)
 		member_bonus.addSponsor(cr, uid, new_member.id, sponsor.id, 
-			amount, 'New Member, Direct Sponsor', context=context)
+			amount, 'New Member Sponsor', context=context)
 
 		#####################################################################
 		# sponsor upline di atas sponsor langsung, x level ke atas sponsor
@@ -147,7 +151,6 @@ class member(osv.osv):
 					amount, "New Member, Up Level %d Sponsor" % (-p[3] + 1), context=context)
 
 		return True
-
 
 	#########################################################################
 	# ini dijalankan waktu action_aktif suatu member baru.
@@ -284,7 +287,8 @@ class member(osv.osv):
 		return new_id
 	
 	#########################################################################
-	# create : cek max downline, set path
+	# create user secara manual
+	# bawaan odoo: waktu create user otomatis terbentuk res_partner
 	#########################################################################
 	def create_user(self, cr, uid, member, context=None):
 		alias_id = 4
@@ -394,7 +398,6 @@ class member(osv.osv):
 
 		return ids[0]
 
-
 	#########################################################################
 	# bentuk sub member akibat dari paket join (khusus binary plan)
 	#########################################################################
@@ -435,8 +438,22 @@ class member(osv.osv):
 				jc = 0
 
 			#confirm langsung 
-			self.action_aktif(cr, uid, [new_sub_id], context=context)
-			# self.write(cr, uid, new_sub_id, {'state':'aktif'}, context=context)
+			self.write(cr, uid, new_sub_id, {'state':'aktif'}, context=context)
+
+		#######################################################################
+		# si top level (new_member) paket dapat bonus sponsor langsung sebanyak 
+		# = hak_usaha * bonus_sponsor
+		# 
+		# dan bonus level sebanyak:
+		# = 
+		#######################################################################
+		bonus_sponsor = mlm_plan.bonus_sponsor
+
+		member_bonus 	= self.pool.get('mlm.member_bonus')
+		sponsor 		= self.browse(cr, uid, new_member.sponsor_id.id, context=context)
+		amount 			= hak_usaha * bonus_sponsor
+		member_bonus.addSponsor(cr, uid, new_member.id, sponsor.id, 
+			amount, '%d x Bonus Sponsor Paket %s' % (hak_usaha, paket.name), context=context)
 
 		return True 
 
@@ -466,12 +483,17 @@ class member(osv.osv):
 
 		#########################################################################
 		# process paket join, khusus binary plan saja
+		# jika lebih dari satu titik, maka bonus sponsor milik yg mensponsori
 		#########################################################################		
 		if new_member.paket_id:
-			self.generate_sub_member(cr, uid, ids, context=context)
+			if new_member.paket_id.hak_usaha == 1:
+				self.hitung_bonus_sponsor(cr, uid, ids, context=context)
+			else:
+				self.generate_sub_member(cr, uid, ids, context=context)
 
-
-		self.hitung_bonus_sponsor(cr, uid, ids, context=context)
+		#########################################################################
+		# hitung bonus level
+		#########################################################################
 		self.hitung_bonus_level(cr, uid, ids, context=context)
 		return self.write(cr,uid,ids,{'state':MEMBER_STATES[3][0]},context=context)
 
