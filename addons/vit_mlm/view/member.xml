@@ -16,6 +16,13 @@
                     <field name="is_affiliate" />
             		<field name="is_stockist" />
             	</field>
+                
+                <field name="title" position="after">
+                    <field name="bank_no" />
+                    <field name="bank_account_name" />
+                    <field name="bank_name" />
+                    <field name="bank_branch" />
+                </field>
 
                 <xpath expr="//form/sheet" position="before">
                     <header>
