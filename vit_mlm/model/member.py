@@ -68,8 +68,8 @@ class member(osv.osv):
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
-		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=True),
-		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=True),
+		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=False),
+		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False),
 		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade"),
 		'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
 		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True),
@@ -311,7 +311,7 @@ class member(osv.osv):
 
 		group =  self.pool.get('res.groups')
 		gids =group.search(cr, uid, [('name','in',['Employee','Contact Creation',
-			'MLM / User',
+			'MLM / Member',
 			'Portal'])], context=context)
 
 		for gid in gids:

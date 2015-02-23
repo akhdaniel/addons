@@ -11,11 +11,11 @@
 		</record>
 
 		<!-- action list bonus -->
-		<record id="action_member_bonus_list" model="ir.actions.act_window">
+		<!--record id="action_member_bonus_list" model="ir.actions.act_window">
 			<field name="name">List Member Bonus</field>
 			<field name="res_model">mlm.member_bonus</field>
 			<field name="view_mode">tree,form</field>
-		</record>
+		</record-->
 
 
 		<!--  menu_mlm_member -->
@@ -39,11 +39,11 @@
 			 parent="menu_membership"/>
 
 		<!-- menu_mlm_bonus -->
-		<menuitem id="menu_member_bonus"
+		<!--menuitem id="menu_member_bonus"
 			 action="action_member_bonus_list"
 			 name="Member Bonus"
 			 sequence="30"
-			 parent="menu_membership"/>
+			 parent="menu_membership"/-->
 
 	</data>
 </openerp>
