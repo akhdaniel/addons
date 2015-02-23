@@ -1,0 +1,17 @@
+<openerp>
+<data>
+	<record id="view_ads_tree" model="ir.ui.view">
+	    <field name="name">mlm_ads_tree</field>
+	    <field name="model">mlm.ads</field>
+	    <field name="arch" type="xml">
+	    	<tree string="list ads">
+				<field name='message' />
+				<field name='url' />
+				<field name='partner_id' />
+				<field name='date_start' />
+				<field name='date_end' />
+			</tree>    
+	    </field>
+	</record>
+</data>
+</openerp>

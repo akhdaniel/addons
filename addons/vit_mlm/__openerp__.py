@@ -18,13 +18,19 @@
       'view/mlm_plan.xml',
       'view/pages.xml',
       'view/paket.xml',
+      'view/broadcast.xml',
+      'view/ads.xml',
 
       'security/group.xml',
       'security/ir.model.access.csv',
 
       'menu/menu_membership.xml',   
+      'menu/menu_bonus.xml',   
+      'menu/menu_broadcast.xml',   
+      'menu/menu_ads.xml',   
 
       'static/src/d3.min.js',
+      'static/style/my.css',
       
     ],    
     'description': """
