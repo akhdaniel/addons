@@ -237,7 +237,7 @@ class member(osv.osv):
 				if not member_bonus.search(cr, uid, exist, context=context):
 					# jika jumlah child == 2^level
 					if children == 2**rel_level:
-						# jika level 1 : namanya bonus pasangan
+						# jika level 1 : tambah yg namanya bonus pasangan
 						if rel_level==1:
 							member_bonus.addBonusPasangan(cr, uid, new_member.id, upline_id, rel_level,
 								amount_bonus_pasangan, "Bonus Pasangan", context=context)

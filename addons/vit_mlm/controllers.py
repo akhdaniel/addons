@@ -19,10 +19,10 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/view/<model("res.partner"):member>',  auth='user', website=True)
 	def view(self, member):
-		Member = http.request.env['res.partner']
-		Paket  = http.request.env['mlm.paket']
-		State = http.request.env['res.country.state']
-		Country = http.request.env['res.country']
+		# Member = http.request.env['res.partner']
+		# Paket  = http.request.env['mlm.paket']
+		# State = http.request.env['res.country.state']
+		# Country = http.request.env['res.country']
 		return http.request.render('website.member_view', {
 			'member': member,
 			# 'members': Member.search([]),
