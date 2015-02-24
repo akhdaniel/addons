@@ -456,7 +456,7 @@
 		        <div class="oe_structure"/>
 
                 <h1 t-esc="member.name"/>
-                <h2 t-esc="member.state_id.name"/>
+                <h2 t-esc="member.state"/>
 
 		        <div class="form-horizontal mt32">
 		        	<t t-call="website.member_form">
@@ -480,59 +480,59 @@
 
 				  <!-- Tab panes -->
 				  <div class="tab-content">
-				    <div role="tabpanel" class="tab-pane active" id="downlines">
-				    	<table class="table table-striped">
-				    		<tr>
-				    			<th>Name</th>
-				    			<th>Code</th>
-				    			<th>Phone</th>
-				    			<th>Mobile</th>
-				    			<th>Email</th>
-				    			<th>BBM</th>
-			                </tr>			    		
-		                <t t-foreach="member.child_ids or []" t-as="child">
-				    		<tr>
-				    			<td t-esc="child.name" />
-				    			<td t-esc="child.code" />
-				    			<td t-esc="child.phone" />
-				    			<td t-esc="child.mobile" />
-				    			<td t-esc="child.email" />
-				    			<td t-esc="child.bbm" />
-			                </tr>
-			            </t>
-			            </table>
-				    </div>
+					    <div role="tabpanel" class="tab-pane active" id="downlines">
+					    	<table class="table table-striped">
+					    		<tr>
+					    			<th>Name</th>
+					    			<th>Code</th>
+					    			<th>Phone</th>
+					    			<th>Mobile</th>
+					    			<th>Email</th>
+					    			<th>BBM</th>
+				                </tr>			    		
+			                <t t-foreach="member.child_ids or []" t-as="child">
+					    		<tr>
+					    			<td t-esc="child.name" />
+					    			<td t-esc="child.code" />
+					    			<td t-esc="child.phone" />
+					    			<td t-esc="child.mobile" />
+					    			<td t-esc="child.email" />
+					    			<td t-esc="child.bbm" />
+				                </tr>
+				            </t>
+				            </table>
+					    </div>
 
-				    <div role="tabpanel" class="tab-pane" id="tree">
-				    	<t t-call="website.member_tree">
-		                    <t t-set="member" t-value="member"/>
-				    	</t>
-				    </div>
+					    <div role="tabpanel" class="tab-pane" id="tree">
+					    	<t t-call="website.member_tree">
+			                    <t t-set="member" t-value="member"/>
+					    	</t>
+					    </div>
 
-				    <div role="tabpanel" class="tab-pane" id="bonus">
-				    	<table class="table table-striped">
-				    		<tr>
-				    			<th>New Member</th>
-				    			<th>At Level</th>
-				    			<th>Amount</th>
-				    			<th>Trans. Date</th>
-				    			<th>Bonus Name</th>
-				    			<th>Description</th>
-				    			<th>Is Transferd</th>
-			                </tr>			    		
-		                <t t-foreach="member.member_bonus_ids or []" t-as="b">
-				    		<tr>
-				    			<td t-esc="b.new_member_id.name" />
-				    			<td t-esc="b.level" />
-				    			<td t-esc="b.amount" />
-				    			<td t-esc="b.trans_date" />
-				    			<td t-esc="b.bonus_id.name" />
-				    			<td t-esc="b.description" />
-				    			<td t-esc="b.is_transfered" />
-			                </tr>
-			            </t>
-			            </table>
-				    </div>
+					    <div role="tabpanel" class="tab-pane" id="bonus">
+					    	<table class="table table-striped">
+					    		<tr>
+					    			<th>New Member</th>
+					    			<th>At Level</th>
+					    			<th>Amount</th>
+					    			<th>Trans. Date</th>
+					    			<th>Bonus Name</th>
+					    			<th>Description</th>
+					    			<th>Is Transferd</th>
+				                </tr>			    		
+			                <t t-foreach="member.member_bonus_ids or []" t-as="b">
+					    		<tr>
+					    			<td t-esc="b.new_member_id.name" />
+					    			<td t-esc="b.level" />
+					    			<td t-esc="b.amount" />
+					    			<td t-esc="b.trans_date" />
+					    			<td t-esc="b.bonus_id.name" />
+					    			<td t-esc="b.description" />
+					    			<td t-esc="b.is_transfered" />
+				                </tr>
+				            </t>
+				            </table>
+					    </div>
 				  </div>
 				</div>
 
