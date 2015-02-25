@@ -72,6 +72,28 @@ class res_partner (osv.osv):
 			res[mhs.id] = years
 		return res		
 
+	def _get_wisuda_ready(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+
+		for siap_wisuda in  self.browse(cr, uid, ids, context=context):
+			tahun_ajaran = siap_wisuda.tahun_ajaran_id.id
+
+			# cari jumlah kurikulum untuk thn akademik ini sesuai dengan settingan master kurikulum
+			kurikulum_obj = self.pool.get('master.kurikulum')
+			th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),('state','=','confirm')])
+			total_kurikulum = len(th_kurikulum)
+
+			# hitung jumlah kurikulum untuk thn akademik dan mahasiswa yg bersangkutan, harus sama dg jumlah yg ada di kurikulum
+			khs_obj = self.pool.get('operasional.krs')
+			th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_wisuda.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
+			total_khs = len(th_khs)
+
+			results[siap_wisuda.id] = False
+			if total_khs >= total_kurikulum :
+				results[siap_wisuda.id] = True
+
+		return results
+
 	_columns = {
 		#Mahasiswa
 		'npm' :fields.char(string='NPM',readonly=True,size=34),
@@ -109,6 +131,7 @@ class res_partner (osv.osv):
 		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
 		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,readonly=True),
 		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
+		'siap_wisuda' : fields.function(_get_wisuda_ready,type='boolean',string='Siap Wisuda',readonly=True)
 				}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]

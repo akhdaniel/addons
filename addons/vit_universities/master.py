@@ -10,16 +10,31 @@ class academic_year(osv.Model):
 	''' Defining an academic year '''
 	_name = "academic.year"
 	_description = "Academic Year"
-	_order = "sequence"
+	_rec_name = "code"
+	_order = "code"
 	_columns = {
-		'sequence': fields.integer('Urutan', required=True, help="In which sequence order you want to see this year."),
-		'name': fields.char('Nama', size=64, required=True, select=1, help='Name of  academic year'),
-		'code': fields.char('Kode', size=6, required=True, select=1, help='Code of academic year'),
-		'date_start': fields.date('Tanggal Mulai', required=True, help='Starting date of academic year'),
-		'date_stop': fields.date('Tanggal Berakhir', required=True, help='Ending of academic year'),
+		#'sequence': fields.integer('Urutan', required=True, help="Urutan yang akan di tampilkan."),
+		'name': fields.char('Nama', size=64),
+		'code': fields.char('Kode', size=6, required=True, select=1),
+		'date_start': fields.date('Tanggal Mulai', required=True),
+		'date_stop': fields.date('Tanggal Berakhir', required=True),
 		'month_ids': fields.one2many('academic.month', 'year_id', 'Bulan', help="related Academic months"),
 		#'grade_id' : fields.many2one('grade.master', "Grade"),
-		'description': fields.text('Deskripsi')
+		'description': fields.text('Deskripsi'),
+		'type' : fields.selection([('flat','Flat'),('sks','Per SKS'),('matkul','Per Matakuliah')],'Type Pembayaran',required=True,
+				help='* Type \'Flat\' = perhitungan pembayaran flat sesuai denga template pembayaran. \
+					\n* Type \'Per SKS\' = perhitungan pembayaran terupdate sesuai jumlah SKS ketika pembuatan KRS. \
+					\n* type \'Per Matakuliah\' = perhitungan pembayaran terupdate sesuai jumlah Matakuliah ketika pembuatan KRS.'),
+		'jml_max': fields.integer('Jumlah Maksimal',help="Jumlah Maksimal SKS atau Matakuliah per semester."),
+		'mekanisme_nilai' :fields.selection([('terbaru','Nilai Terbaru'),('terbaik','Nilai Terbaik')],'Mekanisme Nilai',required=True,
+				help='Mekanisme pengambilan nilai di transkrip jika remedial/her \
+					\n* Terbaru = Jika terdapat 2 atau lebih matakuliah yang sama maka di ambil yang terbaru sesuai tanggal KHS. \
+					\n* Terbaik = Jika terdapat 2 atau lebih matakuliah yang sama maka di ambil yang terbaik sesuai tanggal KHS.'),
+	}
+
+	_defaults = {
+		'type':'flat',
+		'mekanisme_nilai':'terbaru',
 	}
 
 	def create_period(self, cr, uid, ids, context=None, interval=1):
@@ -49,11 +64,11 @@ class academic_year(osv.Model):
 				ds = ds + relativedelta(months=interval)
 		return True
 
-	def next_year(self, cr, uid, sequence, context=None):
-		year_ids = self.search(cr, uid, [('sequence', '>', sequence)])
-		if year_ids:
-			return year_ids[0]
-		return False
+	# def next_year(self, cr, uid, sequence, context=None):
+	# 	year_ids = self.search(cr, uid, [('sequence', '>', sequence)])
+	# 	if year_ids:
+	# 		return year_ids[0]
+	# 	return False
 
 	def name_get(self, cr, uid, ids, context=None):
 		res = []

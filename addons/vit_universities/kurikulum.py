@@ -31,7 +31,41 @@ class master_kurikulum (osv.Model):
 			sult += int(sks)
 		result[ids[0]] = sult
 		return result
- 
+
+	def _get_total_sks2(self,cr,uid,ids,field,args,context=None):
+		#import pdb;pdb.set_trace()
+		result = {}
+		sult = 0
+		for res in self.browse(cr,uid,ids[0],context=context).total_mk_ids:
+			sks = res.sks
+			sult += int(sks)
+		result[ids[0]] = sult
+		return result 
+
+	def _get_total_mk_kurikulum(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result = {}
+
+		tahun_ajaran_id = self.browse(cr,uid,ids[0]).tahun_ajaran_id.id
+		prodi_id = self.browse(cr,uid,ids[0]).prodi_id.id
+		cr.execute("""SELECT kmr.matakuliah_id kmr
+						FROM kurikulum_mahasiswa_rel kmr
+						LEFT JOIN master_matakuliah mm ON mm.id = kmr.matakuliah_id
+						LEFT JOIN master_kurikulum mk ON kmr.kurikulum_id = mk.id 
+						WHERE mk.tahun_ajaran_id ="""+ str(tahun_ajaran_id) +""" 
+						AND mk.prodi_id = """+ str(prodi_id) +"""
+						AND mk.state = 'confirm'""")		   
+		mk = cr.fetchall()			
+		if mk == []:
+			return result
+		mk_ids= []
+		for m in mk:
+			if m[0] not in mk_ids:
+				mk_ids.append(m[0])		
+		result[ids[0]] = mk_ids
+		return result
+
 	_columns = {
 		'name' :fields.char('Kode Kurikulum', size=28,required = True,ondelete="cascade"),
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),         
@@ -49,7 +83,8 @@ class master_kurikulum (osv.Model):
 			domain="['|',('prodi_id','=',prodi_id),\
 			('jenis','=','mk_umum')]",),	   
 		'total_sks':fields.function(_get_total_sks,type="integer",string="Total SKS"),         			
-		#'kurikulum_detail_ids':fields.one2many('master.kurikulum_detail','kurikulum_id','Daftar Mata Kuliah',),
+		'total_mk_ids' : fields.function(_get_total_mk_kurikulum, type='many2many', relation="master.matakuliah", string="Total Mata Kuliah",readonly=True),
+		'total_sks2':fields.function(_get_total_sks2,type="integer",string="Total SKS"), 
 			}
 			
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode kurikulum tidak boleh sama')]

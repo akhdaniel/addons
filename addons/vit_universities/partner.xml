@@ -34,7 +34,15 @@
                     <page string="Informasi Umum">
                         <form string="Informasi Umum" version="7.0">
                             <sheet>
-                                <separator string="Informasi Umum"/>
+                              <separator string="Data Ujian Saringan Masuk" colspan="4"/>
+                              <newline/>
+                               <group colspan="4" col="4">
+                                  <field name="no_formulir"/>
+                                  <field name="nilai_ujian" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
+                                  <field name="tgl_ujian"/>                                   
+                                  <field name="batas_nilai"/>
+                                   </group>                                
+                                <separator string="Informasi Pribadi"/>
                                 <group col="4" colspan="4">
                                 	<group>
                                 		<field name="tempat_lahir"/>
@@ -47,14 +55,7 @@
                                 		<field name="agama"/>	
                                 	</group>
                                 </group>
-                            </sheet>
-                        </form>
-                    </page>                    
-                </notebook>
-                <notebook colspan="4">
-                    <page string="Informasi Mahasiswa">
-                        <form string="Informasi Mahasiswa" version="7.0">
-                            <sheet>
+
                                 <separator string="Informasi Calon Mahasiswa" attrs="{'invisible': [('status_mahasiswa','in',('Mahasiswa','alumni'))]}"/>
                                 <separator string="Informasi Mahasiswa" attrs="{'invisible': [('status_mahasiswa','=','calon')]}"/>
                                 <group col="4" colspan="4">
@@ -68,66 +69,67 @@
                                 		<field name="kelas_id"/>
                                 		<field name="tahun_ajaran_id"/>	
                                 	</group>
-                                </group>
-                                <newline/>
-                        		  <separator string="Data Ujian Saringan Masuk" colspan="4"/>
-                        		  <newline/>
-                     	           <group colspan="4" col="4">
-                        	       	  <field name="no_formulir"/>
-                        	       	  <field name="nilai_ujian" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
-                        	          <field name="tgl_ujian"/>                       	          
-                        	          <field name="batas_nilai"/>
-                     	           </group>      
-                                <newline/>
-                        		  <separator string="Informasi Kelulusan" colspan="4" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
-                        		  <newline/>
-                     	           <group colspan="4" col="4" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
-                                        <group>
-                        	       	        <field name="tgl_lulus"/>
-                                            <field name="wisuda"/> 
-                                            <field name="lokasi_wisuda"/>
-                                        </group>
-                                        <group>
-                        	       	       <field name="ipk"/>               	          
-                        	               <field name="judul"/>
-                                        </group> 
-                     	           </group>                       	                                     
+                                </group>                       	                                     
                             </sheet>
                         </form>
                     </page>
-                    <page string="Riwayat Pendidikan" name="riwayat_pendidikan">
-                        <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
-                	        <tree string="Daftar Riwayat Pendidikan" editable="bottom">
-			                    <field name="nama_sekolah"/>
-			                    <field name="tingkat"/>
-                                <field name="tahun_masuk"/>
-                                <field name="tahun_lulus"/>
-                                <field name="nilai_akhir"/>
-			                </tree>
-		                </field>
-                    </page>
-                    <page string="Biodata Keluarga" name="biodata_keluarga" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
-                		<field view_mode="tree" name="biodata_keluarga_ids" nolabel="1" >
-                			<tree string="Daftar Anggota Keluarga" editable="bottom">
-			                    <field name="nama"/>
-			                    <field name="jenis_kelamin"/>
-			                    <field name="tempat_lahir"/>
-			                    <field name="tanggal_lahir"/>
-			                    <field name="hubungan_keluarga"/>
-			                    <field name="pekerjaan"/>
-			                    <field name="alamat"/>
-			                </tree>
-			            </field>   
+                    <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan">
+                        <sheet>
+                            <separator string="Riwayat Pendidikan"/>
+                                <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
+                        	        <tree string="Daftar Riwayat Pendidikan" editable="bottom">
+        			                    <field name="nama_sekolah"/>
+        			                    <field name="tingkat"/>
+                                        <field name="tahun_masuk"/>
+                                        <field name="tahun_lulus"/>
+                                        <field name="nilai_akhir"/>
+        			                </tree>
+        		                </field>
+                                <separator string="Riwayat Keluarga" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
+                        		<field view_mode="tree" name="biodata_keluarga_ids" nolabel="1" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
+                        			<tree string="Daftar Anggota Keluarga" editable="bottom">
+        			                    <field name="nama"/>
+        			                    <field name="jenis_kelamin"/>
+        			                    <field name="tempat_lahir"/>
+        			                    <field name="tanggal_lahir"/>
+        			                    <field name="hubungan_keluarga"/>
+        			                    <field name="pekerjaan"/>
+        			                    <field name="alamat"/>
+        			                </tree>
+        			            </field>  
+                            </sheet>
+
 		            </page> 
                     <page string="Pelanggaran" name="pelanggaran" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
                         <field view_mode="tree" name="pelanggaran_ids" nolabel="1">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="jenis_pelanggaran_id"/>
                                 <field name="tanggal"/>
                                 <field name="nama" string="Catatan Tambahan"/>
                             </tree>
                         </field>
-                    </page>		                                                                            
+                    </page>
+                    <page string="Informasi Kelulusan" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
+                        <form string="Informasi Kelulusan" version="7.0">
+                            <sheet>
+                                  <separator string="Informasi Kelulusan" colspan="4" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
+                                  <newline/>
+                                   <group colspan="4" col="4">
+                                        <group>
+                                            <field name="tgl_lulus"/>
+                                            <field name="siap_wisuda"/>
+                                            <field name="wisuda" attrs="{'invisible': [('siap_wisuda','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
+                                            <field name="lokasi_wisuda" attrs="{'invisible': [('siap_wisuda','!=',True)]}"/>
+                                        </group>
+                                        <group>
+                                           <field name="ipk"/>                            
+                                           <field name="judul"/>
+                                        </group> 
+                                   </group>                                                              
+                            </sheet>
+                        </form>
+                    </page>
+
                 </notebook>                
             </field>       
         </record>

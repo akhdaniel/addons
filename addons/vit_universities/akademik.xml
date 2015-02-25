@@ -153,7 +153,6 @@
             <field name="model">academic.year</field>
             <field name="arch" type="xml">
                 <tree string="Academic Years">
-                    <field name="sequence"/>
                     <field name="name"/>  
                     <field name="code"/>
                     <field name="date_start"/>
@@ -178,8 +177,8 @@
             <field name="model">academic.month</field>
             <field name="arch" type="xml">
                 <tree string="Months">
-                    <field name="name"/>
                     <field name="code"/>
+                    <field name="name"/>
                     <field name="date_start"/>
                     <field name="date_stop"/>
                     <field name="year_id"/>
@@ -714,11 +713,22 @@
                     </header>
                     <sheet>
                         <group col="4" colspan="4">
-                            <field name="sequence"/><newline/>
-                            <field name="name" placeholder="Name"/>  
-                            <field name="code" placeholder="Code"/>
-                            <field name="date_start" placeholder="Start Date"/>
-                            <field name="date_stop" placeholder="Stop Date"/>
+                            <group>
+                                <field name="code" placeholder="Code"/> 
+                                <field name="name" placeholder="Name"/> 
+                                <label for="date_start" string="Tanggal"/>
+                                <div>
+                                    <field name="date_start" nolabel="1" class="oe_inline" placeholder="From"/><label string="-" class="oe_inline"/>
+                                    <field name="date_stop" nolabel="1" class="oe_inline" placeholder="To"/>
+                                </div>
+
+                            </group>
+                            <group> 
+                                <field name="type"/>
+                                <field name="jml_max" attrs="{'invisible': [('type','not in',('sks','matkul'))],'required': [('type','!=','flat')]}"/>
+                                 <field name="mekanisme_nilai"/>                             
+                                
+                            </group>
                         </group>
                         <notebook colspan="4">
                             <page string="Months">
@@ -740,20 +750,6 @@
             </field>
         </record>
 
-        <!-- Academic Years Information Tree View -->
-        <record model="ir.ui.view" id="view_academic_year_tree">
-            <field name="name">academic.year.tree</field>
-            <field name="model">academic.year</field>
-            <field name="arch" type="xml">
-                <tree string="Academic Years">
-                    <field name="sequence"/>
-                    <field name="name"/>  
-                    <field name="code"/>
-                    <field name="date_start"/>
-                    <field name="date_stop"/>
-                </tree>
-            </field>
-        </record>
 
         <!-- Academic Months Information From View -->
         <record model="ir.ui.view" id="view_academic_month_form">
