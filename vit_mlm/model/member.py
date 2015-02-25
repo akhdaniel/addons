@@ -167,22 +167,33 @@ class member(osv.osv):
 	#		jika belum ada bonus pada level tsb dan jumlah downline == 2^level :
 	#			maka si upline dapat bonus level
 	#########################################################################
-	def hitung_bonus_level(self, cr, uid, ids, context=None):
+	def hitung_bonus_level(self, cr, uid, ids, zero_amount=False, context=None):
 		mlm_plan 		= self.get_mlm_plan(cr, uid, context=context)
 		amount_bonus_level 			 = mlm_plan.bonus_level
-		amount_bonus_pasangan 		 = mlm_plan.bonus_pasangan 
 		bonus_level_percent_decrease = mlm_plan.bonus_level_percent_decrease
-
 		max_bonus_level_level = 1000000 if mlm_plan.max_bonus_level_level == 0 else mlm_plan.max_bonus_level_level
+
+		cashback = ''
+
+		####################################################################
+		# apakah bonus level ada / aktif ?
+		####################################################################
 		if amount_bonus_level == 0:
 			return True
+
+		####################################################################
+		# jika memang sengaja bonus level=0, karena cashback
+		####################################################################
+		if zero_amount:
+			amount_bonus_level = 0
+			cashback = 'Cashback '
 
 		new_member 		= self.browse(cr, uid, ids[0], context=context)
 		member_bonus 	= self.pool.get('mlm.member_bonus')
 
 		#####################################################################
 		# cari upline dan level nya masing-masing sd level max_bonus_level_level
-		# dan bukan type Affiliate
+		# dan bukan type Affiliate, mulai dari top level paling atas
 		# 	Andi 1
 		# 	Bani 2
 		#   Doni 3
@@ -196,7 +207,7 @@ class member(osv.osv):
 				and (is_affiliate <> 't' or is_affiliate is null)\
 				order by path_ltree desc\
 				limit %d" % (new_member.path, new_member.path, new_member.id, max_bonus_level_level)
-		print sql 
+		_logger.warning( sql )
 		cr.execute(sql)
 		rows = cr.fetchall()
 
@@ -214,7 +225,7 @@ class member(osv.osv):
 			# hanya dihitung member yang sudang status Open (ada path nya)
 			# jika jumlah child pada level n = 2^n : terjadi bonus level
 			# level   children
-			# 1       2  ---> bonus pasangan
+			# 1       2  ---> 
 			# 2       4 
 			# 3       8
 			# 4       5  ---> belum ada bonus level
@@ -230,23 +241,51 @@ class member(osv.osv):
 	
 			for l in levels:
 				rel_level = l[0]; children = l[1]
-				_logger.error('Upline=%s, rel_level=%d, children=%d' % 
+				_logger.warning('Upline=%s, rel_level=%d, children=%d' % 
 					(upline_name, rel_level, children))
 				# jika belum exists
 				exist = [('member_id','=',upline_id),('level','=',rel_level)]
 				if not member_bonus.search(cr, uid, exist, context=context):
 					# jika jumlah child == 2^level
 					if children == 2**rel_level:
-						# jika level 1 : tambah yg namanya bonus pasangan
-						if rel_level==1:
-							member_bonus.addBonusPasangan(cr, uid, new_member.id, upline_id, rel_level,
-								amount_bonus_pasangan, "Bonus Pasangan", context=context)
-
 						member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
-							amount_bonus_level, "Bonus Level at Level %d" % (rel_level), context=context)
+							amount_bonus_level, "%sBonus Level at Level %d" % (cashback, rel_level), context=context)
 		return True 
 
 
+	#########################################################################
+	# ini dijalankan waktu action_aktif suatu member baru.
+	# untuk menghitung berapa bonus pasangan bagi upline-upline nya
+	# 
+	# hitung dan cari bonus pasangan, kalau ada, masukkan ke tabel partner_bonus
+	# dengan type 'pasangan'
+	# 
+	# syarat terjadinya bonus pasangan: 
+	# 		pada level ke n [0..n], jumlah member aktif = 2
+	# logic:
+	#		cari semua upline sd max_bonus_pasangan limit
+	#		setiap id upline: hitung berapa jumlah downlinenya
+	#		jika belum ada bonus pada level tsb dan jumlah downline == 2^level :
+	#			maka si upline dapat bonus level
+	#########################################################################
+	def hitung_bonus_pasangan(self, cr, uid, ids, context=None):
+		mlm_plan 		= self.get_mlm_plan(cr, uid, context=context)
+		amount_bonus_pasangan 		 = mlm_plan.bonus_pasangan 
+		bonus_pasangan_percent_decrease = mlm_plan.bonus_pasangan_percent_decrease
+
+		max_bonus_pasangan_level = 1000000 if mlm_plan.max_bonus_pasangan_level == 0 else mlm_plan.max_bonus_pasangan_pasangan
+		if amount_bonus_pasangan == 0:
+			return True
+
+		new_member 		= self.browse(cr, uid, ids[0], context=context)
+		member_bonus 	= self.pool.get('mlm.member_bonus')
+
+		return True 
+
+
+	#########################################################################
+	# max downline sesuai mlm_plan
+	#########################################################################
 	def cek_max_downline(self, cr, uid, parent_id, context=None):
 		#########################################################################
 		# cek mlm_plan
@@ -291,7 +330,7 @@ class member(osv.osv):
 	# bawaan odoo: waktu create user otomatis terbentuk res_partner
 	#########################################################################
 	def create_user(self, cr, uid, member, context=None):
-		alias_id = 4
+		alias_id = 1 
 
 		sql = "INSERT INTO ""res_users"" (""id"", ""partner_id"", \
 			""alias_id"", ""share"", ""active"", ""company_id"", \
@@ -365,8 +404,9 @@ class member(osv.osv):
 		#########################################################################
 		# cek upline sudah state aktif?
 		#########################################################################
-		if upline and upline.state != 'aktif':
-			raise osv.except_osv(_('Warning'),_("Cannot confirm member, upline is not active") ) 
+		if upline and upline.state not in ['open','aktif']:
+			raise osv.except_osv(_('Warning'),
+				"Cannot confirm member %s, upline %s is not Open"%(new_member.name,upline.name) ) 
 
 		#########################################################################
 		# cek max downline si upline
@@ -395,6 +435,13 @@ class member(osv.osv):
 		#########################################################################		
 		cr.execute("update res_partner set path_ltree = '%s' where id=%d" % 
 			(new_path, ids[0]) )
+		cr.commit()
+
+		#########################################################################
+		# generate sub members and confirm
+		#########################################################################		
+		if new_member.paket_id.hak_usaha > 1:
+			self.generate_sub_member(cr, uid, ids, context=context)
 
 		return ids[0]
 
@@ -408,7 +455,7 @@ class member(osv.osv):
 		new_member   = self.browse(cr, uid, ids[0], context=context)
 		paket        = new_member.paket_id
 		hak_usaha    = paket.hak_usaha
-		child        = []
+		childs       = []
 
 		parent_id 	 = new_member.id 
 		sponsor_id 	 = new_member.sponsor_id.id
@@ -416,10 +463,7 @@ class member(osv.osv):
 		jc = 0
 		parent_index = 0
 
-		#import pdb; pdb.set_trace()
-
 		for i in range(0, hak_usaha-1):
-
 			data = {
 				'code'			: '/',
 				'parent_id'		: parent_id,
@@ -428,34 +472,60 @@ class member(osv.osv):
 				'is_company'	: True 
 			}
 			new_sub_id = self.create(cr, uid, data, context=context)
-			child.append(new_sub_id)
+			childs.append(new_sub_id)
 
+			# jd = jumlah children
 			jc = jc + 1
 
 			if jc >= max_downline:
-				parent_id = child[parent_index]
+				parent_id = childs[parent_index]
 				parent_index = parent_index + 1
 				jc = 0
 
-			#confirm langsung 
-			self.write(cr, uid, new_sub_id, {'state':'aktif'}, context=context)
+			# confirm langsung 
+			self.action_confirm(cr,uid,[new_sub_id],context=context)
+
+		return True 
+
+	#########################################################################
+	# pada masing2 sub member, jalankan action_aktif
+	# supaya menghitung bonus level tapi dengan amount=0
+	#########################################################################
+	def activate_sub_member(self, cr, uid, ids, context=None):
+		mlm_plan     = self.get_mlm_plan(cr, uid, context=context)
+
+		#####################################################################
+		# titip yang beli paket
+		#####################################################################
+		new_member 	 = self.browse(cr, uid, ids[0], context=context)
+		paket        = new_member.paket_id
+		hak_usaha    = paket.hak_usaha
 
 		#######################################################################
 		# si top level (new_member) paket dapat bonus sponsor langsung sebanyak 
 		# = hak_usaha * bonus_sponsor
-		# 
-		# dan bonus level sebanyak:
-		# = 
 		#######################################################################
-		bonus_sponsor = mlm_plan.bonus_sponsor
-
+		bonus_sponsor 	= mlm_plan.bonus_sponsor
 		member_bonus 	= self.pool.get('mlm.member_bonus')
 		sponsor 		= self.browse(cr, uid, new_member.sponsor_id.id, context=context)
 		amount 			= hak_usaha * bonus_sponsor
 		member_bonus.addSponsor(cr, uid, new_member.id, sponsor.id, 
 			amount, '%d x Bonus Sponsor Paket %s' % (hak_usaha, paket.name), context=context)
 
-		return True 
+		#######################################################################
+		# hitung bonus level utk masing2 titik 
+		# nilainya 0 saja karena sudah dijadikan cashback pada waktu join
+		#######################################################################
+		# import pdb; pdb.set_trace()
+		sql = "select id, name,path from res_partner where \
+			path_ltree <@ '%s' and id<>%d \
+			order by path_ltree " % (new_member.path, new_member.id)
+		cr.execute(sql)
+		pids = cr.fetchall()
+		for p in pids:
+			self.hitung_bonus_level(cr, uid, [ p[0] ], zero_amount=True, context=context)
+
+		return True
 
 	#########################################################################
 	#set to "reject" state
@@ -474,6 +544,9 @@ class member(osv.osv):
 	#########################################################################
 	def action_aktif(self,cr,uid,ids,context=None):
 
+		#########################################################################
+		# yang mau diaktifkan
+		#########################################################################		
 		new_member = self.browse(cr, uid, ids[0], context=context)
 
 		#########################################################################
@@ -482,19 +555,32 @@ class member(osv.osv):
 		self.create_user(cr, uid, new_member, context=context)
 
 		#########################################################################
+		# hitung bonus level utk upline si new_member
+		#########################################################################
+		self.hitung_bonus_level(cr, uid, ids, context=context)
+		cr.commit()
+
+		#########################################################################
+		# hitung bonus sponsor:
 		# process paket join, khusus binary plan saja
 		# jika lebih dari satu titik, maka bonus sponsor milik yg mensponsori
 		#########################################################################		
 		if new_member.paket_id:
-			if new_member.paket_id.hak_usaha == 1:
-				self.hitung_bonus_sponsor(cr, uid, ids, context=context)
-			else:
-				self.generate_sub_member(cr, uid, ids, context=context)
 
-		#########################################################################
-		# hitung bonus level
-		#########################################################################
-		self.hitung_bonus_level(cr, uid, ids, context=context)
+			if new_member.paket_id.hak_usaha == 1:
+				#########################################################################
+				# hitung bonus sponsor utk yang mensponsori si new_member
+				#########################################################################
+				self.hitung_bonus_sponsor(cr, uid, ids, context=context)
+
+			else:
+				#########################################################################
+				# aktivasi sub member di bawahnya, 
+				# hitung bonus sponsor yang mensponsori
+				# hitung bonus level untuk setiap titik dengan nilai 0 (cashback)
+				#########################################################################
+				self.activate_sub_member(cr, uid, ids, context=context)
+
 		return self.write(cr,uid,ids,{'state':MEMBER_STATES[3][0]},context=context)
 
 	#########################################################################

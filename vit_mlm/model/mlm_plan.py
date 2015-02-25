@@ -15,6 +15,9 @@ class mlm_plan(osv.osv):
 		'max_downline'		: fields.integer('Max Downline',
 			help='Berapa jumlah max downline suatu titik, isi dengan 0 untuk unlimited'),
 
+		###############################################################
+		# bonus sponsor
+		###############################################################
 		'bonus_sponsor'		: fields.float('Bonus Sponsor Amount', 
 			help="Berapa nilai bonus sponsor, isi dengan 0 utk tidak ada bonus"),
 		'max_bonus_sponsor_level'	: fields.integer('Max Bonus Sponsor Depth (Up)',
@@ -22,6 +25,9 @@ class mlm_plan(osv.osv):
 		'bonus_sponsor_percent_decrease': fields.float("Bonus Sponsor Percent Decrease",
 			help='Berapa persen penurunan Bonus Sponsor untuk setiap level ke atasnya. Isi dengan 0.0-1.0, nilai 1 artinya tidak ada penurunan'),
 		
+		###############################################################
+		# bonus level
+		###############################################################
 		'bonus_level'		: fields.float('Bonus Level Amount', 
 			help="Berapa nilai bonus level, isi dengan 0 untuk tidak ada bonus"),
 		'max_bonus_level_level'	: fields.integer('Max Bonus Level Depth',
@@ -29,6 +35,15 @@ class mlm_plan(osv.osv):
 		'bonus_level_percent_decrease': fields.float("Bonus Level Percent Decrease",
 			help='Berapa persen penurunan Bonus Level untuk setiap level ke atasnya. Isi dengan 0.0-1.0, nilai 1 artinya tidak ada penurunan'),
 
+		###############################################################
+		# bonus pasangan
+		###############################################################
 		'bonus_pasangan'	: fields.float('Bonus Pasangan Amount', 
 			help="Berapa nilai bonus pasangan"),
+		'max_bonus_pasangan_level'	: fields.integer('Max Bonus Pasangan Depth',
+			help='Berapa jumlah kedalaman level yang masih dapat bonus pasangan, isi dengan 0 untuk unlimited'),
+		'bonus_pasangan_percent_decrease': fields.float("Bonus Pasangan Percent Decrease",
+			help='Berapa persen penurunan Bonus Pasangan untuk setiap level ke atasnya. Isi dengan 0.0-1.0, nilai 1 artinya tidak ada penurunan'),
+
+
 	}
