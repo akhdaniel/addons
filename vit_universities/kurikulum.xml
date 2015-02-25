@@ -58,6 +58,19 @@
                                     <field name="total_sks"/>
                                 </group>                               
                             </page>
+                            <page string="Total Mata Kuliah">
+                                <field view_mode="tree" name="total_mk_ids">
+                                    <tree version="7.0">
+                                        <field name="kode"/>
+                                        <field name="nama"/>
+                                        <field name="sks" sum="Total SKS"/>
+                                        <field name="jenis"/>                                        
+                                    </tree>
+                                </field> 
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="total_sks2"/>
+                                </group>                                                             
+                            </page>                            
                         </notebook>
                     </sheet>    
                 </form>

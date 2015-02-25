@@ -190,7 +190,6 @@ class krs_detail (osv.Model):
 		
 		nil_obj = self.pool.get('master.nilai')
 		
-		#import pdb;pdb.set_trace()
 		result = {}
 		for nil in self.browse(cr,uid,ids,context=context):
 			tugas = nil.tugas
@@ -246,39 +245,83 @@ class operasional_transkrip(osv.Model):
 
 		return super(operasional_transkrip, self).create(cr, uid, vals, context=context)	 
 
-	def get_mk(self, cr, uid, ids, context=None):
+		#jika penggambilan MK di KRS berdasarkan yang terbaru
+	def get_mk_by_newest(self, cr, uid, ids, context=None):
 
 		mhs_id = self.browse(cr,uid,ids[0],context=context).partner_id.id
 		
 		ops_obj = self.pool.get('operasional.krs')
 		det_obj = self.pool.get('operasional.krs_detail')
-		cr.execute("""SELECT okd.id
-						FROM operasional_krs ok 
+	
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,s.name AS smt
+						FROM operasional_krs ok
 						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
-						WHERE okd.state = 'done'
-						AND ok.partner_id ="""+ str(mhs_id))
-					   
-		mk = cr.fetchall()	
+						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(mhs_id) +"""
+						GROUP BY okd.id,s.name
+						ORDER BY okd.mata_kuliah_id, s.name DESC""")		   
+		mk = cr.fetchall()			
 
 		if mk == []:
-			return mk		
-		mk_ids = []
-		for m in mk:
-			mk_ids.append(m[0])
-	
-		return mk_ids
+			return mk
+		id_mk = []	#id khsdetail
+		mk_ids = [] #Matakuliah khsdetail
 
+		for m in mk:
+			#matakuliah
+			if m[1] not in mk_ids:
+				id_mk.append(m[0])
+				mk_ids.append(m[1])
+
+		return id_mk
+
+		#jika penggambilan MK di KRS berdasarkan yang terbaik
+	def get_mk_by_better(self, cr, uid, ids, context=None):
+
+		mhs_id = self.browse(cr,uid,ids[0],context=context).partner_id.id
+		
+		ops_obj = self.pool.get('operasional.krs')
+		det_obj = self.pool.get('operasional.krs_detail')
+	
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,okd.nilai_angka AS nilai
+						FROM operasional_krs ok
+						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(mhs_id) +"""
+						GROUP BY okd.id,s.name
+						ORDER BY okd.mata_kuliah_id, okd.nilai_angka DESC""")		   
+		mk = cr.fetchall()			
+
+		if mk == []:
+			return mk
+		id_mk = []	#id khsdetail
+		mk_ids = [] #Matakuliah khsdetail
+
+		for m in mk:
+			#matakuliah
+			if m[1] not in mk_ids:
+				id_mk.append(m[0])
+				mk_ids.append(m[1])
+
+		return id_mk
 
 	def _get_total_khs(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
 			context = {}
 		result = {}
 
-		mk = self.get_mk(cr, uid, ids, context=None)
+		if self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
+			mk = self.get_mk_by_newest(cr, uid, ids, context=None)
+		elif self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
+			mk = self.get_mk_by_better(cr, uid, ids, context=None)
 
 		if mk == []:
 			return result			
-	
+
+		khs_detail_obj = self.pool.get('operasional.krs_detail')
+		mekanisme_nilai = self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai
+
+
 		result[ids[0]] = mk
 		return result
 
@@ -287,7 +330,11 @@ class operasional_transkrip(osv.Model):
 			context = {}
 		result = {}
 
-		mk = self.get_mk(cr, uid, ids, context=None)
+		if self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
+			mk = self.get_mk_by_newest(cr, uid, ids, context=None)
+		elif self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
+			mk = self.get_mk_by_better(cr, uid, ids, context=None)
+
 		if mk == []:
 			return result
 
@@ -333,7 +380,7 @@ class operasional_transkrip(osv.Model):
 		'jurusan_id':fields.related('partner_id', 'jurusan_id', type='many2one',relation='master.jurusan', string='Jurusan',readonly=True),
 		'prodi_id':fields.related('partner_id', 'prodi_id', type='many2one',relation='master.prodi', string='Program Studi',readonly=True),
 		'transkrip_detail_ids' : fields.function(_get_total_khs, type='many2many', relation="operasional.krs_detail", string="Total Mata Kuliah"), 
-		'ipk' : fields.function(_get_ipk,type='float',string='IPK'),
+		'ipk' : fields.function(_get_ipk,type='float',string='IPK',help="SKS = Total ( SKS * bobot nilai ) / Total SKS"),
 		'yudisium' : fields.char('Yudisium',readonly=True),
 		't_sks' : fields.integer('Total SKS',readonly=True),
 		't_nilai' : fields.char('Total Nilai',readonly=True),

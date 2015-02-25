@@ -22,5 +22,6 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'kurikulum.xml',
             'invoice.xml',
             'pembayaran.xml',
-            'reports/report.xml'],
+            'reports/report.xml',
+            'data/data_view.xml'],
 }
