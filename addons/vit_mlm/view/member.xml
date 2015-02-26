@@ -22,6 +22,8 @@
                     <field name="bank_account_name" />
                     <field name="bank_name" />
                     <field name="bank_branch" />
+                    <field name="id_number" />
+                    <field name="signature" widget="image"/>
                 </field>
 
                 <xpath expr="//form/sheet" position="before">

@@ -88,6 +88,7 @@ class member(osv.osv):
 		'bank_account_name'	: fields.char("Bank Account Name"),
 		'bank_name'			: fields.char("Bank Name"),
 		'bank_branch'		: fields.char("Bank Branch"),
+		'id_number'			: fields.char("Nomor KTP/SIM"),
 
 	}
 	_defaults = {
