@@ -12,7 +12,7 @@
 			<field name="bonus_level">100000</field>
 			<field name="max_bonus_level_level">4</field>
 			<field name="bonus_level_percent_decrease">0</field>
-			<field name="full_level">False</field>
+			<field name="full_level" eval="False"/>
 			<field name="bonus_pasangan">80000</field>
 			<field name="max_bonus_pasangan_level">4</field>
 			<field name="bonus_pasangan_percent_decrease">0</field>

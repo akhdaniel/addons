@@ -30,7 +30,7 @@
 
 		            <filter icon="terp-mail-message-new" 
 		                string="Bonus Level" 
-		            	name="level" domain="[('bonus_id','=','Level')]"/>
+		            	name="level" domain="['&amp;',('bonus_id','=','Level'),('amount','&lt;&gt;','0')]"/>
 
 		            <filter icon="terp-mail-message-new" 
 		                string="Bonus Pasangan" 
