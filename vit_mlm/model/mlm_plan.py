@@ -34,6 +34,8 @@ class mlm_plan(osv.osv):
 			help='Berapa jumlah kedalaman level yang masih dapat bonus level, isi dengan 0 untuk unlimited'),
 		'bonus_level_percent_decrease': fields.float("Bonus Level Percent Decrease",
 			help='Berapa persen penurunan Bonus Level untuk setiap level ke atasnya. Isi dengan 0.0-1.0, nilai 1 artinya tidak ada penurunan'),
+		'full_level'		: fields.boolean('Full Level?',
+			help='Bonus level terjadi ketika jumlah level sudah Full atau minimal 1 di kiri dan 1 di kanan'),
 
 		###############################################################
 		# bonus pasangan

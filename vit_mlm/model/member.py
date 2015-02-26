@@ -161,11 +161,16 @@ class member(osv.osv):
 	# dengan type 'level'
 	# 
 	# syarat terjadinya bonus level: 
+	# model full level:
 	# 		pada level ke n [0..n], jumlah member aktif = 2^n
+	# model minimal 1 kiri - kanan:
+	# 		pada level ke n [0..n] jika jumlah grup kiri min 1 dan grup kanan min 1
 	# logic:
 	#		cari semua upline sd max_bonus_level limit
 	#		setiap id upline: hitung berapa jumlah downlinenya
-	#		jika belum ada bonus pada level tsb dan jumlah downline == 2^level :
+	#		jika belum ada bonus pada level tsb 
+	#		modul full: jumlah downline == 2^level :
+	#		model 1-1 kiri kanan : 
 	#			maka si upline dapat bonus level
 	#########################################################################
 	def hitung_bonus_level(self, cr, uid, ids, zero_amount=False, context=None):
