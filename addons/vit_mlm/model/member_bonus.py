@@ -28,7 +28,8 @@ class member_bonus(osv.osv):
 	_name 		= "mlm.member_bonus"
 	_columns 	= {
 		'member_id' 		: fields.many2one('res.partner', 'Member'),
-		'new_member_id' 	: fields.many2one('res.partner', 'New Member'),
+		'new_member_id' 	: fields.many2one('res.partner', 'Activated New Member', help="Member yang diaktivasi yang menyebabkan terjadinya bonus"),
+		'match_member_id'	: fields.many2one('res.partner', 'Matched Member', help="Member pasangan"),
 		'level' 			: fields.integer('At Level'),
 		'amount'			: fields.float('Bonus Amount'),
 		'trans_date'		: fields.datetime('Transaction Date'),

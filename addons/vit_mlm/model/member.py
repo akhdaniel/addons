@@ -107,6 +107,117 @@ class member(osv.osv):
 			raise osv.except_osv(_('Warning'),_("Please set Company's MLM Plan") ) 
 		return mlm_plan
 
+
+	#####################################################################
+	# cari upline dan level nya masing-masing 
+	# sd level max_bonus_level_level
+	# dan bukan type Affiliate, 
+	# mulai dari top level paling atas
+	# return array:
+	#   0=id 	1=name 	2=path_ltree 	3=level-abs 	4=level-relative
+	# 	0		Andi    001 			1 				-2
+	# 	1 		Bani    001.002 		2 				-1
+	#   2 		Doni    001.003 		2 				-1
+	#####################################################################
+	def cari_upline_dan_level(self, cr, uid, new_member, max_bonus_level_level, context=None):
+
+		sql = "select id, name, path_ltree,\
+				nlevel(path_ltree) as level,\
+				nlevel(path_ltree) - nlevel('%s') as level\
+				from res_partner as p where path_ltree @> '%s'\
+				and id <> %d \
+				and (is_affiliate <> 't' or is_affiliate is null)\
+				order by path_ltree desc\
+				limit %d" % (new_member.path, new_member.path, new_member.id, max_bonus_level_level)
+		_logger.warning( sql )
+		cr.execute(sql)
+		rows = cr.fetchall()
+		return rows
+
+	#################################################################
+	# cari total child per level 
+	# hanya dihitung member yang sudah status Open (ada path nya)
+	# return
+	# level   children
+	# 1       2  ---> 
+	# 2       4 
+	# 3       8
+	# 4       5  ---> belum ada bonus level
+	# 
+	# jika jumlah child upline = 2: terjadi bonus pasangan
+	#################################################################	
+	def cari_child_per_level(self, cr, uid, upline_path, context=None):
+		sql = "select nlevel(path_ltree) - nlevel('%s') as level, count(*)\
+			from res_partner\
+			where path_ltree ~ '%s.*{1,}'\
+			group by level" % (upline_path,upline_path)
+		cr.execute(sql)
+		levels = cr.fetchall()	
+		return levels
+
+	def cari_direct_childs(self, cr, uid, upline_path, context=None):
+		sql = "select id, name, path \
+			from res_partner where\
+			path_ltree ~ '%s.*{1,1}'" % (upline_path)
+		cr.execute(sql)
+		direct_childs = cr.fetchall() # 076; 083
+		return direct_childs		
+
+	#################################################################
+	# cari total child per level di kiri dan kanan
+	# hanya dihitung member yang sudah status Open (ada path nya)
+	# return misal
+	# 0:level   1:kiri 		2:kanan
+	# 1      	1 			1
+	# 2       	2 			2 
+	# 3       	4 			4 
+	# 4       	5	  		3 
+	# 
+	# jika jumlah child upline = 2: terjadi bonus pasangan
+	#################################################################	
+	def cari_child_per_level_kiri_kanan(self, cr, uid, upline_path, context=None):
+
+		# cari direct child di kiri dan kanan
+		# return array tdd:
+		#	0: anak kiri 
+		#	1: anak kanan
+		direct_childs = self.cari_direct_childs(cr, uid, upline_path, context=context)
+
+		# level 1: levels = {1:(1,1)}
+		levels = {
+			1 : [
+				1 if len(direct_childs)>0 else 0,
+				1 if len(direct_childs)>1 else 0,
+			]
+		}
+
+		# import pdb; pdb.set_trace()
+		# cari jumlah child anak kiri dan anak kanan  per level
+		# misalnya:
+		# Andi
+		# 		level 1: 1  1
+		#		level 2: 2  2
+		#		level 3: 4  4
+		# Badu
+		# 		level 1: 1  0
+		#		level 2: 2  1
+		#		level 3: 4  3
+		kaki = 0
+
+		for child in direct_childs: # 0:kiri - 1:kanan 
+			data = {}
+			child_per_level = self.cari_child_per_level(cr, uid, child[2], context=context)
+			for r in child_per_level:
+				lev = r[0] + 1 
+				if lev in levels :
+					data = {lev: levels[lev]}
+				else:
+					data = {lev: [0,0]}
+				data[lev][kaki] = r[1]
+				levels.update( data )
+			kaki = kaki + 1
+		return levels	
+
 	#########################################################################
 	# cari bonus sponsor, kalau ada >0 , masukkan ke tabel partner_bonus
 	# dengan type 'sponsor'
@@ -153,6 +264,7 @@ class member(osv.osv):
 
 		return True
 
+
 	#########################################################################
 	# ini dijalankan waktu action_aktif suatu member baru.
 	# untuk menghitung berapa bonus level bagi upline-upline nya
@@ -174,8 +286,9 @@ class member(osv.osv):
 	#			maka si upline dapat bonus level
 	#########################################################################
 	def hitung_bonus_level(self, cr, uid, ids, zero_amount=False, context=None):
-		mlm_plan 		= self.get_mlm_plan(cr, uid, context=context)
-		amount_bonus_level 			 = mlm_plan.bonus_level
+		mlm_plan 			= self.get_mlm_plan(cr, uid, context=context)
+		full_level 			= mlm_plan.full_level
+		amount_bonus_level 	= mlm_plan.bonus_level
 		bonus_level_percent_decrease = mlm_plan.bonus_level_percent_decrease
 		max_bonus_level_level = 1000000 if mlm_plan.max_bonus_level_level == 0 else mlm_plan.max_bonus_level_level
 
@@ -188,7 +301,7 @@ class member(osv.osv):
 			return True
 
 		####################################################################
-		# jika memang sengaja bonus level=0, karena cashback
+		# jika karena cashback memang sengaja bonus level=0
 		####################################################################
 		if zero_amount:
 			amount_bonus_level = 0
@@ -197,65 +310,51 @@ class member(osv.osv):
 		new_member 		= self.browse(cr, uid, ids[0], context=context)
 		member_bonus 	= self.pool.get('mlm.member_bonus')
 
-		#####################################################################
-		# cari upline dan level nya masing-masing sd level max_bonus_level_level
-		# dan bukan type Affiliate, mulai dari top level paling atas
-		# 	Andi 1
-		# 	Bani 2
-		#   Doni 3
-		#####################################################################
-		#import pdb; pdb.set_trace()
-		sql = "select id, name, path_ltree,\
-				nlevel(path_ltree) as level,\
-				nlevel(path_ltree) - nlevel('%s') as level\
-				from res_partner as p where path_ltree @> '%s'\
-				and id <> %d \
-				and (is_affiliate <> 't' or is_affiliate is null)\
-				order by path_ltree desc\
-				limit %d" % (new_member.path, new_member.path, new_member.id, max_bonus_level_level)
-		_logger.warning( sql )
-		cr.execute(sql)
-		rows = cr.fetchall()
-
-		#import pdb; pdb.set_trace()
-
 		#################################################################
-		# loop masing-masing upline :
+		# cari upline sd ke max level
 		#################################################################
-		for r in rows:
-			upline_id    = r[0]; upline_name  = r[1]; upline_path  = r[2]; upline_level = r[3]
-			member_level = upline_level + 1
+		uplines = self.cari_upline_dan_level(cr, uid, new_member, max_bonus_level_level, context=context)
 
+		if full_level:
 			#################################################################
-			# cari total child per level 
-			# hanya dihitung member yang sudang status Open (ada path nya)
-			# jika jumlah child pada level n = 2^n : terjadi bonus level
-			# level   children
-			# 1       2  ---> 
-			# 2       4 
-			# 3       8
-			# 4       5  ---> belum ada bonus level
-			# 
-			# jika jumlah child upline = 2: terjadi bonus pasangan
+			# loop masing-masing upline : dan cari berapa jumlah children 
+			# per masing-masing level
 			#################################################################
-			sql = "select nlevel(path_ltree) - nlevel('%s') as level, count(*)\
-				from res_partner\
-				where path_ltree ~ '%s.*{1,}'\
-				group by level" % (upline_path,upline_path)
-			cr.execute(sql)
-			levels = cr.fetchall()
-	
-			for l in levels:
-				rel_level = l[0]; children = l[1]
-				_logger.warning('Upline=%s, rel_level=%d, children=%d' % 
-					(upline_name, rel_level, children))
-				# jika belum exists
-				exist = [('member_id','=',upline_id),('level','=',rel_level)]
-				if not member_bonus.search(cr, uid, exist, context=context):
-					# jika jumlah child == 2^level
-					if children == 2**rel_level:
-						member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
-							amount_bonus_level, "%sBonus Level at Level %d" % (cashback, rel_level), context=context)
+			for r in uplines:
+				upline_id    = r[0]; upline_name  = r[1]; upline_path  = r[2]; upline_level = r[3]
+				member_level = upline_level + 1
+				levels = self.cari_child_per_level(cr, uid, upline_path, context=context)
+				for l in levels:
+					rel_level = l[0]; children = l[1]
+					_logger.warning('Upline=%s, rel_level=%d, children=%d' % (upline_name, rel_level, children))
+					
+					# jika belum exists
+					exist = [('member_id','=',upline_id),('level','=',rel_level)]
+					if not member_bonus.search(cr, uid, exist, context=context):
+						# full level: harus jumlah child == 2^level
+						if children == 2**rel_level:
+							member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
+								amount_bonus_level, "%sLevel %d" % (cashback, rel_level), context=context)
+
+		else:
+			#################################################################
+			# loop setiap upline mulai dari yg paling atas:
+			# dan cari jumlah children per masing-masing level di kiri dan kanan
+			#################################################################
+			for upline in uplines:
+				upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
+				levels = self.cari_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
+				# import pdb; pdb.set_trace()
+				for lev in levels.keys():
+					rel_level = lev; children_kiri = levels[lev][0]; children_kanan = levels[lev][1]
+					# jika belum ada dan 
+					# jika kiri =1 and kanan = 1: add bonus level
+					if children_kiri >= 1 and children_kanan>=1:
+						exist = [('member_id','=',upline_id),('level','=',rel_level)]
+						if not member_bonus.search(cr, uid, exist, context=context):
+							member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
+								amount_bonus_level, "%sLevel %d" % (cashback, rel_level), context=context)
+
 		return True 
 
 
@@ -530,6 +629,7 @@ class member(osv.osv):
 		pids = cr.fetchall()
 		for p in pids:
 			self.hitung_bonus_level(cr, uid, [ p[0] ], zero_amount=True, context=context)
+			self.write(cr, uid, [p[0]], {'state':'aktif'}, context=context)
 
 		return True
 
