@@ -724,10 +724,8 @@
 
                             </group>
                             <group> 
-                                <field name="type"/>
-                                <field name="jml_max" attrs="{'invisible': [('type','not in',('sks','matkul'))],'required': [('type','!=','flat')]}"/>
-                                 <field name="mekanisme_nilai"/>                             
-                                
+                                <field name="mekanisme_nilai"/>                             
+                                <field name="max_mk"/>
                             </group>
                         </group>
                         <notebook colspan="4">

@@ -17,6 +17,7 @@ class res_partner (osv.osv):
 		#nim = self.pool.get('ir.sequence').get(cr, uid, 'res.partner')
 		#vals['npm'] = jurusan.fakultas_id.kode + jurusan.kode + nim 
 		#return super(partner, self).create(cr, uid, vals, context=None)
+
 	def name_get(self, cr, uid, ids, context=None):
 		if not ids:
 			return []
@@ -72,25 +73,126 @@ class res_partner (osv.osv):
 			res[mhs.id] = years
 		return res		
 
-	def _get_wisuda_ready(self, cr, uid, ids, field, arg, context=None):
+		#jika penggambilan MK di KRS berdasarkan yang terbaru
+	def get_ttl_mk_by_newest(self, cr, uid, ids, context=None):
+		
+		ops_obj = self.pool.get('operasional.krs')
+		det_obj = self.pool.get('operasional.krs_detail')
+	
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk, okd.nilai_angka AS nilai
+						FROM operasional_krs ok
+						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(ids[0]) +"""
+						GROUP BY okd.id,s.name
+						ORDER BY okd.mata_kuliah_id, s.name DESC""")		   
+		mk = cr.fetchall()			
+
+		if mk == []:
+			mk=0
+			return mk
+		id_mk = []	#id khsdetail
+		mk_ids = [] #Matakuliah khsdetail
+
+		for m in mk:
+			##################################
+			# m[0] = operasional_krs_detail id
+			# m[1] = matakuliah_id
+			# m[2] = nilai angka
+			##################################
+			if m[1] not in mk_ids:
+				if m[2] > 0 :
+					id_mk.append(m[0])
+					mk_ids.append(m[1])
+
+		jml_id_mk = len(mk_ids)
+
+		return jml_id_mk
+
+		#jika penggambilan MK di KRS berdasarkan yang terbaik
+	def get_ttl_mk_by_better(self, cr, uid, ids, context=None):
+		
+		ops_obj = self.pool.get('operasional.krs')
+		det_obj = self.pool.get('operasional.krs_detail')
+	
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,okd.nilai_angka AS nilai
+						FROM operasional_krs ok
+						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(ids[0]) +"""
+						GROUP BY okd.id,s.name
+						ORDER BY okd.mata_kuliah_id, okd.nilai_angka DESC""")		   
+		mk = cr.fetchall()			
+
+		if mk == []:
+			mk = 0
+			return mk
+		id_mk = []	#id khsdetail
+		mk_ids = [] #Matakuliah khsdetail
+
+		for m in mk:
+			##################################
+			# m[0] = operasional_krs_detail id
+			# m[1] = matakuliah_id
+			# m[2] = nilai angka
+			##################################
+			if m[1] not in mk_ids:
+				if m[2] > 0 :
+					id_mk.append(m[0])
+					mk_ids.append(m[1])
+
+		jml_id_mk = len(mk_ids)
+
+		return jml_id_mk
+
+	def _get_sidang_ready(self, cr, uid, ids, field_name, arg, context=None):
 		results = {}
 
-		for siap_wisuda in  self.browse(cr, uid, ids, context=context):
-			tahun_ajaran = siap_wisuda.tahun_ajaran_id.id
+		for siap_sidang in  self.browse(cr, uid, ids, context=context):
+			if siap_sidang.tahun_ajaran_id.id != False:
+				tahun_ajaran = siap_sidang.tahun_ajaran_id.id
 
-			# cari jumlah kurikulum untuk thn akademik ini sesuai dengan settingan master kurikulum
-			kurikulum_obj = self.pool.get('master.kurikulum')
-			th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),('state','=','confirm')])
-			total_kurikulum = len(th_kurikulum)
+				# cari jumlah kurikulum untuk thn akademik ini sesuai dengan settingan master kurikulum
+				kurikulum_obj = self.pool.get('master.kurikulum')
+				th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),('state','=','confirm')])
+				total_kurikulum = len(th_kurikulum)
 
-			# hitung jumlah kurikulum untuk thn akademik dan mahasiswa yg bersangkutan, harus sama dg jumlah yg ada di kurikulum
-			khs_obj = self.pool.get('operasional.krs')
-			th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_wisuda.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
-			total_khs = len(th_khs)
+				# hitung jumlah kurikulum untuk thn akademik dan mahasiswa yg bersangkutan, harus sama dg jumlah yg ada di kurikulum
+				khs_obj = self.pool.get('operasional.krs')
+				th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_sidang.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
+				total_khs = len(th_khs)
 
-			results[siap_wisuda.id] = False
-			if total_khs >= total_kurikulum :
-				results[siap_wisuda.id] = True
+				results[siap_sidang.id] = False
+				if total_khs >= total_kurikulum :
+					#cek juga total mk di kurikulum harus sama dengan mk yg sudah ditempuh
+					tahun_ajaran_id = self.browse(cr,uid,ids[0]).tahun_ajaran_id.id
+					prodi_id = self.browse(cr,uid,ids[0]).prodi_id.id
+					cr.execute("""SELECT kmr.matakuliah_id kmr
+									FROM kurikulum_mahasiswa_rel kmr
+									LEFT JOIN master_matakuliah mm ON mm.id = kmr.matakuliah_id
+									LEFT JOIN master_kurikulum mk ON kmr.kurikulum_id = mk.id 
+									WHERE mk.tahun_ajaran_id ="""+ str(tahun_ajaran_id) +""" 
+									AND mk.prodi_id = """+ str(prodi_id) +"""
+									AND mk.state = 'confirm'""")		   
+					mk_klm = cr.fetchall()			
+					if mk_klm != []:
+
+						if self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
+							mk = self.get_ttl_mk_by_newest(cr, uid, ids, context=None)
+						elif self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
+							mk = self.get_ttl_mk_by_better(cr, uid, ids, context=None)	
+
+						if mk > 0 :										
+							mk_ids = []
+							for m in mk_klm:
+								if m[0] not in mk_ids:
+									mk_ids.append(m[0])		
+							tot_kurikulum = len(mk_ids)
+							#import pdb;pdb.set_trace()
+							toleransi_mk = self.browse(cr,uid,ids[0]).tahun_ajaran_id.max_mk
+							#jika total mk yg telah ditempuh sama dengan / lebih dari yg ada di kurikulum
+							if mk >= (tot_kurikulum-toleransi_mk):
+								results[siap_sidang.id] = True
 
 		return results
 
@@ -131,7 +233,7 @@ class res_partner (osv.osv):
 		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
 		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,readonly=True),
 		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
-		'siap_wisuda' : fields.function(_get_wisuda_ready,type='boolean',string='Siap Wisuda',readonly=True)
+		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True)
 				}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]
@@ -142,8 +244,6 @@ class res_partner (osv.osv):
 		return self.write(cr,uid,ids,{'status_mahasiswa':SESSION_STATES[0][0]},context=context)
 			
 	def action_confirm(self,cr,uid,ids,jurusan_id,context=None):
-		#import pdb;pdb.set_trace()
-		#jurus = self.pool.get('master.jurusan')
 		val = self.browse(cr,uid,ids)[0]
 		kod = val.jurusan_id.kode
 		val1 = val.jurusan_id.fakultas_id.kode

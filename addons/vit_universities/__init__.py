@@ -10,3 +10,4 @@ import kurikulum
 import invoice
 import pembayaran
 import reports
+import product

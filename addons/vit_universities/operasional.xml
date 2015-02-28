@@ -1,13 +1,29 @@
 <openerp>
 	<data>
 
+    <record id="act_res_partner_pembayaran_krs3" model="ir.actions.act_window">
+            <field name="name">Pembayaran Kuliah</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','out_invoice')]</field>
+            <field name="context">{'default_partner_id': context.get('partner_id')}</field>            
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    ...
+                </p><p>
+                    Belum ada pembayaran...
+                </p>
+            </field>
+        </record> 
+
        <!--Operasional--> 
        <record model="ir.ui.view" id="krs_tree_view">
             <field name="name">krs.tree</field>
             <field name="model">operasional.krs</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="KRS" version="7.0">
+                <tree string="Kartu Studi" version="7.0">
                     <field name="kode"/>
                     <field name="partner_id"/>  
                     <field name="npm"/> 
@@ -15,7 +31,7 @@
                     <field name="prodi_id"/>            
                     <field name="semester_id"/>
                     <field name="kurikulum_id"/>
-                    <field name="state"/>
+                    <field name="state" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -25,16 +41,21 @@
             <field name="model">operasional.krs</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="KRS" version="7.0">
+                <form string="Kartu Studi" version="7.0">
                     <header>
                         <button name='confirm' string='Konfirmasi' icon="gtk-execute" states='draft' type='object'/>
                         <button name='done' string='Selesai' states='confirm' type='object'/>
-                         <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
+                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>
                 	<sheet>
+                        <div class="oe_right oe_button_box">
+                            <!-- <button name="%(act_res_partner_pembayaran_krs3)d" type="action" string="Pembayaran"/>  -->
+                            <label for="invoice_id" string="Invoice :" class="oe_inline"/>
+                            <field name="invoice_id" class="oe_inline"/>
+                        </div>                        
 	                    <group>
-	                    	<group>
+	                    	<group>                          
 			                    <field name="kode"/>
 			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id,jurusan_id, prodi_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/>
 			                    <field name="npm" invisible="1"/> 

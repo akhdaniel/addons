@@ -1,6 +1,23 @@
 <openerp>
     <data>
 
+    <record id="act_res_partner_view_transkrip" model="ir.actions.act_window">
+            <field name="name">Total Matakuliah</field>
+            <field name="res_model">operasional.transkrip</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="view_id" ref="invoice_tree_mhs"/> -->
+            <field name="domain">[('partner_id','=',active_id)]</field>
+            <field name="context">{'default_partner_id':active_id}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Transkrip belum dibuat
+                </p><p>
+                    Tekan tombol Create untuk buat Transkrip...
+                </p>
+            </field>
+        </record> 
+
         <record model="ir.ui.view" id="tab_form_view">
             <field name="name">partner.personal</field>
             <field name="model">res.partner</field>
@@ -113,18 +130,23 @@
                         <form string="Informasi Kelulusan" version="7.0">
                             <sheet>
                                   <separator string="Informasi Kelulusan" colspan="4" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
-                                  <newline/>
+                                  <newline/>                                
                                    <group colspan="4" col="4">
-                                        <group>
-                                            <field name="tgl_lulus"/>
-                                            <field name="siap_wisuda"/>
-                                            <field name="wisuda" attrs="{'invisible': [('siap_wisuda','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
-                                            <field name="lokasi_wisuda" attrs="{'invisible': [('siap_wisuda','!=',True)]}"/>
-                                        </group>
                                         <group>
                                            <field name="ipk"/>                            
                                            <field name="judul"/>
-                                        </group> 
+                                        </group>                                     
+                                        <group>
+                                        <label for="tgl_lulus" string="Tanggal Lulus" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                        <div>
+                                            <field name="tgl_lulus" class="oe_inline" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                            <label for="%(act_res_partner_view_transkrip)d" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
+                                            <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find"/> 
+                                        </div>  
+                                            <field name="siap_sidang" invisible="1"/>
+                                            <field name="wisuda" attrs="{'invisible': [('siap_sidang','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
+                                            <field name="lokasi_wisuda" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                        </group>
                                    </group>                                                              
                             </sheet>
                         </form>

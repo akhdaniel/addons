@@ -42,10 +42,15 @@
                                 <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="semester_id" attrs="{'readonly': [('state','=','confirm')]}" widget="selection"/>
+
                             </group>
                         </group>    
                         <notebook colspan="4">
                             <page string="Daftar Mata Kuliah">
+                               <!--  <label for="max_sks" string="Maximal SKS"/> -->
+                               <group>
+                                <field name="max_sks" attrs="{'readonly': [('state','=','confirm')]}" string="Maximal SKS"/>
+                            </group>
                                 <field view_mode="tree" name="kurikulum_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
                                     <tree version="7.0">
                                         <field name="kode"/>
