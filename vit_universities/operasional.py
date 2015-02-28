@@ -7,13 +7,66 @@ class operasional_krs (osv.Model):
 	_rec_name='kode'
 
 	def create(self, cr, uid, vals, context=None):
-		#import pdb;pdb.set_trace() 
+
+		if not vals['krs_detail_ids']:
+			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))		
 		if vals.get('kode','/')=='/':
 			npm = vals['npm']
 			if not npm :
 				npm = '<<npm_kosong>> '
 			smt = vals['semester_id']
 			vals['kode'] = npm +'-'+str(smt) or '/'
+		if vals['kurikulum_id']:
+			kurikulum = vals['kurikulum_id']
+			t_sks = self.pool.get('master.kurikulum').browse(cr,uid,kurikulum).max_sks
+		 	
+		mk = vals['krs_detail_ids']
+		tot_mk = 0
+		for m in mk:
+			mk_id = m[2]['mata_kuliah_id']
+			sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+			tot_mk += int(sks)
+	
+		if tot_mk > t_sks :
+			raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))			
+
+		#langsung create invoice nya
+		byr_obj = self.pool.get('master.pembayaran')
+		byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
+			('fakultas_id','=',vals['fakultas_id']),
+			('jurusan_id','=',vals['jurusan_id']),
+			('prodi_id','=',vals['prodi_id']),
+			('state','=','confirm'),
+			])		
+		if byr_sch != []:
+			list_pembayaran = byr_obj.browse(cr,uid,byr_sch[0],context=context).detail_product_ids
+			for bayar in list_pembayaran:
+				#import pdb;pdb.set_trace()
+				#jika menemukan semester yang sama
+				if vals['semester_id'] == bayar.semester_id.id:
+					list_product = bayar.product_ids
+					prod_id = []					
+					for lp in list_product:
+						prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price}))
+					if byr_obj.browse(cr,uid,byr_sch[0],context=context).type == 'paket':
+						prod_obj = self.pool.get('product.product')
+						beban_sks_id = prod_obj.search(cr,uid,[('is_sks','=',True),('fakultas_id','=',vals['fakultas_id'])])
+						if beban_sks_id != [] :
+							prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
+							prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price}))
+					
+					inv_id = self.pool.get('account.invoice').create(cr,uid,{
+							'partner_id':vals['partner_id'],
+							'name': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
+							'type':'out_invoice',
+							'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
+							'invoice_line': prod_id,
+							},context=context)
+					if inv_id :
+						inv = {'invoice_id':inv_id}
+						vals = dict(vals.items()+inv.items())						
+					#self.write(cr,uid,)
+							
 		return super(operasional_krs, self).create(cr, uid, vals, context=context)	    
 	
 	def _get_ips(self, cr, uid, ids, field_name, arg, context=None):
@@ -74,6 +127,7 @@ class operasional_krs (osv.Model):
 		'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi',),
 		'user_id':fields.many2one('res.users','User',readonly=True),
 		'sks_tot' : fields.integer('Total SKS',readonly=True),
+		'invoice_id' : fields.many2one('account.invoice','Invoice',domain=[('type', '=','out_invoice')],readonly=True),
 			}    
 				 
 	_defaults={
@@ -87,7 +141,21 @@ class operasional_krs (osv.Model):
 		for x in self.browse(cr,uid,ids[0],context=context).krs_detail_ids:
 			self.pool.get('operasional.krs_detail').write(cr,uid,x.id,{'state':'confirm'},context=context)
 		self.write(cr, uid, ids, {'state' : 'confirm'}, context=context)
-		return True
+		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities', 'krs_tree_view')
+		view_id = view_ref and view_ref[1] or False,		
+		return {
+			'name' : _('Temporary View'),
+			'view_type': 'form',
+			'view_mode': 'tree',			
+			'res_model': 'operasional.krs',
+			'res_id': ids[0],
+			'type': 'ir.actions.act_window',
+			'view_id': view_id,
+			'target': 'current',
+			'domain' : "[('state','=','draft')]",
+			#'context': "{'default_state':'open'}",#
+			'nodestroy': False,
+			}
 
 	def cancel(self,cr,uid,ids,context=None):   
 
@@ -233,7 +301,7 @@ class operasional_transkrip(osv.Model):
 	_name='operasional.transkrip'
 
 	def create(self, cr, uid, vals, context=None):
-		#import pdb;pdb.set_trace() 
+		
 		if 'partner_id' in vals:
 			mhs = vals['partner_id']
 			partner_brw = self.pool.get('res.partner').browse(cr,uid,mhs)
@@ -305,7 +373,7 @@ class operasional_transkrip(osv.Model):
 
 		return id_mk
 
-	def _get_total_khs(self, cr, uid, ids, field_name, arg, context=None):
+	def get_total_khs(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
 			context = {}
 		result = {}
@@ -320,7 +388,6 @@ class operasional_transkrip(osv.Model):
 
 		khs_detail_obj = self.pool.get('operasional.krs_detail')
 		mekanisme_nilai = self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai
-
 
 		result[ids[0]] = mk
 		return result
@@ -379,7 +446,7 @@ class operasional_transkrip(osv.Model):
 		'fakultas_id':fields.related('partner_id', 'fakultas_id', type='many2one',relation='master.fakultas', string='Fakultas',readonly=True),
 		'jurusan_id':fields.related('partner_id', 'jurusan_id', type='many2one',relation='master.jurusan', string='Jurusan',readonly=True),
 		'prodi_id':fields.related('partner_id', 'prodi_id', type='many2one',relation='master.prodi', string='Program Studi',readonly=True),
-		'transkrip_detail_ids' : fields.function(_get_total_khs, type='many2many', relation="operasional.krs_detail", string="Total Mata Kuliah"), 
+		'transkrip_detail_ids' : fields.function(get_total_khs, type='many2many', relation="operasional.krs_detail", string="Total Mata Kuliah"), 
 		'ipk' : fields.function(_get_ipk,type='float',string='IPK',help="SKS = Total ( SKS * bobot nilai ) / Total SKS"),
 		'yudisium' : fields.char('Yudisium',readonly=True),
 		't_sks' : fields.integer('Total SKS',readonly=True),

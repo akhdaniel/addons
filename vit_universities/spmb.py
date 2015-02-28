@@ -165,29 +165,29 @@ class spmb_mahasiswa(osv.Model):
 				'npm':t_id_final+f_id+j_id+p_id+se,
 				'user_id':uid},
 				context=context)	
-			
-			byr_obj = self.pool.get('master.pembayaran')
-			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id),
-				('fakultas_id','=',my_form.fakultas_id.id),
-				('jurusan_id','=',my_form.jurusan_id.id),
-				('prodi_id','=',my_form.prodi_id.id),
-				('state','=','confirm'),
-				('type','=','mahasiswa')])
-			
-			if byr_sch != []:
-				byr_bws = byr_obj.browse(cr,uid,byr_sch,context=context)[0]
-
-				#biaya_ids = []
-				for biaya in byr_obj.browse(cr,uid,byr_sch,context=context)[0].product_ids:
-					pel_id = biaya.id
-					#import pdb;pdb.set_trace()
-					#pel = biaya_ids.append(pel_id)
-					self.pool.get('account.invoice').create(cr,uid,{
-						'partner_id':p.id,
-						'type':'out_invoice',
-						'account_id':p.property_account_receivable.id,
-						'invoice_line':[(0, 0, {'product_id':pel_id,'name':biaya.name,'price_unit':biaya.list_price})],
-						},context=context)
+			# if my_form.tahun_ajaran_id.type == 'flat':
+			# 	byr_obj = self.pool.get('master.pembayaran')
+			# 	byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id),
+			# 		('fakultas_id','=',my_form.fakultas_id.id),
+			# 		('jurusan_id','=',my_form.jurusan_id.id),
+			# 		('prodi_id','=',my_form.prodi_id.id),
+			# 		('state','=','confirm'),
+			# 		])
+				
+			# 	if byr_sch != []:
+			# 		byr_bws = byr_obj.browse(cr,uid,byr_sch,context=context)[0]
+					
+			# 		#biaya_ids = []
+			# 		for biaya in byr_obj.browse(cr,uid,byr_sch,context=context)[0].product_ids:
+			# 			pel_id = biaya.id
+			# 			#import pdb;pdb.set_trace()
+			# 			#pel = biaya_ids.append(pel_id)
+			# 			self.pool.get('account.invoice').create(cr,uid,{
+			# 				'partner_id':p.id,
+			# 				'type':'out_invoice',
+			# 				'account_id':p.property_account_receivable.id,
+			# 				'invoice_line':[(0, 0, {'product_id':pel_id,'name':biaya.name,'price_unit':biaya.list_price})],
+			# 				},context=context)
 		self.write(cr,uid,ids,{'state':'done'},context=context)
 		return True	
 

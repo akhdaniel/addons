@@ -21,19 +21,14 @@ class academic_year(osv.Model):
 		'month_ids': fields.one2many('academic.month', 'year_id', 'Bulan', help="related Academic months"),
 		#'grade_id' : fields.many2one('grade.master', "Grade"),
 		'description': fields.text('Deskripsi'),
-		'type' : fields.selection([('flat','Flat'),('sks','Per SKS'),('matkul','Per Matakuliah')],'Type Pembayaran',required=True,
-				help='* Type \'Flat\' = perhitungan pembayaran flat sesuai denga template pembayaran. \
-					\n* Type \'Per SKS\' = perhitungan pembayaran terupdate sesuai jumlah SKS ketika pembuatan KRS. \
-					\n* type \'Per Matakuliah\' = perhitungan pembayaran terupdate sesuai jumlah Matakuliah ketika pembuatan KRS.'),
-		'jml_max': fields.integer('Jumlah Maksimal',help="Jumlah Maksimal SKS atau Matakuliah per semester."),
 		'mekanisme_nilai' :fields.selection([('terbaru','Nilai Terbaru'),('terbaik','Nilai Terbaik')],'Mekanisme Nilai',required=True,
 				help='Mekanisme pengambilan nilai di transkrip jika remedial/her \
 					\n* Terbaru = Jika terdapat 2 atau lebih matakuliah yang sama maka di ambil yang terbaru sesuai tanggal KHS. \
 					\n* Terbaik = Jika terdapat 2 atau lebih matakuliah yang sama maka di ambil yang terbaik sesuai tanggal KHS.'),
+		'max_mk': fields.integer('Maksimal Matakuliah',required=True,help='Jumlah maksimal matakuliah BL untuk bisa mengajukan judul'),
 	}
 
 	_defaults = {
-		'type':'flat',
 		'mekanisme_nilai':'terbaru',
 	}
 

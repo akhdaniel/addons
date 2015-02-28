@@ -10,6 +10,25 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 class master_kurikulum (osv.Model):
 	_name = 'master.kurikulum'
 
+
+	def create(self, cr, uid, vals, context=None):
+		#import pdb;pdb.set_trace()
+		if vals['max_sks'] == 0:
+			raise osv.except_osv(_('Error!'), _('Maximal total SKS tidak boleh nol !'))		
+		if not vals['kurikulum_detail_ids']:
+			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))
+		mk = vals['kurikulum_detail_ids'][0][2]
+		tot_mk = 0
+		for m in mk:
+			sks = self.pool.get('master.matakuliah').browse(cr,uid,m,context=context).sks
+			tot_mk += int(sks)
+
+		toleransi_sks = vals['max_sks']	
+		if tot_mk > toleransi_sks :
+			raise osv.except_osv(_('Error!'), _('Total matakuliah melebihi batas maximal SKS !'))		
+
+		return super(master_kurikulum, self).create(cr, uid, vals, context=context)
+
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
 		if not args:
 			args = []
@@ -23,22 +42,25 @@ class master_kurikulum (osv.Model):
 		return self.name_get(cr, user, ids, context)
 
 	def _get_total_sks(self,cr,uid,ids,field,args,context=None):
-		#import pdb;pdb.set_trace()
 		result = {}
 		sult = 0
 		for res in self.browse(cr,uid,ids[0],context=context).kurikulum_detail_ids:
 			sks = res.sks
 			sult += int(sks)
+		# if sult > self.browse(cr,uid,ids[0]).max_sks :
+		# 		raise openerp.exceptions.Warning(_('Error!'), _('Jumlah SKS melebihi batas maximal SKS yang ditentukan !'))			
+
 		result[ids[0]] = sult
 		return result
 
 	def _get_total_sks2(self,cr,uid,ids,field,args,context=None):
-		#import pdb;pdb.set_trace()
+		
 		result = {}
 		sult = 0
 		for res in self.browse(cr,uid,ids[0],context=context).total_mk_ids:
 			sks = res.sks
 			sult += int(sks)
+			
 		result[ids[0]] = sult
 		return result 
 
@@ -72,6 +94,7 @@ class master_kurikulum (osv.Model):
 		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required = True),           
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
 		'semester_id':fields.many2one('master.semester','Semester',required = True),
+		'max_sks':fields.integer('Max Total SKS',required = True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
 		'state':fields.selection([('draft','Draft'),('confirm','Konfirmasi')],string="Status",required = True),
 		'kurikulum_detail_ids':fields.many2many(
@@ -106,6 +129,6 @@ class master_kurikulum (osv.Model):
 		for rec in self.browse(cr, uid, ids, context=context):
 			if rec.state != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
-		return super(spmb_mahasiswa, self).unlink(cr, uid, ids, context=context)					
+		return super(master_kurikulum, self).unlink(cr, uid, ids, context=context)					
 			
 master_kurikulum()
