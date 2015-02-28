@@ -48,6 +48,8 @@
 		                string="Bonus Point Belanja" 
 		            	name="point" domain="[('bonus_id','=','Point Belanja')]"/>
 
+		            <separator/>
+
 		            <filter icon="terp-mail-message-new" 
 		                string="Transfered" 
 		            	name="transfered" domain="[('is_transfered','=',True)]"/>
