@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim:fdl=1:
+-->
+<templates id="template" xml:space="preserve">
+    <t t-name="FieldD3tree">
+
+        <div class="oe_form_field_text oe_pad">
+            tree
+        </div>
+    </t>
+
+</templates>
