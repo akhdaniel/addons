@@ -82,9 +82,11 @@
                         </group>
 		            </page>
 
-                    <!--page string="Tree">
-                        <iframe src="/mlm/member/view/badu-36" style="width:100%; height:300px" />
-                    </page-->
+                    <page string="Tree">
+                        <!-- field name="tree_url" widget="url" /-->
+                        <field name="tree_url" widget="d3tree" />
+                        <!--iframe src="/mlm/member/view/" style="width:100%; height:300px" /-->
+                    </page>
 
 		        </notebook>
             </field>
