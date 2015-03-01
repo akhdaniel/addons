@@ -9,6 +9,10 @@ _logger = logging.getLogger(__name__)
 
 MEMBER_STATES =[('draft','Draft'),('open','Sedang Verifikasi'), ('reject','Ditolak'),
                  ('aktif','Aktif'),('nonaktif','Non Aktif')]
+BONUS_SPONSOR_CODE   = 1
+BONUS_PASANGAN_CODE  = 2
+BONUS_LEVEL_CODE     = 3
+BONUS_BELANJA	     = 4
 
 '''
 insstall
@@ -155,6 +159,42 @@ class member(osv.osv):
 		levels = cr.fetchall()	
 		return levels
 
+	#################################################################
+	# cari detail nama2 child per level 
+	# hanya dihitung member yang sudah status Open (ada path nya)
+	# return
+	# level   children
+	# 1       [Banu, Dodo]
+	# 2       [Banu0, Banu1]
+	# 3       8
+	# 4       5  ---> belum ada bonus level
+	# 
+	# jika jumlah child upline = 2: terjadi bonus pasangan
+	#################################################################	
+	def cari_detail_child_per_level(self, cr, uid, upline_path, context=None):
+		sql = "select nlevel(path_ltree) - nlevel('%s') + 1 as level, id, name \
+			from res_partner\
+			where path_ltree ~ '%s.*{1,}'\
+			order by level, id" % (upline_path,upline_path)
+		cr.execute(sql)
+		rows = cr.fetchall()
+		# import pdb; pdb.set_trace()
+
+		data={}
+		members = []
+		lev_lama = 0
+
+		for lev in rows:
+			if lev[0] != lev_lama:
+				members = []
+			members.append(lev[1]) 
+			data.update({ lev[0] : members })
+			lev_lama = lev[0] 
+
+		_logger.warning( data )
+
+		return data 
+
 	def cari_direct_childs(self, cr, uid, upline_path, context=None):
 		sql = "select id, name, path \
 			from res_partner where\
@@ -183,7 +223,7 @@ class member(osv.osv):
 		#	1: anak kanan
 		direct_childs = self.cari_direct_childs(cr, uid, upline_path, context=context)
 
-		# level 1: levels = {1:(1,1)}
+		# pada level 1: levels = {1:[ [1],[1] ]}
 		levels = {
 			1 : [
 				1 if len(direct_childs)>0 else 0,
@@ -192,16 +232,8 @@ class member(osv.osv):
 		}
 
 		# import pdb; pdb.set_trace()
-		# cari jumlah child anak kiri dan anak kanan  per level
+		# cari child anak kiri dan anak kanan  per level
 		# misalnya:
-		# Andi
-		# 		level 1: 1  1
-		#		level 2: 2  2
-		#		level 3: 4  4
-		# Badu
-		# 		level 1: 1  0
-		#		level 2: 2  1
-		#		level 3: 4  3
 		kaki = 0
 
 		for child in direct_childs: # 0:kiri - 1:kanan 
@@ -215,6 +247,54 @@ class member(osv.osv):
 					data = {lev: [0,0]}
 				data[lev][kaki] = r[1]
 				levels.update( data )
+			kaki = kaki + 1
+		return levels	
+
+
+	#################################################################
+	# cari detail nama-nama child per level di kiri dan kanan
+	# hanya dihitung member yang sudah status Open (ada path nya)
+	# return misal
+	# 0:level   1:kiri 		2:kanan
+	# 1      	[[Banu] 			[Dodo]]
+	# 2       	[[Banu0, Banu1]		[Joko0,Joko1]]  
+	# 3 dst....
+	# 
+	#################################################################	
+	def cari_detail_child_per_level_kiri_kanan(self, cr, uid, upline_path, context=None):
+
+		# cari direct child di kiri dan kanan
+		# return array tdd:
+		#	0: anak kiri 
+		#	1: anak kanan
+		direct_childs = self.cari_direct_childs(cr, uid, upline_path, context=context)
+
+		kaki = 0
+		levels = {}
+
+		for child in direct_childs: # 0:kiri - 1:kanan 
+			if kaki==0:
+				levels.update( {1 : [[child[0]], [] ] })
+			else:
+				levels[1][1] = [ child[0] ]
+
+			# nama2 child per setiap level: 
+			# { 
+			#    1: [list children level 1] 
+			#    2: [list children level 2] 
+			#    3: [list children level 3] 
+			# }
+			child_per_level = self.cari_detail_child_per_level(cr, uid, child[2], context=context)
+			# import ipdb; ipdb.set_trace()
+
+			for lev in child_per_level.keys():
+				if lev in levels :
+					data = {lev: levels[lev] } # [ [11,22], []]
+				else:
+					data = {lev: [[],[]] }
+				data[lev][kaki] = child_per_level[lev]
+				levels.update( data )
+
 			kaki = kaki + 1
 		return levels	
 
@@ -294,6 +374,12 @@ class member(osv.osv):
 
 		cashback = ''
 
+		bonus  = self.pool.get('mlm.bonus').search(cr, uid, 
+			[('code','=',BONUS_LEVEL_CODE)], context=context)
+		if not bonus:
+			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Level, code = 3") ) 
+		bonus_level = bonus[0]
+
 		####################################################################
 		# apakah bonus level ada / aktif ?
 		####################################################################
@@ -326,10 +412,12 @@ class member(osv.osv):
 				levels = self.cari_child_per_level(cr, uid, upline_path, context=context)
 				for l in levels:
 					rel_level = l[0]; children = l[1]
+
 					_logger.warning('Upline=%s, rel_level=%d, children=%d' % (upline_name, rel_level, children))
 					
 					# jika belum exists
-					exist = [('member_id','=',upline_id),('level','=',rel_level)]
+					exist = ['&','&',('member_id','=',upline_id),('level','=',rel_level),
+ 						('bonus_id','=',bonus_level)]
 					if not member_bonus.search(cr, uid, exist, context=context):
 						# full level: harus jumlah child == 2^level
 						if children == 2**rel_level:
@@ -350,7 +438,8 @@ class member(osv.osv):
 					# jika belum ada dan 
 					# jika kiri =1 and kanan = 1: add bonus level
 					if children_kiri >= 1 and children_kanan>=1:
-						exist = [('member_id','=',upline_id),('level','=',rel_level)]
+						exist = ['&','&',('member_id','=',upline_id),('level','=',rel_level),
+	 						('bonus_id','=',bonus_level)]
 						if not member_bonus.search(cr, uid, exist, context=context):
 							member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
 								amount_bonus_level, "%sLevel %d" % (cashback, rel_level), context=context)
@@ -373,17 +462,72 @@ class member(osv.osv):
 	#		jika belum ada bonus pada level tsb dan jumlah downline == 2^level :
 	#			maka si upline dapat bonus level
 	#########################################################################
-	def hitung_bonus_pasangan(self, cr, uid, ids, context=None):
+	def hitung_bonus_pasangan(self, cr, uid, ids,  zero_amount=False, context=None):
 		mlm_plan 		= self.get_mlm_plan(cr, uid, context=context)
-		amount_bonus_pasangan 		 = mlm_plan.bonus_pasangan 
+		amount 			= mlm_plan.bonus_pasangan 
 		bonus_pasangan_percent_decrease = mlm_plan.bonus_pasangan_percent_decrease
-
-		max_bonus_pasangan_level = 1000000 if mlm_plan.max_bonus_pasangan_level == 0 else mlm_plan.max_bonus_pasangan_pasangan
-		if amount_bonus_pasangan == 0:
+		max_bonus_pasangan_level = 1000000 if mlm_plan.max_bonus_pasangan_level == 0 else mlm_plan.max_bonus_pasangan_level
+		if amount == 0:
 			return True
+
+		bonus = self.pool.get('mlm.bonus').search(cr, uid, 
+			[('code','=',BONUS_PASANGAN_CODE)], context=context)
+		if not bonus:
+			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Pasangan, code = 2") ) 
+		bonus_pasangan=bonus[0]
+
+		####################################################################
+		# jika karena cashback memang sengaja bonus level=0
+		####################################################################
+		if zero_amount:
+			amount = 0
+			cashback = 'Cashback '
+		else:
+			cashback=''
 
 		new_member 		= self.browse(cr, uid, ids[0], context=context)
 		member_bonus 	= self.pool.get('mlm.member_bonus')
+
+		#################################################################
+		# cari upline sd ke max level
+		#################################################################
+		uplines = self.cari_upline_dan_level(cr, uid, new_member, max_bonus_pasangan_level, context=context)
+
+		for upline in uplines:
+			upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
+			
+			#################################################################
+			# si upline punya child siapa saja di kiri dan di kanan
+			# bentuk levels: { level : [ [list kiri], [list kanan] ]}
+			#################################################################
+			levels = self.cari_detail_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
+			
+			#################################################################
+			# apakah child di kiri sudah punya pasangan child di kanan
+			# pada level suatu level ?
+			# jika belum , tambahkan bonus pasangan untuk si upline
+			#################################################################
+			# import pdb; pdb.set_trace()
+
+			for lev in levels.keys():
+				kiris = levels[lev][0]
+				kanans = levels[lev][1]
+ 				
+ 				for kiri in kiris:
+ 					search = ['&','&',('new_member_id','=', kiri),('level', '=',lev),
+ 						('bonus_id','=',bonus_pasangan)]
+ 					exist = member_bonus.search(cr, uid, search, context=context)
+ 					if not exist:
+	 					for kanan in kanans:
+		 					search = ['&','&',('match_member_id', '=',kanan),('level', '=',lev),
+		 						('bonus_id','=',bonus_pasangan)]
+		 					exist = member_bonus.search(cr, uid, search, context=context)
+		 					if not exist:
+		 						desc = '%sPasangan' % (cashback)
+		 						member_bonus.addBonusPasangan(cr, uid, kiri, kanan, 
+		 							upline_id, lev, amount, desc, context=context)
+		 						cr.commit()
+		 						break
 
 		return True 
 
@@ -600,14 +744,14 @@ class member(osv.osv):
 		mlm_plan     = self.get_mlm_plan(cr, uid, context=context)
 
 		#####################################################################
-		# titip yang beli paket
+		# titik yang membeli paket
 		#####################################################################
 		new_member 	 = self.browse(cr, uid, ids[0], context=context)
 		paket        = new_member.paket_id
 		hak_usaha    = paket.hak_usaha
 
 		#######################################################################
-		# si top level (new_member) paket dapat bonus sponsor langsung sebanyak 
+		# si sponsor (new_member) paket dapat bonus sponsor langsung sebanyak 
 		# = hak_usaha * bonus_sponsor
 		#######################################################################
 		bonus_sponsor 	= mlm_plan.bonus_sponsor
@@ -619,9 +763,9 @@ class member(osv.osv):
 
 		#######################################################################
 		# hitung bonus level utk masing2 titik 
+		# hitung bonus pasangan utk masing2 titik 
 		# nilainya 0 saja karena sudah dijadikan cashback pada waktu join
 		#######################################################################
-		# import pdb; pdb.set_trace()
 		sql = "select id, name,path from res_partner where \
 			path_ltree <@ '%s' and id<>%d \
 			order by path_ltree " % (new_member.path, new_member.id)
@@ -629,7 +773,9 @@ class member(osv.osv):
 		pids = cr.fetchall()
 		for p in pids:
 			self.hitung_bonus_level(cr, uid, [ p[0] ], zero_amount=True, context=context)
+			self.hitung_bonus_pasangan(cr, uid, [ p[0] ], zero_amount=True,context=context)
 			self.write(cr, uid, [p[0]], {'state':'aktif'}, context=context)
+
 
 		return True
 
@@ -664,6 +810,15 @@ class member(osv.osv):
 		# hitung bonus level utk upline si new_member
 		#########################################################################
 		self.hitung_bonus_level(cr, uid, ids, context=context)
+
+		#########################################################################
+		# hitung bonus pasangan utk upline si new_member
+		#########################################################################		
+		self.hitung_bonus_pasangan(cr, uid, ids, context=context)
+
+		#########################################################################
+		# langsung commit database, supaya bisa hitung sub member
+		#########################################################################		
 		cr.commit()
 
 		#########################################################################
@@ -684,8 +839,10 @@ class member(osv.osv):
 				# aktivasi sub member di bawahnya, 
 				# hitung bonus sponsor yang mensponsori
 				# hitung bonus level untuk setiap titik dengan nilai 0 (cashback)
+				# hitung bonus pasangan untuk setiap titik dengan nilai 0 (cashback)
 				#########################################################################
 				self.activate_sub_member(cr, uid, ids, context=context)
+
 
 		return self.write(cr,uid,ids,{'state':MEMBER_STATES[3][0]},context=context)
 

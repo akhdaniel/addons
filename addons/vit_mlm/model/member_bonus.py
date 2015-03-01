@@ -48,6 +48,7 @@ class member_bonus(osv.osv):
 		data = {
 			'member_id' 		: sponsor_id ,   # yang dapat bonus
 			'new_member_id' 	: new_member_id, # sumber member 
+			'level' 			: False, # pada level berapa
 			'amount'			: amount,        # jumlah
 			'trans_date'		: time.strftime("%Y-%m-%d %H:%M:%S") ,
 			'bonus_id'			: bonus_sponsor[0],
@@ -57,7 +58,7 @@ class member_bonus(osv.osv):
 		self.pool.get('mlm.member_bonus').create(cr, uid, data, context=context)
 
 
-	def addBonusLevel(self, cr, uid, new_member_id, sponsor_id, level, amount, description, context=None):
+	def addBonusLevel(self, cr, uid, new_member_id, member_id, level, amount, description, context=None):
 
 		bonus_sponsor = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_LEVEL_CODE)], context=context)
@@ -65,7 +66,7 @@ class member_bonus(osv.osv):
 			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Level, code = 3") ) 
 
 		data = {
-			'member_id' 		: sponsor_id ,   # yang dapat bonus
+			'member_id' 		: member_id ,   # yang dapat bonus
 			'new_member_id' 	: new_member_id, # sumber member 
 			'level' 			: level, # pada level berapa
 			'amount'			: amount,        # jumlah
@@ -77,20 +78,21 @@ class member_bonus(osv.osv):
 		self.pool.get('mlm.member_bonus').create(cr, uid, data, context=context)
 
 
-	def addBonusPasangan(self, cr, uid, new_member_id, sponsor_id, level, amount, description, context=None):
+	def addBonusPasangan(self, cr, uid, new_member_id, match_member_id, member_id, level, amount, description, context=None):
 
-		bonus_sponsor = self.pool.get('mlm.bonus').search(cr, uid, 
+		bonus_pasangan = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_PASANGAN_CODE)], context=context)
-		if not bonus_sponsor:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Level, code = 3") ) 
+		if not bonus_pasangan:
+			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Psangangan, code = 2") ) 
 
 		data = {
-			'member_id' 		: sponsor_id ,   # yang dapat bonus
+			'member_id' 		: member_id ,   # yang dapat bonus
 			'new_member_id' 	: new_member_id, # sumber member 
+			'match_member_id' 	: match_member_id, # sumber member 
 			'level' 			: level, # pada level berapa
 			'amount'			: amount,        # jumlah
 			'trans_date'		: time.strftime("%Y-%m-%d %H:%M:%S") ,
-			'bonus_id'			: bonus_sponsor[0],
+			'bonus_id'			: bonus_pasangan[0],
 			'is_transfered'		: False,
 			'description' 		: description
 		}
