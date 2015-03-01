@@ -63,6 +63,7 @@
             			<field name="member_bonus_ids">
             				<tree string="Bonus">
                                 <field name='new_member_id'/>
+                                <field name='match_member_id'/>
                                 <field name='level'/>
                                 <field name='amount'/>
                                 <field name='trans_date'/>
