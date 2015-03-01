@@ -26,9 +26,11 @@
       'menu/menu_membership.xml',   
       'menu/menu_bonus.xml',   
       'menu/menu_broadcast.xml',   
-      'menu/menu_ads.xml',   
-      
+      'menu/menu_ads.xml',
+         
+      'view/d3tree.xml',   
     ],    
+    'qweb' : ['static/src/xml/*.xml'],
     'description': """
 Description
 ==================

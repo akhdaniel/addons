@@ -15,7 +15,7 @@ BONUS_LEVEL_CODE     = 3
 BONUS_BELANJA	     = 4
 
 '''
-insstall
+install
 
 Install the contrib package: 
 sudo apt-get install postgresql-contrib
@@ -69,6 +69,12 @@ class member(osv.osv):
 
 		return results	
 
+	def _get_tree_url(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		for m in self.browse(cr, uid, ids, context=context):
+			results[m.id] = '/mlm/member/tree/%d' % (m.id)
+		return results	
+
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
@@ -93,6 +99,8 @@ class member(osv.osv):
 		'bank_name'			: fields.char("Bank Name"),
 		'bank_branch'		: fields.char("Bank Branch"),
 		'id_number'			: fields.char("Nomor KTP/SIM"),
+
+		'tree_url'	  		: fields.function(_get_tree_url, type="char", string="Tree URL"),
 
 	}
 	_defaults = {

@@ -41,6 +41,8 @@
 
 				            <group string="Bonus Pasangan">
 				                <field name="bonus_pasangan"/>       
+				                <field name="max_bonus_pasangan_level"/>     
+				                <field name="bonus_pasangan_percent_decrease"/>       
 				            </group>
 
 				        </group>
