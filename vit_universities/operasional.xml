@@ -52,7 +52,7 @@
                         <div class="oe_right oe_button_box">
                             <!-- <button name="%(act_res_partner_pembayaran_krs3)d" type="action" string="Pembayaran"/>  -->
                             <label for="invoice_id" string="Pembayaran:" class="oe_inline"/>
-                            <field name="invoice_id" class="oe_inline"/>
+                            <field name="invoice_id" class="oe_inline" context="{'default_type':'out_invoice','type': 'out_invoice'}"/>
                         </div>                        
 	                    <group>
 	                    	<group>                          
