@@ -24,11 +24,7 @@ class master_pembayaran(osv.Model):
 		pro = vals['prodi_id']
 		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
-		typ = vals['type']
-		if typ == 'calon':
-			no = 'Reg-'+fak_id+jur_id+pro_id+ta_id
-		else:
-			no = fak_id+jur_id+pro_id+ta_id
+		no = fak_id+jur_id+pro_id+ta_id
 		vals['name'] = no
 		
 		return super(master_pembayaran, self).create(cr, uid, vals, context=context)
@@ -63,6 +59,7 @@ class master_pembayaran(osv.Model):
 		'state':fields.selection([('draft','Non Aktif'),('confirm','Aktif')],'Status'),
 		'detail_product_ids':fields.one2many('master.pembayaran.detail','pembayaran_id',string='Pembayaran',required=True),		
 		'type': fields.selection([('flat','Flat'),('paket','Paket SKS')],'Type Pembayaran',required=True),
+		'sks_plus' : fields.boolean('Bayar jika tambah SKS'),
 		'total': fields.function(_total,type='char',string='Total'),
 	}
 	_defaults = {
@@ -94,7 +91,6 @@ class master_pembayaran_detail(osv.Model):
 				harga = t.list_price
 				tot += harga
 			res[x.id] = tot
-			self.write(cr,uid,x.id,{'total2':tot})
 
 		return res
 
@@ -110,5 +106,4 @@ class master_pembayaran_detail(osv.Model):
 			domain="[('type','=','service')]",
 			required=True),
 		'total': fields.function(_sub_total,type='char',string='Sub Total'),
-		'total2' : fields.char('Sub Total'),
 	}
