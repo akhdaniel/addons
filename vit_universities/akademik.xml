@@ -558,7 +558,7 @@
                             <group>
                                 <field name="sks"/>
                                 <field name="jenis"/>
-                                <field name="prodi_id" attrs="{'invisible': [('jenis','=','mk_umum')],'required': [('jenis','=','mk_khusus')]}"/>
+                                <field name="prodi_id" attrs="{'invisible': [('jenis','!=','mk_khusus')],'required': [('jenis','=','mk_khusus')]}"/>
                             </group>
                         </group>    
                     </sheet>

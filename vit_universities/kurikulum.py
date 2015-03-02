@@ -94,7 +94,8 @@ class master_kurikulum (osv.Model):
 		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required = True),           
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
 		'semester_id':fields.many2one('master.semester','Semester',required = True),
-		'max_sks':fields.integer('Max Total SKS',required = True),
+		'max_sks':fields.integer('Max Total SKS',required = True,help="Maksimal SKS dalam satu KRS"),
+		'min_ip':fields.float('Min Indeks Prestasi',required = True,help="Minimal indeks prestasi untuk bisa ambil matakuliah tambahan dalam KRS"),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
 		'state':fields.selection([('draft','Draft'),('confirm','Konfirmasi')],string="Status",required = True),
 		'kurikulum_detail_ids':fields.many2many(

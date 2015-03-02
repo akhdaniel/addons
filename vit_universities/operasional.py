@@ -18,17 +18,95 @@ class operasional_krs (osv.Model):
 			vals['kode'] = npm +'-'+str(smt) or '/'
 		if vals['kurikulum_id']:
 			kurikulum = vals['kurikulum_id']
-			t_sks = self.pool.get('master.kurikulum').browse(cr,uid,kurikulum).max_sks
-		 	
+			klm_brw = self.pool.get('master.kurikulum').browse(cr,uid,kurikulum)
+			t_sks = klm_brw.max_sks
+			sks_kurikulum = 0
+			mk_ids_kurikulum = []
+			for klm in klm_brw.kurikulum_detail_ids:
+				mk_ids_kurikulum.append(klm.id)
+				sks_kurikulum += int(klm.sks)
+
+		#cek partner dan semester yang sama
+		krs_uniq = self.search(cr,uid,[('partner_id','=',vals['partner_id']),('semester_id','=',vals['semester_id'])])
+		if krs_uniq != []:
+			raise osv.except_osv(_('Error!'),
+								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))	
+
+		#cek krs_detail tdk boleh kosong
+		if not vals['krs_detail_ids']:
+			raise osv.except_osv(_('Error!'),
+								_('Matakuliah harus di isi !'))	
+
 		mk = vals['krs_detail_ids']
+		mk_ids = []
 		tot_mk = 0
 		for m in mk:
 			mk_id = m[2]['mata_kuliah_id']
+			mk_ids.append(mk_id)
 			sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
 			tot_mk += int(sks)
-	
+
 		if tot_mk > t_sks :
-			raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))			
+			raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
+		#import pdb;pdb.set_trace()
+		#cek jika mengambil matakuliah lebih
+		tambahan_mk = 0
+		ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
+		for tambahan in mk:
+			if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
+				mk_id = tambahan[2]['mata_kuliah_id']
+				sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+				tambahan_mk += int(sks)
+				ids_tambahan_mk.append(mk_id)
+		selisih_tambahan_mk = t_sks - sks_kurikulum
+		
+		#pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
+		if tambahan_mk > selisih_tambahan_mk:			
+			raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
+
+		#cek juga apa di setingan kurikulum mengijinkan tambah MK sesuai dengan minimal IP sementara
+		if klm_brw.min_ip > 0 : #settingan IP di kurikulum harus di isi angka positif
+			if len(mk_ids) > len(mk_ids_kurikulum) :
+				#hitung IP sementara partner ini
+				cr.execute("""SELECT okd.id, okd.mata_kuliah_id
+								FROM operasional_krs_detail okd
+								LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
+								WHERE ok.partner_id = %s
+								AND ok.state <> 'draft'"""%(vals['partner_id']))
+				dpt = cr.fetchall()
+				
+				det_id = []
+				total_mk_ids = []
+				for x in dpt:
+					x_id = x[0]
+					det_id.append(x_id)
+					total_mk_ids.append(x[1])
+
+				#cek mk yang dinput lebih harus yang belum di tempuh pada semester sebelumnya
+				mk_baru_ids = []
+				if ids_tambahan_mk != []:
+					for mk_krs in ids_tambahan_mk:	#mk yang baru di tambah
+						if mk_krs not in total_mk_ids:#mk-mk yg telah ditempuh pd semester sebelumnya
+							mk_baru_ids.append(mk_krs)
+
+				det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
+				sks = 0
+				bobot_total = 0.00
+				total_mk_ids = []	
+				for det in det_sch:
+					sks += det.sks
+					bobot_total += (det.nilai_angka*det.sks)			
+
+				### ips = (total nilai angka*total sks) / total sks
+				if sks == 0:
+					ips = 0
+				else :
+					ips = round(bobot_total/sks,2)
+			
+				#jika ada mk bru yg di inputkan dan ip tidak memenuhi syarat
+				if ips <= klm_brw.min_ip :
+					if mk_baru_ids != []:
+				 		raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
 
 		#langsung create invoice nya
 		byr_obj = self.pool.get('master.pembayaran')
@@ -39,25 +117,34 @@ class operasional_krs (osv.Model):
 			('state','=','confirm'),
 			])		
 		if byr_sch != []:
-			list_pembayaran = byr_obj.browse(cr,uid,byr_sch[0],context=context).detail_product_ids
+			byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+			list_pembayaran = byr_brw.detail_product_ids
 			for bayar in list_pembayaran:
-				#import pdb;pdb.set_trace()
+				
 				#jika menemukan semester yang sama
 				if vals['semester_id'] == bayar.semester_id.id:
 					list_product = bayar.product_ids
 					prod_id = []					
 					for lp in list_product:
 						prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price}))
-					if byr_obj.browse(cr,uid,byr_sch[0],context=context).type == 'paket':
-						prod_obj = self.pool.get('product.product')
-						beban_sks_id = prod_obj.search(cr,uid,[('is_sks','=',True),('fakultas_id','=',vals['fakultas_id'])])
+
+					prod_obj = self.pool.get('product.product')
+					beban_sks_id = prod_obj.search(cr,uid,[('is_sks','=',True),('fakultas_id','=',vals['fakultas_id'])])
+
+					if byr_brw.type == 'paket':
 						if beban_sks_id != [] :
 							prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
 							prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price}))
-					
+
+					elif byr_brw.type == 'flat':
+						if beban_sks_id != [] and byr_brw.sks_plus == True:
+							if tambahan_mk != 0:
+								prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
+								prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tambahan_mk ,'price_unit':prod_brw.list_price}))							
+
 					inv_id = self.pool.get('account.invoice').create(cr,uid,{
 							'partner_id':vals['partner_id'],
-							'name': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
+							'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
 							'type':'out_invoice',
 							'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
 							'invoice_line': prod_id,
@@ -65,7 +152,7 @@ class operasional_krs (osv.Model):
 					if inv_id :
 						inv = {'invoice_id':inv_id}
 						vals = dict(vals.items()+inv.items())						
-					#self.write(cr,uid,)
+					
 							
 		return super(operasional_krs, self).create(cr, uid, vals, context=context)	    
 	
@@ -137,9 +224,13 @@ class operasional_krs (osv.Model):
 	}
 
 	def confirm(self, cr, uid, ids, context=None):
-		#import pdb;pdb.set_trace()  
-		for x in self.browse(cr,uid,ids[0],context=context).krs_detail_ids:
+		#import pdb;pdb.set_trace()
+		form_id = self.browse(cr,uid,ids[0],context=context) 
+		for x in form_id.krs_detail_ids:
 			self.pool.get('operasional.krs_detail').write(cr,uid,x.id,{'state':'confirm'},context=context)
+		#cek dahulu pembayaran atas KRS ini,
+		if form_id.invoice_id.state != 'paid':
+			raise osv.except_osv(_('Error!'), _('Pembayaran atas KRS ini harus dibayar lunas dahulu !'))	
 		self.write(cr, uid, ids, {'state' : 'confirm'}, context=context)
 		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities', 'krs_tree_view')
 		view_id = view_ref and view_ref[1] or False,		
@@ -213,7 +304,7 @@ class operasional_krs (osv.Model):
 		}
 		return results 
 
-	def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, prodi_id, semester_id,context=None):
+	def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, prodi_id, semester_id, partner_id, context=None):
 
 		results = {}
 		if not semester_id:
@@ -228,15 +319,37 @@ class operasional_krs (osv.Model):
 		if kur_ids == []:
 			raise osv.except_osv(_('Error!'),
 								_('Tidak ada kurikulum yang cocok untuk data ini!'))
+
+		#cek partner dan semester yang sama
+		krs_uniq = self.search(cr,uid,[('partner_id','=',partner_id),('semester_id','=',semester_id)])
+		if krs_uniq != []:
+			raise osv.except_osv(_('Error!'),
+								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))			
 		
 		kur_id = kur_obj.browse(cr,uid,kur_ids,context=context)[0].kurikulum_detail_ids
 		kur_kode = kur_obj.browse(cr,uid,kur_ids,context=context)[0].id
-		res = []
+		mk_kurikulum = []
 		for kur in kur_id:
-			det = kur.id
-			res.append([0,0,{'mata_kuliah_id': det,'state':'draft'}])
+			mk_kurikulum.append(kur.id)
+	
+		#cari matakuliah apa saja yg sdh di tempuh di smt sebelumnya
+		cr.execute("""SELECT okd.id, okd.mata_kuliah_id
+						FROM operasional_krs_detail okd
+						LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
+						WHERE ok.partner_id = %s
+						AND ok.state <> 'draft'"""%(partner_id))
+		dpt = cr.fetchall()
+		
+		total_mk_ids = []
+		for x in dpt:
+			total_mk_ids.append(x[1])
 		#import pdb;pdb.set_trace()
+		#filter matakuliah yg benar-benar belum di tempuh
+		mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
 
+		res = []
+		for kur in mk_baru_ids:
+			res.append([0,0,{'mata_kuliah_id': kur,'state':'draft'}])	
 		results = {
 			'value' : {
 				'kurikulum_id': kur_kode,
@@ -321,13 +434,15 @@ class operasional_transkrip(osv.Model):
 		ops_obj = self.pool.get('operasional.krs')
 		det_obj = self.pool.get('operasional.krs_detail')
 	
-		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,s.name AS smt
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,s.name AS smt,s2.name AS smt_kurikulum
 						FROM operasional_krs ok
 						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_kurikulum mkk ON ok.kurikulum_id = mkk.id
 						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						LEFT JOIN master_semester s2 ON s2.id = mkk.semester_id
 						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(mhs_id) +"""
-						GROUP BY okd.id,s.name
-						ORDER BY okd.mata_kuliah_id, s.name DESC""")		   
+						GROUP BY okd.id,s.name,s2.name
+						ORDER BY s2.name,s.name DESC""")		   
 		mk = cr.fetchall()			
 
 		if mk == []:
@@ -351,13 +466,15 @@ class operasional_transkrip(osv.Model):
 		ops_obj = self.pool.get('operasional.krs')
 		det_obj = self.pool.get('operasional.krs_detail')
 	
-		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,okd.nilai_angka AS nilai
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,okd.nilai_angka AS nilai,s2.name AS smt_kurikulum
 						FROM operasional_krs ok
 						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_kurikulum mkk ON ok.kurikulum_id = mkk.id
 						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						LEFT JOIN master_semester s2 ON s2.id = mkk.semester_id
 						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(mhs_id) +"""
-						GROUP BY okd.id,s.name
-						ORDER BY okd.mata_kuliah_id, okd.nilai_angka DESC""")		   
+						GROUP BY okd.id,s.name,s2.name
+						ORDER BY s2.name, okd.nilai_angka DESC""")		   
 		mk = cr.fetchall()			
 
 		if mk == []:
@@ -385,9 +502,6 @@ class operasional_transkrip(osv.Model):
 
 		if mk == []:
 			return result			
-
-		khs_detail_obj = self.pool.get('operasional.krs_detail')
-		mekanisme_nilai = self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai
 
 		result[ids[0]] = mk
 		return result
