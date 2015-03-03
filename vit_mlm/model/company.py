@@ -12,4 +12,5 @@ class company(osv.osv):
 	_inherit 	= "res.company"
 	_columns 	= {
 		'mlm_plan_id'  :  fields.many2one('mlm.mlm_plan', 'MLM Plan'),
+		'ap_coa_id'  :  fields.many2one('account.account', 'AP COA for member bonus'),
 	}

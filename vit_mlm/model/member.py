@@ -578,6 +578,15 @@ class member(osv.osv):
 		if 'parent_id' in vals:
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
 
+		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
+		vals.update({
+			'customer':True,
+			'supplier':True,
+		})
+		if members_categ:
+			vals.update({
+				'category_id': [(4, members_categ[0])]
+			})
 		new_id = super(member, self).create(cr, uid, vals, context=context)
 
 		return new_id

@@ -1,6 +1,7 @@
 from openerp import tools
 from openerp.osv import fields,osv
 import openerp.addons.decimal_precision as dp
+from openerp import netsvc
 import time
 import logging
 from openerp.tools.translate import _
@@ -98,3 +99,178 @@ class member_bonus(osv.osv):
 		}
 		self.pool.get('mlm.member_bonus').create(cr, uid, data, context=context)
 
+	####################################################################################
+	# make invoice dari menu More..
+	####################################################################################
+	def action_make_invoice(self, cr, uid, context=None):
+ 		################################################################################
+		# id yg akan diproses
+		################################################################################
+		active_ids 		= context['active_ids']
+		_logger.info('processing from menu. active_ids=%s' % (active_ids)) 
+		self.actual_make_invoice(cr, uid, active_ids, context)
+
+	####################################################################################
+	# make invoice dari Cron Job, pilih yang masih is_processed = False
+	# limit records
+	# panggil dari cron job (lihat di xml)
+	####################################################################################
+	def cron_make_invoice(self, cr, uid, context=None):
+ 		################################################################################
+		# id yg akan diproses
+		################################################################################
+		active_ids = self.search(cr,uid, [('is_transfered','=',False)], limit=100)
+		_logger.info('processing from cron. active_ids=%s' % (active_ids)) 
+		self.actual_make_invoice(cr, uid, active_ids, context)
+
+	####################################################################################
+	# mulai make invoice, bisa dari menu atau dari cron job
+	####################################################################################
+	def actual_make_invoice(self, cr, uid, ids, context=None):
+
+		##################################################################################
+		# loop setiap record member_bonus yang id nya ids 
+		# kelompokkan berdasarkan member_id, setiap 1 member => 1 invoice
+		# dengan detail dari member_bonus tsb
+		##################################################################################
+		i = 0
+		old_member_id = 0
+		lines = []
+
+		# import pdb; pdb.set_trace()
+
+		for member_bonus in self.browse(cr,uid, ids, context):
+
+			partner_id = member_bonus.member_id.id
+
+			if old_member_id!=partner_id:
+				if old_member_id != 0:
+					self.create_supplier_invoice(cr, uid, member_bonus, old_member_id, lines, context)
+					lines = []
+	
+			lines = self.add_invoice_lines(cr, uid, member_bonus, lines, context)
+			cr.execute("UPDATE mlm_member_bonus set is_transfered='t' where id = %s" % (member_bonus.id))
+
+			old_member_id = partner_id
+			i = i + 1
+
+		self.create_supplier_invoice(cr, uid, member_bonus, old_member_id, lines, context)
+
+		cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done processing. %s import(s) member_bonus' % (i) )		
+
+		return {
+			#refresh list
+		}
+
+	####################################################################################
+	# add_invoice_lines
+	####################################################################################
+	def add_invoice_lines(self, cr,uid, member_bonus, lines, context):
+
+		################################################################################
+		# common variabels
+		################################################################################
+		partner_id 		= member_bonus.member_id
+
+		################################################################################
+		# check COA of the bonus expense
+		################################################################################
+		coa = member_bonus.bonus_id.coa_id
+		if not coa:
+			raise osv.except_osv(_('Warning'), "Please set expense COA for this bonus type: %s" %(member_bonus.bonus_id) ) 
+		coa_id = coa.id
+
+		################################################################################
+		#  product line
+		################################################################################
+		lines.append(
+			(0,0,{
+				'name'			:  "%s: %s-%s" % (member_bonus.description, 
+					member_bonus.new_member_id.name or '', member_bonus.match_member_id.name or '' ) ,
+				'origin'		:  '%s' % (member_bonus.bonus_id.name),
+				'sequence'		:  '',
+				'uos_id'		:  False,
+				'product_id'	:  False,
+				'account_id'	:  coa_id, 
+				'price_unit'	:  member_bonus.amount,
+				'quantity'		:  1 , 
+				'price_subtotal':  member_bonus.amount,  
+				'discount'		:  0,
+				'partner_id'	:  partner_id.id
+			})
+		)
+
+		return lines 
+
+	####################################################################################
+	#create supplier invoice
+	####################################################################################
+	def create_supplier_invoice(self, cr, uid, member_bonus, partner_id, lines, context=None):
+
+		################################################################################
+		# prepare common variable
+		################################################################################
+		company_id 		= self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
+		ap_coa_id 		= company_id.ap_coa_id
+		if not ap_coa_id:
+			raise osv.except_osv(_('Warning'),_("Please set AP COA for the Company") ) 
+
+
+		################################################################################
+		# purchase journal
+		################################################################################
+		journal_ids 			= self.pool.get('account.journal').search(cr, uid,[('type', '=', 'purchase'), 
+								('company_id', '=', company_id.id)],limit=1)
+		if not journal_ids:
+			raise osv.except_osv(_('Error!'),_('Please define purchase journal for this company.')  )
+		purchase_journal_id = journal_ids[0]
+
+		################################################################################
+		# cari periode_id
+		################################################################################
+		date_invoice 	= time.strftime("%Y-%m-%d %H:%M:%S") 
+		if context==None:
+			context={}
+		context['account_period_prefer_normal']= True
+		period_id 	= self.pool.get('account.period').find(cr,uid, date_invoice, context)[0]
+
+		################################################################################
+		# cari COA hutang bonus
+		################################################################################
+		ap_coa_id = company_id.ap_coa_id
+
+		################################################################################
+		# invoice data
+		################################################################################
+		invoice_id = self.pool.get('account.invoice').create(cr,uid,{
+		    'date_invoice' 	: date_invoice,
+		    'partner_id' 	: partner_id,
+		    'account_id' 	: ap_coa_id.id,
+		    'invoice_line'	: lines,
+		    'type'			: 'in_invoice',
+		    'origin'		: member_bonus.bonus_id.name,
+		    'name'			: '/',
+		    'period_id' 	: period_id,
+		    'date_due'		: date_invoice,
+		    'journal_id'	: purchase_journal_id,
+		    'company_id'	: company_id.id
+		    })
+		_logger.info("   created supplier invoice id:%d" % (invoice_id) )
+
+		################################################################################
+		# post supplier invoice  
+		################################################################################
+		self.invoice_confirm(cr, uid, invoice_id, context)		
+
+		return invoice_id
+
+	####################################################################################
+	#set open/validate
+	####################################################################################
+	def invoice_confirm(self, cr, uid, id, context=None):
+		wf_service = netsvc.LocalService('workflow')
+		wf_service.trg_validate(uid, 'account.invoice', id , 'invoice_open', cr)
+		_logger.info("   validated invoice id:%d" % (id) )
+		return True
