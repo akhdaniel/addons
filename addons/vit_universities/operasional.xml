@@ -1,21 +1,5 @@
 <openerp>
-	<data>
-
-    <record id="act_res_partner_pembayaran_krs3" model="ir.actions.act_window">
-            <field name="name">Pembayaran Kuliah</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('type','=','out_invoice')]</field>
-            <field name="context">{'default_partner_id': context.get('partner_id')}</field>            
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    ...
-                </p><p>
-                    Belum ada pembayaran...
-                </p>
-            </field>
-        </record> 
+	<data> 
 
        <!--Operasional--> 
        <record model="ir.ui.view" id="krs_tree_view">
@@ -50,7 +34,6 @@
                     </header>
                 	<sheet>
                         <div class="oe_right oe_button_box">
-                            <!-- <button name="%(act_res_partner_pembayaran_krs3)d" type="action" string="Pembayaran"/>  -->
                             <label for="invoice_id" string="Pembayaran:" class="oe_inline"/>
                             <field name="invoice_id" class="oe_inline" context="{'default_type':'out_invoice','type': 'out_invoice'}"/>
                         </div>                        

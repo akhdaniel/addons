@@ -8,10 +8,10 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 
 
 class spmb_mahasiswa(osv.Model):
-	_name = 'spmb.mahasiswa'
+	_name = 'spmb.mahasiswa'    
 
 	def onchange_prodi(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kuota,context=None):
-		#import pdb;pdb.set_trace()
+		
 		results = {}
 		if not prodi_id:
 			return results
@@ -84,7 +84,7 @@ class spmb_mahasiswa(osv.Model):
 			('jurusan_id','=',jurusan_id),\
 			('prodi_id','=',prodi_id),]",
 			readonly=False),	
-		'nilai_min':fields.float('Nilai Minimal'),
+		'nilai_min':fields.float('Nilai Minimal',readonly=True),
 		'state':fields.selection([('draft','Draft'),('done','Lulus')],'Status'),
 	}
 	_defaults = {  
