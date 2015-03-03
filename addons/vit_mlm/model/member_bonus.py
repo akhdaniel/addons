@@ -110,6 +110,21 @@ class member_bonus(osv.osv):
 		_logger.info('processing from menu. active_ids=%s' % (active_ids)) 
 		self.actual_make_invoice(cr, uid, active_ids, context)
 
+		# res = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'stock', 'view_stock_return_picking_form')
+		# res_id = res and res[1] or False
+		# picking_id = self.browse(cr, uid, ids[0], context=context).picking_id.id
+		# #assert len(ids) == 1, 'This option should only be used for a single id at a time'
+		# return {
+		# 	'name': _('Return lines'),
+		# 	'view_type': 'form',
+		# 	'view_mode': 'form',
+		# 	'view_id': [res_id],
+		# 	'res_model': 'stock.return.picking',
+		# 	'type': 'ir.actions.act_window',
+		# 	'target': 'current',
+		# 	'context':context
+		# }
+
 	####################################################################################
 	# make invoice dari Cron Job, pilih yang masih is_processed = False
 	# limit records
