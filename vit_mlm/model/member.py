@@ -582,11 +582,12 @@ class member(osv.osv):
 		vals.update({
 			'customer':True,
 			'supplier':True,
+			'is_company':True,
 		})
 		if members_categ:
 			vals.update({
 				'category_id': [(4, members_categ[0])]
-			})
+		})
 		new_id = super(member, self).create(cr, uid, vals, context=context)
 
 		return new_id
