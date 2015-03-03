@@ -49,7 +49,7 @@ class spmb_mahasiswa(osv.Model):
 			nli = nl[0]
 			idd = nl[1]
 			x += 1
-			if x == kuota :
+			if x <= kuota :
 				na = nli			
 			if x > kuota :
 				break
@@ -135,7 +135,7 @@ class spmb_mahasiswa(osv.Model):
 			nli = nl[0]
 			idd = nl[1]
 			x += 1
-			if x == kuota :
+			if x <= kuota :
 				na = nli			
 			if x > kuota :
 				break
