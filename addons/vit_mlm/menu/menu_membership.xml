@@ -11,12 +11,13 @@
 		</record>
 
 		<!-- action list bonus -->
-		<!--record id="action_member_bonus_list" model="ir.actions.act_window">
-			<field name="name">List Member Bonus</field>
-			<field name="res_model">mlm.member_bonus</field>
+		<record id="action_member_list_today" model="ir.actions.act_window">
+			<field name="name">List Member Today</field>
+			<field name="res_model">res.partner</field>
 			<field name="view_mode">tree,form</field>
-		</record-->
-
+            <field name="view_id" ref="view_member_today"/>
+            <field name="domain">[('state','=','draft'),('category_id','=','Members')]</field>            
+		</record>
 
 		<!--  menu_mlm_member -->
 		<menuitem id="menu_membership"
@@ -24,18 +25,26 @@
 			 sequence="10"
 			 parent="menu_mlm_top"/>
 
+
 		<!-- menu_mlm_member -->
-		<menuitem id="menu_member_tree"
-			 action="action_member_tree"
-			 name="Member Tree"
-			 sequence="20"
+		<menuitem id="menu_member_list_today"
+			 action="action_member_list_today"
+			 name="Member List Today"
+			 sequence="10"
 			 parent="menu_membership"/>
 
 		<!-- menu_mlm_member -->
 		<menuitem id="menu_member_list"
 			 action="base.action_partner_customer_form"
-			 name="Member List"
-			 sequence="10"
+			 name="Member List All"
+			 sequence="20"
+			 parent="menu_membership"/>
+
+		<!-- menu_mlm_member -->
+		<menuitem id="menu_member_tree"
+			 action="action_member_tree"
+			 name="Member Tree"
+			 sequence="30"
 			 parent="menu_membership"/>
 
 		<!-- menu_mlm_bonus -->

@@ -20,7 +20,7 @@
 		<!--  menu_mlm_member -->
 		<menuitem id="menu_broadcast"
 			 name="Broadcast"
-			 sequence="30"
+			 sequence="40"
 			 parent="menu_mlm_top"/>
 		<!-- menu_broadcast_android -->
 		<menuitem id="menu_broadcast_android"

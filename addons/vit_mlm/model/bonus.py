@@ -12,4 +12,5 @@ class mlm_bonus(osv.osv):
 	_columns 	= {
 		'code'		: fields.char('Code'),
 		'name'		: fields.char('Name'),
+		'coa_id' 	: fields.many2one('account.account', 'Related COA', help="Related invoicing COA/ AP to members"),
 	}

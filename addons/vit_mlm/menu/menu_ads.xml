@@ -13,7 +13,7 @@
 		<!--  menu_mlm_member -->
 		<menuitem id="menu_ads"
 			 name="Advertising"
-			 sequence="40"
+			 sequence="50"
 			 parent="menu_mlm_top"/>
 		<!-- menu_ads_android -->
 		<menuitem id="menu_ads_android"

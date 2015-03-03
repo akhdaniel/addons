@@ -1,7 +1,7 @@
 {
     'version': '0.2',
     'name': 'Aplikasi MLM',
-    'depends': ['website', 'sale', 'base','account','product', 'hr', 'report'],
+    'depends': ['website', 'sale', 'base','account','product', 'hr', 'report','account_accountant'],
     'author'  :'vitraining.com',
     'category': 'Website',
     'data': [
@@ -10,7 +10,8 @@
       'data/mlm_plan.xml',   
       'data/ir_sequence.xml',   
       'data/bonus.xml',   
-    	'data/paket.xml',   
+      'data/paket.xml',   
+    	'data/res_partner_category.xml',   
 
       'view/member.xml',
       'view/company.xml',
@@ -27,7 +28,8 @@
       'menu/menu_bonus.xml',   
       'menu/menu_broadcast.xml',   
       'menu/menu_ads.xml',
-         
+
+      'menu/menu_context_bonus.xml',
       'view/d3tree.xml',   
     ],    
     'qweb' : ['static/src/xml/*.xml'],

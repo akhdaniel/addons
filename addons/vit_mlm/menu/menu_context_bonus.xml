@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>        
+        <record id="action_make_invoice" model="ir.actions.server">
+            <field name="name">Make Invoice</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="model_mlm_member_bonus"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('mlm.member_bonus').action_make_invoice(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_partial_move_wizard" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'mlm.member_bonus'" name="model"/>
+            <field name="name">Make Invoice</field>
+            <field eval="'ir.actions.server,%d'%action_make_invoice" name="value"/>
+        </record>
+	</data>
+</openerp>

@@ -107,6 +107,19 @@
             </field>
         </record>
 
+        <record id="view_member_today" model="ir.ui.view">
+            <field name="name">res_partner_today_mlm</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree string="Members">
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="parent_id"/>
+                    <field name="sponsor_id"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="view_partner_tree_mlm" model="ir.ui.view">
             <field name="name">res_partner_tree</field>
             <field name="model">res.partner</field>
@@ -123,5 +136,7 @@
                 </field>
             </field>
         </record>
+
+
     </data>
 </openerp>

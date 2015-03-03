@@ -1,5 +1,7 @@
 <openerp>
 	<data>
+
+		
 		<!-- bonus -->
 
 		<record id="bonus1" model="mlm.bonus">
