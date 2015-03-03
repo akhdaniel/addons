@@ -185,7 +185,7 @@ class operasional_krs (osv.Model):
 			bobot_total += (det.nilai_angka*det.sks)
 
 		self.write(cr,uid,ids[0],{'sks_tot':sks},context=context)
-
+		#import pdb;pdb.set_trace()	
 		### ips = (total nilai angka*total sks) / total sks
 		if sks == 0:
 			ips = 0
@@ -387,6 +387,7 @@ class krs_detail (osv.Model):
 			angka = nil_par.bobot
 			self.write(cr,uid,nil.id,{'nilai_angka':angka},context=context)
 			result[nil.id] = huruf
+
 		return result
 		
 	_columns = {

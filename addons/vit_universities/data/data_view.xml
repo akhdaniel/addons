@@ -39,5 +39,23 @@
 	    	<field name="max">39</field>
 	    </record>
 
+<!-- Master Yudisium -->
+	    <record model="master.yudisium" id="yudisium_a" >
+	    	<field name="name">Cumlaude</field>
+	    	<field name="min">3.51</field>
+	    	<field name="max">4.00</field>
+	    </record>
+	    <record model="master.yudisium" id="yudisium_b" >
+	    	<field name="name">Sangat Memuaskan</field>
+
+	    	<field name="min">3.01</field>
+	    	<field name="max">3.50</field>
+	    </record>	
+	    <record model="master.yudisium" id="yudisium_c" >
+	    	<field name="name">Memuaskan</field>
+	    	<field name="min">2.50</field>
+	    	<field name="max">3.00</field>
+	    </record>
+
 	</data>
 </openerp>
