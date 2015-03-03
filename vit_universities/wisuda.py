@@ -94,9 +94,10 @@ class wisuda_mahasiswa(osv.Model):
 
 	def confirm(self,cr,uid,ids,context=None):
 		my_form = self.browse(cr,uid,ids[0])
-		for p in my_form.partner_ids:
-			st = p.status_mahasiswa
-			self.pool.get('res.partner').write(cr,uid,p.id,{'status_mahasiswa':'alumni','lokasi_wisuda':my_form.lokasi_wisuda},context=context)
+		for alumni in my_form.partner_ids:
+			gelar = alumni.prodi_id.gelar_id.id
+			#import pdb;pdb.set_trace()
+			self.pool.get('res.partner').write(cr,uid,alumni.id,{'status_mahasiswa':'alumni','lokasi_wisuda':my_form.lokasi_wisuda,'title':gelar},context=context)
 		self.write(cr,uid,ids,{'state':'done'},context=context)
 		return True	
 
