@@ -69,6 +69,14 @@ class member(osv.osv):
 
 		return results	
 
+	def _sale_order_exists(self, cursor, user, ids, name, arg, context=None):
+		res = {}
+		for partner in self.browse(cursor, user, ids, context=context):
+			res[partner.id] = False
+			if partner.sale_order_ids:
+				res[partner.id] = True
+		return res
+
 	def _get_tree_url(self, cr, uid, ids, field, arg, context=None):
 		results = {}
 		for m in self.browse(cr, uid, ids, context=context):
@@ -82,8 +90,17 @@ class member(osv.osv):
 		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False),
 		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade"),
 		'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
+		
+		### paket join
 		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True),
-		'is_affiliate'  	: fields.boolean('Affiliate Member ?', help="Hanya mendapat bonus sponsor saja"),
+		'paket_harga'		: fields.related('paket_id', 'price' , 
+			type="float", relation="mlm.paket", string="Harga Paket"),
+		'paket_cashback'		: fields.related('paket_id', 'cashback' , 
+			type="float", relation="mlm.paket", string="Cashback Paket"),
+
+		## paket barang
+		'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
+			required=True),
 
 		'total_bonus' 				: fields.function(_total_bonus, string="Total Bonus"),
 		'total_bonus_sponsor' 		: fields.function(_total_bonus_sponsor, string="Total Bonus Sponsor"),
@@ -102,6 +119,10 @@ class member(osv.osv):
 
 		'tree_url'	  		: fields.function(_get_tree_url, type="char", string="Tree URL"),
 
+		'sale_order_ids'		: fields.one2many('sale.order','partner_id','Sale Orders'),
+		'sale_order_exists'		: fields.function(_sale_order_exists, 
+			string='Sales Order Ada',  
+		    type='boolean', help="Apakah Partner ini sudah punya Sales Order."),	
 	}
 	_defaults = {
 		'code'				: lambda obj, cr, uid, context: '/',		
@@ -138,7 +159,7 @@ class member(osv.osv):
 				nlevel(path_ltree) - nlevel('%s') as level\
 				from res_partner as p where path_ltree @> '%s'\
 				and id <> %d \
-				and (is_affiliate <> 't' or is_affiliate is null)\
+				-- and (is_affiliate <> 't' or is_affiliate is null)\
 				order by path_ltree desc\
 				limit %d" % (new_member.path, new_member.path, new_member.id, max_bonus_level_level)
 		_logger.warning( sql )
@@ -871,3 +892,51 @@ class member(osv.osv):
 		self.hitung_bonus_sponsor(cr, uid, ids, context=context)
 		self.hitung_bonus_level(cr, uid, ids, context=context)
 		return self.write(cr,uid,ids,{'state':MEMBER_STATES[4][0]},context=context)
+
+
+	#########################################################################
+	# create sales order berisi produk-produk yang sesuai dengan paket_produk
+	# yang dipilih pada saat join
+	#########################################################################
+	def action_create_sale_order(self,cr,uid,ids,context=None):
+		#################################################################
+		# partner
+		#################################################################
+		partner = self.browse(cr, uid, ids[0], context)
+		paket_produk_id = partner.paket_produk_id
+
+		#################################################################
+		# compose sale_order lines 
+		#################################################################
+		lines = []
+		for detail in paket_produk_id.paket_produk_detail_ids:
+			lines.append((0,0,{
+				'product_id'		: detail.product_id.id,
+				'name'				: detail.product_id.name,
+				'product_uom_qty' 	: detail.qty,
+				'price_unit' 		: detail.product_id.lst_price,
+			}))
+
+		if not lines:
+			return False 
+
+		#################################################################
+		# sale_order object
+		#################################################################
+		sale_order_obj = self.pool.get("sale.order")
+
+		#################################################################
+		# create sale_order 
+		#################################################################
+		data= {
+			'partner_id'			: partner.id,
+			'partner_invoice_id' 	: partner.id,
+			'partner_shipping_id' 	: partner.id,
+			'date_order'			: time.strftime("%Y-%m-%d %H:%M:%S") ,
+			'order_line' 			: lines,
+			'origin'				: 'Paket Produk: %s' % (paket_produk_id.name)
+		}
+		sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
+		
+		return sale_order_id
+
