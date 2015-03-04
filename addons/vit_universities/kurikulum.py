@@ -115,6 +115,7 @@ class master_kurikulum (osv.Model):
 
 	_defaults = {
 		'state' : 'draft',
+		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.kurikulum'), 
 	}
 
 	def confirm(self,cr,uid,ids,context=None):		

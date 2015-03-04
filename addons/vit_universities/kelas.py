@@ -9,6 +9,20 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 class master_kelas (osv.Model):
 	_name = 'master.kelas'
 
+	def name_get(self, cr, uid, ids, context=None):
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+			ids = [ids]
+		reads = self.read(cr, uid, ids, ['name', 'nama'], context=context)
+		res = []
+		for record in reads:
+			name= record['name']
+			if record['nama']:
+				name = '['+record['name'] +']'+ ' ' + record['nama']
+			res.append((record['id'], name))
+		return res
+
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
 		if not args:
 			args = []
@@ -50,6 +64,7 @@ class master_kelas (osv.Model):
 	_defaults = {  
 		'kuota':1,
 		'state':'draft',
+		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.kelas'), 
 				}
 			
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode kelas tidak boleh sama')]
