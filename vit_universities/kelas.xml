@@ -26,7 +26,7 @@
             <field name="arch" type="xml">
                 <form string="Peserta Kelas" version="7.0">
                 	<header>
-                		<button name='confirm' string='Konfirmasi' icon="gtk-execute" states='draft' type='object'/>
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
                 		<button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
 			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list kelas"/>                		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>

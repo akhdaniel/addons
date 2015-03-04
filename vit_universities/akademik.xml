@@ -442,7 +442,7 @@
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
                         <filter icon="terp-project" string="Kurikulum" help="By Kurikulum" context="{'group_by':'kurikulum_id'}"/>
-                        <filter icon="terp-project" string="state" help="By Status" context="{'group_by':'state'}"/>
+                        <filter icon="terp-project" string="state" name="state" help="By Status" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>
@@ -466,8 +466,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('state','in',('confirm','done'))]</field>
-            <field name="context">{'default_state':'confirm'}</field>
-            <field name="search_view_id" ref="kartu_studi_search"/>             
+            <field name="context">{'search_default_state':1}</field>
+            <field name="search_view_id" ref="kartu_studi_search"/>           
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data KHS.</p><p>disini belum ada data tentang KHS !</p></field>
         </record>

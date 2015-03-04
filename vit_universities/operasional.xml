@@ -27,8 +27,8 @@
             <field name="arch" type="xml">
                 <form string="Kartu Studi" version="7.0">
                     <header>
-                        <button name='confirm' string='Konfirmasi' icon="gtk-execute" states='draft' type='object'/>
-                        <button name='done' string='Selesai' states='confirm' type='object'/>
+                        <button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
+                        <button name='done' string='Done' states='confirm' type='object'/>
                         <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>

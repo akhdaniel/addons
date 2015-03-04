@@ -30,7 +30,7 @@ class master_kelas (osv.Model):
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
 		'kuota':fields.integer('Kuota',required = True),
-		'state':fields.selection([('draft','Draft'),('confirm','Konfirmasi')],'Status'),
+		'state':fields.selection([('draft','Draft'),('confirm','Confirm')],'Status'),
 		'partner_ids':fields.many2many(
 			'res.partner',   	# 'other.object.name' dengan siapa dia many2many
 			'kelas_mahasiswa_rel',          # 'relation object'
@@ -119,17 +119,16 @@ class master_kelas (osv.Model):
 
 	def confirm(self,cr,uid,ids,context=None):
 		my_form = self.browse(cr,uid,ids[0])
-		for p in my_form.partner_ids:
-			st = p.status_mahasiswa
-			self.pool.get('res.partner').write(cr,uid,p.id,{'kelas_id':my_form.id},context=context)
+		for mhs in my_form.partner_ids:
+			#import pdb;pdb.set_trace()
+			self.pool.get('res.partner').write(cr,uid,mhs.id,{'kelas_id':my_form.id},context=context)
 		self.write(cr,uid,ids,{'state':'confirm'},context=context)
 		return True	
 
 	def cancel(self,cr,uid,ids,context=None):
 		my_form = self.browse(cr,uid,ids[0])
-		for p in my_form.partner_ids:
-			st = p.status_mahasiswa
-			self.pool.get('res.partner').write(cr,uid,p.id,{'kelas_id':False},context=context)		
+		for mhs in my_form.partner_ids:
+			self.pool.get('res.partner').write(cr,uid,mhs.id,{'kelas_id':False},context=context)		
 		self.write(cr,uid,ids,{'state':'draft'},context=context)
 		return True
 
