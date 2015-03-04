@@ -9,6 +9,15 @@
 			<field name="hak_usaha">1</field>
 			<field name="description">1 Hak Usaha</field>
 		</record>
+		<record id="paket1" model="mlm.paket">
+			<field name="code">4</field>
+			<field name="name">Affiliate Member</field>
+			<field name="price">950000</field>
+			<field name="cashback">0</field>
+			<field name="hak_usaha">1</field>
+			<field name="is_affiliate" eval="True" />
+			<field name="description">Affiliate Member</field>
+		</record>
 		<record id="paket2" model="mlm.paket">
 			<field name="code">2</field>
 			<field name="name">Gold</field>
