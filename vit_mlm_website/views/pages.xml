@@ -208,7 +208,8 @@
                     </h2>
                     
                     <p>
-            			Member ID: <t t-esc="member.code"/><br/>
+            			<a t-attf-href="/mlm/member/tree/{{ slug(member) }}">
+            				Member ID: <t t-esc="member.code"/></a><br/>
             			Upline ID: <span t-field="member.parent_id"/><br/>
             			Sponsor ID: <span t-field="member.sponsor_id"/><br/>
             			Address: <t t-esc="member.street"/>
@@ -680,7 +681,7 @@
 </template>	
 
 <!-- Inherit homepage dan insert 5 kolom -->
-<template id="mlm_homepage" name="MLM X Website" inherit_id="website.homepage">
+<template id="mlm_homepage" name="MLM Homepage" inherit_id="website.homepage">
     <xpath expr="//div[@id='wrap']" position="replace">
     	<!-- sediakan kontainer untuk dicustom (admin:set di setting) -->
         <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
@@ -688,31 +689,36 @@
             <section class="mt16 mb16">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-user fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/mlm/member/create/">Add Member</a>
                             </h4>
                           <p>Add new member.</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-users fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/mlm/member/list">Members</a>
                             </h4>
                           <p>Member list.</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-suitcase fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/mlm/member/stockist">Stockist</a>
                             </h4>
                           <p>Stokist member.</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-shopping-cart fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/shop">Shop</a>
                             </h4>
                           <p>Products and sales.</p>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-pencil-square fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/blog">Blog</a>
                             </h4>
@@ -724,6 +730,19 @@
         </div>
         <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
     </xpath>
+</template>
+
+<template id="website.d3_member_tree" name="d3 Member View" page="True">
+    <t t-set="title">Member d3 Tree</t>        
+    <!-- <div class="oe_structure">
+        <div class="container"> -->
+		    <div id="tree">
+		    	<t t-call="website.member_tree">
+                    <t t-set="member" t-value="member"/>
+		    	</t>
+		    </div>
+		<!-- </div>
+	</div> -->
 </template>
 
 </data>
