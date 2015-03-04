@@ -12,10 +12,11 @@ class academic_year(osv.Model):
 	_description = "Academic Year"
 	_rec_name = "code"
 	_order = "code"
+
 	_columns = {
 		#'sequence': fields.integer('Urutan', required=True, help="Urutan yang akan di tampilkan."),
-		'name': fields.char('Nama', size=64),
-		'code': fields.char('Kode', size=6, required=True, select=1),
+		'name': fields.char('Nama', size=64, select=1),
+		'code': fields.char('Kode', size=6, required=True),
 		'date_start': fields.date('Tanggal Mulai', required=True),
 		'date_stop': fields.date('Tanggal Berakhir', required=True),
 		'month_ids': fields.one2many('academic.month', 'year_id', 'Bulan', help="related Academic months"),
@@ -28,8 +29,11 @@ class academic_year(osv.Model):
 		'max_mk': fields.integer('Maksimal Matakuliah',required=True,help='Jumlah maksimal matakuliah BL untuk bisa mengajukan judul'),
 	}
 
+	_sql_constraints = [('code_uniq', 'unique(code)','Kode tahun akademik tidak boleh sama')]
+
 	_defaults = {
 		'mekanisme_nilai':'terbaru',
+
 	}
 
 	def create_period(self, cr, uid, ids, context=None, interval=1):
@@ -162,6 +166,7 @@ class master_matakuliah (osv.Model):
 
 	_defaults = {
 		'jenis':'mk_umum',
+		'kode':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.matakuliah'), 
 	}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode mata kuliah tidak boleh sama')]
@@ -179,13 +184,12 @@ master_matakuliah()
 			#}
 #peserta_kelas()
 
-class master_ruangan (osv.osv):
+class master_ruangan (osv.Model):
 	_name = 'master.ruangan'
-	_rec_name= 'kode'
 	
 	_columns = {
-		'kode' :fields.char('Kode Ruangan', size=26,required = True),
-		'nama' :fields.char('Nama Ruangan', size=128,required = True),
+		'name' :fields.char('Kode Ruangan', size=26,required = True),
+		'nama' :fields.char('Nama Ruangan', size=128),
 		'kapasitas':fields.integer('Kapasitas Ruangan'),
 		'gedung':fields.char('Gedung',size=50),
 		'alamat':fields.char('Alamat',size=128),
@@ -197,12 +201,13 @@ class master_ruangan (osv.osv):
 
 	_defaults = {
 		'kapasitas':5,
+		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.ruangan'), 
 	}
 			
 master_ruangan()
 
 
-class master_fakultas (osv.osv):
+class master_fakultas (osv.Model):
 	_name='master.fakultas'
 	   
 	_columns = {
@@ -214,7 +219,7 @@ class master_fakultas (osv.osv):
 			
 master_fakultas()
 
-class master_jurusan (osv.osv):
+class master_jurusan (osv.Model):
 	_name = 'master.jurusan'
 	
 	_columns = {
@@ -227,7 +232,7 @@ class master_jurusan (osv.osv):
 			
 master_jurusan()
 
-class master_prodi (osv.osv):
+class master_prodi (osv.Model):
 	_name = 'master.prodi'
 
 	_columns = {
@@ -243,7 +248,7 @@ class master_prodi (osv.osv):
 		   
 master_prodi()
 
-class jenis_pelanggaran (osv.osv):
+class jenis_pelanggaran (osv.Model):
 	_name = 'master.jenis_pelanggaran'
 	
 	_columns = {
@@ -255,7 +260,7 @@ class jenis_pelanggaran (osv.osv):
 	
 jenis_pelanggaran()
 
-class master_pelanggaran (osv.osv):
+class master_pelanggaran (osv.Model):
 	_name = 'master.pelanggaran'
 	
 	_columns = {
@@ -266,7 +271,7 @@ class master_pelanggaran (osv.osv):
 			}
 master_pelanggaran()
 
-class riwayat_pendidikan (osv.osv):
+class riwayat_pendidikan (osv.Model):
 	_name = 'master.riwayat_pendidikan'
 	
 	_columns = {
@@ -281,7 +286,7 @@ class riwayat_pendidikan (osv.osv):
 			
 riwayat_pendidikan()
 
-class biodata_keluarga (osv.osv):
+class biodata_keluarga (osv.Model):
 	_name = 'master.biodata_keluarga'
 	
 	_columns = {

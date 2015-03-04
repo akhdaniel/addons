@@ -62,5 +62,18 @@
             </field>
         </record>
 
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_jadwal" model="ir.sequence.type">
+            <field name="name">Jadwal</field>
+            <field name="code">master.jadwal</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_jadwal" model="ir.sequence">
+            <field name="name">Jadwal</field>
+            <field name="code">master.jadwal</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+        </record> 
+
 	</data>
 </openerp>	

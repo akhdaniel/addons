@@ -565,14 +565,28 @@
                 </form>
             </field>
         </record>
+ 
+        <!--sequance Mata Kuliah-->
+        <record forcecreate="1" id="seq_type_mk" model="ir.sequence.type">
+            <field name="name">Matakuliah</field>
+            <field name="code">master.matakuliah</field>
+        </record>
         
+        <record  forcecreate="1" id="seq_matakuliah" model="ir.sequence">
+            <field name="name">Matakuliah</field>
+            <field name="code">master.matakuliah</field>
+            <field name="prefix">MK%(y)s-</field>
+            <field name="padding">3</field>
+        </record> 
+
+        <!-- Ruangan  -->
         <record model="ir.ui.view" id="ruangan_tree_view">
             <field name="name">ruangan.tree</field>
             <field name="model">master.ruangan</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Daftar Ruangan">
-                    <field name="kode"/>
+                    <field name="name"/>
                     <field name="nama"/>
                 </tree>
             </field>
@@ -587,7 +601,7 @@
                     <sheet>
                         <group colspan="2">
                             <group colspan="2">
-                                <field name="kode"/>
+                                <field name="name"/>
                                 <field name="nama"/>
                                 <field name="kapasitas"/>
                             </group>
@@ -606,7 +620,21 @@
                 </form>               
             </field>
         </record>
+
+        <!--sequance Ruangan-->
+        <record forcecreate="1" id="seq_type_ruangan" model="ir.sequence.type">
+            <field name="name">Ruangan</field>
+            <field name="code">master.ruangan</field>
+        </record>
         
+        <record  forcecreate="1" id="seq_ruangan" model="ir.sequence">
+            <field name="name">Ruangan</field>
+            <field name="code">master.ruangan</field>
+            <field name="prefix">RG-</field>
+            <field name="padding">3</field>
+         </record>
+
+         <!-- Fakultas  -->       
         <record model="ir.ui.view" id="fakultas_tree_view">
             <field name="name">fakultas.tree</field>
             <field name="model">master.fakultas</field>
@@ -619,7 +647,7 @@
             </field>
         </record>
         
-        
+        <!-- Jurusan  -->       
         <record model="ir.ui.view" id="jurusan_tree_view">
             <field name="name">jurusan.tree</field>
             <field name="model">master.jurusan</field>
@@ -633,7 +661,7 @@
             </field>
         </record>
 
-        
+        <!-- Prodi  -->
         <record model="ir.ui.view" id="prodi_tree_view">
             <field name="name">prodi.tree</field>
             <field name="model">master.prodi</field>
@@ -675,6 +703,7 @@
             </field>
         </record>
 
+        <!-- Nilai  -->
         <record model="ir.ui.view" id="nilai_tree_view">
             <field name="name">nilai.tree</field>
             <field name="model">master.nilai</field>
@@ -768,7 +797,6 @@
                 </form>
             </field>
         </record>
-
 
     </data>   
 </openerp>

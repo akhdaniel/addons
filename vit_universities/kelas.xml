@@ -62,5 +62,18 @@
             </field>
         </record>
 
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_kelas" model="ir.sequence.type">
+            <field name="name">Kelas</field>
+            <field name="code">master.kelas</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_kelas" model="ir.sequence">
+            <field name="name">Kelas</field>
+            <field name="code">master.kelas</field>
+            <field name="prefix">KLS%(y)s-</field>
+            <field name="padding">5</field>
+        </record> 
+
 	</data>
 </openerp>	

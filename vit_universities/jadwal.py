@@ -69,6 +69,7 @@ class master_jadwal (osv.Model):
 	_defaults= {
 		'sesi':1,
 		'is_active':True,
+		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.jadwal'), 
 	}
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode jadwal tidak boleh sama')]
