@@ -152,12 +152,10 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/update',  auth='user', method='post', website=True)		
 	def update_member(self, **kwargs):
-		# import pdb; pdb.set_trace()
 		id = int(kwargs['id'])
 		request.registry['res.partner'].write(request.cr, SUPERUSER_ID, [id], kwargs, request.context)
 		return request.redirect('/mlm/member/view/%d'% (id), code=301)
 
-	# class vit_mlm_website(http.Controller):
 	@http.route('/mlm/member/stockist',  auth='user', website=True)
 	def stockist(self, **kw):
 		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
@@ -168,4 +166,11 @@ class Member(http.Controller):
 
 		return http.request.render('website.member_list', {
 			'members': Partners,
+		})
+
+	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
+	def tree(self,member):
+		# import pdb; pdb.set_trace()
+		return http.request.render('website.d3_member_tree', {
+			'member': member,
 		})
