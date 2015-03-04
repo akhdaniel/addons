@@ -24,7 +24,7 @@
             <field name="arch" type="xml">
                 <form string="Wisuda" version="7.0">
                 	<header>
-                		<button name='confirm' string='Konfirmasi' icon="gtk-execute" states='draft' type='object'/>
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
                         <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object'/>               		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>
                 	</header>

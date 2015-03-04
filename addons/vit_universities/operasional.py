@@ -15,7 +15,8 @@ class operasional_krs (osv.Model):
 			if not npm :
 				npm = '<<npm_kosong>> '
 			smt = vals['semester_id']
-			vals['kode'] = npm +'-'+str(smt) or '/'
+			smt_name = self.pool.get('master.semester').browse(cr,uid,smt,context=context).name
+			vals['kode'] = npm +'-'+str(smt_name) or '/'
 		if vals['kurikulum_id']:
 			kurikulum = vals['kurikulum_id']
 			klm_brw = self.pool.get('master.kurikulum').browse(cr,uid,kurikulum)
@@ -196,7 +197,7 @@ class operasional_krs (osv.Model):
 	
 	_columns = {
 		'kode' : fields.char('Kode', 128, readonly=True),
-		'state':fields.selection([('draft','Draft'),('confirm','Konfirmasi'),('done','Selesai')],'Status',readonly=True),
+		'state':fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
 		'partner_id' : fields.many2one('res.partner','Mahasiswa', required=True, domain="[('status_mahasiswa','=','Mahasiswa')]"),
 		#'employee_id' : fields.many2one('hr.employee','Dosen Wali'),
 		#'npm':fields.related('partner_id', 'npm', type='char', relation='res.partner',size=128, string='NPM',readonly=True),
@@ -401,7 +402,7 @@ class krs_detail (osv.Model):
 		'nilai_huruf':fields.function(_get_nilai_akhir,type='char',string='Nilai Akhir'),
 		'nilai_angka':fields.float('Nilai Angka'),
 		'transkrip_id':fields.many2one('operasional.transkrip','Transkrip'),
-		'state':fields.selection([('draft','Draft'),('confirm','Konfirmasi'),('done','Selesai')],'Status',readonly=False),
+		'state':fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
 			}
 
 	_defaults={
@@ -518,6 +519,8 @@ class operasional_transkrip(osv.Model):
 			mk = self.get_mk_by_better(cr, uid, ids, context=None)
 
 		if mk == []:
+			raise osv.except_osv(_('Error!'),
+				('Untuk menggunakan fitur ini minimal harus selesai 1 semester!'))				
 			return result
 
 		det_obj = self.pool.get('operasional.krs_detail')			
