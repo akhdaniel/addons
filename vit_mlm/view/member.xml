@@ -13,8 +13,11 @@
                     <field name="parent_id" />
                     <field name="sponsor_id" />
                     <field name="paket_id" />
-                    <field name="is_affiliate" />
+                    <field name="paket_harga" />
+                    <field name="paket_cashback" />
+                    <field name="paket_produk_id" />
             		<field name="is_stockist" />
+                    <!--field name="is_affiliate" /-->
             	</field>
                 
                 <field name="title" position="after">
