@@ -82,7 +82,7 @@ class Member(http.Controller):
 	def add_partner_response(self, values, kwargs):
 		return request.website.render(kwargs.get("view_callback", "website.add_member_thanks"), values)
 
-	@http.route('/mlm/member/add',  auth='user', method='post', website=True)
+	@http.route('/mlm/member/add',  auth='user', method=['POST'], website=True)
 	def add_member(self, **kwargs):
 		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
 
@@ -116,7 +116,8 @@ class Member(http.Controller):
 
 		if post_description:
 			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
-
+		# request.registry.get('res.partner').create(cr, request.session.uid, values, request.context)
+		import pdb;pdb.set_trace()
 		lead_id = self.create_partner(request, dict(values, user_id=False), 
 			kwargs)
 		values.update(lead_id=lead_id)

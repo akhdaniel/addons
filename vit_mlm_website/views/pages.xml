@@ -208,8 +208,7 @@
                     </h2>
                     
                     <p>
-            			<a t-attf-href="/mlm/member/tree/{{ slug(member) }}">
-            				Member ID: <t t-esc="member.code"/></a><br/>
+            			Member ID: <t t-esc="member.code"/><br/>
             			Upline ID: <span t-field="member.parent_id"/><br/>
             			Sponsor ID: <span t-field="member.sponsor_id"/><br/>
             			Address: <t t-esc="member.street"/>
