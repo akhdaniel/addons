@@ -13,6 +13,7 @@ class paket_produk(osv.osv):
 		'name' 		: fields.char('Name'),
 		'harga' 		: fields.float('Harga'),
 		'description' 		: fields.text('Description'),
+		'paket_produk_detail_ids': fields.one2many('mlm.paket_produk_detail','paket_produk_id','Produk Detail', ondelete="cascade"),
 	}
 
 class paket_produk_detail(osv.osv):
