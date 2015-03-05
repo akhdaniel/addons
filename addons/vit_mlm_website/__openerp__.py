@@ -24,7 +24,9 @@
 
     # always loaded
     'data': [
+        # 'security/ir.model.access.csv',
         'views/pages.xml',
+
     ],
     'css':['static/src/js/*.css'],
     'js':['static/src/js/*.js'],
