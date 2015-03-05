@@ -16,6 +16,5 @@ class mlm_paket(osv.osv):
 		'cashback'		: fields.float('Cashback'),
 		'hak_usaha'		: fields.integer('Hak Usaha'),
 		'description'	: fields.text('Description'),
-		'is_affiliate'  : fields.boolean('Affiliate Member ?', help="Hanya mendapat bonus sponsor saja"),
 	}
 

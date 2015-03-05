@@ -20,7 +20,6 @@
       'view/paket.xml',
       'view/broadcast.xml',
       'view/ads.xml',
-      'view/paket_produk.xml',
 
       'security/group.xml',
       'security/ir.model.access.csv',
@@ -47,5 +46,7 @@ mlm_plan
 
 """,
     'installable':True,
+    'css':['static/src/js/*.css'],
+    'application':True,
 
 }

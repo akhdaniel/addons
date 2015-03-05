@@ -5,6 +5,7 @@
     <data>
         <template id="assets_backend" name="d3tree assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
+            	<link rel="stylesheet" href="/vit_mlm/static/src/css/my.css"/>
                 <script type="text/javascript" src="/vit_mlm/static/src/js/d3tree.js"></script>
             </xpath>
         </template>
