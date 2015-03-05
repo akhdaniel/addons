@@ -13,10 +13,8 @@
                     <field name="parent_id" />
                     <field name="sponsor_id" />
                     <field name="paket_id" />
-                    <field name="paket_harga" />
-                    <field name="paket_cashback" />
-                    <field name="paket_produk_id" />
-            		<!--field name="is_stockist" /-->
+                    <field name="is_affiliate" />
+            		<field name="is_stockist" />
             	</field>
                 
                 <field name="title" position="after">
@@ -43,11 +41,6 @@
                             class="oe_highlight"
                             states="open"
                             string="Diterima"/>
-                        
-                        <button string="Sale Order Paket Join" type="object" 
-                             name="action_create_sale_order"
-                             class="oe_highlight"
-                             attrs="{'invisible': ['|', ('sale_order_exists', '=', True), ('state','&lt;&gt;','open')]}" />
 
                         <button name="action_cancel" type="object" 
                             states="open"
@@ -56,11 +49,6 @@
                         <button name="action_nonaktif" type="object" 
                             states="aktif"
                             string="Eliminasi"/>
-
-
-
-                        <!--button string="View Sale Order" type="object" name="action_view_sale_order"
-                             attrs="{'invisible': ['|', ('sale_order_exists', '=', False), ('state','=','aktif')]}" /-->
 
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,aktif"/>
                     </header>
@@ -95,8 +83,9 @@
 		            </page>
 
                     <page string="Tree">
+                        <!-- field name="tree_url" widget="url" /-->
                         <field name="tree_url" widget="d3tree" />
-                        <field name='sale_order_exists' />
+                        <!--iframe src="/mlm/member/view/" style="width:100%; height:300px" /-->
                     </page>
 
 		        </notebook>
@@ -125,12 +114,8 @@
                 <tree string="Members">
                     <field name="name"/>
                     <field name="email"/>
-                    <field name="phone"/>
-                    <field name="bbm"/>
-                    <field name="city"/>
                     <field name="parent_id"/>
                     <field name="sponsor_id"/>
-                    <field name="create_date"/>
                 </tree>
             </field>
         </record>
