@@ -1,0 +1,44 @@
+<openerp>
+	<data>
+		<!-- action list master_reward -->
+		<record id="action_master_reward_list" model="ir.actions.act_window">
+			<field name="name">List Sale Reward Point</field>
+			<field name="res_model">vit_sale_reward.master_reward</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Click to add a master reward
+		      </p>				
+				<p>Click create button to create new master reward</p>
+			</field>
+		</record>
+
+		<!-- action list partner_reward -->
+		<record id="action_partner_reward_list" model="ir.actions.act_window">
+			<field name="name">List Partner Reward Point</field>
+			<field name="res_model">vit_sale_reward.partner_reward</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_reward"
+			 name="Reward Point"
+			 sequence="50"
+			 parent="base.menu_sales"/>
+
+		<!-- menu master_reward -->
+		<menuitem id="menu_master_reward"
+			 action="action_master_reward_list"
+			 name="Sale Reward Point"
+			 sequence="210"
+			 parent="menu_reward"/>
+
+		<!-- menu partner_reward -->
+		<menuitem id="menu_partner_reward"
+			 action="action_partner_reward_list"
+			 name="Partner Reward Point"
+			 sequence="220"
+			 parent="menu_reward"/>
+
+
+	</data>
+</openerp>
