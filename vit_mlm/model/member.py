@@ -574,7 +574,7 @@ class member(osv.osv):
 		# cek max level upline , kalau masih boleh tambah downline,
 		# isikan nilai path 
 		#########################################################################
-		upline = self.browse(cr, uid, parent_id, context=context)
+		upline = self.browse(cr, uid, int(parent_id), context=context)
 		max_downline = mlm_plan.max_downline
 		downline = 0
 		if max_downline != 0:
@@ -918,7 +918,7 @@ class member(osv.osv):
 			}))
 
 		if not lines:
-			return False 
+			raise osv.except_osv(_('Warning'),_("No Producs in Paket Produk") ) 
 
 		#################################################################
 		# sale_order object
