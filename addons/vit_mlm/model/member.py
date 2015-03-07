@@ -99,8 +99,9 @@ class member(osv.osv):
 			type="float", relation="mlm.paket", string="Cashback Paket"),
 
 		## paket barang
-		'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk A', 
-			required=True),
+		'paket_produk_ids'	: fields.one2many('mlm.paket_produk_pendaftaran','member_id', 'Paket Produk'),
+		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
+		# 	required=True),
 
 		'total_bonus' 				: fields.function(_total_bonus, string="Total Bonus"),
 		'total_bonus_sponsor' 		: fields.function(_total_bonus_sponsor, string="Total Bonus Sponsor"),
