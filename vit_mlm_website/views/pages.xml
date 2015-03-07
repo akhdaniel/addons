@@ -26,6 +26,7 @@
 
 <template id="website.member_tree" name="Member Tree" page="True">
 	<h1>Member Tree</h1>
+	<link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
 	<!-- load the d3.js library -->	
 	<script src="/vit_mlm_website/static/src/js/d3.min.js"></script>
 	<script>
@@ -302,6 +303,24 @@
 				    <option value="">Paket...</option>
 				    <t t-foreach="pakets or []" t-as="paket">
 				        <option t-att-value="paket.id" t-attf-selected="#{member and member.paket_id.id == paket.id}"><t t-esc="paket.name"/></option>
+				    </t>
+				</select>
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true" t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
+			</t>				
+		</div>
+	</div>
+
+	<div t-attf-class="form-group">
+		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Paket Produk</label>
+		<div class="col-md-7 col-sm-8">
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="paket_produk_id" 
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">Paket Produk...</option>
+				    <t t-foreach="products or []" t-as="product">
+				        <option t-att-value="product.id" t-attf-selected="#{member and member.paket_produk_id.id == paket.id}"><t t-esc="product.name"/></option>
 				    </t>
 				</select>
 			</t>
@@ -615,6 +634,7 @@
 		        		<t t-set="members" t-value="members"/>
 		        		<t t-set="parent" t-value="parent"/>
 		        		<t t-set="pakets" t-value="pakets"/>
+		        		<t t-set="paket_produk_id" t-value="paket_produk_id"/>
 		        	</t>
 
 		            <div class="form-group">

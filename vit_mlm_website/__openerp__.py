@@ -28,7 +28,7 @@
         'views/pages.xml',
 
     ],
-    'css':['static/src/js/*.css'],
+    'css':['static/src/css/*.css'],
     'js':['static/src/js/*.js'],
     'installable':True,
 }
