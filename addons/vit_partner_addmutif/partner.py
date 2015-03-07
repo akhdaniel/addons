@@ -7,12 +7,12 @@ class res_partner(osv.osv):
 	_inherit = "res.partner"
 	
 	_columns = {
-     	'code': fields.char('Kode'),
+     	# 'code': fields.char('Kode'),
         'point': fields.char('Point'),
         # 'discount': fields.char('Diskon'),
         'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Discount')),
-        'pin_bb': fields.char('Pin BB'),
-        'no_rek': fields.char('No Rekening'),
+        # 'pin_bb': fields.char('Pin BB'),
+        # 'no_rek': fields.char('No Rekening'),
         'status_pelanggan': fields.char('Status Pelanggan')
         
 	}

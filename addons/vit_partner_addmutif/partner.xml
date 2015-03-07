@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    	<record id="view_partner_tree_vit1" model="ir.ui.view">
+    	<!-- <record id="view_partner_tree_vit1" model="ir.ui.view">
             <field name="name">res.partner.tree</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_tree"/>
@@ -11,7 +11,7 @@
             		<field name="code"/>
             	</field>
 			</field>
-		</record>
+		</record> -->
 
 
     	<record id="view_partner_form_vit1" model="ir.ui.view">
@@ -23,7 +23,7 @@
                 <field name="function" position="before">
                     <field name="status_pelanggan"/>
                 </field>
-            	<field name="name" position="after">
+            	<!-- <field name="name" position="after">
             		<field name="code" placeholder="code"/>
             	</field>
             	<field name="phone" position="after">
@@ -31,7 +31,7 @@
             	</field>
             	<field name="title" position="after">
             		<field name="no_rek"/>
-            	</field>
+            	</field> -->
 			</field>
 		</record>
 
@@ -52,7 +52,7 @@
 			</field>
 		</record>
 
-        <record id="view_res_partner_filter2" model="ir.ui.view">
+        <!-- <record id="view_res_partner_filter2" model="ir.ui.view">
             <field name="name">res.partner.select</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_res_partner_filter"/>
@@ -62,6 +62,6 @@
                      <field name="code" string="Kode" filter_domain="[('code','ilike', self)]"/>
                </search>
             </field>
-        </record>
+        </record> -->
     </data>
 </openerp>
