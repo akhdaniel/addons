@@ -99,7 +99,7 @@ class member(osv.osv):
 			type="float", relation="mlm.paket", string="Cashback Paket"),
 
 		## paket barang
-		'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
+		'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk A', 
 			required=True),
 
 		'total_bonus' 				: fields.function(_total_bonus, string="Total Bonus"),
@@ -918,7 +918,7 @@ class member(osv.osv):
 			}))
 
 		if not lines:
-			raise osv.except_osv(_('Warning'),_("No Producs in Paket Produk") ) 
+			return False 
 
 		#################################################################
 		# sale_order object
