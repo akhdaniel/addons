@@ -7,6 +7,14 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+class paket_produk_pendaftaran(osv.osv):
+	_name 		= "mlm.paket_produk_pendaftaran"
+	_columns 	= {
+		'qty' 		: fields.float('Qty'),
+		'paket_produk_id': fields.many2one('mlm.paket_produk','Produk Detail', ondelete="cascade"),
+		'member_id' : fields.many2one("res.partner", 'Member'),
+	}
+
 class paket_produk(osv.osv):
 	_name 		= "mlm.paket_produk"
 	_columns 	= {
@@ -22,4 +30,5 @@ class paket_produk_detail(osv.osv):
 		'paket_produk_id' : fields.many2one('mlm.paket_produk', 'Paket Produk ID'),
 		'product_id'   : fields.many2one('product.product', 'Produk ID'),
 		'qty' 		: fields.float('Qty'),
+		'uom_id'	: fields.many2one('product.uom', 'Unit of Measure'),
 	}
