@@ -57,10 +57,11 @@ class Member(http.Controller):
 		Paket  = http.request.env['mlm.paket']
 		State = http.request.env['res.country.state']
 		Country = http.request.env['res.country']
+		Products  = http.request.env['mlm.paket_produk']
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
-			'phone','fax','mobile']:
+			'phone','fax','mobile','paket_produk_id']:
 			if kwargs.get(field):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
@@ -71,6 +72,7 @@ class Member(http.Controller):
 			'members': Member.search([]),
 			'states': State.search([]),
 			'countrys': Country.search([]),
+			'products': Products.search([]),
 
 		})
 		return http.request.render('website.member_create', values)
@@ -117,7 +119,7 @@ class Member(http.Controller):
 		if post_description:
 			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
 		# request.registry.get('res.partner').create(cr, request.session.uid, values, request.context)
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		lead_id = self.create_partner(request, dict(values, user_id=False), 
 			kwargs)
 		values.update(lead_id=lead_id)
