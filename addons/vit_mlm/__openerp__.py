@@ -47,5 +47,6 @@ mlm_plan
 
 """,
     'installable':True,
+    'application':True,
 
 }
