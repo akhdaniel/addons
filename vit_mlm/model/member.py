@@ -904,19 +904,25 @@ class member(osv.osv):
 		# partner
 		#################################################################
 		partner = self.browse(cr, uid, ids[0], context)
-		paket_produk_id = partner.paket_produk_id
+		paket_produk_ids = partner.paket_produk_ids
 
 		#################################################################
 		# compose sale_order lines 
 		#################################################################
 		lines = []
-		for detail in paket_produk_id.paket_produk_detail_ids:
-			lines.append((0,0,{
-				'product_id'		: detail.product_id.id,
-				'name'				: detail.product_id.name,
-				'product_uom_qty' 	: detail.qty,
-				'price_unit' 		: detail.product_id.lst_price,
-			}))
+		# import pdb;pdb.set_trace()
+		for paket in paket_produk_ids:
+			paket_qty = paket.qty or 0.0
+			if paket_qty == 0.0:
+				continue
+			for detail in paket.paket_produk_id.paket_produk_detail_ids:
+				lines.append((0,0,{
+					'product_id'		: detail.product_id.id,
+					'product_uom'		: detail.uom_id.id,
+					'name'				: detail.product_id.name,
+					'product_uom_qty' 	: detail.qty * paket_qty,
+					'price_unit' 		: detail.product_id.lst_price,
+				}))
 
 		if not lines:
 			return False 
@@ -935,7 +941,7 @@ class member(osv.osv):
 			'partner_shipping_id' 	: partner.id,
 			'date_order'			: time.strftime("%Y-%m-%d %H:%M:%S") ,
 			'order_line' 			: lines,
-			'origin'				: 'Paket Produk: %s' % (paket_produk_id.name)
+			'origin'				: 'Paket Produk Pendaftaran: %s' % (partner.name)
 		}
 		sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
 		
