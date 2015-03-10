@@ -13,6 +13,7 @@
                     <field name="parent_id" />
                     <field name="sponsor_id" />
                     <field name="paket_id" />
+                    <field name="start_join" />
                     <!-- <field name="paket_produk_id" /> -->
                     <field name="paket_harga" />
                     <field name="paket_cashback" />
@@ -20,6 +21,10 @@
             		<field name="is_stockist" />
 
             	</field>
+
+                <!-- <xpath expr="/form/sheet/group/group/field[@name='fax']" position="attributes">
+                    <attribute name='string'>Start Join</attribute>
+                </xpath> -->
 
                 <field name="mobile" position="after">
                     <field name="bbm" />
