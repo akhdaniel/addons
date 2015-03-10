@@ -54,11 +54,11 @@
             </field>
         </record>
 
-        <record id="view_paket_produk_pendaftaran_tree" model="ir.ui.view">
-		    <field name="name">mlm_paket_produk_pendaftaran_tree</field>
-		    <field name="model">mlm.paket_produk_pendaftaran</field>
+        <record id="view_member_paket_produk_tree" model="ir.ui.view">
+		    <field name="name">mlm_member_paket_produk_tree</field>
+		    <field name="model">mlm.member_paket_produk</field>
 		    <field name="arch" type="xml">
-		    	<tree string="Paket Produk Pendaftaran">
+		    	<tree string="Paket Produk Pendaftaran" editable='bottom'>
                     <field name='paket_produk_id'/>
                     <field name='qty'/>
                     <field name='member_id' invisible='1' />      
@@ -66,9 +66,9 @@
             </field>
         </record>
 
-        <record id="view_paket_produk_pendaftaran_form" model="ir.ui.view">
+        <record id="view_member_paket_produk_form" model="ir.ui.view">
             <field name="name">mlm_paket_produk_pendaftaran_form</field>
-            <field name="model">mlm.paket_produk_pendaftaran</field>
+            <field name="model">mlm.member_paket_produk</field>
             <field name="arch" type="xml">
             	<form string="paket produk pendaftaran form" version="7.0">
             		<group style="width : 600px;">
