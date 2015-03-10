@@ -13,7 +13,7 @@
 
 """,    
     'depends': [
-        'sale', 'base' , 'account', 'vit_partner_addmutif'
+        'sale', 'base' , 'account',
     ],
     'update_xml':[],
     'data': [
