@@ -83,6 +83,14 @@ class member(osv.osv):
 			results[m.id] = '/mlm/member/tree/%d' % (m.id)
 		return results	
 
+	def _get_default_paket_produk(self, cr, uid, context=None):
+		product_ids = []
+		paket_ids = self.pool.get('mlm.paket_produk').search(cr,uid,[])
+		for x in paket_ids:
+			product_ids.append((0,0,{'paket_produk_id':x,'qty':0.0}))
+		return product_ids
+
+
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
@@ -99,7 +107,7 @@ class member(osv.osv):
 			type="float", relation="mlm.paket", string="Cashback Paket"),
 
 		## paket barang
-		'paket_produk_ids'	: fields.one2many('mlm.paket_produk_pendaftaran','member_id', 'Paket Produk'),
+		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk'),
 		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
 		# 	required=True),
 
@@ -124,10 +132,12 @@ class member(osv.osv):
 		'sale_order_exists'		: fields.function(_sale_order_exists, 
 			string='Sales Order Ada',  
 		    type='boolean', help="Apakah Partner ini sudah punya Sales Order."),	
+		'start_join'		: fields.char("Start Join"),
 	}
 	_defaults = {
 		'code'				: lambda obj, cr, uid, context: '/',		
 		'state'				: MEMBER_STATES[0][0],
+		'paket_produk_ids'	: _get_default_paket_produk,
 	}
 
 	#########################################################################
@@ -601,10 +611,13 @@ class member(osv.osv):
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
 
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
+		paket = self.pool.get('mlm.paket').browse(cr,uid,vals['paket_id'])
+		start_join = paket.name or ''
 		vals.update({
 			'customer':True,
 			'supplier':True,
 			'is_company':True,
+			'start_join':start_join
 		})
 		if members_categ:
 			vals.update({
@@ -751,6 +764,8 @@ class member(osv.osv):
 
 		jc = 0
 		parent_index = 0
+		import pdb;pdb.set_trace()
+		paket_silver = self.pool.get('mlm.paket').search(cr,uid,['&',('hak_usaha','=',1),('code','=',1)],limit=1)
 
 		for i in range(0, hak_usaha-1):
 			data = {
@@ -758,7 +773,9 @@ class member(osv.osv):
 				'parent_id'		: parent_id,
 				'sponsor_id'	: sponsor_id,
 				'name'			: "%s %d" % (new_member.name, i),
-				'is_company'	: True 
+				'is_company'	: True,
+				'start_join'	: new_member.paket_id.name,
+				'paket_id'		: paket_silver[0]
 			}
 			new_sub_id = self.create(cr, uid, data, context=context)
 			childs.append(new_sub_id)
@@ -941,7 +958,7 @@ class member(osv.osv):
 			'partner_shipping_id' 	: partner.id,
 			'date_order'			: time.strftime("%Y-%m-%d %H:%M:%S") ,
 			'order_line' 			: lines,
-			'origin'				: 'Paket Produk Pendaftaran: %s' % (partner.name)
+			'origin'				: 'Paket Produk Member: %s' % (partner.name)
 		}
 		sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
 		

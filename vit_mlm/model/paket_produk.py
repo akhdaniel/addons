@@ -7,8 +7,8 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
-class paket_produk_pendaftaran(osv.osv):
-	_name 		= "mlm.paket_produk_pendaftaran"
+class member_paket_produk(osv.osv):
+	_name 		= "mlm.member_paket_produk"
 	_columns 	= {
 		'qty' 		: fields.float('Qty'),
 		'paket_produk_id': fields.many2one('mlm.paket_produk','Produk Detail', ondelete="cascade"),
