@@ -11,3 +11,4 @@ access_mlm_broadcast,access_mlm_broadcast,model_mlm_broadcast,,1,1,1,1
 access_mlm_ads,access_mlm_ads,model_mlm_ads,,1,1,1,1
 access_mlm_paket_produk,access_mlm_paket_produk,model_mlm_paket_produk,,1,1,1,1
 access_mlm_paket_produk_detail,access_mlm_paket_produk_detail,model_mlm_paket_produk_detail,,1,1,1,1
+access_mlm_member_paket_produk,access_mlm_member_paket_produk,model_mlm_member_paket_produk,,1,0,0,0
