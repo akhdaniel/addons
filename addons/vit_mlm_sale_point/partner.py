@@ -12,7 +12,6 @@ class partner(osv.osv):
 	_name 		= "res.partner"
 	_inherit 	= "res.partner"
 
-
 	def _calc_point(self, cr, uid, ids, field, arg, context=None):
 		results = {}
 		pr_obj = self.pool.get('vit_sale_reward.partner_reward')
@@ -42,5 +41,8 @@ class partner(osv.osv):
 		'partner_reward_ids' : fields.one2many('vit_sale_reward.partner_reward',
 			'partner_id','Point Reward Transactions', 
 			order="date",
-			ondelete="cascade")
+			ondelete="cascade"),
+        'point': fields.char('Point'),
+        'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Discount')),
+        'status_pelanggan': fields.char('Status Pelanggan')
 	}
