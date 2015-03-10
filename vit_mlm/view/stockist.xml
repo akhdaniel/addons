@@ -1,0 +1,16 @@
+<openerp>
+<data>
+	<record id="view_stockist_tree" model="ir.ui.view">
+	    <field name="name">mlm_stockist_tree</field>
+	    <field name="model">stock.warehouse</field>
+	    <field name="arch" type="xml">
+	    	<tree string="list stockist">
+				<field name='name' />
+				<field name='partner_id' />
+				<field name='city' />
+				<field name='state_id' />
+			</tree>    
+	    </field>
+	</record>
+</data>
+</openerp>
