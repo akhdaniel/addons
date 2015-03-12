@@ -17,5 +17,6 @@ class mlm_paket(osv.osv):
 		'hak_usaha'		: fields.integer('Hak Usaha'),
 		'description'	: fields.text('Description'),
 		'is_affiliate'  : fields.boolean('Affiliate Member ?', help="Hanya mendapat bonus sponsor saja"),
+		'is_upgradable'  : fields.boolean('Upgrade-able ?', help="Apakah bisa diupgrade"),
 	}
 

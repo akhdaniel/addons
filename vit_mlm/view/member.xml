@@ -68,7 +68,10 @@
                             states="aktif"
                             string="Eliminasi"/>
 
-
+                            <!-- states="aktif" -->
+                        <button name="action_upgrade" type="object" 
+                            states="aktif"
+                            string="Upgrade"/>
 
                         <!--button string="View Sale Order" type="object" name="action_view_sale_order"
                              attrs="{'invisible': ['|', ('sale_order_exists', '=', False), ('state','=','aktif')]}" /-->

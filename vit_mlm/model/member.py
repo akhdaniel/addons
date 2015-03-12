@@ -764,8 +764,7 @@ class member(osv.osv):
 
 		jc = 0
 		parent_index = 0
-		import pdb;pdb.set_trace()
-		paket_silver = self.pool.get('mlm.paket').search(cr,uid,['&',('hak_usaha','=',1),('code','=',1)],limit=1)
+		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,[('code','=',5)],limit=1)[0]
 
 		for i in range(0, hak_usaha-1):
 			data = {
@@ -775,7 +774,7 @@ class member(osv.osv):
 				'name'			: "%s %d" % (new_member.name, i),
 				'is_company'	: True,
 				'start_join'	: new_member.paket_id.name,
-				'paket_id'		: paket_silver[0]
+				'paket_id'		: paket_sub_member
 			}
 			new_sub_id = self.create(cr, uid, data, context=context)
 			childs.append(new_sub_id)
@@ -964,3 +963,87 @@ class member(osv.osv):
 		
 		return sale_order_id
 
+	def _cari_sub_member(self, cr, uid, parent_id, path_ltree, context=None):
+		sql = """SELECT id, path_ltree, \
+				nlevel(path_ltree) as alevel, \
+				nlevel(path_ltree) - nlevel('%s') as rlevel \
+				FROM res_partner as p \
+				where path_ltree <@ '%s' \
+				and id <> %d \
+				order by path_ltree""" % (path_ltree,path_ltree,parent_id)
+		_logger.warning( sql )
+		cr.execute(sql)
+		rows = cr.fetchall()
+		return rows
+
+	#########################################################################
+	# upgrade 1 level
+	#########################################################################
+	def action_upgrade(self, cr, uid, ids, context=None):
+		upline = self.browse(cr, uid, ids[0], context)
+		# Paket yang akan diupgrade
+		paket = upline.paket_id
+
+		if not paket.is_upgradable:
+			raise osv.except_osv(_('Error!'), _('Paket %s tidak bisa diupgrade!') % (paket.name))
+		
+		paket_obj=self.pool.get('mlm.paket')
+		
+		# cari paket baru berdasarkan Code
+		new_code = str(int(paket.code) + 1)
+		new_paket_id  = paket_obj.search(cr,uid,[('code','=',new_code)])[0]
+
+		# cari sub-sub member
+		sub_members = self._cari_sub_member(cr,uid,ids[0],upline.path)
+
+		max_downline = upline.company_id.mlm_plan_id.max_downline
+		hu_baru = paket_obj.browse(cr,uid,new_paket_id,).hak_usaha
+		member_to_add =  hu_baru - paket.hak_usaha
+
+		if member_to_add == 0:
+			return self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
+
+		i = len(self.search(cr,uid,[('name','ilike',upline.name)])) - 1
+		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,['|',('code','=',5),('name','ilike','Sub-member')],limit=1)[0]
+		
+		# import pdb;pdb.set_trace()
+		"""
+		def _generate_new_path(upline):	
+			new_code = self.pool.get('ir.sequence').get(cr, uid, 'mlm.member') or '/'
+			if upline.path:
+				new_path = "%s.%s" % (upline.path, new_code)
+			else:
+				new_path = "%s" % (new_code)
+			return {'new_path':new_path,'new_code':new_code}"""
+
+		for sub in sub_members:
+			self.write(cr,uid,sub[0],{'parent_id':False})
+			# kode = _generate_new_path(upline)
+			new_data = {
+				# 'code'			: kode['new_code'],
+				# 'path'			: kode['new_path'],
+				'parent_id'		: ids[0],
+				'sponsor_id'	: upline.sponsor_id.id,
+				'name'			: "%s %d" % (upline.name,i),
+				'is_company'	: True,
+				'start_join'	: upline.paket_id.name,
+				'paket_id'		: paket_sub_member,
+			}
+			new_id = self.create(cr, uid, new_data, context=context)
+			self.write(cr,uid,sub[0],{'parent_id':new_id})
+			i+=1
+			if member_to_add > max_downline:
+				# kode = _generate_new_path(upline)
+				new_data.update({
+					# 'code'			: kode['new_code'],
+					# 'path'			: kode['new_path'],
+					'parent_id'		: new_id,
+					'name'			: "%s %d" % (upline.name,i),
+				})
+				sub_new_id = self.create(cr, uid, new_data, context=context)
+				i+=1
+
+		# update paket_id member 
+		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
+		# self._update_childs_path(cr,uid,[sub for sub in sub_members],context)
+		return True
