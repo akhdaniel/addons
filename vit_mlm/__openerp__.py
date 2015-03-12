@@ -21,6 +21,7 @@
       'view/broadcast.xml',
       'view/ads.xml',
       'view/paket_produk.xml',
+      'view/stockist.xml',
 
       'security/group.xml',
       'security/ir.model.access.csv',
@@ -29,6 +30,7 @@
       'menu/menu_bonus.xml',   
       'menu/menu_broadcast.xml',   
       'menu/menu_ads.xml',
+      'menu/menu_stockist.xml',
 
       'menu/menu_context_bonus.xml',
       'view/d3tree.xml',   
