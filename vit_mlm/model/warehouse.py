@@ -12,9 +12,21 @@ class warehouse(osv.osv):
 	_inherit 	= "stock.warehouse"
 	_columns 	= {
 		'state_id' 	: fields.related('partner_id', 'state_id' , type="many2one", 
-			relation="res.country.state", string="State", store=False),
+			relation="res.country.state", string="State", store=True),
 
 		'city' 	: fields.related('partner_id', 'city' , type="char", 
-			relation="res.partner", string="City", store=False),
+			relation="res.partner", string="City", 
+			store=True,
+			#store={'partner_id': (lambda self, cr, uid, ids, c={}: ids, ['street', 'city', 'state_id'], 50)} 
+		),
+		
+		'street' 	: fields.related('partner_id', 'street' , type="char", 
+			relation="res.partner", string="Street", store=True),		
+
+		'phone' 	: fields.related('partner_id', 'phone' , type="char", 
+			relation="res.partner", string="Phone", store=True),
+
+		'bbm' 	: fields.related('partner_id', 'bbm' , type="char", 
+			relation="res.partner", string="BBM", store=True),
 
 	}
