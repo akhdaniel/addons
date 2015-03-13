@@ -102,6 +102,7 @@ class Member(http.Controller):
 		post_description = []  # Info to add after the message
 		values = {}
 
+		import pdb;pdb.set_trace()
 		for field_name, field_value in kwargs.items():
 			if hasattr(field_value, 'filename'):
 				post_file.append(field_value)
@@ -118,8 +119,6 @@ class Member(http.Controller):
 
 		if post_description:
 			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
-		# request.registry.get('res.partner').create(cr, request.session.uid, values, request.context)
-		# import pdb;pdb.set_trace()
 		lead_id = self.create_partner(request, dict(values, user_id=False), 
 			kwargs)
 		values.update(lead_id=lead_id)

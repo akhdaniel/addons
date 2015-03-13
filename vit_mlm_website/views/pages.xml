@@ -199,9 +199,7 @@
 
             <div class="container">
 
-            	<a class="btn btn-primary" href="/mlm/member/create" role="button">Add Downline</a>
-
-                <t t-foreach="members" t-as="member">
+            	<!-- <t t-foreach="members" t-as="member">
                     <h2>
                     	<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
                     		 <t t-esc="member.name"/>
@@ -222,8 +220,49 @@
             			Phone: <t t-esc="member.street"/><br/>
             			Email: <t t-esc="member.email"/><br/>
             			BBM: <t t-esc="member.bbm"/><br/>
-            		</p>
-                </t>
+            		</p> 
+                </t> -->
+                <table class="table table-striped">
+		    		<tr>
+		    			<th>Member Name</th>
+		    			<th>Upline</th>
+		    			<th>Sponsor</th>
+		    			<th>Address</th>
+		    			<th>Mobile</th>
+		    			<th>Email</th>
+		    			<th>BBM</th>
+	                </tr>			    		
+	                <t t-foreach="members or []" t-as="member">
+			    		<tr>
+			    			<td>
+			    				<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
+		                    		<t t-esc="member.name"/>
+		                    	</a>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.parent_id.name or '' "/>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.sponsor_id.name or '' "/>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.street"/>
+		            			<t t-esc="member.street2"/>
+		            			<t t-esc="member.city"/>
+		            			<span t-esc="member.country_id.name or ''"/>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.mobile"/>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.email"/>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.bbm"/><br/>
+		                    </td>
+		                </tr>
+		            </t>
+	            </table>
             </div>
         </div>
     </t>			
@@ -311,25 +350,6 @@
 			</t>				
 		</div>
 	</div>
-
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Paket Produk</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="paket_produk_id" 
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Paket Produk...</option>
-				    <t t-foreach="products or []" t-as="product">
-				        <option t-att-value="product.id" t-attf-selected="#{member and member.paket_produk_id.id == paket.id}"><t t-esc="product.name"/></option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true" t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
-			</t>				
-		</div>
-	</div>
-
 
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="street">Street</label>
@@ -509,11 +529,22 @@
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="mobile">Signature</label>
 		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="signature" id="signature" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.signature or ''}"/>
-		</div>
+            <input class="input-file" id="fileInput" type="file" name="signfile"/>
+            <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
+        </div>
 	</div>
+
+	<!-- <div t-attf-class="form-group">			    		
+        <t t-foreach="['A','B','C']" t-as="b">		    		
+				<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk <t t-esc="b"/></label>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control" name="paket_produk_qty" id="bank_no" 
+					 t-attf-readonly="#{True if readonly==1 else False}"
+					 t-attf-value="#{member and member.bank_no or ''}"/>
+				</div>
+        </t>
+    </div> -->
+
 </template>
 
 <template id="website.member_view" name="Member View" page="True">
