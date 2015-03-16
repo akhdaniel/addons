@@ -22,13 +22,13 @@
 
             	</field>
 
-                <!-- <xpath expr="/form/sheet/group/group/field[@name='fax']" position="attributes">
-                    <attribute name='string'>Start Join</attribute>
-                </xpath> -->
-
                 <field name="mobile" position="after">
                     <field name="bbm" />
                 </field>
+                
+                <xpath expr="/form/sheet/group/group/field[@name='email']" position="attributes">
+                    <attribute name='required'>True</attribute>
+                </xpath>
                 
                 <field name="title" position="after">
                     <field name="bank_no" />
@@ -99,12 +99,22 @@
             				</tree>
             			</field>
                         <group>
-                            <field name="total_bonus_sponsor"/>
-                            <field name="total_bonus_pasangan"/>
-                            <field name="total_bonus_level"/>
-                            <field name="total_bonus_belanja"/>
-                            <hr colspan="4"/>
-                            <field name="total_bonus"/>
+                            <group class="oe_subtotal_footer" string="Untransfered">
+                                <field name="total_bonus_sponsor" widget="monetary"/>
+                                <field name="total_bonus_pasangan" widget="monetary"/>
+                                <field name="total_bonus_level" widget="monetary"/>
+                                <field name="total_bonus_belanja" widget="monetary"/>
+                                <!-- <hr colspan="2"/> -->
+                                <field name="total_bonus" widget="monetary" class="oe_subtotal_footer_separator" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group class="oe_subtotal_footer" string="Transfered">
+                                <field name="total_bonus_sponsor_transfered" widget="monetary"/>
+                                <field name="total_bonus_pasangan_transfered" widget="monetary"/>
+                                <field name="total_bonus_level_transfered" widget="monetary"/>
+                                <field name="total_bonus_belanja_transfered" widget="monetary"/>
+                                <!-- <hr colspan="2"/> -->
+                                <field name="total_bonus_transfered" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            </group>
                         </group>
 		            </page>
 
