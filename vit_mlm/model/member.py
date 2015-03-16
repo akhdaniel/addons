@@ -32,41 +32,69 @@ class member(osv.osv):
 	_name 		= "res.partner"
 	_inherit 	= "res.partner"
 
+	# untransfered
 	def _total_bonus(self, cr, uid, ids, field, arg, context=None):
-		results = self._get_total_bonus(cr, uid, ids, False, context=context)
+		results = self._get_total_bonus(cr, uid, ids, False, 'False', context=context)
 		return results
 
 	def _total_bonus_sponsor(self, cr, uid, ids, field, arg, context=None):
-		results = self._get_total_bonus(cr, uid, ids, 1, context=context)
+		results = self._get_total_bonus(cr, uid, ids, '1', 'False', context=context)
 		return results
 
 	def _total_bonus_pasangan(self, cr, uid, ids, field, arg, context=None):
-		results = self._get_total_bonus(cr, uid, ids, 2, context=context)
+		results = self._get_total_bonus(cr, uid, ids, '2', 'False', context=context)
 		return results
 
 	def _total_bonus_level(self, cr, uid, ids, field, arg, context=None):
-		results = self._get_total_bonus(cr, uid, ids, '3', context=context)
+		results = self._get_total_bonus(cr, uid, ids, '3', 'False', context=context)
 		return results
 
 	def _total_bonus_belanja(self, cr, uid, ids, field, arg, context=None):
-		results = self._get_total_bonus(cr, uid, ids, '4', context=context)
+		results = self._get_total_bonus(cr, uid, ids, '4', 'False', context=context)
 		return results	
 
-	def _get_total_bonus(self, cr, uid, ids, code, context=None):
+	# trasfered
+	def _total_bonus_transfered(self, cr, uid, ids, field, arg, context=None):
+		results = self._get_total_bonus(cr, uid, ids, False, 'True', context=context)
+		return results
+
+	def _total_bonus_sponsor_transfered(self, cr, uid, ids, field, arg, context=None):
+		results = self._get_total_bonus(cr, uid, ids, '1', 'True', context=context)
+		return results
+
+	def _total_bonus_pasangan_transfered(self, cr, uid, ids, field, arg, context=None):
+		results = self._get_total_bonus(cr, uid, ids, '2', 'True', context=context)
+		return results
+
+	def _total_bonus_level_transfered(self, cr, uid, ids, field, arg, context=None):
+		results = self._get_total_bonus(cr, uid, ids, '3', 'True', context=context)
+		return results
+
+	def _total_bonus_belanja_transfered(self, cr, uid, ids, field, arg, context=None):
+		results = self._get_total_bonus(cr, uid, ids, '4', 'True', context=context)
+		return results	
+
+	def _get_total_bonus(self, cr, uid, ids, code, transfer_status, context=None):
 		bonus = False
 		if code != False:
 			bonus = self.pool.get('mlm.bonus').search(cr, uid, [('code','=', code )], context=context)
-
-		results = {}
-		for m in self.browse(cr, uid, ids, context=context):
-			results[m.id] = 0.0
-			for mb in m.member_bonus_ids:
+		def hitung_bonus(member,ids0,bonus):
+			res={member.id : 0.0}
+			for mb in self.pool.get('mlm.member_bonus').browse(cr,uid,ids0):
 				if bonus:
 					if mb.bonus_id.id == bonus[0]:
-						results[m.id] = results[m.id] + mb.amount
+						res[member.id] = res[member.id] + mb.amount
 				else:					
-					results[m.id] = results[m.id] + mb.amount
-
+					res[member.id] = res[member.id] + mb.amount
+			return res
+		results = {}
+		for m in self.browse(cr, uid, ids, context=context):
+			untransfered_ids = [x.id for x in m.member_bonus_ids if (x.is_transfered == False)] 
+			transfered_ids  = [y.id for y in m.member_bonus_ids if (y.is_transfered == True)] 
+			if 	transfer_status == 'False':
+				results = hitung_bonus(m,untransfered_ids,bonus)
+			else :
+				results = hitung_bonus(m,transfered_ids,bonus)
 		return results	
 
 	def _sale_order_exists(self, cursor, user, ids, name, arg, context=None):
@@ -111,11 +139,18 @@ class member(osv.osv):
 		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
 		# 	required=True),
 
+		# untransfered
 		'total_bonus' 				: fields.function(_total_bonus, string="Total Bonus"),
 		'total_bonus_sponsor' 		: fields.function(_total_bonus_sponsor, string="Total Bonus Sponsor"),
 		'total_bonus_pasangan' 		: fields.function(_total_bonus_pasangan, string="Total Bonus Pasangan"),
 		'total_bonus_level' 		: fields.function(_total_bonus_level, string="Total Bonus Level"),
 		'total_bonus_belanja' 		: fields.function(_total_bonus_belanja, string="Total Bonus Belanja"),
+		# trasfered
+		'total_bonus_transfered' 				: fields.function(_total_bonus_transfered, string="Total Bonus"),
+		'total_bonus_sponsor_transfered' 		: fields.function(_total_bonus_sponsor_transfered, string="Total Bonus Sponsor"),
+		'total_bonus_pasangan_transfered' 		: fields.function(_total_bonus_pasangan_transfered, string="Total Bonus Pasangan"),
+		'total_bonus_level_transfered' 			: fields.function(_total_bonus_level_transfered, string="Total Bonus Level"),
+		'total_bonus_belanja_transfered' 		: fields.function(_total_bonus_belanja_transfered, string="Total Bonus Belanja"),
 
 		'is_stockist'		: fields.boolean("Is Stockist?"),
 		'bbm'				: fields.char("BBM Pin"),
