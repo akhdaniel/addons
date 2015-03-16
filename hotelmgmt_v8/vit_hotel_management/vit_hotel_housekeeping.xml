@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--============================================================ Housekeeping
+        ============================================================ -->
+        <record model="ir.ui.view" id="vit_view_hotel_housekeeping_form">
+            <field name="name">hotel.housekeeping.form</field>
+            <field name="model">hotel.housekeeping</field>
+            <field name="inherit_id" ref="hotel_housekeeping.view_hotel_housekeeping_form"/>
+            <field name="arch" type="xml">
+                <form string="Housekeeping" version="7.0" position="replace">
+                    <form string="Housekeeping" version="7.0">
+                        <header>
+                            <field name="state" widget="statusbar" />
+                        </header>
+                        <sheet>
+                            <h1 align="right">
+                                <button string="Clean" name="clean" states="dirty" type="workflow" icon="gtk-clear" />
+                                <button string="Inspect" name="inspect" states="clean" type="workflow" icon="gtk-find" />
+                                <button string="Done" name="done" states="inspect" type="workflow" icon="terp-camera_test" />
+                                <button string="Cancel" name="cancel" states="clean,inspect" type="workflow" icon="gtk-cancel" />
+                                <button string="Set to Dirty" name="action_set_to_dirty" states="cancel" type="object" icon="gtk-index" />
+                            </h1>
+                            <h1>
+                                <label string="Housekeeping" />
+                                <field name="name" nolabel="1"/>
+                            </h1>
+                            <group>
+                                <group>
+                                    <field name="current_date" />
+                                    <field name="clean_type" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                    <field name="room_no" select="1" domain="[('isroom','=',True)]" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                </group>
+                                <group>
+                                    <field name="inspector" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                    <field name="inspect_date_time" attrs="{'readonly':[('state','in',('done','cancel'))]}"/>
+                                    <field name="quality" attrs="{'readonly':[('state','in',('done','cancel'))]}" />
+                                </group>
+                            </group>
+                            <newline />
+                            <newline />
+                            <separator string="Activity Lines" colspan="4" />
+                            <field name="activity_lines" context="{'room_id':room_no, 'today_date':current_date}" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('done','cancel'))]}">
+                                <form string="Activity Lines">
+                                    <group colspan="4" col="4">
+                                        <field name="room_id" />
+                                        <field name="today_date" />
+                                        <field name="activity_name" />
+                                        <field name="housekeeper" />
+                                        <field name="clean_start_time" />
+                                        <field name="clean_end_time" />
+                                    </group>
+                                    <div class="oe_title">
+                                        <div class="oe_edit_only">
+                                            <field name="dirty"/>
+                                            <label for="dirty" string="Is Dirty?" />
+                                            <field name="clean" />
+                                            <label for="clean" string="Is Clean?" />
+                                        </div>
+                                    </div>
+                                </form>
+                                <tree string="Activity Lines" editable="bottom">
+                                    <field name="activity_name" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                    <field name="housekeeper" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                    <field name="room_id" invisible="1"/>
+                                    <field name="today_date" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                    <field name="clean_start_time" attrs="{'readonly':[('state','!=','dirty')]}"/>
+                                    <field name="clean_end_time" attrs="{'readonly':[('state','in',('done','cancel'))]}"/>
+                                    <field name="dirty" attrs="{'readonly':[('state','in',('done','cancel'))]}"/>
+                                    <field name="clean" attrs="{'readonly':[('state','in',('done','cancel'))]}"/>
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>
+                            <newline />
+                        </sheet>
+                    </form>
+                </form>    
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="vit_view_hotel_housekeeping_tree">
+            <field name="name">hotel.housekeeping.tree</field>
+            <field name="model">hotel.housekeeping</field>
+            <field name="inherit_id" ref="hotel_housekeeping.view_hotel_housekeeping_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Housekeeping12" position="replace">
+                    <tree string="Housekeeping">
+                        <field name="name" />
+                        <field name="current_date" />
+                        <field name="clean_type" />
+                        <field name="room_no" />
+                        <field name="inspector" />
+                        <field name="inspect_date_time" />
+                        <field name="state" />
+                    </tree>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Housekeeping Search View -->
+        <record model="ir.ui.view" id="kartu_studi_search">
+            <field name="name">Housekeeping Search</field>
+            <field name="model">hotel.housekeeping</field>
+            <field name="arch" type="xml">
+                <search string="Housekeeping">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="room_no"/>
+                         <field name="inspector" />
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Room No" help="By Room" context="{'group_by':'room_no'}"/>
+                        <filter icon="terp-project" string="Inspector" help="By Inspector" context="{'group_by':'inspector'}"/>
+                        <filter icon="terp-project" string="State" help="By State" context="{'group_by':'state'}"/>
+                        <filter icon="terp-project" string="Clean Type" help="By Clean Type" context="{'group_by':'clean_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_housekeeping" model="ir.sequence.type">
+            <field name="name">Housekeeping</field>
+            <field name="code">hotel.housekeeping</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_housekeeping" model="ir.sequence">
+            <field name="name">Housekeeping</field>
+            <field name="code">hotel.housekeeping</field>
+            <field name="prefix">HK/%(day)s/</field>
+            <field name="padding">4</field>
+        </record> 
+
+    </data>
+</openerp>
