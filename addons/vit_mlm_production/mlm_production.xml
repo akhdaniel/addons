@@ -9,6 +9,8 @@
 	            <group string="Bonus Pasangan" position="after">
 	            	<group string="Bonus Produksi">
 	                <field name="bonus_produksi"/>       
+	                <field name="max_bonus_produksi_level"/>
+	                <field name="bonus_produksi_percent_decrease"/>
 	                </group>      
 	            </group>
             </field>
