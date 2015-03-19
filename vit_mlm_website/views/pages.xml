@@ -529,7 +529,7 @@
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="mobile">Signature</label>
 		<div class="col-md-7 col-sm-8">
-            <input class="input-file" id="fileInput" type="file" name="signfile"/>
+            <input class="input-file" id="signature" type="file" name="signature"/>
             <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
         </div>
 	</div>
