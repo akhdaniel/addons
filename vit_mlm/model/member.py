@@ -118,24 +118,35 @@ class member(osv.osv):
 			product_ids.append((0,0,{'paket_produk_id':x,'qty':0.0}))
 		return product_ids
 
+	def _cek_state(self, cr, uid, ids, name, arg, context=None):
+		res = {}
+		# state:draft,open,sale_wait,aktif
+		for partner in self.browse(cr, uid, ids, context=context):
+			if   partner.state == 'aktif' and partner.paket_id.is_upgradable:
+				res[partner.id] = 'update'
+			elif partner.state == 'open' and partner.sale_order_ids:
+				res[partner.id] = '2baktif'
+			elif partner.state == 'open':
+				res[partner.id] = 'sale'
+		return res
 
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
-		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=False),
-		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False),
-		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade"),
+		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=False,states={'aktif':[('readonly',True)]}),
+		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False,states={'aktif':[('readonly',True)]}),
+		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade", readonly=True),
 		'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
 		
 		### paket join
-		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True),
+		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True, domain="[('is_submember','=',False)]",states={'aktif':[('readonly',True)]}),
 		'paket_harga'		: fields.related('paket_id', 'price' , 
 			type="float", relation="mlm.paket", string="Harga Paket"),
 		'paket_cashback'		: fields.related('paket_id', 'cashback' , 
 			type="float", relation="mlm.paket", string="Cashback Paket"),
 
 		## paket barang
-		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk'),
+		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk', states={'aktif':[('readonly',True)]}),
 		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
 		# 	required=True),
 
@@ -167,12 +178,15 @@ class member(osv.osv):
 		'sale_order_exists'		: fields.function(_sale_order_exists, 
 			string='Sales Order Ada',  
 		    type='boolean', help="Apakah Partner ini sudah punya Sales Order."),	
-		'start_join'		: fields.char("Start Join"),
+		'start_join'		: fields.char("Start Join",readonly=True),
+		'cek_state'		    : fields.function(_cek_state, type="char", method=True,
+			string="Show/hide buttons", store=False, help="Show/hide buttons."),
 	}
 	_defaults = {
 		'code'				: lambda obj, cr, uid, context: '/',		
 		'state'				: MEMBER_STATES[0][0],
 		'paket_produk_ids'	: _get_default_paket_produk,
+		'cek_state'			: 'draft',
 	}
 
 	#########################################################################
@@ -646,7 +660,7 @@ class member(osv.osv):
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
 
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
-		paket = self.pool.get('mlm.paket').browse(cr,uid,vals['paket_id'])
+		paket = self.pool.get('mlm.paket').browse(cr,uid,int(vals['paket_id']))
 		start_join = paket.name or ''
 		vals.update({
 			'customer':True,
@@ -756,7 +770,7 @@ class member(osv.osv):
 		if context is None:
 			context = {}
 		new_code = self.pool.get('ir.sequence').get(cr, uid, 'mlm.member') or '/'
-		
+
 		if upline.path:
 			new_path = "%s.%s" % (upline.path, new_code)
 		else:
@@ -799,7 +813,7 @@ class member(osv.osv):
 
 		jc = 0
 		parent_index = 0
-		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,[('code','=',5)],limit=1)[0]
+		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,[('code','=',99)],limit=1)[0]
 
 		for i in range(0, hak_usaha-1):
 			data = {
@@ -961,11 +975,14 @@ class member(osv.osv):
 		# compose sale_order lines 
 		#################################################################
 		lines = []
-		# import pdb;pdb.set_trace()
+		isi_paket = 0
+		jml_paket = partner.paket_id.hak_usaha
+		import pdb;pdb.set_trace()
 		for paket in paket_produk_ids:
 			paket_qty = paket.qty or 0.0
 			if paket_qty == 0.0:
 				continue
+			isi_paket+=paket_qty
 			for detail in paket.paket_produk_id.paket_produk_detail_ids:
 				lines.append((0,0,{
 					'product_id'		: detail.product_id.id,
@@ -974,10 +991,12 @@ class member(osv.osv):
 					'product_uom_qty' 	: detail.qty * paket_qty,
 					'price_unit' 		: detail.product_id.lst_price,
 				}))
-
 		if not lines:
 			return False 
 
+		if isi_paket != jml_paket:
+			raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
+		
 		#################################################################
 		# sale_order object
 		#################################################################
@@ -998,87 +1017,120 @@ class member(osv.osv):
 		
 		return sale_order_id
 
-	def _cari_sub_member(self, cr, uid, parent_id, path_ltree, context=None):
-		sql = """SELECT id, path_ltree, \
+	def _generate_new_path(self, cr, uid, path, context=None):	
+		new_code = self.pool.get('ir.sequence').get(cr, uid, 'mlm.member') or '/'
+		if path:
+			new_path = "%s.%s" % (path, new_code)
+		else:
+			new_path = "%s" % (new_code)
+		return {'new_path':new_path,'new_code':new_code}
+
+	def _cari_data_bds_ltree_level(self, cr, uid, path_ltree, start_lv, context=None):
+		sql = """SELECT id, path_ltree, path, \
 				nlevel(path_ltree) as alevel, \
 				nlevel(path_ltree) - nlevel('%s') as rlevel \
 				FROM res_partner as p \
-				where path_ltree <@ '%s' \
-				and id <> %d \
-				order by path_ltree""" % (path_ltree,path_ltree,parent_id)
-		_logger.warning( sql )
+				where path_ltree ~ '%s.*{%d,}' \
+				order by path_ltree""" % (path_ltree,path_ltree,start_lv)
 		cr.execute(sql)
-		rows = cr.fetchall()
+		rows = cr.fetchall() 
 		return rows
+	
+	def update_path_ltree(self, cr, uid, path, res_id, context=None):
+		cr.execute("update res_partner set path_ltree = '%s' where id=%d" % 
+			(path, res_id) )
+		cr.commit()
 
 	#########################################################################
 	# upgrade 1 level
 	#########################################################################
 	def action_upgrade(self, cr, uid, ids, context=None):
 		upline = self.browse(cr, uid, ids[0], context)
-		# Paket yang akan diupgrade
-		paket = upline.paket_id
+		paket  = upline.paket_id
 
 		if not paket.is_upgradable:
 			raise osv.except_osv(_('Error!'), _('Paket %s tidak bisa diupgrade!') % (paket.name))
 		
-		paket_obj=self.pool.get('mlm.paket')
-		
-		# cari paket baru berdasarkan Code
-		new_code = str(int(paket.code) + 1)
-		new_paket_id  = paket_obj.search(cr,uid,[('code','=',new_code)])[0]
+		# paket yg akan diisikan ke member yg diupdate
+		new_code 		= str(int(paket.code) + 1)
+		paket_obj 		= self.pool.get('mlm.paket')
+		new_paket_id  	= paket_obj.search(cr,uid,[('code','=',new_code)])[0]
 
-		# cari sub-sub member
-		sub_members = self._cari_sub_member(cr,uid,ids[0],upline.path)
-
-		max_downline = upline.company_id.mlm_plan_id.max_downline
-		hu_baru = paket_obj.browse(cr,uid,new_paket_id,).hak_usaha
-		member_to_add =  hu_baru - paket.hak_usaha
+		max_downline 	= upline.company_id.mlm_plan_id.max_downline
+		hu_baru 		= paket_obj.browse(cr,uid,new_paket_id,).hak_usaha
+		member_to_add 	= hu_baru - paket.hak_usaha
 
 		if member_to_add == 0:
 			return self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
-
-		i = len(self.search(cr,uid,[('name','ilike',upline.name)])) - 1
-		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,['|',('code','=',5),('name','ilike','Sub-member')],limit=1)[0]
 		
-		# import pdb;pdb.set_trace()
-		"""
-		def _generate_new_path(upline):	
-			new_code = self.pool.get('ir.sequence').get(cr, uid, 'mlm.member') or '/'
-			if upline.path:
-				new_path = "%s.%s" % (upline.path, new_code)
-			else:
-				new_path = "%s" % (new_code)
-			return {'new_path':new_path,'new_code':new_code}"""
+		direct_childs = self.cari_direct_childs(cr,uid,upline.path)
+		if direct_childs:
+			self.write(cr,uid,[sub[0] for sub in direct_childs],{'parent_id':False})
 
-		for sub in sub_members:
-			self.write(cr,uid,sub[0],{'parent_id':False})
-			# kode = _generate_new_path(upline)
+		new_data 		= {}
+		new_childs 		= {}
+		i = len(self.search(cr,uid,[('name','ilike',upline.name)])) - 1
+		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,[('is_submember','=',True)],limit=1)[0]
+		# kiri :0 kanan: 1
+		kaki = 0
+		dc_path=[]
+
+		while len(new_childs) < member_to_add:
+			kode = self._generate_new_path(cr,uid,upline.path,context=None)
 			new_data = {
-				# 'code'			: kode['new_code'],
-				# 'path'			: kode['new_path'],
-				'parent_id'		: ids[0],
+				'code'			: kode['new_code'],
+				'path'			: kode['new_path'],
+				'parent_id'		: upline.id,
 				'sponsor_id'	: upline.sponsor_id.id,
 				'name'			: "%s %d" % (upline.name,i),
 				'is_company'	: True,
 				'start_join'	: upline.paket_id.name,
-				'paket_id'		: paket_sub_member,
-			}
-			new_id = self.create(cr, uid, new_data, context=context)
-			self.write(cr,uid,sub[0],{'parent_id':new_id})
+				'paket_id'		: paket_sub_member
+				}
+			new_childs[len(new_childs)] = self.create(cr, uid, new_data, context=context)
+			dc_path.append(kode['new_path'])
 			i+=1
+			if direct_childs :
+				self.write(cr,uid,direct_childs[kaki][0],{'parent_id':new_childs[kaki]})
 			if member_to_add > max_downline:
-				# kode = _generate_new_path(upline)
+				# upline2=self.browse(cr, uid, int(new_id), context) 
+				kode = self._generate_new_path(cr,uid,kode['new_path'],context=None)
 				new_data.update({
-					# 'code'			: kode['new_code'],
-					# 'path'			: kode['new_path'],
+					'code'			: kode['new_code'],
+					'path'			: kode['new_path'],
 					'parent_id'		: new_id,
-					'name'			: "%s %d" % (upline.name,i),
+					'name'			: "%s %d" % (upline.name,i)
 				})
-				sub_new_id = self.create(cr, uid, new_data, context=context)
+				new_childs[len(new_childs)]=self.create(cr, uid, new_data, context=context)
+				dc_path.append(kode['new_path'])
 				i+=1
+				# import pdb;pdb.set_trace()
+				if direct_childs and kaki == 1:
+					self.write(cr,uid,direct_childs[kaki][0],{'parent_id':new_id})
+				elif len(new_childs)==4:
+					self.write(cr,uid,direct_childs[kaki][0],{'parent_id':new_id})
+			kaki+=1		
 
-		# update paket_id member 
+		kiri=False
+		cur_update_member_path=upline.path
+		if new_childs and direct_childs:
+			# kaki kiri dan kanan diproses masing2
+			for dc in direct_childs:
+				# all member kiri saja/kanan saja
+				member_to_update = self._cari_data_bds_ltree_level(cr, uid, dc[2], 0, context=None) #res: id,ltree,path
+				if kiri :
+					new_id_path = dc_path[len(dc_path)-1:][0]
+				else: 
+					new_id_path = dc_path[:1][0]
+					kiri = True
+				for mem in member_to_update:
+					# new_path = upline.path+(upline.path(awal-len(self.path)))
+					this_old_path = mem[2]
+					new_path = new_id_path + this_old_path[len(cur_update_member_path):]
+					self.write(cr,uid,mem[0],{'path':new_path})
+					self.update_path_ltree(cr, uid, new_path,mem[0],context=None)
+		 			# increment lv bonus lv
+		 			for bonus in self.browse(cr, uid, mem[0], context).member_bonus_ids:
+	 					bonus.write({'level':bonus.level+1})
 		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
-		# self._update_childs_path(cr,uid,[sub for sub in sub_members],context)
-		return True
+		return True 

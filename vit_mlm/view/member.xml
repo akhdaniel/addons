@@ -36,7 +36,7 @@
                     <field name="bank_name" />
                     <field name="bank_branch" />
                     <field name="id_number" />
-                    <field name="signature" widget="image"/>
+                    <field name="signature" widget="image" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
                 </field>
 
                 <xpath expr="//form/sheet" position="before">
@@ -52,13 +52,13 @@
 
                         <button name="action_aktif" type="object" 
                             class="oe_highlight"
-                            states="open"
-                            string="Diterima"/>
+                            string="Diterima"
+                            attrs="{'invisible': [('cek_state', '!=', '2baktif')]}" />
                         
                         <button string="Sale Order Paket Join" type="object" 
                              name="action_create_sale_order"
                              class="oe_highlight"
-                             attrs="{'invisible': ['|', ('sale_order_exists', '=', True), ('state','&lt;&gt;','open')]}" />
+                             attrs="{'invisible': [('cek_state','!=','sale')]}" />
 
                         <button name="action_cancel" type="object" 
                             states="open"
@@ -70,8 +70,8 @@
 
                             <!-- states="aktif" -->
                         <button name="action_upgrade" type="object" 
-                            states="aktif"
-                            string="Upgrade"/>
+                            string="Upgrade"
+                            attrs="{'invisible':[('cek_state','!=','update')]}"/>
 
                         <!--button string="View Sale Order" type="object" name="action_view_sale_order"
                              attrs="{'invisible': ['|', ('sale_order_exists', '=', False), ('state','=','aktif')]}" /-->
@@ -119,12 +119,14 @@
 		            </page>
 
                     <page string="Tree">
-                        <field name="tree_url" widget="d3tree" />
-                        <field name='sale_order_exists' />
+                        <h4 attrs="{'invisible' : [('state','!=','draft')] }">Confirms to see member's tree</h4>
+                        <field name="tree_url" widget="d3tree" attrs="{'invisible' : [('state','=','draft')] }" />
+                        <field name='sale_order_exists' invisible="1"/>
                     </page>
 
                     <page string="Paket Produk">
                         <field name="paket_produk_ids" />
+                        <div><field name="cek_state" invisible="1"/></div>
                     </page>
 
 		        </notebook>
