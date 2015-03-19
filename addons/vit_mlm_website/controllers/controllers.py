@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import http, SUPERUSER_ID
 from openerp.http import request
+import base64
 
 class Member(http.Controller):
 	@http.route('/mlm/member/tree/',  auth='public', website=True)
@@ -61,7 +62,7 @@ class Member(http.Controller):
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
-			'phone','fax','mobile','paket_produk_id']:
+			'phone','fax','mobile','paket_produk_id','signature']:
 			if kwargs.get(field):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
@@ -102,10 +103,10 @@ class Member(http.Controller):
 		post_description = []  # Info to add after the message
 		values = {}
 
-		import pdb;pdb.set_trace()
 		for field_name, field_value in kwargs.items():
 			if hasattr(field_value, 'filename'):
 				post_file.append(field_value)
+				values[field_name] = base64.encodestring(field_value.read())
 			elif field_name in request.registry['res.partner']._fields and field_name not in _BLACKLIST:
 				values[field_name] = field_value
 			elif field_name not in _TECHNICAL:  # allow to add some free fields or blacklisted field like ID
@@ -122,17 +123,17 @@ class Member(http.Controller):
 		lead_id = self.create_partner(request, dict(values, user_id=False), 
 			kwargs)
 		values.update(lead_id=lead_id)
-		if lead_id:
-			for field_value in post_file:
-				attachment_value = {
-					'name': field_value.filename,
-					'res_name': field_value.filename,
-					'res_model': 'crm.lead',
-					'res_id': lead_id,
-					'datas': base64.encodestring(field_value.read()),
-					'datas_fname': field_value.filename,
-				}
-				request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
+		# if lead_id:
+		# 	for field_value in post_file:
+		# 		attachment_value = {
+		# 			'name': field_value.filename,
+		# 			'res_name': field_value.filename,
+		# 			'res_model': 'res.partner',
+		# 			'res_id': lead_id,
+		# 			'datas': base64.encodestring(field_value.read()),
+		# 			'datas_fname': field_value.filename,
+		# 		}
+		# 		request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
 
 		return request.redirect('/mlm/member/view/%d'% (lead_id), code=301)
 
@@ -172,7 +173,6 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
 	def tree(self,member):
-		# import pdb; pdb.set_trace()
 		return http.request.render('website.d3_member_tree', {
 			'member': member,
 		})
