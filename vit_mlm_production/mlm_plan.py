@@ -118,15 +118,12 @@ class member(osv.osv):
 				for upline in upline1:
 					upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
 					#import pdb;pdb.set_trace()
-					if hitung_upline <=  max_bonus_produksi_level :
-						#####################################################################
-						# bonus produksi bertingkat ke atas (upline)
-						#####################################################################
-						bns_produksi 	= (new_member.paket_id.price * presentase_bns) /100
-						member_bonus.addBonusProduksi(cr, uid, new_member.id, upline_id, 
-							bns_produksi, 'New Member Bonus Produksi Paket %s' % (new_member.paket_id.name), context=context)						
-					else :
-						break
+					#####################################################################
+					# bonus produksi bertingkat ke atas (upline)
+					#####################################################################
+					bns_produksi 	= (new_member.paket_id.price * presentase_bns) /100
+					member_bonus.addBonusProduksi(cr, uid, new_member.id, upline_id, 
+						bns_produksi, 'New Member Bonus Produksi Paket %s' % (new_member.paket_id.name), context=context)						
 
 				##############################################
 				#beri status bahwa sdh terima bonus produksi
@@ -212,31 +209,106 @@ class member(osv.osv):
 	# jika invoice pertama paid, field is_bonus_produksi = False, berikan bonus produksi ke sponsor_id
 	####################################################################################################
 	def cron_bonus_produksi(self, cr, uid, context=None):
-		inv_obj = self.pool.get('account.invoice')
-		mlm_plan = self.get_mlm_plan(cr, uid, context=context)
+
+		mlm_plan 						= self.get_mlm_plan(cr, uid, context=context)
+		presentase_bns 					= mlm_plan.bonus_produksi
+		max_bonus_produksi_level		= mlm_plan.max_bonus_produksi_level
+		bonus_produksi_percent_decrease	= mlm_plan.bonus_produksi_percent_decrease
 		
 		presentase_bns = mlm_plan.bonus_produksi
+		member_ids = self.search(cr,uid,[('state','=','aktif'),('is_bonus_produksi','=',False)],context=context)
 		#import pdb;pdb.set_trace()
-		if presentase_bns == 0 :
+		if presentase_bns == 0 or member_ids == [] :
 			return True
 
-		member_ids = self.search(cr,uid,[('state','=','aktif'),('is_bonus_produksi','=',False)],context=context)
-		for member in self.browse(cr, uid, member_ids, context=context):
-			inv_id = inv_obj.search(cr, uid, [('partner_id','=',member.id),('state','=','paid')], context=context)
-			if inv_id :
-				inv_pertama = sorted(inv_id)[0]
-				#####################################################################
-				# bonus produksi langsung
-				#####################################################################
-				member_bonus 	= self.pool.get('mlm.member_bonus')
-				new_member 		= self.browse(cr, uid, member.id, context=context)
-				sponsor 		= self.browse(cr, uid, new_member.sponsor_id.id, context=context)
-				bns_produksi 	= (new_member.paket_id.price * presentase_bns) /100
-				member_bonus.addBonusProduksi(cr, uid, new_member.id, sponsor.id, 
-					bns_produksi, 'New Member Bonus Produksi Paket %s' % (new_member.paket_id.name), context=context)
+		new_member_ids = self.browse(cr, uid, member_ids, context=context)
+		for member in new_member_ids:
+			#inv_id = inv_obj.search(cr, uid, [('partner_id','=',member.id),('state','=','paid')], context=context)
+			# if inv_id :
+			# 	inv_pertama = sorted(inv_id)[0]
+			# 	#####################################################################
+			# 	# bonus produksi langsung
+			# 	#####################################################################
+			# 	member_bonus 	= self.pool.get('mlm.member_bonus')
+			# 	new_member 		= self.browse(cr, uid, member.id, context=context)
+			# 	sponsor 		= self.browse(cr, uid, new_member.sponsor_id.id, context=context)
+			# 	bns_produksi 	= (new_member.paket_id.price * presentase_bns) /100
+			# 	member_bonus.addBonusProduksi(cr, uid, new_member.id, sponsor.id, 
+			# 		bns_produksi, 'New Member Bonus Produksi Paket %s' % (new_member.paket_id.name), context=context)
 
-				#bri status bahwa sdh terima bonus produksi
-				self.write(cr,uid,member.id,{'is_bonus_produksi':True},context=context)        		 
+			# 	#bri status bahwa sdh terima bonus produksi
+			# 	self.write(cr,uid,member.id,{'is_bonus_produksi':True},context=context)     
+
+			###########################################################################################
+			#Cek invoice atas nama bersangkutan harus sudah berstatus paid untuk mendapatkan bonus ini
+			###########################################################################################
+			inv_obj			= self.pool.get('account.invoice')
+			inv_id 			= inv_obj.search(cr, uid, [('partner_id','=',member.id),('state','=','paid')], context=context)
+			
+			############################################################################
+			# cari id invoice pertama atau yg paling kecil (invoice pendaftaran member),
+			# dan setting batasan upline di isi kurang dari atau sama dengan nol
+			############################################################################
+			if inv_id and max_bonus_produksi_level <= 0.00 :
+				inv_id_pertama = sorted(inv_id)[0]
+				inv_id_state = inv_obj.browse(cr, uid, inv_id_pertama, context=context).state
+				if inv_id_state == 'paid' :
+
+					#####################################################################
+					# bonus produksi langsung
+					#####################################################################
+					member_bonus 	= self.pool.get('mlm.member_bonus')				
+					sponsor 		= self.browse(cr, uid, member.sponsor_id.id, context=context)
+					bns_produksi 	= (member.paket_id.price * presentase_bns) /100
+					member_bonus.addBonusProduksi(cr, uid, member.id, sponsor.id, 
+						bns_produksi, 'New Member Bonus Produksi Paket %s' % (member.paket_id.name), context=context)
+
+					##############################################
+					#beri status bahwa sdh terima bonus produksi
+					##############################################
+					self.write(cr,uid,member.id,{'is_bonus_produksi':True},context=context)
+
+			elif inv_id and max_bonus_produksi_level > 0.00 :
+				inv_id_pertama = sorted(inv_id)[0]
+				inv_id_state = inv_obj.browse(cr, uid, inv_id_pertama, context=context).state
+				if inv_id_state == 'paid' : 
+					######################################################################################################################################
+					# cari upline sd ke max level
+					######################################################################################################################################
+					# tulis ulang sql ini karena jika memanggil fungsi aslinya komen "-- and (is_affiliate <> 't' or is_affiliate is null)" masih terbaca
+					######################################################################################################################################
+					sql = "select id, name, path_ltree,\
+							nlevel(path_ltree) as level,\
+							nlevel(path_ltree) - nlevel('%s') as level\
+							from res_partner as p where path_ltree @> '%s'\
+							and id <> %d \
+							order by path_ltree desc\
+							limit %d" % (member.path, member.path, member.id, max_bonus_produksi_level)
+					_logger.warning( sql )
+					cr.execute(sql)
+					upline1 = cr.fetchall()
+
+					#################################################################
+					# loop setiap upline mulai dari yg paling atas:
+					#################################################################				
+					member_bonus 	= self.pool.get('mlm.member_bonus')
+					for upline in upline1:
+						upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
+						
+						#####################################################################
+						# bonus produksi bertingkat ke atas (upline)
+						#####################################################################
+						bns_produksi 	= (member.paket_id.price * presentase_bns) /100
+						member_bonus.addBonusProduksi(cr, uid, member.id, upline_id, 
+							bns_produksi, 'New Member Bonus Produksi Paket %s' % (member.paket_id.name), context=context)						
+
+
+					##############################################
+					#beri status bahwa sdh terima bonus produksi
+					##############################################
+					self.write(cr,uid,member.id,{'is_bonus_produksi':True},context=context)	
+
+
 		return True
 
 
