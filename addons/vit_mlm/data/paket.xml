@@ -29,7 +29,7 @@
 			<field name="is_upgradable" eval="False" />
 		</record>
 		<record id="paket4" model="mlm.paket">
-			<field name="code">4</field>
+			<field name="code">0</field>
 			<field name="name">Affiliate Member</field>
 			<field name="price">950000</field>
 			<field name="cashback">0</field>
@@ -39,13 +39,14 @@
 			<field name="is_upgradable" eval="True" />
 		</record>
 		<record id="paket5" model="mlm.paket">
-			<field name="code">5</field>
+			<field name="code">99</field>
 			<field name="name">Sub-member</field>
 			<field name="price"></field>
 			<field name="cashback"></field>
 			<field name="hak_usaha">1</field>
 			<field name="description">Sub-member</field>
 			<field name="is_upgradable" eval="False" />
+			<field name="is_submember" eval="True" />
 		</record>
 	</data>
 </openerp>

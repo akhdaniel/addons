@@ -15,6 +15,29 @@
 		    </field>
 		</record>
 
+		<record id="view_paket_form" model="ir.ui.view">
+		    <field name="name">mlm_paket_form</field>
+		    <field name="model">mlm.paket</field>
+		    <field name="arch" type="xml">
+		    	<form string="Paket" >
+		    		<group>
+			    		<group>
+				            <field name="code"/>
+				            <field name="name"/>
+				            <field name="price"/>
+				            <field name="cashback"/>
+				            <field name="hak_usaha"/>
+				        </group>
+				        <group>
+				            <field name="is_affiliate"/>
+				            <field name="is_upgradable"/>
+				            <field name="is_submember"/>
+				            <field name="description"/>
+				        </group>
+				    </group>
+		        </form>    
+		    </field>
+		</record>
 
 	</data>
 </openerp>
