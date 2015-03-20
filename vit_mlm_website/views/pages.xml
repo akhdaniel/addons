@@ -529,21 +529,37 @@
 	<div t-attf-class="form-group">
 		<label class="col-md-3 col-sm-4 control-label" for="mobile">Signature</label>
 		<div class="col-md-7 col-sm-8">
-            <input class="input-file" id="image" type="file" name="image"/>
+            <input class="input-file" id="signature" type="file" name="signature"/>
             <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
         </div>
 	</div>
 
-	<!-- <div t-attf-class="form-group">			    		
-        <t t-foreach="['A','B','C']" t-as="b">		    		
-			<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk <t t-esc="b"/></label>
-			<div class="col-md-7 col-sm-8">
-				<input type="text" class="form-control" name="paket_produk_qty" id="bank_no" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.bank_no or ''}"/>
-			</div>
-		</t>
-    </div> -->
+	<div t-attf-class="form-group">			    	    		
+		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk A</label>
+		<div class="col-md-7 col-sm-8">
+			<input type="text" class="form-control" name="paket_produk_qtyA" id="paket_produk_qtyA" 
+			 t-attf-readonly="#{True if readonly==1 else False}"
+			 t-attf-value="#{member and member.paket_produk_ids[0] or ''}"/>
+		</div>
+    </div>
+
+	<div t-attf-class="form-group">			    	    		
+		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk B</label>
+		<div class="col-md-7 col-sm-8">
+			<input type="text" class="form-control" name="paket_produk_qtyB" id="paket_produk_qtyB" 
+			 t-attf-readonly="#{True if readonly==1 else False}"
+			 t-attf-value="#{member and member.paket_produk_ids[1] or ''}"/>
+		</div>
+    </div>
+
+	<div t-attf-class="form-group">			    	    		
+		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk C</label>
+		<div class="col-md-7 col-sm-8">
+			<input type="text" class="form-control" name="paket_produk_qtyC" id="paket_produk_qtyC" 
+			 t-attf-readonly="#{True if readonly==1 else False}"
+			 t-attf-value="#{member and member.paket_produk_ids[2] or ''}"/>
+		</div>
+    </div>
 
 </template>
 

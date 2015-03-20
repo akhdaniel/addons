@@ -219,7 +219,6 @@ class member(osv.osv):
 				nlevel(path_ltree) - nlevel('%s') as level\
 				from res_partner as p where path_ltree @> '%s'\
 				and id <> %d \
-				-- and (is_affiliate <> 't' or is_affiliate is null)\
 				order by path_ltree desc\
 				limit %d" % (new_member.path, new_member.path, new_member.id, max_bonus_level_level)
 		_logger.warning( sql )
@@ -489,7 +488,7 @@ class member(osv.osv):
 		# cari upline sd ke max level
 		#################################################################
 		uplines = self.cari_upline_dan_level(cr, uid, new_member, max_bonus_level_level, context=context)
-
+		
 		if full_level:
 			#################################################################
 			# loop masing-masing upline : dan cari berapa jumlah children 
@@ -512,16 +511,17 @@ class member(osv.osv):
 						if children == 2**rel_level:
 							member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
 								amount_bonus_level, "%sLevel %d" % (cashback, rel_level), context=context)
-
+		
 		else:
 			#################################################################
 			# loop setiap upline mulai dari yg paling atas:
 			# dan cari jumlah children per masing-masing level di kiri dan kanan
 			#################################################################
 			for upline in uplines:
+				import pdb;pdb.set_trace()
 				upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
 				levels = self.cari_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
-				# import pdb; pdb.set_trace()
+				
 				for lev in levels.keys():
 					rel_level = lev; children_kiri = levels[lev][0]; children_kanan = levels[lev][1]
 					# jika belum ada dan 
@@ -581,7 +581,6 @@ class member(osv.osv):
 		# cari upline sd ke max level
 		#################################################################
 		uplines = self.cari_upline_dan_level(cr, uid, new_member, max_bonus_pasangan_level, context=context)
-
 		for upline in uplines:
 			upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
 			
@@ -596,7 +595,7 @@ class member(osv.osv):
 			# pada level suatu level ?
 			# jika belum , tambahkan bonus pasangan untuk si upline
 			#################################################################
-			# import pdb; pdb.set_trace()
+			# import pdb; pdb.set_trace()n
 
 			for lev in levels.keys():
 				kiris = levels[lev][0]
@@ -658,7 +657,15 @@ class member(osv.osv):
 		#####################################################################
 		if 'parent_id' in vals:
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
-
+		paket_ids=[]
+		produk_ids = self.pool.get('mlm.paket_produk').search(cr,uid,[])
+		if 'paket_produk_qtyA' in vals:
+			paket_ids.append((0,0,{'paket_produk_id':produk_ids[0],'qty':int(vals['paket_produk_qtyA'])}))
+		if 'paket_produk_qtyB' in vals:
+			paket_ids.append((0,0,{'paket_produk_id':produk_ids[1],'qty':int(vals['paket_produk_qtyB'])}))
+		if 'paket_produk_qtyC' in vals:
+			paket_ids.append((0,0,{'paket_produk_id':produk_ids[2],'qty':int(vals['paket_produk_qtyC'])}))
+		vals.update({'paket_produk_ids':paket_ids})
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
 		paket = self.pool.get('mlm.paket').browse(cr,uid,int(vals['paket_id']))
 		start_join = paket.name or ''
@@ -672,6 +679,7 @@ class member(osv.osv):
 			vals.update({
 				'category_id': [(4, members_categ[0])]
 		})
+		# import pdb;pdb.set_trace()
 		new_id = super(member, self).create(cr, uid, vals, context=context)
 
 		return new_id
@@ -1096,7 +1104,6 @@ class member(osv.osv):
 				self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
 			elif direct_childs and kaki == 1 :
 				self.write(cr,uid,direct_childs[1].id,{'parent_id':new_id})
-
 			if member_to_add > max_downline:
 				kode = self._generate_new_path(cr,uid,kode['new_path'],context=None)
 				new_data.update({
@@ -1110,7 +1117,6 @@ class member(osv.osv):
 				dc_path.append(kode['new_path'])
 				i+=1
 			kaki+=1		
-
 		kiri=False
 		cur_update_member_path=upline.path
 		if new_childs and direct_childs:
@@ -1130,12 +1136,53 @@ class member(osv.osv):
 					self.write(cr,uid,mem[0],{'path':new_path})
 					self.update_path_ltree(cr, uid, new_path,mem[0],context=None)
 		 			# increment lv bonus lv
-		 			for bonus in self.browse(cr, uid, mem[0], context).member_bonus_ids:
-	 					bonus.write({'level':bonus.level+1})
+		 			# for bonus in self.browse(cr, uid, mem[0], context).member_bonus_ids:
+	 				# 	bonus.write({'level':bonus.level+1})
+		for bonus in upline.member_bonus_ids:
+			if bonus.level != 0 :
+				self.pool.get('mlm.member_bonus').write(cr,uid,bonus.id,{'level':bonus.level+1})
+
+		bp = self.pool.get('mlm.bonus').search(cr,uid,[('code','=',2)],limit=1)[0]
+		mlm_plan = self.get_mlm_plan(cr, uid, context=context)
+		amount = mlm_plan.bonus_pasangan
+
+		if len(new_childs)==2:
+			self.pool.get('mlm.member_bonus').create(cr,uid,{
+				'member_id': upline.id,
+				'new_member_id': new_childs[1],
+				'match_member_id': new_childs[0],
+				'amount': amount,
+				'trans_date': time.strftime("%Y-%m-%d %H:%M:%S"),
+				'bonus_id': bp,
+				'is_transfered': False,
+				'description': "Pasangan",
+				'level':1})
+		elif len(new_childs)==4:
+			for k in range(0, 2):
+				self.pool.get('mlm.member_bonus').create(cr,uid,{
+					'member_id': upline.id,
+					'new_member_id': new_childs[k],
+					'match_member_id': new_childs[k+2],
+					'amount': amount,
+					'trans_date': time.strftime("%Y-%m-%d %H:%M:%S"),
+					'bonus_id': bp,
+					'is_transfered': False,
+					'description': "Pasangan",
+					'level':k+1})
+		# uplines = self.cari_upline_dan_level(cr, uid, new_member, max_bonus_level_level, context=context)
+		
 		# jika new child = 2, add bonus lv 0, bonus pasangan 0 untuk upline
 		# jika new child = 4
-		# if new_childs:
-		# 	upline.addBonusLevel(cr, uid, new_childs[1], upline.id, 0, 0, "Cashback Level", context=context)
-		# 	upline.addBonusPasangan(cr, uid, new_childs[0], new_childs[1], upline.id, 0, 0, "Pasangan", context=None)
+		#######################################################################
+		# hitung bonus level utk masing2 titik 
+		# hitung bonus pasangan utk masing2 titik 
+		# nilainya 0 saja karena sudah dijadikan cashback pada waktu join
+		#######################################################################
+		if new_childs:
+			for child in new_childs:
+				# self.hitung_bonus_level(cr, uid, [child], zero_amount=True, context=context)
+				# self.hitung_bonus_pasangan(cr, uid, [ child ], zero_amount=True,context=context)
+				self.write(cr, uid, [child], {'state':'aktif'}, context=context)
+
 		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
 		return True 
