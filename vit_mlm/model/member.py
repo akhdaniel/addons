@@ -977,7 +977,6 @@ class member(osv.osv):
 		lines = []
 		isi_paket = 0
 		jml_paket = partner.paket_id.hak_usaha
-		import pdb;pdb.set_trace()
 		for paket in paket_produk_ids:
 			paket_qty = paket.qty or 0.0
 			if paket_qty == 0.0:
@@ -1063,12 +1062,13 @@ class member(osv.osv):
 		if member_to_add == 0:
 			return self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
 		
-		direct_childs = self.cari_direct_childs(cr,uid,upline.path)
+		direct_src = self.search(cr,uid,[('parent_id','=',upline.id)])
+		direct_childs = self.browse(cr,uid,direct_src,)
 		if direct_childs:
-			self.write(cr,uid,[sub[0] for sub in direct_childs],{'parent_id':False})
+			for child in direct_childs: child.write({'parent_id':False})
 
 		new_data 		= {}
-		new_childs 		= {}
+		new_childs 		= []
 		i = len(self.search(cr,uid,[('name','ilike',upline.name)])) - 1
 		paket_sub_member = self.pool.get('mlm.paket').search(cr,uid,[('is_submember','=',True)],limit=1)[0]
 		# kiri :0 kanan: 1
@@ -1085,15 +1085,19 @@ class member(osv.osv):
 				'name'			: "%s %d" % (upline.name,i),
 				'is_company'	: True,
 				'start_join'	: upline.paket_id.name,
-				'paket_id'		: paket_sub_member
+				'paket_id'		: paket_sub_member,
+				'state'			: MEMBER_STATES[1][0],
 				}
-			new_childs[len(new_childs)] = self.create(cr, uid, new_data, context=context)
+			new_id = self.create(cr, uid, new_data, context=context)
+			new_childs.append(new_id)
 			dc_path.append(kode['new_path'])
 			i+=1
-			if direct_childs :
-				self.write(cr,uid,direct_childs[kaki][0],{'parent_id':new_childs[kaki]})
+			if direct_childs and kaki == 0 :
+				self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
+			elif direct_childs and kaki == 1 :
+				self.write(cr,uid,direct_childs[1].id,{'parent_id':new_id})
+
 			if member_to_add > max_downline:
-				# upline2=self.browse(cr, uid, int(new_id), context) 
 				kode = self._generate_new_path(cr,uid,kode['new_path'],context=None)
 				new_data.update({
 					'code'			: kode['new_code'],
@@ -1101,14 +1105,10 @@ class member(osv.osv):
 					'parent_id'		: new_id,
 					'name'			: "%s %d" % (upline.name,i)
 				})
-				new_childs[len(new_childs)]=self.create(cr, uid, new_data, context=context)
+				new_sub_id=self.create(cr, uid, new_data, context=context)
+				new_childs.append(new_sub_id)
 				dc_path.append(kode['new_path'])
 				i+=1
-				# import pdb;pdb.set_trace()
-				if direct_childs and kaki == 1:
-					self.write(cr,uid,direct_childs[kaki][0],{'parent_id':new_id})
-				elif len(new_childs)==4:
-					self.write(cr,uid,direct_childs[kaki][0],{'parent_id':new_id})
 			kaki+=1		
 
 		kiri=False
@@ -1117,7 +1117,7 @@ class member(osv.osv):
 			# kaki kiri dan kanan diproses masing2
 			for dc in direct_childs:
 				# all member kiri saja/kanan saja
-				member_to_update = self._cari_data_bds_ltree_level(cr, uid, dc[2], 0, context=None) #res: id,ltree,path
+				member_to_update = self._cari_data_bds_ltree_level(cr, uid, dc.path, 0, context=None) #res: id,ltree,path
 				if kiri :
 					new_id_path = dc_path[len(dc_path)-1:][0]
 				else: 
@@ -1132,5 +1132,10 @@ class member(osv.osv):
 		 			# increment lv bonus lv
 		 			for bonus in self.browse(cr, uid, mem[0], context).member_bonus_ids:
 	 					bonus.write({'level':bonus.level+1})
+		# jika new child = 2, add bonus lv 0, bonus pasangan 0 untuk upline
+		# jika new child = 4
+		# if new_childs:
+		# 	upline.addBonusLevel(cr, uid, new_childs[1], upline.id, 0, 0, "Cashback Level", context=context)
+		# 	upline.addBonusPasangan(cr, uid, new_childs[0], new_childs[1], upline.id, 0, 0, "Pasangan", context=None)
 		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
 		return True 
