@@ -62,7 +62,7 @@ class Member(http.Controller):
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
-			'phone','fax','mobile','paket_produk_id','signature']:
+			'phone','fax','mobile','paket_produk_id','image']:
 			if kwargs.get(field):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
@@ -173,6 +173,7 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
 	def tree(self,member):
+		# import pdb; pdb.set_trace()
 		return http.request.render('website.d3_member_tree', {
 			'member': member,
 		})

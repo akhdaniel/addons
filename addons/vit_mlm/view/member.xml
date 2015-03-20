@@ -36,7 +36,7 @@
                     <field name="bank_name" />
                     <field name="bank_branch" />
                     <field name="id_number" />
-                    <field name="signature" widget="image" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                    <!-- <field name="signature" widget="image" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/> -->
                 </field>
 
                 <xpath expr="//form/sheet" position="before">
@@ -161,6 +161,7 @@
                     <field name="parent_id"/>
                     <field name="sponsor_id"/>
                     <field name="create_date"/>
+                    <field name="state" invisible='1'/>
                 </tree>
             </field>
         </record>
