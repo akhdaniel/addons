@@ -62,7 +62,7 @@ class Member(http.Controller):
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
-			'phone','fax','mobile','paket_produk_id','image']:
+			'phone','fax','mobile','paket_produk_id','signature']:
 			if kwargs.get(field):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
@@ -110,7 +110,8 @@ class Member(http.Controller):
 			elif field_name in request.registry['res.partner']._fields and field_name not in _BLACKLIST:
 				values[field_name] = field_value
 			elif field_name not in _TECHNICAL:  # allow to add some free fields or blacklisted field like ID
-				post_description.append("%s: %s" % (field_name, field_value))
+				# post_description.append("%s: %s" % (field_name, field_value))
+				values[field_name] = field_value
 
 		error = set(field for field in _REQUIRED if not values.get(field))
 
@@ -118,8 +119,8 @@ class Member(http.Controller):
 			values = dict(values, error=error, kwargs=kwargs.items())
 			return request.website.render(kwargs.get("view_from", "website.member_create"), values)
 
-		if post_description:
-			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
+		# if post_description:
+		# 	values['description'] += dict_to_str(_("Custom Fields: "), post_description)
 		lead_id = self.create_partner(request, dict(values, user_id=False), 
 			kwargs)
 		values.update(lead_id=lead_id)
