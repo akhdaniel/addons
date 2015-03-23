@@ -80,11 +80,11 @@ class member_bonus(osv.osv):
 
 
 	def addBonusPasangan(self, cr, uid, new_member_id, match_member_id, member_id, level, amount, description, context=None):
-
+		#import pdb;pdb.set_trace()
 		bonus_pasangan = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_PASANGAN_CODE)], context=context)
 		if not bonus_pasangan:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Psangangan, code = 2") ) 
+			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Pasangan, code = 2") ) 
 
 		data = {
 			'member_id' 		: member_id ,   # yang dapat bonus

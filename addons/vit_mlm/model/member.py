@@ -518,6 +518,7 @@ class member(osv.osv):
 			# dan cari jumlah children per masing-masing level di kiri dan kanan
 			#################################################################
 			for upline in uplines:
+				#import pdb;pdb.set_trace()
 				upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
 				levels = self.cari_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
 				
@@ -588,13 +589,13 @@ class member(osv.osv):
 			# bentuk levels: { level : [ [list kiri], [list kanan] ]}
 			#################################################################
 			levels = self.cari_detail_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
-			
+			#import pdb;pdb.set_trace()
 			#################################################################
 			# apakah child di kiri sudah punya pasangan child di kanan
 			# pada level suatu level ?
 			# jika belum , tambahkan bonus pasangan untuk si upline
 			#################################################################
-			# import pdb; pdb.set_trace()n
+			#import pdb; pdb.set_trace()
 
 			for lev in levels.keys():
 				kiris = levels[lev][0]
@@ -656,7 +657,6 @@ class member(osv.osv):
 		#####################################################################
 		if 'parent_id' in vals:
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
-		
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
 		paket = self.pool.get('mlm.paket').browse(cr,uid,int(vals['paket_id']))
 		start_join = paket.name or ''
@@ -1045,7 +1045,7 @@ class member(osv.osv):
 	def action_upgrade(self, cr, uid, ids, context=None):
 		upline = self.browse(cr, uid, ids[0], context)
 		paket  = upline.paket_id
-
+		
 		if not paket.is_upgradable:
 			raise osv.except_osv(_('Error!'), _('Paket %s tidak bisa diupgrade!') % (paket.name))
 		
@@ -1060,11 +1060,14 @@ class member(osv.osv):
 
 		if member_to_add == 0:
 			return self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
-		
+
 		direct_src = self.search(cr,uid,[('parent_id','=',upline.id)])
 		direct_childs = self.browse(cr,uid,direct_src,)
 		if direct_childs:
-			for child in direct_childs: child.write({'parent_id':False})
+			for child in direct_childs: 
+				# putuskan parent id
+				child.write({'parent_id':False})
+
 
 		new_data 		= {}
 		new_childs 		= []
@@ -1088,28 +1091,64 @@ class member(osv.osv):
 				'state'			: MEMBER_STATES[1][0],
 				}
 			new_id = self.create(cr, uid, new_data, context=context)
+
+			#######################################################
+			#commit dulu ke database agar path_ltree bisa di update
+			#######################################################
+			cr.commit()
+			self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
+
 			new_childs.append(new_id)
 			dc_path.append(kode['new_path'])
 			i+=1
-			if direct_childs and kaki == 0 :
-				self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
-			elif direct_childs and kaki == 1 :
-				self.write(cr,uid,direct_childs[1].id,{'parent_id':new_id})
-			if member_to_add > max_downline:
-				kode = self._generate_new_path(cr,uid,kode['new_path'],context=None)
-				new_data.update({
-					'code'			: kode['new_code'],
-					'path'			: kode['new_path'],
-					'parent_id'		: new_id,
-					'name'			: "%s %d" % (upline.name,i)
-				})
-				new_sub_id=self.create(cr, uid, new_data, context=context)
-				new_childs.append(new_sub_id)
-				dc_path.append(kode['new_path'])
-				i+=1
-			kaki+=1		
-		kiri=False
-		cur_update_member_path=upline.path
+
+			#################################### 				
+			#jika punya direct childs
+			####################################			
+			if direct_childs:
+			 	if kaki == 0 :
+					self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
+
+				elif len(direct_childs) >1 and kaki == 1 :
+					self.write(cr,uid,direct_childs[1].id,{'parent_id':new_id})
+
+				if member_to_add > max_downline:
+					kode = self._generate_new_path(cr,uid,kode['new_path'],context=None)
+					new_data.update({
+						'code'			: kode['new_code'],
+						'path'			: kode['new_path'],
+						'parent_id'		: new_id,
+						'name'			: "%s %d" % (upline.name,i)
+					})
+					new_sub_id=self.create(cr, uid, new_data, context=context)
+
+					#######################################################
+					#commit dulu ke database agar path_ltree bisa di update
+					#######################################################					
+					cr.commit()
+					self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
+
+					new_childs.append(new_sub_id)
+					dc_path.append(kode['new_path'])
+					i+=1
+				kaki+=1	
+		
+				kiri=False
+				cur_update_member_path=upline.path
+
+			#################################### 				
+			#jika tidak punya direct childs
+			####################################
+			else:		
+			 	if kaki == 0 :
+					self.write(cr,uid,new_id,{'parent_id':ids[0]})
+
+				elif len(direct_childs) >1 and kaki == 1 :
+					self.write(cr,uid,new_id,{'parent_id':ids[0]})		
+
+				self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
+
+		#import pdb;pdb.set_trace()
 		if new_childs and direct_childs:
 			# kaki kiri dan kanan diproses masing2
 			for dc in direct_childs:
@@ -1121,49 +1160,18 @@ class member(osv.osv):
 					new_id_path = dc_path[:1][0]
 					kiri = True
 				for mem in member_to_update:
-					# new_path = upline.path+(upline.path(awal-len(self.path)))
+
 					this_old_path = mem[2]
 					new_path = new_id_path + this_old_path[len(cur_update_member_path):]
-					self.write(cr,uid,mem[0],{'path':new_path})
+					#self.write(cr,uid,mem[0],{'path':new_path})
 					self.update_path_ltree(cr, uid, new_path,mem[0],context=None)
-		 			# increment lv bonus lv
-		 			# for bonus in self.browse(cr, uid, mem[0], context).member_bonus_ids:
-	 				# 	bonus.write({'level':bonus.level+1})
+
 		for bonus in upline.member_bonus_ids:
 			if bonus.level != 0 :
 				self.pool.get('mlm.member_bonus').write(cr,uid,bonus.id,{'level':bonus.level+1})
 
-		bp = self.pool.get('mlm.bonus').search(cr,uid,[('code','=',2)],limit=1)[0]
-		mlm_plan = self.get_mlm_plan(cr, uid, context=context)
-		amount = mlm_plan.bonus_pasangan
+			cr.commit()
 
-		if len(new_childs)==2:
-			self.pool.get('mlm.member_bonus').create(cr,uid,{
-				'member_id': upline.id,
-				'new_member_id': new_childs[1],
-				'match_member_id': new_childs[0],
-				'amount': amount,
-				'trans_date': time.strftime("%Y-%m-%d %H:%M:%S"),
-				'bonus_id': bp,
-				'is_transfered': False,
-				'description': "Pasangan",
-				'level':1})
-		elif len(new_childs)==4:
-			for k in range(0, 2):
-				self.pool.get('mlm.member_bonus').create(cr,uid,{
-					'member_id': upline.id,
-					'new_member_id': new_childs[k],
-					'match_member_id': new_childs[k+2],
-					'amount': amount,
-					'trans_date': time.strftime("%Y-%m-%d %H:%M:%S"),
-					'bonus_id': bp,
-					'is_transfered': False,
-					'description': "Pasangan",
-					'level':k+1})
-		# uplines = self.cari_upline_dan_level(cr, uid, new_member, max_bonus_level_level, context=context)
-		
-		# jika new child = 2, add bonus lv 0, bonus pasangan 0 untuk upline
-		# jika new child = 4
 		#######################################################################
 		# hitung bonus level utk masing2 titik 
 		# hitung bonus pasangan utk masing2 titik 
@@ -1171,9 +1179,7 @@ class member(osv.osv):
 		#######################################################################
 		if new_childs:
 			for child in new_childs:
-				# self.hitung_bonus_level(cr, uid, [child], zero_amount=True, context=context)
-				# self.hitung_bonus_pasangan(cr, uid, [ child ], zero_amount=True,context=context)
-				self.write(cr, uid, [child], {'state':'aktif'}, context=context)
+				self.action_aktif(cr,uid,[child],context=None)
 
 		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
 		return True 
