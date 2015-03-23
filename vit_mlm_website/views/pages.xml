@@ -534,31 +534,28 @@
         </div>
 	</div>
 
-	<div t-attf-class="form-group">			    	    		
+<!-- 	<div t-attf-class="form-group">			    	    		
 		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk A</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="paket_produk_qtyA" id="paket_produk_qtyA" 
 			 t-attf-readonly="#{True if readonly==1 else False}"
 			 t-attf-value="#{member and member.paket_produk_ids[0] or ''}"/>
 		</div>
-    </div>
+    </div> -->
 
-	<div t-attf-class="form-group">			    	    		
-		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk B</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="paket_produk_qtyB" id="paket_produk_qtyB" 
-			 t-attf-readonly="#{True if readonly==1 else False}"
-			 t-attf-value="#{member and member.paket_produk_ids[1] or ''}"/>
-		</div>
-    </div>
-
-	<div t-attf-class="form-group">			    	    		
-		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk C</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="paket_produk_qtyC" id="paket_produk_qtyC" 
-			 t-attf-readonly="#{True if readonly==1 else False}"
-			 t-attf-value="#{member and member.paket_produk_ids[2] or ''}"/>
-		</div>
+	<div t-attf-class="form-group">			    		
+        <t t-foreach="products or []" t-as="product">	
+        	<div t-attf-class="form-group">	    		
+				<label class="col-md-3 col-sm-4 control-label">Jumlah <t t-esc="product.name"/></label>
+				<div class="col-md-7 col-sm-8">
+					<input type="text" class="form-control"
+					 t-attf-readonly="#{True if readonly==1 else False}"
+					 t-attf-value="#{member and member.paket_produk_ids[product_index].name or ''}"
+					 t-attf-name="paket_produk_ids[#{product.id}]">
+					</input>
+				</div>
+			</div>
+        </t>
     </div>
 
 </template>
