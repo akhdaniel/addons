@@ -518,7 +518,6 @@ class member(osv.osv):
 			# dan cari jumlah children per masing-masing level di kiri dan kanan
 			#################################################################
 			for upline in uplines:
-				import pdb;pdb.set_trace()
 				upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
 				levels = self.cari_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
 				
@@ -657,15 +656,7 @@ class member(osv.osv):
 		#####################################################################
 		if 'parent_id' in vals:
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
-		paket_ids=[]
-		produk_ids = self.pool.get('mlm.paket_produk').search(cr,uid,[])
-		if 'paket_produk_qtyA' in vals:
-			paket_ids.append((0,0,{'paket_produk_id':produk_ids[0],'qty':int(vals['paket_produk_qtyA'])}))
-		if 'paket_produk_qtyB' in vals:
-			paket_ids.append((0,0,{'paket_produk_id':produk_ids[1],'qty':int(vals['paket_produk_qtyB'])}))
-		if 'paket_produk_qtyC' in vals:
-			paket_ids.append((0,0,{'paket_produk_id':produk_ids[2],'qty':int(vals['paket_produk_qtyC'])}))
-		vals.update({'paket_produk_ids':paket_ids})
+		
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
 		paket = self.pool.get('mlm.paket').browse(cr,uid,int(vals['paket_id']))
 		start_join = paket.name or ''
