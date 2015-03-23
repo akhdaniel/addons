@@ -62,7 +62,7 @@ class Member(http.Controller):
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
-			'phone','fax','mobile','paket_produk_id','signature']:
+			'phone','fax','mobile','paket_produk_id','signature','paket_produk_ids']:
 			if kwargs.get(field):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
@@ -102,39 +102,42 @@ class Member(http.Controller):
 		post_file = []  # List of file to add to ir_attachment once we have the ID
 		post_description = []  # Info to add after the message
 		values = {}
-
+		paket_produk_ids = []
 		for field_name, field_value in kwargs.items():
 			if hasattr(field_value, 'filename'):
 				post_file.append(field_value)
-				values[field_name] = base64.encodestring(field_value.read())
+				# values[field_name] = base64.encodestring(field_value.read())
 			elif field_name in request.registry['res.partner']._fields and field_name not in _BLACKLIST:
 				values[field_name] = field_value
+			elif field_name[:16] == 'paket_produk_ids' and field_value:
+				paket_produk_ids.append((0,0,{'paket_produk_id':int(field_name[17:-1]),'qty':int(field_value)}))
 			elif field_name not in _TECHNICAL:  # allow to add some free fields or blacklisted field like ID
-				# post_description.append("%s: %s" % (field_name, field_value))
+				post_description.append("%s: %s" % (field_name, field_value))
 				values[field_name] = field_value
-
+		if paket_produk_ids:
+			values['paket_produk_ids'] = paket_produk_ids
 		error = set(field for field in _REQUIRED if not values.get(field))
 
 		if error:
 			values = dict(values, error=error, kwargs=kwargs.items())
 			return request.website.render(kwargs.get("view_from", "website.member_create"), values)
 
-		# if post_description:
-		# 	values['description'] += dict_to_str(_("Custom Fields: "), post_description)
+		if post_description:
+			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
 		lead_id = self.create_partner(request, dict(values, user_id=False), 
 			kwargs)
 		values.update(lead_id=lead_id)
-		# if lead_id:
-		# 	for field_value in post_file:
-		# 		attachment_value = {
-		# 			'name': field_value.filename,
-		# 			'res_name': field_value.filename,
-		# 			'res_model': 'res.partner',
-		# 			'res_id': lead_id,
-		# 			'datas': base64.encodestring(field_value.read()),
-		# 			'datas_fname': field_value.filename,
-		# 		}
-		# 		request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
+		if lead_id:
+			for field_value in post_file:
+				attachment_value = {
+					'name': field_value.filename,
+					'res_name': field_value.filename,
+					'res_model': 'res.partner',
+					'res_id': lead_id,
+					'datas': base64.encodestring(field_value.read()),
+					'datas_fname': field_value.filename,
+				}
+				request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
 
 		return request.redirect('/mlm/member/view/%d'% (lead_id), code=301)
 
@@ -174,7 +177,6 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
 	def tree(self,member):
-		# import pdb; pdb.set_trace()
 		return http.request.render('website.d3_member_tree', {
 			'member': member,
 		})
