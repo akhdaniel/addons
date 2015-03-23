@@ -66,12 +66,14 @@
 
                         <button name="action_nonaktif" type="object" 
                             states="aktif"
-                            string="Eliminasi"/>
+                            string="Eliminasi"
+                            confirm="Are you sure to eliminate this member ?"/>
 
                             <!-- states="aktif" -->
                         <button name="action_upgrade" type="object" 
                             string="Upgrade"
-                            attrs="{'invisible':[('cek_state','!=','update')]}"/>
+                            attrs="{'invisible':[('cek_state','!=','update')]}"
+                            confirm="Are you sure to upgrade this member ?"/>
 
                         <!--button string="View Sale Order" type="object" name="action_view_sale_order"
                              attrs="{'invisible': ['|', ('sale_order_exists', '=', False), ('state','=','aktif')]}" /-->
