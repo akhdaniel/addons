@@ -977,9 +977,7 @@ class member(osv.osv):
 		isi_paket = 0
 		jml_paket = partner.paket_id.hak_usaha
 		for paket in paket_produk_ids:
-			paket_qty = paket.qty or 0.0
-			if paket_qty == 0.0:
-				continue
+			paket_qty = paket.qty
 			isi_paket+=paket_qty
 			for detail in paket.paket_produk_id.paket_produk_detail_ids:
 				lines.append((0,0,{
@@ -1148,12 +1146,10 @@ class member(osv.osv):
 		kiri=False
 		cur_update_member_path=upline.path
 		if new_childs and direct_childs:
-
 			####################################################
 			# kaki kiri dan kanan diproses masing2
 			####################################################
 			for dc in direct_childs:
-				
 				################################################
 				# update childs all member kiri saja/kanan saja
 				################################################
