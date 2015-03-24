@@ -133,7 +133,7 @@ class Member(http.Controller):
 		if lead_id:
 			for field_value in post_file:
 				attachment_value = {
-					'name': 'Signature:'+values['name']+field_value.filename,
+					'name': 'Signature of '+values['name']+':'+field_value.filename,
 					'res_name': field_value.filename,
 					'res_model': 'res.partner',
 					'res_id': lead_id,
