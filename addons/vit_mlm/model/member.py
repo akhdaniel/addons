@@ -1175,7 +1175,7 @@ class member(osv.osv):
 		#######################################################################
 		# hitung bonus level utk masing2 titik 
 		# hitung bonus pasangan utk masing2 titik 
-		# nilainya 0 saja karena sudah dijadikan cashback pada waktu join
+		#
 		#######################################################################
 		if new_childs:
 			for child in new_childs:
