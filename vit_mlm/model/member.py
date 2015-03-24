@@ -1132,9 +1132,6 @@ class member(osv.osv):
 					dc_path.append(kode['new_path'])
 					i+=1
 				kaki+=1	
-		
-				kiri=False
-				cur_update_member_path=upline.path
 
 			#################################### 				
 			#jika tidak punya direct childs
@@ -1148,11 +1145,18 @@ class member(osv.osv):
 
 				self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
 
-		#import pdb;pdb.set_trace()
+		kiri=False
+		cur_update_member_path=upline.path
 		if new_childs and direct_childs:
+
+			####################################################
 			# kaki kiri dan kanan diproses masing2
+			####################################################
 			for dc in direct_childs:
-				# all member kiri saja/kanan saja
+				
+				################################################
+				# update childs all member kiri saja/kanan saja
+				################################################
 				member_to_update = self._cari_data_bds_ltree_level(cr, uid, dc.path, 0, context=None) #res: id,ltree,path
 				if kiri :
 					new_id_path = dc_path[len(dc_path)-1:][0]
