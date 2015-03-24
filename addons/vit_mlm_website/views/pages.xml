@@ -530,27 +530,18 @@
 		<label class="col-md-3 col-sm-4 control-label" for="mobile">Signature</label>
 		<div class="col-md-7 col-sm-8">
             <input class="input-file" id="signature" type="file" name="signature"/>
-            <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
         </div>
 	</div>
-
-<!-- 	<div t-attf-class="form-group">			    	    		
-		<label class="col-md-3 col-sm-4 control-label" for="paket_produk">Paket Produk A</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="paket_produk_qtyA" id="paket_produk_qtyA" 
-			 t-attf-readonly="#{True if readonly==1 else False}"
-			 t-attf-value="#{member and member.paket_produk_ids[0] or ''}"/>
-		</div>
-    </div> -->
+            <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
 
 	<div t-attf-class="form-group">			    		
         <t t-foreach="products or []" t-as="product">	
         	<div t-attf-class="form-group">	    		
-				<label class="col-md-3 col-sm-4 control-label">Jumlah <t t-esc="product.name"/></label>
+				<label class="col-md-3 col-sm-4 control-label">Qty <t t-esc="product.name"/></label>
 				<div class="col-md-7 col-sm-8">
 					<input type="text" class="form-control"
 					 t-attf-readonly="#{True if readonly==1 else False}"
-					 t-attf-value="#{member and member.paket_produk_ids[product_index].name or ''}"
+					 t-attf-value="#{member and member.paket_produk_ids[product_index].qty or 0}"
 					 t-attf-name="paket_produk_ids[#{product.id}]">
 					</input>
 				</div>

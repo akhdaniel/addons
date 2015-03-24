@@ -24,8 +24,10 @@ class Member(http.Controller):
 		# Paket  = http.request.env['mlm.paket']
 		# State = http.request.env['res.country.state']
 		# Country = http.request.env['res.country']
+		Products  = http.request.env['mlm.paket_produk']
 		return http.request.render('website.member_view', {
 			'member': member,
+			'products': Products.search([]),
 			# 'members': Member.search([]),
 			# 'pakets': Paket.search([]),
 			# 'states': State.search([]),
@@ -106,7 +108,8 @@ class Member(http.Controller):
 		for field_name, field_value in kwargs.items():
 			if hasattr(field_value, 'filename'):
 				post_file.append(field_value)
-				# values[field_name] = base64.encodestring(field_value.read())
+				if field_name=='signature':
+					values['signature'] = base64.encodestring(field_value.read())
 			elif field_name in request.registry['res.partner']._fields and field_name not in _BLACKLIST:
 				values[field_name] = field_value
 			elif field_name[:16] == 'paket_produk_ids' and field_value:
@@ -130,7 +133,7 @@ class Member(http.Controller):
 		if lead_id:
 			for field_value in post_file:
 				attachment_value = {
-					'name': field_value.filename,
+					'name': 'Signature:'+values['name']+field_value.filename,
 					'res_name': field_value.filename,
 					'res_model': 'res.partner',
 					'res_id': lead_id,
