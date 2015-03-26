@@ -4,6 +4,7 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
+import sets
 
 _logger = logging.getLogger(__name__)
 
@@ -589,36 +590,42 @@ class member(osv.osv):
 			# bentuk levels: { level : [ [list kiri], [list kanan] ]}
 			#################################################################
 			levels = self.cari_detail_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
-			#import pdb;pdb.set_trace()
+
 			#################################################################
 			# apakah child di kiri sudah punya pasangan child di kanan
 			# pada level suatu level ?
 			# jika belum , tambahkan bonus pasangan untuk si upline
 			#################################################################
-			#import pdb; pdb.set_trace()
 
 			for lev in levels.keys():
 				kiris = levels[lev][0]
 				kanans = levels[lev][1]
  				
  				for kiri in kiris:
- 					search = ['&','&',('new_member_id','=', kiri),('level', '=',lev),
- 						('bonus_id','=',bonus_pasangan)]
- 					exist = member_bonus.search(cr, uid, search, context=context)
- 					if not exist:
+ 					search = ['&','&',('level', '=',lev),
+ 							('bonus_id','=',bonus_pasangan),
+ 							('new_member_id','=',kiri)]	
+					exist = member_bonus.search(cr, uid, search, context=context)
+ 					if not exist :
 	 					for kanan in kanans:
-		 					search = ['&','&',('match_member_id', '=',kanan),('level', '=',lev),
-		 						('bonus_id','=',bonus_pasangan)]
-		 					exist = member_bonus.search(cr, uid, search, context=context)
+		 					# search = ['&','&',('match_member_id', '=',kanan),('level', '=',lev),
+		 					# 	('bonus_id','=',bonus_pasangan)] 					
+		 					# exist = member_bonus.search(cr, uid, search, context=context)
+							sql = "select id from mlm_member_bonus \
+									where level = %d \
+									and bonus_id = %d \
+									and ( match_member_id = %d \
+									or new_member_id = %d)" % (lev, bonus_pasangan, kanan, kanan)
+							_logger.warning( sql )
+							cr.execute(sql)
+							exist = cr.fetchall()		 					
 		 					if not exist:
 		 						desc = '%sPasangan' % (cashback)
 		 						member_bonus.addBonusPasangan(cr, uid, kiri, kanan, 
 		 							upline_id, lev, amount, desc, context=context)
 		 						cr.commit()
 		 						break
-
 		return True 
-
 
 	#########################################################################
 	# max downline sesuai mlm_plan
@@ -1013,14 +1020,6 @@ class member(osv.osv):
 		
 		return sale_order_id
 
-	def _generate_new_path(self, cr, uid, path, context=None):	
-		new_code = self.pool.get('ir.sequence').get(cr, uid, 'mlm.member') or '/'
-		if path:
-			new_path = "%s.%s" % (path, new_code)
-		else:
-			new_path = "%s" % (new_code)
-		return {'new_path':new_path,'new_code':new_code}
-
 	def _cari_data_bds_ltree_level(self, cr, uid, path_ltree, start_lv, context=None):
 		sql = """SELECT id, path_ltree, path, \
 				nlevel(path_ltree) as alevel, \
@@ -1046,8 +1045,9 @@ class member(osv.osv):
 		
 		if not paket.is_upgradable:
 			raise osv.except_osv(_('Error!'), _('Paket %s tidak bisa diupgrade!') % (paket.name))
-		
+		####################################################
 		# paket yg akan diisikan ke member yg diupdate
+		####################################################
 		new_code 		= str(int(paket.code) + 1)
 		paket_obj 		= self.pool.get('mlm.paket')
 		new_paket_id  	= paket_obj.search(cr,uid,[('code','=',new_code)])[0]
@@ -1063,7 +1063,9 @@ class member(osv.osv):
 		direct_childs = self.browse(cr,uid,direct_src,)
 		if direct_childs:
 			for child in direct_childs: 
+				##############################################
 				# putuskan parent id
+				##############################################
 				child.write({'parent_id':False})
 
 
@@ -1075,74 +1077,90 @@ class member(osv.osv):
 		kaki = 0
 		dc_path=[]
 
+		#import pdb;pdb.set_trace()
 		while len(new_childs) < member_to_add:
-			kode = self._generate_new_path(cr,uid,upline.path,context=None)
+			####################################################
+			# Generate new_id
+			####################################################
 			new_data = {
-				'code'			: kode['new_code'],
-				'path'			: kode['new_path'],
 				'parent_id'		: upline.id,
 				'sponsor_id'	: upline.sponsor_id.id,
 				'name'			: "%s %d" % (upline.name,i),
 				'is_company'	: True,
 				'start_join'	: upline.paket_id.name,
 				'paket_id'		: paket_sub_member,
-				'state'			: MEMBER_STATES[1][0],
+				'state'			: MEMBER_STATES[0][0],
 				}
 			new_id = self.create(cr, uid, new_data, context=context)
+				
+			####################################################
+			# Commit dulu ke database agar bisa di aktivasi
+			####################################################
+			cr.commit()	
 
-			#######################################################
-			#commit dulu ke database agar path_ltree bisa di update
-			#######################################################
-			cr.commit()
-			self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
+			####################################################
+			# aktifasi new_id yang telah dibuat sebelumnya
+			####################################################
+			self.action_confirm(cr,uid,[new_id],context=None)
 
+			####################################################
+			# browse path new_id yang sudah di update 
+			# di fungsi action_confirm untuk di append
+			####################################################
+			new_path_new_id = self.browse(cr,uid,new_id).path
+
+			dc_path.append(new_path_new_id)
 			new_childs.append(new_id)
-			dc_path.append(kode['new_path'])
+			
+			kaki+=1
 			i+=1
 
-			#################################### 				
-			#jika punya direct childs
-			####################################			
+			#################################################### 				
+			# jika punya direct childs
+			# sambungkan kembali upline_id nya
+			####################################################	
 			if direct_childs:
-			 	if kaki == 0 :
+			 	if kaki == 1 :
 					self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
 
-				elif len(direct_childs) >1 and kaki == 1 :
+				elif len(direct_childs) >1 and kaki == 2 :
 					self.write(cr,uid,direct_childs[1].id,{'parent_id':new_id})
 
+				#########################################################################
+				# create sub new_id (sub dari id baru, misal dari 3 titik ke 7 titik)
+				# jumlah titik yang akan ditambahkan > maksimal downline per titik
+				#########################################################################
 				if member_to_add > max_downline:
-					kode = self._generate_new_path(cr,uid,kode['new_path'],context=None)
 					new_data.update({
-						'code'			: kode['new_code'],
-						'path'			: kode['new_path'],
 						'parent_id'		: new_id,
 						'name'			: "%s %d" % (upline.name,i)
 					})
 					new_sub_id=self.create(cr, uid, new_data, context=context)
 
-					#######################################################
-					#commit dulu ke database agar path_ltree bisa di update
-					#######################################################					
-					cr.commit()
-					self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
+					####################################################
+					# Commit dulu ke database agar bisa di aktivasi
+					####################################################
+					cr.commit()	
 
+					####################################################
+					# aktifasi sub new_id yang telah dibuat sebelumnya
+					####################################################
+					self.action_confirm(cr,uid,[new_sub_id],context=None)
+
+					####################################################
+					# browse path new_id yang sudah di update 
+					# di fungsi action_confirm untuk di append
+					####################################################
+					new_path_sub_new_id = self.browse(cr,uid,new_sub_id).path
+
+					dc_path.append(new_path_sub_new_id)
 					new_childs.append(new_sub_id)
-					dc_path.append(kode['new_path'])
-					i+=1
-				kaki+=1	
+					
+					i+=1				
 
-			#################################### 				
-			#jika tidak punya direct childs
-			####################################
-			else:		
-			 	if kaki == 0 :
-					self.write(cr,uid,new_id,{'parent_id':ids[0]})
-
-				elif len(direct_childs) >1 and kaki == 1 :
-					self.write(cr,uid,new_id,{'parent_id':ids[0]})		
-
-				self.update_path_ltree(cr, uid, kode['new_path'],new_id,context=None)
-
+		########################################################
+		# Update path semua child dari memeber yang di upgrade
+		########################################################
 		kiri=False
 		cur_update_member_path=upline.path
 		if new_childs and direct_childs:
@@ -1163,20 +1181,18 @@ class member(osv.osv):
 
 					this_old_path = mem[2]
 					new_path = new_id_path + this_old_path[len(cur_update_member_path):]
-					#self.write(cr,uid,mem[0],{'path':new_path})
+
 					self.update_path_ltree(cr, uid, new_path,mem[0],context=None)
 
 		for bonus in upline.member_bonus_ids:
 			if bonus.level != 0 :
 				self.pool.get('mlm.member_bonus').write(cr,uid,bonus.id,{'level':bonus.level+1})
 
-			cr.commit()
+		cr.commit()
 
-		#######################################################################
-		# hitung bonus level utk masing2 titik 
-		# hitung bonus pasangan utk masing2 titik 
-		#
-		#######################################################################
+		#########################################################
+		# hitung semua bonus utk masing2 titik 
+		#########################################################
 		if new_childs:
 			for child in new_childs:
 				self.action_aktif(cr,uid,[child],context=None)
