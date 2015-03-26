@@ -602,10 +602,18 @@ class member(osv.osv):
 				kanans = levels[lev][1]
  				
  				for kiri in kiris:
- 					search = ['&','&',('level', '=',lev),
- 							('bonus_id','=',bonus_pasangan),
- 							('new_member_id','=',kiri)]	
-					exist = member_bonus.search(cr, uid, search, context=context)
+ 				# 	search = ['&','&',('level', '=',lev),
+ 				# 			('bonus_id','=',bonus_pasangan),
+ 				# 			('new_member_id','=',kiri)]	
+					# exist = member_bonus.search(cr, uid, search, context=context)
+					sql = "select id from mlm_member_bonus \
+							where level = %d \
+							and bonus_id = %d \
+							and ( match_member_id = %d \
+							or new_member_id = %d)" % (lev, bonus_pasangan, kiri, kiri)
+					_logger.warning( sql )
+					cr.execute(sql)
+					exist = cr.fetchall()						
  					if not exist :
 	 					for kanan in kanans:
 		 					# search = ['&','&',('match_member_id', '=',kanan),('level', '=',lev),
@@ -1029,7 +1037,7 @@ class member(osv.osv):
 				order by path_ltree""" % (path_ltree,path_ltree,start_lv)
 		cr.execute(sql)
 		rows = cr.fetchall() 
-		return rows
+		return rows	
 	
 	def update_path_ltree(self, cr, uid, path, res_id, context=None):
 		cr.execute("update res_partner set path_ltree = '%s' where id=%d" % 
@@ -1119,13 +1127,13 @@ class member(osv.osv):
 			# jika punya direct childs
 			# sambungkan kembali upline_id nya
 			####################################################	
-			if direct_childs:
+			if direct_childs :
 			 	if kaki == 1 :
 					self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
 
 				elif len(direct_childs) >1 and kaki == 2 :
 					self.write(cr,uid,direct_childs[1].id,{'parent_id':new_id})
-
+				cr.commit()
 				#########################################################################
 				# create sub new_id (sub dari id baru, misal dari 3 titik ke 7 titik)
 				# jumlah titik yang akan ditambahkan > maksimal downline per titik
@@ -1153,37 +1161,51 @@ class member(osv.osv):
 					####################################################
 					new_path_sub_new_id = self.browse(cr,uid,new_sub_id).path
 
-					dc_path.append(new_path_sub_new_id)
+					# dc_path.append(new_path_sub_new_id)
 					new_childs.append(new_sub_id)
 					
 					i+=1				
 
+
 		########################################################
-		# Update path semua child dari memeber yang di upgrade
+		# Update path semua child dari member yang di upgrade
 		########################################################
-		kiri=False
+		kanan=False
 		cur_update_member_path=upline.path
 		if new_childs and direct_childs:
 			####################################################
 			# kaki kiri dan kanan diproses masing2
 			####################################################
 			for dc in direct_childs:
+				#import pdb;pdb.set_trace()
 				################################################
 				# update childs all member kiri saja/kanan saja
 				################################################
 				member_to_update = self._cari_data_bds_ltree_level(cr, uid, dc.path, 0, context=None) #res: id,ltree,path
-				if kiri :
-					new_id_path = dc_path[len(dc_path)-1:][0]
+				
+				if kanan :
+					# kaki kanan
+					new_id_path = dc_path[1]
 				else: 
-					new_id_path = dc_path[:1][0]
-					kiri = True
+					# kaki kiri
+					new_id_path = dc_path[0]
+					kanan = True
+				#import pdb;pdb.set_trace()
 				for mem in member_to_update:
-
+					###############################################
 					this_old_path = mem[2]
 					new_path = new_id_path + this_old_path[len(cur_update_member_path):]
 
-					self.update_path_ltree(cr, uid, new_path,mem[0],context=None)
-
+					#########################################################################
+					# update path_ltree 
+					#########################################################################		
+					cr.execute("update res_partner set path_ltree = '%s', path = '%s' where id=%d" % 
+						(new_path,new_path, mem[0]) )
+					cr.commit()
+			
+		########################################################
+		# naikan bonus level dan pasangan (increament +1)
+		########################################################
 		for bonus in upline.member_bonus_ids:
 			if bonus.level != 0 :
 				self.pool.get('mlm.member_bonus').write(cr,uid,bonus.id,{'level':bonus.level+1})
