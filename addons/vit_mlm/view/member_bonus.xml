@@ -23,7 +23,13 @@
 		    <field name="model">mlm.member_bonus</field>
 		    <field name="arch" type="xml">
 		        <search string="Search Bonus">
-		
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Belong to Member" 
+		            	name="not_null" domain="[('member_id','!=',False)]"/>
+
+					<separator/>
+					
 		            <filter icon="terp-mail-message-new" 
 		                string="Bonus Sponsor" 
 		            	name="sponsor" domain="[('bonus_id','=','Sponsor')]"/>

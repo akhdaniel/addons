@@ -35,16 +35,18 @@
 						
 		            	<group>
 			                <field name="description"/>       
-			                <field name="harga"/>       
+			                <field name="harga"/>
+			                <!-- <field name="harga_"/>  -->      
 			            </group>
 
 			            <notebook>
 			            	<page string="Lines">
 					            <field name="paket_produk_detail_ids">
 					            	<tree string="Lines" editable="bottom">
-						                <field name="product_id"/>       
+						                <field name="product_id" on_change="onchange_product_id(product_id)"/>       
 						                <field name="qty"/>       
-						                <field name="uom_id"/>   
+						                <field name="uom_id"/>
+						                <field name="harga"/>   
 						            </tree>
 						        </field>
 						    </page>
