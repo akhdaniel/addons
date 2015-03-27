@@ -279,8 +279,32 @@
         </div>
     </t>			
 </template>
+			<!-- $.ajax("/mlm/member/create/json/"+countryID, {
+				type: "POST",
+				dataType: "json",
+				contentType: "application/json",
+			}); -->
 
 <template id="website.member_form" name="Member Form" page="True">
+	<script>
+		function testhis() {
+			var e = document.getElementById("country_id");
+			var countryID = e.options[e.selectedIndex].value;
+			console.log(countryID);
+
+			$.ajax("/mlm/member/create/json/"+countryID, {
+				type: "POST",
+				dataType: "json",
+				data: JSON.stringify({
+					"country_id": countryID,
+				}),
+				contentType: "application/json",
+				}).then(function(a) {
+					console.log("countryID=", a.states);
+					console.log("data=",a.data);
+			});
+		}
+	</script>
 
 	<div t-attf-class="form-group #{error and 'name' in error and 'has-error' or ''}">
 		<label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
@@ -396,7 +420,7 @@
 		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="country_id" 
+				<select class="form-control" required="True" name="country_id" id="country_id" onchange="testhis();"
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Country...</option>
 				    <t t-foreach="countrys or []" t-as="country">
@@ -414,7 +438,7 @@
 		<label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="state_id" 
+				<select class="form-control" required="True" name="state_id" id="state_id"
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">State...</option>
 				    <t t-foreach="states or []" t-as="state">

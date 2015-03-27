@@ -15,7 +15,7 @@ class Member(http.Controller):
 	def list(self, **kw):
 		Members = http.request.env['res.partner']
 		return http.request.render('website.member_list', {
-			'members': Members.search([])
+			'members': Members.search([('customer','=',True)])
 		})  
 
 	@http.route('/mlm/member/view/<model("res.partner"):member>',  auth='user', website=True)
@@ -51,7 +51,7 @@ class Member(http.Controller):
 	@http.route('/mlm/member/create',  auth='user', website=True)
 	def create(self, **kwargs):
 		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-
+		
 		Users  = pool['res.users']
 		user   = Users.browse(cr, uid, uid, context=context)
 		parent = user.partner_id
@@ -72,7 +72,7 @@ class Member(http.Controller):
 			'parent' : parent,
 			'member' : None,
 			'pakets' : Paket.search([]),
-			'members': Member.search([]),
+			'members': Member.search([('customer','=',True)]),
 			'states': State.search([]),
 			'countrys': Country.search([]),
 			'products': Products.search([]),
@@ -178,8 +178,9 @@ class Member(http.Controller):
 			'members': Partners,
 		})
 
-	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
-	def tree(self,member):
-		return http.request.render('website.d3_member_tree', {
-			'member': member,
-		})
+	@http.route('/mlm/member/create/json/<int:country_id>',type='json', method='post')
+	def json(self,country_id, **kwargs):
+		# import pdb;pdb.set_trace()
+		State = http.request.env['res.country.state']
+		states = State.search([('country_id','=',country_id)])
+		return {'states':[a.id for a in states]}
