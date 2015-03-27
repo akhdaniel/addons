@@ -175,8 +175,20 @@ class member_bonus(osv.osv):
 
 		raise osv.except_osv( 'OK!' , 'Done processing. %s import(s) member_bonus' % (i) )		
 
+		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_mlm', 'view_member_bonus_tree')
+		view_id = view_ref and view_ref[1] or False,	
 		return {
-			#refresh list
+			'name' : _('Temporary View'),
+			'view_type': 'form',
+			'view_mode': 'tree',			
+			'res_model': 'mlm.member_bonus',
+			'res_id': ids[0],
+			'type': 'ir.actions.act_window',
+			'view_id': view_id,
+			'target': 'current',
+			#'domain' : "[('state','=','draft')]",
+			"context":"{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_not_null': 1,'search_default_group_by_member':1,}",
+			'nodestroy': False,
 		}
 
 	####################################################################################

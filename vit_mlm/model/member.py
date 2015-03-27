@@ -4,7 +4,7 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
-import sets
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -136,18 +136,18 @@ class member(osv.osv):
 		'code'				: fields.char("Member ID"),
 		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=False,states={'aktif':[('readonly',True)]}),
 		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False,states={'aktif':[('readonly',True)]}),
-		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade", readonly=True),
+		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade", readonly=True,),
 		'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
 		
 		### paket join
 		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True, domain="[('is_submember','=',False)]",states={'aktif':[('readonly',True)]}),
 		'paket_harga'		: fields.related('paket_id', 'price' , 
-			type="float", relation="mlm.paket", string="Harga Paket"),
+			type="float", relation="mlm.paket", string="Harga Paket",readonly=True),
 		'paket_cashback'		: fields.related('paket_id', 'cashback' , 
-			type="float", relation="mlm.paket", string="Cashback Paket"),
+			type="float", relation="mlm.paket", string="Cashback Paket",readonly=True),
 
 		## paket barang
-		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk', states={'aktif':[('readonly',True)]}),
+		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk',),# states={'aktif':[('readonly',True)]}),
 		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
 		# 	required=True),
 
@@ -182,6 +182,9 @@ class member(osv.osv):
 		'start_join'		: fields.char("Start Join",readonly=True),
 		'cek_state'		    : fields.function(_cek_state, type="char", method=True,
 			string="Show/hide buttons", store=False, help="Show/hide buttons."),
+
+		'history_join_ids'	: fields.one2many('mlm.history.join','member_id',string='History Join',readonly=True),
+
 	}
 	_defaults = {
 		'code'				: lambda obj, cr, uid, context: '/',		
@@ -189,6 +192,8 @@ class member(osv.osv):
 		'paket_produk_ids'	: _get_default_paket_produk,
 		'cek_state'			: 'draft',
 	}
+	_sql_constraints = [('id_number_uniq', 'unique(id_number)','No KTP / SIM sudah ada !')]
+
 
 	#########################################################################
 	# cari MLM plan current company
@@ -675,17 +680,19 @@ class member(osv.osv):
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
 		paket = self.pool.get('mlm.paket').browse(cr,uid,int(vals['paket_id']))
 		start_join = paket.name or ''
+
 		vals.update({
 			'customer':True,
 			'supplier':True,
 			'is_company':True,
-			'start_join':start_join
+			'start_join':start_join,
+
 		})
 		if members_categ:
 			vals.update({
 				'category_id': [(4, members_categ[0])]
 		})
-		# import pdb;pdb.set_trace()
+		
 		new_id = super(member, self).create(cr, uid, vals, context=context)
 
 		return new_id
@@ -790,11 +797,21 @@ class member(osv.osv):
 		else:
 			new_path = "%s" % (new_code)
 
+		#########################################################################	
+		# buat histori confirm
+		#########################################################################
+		history= {
+				'member_id'		: ids[0],
+				'paket_id'		: new_member.paket_id.id,
+				'date'			: time.strftime("%Y-%m-%d %H:%M:%S")
+		}
+		history_id = self.pool.get('mlm.history.join').create(cr, uid, history, context=context)
+
 		self.write(cr,uid,ids[0],{
 			'code' : new_code,
 			'path' : new_path,
-			'state': MEMBER_STATES[1][0]}, context=context)
-		
+			'state': MEMBER_STATES[1][0]},context=context)
+															
 		#########################################################################
 		# update path_ltree 
 		#########################################################################		
@@ -993,17 +1010,18 @@ class member(osv.osv):
 		jml_paket = partner.paket_id.hak_usaha
 		for paket in paket_produk_ids:
 			paket_qty = paket.qty
-			isi_paket+=paket_qty
-			for detail in paket.paket_produk_id.paket_produk_detail_ids:
-				lines.append((0,0,{
-					'product_id'		: detail.product_id.id,
-					'product_uom'		: detail.uom_id.id,
-					'name'				: detail.product_id.name,
-					'product_uom_qty' 	: detail.qty * paket_qty,
-					'price_unit' 		: detail.product_id.lst_price,
-				}))
+			if paket_qty > 0 :
+				isi_paket+=paket_qty
+				for detail in paket.paket_produk_id.paket_produk_detail_ids:
+					lines.append((0,0,{
+						'product_id'		: detail.product_id.id,
+						'product_uom'		: detail.uom_id.id,
+						'name'				: detail.product_id.name,
+						'product_uom_qty' 	: detail.qty * paket_qty,
+						'price_unit' 		: detail.product_id.lst_price,
+					}))
 		if not lines:
-			return False 
+			raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
 
 		if isi_paket != jml_paket:
 			raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
@@ -1022,6 +1040,7 @@ class member(osv.osv):
 			'partner_shipping_id' 	: partner.id,
 			'date_order'			: time.strftime("%Y-%m-%d %H:%M:%S") ,
 			'order_line' 			: lines,
+			'order_policy'			: 'prepaid', # agar invoice di buat otomatis sebelum barang di transfer
 			'origin'				: 'Paket Produk Member: %s' % (partner.name)
 		}
 		sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
@@ -1219,5 +1238,35 @@ class member(osv.osv):
 			for child in new_childs:
 				self.action_aktif(cr,uid,[child],context=None)
 
+		#########################################################
+		# buat histori upgrade
+		#########################################################
+		history= {
+				'member_id'		: ids[0],
+				'paket_id'		: new_paket_id,
+				'date'			: time.strftime("%Y-%m-%d %H:%M:%S")
+		}
+		history_id = self.pool.get('mlm.history.join').create(cr, uid, history, context=context)
+
 		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
+
 		return True 
+
+
+class mlm_history_join(osv.osv):
+	_name ='mlm.history.join'
+
+	def name_get(self, cr, uid, ids, context=None):
+		res = []
+		for history in self.read(cr, uid, ids, context=context):
+			nam = history['paket_id'][1] + "[" + history['date'] + "]"# [0]=id, [1]=name
+			res.append((history['id'], nam))
+		return res
+
+	_columns ={
+		'member_id'		: fields.many2one('res.partner','Member_id'),
+		'paket_id'		: fields.many2one('mlm.paket','Paket'),
+		'date'			: fields.date('Date'),
+		}
+
+mlm_history_join()

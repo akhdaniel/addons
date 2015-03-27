@@ -7,7 +7,7 @@
 			<field name="name">List Bonus Sponsor Today</field>
 			<field name="res_model">mlm.member_bonus</field>
 			<field name="view_mode">tree,form</field>
-			<field name="context">{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_group_by_member':1,}</field>
+			<field name="context">{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_not_null': 1,'search_default_group_by_member':1,}</field>
 		</record>
 
 
