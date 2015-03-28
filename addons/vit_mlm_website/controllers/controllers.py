@@ -14,8 +14,17 @@ class Member(http.Controller):
 	@http.route('/mlm/member/list', auth='user', website=True)
 	def list(self, **kw):
 		Members = http.request.env['res.partner']
+		Mypath = Members.browse(request.uid).path
+		MyMembers=[]
+		if Mypath:
+			MyMembers.append(request.uid)
+			A=Members.search([('customer','=',True)])
+			for x in A:
+				path = x.path
+				if path and path.startswith(Mypath):
+					MyMembers.append(x.id)
 		return http.request.render('website.member_list', {
-			'members': Members.search([('customer','=',True)])
+			'members': Members.search([('id','in',MyMembers)])
 		})  
 
 	@http.route('/mlm/member/view/<model("res.partner"):member>',  auth='user', website=True)
@@ -24,10 +33,10 @@ class Member(http.Controller):
 		# Paket  = http.request.env['mlm.paket']
 		# State = http.request.env['res.country.state']
 		# Country = http.request.env['res.country']
-		Products  = http.request.env['mlm.paket_produk']
+		# Products  = http.request.env['mlm.paket_produk']
 		return http.request.render('website.member_view', {
 			'member': member,
-			'products': Products.search([]),
+			'products': member.paket_produk_ids,
 			# 'members': Member.search([]),
 			# 'pakets': Paket.search([]),
 			# 'states': State.search([]),
@@ -178,9 +187,15 @@ class Member(http.Controller):
 			'members': Partners,
 		})
 
-	@http.route('/mlm/member/create/json/<int:country_id>',type='json', method='post')
-	def json(self,country_id, **kwargs):
-		# import pdb;pdb.set_trace()
-		State = http.request.env['res.country.state']
-		states = State.search([('country_id','=',country_id)])
-		return {'states':[a.id for a in states]}
+	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
+	def tree(self,member):
+		return http.request.render('website.d3_member_tree', {
+			'member': member,
+		})
+
+	# @http.route('/mlm/member/create/json/<int:country_id>',type='json', method='post')
+	# def json(self,country_id, **kwargs):
+	# 	# import pdb;pdb.set_trace()
+	# 	State = http.request.env['res.country.state']
+	# 	states = State.search([('country_id','=',country_id)])
+	# 	return {'states':[a.id for a in states]}
