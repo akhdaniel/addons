@@ -12,22 +12,12 @@ class Member(http.Controller):
 		})
 
 	@http.route('/mlm/member/list', auth='user', website=True)
-	def list(self, **kw):
-		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
-		
-		Users  = pool['res.users']
-		user   = Users.browse(cr, uid, uid, context=context)
-		Mypath = user.partner_id and user.partner_id.path
-		
+	def list(self, **kw):		
 		Partners = http.request.env['res.partner']
-		sql="select id from res_partner where path_ltree <@ '%s' order by path_ltree" % (Mypath)
-		cr.execute(sql)
-		member_ids = cr.fetchall()
-		Mymembers =[x[0] for x in member_ids]
-		# import pdb;pdb.set_trace()
+		Mymembers = self._cari_users_members(request.cr, request.uid, request.uid, request.context)
 		return http.request.render('website.member_list', {
 			'members': Partners.search([('id','in',Mymembers)])
-		})  
+		}) 
 
 	@http.route('/mlm/member/view/<model("res.partner"):member>',  auth='user', website=True)
 	def view(self, member):
@@ -72,6 +62,7 @@ class Member(http.Controller):
 		State = http.request.env['res.country.state']
 		Country = http.request.env['res.country']
 		Products  = http.request.env['mlm.paket_produk']
+		Mymembers = self._cari_users_members(cr, uid, uid, context)
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
@@ -83,7 +74,7 @@ class Member(http.Controller):
 			'parent' : parent,
 			'member' : None,
 			'pakets' : Paket.search([]),
-			'members': Member.search([('customer','=',True)]),
+			'members': Member.search([('id','in',Mymembers)]),
 			'states': State.search([]),
 			'countrys': Country.search([]),
 			'products': Products.search([]),
@@ -195,9 +186,18 @@ class Member(http.Controller):
 			'member': member,
 		})
 
+	def _cari_users_members(self,cr,uid,user_id,context=None):
+		Users  = request.registry['res.users']
+		user   = Users.browse(cr, uid, user_id, context=context)
+		path   = user.partner_id and user.partner_id.path
+		
+		sql="select id from res_partner where path_ltree <@ '%s' order by path_ltree" % (path)
+		cr.execute(sql)
+		member_ids = cr.fetchall()
+		return [x[0] for x in member_ids]
+
 	# @http.route('/mlm/member/create/json/<int:country_id>',type='json', method='post')
 	# def json(self,country_id, **kwargs):
-	# 	# import pdb;pdb.set_trace()
 	# 	State = http.request.env['res.country.state']
 	# 	states = State.search([('country_id','=',country_id)])
 	# 	return {'states':[a.id for a in states]}
