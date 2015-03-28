@@ -13,18 +13,20 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/list', auth='user', website=True)
 	def list(self, **kw):
-		Members = http.request.env['res.partner']
-		Mypath = Members.browse(request.uid).path
-		MyMembers=[]
-		if Mypath:
-			MyMembers.append(request.uid)
-			A=Members.search([('customer','=',True)])
-			for x in A:
-				path = x.path
-				if path and path.startswith(Mypath):
-					MyMembers.append(x.id)
+		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+		
+		Users  = pool['res.users']
+		user   = Users.browse(cr, uid, uid, context=context)
+		Mypath = user.partner_id and user.partner_id.path
+		
+		Partners = http.request.env['res.partner']
+		sql="select id from res_partner where path_ltree <@ '%s' order by path_ltree" % (Mypath)
+		cr.execute(sql)
+		member_ids = cr.fetchall()
+		Mymembers =[x[0] for x in member_ids]
+		# import pdb;pdb.set_trace()
 		return http.request.render('website.member_list', {
-			'members': Members.search([('id','in',MyMembers)])
+			'members': Partners.search([('id','in',Mymembers)])
 		})  
 
 	@http.route('/mlm/member/view/<model("res.partner"):member>',  auth='user', website=True)
