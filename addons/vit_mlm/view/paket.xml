@@ -25,17 +25,26 @@
 				    		<group>
 					            <field name="code"/>
 					            <field name="name"/>
-					            <field name="price"/>
-					            <field name="cashback"/>
-					            <field name="hak_usaha"/>
+					            <field name="description"/>
 					        </group>
-					        <group>
+				    		<group>
+					            <field name="hak_usaha"/>
+					            <label for="paket_product_id" string="Paket Ref"/>
+	                            <div>
+	                                <group>
+	                                    <field name="paket_product_id" on_change="onchange_paket_product_id(paket_product_id)" class="oe_inline" nolabel="1"/>
+	                                    <field name="harga" class="oe_inline" nolabel="1"/>
+	                                </group>
+	                            </div>						               
+					            <field name="cashback"/>
+					            <field name="price"/>
+					        </group>
+					     </group>
+					        <group string="Settings">
 					            <field name="is_affiliate"/>
 					            <field name="is_upgradable"/>
 					            <field name="is_submember"/>
-					            <field name="description"/>
-					        </group>
-					    </group>
+					        </group>				        	
 					</sheet>
 		        </form>    
 		    </field>

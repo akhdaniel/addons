@@ -36,7 +36,7 @@
 		            	<group>
 			                <field name="description"/>       
 			                <field name="harga"/>
-			                <!-- <field name="harga_"/>  -->      
+			                <!-- <field name="discount"/>   -->     
 			            </group>
 
 			            <notebook>
