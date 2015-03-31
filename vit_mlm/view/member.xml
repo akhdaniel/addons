@@ -8,7 +8,7 @@
                 <field name="parent_id" position="replace"/>
 
             	<field name="website" position="after">
-                    <field name="path" readonly="True"/>
+                    <field name="path" readonly="True" invisible="1"/>
             		<field name="code" readonly="True"/>
                     <field name="parent_id" />
                     <field name="sponsor_id" />
@@ -67,6 +67,7 @@
                         <button name="action_nonaktif" type="object" 
                             states="aktif"
                             string="Eliminasi"
+                            class="oe_edit_only"
                             confirm="Are you sure to eliminate this member ?"/>
 
                             <!-- states="aktif" -->
@@ -186,11 +187,25 @@
                 <field name="email" position="after">
                     <field name="sponsor_id"/>
                     <field name="parent_id"/>
+                    <field name="paket_id"/>
                     <field name="state"/>
                 </field>
             </field>
         </record>
 
+        <!-- Tambah filter di partner -->
+       <record id="view_res_partner_filter_mahasiswa" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Country" context="{'group_by': 'country_id'}" position="after">
+                    <filter string="Sponsor" context="{'group_by': 'sponsor_id'}"/>
+                    <filter string="Paket" context="{'group_by': 'paket_id'}"/>
+                    <filter string="State" context="{'group_by': 'state'}"/>
+                </filter>   
+            </field>
+        </record>
 
     </data>
 </openerp>

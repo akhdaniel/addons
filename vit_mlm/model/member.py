@@ -1007,6 +1007,11 @@ class member(osv.osv):
 		paket_produk_ids = partner.paket_produk_ids	
 
 		#################################################################
+		# sale_order dan invoice object
+		#################################################################
+		sale_order_obj = self.pool.get("sale.order")
+
+		#################################################################
 		# compose sale_order lines 
 		#################################################################
 		lines = []
@@ -1031,33 +1036,44 @@ class member(osv.osv):
 		# jika create SO untuk join pertama
 		####################################################		
 		if partner.cek_state != 'update':
+			paket_so = partner.paket_id.id
 			if isi_paket != jml_paket:
 				raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
+			##############################################################
+			# cek apakah sudah buat SO sebelumnya untuk aktifkan memmber
+			##############################################################	
+			sale_order_exist 	= sale_order_obj.search(cr,uid,[('partner_id','=',ids[0]),('paket_id','=',partner.paket_id.id)])	
+			if sale_order_exist :
+				raise osv.except_osv(_('Error!'), _('Sale Order member %s paket %s sudah ada !') % (partner.name,partner.paket_id.name))
+
 		####################################################
 		# jika create SO untuk Upgrade
 		####################################################			
 		elif partner.cek_state == 'update':
-			paket  = partner.paket_id
 
 			####################################################
 			# hitung jumlah paket yang seharusnya diisi
 			####################################################
-			new_code 		= str(int(paket.code) + 1)
+			new_code 		= str(int(partner.paket_id.code) + 1)
 			paket_obj 		= self.pool.get('mlm.paket')
 			new_paket_id  	= paket_obj.search(cr,uid,[('code','=',new_code)])[0]
 
 			paket_browse	= paket_obj.browse(cr,uid,new_paket_id)
 			hu_baru 		= paket_browse.hak_usaha
-			paket_to_add 	= hu_baru - paket.hak_usaha	
+			paket_to_add 	= hu_baru - partner.paket_id.hak_usaha
+
+			paket_so  		= paket_browse.id
 
 			if isi_paket != paket_to_add :		
-				raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan upgrade \
-					paket %s ke paket %s (%d paket product) " % (partner.paket_id.name,paket_browse.name,paket_to_add)))
+				raise osv.except_osv(_('Warning!'),_("Jumlah paket produk tidak sesuai dengan upgrade \
+					paket %s ke paket %s (%d paket product) !" % (partner.paket_id.name,paket_browse.name,paket_to_add)))
 
-		#################################################################
-		# sale_order object
-		#################################################################
-		sale_order_obj = self.pool.get("sale.order")
+			##############################################################
+			# cek apakah sudah buat SO sebelumnya untuk aktifkan memmber
+			##############################################################	
+			sale_order_exist 	= sale_order_obj.search(cr,uid,[('partner_id','=',ids[0]),('paket_id','=',new_paket_id)])	
+			if sale_order_exist :
+				raise osv.except_osv(_('Error!'), _('Sale Order member %s paket upgrade %s sudah ada !') % (partner.name,paket_browse.name))
 
 		#################################################################
 		# create sale_order 
@@ -1069,7 +1085,8 @@ class member(osv.osv):
 			'date_order'			: time.strftime("%Y-%m-%d %H:%M:%S") ,
 			'order_line' 			: lines,
 			'order_policy'			: 'prepaid', # agar invoice di buat otomatis sebelum barang di transfer
-			'origin'				: 'Paket Produk Member: %s' % (partner.name)
+			'origin'				: 'Paket Produk Member: %s' % (partner.name),
+			'paket_id'				:  paket_so#insert paket id di SO
 		}
 		sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
 
@@ -1103,6 +1120,7 @@ class member(osv.osv):
 		
 		if not paket.is_upgradable:
 			raise osv.except_osv(_('Error!'), _('Paket %s tidak bisa diupgrade!') % (paket.name))
+
 		####################################################
 		# paket yg akan diisikan ke member yg diupdate
 		####################################################
@@ -1116,7 +1134,24 @@ class member(osv.osv):
 		member_to_add 	= hu_baru - paket.hak_usaha
 
 		####################################################
-		# cek dulu paket yang akan di upgrade 
+		# cek invoice atas join paket ini apa sdh paid?
+		####################################################			
+		inv_obj = self.pool.get('account.invoice')
+		invoice_id 	= inv_obj.search(cr,uid,[('partner_id','=',ids[0]),('paket_id','=',new_paket_id)])	
+		if not invoice_id :
+			raise osv.except_osv(_('Tidak bisa upgrade!'), _('Hal ini terjadi karena SO belum di buat, \n jika SO sudah dibuat berarti invoicenya belum dibuat'))
+
+		else :
+			invoice 	= inv_obj.browse(cr,uid,invoice_id[0])
+			inv_state 	= invoice.state
+			inv_number	= invoice.number
+			if inv_number == False :
+				inv_number = '(masih draft)'
+			if inv_state != 'paid' :
+				raise osv.except_osv(_('Error!'), _('Invoice %s untuk upgrade paket %s member ini belum paid !') % (inv_number,paket_browse.name))
+
+		####################################################
+		# cek paket yang akan di upgrade 
 		# apakah jml paket detailnya sesuai dengan sisa
 		# hak usaha (hak usaha baru - hak usaha lama)
 		####################################################
