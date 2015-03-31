@@ -14,13 +14,12 @@
                     <field name="sponsor_id" />
                     <field name="paket_id" widget="selection"/>
                     <field name="start_join" attrs="{'invisible': [('state','!=','draft')]}"/>
-                    <field name="history_join_ids" widget="many2many_tags" attrs="{'invisible': [('state','=','draft')]}"/>
                     <!-- <field name="paket_produk_id" /> -->
                     <field name="paket_harga" />
                     <field name="paket_cashback" />
-                    <!--field name="is_affiliate" /-->
+                    <field name="history_join_ids" widget="many2many_tags" attrs="{'invisible': [('state','=','draft')]}"/>
+                    <field name="jumlah_bayar" />
             		<field name="is_stockist" />
-
             	</field>
 
                 <field name="mobile" position="after">
@@ -75,6 +74,11 @@
                             string="Upgrade"
                             attrs="{'invisible':[('cek_state','!=','update')]}"
                             confirm="Are you sure to upgrade this member ?"/>
+
+                        <button name="action_create_sale_order" type="object" 
+                            string="Sale Order Upgrade"
+                            attrs="{'invisible':[('cek_state','!=','update')]}"
+                            confirm="Are you sure to create Sale Order Upgrade to this member ?"/>
 
                         <!--button string="View Sale Order" type="object" name="action_view_sale_order"
                              attrs="{'invisible': ['|', ('sale_order_exists', '=', False), ('state','=','aktif')]}" /-->
