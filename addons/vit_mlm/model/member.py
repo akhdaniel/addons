@@ -9,7 +9,7 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 MEMBER_STATES =[('draft','Draft'),('open','Sedang Verifikasi'), ('reject','Ditolak'),
-                 ('aktif','Aktif'),('nonaktif','Non Aktif')]
+				 ('aktif','Aktif'),('nonaktif','Non Aktif')]
 BONUS_SPONSOR_CODE   = 1
 BONUS_PASANGAN_CODE  = 2
 BONUS_LEVEL_CODE     = 3
@@ -143,8 +143,7 @@ class member(osv.osv):
 		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True, domain="[('is_submember','=',False)]",states={'aktif':[('readonly',True)]}),
 		'paket_harga'		: fields.related('paket_id', 'price' , 
 			type="float", relation="mlm.paket", string="Harga Paket",readonly=True),
-		'paket_cashback'		: fields.related('paket_id', 'cashback' , 
-			type="float", relation="mlm.paket", string="Cashback Paket",readonly=True),
+		'paket_cashback'		: fields.float("Cashback Join",readonly=True,store=True),
 
 		## paket barang
 		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk',),# states={'aktif':[('readonly',True)]}),
@@ -178,12 +177,13 @@ class member(osv.osv):
 		'sale_order_ids'		: fields.one2many('sale.order','partner_id','Sale Orders'),
 		'sale_order_exists'		: fields.function(_sale_order_exists, 
 			string='Sales Order Ada',  
-		    type='boolean', help="Apakah Partner ini sudah punya Sales Order."),	
+			type='boolean', help="Apakah Partner ini sudah punya Sales Order."),	
 		'start_join'		: fields.char("Start Join",readonly=True),
 		'cek_state'		    : fields.function(_cek_state, type="char", method=True,
 			string="Show/hide buttons", store=False, help="Show/hide buttons."),
 
 		'history_join_ids'	: fields.one2many('mlm.history.join','member_id',string='History Join',readonly=True),
+		'jumlah_bayar'		: fields.float('Yang harus dibayar',readonly=True),
 
 	}
 	_defaults = {
@@ -511,7 +511,7 @@ class member(osv.osv):
 					
 					# jika belum exists
 					exist = ['&','&',('member_id','=',upline_id),('level','=',rel_level),
- 						('bonus_id','=',bonus_level)]
+						('bonus_id','=',bonus_level)]
 					if not member_bonus.search(cr, uid, exist, context=context):
 						# full level: harus jumlah child == 2^level
 						if children == 2**rel_level:
@@ -534,7 +534,7 @@ class member(osv.osv):
 					# jika kiri =1 and kanan = 1: add bonus level
 					if children_kiri >= 1 and children_kanan>=1:
 						exist = ['&','&',('member_id','=',upline_id),('level','=',rel_level),
-	 						('bonus_id','=',bonus_level)]
+							('bonus_id','=',bonus_level)]
 						if not member_bonus.search(cr, uid, exist, context=context):
 							member_bonus.addBonusLevel(cr, uid, new_member.id, upline_id, rel_level,
 								amount_bonus_level, "%sLevel %d" % (cashback, rel_level), context=context)
@@ -605,11 +605,11 @@ class member(osv.osv):
 			for lev in levels.keys():
 				kiris = levels[lev][0]
 				kanans = levels[lev][1]
- 				
- 				for kiri in kiris:
- 				# 	search = ['&','&',('level', '=',lev),
- 				# 			('bonus_id','=',bonus_pasangan),
- 				# 			('new_member_id','=',kiri)]	
+				
+				for kiri in kiris:
+				# 	search = ['&','&',('level', '=',lev),
+				# 			('bonus_id','=',bonus_pasangan),
+				# 			('new_member_id','=',kiri)]	
 					# exist = member_bonus.search(cr, uid, search, context=context)
 					sql = "select id from mlm_member_bonus \
 							where level = %d \
@@ -619,11 +619,11 @@ class member(osv.osv):
 					_logger.warning( sql )
 					cr.execute(sql)
 					exist = cr.fetchall()						
- 					if not exist :
-	 					for kanan in kanans:
-		 					# search = ['&','&',('match_member_id', '=',kanan),('level', '=',lev),
-		 					# 	('bonus_id','=',bonus_pasangan)] 					
-		 					# exist = member_bonus.search(cr, uid, search, context=context)
+					if not exist :
+						for kanan in kanans:
+							# search = ['&','&',('match_member_id', '=',kanan),('level', '=',lev),
+							# 	('bonus_id','=',bonus_pasangan)] 					
+							# exist = member_bonus.search(cr, uid, search, context=context)
 							sql = "select id from mlm_member_bonus \
 									where level = %d \
 									and bonus_id = %d \
@@ -632,12 +632,12 @@ class member(osv.osv):
 							_logger.warning( sql )
 							cr.execute(sql)
 							exist = cr.fetchall()		 					
-		 					if not exist:
-		 						desc = '%sPasangan' % (cashback)
-		 						member_bonus.addBonusPasangan(cr, uid, kiri, kanan, 
-		 							upline_id, lev, amount, desc, context=context)
-		 						cr.commit()
-		 						break
+							if not exist:
+								desc = '%sPasangan' % (cashback)
+								member_bonus.addBonusPasangan(cr, uid, kiri, kanan, 
+									upline_id, lev, amount, desc, context=context)
+								cr.commit()
+								break
 		return True 
 
 	#########################################################################
@@ -679,13 +679,17 @@ class member(osv.osv):
 			self.cek_max_downline(cr, uid, vals['parent_id'], context=context)
 		members_categ = self.pool.get('res.partner.category').search(cr, uid, [('name','=','Members')], context=context)
 		paket = self.pool.get('mlm.paket').browse(cr,uid,int(vals['paket_id']))
-		start_join = paket.name or ''
+		start_join 	= paket.name or ''
+		harga_paket = paket.price
+		cashback 	= paket.cashback
 
 		vals.update({
-			'customer':True,
-			'supplier':True,
-			'is_company':True,
-			'start_join':start_join,
+			'customer'		: True,
+			'supplier'		: True,
+			'is_company'	: True,
+			'start_join'	: start_join,
+			'jumlah_bayar'	: harga_paket-cashback,
+			'paket_cashback': cashback
 
 		})
 		if members_categ:
@@ -1000,7 +1004,7 @@ class member(osv.osv):
 		# partner
 		#################################################################
 		partner = self.browse(cr, uid, ids[0], context)
-		paket_produk_ids = partner.paket_produk_ids
+		paket_produk_ids = partner.paket_produk_ids	
 
 		#################################################################
 		# compose sale_order lines 
@@ -1021,11 +1025,35 @@ class member(osv.osv):
 						'price_unit' 		: detail.product_id.lst_price,
 					}))
 		if not lines:
-			raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
+			raise osv.except_osv(_('Warning'),_("Jumlah produk paket %s kosong, Isi dulu !" % (partner.paket_id.name))) 
 
-		if isi_paket != jml_paket:
-			raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
-		
+		####################################################
+		# jika create SO untuk join pertama
+		####################################################		
+		if partner.cek_state != 'update':
+			if isi_paket != jml_paket:
+				raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name))) 
+		####################################################
+		# jika create SO untuk Upgrade
+		####################################################			
+		elif partner.cek_state == 'update':
+			paket  = partner.paket_id
+
+			####################################################
+			# hitung jumlah paket yang seharusnya diisi
+			####################################################
+			new_code 		= str(int(paket.code) + 1)
+			paket_obj 		= self.pool.get('mlm.paket')
+			new_paket_id  	= paket_obj.search(cr,uid,[('code','=',new_code)])[0]
+
+			paket_browse	= paket_obj.browse(cr,uid,new_paket_id)
+			hu_baru 		= paket_browse.hak_usaha
+			paket_to_add 	= hu_baru - paket.hak_usaha	
+
+			if isi_paket != paket_to_add :		
+				raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan upgrade \
+					paket %s ke paket %s (%d paket product) " % (partner.paket_id.name,paket_browse.name,paket_to_add)))
+
 		#################################################################
 		# sale_order object
 		#################################################################
@@ -1044,8 +1072,11 @@ class member(osv.osv):
 			'origin'				: 'Paket Produk Member: %s' % (partner.name)
 		}
 		sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
-		
-		return sale_order_id
+
+		# cr.commit()
+		# raise osv.except_osv( '' , '')
+		return {'warning': {'title': _('OK!'),'message': _('Sale Order telah dibuat !.')}}
+
 
 	def _cari_data_bds_ltree_level(self, cr, uid, path_ltree, start_lv, context=None):
 		sql = """SELECT id, path_ltree, path, \
@@ -1080,10 +1111,34 @@ class member(osv.osv):
 		new_paket_id  	= paket_obj.search(cr,uid,[('code','=',new_code)])[0]
 
 		max_downline 	= upline.company_id.mlm_plan_id.max_downline
-		hu_baru 		= paket_obj.browse(cr,uid,new_paket_id,).hak_usaha
+		paket_browse	= paket_obj.browse(cr,uid,new_paket_id,)
+		hu_baru 		= paket_browse.hak_usaha
 		member_to_add 	= hu_baru - paket.hak_usaha
 
+		####################################################
+		# cek dulu paket yang akan di upgrade 
+		# apakah jml paket detailnya sesuai dengan sisa
+		# hak usaha (hak usaha baru - hak usaha lama)
+		####################################################
+		titik = 0
+		for ttk in upline.paket_produk_ids :
+			titik += ttk.qty
+
+		if member_to_add != 0.0 :
+			if titik != member_to_add:
+				raise osv.except_osv(_('Error!'), _('Upgrade ke Paket %s harus beli %d paket lagi !') 
+													% (paket_browse.name,member_to_add))
+
 		if member_to_add == 0:
+			#########################################################
+			# buat histori upgrade
+			#########################################################
+			history= {
+					'member_id'		: ids[0],
+					'paket_id'		: new_paket_id,
+					'date'			: time.strftime("%Y-%m-%d %H:%M:%S")
+			}
+			self.pool.get('mlm.history.join').create(cr, uid, history, context=context)
 			return self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
 
 		direct_src = self.search(cr,uid,[('parent_id','=',upline.id)])
@@ -1147,7 +1202,7 @@ class member(osv.osv):
 			# sambungkan kembali upline_id nya
 			####################################################	
 			if direct_childs :
-			 	if kaki == 1 :
+				if kaki == 1 :
 					self.write(cr,uid,direct_childs[0].id,{'parent_id':new_id})
 
 				elif len(direct_childs) >1 and kaki == 2 :
@@ -1246,9 +1301,13 @@ class member(osv.osv):
 				'paket_id'		: new_paket_id,
 				'date'			: time.strftime("%Y-%m-%d %H:%M:%S")
 		}
-		history_id = self.pool.get('mlm.history.join').create(cr, uid, history, context=context)
+		self.pool.get('mlm.history.join').create(cr, uid, history, context=context)
 
-		self.write(cr,uid,ids[0],{'paket_id':new_paket_id})
+		harga_paket_awal 	= upline.paket_id.price
+		harga_paket_upgrade = paket_browse.price
+		jml_harus_dibayar	= harga_paket_upgrade-harga_paket_awal
+
+		self.write(cr,uid,ids[0],{'paket_id':new_paket_id,'jumlah_bayar':jml_harus_dibayar})
 
 		return True 
 

@@ -10,8 +10,8 @@ _logger = logging.getLogger(__name__)
 class mlm_plan(osv.osv):
 	_name 		= "mlm.mlm_plan"
 	_columns 	= {
-		'name'				: fields.char('Name'),
-		'code'				: fields.char('Code'),
+		'name'				: fields.char('Name',required=True),
+		'code'				: fields.char('Code',required=True),
 		'max_downline'		: fields.integer('Max Downline',
 			help='Berapa jumlah max downline suatu titik, isi dengan 0 untuk unlimited'),
 

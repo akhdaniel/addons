@@ -10,8 +10,8 @@ _logger = logging.getLogger(__name__)
 class member_paket_produk(osv.osv):
 	_name 		= "mlm.member_paket_produk"
 	_columns 	= {
-		'qty' 		: fields.float('Qty'),
-		'paket_produk_id': fields.many2one('mlm.paket_produk','Produk Detail', ondelete="cascade"),
+		'qty' 		: fields.float('Qty',required=True),
+		'paket_produk_id': fields.many2one('mlm.paket_produk','Produk Detail', ondelete="cascade",required=True),
 		'member_id' : fields.many2one("res.partner", 'Member'),
 	}
 
@@ -19,7 +19,6 @@ class paket_produk(osv.osv):
 	_name 		= "mlm.paket_produk"
 
 	def _get_harga(self, cr, uid, ids, field_name, arg, context=None):
-
 		result = {}
 		for paket in self.browse(cr,uid,ids,context=context):
 			lines 			= paket.paket_produk_detail_ids
@@ -29,7 +28,7 @@ class paket_produk(osv.osv):
 			uom_obj			= self.pool.get('product.uom')
 			total_harga =0
 			for product in lines :
-				product_price 	= product.product_id.lst_price
+				product_price 	= product.harga
 				qty 			= product.qty
 
 				harga 			= product_price*qty
@@ -40,12 +39,12 @@ class paket_produk(osv.osv):
 		return result
 
 	_columns 	= {
-		'name' 		: fields.char('Name',required=True),
-		#'harga' 		: fields.float('Harga'),
-		'description' 		: fields.text('Description'),
-		'paket_produk_detail_ids': fields.one2many('mlm.paket_produk_detail','paket_produk_id','Produk Detail', ondelete="cascade"),
-
-		'harga'	: fields.function(_get_harga,type="float",string="Total Harga", readonly=True), # harga otomatis dihitung dari harga dan jumlah produk yang di input
+		'name' 						: fields.char('Name',required=True),
+		#'harga' 					: fields.float('Harga'),
+		'description' 				: fields.text('Description'),
+		'paket_produk_detail_ids'	: fields.one2many('mlm.paket_produk_detail','paket_produk_id','Produk Detail', ondelete="cascade"),
+		#'discount'					: fields.float('Discount',help="Ketik minus untuk mendapatkan potongan harga paket"),		
+		'harga'						: fields.function(_get_harga,type="float",string="Total Harga", readonly=True), # harga otomatis dihitung dari harga dan jumlah produk yang di input
 	}
 
 
@@ -53,7 +52,7 @@ class paket_produk_detail(osv.osv):
 	_name 		= "mlm.paket_produk_detail"
 	_columns 	= {
 		'paket_produk_id' : fields.many2one('mlm.paket_produk', 'Paket Produk ID'),
-		'product_id'   : fields.many2one('product.product', 'Produk ID',required=True),
+		'product_id'   : fields.many2one('product.product', 'Produk',required=True),
 		'qty' 		: fields.float('Qty',required=True),
 		'harga'		: fields.float('Harga',required=True),
 		'uom_id'	: fields.many2one('product.uom', 'Unit of Measure',required=True),
