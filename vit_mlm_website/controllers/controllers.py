@@ -139,7 +139,7 @@ class Member(http.Controller):
 					'res_name': field_value.filename,
 					'res_model': 'res.partner',
 					'res_id': lead_id,
-					'datas': base64.encodestring(field_value.read()),
+					'datas': values['signature'],
 					'datas_fname': field_value.filename,
 				}
 				request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
