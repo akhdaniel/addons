@@ -171,14 +171,13 @@ class member_bonus(osv.osv):
 
 		self.create_supplier_invoice(cr, uid, member_bonus, old_member_id, lines, context)
 
-		cr.commit()
-
-		raise osv.except_osv( 'OK!' , 'Done processing. %s import(s) member_bonus' % (i) )		
+		#cr.commit()
 
 		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_mlm', 'view_member_bonus_tree')
 		view_id = view_ref and view_ref[1] or False,	
 		return {
-			'name' : _('Temporary View'),
+			'warning': {'title': _('OK!'),'message': _('Done processing. %s import(s) member_bonus' % (i) )}, 
+			'name' : _('List Member Bonus'),
 			'view_type': 'form',
 			'view_mode': 'tree',			
 			'res_model': 'mlm.member_bonus',
@@ -186,7 +185,6 @@ class member_bonus(osv.osv):
 			'type': 'ir.actions.act_window',
 			'view_id': view_id,
 			'target': 'current',
-			#'domain' : "[('state','=','draft')]",
 			"context":"{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_not_null': 1,'search_default_group_by_member':1,}",
 			'nodestroy': False,
 		}
