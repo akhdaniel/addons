@@ -6,7 +6,7 @@
 		<record id="action_bonus_sponsor_today" model="ir.actions.act_window">
 			<field name="name">List Bonus Sponsor Today</field>
 			<field name="res_model">mlm.member_bonus</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree</field>
 			<field name="context">{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_not_null': 1,'search_default_group_by_member':1,}</field>
 		</record>
 
@@ -15,7 +15,7 @@
 		<record id="action_bonus_pasangan" model="ir.actions.act_window">
 			<field name="name">List Bonus Pasangan</field>
 			<field name="res_model">mlm.member_bonus</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree</field>
 			<field name="domain">[('amount','&lt;&gt;',0)]</field>
 			<field name="context">{'search_default_pasangan': 1,'search_default_not_transfered':1, 
 			'search_default_group_by_member':1}</field>
@@ -25,7 +25,7 @@
 		<record id="action_bonus_level" model="ir.actions.act_window">
 			<field name="name">List Bonus Level</field>
 			<field name="res_model">mlm.member_bonus</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree</field>
 			<field name="domain">[('amount','&lt;&gt;',0)]</field>
 			<field name="context">{'search_default_level': 1,'search_default_not_transfered':1,
 			'search_default_group_by_member':1}</field>
@@ -35,7 +35,7 @@
 		<record id="action_bonus_development" model="ir.actions.act_window">
 			<field name="name">List Bonus Development</field>
 			<field name="res_model">mlm.member_bonus</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree</field>
 			<field name="context">{'search_default_development': 1,'search_default_not_transfered':1,
 				'search_default_group_by_member':1}</field>
 		</record>
@@ -44,7 +44,7 @@
 		<record id="action_bonus_leadership" model="ir.actions.act_window">
 			<field name="name">List Bonus Leadership</field>
 			<field name="res_model">mlm.member_bonus</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree</field>
 			<field name="context">{'search_default_leadership': 1,'search_default_not_transfered':1,
 				'search_default_group_by_member':1}</field>
 		</record>

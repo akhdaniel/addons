@@ -131,16 +131,33 @@ class member(osv.osv):
 				res[partner.id] = 'sale'
 		return res
 
+	# untuk mencari invoice pertama (inv join) apa sdh paid atau belum
+	def _get_inv_join_paid(self, cr, uid, ids, field, arg, context=None):
+		inv_obj		= self.pool.get("account.invoice")
+		results 	= {}
+		partners 	= self.browse(cr, uid, ids, context=context)
+		for partner in partners:
+			results[partner.id] = False
+			inv_id 	= inv_obj.search(cr,uid,[('partner_id','=',partner.id)])
+			#jika ada invoicenya
+			if inv_id :
+				# cari yang id nya paling kecil
+				inv_join 	= sorted(inv_id)[0] 
+				inv_state 	= inv_obj.browse(cr,uid,inv_join).state
+				if inv_state == 'paid' :
+					results[partner.id] = True
+		return results
+
 	_columns 	= {
 		'path'				: fields.char("Path"),
 		'code'				: fields.char("Member ID"),
-		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=False,states={'aktif':[('readonly',True)]}),
-		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False,states={'aktif':[('readonly',True)]}),
+		'parent_id' 		: fields.many2one('res.partner', 'Upline ID', required=False,readonly=True,states={'draft':[('readonly',False)]}),
+		'sponsor_id' 		: fields.many2one('res.partner', 'Sponsor ID', required=False,readonly=True,states={'draft':[('readonly',False)]}),
 		'member_bonus_ids' 	: fields.one2many('mlm.member_bonus','member_id','Member Bonuses', ondelete="cascade", readonly=True,),
 		'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
 		
 		### paket join
-		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True, domain="[('is_submember','=',False)]",states={'aktif':[('readonly',True)]}),
+		'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True, domain="[('is_submember','=',False)]",readonly=True,states={'draft':[('readonly',False)]}),
 		'paket_harga'		: fields.related('paket_id', 'price' , 
 			type="float", relation="mlm.paket", string="Harga Paket",readonly=True),
 		'paket_cashback'		: fields.float("Cashback Join",readonly=True,store=True),
@@ -184,6 +201,7 @@ class member(osv.osv):
 
 		'history_join_ids'	: fields.one2many('mlm.history.join','member_id',string='History Join',readonly=True),
 		'jumlah_bayar'		: fields.float('Yang harus dibayar',readonly=True),
+		'invoice_join_paid'	: fields.function(_get_inv_join_paid, type="boolean",readonly=True,string="Invoice Join Paid")
 
 	}
 	_defaults = {
@@ -1027,7 +1045,7 @@ class member(osv.osv):
 						'product_uom'		: detail.uom_id.id,
 						'name'				: detail.product_id.name,
 						'product_uom_qty' 	: detail.qty * paket_qty,
-						'price_unit' 		: detail.product_id.lst_price,
+						'price_unit' 		: detail.harga,
 					}))
 		if not lines:
 			raise osv.except_osv(_('Warning'),_("Jumlah produk paket %s kosong, Isi dulu !" % (partner.paket_id.name))) 
@@ -1066,7 +1084,7 @@ class member(osv.osv):
 
 			if isi_paket != paket_to_add :		
 				raise osv.except_osv(_('Warning!'),_("Jumlah paket produk tidak sesuai dengan upgrade \
-					paket %s ke paket %s (%d paket product) !" % (partner.paket_id.name,paket_browse.name,paket_to_add)))
+					paket %s ke paket %s (harus %d paket product) !" % (partner.paket_id.name,paket_browse.name,paket_to_add)))
 
 			##############################################################
 			# cek apakah sudah buat SO sebelumnya untuk aktifkan memmber
@@ -1139,14 +1157,14 @@ class member(osv.osv):
 		inv_obj = self.pool.get('account.invoice')
 		invoice_id 	= inv_obj.search(cr,uid,[('partner_id','=',ids[0]),('paket_id','=',new_paket_id)])	
 		if not invoice_id :
-			raise osv.except_osv(_('Tidak bisa upgrade!'), _('Hal ini terjadi karena SO belum di buat, \n jika SO sudah dibuat berarti invoicenya belum dibuat'))
+			raise osv.except_osv(_('Tidak bisa upgrade!'), _('Hal ini terjadi karena SO belum di buat, \n jika SO sudah dibuat berarti invoicenya belum dibuat !'))
 
 		else :
 			invoice 	= inv_obj.browse(cr,uid,invoice_id[0])
 			inv_state 	= invoice.state
 			inv_number	= invoice.number
 			if inv_number == False :
-				inv_number = '(masih draft)'
+				inv_number = ''
 			if inv_state != 'paid' :
 				raise osv.except_osv(_('Error!'), _('Invoice %s untuk upgrade paket %s member ini belum paid !') % (inv_number,paket_browse.name))
 
@@ -1345,6 +1363,18 @@ class member(osv.osv):
 		self.write(cr,uid,ids[0],{'paket_id':new_paket_id,'jumlah_bayar':jml_harus_dibayar})
 
 		return True 
+
+	def unlink(self, cr, uid, ids, context=None):
+		orphan_contact_ids = self.search(cr, uid,
+			[('parent_id', 'in', ids), ('id', 'not in', ids), ('use_parent_address', '=', True)], context=context)
+		if orphan_contact_ids:
+			# no longer have a parent address
+			self.write(cr, uid, orphan_contact_ids, {'use_parent_address': False}, context=context)
+		# hanya data yang berstatus draft saja yg bisa di hapus
+		for rec in self.browse(cr, uid, ids, context=context):
+			if rec.state != 'draft':
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft !'))            
+		return super(res_partner, self).unlink(cr, uid, ids, context=context)
 
 
 class mlm_history_join(osv.osv):

@@ -26,7 +26,7 @@ class paket_produk(osv.osv):
 				return result
 
 			uom_obj			= self.pool.get('product.uom')
-			total_harga =0
+			total_harga = 0
 			for product in lines :
 				product_price 	= product.harga
 				qty 			= product.qty
