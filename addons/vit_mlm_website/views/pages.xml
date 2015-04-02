@@ -3,24 +3,31 @@
 
 <template id="website.member_children">
     <t t-foreach="member.child_ids" t-as="child">
-	  {
+		<t t-set="stroke" t-value="'#B6BCBE'"/>
+		<t t-if="child.paket_id.is_affiliate==True and child.state=='aktif'"><t t-set="stroke" t-value="'#FF7373'"/></t>
+		<t t-if="child.paket_id.is_affiliate==False and child.state=='aktif'"><t t-set="stroke" t-value="'#4DBD33'"/></t>
+		{
 		 "name":"<t t-esc="child.name"/>",
 		 "parent":"<t t-esc="member.name" />",
+		 "type":"<t t-esc="stroke"/>",
 		 "children":[
 	        <t t-foreach="child.child_ids" t-as="child2">
-			  {
-	    		 "name":"<t t-esc="child2.name"/>",
-	    		 "parent":"<t t-esc="child.name" />",
-	    		 "children":[
+				<t t-set="stroke" t-value="'#B6BCBE'"/>
+				<t t-if="child2.paket_id.is_affiliate==True and child2.state=='aktif'"><t t-set="stroke" t-value="'#FF7373'"/></t>
+				<t t-if="child2.paket_id.is_affiliate==False and child2.state=='aktif'"><t t-set="stroke" t-value="'#4DBD33'"/></t>
+			  	{
+				 "name":"<t t-esc="child2.name"/>",
+				 "parent":"<t t-esc="child.name" />",
+				 "type":"<t t-esc="stroke"/>",
+				 "children":[
 					<t t-call="website.member_children">
 						<t t-set="member" t-value="child2"/>
 					</t>	
-	    		 ]
-			  },
+	    			]
+			  	},
 	        </t>				
-
 		 ]
-	  },
+		},
     </t>	
 </template>
 
@@ -30,9 +37,12 @@
 	<!-- load the d3.js library -->	
 	<script src="/vit_mlm_website/static/src/js/d3.min.js"></script>
 	<script>
+		<t t-set="stroke" t-value="'#B6BCBE'"/>
+		<t t-if="member.state=='aktif'"><t t-set="stroke" t-value="'#4DBD33'"/></t>
 		var treeData = [
 			{"name": "<t t-esc="member.name"/>",
 				"parent":"null",
+				"type":"<t t-esc="stroke"/>",
 				"children":[
 					<t t-call="website.member_children">
 						<t t-set="member" t-value="member"/>
@@ -98,10 +108,16 @@
 		comprises the node (using nodeEnter).
 		*/
 
+		/* styled below
 		nodeEnter.append("circle")
 			.attr("r", 1)
 			.style("fill", 
 				function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+		*/
+
+		nodeEnter.append("circle")
+			.attr("r", function(d) { return d.value; })
+			.style("stroke", function(d) { return d.type; });
 
 		/*
 		And we add in the text for each node
