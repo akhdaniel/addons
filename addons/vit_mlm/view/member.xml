@@ -54,7 +54,7 @@
                         <button name="action_aktif" type="object" 
                             class="oe_highlight"
                             string="Activate"
-                            attrs="{'invisible': ['|',('invoice_join_paid', '!=', True),('cek_state', '!=', '2baktif')]}" />
+                            attrs="{'invisible': [('cek_state', '!=', '2baktif')]}" />
                         
                         <button string="Sale Order Paket Join" type="object" 
                              name="action_create_sale_order"

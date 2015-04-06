@@ -121,14 +121,14 @@ class member(osv.osv):
 
 	def _cek_state(self, cr, uid, ids, name, arg, context=None):
 		res = {}
-		# state:draft,open,sale_wait,aktif
+		# state "open" dibagi 3: open tanpa SO,open SO exist, invoice paid
 		for partner in self.browse(cr, uid, ids, context=context):
 			if   partner.state == 'aktif' and partner.paket_id.is_upgradable:
 				res[partner.id] = 'update'
-			elif partner.state == 'open' and partner.sale_order_ids:
-				res[partner.id] = '2baktif'
-			elif partner.state == 'open':
+			elif partner.state == 'open' and not partner.sale_order_ids:
 				res[partner.id] = 'sale'
+			elif partner.state == 'open' and partner.sale_order_ids and self._get_inv_join_paid(cr,uid,partner.id,name,arg)[partner.id]:
+				res[partner.id] = '2baktif'
 		return res
 
 	# untuk mencari invoice pertama (inv join) apa sdh paid atau belum
@@ -237,14 +237,16 @@ class member(osv.osv):
 	#   2 		Doni    001.003 		2 				-1
 	#####################################################################
 	def cari_upline_dan_level(self, cr, uid, new_member, max_bonus_level_level, context=None):
-
+		cr.execute("select id from mlm_paket where is_affiliate = True")
+		paket = cr.fetchall()
+		aff = paket and u' and paket_id not in (%s) ' % str([x[0] for x in paket])[1:-1] or ''
 		sql = "select id, name, path_ltree,\
 				nlevel(path_ltree) as level,\
 				nlevel(path_ltree) - nlevel('%s') as level\
 				from res_partner as p where path_ltree @> '%s'\
-				and id <> %d \
+				and id <> %d %s \
 				order by path_ltree desc\
-				limit %d" % (new_member.path, new_member.path, new_member.id, max_bonus_level_level)
+				limit %d" % (new_member.path, new_member.path, new_member.id, aff, max_bonus_level_level)
 		_logger.warning( sql )
 		cr.execute(sql)
 		rows = cr.fetchall()
@@ -542,7 +544,6 @@ class member(osv.osv):
 			# dan cari jumlah children per masing-masing level di kiri dan kanan
 			#################################################################
 			for upline in uplines:
-				#import pdb;pdb.set_trace()
 				upline_id    = upline[0]; upline_name  = upline[1]; upline_path  = upline[2]; upline_level = upline[3]
 				levels = self.cari_child_per_level_kiri_kanan(cr, uid, upline_path, context=context)
 				
