@@ -47,7 +47,7 @@ class vit_usage_line(osv.osv):
 	_name = "vit.usage.line"
 	_description = 'Consumed Line'
 
-
+	
 	_columns = {
 		'cutting_order_id': fields.many2one('vit.cutting.order', 'Cutting Reference',required=True, ondelete='cascade', select=True),
 		'type' : fields.selection([('main','Body'),('variation','Variation')], 'Component Type'),
@@ -56,6 +56,8 @@ class vit_usage_line(osv.osv):
 		#'product_id': fields.many2one('vit.consumed.line', 'Material',domain="[('cutting_order_id','=',parent.id)]"),
 		'product_id': fields.many2one('product.product', 'Material',required=True),
 		'product_uom': fields.many2one('product.uom', 'Product Unit of Measure', help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control"),  
+		'total_harga' :  fields.float('Total Harga'),
+		# 'qty_total_harga': fields.function(_qty_total_harga, string='Total', type='float'),
 	}
 
 
@@ -81,13 +83,13 @@ class vit_usage_line(osv.osv):
 
 	def on_change_product_id(self, cr, uid, ids, product_id, name, context=None):
 		uom = self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id
-		#type_brg = self.pool.get('vit.consumed.line').browse(cr, uid, product_id, context=context).type
-		
+		list_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).list_price	
+		qty = 0				
 		if product_id!=False:
 			return {
 				'value' : {
 					'product_uom' : uom,
-					#'type' : type_brg,
+					# 'total_harga' : list_price * qty_total_material
 				}
 			}
 		else:
@@ -96,6 +98,32 @@ class vit_usage_line(osv.osv):
 					'product_uom' : '',
 				} 
 			}
+
+
+
+	## ** Fungsi untuk mengalikan total harga dengan standard price ** ##
+	def on_change_qty_total(self, cr, uid, ids, product_id, qty, name, context=None):
+		list_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).list_price
+		standard_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).standard_price
+		# import pdb;pdb.set_trace()
+		
+
+		if product_id!=False:
+			return {
+				'value' : {
+					# 'product_uom' : uom,
+					'total_harga' : standard_price * qty
+				}
+			}
+		else:
+			return {
+				'value' : {
+					# 'product_uom' : '',
+					'total_harga' : ''
+				} 
+			}
+
+
 
 vit_usage_line()
 
@@ -166,6 +194,86 @@ class vit_cutting_order(osv.osv):
 			return uom_id
 		return False
 
+	def _get_default_journal(self, cr, uid, context=None):
+		if context is None:
+			context = {}
+		jurnal_value_ids = []
+		ir_model_id   = self.pool.get('ir.model').search(cr,uid,[('model','=',self._name)])
+		master_journal_obj   = self.pool.get('vit.master.journal')
+		master_ids   = master_journal_obj.search(cr, uid,[('appeareance','=',ir_model_id[0])])
+		for master_id in master_ids:
+			jurnal_value_ids.append((0,0,{'master_jurnal_id':master_id,'value':0}))
+		return jurnal_value_ids
+
+	
+
+	def _qty_total_harga_consumed_line(self, cr, uid, ids, field_name, arg, context):
+	 	res = {}
+		for i in ids:
+			val = 0.0
+			for line in self.browse(cr, uid, i, context=context).usage_line_ids:
+				val += line.total_harga
+			res[i] = val
+		return res
+
+	def _qty_total_harga_sisa_line(self, cr, uid, ids, field_name, arg, context):
+	 	res = {}
+		for i in ids:
+			val = 0.0
+			for line in self.browse(cr, uid, i, context=context).sisa_ids:
+				val += line.total_harga
+			res[i] = val
+		return res
+
+	def _qty_total_journal_value_line(self, cr, uid, ids, field_name, arg, context):
+	 	res = {}
+		for i in ids:
+			val = 0.0
+			for line in self.browse(cr, uid, i, context=context).jurnal_value_ids:
+				val += line.value
+			res[i] = val
+		return res
+	
+	def _qty_total_harga_journal_value_all_pcs(self, cr, uid, ids, field_name, arg, context):
+	 	res = {}
+		x = self.browse(cr,uid,ids,context=context)
+	 	res[x[0].id] = x[0].qty_order * x[0].qty_total_harga_journal_value
+		return res
+	
+	def _avg_qty_total(self, cr, uid, ids, name, arg, context=None):
+	 	res = {}
+	 	x = self.browse(cr,uid,ids,context=context)
+	 	if x[0].qty_total_harga_consumed_line!=0 and x[0].qty_order!=0:
+	 		res[x[0].id] = x[0].qty_total_harga_consumed_line / x[0].qty_order
+	 	else:
+	 		res[x[0].id] = 0
+		return res
+
+	
+	def _qty_total_wip_material(self, cr, uid, ids, name, arg, context=None):
+	 	res = {}
+	 	x = self.browse(cr,uid,ids,context=context)
+	 	res[x[0].id] = x[0].qty_total_harga_consumed_line
+	 
+	def _qty_total_wip(self, cr, uid, ids, name, arg, context=None):
+	 	res = {}
+	 	x = self.browse(cr,uid,ids,context=context)
+	 	# res[x[0].id] = x[0].qty_total_harga_consumed_line + (x[0].direct_labour * x[0].qty_order)+(x[0].electricity_cost * x[0].qty_order) + (x[0].factory_rent_cost* x[0].qty_order) + (x[0].cutting_cost * x[0].qty_order) + (x[0].sewing_cost* x[0].qty_order)
+	 	if  x[0].qty_total_harga_consumed_line !=0 and x[0].qty_order !=0:
+	 		res[x[0].id] = x[0].qty_total_harga_consumed_line + (x[0].qty_total_harga_journal_value*x[0].qty_order) -  x[0].qty_total_harga_sisa_line
+	 	else:
+	 		res[x[0].id]=0
+		return res
+
+	def _avg_qty_total_wip(self, cr, uid, ids, name, arg, context=None):
+	 	res = {}
+	 	x = self.browse(cr,uid,ids,context=context)
+	 	if x[0].qty_total_harga_consumed_line!=0 and x[0].qty_order!=0:
+	 		res[x[0].id] = x[0].qty_total_wip / x[0].qty_order
+	 	else:
+	 		res[x[0].id] = 0
+		return res
+
 	_columns = {
 		'name': fields.char('Order Cutting Reference', size=64, required=True,
 			readonly=True, select=True),
@@ -233,6 +341,23 @@ class vit_cutting_order(osv.osv):
 		'uom_id' : fields.many2one('product.uom','Satuan',readonly=True),
 		'qty': fields.float('Qty'),
 		'sisa_ids':fields.one2many('product.sisa','cutting_order_id','Bahan Sisa'),
+		'jurnal_value_ids':fields.one2many('vit.jurnal.value','cutting_order_id','Jurnal Value'),
+		# 'sisa_line_ids':fields.one2many('vit.sisa.line','cutting_order_id','Bahan Sisa'),
+		# 'sisa_ids':fields.one2many('product.sisa','cutting_order_id','Bahan Sisa'),
+		'direct_labour' : fields.float('Direct Labour/Pcs'),
+		'electricity_cost' : fields.float('Electricity Cost/Pcs'),
+		'factory_rent_cost' : fields.float('Factory Rent Cost/Pcs'),
+		'cutting_cost'		: fields.related('type_product_id','cost_cut', type="float", relation='vit.master.type', string="Cutting External Cost/Pcs", store=True),
+		'sewing_cost'		: fields.related('type_product_id','cost_makl', type="float", relation='vit.master.type', string="Makloon Cost/Pcs", store=True),
+		'qty_total_harga_consumed_line': fields.function(_qty_total_harga_consumed_line, string='Total Usage Material', type='float',store=True),
+		'qty_total_harga_journal_value': fields.function(_qty_total_journal_value_line, string='Total Overhead/Pcs', type='float',store=True),
+		'qty_total_harga_journal_value_all_pcs': fields.function(_qty_total_harga_journal_value_all_pcs, string='Total Overheads * Total Pcs', type='float',store=True),
+		'qty_total_wip': fields.function(_qty_total_wip, string='Total WIP', type='float',store=True),
+		'avg_qty_total' : fields.function(_avg_qty_total, string='Harga Rata-rata', type='float'),
+		'avg_qty_total_wip' : fields.function(_avg_qty_total_wip, string='Harga WIP/Pcs', type='float'),
+		'qty_total_harga_sisa_line': fields.function(_qty_total_harga_sisa_line, string='Total Sisa Material', type='float',store=True),
+		# 'factory_rent_cost' : fields.float('Factory Rent Cost/Pcs'),
+
 
 	}
 
@@ -247,6 +372,7 @@ class vit_cutting_order(osv.osv):
 		'count_list_internal_move' : 0,
 		'product_id' : _get_default_majun,
 		'uom_id' : _get_default_majun_uom,
+		'jurnal_value_ids' : _get_default_journal
 	}
 
 
@@ -256,7 +382,6 @@ class vit_cutting_order(osv.osv):
 		return super(vit_cutting_order, self).create(cr, uid, vals, context=context)
 
 	def write(self, cr, uid, ids, vals, context=None):
-		#import pdb;pdb.set_trace()
 		if context is None:
 			context = {}
 		if isinstance(ids, (int, long)):
@@ -437,6 +562,7 @@ class vit_cutting_order(osv.osv):
 				if mrp_bom_obj_by_id_ls ==[]:
 					raise osv.except_osv( 'Lengkapi BOM untuk produk ini, satu product memiliki 5 Ukuran [S,M,L,XL,XXL]' , 'Tidak Bisa Dikalkulasi/Proses')
 				ls_id_list.append(mrp_bom_obj_by_id_ls[0])
+			# import pdb;pdb.set_trace()
 			print ls_id_list
 			
 			bom_s_list = []
@@ -515,12 +641,41 @@ class vit_cutting_order(osv.osv):
 
 			for x in xrange(len(acc_s)):
 				# mat = bom_s_list[x]['material']+bom_m_list[x]['material']+bom_l_list[x]['material']+bom_xl_list[x]['material']+bom_xxl_list[x]['material']
-				mat = acc_s[x]['material']
-				tipe = acc_s[x]['type']
-				qty = acc_s[x]['qty_total_material']+acc_m[x]['qty_total_material']+acc_l[x]['qty_total_material']+acc_xl[x]['qty_total_material']+acc_xxl[x]['qty_total_material']
-				uom = acc_s[x]['product_uom']
-				acc_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
+				### Karena dalam lima ukuran tiap bom nya sama maka dapat diambil nilai id product pada salah satu ukuran saja misal s ###
+				if acc_s[x]['material'] == acc_m[x]['material']:
+					mat = acc_s[x]['material']
+					tipe = acc_s[x]['type']
+					qty = acc_s[x]['qty_total_material']+acc_m[x]['qty_total_material']+acc_l[x]['qty_total_material']+acc_xl[x]['qty_total_material']+acc_xxl[x]['qty_total_material']
+					uom = acc_s[x]['product_uom']
+					acc_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
+				
+			## ** Update 03/17/15 ** ##
+			## Check Bom yang ternyata tidak sama tiap ukurannya misal  Label Mutif Size S, Label Mutif Size M, dll
+			acc_list2 = []
+			if len(acc_s) == len(acc_m) == len(acc_l) == len(acc_xl)== len(acc_xxl):			
+				for x in xrange(len(acc_s)):
+					# for y in xrange(len(acc_m)):
+					if acc_s[x]['material'] != acc_m[x]['material'] !=  acc_l[x]['material'] != acc_xl[x]['material'] != acc_xxl[x]['material'] :
+						acc = [acc_s[x]['material'],acc_m[x]['material'],acc_l[x]['material'],acc_xl[x]['material'],acc_xxl[x]['material']]
+						qty_list = [acc_s[x]['qty_total_material'],acc_m[x]['qty_total_material'],acc_l[x]['qty_total_material'],acc_xl[x]['qty_total_material'],acc_xxl[x]['qty_total_material']]
+						
+						for product_id in acc:
+							acc_list2.append({'material' : product_id,'type' : tipe, 'product_uom' : uom})
+						acc_list2[0].update({'qty_total_material':qty_list[0]})
+						acc_list2[1].update({'qty_total_material':qty_list[1]})
+						acc_list2[2].update({'qty_total_material':qty_list[2]})
+						acc_list2[3].update({'qty_total_material':qty_list[3]})
+						acc_list2[4].update({'qty_total_material':qty_list[4]})
 
+			##  Jika acc_list2 ada maka tambahkan ke acc_list
+			if acc_list2 != []:
+				acc_list+=acc_list2
+			# import pdb;pdb.set_trace()
+			## ** ##
+
+		
+			### Bila Recalulate lebih dari satu kali, lakukan delete terlebih dahulu vit_consumed_line dan vit_accessories_line ###
+			### Supaya tidak double write ###
 			if self_obj[0].consumed_line_ids != []:
 				cr.execute('delete from vit_consumed_line where cutting_order_id = %d' %(ids[0]))
 			if self_obj[0].accessories_line_ids != []:
@@ -530,6 +685,8 @@ class vit_cutting_order(osv.osv):
 				self.write(cr,uid,ids,{'consumed_line_ids':[(0,0,{'material':jk_item['material'],'type':jk_item['type'],
 					'qty_total_material':jk_item['qty_total_material'],'product_uom':jk_item['product_uom']})]})		
 			for jk_item in acc_list:
+				# import pdb;pdb.set_trace()
+
 				self.write(cr,uid,ids,{'accessories_line_ids':[(0,0,{'material':jk_item['material'],'type':jk_item['type'],
 					'qty_total_material':jk_item['qty_total_material'],'product_uom':jk_item['product_uom']})]})
 
@@ -646,12 +803,41 @@ class vit_cutting_order(osv.osv):
 
 			for x in xrange(len(acc_s)):
 				# mat = bom_s_list[x]['material']+bom_m_list[x]['material']+bom_l_list[x]['material']+bom_xl_list[x]['material']+bom_xxl_list[x]['material']
-				mat = acc_s[x]['material']
-				tipe = acc_s[x]['type']
+				if acc_s[x]['material'] == acc_m[x]['material']:
+					mat = acc_s[x]['material']
+					tipe = acc_s[x]['type']
 
-				qty = acc_s[x]['qty_total_material']+acc_m[x]['qty_total_material']+acc_l[x]['qty_total_material']+acc_xl[x]['qty_total_material']+acc_xxl[x]['qty_total_material']+acc_xxxl[x]['qty_total_material']
-				uom = acc_s[x]['product_uom']
-				acc_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
+					qty = acc_s[x]['qty_total_material']+acc_m[x]['qty_total_material']+acc_l[x]['qty_total_material']+acc_xl[x]['qty_total_material']+acc_xxl[x]['qty_total_material']+acc_xxxl[x]['qty_total_material']
+					uom = acc_s[x]['product_uom']
+					acc_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
+
+			## ** Update 03/17/15 ** ##s
+			## Check Bom yang ternyata tidak sama tiap ukurannya misal  Label Mutif Size S, Label Mutif Size M, dll
+			acc_list2 = []
+			if len(acc_s) == len(acc_m) == len(acc_l) == len(acc_xl)== len(acc_xxl)== len(acc_xxxl):			
+				for x in xrange(len(acc_s)):
+					# for y in xrange(len(acc_m)):
+					if acc_s[x]['material'] != acc_m[x]['material'] !=  acc_l[x]['material'] != acc_xl[x]['material'] != acc_xxl[x]['material'] != acc_xxxl[x]['material'] :
+						acc = [acc_s[x]['material'],acc_m[x]['material'],acc_l[x]['material'],acc_xl[x]['material'],acc_xxl[x]['material'],acc_xxxl[x]['material']]
+						qty_list = [acc_s[x]['qty_total_material'],acc_m[x]['qty_total_material'],acc_l[x]['qty_total_material'],acc_xl[x]['qty_total_material'],acc_xxl[x]['qty_total_material'],acc_xxxl[x]['qty_total_material']]
+						
+						for product_id in acc:
+							acc_list2.append({'material' : product_id,'type' : tipe, 'product_uom' : uom})
+						acc_list2[0].update({'qty_total_material':qty_list[0]})
+						acc_list2[1].update({'qty_total_material':qty_list[1]})
+						acc_list2[2].update({'qty_total_material':qty_list[2]})
+						acc_list2[3].update({'qty_total_material':qty_list[3]})
+						acc_list2[4].update({'qty_total_material':qty_list[4]})
+						acc_list2[5].update({'qty_total_material':qty_list[5]})
+
+			##  Jika acc_list2 ada maka tambahkan ke acc_list
+			if acc_list2 != []:
+				acc_list+=acc_list2
+			# import pdb;pdb.set_trace()
+			## ** ##
+
+
+
 
 			if self_obj[0].consumed_line_ids != []:
 				cr.execute('delete from vit_consumed_line where cutting_order_id = %d' %(ids[0]))
@@ -673,20 +859,29 @@ class vit_cutting_order(osv.osv):
 		return self.write(cr, uid, ids, {'state':'sent'}, context=context)
 
 	def action_confirm(self, cr, uid, ids, context=None):
+		if self.browse(cr,uid,ids,context)[0].s_order  == 0 and self.browse(cr,uid,ids,context)[0].m_order == 0 \
+			and self.browse(cr,uid,ids,context)[0].l_order  == 0  and self.browse(cr,uid,ids,context)[0].xl_order  == 0  \
+			and self.browse(cr,uid,ids,context)[0].xxl_order == 0:
+			raise osv.except_osv('Lengkapi dan isi Order Quantity','Tap Order Quantity')
+		if self.browse(cr,uid,ids,context)[0].consumed_line_ids == [] :
+			raise osv.except_osv('Calculate Belum Dilakukan','Klik Tombol Calculate')
 		return self.write(cr, uid, ids, {'state':'open'}, context=context)
 
 	def action_inprogress(self, cr, uid, ids, context=None):
+
 		lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
-		lokasi_produksi = 'Lokasi Produksi'
-		# import pdb;pdb.set_trace()
+		# lokasi_produksi = 'Lokasi Produksi'
+		virtual_production = 'Production'
 		try:
 			lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
-			lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+			# lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
 		except Exception, e:
 			raise osv.except_osv('Tidak Ditemukan' , lokasi_barang_jadi+' atau'+ lokasi_produksi)	
 		
 		lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
-		lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		# lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		virtual_production_id = self.pool.get('stock.location').search(cr,uid,[('name','=',virtual_production)])[0]
+
 		### Buat Internal Move Dari Gudang Jadi ke Produksi ####
 		########################################################
 		### Create Dahulu ######################################
@@ -706,7 +901,7 @@ class vit_cutting_order(osv.osv):
 				'product_qty'       : usage_line.qty_total_material,
 				'product_uom'		: usage_line.product_uom.id,
 				'location_id'       : lokasi_barang_jadi_id,
-				'location_dest_id'  : lokasi_produksi_id
+				'location_dest_id'  : virtual_production_id
 			}
 			
 			move_lines = [(0,0,data_line)]
@@ -716,29 +911,57 @@ class vit_cutting_order(osv.osv):
 			sp_obj.write(cr, uid, sp_id_create, sp_data, context=context)
 		### Lakukan Validate di Internal Move ####
 		# sp_obj.draft_validate(cr,uid,[sp_id_create],context=context)
+
+			### ** Lakukan Juga Perhitungan sale_price tiap product di kali quantity nya ### **
+
 		return self.write(cr, uid, ids, {'state':'inprogres', 'count_list_internal_move':1}, context=context)
 
 	def action_finish_cut(self, cr, uid, ids, context=None):
+		if self.browse(cr,uid,ids,context)[0].usage_line_ids == []:
+			raise osv.except_osv('Lengkapi dan isi Penggunaan Material yang akan dipakai','Tap Usage Material')
+		if self.browse(cr,uid,ids,context)[0].s_cut  == 0 and self.browse(cr,uid,ids,context)[0].m_cut == 0 \
+			and self.browse(cr,uid,ids,context)[0].l_cut  == 0  and self.browse(cr,uid,ids,context)[0].xl_cut == 0  \
+			and self.browse(cr,uid,ids,context)[0].xxl_cut == 0:
+			raise osv.except_osv('Lengkapi dan isi Penggunaan Cutting','Tap Cutting')
 		return self.write(cr, uid, ids, {'state':'finish_cut'}, context=context)
 
+	
+	## Disini Ada Eksekusi untuk membuat jurnal direct labour,electricity, factory rent dll
 	def action_finish_qc(self, cr, uid, ids, context=None):
-		lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
+		if self.browse(cr,uid,ids,context)[0].s_qc  == 0 and self.browse(cr,uid,ids,context)[0].m_qc == 0 \
+			and self.browse(cr,uid,ids,context)[0].l_qc  == 0  and self.browse(cr,uid,ids,context)[0].xl_qc== 0  \
+			and self.browse(cr,uid,ids,context)[0].xxl_qc == 0:
+			raise osv.except_osv('Lengkapi dan isi Qc Cutting','Tap QC Cutting')
+
+		if self.browse(cr,uid,ids,context)[0].qty_total_harga_journal_value  == 0 :
+			raise osv.except_osv('Lengkapi dan isi Nilai Overheads','Tap Accounting')
+
+		self.journal_overheads(cr,uid,ids,context)
+		lokasi_bahan_jadi = 'Lokasi Barang Jadi'
+		customer = 'Customers'
+		lokasi_bahan_baku_kain = 'Lokasi Bahan Baku Kain'
 		lokasi_produksi = 'Lokasi Produksi'
+		virtual_production = 'Production'
+		lokasi_bahan_sisa = 'Lokasi Bahan Sisa'
 
 
 		try:
-			lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
-			lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+			lokasi_bahan_baku_kain_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_bahan_baku_kain)])[0]
+			# lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+			lokasi_bahan_sisa_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_bahan_sisa)])[0]
 		except Exception, e:
-			raise osv.except_osv('Tidak Ditemukan' , lokasi_barang_jadi+' atau'+ lokasi_produksi)	
+			raise osv.except_osv('Tidak Ditemukan' , lokasi_bahan_baku_kain+' atau '+ lokasi_produksi+' atau '+lokasi_bahan_sisa)	
 
-		lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
-		lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		lokasi_bahan_baku_kain_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_bahan_baku_kain)])[0]
+		# lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		lokasi_bahan_sisa_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_bahan_sisa)])[0]
+		lokasi_bahan_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_bahan_jadi)])[0]
+		customer_id = self.pool.get('stock.location').search(cr,uid,[('name','=',customer)])[0]
+		virtual_production_id = self.pool.get('stock.location').search(cr,uid,[('name','=',virtual_production)])[0]
 		move_obj = self.pool.get('stock.move')
 		my_form = self.browse(cr,uid,ids[0])
 		if my_form.sisa_ids != []:
 			#if pick_obj.browse(cr,uid,int_move,context=context)[0].state == 'done':
-			# import pdb;pdb.set_trace()
 			### Buat Internal Move Balik Dari Producksi ke Gudang Jadi (dibalik)####
 			########################################################
 			### Create Dahulu ######################################
@@ -753,12 +976,14 @@ class vit_cutting_order(osv.osv):
 			### Update move_lines nya ###############################
 			for sisa in self.browse(cr,uid,ids,context)[0].sisa_ids:
 				data_line = { 
-					'name'				: sisa.product_id.product_id.name,
-					'product_id'        : sisa.product_id.product_id.id,
+					# 'name'				: sisa.product_id.product_id.name,
+					'name'				: sisa.product_id.name, # Pada product.product
+					# 'product_id'        : sisa.product_id.product_id.id,
+					'product_id'        : sisa.product_id.id,
 					'product_qty'       : sisa.qty,
 					'product_uom'		: sisa.uom_id.id,
-					'location_id'       : lokasi_produksi_id,
-					'location_dest_id'  : lokasi_barang_jadi_id,
+					'location_id'       : virtual_production_id,
+					'location_dest_id'  : lokasi_bahan_sisa_id, #Barang Jadi Sisa
 				}
 				
 				move_lines = [(0,0,data_line)]
@@ -775,8 +1000,8 @@ class vit_cutting_order(osv.osv):
 											'name'				: my_form.product_id.name,
 											'product_qty'       : my_form.qty,
 											'product_uom'		: my_form.uom_id.id,
-											'location_id'       : lokasi_produksi_id,
-											'location_dest_id'  : lokasi_barang_jadi_id,											
+											'location_id'       : virtual_production_id,
+											'location_dest_id'  : lokasi_bahan_sisa_id,											
 											}, context=context)
 
 			self.write(cr, uid, ids[0], {'picking_id':sp_id_create}, context=context)
@@ -799,15 +1024,269 @@ class vit_cutting_order(osv.osv):
 		self.write(cr, uid, ids, {'state':'finish_qc'}, context=context)
 		return True
 
+			
+	#################################################################################
+	## Membuat Jurnal overheads --> Direct Labour dan Gedung #######################################
+	#################################################################################
+	def journal_overheads(self, cr, uid, ids, context=None):
+
+		##############################################################################
+		# ambil master journal
+		##############################################################################
+		ir_model_obj = self.pool.get('ir.model')
+		ir_model_ids = ir_model_obj.search(cr, uid, 
+			[('model','=', self._name)], context=context) # dapat model_id dari cutting_order ex : [486]
+
+		ir_model_fields_obj = self.pool.get('ir.model.fields')
+		ir_model_fields_ids = ir_model_fields_obj.search(cr, uid, 
+			[('model_id','=', ir_model_ids[0])], context=context) # dapat id dari ir.model.fields filter dari ir_model_ids (misal cutting_order)
+
+		master_journal_obj   = self.pool.get('vit.master.journal')
+		 
+		# self.browse(cr,uid,ids[0],).jurnal_value_ids[0].master_jurnal_id.target_field.id #Id Field dari jurnal_value_ids misal : 4332 
+		## Loop jurnal_value_ids
+		for jurnal_value_id in self.browse(cr,uid,ids[0],).jurnal_value_ids:
+			# master_ids   = master_journal_obj.search(cr, uid, 
+			# 	[('is_active','=', True),('target_field','=',jurnal_value_id.master_jurnal_id.target_field.id)], context=context)
+			master_ids   = master_journal_obj.search(cr, uid, 
+				[('is_active','=', True),('name','=',jurnal_value_id.master_jurnal_id.name)], context=context)
+			# import pdb;pdb.set_trace()
+			for master_id in master_ids:
+				master = master_journal_obj.browse(cr,uid,master_id)
+				########################################################################
+				# create account move utk point
+				#########################################################################
+				if context==None:
+					context={}
+				context['account_period_prefer_normal']= True
+				period_id 	= self.pool.get('account.period').find(cr,uid, self.browse(cr,uid,ids[0],).date_start_cutting, context)[0]
+				debit = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.debit_account_id.id,
+					'debit'      : jurnal_value_id.value * self.browse(cr,uid,ids[0],).qty_order,
+					'credit'     : 0.0 
+				}
+				
+				credit = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.credit_account_id.id,
+					'debit'      : 0.0 ,
+					'credit'     : jurnal_value_id.value * self.browse(cr,uid,ids[0],).qty_order ,
+					}
+
+				lines = [(0,0,debit), (0,0,credit)]
+				am_obj            = self.pool.get('account.move')
+				am_data = {
+					'journal_id'   : master.journal_id.id,
+					'date'         :  self.browse(cr,uid,ids[0],).date_start_cutting,
+					'ref'          : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'period_id'    : period_id,
+					'line_id'      : lines ,
+					}
+
+				am_id = am_obj.create(cr, uid, am_data, context=context)
+				# am_obj.button_validate(cr, uid, [am_id], context=context)
+
+
+
+		# for master_id in master_ids:
+		# 	master = master_journal_obj.browse(cr,uid,master_id)
+		# 	#########################################################################
+		# 	# create account move utk point
+		# 	#########################################################################
+		# 	if context==None:
+		# 		context={}
+		# 	context['account_period_prefer_normal']= True
+		# 	period_id 	= self.pool.get('account.period').find(cr,uid, self.browse(cr,uid,ids[0],).date_start_cutting, context)[0]
+			
+		# 	if master.target_field.name == 'factory_rent_cost':
+		# 		debit = {
+		# 			'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+		# 			'name'       : self.browse(cr,uid,ids[0],).name,
+		# 			'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+		# 			#'ref'        : 'Upah Direct Labour %s' % (self.browse(cr,uid,ids[0],).name),
+		# 			'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+		# 			'account_id' : master.debit_account_id.id,
+		# 			'debit'      : (self.browse(cr,uid,ids[0],).electricity_cost * self.browse(cr,uid,ids[0],).qty_order)+(self.browse(cr,uid,ids[0],).factory_rent_cost * self.browse(cr,uid,ids[0],).qty_order),
+		# 			'credit'     : 0.0 
+		# 		}
+		# 		credit = {
+		# 			'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+		# 			'name'       : self.browse(cr,uid,ids[0],).name,
+		# 			'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+		# 			'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+		# 			'account_id' : master.credit_account_id.id,
+		# 			'debit'      : 0.0 ,
+		# 			'credit'     : self.browse(cr,uid,ids[0],).electricity_cost * self.browse(cr,uid,ids[0],).qty_order ,
+		# 			}
+
+		# 		credit2 = {
+		# 			'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+		# 			'name'       : self.browse(cr,uid,ids[0],).name,
+		# 			'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+		# 			'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+		# 			'account_id' : master.credit_account_id2.id,
+		# 			'debit'      : 0.0 ,
+		# 			'credit'     : self.browse(cr,uid,ids[0],).factory_rent_cost * self.browse(cr,uid,ids[0],).qty_order ,
+		# 			}
+		# 	else :
+		# 		debit = {
+		# 			'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+		# 			'name'       : self.browse(cr,uid,ids[0],).name,
+		# 			'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+		# 			'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+		# 			'account_id' : master.debit_account_id.id,
+		# 			'debit'      : self.browse(cr,uid,ids[0],).direct_labour * self.browse(cr,uid,ids[0],).qty_order ,
+		# 			'credit'     : 0.0 
+		# 			}
+				
+		# 		credit = {
+		# 			'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+		# 			'name'       : self.browse(cr,uid,ids[0],).name,
+		# 			'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+		# 			'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+		# 			'account_id' : master.credit_account_id.id,
+		# 			'debit'      : 0.0 ,
+		# 			'credit'     : self.browse(cr,uid,ids[0],).direct_labour * self.browse(cr,uid,ids[0],).qty_order ,
+		# 			}
+
+		# 	if master.credit_account_id2.id:
+		# 		lines = [(0,0,debit), (0,0,credit),(0,0,credit2)]
+		# 	else:
+		# 		lines = [(0,0,debit), (0,0,credit)]
+
+		# 	am_obj            = self.pool.get('account.move')
+		# 	am_data = {
+		# 		'journal_id'   : master.journal_id.id,
+		# 		'date'         :  self.browse(cr,uid,ids[0],).date_start_cutting,
+		# 		'ref'          : master.name +' '+self.browse(cr,uid,ids[0],).name,
+		# 		'period_id'    : period_id,
+		# 		'line_id'      : lines ,
+		# 		}
+
+		# 	am_id = am_obj.create(cr, uid, am_data, context=context)
+		# 	# am_obj.button_validate(cr, uid, [am_id], context=context)
+
+		return True
+
+
+
+	#################################################################################
+	## Membuat Jurnal Direct Labour dan Gedung #######################################
+	#################################################################################
+	def journal_direct_labour2(self, cr, uid, ids, context=None):
+		##############################################################################
+		# ambil master journal
+		##############################################################################
+		master_journal_obj   = self.pool.get('vit.master.journal')
+		master_ids   = master_journal_obj.search(cr, uid, 
+			[('is_active','=', True)], context=context)
+
+		for master_id in master_ids:
+			master = master_journal_obj.browse(cr,uid,master_id)
+			#########################################################################
+			# create account move utk point
+			#########################################################################
+			if context==None:
+				context={}
+			context['account_period_prefer_normal']= True
+			period_id 	= self.pool.get('account.period').find(cr,uid, self.browse(cr,uid,ids[0],).date_start_cutting, context)[0]
+			
+			if master.target_field.name == 'factory_rent_cost':
+				debit = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					#'ref'        : 'Upah Direct Labour %s' % (self.browse(cr,uid,ids[0],).name),
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.debit_account_id.id,
+					'debit'      : (self.browse(cr,uid,ids[0],).electricity_cost * self.browse(cr,uid,ids[0],).qty_order)+(self.browse(cr,uid,ids[0],).factory_rent_cost * self.browse(cr,uid,ids[0],).qty_order),
+					'credit'     : 0.0 
+				}
+				credit = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.credit_account_id.id,
+					'debit'      : 0.0 ,
+					'credit'     : self.browse(cr,uid,ids[0],).electricity_cost * self.browse(cr,uid,ids[0],).qty_order ,
+					}
+
+				credit2 = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.credit_account_id2.id,
+					'debit'      : 0.0 ,
+					'credit'     : self.browse(cr,uid,ids[0],).factory_rent_cost * self.browse(cr,uid,ids[0],).qty_order ,
+					}
+			else :
+				debit = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.debit_account_id.id,
+					'debit'      : self.browse(cr,uid,ids[0],).direct_labour * self.browse(cr,uid,ids[0],).qty_order ,
+					'credit'     : 0.0 
+					}
+				
+				credit = {
+					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
+					'name'       : self.browse(cr,uid,ids[0],).name,
+					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'account_id' : master.credit_account_id.id,
+					'debit'      : 0.0 ,
+					'credit'     : self.browse(cr,uid,ids[0],).direct_labour * self.browse(cr,uid,ids[0],).qty_order ,
+					}
+
+			if master.credit_account_id2.id:
+				lines = [(0,0,debit), (0,0,credit),(0,0,credit2)]
+			else:
+				lines = [(0,0,debit), (0,0,credit)]
+
+			am_obj            = self.pool.get('account.move')
+			am_data = {
+				'journal_id'   : master.journal_id.id,
+				'date'         :  self.browse(cr,uid,ids[0],).date_start_cutting,
+				'ref'          : master.name +' '+self.browse(cr,uid,ids[0],).name,
+				'period_id'    : period_id,
+				'line_id'      : lines ,
+				}
+
+			am_id = am_obj.create(cr, uid, am_data, context=context)
+			# am_obj.button_validate(cr, uid, [am_id], context=context)
+
+		return True
+
 	def action_create_makloon(self, cr, uid, ids, context=None):
 		makloon_obj = self.pool.get('vit.makloon.order').create(cr,uid,{'origin' : self.browse(cr,uid,ids[0],).id,
 																		'model'  : self.browse(cr,uid,ids[0],).type_product_id.model_product,
+																		'type_product_id' : self.browse(cr,uid,ids[0],).type_product_id.id,
 																		's_order' : self.browse(cr,uid,ids[0],).s_qc,
 																		'm_order' : self.browse(cr,uid,ids[0],).m_qc,
 																		'l_order' : self.browse(cr,uid,ids[0],).l_qc,
 																		'xl_order' : self.browse(cr,uid,ids[0],).xl_qc,
 																		'xxl_order' : self.browse(cr,uid,ids[0],).xxl_qc,
 																		'xxxl_order' : self.browse(cr,uid,ids[0],).xxxl_qc,
+																		'direct_labour'  : self.browse(cr,uid,ids[0],).direct_labour,
+																		'electricity_cost'  : self.browse(cr,uid,ids[0],).electricity_cost,
+																		'factory_rent_cost'  : self.browse(cr,uid,ids[0],).factory_rent_cost,
+																		'sewing_cost'  : self.browse(cr,uid,ids[0],).sewing_cost,
+																		'cutting_cost'  : self.browse(cr,uid,ids[0],).cutting_cost,
+																		'avg_qty_material_total'  : self.browse(cr,uid,ids[0],).avg_qty_total,
+																		'qty_total_wip_spk_cut'   : self.browse(cr,uid,ids[0],).qty_total_wip,
+																		'avg_qty_total_wip_spk_cut': self.browse(cr,uid,ids[0],).avg_qty_total_wip,
+																		# 'qty_total_wip' : self.browse(cr,uid,ids[0],).qty_total_wip,
 																		})
 
 		# for x in self.browse(cr,uid,ids[0],).consumed_line_ids:
@@ -838,6 +1317,8 @@ class vit_cutting_order(osv.osv):
 				#continue
 				self.pool.get('vit.material.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'type':x.type,'qty':x.qty_total_material})
 		
+		for x in self.browse(cr,uid,ids[0],).accessories_line_ids:
+			self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':x.material.id,'uom_id':x.material.uom_id.id,'type':x.type,'qty':x.qty_total_material})
 
 		########################################################################################################
 		#w: tambahan accesories langsung dr BoM
@@ -847,38 +1328,37 @@ class vit_cutting_order(osv.osv):
 		########################################################################################################
 
 		#w: size S
-		for line in bom_s.bom_lines:
-			if line.component_type == 'accessories':
-				acc_line = self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':line.product_id.id,'type':line.component_type,'uom_id':line.product_uom.id,'size_s':line.product_qty})
-				# size M
-				bom_m = mrp_bom_obj.browse(cr,uid,ls_id_list[1],context =context)
-				for m in bom_m.bom_lines:
-					if line.product_id.id == m.product_id.id:
-						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_m':m.product_qty})
-				# size L
-				bom_l = mrp_bom_obj.browse(cr,uid,ls_id_list[2],context =context)
-				for l in bom_l.bom_lines:
-					if line.product_id.id == l.product_id.id:
-						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_l':l.product_qty})
-				# size XL
-				bom_xl = mrp_bom_obj.browse(cr,uid,ls_id_list[3],context =context)
-				for xl in bom_xl.bom_lines:
-					if line.product_id.id == xl.product_id.id:
-						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xl':xl.product_qty})
-				# size XXL
-				bom_xxl = mrp_bom_obj.browse(cr,uid,ls_id_list[4],context =context)
-				for xxl in bom_xxl.bom_lines:
-					if line.product_id.id == xxl.product_id.id:
-						self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xxl':xxl.product_qty})
+		# for line in bom_s.bom_lines:
+		# 	if line.component_type == 'accessories':
+		# 		acc_line = self.pool.get('vit.accessories.req.line').create(cr,uid,{'makloon_order_id' : makloon_obj, 'material':line.product_id.id,'type':line.component_type,'uom_id':line.product_uom.id,'size_s':line.product_qty})
+		# 		# size M
+		# 		bom_m = mrp_bom_obj.browse(cr,uid,ls_id_list[1],context =context)
+		# 		for m in bom_m.bom_lines:
+		# 			if line.product_id.id == m.product_id.id:
+		# 				self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_m':m.product_qty})
+		# 		# size L
+		# 		bom_l = mrp_bom_obj.browse(cr,uid,ls_id_list[2],context =context)
+		# 		for l in bom_l.bom_lines:
+		# 			if line.product_id.id == l.product_id.id:
+		# 				self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_l':l.product_qty})
+		# 		# size XL
+		# 		bom_xl = mrp_bom_obj.browse(cr,uid,ls_id_list[3],context =context)
+		# 		for xl in bom_xl.bom_lines:
+		# 			if line.product_id.id == xl.product_id.id:
+		# 				self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xl':xl.product_qty})
+		# 		# size XXL
+		# 		bom_xxl = mrp_bom_obj.browse(cr,uid,ls_id_list[4],context =context)
+		# 		for xxl in bom_xxl.bom_lines:
+		# 			if line.product_id.id == xxl.product_id.id:
+		# 				self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xxl':xxl.product_qty})
 				
-				# size XXXL
-				# import pdb;pdb.set_trace()
-				## Cek Dahulu loop_size nya bila 6 berarti little mutif
-				if len(loop_size) == 6:
-					bom_xxxl = mrp_bom_obj.browse(cr,uid,ls_id_list[5],context =context)
-					for xxxl in bom_xxxl.bom_lines:
-						if line.product_id.id == xxxl.product_id.id:
-							self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xxxl':xxxl.product_qty})
+		# 		# size XXXL
+		# 		## Cek Dahulu loop_size nya bila 6 berarti little mutif
+		# 		if len(loop_size) == 6:
+		# 			bom_xxxl = mrp_bom_obj.browse(cr,uid,ls_id_list[5],context =context)
+		# 			for xxxl in bom_xxxl.bom_lines:
+		# 				if line.product_id.id == xxxl.product_id.id:
+		# 					self.pool.get('vit.accessories.req.line').write(cr,uid,acc_line,{'size_xxxl':xxxl.product_qty})
 
 		## Update Field count_list_mo
 		self.write(cr,uid,ids,{'count_list_mo': 1},context=context)
@@ -981,9 +1461,40 @@ vit_cutting_order()
 #class u/ menampung sisa bahan dari cutting
 class product_sisa(osv.Model):
 	_name = "product.sisa"
+	# _description = 'Consumed Line'
 
-	def on_change_product_id(self, cr, uid, ids, product_id, name, context=None):
-		uom_id = self.pool.get('vit.usage.line').browse(cr, uid, product_id, context=context).product_id.uom_id.id
+	_columns = {
+		# 'cutting_order_id' : fields.many2one('vit.cutting.order','No. Cutting'),
+		'cutting_order_id': fields.many2one('vit.cutting.order', 'Cutting Reference',required=True, ondelete='cascade', select=True),
+		# 'product_id': fields.many2one('vit.usage.line', 'Material',required=True),
+		'product_id': fields.many2one('product.product', 'Material',required=True),
+		'qty' : fields.float('Qty',required=True),
+		'uom_id': fields.many2one('product.uom','Satuan',required=True),
+		'total_harga' :  fields.float('Total Harga'),
+	}
+
+
+	def name_get(self, cr, uid, ids, context=None):
+		
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+			ids = [ids]
+		reads = self.read(cr, uid, ids, ['product_id'], context=context)
+
+		res = []
+		for record in reads:
+			name = record['product_id'][1]
+			if record['product_id'][1]:
+				name = record['product_id'][1]
+			res.append((record['id'], name))
+		return res
+
+	def on_change_product_id2(self, cr, uid, ids, product_id, name, context=None):
+		# import pdb;pdb.set_trace()
+
+		# uom_id = self.pool.get('vit.usage.line').browse(cr, uid, product_id, context=context).product_id.uom_id.id
+		uom_id = self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id
 	
 		if product_id!=False:
 			return {
@@ -998,15 +1509,106 @@ class product_sisa(osv.Model):
 				} 
 			}
 
+	## ** Fungsi untuk mengalikan total harga dengan standard price ** ##
+	def on_change_qty_total(self, cr, uid, ids, product_id, qty, name, context=None):
+		list_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).list_price
+		standard_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).standard_price
+
+		if product_id!=False:
+			return {
+				'value' : {
+					# 'product_uom' : uom,
+					'total_harga' : standard_price * qty
+				}
+			}
+		else:
+			return {
+				'value' : {
+					# 'product_uom' : '',
+					'total_harga' : ''
+				} 
+			}
+		# return self.write(cr,uid,ids,{'loaded_acc':True},context=context)
+	# _defaults = {
+	# 	'qty': False,
+	# }
+
+product_sisa()
+
+
+#class untuk value jurnal-jurnal tambahan dalam cutting relasi dengan master jurnal
+class jurnal_value(osv.Model):
+	_name = "vit.jurnal.value"
+
 	_columns = {
-		'cutting_order_id' : fields.many2one('vit.cutting.order','No. Cutting'),
-		'product_id': fields.many2one('vit.usage.line', 'Material',domain="[('cutting_order_id','=',parent.id)]",required=True),
-		'qty' : fields.float('Qty',required=True),
-		'uom_id': fields.many2one('product.uom','Satuan',required=True),
+		'cutting_order_id': fields.many2one('vit.cutting.order', 'Cutting Reference',required=True, ondelete='cascade', select=True),
+		'master_jurnal_id': fields.many2one('vit.master.journal', 'Overheads',required=True),
+		'value' : fields.float('Overhead Per Pcs',required=True),
 	}
 
-	_defaults = {
-		'qty': False,
-	}
 
-product_sisa()	
+	def name_get(self, cr, uid, ids, context=None):
+		# import pdb;pdb.set_trace()
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+			ids = [ids]
+		reads = self.read(cr, uid, ids, ['master_jurnal_id'], context=context)
+
+		res = []
+		for record in reads:
+			name = record['master_jurnal_id'][1]
+			if record['master_jurnal_id'][1]:
+				name = record['master_jurnal_id'][1]
+			res.append((record['id'], name))
+		return res
+jurnal_value()
+
+
+# class vit_sisa_line(osv.osv):
+# 	_name = "vit.sisa.line"
+# 	_description = 'Sisa Line'
+
+
+# 	_columns = {
+# 		'cutting_order_id': fields.many2one('vit.cutting.order', 'Cutting Reference',required=True, ondelete='cascade', select=True),
+# 		'product_id': fields.many2one('product.product', 'Material',required=True),
+# 		'product_uom': fields.many2one('product.uom', 'Product Unit of Measure', help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control"),  
+# 		'qty' : fields.float('Quantity'),
+# 	}
+
+# 	def name_get(self, cr, uid, ids, context=None):
+# 		# import pdb;pdb.set_trace()
+# 		if not ids:
+# 			return []
+# 		if isinstance(ids, (int, long)):
+# 			ids = [ids]
+# 		reads = self.read(cr, uid, ids, ['product_id'], context=context)
+
+# 		res = []
+# 		for record in reads:
+# 			name = record['product_id'][1]
+# 			if record['product_id'][1]:
+# 				name = record['product_id'][1]
+# 			res.append((record['id'], name))
+# 		return res
+
+# 	def on_change_product_id3(self, cr, uid, ids, product_id, name, context=None):
+# 		uom = self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id
+# 		#type_brg = self.pool.get('vit.consumed.line').browse(cr, uid, product_id, context=context).type
+		
+# 		if product_id!=False:
+# 			return {
+# 				'value' : {
+# 					'product_uom' : uom,
+# 					#'type' : type_brg,
+# 				}
+# 			}
+# 		else:
+# 			return {
+# 				'value' : {
+# 					'product_uom' : '',
+# 				} 
+# 			}
+
+# vit_sisa_line()	

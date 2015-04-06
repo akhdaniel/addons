@@ -25,9 +25,9 @@
                     <header>
                         <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
                         <button name="action_inprogress" type="object" states="open" string="Send to Makloon" class="oe_highlight"/>
-                        <button name="action_receive" states="inprogres"  type="object" string="Receive" class="oe_highlight" />
-                        <button name="action_view_receive" states="tobereceived,grade,split,done"  type="object" string="View Incoming" class="oe_highlight" />
-                        <button name="action_split_grade" states="tobereceived"  type="object" string="Split Grade" class="oe_highlight" />
+                        <button name="action_receive" states="inprogres"  type="object" string="Receive" class="oe_highlight" confirm="Action Received Akan Dijalankan ?" />
+                        <button name="action_view_receive" states="inprogres,tobereceived,grade,split,done"  type="object" string="View Incoming" class="oe_highlight" />
+                        <button name="action_split_grade" states="tobereceived,tobeupdatedhpp"  type="object" string="Split Grade" class="oe_highlight" />
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,inprogres,tobereceived,done"/>
                     </header>
                     <sheet>
@@ -50,10 +50,14 @@
                             </group>
                             <group>
                                 <field name="origin" readonly="1"/>
-                                <field name="model" />
+                                <field name="model" invisible="1" />
+                                <field name="type_product_id" on_change="on_type_product_id(type_product_id, context)"/>
                                 <field name="state_incoming" invisible="1"/>
                                 <field name="is_receive" invisible="1"/>
                                 <field name="invoice_id" />
+                                
+                                
+                                
                             </group>
                         </group>
                         <group>
@@ -111,12 +115,13 @@
                                     <group class="oe_subtotal_footer oe_right" colspan="2">
                                         <button name="qty_acc_reload" string="Load..Qty" type="object"/>
                                     </group>
-                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
+                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft'),('state','!=','open')]}">
                                     <tree  editable="bottom">
                                         <field name="material"/>
                                         <field name="type"/>
-                                        <field name="qty"/>
+                                        <field name="qty" on_change="on_change_qty_total(material,qty,context)"/>
                                         <field name="uom_id"/>
+                                        <field name="total_harga"/>
                                         <field name="size_s" invisible="1"/>
                                         <field name="size_m" invisible="1"/>
                                         <field name="size_l" invisible="1"/>
@@ -135,7 +140,7 @@
 
                                 <page string="Grade B" attrs="{'invisible':[('state','not in',('grade','split','done'))]}">
                                     <group class="oe_subtotal_footer oe_right" colspan="2">
-                                        <button name="action_grade_b" states="grade"  type="object" string="Finish..Split"/>
+                                        <button name="action_grade_b" states="grade,done"  type="object" string="Finish..Split"/>
                                         <button name="button_dummy" type="object" string="Refresh"/>
                                      </group>   
                                     <field name="grade_ids" view_mode="tree" nolabel="1">
@@ -161,10 +166,88 @@
                                 <page string="Int Move List" >
                                      <group class="oe_subtotal_footer oe_right" colspan="2">
                                         <button name="button_dummy" type="object" string="Refresh"/>
+                                        <button name="updated_hpp" type="object" string="Updated Hpp"/>
+                                        <button name="move_dest" type="object" string="Move To Gudang Jadi"/>
+
                                      </group>   
                                     <field name="int_move_ids" nolabel="1"/>
                                    
-                                </page>  
+                                </page> 
+                                <page string="Accounting" >
+                                <field name="jurnal_value_ids" widget="one2many_list" view_mode="tree" nolabel="1">
+                                            <tree  editable="bottom">
+                                                 <field name="master_jurnal_id"/>
+                                                 <field name="value"/>
+                                            </tree>
+                                </field> 
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <!-- <group> -->
+                                            <label for="qty_order"  string="Total Pcs"/>    
+                                            <field name="qty_order" nolabel="1" class="oe_inline" readonly="1"/>
+                                            <field name="qty_total_harga_journal_value"/>
+                                            <field name="qty_total_harga_journal_value_all_pcs" class="oe_inline"/>
+                                        <!-- </group> -->
+                                    </group>
+                                     
+                                    <group col='3'>
+                                        <group>
+                                            <field name="qty_total_wip_spk_cut" />
+                                            <field name="avg_qty_material_total" invisible="1"/>
+                                            <field name="avg_qty_total_wip_spk_cut" />             
+                                        </group>
+                                        <group>
+                                            <field name="qty_total_harga_acc_line" />
+                                            <field name="avg_qty_acc_total" />
+                                        </group>
+                                         <group>
+                                           <field name="qty_all_total_wip"/>  
+                                           <field name="qty_all_total_wip_pcs"/>         
+                                        </group>
+                                    </group>  
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <!-- <group> -->
+                                
+                                            <field name="last_qty_incoming"/>
+                                            <field name="reward_steam"/>
+                                            <field name="hpp_reward"/>
+                                        <!-- </group> -->
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <!-- <group> -->
+                                            <field name="last_qty_all_total_wip"/>
+                                            <field name="last_qty_all_total_wip_pcs"/>
+                                        <!-- </group> -->
+                                    </group> 
+
+                                  <!--   <group class="oe_subtotal_footer oe_right">
+                                          <field name="last_qty_all_total_wip_last_incoming"/>  
+                                          <field name="last_qty_all_total_wip_last_incoming_pcs"/>        
+                                    </group>       -->         
+                                  <!--   <group> 
+                                        <label for="direct_labour"/>                       
+                                        <field name="direct_labour"  nolabel="1"/>                 
+                                    </group>
+                                    <group> 
+                                        <label for="electricity_cost"/> 
+                                        <field name="electricity_cost"  nolabel="1"/>                    
+                                    </group>
+                                    <group>
+                                        <label for="factory_rent_cost"/> 
+                                        <field name="factory_rent_cost"  nolabel="1"/>   
+                                    </group>
+                                     <group>
+                                        <label for="sewing_cost"/> 
+                                        <field name="sewing_cost"  nolabel="1"/>   
+                                    </group> -->
+                                    <!--  <group>
+                                        <label for="cutting_cost"/> 
+                                        <field name="cutting_cost"  nolabel="1"/>   
+                                    </group> -->
+                                   <!--  <group>
+                                        <label for="avg_qty_material_total"/> 
+                                        <field name="avg_qty_material_total"  nolabel="1"/>   
+                                    </group> -->
+                                    </page> 
 
                             </notebook>
                         </group>

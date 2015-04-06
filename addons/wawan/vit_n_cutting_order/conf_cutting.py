@@ -27,4 +27,37 @@ class conf_cutting(osv.osv):
 
 }
 
+
+class vit_master_journal(osv.osv):
+	_name = "vit.master.journal"
+	_description = 'Master Journal'
+	# _rec_name = 'loop_size'
+		
+	_columns = {
+		# 'target_model_id': fields.many2one('ir.model', 'Target Model'),
+		'name'       : fields.char('Name', required=True),
+		'appeareance': fields.many2one('ir.model', string="Appearance"), #appearance
+		'journal_id' : fields.many2one('account.journal', 'Journal', required=True),     
+		'credit_account_id'    : fields.many2one('account.account', 'Credit Account', 
+			required=True,
+			domain="[('type','!=','view')]" ),
+		'debit_account_id'     : fields.many2one('account.account', 'Debit Account', 
+			required=True,
+			domain="[('type','!=','view')]"),
+		'product_id' : fields.many2one('product.product', 'Product Jasa',),
+		'is_active'  : fields.boolean('Active?'),	
+}
+
+
+
+class vit_master_location(osv.osv):
+	_name = "vit.master.location"
+	_description = 'Master Location'
+		
+	_columns = {
+		'name'       : fields.char('Name Method', required=True),
+		'source_loc_id': fields.many2one('stock.location', string="Source Location",required=True),
+		'dest_loc_id': fields.many2one('stock.location', string="Destination Location",required=True),
+}
+
 	

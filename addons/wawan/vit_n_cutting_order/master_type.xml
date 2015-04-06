@@ -8,8 +8,9 @@
                     <field name="model_product" />
                     <field name="categ_id"/>
                     <field name="main_qty"/>
-                    <field name="variation_qty"/>
-                    <field name="cost_model"/>                     
+                    <field name="variation_qty" invisible="1"/>
+                    <field name="cost_makl" invisible="1"/>  
+                    <field name="kancing_price" invisible="1"/>                   
                 </tree>
             </field>
         </record>
@@ -24,15 +25,23 @@
                     </div>
                         <group>
                             <group>
-                                <field name="product_id" on_change="on_change_product_id(product_id, context)"/>
+                                <!-- <field name="product_id" on_change="on_change_product_id(product_id, context)"/> -->
                                 <field name="model_product"/>
                                  <field name="categ_id" />
                                 <field name="main_qty"/>
                                 <field name="variation_qty"/>
-                                <field name="cost_model"/>
-                                <field name="cost_model_cut"/>
+                                <field name="cost_makl" invisible="1"/>
+                                <field name="cost_cut" invisible="1"/>
+                                <field name="kancing_price" invisible="1"/>
+                                
                             </group>
                         </group>
+                        <field name="biaya_lain_ids" widget="one2many_list" view_mode="tree" nolabel="1">
+                                 <tree  editable="bottom">
+                                     <field name="master_jurnal_id"/>
+                                     <field name="value"/>
+                                </tree>
+                        </field> 
                     </sheet>
                     
                 </form>
