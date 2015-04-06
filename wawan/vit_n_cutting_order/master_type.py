@@ -20,13 +20,15 @@ class vit_master_type(osv.osv):
 	
 	_columns = {
 		'model_product' : fields.char('Model/Type', required=True,),
-		'product_id' : fields.many2one('product.product','Sample Product', domain="['|',('categ_id.name','=','Mutif'),('categ_id.name','=','Little Mutif')]"),
+		# 'product_id' : fields.many2one('product.product','Sample Product', domain="['|',('categ_id.name','=','Mutif'),('categ_id.name','=','Little Mutif')]"),
 		'main_qty'		: fields.integer('Body'),
 		'variation_qty'	: fields.integer('Variation'),
 		'categ_id' : fields.char('Category'),
-		'cost_model': fields.float('Makloon Price'),
-		'cost_model_cut' :fields.float('Cutting Price'),
+		'cost_makl': fields.float('Makloon Price'),
+		'cost_cut' :fields.float('Cutting Price'),
+		'kancing_price' :fields.float('Kancing Price'),
 		'image': fields.binary('image',type="binary"),
+		'biaya_lain_ids':fields.one2many('vit.biaya.lain.type','master_type_id','Biaya Lain'),
 	}
 
 	_sql_constraints = [
@@ -36,26 +38,6 @@ class vit_master_type(osv.osv):
 	def on_change_categ_id(self, cr, uid, ids, categ_id, context=None):
 		categ_id_obj = self.pool.get('product.category')
 		categ_id = categ_id_obj.browse(cr,uid,categ_id,context=context)
-
-	def on_change_product_id(self, cr, uid, ids, product_id, context=None):
-		product_obj = self.pool.get('product.product')
-		product = product_obj.browse(cr, uid, product_id, context=context)
-
-		if product_id != False:
-			return {
-				'value' : {
-					'model_product' : product.type_model,
-					'categ_id'		: product.categ_id.name,
-			}
-		}
-		else:
-			return {
-				'value' : {
-					'model_product' :'',
-					'categ_id'		:'',
-			}
-		}
-		
 
 
 class vit_category(osv.osv):
@@ -84,6 +66,31 @@ class vit_category(osv.osv):
 			res.append((record['id'], name))
 		return res
 
+#class untuk value jurnal-jurnal tambahan dalam cutting relasi dengan master jurnal 
+class biaya_lain(osv.Model):
+	_name = "vit.biaya.lain.type"
 
+	_columns = {
+		'master_type_id': fields.many2one('vit.master.type', 'Master Reference',required=True, ondelete='cascade', select=True),
+		'master_jurnal_id': fields.many2one('vit.master.journal', 'Biaya Lain',required=True),
+		'value' : fields.float('Biaya Per Pcs',required=True),
+	}
+
+
+	def name_get(self, cr, uid, ids, context=None):
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+			ids = [ids]
+		reads = self.read(cr, uid, ids, ['master_jurnal_id'], context=context)
+
+		res = []
+		for record in reads:
+			name = record['master_jurnal_id'][1]
+			if record['master_jurnal_id'][1]:
+				name = record['master_jurnal_id'][1]
+			res.append((record['id'], name))
+		return res
+biaya_lain()
 
 	

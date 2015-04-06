@@ -26,7 +26,7 @@
                         <button name="action_inprogress" type="object" states="open" string="Start Cutting" class="oe_highlight"/>
                         <button name="action_finish_cut" type="object" states="inprogres" string="Finish Cutting" class="oe_highlight"/>
                         <button name="action_finish_qc" type="object" states="finish_cut"  string="Finish QC" class="oe_highlight"/>
-                        <button name="action_create_makloon" type="object"  states="finish_qc"  string="Create SPK Makloon" class="oe_highlight"/>
+                        <button name="action_create_makloon" type="object"  states="finish_qc"  string="Create SPK Makloon" class="oe_highlight"  confirm="Anda Yakin Akan Membuat SPK Makloon?"/>
                         <button name="action_view_makloon" type="object"  attrs="{'invisible':[('count_list_mo','=', 0) ] }"  string="View Makloon Order" class="oe_highlight"/>
                         
                         <button name="action_view_moves" type="object"  attrs="{'invisible':[('count_list_internal_move','=', 0) ] }"  string="Views Internal Move" class="oe_highlight"/>
@@ -58,6 +58,8 @@
                                 <field name="component_variation_qty"  readonly="0"/>
                                 <field name="count_list_mo" invisible="1"/>
                                 <field name="count_list_internal_move" invisible="1"/>
+                                
+
 
                             </group>
                         </group>
@@ -65,7 +67,7 @@
                              <page string="Material">
                                  <field name="consumed_line_ids" view_mode="tree" nolabel="1" readonly="1">
                                     <tree editable="bottom">
-                                         <field name="material"/>
+                                         <field name="material" />
                                          <!-- <field name="size"/> -->
                                          <field name="type"/>
                                          <field name="qty_total_material"/>
@@ -113,8 +115,12 @@
                                                  <field name="product_id" on_change="on_change_product_id(product_id, context)"/>
                                                  <field name="type"/>
                                                  <field name="state_normal"/>
-                                                 <field name="qty_total_material"/>
+                                                 <field name="qty_total_material" on_change="on_change_qty_total(product_id,qty_total_material, context)"/>
                                                  <field name="product_uom"/>
+                                                 <field name="total_harga"/>
+
+                                                 
+
                                             </tree>
                                         </field>
                                     </page>
@@ -190,8 +196,7 @@
                                                 <field name="qty_cut_rej" readonly="1"/>
                                         </group>
                                     </page>
-
-
+                                   
 
                                     <page string="QC Cutting" >
                                         <group row='0'>
@@ -269,7 +274,8 @@
                                         <group>
                                             <group>
                                                 <div>
-                                                <field name="product_id" domain="[('name','=','Majun')]" class="oe_inline"/>                                          
+                                                <!-- <field name="product_id" class="oe_inline"/> -->
+                                                    <field name="product_id" domain="[('name','=','Majun')]" class="oe_inline"/>                                          
                                                     <field name="qty" class="oe_inline"  attrs="{'readonly':[('state','!=','finish_cut')]}"/>
                                                     <field name="uom_id" class="oe_inline"/>
                                                 </div>                                                            
@@ -280,12 +286,62 @@
                                         </group>                                 
                                          <field name="sisa_ids" widget="one2many_list" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','!=','finish_cut')]}" >
                                             <tree  editable="bottom">
-                                                 <field name="product_id" on_change="on_change_product_id(product_id, context)"/>
-                                                 <field name="qty"/>
+                                                 <field name="product_id" on_change="on_change_product_id2(product_id, context)"/>
+                                                 <field name="qty" on_change="on_change_qty_total(product_id,qty, context)" />
                                                  <field name="uom_id"/>
+                                                 <field name="total_harga"/>
                                             </tree>
                                         </field>                                   
                                     </page>
+                                    <page string="Accounting" groups="account.group_account_user"> 
+                                        <field name="jurnal_value_ids" widget="one2many_list" view_mode="tree" nolabel="1">
+                                            <tree  editable="bottom">
+                                                 <field name="master_jurnal_id"/>
+                                                 <field name="value"/>
+                                            </tree>
+                                        </field>   
+                                        <group class="oe_subtotal_footer oe_right"> 
+                                            <label for="qty_order"  string="Total Pcs"/>    
+                                            <field name="qty_order" nolabel="1" class="oe_inline" readonly="1"/> 
+                                            <field name="qty_total_harga_journal_value"/>
+                                            <field name="qty_total_harga_journal_value_all_pcs"/>
+                                            
+                                        </group>
+                                        <group>
+                                            <group> 
+                                                <field name="qty_total_harga_consumed_line"/>
+                                                <field name="avg_qty_total" invisible="1"/>
+                                                <field name="qty_total_harga_sisa_line"/>
+                                                <field name="qty_total_wip"/>
+                                                <field name="avg_qty_total_wip"/> 
+                                               
+                                                <!-- <label for="direct_labour"/>                        -->
+                                                <field name="direct_labour"  invisible="1" nolabel="1"/>
+                                                <!-- <label for="electricity_cost"/>  -->
+                                                <field name="electricity_cost"  invisible="1" nolabel="1"/>
+                                                <!-- <label for="factory_rent_cost"/>  -->
+                                                <field name="factory_rent_cost"  invisible="1" nolabel="1"/>                       
+                                            </group>
+                                            <group>
+                                                    <!-- <label for="sewing_cost"   invisible="1"/>  -->
+                                                    <field name="sewing_cost"  nolabel="1"   invisible="1" readonly="1"/>
+                                                    <!-- <label for="cutting_cost"/>  -->
+                                                    <field name="cutting_cost"  nolabel="1"   invisible="1" readonly="1"/>
+                                            </group>  
+                                        </group> 
+                                         
+                                    </page>
+                                   <!--  <page string="Sisa Cutting 2" >
+                                                                    
+                                         <field name="sisa_line_ids" widget="one2many_list" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','!=','finish_cut')]}" >
+                                            <tree  editable="bottom">
+                                                 <field name="product_id"  domain="[]" on_change="on_change_product_id3(product_id, context)"/>
+                                                 <field name="qty"/>
+                                                 <field name="product_uom"/>
+                                            </tree>
+                                        </field>                                   
+                                    </page> -->
+                                   
                                 </notebook>
                                 </page> 
                              <page string="Accessories Material">
