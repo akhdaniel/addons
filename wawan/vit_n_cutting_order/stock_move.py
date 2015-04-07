@@ -29,7 +29,15 @@ class stock_picking(osv.osv):
 		'makloon_id':fields.many2one('vit.makloon.order', 'Makloon Order'),
 		'reward_steam':fields.float('Reward Steam'),
 		'is_updated' : fields.boolean('Updated Cost Price ?'),
+		'is_invoiced'  : fields.boolean('Is Invoiced Makloon ?'),
+		'is_makloon_categ'  : fields.boolean('Is Category Makloon ?'),
+
 	}
+
+	_defaults = {
+		'reward_steam' : 0.0,
+	}
+
 
 
 
@@ -38,7 +46,13 @@ class stock_picking_in(osv.osv):
 	_columns = {
 		'reward_steam':fields.float('Reward Steam'),
 		'is_updated' : fields.boolean('Updated Cost Price ?'),
+		'is_invoiced'  : fields.boolean('Is Invoiced Makloon ?'),
+		'is_makloon_categ'  : fields.boolean('Is Category Makloon ?'),
 		
+	}
+
+	_defaults = {
+		'reward_steam' : 0.0,
 	}
 
 	def create_invoice(self, cr, uid, ids, context=None):
