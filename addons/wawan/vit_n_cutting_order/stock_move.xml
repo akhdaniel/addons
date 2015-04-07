@@ -9,7 +9,7 @@
                     <field name="makloon_id"/>
                 </xpath>
                 <xpath expr="//field[@name='stock_journal_id']" position="after">
-                    <field name="reward_steam" />
+                     <field name="reward_steam"  attrs="{'invisible': [('partner_id','==',False)]}" /> 
                 </xpath>
                 <xpath expr="//field[@name='state']" position="after">
                     <field name="is_updated"/>
@@ -56,11 +56,14 @@
             <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
                 <field name="stock_journal_id" position="after">
-                    <field name="reward_steam" /> 
+                    <field name="reward_steam"  attrs="{'invisible': ['|',('partner_id','==',False),('is_makloon_categ','==',False)]}" /> 
+                    <field name="is_invoiced" invisible="1" />
+                    <field name="is_makloon_categ" invisible="1" />
+
                 </field>
                 <xpath expr="//button[@name='button_cancel']" position="after">
                     <button name="create_invoice" string="Create Invoice" type="object" class="oe_highlight"
-                    attrs="{'invisible': ['|',('state','!=', 'done'),('partner_id','==', 0)]}" groups="base.group_user"/>
+                    attrs="{'invisible': ['|',('state','!=', 'done'),('is_invoiced','==', False)]}" groups="base.group_user"/>
                 </xpath>
                 
             </field>

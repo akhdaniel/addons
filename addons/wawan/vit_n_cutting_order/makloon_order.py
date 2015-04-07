@@ -234,7 +234,7 @@ class vit_makloon_order(osv.osv):
 			master_lokasi_id = self.pool.get('vit.master.location').search(cr,uid,[('name','=','action_move_dest_from_where_to_get')])[0]
 			master_lokasi_obj = self.pool.get('vit.master.location').browse(cr,uid,master_lokasi_id,)
 		stock_move_ids = stock_move_obj.search(cr,uid,[('spk_mkl_id','=',ids[0]),('location_dest_id','=',master_lokasi_obj.dest_loc_id.name),('is_copy','=',False)])
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 
 		"""Cek Dahulu stock move tersebut apakah sudah masuk ke gudang jadi atau belum """
 		for stock_move_id in stock_move_ids:
@@ -1116,12 +1116,20 @@ class vit_makloon_order(osv.osv):
 			master_lokasi_id = self.pool.get('vit.master.location').search(cr,uid,[('name','=','action_receive')])[0]
 			master_lokasi_obj = self.pool.get('vit.master.location').browse(cr,uid,master_lokasi_id,)
 
-
-		### Create Dahulu di stock.picking.in
-		stock_in_objs = self.pool.get('stock.picking.in')
-		stock_in_obj = stock_in_objs.create(cr,uid,{'partner_id' : self.browse(cr,uid,ids[0],).partner_id.id, 'note':"Incoming dari Makloon",	
-													'origin' : self.browse(cr,uid,ids[0],).name,'type':'in'})
 		# import pdb;pdb.set_trace()
+		# Cek Dahaulu  Category Id dengan nama makloon
+		if self.pool.get('res.partner.category').search(cr,uid,[('name','=',"makloon")]) == []:
+			raise osv.except_osv(" name : makloon, tidak ditemukan di category_id ", "Tambahakan di res.partner.category")
+		### Create Dahulu di stock.picking.in
+		if self.browse(cr,uid,ids[0],).partner_id.category_id[0].name == "makloon":
+			is_makloon = True
+		else: 
+			is_makloon = False
+		
+		stock_in_objs = self.pool.get('stock.picking.in')
+		stock_in_obj = stock_in_objs.create(cr,uid,{'partner_id' : self.browse(cr,uid,ids[0],).partner_id.id, 'note':"Incoming dari Makloon",
+													'is_invoiced' : True,'is_makloon_categ': is_makloon,
+													'origin' : self.browse(cr,uid,ids[0],).name,'type':'in'})
 		### Pencarian Id untuk field model
 		master_type_obj = self.pool.get('vit.master.type')
 		master_type_obj_ids = master_type_obj.search(cr,uid,[('model_product','=',self.browse(cr,uid,ids[0],).model)])
