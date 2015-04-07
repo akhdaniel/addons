@@ -39,6 +39,7 @@
 	<script>
 		<t t-set="stroke" t-value="'#B6BCBE'"/>
 		<t t-if="member.state=='aktif'"><t t-set="stroke" t-value="'#4DBD33'"/></t>
+		<t t-if="member.paket_id.is_affiliate==True"><t t-set="stroke" t-value="'#FF7373'"/></t>
 		var treeData = [
 			{"name": "<t t-esc="member.name"/>",
 				"parent":"null",
@@ -298,25 +299,30 @@
 
 
 <template id="website.member_form" name="Member Form" page="True">
-	<!-- <script>
-		function testhis() {
+	<script>
+		function changestate() {
 			var e = document.getElementById("country_id");
 			var countryID = e.options[e.selectedIndex].value;
 			console.log(countryID);
-
 			$.ajax("/mlm/member/create/json/"+countryID, {
 				type: "POST",
 				dataType: "json",
 				data: JSON.stringify({
-					"country_id": countryID,
+					"id" : countryID
 				}),
+				success: function(data) {
+					var res = '<option value="">- Choose State -</option>';
+					$.each(JSON.parse(data.result), function(key,val) {
+						res += '<option value="'+ key +'">'+ val+'</option>';
+					});
+
+					/*replace exiting html in state with this one*/
+					$('#state_id').html(res);			
+					},
 				contentType: "application/json",
-				}).then(function(a) {
-					console.log("countryID=", a.states);
-					console.log("data=",a.data);
-			});
+				}); 
 		}
-	</script> -->
+	</script>
 
 	<div t-attf-class="form-group #{error and 'name' in error and 'has-error' or ''}">
 		<label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
@@ -432,7 +438,7 @@
 		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="country_id" id="country_id"
+				<select class="form-control" required="True" name="country_id" id="country_id" onchange="changestate();"
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Country...</option>
 				    <t t-foreach="countrys or []" t-as="country">

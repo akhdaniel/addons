@@ -2,6 +2,7 @@
 from openerp import http, SUPERUSER_ID
 from openerp.http import request
 import base64
+import simplejson
 
 class Member(http.Controller):
 	@http.route('/mlm/member/tree/',  auth='public', website=True)
@@ -190,14 +191,18 @@ class Member(http.Controller):
 		Users  = request.registry['res.users']
 		user   = Users.browse(cr, uid, user_id, context=context)
 		path   = user.partner_id and user.partner_id.path
-		
-		sql="select id from res_partner where path_ltree <@ '%s' order by path_ltree" % (path)
+		partner_uid = user.partner_id and user.partner_id.id
+		sql="select id from res_partner where path_ltree <@ '%s' \
+			or (path_ltree is null and sponsor_id = %d) \
+			order by path_ltree" % (path,partner_uid)
 		cr.execute(sql)
 		member_ids = cr.fetchall()
 		return [x[0] for x in member_ids]
 
-	# @http.route('/mlm/member/create/json/<int:country_id>',type='json', method='post')
-	# def json(self,country_id, **kwargs):
-	# 	State = http.request.env['res.country.state']
-	# 	states = State.search([('country_id','=',country_id)])
-	# 	return {'states':[a.id for a in states]}
+	@http.route('/mlm/member/create/json/<int:country_id>',type='json')
+	def json(self,country_id):
+		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+		cr.execute("select id, name from res_country_state where country_id = %d" % country_id)
+		rows = cr.fetchall()
+		data = simplejson.dumps(dict(rows))
+		return data
