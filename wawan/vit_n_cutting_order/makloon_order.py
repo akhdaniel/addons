@@ -233,9 +233,8 @@ class vit_makloon_order(osv.osv):
 		else:	
 			master_lokasi_id = self.pool.get('vit.master.location').search(cr,uid,[('name','=','action_move_dest_from_where_to_get')])[0]
 			master_lokasi_obj = self.pool.get('vit.master.location').browse(cr,uid,master_lokasi_id,)
-		stock_move_ids = stock_move_obj.search(cr,uid,[('spk_mkl_id','=',ids[0]),('location_dest_id','=',master_lokasi_obj.dest_loc_id.name),('is_copy','=',False)])
-		# import pdb;pdb.set_trace()
-
+		# stock_move_ids = stock_move_obj.search(cr,uid,[('spk_mkl_id','=',ids[0]),('location_dest_id','=',master_lokasi_obj.dest_loc_id.name),('is_copy','=',False)])
+		stock_move_ids = stock_move_obj.search(cr,uid,[('picking_id.state','=','done'),('spk_mkl_id','=',ids[0]),('location_dest_id','=',master_lokasi_obj.dest_loc_id.name),('is_copy','=',False)])	
 		"""Cek Dahulu stock move tersebut apakah sudah masuk ke gudang jadi atau belum """
 		for stock_move_id in stock_move_ids:
 			stock_move = stock_move_obj.browse(cr,uid,stock_move_id,context=context)
@@ -252,12 +251,16 @@ class vit_makloon_order(osv.osv):
 				'note'				: "Move dari Qc ke Gudang Jadi",
 			}
 
-		sp_id_create = sp_obj.create(cr, uid, sp_data1, context=context)
+		# import pdb;pdb.set_trace()
+		if stock_move_ids!=[]:
+			sp_id_create = sp_obj.create(cr, uid, sp_data1, context=context)
 		for stock_move_id in stock_move_ids:
 			stock_move = stock_move_obj.browse(cr,uid,stock_move_id,context=context)
+
 			if stock_move.picking_id.state =="assigned":
 				continue
 			else:
+				# sp_id_create = sp_obj.create(cr, uid, sp_data1, context=context)
 				self.copy(cr,uid,id,stock_move_id,sp_id_create, defaults=None,context=None)
 				"""Update Dahulu Stok Move Yang Sudah Dibuatkan Copy nya, dengan is_copy = True, Supaya bila ada beberapa kali recevie tidak double"""
 				stock_move_obj.write(cr,uid,stock_move_id,{'is_copy':True})
@@ -1116,7 +1119,6 @@ class vit_makloon_order(osv.osv):
 			master_lokasi_id = self.pool.get('vit.master.location').search(cr,uid,[('name','=','action_receive')])[0]
 			master_lokasi_obj = self.pool.get('vit.master.location').browse(cr,uid,master_lokasi_id,)
 
-		# import pdb;pdb.set_trace()
 		# Cek Dahaulu  Category Id dengan nama makloon
 		if self.pool.get('res.partner.category').search(cr,uid,[('name','=',"makloon")]) == []:
 			raise osv.except_osv(" name : makloon, tidak ditemukan di category_id ", "Tambahakan di res.partner.category")
@@ -1138,11 +1140,17 @@ class vit_makloon_order(osv.osv):
 		mrp_bom_obj = self.pool.get('mrp.bom')
 		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_ids[0])])
 
-		loop_size = ['S','M','L','XL','XXL']
+		# loop_size = ['S','M','L','XL','XXL']
 		ls_id_list = []
 
+		if self.browse(cr,uid,ids[0],).type_product_id.categ_id =="Little Mutif" :
+			loop_size = ['S','M','L','XL','XXL','XXXL']
+		else:
+			loop_size = ['S','M','L','XL','XXL']
+		
 		for mrp_id in mrp_bom_obj_ids:
 			obj_mrp = mrp_bom_obj.browse(cr,uid,mrp_id,)
+			# import pdb;pdb.set_trace()
 			for ls in loop_size:
 				if obj_mrp.size == ls:
 					if obj_mrp.size == 'S':
@@ -1153,8 +1161,10 @@ class vit_makloon_order(osv.osv):
 						size = self.browse(cr,uid,ids,context)[0].l_order
 					elif obj_mrp.size == 'XL':
 						size = self.browse(cr,uid,ids,context)[0].xl_order
-					else :
+					elif obj_mrp.size == 'XXL':
 						size = self.browse(cr,uid,ids,context)[0].xxl_order
+					else :
+						size = self.browse(cr,uid,ids,context)[0].xxxl_order
 
 					if size == 0.0:
 						continue
