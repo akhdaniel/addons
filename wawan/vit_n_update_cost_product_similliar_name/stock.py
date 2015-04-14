@@ -25,11 +25,12 @@ class stock_partial_picking(osv.osv_memory):
 		""" Cari Nama product dalam line wizard do_partial,
 		    ambil dan lakukan pencarian product dengan nama tersebut
 		    update nilai standard_price (Cost Price)
+		    atau berdasarkan default_code ditambah 'X' di belakangnya
 		"""
 		
 		for line in partial.move_ids:
+			product_ids = product_obj.search(cr,uid,[('default_code','=',line.product_id.default_code+'X')])
 			# import pdb;pdb.set_trace()
-			product_ids = product_obj.search(cr,uid,[('name','=',line.product_id.name)])
 			for product in product_ids:
 				product_obj.write(cr, uid, [product], {'standard_price': line.product_id.standard_price})
 
