@@ -280,7 +280,6 @@ class vit_makloon_order(osv.osv):
 			master_lokasi_obj = self.pool.get('vit.master.location').browse(cr,uid,master_lokasi_id,)
 
 		defaults.update(picking_id=sp_id_create,location_id=master_lokasi_obj.source_loc_id.id,location_dest_id=master_lokasi_obj.dest_loc_id.id)
-		# import pdb;pdb.set_trace()
 		return stock_move_obj.copy(cr, uid, stock_move_id, defaults, context=context)
 
 	def updated_hpp(self,cr,uid,ids,context=None):
@@ -307,8 +306,8 @@ class vit_makloon_order(osv.osv):
 				# total_hpp = hpp_reward + self.browse(cr,uid,ids,context=context)[0].qty_all_total_wip_pcs
 				total_hpp = self.browse(cr,uid,ids,context=context)[0].last_qty_all_total_wip_pcs
 				"""Update Nilai Cost price dari Last Total WIP/Pcs  """
-				self.update_cost(cr,uid,ids,total_hpp,context)
-				self.update_other_field(cr,uid,ids,reward_steam,qty,hpp_reward,context)
+				# self.update_cost(cr,uid,ids,total_hpp,context)
+				# self.update_other_field(cr,uid,ids,reward_steam,qty,hpp_reward,context)
 				
 				"""Update Dahulu Journal Entry Yang sudah dibuat Debit/Kredit Sesuaikan dengan Hpp Makloon"""
 				name = int_move_id.name
@@ -319,6 +318,16 @@ class vit_makloon_order(osv.osv):
 				
 				""" Update Status internal move menjadi True update costprice """
 				self.is_updated(cr,uid,ids,id_int_move,context)
+
+				# import pdb;pdb.set_trace()
+
+				"""Update Nilai Cost price dari Last Total WIP/Pcs
+				     t_qty_all_total_wip_pcs : Harga WIP/Pcs Dari SPK Cutting + Harga WIP/Pcs Accessories + Total Overheads 
+				     atau Nilai dari field : Total WIP/Pcs
+			    """
+				t_qty_all_total_wip_pcs = self.browse(cr,uid,ids[0],).qty_all_total_wip_pcs
+				self.update_cost(cr,uid,ids,total_hpp,t_qty_all_total_wip_pcs,hpp_reward,context)
+				self.update_other_field(cr,uid,ids,reward_steam,qty,hpp_reward,context)
 				
 				## Create Jurnal Reward Steam
 				# self.journal_reward(cr,uid,ids,reward_steam,qty,context)
@@ -496,26 +505,26 @@ class vit_makloon_order(osv.osv):
 
 
 	## FUngsi Update Cost Price Barang Jadi ###
-	def update_cost(self, cr, uid, ids, total_hpp, context=None):
+	def update_cost(self, cr, uid, ids, total_hpp,t_qty_all_total_wip_pcs,hpp_reward,context=None):
 		model = self.browse(cr,uid,ids,context=context)[0].model
 		prod_obj = self.pool.get('product.product')
 		product_ids = self.pool.get('product.product').search(cr, uid, [('name','like',model)])
 		for product_id in product_ids:
 			cost_price = prod_obj.browse(cr,uid,product_id,).standard_price
+			# import pdb;pdb.set_trace()
 			if cost_price != 0:
-				total_hpp2 = (total_hpp + cost_price)/2
+				total_hpp2 = (t_qty_all_total_wip_pcs + cost_price + hpp_reward)/2
 				prod_obj.write(cr,uid,product_id,{'standard_price' : total_hpp2},context=context)
 			else:
-				# import pdb;pdb.set_trace()
-				prod_obj.write(cr,uid,product_id,{'standard_price' : total_hpp},context=context)
-			
-			# stock_picking_obj = self.pool.get('stock.picking')
-			# stock_ids = stock_picking_obj.search(cr,uid,[('origin','=',self.browse(cr,uid,ids,context=context)[0].name),('type','=','in'),('is_updated','=',True)])
-			# if stock_ids!=[] :
+				total_hpp2 = t_qty_all_total_wip_pcs + hpp_reward
+				prod_obj.write(cr,uid,product_id,{'standard_price' : total_hpp2},context=context)
+
+			# if cost_price != 0:
 			# 	total_hpp2 = (total_hpp + cost_price)/2
 			# 	prod_obj.write(cr,uid,product_id,{'standard_price' : total_hpp2},context=context)
 			# else:
 			# 	prod_obj.write(cr,uid,product_id,{'standard_price' : total_hpp},context=context)
+			
 		return True
 
 	def is_updated(self,cr,uid,ids,id_int_move,context):
@@ -800,7 +809,7 @@ class vit_makloon_order(osv.osv):
 	 	if x[0].reward_steam!=0:
 	 		res[x[0].id] = x[0].qty_all_total_wip + x[0].reward_steam
 	 	else:
-	 		res[x[0].id] = 0
+	 		res[x[0].id] = x[0].qty_all_total_wip 
 		return res
 
 	def _last_total_all_wip_pcs(self, cr, uid, ids, name, arg, context=None):
@@ -809,7 +818,7 @@ class vit_makloon_order(osv.osv):
 	 	if x[0].hpp_reward!=0 :
 	 		res[x[0].id] = x[0].qty_all_total_wip_pcs +x[0].hpp_reward
 	 	else:
-	 		res[x[0].id] = 0
+	 		res[x[0].id] = x[0].qty_all_total_wip_pcs
 		return res
 
 	def _last_total_all_wip_last_incoming(self, cr, uid, ids, name, arg, context=None):
