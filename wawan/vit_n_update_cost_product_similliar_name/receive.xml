@@ -1,0 +1,52 @@
+<openerp>
+	<data>
+
+		<!-- di wizard -->
+		<record model="ir.ui.view" id="stock_partial_picking_form_nett">
+		    <field name="name">stock.partial.picking.form.nett</field>
+		    <field name="model">stock.partial.picking</field>
+		    <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+		    <field name="arch" type="xml">
+		    	<field name="quantity" position="attributes">
+		    		<attribute name="on_change">on_change_qty(quantity, context)</attribute>
+		    	</field>
+
+		    	<field name="quantity" position="after">
+		    		<field name="product_qty_nett" on_change="on_change_nett_qty( product_qty_nett, quantity, context)"/>
+		    		<field name="product_qty_diff" readonly="1"/>
+		    	</field>
+
+		   	</field>
+		</record>	
+
+
+
+
+		<!-- di stock move tree -->
+		<record model="ir.ui.view" id="view_move_picking_tree_nett">
+		    <field name="name">view_move_picking_tree_nett</field>
+		    <field name="model">stock.move</field>
+		    <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+		    <field name="arch" type="xml">
+		    	<field name="product_qty" position="after">
+		    		<field name="product_qty_nett" />
+		    		<field name="product_qty_diff"/>
+		    	</field>
+		   	</field>
+		</record>
+
+
+		<!-- di stock move -->
+		<record model="ir.ui.view" id="view_move_form_nett">
+		    <field name="name">view_move_form_nett</field>
+		    <field name="model">stock.move</field>
+		    <field name="inherit_id" ref="stock.view_move_form"/>
+		    <field name="arch" type="xml">
+		    	<label for="product_uos_qty" position="before">
+		    		<field name="product_qty_nett"/>
+		    		<field name="product_qty_diff"/>
+		    	</label>
+		   	</field>
+		</record>					
+	</data>
+</openerp>
