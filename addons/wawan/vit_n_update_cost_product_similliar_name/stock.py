@@ -29,10 +29,12 @@ class stock_partial_picking(osv.osv_memory):
 		"""
 		
 		for line in partial.move_ids:
-			product_ids = product_obj.search(cr,uid,[('default_code','=',line.product_id.default_code+'X')])
 			# import pdb;pdb.set_trace()
-			for product in product_ids:
-				product_obj.write(cr, uid, [product], {'standard_price': line.product_id.standard_price})
+			if line.product_id.default_code!=False:
+				product_ids = product_obj.search(cr,uid,[('default_code','=',line.product_id.default_code+'X')])
+				if product_ids!=[] :
+					for product in product_ids:
+						product_obj.write(cr, uid, [product], {'standard_price': line.product_id.standard_price})
 
 		return res 
 
