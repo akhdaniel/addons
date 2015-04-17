@@ -51,7 +51,7 @@ class purchase_order(osv.osv):
         return res  
 
     _columns = {  
-        'qty_total': fields.function(_qty_product, string=' Product Quantity Total', type='float'),
+        'qty_total2': fields.function(_qty_product, string='Product Quantity Total', type='float'),
     
     }
 
