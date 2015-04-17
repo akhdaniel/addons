@@ -91,7 +91,6 @@ class stock_picking_in(osv.osv):
 			
 
 		# Create Invoice Reward
-		# import pdb;pdb.set_trace()
 		reward_id = self.pool.get('vit.master.journal').search(cr,uid,[('name','=','Reward Steam')],context=context)[0]
 		reward = self.pool.get('vit.master.journal').browse(cr,uid,reward_id,context=context)
 		inv_makloon = self.pool.get('account.invoice').create(cr,uid,{'partner_id' : self.browse(cr,uid,ids[0],).partner_id.id,
@@ -107,52 +106,15 @@ class stock_picking_in(osv.osv):
 																	'name':reward.name,
 																	'account_id':reward.debit_account_id.id,
 																	'price_unit': self.browse(cr,uid,ids[0],).reward_steam,})
+		
 
-		# #create juga supplier invoicenya
-		# inv_makloon = self.pool.get('account.invoice').create(cr,uid,{'partner_id' : self.browse(cr,uid,ids[0],).partner_id.id,
-		# 														'origin'  : self.browse(cr,uid,ids[0],).name,
-		# 														'account_id' : prod.property_account_expense.id,
-		# 														'journal_id' : jurnal,
-		# 														'type' : 'in_invoice',
-		# 														}),
-
-		# #search product (id 1 bawaan dari openerp pasti product service)
-		# self.pool.get('account.invoice.line').create(cr,uid,{'invoice_id' : inv_makloon,
-		# 														'product_id':self._get_ongkos_jahit(cr,uid,context),
-		# 														'name':prod_name,
-		# 														'account_id':prod.property_account_income.id,
-		# 														'price_unit': 0.0,})
-																# 'price_unit':(self.browse(cr,uid,ids[0],).origin.type_product_id.cost_makl)*(self.browse(cr,uid,ids[0],).qty_order)})			
-		#set to "inprogress" state
-		# self.write(cr, uid, ids, {'state':'inprogres','invoice_id':inv_makloon}, context=context)
-		# self.action_move_accessories(cr,uid,ids,context=context)
-		# self.journal_biaya(cr, uid, ids, context)
-		# mod_obj = self.pool.get('ir.model.data')
-		# wizard_obj = self.pool.get('purchase.order.line_invoice')
-		# #compute the number of invoices to display
-		# inv_ids = []
-		# for po in self.browse(cr, uid, ids, context=context):
-		# 	if po.invoice_method == 'manual':
-		# 		if not po.invoice_ids:
-		# 			context.update({'active_ids' :  [line.id for line in po.order_line]})
-		# 			wizard_obj.makeInvoices(cr, uid, [], context=context)
-
-		# for po in self.browse(cr, uid, ids, context=context):
-		# 	inv_ids+= [invoice.id for invoice in po.invoice_ids]
-		# res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_supplier_form')
-		# res_id = res and res[1] or False
+		""" Kembalikan Lagi Field is_invoiced = False, supaya tombol Create Invoice di Stok picking menjadi Hide"""
+		self.write(cr,uid,ids,{'is_invoiced':False},context=context)
+		
+		# import pdb;pdb.set_trace()
 
 		return {
-			# 'name': _('Supplier Invoices'),
-			# 'view_type': 'form',
-			# 'view_mode': 'form',
-			# 'view_id': [res_id],
-			# 'res_model': 'account.invoice',
-			# 'context': "{'type':'in_invoice', 'journal_type': 'purchase'}",
-			# 'type': 'ir.actions.act_window',
-			# 'nodestroy': True,
-			# 'target': 'current',
-			# 'res_id': inv_ids and inv_ids[0] or False,
+		
 		}
 
 

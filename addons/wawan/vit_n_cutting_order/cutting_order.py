@@ -869,6 +869,55 @@ class vit_cutting_order(osv.osv):
 
 	def action_inprogress(self, cr, uid, ids, context=None):
 
+		# lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
+		# # lokasi_produksi = 'Lokasi Produksi'
+		# virtual_production = 'Production'
+		# try:
+		# 	lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
+		# 	# lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		# except Exception, e:
+		# 	raise osv.except_osv('Tidak Ditemukan' , lokasi_barang_jadi+' atau'+ lokasi_produksi)	
+		
+		# lokasi_barang_jadi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_barang_jadi)])[0]
+		# # lokasi_produksi_id = self.pool.get('stock.location').search(cr,uid,[('name','=',lokasi_produksi)])[0]
+		# virtual_production_id = self.pool.get('stock.location').search(cr,uid,[('name','=',virtual_production)])[0]
+
+		# ### Buat Internal Move Dari Gudang Jadi ke Produksi ####
+		# ########################################################
+		# ### Create Dahulu ######################################
+		# sp_obj   = self.pool.get('stock.picking')
+		# sp_data1 = {
+		# 		'origin'			: self.browse(cr,uid,ids,context)[0].name,
+		# 	}
+
+		# sp_id_create = sp_obj.create(cr, uid, sp_data1, context=context)
+
+		# ### Update move_lines nya ###############################
+		# for usage_line in self.browse(cr,uid,ids,context)[0].usage_line_ids:
+		# 	product_id = self.pool.get('product.product').browse(cr, uid, usage_line.product_id.id, context=context).id
+		# 	data_line = { 
+		# 		'name'				: self.browse(cr,uid,ids,context)[0].name,
+		# 		'product_id'        : product_id,
+		# 		'product_qty'       : usage_line.qty_total_material,
+		# 		'product_uom'		: usage_line.product_uom.id,
+		# 		'location_id'       : lokasi_barang_jadi_id,
+		# 		'location_dest_id'  : virtual_production_id
+		# 	}
+			
+		# 	move_lines = [(0,0,data_line)]
+		# 	sp_data = {
+		# 		'move_lines'     	: move_lines,
+		# 	}
+		# 	sp_obj.write(cr, uid, sp_id_create, sp_data, context=context)
+		### Lakukan Validate di Internal Move ####
+		# sp_obj.draft_validate(cr,uid,[sp_id_create],context=context)
+
+			### ** Lakukan Juga Perhitungan sale_price tiap product di kali quantity nya ### **
+
+		return self.write(cr, uid, ids, {'state':'inprogres'}, context=context)
+
+	def action_finish_cut(self, cr, uid, ids, context=None):
+
 		lokasi_barang_jadi = 'Lokasi Bahan Baku Kain'
 		# lokasi_produksi = 'Lokasi Produksi'
 		virtual_production = 'Production'
@@ -909,21 +958,15 @@ class vit_cutting_order(osv.osv):
 				'move_lines'     	: move_lines,
 			}
 			sp_obj.write(cr, uid, sp_id_create, sp_data, context=context)
-		### Lakukan Validate di Internal Move ####
-		# sp_obj.draft_validate(cr,uid,[sp_id_create],context=context)
 
-			### ** Lakukan Juga Perhitungan sale_price tiap product di kali quantity nya ### **
-
-		return self.write(cr, uid, ids, {'state':'inprogres', 'count_list_internal_move':1}, context=context)
-
-	def action_finish_cut(self, cr, uid, ids, context=None):
+		
 		if self.browse(cr,uid,ids,context)[0].usage_line_ids == []:
 			raise osv.except_osv('Lengkapi dan isi Penggunaan Material yang akan dipakai','Tap Usage Material')
 		if self.browse(cr,uid,ids,context)[0].s_cut  == 0 and self.browse(cr,uid,ids,context)[0].m_cut == 0 \
 			and self.browse(cr,uid,ids,context)[0].l_cut  == 0  and self.browse(cr,uid,ids,context)[0].xl_cut == 0  \
 			and self.browse(cr,uid,ids,context)[0].xxl_cut == 0:
 			raise osv.except_osv('Lengkapi dan isi Penggunaan Cutting','Tap Cutting')
-		return self.write(cr, uid, ids, {'state':'finish_cut'}, context=context)
+		return self.write(cr, uid, ids, {'state':'finish_cut', 'count_list_internal_move':1}, context=context)
 
 	
 	## Disini Ada Eksekusi untuk membuat jurnal direct labour,electricity, factory rent dll

@@ -1159,7 +1159,6 @@ class vit_makloon_order(osv.osv):
 		
 		for mrp_id in mrp_bom_obj_ids:
 			obj_mrp = mrp_bom_obj.browse(cr,uid,mrp_id,)
-			# import pdb;pdb.set_trace()
 			for ls in loop_size:
 				if obj_mrp.size == ls:
 					if obj_mrp.size == 'S':
