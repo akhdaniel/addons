@@ -301,8 +301,8 @@
                                             </tree>
                                         </field>   
                                         <group class="oe_subtotal_footer oe_right"> 
-                                            <label for="qty_order"  string="Total Pcs"/>    
-                                            <field name="qty_order" nolabel="1" class="oe_inline" readonly="1"/> 
+                                           <!--  <label for="qty_order"  string="Total Pcs"/>    
+                                            <field name="qty_order" nolabel="1" class="oe_inline" readonly="1"/>  -->
                                             <field name="qty_total_harga_journal_value"/>
                                             <field name="qty_total_harga_journal_value_all_pcs"/>
                                             
