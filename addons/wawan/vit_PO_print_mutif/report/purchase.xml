@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="Purchase" 
+        string="PO With Signature Mutif" 
+        model="purchase.order" 
+        name="purchase" 
+        rml="vit_PO_print_mutif/report/purchase.rml" 
+        auto="False" 
+        header="True"/>          
+    </data> 
+</openerp>
