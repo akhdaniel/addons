@@ -43,6 +43,7 @@
                 <field name="quantity"/>
                 <field name="uos_id" groups="product.group_uom"/>
                 <field name="price_unit"/>
+                <field name="gross"/>
                 <field name="price_subtotal"/>
                 <field name="type" invisible="1"/>
                 <field name="state" invisible="1"/>
