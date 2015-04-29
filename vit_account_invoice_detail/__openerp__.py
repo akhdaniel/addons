@@ -21,7 +21,7 @@
 
 {
     'name': 'Account Invoice Detail',
-    'version': '0.1',
+    'version': '0.2',
     'author': 'vitraining.com',
     'summary': 'Account Invoice Detail',
     'description' : """
