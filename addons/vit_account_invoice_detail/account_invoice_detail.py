@@ -32,6 +32,6 @@ class account_invoice_line(osv.Model):
 		'date_invoice': fields.related('invoice_id','date_invoice',type='date',string='Invoice date',store=True),
 		'date_due': fields.related('invoice_id','date_due',type='date',string='Due Date',store=True),
 		'move_id': fields.related('invoice_id','move_id',type='many2one',relation='account.move',string='Journal Entry',store=True),
-		'gross' : fields.function(_amount_gross, string='Gross Calculate',type='float',digits_compute= dp.get_precision('Account'),store=True),
+		'gross' : fields.function(_amount_gross, string='Gross',type='float',digits_compute= dp.get_precision('Account'),store=True),
 
 	}
