@@ -92,7 +92,7 @@ class stockw_order_line(osv.osv):
     _columns = {
         'stock_id': fields.many2one('stockw.order', 'Warehouse Order', required=True, ondelete='cascade'),
         'name': fields.char('Description', size=256, required=True),
-        'product_id': fields.many2one('product.product', 'Product', required=True, domain=[('sale_ok', '=', True)]),
+        'product_id': fields.many2one('product.product', 'Product', required=True, domain=[('sale_ok', '=', True),('categ_id.name','ilike','wip'),]),
         'product_qty': fields.integer('Quantity'),
         'product_uom': fields.many2one('product.uom', 'UoM', required=True),
     }

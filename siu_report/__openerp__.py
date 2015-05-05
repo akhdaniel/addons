@@ -1,7 +1,7 @@
 {
     "name":"Sale Report",
     "version":"0.1",
-    "author":"openerpsoft,Vitraining.com",
+    "author":"openerpsoft",
     "website":"http://openerpsoft.com",
     "category":"Custom Modules",
     "description": """

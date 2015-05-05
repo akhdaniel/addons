@@ -81,6 +81,7 @@
 				</xpath>
 				<xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_uom_qty']" position="before">
                     <field name="ucapan"/>
+                    <field name="catatan"/>
 				</xpath>
 				<xpath expr="//tree[@string='Sales Order Lines']/field[@name='name']" position="replace">
                     <field name="name" on_change="onchange_price_desc(price_unit, product_id, parent.pricelist_id, product_uom_qty, product_uom, parent.partner_id, parent.date_order)"/>

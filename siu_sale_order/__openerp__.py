@@ -1,7 +1,7 @@
 {
     "name":"Sale Order Management",
     "version":"0.1",
-    "author":"openerpsoft,Vitraining.com",
+    "author":"openerpsoft",
     "website":"http://openerpsoft.com",
     "category":"Generic Modules",
     "description": """
