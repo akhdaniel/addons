@@ -137,7 +137,7 @@ class sale_order(osv.osv):
         'catatan': fields.text('Notes'),
         #'alamat_kirim': fields.text('Delivery Address'),
         'party_datetime': fields.datetime('Party Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
-        'delivery_date': fields.date('Delivery Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
+        'delivery_date': fields.datetime('Delivery Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
     }
 
     _defaults = {
@@ -269,6 +269,7 @@ class sale_order_line(osv.osv):
     _inherit = "sale.order.line"    
     _columns = {
         'ucapan': fields.text('Ucapan'),
+        'catatan': fields.text('Catatan'),
     } 
  
 

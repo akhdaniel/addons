@@ -19,6 +19,7 @@ class manifest_delivery(osv.osv):
                         domain="[('state', 'in', ('confirmed', 'assigned')), ('type','=','internal'), ('shop_id','!=', False)]", readonly=True, states={'draft': [('readonly', False)]}),
         'state': fields.selection([('draft', 'Draft'), ('approve', 'Approved'), ('done', 'Done'), ('cancel', 'Cancel')], 'State', readonly=True),
         'note': fields.text('Notes'),
+        'validasi': fields.char('Created by', size=64, readonly=True),
     }
     
     _defaults = {
@@ -78,6 +79,12 @@ class manifest_delivery(osv.osv):
         
         self.write(cr, uid, ids, {'state': 'done'})
         return True 
+
+    def create(self, cr, uid, vals, context=None):
+        cr.execute("select p.name from res_users u join res_partner p on u.partner_id = p.id where u.id = %d" % uid)
+        name=cr.fetchall()
+        vals['validasi']= (name!=[] and name[0][0]) or '' 
+        return super(manifest_delivery, self).create(cr, uid, vals, context=context)
          
 manifest_delivery()
 

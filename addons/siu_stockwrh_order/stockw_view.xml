@@ -33,8 +33,10 @@
 		                <field name="name"/>
 		                <field name="date"/>
 		                <field name="user_id" on_change="user_id_change(user_id)"/>
-		                <field name="description" colspan="4"/>
-		            </group>
+                    </group>
+                    <group col="4" colspan="4">
+    	                <field name="description" colspan="4"/>
+                    </group>
                     <notebook colspan="5">
                         <page string="Stock Lines">
                             <field colspan="4" name="stock_line" nolabel="1" widget="one2many_list">

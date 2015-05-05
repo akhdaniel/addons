@@ -81,7 +81,8 @@
 		                <field name="name"/>
 		                <field name="date" on_change="onchange_backdate(date)"/>
 		                <field name="driver"/>
-		                <field name="nopol"/>
+                        <field name="nopol"/>
+		                <field name="validasi"/>
 		            </group>
                     <notebook colspan="5">
                         <page string="Delivery Order">

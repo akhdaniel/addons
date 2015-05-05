@@ -5,7 +5,7 @@
     'description': """
     This module aims to create master scheduling for production.    
        """,
-    'author': 'Openerpsoft,Vitraining.com',
+    'author': 'Openerpsoft',
     'depends': ['siu_stock_order', 'mrp', 'sale','wtc_shop'],
     'data': ['mps_view.xml'],
     'test': [],    

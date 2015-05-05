@@ -3,7 +3,7 @@
 
 {
     "name": "Manifest Delivery Orders",
-    "author": "Openerpsoft,Vitraining.com",
+    "author": "Openerpsoft",
     "Description": """
     This module adds a facility to merge several Delivery Orders
     """,
