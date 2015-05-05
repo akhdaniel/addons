@@ -1,7 +1,7 @@
 {
     "name":"Master Shop",
     "version":"0.1",
-    "author":"openerpsoft",
+    "author":"openerpsoft,Vitraining.com",
     "website":"http://openerpsoft.com",
     "category":"Generic Modules",
     "description": """
