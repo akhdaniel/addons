@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<document filename="Invoice.pdf">
+  <template pageSize="(23cm,29.5cm)" title="Invoice" author="SUMBER INTEGRASI UTAMA" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="1.0cm" y1="2.0cm" width="20cm" height="27cm"/>
+      	<header>
+			<pageGraphics>
+				<setFont name="Helvetica" size="7"/>
+				<drawString x="19.0cm" y="1cm">Hal <pageNumber/></drawString>
+			</pageGraphics>
+		</header>
+    </pageTemplate>
+  </template>
+
+  <stylesheet>
+
+	<blockTableStyle id="Table20">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#FFFFFF" start="1,0" stop="1,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#FFFFFF" start="1,-1" stop="1,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    
+	<paraStyle name="terp_default_7" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="5" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica-Bold" fontSize="10.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_Centre_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="14.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Centre" fontName="Helvetica" fontSize="13.0" leading="11" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Right" fontName="Helvetica-Bold" fontSize="14.0" leading="11" alignment="RIGHT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Right_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Centre_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_18" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Center_7" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_label" fontName="Helvetica" fontSize="11.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="5.0"/>
+    <paraStyle name="terp_default_Bold_9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="12.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>    
+    <paraStyle name="terp_default_1" fontName="Helvetica" fontSize="3.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+
+    <images/>
+  </stylesheet>
+
+  <story>
+  <pto>
+    <para style="terp_default_8">[[ repeatIn(objects,'o') ]]</para>
+    <para style="terp_default_8">[[ setLang(o.partner_id.lang) ]]</para>
+
+	<section>
+	    <para style="terp_default_1">[[repeatIn(get_label(o), 'x')]]</para>
+		<blockTable colWidths="280.0,10.0,280.0" style="Table20">
+		<tr>
+			<td>
+		  		<para style="terp_default_label">[[ x[0][0] ]] / [[ (o.name).split('/')[-1] ]]</para>
+		  		<para style="terp_default_label">[[ x[0][1] ]]</para>
+			</td>
+			<td>
+		  		<para style="terp_default_label"><font color="white">:</font></para>
+			</td>
+			<td>
+		  		<para style="terp_default_label">[[ x[1][0] ]] / [[ (o.name).split('/')[-1] ]]</para>
+		  		<para style="terp_default_label">[[ x[1][1] ]]</para>
+			</td>
+		</tr>
+		</blockTable>
+		<para style="terp_default_label"><font color="white">:</font></para>
+    </section>
+    
+  </pto>
+  </story>
+</document>
