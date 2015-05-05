@@ -1,7 +1,7 @@
 {
     "name":"Eksport Import Object Data",
     "version":"0.1",
-    "author":"Openerpsoft,Vitraining.com",
+    "author":"Openerpsoft",
     "website":"http://openerpsoft.com",
     "category":"Custom Modules",
     "description": """
