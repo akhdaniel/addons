@@ -13,27 +13,56 @@
 ### END INIT INFO
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/opt/odoo/odoo.py
-NAME=odoo
-DESC=odoo
-CONFIG=/etc/odoo.conf
+# Di /opt/odoo dicopykan openerp-server > openerp-server8
+DAEMON=/opt/odoo/openerp-server8
+NAME=openerp-server8
+DESC=openerp-server8
+CONFIGFILE=/etc/odoo.conf
 LOGFILE=/var/log/odoo/odoo.log
-USER=openerp
+#User
+USER=odoo2
+
+PIDFILE=/var/run/$NAME.pid
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS="-c $CONFIGFILE"
+# Additional var for start/stop virtualenv
+VENV=/opt/odoo2/venv_oddo/bin/
 
 test -x ${DAEMON} || exit 0
+[ -f $CONFIGFILE ] || exit 0
+
+checkpid() {
+    [ -f $PIDFILE ] || return 1
+    pid=`cat $PIDFILE`
+    [ -d /proc/$pid ] && return 0
+    return 1
+}
 
 set -e
 
 do_start () {
     echo -n "Starting ${DESC}: "
-    start-stop-daemon --start --quiet --pidfile /var/run/${NAME}.pid --chuid ${USER} --background --make-pidfile --exec ${DAEMON} -- --config=${CONFIG} --logfile=${LOGFILE}
+    #Aktifkan VENV
+    source ${VENV}/activate
+    echo -n "Activate ${VENV}"
+
+    # start-stop-daemon --start --quiet --pidfile /var/run/${NAME}.pid --chuid ${USER} --background --make-pidfile --exec ${DAEMON} -- --config=${CONFIG} --logfile=${LOGFILE}
+    start-stop-daemon --start --quiet --pidfile ${PIDFILE} \
+		    --chuid ${USER} --background --make-pidfile \
+		    --exec ${DAEMON} -- ${DAEMON_OPTS}
     echo "${NAME}."
 }
 
 do_stop () {
     echo -n "Stopping ${DESC}: "
-    start-stop-daemon --stop --quiet --pidfile /var/run/${NAME}.pid --oknodo
-    echo "${NAME}."
+    # Deactivate VENV
+	source ${VENV}/deactivate
+	echo -n "deactivate ${VENV}"
+
+    # start-stop-daemon --stop --quiet --pidfile /var/run/${NAME}.pid --oknodo
+    start-stop-daemon --stop --quiet --pidfile ${PIDFILE} \
+			--oknodo
+	echo "${NAME}."
 }
 
 case "${1}" in
