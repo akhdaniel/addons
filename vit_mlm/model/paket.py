@@ -24,7 +24,7 @@ class mlm_paket(osv.osv):
 	_columns 	= {
 		'code'		: fields.char('Code',required=True),
 		'name'		: fields.char('Name',required=True),
-		'paket_product_id': fields.many2one('mlm.paket_produk', 'Paket Product Ref',required=True),
+		'paket_product_id': fields.many2one('mlm.paket_produk', 'Paket Product Ref'),
 		'harga'		: fields.float('Harga',required=True),
 		'price'		: fields.function(_get_price,type="float",string="Total Harga", readonly=True),
 		'cashback'		: fields.float('Cashback'),
