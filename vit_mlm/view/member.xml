@@ -1,5 +1,6 @@
 <openerp>
 	<data>
+
        <record id="view_member_form" model="ir.ui.view">
             <field name="name">mlm_member_form</field>
             <field name="model">res.partner</field>
@@ -19,8 +20,7 @@
                     <field name="paket_cashback" />
                     <field name="history_join_ids" widget="many2many_tags" attrs="{'invisible': [('state','=','draft')]}"/>
                     <field name="jumlah_bayar" />
-            		<field name="is_stockist" />
-                    <field name="invoice_join_paid" invisible="1"/>
+                    <field name="invoice_join_paid" invisible="0"/>
             	</field>
 
                 <field name="mobile" position="after">
@@ -39,6 +39,10 @@
                     <field name="id_number" />
                     <field name="signature" class="oe_avatar" widget="image" />
                 </field>
+<!-- 
+                <field name="date" position="after">
+                    <field name="is_stockist" />
+                </field> -->
 
                 <xpath expr="//form/sheet" position="before">
                     <header>
@@ -54,7 +58,7 @@
                         <button name="action_aktif" type="object" 
                             class="oe_highlight"
                             string="Activate"
-                            attrs="{'invisible': [('cek_state', '!=', '2baktif')]}" />
+                            attrs="{'invisible': ['|',('invoice_join_paid', '!=', True),('cek_state', '!=', '2baktif')]}" />
                         
                         <button string="Sale Order Paket Join" type="object" 
                              name="action_create_sale_order"
