@@ -1,0 +1,52 @@
+<openerp>
+
+    <data>
+        <record id="view_vit_master_overheads_tree" model="ir.ui.view">
+            <field name="name">vit.master.overheads.tree</field>
+            <field name="model">vit.master.overheads</field>
+            <field name="arch" type="xml">
+                <tree string="List Master overheads">
+                    <field name="name" />
+                    <field name="appeareance"/>     
+                    <field name="journal_id"/> 
+                    <field name="debit_account_id"/>           
+                    <field name="credit_account_id"/>
+                    <field name="is_active"/>                   
+                </tree>
+            </field>
+        </record>
+        <record id="view_vit_master_overheads_form" model="ir.ui.view">
+            <field name="name">vit.master.overheads.form</field>
+            <field name="model">vit.master.overheads</field>
+            <field name="arch" type="xml">
+                 <form string="Master overheads" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="appeareance"/>     
+                            <field name="journal_id"/> 
+                            <field name="debit_account_id"/>       
+                            <field name="credit_account_id"/>
+                            <field name="is_active"/>    
+                        </group>
+                    </sheet>
+                </form>
+                                      
+            </field>
+        </record>
+
+
+        <record id="view_vit_master_overheads_filter" model="ir.ui.view">
+            <field name="name">vit.master.overheads.filter</field>
+            <field name="model">vit.master.overheads</field>
+            <field name="arch" type="xml">
+                <search string="Search Master overheads">
+                    <field name="journal_id" />  
+                    <field name="credit_account_id"/> 
+                    <field name="debit_account_id"/>         
+                </search>
+            </field>
+        </record>
+    </data>
+</openerp>
+
