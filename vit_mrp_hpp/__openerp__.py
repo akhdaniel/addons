@@ -1,7 +1,7 @@
 {
     'version': '0.1',
     'name': 'Mrp HPP',
-    'depends': ['base','product','process','resource','mrp'],
+    'depends': ['base','product','resource','mrp'],
     'author'  :['vitraining.com','Moch. Wawan K'],
     'category': 'Manufacturing',
     'description': """
