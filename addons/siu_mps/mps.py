@@ -87,7 +87,7 @@ class ProductionPlan(osv.osv):
             for x in val.stock_ids:
                 for l in x.stock_line:
                     product.append({'product_id': l.product_id.id, 'line': l, 'qty': l.product_qty, 'uom': l.product_uom.id})
-            for x in val.stock_ids:
+            for x in val.stockw_ids:
                 for l in x.stock_line:
                     product.append({'product_id': l.product_id.id, 'line': l, 'qty': l.product_qty, 'uom': l.product_uom.id})
 
