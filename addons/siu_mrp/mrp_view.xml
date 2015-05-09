@@ -30,7 +30,10 @@
 				<button name="action_cancel" position="replace"/>
 				<button name="button_cancel" position="replace">
 					<button name="%(print_produksi)d" type="action" string="Print MO" icon="gtk-print"/>
-				</button>								
+				</button>	
+				<xpath expr="/form/sheet/group/group/field[@name='origin']" position='after'>
+					<field name='requirement_id'/>
+				</xpath>							
 			</field>
 		</record>
 

@@ -158,18 +158,19 @@ class sale_order(osv.osv):
                 warning = {'title': ('Perhatian !'), 'message' : ('Tanggal Party & Delivery Minimal Hari Ini')}
                 return {'value': value, 'warning': warning}
         return True
-#   VIT 
-#     def onchange_shop_id(self, cr, uid, ids, shop_id, context=None):
-#         v = {}
-#         if shop_id:
-#             shop = self.pool.get('wtc.shop').browse(cr, uid, shop_id, context=context)
-#             if shop.project_id.id:
-#                 v['project_id'] = shop.project_id.id
-#             if shop.pricelist_id.id:
-#                 v['pricelist_id'] = shop.pricelist_id.id
-# #             if shop.alamat_kirim:
-# #                 v['alamat_kirim'] = shop.alamat_kirim
-#         return {'value': v}
+
+    def onchange_shop_id(self, cr, uid, ids, shop_id, context=None):
+        v = {}
+        if shop_id:
+            shop = self.pool.get('wtc.shop').browse(cr, uid, shop_id, context=context)
+            v['warehouse_id'] = shop.warehouse_id.id
+            # if shop.project_id.id:
+            #     v['project_id'] = shop.project_id.id
+            # if shop.pricelist_id.id:
+            #     v['pricelist_id'] = shop.pricelist_id.id
+            # if shop.alamat_kirim:
+            #     v['alamat_kirim'] = shop.alamat_kirim
+        return {'value': v}
 
 
     def onchange_partner_id(self, cr, uid, ids, part, context=None):
@@ -270,6 +271,8 @@ class sale_order_line(osv.osv):
     _columns = {
         'ucapan': fields.text('Ucapan'),
         'catatan': fields.text('Catatan'),
+        'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True),('categ_id.name','ilike','finish'),], 
+            change_default=True, readonly=True, states={'draft': [('readonly', False)]}, ondelete='restrict'),
     } 
  
 
