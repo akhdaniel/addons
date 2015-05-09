@@ -49,8 +49,8 @@ class stock_move(osv.osv):
         if picks:
             pick = picks[0]
         else:
-            move = self.browse(cr, uid, move_ids, context=context)[0]
-            import pdb;pdb.set_trace()
+            move = self.browse(cr, uid, move_ids[0], context=context)
+            print(move)
             values = {
                 'origin': move.origin,
                 'company_id': move.company_id and move.company_id.id or False,
@@ -58,6 +58,7 @@ class stock_move(osv.osv):
                 'partner_id': move.partner_id.id or False,
                 'picking_type_id': move.picking_type_id and move.picking_type_id.id or False,
             }
+            print(values)
             pick = pick_obj.create(cr, uid, values, context=context)
             # Tulis other_vals di DO/picking
             if "SO" in move.origin :
