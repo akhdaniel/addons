@@ -115,23 +115,21 @@ class MaterialRequirement(osv.osv):
         return {'value': {'requirement_line': rqn}}
 
     def compute(self, cr, uid, ids, context={}):
-        data = self.browse(cr, uid, ids)[0]  
-#         bom_obj = self.pool.get('bom.parts')
-#         for part in data.requirement_line:
-#             for comp in part.bom_line:
-#                 if comp.level == 2:
-#                     bid = bom_obj.search(cr, uid, [('pid', '=', comp.mrp_id.bom_id.product_id.id), ('level', '=', 1), ('line_id', '=', part.id)])  
-#                     bom = bom_obj.browse(cr, uid, bid)[0]
-#                     bom_obj.write(cr, uid, [comp.id], {'plan': comp.pqty * bom.plan})
-#                 elif comp.level == 3:
-#                     bid = bom_obj.search(cr, uid, [('pid', '=', comp.mrp_id.bom_id.product_id.id), ('level', '=', 2), ('line_id', '=', part.id)])  
-#                     bom = bom_obj.browse(cr, uid, bid)[0]
-#                     bom_obj.write(cr, uid, [comp.id], {'plan': comp.pqty * bom.plan})
-#                 elif comp.level == 4:
-#                     bid = bom_obj.search(cr, uid, [('pid', '=', comp.mrp_id.bom_id.product_id.id), ('level', '=', 3), ('line_id', '=', part.id)])  
-#                     bom = bom_obj.browse(cr, uid, bid)[0]
-#                     bom_obj.write(cr, uid, [comp.id], {'plan': comp.pqty * bom.plan})
-        return True
+        data = self.browse(cr, uid, ids)[0] 
+        mos = [] 
+        mrp_obj = self.pool.get("mrp.production")
+        for rp in data.requirement_line:
+            values = mrp_obj.product_id_change(cr, uid, [], rp.product_id.id, context={})['value']
+            values.update({
+                'product_id': rp.product_id.id,
+                'product_qty':rp.plan,
+                'location_src_id': mrp_obj._src_id_default(cr, uid, [], context={}),
+                'location_dest_id': mrp_obj._dest_id_default(cr, uid, [], context={})
+                }) 
+            mos.append([0,0,values])
+        if data.manufacture_line:
+            mrp_obj.unlink(cr,uid,[x.id for x in data.manufacture_line if x.state == 'draft'],{})
+        return self.write(cr,uid,ids[0],{'manufacture_line':mos})
 
     def procurement(self, cr, uid, ids, context={}):
         data = self.browse(cr, uid, ids)[0]

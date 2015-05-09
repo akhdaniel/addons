@@ -7,7 +7,7 @@
     "description": """
         The base module to manage sale order.
     """,
-    "depends":["base", "sale", "product","wtc_shop"],
+    "depends":["base", "sale", "product","wtc_shop","purchase"],
     "init_xml":[],
     "demo_xml":[],
     "data":["sale_view.xml"],

@@ -25,6 +25,18 @@
 		</record>
 
 
+		<record model="ir.ui.view" id="view_inherit_view_order_form">
+			<field name="name">sale.order.form.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="wtc_shop.sales_order_shop"/>
+			<field name="arch" type="xml">
+				<field name="shop_id" position='attributes'>
+					<attribute name="on_change">onchange_shop_id(shop_id)</attribute>
+				</field>								
+			</field>
+		</record>
+
+
 		<record model="ir.ui.view" id="view_inherit_quotation_sale_order">
 			<field name="name">quotation.tree.inherit</field>
 			<field name="model">sale.order</field>
