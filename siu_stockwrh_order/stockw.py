@@ -50,16 +50,18 @@ class stockw_order(osv.osv):
     
     def stockw_validate(self, cr, uid, ids, context=None):
         val = self.browse(cr, uid, ids, context={})[0]
-        
+        # import pdb;pdb.set_trace()
+        type_id = self.pool.get("stock.picking.type").search(cr,uid,[('name','ilike','Internal')])
         if val.stock_line:
             pid = self.pool.get('stock.picking').create(cr,uid, {
                                         'name': self.pool.get('ir.sequence').get(cr, uid, 'stock.picking'),
                                         'origin': val.name,
-                                        'stock_id': val.id,
-                                        'type': 'internal',
+                                        # 'stock_id': val.id,
+                                        # 'type': 'internal',
+                                        'picking_type_id': type_id[0],
                                         'move_type': 'one',
                                         'state': 'waiting',
- #                                       'shop_id': val.shop_id.id,
+                                        # 'shop_id': val.shop_id.id,
                                         'date': val.date,
                                         'auto_picking': True,
                                         'company_id': 1,

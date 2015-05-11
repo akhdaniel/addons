@@ -89,12 +89,12 @@ class manifest_delivery(osv.osv):
 manifest_delivery()
 
 
-# class stock_picking(osv.osv):
-#     _inherit = 'stock.picking' 
-#     _columns = {
-#         'manifest_id': fields.many2one('manifest.delivery', 'Manifest'),
-#         'stock_id': fields.many2one('stock.order', 'Stock Order'),
-#     }
+class stock_picking(osv.osv):
+    _inherit = 'stock.picking' 
+    _columns = {
+        'manifest_id': fields.many2one('manifest.delivery', 'Manifest'),
+        'stock_id': fields.many2one('stock.order', 'Stock Order'),
+    }
 
 
 
