@@ -14,9 +14,9 @@ class manifest_delivery(osv.osv):
         'nopol': fields.char('No Polisi', required=True, size=64, readonly=True, states={'draft': [('readonly', False)]}),
         'date': fields.date('Date', readonly=True, states={'draft': [('readonly', False)]}),
         'order_ids': fields.many2many('stock.picking','merge_order_rel', 'merge_order_id', 'picking_id', 'Delivery Order', 
-                        domain="[('state', 'in', ('confirmed', 'assigned')), ('type','=','out')]", readonly=True, states={'draft': [('readonly', False)]}),
+                        domain="[('state', 'in', ('confirmed', 'assigned')), ('picking_type_id.name','ilike','Delivery Orders')]", readonly=True, states={'draft': [('readonly', False)]}),
         'stock_ids': fields.many2many('stock.picking','merge_stock_rel', 'merge_stock_id', 'picking_id', 'Delivery Stock', 
-                        domain="[('state', 'in', ('confirmed', 'assigned')), ('type','=','internal'), ('shop_id','!=', False)]", readonly=True, states={'draft': [('readonly', False)]}),
+                        domain="[('state', 'in', ('confirmed', 'assigned')), ('picking_type_id.name','ilike','Internal Transfers'), ('shop_id','!=', False)]", readonly=True, states={'draft': [('readonly', False)]}),
         'state': fields.selection([('draft', 'Draft'), ('approve', 'Approved'), ('done', 'Done'), ('cancel', 'Cancel')], 'State', readonly=True),
         'note': fields.text('Notes'),
         'validasi': fields.char('Created by', size=64, readonly=True),
@@ -89,13 +89,12 @@ class manifest_delivery(osv.osv):
 manifest_delivery()
 
 
-
-class stock_picking(osv.osv):
-    _inherit = 'stock.picking' 
-    _columns = {
-        'manifest_id': fields.many2one('manifest.delivery', 'Manifest', select=True),
-        'stock_id': fields.many2one('stock.order', 'Stock Order', select=True),
-    }
+# class stock_picking(osv.osv):
+#     _inherit = 'stock.picking' 
+#     _columns = {
+#         'manifest_id': fields.many2one('manifest.delivery', 'Manifest'),
+#         'stock_id': fields.many2one('stock.order', 'Stock Order'),
+#     }
 
 
 
