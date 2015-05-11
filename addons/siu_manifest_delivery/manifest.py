@@ -4,6 +4,7 @@ import datetime
 import calendar
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from datetime import timedelta, datetime
 
 class manifest_delivery(osv.osv):
 
@@ -32,7 +33,9 @@ class manifest_delivery(osv.osv):
 
     def onchange_backdate(self, cr, uid, ids, date):
         if date:
-            if date < str(datetime.today()):
+            today = datetime.strptime(datetime.today().strftime("%Y-%m-%d"),"%Y-%m-%d")
+            tomorrow = datetime.today() + timedelta(days=1)
+            if datetime.strptime(date,"%Y-%m-%d") < today or datetime.strptime(date,"%Y-%m-%d") > tomorrow:
                 value = {'date': str(datetime.today())}
                 warning = {'title': ('Perhatian !'), 'message' : ('Tanggal minimal hari ini atau besok')}
                 return {'value': value, 'warning': warning}
