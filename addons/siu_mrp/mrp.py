@@ -158,9 +158,9 @@ class MaterialRequirement(osv.osv):
             # mo_ids += self.mo_and_cosolidate(cr, uid, new_mo)
 
             selisih = rp.plan - rp.product_id.qty_available
-            print('rp.plan : %d' % rp.plan)
-            print('qty_available : %d' % qty_available)
-            print('selisih : %d' % selisih)
+            #print('rp.plan : %d' % rp.plan)
+            #print('qty_available : %d' % qty_available)
+            #print('selisih : %d' % selisih)
             if rp.plan > rp.product_id.qty_available:
                 if wip and rp.product_id.categ_id.id in wip:
                     bomID = bom_obj.search(cr,uid,[('product_tmpl_id','=',rp.product_id.id)])
