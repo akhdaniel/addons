@@ -28,6 +28,7 @@ class ProductionPlan(osv.osv):
         'stockw_ids': fields.many2many('stockw.order','plan_stockw_rel', 'plan_stockw_id', 'stockw_id', 'Warehouse Order', 
                         domain="[('mps', '=', False), ('state', '=', 'done')]", readonly=True, states={'draft': [('readonly', False)]}),
         'plan_line': fields.one2many('production.plan.line', 'plan_id', 'Production Plan Lines'),
+        'mr_exist': fields.boolean("MR Exist?", readonly=True),
     }
 
     _defaults = {

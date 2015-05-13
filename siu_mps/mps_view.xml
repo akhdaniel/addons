@@ -31,6 +31,7 @@
                     <group col="4" colspan="4">
                         <field name="name"/>
                         <field name="date"/>
+                        <field name="mr_exist" invisible='1'/>
                     </group>
                     <notebook colspan="5">
                         <page string="Production Plan">
@@ -58,7 +59,7 @@
                         	<field colspan="4" name="stockw_ids" nolabel="1"/>
                         </page>
                         <page string="Notes">
-                        	<field name="notes" nolabel="1"/>
+                            <field name="notes" nolabel="1"/>
                         </page>
                     </notebook>
                     </sheet>

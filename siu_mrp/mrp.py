@@ -11,7 +11,7 @@ class MaterialRequirement(osv.osv):
     _name = 'material.requirement'
     _columns = {
         'name': fields.char('Reference', size=64, required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
-        'plan_id': fields.many2one('production.plan', 'Production Plan', readonly=True, required=True, select=True, domain=[('state', '=', 'done')], states={'draft': [('readonly', False)]}),
+        'plan_id': fields.many2one('production.plan', 'Production Plan', readonly=True, required=True, select=True, domain=[('state', '=', 'done'),('mr_exist','=',False)], states={'draft': [('readonly', False)]}),
         'notes': fields.text('Notes'),
         'state': fields.selection([
             ('draft', 'Draft'),
@@ -40,8 +40,10 @@ class MaterialRequirement(osv.osv):
          
     def material_confirm(self, cr, uid, ids, context=None):
         val = self.browse(cr, uid, ids)[0]
-        bom_obj = self.pool.get('mrp.bom')    
-        product_obj = self.pool.get('product.product')
+        if val.plan_id:
+            self.pool.get('production.plan').write(cr,uid,val.plan_id.id,{'mr_exist':True})
+#       bom_obj = self.pool.get('mrp.bom')    
+#       product_obj = self.pool.get('product.product')
         
 #         for x in val.requirement_line:
 #             product = product_obj.browse(cr, uid, x.product_id.id)
@@ -158,9 +160,9 @@ class MaterialRequirement(osv.osv):
             # mo_ids += self.mo_and_cosolidate(cr, uid, new_mo)
 
             selisih = rp.plan - rp.product_id.qty_available
-            #print('rp.plan : %d' % rp.plan)
-            #print('qty_available : %d' % qty_available)
-            #print('selisih : %d' % selisih)
+            print('rp.plan : %d' % rp.plan)
+            print('qty_available : %d' % rp.product_id.qty_available)
+            print('selisih : %d' % selisih)
             if rp.plan > rp.product_id.qty_available:
                 if wip and rp.product_id.categ_id.id in wip:
                     bomID = bom_obj.search(cr,uid,[('product_tmpl_id','=',rp.product_id.id)])
@@ -204,7 +206,6 @@ class MaterialRequirement(osv.osv):
                         })
 
         sum_barang_booking = []
-        # import pdb;pdb.set_trace()
         for k,itr in groupby(sorted(barang_booking, key=itemgetter('product_id')),itemgetter('product_id')):
             jml=0
             for v in itr: jml+=v['product_qty']
@@ -230,6 +231,7 @@ class MaterialRequirement(osv.osv):
         
 
     def procurement(self, cr, uid, ids, context={}):
+        # import pdb;pdb.set_trace()
         return True
         
         # data = self.browse(cr, uid, ids)[0]
