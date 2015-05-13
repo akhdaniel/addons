@@ -3,6 +3,9 @@ import math
 import datetime
 import calendar
 from openerp.osv import osv, fields
+from openerp import SUPERUSER_ID
+from operator import itemgetter
+from itertools import groupby
 
 class MaterialRequirement(osv.osv):
     _name = 'material.requirement'
@@ -114,39 +117,136 @@ class MaterialRequirement(osv.osv):
                  
         return {'value': {'requirement_line': rqn}}
 
+
     def compute(self, cr, uid, ids, context={}):
         data = self.browse(cr, uid, ids)[0] 
-        mos = [] 
         mrp_obj = self.pool.get("mrp.production")
+        pr_obj = self.pool.get("purchase.requisition")
+        type_obj = self.pool.get("stock.picking.type")
+        bom_obj = self.pool.get("mrp.bom")
+        barang_booking =[]
+        # mo_ids = [] 
+        wip = self.pool.get("product.category").search(cr,uid,[('name','ilike','wip')])
+        finish = self.pool.get("product.category").search(cr,uid,[('name','ilike','finish')])
+        
+        ##############################################################################################
+        # Delete existing MO
+        ##############################################################################################
+        if data.manufacture_line:
+            mrp_obj.unlink(cr,uid,[x.id for x in data.manufacture_line],{})
+        
+        ##############################################################################################
+        # Buatkan Semua MO setiap Production Plan kemudian divalidasi
+        # Jika Stok Produk Kurang dari Plan, dibuatkan draft Purchase Requisition, 
+        #   Barang yang di attach ke PR adalah tingkatan raw, 
+        #   jika finish atau wip, akan dipecah menjadi beberapa raw material, 
+        #   Semua raw material dijumlahkan
+        # TODO: - validasi MO bisa dipisah button
+        #       - Jika dipisah generate PR dijalankan saat validasi MO
+        ##############################################################################################
         for rp in data.requirement_line:
             values = mrp_obj.product_id_change(cr, uid, [], rp.product_id.id, context={})['value']
             values.update({
                 'product_id': rp.product_id.id,
                 'product_qty':rp.plan,
                 'location_src_id': mrp_obj._src_id_default(cr, uid, [], context={}),
-                'location_dest_id': mrp_obj._dest_id_default(cr, uid, [], context={})
+                'location_dest_id': mrp_obj._dest_id_default(cr, uid, [], context={}),
+                'requirement_id': ids[0]
                 }) 
-            mos.append([0,0,values])
-        if data.manufacture_line:
-            mrp_obj.unlink(cr,uid,[x.id for x in data.manufacture_line if x.state == 'draft'],{})
-        return self.write(cr,uid,ids[0],{'manufacture_line':mos})
+            new_mo = mrp_obj.create(cr,uid,values)
+            mrp_obj.action_confirm(cr, uid, new_mo, context={})
+            # mo_ids += self.mo_and_cosolidate(cr, uid, new_mo)
+
+            selisih = rp.plan - rp.product_id.qty_available
+            print('rp.plan : %d' % rp.plan)
+            print('qty_available : %d' % qty_available)
+            print('selisih : %d' % selisih)
+            if rp.plan > rp.product_id.qty_available:
+                if wip and rp.product_id.categ_id.id in wip:
+                    bomID = bom_obj.search(cr,uid,[('product_tmpl_id','=',rp.product_id.id)])
+                    if bomID:
+                        for bom in bom_obj.browse(cr,uid,bomID[0]).bom_line_ids:
+                            barang_booking.append({
+                                'product_id'  :bom.product_id.id, 
+                                'product_uom_id' :bom.product_uom.id,
+                                'product_qty' :selisih * bom.product_qty,
+                            })
+                    else :
+                        barang_booking.append({
+                                'product_id'  :rp.product_id.id, 
+                                'product_uom_id' :rp.product_uom.id,
+                                'product_qty' :selisih,
+                            })
+                elif finish and rp.product_id.categ_id.id in finish:
+                    bomID = bom_obj.search(cr,uid,[('product_tmpl_id','=',rp.product_id.id)])
+                    if bomID:
+                        for bom in bom_obj.browse(cr,uid,bomID[0]).bom_line_ids:
+                            if bom.product_id.categ_id.id in wip:
+                                bomID2 = bom_obj.search(cr,uid,[('product_tmpl_id','=',bom.product_id.id)])
+                                if bomID2:
+                                    for bom2 in bom_obj.browse(cr,uid,bomID2[0]).bom_line_ids:
+                                        barang_booking.append({
+                                            'product_id'  :bom2.product_id.id, 
+                                            'product_uom_id' :bom2.product_uom.id,
+                                            'product_qty' :selisih * bom.product_qty * bom2.product_qty,
+                                        })
+                            elif bom.product_id.categ_id.id not in wip:
+                                barang_booking.append({
+                                    'product_id'  :bom.product_id.id, 
+                                    'product_uom_id' :bom.product_uom.id,
+                                    'product_qty' :selisih * bom.product_qty,
+                                })
+                    else :
+                        barang_booking.append({
+                            'product_id'  :rp.product_id.id, 
+                            'product_uom_id' :rp.product_uom.id,
+                            'product_qty' :selisih,
+                        })
+
+        sum_barang_booking = []
+        # import pdb;pdb.set_trace()
+        for k,itr in groupby(sorted(barang_booking, key=itemgetter('product_id')),itemgetter('product_id')):
+            jml=0
+            for v in itr: jml+=v['product_qty']
+            sum_barang_booking.append([0,0,{
+                    'product_id'  :k, 
+                    'product_uom_id' :v['product_uom_id'],
+                    'product_qty' :jml,
+                }])
+            
+        if barang_booking:
+            # cek warehouse di type_id, di pr origin ada 2, schedule date ada 2
+            type_id = self.pool.get("stock.picking.type").search(cr,uid,[('name','ilike','Receipts'),('warehouse_id','=',1)])
+            pr_obj.create(cr,uid,{
+                "name" : self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.requisition'),
+                "origin" : data.name,
+                "exclusive" : 'multiple',
+                "line_ids"  : sum_barang_booking,
+                "user_id" : self.pool.get('res.users').browse(cr, uid, uid, context).id, 
+                "requirement_id" : ids[0],
+                "picking_type_id" : type_id[0], 
+                "warehouse_id" : 1,},context=None)
+        return True
+        
 
     def procurement(self, cr, uid, ids, context={}):
-        data = self.browse(cr, uid, ids)[0]
-        bom_obj = self.pool.get('mrp.bom')
-        mrp_obj = self.pool.get('mrp.production')    
+        return True
         
-        purchase = []; produce = []; beli = {}
-        for part in data.requirement_line:
-            ada = mrp_obj.search(cr, uid, [('origin', '=', data.name), ('product_id', '=', part.product_id.id)])
-            if not ada :
-                self.pool.get('mrp.production').create(cr,uid, {
-                                    'origin': data.name,
-                                    'requirement_id': data.id,
-                                    'product_id': part.product_id.id,
-                                    'product_qty': part.plan,
-                                    'product_uom': part.product_uom.id,
-                                    'bom_id': 13841}) #bom_obj._bom_find(cr, uid, part.product_id.id, part.product_uom.id)})
+        # data = self.browse(cr, uid, ids)[0]
+        # bom_obj = self.pool.get('mrp.bom')
+        # mrp_obj = self.pool.get('mrp.production')    
+        
+        # purchase = []; produce = []; beli = {}
+        # for part in data.requirement_line:
+        #     ada = mrp_obj.search(cr, uid, [('origin', '=', data.name), ('product_id', '=', part.product_id.id)])
+        #     if not ada :
+        #         self.pool.get('mrp.production').create(cr,uid, {
+        #                             'origin': data.name,
+        #                             'requirement_id': data.id,
+        #                             'product_id': part.product_id.id,
+        #                             'product_qty': part.plan,
+        #                             'product_uom': part.product_uom.id,
+        #                             'bom_id': 13841}) #bom_obj._bom_find(cr, uid, part.product_id.id, part.product_uom.id)})
                     
             
 #             for comp in part.bom_line:
@@ -197,7 +297,7 @@ class MaterialRequirement(osv.osv):
 #                                     'product_uom': x.uname.id,
 #                                     'bom_id': bom_obj._bom_find(cr, uid, x.pid.id, x.uname.id)})
          
-        return True
+        # return True
 
 
     def reordering_rules(self, cr, uid, ids, pid, order):
@@ -267,7 +367,7 @@ BomParts()
 class mrp_production(osv.osv):
     _inherit = "mrp.production"
     _columns = {
-            'requirement_id': fields.many2one('material.requirement', 'Requirement Reference', ondelete='cascade', select=True),
+            'requirement_id': fields.many2one('material.requirement', 'Requirement Reference', readonly=True, ondelete='cascade', select=True),
 
     }
     
