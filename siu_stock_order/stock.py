@@ -115,6 +115,33 @@ class stock_order_line(osv.osv):
 stock_order_line()
 
 
-#'location_src_id': fields.many2one('stock.location', 'Source', required=True, domain=[('usage', '=', 'internal')]),
-#'location_dest_id': fields.many2one('stock.location', 'Destination', required=True, domain=[('usage', '=', 'internal')]),
-    
+#----------------------------------------------------------
+# Stock Picking
+#----------------------------------------------------------
+
+class stock_picking(osv.osv):
+    _name = "stock.picking"
+    _inherit = "stock.picking"
+
+    def _is_do_validated(self, cr, uid, ids, name, arg, context=None):
+        res = {}
+        for pick in self.browse(cr, uid, ids, context=context):
+            if (pick.state in ['assigned','partially_available']) :
+                if (pick.validated == "V"):
+                    res[pick.id] = 'P'
+                else : res[pick.id] = 'V'
+        return res
+
+    _columns = {
+        'validated': fields.char("Validated",size=25),
+        'do_validation' : fields.function(_is_do_validated,"is validated", type='char', store=False),
+    }
+
+    _defaults = {
+        'validated' : 'F',
+    }
+
+    def validate_for_transfer(self, cr, uid, ids, context=None):
+        for pick in self.browse(cr, uid, ids, context=context):
+            self.write(cr,uid,pick.id,{'validated':'V'})
+        return True

@@ -97,6 +97,21 @@
 		<menuitem id="sales_order" parent="shop_order_menu" name="Sales Order" action="action_sale_orders"/>
         <menuitem id="stock_order" parent="shop_order_menu" name="Stock Order" action="action_stock_order_form"/>
         
+        <record id="vit_view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[@name='do_enter_transfer_details']" position="replace">
+                    <button name="do_enter_transfer_details" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight" attrs="{'invisible': [('do_validation','!=','P')]}"/>
+                    <button name="validate_for_transfer"  attrs="{'invisible': [('do_validation','!=','V')]}" type="object" string="Validate" groups="stock.group_stock_user"/>
+                </xpath>
+                <field name="partner_id" position="after">
+                    <field name="validated" invisible='1'/>
+                    <field name="do_validation" invisible='1'/>
+                </field>
+            </field>
+        </record>
 
     </data>
 </openerp>
