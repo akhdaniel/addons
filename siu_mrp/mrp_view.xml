@@ -61,7 +61,7 @@
 	           			<button name="material_confirm" type="object" states="draft" string="Approve" icon="gtk-apply"/>
                         <button name="compute" type="object" states="approve" string="Compute Material" icon="gtk-execute"/>
 	           			<button name="material_validate" type="object" states="approve" string="Validate" icon="gtk-apply"/>
-	           			<button name="procurement" type="object" states="done" string="Create Procurement" icon="gtk-execute"/>
+	           			<button name="procurement" type="object" states="done" string="Create Procurement" icon="gtk-execute" attrs="{'invisible':True}"/>
 	           			<button name="%(print_rekap)d" type="action" states="done" string="Rekap Produksi" icon="gtk-print"/>
 	           			<button name="%(print_order)d" type="action" states="done" string="Print Order" icon="gtk-print"/>
 	           			<button name="%(print_label)d" type="action" string="Print Label" icon="gtk-print"/>
