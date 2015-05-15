@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_material_requirement_form_barcode" model="ir.ui.view">
+            <field name="name">material.requirement.form.barcode</field>
+            <field name="model">material.requirement</field>
+            <field name="inherit_id" ref="siu_mrp.view_material_requirement_form" />
+            <field name="arch" type="xml">
+            	<xpath expr="//header/button[@string='Print Label']" position="after"> 
+       				<button name="print_barcode" string="Print Barcode" type="object" icon="gtk-print"/>
+            	</xpath>
+       		</field>
+       	</record>
+	</data>
+</openerp>
