@@ -18,31 +18,24 @@ openerp.web_print_barcode = function (instance) {
         },
 
         on_print_to_local_barcode: function () {
-            console.log("function ok");
-            var barcode = document.getElementById("name");//barcode_command
-            //urlencode()
-            //var countryID = e.options[e.selectedIndex].value;
-            //jsonp:
+            var view = this.getParent();
+            //jika pakai css
+            //var barcode = $('.oe_form_text_content').text();
+            
+            //jika pakai objek
+            var barcode = view.datarecord.barcode_data;
+
             console.log(barcode);
+            //urlencode()//jsonp: > jika tidak json.stringify
             $.ajax("http://localhost", {
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify({
                     "barcode" : barcode
-                }),
-                success: function(data) {
-                    // var res = '<option value="">- Choose State -</option>';
-                    // $.each(JSON.parse(data.result), function(key,val) {
-                    //     res += '<option value="'+ key +'">'+ val+'</option>';
-                    // });
-
-                    //replace exiting html in state with this one
-                    // $('#state_id').html(res);           
-                    // },
-                },
+                    }),
                 contentType: "application/json",
-                ); 
-            }
+                success: function(data) {},
+            });
+        },
     });
-
 };
