@@ -19,27 +19,30 @@ openerp.web_print_barcode = function (instance) {
 
         on_print_to_local_barcode: function () {
             console.log("function ok");
-            var barcode = document.getElementById("name");
+            var barcode = document.getElementById("name");//barcode_command
+            //urlencode()
             //var countryID = e.options[e.selectedIndex].value;
+            //jsonp:
             console.log(barcode);
-            /*$.ajax("/mlm/member/create/json/"+countryID, {
+            $.ajax("http://localhost", {
                 type: "POST",
                 dataType: "json",
                 data: JSON.stringify({
-                    "id" : countryID
+                    "barcode" : barcode
                 }),
                 success: function(data) {
-                    var res = '<option value="">- Choose State -</option>';
-                    $.each(JSON.parse(data.result), function(key,val) {
-                        res += '<option value="'+ key +'">'+ val+'</option>';
-                    });
+                    // var res = '<option value="">- Choose State -</option>';
+                    // $.each(JSON.parse(data.result), function(key,val) {
+                    //     res += '<option value="'+ key +'">'+ val+'</option>';
+                    // });
 
                     //replace exiting html in state with this one
-                    $('#state_id').html(res);           
-                    },
+                    // $('#state_id').html(res);           
+                    // },
+                },
                 contentType: "application/json",
-                }); */
-        }
+                ); 
+            }
     });
 
 };
