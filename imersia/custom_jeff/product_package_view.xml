@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+			<record id="product_package_type_action" model="ir.actions.act_window">
+	            <field name="name">Product package</field>
+	            <field name="res_model">product.package.type</field>
+	            <field name="view_mode">tree,form</field>
+	            <field name="view_type">form</field>
+	        </record>
+			<record id="product_package_type_tree_view" model="ir.ui.view">
+	            <field name="name">product.package.tree</field>
+	            <field name="model">product.package.type</field>
+	            <field name="arch" type="xml">
+	                <tree string="Product package types" editable="top">
+	                    <field name="name"/>
+	                </tree>
+	            </field>
+	        </record>
+	        <record id="product_package_type_form_view" model="ir.ui.view">
+	            <field name="name">product.package.form</field>
+	            <field name="model">product.package.type</field>
+	            <field name="arch" type="xml">
+	                <form string="Product package types">
+	                    <field name="name"/>
+	                </form>
+	            </field>
+	        </record>
+     <menuitem id="product_package_type" name="Product Package" action="product_package_type_action" parent="product.prod_config_main" sequence="90"/>
+ 			
+</data>
+</openerp>

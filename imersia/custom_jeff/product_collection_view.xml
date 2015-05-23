@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+ 			<record id="product_collection_type_action" model="ir.actions.act_window">
+	            <field name="name">Product Collection</field>
+	            <field name="res_model">product.collection.type</field>
+	            <field name="view_mode">tree,form</field>
+	            <field name="view_type">form</field>
+	        </record>
+ 			<record id="product_collection_type_tree_view" model="ir.ui.view">
+	            <field name="name">product.collection.tree</field>
+	            <field name="model">product.collection.type</field>
+	            <field name="arch" type="xml">
+	                <tree string="Product collection types" editable="top">
+	                    <field name="name"/>
+	                </tree>
+	            </field>
+	        </record>
+	        <record id="product_collection_type_form_view" model="ir.ui.view">
+	            <field name="name">product.collection.form</field>
+	            <field name="model">product.collection.type</field>
+	            <field name="arch" type="xml">
+	                <form string="Product collection types">
+	                    <field name="name"/>
+	                </form>
+	            </field>
+	        </record>
+	    <menuitem id="product_collection_type" name="Product Collection" action="product_collection_type_action" parent="product.prod_config_main" sequence="91"/>    
+</data>
+</openerp>
+	       

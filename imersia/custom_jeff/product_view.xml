@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+ 
+     <record id="product_template_form_view" model="ir.ui.view">
+	<field name="name">product.template.form</field>
+	<field name="model">product.template</field>
+	<field name="inherit_id" ref="product.product_template_form_view"/>
+	<field name="arch" type="xml">
+	 <xpath expr="//form/sheet/notebook/page[@string='Inventory']" position="after">
+	  <page string='Product Measurement'>
+	    <group>
+		<field name='product_category'/>
+	    </group>
+	    <group col="4">
+		    <group col="2">
+			<field name='product_length' attrs="{'invisible': [('product_category','=','volume')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+			<field name='product_diameter' attrs="{'invisible': [('product_category','!=','cylindrical')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+			<field name='product_larg' attrs="{'invisible': [('product_category','!=','cubic')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+			<field name='product_height' attrs="{'invisible': [('product_category','!=','cubic')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+			<field name='product_weight' on_change="product_weight_change(product_category,product_weight,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+			<field name="product_cylindrical_density" attrs="{'invisible': [('product_category','!=','cylindrical')]}" on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+			<field name="product_cylindrical_volume" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>
+			<field name="product_cubic_density" attrs="{'invisible': [('product_category','!=','cubic')]}" on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+			<field name="product_cubic_volume" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
+			<field name="product_volume_density" attrs="{'invisible': [('product_category','!=','volume')]}" on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+			<field name="product_volume_volume" attrs="{'invisible': [('product_category','!=','volume')]}" on_change="product_volumn_change(product_category,product_volume_volume,product_weight)"/>
+		    </group>
+		    
+		    <group col="2">
+		    	<field name='product_material_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic')]}" />
+		    	<field name='product_classic_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',False)]}" />
+		    	<field name='product_unbuilt_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
+		    	<field name='product_packed_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
+		    	<field name='product_package_type12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
+		    	
+		    </group>
+	    </group>
+	  </page>
+	  </xpath>
+	  <xpath expr="//page[@string='Information']/field[@name='description']" position="before" >
+	  	<field name='product_customer_description12' attrs="{'invisible': [('sale_ok','=',False)]}">
+   			<form string="Customer Description">
+   				<group>
+   				<field name='customer' string='Customer'/>
+   				<field name='description'/>
+   				</group>
+   			</form>
+   			<tree string="Customer Description" editable="bottom" >
+   				<field name='customer' string='Customer'/>
+   				<field name='description'/>
+   			</tree>
+   		</field>
+	    <group>
+	    	<field name='product_collection_type12' attrs="{'invisible': [('sale_ok','=',False)]}" />
+	    	<field name='product_finishing12' attrs="{'invisible': [('sale_ok','=',False)]}" />
+	    	<field name='product_wood_description12' attrs="{'invisible': [('sale_ok','=',False)]}" />
+	    </group>
+	  </xpath>
+	</field>
+     </record>
+     
+     <record id="product_template_tree_view" model="ir.ui.view">
+	<field name="name">product.template.product.tree</field>
+	<field name="model">product.template</field>
+	<field name="inherit_id" ref="product.product_template_tree_view"/>
+	<field eval="7" name="priority"/>
+	<field name="arch" type="xml">
+	    <field name="name" position='after'>
+	    <field name='product_category'/>
+	    
+	</field>
+	</field>
+    </record>
+     
+    <record id="product_product_tree_view" model="ir.ui.view">
+	<field name="name">product.product.tree</field>
+	<field name="model">product.product</field>
+	<field name="inherit_id" ref="product.product_product_tree_view"/>
+	<field eval="7" name="priority"/>
+	<field name="arch" type="xml">
+	    <field name="name" position='after'>
+	    <field name='product_category'/>
+	</field>
+	</field>
+    </record>
+     
+
+     
+     
+ 
+        
+    </data>
+</openerp>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_package_type,product package type,vit_product.model_product_package_type,,1,1,1,1
+access_product_collection,product collection type,vit_product.model_product_collection,,1,1,1,1
+access_product_customer_description,product customers description,vit_product.model_product_customers_description,,1,1,1,1
