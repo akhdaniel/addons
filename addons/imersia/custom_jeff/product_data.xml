@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="product_category_waste" model="product.category">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">Waste Product</field>
+        </record>
+        
+        <record id="product_product_waste" model="product.product">
+            <field name="name">Waste</field>
+            <field name="categ_id" ref="product_category_waste"/>
+            <field name="standard_price">0.0</field>
+            <field name="list_price">0.0</field>
+            <field name="type">consu</field>
+            <field name="sale_ok">True</field>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="description">This type of product used for waste.</field>
+            <field name="description_sale">This type of service include basic monitoring of products.</field>
+        </record>
+        
+    </data>
+</openerp>
