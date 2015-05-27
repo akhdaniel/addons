@@ -15,7 +15,7 @@
                 <xpath expr="//form/sheet/notebook/page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
                         <group>
-                            <field name='product_category' attrs="{'invisible': [('sale_ok','=',False)]}"/>
+                            <field name='product_category'/>
                         </group>
                         <group col="4">
                             <group col="2" attrs="{'invisible': [('sale_ok','=',False)]}">
