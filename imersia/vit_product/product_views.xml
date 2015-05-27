@@ -18,25 +18,50 @@
                             <field name='product_category'/>
                         </group>
                         <group col="4">
-                            <group col="2">
-                                <field name='product_length' attrs="{'invisible': [('product_category','=','volume')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
-                                <field name='product_diameter' attrs="{'invisible': [('product_category','!=','cylindrical')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
-                                <field name='product_larg' attrs="{'invisible': [('product_category','!=','cubic')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
-                                <field name='product_height' attrs="{'invisible': [('product_category','!=','cubic')]}" on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
-                                <field name='product_weight' on_change="product_weight_change(product_category,product_weight,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
-                                <field name="product_cylindrical_density" attrs="{'invisible': [('product_category','!=','cylindrical')]}" on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
-                                <field name="product_cylindrical_volume" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>
-                                <field name="product_cubic_density" attrs="{'invisible': [('product_category','!=','cubic')]}" on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
-                                <field name="product_cubic_volume" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
-                                <field name="product_volume_density" attrs="{'invisible': [('product_category','!=','volume')]}" on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
-                                <field name="product_volume_volume" attrs="{'invisible': [('product_category','!=','volume')]}" on_change="product_volumn_change(product_category,product_volume_volume,product_weight)"/>
+                            <group col="2" attrs="{'invisible': [('sale_ok','=',False),('is_furniture','=',False)]}">
+                                <field name='product_length' 
+                                	attrs="{'invisible': [('product_category','not in',['cubic','cylindrical'])]}" 
+                                	on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                                <field name='product_diameter' 
+                                	attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
+                                	on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                                <field name="product_cylindrical_density"
+                                	attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
+                                	on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+                                <field name="product_cylindrical_volume" 
+                                	attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
+                                	on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                            	<field name='product_larg' 
+                            		attrs="{'invisible': [('product_category','!=','cubic')]}" 
+                                	on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                                <field name='product_height'
+                            		attrs="{'invisible': [('product_category','!=','cubic')]}" 
+                                	on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                                <field name="product_cubic_density"
+                            		attrs="{'invisible': [('product_category','!=','cubic')]}" 
+                                	on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+                                <field name="product_cubic_volume"
+                            		attrs="{'invisible': [('product_category','!=','cubic')]}"/>
+                                <field name="product_volume_density"
+                            		attrs="{'invisible': [('product_category','!=','volume')]}" 
+                                	on_change="product_density_change(product_category,product_cylindrical_density,product_cubic_density,product_volume_density,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
+                                <field name="product_volume_volume" 
+                            		attrs="{'invisible': [('product_category','!=','volume')]}" 
+                                	on_change="product_volumn_change(product_category,product_volume_volume,product_weight)"/>
+                                <field name='product_weight'
+                            		attrs="{'invisible': [('product_category','=',False)]}" 
+                                	on_change="product_weight_change(product_category,product_weight,product_cylindrical_volume,product_cubic_volume,product_volume_volume)"/>
                             </group>
 
                             <group col="2">
-                                <field name='product_material_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic')]}" />
-                                <field name='product_classic_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',False)]}" />
-                                <field name='product_unbuilt_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
-                                <field name='product_packed_volume12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
+                                <field name='product_classic_volume12' 
+                                	attrs="{'invisible': [('sale_ok','=',True)]}" />
+                                <field name='product_material_volume12'
+                                	attrs="{'invisible': [('sale_ok','=',True)]}" />
+                                <field name='product_unbuilt_volume12'
+                            		attrs="{'invisible': [('product_category','!=','cubic')]}" />
+                                <field name='product_packed_volume12'
+                            		attrs="{'invisible': [('product_category','!=','cubic')]}" />
                                 <!-- <field name='product_package_type12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" /> -->
                                 
                              </group>
@@ -90,6 +115,59 @@
             </field>
             </field>
         </record>
+
+        <record id="product_collection_type_action" model="ir.actions.act_window">
+            <field name="name">Product Collection</field>
+            <field name="res_model">product.collection</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        <record id="product_collection_type_tree_view" model="ir.ui.view">
+            <field name="name">product.collection.tree</field>
+            <field name="model">product.collection</field>
+            <field name="arch" type="xml">
+                <tree string="Product collection types" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_collection_type_form_view" model="ir.ui.view">
+            <field name="name">product.collection.form</field>
+            <field name="model">product.collection</field>
+            <field name="arch" type="xml">
+                <form string="Product collection types">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+        <record id="product_package_type_action" model="ir.actions.act_window">
+            <field name="name">Product package</field>
+            <field name="res_model">product.package.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        <record id="product_package_type_tree_view" model="ir.ui.view">
+            <field name="name">product.package.tree</field>
+            <field name="model">product.package.type</field>
+            <field name="arch" type="xml">
+                <tree string="Product package types" editable="top">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="product_package_type_form_view" model="ir.ui.view">
+            <field name="name">product.package.form</field>
+            <field name="model">product.package.type</field>
+            <field name="arch" type="xml">
+                <form string="Product package types">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+        <menuitem id="product_package_type" name="Product Package" action="product_package_type_action" parent="product.prod_config_main" sequence="90"/>
+
+        <menuitem id="product_collection_type" name="Product Collection" action="product_collection_type_action" parent="product.prod_config_main" sequence="91"/>
     
     </data>
 </openerp>

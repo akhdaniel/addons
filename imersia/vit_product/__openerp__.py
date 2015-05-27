@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "vit_product",
+    'name': "Product Customisation",
 
     'summary': """
         Product furniture  adjustment""",
@@ -19,12 +19,17 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['product','mrp'],
+    'depends': ['product','stock','mrp','sale'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'wizard/mrp_product_produce_view.xml',
+        'mrp_view.xml',
+        # 'stock_view.xml',
         'product_views.xml',
+        'product_data.xml',
+        # 'sales_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [],
