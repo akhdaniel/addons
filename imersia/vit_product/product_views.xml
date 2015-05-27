@@ -7,18 +7,18 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
                 <div class="oe_left" name="options" groups="base.group_user" position='inside'>
-                    <div attrs="{'invisible': [('sale_ok','=',False)]}">
+                    <!-- <div attrs="{'invisible': [('sale_ok','=',False)]}">
                         <field name="is_furniture"/>
                         <label for="is_furniture"/>
-                    </div>
+                    </div> -->
                 </div>
                 <xpath expr="//form/sheet/notebook/page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
                         <group>
-                            <field name='product_category'/>
+                            <field name='product_category' attrs="{'invisible': [('sale_ok','=',False)]}"/>
                         </group>
                         <group col="4">
-                            <group col="2" attrs="{'invisible': [('sale_ok','=',False),('is_furniture','=',False)]}">
+                            <group col="2" attrs="{'invisible': [('sale_ok','=',False)]}">
                                 <field name='product_length' 
                                 	attrs="{'invisible': [('product_category','not in',['cubic','cylindrical'])]}" 
                                 	on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
@@ -74,7 +74,7 @@
                             <field name="material_id"/>
                         </group>
                     </page>
-                    <page string='Saleable Product' attrs="{'invisible':[('is_furniture','=',False)]}" name="saleable_prod">
+                    <page string='Saleable Product' attrs="{'invisible':[('sale_ok','=',False)]}" name="saleable_prod">
                         <group>
                             <field name="packaging_id"/>
                             <field name="colection_ids" widget='many2many_tags'/>
