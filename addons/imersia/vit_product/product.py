@@ -146,34 +146,29 @@ class product_template(osv.osv):
         'finishing_id': fields.many2one('product.finishing', 'Finishing'),
         'quality_id': fields.many2one('product.quality', 'Quality'),
         'material_id': fields.many2one('product.material', 'Material'),
-
         'is_furniture': fields.boolean('is Furniture?'),
-        # 'component_vol' : fields.float("Component volume", digits=(12,9),help="Length x width x Height (m3)"),
-		# 'material_vol' : fields.float("Material volume", digits=(12,9),help="Volume sum of all sub-component material vol (m3)"),
-		# 'unbuilt_vol' : fields.float("Unbuilt volume", digits=(12,9),help="Volume of the disassemble furniture, ready to be packed (m3)"),
-		# 'packed_vol' : fields.float("Packed volume", digits=(12,9),help="Volume of the packed furniture (m3)"),
+        'component_vol' : fields.float("Component volume", digits=(12,9),help="Length x width x Height (m3)"),
+		'material_vol' : fields.float("Material volume", digits=(12,9),help="Volume sum of all sub-component material vol (m3)"),
     	'packaging_id' : fields.many2one('product.package.type', "Package type"),
 		'description_ids' : fields.one2many('product.customers.description','produk_id',string="Customers description",),
         'colection_ids': fields.many2many('product.collection','product_collection_rel', id1='prod_id', id2='coll_id', string='Collection', ondelete='restrict'),
 		'wood_type_id' : fields.many2one('product.wood.type','Wood'),
-		# by harsh jain 
 		'product_category':fields.selection([('cylindrical','Cylindrical'),('cubic','Cubic'),('volume','Volume')],'Product Category'),
         'product_length':fields.float('Length (mm)'),
         'product_diameter':fields.float('Diameter (mm)'),
-        'product_larg':fields.float('Large(mm)'),
-        'product_height':fields.float('Height(mm)'),
-        'product_weight':fields.float('Weight(Kg)'),
-        'product_cylindrical_volume': fields.float('Volume(m3)',digits=(12, 9)),
-        'product_cubic_volume': fields.float('Component Volume(m3)',digits=(12, 9)),
-        'product_volume_volume': fields.float('Volume(Liter)',digits=(12, 9)),
-        'product_cylindrical_density':fields.float('Density(Kg/m3)'),
-        'product_cubic_density':fields.float('Density(Kg/m3)'),
+        'product_larg':fields.float('Large (mm)'),
+        'product_height':fields.float('Height (mm)'),
+        'product_weight':fields.float('Weight (Kg)'),
+        'product_cylindrical_volume': fields.float('Volume (m3)',digits=(12, 9)),
+        'product_cubic_volume': fields.float('Component Volume (m3)',digits=(12, 9)),
+        'product_volume_volume': fields.float('Volume (Liter)',digits=(12, 9)),
+        'product_cylindrical_density':fields.float('Density (Kg/m3)'),
+        'product_cubic_density':fields.float('Density (Kg/m3)'),
         'product_volume_density':fields.float('Density (Kg/Liter)'),
-        'product_finishing12':fields.text('Finishing'),
         'product_material_volume12':fields.function(_get_material_volume,type='float',digits=(12, 9),string='Material volume (m3)',help="Volume sum of all sub-component vol"),
         'product_classic_volume12':fields.float('Classic Volume',help="Length x width x Height (m3)"),
-        'product_unbuilt_volume12':fields.float('Unbuilt Volume (m3)',help="Volume of the disassemble furniture, ready to be packed"),
-        'product_packed_volume12':fields.float('Packed Volume (m3)',help="Volume of the packed furniture"),
+        'product_unbuilt_volume12':fields.float('Unbuilt (m3)',digits=(12, 9),help="Volume of the disassemble furniture, ready to be packed"),
+        'product_packed_volume12':fields.float('Packed (m3)',digits=(12, 9),help="Volume of the packed furniture"),
             
     }
 
@@ -185,11 +180,9 @@ class product_template(osv.osv):
         #'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'product.supplierinfo', context=c),
     }
 
-    def product_weight_change(self, cr, uid, ids, product_category, product_weight, product_cylindrical_volume,product_cubic_volume,product_volume_volume):
-        
-        volume = None
-        density = None
-        weight= None
+    def product_weight_change(self, cr, uid, ids, product_category, 
+        product_weight, product_cylindrical_volume,product_cubic_volume,product_volume_volume):
+        density= None
         try:
             if product_category:
                 if product_category == 'cylindrical':
@@ -201,13 +194,12 @@ class product_template(osv.osv):
                 elif product_category == 'volume':
                     density = product_weight/float(product_volume_volume)
                     return {'value': {'product_volume_density': density}}
-                
         except ZeroDivisionError:
             raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
         return True
     
-    def product_qty_change(self, cr, uid, ids, product_category, product_height, product_larg, product_diameter, product_length):
-        
+    def product_qty_change(self, cr, uid, ids, product_category, 
+        product_height, product_larg, product_diameter, product_length):
         volume = None
         try:
             if product_category:
@@ -222,8 +214,9 @@ class product_template(osv.osv):
             raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
         return True
     
-    def product_density_change(self, cr, uid, ids, product_category, product_cylindrical_density, product_cubic_density, product_volume_density,product_cylindrical_volume, product_cubic_volume, product_volume_volume):
-        
+    def product_density_change(self, cr, uid, ids, product_category, 
+        product_cylindrical_density, product_cubic_density, product_volume_density,
+        product_cylindrical_volume, product_cubic_volume, product_volume_volume):
         weight = None
         try:
             if product_category:
@@ -237,19 +230,16 @@ class product_template(osv.osv):
                 elif product_category == 'volume':
                     weight = product_volume_density * float(product_volume_volume)
                     #return {'value': {'product_weight': weight}}
-                
         except ZeroDivisionError:
-            raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
+            raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
         return {'value': {'product_weight': weight}}
-    
+
     def product_volumn_change(self, cr, uid, ids ,product_category, product_volume_volume, product_weight):
         density = None
         try:
             if product_category:
                 if product_category == 'volume':
                    density = product_weight/float(product_volume_volume)
-
-                
         except ZeroDivisionError:
             raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
         return {'value': {'product_volume_density': density}}
