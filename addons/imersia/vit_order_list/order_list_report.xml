@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="report_sale_order_list"
+            string="Order List"
+            model="sale.order.list" 
+            report_type="qweb-pdf"
+            file="vit_order_list.report_saleorderlist" 
+            name="vit_order_list.report_saleorderlist" 
+        />
+    </data>
+</openerp>
