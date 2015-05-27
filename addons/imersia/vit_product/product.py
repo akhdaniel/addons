@@ -272,3 +272,5 @@ class product_template(osv.osv):
         except ZeroDivisionError:
             raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
         return self.write(cr,uid,ids,{'product_cubic_volume': com_vol},)
+
+product_template()
