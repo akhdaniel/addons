@@ -15,6 +15,16 @@ class stock_transfer_details(models.TransientModel):
 	_inherit = 'stock.transfer_details'
 	_description = 'Picking wizard'
 
+	_columns = {
+		# 'product_qty_nett'  : fields.float("Nett Quantity"),
+		# 'product_qty_diff'  : fields.float("Diff/Loss Quantity"),
+		# 'weight' : fields.float('Weight'),
+		# 'length' : fields.float('Length'),
+		# 'height' : fields.float('Height'),
+
+	}
+
+
 	def default_get(self, cr, uid, fields, context=None):
 		"""
 		Modifikasi wizard sehingga bila ada n log dari stock.picking, akan memecah list di wizard tranfer sejumlah n 
@@ -65,10 +75,20 @@ class stock_transfer_details(models.TransientModel):
 						elif op.package_id:
 							packs.append(item)
 					else:
+
+						""" Karena n log, pada default nya membentuk 'packop_id': op.id, ini akan
+							Mengakibatkan n list di wizard dengan packop_id yang sama, ternyata akan berperngaruh terhadap
+							jumlah quantity yang akan tranfer, jadi bila jumlah n list di wizard masing2 mempunyai packop_id yang sama
+							akan masuk 1 n list,logic nya lebih baik buat satu list saja yang memiliki packop_id
+							logic : if x == 0, isi 'packop_id': op.id, else 'packop_id' :''
+									(op_id =  op.id if (x == 0) else '')
+						"""
+						
 						product_qty = op.product_qty // int(picking.log_qty)
 						qty = op.product_qty//int(picking.log_qty)+((op.product_qty/int(picking.log_qty)- op.product_qty//int(picking.log_qty)) * int(picking.log_qty))
+						op_id =  op.id if (x == 0) else ''
 						item = {
-								'packop_id': op.id,
+								'packop_id': op_id,
 								'product_id': op.product_id.id,
 								'product_uom_id': op.product_uom_id.id,
 								'quantity': product_qty,
@@ -84,7 +104,7 @@ class stock_transfer_details(models.TransientModel):
 							product_qty = op.product_qty - (op.product_qty//int(picking.log_qty) * (int(picking.log_qty) - 1))
 							# product_qty = op.product_qty//int(picking.log_qty)+((op.product_qty/int(picking.log_qty)- op.product_qty//int(picking.log_qty)) * int(picking.log_qty))
 							item = {
-								'packop_id': op.id,
+								# 'packop_id': op.id,
 								'product_id': op.product_id.id,
 								'product_uom_id': op.product_uom_id.id,
 								'quantity': product_qty,
@@ -128,10 +148,30 @@ class stock_transfer_details(models.TransientModel):
 
 
 		res.update(item_ids=items)
-		# import pdb;pdb.set_trace()
-
 		res.update(packop_ids=packs)
+
 		return res
+
+
+class stock_transfer_details_items(models.TransientModel):
+	_name = 'stock.transfer_details_items'
+	_inherit = 'stock.transfer_details_items'
+	_description = 'Picking wizard items'
+
+	_columns = {
+		'product_qty_nett'  : fields.float("Nett Quantity"),
+		'product_qty_diff'  : fields.float("Diff/Loss Quantity"),
+		'weight_log' : fields.float('Weight'),
+		'length_log' : fields.float('Length'),
+		'height_log' : fields.float('Height'),
+
+	}
+
+	@api.onchange('weight_log', 'length_log','height_log') # if these fields are changed, call method
+	def on_change_nett_diff(self):
+		self.product_qty_nett = self.weight_log * self.length_log * self.height_log
+		self.product_qty_diff = self.quantity - self.product_qty_nett 
+	
 
 #----------------------------------------------------------
 # Stock Move
@@ -140,9 +180,12 @@ class stock_transfer_details(models.TransientModel):
 class stock_move(osv.osv):
 	_name = "stock.move"
 	_inherit = "stock.move"
+	_description = "Stock Move"
 
 	_columns = {
-		'log_qty' : fields.float('Log Quantity')
+		'log_qty' : fields.float('Log Quantity'),
+		'product_qty_nett'  : fields.float("Nett Quantity"),
+		'product_qty_diff'  : fields.float("Diff/Loss Quantity"),
 	}
 
 
@@ -158,3 +201,10 @@ class stock_picking(osv.osv):
 	_columns = {
 		'log_qty' : fields.float('Log Quantity')
 	}
+
+
+	@api.cr_uid_ids_context
+	def do_transfer(self, cr, uid, picking_ids, context=None):
+		res = super(stock_picking, self).do_transfer(cr, uid, picking_ids, context=context)
+		# import pdb;pdb.set_trace()
+		return res	
