@@ -1,0 +1,37 @@
+<openerp>
+<data>
+
+
+        <record id="vit_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_form2"/>
+            <field name="arch" type="xml">
+<!--             	<xpath expr="//form/sheet/notebook/page[@string='Order Lines']/field[@name='order_line']/form[@string='Sales Order Lines']/group" position="after">
+
+            	</xpath> -->
+            	<label for="order_id" position="before">
+            		<field name="image_medium" widget="image" class="oe_avatar oe_left" nolabel="1"/>
+            	</label>
+            	<field name="name" position="after">
+                <group>    
+                    <group>
+                        <field name="default_code"/>
+                		<field name="colection_ids" widget='many2many_tags'/>
+                		<field name="finishing_id"/>
+                		<field name="description_ids"/>
+                    </group>
+                    <group>
+                        <field name="product_weight"/>
+                        <field name="product_height"/>
+                        <field name="product_larg"/>
+                        <field name="product_material_volume12"/>
+                    </group>                    
+                </group>
+
+            	</field>
+            </field>
+        </record>	
+
+</data>
+</openerp>
