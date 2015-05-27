@@ -177,6 +177,7 @@ class product_template(osv.osv):
         'product_diameter': 1.0,
         'product_larg': 1.0,
         'product_height': 1.0,
+        'product_category' : False,
         #'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'product.supplierinfo', context=c),
     }
 
