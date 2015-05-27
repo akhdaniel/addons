@@ -63,7 +63,8 @@
                                 <field name='product_packed_volume12'
                             		attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
                                 <!-- <field name='product_package_type12' attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" /> -->
-                                
+                                <button name="compute_vol" type="object" string="Update" class="oe_highlight"
+                                    attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}"/>
                              </group>
                         </group>
                     </page> 

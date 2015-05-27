@@ -147,7 +147,7 @@ class product_template(osv.osv):
         'quality_id': fields.many2one('product.quality', 'Quality'),
         'material_id': fields.many2one('product.material', 'Material'),
         # 'is_furniture': fields.boolean('is Furniture?'),
-        'component_vol' : fields.float("Component Volume (m3)", digits=(12,9),help="Length x width x Height"),
+        # 'component_vol' : fields.float("Component Volume (m3)", digits=(12,9),help="Length x width x Height"),
 		'material_vol' : fields.float("Material Volume (m3)", digits=(12,9),help="Volume sum of all sub-component material vol"),
     	'packaging_id' : fields.many2one('product.package.type', "Package type"),
 		'description_ids' : fields.one2many('product.customers.description','produk_id',string="Customers description",),
@@ -244,4 +244,31 @@ class product_template(osv.osv):
         except ZeroDivisionError:
             raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
         return {'value': {'product_volume_density': density}}
-    
+
+    def compute_vol(self, cr, uid, ids, context=None):
+        def cek_vol(produk):
+            res = 0.00
+            categ = produk.product_category
+            if categ == 'cylindrical' : res = produk.product_cylindrical_volume
+            if categ == 'cubic' : res = produk.product_cubic_volume
+            if categ == 'volume' : res = produk.product_volume_volume       
+            return res
+        data    = self.browse(cr,uid,ids[0],)
+        bom_obj = self.pool.get('mrp.bom')
+        bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','in',ids)])
+        com_vol = cek_vol(data)
+        try : 
+            if bom_ids:
+                bom_lines = bom_obj.browse(cr,uid,bom_ids,)
+                if bom_lines.bom_line_ids:
+                    for bom1 in bom_lines.bom_line_ids :
+                        vol = cek_vol(bom1.product_id)
+                        com_vol += vol
+                elif not bom_lines.bom_line_ids:
+                    vol = cek_vol(bom_lines.product_tmpl_id)
+                    com_vol += vol
+            elif not bom_ids and data.product_category == 'cubic':
+                com_vol = (data.product_length * data.product_height * data.product_larg)/1000000000.0
+        except ZeroDivisionError:
+            raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
+        return self.write(cr,uid,ids,{'product_cubic_volume': com_vol},)
