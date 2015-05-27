@@ -24,19 +24,24 @@ openerp.web_print_barcode = function (instance) {
             
             //objek
             barcode = view.datarecord.barcode_data;
-
-            console.log(barcode);
+            //barcode = encodeURIComponent(barcode);
             //urlencode()//jsonp: > jika tidak json.stringify
-            $.ajax("http://localhost", {
+ 
+            $.ajax("http://127.0.0.1/pproxy/print.php", {
                 type: "POST",
-                dataType: "json",
-                jsonrpc: "2.0",
                 data: JSON.stringify({
                     "barcode" : barcode
-                    }),
+                }),
                 contentType: "application/json",
-                success: function(data) {},
-            });
+                success:function(json){
+                    alert("Print Success");
+                },
+                error:function(){
+                    alert("Print Error");
+                }
+            });    
         },
+
+
     });
 };
