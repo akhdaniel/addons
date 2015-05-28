@@ -29,7 +29,7 @@
         # 'stock_view.xml',
         'product_views.xml',
         'product_data.xml',
-        # 'sales_views.xml'
+        'sales_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [],
