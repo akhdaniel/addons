@@ -232,7 +232,9 @@
         <menuitem id="product_package_type" name="Product Package" action="product_package_type_action" parent="product.prod_config_main" sequence="90"/>
 
         <menuitem id="product_collection_type" name="Product Collection" action="product_collection_type_action" parent="product.prod_config_main" sequence="91"/>
-        
+
+        <delete id="product.menu_attribute_action" model="ir.ui.menu"/>
+        <delete id="product.menu_variants_action" model="ir.ui.menu"/>        
     
     </data>
 </openerp>
