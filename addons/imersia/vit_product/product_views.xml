@@ -65,8 +65,12 @@
                 </field>
                 <xpath expr="//form/sheet/notebook//page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
-                        <group style="width : 260px;">
+                        <group style="width : 260px;" attrs="{'invisible': [('sale_ok','=',False)]}">
                             <field name='product_category'/>
+                        </group>
+                        <group attrs="{'invisible': [('sale_ok','=',True)]}">                            
+                            <field name='product_classic_volume12'/>
+                            <field name='material_vol'/>
                         </group>
                         <group>
                             <group col="4">
@@ -112,7 +116,7 @@
                             <label string="Component" style="font-weight: bold !important;"
                                 attrs="{'invisible': [('sale_ok','=',False)]}"/>
                             <label string="Material" style="font-weight: bold !important;"
-                                attrs="{'invisible': ['|',('product_category','in',['cylindrical','volume'])]}"/>
+                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
                             <label string="Unbuilt" style="font-weight: bold !important;"
                                 attrs="{'invisible': [('sale_ok','=',False)]}"/>
                             <label string="Packed" style="font-weight: bold !important;"
@@ -122,15 +126,13 @@
                             <field name="product_cubic_volume" nolabel="1"
                                 attrs="{'invisible': [('product_category','!=','cubic')]}"/>
                             <field name='product_material_volume12'  nolabel="1" class='oe_inline'
-                                attrs="{'invisible': ['|',('product_category','in',['cylindrical','volume'])]}"/>
+                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
                             <field name='product_unbuilt_volume12' nolabel="1"
                                 attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
                             <field name='product_packed_volume12' nolabel="1"
                                 attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
                             <button name="compute_vol" type="object" string="Update" class="oe_highlight"
                                 attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}"/>
-                            <field name='product_classic_volume12'
-                                attrs="{'invisible': [('sale_ok','=',True)]}" />
                         </group>
                     </page> 
                 </xpath>
@@ -234,7 +236,70 @@
         <menuitem id="product_collection_type" name="Product Collection" action="product_collection_type_action" parent="product.prod_config_main" sequence="91"/>
 
         <delete id="product.menu_attribute_action" model="ir.ui.menu"/>
-        <delete id="product.menu_variants_action" model="ir.ui.menu"/>        
-    
+        <delete id="product.menu_variants_action" model="ir.ui.menu"/>  
+
+        <record id="vit_product_Material_tree_view" model="ir.ui.view">
+            <field name="name">product Material tree</field>
+            <field name="model">product.material</field>
+            <field name="arch" type="xml">
+                <tree string='tree product material' editable='botom'>
+                        <field name='name'/>
+                        <field name='parent_id'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="vit_product_Quality_tree_view" model="ir.ui.view">
+            <field name="name">product quality tree</field>
+            <field name="model">product.quality</field>
+            <field name="arch" type="xml">
+                <tree string='tree product quality' editable='botom'>
+                        <field name='name'/>
+                        <field name='parent_id'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="vit_product_finishing_tree_view" model="ir.ui.view">
+            <field name="name">product finishing tree</field>
+            <field name="model">product.finishing</field>
+            <field name="arch" type="xml">
+                <tree string='tree product finishing' editable='botom'>
+                        <field name='name'/>
+                        <field name='parent_id'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="vi_finishing_product_action" model="ir.actions.act_window">
+            <field name="name">Product Fin</field>
+            <field name="res_model">product.finishing</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>   
+
+        <record id="vi_Material_product_action" model="ir.actions.act_window">
+            <field name="name">Product material</field>
+            <field name="res_model">product.material</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>   
+
+        <record id="vi_Quality_product_action" model="ir.actions.act_window">
+            <field name="name">Product quality</field>
+            <field name="res_model">product.quality</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>      
+
+        <menuitem
+            id="menu_vi_finishing_product_in_config_stock" name="Product Finishing" action="vi_finishing_product_action"
+            parent="stock.menu_product_in_config_stock" groups="base.group_no_one"/>
+        <menuitem
+            id="menu_vi_Material_product_in_config_stock" name="Product Material" action="vi_Material_product_action"
+            parent="stock.menu_product_in_config_stock" groups="base.group_no_one"/>
+        <menuitem
+            id="menu_vi_Quality_product_in_config_stock" name="Product Quality" action="vi_Quality_product_action"
+            parent="stock.menu_product_in_config_stock" groups="base.group_no_one"/>
     </data>
 </openerp>
