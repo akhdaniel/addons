@@ -8,14 +8,14 @@
             <field name="model">sale.order.list</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Order List">
+                <tree colors="blue:state == 'draft';black:state == 'confirm';gray:state == 'done'" string="Order List">
                     <field name="ref"/>
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="purchase_date"/>                    
                     <field name="up_to_date"/>
                     <field name="delivery_date"/>
-                    <field name="state" invisible="1"/>
+                    <field name="state" invisible="0"/>
                 </tree>
             </field>
         </record>
@@ -40,7 +40,7 @@
                         type="object" states="draft,confirm" class="oe_highlight" 
                         groups="base.group_user"/>    
 
-                    <button string="Create Work Orders" type="object" 
+                    <button string="Create Manufacturing Orders" type="object" 
                         states="confirm" name="action_create_manufacturing_orders"
                         groups="base.group_sale_salesman,base.group_sale_manager"/>
 
@@ -108,9 +108,9 @@
             <field name="arch" type="xml">
                 <search string="Picking List">
                     <field name="name" filter_domain="[('name','ilike',self)]" string="Code"/>
-                    <filter icon="terp-sale" string="Draft" domain="[('state','=','draft')]"/>
-                    <filter icon="terp-sale" string="Confirm" domain="[('state','=','confirm')]"/>
-                    <filter icon="terp-sale" string="Done" domain="[('state','=','done')]"/>
+                    <filter icon="terp-sale" string="Draft" name='draft' domain="[('state','=','draft')]"/>
+                    <filter icon="terp-sale" string="Confirm" name='confirm' domain="[('state','=','confirm')]"/>
+                    <filter icon="terp-sale" string="Done" name='done' domain="[('state','=','done')]"/>
                     <group expand="0" string="Group By...">
                         <filter string="Customer" icon="terp-folder-orange" domain="" context="{'group_by':'partner_id'}"/>
                     </group>
@@ -126,6 +126,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_order_list_tree"/>
             <field name="search_view_id" ref="view_order_list_search"/>
+                        <field name="context">{"search_default_draft":1,"search_default_confirm":1}</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
                 Sorry....

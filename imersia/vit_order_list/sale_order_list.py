@@ -31,6 +31,7 @@ from openerp import workflow
 class sale_order_list(osv.Model):
 	_name 			= "sale.order.list"
 	_description 	= "Order List"
+	_order = "ref desc, name desc"
 
 	def _get_default_company(self, cr, uid, context=None):
 		company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
@@ -81,17 +82,16 @@ class sale_order_list(osv.Model):
 			'sale_order_list_id',          
 			'Order Lines',    
 			domain="[('state','=','confirmed'),\
+			('is_order_list','=',False),\
 			('order_partner_id','=',partner_id)]",\
 			readonly=True,states={'draft':[('readonly',False)]},
 			required=True),	
-		'state'					: fields.selection([('draft', 'draft'),('confirm', 'Confirm'),('done', 'done')], 'Status'),
+		'state'					: fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('done', 'Done')], 'Status'),
 		'note'					: fields.text('Note'),
 		'user_id'				: fields.many2one('res.users','User',readonly=True, select=True, track_visibility='onchange'),
 		'company_id'			: fields.many2one('res.company', 'Company'),
 		'manufacturing_order_ids' : fields.function(_get_manufacturing_order, type='many2many', relation="mrp.production", string="Manufacturing Order List"),
 		'total' 				: fields.function(_get_total, type='float', string="Total",store=True),
-
-
 	}
 
 	_defaults ={
@@ -116,10 +116,21 @@ class sale_order_list(osv.Model):
 		return super(sale_order_list, self).create(cr, uid, vals, context=context)	
 
 	def action_confirm(self,cr,uid,ids,context=None):
-		return self.write(cr,uid,ids,{'state':'confirm'},context=context)	
+		#set true field is_order_list agar tidak bisa di search ketika add new di order list detail
+		for order_list in self.browse(cr,uid,ids[0],context=context).sale_order_line_ids:
+			self.pool.get('sale.order.line').write(cr,uid,order_list.id,{'is_order_list':True},context=context)
+
+		self.write(cr,uid,ids,{'state':'confirm'},context=context)			
+
+		return True
 
 	def action_cancel(self,cr,uid,ids,context=None):
-		return self.write(cr,uid,ids,{'state':'draft'},context=context)
+		#set false field is_order_list agar bisa di search ketika add new di order list detail
+		for order_list in self.browse(cr,uid,ids[0],context=context).sale_order_line_ids:
+			self.pool.get('sale.order.line').write(cr,uid,order_list.id,{'is_order_list':False},context=context)	
+		self.write(cr,uid,ids,{'state':'draft'},context=context)
+
+		return True
 
 	def unlink(self, cr, uid, ids, context=None):
 		if context is None:
@@ -130,34 +141,6 @@ class sale_order_list(osv.Model):
 				raise osv.except_osv(_('Invalid Action!'), _('The data can be removed only with the status of the draft'))
 		return super(sale_order_list, self).unlink(cr, uid, ids, context=context)		
 
-
-	# @api.multi
-	# def action_order_list_send(self):
-	# 	""" Open a window to compose an email, with the edi invoice template
-	# 		message loaded by default
-	# 	"""
-	# 	assert len(self) == 1, 'This option should only be used for a single id at a time.'
-	# 	template = self.env.ref('vit_order_list.email_template_edi_sale_order_list', False)
-	# 	compose_form = self.env.ref('mail.email_compose_message_wizard_form', False)
-	# 	ctx = dict(
-	# 		default_model='sale.order.list',
-	# 		default_res_id=self.id,
-	# 		default_use_template=bool(template),
-	# 		default_template_id=template.id,
-	# 		default_composition_mode='comment',
-	# 		mark_invoice_as_sent=True,
-	# 	)
-	# 	return {
-	# 		'name': _('Compose Email'),
-	# 		'type': 'ir.actions.act_window',
-	# 		'view_type': 'form',
-	# 		'view_mode': 'form',
-	# 		'res_model': 'mail.compose.message',
-	# 		'views': [(compose_form.id, 'form')],
-	# 		'view_id': compose_form.id,
-	# 		'target': 'new',
-	# 		'context': ctx,
-	# 	}
 
 	def action_order_list_send(self, cr, uid, ids, context=None):
 		'''

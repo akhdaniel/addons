@@ -16,17 +16,23 @@
             	<field name="name" position="after">
                 <group>    
                     <group>
+                        <field name="product_weight_cm"/>
+                        <field name="product_height_cm"/>
+                        <field name="product_larg_cm"/>
+                        <field name="product_weight_inch"/>
+                        <field name="product_height_inch"/>
+                        <field name="product_larg_inch"/>                                              
+                    </group>                   	
+                    <group>
                         <field name="default_code"/>
                 		<field name="colection_ids" widget='many2many_tags'/>
                 		<field name="finishing_id"/>
                 		<field name="description_ids"/>
+                		<field name="wood_type_id"/>
+                		<field name="product_unbuilt_volume12"/>
+                		<field name="product_volume_total"/>
                     </group>
-                    <group>
-                        <field name="product_weight"/>
-                        <field name="product_height"/>
-                        <field name="product_larg"/>
-                        <field name="product_material_volume12"/>
-                    </group>                    
+                 
                 </group>
 
             	</field>
