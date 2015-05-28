@@ -108,7 +108,7 @@ class product_customers_description(osv.osv):
 
     _columns = {
         'name': fields.char('Customers Description'),
-        'partner_id': fields.many2one('res.partner', 'Customer', domain=[('customer','=',True)]),
+        'partner_id': fields.many2one('res.partner', 'Customers', domain=[('customer','=',True)]),
         'produk_id' : fields.many2one('product.template', 'Product'),
     }
 
