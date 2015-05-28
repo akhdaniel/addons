@@ -30,7 +30,7 @@ class product_finishing(osv.osv):
 
     _columns = {
         'name': fields.char('Name'),
-        'parent_id': fields.many2one('product.finishing','Parent Category', ondelete='cascade'),
+        'parent_id': fields.many2one('product.finishing','Parent Finishing', ondelete='cascade'),
         'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
     }
 
@@ -61,7 +61,7 @@ class product_quality(osv.osv):
 
     _columns = {
         'name': fields.char('Name'),
-        'parent_id': fields.many2one('product.quality','Parent Category', ondelete='cascade'),
+        'parent_id': fields.many2one('product.quality','Parent Quality', ondelete='cascade'),
         'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
     }
 
@@ -92,7 +92,7 @@ class product_material(osv.osv):
 
     _columns = {
         'name': fields.char('Name'),
-        'parent_id': fields.many2one('product.material','Parent Category', ondelete='cascade'),
+        'parent_id': fields.many2one('product.material','Parent Material', ondelete='cascade'),
         'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
     }
 
@@ -148,7 +148,7 @@ class product_template(osv.osv):
         'material_id': fields.many2one('product.material', 'Material'),
         # 'is_furniture': fields.boolean('is Furniture?'),
         # 'component_vol' : fields.float("Component Volume (m3)", digits=(12,9),help="Length x width x Height"),
-		'material_vol' : fields.float("Material Volume (m3)", digits=(12,9),help="Volume sum of all sub-component material vol"),
+		# 'material_vol' : fields.float("Material Volume (m3)", digits=(12,9),help="Volume sum of all sub-component material vol"),
     	'packaging_id' : fields.many2one('product.package.type', "Package type"),
 		'description_ids' : fields.one2many('product.customers.description','produk_id',string="Customers description",),
         'colection_ids': fields.many2many('product.collection','product_collection_rel', id1='prod_id', id2='coll_id', string='Collection', ondelete='restrict'),
@@ -156,11 +156,11 @@ class product_template(osv.osv):
 		'product_category':fields.selection([('cylindrical','Cylindrical'),('cubic','Cubic'),('volume','Volume')],'Product Category'),
         'product_length':fields.float('Length (mm)'),
         'product_diameter':fields.float('Diameter (mm)'),
-        'product_larg':fields.float('Large (mm)'),
+        'product_larg':fields.float('Larg (mm)'),
         'product_height':fields.float('Height (mm)'),
         'product_weight':fields.float('Weight (Kg)'),
         'product_cylindrical_volume': fields.float('Volume (m3)',digits=(12, 9)),
-        'product_cubic_volume': fields.float('Component Volume (m3)',digits=(12, 9)),
+        'product_cubic_volume': fields.float('Component (m3)',digits=(12, 9)),
         'product_volume_volume': fields.float('Volume (Liter)',digits=(12, 9)),
         'product_cylindrical_density':fields.float('Density (Kg/m3)'),
         'product_cubic_density':fields.float('Density (Kg/m3)'),
@@ -271,6 +271,6 @@ class product_template(osv.osv):
                 com_vol = (data.product_length * data.product_height * data.product_larg)/1000000000.0
         except ZeroDivisionError:
             raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
-        return self.write(cr,uid,ids,{'product_cubic_volume': com_vol},)
+        return self.write(cr,uid,ids,{'product_material_volume12': com_vol},)
 
 product_template()
