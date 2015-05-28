@@ -15,15 +15,6 @@ class stock_transfer_details(models.TransientModel):
 	_inherit = 'stock.transfer_details'
 	_description = 'Picking wizard'
 
-	_columns = {
-		# 'product_qty_nett'  : fields.float("Nett Quantity"),
-		# 'product_qty_diff'  : fields.float("Diff/Loss Quantity"),
-		# 'weight' : fields.float('Weight'),
-		# 'length' : fields.float('Length'),
-		# 'height' : fields.float('Height'),
-
-	}
-
 
 	def default_get(self, cr, uid, fields, context=None):
 		"""
@@ -152,6 +143,52 @@ class stock_transfer_details(models.TransientModel):
 
 		return res
 
+	@api.one
+	def do_detailed_transfer(self):
+		# res = super(stock_transfer_details, self).do_detailed_transfer()
+		import pdb;pdb.set_trace()
+		processed_ids = []
+		# Create new and update existing pack operations
+		for lstits in [self.item_ids, self.packop_ids]:
+			""" Jika on_formula di uom == True maka gunakan quantity dari nett nya"""
+			for prod in lstits:
+				if prod.product_id.uom_id.on_formula:
+					qty = prod.product_qty_nett
+				else:
+					qty = prod.quantity
+				pack_datas = {
+					'product_id': prod.product_id.id,
+					'product_uom_id': prod.product_uom_id.id,
+					'product_qty': qty,
+					'product_qty': prod.product_qty_nett,
+					'package_id': prod.package_id.id,
+					'lot_id': prod.lot_id.id,
+					'location_id': prod.sourceloc_id.id,
+					'location_dest_id': prod.destinationloc_id.id,
+					'result_package_id': prod.result_package_id.id,
+					'date': prod.date if prod.date else datetime.now(),
+					'owner_id': prod.owner_id.id,
+				}
+				if prod.packop_id:
+					# import pdb;pdb.set_trace()
+					prod.packop_id.write(pack_datas)
+					processed_ids.append(prod.packop_id.id)
+				else:
+					pack_datas['picking_id'] = self.picking_id.id
+					packop_id = self.env['stock.pack.operation'].create(pack_datas)
+					processed_ids.append(packop_id.id)
+					# import pdb;pdb.set_trace()
+
+		# Delete the others
+		packops = self.env['stock.pack.operation'].search(['&', ('picking_id', '=', self.picking_id.id), '!', ('id', 'in', processed_ids)])
+		for packop in packops:
+			packop.unlink()
+
+		# Execute the transfer of the picking
+		self.picking_id.do_transfer()
+
+		return True	
+
 
 class stock_transfer_details_items(models.TransientModel):
 	_name = 'stock.transfer_details_items'
@@ -159,17 +196,23 @@ class stock_transfer_details_items(models.TransientModel):
 	_description = 'Picking wizard items'
 
 	_columns = {
-		'product_qty_nett'  : fields.float("Nett Quantity"),
-		'product_qty_diff'  : fields.float("Diff/Loss Quantity"),
+		'product_qty_nett'  : fields.float("Nett Quantity" ,store=True),
+		'product_qty_diff'  : fields.float("Diff/Loss Quantity" , store=True),
 		'weight_log' : fields.float('Weight'),
 		'length_log' : fields.float('Length'),
 		'height_log' : fields.float('Height'),
+		'diameter_log' : fields.float('Diameter'),
 
 	}
 
-	@api.onchange('weight_log', 'length_log','height_log') # if these fields are changed, call method
+	@api.onchange('weight_log', 'length_log','height_log','diameter_log') # if these fields are changed, call method
 	def on_change_nett_diff(self):
-		self.product_qty_nett = self.weight_log * self.length_log * self.height_log
+		# import pdb;pdb.set_trace()
+		if self.product_id.uom_id == "Cylindrical" :
+			self.product_qty_nett = self.diameter_log * self.length_log
+		else:
+			self.product_qty_nett = self.weight_log * self.length_log * self.height_log
+		
 		self.product_qty_diff = self.quantity - self.product_qty_nett 
 	
 
@@ -184,8 +227,8 @@ class stock_move(osv.osv):
 
 	_columns = {
 		'log_qty' : fields.float('Log Quantity'),
-		'product_qty_nett'  : fields.float("Nett Quantity"),
-		'product_qty_diff'  : fields.float("Diff/Loss Quantity"),
+		'product_qty_nett'  : fields.float("Nett Quantity", store=True),
+		'product_qty_diff'  : fields.float("Diff/Loss Quantity", store=True),
 	}
 
 
@@ -203,8 +246,19 @@ class stock_picking(osv.osv):
 	}
 
 
-	@api.cr_uid_ids_context
-	def do_transfer(self, cr, uid, picking_ids, context=None):
-		res = super(stock_picking, self).do_transfer(cr, uid, picking_ids, context=context)
-		# import pdb;pdb.set_trace()
-		return res	
+	# @api.cr_uid_ids_context
+	# def do_transfer(self, cr, uid, picking_ids, context=None):
+	# 	res = super(stock_picking, self).do_transfer(cr, uid, picking_ids, context=context)
+	# 	return res	
+
+
+
+
+class product_uom(osv.osv):
+	_name = 'product.uom'
+	_inherit = 'product.uom'
+	_description = 'Product Unit of Measure'
+
+	_columns = {
+		'on_formula' : fields.boolean('On Formulation (m3)')
+	}

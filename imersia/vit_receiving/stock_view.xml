@@ -23,8 +23,8 @@
                     <field name="log_qty" /> 
                 </field>
                 <field name="product_uom_qty" position="after">
-                    <field name="product_qty_nett" readonly="1" />
-                    <field name="product_qty_diff" readonly="1"/>
+                    <field name="product_qty_nett" readonly="0" />
+                    <field name="product_qty_diff" readonly="0"/>
                 </field>
             </field>
         </record>
@@ -49,14 +49,43 @@
             <field name="inherit_id" ref="stock.view_stock_enter_transfer_details" />
             <field name="arch" type="xml">
                 <field name="quantity" position="after">
-                    <field name="product_qty_nett" readonly="1" on_change="0"/>
-                    <field name="product_qty_diff" readonly="1"/>
                     <field name="weight_log" />  
-                    <field name="length_log" />
                     <field name="height_log" />
+                    <field name="length_log" />
+                    <field name="diameter_log" />
+                    <field name="product_qty_nett" readonly="0" on_change="0"/>       
                 </field>  
+                <field name="product_uom_id" position="after">
+                    <field name="product_qty_diff" readonly="0"/>
+                </field>
             </field>
         </record>
+
+
+        <!-- Unit of Measure -->
+
+        <record id="product_uom_tree_view_vitraining" model="ir.ui.view">
+            <field name="name">product.uom.tree.vitraining</field>
+            <field name="model">product.uom</field>
+            <field name="inherit_id" ref="product.product_uom_tree_view" />
+            <field name="arch" type="xml">
+                    <field name="category_id" position="after">
+                        <field name="on_formula"/>
+                    </field>
+            </field>
+        </record>
+
+         <record id="product_uom_form_view_vitraining" model="ir.ui.view">
+            <field name="name">product.uom.form.vitraining</field>
+            <field name="model">product.uom</field>
+            <field name="inherit_id" ref="product.product_uom_form_view" />
+            <field name="arch" type="xml">
+                 <field name="rounding" position="after">
+                     <field name="on_formula" />
+                 </field>        
+            </field>
+        </record>
+
 	</data>
 </openerp>
 
