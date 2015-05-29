@@ -95,5 +95,28 @@
             action="vit_action_quotations" parent="base.menu_sales"
             sequence="5"/>
 
+        <!-- Sales form -->
+        <record id="vi_x_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form x</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position='inside'>
+                    <group>
+                          <field name='port_name'/>
+                          <field name='port_discharge'/>
+                          <field name='qty_total'/>
+                          <field name='readiness_date'/>
+                          <field name='etd_date'/>
+                    </group>
+                    <group>
+                          <field name='desc_goods'/>
+                    </group>
+                </xpath>
+                <!-- <xpath expr="//form/sheet/notebook/page[@string='Order Lines]/field[@name='order_line'/tree[@string='Sales Order Lines]/field[@name='product_id']" position='after'>
+                </xpath> -->
+            </field>
+        </record>
+
     </data>
 </openerp>

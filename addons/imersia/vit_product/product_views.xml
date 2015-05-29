@@ -4,11 +4,10 @@
             <field name="name">product material form</field>
             <field name="model">product.material</field>
             <field name="arch" type="xml">
-                <form string='product material' style="width : 550px;">
+                <form string='product material'>
                     <group col='2' style="width : 400px;">
                         <field name='name'/>
                         <field name='parent_id' widget="selection"/>
-                        <field name='complete_name' invisible='1'/>
                     </group>
                 </form>
             </field>
@@ -22,7 +21,6 @@
                     <group col='2' style="width : 400px;">
                         <field name='name'/>
                         <field name='parent_id' widget="selection"/>
-                        <field name='complete_name' invisible='1'/>
                     </group>
                 </form>
             </field>
@@ -36,7 +34,6 @@
                     <group col='2' style="width : 400px;">
                         <field name='name'/>
                         <field name='parent_id' widget="selection"/>
-                        <field name='complete_name' invisible='1'/>
                     </group>
                 </form>
             </field>
@@ -202,7 +199,7 @@
                 <form string="Product collection types">
                     <group col='2' style="width : 400px;">
                         <field name="name"/>
-                        <field name='parent_id'/>
+                        <field name='parent_id' widget="selection"/>
                     </group>
                 </form>
             </field>
@@ -233,7 +230,7 @@
                 <form string="Product package types">
                     <group col='2' style="width : 400px;">
                         <field name="name"/>
-                        <field name='parent_id'/>
+                        <field name='parent_id' widget="selection"/>
                     </group>
                 </form>
             </field>
