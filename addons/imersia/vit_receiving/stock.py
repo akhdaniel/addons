@@ -146,7 +146,7 @@ class stock_transfer_details(models.TransientModel):
 	@api.one
 	def do_detailed_transfer(self):
 		# res = super(stock_transfer_details, self).do_detailed_transfer()
-		import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		processed_ids = []
 		# Create new and update existing pack operations
 		for lstits in [self.item_ids, self.packop_ids]:
@@ -176,18 +176,61 @@ class stock_transfer_details(models.TransientModel):
 				else:
 					pack_datas['picking_id'] = self.picking_id.id
 					packop_id = self.env['stock.pack.operation'].create(pack_datas)
-					processed_ids.append(packop_id.id)
 					# import pdb;pdb.set_trace()
+					processed_ids.append(packop_id.id)
 
 		# Delete the others
 		packops = self.env['stock.pack.operation'].search(['&', ('picking_id', '=', self.picking_id.id), '!', ('id', 'in', processed_ids)])
 		for packop in packops:
 			packop.unlink()
 
+		
+		""" Update Stock picking:
+			1. Update Stock Move nya, Berdasarkan list item dari stock_transfer_details_items
+		"""
+		# import pdb;pdb.set_trace()
+		item_ids = self.item_ids
+		self.update_stock_picking(item_ids)
+		
 		# Execute the transfer of the picking
 		self.picking_id.do_transfer()
 
 		return True	
+
+	@api.cr_uid_ids_context
+	def update_stock_picking(self, cr, uid, ids, item_ids, context=None):
+		# item_ids[0].transfer_id.picking_id.move_lines
+		for item in item_ids:
+			# for sm_id in item.transfer_id.picking_id.move_lines:
+				# Create Lagi Stock Move berdasarkan item_ids
+			stock_move_obj = self.pool.get('stock.move')
+			datas = {
+				'name'				: item.product_id.name,
+				'product_id'		: item.product_id.id,
+				'product_uom_qty'	: item.product_qty_nett,
+				'product_uom'		: item.product_uom_id.id,
+				'date'				: item.date,
+				'date_expected'		: item.transfer_id.picking_id.min_date,
+				'location_id'		: item.sourceloc_id.id,
+				'location_dest_id'	: item.destinationloc_id.id,
+				'partner_id'		: item.transfer_id.picking_id.partner_id.id,
+				'company_id'		: item.transfer_id.picking_id.company_id.id,
+				'procure_method'	: 'make_to_stock',
+				'product_qty_nett'  : item.product_qty_nett,
+				'product_qty_diff'  : item.product_qty_diff,
+				'weight_log' 		: item.weight_log,
+				'length_log'		: item.length_log,
+				'height_log' 		: item.height_log,
+				'diameter_log'		: item.diameter_log,
+				'picking_id'		: item.transfer_id.picking_id.id,
+				'state'				: 'done'
+			}
+
+			stock_move_obj.create(cr, uid, datas, context=context)
+	
+		# for item in item_ids:
+		# 	for sm_id in item.transfer_id.picking_id.move_lines:
+		# 		cr.execute('delete from stock_move where id = %d' %(sm_id))
 
 
 class stock_transfer_details_items(models.TransientModel):
@@ -229,6 +272,11 @@ class stock_move(osv.osv):
 		'log_qty' : fields.float('Log Quantity'),
 		'product_qty_nett'  : fields.float("Nett Quantity", store=True),
 		'product_qty_diff'  : fields.float("Diff/Loss Quantity", store=True),
+		'weight_log' : fields.float('Weight'),
+		'length_log' : fields.float('Length'),
+		'height_log' : fields.float('Height'),
+		'diameter_log' : fields.float('Diameter'),
+
 	}
 
 
