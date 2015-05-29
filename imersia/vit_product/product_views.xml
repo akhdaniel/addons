@@ -266,8 +266,8 @@
             <field name="model">product.material</field>
             <field name="arch" type="xml">
                 <tree string='tree product material' editable='botom'>
-                        <field name='name'/>
-                        <field name='parent_id'/>
+                    <field name='name'/>
+                    <field name='parent_id'/>
                 </tree>
             </field>
         </record>
