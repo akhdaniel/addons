@@ -24,6 +24,19 @@ class product_finishing(osv.osv):
             res.append((record['id'], name))
         return res
 
+    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
+        if not args:
+            args = []
+        if not context:
+            context = {}
+        if name:
+            # Be sure name_search is symetric to name_get
+            name = name.split(' / ')[-1]
+            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
+        else:
+            ids = self.search(cr, uid, args, limit=limit, context=context)
+        return self.name_get(cr, uid, ids, context)
+
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
         res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
@@ -31,7 +44,7 @@ class product_finishing(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.finishing','Parent Finishing', ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 #----------------------------------------------------------
@@ -62,7 +75,7 @@ class product_quality(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.quality','Parent Quality', ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 #----------------------------------------------------------
@@ -85,19 +98,6 @@ class product_material(osv.osv):
                 name = record['parent_id'][1]+' / '+name
             res.append((record['id'], name))
         return res
-
-    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
-        if not context:
-            context = {}
-        if name:
-            # Be sure name_search is symetric to name_get
-            name = name.split(' / ')[-1]
-            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
-        else:
-            ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
         
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
         res = self.name_get(cr, uid, ids, context=context)
@@ -106,7 +106,7 @@ class product_material(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.material','Parent Material', ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 class product_customers_description(osv.osv):
@@ -214,20 +214,20 @@ class product_template(osv.osv):
 
     def _get_material_volume2(self, cr, uid, ids, field_name, arg, context=None):
         result = dict.fromkeys(ids, False)
-        def cek_vol(produk):
+        def cek_vol(produk,product_qty):
             res = 0.00
             categ = produk.product_category
-            if categ == 'cylindrical' : res = produk.product_cylindrical_volume
-            if categ == 'cubic' : res = produk.product_cubic_volume
-            if categ == 'volume' : res = produk.product_volume_volume
+            if categ == 'cylindrical' : res = produk.product_cylindrical_volume * product_qty
+            if categ == 'cubic' : res = produk.product_cubic_volume * product_qty
+            if categ == 'volume' : res = produk.product_volume_volume * product_qty
             else : 
-                res =  produk.material_vol      
+                res =  produk.material_vol  * product_qty     
                 # print("%s not saleable %d" % (produk.name,produk.material_vol))
             return res
         bom_obj = self.pool.get('mrp.bom')
         for i in self.browse(cr, uid, ids, context=context):
             bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','in',ids)])
-            com_vol = cek_vol(i)
+            com_vol = cek_vol(i,1)
             try : 
                 if bom_ids:
                     com_vol = 0.00
@@ -238,13 +238,16 @@ class product_template(osv.osv):
                     for bom in bom_lines:
                         if bom.bom_line_ids:
                             for bom1 in bom.bom_line_ids :
-                                vol = cek_vol(bom1.product_id)
+                                vol = cek_vol(bom1.product_id,bom1.product_qty)
                                 com_vol += vol
+                                print('vol1 %s qty %d = %d' % (bom1.product_id.name,bom1.product_qty,com_vol))
                         elif not bom.bom_line_ids:
-                            vol = cek_vol(bom.product_tmpl_id)
+                            vol = cek_vol(bom.product_tmpl_id,bom.product_qty)
                             com_vol += vol
+                            print('vol %s qty %d = %d' % (bom.product_tmpl_id.name,bom.product_qty,com_vol))
                 elif not bom_ids and i.product_category == 'cubic':
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
+                    print('vol-i %s = %d' % (i.name,com_vol))
             except ZeroDivisionError:
                 raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
             result[i.id] = com_vol
@@ -252,33 +255,38 @@ class product_template(osv.osv):
 
 
     def compute_vol(self, cr, uid, ids, context=None):
-        def cek_vol(produk):
-            res = 0.00
-            categ = produk.product_category
-            if categ == 'cylindrical' : res = produk.product_cylindrical_volume
-            if categ == 'cubic' : res = produk.product_cubic_volume
-            if categ == 'volume' : res = produk.product_volume_volume       
-            return res
-        data    = self.browse(cr,uid,ids[0],)
-        bom_obj = self.pool.get('mrp.bom')
-        bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','in',ids)])
-        com_vol = cek_vol(data)
-        try : 
-            if bom_ids:
-                com_vol = 0.00
-                bom_lines = bom_obj.browse(cr,uid,bom_ids,)
-                if bom_lines.bom_line_ids:
-                    for bom1 in bom_lines.bom_line_ids :
-                        vol = cek_vol(bom1.product_id)
-                        com_vol += vol
-                elif not bom_lines.bom_line_ids:
-                    vol = cek_vol(bom_lines.product_tmpl_id)
-                    com_vol += vol
-            elif not bom_ids and data.product_category == 'cubic':
-                com_vol = (data.product_length * data.product_height * data.product_larg)/1000000000.0
-        except ZeroDivisionError:
-            raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
-        return self.write(cr,uid,ids,{'product_material_volume12': com_vol},)
+        # def cek_vol(produk):
+        #     res = 0.00
+        #     categ = produk.product_category
+        #     if categ == 'cylindrical' : res = produk.product_cylindrical_volume
+        #     if categ == 'cubic' : res = produk.product_cubic_volume
+        #     if categ == 'volume' : res = produk.product_volume_volume       
+        #     return res
+        # data    = self.browse(cr,uid,ids[0],)
+        # bom_obj = self.pool.get('mrp.bom')
+        # bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','in',ids)])
+        # com_vol = cek_vol(data)
+        # try : 
+        #     if bom_ids:
+        #         com_vol = 0.00
+        #         bom_lines = bom_obj.browse(cr,uid,bom_ids,)
+        #         # Cek bom > 1 ?
+        #         if len(bom_lines) > 1:
+        #             raise osv.except_osv(_('Product has more than one BoM'), _('Pls Check BoM for this product in Manufacturing'))
+        #         for bom in bom_lines:
+        #             if bom.bom_line_ids:
+        #                 for bom1 in bom.bom_line_ids :
+        #                     vol = cek_vol(bom1.product_id,bom1.product_qty)
+        #                     com_vol += vol
+        #             elif not bom.bom_line_ids:
+        #                 vol = cek_vol(bom.product_tmpl_id,bom.product_qty)
+        #                 com_vol += vol
+        #     elif not bom_ids and i.product_category == 'cubic':
+        #         com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
+        # except ZeroDivisionError:
+        #     raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
+        # self.write(cr,uid,ids,{'product_material_volume12': com_vol},)
+        return True
 
     _columns = {
         'finishing_id': fields.many2one('product.finishing', 'Finishing'),

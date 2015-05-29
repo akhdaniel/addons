@@ -109,3 +109,23 @@ class sale_order(osv.osv):
     }
 sale_order()
 
+# class sale_order_line(osv.osv):
+#     _inherit = 'sale.order.line'
+#     _columns = {
+#         # 'colection_ids': fields.related('product_id','colection_ids',type='many2many',relation='product_collection_rel',string='Collection'),
+#         'colection_ids': fields.Char(related='product_id.colection_ids', store=False),
+#         'description_ids': fields.related('product_id','description_ids',type='one2many',relation='product.collection',string='Customer Description'),
+#         }
+
+# • Customer description (the new field we built in the product form)
+# • Description (the normal description of the product)
+# • Finishing (the new field too)
+# • W (cm), (the width of the product)
+# • L (cm), (the length of the product)
+# • H (cm), (the height of the product)
+# • Volume (this is the new disassemble volume)
+# • Unit price
+# • Quantity
+# • Total amount
+# • Total vol
+#         }
