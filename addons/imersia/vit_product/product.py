@@ -186,18 +186,18 @@ class product_collection(osv.osv):
 class product_template(osv.osv):
     _inherit = 'product.template'
 
-    def _get_material_volume(self, cr, uid, ids, field_name, arg, context=None):
-        if context==None:context={}
-        res = dict.fromkeys(ids, False)
-        for i in self.browse(cr, uid, ids, context=context):
-            bom_id=self.pool.get('mrp.bom').search(cr,uid,[('product_tmpl_id','=',i.id)],context=context)
-            if bom_id:bom_id=bom_id[0]
-            bom_obj=self.pool.get('mrp.bom').browse(cr,uid,bom_id)
-            volume=0.0
-            for j in bom_obj.bom_line_ids:
-                volume += j.product_id.product_tmpl_id.product_cubic_volume
-            res[i.id]=volume
-        return res
+    # def _get_material_volume(self, cr, uid, ids, field_name, arg, context=None):
+    #     if context==None:context={}
+    #     res = dict.fromkeys(ids, False)
+    #     for i in self.browse(cr, uid, ids, context=context):
+    #         bom_id=self.pool.get('mrp.bom').search(cr,uid,[('product_tmpl_id','=',i.id)],context=context)
+    #         if bom_id:bom_id=bom_id[0]
+    #         bom_obj=self.pool.get('mrp.bom').browse(cr,uid,bom_id)
+    #         volume=0.0
+    #         for j in bom_obj.bom_line_ids:
+    #             volume += j.product_id.product_tmpl_id.product_cubic_volume
+    #         res[i.id]=volume
+    #     return res
 
     def _get_material_volume2(self, cr, uid, ids, field_name, arg, context=None):
         result = dict.fromkeys(ids, False)
@@ -216,13 +216,14 @@ class product_template(osv.osv):
                 if bom_ids:
                     com_vol = 0.00
                     bom_lines = bom_obj.browse(cr,uid,bom_ids,)
-                    if bom_lines.bom_line_ids:
-                        for bom1 in bom_lines.bom_line_ids :
-                            vol = cek_vol(bom1.product_id)
+                    for bom in bom_lines:
+                        if bom.bom_line_ids:
+                            for bom1 in bom.bom_line_ids :
+                                vol = cek_vol(bom1.product_id)
+                                com_vol += vol
+                        elif not bom.bom_line_ids:
+                            vol = cek_vol(bom.product_tmpl_id)
                             com_vol += vol
-                    elif not bom_lines.bom_line_ids:
-                        vol = cek_vol(bom_lines.product_tmpl_id)
-                        com_vol += vol
                 elif not bom_ids and i.product_category == 'cubic':
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
             except ZeroDivisionError:
