@@ -159,7 +159,9 @@ class sale_order_line(osv.osv):
             if bilangan1 > 0:
                 hasil3 = bilangan3 / 1000                          
 
-            hasil      = round(hasil1 * hasil2 *hasil3,4)
+            qty        = obj.product_uom_qty
+
+            hasil      = round((hasil1 * hasil2 *hasil3)*qty,4)
             result[ids[0]] = hasil
         return result  
 
@@ -180,7 +182,7 @@ class sale_order_line(osv.osv):
 
         'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      
 
-        'product_unbuilt_volume12': fields.related('product_id','product_material_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),
+        'product_unbuilt_volume12': fields.related('product_id','product_unbuilt_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),
 
         #'product_cubic_volume': fields.related('product_id',type='float',string='Volume'),
         'finishing_id': fields.related('product_id','finishing_id',type='many2one',relation='product.finishing',string='Finishing',readonly=True),
