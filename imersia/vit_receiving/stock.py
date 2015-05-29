@@ -46,10 +46,11 @@ class stock_transfer_details(models.TransientModel):
 		if picking.log_qty != 0.0:
 			for x,y in zip(range(int(picking.log_qty)),range(int(picking.log_qty))):
 				for op in picking.pack_operation_ids:
-					if (op.product_qty%int(picking.log_qty) == 0):
+					if (op.product_qty%int(picking.log_qty) == 0): #Genap
 						product_qty = op.product_qty // int(picking.log_qty)
+						op_id =  op.id if (x == 0) else ''
 						item = {
-							'packop_id': op.id,
+							'packop_id': op_id,
 							'product_id': op.product_id.id,
 							'product_uom_id': op.product_uom_id.id,
 							'quantity': product_qty,
