@@ -31,7 +31,7 @@ class product_finishing(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.finishing','Parent Finishing', ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 #----------------------------------------------------------
@@ -62,7 +62,7 @@ class product_quality(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.quality','Parent Quality', ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 #----------------------------------------------------------
@@ -93,14 +93,7 @@ class product_material(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.material','Parent Material', ondelete='cascade'),
-        'complete_name': fields.function(_name_get_fnc, type="char", string='Name'),
-    }
-
-class product_package_type(osv.osv):
-    _name = "product.package.type"
-    
-    _columns = {
-        'name': fields.char('Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 class product_customers_description(osv.osv):
@@ -112,18 +105,82 @@ class product_customers_description(osv.osv):
         'produk_id' : fields.many2one('product.template', 'Product'),
     }
 
-class product_wood_type(osv.osv):
-    _name = "product.wood.type"
+class product_package_type(osv.osv):
+    _name = "product.package.type"
+
+    def name_get(self, cr, uid, ids, context=None):
+        if isinstance(ids, (list, tuple)) and not len(ids):
+            return []
+        if isinstance(ids, (long, int)):
+            ids = [ids]
+        reads = self.read(cr, uid, ids, ['name','parent_id'], context=context)
+        res = []
+        for record in reads:
+            name = record['name']
+            if record['parent_id']:
+                name = record['parent_id'][1]+' / '+name
+            res.append((record['id'], name))
+        return res
+
+    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
+        res = self.name_get(cr, uid, ids, context=context)
+        return dict(res)        
 
     _columns = {
         'name': fields.char('Name'),
+        'parent_id': fields.many2one('product.package.type','Parent Package', ondelete='cascade'),
+        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+    }
+
+class product_wood_type(osv.osv):
+    _name = "product.wood.type"
+
+    def name_get(self, cr, uid, ids, context=None):
+        if isinstance(ids, (list, tuple)) and not len(ids):
+            return []
+        if isinstance(ids, (long, int)):
+            ids = [ids]
+        reads = self.read(cr, uid, ids, ['name','parent_id'], context=context)
+        res = []
+        for record in reads:
+            name = record['name']
+            if record['parent_id']:
+                name = record['parent_id'][1]+' / '+name
+            res.append((record['id'], name))
+        return res
+
+    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
+        res = self.name_get(cr, uid, ids, context=context)
+        return dict(res)  
+
+    _columns = {
+        'name': fields.char('Name'),
+        'parent_id': fields.many2one('product.wood.type','Parent Wood', ondelete='cascade'),
     }
 
 class product_collection(osv.osv):
     _name = "product.collection"
 
+    def name_get(self, cr, uid, ids, context=None):
+        if isinstance(ids, (list, tuple)) and not len(ids):
+            return []
+        if isinstance(ids, (long, int)):
+            ids = [ids]
+        reads = self.read(cr, uid, ids, ['name','parent_id'], context=context)
+        res = []
+        for record in reads:
+            name = record['name']
+            if record['parent_id']:
+                name = record['parent_id'][1]+' / '+name
+            res.append((record['id'], name))
+        return res
+
+    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
+        res = self.name_get(cr, uid, ids, context=context)
+        return dict(res)  
     _columns = {
         'name': fields.char('Name'),
+        'parent_id': fields.many2one('product.collection','Parent Collection', ondelete='cascade'),
     }
 
 class product_template(osv.osv):
@@ -208,7 +265,6 @@ class product_template(osv.osv):
         'quality_id': fields.many2one('product.quality', 'Quality'),
         'material_id': fields.many2one('product.material', 'Material'),
         # 'is_furniture': fields.boolean('is Furniture?'),
-        # 'component_vol' : fields.float("Component Volume (m3)", digits=(12,9),help="Length x width x Height"),
 		'material_vol' : fields.float("Material Volume (m3)", digits=(12,9),help="Volume sum of all sub-component material vol"),
     	'packaging_id' : fields.many2one('product.package.type', "Package type"),
 		'description_ids' : fields.one2many('product.customers.description','produk_id',string="Customers description",),

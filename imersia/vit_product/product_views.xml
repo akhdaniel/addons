@@ -161,9 +161,8 @@
             <field eval="7" name="priority"/>
             <field name="arch" type="xml">
                 <field name="name" position='after'>
-                <field name='product_category'/>
-                
-            </field>
+                    <field name='product_category'/>
+                </field>
             </field>
         </record>
              
@@ -191,30 +190,38 @@
             <field name="arch" type="xml">
                 <tree string="Product collection types" editable="top">
                     <field name="name"/>
+                    <field name='parent_id'/>
                 </tree>
             </field>
         </record>
+
         <record id="product_collection_type_form_view" model="ir.ui.view">
             <field name="name">product.collection.form</field>
             <field name="model">product.collection</field>
             <field name="arch" type="xml">
                 <form string="Product collection types">
-                    <field name="name"/>
+                    <group col='2' style="width : 400px;">
+                        <field name="name"/>
+                        <field name='parent_id'/>
+                    </group>
                 </form>
             </field>
         </record>
+
         <record id="product_package_type_action" model="ir.actions.act_window">
             <field name="name">Product package</field>
             <field name="res_model">product.package.type</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>
         </record>
+
         <record id="product_package_type_tree_view" model="ir.ui.view">
             <field name="name">product.package.tree</field>
             <field name="model">product.package.type</field>
             <field name="arch" type="xml">
                 <tree string="Product package types" editable="top">
                     <field name="name"/>
+                    <field name='parent_id'/>
                 </tree>
             </field>
         </record>
@@ -224,7 +231,23 @@
             <field name="model">product.package.type</field>
             <field name="arch" type="xml">
                 <form string="Product package types">
-                    <field name="name"/>
+                    <group col='2' style="width : 400px;">
+                        <field name="name"/>
+                        <field name='parent_id'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="vit_product_wood_type_form_view" model="ir.ui.view">
+            <field name="name">product wood type form</field>
+            <field name="model">product.wood.type</field>
+            <field name="arch" type="xml">
+                <form string='product wood type'>
+                    <group col='2' style="width : 400px;">
+                        <field name='name'/>
+                        <field name='parent_id' widget="selection"/>
+                    </group>
                 </form>
             </field>
         </record>
