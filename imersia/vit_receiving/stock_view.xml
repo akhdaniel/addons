@@ -25,6 +25,10 @@
                 <field name="product_uom_qty" position="after">
                     <field name="product_qty_nett" readonly="0" />
                     <field name="product_qty_diff" readonly="0"/>
+                    <field name="weight_log" />  
+                    <field name="height_log" />
+                    <field name="length_log" />
+                    <field name="diameter_log" />
                 </field>
             </field>
         </record>
@@ -38,6 +42,10 @@
                 <field name="product_uom_qty" position="after">
                     <field name="product_qty_nett" />
                     <field name="product_qty_diff"/>
+                    <field name="weight_log" />  
+                    <field name="height_log" />
+                    <field name="length_log" />
+                    <field name="diameter_log" />
                 </field>
             </field>
         </record>
