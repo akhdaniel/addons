@@ -206,7 +206,10 @@ class product_template(osv.osv):
             categ = produk.product_category
             if categ == 'cylindrical' : res = produk.product_cylindrical_volume
             if categ == 'cubic' : res = produk.product_cubic_volume
-            if categ == 'volume' : res = produk.product_volume_volume       
+            if categ == 'volume' : res = produk.product_volume_volume
+            else : 
+                res =  produk.material_vol      
+                # print("%s not saleable %d" % (produk.name,produk.material_vol))
             return res
         bom_obj = self.pool.get('mrp.bom')
         for i in self.browse(cr, uid, ids, context=context):
@@ -216,6 +219,9 @@ class product_template(osv.osv):
                 if bom_ids:
                     com_vol = 0.00
                     bom_lines = bom_obj.browse(cr,uid,bom_ids,)
+                    # Cek bom > 1 ?
+                    if len(bom_lines) > 1:
+                        raise osv.except_osv(_('Product has more than one BoM'), _('Pls Check BoM for this product in Manufacturing'))
                     for bom in bom_lines:
                         if bom.bom_line_ids:
                             for bom1 in bom.bom_line_ids :
@@ -278,7 +284,7 @@ class product_template(osv.osv):
         'product_height':fields.float('Height (mm)'),
         'product_weight':fields.float('Weight (Kg)'),
         'product_cylindrical_volume': fields.float('Volume (m3)',digits=(12, 9)),
-        'product_cubic_volume': fields.float('Component (m3)',digits=(12, 9)),
+        'product_cubic_volume': fields.float('Component (m3)',help="Length x width x Height",digits=(12, 9)),
         'product_volume_volume': fields.float('Volume (Liter)',digits=(12, 9)),
         'product_cylindrical_density':fields.float('Density (Kg/m3)'),
         'product_cubic_density':fields.float('Density (Kg/m3)'),

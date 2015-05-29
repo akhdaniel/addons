@@ -4,3 +4,4 @@ import product
 import stock
 import mrp
 import product_new_api
+import sale_order
