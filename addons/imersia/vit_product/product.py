@@ -218,8 +218,8 @@ class product_template(osv.osv):
             res = 0.00
             categ = produk.product_category
             if categ == 'cylindrical' : res = produk.product_cylindrical_volume * product_qty
-            if categ == 'cubic' : res = produk.product_cubic_volume * product_qty
-            if categ == 'volume' : res = produk.product_volume_volume * product_qty
+            elif categ == 'cubic' : res = produk.product_cubic_volume * product_qty
+            elif categ == 'volume' : res = produk.product_volume_volume * product_qty
             else : 
                 res =  produk.material_vol  * product_qty     
                 # print("%s not saleable %d" % (produk.name,produk.material_vol))
@@ -240,51 +240,20 @@ class product_template(osv.osv):
                             for bom1 in bom.bom_line_ids :
                                 vol = cek_vol(bom1.product_id,bom1.product_qty)
                                 com_vol += vol
-                                print('vol1 %s qty %d = %d' % (bom1.product_id.name,bom1.product_qty,com_vol))
+                                # print('vol1 %s qty %d = %d' % (bom1.product_id.name,bom1.product_qty,com_vol))
                         elif not bom.bom_line_ids:
                             vol = cek_vol(bom.product_tmpl_id,bom.product_qty)
                             com_vol += vol
-                            print('vol %s qty %d = %d' % (bom.product_tmpl_id.name,bom.product_qty,com_vol))
+                            # print('vol %s qty %d = %d' % (bom.product_tmpl_id.name,bom.product_qty,com_vol))
                 elif not bom_ids and i.product_category == 'cubic':
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
-                    print('vol-i %s = %d' % (i.name,com_vol))
+                    # print('vol-i %s = %d' % (i.name,com_vol))
             except ZeroDivisionError:
                 raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
             result[i.id] = com_vol
         return result
 
-
     def compute_vol(self, cr, uid, ids, context=None):
-        # def cek_vol(produk):
-        #     res = 0.00
-        #     categ = produk.product_category
-        #     if categ == 'cylindrical' : res = produk.product_cylindrical_volume
-        #     if categ == 'cubic' : res = produk.product_cubic_volume
-        #     if categ == 'volume' : res = produk.product_volume_volume       
-        #     return res
-        # data    = self.browse(cr,uid,ids[0],)
-        # bom_obj = self.pool.get('mrp.bom')
-        # bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','in',ids)])
-        # com_vol = cek_vol(data)
-        # try : 
-        #     if bom_ids:
-        #         com_vol = 0.00
-        #         bom_lines = bom_obj.browse(cr,uid,bom_ids,)
-        #         # Cek bom > 1 ?
-        #         if len(bom_lines) > 1:
-        #             raise osv.except_osv(_('Product has more than one BoM'), _('Pls Check BoM for this product in Manufacturing'))
-        #         for bom in bom_lines:
-        #             if bom.bom_line_ids:
-        #                 for bom1 in bom.bom_line_ids :
-        #                     vol = cek_vol(bom1.product_id,bom1.product_qty)
-        #                     com_vol += vol
-        #             elif not bom.bom_line_ids:
-        #                 vol = cek_vol(bom.product_tmpl_id,bom.product_qty)
-        #                 com_vol += vol
-        #     elif not bom_ids and i.product_category == 'cubic':
-        #         com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
-        # except ZeroDivisionError:
-        #     raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
         # self.write(cr,uid,ids,{'product_material_volume12': com_vol},)
         return True
 
