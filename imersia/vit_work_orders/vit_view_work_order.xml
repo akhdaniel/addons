@@ -1,0 +1,74 @@
+<openerp>
+<data>
+
+
+        <record id="vit_mrp_workcenter_view" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <group string="Product to Produce" position="after">
+                    <group string="Rate Production Time">
+                        <field name="rate_production_time" widget="float_time"/>
+                    </group>
+                </group>
+            	<page string="Information" position="after">
+                    <page string="Instructions">
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="colection_ids" widget='many2many_tags'/>
+                                <field name="product_name"/>
+                            </group>
+                            <group>
+                                <field name="ean_barcode"/>
+                                <field name="default_code"/>                                
+                                <field name="origin"/>
+                            </group>    
+                        </group>                    
+                    </page>  
+                    <page string="Product to Consume">
+                        <field view_mode="tree,form" name="move_lines" nolabel="1">
+                            <tree string="Product to Consume">
+                                <field name="default_code"/>
+                                <field name="product_id"/>
+                                <field name="product_category" invisible="1"/>
+                                <field name="product_larg" string="W" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
+                                <field name="product_length" string="L" attrs="{'invisible': [('product_category','=','volume')]}"/>                                
+                                <field name="product_height" string="H" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>          
+                                <field name="product_diameter" string="D" attrs="{'invisible': [('product_category','!=','cubic')]}"/>                                
+                                <field name="product_volume_volume" string="Vol" attrs="{'invisible': [('product_category','!=','volume')]}"/>    
+                                <field name="product_uom_qty" sum="Total Amount"/>
+                                <field name="material_id" />
+                                <field name="quality_id"/>  
+                                <field name="position"/>                   
+                                <field name="state" invisible="1"/>
+                            </tree>
+                        </field>                    
+                    </page>    
+                    <page string="Product to Produce">
+                        <field view_mode="tree,form" name="move_created_ids" nolabel="1">
+                            <tree string="Product to Consume">
+                                <field name="default_code"/>
+                                <field name="product_id"/>
+                                <field name="product_category" invisible="1"/>
+                                <field name="product_larg" string="W" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
+                                <field name="product_length" string="L" attrs="{'invisible': [('product_category','=','volume')]}"/>                                
+                                <field name="product_height" string="H" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>          
+                                <field name="product_diameter" string="D" attrs="{'invisible': [('product_category','!=','cubic')]}"/>                                
+                                <field name="product_volume_volume" string="Vol" attrs="{'invisible': [('product_category','!=','volume')]}"/>    
+                                <field name="product_uom_qty" sum="Total Amount"/>
+                                <field name="material_id" />
+                                <field name="quality_id"/>     
+                                <field name="state" invisible="1"/>
+                            </tree>
+                        </field> 
+                  
+                    </page>                                          
+                </page>
+
+            </field>
+        </record>	
+
+</data>
+</openerp>
