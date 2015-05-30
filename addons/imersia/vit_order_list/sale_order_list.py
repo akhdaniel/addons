@@ -183,7 +183,6 @@ class sale_order_list(osv.Model):
 
 		for line in self_obj.sale_order_line_ids:
 			
-			mrp_bom_obj
 			#cari product di BoM
 			product_bom_id = mrp_bom_obj.search(cr,uid,[('product_tmpl_id','=',line.product_id.product_tmpl_id.id)])
 			if product_bom_id ==[]:

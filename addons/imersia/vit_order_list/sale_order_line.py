@@ -191,3 +191,36 @@ class sale_order_line(osv.osv):
         'is_order_list': fields.boolean('Order List',readonly=True),
      
     }
+
+
+class sale_order(osv.osv):
+    _inherit = "sale.order"
+
+    _columns = {
+        'order_list_id' : fields.many2one('sale.order.list','Order List',readonly=True),
+    }
+
+
+    def action_button_confirm(self, cr, uid, ids, context=None):
+        assert len(ids) == 1, 'This option should only be used for a single id at a time.'
+        self.signal_workflow(cr, uid, ids, 'order_confirm')
+
+        ###################################
+        # Create Ordr list per SO
+        ###################################
+        order_list_obj = self.pool.get('sale.order.list')
+        self_obj    = self.browse(cr,uid,ids[0],context=context)
+        detail=[]
+        if self_obj.order_line:
+            for line in self_obj.order_line:
+                detail.append(line.id)
+    
+        #import pdb;pdb.set_trace()
+        order_list_id = order_list_obj.create(cr,uid,{'partner_id'       : self_obj.partner_id.id,
+                                                        'ref'                : 'OL-'+self_obj.name,
+                                                        'sale_order_line_ids': [(6,0,detail)]
+                                                        })
+
+        self.write(cr,uid,ids[0],{'order_list_id':order_list_id})
+
+        return True    
