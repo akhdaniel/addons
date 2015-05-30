@@ -39,5 +39,17 @@
             </field>
         </record>	
 
+        <record model="ir.ui.view" id="vit_view_order_form">
+            <field name="name">sale.order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="order_list_id"/>
+                </field>
+           </field>
+        </record>            
+
+
 </data>
 </openerp>

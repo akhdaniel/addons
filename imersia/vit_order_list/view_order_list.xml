@@ -74,7 +74,7 @@
                                     <field name="product_uom" />
                                     <field name="price_subtotal" sum="Total Amount"/>
                                     <field name="state" invisible="1"/>
-                                    <field name="company_id" invisible="0"/>
+                                    <field name="company_id" invisible="1"/>
                                 </tree>  
                                  <form string="Sale Order List">
                                     <field name="order_id"/>
@@ -84,7 +84,7 @@
                                     <field name="product_uom" />
                                     <field name="price_subtotal" sum="Total Amount"/>
                                     <field name="state" invisible="1"/>
-                                   <!--  <field name="company_id" invisible="1"/> -->
+                                    <field name="company_id" invisible="1"/>
                                    <field name="colection_ids"/>
                                 </form>                                
                             </field>  
