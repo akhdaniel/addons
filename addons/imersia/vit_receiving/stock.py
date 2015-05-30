@@ -118,7 +118,12 @@ class stock_transfer_details(models.TransientModel):
 							items.append(item)
 						elif op.package_id:
 							packs.append(item)
+			# res.update(item_ids=items)
+			# res.update(packop_ids=packs)
+
 		else:
+			# import pdb;pdb.set_trace()
+
 			for op in picking.pack_operation_ids:
 					item = {
 						'packop_id': op.id,
@@ -133,12 +138,14 @@ class stock_transfer_details(models.TransientModel):
 						'date': op.date, 
 						'owner_id': op.owner_id.id,
 					}
+					# import pdb;pdb.set_trace()
 					if op.product_id:
 						items.append(item)
 					elif op.package_id:
 						packs.append(item)
 
-
+			# res.update(item_ids=items)
+			# res.update(packop_ids=packs)
 		res.update(item_ids=items)
 		res.update(packop_ids=packs)
 
@@ -147,21 +154,22 @@ class stock_transfer_details(models.TransientModel):
 	@api.one
 	def do_detailed_transfer(self):
 		# res = super(stock_transfer_details, self).do_detailed_transfer()
-		# import pdb;pdb.set_trace()
 		processed_ids = []
 		# Create new and update existing pack operations
 		for lstits in [self.item_ids, self.packop_ids]:
 			""" Jika on_formula di uom == True maka gunakan quantity dari nett nya"""
 			for prod in lstits:
-				if prod.product_id.uom_id.on_formula:
+				# import pdb;pdb.set_trace()
+
+				if prod.product_id.uom_id.on_formula and self.picking_id.log_qty:
 					qty = prod.product_qty_nett
 				else:
 					qty = prod.quantity
 				pack_datas = {
 					'product_id': prod.product_id.id,
 					'product_uom_id': prod.product_uom_id.id,
-					'product_qty': qty,
-					'product_qty': prod.product_qty_nett,
+					'product_qty': prod.quantity,
+					# 'product_qty': prod.product_qty_nett,
 					'package_id': prod.package_id.id,
 					'lot_id': prod.lot_id.id,
 					'location_id': prod.sourceloc_id.id,
@@ -189,9 +197,9 @@ class stock_transfer_details(models.TransientModel):
 		""" Update Stock picking:
 			1. Update Stock Move nya, Berdasarkan list item dari stock_transfer_details_items
 		"""
-		# import pdb;pdb.set_trace()
 		item_ids = self.item_ids
-		self.update_stock_picking(item_ids)
+		if self.picking_id.log_qty !=0.0:	
+			self.update_stock_picking(item_ids)
 		
 		# Execute the transfer of the picking
 		self.picking_id.do_transfer()
