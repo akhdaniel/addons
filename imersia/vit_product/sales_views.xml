@@ -66,12 +66,30 @@
             </field>
         </record>
 
+        <record id="vit_x_view_quotation_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="priority">4</field>
+            <field name="arch" type="xml">
+                <tree string="Proforma Invoices" fonts="bold:message_unread==True" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="proforma_no" string="Proforma Invoice Number" />
+                    <field name="date_order"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="amount_total" sum="Total Tax Included"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="vit_action_quotations" model="ir.actions.act_window">
             <field name="name">Proforma Invoices</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.order</field>
             <field name="view_type">form</field>
-            <field name="view_id" ref="sale.view_quotation_tree"/>
+            <field name="view_id" ref="vit_x_view_quotation_tree"/>
             <field name="view_mode">tree,form,calendar,graph</field>
             <field name="context">{'search_default_my_sale_orders_filter': 1}</field>
             <field name="domain">[('state','in',('draft','sent','cancel'))]</field>
@@ -101,7 +119,11 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//form/sheet/group" position='inside'>
+                <xpath expr="//form/sheet//h1/field[@name='name']" position='replace'>
+                    <field name="name" class="oe_inline" attrs="{'invisible' : [('state','in',['draft','sent'])]}" readonly="1"/>
+                    <field name="proforma_no" class="oe_inline" attrs="{'invisible' : [('state','not in',['draft','sent'])]}" readonly="1"/>
+                </xpath>
+                <xpath expr="//group" position='inside'>
                     <group>
                           <field name='port_name'/>
                           <field name='port_discharge'/>
@@ -110,6 +132,7 @@
                           <field name='etd_date'/>
                     </group>
                     <group>
+                          <field name='comment'/>
                           <field name='desc_goods'/>
                     </group>
                 </xpath>

@@ -10,7 +10,7 @@ class product_finishing(osv.osv):
     _name = "product.finishing"
     _description = "Product Finishing"
 
-    def name_get(self, cr, uid, ids, context=None):
+    def RENAMETOname_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -24,27 +24,14 @@ class product_finishing(osv.osv):
             res.append((record['id'], name))
         return res
 
-    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        if not args:
-            args = []
-        if not context:
-            context = {}
-        if name:
-            # Be sure name_search is symetric to name_get
-            name = name.split(' / ')[-1]
-            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
-        else:
-            ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
-
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
+        res = self.RENAMETOname_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.finishing','Parent Finishing', ondelete='cascade'),
-        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 #----------------------------------------------------------
@@ -54,7 +41,7 @@ class product_quality(osv.osv):
     _name = "product.quality"
     _description = "Product Quality"
 
-    def name_get(self, cr, uid, ids, context=None):
+    def RENAMETOname_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -67,15 +54,15 @@ class product_quality(osv.osv):
                 name = record['parent_id'][1]+' / '+name
             res.append((record['id'], name))
         return res
-        
+
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
+        res = self.RENAMETOname_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.quality','Parent Quality', ondelete='cascade'),
-        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 #----------------------------------------------------------
@@ -85,7 +72,7 @@ class product_material(osv.osv):
     _name = "product.material"
     _description = "Product Material"
 
-    def name_get(self, cr, uid, ids, context=None):
+    def RENAMETOname_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -98,15 +85,15 @@ class product_material(osv.osv):
                 name = record['parent_id'][1]+' / '+name
             res.append((record['id'], name))
         return res
-        
+
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
+        res = self.RENAMETOname_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.material','Parent Material', ondelete='cascade'),
-        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 class product_customers_description(osv.osv):
@@ -121,7 +108,7 @@ class product_customers_description(osv.osv):
 class product_package_type(osv.osv):
     _name = "product.package.type"
 
-    def name_get(self, cr, uid, ids, context=None):
+    def RENAMETOname_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -136,19 +123,19 @@ class product_package_type(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
-        return dict(res)        
+        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        return dict(res)       
 
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.package.type','Parent Package', ondelete='cascade'),
-        # 'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 class product_wood_type(osv.osv):
     _name = "product.wood.type"
 
-    def name_get(self, cr, uid, ids, context=None):
+    def RENAMETOname_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -163,18 +150,19 @@ class product_wood_type(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
-        return dict(res)  
+        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        return dict(res)
 
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.wood.type','Parent Wood', ondelete='cascade'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 class product_collection(osv.osv):
     _name = "product.collection"
 
-    def name_get(self, cr, uid, ids, context=None):
+    def RENAMETOname_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -189,65 +177,39 @@ class product_collection(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.name_get(cr, uid, ids, context=context)
+        res = self.RENAMETOname_get(cr, uid, ids, context=context)
         return dict(res)  
+
     _columns = {
         'name': fields.char('Name'),
         'parent_id': fields.many2one('product.collection','Parent Collection', ondelete='cascade'),
+        'complete_name': fields.function(_name_get_fnc, type="char", string='Complete Name'),
     }
 
 class product_template(osv.osv):
     _inherit = 'product.template'
 
-    # def _get_material_volume(self, cr, uid, ids, field_name, arg, context=None):
-    #     if context==None:context={}
-    #     res = dict.fromkeys(ids, False)
-    #     for i in self.browse(cr, uid, ids, context=context):
-    #         bom_id=self.pool.get('mrp.bom').search(cr,uid,[('product_tmpl_id','=',i.id)],context=context)
-    #         if bom_id:bom_id=bom_id[0]
-    #         bom_obj=self.pool.get('mrp.bom').browse(cr,uid,bom_id)
-    #         volume=0.0
-    #         for j in bom_obj.bom_line_ids:
-    #             volume += j.product_id.product_tmpl_id.product_cubic_volume
-    #         res[i.id]=volume
-    #     return res
-
     def _get_material_volume2(self, cr, uid, ids, field_name, arg, context=None):
-        result = dict.fromkeys(ids, False)
-        def cek_vol(produk,product_qty):
-            res = 0.00
-            categ = produk.product_category
-            if categ == 'cylindrical' : res = produk.product_cylindrical_volume * product_qty
-            elif categ == 'cubic' : res = produk.product_cubic_volume * product_qty
-            elif categ == 'volume' : res = produk.product_volume_volume * product_qty
-            else : 
-                res =  produk.material_vol  * product_qty     
-                # print("%s not saleable %d" % (produk.name,produk.material_vol))
-            return res
+        result  = dict.fromkeys(ids, False)
         bom_obj = self.pool.get('mrp.bom')
         for i in self.browse(cr, uid, ids, context=context):
-            bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','in',ids)])
-            com_vol = cek_vol(i,1)
+            bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','=',i.id)])
+            com_vol = 0.00
             try : 
                 if bom_ids:
-                    com_vol = 0.00
-                    bom_lines = bom_obj.browse(cr,uid,bom_ids,)
+                    bom = bom_obj.browse(cr,uid,bom_ids[0],)
                     # Cek bom > 1 ?
-                    if len(bom_lines) > 1:
+                    if len(bom_ids) > 1:
                         raise osv.except_osv(_('Product has more than one BoM'), _('Pls Check BoM for this product in Manufacturing'))
-                    for bom in bom_lines:
-                        if bom.bom_line_ids:
-                            for bom1 in bom.bom_line_ids :
-                                vol = cek_vol(bom1.product_id,bom1.product_qty)
-                                com_vol += vol
-                                # print('vol1 %s qty %d = %d' % (bom1.product_id.name,bom1.product_qty,com_vol))
-                        elif not bom.bom_line_ids:
-                            vol = cek_vol(bom.product_tmpl_id,bom.product_qty)
+                    if bom.bom_line_ids:
+                        for bom1 in bom.bom_line_ids :
+                            vol = bom1.product_id.product_cubic_volume * bom1.product_qty
                             com_vol += vol
-                            # print('vol %s qty %d = %d' % (bom.product_tmpl_id.name,bom.product_qty,com_vol))
-                elif not bom_ids and i.product_category == 'cubic':
+                    elif not bom.bom_line_ids:
+                        vol = bom.product_tmpl_id.product_cubic_volume * bom.product_qty
+                        com_vol += vol
+                elif i.product_category == 'cubic':
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
-                    # print('vol-i %s = %d' % (i.name,com_vol))
             except ZeroDivisionError:
                 raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
             result[i.id] = com_vol
@@ -261,13 +223,12 @@ class product_template(osv.osv):
         'finishing_id': fields.many2one('product.finishing', 'Finishing'),
         'quality_id': fields.many2one('product.quality', 'Quality'),
         'material_id': fields.many2one('product.material', 'Material'),
-        # 'is_furniture': fields.boolean('is Furniture?'),
 		'material_vol' : fields.float("Material Volume (m3)", digits=(12,9),help="Volume sum of all sub-component material vol"),
     	'packaging_id' : fields.many2one('product.package.type', "Package type"),
 		'description_ids' : fields.one2many('product.customers.description','produk_id',string="Customers description",),
         'colection_ids': fields.many2many('product.collection','product_collection_rel', id1='prod_id', id2='coll_id', string='Collection', ondelete='restrict'),
 		'wood_type_id' : fields.many2one('product.wood.type','Wood'),
-		'product_category':fields.selection([('cylindrical','Cylindrical'),('cubic','Cubic'),('volume','Volume')],'Product Category'),
+		'product_category':fields.selection([('cylindrical','Cylindrical'),('cubic','Cubic'),('volume','Volume')],'Measurement Type'),
         'product_length':fields.float('Length (mm)'),
         'product_diameter':fields.float('Diameter (mm)'),
         'product_larg':fields.float('Larg (mm)'),
