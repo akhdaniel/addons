@@ -81,13 +81,30 @@ from openerp.tools import html2plaintext
 class sale_order(osv.osv):
     _name = "sale.order"
     _inherit = "sale.order"
+
+    def _get_qty_total(self, cr, uid, ids, field_name, arg, context=None):
+        result = dict.fromkeys(ids, False)
+        for i in self.browse(cr, uid, ids, context=context):
+            qty = 0.0
+            for line in i.order_line:
+                qty += line.product_uom_qty
+            result[i.id] = qty
+        return result
+
+    def _get_so_name(self, cr, uid, ids, field_name, arg, context=None):
+        result = dict.fromkeys(ids, False)
+        for i in self.browse(cr, uid, ids, context=context):
+            result[i.id] = 'PO'+ i.name[2:]
+        return result
+
     _columns = {
+        'proforma_no':fields.function(_get_so_name,type='char',store=True,string='No.'),
         'state': fields.selection([
             ('draft', 'Draft Proforma Invoice'),
             ('sent', 'Proforma Invoice Sent'),
             ('cancel', 'Cancelled'),
             ('waiting_date', 'Waiting Schedule'),
-            ('progress', 'Sales Orderrrrrrrr'),
+            ('progress', 'Sales Order'),
             ('manual', 'Sale to Invoice'),
             ('shipping_except', 'Shipping Exception'),
             ('invoice_except', 'Invoice Exception'),
@@ -97,10 +114,12 @@ class sale_order(osv.osv):
               in the invoice validation (Invoice Exception) or in the picking list process (Shipping Exception).\nThe 'Waiting Schedule' status is set when the invoice is confirmed\
                but waiting for the scheduler to run on the order date.", select=True),
         'port_name':fields.char("Port of loading"),
+        'comment':fields.char("Remarks"),
         'port_discharge':fields.char("Port of discharge"),
         'desc_goods':fields.text("Description of goods"),
-        'qty_total':fields.float("Quantity",help="total products quantity"),
-        'readiness_date':fields.datetime("Readiness",help="order availability date"),
+        # 'qty_total':fields.float("Quantity",help="total products quantity"),
+        'qty_total':fields.function(_get_qty_total,type='float',digits=(12, 2),string='Quantity',help="Total products quantity"),
+        'readiness_date':fields.datetime("Readiness",help="Order availability date"),
         'etd_date':fields.datetime("ETD",help="Estimated Time of Delivery"),
         }
 

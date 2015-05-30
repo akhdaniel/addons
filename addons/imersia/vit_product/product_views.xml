@@ -54,15 +54,15 @@
                 <field name='description' position="before">
                     <group colspan="4">
                         <group>
-                            <field name="finishing_id"/>
-                            <field name="quality_id"/>
-                            <field name="material_id"/>
+                            <field name="finishing_id" widget="selection"/>
+                            <field name="quality_id" widget="selection"/>
+                            <field name="material_id" widget="selection"/>
                         </group>
                     </group>
                 </field>
                 <xpath expr="//form/sheet/notebook//page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
-                        <group style="width : 260px;" attrs="{'invisible': [('sale_ok','=',False)]}">
+                        <group style="width : 260px;">
                             <field name='product_category'/>
                         </group>
                         <group attrs="{'invisible': [('sale_ok','=',True)]}">                            
@@ -136,9 +136,9 @@
                 <xpath expr="//page[@string='Sales']/group[@name='sale']" position="after">
                     <group name="saleable_prod"  string="Saleable Product">
                         <group>
-                            <field name="packaging_id" />
+                            <field name="packaging_id" widget='selection' />
                             <field name="colection_ids" widget='many2many_tags'/>
-                            <field name="wood_type_id"/>
+                            <field name="wood_type_id" widget='selection'/>
                             <field name="description_ids" view_type='tree,form' nolabel='1' colspan='2'>
                                 <tree editable='bottom'>
                                     <field name='partner_id'/>
