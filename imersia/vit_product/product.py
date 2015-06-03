@@ -203,11 +203,11 @@ class product_template(osv.osv):
                         raise osv.except_osv(_('Product has more than one BoM'), _('Pls Check BoM for this product in Manufacturing'))
                     if bom.bom_line_ids:
                         for bom1 in bom.bom_line_ids :
-                            vol = bom1.product_qty #* bom1.product_id.product_cubic_volume 
-                            com_vol += vol
+                            if bom1.product_id.product_category == 'cubic':
+                                com_vol += bom1.product_qty #* bom1.product_id.product_cubic_volume 
                     elif not bom.bom_line_ids:
-                        vol = bom.product_qty #* bom.product_tmpl_id.product_cubic_volume 
-                        com_vol += vol
+                        if bom.product_tmpl_id.product_category == 'cubic':
+                            com_vol += bom.product_qty #* bom.product_tmpl_id.product_cubic_volume 
                 elif i.product_category == 'cubic':
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
             except ZeroDivisionError:
