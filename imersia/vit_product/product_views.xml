@@ -63,29 +63,29 @@
                 <xpath expr="//form/sheet/notebook//page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
                         <group style="width : 260px;">
-                            <field name='product_category'/>
+                            <field name='product_category' attrs="{'readonly': [('sale_ok','=',True)]}"/>
                         </group>
-                        <group attrs="{'invisible': [('sale_ok','=',True)]}">                            
+                        <!-- <group attrs="{'invisible': [('sale_ok','=',True)]}">                            
                             <field name='product_classic_volume12'/>
                             <field name='material_vol'/>
-                        </group>
+                        </group> -->
                         <group>
                             <group col="4">
-                                <group col="2" attrs="{'invisible': [('sale_ok','=',False)]}">
+                                <group col="2">
                                     <field name='product_length' 
                                         attrs="{'invisible': [('product_category','not in',['cubic','cylindrical'])]}" 
-                                        on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
-                                    <field name='product_diameter' 
-                                        attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
-                                        on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
-                                    <field name="product_cylindrical_volume" 
-                                        attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
                                         on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
                                     <field name='product_larg' 
                                         attrs="{'invisible': [('product_category','!=','cubic')]}" 
                                         on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
                                     <field name='product_height'
                                         attrs="{'invisible': [('product_category','!=','cubic')]}" 
+                                        on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                                    <field name='product_diameter' 
+                                        attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
+                                        on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
+                                    <field name="product_cylindrical_volume" 
+                                        attrs="{'invisible': [('product_category','!=','cylindrical')]}" 
                                         on_change="product_qty_change(product_category,product_height,product_larg,product_diameter,product_length)"/>
                                     <field name="product_volume_volume" 
                                         attrs="{'invisible': [('product_category','!=','volume')]}" 
@@ -108,28 +108,22 @@
                             </group>
                         </group>
                         <group col="5" attrs="{'invisible': [('product_category','!=','cubic')]}">
-                            <label string="Volumes" style="font-weight: bold !important;"
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
-                            <label string="Component" style="font-weight: bold !important;"
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
-                            <label string="Material" style="font-weight: bold !important;"
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
+                            <label string="Volumes" style="font-weight: bold !important;"/>
+                            <label string="Component" style="font-weight: bold !important;"/>
+                            <label string="Material" style="font-weight: bold !important;"/>
                             <label string="Unbuilt" style="font-weight: bold !important;"
                                 attrs="{'invisible': [('sale_ok','=',False)]}"/>
                             <label string="Packed" style="font-weight: bold !important;"
                                 attrs="{'invisible': [('sale_ok','=',False)]}"/>
-                            <label string="meter cube" style="font-weight: bold !important;"
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
-                            <field name="product_cubic_volume" nolabel="1"
-                                attrs="{'invisible': [('product_category','!=','cubic')]}"/>
-                            <field name='product_material_volume12'  nolabel="1" class='oe_inline'
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
+                            <label string="meter cube" style="font-weight: bold !important;"/>
+                            <field name="product_cubic_volume" nolabel="1"/>
+                            <field name='product_material_volume12'  nolabel="1" class='oe_inline'/>
                             <field name='product_unbuilt_volume12' nolabel="1"
-                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
+                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}" />
                             <field name='product_packed_volume12' nolabel="1"
-                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}" />
+                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}" />
                             <button name="compute_vol" type="object" string="Update" class="oe_highlight"
-                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','=',False)]}"/>
+                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}"/>
                         </group>
                     </page> 
                 </xpath>
