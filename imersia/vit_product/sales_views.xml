@@ -125,11 +125,14 @@
                 </xpath>
                 <xpath expr="//group" position='inside'>
                     <group>
-                          <field name='port_name'/>
-                          <field name='port_discharge'/>
-                          <field name='qty_total'/>
-                          <field name='readiness_date'/>
-                          <field name='etd_date'/>
+                        <field name='port_name'/>
+                        <field name='port_discharge'/>
+                        <field name='qty_total'/>
+                        <label for='readiness_date'/>
+                        <div>
+                            <field name='readiness_date' on_change="readydate_change(readiness_date)"/> <field name='week_of_year' class="oe_inline"/>
+                        </div>
+                        <field name='etd_date'/>
                     </group>
                     <group>
                           <field name='comment'/>

@@ -25,7 +25,7 @@ import re
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools import html2plaintext
-
+from datetime import datetime,time
 
 # class sale_order(osv.osv):
 #     """ Helpdesk Cases """
@@ -120,12 +120,18 @@ class sale_order(osv.osv):
         # 'qty_total':fields.float("Quantity",help="total products quantity"),
         'qty_total':fields.function(_get_qty_total,type='float',digits=(12, 2),string='Quantity',help="Total products quantity"),
         'readiness_date':fields.datetime("Readiness",help="Order availability date"),
+        'week_of_year': fields.char('Week'),
         'etd_date':fields.datetime("ETD",help="Estimated Time of Delivery"),
         }
 
     _defaults={
-        'desc_goods': "wooden furniture",
+        'desc_goods': "Wooden Furniture",
     }
+
+    def readydate_change(self, cr, uid, ids,rd,):
+        if rd:
+            dte = "WEEK  " + str(datetime.strptime(rd,"%Y-%m-%d %H:%M:%S").isocalendar()[1])
+            return {'value':{'week_of_year':dte}}
 sale_order()
 
 # class sale_order_line(osv.osv):
