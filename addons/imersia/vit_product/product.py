@@ -10,7 +10,7 @@ class product_finishing(osv.osv):
     _name = "product.finishing"
     _description = "Product Finishing"
 
-    def RENAMETOname_get(self, cr, uid, ids, context=None):
+    def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -25,7 +25,7 @@ class product_finishing(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
@@ -41,7 +41,7 @@ class product_quality(osv.osv):
     _name = "product.quality"
     _description = "Product Quality"
 
-    def RENAMETOname_get(self, cr, uid, ids, context=None):
+    def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -56,7 +56,7 @@ class product_quality(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
@@ -72,7 +72,7 @@ class product_material(osv.osv):
     _name = "product.material"
     _description = "Product Material"
 
-    def RENAMETOname_get(self, cr, uid, ids, context=None):
+    def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -87,7 +87,7 @@ class product_material(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
@@ -108,7 +108,7 @@ class product_customers_description(osv.osv):
 class product_package_type(osv.osv):
     _name = "product.package.type"
 
-    def RENAMETOname_get(self, cr, uid, ids, context=None):
+    def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -123,7 +123,7 @@ class product_package_type(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        res = self.name_get(cr, uid, ids, context=context)
         return dict(res)       
 
     _columns = {
@@ -135,7 +135,7 @@ class product_package_type(osv.osv):
 class product_wood_type(osv.osv):
     _name = "product.wood.type"
 
-    def RENAMETOname_get(self, cr, uid, ids, context=None):
+    def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -150,7 +150,7 @@ class product_wood_type(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
 
     _columns = {
@@ -162,7 +162,7 @@ class product_wood_type(osv.osv):
 class product_collection(osv.osv):
     _name = "product.collection"
 
-    def RENAMETOname_get(self, cr, uid, ids, context=None):
+    def name_get(self, cr, uid, ids, context=None):
         if isinstance(ids, (list, tuple)) and not len(ids):
             return []
         if isinstance(ids, (long, int)):
@@ -177,7 +177,7 @@ class product_collection(osv.osv):
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
-        res = self.RENAMETOname_get(cr, uid, ids, context=context)
+        res = self.name_get(cr, uid, ids, context=context)
         return dict(res)  
 
     _columns = {
