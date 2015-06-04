@@ -2,3 +2,7 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_product_package_type,product package type,model_product_package_type,,1,1,1,1
 access_product_collection,product collection type,model_product_collection,,1,1,1,1
 access_product_customer_description,product customers description,model_product_customers_description,,1,1,1,1
+access_product_wood_type,product wood type,model_product_wood_type,,1,1,1,1
+access_product_finishing,product finishing,model_product_finishing,,1,1,1,1
+access_product_material,product material,model_product_material,,1,1,1,1
+access_product_quality,product quality,model_product_quality,,1,1,1,1
