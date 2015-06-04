@@ -2,7 +2,7 @@
 <data>
 
 
-        <record id="vit_view_order_form" model="ir.ui.view">
+        <record id="vit_ol_view_order_form" model="ir.ui.view">
             <field name="name">sale.order.form</field>
             <field name="model">sale.order.line</field>
             <field name="inherit_id" ref="sale.view_order_line_form2"/>
@@ -39,7 +39,7 @@
             </field>
         </record>	
 
-        <record model="ir.ui.view" id="vit_view_order_form">
+        <record model="ir.ui.view" id="vit_ol2_view_order_form">
             <field name="name">sale.order</field>
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
