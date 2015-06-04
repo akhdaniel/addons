@@ -10,4 +10,3 @@ class stock_picking(models.Model):
             self.product_category='cubic'
         # elif self.sale_ok==False:
         #     self.product_category=False
-        

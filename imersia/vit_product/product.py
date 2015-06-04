@@ -204,10 +204,10 @@ class product_template(osv.osv):
                     if bom.bom_line_ids:
                         for bom1 in bom.bom_line_ids :
                             if bom1.product_id.product_category == 'cubic':
-                                com_vol += bom1.product_qty #* bom1.product_id.product_cubic_volume 
+                                com_vol += bom1.product_qty * bom1.product_id.product_material_volume12 
                     elif not bom.bom_line_ids:
                         if bom.product_tmpl_id.product_category == 'cubic':
-                            com_vol += bom.product_qty #* bom.product_tmpl_id.product_cubic_volume 
+                            com_vol += bom.product_qty * bom.product_tmpl_id.product_material_volume12 
                 elif i.product_category == 'cubic':
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
             except ZeroDivisionError:
@@ -240,7 +240,7 @@ class product_template(osv.osv):
         'product_cylindrical_density':fields.float('Density (Kg/m3)'),
         'product_cubic_density':fields.float('Density (Kg/m3)'),
         'product_volume_density':fields.float('Density (Kg/Liter)'),
-        'product_material_volume12':fields.function(_get_material_volume2,type='float',store=False,digits=(12, 9),string='Material Volume (m3)',help="Volume sum of all sub-component vol"),
+        'product_material_volume12':fields.function(_get_material_volume2,type='float',store=True,digits=(12, 9),string='Material Volume (m3)',help="Volume sum of all sub-component vol"),
         'product_classic_volume12':fields.float('Classic Volume (m3)',help="Length x width x Height"),
         'product_unbuilt_volume12':fields.float('Unbuilt (m3)',digits=(12, 9),help="Volume of the disassemble furniture, ready to be packed"),
         'product_packed_volume12':fields.float('Packed (m3)',digits=(12, 9),help="Volume of the packed furniture"),
