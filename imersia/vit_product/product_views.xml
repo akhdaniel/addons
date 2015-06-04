@@ -108,22 +108,32 @@
                             </group>
                         </group>
                         <group col="5" attrs="{'invisible': [('product_category','!=','cubic')]}">
-                            <label string="Volumes" style="font-weight: bold !important;"/>
-                            <label string="Component" style="font-weight: bold !important;"/>
-                            <label string="Material" style="font-weight: bold !important;"/>
-                            <label string="Unbuilt" style="font-weight: bold !important;"
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
-                            <label string="Packed" style="font-weight: bold !important;"
-                                attrs="{'invisible': [('sale_ok','=',False)]}"/>
-                            <label string="meter cube" style="font-weight: bold !important;"/>
-                            <field name="product_cubic_volume" nolabel="1"/>
-                            <field name='product_material_volume12'  nolabel="1" class='oe_inline'/>
-                            <field name='product_unbuilt_volume12' nolabel="1"
-                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}" />
-                            <field name='product_packed_volume12' nolabel="1"
-                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}" />
-                            <button name="compute_vol" type="object" string="Update" class="oe_highlight"
-                                attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}"/>
+                            <group col="1">
+                                <label string="Volumes" style="font-weight: bold !important;"/>
+                                <label string="meter cube" style="font-weight: bold !important;"/>
+                            </group>
+                            <group col="1">
+                                <label string="Component" style="font-weight: bold !important;"/>
+                                <field name="product_cubic_volume" nolabel="1"/>
+                            </group>
+                            <group col="1">
+                                <label string="Material" style="font-weight: bold !important;"/>
+                                <field name='product_material_volume12'  nolabel="1" class='oe_inline'/>
+                            </group>
+                            <group col="1">
+                                <label string="Unbuilt" style="font-weight: bold !important;"
+                                    attrs="{'invisible': [('sale_ok','=',False)]}"/>
+                                <field name='product_unbuilt_volume12' nolabel="1"
+                                    attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}" />
+                            </group>
+                            <group col="1">
+                                <label string="Packed" style="font-weight: bold !important;"
+                                    attrs="{'invisible': [('sale_ok','=',False)]}"/>
+                                <field name='product_packed_volume12' nolabel="1"
+                                    attrs="{'invisible': ['|',('product_category','!=','cubic'),('sale_ok','!=',True)]}" />
+                            </group>
+                                <button name="compute_vol" type="object" string="Update"
+                                    attrs="{'invisible': [('product_category','!=','cubic')]}"/>
                         </group>
                     </page> 
                 </xpath>
