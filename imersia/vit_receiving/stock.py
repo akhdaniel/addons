@@ -159,16 +159,17 @@ class stock_transfer_details(models.TransientModel):
 		for lstits in [self.item_ids, self.packop_ids]:
 			""" Jika on_formula di uom == True maka gunakan quantity dari nett nya"""
 			for prod in lstits:
-				# import pdb;pdb.set_trace()
 
-				if prod.product_id.uom_id.on_formula and self.picking_id.log_qty:
+				# if prod.product_id.uom_id.on_formula and self.picking_id.log_qty:
+				if self.picking_id.log_qty:
 					qty = prod.product_qty_nett
 				else:
 					qty = prod.quantity
+				# import pdb;pdb.set_trace()
 				pack_datas = {
 					'product_id': prod.product_id.id,
 					'product_uom_id': prod.product_uom_id.id,
-					'product_qty': prod.quantity,
+					'product_qty': qty,
 					# 'product_qty': prod.product_qty_nett,
 					'package_id': prod.package_id.id,
 					'lot_id': prod.lot_id.id,
