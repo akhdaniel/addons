@@ -63,7 +63,7 @@
                 <xpath expr="//form/sheet/notebook//page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
                         <group style="width : 260px;">
-                            <field name='product_category' attrs="{'readonly': [('sale_ok','=',True)]}"/>
+                            <field name='product_category'/>
                         </group>
                         <!-- <group attrs="{'invisible': [('sale_ok','=',True)]}">                            
                             <field name='product_classic_volume12'/>
