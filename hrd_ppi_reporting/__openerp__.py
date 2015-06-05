@@ -13,6 +13,7 @@ Human Resource PT.PPI Reporting
         'turnover.xml',
         'absensi.xml',
         'payroll.xml',
+        'pajak.xml',
     ],
     'data' : [],
     'installable':True,
