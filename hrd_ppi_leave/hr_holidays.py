@@ -98,7 +98,6 @@ class hr_holidays(osv.osv):
             dep = objk.department_id.manager_id.id
         state =objk.state
         if objk.type != "add" and objk.holiday_type != 'lokasi':
-            #import pdb;pdb.set_trace()
             if objk.employee_id.department_id.name != "HRD" :
                 if ids2[0] == emp and emp == dep :
                     raise osv.except_osv(_('Warning!'),_('Anda Tidak Bisa Aproval'))  
