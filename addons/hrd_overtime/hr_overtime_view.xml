@@ -71,6 +71,7 @@
                                 <field name="employee_id" on_change="onchange_dep1(employee_id)" required="1"/>
                                 <field name="department_id"/>
                                 <field name="istirahat"/> 
+                                <field name="nominal"/>
                                 <newline/>
                                 <field name="date_from" on_change="onchange_date_from1(date_to, date_from,istirahat)" required="1"/>
                                 <field name="date_to" on_change="onchange_date_to1(date_to, date_from,istirahat)" required="1"/>

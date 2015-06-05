@@ -132,12 +132,15 @@ class hr_overtime(osv.osv):
         'lembur_dari':fields.datetime('Perintah Lembur dari Tanggal', readonly=True, states={'draft':[('readonly',False)]}),
         'lembur_sampai':fields.datetime('Sampai', readonly=True, states={'draft':[('readonly',False)]}),
         'tanggal':fields.char('tanggal'),
-        'istirahat' : fields.float("istirahat",readonly=True, states={'draft':[('readonly',False)]})
+        'istirahat' : fields.float("istirahat",readonly=True, states={'draft':[('readonly',False)]}),
+        'bulan' : fields.char('Bulan'),
+        'nominal' : fields.integer("Nominal"),
     }
     _defaults = {
         'employee_id': _employee_get,
         'state': 'draft',
         'users_id': lambda obj, cr, uid, context: uid,
+        'bulan' : lambda *a: time.strftime('%Y-%m'),
     }
     _sql_constraints = [
         ('date_check', "CHECK ( number_of_hours_temp > 0 )", "The number of hours must be greater than 0 !"),
