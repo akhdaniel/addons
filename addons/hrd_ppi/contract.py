@@ -134,6 +134,8 @@ class hr_contract(osv.osv):
     	'stat' : fields.char('status Kontak', readonly=True),
         'kelompok_sift' : fields.many2one('hr.contract.schedule','Kelompok Sift'),
         'proyek' : fields.one2many('hr.contract_proyek','contract_id','Kontrak Proyek'),
+        'shift_ids' : fields.one2many('hr.shift_karyawan','contract_id','Shift Working Schedule'),
+        'sift_true' : fields.boolean('Shift Working Schedule'),
     	}
 
     _defaults = {
@@ -348,3 +350,4 @@ class sift_roling(osv.osv):
         'schedule' : fields.many2one('resource.calendar','Schedule Sift')
     }
 sift_roling()
+

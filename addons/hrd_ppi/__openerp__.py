@@ -5,7 +5,7 @@
     'description': """
 Human Resource PT.PPI
 """,    
-    'depends': ['hr','hr_recruitment','hr_payroll','hr_attendance','hrd_ppi_payroll'],
+    'depends': ['hr','hr_recruitment','hr_payroll','hr_attendance','hrd_ppi_payroll','base_import'],
     'update_xml':[
             'security/groups.xml',
             'security/ir.model.access.csv',

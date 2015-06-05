@@ -73,7 +73,7 @@ class employee(osv.osv):
         'type_id': fields.many2one('hr.recruitment.degree', 'Degree'),
         'jurusan_id':fields.many2one('hr_recruit.jurusan_detail','Jurusan'),
         'result_id':fields.many2one('hr_recruit.result','Result'),
-        'gelar_id':fields.many2one('hr_recruit.gelar','Gelar'),
+        'gelar_id':fields.many2one('hr_recruit.gelar','Pendidikan'),
         'alamat1':fields.char('Alamat',100),
         'prov_id':fields.many2one('hr_recruit.prov','Provinsi', domain="[('country_id','=',country_id1)]"),
         'kab_id':fields.many2one('hr_recruit.kota','Kab./kota', domain="[('provinsi_id','=',prov_id)]"),
@@ -391,33 +391,34 @@ class employee_objects_proxy(object_proxy):
             resource_id = resource['id']
             # loop on each field on the res_ids we just have read
             for field in resource:
-                if field in ('__last_update', 'id'):
-                    continue
-                values[field] = resource[field]
-                # get the textual value of that field for this record
-                values_text[field] = self.get_value_text(cr, SUPERUSER_ID, pool, resource_pool, method, field, resource[field])
-
-                field_obj = resource_pool._all_columns.get(field).column
-                if field_obj._type in ('one2many','many2many'):
+                if field == 'work_location2' or field == 'gol_id' or field == 'active' or field == 'job_id' or field == 'department_id' :
                     #import pdb;pdb.set_trace()
-                    # check if an audittrail rule apply in super admin mode
-                    #if self.check_rules(cr, SUPERUSER_ID, field_obj._obj, method):
-                        # check if the model associated to a *2m field exists, in super admin mode
-                    x2m_model_ids = pool.get('ir.model').search(cr, SUPERUSER_ID, [('model', '=', field_obj._obj)])
-                    x2m_model_id = x2m_model_ids and x2m_model_ids[0] or False
-                    assert x2m_model_id, _("'%s' Model does not exist..." %(field_obj._obj))
-                    x2m_model = pool.get('ir.model').browse(cr, SUPERUSER_ID, x2m_model_id)
-                    field_resource_ids = list(set(resource[field]))
-                    if model.model == x2m_model.model:
+                    if field in ('__last_update', 'id'):
+                        continue
+                    values[field] = resource[field]
+                    # get the textual value of that field for this record
+                    values_text[field] = self.get_value_text(cr, SUPERUSER_ID, pool, resource_pool, method, field, resource[field])
+
+                    field_obj = resource_pool._all_columns.get(field).column
+                    if field_obj._type in ('one2many','many2many'):
                         #import pdb;pdb.set_trace()
+                        # check if an audittrail rule apply in super admin mode
+                        #if self.check_rules(cr, SUPERUSER_ID, field_obj._obj, method):
+                            # check if the model associated to a *2m field exists, in super admin mode
+                        x2m_model_ids = pool.get('ir.model').search(cr, SUPERUSER_ID, [('model', '=', field_obj._obj)])
+                        x2m_model_id = x2m_model_ids and x2m_model_ids[0] or False
+                        assert x2m_model_id, _("'%s' Model does not exist..." %(field_obj._obj))
+                        x2m_model = pool.get('ir.model').browse(cr, SUPERUSER_ID, x2m_model_id)
+                        field_resource_ids = list(set(resource[field]))
+                        if model.model == x2m_model.model:
+                            #import pdb;pdb.set_trace()
+                            if model.model != 'res.partner' and model.model != 'res.company' :
+                            # we need to remove current resource_id from the many2many to prevent an infinit loop
+                                if resource_id in field_resource_ids:
+                                    field_resource_ids.remove(resource_id)
                         if model.model != 'res.partner' and model.model != 'res.company' :
-                        # we need to remove current resource_id from the many2many to prevent an infinit loop
-                            if resource_id in field_resource_ids:
-                                field_resource_ids.remove(resource_id)
-                    if model.model != 'res.partner' and model.model != 'res.company' :
-                        data.update(self.get_data(cr, SUPERUSER_ID, pool, field_resource_ids, x2m_model, method))
+                            data.update(self.get_data(cr, SUPERUSER_ID, pool, field_resource_ids, x2m_model, method))
             data[(model.id, resource_id)] = {'text':values_text, 'value': values}
-            #import pdb;pdb.set_trace()
         return data 
 
     def prepare_audittrail_log_line(self, cr, uid, pool, model, resource_id, method, old_values, new_values, field_list=None):
@@ -440,7 +441,6 @@ class employee_objects_proxy(object_proxy):
             field_obj = field_definition.column
             if model.model == 'hr.contract' :
                 if field_name == 'type_id' :
-                    import pdb;pdb.set_trace()
                     employee = key in new_values and new_values[key]['value'].get('employee_id')[1]
                     objk = pool.get('hr.employee')
                     src = objk.search(cr,uid,[('name','=',employee)])
@@ -520,7 +520,8 @@ class employee_objects_proxy(object_proxy):
                 for res_id in res_ids:
                     lines.update(self.prepare_audittrail_log_line(cr, SUPERUSER_ID, pool, x2m_model, res_id, method, old_values, new_values, field_list))
             # if the value value is different than the old value: record the change
-            if key not in old_values or key not in new_values or old_values[key]['value'][field_name] != new_values[key]['value'][field_name]:
+            #import pdb;pdb.set_trace()
+            if key not in old_values or key not in new_values or old_values != new_values:
                 if model.model == 'hr.employee' :
                     if field_name == 'work_location2' or field_name == 'gol_id' or method == 'create' or field_name == 'active' or field_name == 'job_id' or field_name == 'department_id' :
                         act = key in new_values and new_values[key]['value'].get('active')
@@ -578,7 +579,6 @@ class employee_objects_proxy(object_proxy):
     def execute_cr(self, cr, uid, model, method, *args, **kw):
         fct_src = super(employee_objects_proxy, self).execute_cr
         if model == 'hr.employee' and method == 'write' :
-
             return self.log_fct(cr, uid, model, method, fct_src, *args, **kw)
         if model == 'hr.contract':
             if method == 'write' or method == 'create' :

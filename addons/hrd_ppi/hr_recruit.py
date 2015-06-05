@@ -417,11 +417,12 @@ class permohonan_recruit(osv.osv):
                 for xx in job_jurusan_ids:
                     A.append(xx.name.id)
                 filt.append(('jurusan_id','in',A))
-        
         pero=partner.search(cr,uid,filt)
         if job_b_name == False:
             for xux in partner.browse(cr,uid,pero): 
-                partner.write(cr,uid,pero,{'app_id':per.id,'dep_app':per.department_id.id},context=context)
+                umr = int(job_umr)
+                if xux.age <= umr :
+                    partner.write(cr,uid,[xux.id],{'app_id':per.id,'dep_app':per.department_id.id},context=context)
         elif job_b_name:
             ada = partner.browse(cr,uid,pero)
             for rr in ada:
@@ -961,6 +962,7 @@ class hr_applicant(osv.osv):
                 # Convert time interval to string value
                 age = delta.days / 365
             result[r.id] = age
+            #self.write(cr,uid,ids,{'age2' : age})
         return result
         
     '''Filter Applicant
