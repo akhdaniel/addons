@@ -23,7 +23,7 @@
     </record>    
 
     <record id="action_hr_training3" model="ir.actions.act_window">
-        <field name="name">Pelatihan Khusus ISO</field>
+        <field name="name">Pelatihan Khusus SIO</field>
         <field name="res_model">hr_training.analisa</field>
         <field name="view_type">form</field>
         <field name="context">{'default_tes': 'SIO'}</field>
