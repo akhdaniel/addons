@@ -3,6 +3,7 @@ from datetime import date
 from datetime import datetime
 from datetime import timedelta
 from dateutil import relativedelta
+from dateutil.relativedelta import relativedelta
 
 from openerp import netsvc
 from openerp.osv import fields, osv
