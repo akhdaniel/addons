@@ -119,9 +119,9 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//form/sheet//h1/label[@string='Quotation ']" position='attributes'>
+                <!-- <xpath expr="//form/sheet//h1/label[@string='Quotation ']" position='attributes'>
                     <attribute name='string'>Proforma Invoice </attribute>
-                </xpath>
+                </xpath> -->
                 <xpath expr="//form/sheet//h1/field[@name='name']" position='replace'>
                     <field name="name" class="oe_inline" attrs="{'invisible' : [('state','in',['draft','sent'])]}" readonly="1"/>
                     <field name="proforma_no" class="oe_inline" attrs="{'invisible' : [('state','not in',['draft','sent'])]}" readonly="1"/>
