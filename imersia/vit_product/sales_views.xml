@@ -142,7 +142,8 @@
                           <field name='desc_goods'/>
                     </group>
                 </xpath>
-                <!-- <xpath expr="//form/sheet/notebook/page[@string='Order Lines]/field[@name='order_line'/tree[@string='Sales Order Lines]/field[@name='product_id']" position='after'>
+                <!-- <xpath expr="//notebook/page[@string='Order Lines]/field[@name='order_line'/tree[@string='Sales Order Lines]/field[@name='product_id']" position='after'>
+                <field name='colection_ids'/>
                 </xpath> -->
             </field>
         </record>
