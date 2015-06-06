@@ -122,7 +122,7 @@
                 <xpath expr="//form/sheet//h1/label[@string='Quotation ']" position='attributes'>
                     <attribute name='string'>Proforma Invoice </attribute>
                 </xpath>
-                <xpath expr="//h1/field[@name='name']" position='replace'>
+                <xpath expr="//form/sheet//h1/field[@name='name']" position='replace'>
                     <field name="name" class="oe_inline" attrs="{'invisible' : [('state','in',['draft','sent'])]}" readonly="1"/>
                     <field name="proforma_no" class="oe_inline" attrs="{'invisible' : [('state','not in',['draft','sent'])]}" readonly="1"/>
                 </xpath>
