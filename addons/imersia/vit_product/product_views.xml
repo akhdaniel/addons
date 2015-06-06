@@ -63,7 +63,7 @@
                 <xpath expr="//form/sheet/notebook//page[@string='Inventory']" position="after">
                     <page string='Product Measurement'>
                         <group style="width : 260px;">
-                            <field name='product_category'/>
+                            <field name='product_category' on_change="categ_change(product_category,sale_ok)"/>
                         </group>
                         <!-- <group attrs="{'invisible': [('sale_ok','=',True)]}">                            
                             <field name='product_classic_volume12'/>
@@ -286,9 +286,12 @@
 
         <menuitem id="product_wood_type" name="Product Wood Type" action="product_wood_type_action" parent="product.prod_config_main" sequence="92"/>
 
+        <!-- delete once @ install -->
+        <!-- 
         <delete id="product.menu_attribute_action" model="ir.ui.menu"/>
         <delete id="product.menu_variants_action" model="ir.ui.menu"/>  
-
+         -->
+        
         <record id="vit_product_Material_tree_view" model="ir.ui.view">
             <field name="name">product Material tree</field>
             <field name="model">product.material</field>

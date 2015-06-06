@@ -319,4 +319,8 @@ class product_template(osv.osv):
             raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
         return {'value': {'product_volume_density': density}}
 
+    def categ_change(self, cr, uid, ids ,product_category,sale_ok):
+        if sale_ok :
+            return {'value': {'product_category': 'cubic'}}
+
 product_template()
