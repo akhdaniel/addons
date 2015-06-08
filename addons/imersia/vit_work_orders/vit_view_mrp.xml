@@ -29,5 +29,17 @@
             </field>
         </record>
 
+        <record id="vit_mrp_workcenter_view" model="ir.ui.view">
+            <field name="name">mrp.workcenter</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+            <field name="arch" type="xml">
+                <field name="time_cycle" position="replace">
+                    <field name="time_cycle2" style="width: 20%"/>
+                </field>     
+            </field>
+        </record>  
+
+
 </data>
 </openerp>            
