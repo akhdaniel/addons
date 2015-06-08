@@ -243,7 +243,7 @@ class product_template(osv.osv):
         'product_cylindrical_density':fields.float('Density (Kg/m3)'),
         'product_cubic_density':fields.float('Density (Kg/m3)'),
         'product_volume_density':fields.float('Density (Kg/Liter)'),
-        'product_material_volume12':fields.function(_get_material_volume2,type='float',store=False,digits=(12, 9),string='Material Volume (m3)',help="Volume sum of all sub-component vol"),
+        'product_material_volume12':fields.function(_get_material_volume2,type='float',store=False,digits=(12, 9),string='Material Volume (m3)',help="Volume sum of all sub-component material vol"),
         'product_classic_volume12':fields.float('Classic Volume (m3)',help="Length x width x Height"),
         'product_unbuilt_volume12':fields.float('Unbuilt (m3)',digits=(12, 9),help="Volume of the disassemble furniture, ready to be packed"),
         'product_packed_volume12':fields.float('Packed (m3)',digits=(12, 9),help="Volume of the packed furniture"),
