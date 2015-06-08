@@ -124,6 +124,18 @@ class mrp_bom_line(osv.osv):
         'position' : fields.char('position',size=64),
         'ket_bahan' : fields.char('Ket Bahan',size=64),
         'ket_mesin' : fields.char('Ket Mesin',size=64),
-
-
     }    
+
+
+class mrp_workcenter(osv.osv):
+    _inherit = 'mrp.workcenter'
+
+    _columns = {
+        #'time_cycle': fields.float('Time for 1 cycle (hour)', help="Time in hours for doing one cycle."),
+        'time_cycle2': fields.char('Time for 1 cycle (hour)',size=8, help="Time in hours for doing one cycle."),
+
+    }
+    _defaults = {
+        'time_cycle2': '00:00:00',
+
+     }    
