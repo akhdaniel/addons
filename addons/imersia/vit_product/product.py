@@ -195,7 +195,6 @@ class product_template(osv.osv):
         for i in self.browse(cr, uid, ids, context=context):
             bom_ids = bom_obj.search(cr,uid,[('product_tmpl_id','=',i.id)])
             com_vol = 0.00
-            print("bom_ids %s " % str(bom_ids))
             try : 
                 if bom_ids:
                     bom = bom_obj.browse(cr,uid,bom_ids[0],)
@@ -204,7 +203,6 @@ class product_template(osv.osv):
                         raise osv.except_osv(_('Product has more than one BoM'), _('Pls Check BoM for this product in Manufacturing'))
                     if bom.bom_line_ids:
                         for bom1 in bom.bom_line_ids :
-                            print("produk %s category %s" % (bom1.product_id.name,bom1.product_id.product_category))
                             if bom1.product_id.product_category == 'cubic':
                                 com_vol += bom1.product_qty * bom1.product_id.product_material_volume12 
                     elif not bom.bom_line_ids:
@@ -214,7 +212,6 @@ class product_template(osv.osv):
                     com_vol = (i.product_length * i.product_height * i.product_larg)/1000000000.0
             except ZeroDivisionError:
                 raise osv.except_osv(_('No could not divide by zero'), _('Pls Check The values of Product Mesurement Tab'))
-            print("vol %s " % str(com_vol))
             result[i.id] = com_vol
         return result
 
