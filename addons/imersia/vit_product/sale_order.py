@@ -118,20 +118,119 @@ class sale_order(osv.osv):
         'comment':fields.char("Remarks"),
         'port_discharge':fields.char("Port of discharge"),
         'desc_goods':fields.text("Description of goods"),
-        # 'qty_total':fields.float("Quantity",help="total products quantity"),
         'qty_total':fields.function(_get_qty_total,type='float',digits=(12, 2),string='Quantity',help="Total products quantity"),
-        'readiness_date':fields.datetime("Readiness",help="Order availability date"),
+        'readiness_date':fields.date("Readiness",help="Order availability date"),
         'week_of_year': fields.char('Week'),
         'etd_date':fields.datetime("ETD",help="Estimated Time of Delivery"),
         }
 
     _defaults={
         'desc_goods': "Wooden Furniture",
+        'week_of_year': "Week -" 
     }
 
     def readydate_change(self, cr, uid, ids,rd,):
         if rd:
-            dte = "WEEK  " + str(datetime.strptime(rd,"%Y-%m-%d %H:%M:%S").isocalendar()[1])
+            dte = "Week  " + str(datetime.strptime(rd,"%Y-%m-%d").isocalendar()[1])
             return {'value':{'week_of_year':dte}}
+        return {'value':{'week_of_year':"Week -"}}
+
 sale_order()
 
+class sale_order_line(osv.osv):
+    _inherit = 'sale.order.line'
+
+    def hitung_mm_ke_cm(self,bilangan):
+        hasil = 0
+        if bilangan > 0 :
+            hasil =  bilangan / 10
+        return hasil 
+
+    ####################################
+    #konversi mm ke cm
+    ####################################
+    def hitung_width_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        result = {}
+
+        for obj in self.browse(cr,uid,ids,context=context):
+            bilangan  = obj.product_id.product_larg
+            hasil     = self.hitung_mm_ke_cm(bilangan)
+            result[ids[0]] = hasil
+        return result         
+
+    def hitung_height_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        result = {}
+
+        for obj in self.browse(cr,uid,ids,context=context):
+            bilangan  = obj.product_id.product_height
+            hasil     = self.hitung_mm_ke_cm(bilangan)
+            result[ids[0]] = hasil
+        return result 
+
+    def hitung_length_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        result = {}
+
+        for obj in self.browse(cr,uid,ids,context=context):
+            bilangan  = obj.product_id.product_length
+            hasil     = self.hitung_mm_ke_cm(bilangan)
+            result[ids[0]] = hasil
+        return result   
+
+    def hitung_total_volume_m3(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        result = {}
+
+        for obj in self.browse(cr,uid,ids,context=context):
+            bilangan1  = obj.product_id.product_length
+            hasil1     = 0
+            if bilangan1 > 0:
+                hasil1 = bilangan1 / 1000
+
+            bilangan2  = obj.product_id.product_height
+            hasil2     = 0
+            if bilangan2 > 0:
+                hasil2 = bilangan2 / 1000  
+
+            bilangan3  = obj.product_id.product_larg
+            hasil3     = 0
+            if bilangan1 > 0:
+                hasil3 = bilangan3 / 1000                          
+
+            qty        = obj.product_uom_qty
+
+            hasil      = round((hasil1 * hasil2 *hasil3)*qty,4)
+            result[ids[0]] = hasil
+        return result 
+
+
+    def _get_cust_desc(self, cr, uid, ids, field_name, arg, context=None):
+        result = dict.fromkeys(ids, False)
+        desc_obj       = self.pool.get('product.customers.description')
+
+        for i in self.browse(cr, uid, ids, context=context):
+            desc     = '-'
+            partner  = i.order_id.partner_id.id
+            produk   = i.product_id.product_tmpl_id.id
+            cust_ids = desc_obj.search(cr,uid,[('produk_id','=',produk),('partner_id','=',partner)])
+            if cust_ids:
+                desc = desc_obj.browse(cr,uid,cust_ids[0],).name
+            result[i.id] = desc
+        return result
+
+    _columns = {
+        'cust_desc' : fields.function(_get_cust_desc,type='char',string='Cust. Description'),
+        'colection_ids': fields.related('product_id','colection_ids',type='many2many',relation='product.collection',string='Collection',readonly=True),
+        'finishing_id': fields.related('product_id','finishing_id',type='many2one',relation='product.finishing',string='Finishing',readonly=True),
+        'product_weight_cm': fields.function(hitung_length_mm_ke_cm, type='char', string='Length (cm)'),
+        'product_height_cm': fields.function(hitung_height_mm_ke_cm, type='char', string='Height (cm)'),
+        'product_larg_cm': fields.function(hitung_width_mm_ke_cm, type='char', string='Width (cm)'),
+        'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      
+        'product_unbuilt_volume12': fields.related('product_id','product_unbuilt_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),
+        }

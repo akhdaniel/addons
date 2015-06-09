@@ -119,9 +119,9 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <!-- <xpath expr="//form/sheet//h1/label[@string='Quotation ']" position='attributes'>
+                <xpath expr="//form/sheet//h1/label[@string='Quotation ']" position='attributes'>
                     <attribute name='string'>Proforma Invoice </attribute>
-                </xpath> -->
+                </xpath>
                 <xpath expr="//form/sheet//h1/field[@name='name']" position='replace'>
                     <field name="name" class="oe_inline" attrs="{'invisible' : [('state','in',['draft','sent'])]}" readonly="1"/>
                     <field name="proforma_no" class="oe_inline" attrs="{'invisible' : [('state','not in',['draft','sent'])]}" readonly="1"/>
@@ -133,7 +133,8 @@
                         <field name='qty_total'/>
                         <label for='readiness_date'/>
                         <div>
-                            <field name='readiness_date' on_change="readydate_change(readiness_date)"/> <field name='week_of_year' class="oe_inline"/>
+                            <field name='readiness_date' class='oe_inline' style="width : 30% !important;" nolabel='1' on_change="readydate_change(readiness_date)"/>
+                            <field name='week_of_year' class='oe_inline' nolabel='1' widget="statinfo"/>
                         </div>
                         <field name='etd_date'/>
                     </group>
