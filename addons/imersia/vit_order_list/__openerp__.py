@@ -14,7 +14,7 @@
     'category': 'Sale',
     'url': 'http://www.vitraining.com/',
     'data': [ 
-        
+        'security/ir.model.access.csv',
         'view_order_list.xml',
         'order_list_report.xml',
         'reports/sale_order_list_report.xml',
