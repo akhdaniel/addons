@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+    <record id="vit_view_order_form_inherit" model="ir.ui.view">
+      <field name="name">vi sale.order.form.sale.stock</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form"/>
+      <field name="arch" type="xml">
+        <!-- <xpath expr="//tree[@string='Sales Order Lines']" position='attributes'>
+          <attribute name='editable'></attribute>
+        </xpath> -->
+        <xpath expr="//tree[@string='Sales Order Lines']/field[@name='name']" position='before'>
+          <field name="cust_desc"/>
+        </xpath>
+        <xpath expr="//form[@string='Sales Order Lines']/group" position='inside'>
+          <group>
+            <field name="cust_desc"/>
+            <field name="colection_ids" widget="many2many_tags"/>
+            <field name="finishing_id"/>
+          </group>
+          <group>
+            <field name='product_weight_cm'/>
+            <field name='product_larg_cm'/>
+            <field name='product_height_cm'/>
+            <field name='product_volume_total'/>
+            <field name='product_unbuilt_volume12'/>
+          </group>
+        </xpath>
+
+      </field>
+    </record>
+
+  </data>
+</openerp>
