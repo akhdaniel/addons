@@ -52,55 +52,13 @@ class sale_order_line(osv.osv):
                         customers_description = desc.name
 
             result[ids[0]] = customers_description
-        return result   
-
-    def hitung_mm_ke_cm(self,bilangan):
-        hasil = 0
-        if bilangan > 0 :
-            hasil =  bilangan / 10
-        return hasil    
+        return result     
 
     def hitung_mm_ke_inch(self,bilangan):
         hasil = 0
         if bilangan > 0 :
             hasil = round(bilangan / 25.4,4)
-        return hasil 
-
-    ####################################
-    #konversi mm ke cm
-    ####################################
-    def hitung_width_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        result = {}
-
-        for obj in self.browse(cr,uid,ids,context=context):
-            bilangan  = obj.product_id.product_larg
-            hasil     = self.hitung_mm_ke_cm(bilangan)
-            result[ids[0]] = hasil
-        return result         
-
-    def hitung_height_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        result = {}
-
-        for obj in self.browse(cr,uid,ids,context=context):
-            bilangan  = obj.product_id.product_height
-            hasil     = self.hitung_mm_ke_cm(bilangan)
-            result[ids[0]] = hasil
-        return result 
-
-    def hitung_length_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        result = {}
-
-        for obj in self.browse(cr,uid,ids,context=context):
-            bilangan  = obj.product_id.product_length
-            hasil     = self.hitung_mm_ke_cm(bilangan)
-            result[ids[0]] = hasil
-        return result         
+        return hasil  
 
     ####################################
     #konversi mm ke inch
@@ -138,54 +96,16 @@ class sale_order_line(osv.osv):
             result[ids[0]] = hasil
         return result 
 
-    def hitung_total_volume_m3(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        result = {}
-
-        for obj in self.browse(cr,uid,ids,context=context):
-            bilangan1  = obj.product_id.product_length
-            hasil1     = 0
-            if bilangan1 > 0:
-                hasil1 = bilangan1 / 1000
-
-            bilangan2  = obj.product_id.product_height
-            hasil2     = 0
-            if bilangan2 > 0:
-                hasil2 = bilangan2 / 1000  
-
-            bilangan3  = obj.product_id.product_larg
-            hasil3     = 0
-            if bilangan1 > 0:
-                hasil3 = bilangan3 / 1000                          
-
-            qty        = obj.product_uom_qty
-
-            hasil      = round((hasil1 * hasil2 *hasil3)*qty,4)
-            result[ids[0]] = hasil
-        return result  
 
     _columns = {
-        'colection_ids': fields.related('product_id','colection_ids',type='many2many',relation='product.collection',string='Collection',readonly=True),
         'default_code' : fields.related('product_id','default_code',type='char',string='Ref Product',readonly=True),
         'description_ids': fields.function(_get_customer_description, type='char', string='Customer Description',readonly=True),
-        #'description': fields.related('product_id','description',type='char',string='Description'),
         'wood_type_id': fields.related('product_id','wood_type_id',type='many2one',relation='product.wood.type',string='Wood',readonly=True),
         
-        'product_weight_cm': fields.function(hitung_length_mm_ke_cm, type='char', string='Length (cm)'),
-        'product_height_cm': fields.function(hitung_height_mm_ke_cm, type='char', string='Height (cm)'),
-        'product_larg_cm': fields.function(hitung_width_mm_ke_cm, type='char', string='Width (cm)'),
-
         'product_weight_inch': fields.function(hitung_length_mm_ke_inch, type='char', string='Length (Inch)'),
         'product_height_inch': fields.function(hitung_height_mm_ke_inch, type='char', string='Height (Inch)',),
         'product_larg_inch': fields.function(hitung_width_mm_ke_inch, type='char', string='Width (Inch)'),  
 
-        'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      
-
-        'product_unbuilt_volume12': fields.related('product_id','product_unbuilt_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),
-
-        #'product_cubic_volume': fields.related('product_id',type='float',string='Volume'),
-        'finishing_id': fields.related('product_id','finishing_id',type='many2one',relation='product.finishing',string='Finishing',readonly=True),
         'image_medium': fields.related('product_id','image_medium',type='binary',relation='product.template',string='Picture',readonly=True),
 
         'is_order_list': fields.boolean('Order List',readonly=True),
