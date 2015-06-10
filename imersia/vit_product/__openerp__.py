@@ -30,8 +30,15 @@
         'product_views.xml',
         'product_data.xml',
         'sales_views.xml',
-        'sales_lines_views.xml'
+        'sales_lines_views.xml',
+        'reports/proforma.xml'
     ],
+
     # only loaded in demonstration mode
     'demo': [],
+
+    # Static files
+    # 'css':[
+    #     'static/src/css/xxcss.css',
+    # ],
 }
