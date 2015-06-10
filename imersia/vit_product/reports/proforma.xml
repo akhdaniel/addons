@@ -11,30 +11,48 @@
 				            <div style="float: right;">
 		                        <table>
 		                            <tr style="width: 100%;">
-		                            	<td/>
+		                            	<td style="width: 30%;"/>
 		                            	<td style="width: 20%;"/>
-		                                <td class="text-center" style="
+		                                <td colspan='2' class="text-center" style="
 				                        	border-width: 1px;
 		  									border-style: solid;
 		  									border-color: grey;
 		  									width: 40%;">
-						                    <h4 t-if="o.state in ['draft','sent']">Proforma Invoice</h4>
+						                    <h4 t-if="o.state in ['draft','sent']">Draft Pro Forma Invoice</h4>
 						                    <h4 t-if="o.state  == 'progress'">Sales Order</h4>
-		                                </td>
+						                    <h4 t-if="o.state  == 'cancel'">Sales Order Canceled</h4>
+		                                	</td>
 		                            </tr>
 		                            <tr>
 		                            	<td/>
 		                            	<td class="text-center" style="
 				                        	border-width: 1px;
 		  									border-style: solid;
-		  									border-color: grey;">Remarks:</td>
-		                                <td class="text-center" style="
-				                        	border-width: 1px;
-		  									border-style: solid;
 		  									border-color: grey;">
-						                    <p t-if="o.state in ['draft','sent']">Proforma Invoice N° : <span t-field="o.proforma_no"/></p>
-						                    <p t-if="o.state  == 'progress'">Sales Order N° : <span t-field="o.name"/></p>
-						                </td>
+		  									<p>Remarks:<br/><span t-field="o.comment"/></p></td>
+		                                <td style="
+  											padding: 4px 8px 4px 8px;
+				                        	border-right: 0px;
+		  									border-style: solid;
+		  									border-color: grey;
+		  									width: 15%;">
+						                    <span t-if="o.state in ['draft','sent']">Proforma Invoice N° :<br/><br/></span>
+						                    <span t-if="o.state  == 'progress'">Sales Order N° :<br/><br/></span>
+						                    <span>Date :<br/><br/></span>
+						                    <span>Remarks :</span></td>
+					                	<td style="
+  											padding: 4px 8px 4px 8px;
+				                        	border-right: 1px solid;
+				                        	border-left: 0px;
+				                        	border-botom: 1px solid;
+				                        	border-top: 1px solid;
+		  									border-style: solid;
+		  									border-color: grey;
+		  									width: 15%;">
+		  									<span t-if="o.state in ['draft','sent']" t-field="o.proforma_no"/>
+						                	<span t-if="o.state  == 'progress'" t-field="o.name"/><br/><br/>
+						                	<span t-field="o.date_order"/><br/><br/>
+						                	<span t-field="o.desc_goods"/></td>
 		                            </tr>
 		                        </table>
 			                    
@@ -44,14 +62,7 @@
 				            </div>
 				            <p class="oe_clear"/>
 				            <div class="oe_structure"/>
-	                        <table class="table table-condensed">
-	                            <tr>
-	                                <td class="text-center"><strong>Sequence</strong></td>
-	                            </tr>
-	                            <tr t-foreach="o.order_line" t-as="line">
-	                                <td class="text-center"><span t-field="line.sequence"/></td>
-	                            </tr>
-	                        </table>
+	                       
 	                    </div>
 		        	<!-- </t> -->
 	            </t>
