@@ -143,9 +143,12 @@
                           <field name='desc_goods'/>
                     </group>
                 </xpath>
-                <!-- <xpath expr="//notebook/page[@string='Order Lines]/field[@name='order_line'/tree[@string='Sales Order Lines]/field[@name='product_id']" position='after'>
-                <field name='colection_ids'/>
-                </xpath> -->
+                <xpath expr="//form/header//button[@name='copy_quotation']" position='attributes'>
+                    <attribute name='string'>New Copy of Proforma Invoice</attribute>
+                </xpath>
+                <xpath expr="///button[@name='cancel']" position='attributes'>
+                    <attribute name='string'>Cancel Proforma Invoice</attribute>
+                </xpath>
             </field>
         </record>
 

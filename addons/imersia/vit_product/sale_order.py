@@ -115,9 +115,9 @@ class sale_order(osv.osv):
               in the invoice validation (Invoice Exception) or in the picking list process (Shipping Exception).\nThe 'Waiting Schedule' status is set when the invoice is confirmed\
                but waiting for the scheduler to run on the order date.", select=True),
         'port_name':fields.char("Port of loading"),
-        'comment':fields.char("Remarks"),
+        'comment':fields.text("Remarks"),
         'port_discharge':fields.char("Port of discharge"),
-        'desc_goods':fields.text("Description of goods"),
+        'desc_goods':fields.char("Description of goods"),
         'qty_total':fields.function(_get_qty_total,type='float',digits=(12, 2),string='Quantity',help="Total products quantity"),
         'readiness_date':fields.date("Readiness",help="Order availability date"),
         'week_of_year': fields.char('Week'),

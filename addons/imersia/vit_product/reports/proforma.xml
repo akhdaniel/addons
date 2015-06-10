@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<template id="report_so_invoice">
+			<!-- <link rel="stylesheet" href="/vit_product/static/src/css/xxcss.css"/> -->
+		    <!-- <t t-call="report.html_container"> -->
+		        <t t-foreach="docs" t-as="o">
+		            <!-- <t t-call="report.external_layout"> -->
+			            <div class="page">
+				            <div style="float: right;">
+		                        <table>
+		                            <tr style="width: 100%;">
+		                            	<td/>
+		                            	<td style="width: 20%;"/>
+		                                <td class="text-center" style="
+				                        	border-width: 1px;
+		  									border-style: solid;
+		  									border-color: grey;
+		  									width: 40%;">
+						                    <h4 t-if="o.state in ['draft','sent']">Proforma Invoice</h4>
+						                    <h4 t-if="o.state  == 'progress'">Sales Order</h4>
+		                                </td>
+		                            </tr>
+		                            <tr>
+		                            	<td/>
+		                            	<td class="text-center" style="
+				                        	border-width: 1px;
+		  									border-style: solid;
+		  									border-color: grey;">Remarks:</td>
+		                                <td class="text-center" style="
+				                        	border-width: 1px;
+		  									border-style: solid;
+		  									border-color: grey;">
+						                    <p t-if="o.state in ['draft','sent']">Proforma Invoice N° : <span t-field="o.proforma_no"/></p>
+						                    <p t-if="o.state  == 'progress'">Sales Order N° : <span t-field="o.name"/></p>
+						                </td>
+		                            </tr>
+		                        </table>
+			                    
+			                    <div class="oe_structure"/>
+					            
+			                    <!-- <div t-field="o.partner_id" t-field-options="{&quot;no_marker&quot;: true}"/> -->
+				            </div>
+				            <p class="oe_clear"/>
+				            <div class="oe_structure"/>
+	                        <table class="table table-condensed">
+	                            <tr>
+	                                <td class="text-center"><strong>Sequence</strong></td>
+	                            </tr>
+	                            <tr t-foreach="o.order_line" t-as="line">
+	                                <td class="text-center"><span t-field="line.sequence"/></td>
+	                            </tr>
+	                        </table>
+	                    </div>
+		        	<!-- </t> -->
+	            </t>
+		    <!-- </t> -->
+		</template>
+
+        <report
+		    id="so_proforma_invoice"
+		    model="sale.order"
+		    string="Proforma Invoice"
+		    report_type="qweb-pdf"
+		    name="vit_product.report_so_invoice"
+		    file="vit_product.report_so_invoice"
+		/>
+		
+	</data>
+</openerp>
