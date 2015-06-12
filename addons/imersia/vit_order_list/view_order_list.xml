@@ -49,7 +49,7 @@
                 </header>
                 <sheet>
                      <h1>
-                        <field name="name" class="oe_inline" readonly="1"/>
+                        <field name="name" class="oe_inline" nolabel='1'/>
                     </h1>
                     <group>
                         <group>

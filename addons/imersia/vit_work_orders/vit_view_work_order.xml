@@ -33,10 +33,10 @@
                                 <field name="default_code"/>
                                 <field name="product_id"/>
                                 <field name="product_category" invisible="1"/>
-                                <field name="product_larg" string="W" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
-                                <field name="product_length" string="L" attrs="{'invisible': [('product_category','=','volume')]}"/>                                
-                                <field name="product_height" string="H" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>          
-                                <field name="product_diameter" string="D" attrs="{'invisible': [('product_category','!=','cubic')]}"/>                                
+                                <field name="product_larg" style="text-align: center;" string="W" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
+                                <field name="product_length" style="text-align: center;" string="L" attrs="{'invisible': [('product_category','=','volume')]}"/>                                
+                                <field name="product_height" style="text-align: center;" string="H" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>          
+                                <field name="product_diameter" style="text-align: center;" string="D" attrs="{'invisible': [('product_category','!=','cubic')]}"/>                                
                                 <field name="product_volume_volume" string="Vol" attrs="{'invisible': [('product_category','!=','volume')]}"/>    
                                 <field name="product_uom_qty" sum="Total Amount"/>
                                 <field name="material_id" />
