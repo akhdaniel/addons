@@ -29,7 +29,7 @@
             </field>
         </record>
 
-        <record id="vit2_mrp_workcenter_view" model="ir.ui.view">
+        <record id="vit_mrp_workcenter_view2" model="ir.ui.view">
             <field name="name">mrp.workcenter</field>
             <field name="model">mrp.workcenter</field>
             <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>

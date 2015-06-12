@@ -228,7 +228,7 @@ class sale_order_line(osv.osv):
         'cust_desc' : fields.function(_get_cust_desc,type='char',string='Cust. Description'),
         'colection_ids': fields.related('product_id','colection_ids',type='many2many',relation='product.collection',string='Collection',readonly=True),
         'finishing_id': fields.related('product_id','finishing_id',type='many2one',relation='product.finishing',string='Finishing',readonly=True),
-        'product_weight_cm': fields.function(hitung_length_mm_ke_cm, type='char', string='Length (cm)'),
+        'product_weight_cm': fields.function(hitung_length_mm_ke_cm, type='char', string='Depth (cm)'),
         'product_height_cm': fields.function(hitung_height_mm_ke_cm, type='char', string='Height (cm)'),
         'product_larg_cm': fields.function(hitung_width_mm_ke_cm, type='char', string='Width (cm)'),
         'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      

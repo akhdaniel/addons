@@ -92,6 +92,7 @@ class sale_order_list(osv.Model):
 		'company_id'			: fields.many2one('res.company', 'Company'),
 		'manufacturing_order_ids' : fields.function(_get_manufacturing_order, type='many2many', relation="mrp.production", string="Manufacturing Order List"),
 		'total' 				: fields.function(_get_total, type='float', string="Total",store=True),
+		
 	}
 
 	_defaults ={
@@ -99,7 +100,16 @@ class sale_order_list(osv.Model):
 		'ref'					:'/',
 		'user_id'				: lambda obj, cr, uid, context: uid,
 		'company_id'			: _get_default_company,
+		'name' 					: "/",
 	}
+
+
+	# def partner_change(self, cr, uid, ids, partner_id, name):
+	# 	partner = name or ''
+	# 	if partner_id:
+	# 		partner = 'Order List ' + self.pool.get('res.partner').browse(cr,uid,partner_id,).name
+	# 	return {'value': {'name': partner}}
+
 	def create(self, cr, uid, vals, context=None):
 
 		if vals.get('ref','/')=='/':
@@ -110,7 +120,7 @@ class sale_order_list(osv.Model):
 		partner_name 	= par_obj.name
 		ref 			= vals['ref']
 
-		order_list_name = {'name':ref+' / '+partner_name}
+		order_list_name = {'name':'Order List '+partner_name + '/' + ref}
 		vals = dict(vals.items()+order_list_name.items()) 
 		
 		return super(sale_order_list, self).create(cr, uid, vals, context=context)	
