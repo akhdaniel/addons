@@ -68,6 +68,7 @@
                             <field view_mode="tree,form" name="sale_order_line_ids" nolabel="1" >
                                 <tree string="Sale Order List">
                                     <field name="order_id"/>
+                                    <field name="image_medium" widget="image" height="50" />
                                     <field name="name"/>
                                     <field name="price_unit" sum="Total Amount"/>
                                     <field name="product_uom_qty" sum="Total Amount"/>
