@@ -51,7 +51,7 @@ class sale_order_line(osv.osv):
                     if desc.partner_id.name == obj.order_id.partner_id.name :
                         customers_description = desc.name
 
-            result[ids[0]] = customers_description
+            result[obj.id] = customers_description
         return result     
 
     def hitung_mm_ke_inch(self,bilangan):
@@ -71,7 +71,7 @@ class sale_order_line(osv.osv):
         for obj in self.browse(cr,uid,ids,context=context):
             bilangan  = obj.product_id.product_larg
             hasil     = self.hitung_mm_ke_inch(bilangan)
-            result[ids[0]] = hasil
+            result[obj.id] = hasil
         return result         
 
     def hitung_height_mm_ke_inch(self, cr, uid, ids, field_name, arg, context=None):
@@ -82,7 +82,7 @@ class sale_order_line(osv.osv):
         for obj in self.browse(cr,uid,ids,context=context):
             bilangan  = obj.product_id.product_height
             hasil     = self.hitung_mm_ke_inch(bilangan)
-            result[ids[0]] = hasil
+            result[obj.id] = hasil
         return result 
 
     def hitung_length_mm_ke_inch(self, cr, uid, ids, field_name, arg, context=None):
@@ -92,8 +92,8 @@ class sale_order_line(osv.osv):
 
         for obj in self.browse(cr,uid,ids,context=context):
             bilangan  = obj.product_id.product_length
-            hasil     = self.hitung_mm_ke_inch(bilangan)
-            result[ids[0]] = hasil
+            hasil     = self.hitung_mm_ke_inch(bilangan)           
+            result[obj.id] = hasil
         return result 
 
 
@@ -101,7 +101,9 @@ class sale_order_line(osv.osv):
         'default_code' : fields.related('product_id','default_code',type='char',string='Ref Product',readonly=True),
         'description_ids': fields.function(_get_customer_description, type='char', string='Customer Description',readonly=True),
         'wood_type_id': fields.related('product_id','wood_type_id',type='many2one',relation='product.wood.type',string='Wood',readonly=True),
-        
+        'packaging_id': fields.related('product_id','packaging_id',type='many2one',relation='product.package.type',string='Package Type',readonly=True),
+        'remarks':fields.char('Remarks'),
+
         'product_weight_inch': fields.function(hitung_length_mm_ke_inch, type='char', string='Depth (Inch)'),
         'product_height_inch': fields.function(hitung_height_mm_ke_inch, type='char', string='Height (Inch)',),
         'product_larg_inch': fields.function(hitung_width_mm_ke_inch, type='char', string='Width (Inch)'),  
@@ -110,7 +112,12 @@ class sale_order_line(osv.osv):
         'image_small': fields.related('product_id','image_small',type='binary',relation='product.template',string='Picture ',readonly=True),
 
         'is_order_list': fields.boolean('Order List',readonly=True),
-     
+
+        'description': fields.related('product_id','description',type='text',string='Description',readonly=True),
+
+        'product_length':fields.related('product_id','product_length',type='float',string='Length (mm)'),
+        'product_larg':fields.related('product_id','product_length',type='float',string='Width (mm)'),
+        'product_height':fields.related('product_id','product_length',type='float',string='Thickness (mm)'),     
     }
 
 
