@@ -11,7 +11,7 @@
 
             	</xpath> -->
             	<label for="order_id" position="before">
-            		<field name="image_medium" widget="image" class="oe_avatar oe_left" nolabel="1"/>
+            	       <field name="image_medium" widget="image" class="oe_avatar oe_left" nolabel="1"/>
             	</label>
             	<field name="name" position="after">
                 <group>    

@@ -229,7 +229,7 @@ class sale_order_line(osv.osv):
         'colection_ids': fields.related('product_id','colection_ids',type='many2many',relation='product.collection',string='Collection',readonly=True),
         'finishing_id': fields.related('product_id','finishing_id',type='many2one',relation='product.finishing',string='Finishing',readonly=True),
         'product_weight_cm': fields.function(hitung_length_mm_ke_cm, type='char', string='Depth (cm)'),
-        'product_height_cm': fields.function(hitung_height_mm_ke_cm, type='char', string='Thickness (cm)'),
+        'product_height_cm': fields.function(hitung_height_mm_ke_cm, type='char', string='Height (cm)'),
         'product_larg_cm': fields.function(hitung_width_mm_ke_cm, type='char', string='Width (cm)'),
         'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      
         'product_unbuilt_volume12': fields.related('product_id','product_unbuilt_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),

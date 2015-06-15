@@ -103,10 +103,11 @@ class sale_order_line(osv.osv):
         'wood_type_id': fields.related('product_id','wood_type_id',type='many2one',relation='product.wood.type',string='Wood',readonly=True),
         
         'product_weight_inch': fields.function(hitung_length_mm_ke_inch, type='char', string='Depth (Inch)'),
-        'product_height_inch': fields.function(hitung_height_mm_ke_inch, type='char', string='Thickness (Inch)',),
+        'product_height_inch': fields.function(hitung_height_mm_ke_inch, type='char', string='Height (Inch)',),
         'product_larg_inch': fields.function(hitung_width_mm_ke_inch, type='char', string='Width (Inch)'),  
 
         'image_medium': fields.related('product_id','image_medium',type='binary',relation='product.template',string='Picture',readonly=True),
+        'image_small': fields.related('product_id','image_small',type='binary',relation='product.template',string='Picture ',readonly=True),
 
         'is_order_list': fields.boolean('Order List',readonly=True),
      
