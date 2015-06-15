@@ -157,7 +157,7 @@ class sale_order_line(osv.osv):
         for obj in self.browse(cr,uid,ids,context=context):
             bilangan  = obj.product_id.product_larg
             hasil     = self.hitung_mm_ke_cm(bilangan)
-            result[ids[0]] = hasil
+            result[obj.id] = hasil
         return result         
 
     def hitung_height_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
@@ -168,7 +168,7 @@ class sale_order_line(osv.osv):
         for obj in self.browse(cr,uid,ids,context=context):
             bilangan  = obj.product_id.product_height
             hasil     = self.hitung_mm_ke_cm(bilangan)
-            result[ids[0]] = hasil
+            result[obj.id] = hasil
         return result 
 
     def hitung_length_mm_ke_cm(self, cr, uid, ids, field_name, arg, context=None):
@@ -179,7 +179,7 @@ class sale_order_line(osv.osv):
         for obj in self.browse(cr,uid,ids,context=context):
             bilangan  = obj.product_id.product_length
             hasil     = self.hitung_mm_ke_cm(bilangan)
-            result[ids[0]] = hasil
+            result[obj.id] = hasil
         return result   
 
     def hitung_total_volume_m3(self, cr, uid, ids, field_name, arg, context=None):
@@ -206,7 +206,7 @@ class sale_order_line(osv.osv):
             qty        = obj.product_uom_qty
 
             hasil      = round((hasil1 * hasil2 *hasil3)*qty,4)
-            result[ids[0]] = hasil
+            result[obj.id] = hasil
         return result 
 
 
