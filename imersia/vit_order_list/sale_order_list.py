@@ -40,7 +40,7 @@ class sale_order_list(osv.Model):
 		return company_id
 
 	def _get_manufacturing_order(self, cr, uid, ids, field_name, arg, context=None):
-
+		#import pdb;pdb.set_trace()
 		if context is None:
 			context = {}
 		result = {}
@@ -52,6 +52,22 @@ class sale_order_list(osv.Model):
 		if mo_ids :
 			result[ids[0]] = mo_ids
 		return result		
+
+	def _get_sale_order_line_ids(self, cr, uid, ids, field_name, arg, context=None):
+		
+		if context is None:
+			context = {}
+		result = {}
+		
+		self_obj		= self.browse(cr,uid,ids[0],context=context)
+		order_line_id = []
+		for line in self_obj.sale_order_line_ids:
+			order_line_id.append(line.id)
+
+		if order_line_id :
+			result[ids[0]] = order_line_id
+		return result
+
 
 	def _get_total(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
@@ -67,6 +83,7 @@ class sale_order_list(osv.Model):
 		res[ids[0]] = sub_total
 
 		return res
+
 
 	_columns = {
 		'ref'					: fields.char('Ref', size=64, required=True,readonly=True,states={'draft':[('readonly',False)]}),
@@ -86,10 +103,13 @@ class sale_order_list(osv.Model):
 			('order_partner_id','=',partner_id)]",\
 			readonly=True,states={'draft':[('readonly',False)]},
 			required=True),	
+		'sale_order_line_ids2'	: fields.function(_get_sale_order_line_ids, type="many2many", relation="sale.order.line", string="Measurement"),
+		#'sale_order_line_ids2'	: fields.many2many("sale.order.line", string="Measurement",compute='_get_sale_order_line_ids'),
 		'state'					: fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('done', 'Done')], 'Status'),
 		'note'					: fields.text('Note'),
 		'user_id'				: fields.many2one('res.users','User',readonly=True, select=True, track_visibility='onchange'),
 		'company_id'			: fields.many2one('res.company', 'Company'),
+		#'manufacturing_order_ids' : fields.many2many("mrp.production", string="Manufacturing Order List",compute='_get_manufacturing_order'),
 		'manufacturing_order_ids' : fields.function(_get_manufacturing_order, type='many2many', relation="mrp.production", string="Manufacturing Order List"),
 		'total' 				: fields.function(_get_total, type='float', string="Total",store=True),
 		
@@ -199,7 +219,7 @@ class sale_order_list(osv.Model):
 				raise osv.except_osv(_('Error!'), _("Product %s don't have Bill of Materials!") % (line.product_id.name))	
 			else:
 				bom = mrp_bom_obj.browse(cr,uid,product_bom_id,context=context)[0]		
-				#import pdb;pdb.set_trace()
+				
 				mo_create = self.pool.get('mrp.production').create(cr,uid,{'product_id' 		: line.product_id.id,
 																			'bom_id'			: bom.id,
 																			'product_qty'		: line.product_uom_qty,

@@ -67,29 +67,83 @@
                         <page string="Order List">
                             <field view_mode="tree,form" name="sale_order_line_ids" nolabel="1" >
                                 <tree string="Sale Order List">
-                                    <field name="order_id"/>
                                     <field name="image_medium" widget="image" height="50" />
-                                    <field name="name"/>
-                                    <field name="price_unit" sum="Total Amount"/>
+                                    <field name="colection_ids"/>
+                                    <field name="order_id"/>
+                                    <field name="description_ids"/>
+                                    <field name="description"/>
+
+                                    <field name="wood_type_id"/>
+                                    <field name="finishing_id"/>
                                     <field name="product_uom_qty" sum="Total Amount"/>
-                                    <field name="product_uom" />
-                                    <field name="price_subtotal" sum="Total Amount"/>
+                                    <field name="product_volume_total"/>
+
+
+                                    <field name="name" invisible="1"/>
+                                    <field name="price_unit" sum="Total Amount" invisible="1"/>
+                                    <field name="product_uom" invisible="1"/>
+                                    <field name="price_subtotal" sum="Total Amount" invisible="1"/>
                                     <field name="state" invisible="1"/>
                                     <field name="company_id" invisible="1"/>
                                 </tree>  
                                  <form string="Sale Order List">
+                                    <field name="image_medium" widget="image" height="50" />
+                                    <field name="colection_ids"/>
                                     <field name="order_id"/>
-                                    <field name="name"/>
-                                    <field name="price_unit" sum="Total Amount"/>
+                                    <field name="description_ids"/>
+                                    <field name="description"/>
+
+                                    <field name="wood_type_id"/>
+                                    <field name="finishing_id"/>
                                     <field name="product_uom_qty" sum="Total Amount"/>
-                                    <field name="product_uom" />
-                                    <field name="price_subtotal" sum="Total Amount"/>
+                                    <field name="product_volume_total"/>
+
+                                    <field name="name" invisible="1"/>
+                                    <field name="price_unit" sum="Total Amount" invisible="1"/>
+                                    <field name="product_uom" invisible="1"/>
+                                    <field name="price_subtotal" sum="Total Amount" invisible="1"/>
                                     <field name="state" invisible="1"/>
                                     <field name="company_id" invisible="1"/>
-                                   <field name="colection_ids"/>
                                 </form>                                
                             </field>  
-                        </page>    
+                        </page>
+                        <page string="Measurement">
+                            <field view_mode="tree,form" name="sale_order_line_ids2" nolabel="1" >
+                                <tree string="Measurement">
+
+                                    <field name="product_larg" string="Furniture W"/>
+                                   <field name="product_length" string="Furniture D"/>
+                                    <field name="product_height" string="Furniture H"/>
+
+                                    <field name="product_larg_cm" string="Inside Box W"/>
+                                   <field name="product_weight_cm" string="Inside Box D"/>
+                                    <field name="product_height_cm" string="Inside Box H"/>
+
+                                    <field name="product_larg_inch" string="Outside Box W"/>
+                                    <field name="product_weight_inch" string="Outside Box D"/>
+                                    <field name="product_height_inch" string="Outside Box H"/>
+
+                                    <field name="packaging_id"/> 
+                                    <field name="remarks"/> 
+                                </tree>   
+                                <form string="Sale Order List">
+                                    <field name="product_larg" string="Furniture W"/>
+                                   <field name="product_length" string="Furniture D"/>
+                                    <field name="product_height" string="Furniture H"/>
+
+                                    <field name="product_larg_cm" string="Inside Box W"/>
+                                   <field name="product_weight_cm" string="Inside Box D"/>
+                                    <field name="product_height_cm" string="Inside Box H"/>
+
+                                    <field name="product_larg_inch" string="Outside Box W"/>
+                                    <field name="product_weight_inch" string="Outside Box D"/>
+                                    <field name="product_height_inch" string="Outside Box H"/>
+                                    
+                                    <field name="packaging_id"/>
+                                    <field name="remarks"/> 
+                                </form>                                                             
+                            </field>  
+                        </page>                             
                          <page string="Manufacturing Order List" attrs="{'invisible':[('state','!=','done')]}">
                             <field view_mode="tree,form" name="manufacturing_order_ids" nolabel="1" />                             
                         </page>
