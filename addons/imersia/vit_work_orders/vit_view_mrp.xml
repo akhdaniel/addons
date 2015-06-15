@@ -36,6 +36,8 @@
             <field name="arch" type="xml">
                 <field name="time_cycle" position="replace">
                     <field name="time_cycle2" style="width: 20%"/>
+                    <field name="time_cycle" invisible="1"/>
+                    <field name="convert_tc1_ke_tc" invisible="1"/>
                 </field>     
             </field>
         </record>  

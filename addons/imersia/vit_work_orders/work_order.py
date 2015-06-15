@@ -47,7 +47,7 @@ class mrp_production_workcenter_line(osv.osv):
                 if sol_id :
                     partner = order_list_obj.browse(cr,uid,sol_id[0]).partner_id.id
 
-            result[ids[0]] = partner
+            result[obj.id] = partner
         return result   
 
 
@@ -65,7 +65,7 @@ class mrp_production_workcenter_line(osv.osv):
                 line_ids = []
                 for line in move_lines:
                     line_ids.append(line.id)
-                result[ids[0]] = line_ids
+                result[obj.id] = line_ids
 
         return result
 
@@ -83,7 +83,7 @@ class mrp_production_workcenter_line(osv.osv):
                 line_ids = []
                 for line in move_lines:
                     line_ids.append(line.id)
-                result[ids[0]] = line_ids
+                result[obj.id] = line_ids
 
         return result        
 
@@ -99,7 +99,7 @@ class mrp_production_workcenter_line(osv.osv):
             number_of_hours = obj.hour
             if number_of_hours != 0.0 :
                 rate = working_hour / number_of_hours
-                result[ids[0]] = rate
+                result[obj.id] = rate
 
         return result  
 
@@ -130,9 +130,44 @@ class mrp_bom_line(osv.osv):
 class mrp_workcenter(osv.osv):
     _inherit = 'mrp.workcenter'
 
+    def _convert_time_cycle(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+
+        cycle = 0
+        for obj in self.browse(cr,uid,ids,context=context):
+            c2 = obj.time_cycle2
+            #[0]0 - [1]0 - [2]: - [3]0 - [4]0 - [5]: - [6]0 - [7]0 
+            #import pdb;pdb.set_trace()
+            if len(c2) != 8:
+                self.write(cr,uid,obj.id,{'time_cycle2':'00:00:00'},context=context)
+                cr.commit()
+                raise osv.except_osv(_('Error!'), _('Wrong Input!'))
+            if c2[2] != ':' or c2[5] != ':':
+                self.write(cr,uid,obj.id,{'time_cycle2':'00:00:00'},context=context)
+                cr.commit()
+                raise osv.except_osv(_('Error!'), _('Wrong Input!'))                
+
+            second      = c2[6]+c2[7]
+            full_sec    = float(second)/3600
+            minute      = c2[3]+c2[4] 
+            full_min    = float(minute)/60
+            hour        = c2[0]+c2[1]
+            full_hour   = float(hour)
+
+            total_hour  = float(full_sec+full_min+full_hour)
+
+            self.write(cr,uid,obj.id,{'time_cycle':total_hour},context=context)
+            result[obj.id] = result
+
+        return result 
+
     _columns = {
         #'time_cycle': fields.float('Time for 1 cycle (hour)', help="Time in hours for doing one cycle."),
         'time_cycle2': fields.char('Time for 1 cycle (hour)',size=8, help="Time in hours for doing one cycle."),
+        'convert_tc1_ke_tc' : fields.function(_convert_time_cycle,type="boolean",string="Convert"),
 
     }
     _defaults = {
