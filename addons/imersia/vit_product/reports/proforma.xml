@@ -2,155 +2,274 @@
 <openerp>
     <data>
 
-		<template id="report_so_invoice">
-		    <t t-foreach="docs" t-as="o">
-			    <div class="page">
-			    	<div style="float : right">
-					    <table style="border-collapse:collapse;border-spacing:0;width:100%;">
-						  	<tbody>
-					  		<tr>
-							    <td colspan="3"></td>
-							    <td colspan="2" class="text-center" style="
-				                                	padding: 4px 8px 4px 8px;
-													border-left: 1px solid grey;
-													border-right: 1px solid grey;
-													border-top: 1px solid grey;
-													border-bottom: 1px solid grey;
-				  									width: 50%;">
-				                    <h4 t-if="o.state in ['draft','sent']">Draft Pro Forma Invoice</h4>
-				                    <h4 t-if="o.state  == 'progress'">Sales Order</h4>
-				                    <h4 t-if="o.state  == 'cancel'">Sales Order Canceled</h4></td>
-							  </tr>
-							  <tr>
-							    <td colspan="2"></td>
-							    <td class="text-center" style="
-				                                	padding: 4px 8px 4px 8px;
-													border-left: 1px solid grey;
-													border-top: 1px solid grey;
-													border-bottom: 1px solid grey;
-				  									width: 20%;"><p>REMARKS :<br/><span t-field="o.comment"/></p></td>
-							    <td rowspan="3" style="
-				                                	padding: 4px 8px 4px 8px;
-													border-left: 1px solid grey;
-				  									width: 20%;">
-				  									<p t-if="o.state in ['draft','sent']">Proforma Invoice N° :</p>
-				  									<p t-if="o.state  == 'progress'">Sales Order N° :</p>
-				  									<p>Date :</p>
-				  									<p>Remarks :</p>
-				  									</td>
-							    <td rowspan="3" style="
-				                                	padding: 4px 8px 4px 8px;
-													border-right: 1px solid grey;
-				  									width: 30%;">
-				  									<p t-if="o.state in ['draft','sent']"><span t-field="o.proforma_no"/></p>
-				  									<p t-if="o.state  == 'progress'"><span t-field="o.name"/></p>
-				  									<p><span t-field="o.date_order"/></p>
-				  									<p><span t-field="o.desc_goods"/></p>
-				  									</td>
-							  </tr>
-							  <tr style="height: 4px;">
-							    <td colspan="3"></td>
-							  </tr>
-							  <tr>
-							    <td style="width : 15%;"></td>
-							    <td colspan="2" style="font-size:9px;
-				                                	padding: 1px 1px 1px 1px;
-													background-color:#DEDEDE;">REVISION ON PRICE OF CHILSON SIDEBOARD</td>
-							  </tr>
-							</tbody>
-						</table>
-						<table style="border-collapse:collapse;border-spacing:0;width:100%;">
-					  	  <tr>
-						    <td colspan="2" rowspan="2" style="
-						    						padding: 2px 3px 2px 3px;
-						    						width : 30%;
-													border-top: 1px solid grey;
-													border-left: 1px solid grey;
-													border-right: 1px solid grey;
-													border-bottom: 1px solid grey;">Sell To : <p><span t-field="o.partner_id"/></p>
-													<p><span t-field="o.partner_id.street"/><br/><span t-field="o.partner_id.street2"/> <span t-field="o.partner_id.city"/><span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.zip"/><br/><span t-field="o.partner_id.country_id.name"/></p>
-												</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-top: 1px solid grey;
-													border-left: 1px solid grey;">Desc. of goods :</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-top: 1px solid grey;
-													border-right: 1px solid grey;"><span t-field="o.desc_goods"/></td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-top: 1px solid grey;">Beneficiary's Name :</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-top: 1px solid grey;
-													border-right: 1px solid grey;"><span t-field="o.warehouse_id.name"/></td>
+	<template id="report_so_invoice">
+	    <t t-foreach="docs" t-as="o">
+		    <div class="page">
+		    	<div style="float : right">
+				    <table style="border-collapse:collapse;border-spacing:0;width:100%;">
+					  	<tbody>
+				  		<tr>
+						    <td colspan="3"></td>
+						    <td colspan="2" class="text-center" style="
+			                                	padding: 4px 8px 4px 8px;
+												border-left: 1px solid grey;
+												border-right: 1px solid grey;
+												border-top: 1px solid grey;
+												border-bottom: 1px solid grey;
+			  									width: 50%;">
+			                    <h4 t-if="o.state in ['draft','sent']">Draft Pro Forma Invoice</h4>
+			                    <h4 t-if="o.state  == 'progress'">Sales Order</h4>
+			                    <h4 t-if="o.state  == 'cancel'">Sales Order Canceled</h4></td>
 						  </tr>
 						  <tr>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-left: 1px solid grey;"><p>Quantity :</p>
-													<p/><p>Readiness :</p>
-													<p>ETD vessel :</p></td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-right: 1px solid grey;"><p><span t-field="o.qty_total"/></p>
-													<p/><p><span t-field="o.week_of_year"/></p>
-													<p><span t-field="o.etd_date"/></p></td>
-						    <td style="padding: 2px 3px 2px 3px;">Beneficiary's Bank :</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-right: 1px solid grey;"><!-- I --></td>
+						    <td colspan="2"></td>
+						    <td class="text-center" style="
+			                                	padding: 4px 8px 4px 8px;
+												border-left: 1px solid grey;
+												border-top: 1px solid grey;
+												border-bottom: 1px solid grey;
+			  									width: 20%;"><p>REMARKS :<br/><span t-field="o.comment"/></p></td>
+						    <td rowspan="4" style="
+			                                	padding: 4px 8px 4px 8px;
+												border-left: 1px solid grey;
+			  									width: 20%;">
+			  									<p t-if="o.state in ['draft','sent']">Proforma Invoice N° :</p>
+			  									<p t-if="o.state  == 'progress' ">Sales Order N° :</p>
+			  									<p>Date :</p>
+			  									<p>Remarks :</p>
+			  									</td>
+						    <td rowspan="4" style="
+			                                	padding: 4px 8px 4px 8px;
+												border-right: 1px solid grey;
+			  									width: 30%;">
+			  									<p t-if="o.state in ['draft','sent']"><span t-field="o.proforma_no"/></p>
+			  									<p t-if="o.state  == 'progress'"><span t-field="o.name"/></p>
+			  									<p><span t-field="o.date_order"/></p>
+			  									<p><span t-field="o.desc_goods"/></p>
+			  									</td>
+						  </tr>
+						  <tr style="height: 4px;">
+						    <td colspan="3"></td>
 						  </tr>
 						  <tr>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-top: 1px solid grey;
-													border-left: 1px solid grey;">Port of Loading :</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-top: 1px solid grey;
-													border-bottom: 1px solid grey;
-													border-right: 1px solid grey;"><span t-field="o.port_name"/></td>
-						    <td></td>
-						    <td style="
-													border-right: 1px solid grey;"></td>
-						    <td style="padding: 2px 3px 2px 3px;">Account Number :</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-right: 1px solid grey;"><!-- O --></td>
-						  </tr>
+						    <td style="width : 15%;"></td>
+						    <th colspan="2" height='30' style="font-size:9px; padding: 1px 1px 1px 1px; "></th>
+					      </tr>
 						  <tr>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-bottom: 1px solid grey;
-													border-left: 1px solid grey;">Port of Discharge :</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-bottom: 1px solid grey;
-													border-right: 1px solid grey;"><span t-field="o.port_discharge"/></td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-bottom: 1px solid grey;"></td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-bottom: 1px solid grey;"></td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-bottom: 1px solid grey;
-													border-left: 1px solid grey;">Swift Transfer</td>
-						    <td style="
-						    						padding: 2px 3px 2px 3px;
-													border-bottom: 1px solid grey;
-													border-right: 1px solid grey;"><!-- U --></td>
+						    <td style="width : 15%;"></td>
+						    <th height='10' colspan="2" style="font-size:9px;
+			                                	padding: 1px 1px 1px 1px;
+			                                	background-color:#DEDEDE;">REVISION ON PRICE OF CHILSON SIDEBOARD</th>
 						  </tr>
-						</table>
-    				</div>
-    			</div>
-			</t>
-		</template>
+						</tbody>
+					</table>
+					<table style="border-collapse:collapse;border-spacing:0;width:100%;">
+				  	  <tr>
+					    <td colspan="2" rowspan="2" style="
+					    						padding: 2px 3px 2px 3px;
+					    						width : 30%;
+												border-top: 1px solid grey;
+												border-left: 1px solid grey;
+												border-right: 1px solid grey;
+												border-bottom: 1px solid grey;">Sell To : <p><span t-field="o.partner_id"/></p>
+												<p><span t-field="o.partner_id.street"/><br/><span t-field="o.partner_id.street2"/> <span t-field="o.partner_id.city"/>, <span t-field="o.partner_id.state_id.name"/> <span t-field="o.partner_id.zip"/><br/><span t-field="o.partner_id.country_id.name"/></p>
+						</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-top: 1px solid grey;
+												border-left: 1px solid grey;">Desc. of goods :</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-top: 1px solid grey;
+												border-right: 1px solid grey;"><span t-field="o.desc_goods"/></td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-top: 1px solid grey;">Beneficiary's Name :</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-top: 1px solid grey;
+												border-right: 1px solid grey;"><span t-field="o.warehouse_id.name"/></td>
+					  </tr>
+					  <tr>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-left: 1px solid grey;"><p>Quantity :</p>
+												<p/><p>Readiness :</p>
+												<p>ETD vessel :</p></td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-right: 1px solid grey;"><p><span t-field="o.qty_total"/></p>
+												<p/><p><span t-field="o.week_of_year"/></p>
+												<p><span t-field="o.etd_date"/></p></td>
+					    <td style="padding: 2px 3px 2px 3px;">Beneficiary's Bank :</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-right: 1px solid grey;"><!-- I --></td>
+					  </tr>
+					  <tr>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-top: 1px solid grey;
+												border-left: 1px solid grey;">Port of Loading :</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-top: 1px solid grey;
+												border-bottom: 1px solid grey;
+												border-right: 1px solid grey;"><span t-field="o.port_name"/></td>
+					    <td></td>
+					    <td style="
+												border-right: 1px solid grey;"></td>
+					    <td style="padding: 2px 3px 2px 3px;">Account Number :</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-right: 1px solid grey;"><!-- O --></td>
+					  </tr>
+					  <tr>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-bottom: 1px solid grey;
+												border-left: 1px solid grey;">Port of Discharge :</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-bottom: 1px solid grey;
+												border-right: 1px solid grey;"><span t-field="o.port_discharge"/></td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-bottom: 1px solid grey;"></td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-bottom: 1px solid grey;"></td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-bottom: 1px solid grey;
+												border-left: 1px solid grey;">Swift Transfer</td>
+					    <td style="
+					    						padding: 2px 3px 2px 3px;
+												border-bottom: 1px solid grey;
+												border-right: 1px solid grey;"><!-- U --></td>
+					  </tr>
+					</table>
+					<br/>
+					<table class="table table-condensed" style="border-spacing:0;width:100%;padding: 2px 3px 2px 3px;">
+					  <tr>
+					    <th class="text-center" style="border: 1px solid #ababab;font-size: 9px;">Item Number</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">Collection</th>
+					    <th class="text-center" style="background-color:#DEDEDE;border: 1px solid #ababab;">Cust. Description</th>
+					    <th class="text-center" style="background-color:#DEDEDE;border: 1px solid #ababab;">Description</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">Finishing</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">W</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">D</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">H</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">Vol/<br/>Pcs</th>
+					    <th class="text-center" style="border: 1px solid #ababab;font-size: 9px;">FOB in Euro</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">Quantity</th>
+					    <th class="text-center" style="border: 1px solid #ababab;font-size: 9px;">Total ammount in Euro</th>
+					    <th class="text-center" style="border: 1px solid #ababab;">Total Volume</th>
+					  </tr>
+					  <t t-set="tot_vol" t-value="0.0"/>
+					  <t t-foreach="o.order_line" t-as="ol">
+						  <tr>
+						    <td style="border: 1px solid #ababab;"><span t-field="ol.product_id.ean13 or ol.product_id.default_code"/></td>
+						    <td style="border: 1px solid #ababab;"> </td>
+						    <td style="border: 1px solid #ababab;"><span t-field="ol.cust_desc"/></td>
+						    <td style="border: 1px solid #ababab;"><span t-field="ol.name"/></td>
+						    <td style="border: 1px solid #ababab;"><span t-field="ol.finishing_id.name"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.product_larg_cm"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.product_weight_cm"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.product_height_cm"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.product_unbuilt_volume12"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.price_unit"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.product_uom_qty"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.price_subtotal"/></td>
+						    <td class="oe_list_field_float" style="border: 1px solid #ababab;"><span t-field="ol.product_volume_total"/></td>
+					  	    <t t-set="tot_vol" t-value="tot_vol + float(ol.product_volume_total)"/>
+						  </tr>
+					  </t>
+					  <tr style="background-color:#DEDEDE;">
+					    <td class="text-center" colspan="5">Subtotal</td>
+					    <td colspan="5"></td>
+					    <td><span t-field="o.qty_total"/></td>
+					    <td><span t-field="o.amount_total"/></td>
+					    <td><t t-esc="tot_vol"/></td>
+					  </tr>
+					  <tr>
+					    <td colspan="3"></td>
+					    <td>Trucking</td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td colspan="3"></td>
+					    <td>Handling and charges</td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr>
+					  <tr style="background-color:#DEDEDE;">
+					    <td class="text-center" colspan="5">Grand Total</td>
+					    <td colspan="5"></td>
+					    <td></td>
+					    <td><span t-field="o.amount_total"/></td>
+					    <td></td>
+					  </tr>
+					  <tr>
+					    <td colspan="3"></td>
+					    <td colspan="2">Down Payment 30%</td>
+					    <td colspan="6"></td>
+					    <t t-set="DP" t-value="0.3 * float(o.amount_total)"/>
+					    <td><t t-esc="DP"/></td>
+					    <td></td>
+					  </tr>
+					  <!-- <tr>
+					    <td colspan="4"></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					    <td></td>
+					  </tr> -->
+					  <tr style="border: 1px solid #ababab;">
+					    <td colspan="4"><p>Proforma acknowledge by</p><p>Date</p></td>
+					    <td colspan="9"><br/><p>Signature</p></td>
+					  </tr>
+					</table>
+				</div>
+			</div>
+		</t>
+	</template>
 
-        <report
+	<record id="paperformat_invSO" model="report.paperformat">
+	    <field name="name">Proforma Invoice</field>
+	    <field name="default" eval="True"/>
+	    <field name="format">Legal</field>
+	    <field name="orientation">Portrait</field>
+	    <field name="margin_top">3</field>
+	    <field name="margin_bottom">3</field>
+	    <field name="margin_left">3</field>
+	    <field name="margin_right">3</field>
+	    <field name="header_line" eval="False" />
+	    <field name="header_spacing">1</field>
+	    <field name="dpi">80</field>
+	</record>
+
+          	<report
 		    id="so_proforma_invoice"
 		    model="sale.order"
 		    string="Proforma Invoice"
@@ -158,6 +277,10 @@
 		    name="vit_product.report_so_invoice"
 		    file="vit_product.report_so_invoice"
 		/>
+
+	<record id="so_proforma_invoice" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="vit_product.paperformat_invSO"/>
+           </record>
 		
 	</data>
 </openerp>
