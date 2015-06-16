@@ -70,7 +70,7 @@
                                     <field name="image_medium" widget="image" height="50" />
                                     <field name="colection_ids"/>
                                     <field name="order_id" invisible="1"/>
-                                    <field name="name" string="Name"/>
+                                    <field name="default_code" string="Ref Meuble"/>
                                     <field name="description_ids"/>
                                     <field name="description"/>
 
@@ -89,7 +89,7 @@
                                  <form string="Sale Order List">
                                     <field name="image_medium" widget="image" height="50" />
                                     <field name="order_id" invisible="1"/>
-                                    <field name="name" string="name"/>
+                                    <field name="default_code" string="Ref Meuble"/>
                                     <field name="description_ids"/>
                                     <field name="description"/>
 
