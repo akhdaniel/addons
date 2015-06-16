@@ -116,8 +116,8 @@ class sale_order_line(osv.osv):
         'description': fields.related('product_id','description',type='text',string='Description',readonly=True),
 
         'product_length':fields.related('product_id','product_length',type='float',string='Length (mm)'),
-        'product_larg':fields.related('product_id','product_length',type='float',string='Width (mm)'),
-        'product_height':fields.related('product_id','product_length',type='float',string='Thickness (mm)'),     
+        'product_larg':fields.related('product_id','product_larg',type='float',string='Width (mm)'),
+        'product_height':fields.related('product_id','product_height',type='float',string='Thickness (mm)'),     
     }
 
 
