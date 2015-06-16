@@ -1,7 +1,7 @@
 {
     'version': '0.1',
     'name': 'Mrp Overheads',
-    'depends': ['base','product','resource','mrp'],
+    'depends': ['base','product','resource','mrp','account_cancel'],
     'author'  :['vitraining.com','rahasia2alpha@gmail.com'],
     'category': 'Manufacturing',
     'description': """

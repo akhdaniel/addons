@@ -18,5 +18,17 @@
                 </xpath>    
             </field>
         </record>
+
+        <record id="mrp_production_form_view_overhead" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@string='Confirm Production']" position="after"> 
+                    <button name="update_hpp" string="Update HPP" states="done" type="object" icon="terp-stock_effects-object-colorize"/>
+                </xpath>
+                
+            </field>
+        </record>
     </data>
 </openerp>
