@@ -69,7 +69,8 @@
                                 <tree string="Sale Order List">
                                     <field name="image_medium" widget="image" height="50" />
                                     <field name="colection_ids"/>
-                                    <field name="order_id"/>
+                                    <field name="order_id" invisible="1"/>
+                                    <field name="name" string="Name"/>
                                     <field name="description_ids"/>
                                     <field name="description"/>
 
@@ -79,7 +80,6 @@
                                     <field name="product_volume_total"/>
 
 
-                                    <field name="name" invisible="1"/>
                                     <field name="price_unit" sum="Total Amount" invisible="1"/>
                                     <field name="product_uom" invisible="1"/>
                                     <field name="price_subtotal" sum="Total Amount" invisible="1"/>
@@ -88,8 +88,8 @@
                                 </tree>  
                                  <form string="Sale Order List">
                                     <field name="image_medium" widget="image" height="50" />
-                                    <field name="colection_ids"/>
-                                    <field name="order_id"/>
+                                    <field name="order_id" invisible="1"/>
+                                    <field name="name" string="name"/>
                                     <field name="description_ids"/>
                                     <field name="description"/>
 
@@ -98,7 +98,7 @@
                                     <field name="product_uom_qty" sum="Total Amount"/>
                                     <field name="product_volume_total"/>
 
-                                    <field name="name" invisible="1"/>
+
                                     <field name="price_unit" sum="Total Amount" invisible="1"/>
                                     <field name="product_uom" invisible="1"/>
                                     <field name="price_subtotal" sum="Total Amount" invisible="1"/>

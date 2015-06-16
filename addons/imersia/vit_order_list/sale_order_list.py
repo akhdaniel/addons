@@ -40,7 +40,7 @@ class sale_order_list(osv.Model):
 		return company_id
 
 	def _get_manufacturing_order(self, cr, uid, ids, field_name, arg, context=None):
-		#import pdb;pdb.set_trace()
+		
 		if context is None:
 			context = {}
 		result = {}
@@ -54,7 +54,7 @@ class sale_order_list(osv.Model):
 		return result		
 
 	def _get_sale_order_line_ids(self, cr, uid, ids, field_name, arg, context=None):
-		
+		#import pdb;pdb.set_trace()
 		if context is None:
 			context = {}
 		result = {}
