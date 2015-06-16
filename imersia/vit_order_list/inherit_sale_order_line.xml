@@ -32,7 +32,9 @@
                 		<field name="product_unbuilt_volume12"/>
                 		<field name="product_volume_total"/>
                     </group>
-                 
+                  <group>
+                    <field name='remarks'/>
+                  </group>                 
                 </group>
 
             	</field>

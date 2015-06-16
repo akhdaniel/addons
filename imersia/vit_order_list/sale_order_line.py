@@ -102,7 +102,7 @@ class sale_order_line(osv.osv):
         'description_ids': fields.function(_get_customer_description, type='char', string='Customer Description',readonly=True),
         'wood_type_id': fields.related('product_id','wood_type_id',type='many2one',relation='product.wood.type',string='Wood',readonly=True),
         'packaging_id': fields.related('product_id','packaging_id',type='many2one',relation='product.package.type',string='Package Type',readonly=True),
-        'remarks':fields.char('Remarks'),
+        'remarks':fields.char('Remarks',readonly=False),
 
         'product_weight_inch': fields.function(hitung_length_mm_ke_inch, type='char', string='Depth (Inch)'),
         'product_height_inch': fields.function(hitung_height_mm_ke_inch, type='char', string='Height (Inch)',),
