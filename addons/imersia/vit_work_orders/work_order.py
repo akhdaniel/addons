@@ -103,6 +103,21 @@ class mrp_production_workcenter_line(osv.osv):
 
         return result  
 
+    def _get_bom_line_detail_ids(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+
+        bom_line_id = []
+        for line in self.browse(cr,uid,ids,context=context).production_id.bom_id.bom_line_ids:
+            bom_line_id.append(line.id)
+
+        if bom_line_id :
+            result[ids[0]] = bom_line_id
+
+        return result
+
     _columns = {
         'default_code' : fields.related('product','default_code',type='char',string='Ref Product',readonly=True),
         'partner_id' : fields.function(_get_partner, type='many2one', relation="res.partner", string="Customer"),
@@ -113,6 +128,7 @@ class mrp_production_workcenter_line(osv.osv):
         'move_lines' : fields.function(_get_product_to_consume, type='many2many', relation="stock.move", string="Product to Consume"),
         'move_created_ids' : fields.function(_get_product_to_produce, type='many2many', relation="stock.move", string="Product to Produce"),
         'rate_production_time' : fields.function(_get_rate_production_time,type="char",string='Rate Production Time'),
+        'bom_line_detail_ids' : fields.function(_get_bom_line_detail_ids,type="many2many",relation="mrp.bom.line",string='Rate Production Time'),
     }
 
 
@@ -165,7 +181,7 @@ class mrp_workcenter(osv.osv):
         return result 
 
     _columns = {
-        #'time_cycle': fields.float('Time for 1 cycle (hour)', help="Time in hours for doing one cycle."),
+        'time_cycle': fields.float('Time for 1 cycle (hour)', help="Time in hours for doing one cycle.",digits=(16,4)),
         'time_cycle2': fields.char('Time for 1 cycle (hour)',size=8, help="Time in hours for doing one cycle."),
         'convert_tc1_ke_tc' : fields.function(_convert_time_cycle,type="boolean",string="Convert"),
 

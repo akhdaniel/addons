@@ -25,7 +25,17 @@
                                 <field name="default_code"/>                                
                                 <field name="origin"/>
                             </group>    
-                        </group>                    
+                        </group> 
+                        <group string="BoM Details">
+                            <field view_mode="tree,form" name="bom_line_detail_ids" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="product_id"/>
+                                    <field name="position" />
+                                    <field name="ket_bahan"/>  
+                                    <field name="ket_mesin"/>                   
+                                </tree>
+                            </field>                            
+                        </group>                                             
                     </page>  
                     <page string="Product to Consume">
                         <field view_mode="tree,form" name="move_lines" nolabel="1">
