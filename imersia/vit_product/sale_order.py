@@ -98,6 +98,14 @@ class sale_order(osv.osv):
             result[i.id] = 'PO'+ i.name[2:]
         return result
 
+    def _get_sale_order_line_ids(self, cr, uid, ids, field_name, arg, context=None):
+        result = dict.fromkeys(ids, False)
+        line_ids = []
+        for line in self.browse(cr,uid,ids[0],).order_line:
+            line_ids.append(line.id)
+        result[ids[0]] = line_ids
+        return result
+
     _columns = {
         'proforma_no':fields.function(_get_so_name,type='char',store=True,string='No.'),
         'state': fields.selection([
@@ -122,6 +130,7 @@ class sale_order(osv.osv):
         'readiness_date':fields.date("Readiness",help="Order availability date"),
         'week_of_year': fields.char('Week'),
         'etd_date':fields.datetime("ETD",help="Estimated Time of Delivery"),
+        'sale_line_measurements'  : fields.function(_get_sale_order_line_ids, type="many2many", relation="sale.order.line", string="Measurement"),
         }
 
     _defaults={
@@ -297,4 +306,7 @@ class sale_order_line(osv.osv):
         'product_larg_cm': fields.function(hitung_width_mm_ke_cm, type='char', string='Width (cm)'),
         'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      
         'product_unbuilt_volume12': fields.related('product_id','product_unbuilt_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),
+        'product_length':fields.related('product_id','product_length',type='float',string='Length (mm)'),
+        'product_larg':fields.related('product_id','product_larg',type='float',string='Width (mm)'),
+        'product_height':fields.related('product_id','product_height',type='float',string='Thickness (mm)'), 
         }
