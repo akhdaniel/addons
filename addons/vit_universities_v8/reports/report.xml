@@ -1,0 +1,54 @@
+<openerp>
+    <data>
+
+		<report id="ktm_report" 
+			 string="Kartu Tanda Mahasiswa" 
+			 model="res.partner" 
+			 name="ktm_report" 
+			 rml="vit_universities/reports/vit_ktm.rml" 
+			 header="False"
+		/>
+
+		<report id="krs_report" 
+			 string="Kartu Rencana Studi" 
+			 model="operasional.krs" 
+			 name="krs_report" 
+			 rml="vit_universities/reports/vit_krs.rml" 
+			 header="False"
+		/>
+
+		<report id="khs_report" 
+			 string="Kartu Hasil Studi" 
+			 model="operasional.krs" 
+			 name="khs_report" 
+			 rml="vit_universities/reports/vit_khs.rml" 
+			 header="False"
+		/>		
+
+		<report id="transkrip_report" 
+			 string="Transkrip Nilai" 
+			 model="operasional.transkrip" 
+			 name="transkrip_report" 
+			 rml="vit_universities/reports/vit_transkrip.rml" 
+			 header="False"
+		/>	
+
+		<report id="spmb_report" 
+			 string="Daftar Lolos Seleksi" 
+			 model="spmb.mahasiswa" 
+			 name="spmb_report" 
+			 rml="vit_universities/reports/vit_spmb.rml" 
+			 header="False"
+		/>
+
+		<report id="kelas_report" 
+			 string="Absensi" 
+			 model="master.kelas" 
+			 name="kelas_report" 
+			 rml="vit_universities/reports/vit_kelas.rml" 
+			 header="False"
+		/>
+
+    </data>
+</openerp>
+

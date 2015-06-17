@@ -1,0 +1,22 @@
+ <openerp>
+    <data>   
+
+<!-- Product -->
+
+        <record id="product_normal_form_view2" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="sale_ok" position="before">      
+                    <field name="is_sks"/>               
+                    <label for="is_sks" string="SKS"/>
+                </field>   
+                <field name="default_code" position="after"> 
+                    <field name="fakultas_id" attrs="{'invisible': [('is_sks','=',False)],'required': [('is_sks','=',True)]}"/>   
+                </field>                                       
+            </field>
+        </record>    
+
+    </data>
+</openerp>        

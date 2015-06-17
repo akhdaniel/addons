@@ -1,0 +1,79 @@
+<openerp>
+	<data>
+
+        <!-- kelas -->
+        <record model="ir.ui.view" id="kelas_tree_view">
+            <field name="name">kelas.form</field>
+            <field name="model">master.kelas</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Kelas" version="7.0">
+                    <field name="name"/>
+                    <field name="nama"/>
+                    <field name="tahun_ajaran_id"/>
+                    <field name="fakultas_id"/>
+                    <field name="jurusan_id"/>
+                    <field name="prodi_id"/> 
+                    <field name="employee_id" invisible="1"/> 
+                </tree>                    
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="kelas_form_view">
+            <field name="name">kelas.tree</field>
+            <field name="model">master.kelas</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Peserta Kelas" version="7.0">
+                	<header>
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
+                		<button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
+			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list kelas"/>                		                		
+                		<field name="state" widget="statusbar" nolabel="1"/>
+                	</header>                	
+                	<sheet>
+                		<group>
+                			<group>
+			                    <field name="name" attrs="{'readonly': [('state','=','confirm')]}"/>
+			                    <field name="nama" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="employee_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="kuota" attrs="{'readonly': [('state','=','confirm')]}"/>                                
+                			</group>
+                			<group>
+                                <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+			                    <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+			                    <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}"/>                				
+                			</group>
+                		</group>	
+                        <notebook colspan="4">
+                            <page string="Peserta Kelas">
+                                <field view_mode="tree" name="partner_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree>    
+                                        <field name="npm"/>                                    
+                                        <field name="name"/>
+                                        <field name="jenis_kelamin"/>
+                                    </tree>
+                                </field>
+                            </page>
+                    	</notebook> 
+                    </sheet> 
+                </form>               
+            </field>
+        </record>
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_kelas" model="ir.sequence.type">
+            <field name="name">Kelas</field>
+            <field name="code">master.kelas</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_kelas" model="ir.sequence">
+            <field name="name">Kelas</field>
+            <field name="code">master.kelas</field>
+            <field name="prefix">KLS%(y)s-</field>
+            <field name="padding">5</field>
+        </record> 
+
+	</data>
+</openerp>	

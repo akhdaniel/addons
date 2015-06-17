@@ -1,0 +1,104 @@
+<openerp>
+	<data>
+
+        <!--over write-->
+        <!--kurikulum-->
+        <record model="ir.ui.view" id="kurikulum_tree_view">
+            <field name="name">kurikulum.tree</field>
+            <field name="model">master.kurikulum</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Kurikulum" version="7.0">
+                    <field name="name"/>
+                    <field name="tahun_ajaran_id"/> 
+                    <field name="fakultas_id"/>
+                    <field name="jurusan_id"/>
+                    <field name="prodi_id"/>
+                    <field name="semester_id"/>                    
+                    <field name="state" invisible="1"/>                  
+                </tree>
+            </field>
+        </record>
+        
+        <record id="kurikulum_form_view" model="ir.ui.view">
+            <field name="name">kurikulum.form</field>
+            <field name="model">master.kurikulum</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Kurikulum" version="7.0">
+                	<header>
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
+               		    <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
+                		<field name="state" widget="statusbar" nolabel="1"/>
+                	</header>                	
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                            </group>
+                            <group>
+                                <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="semester_id" attrs="{'readonly': [('state','=','confirm')]}" widget="selection"/>
+
+                            </group>
+                        </group>    
+                        <notebook colspan="4">
+                            <page string="Daftar Mata Kuliah">
+                               <!--  <label for="max_sks" string="Maximal SKS"/> -->
+                               <group>
+                                    <group>
+                                        <field name="max_sks" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                    </group>
+                                    <group>    
+                                        <field name="min_ip" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                    </group>
+                                </group>
+                                <field view_mode="tree" name="kurikulum_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree version="7.0">
+                                        <field name="kode"/>
+                                        <field name="nama"/>
+                                        <field name="sks" sum="Total SKS"/>
+                                        <field name="jenis"/>                                        
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="total_sks"/>
+                                </group>                               
+                            </page>
+                            <page string="Total Mata Kuliah">
+                                <field view_mode="tree" name="total_mk_ids">
+                                    <tree version="7.0">
+                                        <field name="kode"/>
+                                        <field name="nama"/>
+                                        <field name="sks" sum="Total SKS"/>
+                                        <field name="jenis"/>                                        
+                                    </tree>
+                                </field> 
+                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                    <field name="total_sks2"/>
+                                </group>                                                             
+                            </page>                            
+                        </notebook>
+                    </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_kurikulum" model="ir.sequence.type">
+            <field name="name">Kurikulum</field>
+            <field name="code">master.kurikulum</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_kurikulum" model="ir.sequence">
+            <field name="name">Kurikulum</field>
+            <field name="code">master.kurikulum</field>
+            <field name="prefix">KR%(y)s-</field>
+            <field name="padding">4</field>
+        </record> 
+
+	</data>
+</openerp>	

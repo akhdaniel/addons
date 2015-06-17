@@ -1,0 +1,92 @@
+<openerp>
+	<data>
+
+        <record id="invoice_tree_mhs" model="ir.ui.view">
+            <field name="name">account.invoice.tree.mhs</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice">
+                    <field name="partner_id" string="Nama"/>
+                    <!-- <field name="partner_id" string="Nama" groups="base.group_user"/> -->
+                    <field name="number" string="Nomor"/>
+                    <field name="date_invoice" string="Tanggal"/>                   
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    <field name="user_id" string="User"/>
+                    <field name="date_due" invisible="1"/>
+                    <field name="origin" invisible="1"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="act_res_partner_pembayaran" model="ir.actions.act_window">
+            <field name="name">Pembayaran Kuliah</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="invoice_tree_mhs"/>
+            <field name="domain">[('partner_id','=',active_id),('type','=','out_invoice')]</field>
+            <field name="context">{'default_partner_id':active_id}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    ...
+                </p><p>
+                    Belum ada pembayaran...
+                </p>
+            </field>
+        </record> 
+
+        <record id="res_partner_view_fees_buttons" model="ir.ui.view">
+            <field name="name">Pembayaran</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="25"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button name="%(act_res_partner_pembayaran)d"  type="action"
+                        string="Pembayaran"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Information Form View -->
+        <record model="ir.ui.view" id="view_invoicer_form_inherit">
+            <field name="name">Pembayaran</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+            	<field name="partner_id" position="after">
+            		<newline/>
+                    <field name="npm" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="invoice_supplier_form_mahasiswa" model="ir.ui.view">
+            <field name="name">account.invoice.mahasiswa</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="priority">9</field>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field string="Partner" name="partner_id"
+                    on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
+                    context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"
+                    domain="[('supplier', '=', True)]"/>
+                </field>
+                <field name="fiscal_position" position="replace"/>
+                <field name="supplier_invoice_number" position="replace"/>
+            </field>
+        </record>
+
+
+	</data>
+</openerp>

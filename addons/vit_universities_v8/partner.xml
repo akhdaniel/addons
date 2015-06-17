@@ -1,0 +1,187 @@
+<openerp>
+    <data>
+
+    <record id="act_res_partner_view_transkrip" model="ir.actions.act_window">
+            <field name="name">Total Matakuliah</field>
+            <field name="res_model">operasional.transkrip</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="view_id" ref="invoice_tree_mhs"/> -->
+            <field name="domain">[('partner_id','=',active_id)]</field>
+            <field name="context">{'default_partner_id':active_id}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Transkrip belum dibuat
+                </p><p>
+                    Tekan tombol Create untuk buat Transkrip...
+                </p>
+            </field>
+        </record> 
+
+        <record model="ir.ui.view" id="tab_form_view">
+            <field name="name">partner.personal</field>
+            <field name="model">res.partner</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml"> 
+             	<field name="function" position="replace"/>
+             	<field name="fax" position="replace"/>
+             	<page string="Internal Notes" position="replace"/>
+            	<field name="parent_id" position="after">
+            		<field name="status_mahasiswa" invisible="1"/>
+            	</field>
+                        <div class="oe_edit_only" position="replace">
+                        	<div class="oe_edit_only" invisible="1">
+	                            <label for="name"/> (
+	                            <field name="is_company" on_change="onchange_type(is_company)" class="oe_inline"/> <label for="is_company" string="Is a Company?"/>)
+	                        </div>    
+                        </div>
+            	<field name='name' position="replace">
+            		<field name="reg" style="width: 100%%" attrs="{'invisible': [('status_mahasiswa','in',('Mahasiswa','alumni'))]}"/>
+            		<field name="npm" style="width: 100%%" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
+            		<h3>
+            			<div>
+            				<field name="name" placeholder="Nama" style="width: 100%%"/>
+<!--             				<field name="nama_tengah" placeholder="Nama Tengah" style="width: 30%%"/> 
+            				<field name="nama_belakang" placeholder="Nama Belakang" style="width: 34%%"/> -->
+            			</div>
+            		</h3>
+                </field>   
+                <notebook colspan="4">
+                    <page string="Informasi Umum">
+                        <form string="Informasi Umum" version="7.0">
+                            <sheet>
+                              <separator string="Data Ujian Saringan Masuk" colspan="4"/>
+                              <newline/>
+                               <group colspan="4" col="4">
+                                  <field name="no_formulir"/>
+                                  <field name="nilai_ujian" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
+                                  <field name="tgl_ujian"/>                                   
+                                  <field name="batas_nilai"/>
+                                   </group>                                
+                                <separator string="Informasi Pribadi"/>
+                                <group col="4" colspan="4">
+                                	<group>
+                                		<field name="tempat_lahir"/>
+                                		<field name="tanggal_lahir"/>
+                                		<field name="age"/>	
+                                	</group>
+                                	<group>
+                                		<field name="jenis_kelamin"/>
+                                		<field name="status_pernikahan"/>
+                                		<field name="agama"/>	
+                                	</group>
+                                </group>
+
+                                <separator string="Informasi Calon Mahasiswa" attrs="{'invisible': [('status_mahasiswa','in',('Mahasiswa','alumni'))]}"/>
+                                <separator string="Informasi Mahasiswa" attrs="{'invisible': [('status_mahasiswa','=','calon')]}"/>
+                                <group col="4" colspan="4">
+                                	<group>
+                                		<field name="fakultas_id"/>
+                                		<field name="jurusan_id"/>
+                                		<field name="prodi_id"/>	
+                                	</group>
+                                	<group>
+                                		<field name="tgl_daftar" attrs="{'invisible': [('status_mahasiswa','!=','calon')]}"/>
+                                		<field name="kelas_id"/>
+                                		<field name="tahun_ajaran_id"/>	
+                                	</group>
+                                </group>                       	                                     
+                            </sheet>
+                        </form>
+                    </page>
+                    <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan">
+                        <sheet>
+                            <separator string="Riwayat Pendidikan"/>
+                                <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
+                        	        <tree string="Daftar Riwayat Pendidikan" editable="bottom">
+        			                    <field name="nama_sekolah"/>
+        			                    <field name="tingkat"/>
+                                        <field name="tahun_masuk"/>
+                                        <field name="tahun_lulus"/>
+                                        <field name="nilai_akhir"/>
+        			                </tree>
+        		                </field>
+                                <separator string="Riwayat Keluarga" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
+                        		<field view_mode="tree" name="biodata_keluarga_ids" nolabel="1" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
+                        			<tree string="Daftar Anggota Keluarga" editable="bottom">
+        			                    <field name="nama"/>
+        			                    <field name="jenis_kelamin"/>
+        			                    <field name="tempat_lahir"/>
+        			                    <field name="tanggal_lahir"/>
+        			                    <field name="hubungan_keluarga"/>
+        			                    <field name="pekerjaan"/>
+        			                    <field name="alamat"/>
+        			                </tree>
+        			            </field>  
+                            </sheet>
+
+		            </page> 
+                    <page string="Pelanggaran" name="pelanggaran" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
+                        <field view_mode="tree" name="pelanggaran_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="jenis_pelanggaran_id"/>
+                                <field name="tanggal"/>
+                                <field name="nama" string="Catatan Tambahan"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Informasi Kelulusan" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}">
+                        <form string="Informasi Kelulusan" version="7.0">
+                            <sheet>
+                                  <separator string="Informasi Kelulusan" colspan="4" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/>
+                                  <newline/>                                
+                                   <group colspan="4" col="4">
+                                        <group>
+                                           <field name="ipk"/>                            
+                                           <field name="judul"/>
+                                        </group>                                     
+                                        <group>
+                                        <label for="tgl_lulus" string="Tanggal Lulus" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                        <div>
+                                            <field name="tgl_lulus" class="oe_inline" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                            <label for="%(act_res_partner_view_transkrip)d" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
+                                            <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find"/> 
+                                        </div>  
+                                            <field name="siap_sidang" invisible="1"/>
+                                            <field name="wisuda" attrs="{'invisible': [('siap_sidang','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
+                                            <field name="lokasi_wisuda" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                        </group>
+                                   </group>                                                              
+                            </sheet>
+                        </form>
+                    </page>
+
+                </notebook>                
+            </field>       
+        </record>
+
+       <record id="view_res_partner_filter_mahasiswa" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+            
+                <field name="name" position="replace">
+                   <field name="name" filter_domain="['|','|','|',('name','ilike',self),('parent_id','ilike',self),('npm','=',self),('reg','=',self)]"/>
+                </field>   
+            </field>
+        </record>
+
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_personal" model="ir.sequence.type">
+            <field name="name">Personal</field>
+            <field name="code">res.partner</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_personal" model="ir.sequence">
+            <field name="name">Partner</field>
+            <field name="code">res.partner</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+            <field name="reg" eval="False"/>
+        </record> 
+
+    </data>
+</openerp>

@@ -1,0 +1,12 @@
+<openerp>
+    <data>
+		<report id="ktm_report" 
+			 string="Print KTM" 
+			 model="res.partner" 
+			 name="ktm_report" 
+			 rml="vit_universities/reports/vit_ktm.rml" 
+			 header="False"
+		/>
+    </data>
+</openerp>
+

@@ -1,0 +1,66 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="wisuda_tree_view">
+            <field name="name">wisuda.tree</field>
+            <field name="model">wisuda.mahasiswa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Wisudawan/i">
+                    <field name="name"/>
+                    <field name="tahun_ajaran_id"/>
+                    <field name="kuota"/>
+                    <field name="tgl_wisuda"/>
+                    <field name="lokasi_wisuda"/>
+                    <field name="state"/>                    
+                </tree>
+            </field>
+        </record>
+    
+        <record model="ir.ui.view" id="wisuda_form_view">
+            <field name="name">wisuda.form</field>
+            <field name="model">wisuda.mahasiswa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Wisuda" version="7.0">
+                	<header>
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
+			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list"/>                		                		
+                		<field name="state" widget="statusbar" nolabel="1"/>
+                	</header>
+                	<sheet>
+                		<group>
+                			<group>
+			                    <field name="name" attrs="{'readonly': [('state','=','done')]}"/>
+			                    <field name="tgl_wisuda" attrs="{'readonly': [('state','=','done')]}"/>
+			                    <field name="lokasi_wisuda" attrs="{'readonly': [('state','=','done')]}"/>		                    
+<!-- 			                    <button name="button_reload" states="draft" string="RELOAD" class="oe_link oe_edit_only" type="object" help="reload data mahasiswa yang masuk list"/> -->
+			                 </group>
+			                 <group>  
+                                <field name="kuota" attrs="{'readonly': [('state','=','done')]}"/>
+			                 	<field name="tahun_ajaran_id" on_change="onchange_angkatan(tahun_ajaran_id, tgl_wisuda, kuota)" attrs="{'readonly': [('state','=','done')]}"/>		                    	                  
+			                </group>    
+                    	</group> 
+                        <notebook colspan="4">
+                            <page string="Daftar Calon Wisudawan/i">
+                                <field view_mode="tree,form" name="partner_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}">
+					                <tree string="Daftar Calon Wisudawan/i">
+					                    <field name="npm"/>
+					                    <field name="name" string="Nama"/> 
+					                    <field name="tgl_lulus"/>   
+					                    <field name="ipk"/>
+                                        <field name="fakultas_id"/>
+                                        <field name="jurusan_id"/>
+                                        <field name="prodi_id"/>
+					                    <field name="status_mahasiswa" string="Status"/>                
+					                </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>    
+                </form>
+            </field>
+        </record>
+
+	</data>
+</openerp>			
