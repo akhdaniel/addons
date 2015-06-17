@@ -9,6 +9,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 
 class master_kurikulum (osv.Model):
 	_name = 'master.kurikulum'
+	_order = 'name'
 
 
 	def create(self, cr, uid, vals, context=None):
