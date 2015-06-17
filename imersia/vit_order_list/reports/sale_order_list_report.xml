@@ -1,111 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
-<template id="report_saleorderlist_document">
-    <t t-call="report.external_layout">
-        <div class="page">
-            <div class="oe_structure"/>
-            <div class="row">
-                <div class="col-xs-6">
-                     <strong t-if="o.partner_id">Customer:</strong>
-                    <div t-field="o.partner_id" 
-                        t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
-                        <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p> 
-                                         
-                </div>                                  
+    <data>
+
+  <template id="report_order_list">
+        <t t-foreach="docs" t-as="o">
+          <div class="page"><!-- Header -->
+            <div  class="left"  style="float : left; width:700px;font-size:10px;" >
+              <table class="table table-condensed">
+                <tr>
+                  <th rowspan='2' class="text-center" style="
+                          border-left: 1px solid #ddd;
+                          border-top: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">
+                          <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 40px;"/>
+                  </th>
+                  <th rowspan='2' class="text-center" style="
+                          border-right: 1px solid #ddd;
+                          border-top: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;
+                          width:20%;"><t t-esc="o.company_id.name"/></th>
+                  <th colspan="2" class="text-center" style="border: 1px solid #ddd;width:75%;"><h5><t t-esc="o.name"/></h5></th>
+                </tr>
+                <tr>
+                  <td height="10px" style="border: 1px solid white;border-bottom: 1px solid #ddd;" colspan="2"></td>
+                </tr>
+                <tr>
+                  <td style="
+                          border-left: 1px solid #ddd;
+                          border-top: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">Buyer</td>
+                  <td style="
+                          border-right: 1px solid #ddd;
+                          border-top: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">:                    <t t-esc="o.partner_id.name"/></td>
+                  <td style="
+                          border-top: 1px solid white;
+                          border-bottom: 1px solid white;"></td>
+                  <td style="border: 1px solid #ddd;" class="text-center"><h4><t t-esc="o.ref"/></h4></td>
+                </tr>
+                <tr>
+                  <td style="
+                          border-left: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">PO Date</td>
+                  <td style="
+                          border-right: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">:                    <t t-esc="o.purchase_date"/></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td style="
+                          border-left: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">Up to Date</td>
+                  <td style="
+                          border-right: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">:                    <t t-esc="o.up_to_date"/></td>
+                  <td width='15%' style="
+                          border-top: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;">Delivery Date :</td>
+                  <td style="
+                          border-right: 1px solid #ddd;
+                          border-top: 1px solid #ddd;
+                          border-bottom: 1px solid #ddd;" class="text-center"><t t-esc="o.delivery_date"/></td>
+                </tr>
+              </table>
+              <br/>
             </div>
-
-            <h3>
-                <span >Order List N° : </span>
-                <span t-field="o.name"/>
-            </h3>
-
-            <div class="row mt32 mb32" id="informations">
-<!--                 <div t-if="o.ref" class="col-xs-3">
-                    <strong>Reference:</strong>
-                    <p t-field="o.ref"/>
-                </div>
-                                       
- -->
-                    <div t-if="o.purchase_date" class="col-xs-3">
-                        <strong>P.O Date:</strong>
-                        <p t-field="o.purchase_date"/>                    
-                    </div>
-                    <div t-if="o.up_to_date" class="col-xs-3">
-                        <strong>Up to date:</strong>
-                        <p t-field="o.up_to_date"/>  
-                    </div>    
-                    <div t-if="o.delivery_date" class="col-xs-3">
-                        <strong>Delivery Date:</strong>
-                        <p t-field="o.delivery_date"/> 
-                    </div>      
-                    <div t-if="o.user_id.name" class="col-xs-3">
-                        <strong>User:</strong>
-                        <p t-field="o.user_id.name"/>
-                    </div>
-                                             
+            <div  class="left"  style="width:100%;font-size:10px;">
+              <table class="table table-condensed" >
+                <tr style="vertical-align:middle;background-color:#eee;" >
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3" >Picture</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Collection</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Item Number</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Art No.</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Description <span t-field="o.partner_id.name"/></th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Description MIW</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Wood</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" colspan="11">DIMENTION SIZE (Cm)</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">VOLUME M3 PER PIECE</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" colspan="2" rowspan="2">Weight (Kg)</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">Finishing</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">QTY</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">VOLUME TOTAL</th>
+                  <th style="border: 1px solid #ddd;vertical-align:middle" rowspan="3">REMARKS</th>
+                </tr>
+                <tr style="vertical-align:middle;background-color:#eee;">
+                  <td style="border: 1px solid #ddd;" colspan="3">FURNITURE</td>
+                  <td style="border: 1px solid #ddd;" rowspan="2">Type of Box</td>
+                  <td style="border: 1px solid #ddd;" rowspan="2">Part</td>
+                  <td style="border: 1px solid #ddd;" colspan="3">IN SIDE BOX</td>
+                  <td style="border: 1px solid #ddd;" colspan="3">OUT SIDE BOX</td>
+                </tr>
+                <tr style="vertical-align:middle;background-color:#eee;">
+                  <td style="border: 1px solid #ddd;">W</td>
+                  <td style="border: 1px solid #ddd;">D</td>
+                  <td style="border: 1px solid #ddd;">H</td>
+                  <td style="border: 1px solid #ddd;">W</td>
+                  <td style="border: 1px solid #ddd;">D</td>
+                  <td style="border: 1px solid #ddd;">H</td>
+                  <td style="border: 1px solid #ddd;">W</td>
+                  <td style="border: 1px solid #ddd;">D</td>
+                  <td style="border: 1px solid #ddd;">H</td>
+                  <td style="border: 1px solid #ddd;">Net</td>
+                  <td style="border: 1px solid #ddd;">Gross</td>
+                </tr>
+                <t t-set="tot_qty" t-value="0.0"/>
+                <t t-set="tot_vol" t-value="0.0"/>
+                <t t-foreach="o.sale_order_line_ids" t-as="l">
+                  <tr>
+                    <td style="border: 1px solid #ddd;"><img t-if="l.image_medium" t-att-src="'data:image/png;base64,%s' % l.image_medium" style="max-height: 50px;"/></td>
+                    <td style="border: 1px solid #ddd;"><t t-foreach="l.colection_ids" t-as="c"><span t-field="c.complete_name"/>  </t></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.default_code"/></td>
+                    <td style="border: 1px solid #ddd;">-</td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.description_ids"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.name"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.wood_type_id.complete_name"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.product_larg_cm"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.product_weight_cm"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.product_height_cm"/></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.product_id.product_weight"/></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.finishing_id.complete_name"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.product_uom_qty"/></td>
+                    <td style="border: 1px solid #ddd;"><span t-field="l.product_volume_total"/></td>
+                    <td style="border: 1px solid #ddd;"></td>
+                    <t t-set="tot_qty" t-value="tot_qty + float(l.product_uom_qty)"/>
+                    <t t-set="tot_vol" t-value="tot_vol + float(l.product_volume_total)"/>
+                  </tr>
+                </t>
+                <tr>
+                  <td style="border-bottom: 1px solid white;" colspan="21"></td>
+                  <td  style="border: 1px solid #ddd;" class="text-center">TOTAL</td>
+                  <td  style="border: 1px solid #ddd;"><t t-esc="tot_qty"/></td>
+                  <td  style="border: 1px solid #ddd;"><t t-esc="tot_vol"/></td>
+                  <td style="border-bottom: 1px solid white;"></td>
+                </tr>
+                <tr height="20px">
+                  <td colspan="25"></td>
+                </tr>
+                <tr height="20px"  style="border-top: 1px solid white;">
+                  <td  style="border: 1px solid #ddd;" colspan="24">Remarks  :<br/></td>
+                  <td style="border-top: 1px solid white;"></td>
+                </tr>
+              </table>
             </div>
-
-
-            <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Order Ref</th>
-                        <th>Description</th>
-                        <th class="text-right">Quantity</th>
-                        <th class="text-right">Unit Price</th>
-                        <th class="text-right">Sub Total</th>
-                    </tr>
-               </thead>
-               <tbody class="sale_tbody">
-                    <tr t-foreach="o.sale_order_line_ids" t-as="l">
-                        <td>
-                           <span t-field="l.order_id"/>
-                        </td>
-                        <td>
-                            <span t-field="l.name"/>
-                        </td>
-                        <td class="text-right">
-                            <span t-field="l.product_uom_qty"/>
-                            <span t-field="l.product_uom"/>
-                        </td>
-                        <td class="text-right">
-                            <span t-field="l.price_unit"/>
-                        </td>
-                        <td class="text-right">
-                            <span t-field="l.price_subtotal"
-                                t-field-options='{"display_currency": "o.pricelist_id.currency_id"}'/>
-                        </td>
-                    </tr>
-                </tbody>             
-            </table>
-
-            <div class="row">
-                <div class="col-xs-4 pull-right">
-                    <table class="table table-condensed">
-                        <tr class="border-black">
-                            <td><strong>Total</strong></td>
-                            <td class="text-right">
-                                <span t-field="o.total"
-                                    t-field-options='{"display_currency": "o.pricelist_id.currency_id"}'/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <p t-field="o.note" />
-            <div class="oe_structure"/>
-        </div>
-    </t>
-</template>
-
-<template id="report_saleorderlist">
-    <t t-call="report.html_container">
-        <t t-foreach="doc_ids" t-as="doc_id">
-            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'vit_order_list.report_saleorderlist_document')"/>
+          </div>
         </t>
-    </t>
-</template>
-</data>
+    </template>
+
+    <record id="paperformat_order_list" model="report.paperformat">
+        <field name="name">Order List</field>
+        <field name="default" eval="True"/>
+        <field name="format">Legal</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">1</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <report
+        id="so_proforma_invoice"
+        model="sale.order.list"
+        string="Order List"
+        report_type="qweb-pdf"
+        name="vit_order_list.report_order_list"
+        file="vit_order_list.report_order_list"
+        />
+
+    <!-- Connect report with paper format. Record action id must same with report id -->
+    <record id="so_proforma_invoice" model="ir.actions.report.xml">
+      <!-- ref : which paper format should used in current action -->
+      <field name="paperformat_id" ref="vit_order_list.paperformat_order_list"/>
+    </record>
+    
+  </data>
 </openerp>

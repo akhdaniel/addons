@@ -140,7 +140,7 @@ class sale_order_list(osv.Model):
 		partner_name 	= par_obj.name
 		ref 			= vals['ref']
 
-		order_list_name = {'name':'Order List '+partner_name + '/' + ref}
+		order_list_name = {'name':'Order List '+partner_name}
 		vals = dict(vals.items()+order_list_name.items()) 
 		
 		return super(sale_order_list, self).create(cr, uid, vals, context=context)	
