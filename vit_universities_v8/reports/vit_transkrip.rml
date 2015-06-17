@@ -1,0 +1,493 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(612.0,1008.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="7.0" y1="14.0" width="598" height="980"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#dddddd" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#dddddd" start="0,1" stop="0,1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#dddddd" start="1,1" stop="1,1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#dddddd" start="2,1" stop="2,1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#dddddd" start="3,1" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#dddddd" start="3,1" stop="3,1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#dddddd" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#dddddd" start="3,2" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#dddddd" start="0,3" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#dddddd" start="3,3" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#dddddd" start="3,-1" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <blockBackground colorName="#eeeeee" start="0,0" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,0" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,0" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="3,0" stop="3,-1"/>
+      <blockBackground colorName="#eeeeee" start="4,0" stop="4,-1"/>
+      <blockBackground colorName="#eeeeee" start="5,0" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table8">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,1" stop="2,1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="14.0" leading="17" alignment="CENTER"/>
+    <paraStyle name="P2" fontName="Helvetica" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="2.0" leading="3"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Header" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="179.0,254.0,165.0" style="Table1">
+      <tr>
+        <td>
+          <para style="Standard">[[ repeatIn(objects,'transkrip') ]]</para>
+        </td>
+        <td>
+          <para style="P1">TRANSKRIP NILAI AKADEMIK</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="142.0,209.0,89.0,157.0" style="Table2">
+      <tr>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="Table Contents">Nama</para>
+        </td>
+        <td>
+          <para style="Table Contents">: [[ transkrip.partner_id.name ]]</para>
+        </td>
+        <td>
+          <para style="Table Contents">Fakultas</para>
+        </td>
+        <td>
+          <para style="Table Contents">: [[ transkrip.fakultas_id.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="Table Contents">Nomor Pokok Mahasiswa</para>
+        </td>
+        <td>
+          <para style="Table Contents">: [[ transkrip.partner_id.npm ]]</para>
+        </td>
+        <td>
+          <para style="Table Contents">Jurusan</para>
+        </td>
+        <td>
+          <para style="Table Contents">: [[ transkrip.jurusan_id.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="Table Contents">Tempat / Tanggal Lahir</para>
+        </td>
+        <td>
+          <para style="Table Contents">: [[ transkrip.tempat_lahir ]] / [[ transkrip.tanggal_lahir ]]</para>
+        </td>
+        <td>
+          <para style="Table Contents">Program Studi</para>
+        </td>
+        <td>
+          <para style="Table Contents">: [[ transkrip.prodi_id.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="39.0,249.0,72.0,72.0,72.0,93.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P2">No</para>
+        </td>
+        <td>
+          <para style="P2">Mata Kuliah</para>
+        </td>
+        <td>
+          <para style="P2">SKS</para>
+        </td>
+        <td>
+          <para style="P2">Nilai </para>
+        </td>
+        <td>
+          <para style="P2">Angka</para>
+        </td>
+        <td>
+          <para style="P2">SKS x Angka</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="39.0,249.0,72.0,72.0,72.0,93.0" style="Table4">
+      <tr>
+        <td>
+          <para style="P8" leftIndent="15" bulletIndent="0">
+            <bullet size="8.0">
+              <seq id="L1"/>
+            </bullet>
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P5"><font face="Helvetica" size="2.0">[[ repeatIn(transkrip.transkrip_detail_ids,'line') ]]</font>[[line.mata_kuliah_id.nama]]</para>
+        </td>
+        <td>
+          <para style="P4">[[line.sks]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ line.nilai_huruf ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ line.nilai_angka ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ round(line.sks * line.nilai_angka, 2) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="39.0,249.0,72.0,72.0,72.0,93.0" style="Table5">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">[[transkrip.t_sks]]</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">[[ transkrip.t_nilai ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="63.0,378.0,48.0,109.0" style="Table6">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">Judul Skripsi</para>
+        </td>
+        <td>
+          <para style="P3">: [[ transkrip.partner_id.judul ]]</para>
+        </td>
+        <td>
+          <para style="P5">IPK</para>
+        </td>
+        <td>
+          <para style="P3">: [[ transkrip.ipk ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P5">Yudisium</para>
+        </td>
+        <td>
+          <para style="P3">: [[transkrip.yudisium]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="199.0,289.0,109.0" style="Table7">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">Bandung, [[time.strftime('%d-%m-%Y ')]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="178.0,340.0,54.0,26.0" style="Table8">
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">Mr. Fulan</para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P4">Rektor</para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P7">
+      <font color="white"> </font>
+    </para>
+    <para>
+      <seqReset id="L1"/>
+    </para>
+  </story>
+</document>

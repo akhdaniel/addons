@@ -1,0 +1,156 @@
+<openerp>
+    <data>
+
+
+	<!-- Master Nilai -->
+<!-- 	    <record model="master.nilai" id="master_nilai" >
+	    	<field name="name">Master Nilai</field>
+	    </record> -->
+
+    <!-- Master Nilai -->
+	    <record model="master.nilai" id="nilai_a" >
+	    	<field name="name">A</field>
+	    	<field name="bobot">4</field>
+	    	<field name="min">86</field>
+	    	<field name="max">100</field>
+	    </record>
+	    <record model="master.nilai" id="nilai_b" >
+	    	<field name="name">B</field>
+	    	<field name="bobot">3</field>
+	    	<field name="min">70</field>
+	    	<field name="max">85</field>
+	    </record>
+	    <record model="master.nilai" id="nilai_c" >
+	    	<field name="name">C</field>
+	    	<field name="bobot">2</field>
+	    	<field name="min">55</field>
+	    	<field name="max">69</field>
+	    </record>
+	    <record model="master.nilai" id="nilai_d" >
+	    	<field name="name">D</field>
+	    	<field name="bobot">1</field>
+	    	<field name="min">40</field>
+	    	<field name="max">54</field>
+	    </record>	
+	    <record model="master.nilai" id="nilai_e" >
+	    	<field name="name">E</field>
+	    	<field name="bobot">0</field>
+	    	<field name="min">0</field>
+	    	<field name="max">39</field>
+	    </record>
+
+<!-- Master Yudisium -->
+	    <record model="master.yudisium" id="yudisium_a" >
+	    	<field name="name">Cumlaude</field>
+	    	<field name="min">3.51</field>
+	    	<field name="max">4.00</field>
+	    </record>
+	    <record model="master.yudisium" id="yudisium_b" >
+	    	<field name="name">Sangat Memuaskan</field>
+
+	    	<field name="min">3.01</field>
+	    	<field name="max">3.50</field>
+	    </record>	
+	    <record model="master.yudisium" id="yudisium_c" >
+	    	<field name="name">Memuaskan</field>
+	    	<field name="min">2.50</field>
+	    	<field name="max">3.00</field>
+	    </record>
+
+<!-- Master Semester -->
+	    <record model="master.semester" id="semester1" >
+	    	<field name="name">1</field>
+	    </record>
+	    <record model="master.semester" id="semester2" >
+	    	<field name="name">2</field>
+	    </record>	
+	    <record model="master.semester" id="semester3" >
+	    	<field name="name">3</field>
+	    </record>
+	    <record model="master.semester" id="semester4" >
+	    	<field name="name">4</field>
+	    </record>
+	    <record model="master.semester" id="semester5" >
+	    	<field name="name">5</field>
+	    </record>	
+	    <record model="master.semester" id="semester6" >
+	    	<field name="name">6</field>	    	
+	    </record>
+	    <record model="master.semester" id="semester7" >
+	    	<field name="name">7</field>
+	    </record>	
+	    <record model="master.semester" id="semester8" >
+	    	<field name="name">8</field>
+	    </record>
+
+
+<!-- Master Ruangan -->
+	    <record model="master.ruangan" id="ruangan1" >
+	    	<field name="name">RG-X</field>
+	    	<field name="kapasitas">5</field>
+	    </record>
+	    <record model="master.ruangan" id="ruangan2" >
+	    	<field name="name">RG-Y</field>
+	    	<field name="kapasitas">10</field>
+	    </record>	
+	    <record model="master.ruangan" id="ruangan3" >
+	    	<field name="name">RG-Z</field>
+	    	<field name="kapasitas">15</field>
+	    </record>
+
+<!-- Master Fakultas -->
+<!-- 	    <record model="master.fakultas" id="fakultas1" >
+	    	<field name="kode">01</field>
+	    	<field name="name">Fakultas Kedokteran</field>
+	    </record>
+	    <record model="master.fakultas" id="fakultas2" >
+	    	<field name="kode">02</field>
+	    	<field name="name">Fakultas Teknik</field>
+	    </record>	
+	    <record model="master.fakultas" id="fakultas3" >
+	    	<field name="kode">03</field>
+	    	<field name="name">Fakultas Hukum</field>
+	    </record>
+	    <record model="master.fakultas" id="fakultas4" >
+	    	<field name="kode">04</field>
+	    	<field name="name">Fakultas Farmasi</field>
+	    </record> -->
+
+<!-- Master Jurusan -->
+<!-- 	    <record model="master.jurusan" id="jurusan1" >
+	    	<field name="kode">01</field>
+	    	<field name="name">Pendidikan Dokter</field>
+	    	<field name="fakultas_id">1</field>
+	    </record>
+	    <record model="master.jurusan" id="jurusan2" >
+	    	<field name="kode">02</field>
+	    	<field name="name">Ilmu Keperawatan</field>
+	    	<field name="fakultas_id">1</field>
+	    </record>
+	    <record model="master.jurusan" id="jurusan3" >
+	    	<field name="kode">03</field>
+	    	<field name="name">Teknik Industri</field>
+	    	<field name="fakultas_id">2</field>
+	    </record>
+	    <record model="master.jurusan" id="jurusan4" >
+	    	<field name="kode">04</field>
+	    	<field name="name">Teknik Elektro</field>
+	    	<field name="fakultas_id">2</field>
+	    </record>
+	    <record model="master.jurusan" id="jurusan5" >
+	    	<field name="kode">05</field>
+	    	<field name="name">Hukum Administrasi Negara</field>
+	    	<field name="fakultas_id">3</field>
+	    </record>
+	    <record model="master.jurusan" id="jurusan6" >
+	    	<field name="kode">06</field>
+	    	<field name="name">Hukum Pidana</field>
+	    	<field name="fakultas_id">3</field>
+	    </record>		
+	    <record model="master.jurusan" id="jurusan7" >
+	    	<field name="kode">07</field>
+	    	<field name="name">Farmasi</field>
+	    	<field name="fakultas_id">4</field>
+	    </record> -->	    	        
+	</data>
+</openerp>

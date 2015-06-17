@@ -1,0 +1,79 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="jadwal_tree_view">
+            <field name="name">jadwal.tree</field>
+            <field name="model">master.jadwal</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Jadwal Kuliah" version="7.0">
+                    <field name="name"/>
+                    <field name="employee_id"/> 
+                    <field name="kelas_id"/>                   
+                    <field name="tahun_ajaran_id" invisible="1"/>
+                    <field name="fakultas_id" invisible="1"/>
+                    <field name="jurusan_id" invisible="1"/>
+                    <field name="prodi_id" invisible="1"/>
+                    <field name="ruangan_id"/>
+                    <field name="hari"/>
+                    <field name="sesi"/>
+                    <field name="mata_kuliah_id"/>
+                    <field name="is_active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="jadwal_form_view">
+            <field name="name">jadwal.form</field>
+            <field name="model">master.jadwal</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Jadwal Kuliah" version="7.0">
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="name"/>
+			                    <field name="employee_id"/> 
+			                    <field name="kelas_id"/>
+                            </group>
+                			<group>
+                				<field name="tahun_ajaran_id"/>
+			                    <field name="fakultas_id"/>
+			                    <field name="jurusan_id"/>             				
+                			</group>
+                        </group>
+                        <group>    
+                            <group>   
+                                <field name="ruangan_id"/>     
+                                <field name="hari" placeholder="-- pilih hari --"/>
+                                <field name="sesi"/>                                                                
+                            </group>
+                            <group>
+                                <field name="prodi_id"/>  
+                                <field name="mata_kuliah_id"/>  
+                                <field name="semester_id"/>                                                          
+                            </group>
+                            <group>
+                                <field name="is_active"/> 
+                            </group>
+                		</group>
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_jadwal" model="ir.sequence.type">
+            <field name="name">Jadwal</field>
+            <field name="code">master.jadwal</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_jadwal" model="ir.sequence">
+            <field name="name">Jadwal</field>
+            <field name="code">master.jadwal</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+        </record> 
+
+	</data>
+</openerp>	
