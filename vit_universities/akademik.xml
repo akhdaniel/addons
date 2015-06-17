@@ -397,7 +397,7 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
 
-<!--         <record model="ir.ui.view" id="wisuda_tree_view">
+        <record model="ir.ui.view" id="wisuda_tree_view">
             <field name="name">wisuda.tree</field>
             <field name="model">wisuda.mahasiswa</field>
             <field name="type">tree</field>
@@ -411,7 +411,7 @@
                     <field name="state"/>                    
                 </tree>
             </field>
-        </record>    -->     
+        </record>        
         
         <record model="ir.actions.act_window" id="wisuda_list_action">
             <field name="name">Wisuda</field>
@@ -432,6 +432,7 @@
                 <search string="Cari Kartu Studi">
                     <group col="10" colspan="4">
                          <field name="kode"/>
+                         <field name="partner_id"/>
                     </group>
                     <newline/>
                     <group expand="0" string="Group By..." colspan="12" col="10">

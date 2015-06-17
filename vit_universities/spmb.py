@@ -198,7 +198,7 @@ class spmb_mahasiswa(osv.Model):
 		"""Allows to delete in draft state"""
 		for rec in self.browse(cr, uid, ids, context=context):
 			if rec.state != 'draft':
-				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+				raise osv.except_osv(_('Invalid Action!'), _('The data can be removed only with the status of the draft'))
 		return super(spmb_mahasiswa, self).unlink(cr, uid, ids, context=context)
 
 #class untuk menampung sequence npm di objek res.partner
