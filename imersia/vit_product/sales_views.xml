@@ -151,15 +151,17 @@
                 </xpath>
                 <page string="Order Lines" position='after'>
                 	<page string="Measurement"> 
-                	   <group><group style="width:400">
+                	   <!-- <group><group style="width:400"> -->
                             <field view_mode="tree,form" name="sale_line_measurements" nolabel="1">
                                 <tree string="Measurements">
                                     <field name="product_larg" class="text-center"/>
                                     <field name="product_length" class="text-center"/>
                                     <field name="product_height" class="text-center"/>
+                                    <field name="product_volume_total" class="text-center"/>
+                                    <field name="product_unbuilt_volume12" class="text-center"/>
                                 </tree>                                                              
                             </field>  
-                        </group><group/></group>
+                        <!-- </group><group/></group> -->
                      </page>  
                 </page>   
             </field>

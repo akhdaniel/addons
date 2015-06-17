@@ -3,26 +3,34 @@
     <data>
 
 	<template id="report_so_invoice">
-	    <t t-foreach="docs" t-as="o">
-		    <div class="page">
-		    	<div style="float : right">
-				    <table style="border-collapse:collapse;border-spacing:0;width:100%;">
-					  	<tbody>
-				  		<tr>
-						    <td colspan="3"></td>
-						    <td colspan="2" class="text-center" style="
-			                                	padding: 4px 8px 4px 8px;
-												border-left: 1px solid grey;
-												border-right: 1px solid grey;
-												border-top: 1px solid grey;
-												border-bottom: 1px solid grey;
-			  									width: 50%;">
-			                    <h4 t-if="o.state in ['draft','sent']">Draft Pro Forma Invoice</h4>
-			                    <h4 t-if="o.state  == 'progress'">Sales Order</h4>
-			                    <h4 t-if="o.state  == 'cancel'">Sales Order Canceled</h4></td>
+	    	<t t-foreach="docs" t-as="o">
+		      <div class="page">
+		    		<div style="float : right">
+					<table style="border-collapse:collapse;border-spacing:0;width:100%;">
+						  	<tbody>
+					  		<tr>
+							    <td colspan="3">
+								<div class="left">
+					                          		<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/>
+					                          		<span t-field="o.company_id.name"/>
+					                          	</div>
+							    </td>
+							    <td colspan="2" class="text-center" style="
+				                                	padding: 4px 8px 4px 8px;
+													border-left: 1px solid grey;
+													border-right: 1px solid grey;
+													border-top: 1px solid grey;
+													border-bottom: 1px solid grey;
+				  									width: 50%;">
+				                    <h4 t-if="o.state in ['draft','sent']">Pro Forma Invoice</h4>
+				                    <h4 t-if="o.state  == 'progress'">Sales Order</h4>
+				                    <h4 t-if="o.state  == 'cancel'">Sales Order/Proforma Invoice Canceled</h4></td>
 						  </tr>
 						  <tr>
-						    <td colspan="2"></td>
+						    <td colspan="2">
+			                          		<p>Address :</p><br/>
+			                          		<p>Phone</p>
+			                          	    </td>
 						    <td class="text-center" style="
 			                                	padding: 4px 8px 4px 8px;
 												border-left: 1px solid grey;
@@ -45,7 +53,7 @@
 			  									<p t-if="o.state in ['draft','sent']"><span t-field="o.proforma_no"/></p>
 			  									<p t-if="o.state  == 'progress'"><span t-field="o.name"/></p>
 			  									<p><span t-field="o.date_order"/></p>
-			  									<p><span t-field="o.desc_goods"/></p>
+			  									<p></p>
 			  									</td>
 						  </tr>
 						  <tr style="height: 4px;">
@@ -108,7 +116,7 @@
 					  </tr>
 					  <tr>
 					    <td style="
-					    						padding: 2px 3px 2px 3px;
+					    						width : 15%;padding: 2px 3px 2px 3px;
 												border-top: 1px solid grey;
 												border-left: 1px solid grey;">Port of Loading :</td>
 					    <td style="
@@ -126,7 +134,7 @@
 					  </tr>
 					  <tr>
 					    <td style="
-					    						padding: 2px 3px 2px 3px;
+					    						width : 15%;padding: 2px 3px 2px 3px;
 												border-bottom: 1px solid grey;
 												border-left: 1px solid grey;">Port of Discharge :</td>
 					    <td style="
@@ -142,7 +150,7 @@
 					    <td style="
 					    						padding: 2px 3px 2px 3px;
 												border-bottom: 1px solid grey;
-												border-left: 1px solid grey;">Swift Transfer</td>
+												border-left: 1px solid grey;">Swift Transfer :</td>
 					    <td style="
 					    						padding: 2px 3px 2px 3px;
 												border-bottom: 1px solid grey;

@@ -135,7 +135,7 @@ class sale_order(osv.osv):
 
     _defaults={
         'desc_goods': "Wooden Furniture",
-        'week_of_year': "Week -" 
+        'week_of_year': "-" 
     }
 
     def readydate_change(self, cr, uid, ids,rd,):
@@ -304,9 +304,9 @@ class sale_order_line(osv.osv):
         'product_weight_cm': fields.function(hitung_length_mm_ke_cm, type='char', string='Depth (cm)'),
         'product_height_cm': fields.function(hitung_height_mm_ke_cm, type='char', string='Height (cm)'),
         'product_larg_cm': fields.function(hitung_width_mm_ke_cm, type='char', string='Width (cm)'),
-        'product_volume_total': fields.function(hitung_total_volume_m3, type='char', string='Total Volume (m3)'),      
+        'product_volume_total': fields.function(hitung_total_volume_m3, type='float', string='Total Volume (m3)'),      
         'product_unbuilt_volume12': fields.related('product_id','product_unbuilt_volume12',type='float',string='Unbuilt Volume (m3)',readonly=True),
-        'product_length':fields.related('product_id','product_length',type='float',string='Length (mm)'),
+        'product_length':fields.related('product_id','product_length',type='float',string='Depth (mm)'),
         'product_larg':fields.related('product_id','product_larg',type='float',string='Width (mm)'),
-        'product_height':fields.related('product_id','product_height',type='float',string='Thickness (mm)'), 
+        'product_height':fields.related('product_id','product_height',type='float',string='Height (mm)'), 
         }

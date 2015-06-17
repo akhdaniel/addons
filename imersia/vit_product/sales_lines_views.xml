@@ -12,6 +12,8 @@
         </xpath> -->
         <xpath expr="//tree[@string='Sales Order Lines']/field[@name='name']" position='before'>
           <field name="cust_desc"/>
+            <field name="colection_ids" widget="many2many_tags"/>
+            <field name="finishing_id"/>
         </xpath>
         <xpath expr="//form[@string='Sales Order Lines']/group" position='inside'>
           <group>
