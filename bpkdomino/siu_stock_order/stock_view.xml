@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        		
+    	
+        <record id="view_stock_order_tree" model="ir.ui.view">
+            <field name="name">stock.order.tree</field>
+            <field name="model">stock.order</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Order">
+	                <field name="name"/>
+                    <field name="date"/>
+	                <field name="shop_id"/>
+	                <field name="user_id"/>
+	                <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_stock_order_form" model="ir.ui.view">
+            <field name="name">stock.order.form</field>
+            <field name="model">stock.order</field>
+            <field name="arch" type="xml">
+                <form string="Stock Order" version="7.0">
+				<header>
+                        <button name="stock_cancel" type="object" states="draft" string="Cancel" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="stock_draft" type="object" states="approve" string="Set to Draft" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="stock_confirm" type="object" states="draft" string="Approve" icon="gtk-apply"/>
+                        <button name="stock_validate" type="object" states="approve" string="Validate" icon="gtk-apply"/>
+	           			<field name="state" widget="statusbar" statusbar_visible="draft,approve,done" statusbar_colors='{"draft":"red","approve":"blue"}'/>
+                </header>                                
+				<sheet>
+                    <group col="4" colspan="4">
+		                <field name="name"/>
+		                <field name="date"/>
+		                <field name="shop_id"/>
+		                <field name="user_id" on_change="user_id_change(user_id)"/>
+		                <field name="description" colspan="4"/>
+		            </group>
+                    <notebook colspan="5">
+                        <page string="Stock Lines">
+                            <field colspan="4" name="stock_line" nolabel="1" widget="one2many_list">
+                                <tree string="" editable="top">
+                                    <field name="product_id" on_change="product_id_change(product_id)"/>
+					                <field name="name"/>
+					                <field name="product_qty"/>
+					                <field name="product_uom"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="seq_type_stock_order_new" model="ir.sequence.type">
+			<field name="name">Stock Order</field>
+			<field name="code">stock.order</field>
+		</record>
+		
+		<record id="seq_stock_order_new" model="ir.sequence">
+			<field name="name">Stock Order</field>
+			<field name="code">stock.order</field>
+			<field name="prefix">ST/%(y)s%(month)s/</field>
+			<field name="padding">4</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_stock_order_form">
+            <field name="name">Stock Order</field>
+            <field name="res_model">stock.order</field>
+        </record>
+        
+
+
+        <record id="action_sale_orders" model="ir.actions.act_window">
+            <field name="name">Sales Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation that can be converted into a sales
+                order.
+              </p><p>
+                OpenERP will help you efficiently handle the complete sales flow:
+                quotation, sales order, delivery, invoicing and payment.
+              </p>
+            </field>
+        </record>
+
+		<menuitem id="shop_order" name="Shop Order"/>
+		<menuitem id="shop_order_menu" name="Menu Order" parent="shop_order"/>
+		<menuitem id="sales_order" parent="shop_order_menu" name="Sales Order" action="action_sale_orders"/>
+        <menuitem id="stock_order" parent="shop_order_menu" name="Stock Order" action="action_stock_order_form"/>
+        
+        <record id="vit_view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[@name='do_enter_transfer_details']" position="replace">
+                    <button name="do_enter_transfer_details" string="Transfer" groups="stock.group_stock_user" type="object" class="oe_highlight" attrs="{'invisible': [('do_validation','!=','P')]}"/>
+                    <button name="validate_for_transfer"  attrs="{'invisible': [('do_validation','!=','V')]}" type="object" string="Validate" groups="stock.group_stock_user"/>
+                </xpath>
+                <field name="partner_id" position="after">
+                    <field name="validated" invisible='1'/>
+                    <field name="do_validation" invisible='1'/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+
+
+<!--
+	    <record id="stock_order_personal_rule" model="ir.rule">
+	        <field name="name">Personal Stock Order</field>
+	        <field ref="model_stock_order" name="model_id"/>
+	        <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
+	    </record>
+-->

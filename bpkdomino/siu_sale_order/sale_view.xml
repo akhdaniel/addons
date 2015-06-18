@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<report id="invoice_customer" string="Invoice Customer" 
+				model="account.invoice" name="invoice.customer" 
+				rml="siu_sale_order/report/invoice_customer.rml"
+				auto="False" menu="False"/>
+
+		<report id="invoice_rekanan" string="Invoice Rekanan" 
+				model="account.invoice" name="invoice.rekanan" 
+				rml="siu_sale_order/report/invoice_rekanan.rml"
+				auto="False" menu="False"/>
+
+
+		<record model="ir.ui.view" id="view_inherit_res_users_change_price">
+			<field name="name">res.users.change.price</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form" />
+			<field name="arch" type="xml">
+				<field name="active" position="before">
+                	<field name="change_price" />
+                </field>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_inherit_view_order_form">
+			<field name="name">sale.order.form.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="wtc_shop.sales_order_shop"/>
+			<field name="arch" type="xml">
+				<field name="shop_id" position='attributes'>
+					<attribute name="on_change">onchange_shop_id(shop_id)</attribute>
+				</field>								
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_inherit_quotation_sale_order">
+			<field name="name">quotation.tree.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_quotation_tree" />
+			<field name="arch" type="xml">
+				<field name="date_order" position="after">
+					<field name="shop_id"/>
+					<field name="party_datetime"/>
+					<field name="delivery_date"/>
+				</field>								
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_inherit_tree_sale_order">
+			<field name="name">sale.order.tree.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_tree" />
+			<field name="arch" type="xml">
+				<field name="date_order" position="after">
+					<field name="shop_id"/>
+					<field name="party_datetime"/>
+					<field name="delivery_date"/>
+				</field>								
+			</field>
+		</record>
+
+        <record id="view_order_form_ucapan" model="ir.ui.view">
+            <field name="name">sale.order.form.ucapan</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<field name="date_order" position="replace">
+					<field name="date_order" on_change="onchange_dateorder(date_order)"/>
+					<field name="party_datetime" on_change="onchange_backdate(party_datetime)"/>
+					<field name="delivery_date" on_change="onchange_backdate(delivery_date)"/>
+				</field>
+				<field name="partner_id" position="replace">
+					<field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1}" options='{"always_reload": True}'/>
+                </field>            
+				<field name="amount_tax" position="replace">
+					<field name="amount_tax" widget='monetary' invisible="True" options="{'currency_field': 'currency_id'}"/>
+                </field>
+                <field name="tax_id" position="replace">        
+					<field name="tax_id" widget="many2many_tags" invisible="True" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                </field>                            
+				<xpath expr="//tree[@string='Sales Order Lines']/field[@name='tax_id']" position="replace">
+                    <field name="tax_id" widget="many2many_tags" invisible="True" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+				</xpath>
+				<xpath expr="//page[@string='Other Information']" position="after">
+                    <page string="Notes">
+                        <field colspan="4" name="catatan" nolabel="1"/>
+                    </page>
+				</xpath>
+				<xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_uom_qty']" position="before">
+                    <field name="ucapan"/>
+                    <field name="catatan"/>
+				</xpath>
+				<xpath expr="//tree[@string='Sales Order Lines']/field[@name='name']" position="replace">
+                    <field name="name" on_change="onchange_price_desc(price_unit, product_id, parent.pricelist_id, product_uom_qty, product_uom, parent.partner_id, parent.date_order)"/>
+				</xpath>
+				<xpath expr="//tree[@string='Sales Order Lines']/field[@name='price_unit']" position="replace">
+                    <field name="price_unit" on_change="onchange_price_desc(price_unit, product_id, parent.pricelist_id, product_uom_qty, product_uom, parent.partner_id, parent.date_order)"/>
+                </xpath>
+				<field name="price_unit" position="before">
+                    <field name="ucapan"/>
+                </field>		
+				<xpath expr="//form[@string='Sales Order Lines']/group/group/field[@name='ucapan']" position="after">
+                    <field name="catatan"/>
+                </xpath>
+			</field>
+		</record>
+		
+
+		<record id="customer_invoice_supra" model="ir.ui.view">
+			<field name="name">customer.invoice.supra</field>
+			<field name="type">form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<field name="partner_id" position="replace">
+					<field string="Customer" name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)" groups="base.group_user" context="{'search_default_customer':1}" options='{"always_reload": True}' domain="[('customer', '=', True)]"/>
+                    <field name="delivery_date" on_change="onchange_backdate(delivery_date)"/>
+                    <field name="party_datetime" on_change="onchange_backdate(party_datetime)"/>
+                </field>
+				<xpath expr="//page[@string='Other Info']" position="after">
+                    <page string="Notes">
+                        <field colspan="4" name="catatan" nolabel="1"/>
+                    </page>
+				</xpath>
+				<field name="name" position="after">
+					<field name="ucapan"/>
+				</field>
+				<label for="amount_tax" position="replace">
+					<label for="amount_tax" invisible="True"/>
+                </label>
+                <button string="Send by Email" position="replace"/>
+                <button string="Print" position="replace"/>
+                <button name="button_reset_taxes" position="replace">
+					<button name="button_reset_taxes" states="draft,proforma2" invisible="True" string="(update)" class="oe_link oe_edit_only" type="object" help="Recompute taxes and total"/>
+				</button>
+				<field name="amount_tax" position="replace">
+					<field name="amount_tax" nolabel="1" widget="monetary" invisible="True" options="{'currency_field': 'currency_id'}"/>
+				</field>
+				<field name="invoice_line_tax_id" position="replace">
+					<field name="invoice_line_tax_id" widget="many2many_tags" invisible="True" context="{'type':parent.type}" domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
+                </field>
+				<button string="Print Invoice" position="replace"/>
+				<button string="Refund Invoice" position="replace">
+					<button name="%(invoice_customer)d" type="action" states="open,paid" string="Invoice Customer" icon="gtk-print"/>
+					<button name="%(invoice_rekanan)d" type="action" states="open,paid" string="Invoice Rekanan" icon="gtk-print"/>
+					<button name="invoice_batal" type="object" states="paid" string="Batal" icon="gtk-apply"/>
+				</button>	
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_inherit_product_halal">
+			<field name="name">product.product.halal.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//page[@string='Accounting']" position="after">
+					<page string="Sertifikat Halal" attrs="{'invisible': [('purchase_ok','!=', True)]}">
+                        <field colspan="4" name="sertifikat_line" nolabel="1" widget="one2many_list" >
+                            <tree string="Summary" editable="top">
+				                <field name="expired"/>
+				                <field name="name"/>
+                            </tree>
+                        </field>
+                    </page>
+				</xpath>
+			</field>
+		</record>
+
+
+       
+		
+       
+				 
+		<record model="ir.ui.view" id="party_picking_order">
+		    <field name="name">stock.picking.party.form</field>
+		    <field name="model">stock.picking</field>
+		    <field name="inherit_id" ref="stock.view_picking_form" />
+		    <field name="arch" type="xml">
+		    	<field name="date" position="replace">
+					<field name="date" on_change="onchange_backdatetime(date)"/>
+		        </field>
+		        <field name="origin" position="after">
+		            <field name="shop_id"/>
+					<field name="party_datetime"/>
+					<field name="delivery_date" on_change="onchange_backdate(delivery_date)"/>
+		        </field>
+		    </field>
+		</record> 
+		 
+		
+
+     
+    </data>
+</openerp>
+
+
+<!--
+
+
+
+        <record id="view_order_line_form_ucapan" model="ir.ui.view">
+            <field name="name">sale.order.line.ucapan</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+			<field name="arch" type="xml">
+				<field name="product_uom_qty" position="before">
+                    <field name="ucapan"/>
+                </field>		
+			</field>
+		</record>
+
+
+-->

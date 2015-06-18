@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		
+		<record model="ir.ui.view" id="view_wizard_eksport_import">
+            <field name="name">Import Object</field>
+            <field name="model">eksport.import</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form col="4" string="Eksport Import Wizard" version="7.0">
+                    <group>
+						<field name="type"/>
+						<field name="tabel"/>
+						<field name="name" invisible="True"/>
+						<separator colspan="4"/>
+                        <field name="data_file" nolabel="1" colspan="4"/>
+					</group>
+					<footer>
+	                    <button name="eksport_excel" string="Eksport" type="object" class="oe_highlight" attrs="{'invisible':[('type','=','imp')]}"/>
+	                    <button name="import_excel" string="Import" type="object" class="oe_highlight" attrs="{'invisible':[('type','=','eks')]}"/>
+	                    or 
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>
+                </form>
+            </field>
+        </record>
+              
+        <record model="ir.actions.act_window" id="action_export_import">
+            <field name="name">Import Object</field>
+            <field name="res_model">eksport.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+       
+        <menuitem id="menu_eksport_import" name="Export Import" action="action_export_import" parent="base.menu_config" sequence="103" />
+	</data>
+</openerp>
+

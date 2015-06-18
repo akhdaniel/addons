@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_material_requirement_form_barcode" model="ir.ui.view">
+            <field name="name">material.requirement.form.barcode_txt</field>
+            <field name="model">material.requirement</field>
+            <field name="inherit_id" ref="siu_mrp.view_material_requirement_form" />
+            <field name="arch" type="xml">
+            	<field name="plan_id" position="after">
+            		<field name="barcode_data" invisible='1'/>	
+            	</field>
+       		</field>
+       	</record>
+	</data>
+</openerp>
+

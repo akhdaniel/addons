@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<report id="print_rekap" string="Rekap Produksi" 
+				model="material.requirement" name="print.rekap" 
+				rml="siu_mrp/report/print_rekap_produksi.rml"
+				auto="False" menu="False"/>
+
+		<report id="print_produksi" string="Print Produksi" 
+				model="mrp.production" name="print.produksi" 
+				rml="siu_mrp/report/print_produksi.rml"
+				auto="False" menu="False"/>
+		
+		<report id="print_order" string="Print Order" 
+				model="material.requirement" name="print.order" 
+				rml="siu_mrp/report/print_order.rml"
+				auto="False" menu="False"/>
+
+		<report id="print_label" string="Print Label" 
+				model="material.requirement" name="print.label" 
+				rml="siu_mrp/report/print_label.rml"
+				auto="False" menu="False"/>
+
+		<record model="ir.ui.view" id="view_inherit_form_produksi">
+			<field name="name">mrp.production.form</field>
+			<field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+			<field name="arch" type="xml">
+				<button name="action_cancel" position="replace"/>
+				<button name="button_cancel" position="replace">
+					<button name="%(print_produksi)d" type="action" string="Print MO" icon="gtk-print"/>
+				</button>	
+				<xpath expr="/form/sheet/group/group/field[@name='origin']" position='after'>
+					<field name='requirement_id'/>
+				</xpath>							
+			</field>
+		</record>
+
+		<record id="view_material_tree" model="ir.ui.view">
+            <field name="name">material.requirement.tree</field>
+            <field name="model">material.requirement</field>
+            <field name="arch" type="xml">
+                <tree string="Material Requirement">
+                    <field name="name"/>
+                    <field name="plan_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_material_requirement_form" model="ir.ui.view">
+            <field name="name">material.requirement.form</field>
+            <field name="model">material.requirement</field>
+            <field name="arch" type="xml">
+                <form string="Material Requirement" version="7.0">
+                    <header>
+                        <button name="material_cancel" type="object" states="draft" string="Cancel" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="material_draft" type="object" states="approve" string="Set to Draft" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="material_confirm" type="object" states="draft" string="Approve" icon="gtk-apply"/>
+                        <button name="compute" type="object" states="approve" string="Compute Material" icon="gtk-execute"/>
+	           			<button name="material_validate" type="object" states="approve" string="Validate" icon="gtk-apply"/>
+	           			<button name="procurement" type="object" states="done" string="Create Procurement" icon="gtk-execute" invisible='1'/>
+	           			<button name="%(print_rekap)d" type="action" states="done" string="Rekap Produksi" icon="gtk-print"/>
+	           			<button name="%(print_order)d" type="action" states="done" string="Print Order" icon="gtk-print"/>
+	           			<button name="%(print_label)d" type="action" string="Print Label" icon="gtk-print"/>
+	           			<field name="state" widget="statusbar" statusbar_visible="draft,approve,done" statusbar_colors='{"draft":"red","approve":"blue"}'/>
+                	</header>
+                	<sheet>
+	                    <group col="4" colspan="4">
+	                        <field name="name"/>
+	                        <field name="plan_id" on_change="plan_change(plan_id)"/>
+	                    </group>
+	                    <notebook>
+	                        <page string="Requirement Plan">
+	                            <field colspan="4" name="requirement_line" nolabel="1" widget="one2many_list">
+                                    <tree string="Finish Goods">
+                                        <field name="name"/>
+                                        <field name="product_uom"/>
+                                        <field name="plan"/>
+                                    </tree>
+                                    <form string="Finish Goods">
+                                        <notebook>
+	                                   		<page string="Bill of Material">
+		                                        <field colspan="4" name="bom_line" nolabel="1" widget="one2many_list">
+			                                    	<tree string="Bill of Material" editable="bottom">
+				                                        <field name="name"/>
+				                                        <field name="pcode"/>
+				                                        <field name="pid"/>
+				                                        <field name="uname"/>
+				                                        <field name="level"/>
+				                                        <field name="pqty"/>
+				                                        <field name="plan"/>
+				                                        <field name="supply"/>
+			                                    	</tree>
+			                                	</field>
+			                                </page>
+			                                <page string="Finish Goods">
+	                                   			<group col="4" colspan="4">
+			                                        <field name="product_id"/>
+			                                        <field name="product_uom"/>
+			                                        <field name="name" colspan="4"/>
+			                                    </group>
+	                                    	</page>
+		                            	</notebook>
+									</form>
+                                </field>
+                        	</page>
+                        	<page string="Manufacture Order">
+	                            <field colspan="4" name="manufacture_line" nolabel="1" widget="one2many_list"/>
+                        	</page>
+                        	<page string="Purchase Requisition">
+	                            <field colspan="4" name="requisition_line" nolabel="1" widget="one2many_list"/>
+                        	</page>
+	                	</notebook>    
+	            	</sheet>
+                </form>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_material_requirement_form">
+            <field name="name">Material Requirement</field>
+            <field name="res_model">material.requirement</field>
+            <field name="view_type">form</field>
+        </record>
+
+		<record id="seq_type_material_requirement_new" model="ir.sequence.type">
+			<field name="name">Material Requirement</field>
+			<field name="code">material.requirement</field>
+		</record>
+		
+		<record id="seq_material_requirement_new" model="ir.sequence">
+			<field name="name">Material Requirement</field>
+			<field name="code">material.requirement</field>
+			<field name="prefix">MR/%(y)s%(month)s/</field>
+			<field name="padding">4</field>
+		</record>    
+
+		<menuitem name="Material Requirement" parent="siu_mps.menu_master_production" id="material_requirement" action="action_material_requirement_form"/>
+		
+	</data>
+</openerp>

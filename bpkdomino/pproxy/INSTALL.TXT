@@ -1,0 +1,16 @@
+INSTALL
+
+install printer barcode di windows control panel, gunakan generic printer driver, kasi nama misalnya "zebra"
+
+install XAMPP (yang perlu cuma apache+php saja) di komputer client
+
+copy folder pproxy ke htdocs
+
+copy file php_printer.dll ke c:\xampp\php\extension
+*sesuaikan php_printer dengan versi php, link source: http://windows.php.net/downloads/pecl/snaps/printer/0.1.0-dev/
+
+edit file c:\xampp\php\php.ini, enable printer.dll
+	buka baris ini:
+	extension=php_printer.dll
+
+restart apache

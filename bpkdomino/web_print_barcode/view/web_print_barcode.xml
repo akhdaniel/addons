@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <template id="x_assets_backend" name="x_export_view assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/web_print_barcode/static/src/js/print_barcode.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
