@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<record id="view_plan_tree" model="ir.ui.view">
+            <field name="name">production.plan.tree</field>
+            <field name="model">production.plan</field>
+            <field name="arch" type="xml">
+                <tree string="Production Plan">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_production_plan_form" model="ir.ui.view">
+            <field name="name">production.plan.form</field>
+            <field name="model">production.plan</field>
+            <field name="arch" type="xml">
+                <form string="Production Plan" version="7.0">
+                <header>
+                        <button name="plan_cancel" type="object" states="draft" string="Cancel" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="plan_draft" type="object" states="approve" string="Set to Draft" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="plan_confirm" type="object" states="draft" string="Approve" icon="gtk-apply"/>
+                        <button name="compute" type="object" states="approve" string="Compute Plan" icon="gtk-execute"/>
+	           			<button name="plan_validate" type="object" states="approve" string="Validate" icon="gtk-apply"/>
+	           			<field name="state" widget="statusbar" statusbar_visible="draft,approve,done" statusbar_colors='{"draft":"red","approve":"blue"}'/>
+                </header>                                
+				<sheet>
+                    <group col="4" colspan="4">
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="mr_exist" invisible='1'/>
+                    </group>
+                    <notebook colspan="5">
+                        <page string="Production Plan">
+                            <field colspan="4" name="plan_line" nolabel="1" widget="one2many_list">
+                                <tree string="" editable="top">
+                                    <field name="name"/>
+                                    <field name="product_id"/>
+                                    <field name="total"/>
+                                    <field name="real"/>
+                                    <field name="min"/>
+                        			<field name="max"/>
+                        			<field name="plan"/>
+                        			<field name="end"/>
+                        			<field name="product_uom"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sale Order">
+                        	<field colspan="4" name="order_ids" nolabel="1"/>
+                        </page>
+                        <page string="Stock Order">
+                        	<field colspan="4" name="stock_ids" nolabel="1"/>
+                        </page>
+                         <page string="Warehouse Order">
+                        	<field colspan="4" name="stockw_ids" nolabel="1"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+		<record model="ir.actions.act_window" id="action_production_plan_form">
+            <field name="name">Production Plan</field>
+            <field name="res_model">production.plan</field>
+        </record>
+        
+		<record id="seq_type_production_plan_new" model="ir.sequence.type">
+			<field name="name">Production plan</field>
+			<field name="code">production.plan</field>
+		</record>
+		
+		<record id="seq_production_plan_new" model="ir.sequence">
+			<field name="name">Production plan</field>
+			<field name="code">production.plan</field>
+			<field name="prefix">PP/%(y)s%(month)s/</field>
+			<field name="padding">4</field>
+		</record>    
+		
+		<menuitem name="Master Production" parent="base.menu_mrp_root" id="menu_master_production"/>
+		<menuitem name="Production Plan" parent="menu_master_production" id="production_plan" action="action_production_plan_form"/>
+		
+
+	</data>
+</openerp>

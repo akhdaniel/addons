@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="wtc_permohonan_faktur_branch_rule" model="ir.rule">
+            <field name="name">wtc.permohonan.faktur branch rule</field>
+            <field name="model_id" ref="model_wtc_permohonan_faktur"/>
+            <field name="domain_force">[('branch_id','in',[b.id for b in user.area_id.branch_ids])]</field>
+        </record>
+        <record id="wtc_penyerahan_faktur_branch_rule" model="ir.rule">
+            <field name="name">wtc.penyerahan.faktur branch rule</field>
+            <field name="model_id" ref="model_wtc_penyerahan_faktur"/>
+            <field name="domain_force">[('branch_id','in',[b.id for b in user.area_id.branch_ids])]</field>
+        </record>
+        <record id="wtc_penerimaan_faktur_branch_rule" model="ir.rule">
+            <field name="name">wtc.penerimaan.faktur branch rule</field>
+            <field name="model_id" ref="model_wtc_penerimaan_faktur"/>
+            <field name="domain_force">[('branch_id','in',[b.id for b in user.area_id.branch_ids])]</field>
+        </record>                
+    </data>
+</openerp>

@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<document filename="Sales Varian.pdf">
+  <template pageSize="(23cm,29.5cm)" title="Sales Varian" author="SUMBER INTEGRASI UTAMA" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="1.0cm" y1="2.0cm" width="20cm" height="27cm"/>
+      	<header>
+			<pageGraphics>
+				<setFont name="Helvetica" size="7"/>
+				<drawString x="19.0cm" y="1cm">Hal <pageNumber/></drawString>
+				<image x="1.2cm" y="27.4cm" height="35.0" >[[ company.logo or removeParentNode('image') ]]</image>
+				<setFont name="Helvetica-Bold" size="12"/>
+				<drawString x="3.4cm" y="28.2cm">PT. DOMINO</drawString>
+				<setFont name="Helvetica" size="7"/>
+				<drawString x="3.4cm" y="27.9cm">Jl. CIbubur - Jakarta 14350</drawString>
+			    <drawString x="3.4cm" y="27.6cm">Phone : 021-6666666   Fax : 021-6666666</drawString>
+			    
+			</pageGraphics>
+		</header>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+   
+     <blockTableStyle id="Table_Company_Name">
+     </blockTableStyle>
+
+    
+
+	<blockTableStyle id="Table20">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle thickness="0.5" kind="LINEAFTER" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle thickness="0.5" kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle thickness="0.5" kind="LINEAFTER" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="6,0" stop="6,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle thickness="0.5" kind="LINEAFTER" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="7,0" stop="7,0"/>
+      <lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="7,-1" stop="7,-1"/>
+    </blockTableStyle>
+	
+    
+    <blockTableStyle id="Table21">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="7,0" stop="7,-1"/>
+      <lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#000000" start="8,0" stop="8,-1"/>
+    </blockTableStyle>
+    
+
+	<blockTableStyle id="Table001">
+		<lineStyle thickness="0.5" kind="GRID" colorName="black"/>
+	</blockTableStyle>
+	
+	<blockTableStyle id="Table002">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    
+	<blockTableStyle id="Table003">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    
+	<blockTableStyle id="Table00100">
+		<lineStyle thickness="0.5" kind="LINEABOVE" colorName="black" start="0,0" stop="-1,0"/>
+		<blockValign value="TOP"/>
+	</blockTableStyle>
+
+	<blockTableStyle id="Span001">
+		<blockSpan start="0,0" stop="0,2"/>
+		<blockValign value="top"/>
+		<lineStyle thickness="0.5" kind="GRID" colorName="black"/>
+	</blockTableStyle>
+
+    <blockTableStyle id="Table_All_Total_Detail">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+        <!-- Kolom ke-1 -->
+        <!-- atas --><lineStyle thickness="0.5" kind="LINEABOVE" colorName="#ffffff" start="0,0" stop="0,0"/>
+        <!-- kanan --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="1,-1" stop="1,-1"/>
+        <!-- bawah --><lineStyle thickness="0.5" kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+        <!-- kiri --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="0,0" stop="0,0"/>
+        
+		<!-- Kolom ke-2 -->
+        <!-- atas --><lineStyle thickness="0.5" kind="LINEABOVE" colorName="#ffffff" start="1,0" stop="1,0"/>
+        <!-- kanan --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="2,-1" stop="2,-1"/>
+        <!-- bawah --><lineStyle thickness="0.5" kind="LINEBELOW" colorName="#ffffff" start="1,-1" stop="1,-1"/>
+        <!-- kiri --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="1,0" stop="1,0"/>
+        
+		<!-- Kolom ke-3 -->
+        <!-- atas --><lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+        <!-- kanan --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="3,-1" stop="3,-1"/>
+        <!-- bawah --><lineStyle thickness="0.5" kind="LINEBELOW" colorName="#ffffff" start="2,-1" stop="2,-1"/>
+        <!-- kiri --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="2,0" stop="2,0"/>
+        
+		<!-- Kolom ke-4 -->
+        <!-- atas --><lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+        <!-- kanan --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="4,-1" stop="4,-1"/>
+        <!-- bawah --><lineStyle thickness="0.5" kind="LINEBELOW" colorName="#ffffff" start="3,-1" stop="3,-1"/>
+        <!-- kiri --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="3,0" stop="3,0"/>
+        
+		<!-- Kolom ke-5 -->
+        <!-- atas --><lineStyle thickness="0.5" kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+        <!-- kanan --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="5,-1" stop="5,-1"/>
+        <!-- bawah --><lineStyle thickness="0.5" kind="LINEBELOW" colorName="#ffffff" start="4,-1" stop="4,-1"/>
+        <!-- kiri --><lineStyle thickness="0.5" kind="LINEBEFORE" colorName="#ffffff" start="4,0" stop="4,0"/>
+    </blockTableStyle>
+
+
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_8" fontName="Helvetica" fontSize="7.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Left_Bold_8" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_Bold_8" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Center_Bold_8" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_header_Centre" fontName="Helvetica-Bold" fontSize="13.0" leading="19" alignment="CENTER" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_headerline_Centre" fontName="Helvetica-Bold" fontSize="11.0" leading="19" alignment="CENTER" spaceBefore="12.0" spaceAfter="6.0"/>
+  </stylesheet>
+  <images/>
+  <story>
+  <pto>
+  <pto_header>
+  
+  <para style="terp_header_Centre"><font color="white">:</font></para>
+  <para style="terp_header_Centre"><font color="white">:</font></para>
+  <blockTable colWidths="80.0,80.0,250.0,70.0,70.0" style="Table001">
+      <tr>
+        <td><para style="terp_default_Center_Bold_8">Invoice</para></td>
+        <td><para style="terp_default_Center_Bold_8">Tgl. Acara</para></td>
+        <td><para style="terp_default_Center_Bold_8">Kalimat Ucapan</para></td>
+        <td><para style="terp_default_Center_Bold_8">Harga</para></td>
+        <td><para style="terp_default_Center_Bold_8">Subtotal</para></td>
+      </tr>
+  </blockTable>
+  
+  
+  </pto_header>
+    
+  <para style="Table Contents">[[ repeatIn(objects, 'o') ]]</para>
+  <para style="terp_header_Centre"><font color="white">:</font></para>
+  
+  <blockTable colWidths="530.0" style="Table_Company_Name">
+      <tr><td><para style="terp_header_Centre">Tagihan Birthday Cakes McDonald's</para></td></tr>
+      <tr><td><para style="terp_headerline_Centre">[[ time.strftime('%d %B %Y', time.strptime(o.dari,'%Y-%m-%d')) ]] s/d [[ time.strftime('%d %B %Y', time.strptime(o.sampai,'%Y-%m-%d')) ]]</para></td></tr>
+  </blockTable>
+
+  <para style="terp_default_8"><font color="white">:</font></para>
+     
+  <blockTable colWidths="80.0,80.0,250.0,70.0,70.0" style="Table001">
+      <tr>
+        <td><para style="terp_default_Center_Bold_8">Invoice</para></td>
+        <td><para style="terp_default_Center_Bold_8">Tgl. Acara</para></td>
+        <td><para style="terp_default_Center_Bold_8">Kalimat Ucapan</para></td>
+        <td><para style="terp_default_Center_Bold_8">Harga</para></td>
+        <td><para style="terp_default_Center_Bold_8">Subtotal</para></td>
+      </tr>
+  </blockTable>
+  
+  <section>  
+  
+  <para>[[ repeatIn(o.partner_ids, 'x') ]]</para>
+  <blockTable colWidths="550.0" style="Table001">
+      <tr>
+        <td><para style="terp_default_Left_Bold_8">[[ x.name ]]</para></td>
+      </tr>
+  </blockTable>
+	  <section>
+	  <para>[[ repeatIn(get_invoice(x.id, o)[0], 'i') ]]</para>
+	  <blockTable colWidths="80.0,80.0,250.0,70.0,70.0" style="Table001">
+	      <tr>
+	        <td><para style="terp_default_8">[[ i['number'] ]]</para></td>
+	        <td><para style="terp_default_8">[[ i['date'] ]]</para></td>
+	        <td><para style="terp_default_8">[[ i['ucapan'] ]]</para></td>
+	        <td><para style="terp_default_Right_8">[[ i['harga'] ]]</para></td>
+	        <td><para style="terp_default_Center_Bold_8">-</para></td>
+	      </tr>
+	  </blockTable>
+	  </section>
+  <blockTable colWidths="480.0,70.0" style="Table001">
+      <tr>
+        <td><para style="terp_default_Right_Bold_8">Subtotal</para></td>
+        <td><para style="terp_default_Right_8">[[ get_invoice(x.id, o)[1] ]]</para></td>
+      </tr>
+  </blockTable>
+  </section>
+  
+  <blockTable colWidths="480.0,70.0" style="Table001">
+      <tr>
+        <td><para style="terp_default_Right_Bold_8">Grand Total</para></td>
+        <td><para style="terp_default_Right_8">[[ get_grandtotal(o) ]]</para></td>
+      </tr>
+  </blockTable>
+  
+  </pto>    
+  </story>
+</document>

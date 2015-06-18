@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+	    <record id="group_approval_manifest" model="res.groups">
+	        <field name="name">Approval Manifest</field>
+	        <field name="category_id" ref="base.module_category_warehouse_management"/>
+	        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+	        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+	    </record>
+    
+		<report id="manifest_deliver" string="Print Manifest" 
+				model="manifest.delivery" name="manifest.deliver" 
+				rml="siu_manifest_delivery/report/manifest_deliver.rml"
+				auto="False" menu="False"/>
+
+		<report id="print_deliver" string="Print Deliver" 
+				model="stock.picking" name="print.deliver" 
+				rml="siu_manifest_delivery/report/print_deliver.rml"
+				auto="False" menu="False"/>
+
+		<report id="print_stock" string="Print Stock" 
+				model="stock.picking" name="print.stock" 
+				rml="siu_manifest_delivery/report/print_stock.rml"
+				auto="False" menu="False"/>
+
+        <record id="view_stock_picking_search" model="ir.ui.view">
+            <field name="name">stock.picking.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+                    <field name="partner_id"/>
+                </field>		
+			</field>
+		</record>
+
+
+        <record id="view_setoran_search" model="ir.ui.view">
+            <field name="name">account.voucher.setoran</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+			<field name="arch" type="xml">
+				<field name="name" position="replace">
+                    <field name="setor_date"/>
+                </field>		
+			</field>
+		</record>
+
+        <record id="view_manifest_delivery_tree" model="ir.ui.view">
+            <field name="name">manifest.delivery.tree</field>
+            <field name="model">manifest.delivery</field>
+            <field name="arch" type="xml">
+                <tree string="Manifest Delivery">
+	                <field name="name"/>
+	                <field name="date"/>
+	                <field name="driver"/>
+	                <field name="nopol"/>
+	                <field name="state"/>
+                </tree>
+            </field>
+        </record>	
+
+  
+        <record id="view_manifest_delivery_form" model="ir.ui.view">
+            <field name="name">manifest.delivery.form</field>
+            <field name="model">manifest.delivery</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Manifest Delivery" version="7.0">
+				<header>
+                        <button name="%(manifest_deliver)d" type="action" states="approve,done" string="Print Manifest" icon="gtk-print"/>
+						<button name="manifest_cancel" type="object" states="draft" string="Cancel" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="manifest_draft" type="object" states="approve" string="Set to Draft" icon="terp-stock_effects-object-colorize"/>
+	           			<button name="manifest_confirm" type="object" states="draft" string="Approve" icon="gtk-apply" groups="siu_manifest_delivery.group_approval_manifest"/>
+                        <button name="manifest_validate" type="object" states="approve" string="Validate" icon="gtk-apply" groups="siu_manifest_delivery.group_approval_manifest"/>
+	           			<field name="state" widget="statusbar" statusbar_visible="draft,approve,done" statusbar_colors='{"draft":"red","approve":"blue"}'/>
+                </header>                                
+				<sheet>
+                    <group col="4" colspan="4">
+		                <field name="name"/>
+		                <field name="date" on_change="onchange_backdate(date)"/>
+		                <field name="driver"/>
+                        <field name="nopol"/>
+		                <field name="validasi"/>
+		            </group>
+                    <notebook colspan="5">
+                        <page string="Delivery Order">
+                            <field colspan="4" name="order_ids" nolabel="1">
+                                <tree string="" editable="top">
+                                    <field name="name"/>
+                                    <field name="shop_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="party_datetime"/>
+                                    <field name="origin"/>
+                                    <field name="state"/>
+                                    <button name="%(print_deliver)d" type="action" string="Print Delivery" icon="gtk-print"/>
+                                </tree>
+                        	</field>
+						</page>
+                        <page string="Delivery Stock">
+                            <field colspan="4" name="stock_ids" nolabel="1">
+                        		<tree string="" editable="top">
+                                    <field name="name"/>
+                                    <field name="shop_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="origin"/>
+                                    <field name="state"/>
+                                    <button name="%(print_stock)d" type="action" string="Print Stock" icon="gtk-print"/>
+                                </tree>
+                        	</field>
+						</page>
+                        <page string="Notes">
+                            <field colspan="4" name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+			
+
+  	   
+		<record id="seq_type_manifest_delivery_new" model="ir.sequence.type">
+			<field name="name">Manifest Delivery</field>
+			<field name="code">manifest.delivery</field>
+		</record>
+		
+		<record id="seq_manifest_delivery_new" model="ir.sequence">
+			<field name="name">Manifest Delivery</field>
+			<field name="code">manifest.delivery</field>
+			<field name="prefix">MD/%(y)s/%(month)s/</field>
+			<field name="padding">5</field>
+		</record>
+		
+    	<record model="ir.actions.act_window" id="action_manifest_delivery_form">
+            <field name="name">Manifest Delivery</field>
+            <field name="res_model">manifest.delivery</field>
+        </record>
+                 
+		<menuitem name="Manifest Delivery" parent="stock.menu_stock_warehouse_mgmt" id="stock_manifest_delivery" action="action_manifest_delivery_form"/>
+ 
+    	
+    </data>
+</openerp>

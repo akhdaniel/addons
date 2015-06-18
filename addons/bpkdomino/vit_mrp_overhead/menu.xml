@@ -1,0 +1,16 @@
+<openerp>
+  <data>
+     <record model="ir.actions.act_window" id="field_overheads" >
+        <field name="name">Field Master Overheads</field>
+        <field name="res_model">vit.master.overheads</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Master Overheads</p>
+        </field>
+     </record>
+
+    <menuitem id="menu_conf" parent="base.menu_mrp_root" name="Configuration Overheads" sequence="7" />
+    <menuitem id="menu_conf3" parent="menu_conf" name="Master Overheads" sequence="31" action="field_overheads" />
+
+ </data>
+</openerp>

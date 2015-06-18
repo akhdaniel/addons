@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		
+		<report id="sale_varian" string="Sale Varian"
+			model="sale.varian.report" name="sale.varian"
+			rml="addons/siu_report/report/sale_varian.rml"
+			auto="False" menu="False"/>
+		
+		<report id="rekap_setoran" string="Summary Setoran"
+			model="many.report" name="rekap.setoran"
+			rml="addons/siu_report/report/rekap_setoran.rml"
+			auto="False" menu="False"/>
+
+		<report id="sale_shop_pdf" string="Sale Shop PDF"
+			model="sale.varian.report" name="wtc.shop.pdf"
+			rml="addons/siu_report/report/sale_shop_pdf.rml"
+			auto="False" menu="False"/>
+
+		<report id="sale_stock_pdf" string="Sale Stock PDF"
+			model="sale.varian.report" name="sale.stock.pdf"
+			rml="addons/siu_report/report/sale_stock_pdf.rml"
+			auto="False" menu="False"/>
+		
+		<record model="ir.ui.view" id="view_wizard_sale_report">
+            <field name="name">Sale Varian Report</field>
+            <field name="model">sale.varian.report</field>
+            <field name="arch" type="xml">
+                <form string="Sale Report" version="7.0">
+                    <group col="4" colspan="4">
+						<field name="name" colspan="4"/>
+						<field name="shop_id" colspan="4"/>
+						<field name="opname_id" attrs="{'invisible': [('name', '!=', 'stock')], 'required': [('name','=','stock')]}"/>
+						<field name="dari" on_change="onchange_backdate(dari)"/>
+					</group>
+					<footer>
+	                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+	                    or 
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_sale_report">
+            <field name="name">Sale Report</field>
+            <field name="res_model">sale.varian.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+       
+        <menuitem id="menu_sale_report_domino" name="Sales Reports" action="action_sale_report" parent="base.menu_sales"/>
+
+
+		<record model="ir.ui.view" id="view_many_report">
+            <field name="name">Many Report</field>
+            <field name="model">many.report</field>
+            <field name="arch" type="xml">
+                <form string="Report" version="7.0">
+                	<group>
+                	    <field name="report"/>
+                	</group>
+					<group attrs="{'invisible': [('report','!=','im')]}">
+						<field name="location_src_id" attrs="{'required': [('report','=','im')]}"/>
+						<field name="location_dest_id" attrs="{'required': [('report','=','im')]}"/>
+					</group>
+					<group col="4" colspan="4">
+						<field name="date_from" colspan="4"/>
+						<field name="name" colspan="4" invisible="True"/>
+						<field name="data_eksport" colspan="4" width="300" filename="name"/>
+					</group>
+					<footer>
+						<button icon="gtk-ok" type="object" name="eksport_excel" string="Eksport" default_focus="1" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+	                </footer>
+                </form>
+            </field>
+        </record>
+              
+        <record model="ir.actions.act_window" id="action_many_report">
+            <field name="name">Many Report</field>
+            <field name="res_model">many.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+       
+        <menuitem id="menu_many_report" name="Domino Report" action="action_many_report" parent="account.final_accounting_reports"/>
+
+
+
+
+		<record id="account_journal_shop" model="ir.ui.view">
+			<field name="name">account.journal.shop</field>
+			<field name="model">account.journal</field>
+			<field name="inherit_id" ref="account.view_account_journal_form" />
+			<field name="arch" type="xml">
+				<field name="sequence_id" position="after">
+					<field name="shop_id"/>
+					<field name="jenis"/>
+				</field>	
+			</field>
+		</record>
+
+
+		<record id="customer_voucher_setor" model="ir.ui.view">
+			<field name="name">account.voucher.domino</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_vendor_receipt_form" />
+			<field name="arch" type="xml">
+				<field name="date" position="replace">
+					<field name="date" on_change="onchange_backdate(date)"/>
+                </field>
+				<button string="Unreconcile" position="after">
+					<button name="setor" type="object" string="Setoran"/>
+					<button name="payment_batal" type="object" states="posted" string="Batal" icon="gtk-apply"/>
+				</button>	
+			</field>
+		</record>
+		
+
+		<record id="customer_voucher_backdate" model="ir.ui.view">
+			<field name="name">account.voucher.backdate</field>
+			<field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form" />
+			<field name="arch" type="xml">
+				<field name="date" position="replace">
+					<field name="date" on_change="onchange_backdate(date)"/>
+                </field>	
+			</field>
+		</record>
+		
+		<report id="rekap_invoice" string="Consolidate Invoice"
+			model="consolidate.invoice" name="rekap.invoice"
+			rml="addons/siu_report/report/rekap_invoice.rml"
+			auto="False" menu="False"/>
+		
+		<record model="ir.ui.view" id="view_wizard_consolidate_invoice">
+            <field name="name">Consolidate Invoice</field>
+            <field name="model">consolidate.invoice</field>
+            <field name="arch" type="xml">
+                <form string="Sale Report" version="7.0">
+                    <group col="4" colspan="4">
+						<field name="name" colspan="4"/>
+						<field name="dari"/>
+						<field name="sampai"/>
+					</group>
+					<group colspan="4">
+						<field name="partner_ids" colspan="4"/>
+					</group>
+					<footer>
+	                    <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+	                    or 
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_consolidate_invoice">
+            <field name="name">Consolidate Invoice</field>
+            <field name="res_model">consolidate.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+       
+        <menuitem id="menu_consolidate_invoice" name="Consolidate Invoice" 
+        		action="action_consolidate_invoice" 
+        		parent="account.menu_finance_receivables"/>
+
+
+
+
+
+	</data>
+</openerp>
+
