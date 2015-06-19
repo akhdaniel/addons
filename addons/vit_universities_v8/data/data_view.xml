@@ -99,7 +99,7 @@
 	    </record>
 
 <!-- Master Fakultas -->
-<!-- 	    <record model="master.fakultas" id="fakultas1" >
+	    <record model="master.fakultas" id="fakultas1" >
 	    	<field name="kode">01</field>
 	    	<field name="name">Fakultas Kedokteran</field>
 	    </record>
@@ -114,7 +114,7 @@
 	    <record model="master.fakultas" id="fakultas4" >
 	    	<field name="kode">04</field>
 	    	<field name="name">Fakultas Farmasi</field>
-	    </record> -->
+	    </record>
 
 <!-- Master Jurusan -->
 <!-- 	    <record model="master.jurusan" id="jurusan1" >
