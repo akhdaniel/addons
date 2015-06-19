@@ -15,7 +15,7 @@ class academic_year(osv.Model):
 
 	_columns = {
 		#'sequence': fields.integer('Urutan', required=True, help="Urutan yang akan di tampilkan."),
-		'name': fields.char('Nama', size=64, select=1),
+		'name': fields.char('Nama', size=64, select=1, required=True),
 		'code': fields.char('Kode', size=6, required=True),
 		'date_start': fields.date('Tanggal Mulai', required=True),
 		'date_stop': fields.date('Tanggal Berakhir', required=True),

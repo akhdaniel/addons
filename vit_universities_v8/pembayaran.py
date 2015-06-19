@@ -43,7 +43,7 @@ class master_pembayaran(osv.Model):
 		for x in self.browse(cr,uid,ids,context=context):
 			tot = 0.00
 			for t in x.detail_product_ids:
-				harga = t.total
+				harga = float(t.total)
 				tot += harga
 			res[x.id] = tot
 
@@ -57,7 +57,7 @@ class master_pembayaran(osv.Model):
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True), 
 		'state':fields.selection([('draft','Non Aktif'),('confirm','Aktif')],'Status'),
-		'detail_product_ids':fields.one2many('master.pembayaran.detail','pembayaran_id',string='Pembayaran',required=True),		
+		'detail_product_ids':fields.one2many('master.pembayaran.detail','pembayaran_id',string='Pembayaran'),		
 		'type': fields.selection([('flat','Flat'),('paket','Paket SKS')],'Type Pembayaran',required=True),
 		'sks_plus' : fields.boolean('Bayar jika tambah SKS'),
 		'total': fields.function(_total,type='char',string='Total'),
@@ -103,7 +103,6 @@ class master_pembayaran_detail(osv.Model):
 			'pembayaran_detail_id',               # 'actual.object.id' in relation table
 			'product_id',           # 'other.object.id' in relation table
 			'Pembayaran',              # 'Field Name'
-			domain="[('type','=','service')]",
-			required=True),
+			domain="[('type','=','service')]"),
 		'total': fields.function(_sub_total,type='char',string='Sub Total'),
 	}
