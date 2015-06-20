@@ -144,9 +144,10 @@ class sale_order(osv.osv):
                 detail.append(line.id)
     
         #import pdb;pdb.set_trace()
-        order_list_id = order_list_obj.create(cr,uid,{'partner_id'       : self_obj.partner_id.id,
-                                                        'ref'                : 'OL-'+self_obj.name,
-                                                        'sale_order_line_ids': [(6,0,detail)]
+        order_list_id = order_list_obj.create(cr,uid,{'partner_id'            : self_obj.partner_id.id,
+                                                        'ref'                 : 'OL-'+self_obj.name,
+                                                        'purchase_date' : self_obj.date_order,
+                                                        'sale_order_line_ids' : [(6,0,detail)]
                                                         })
 
         self.write(cr,uid,ids[0],{'order_list_id':order_list_id})
