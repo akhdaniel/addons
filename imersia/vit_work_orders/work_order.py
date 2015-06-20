@@ -126,8 +126,9 @@ class mrp_production_workcenter_line(osv.osv):
             if move_lines:
                 line_ids = []
                 for line in move_lines:
-                    line_ids.append(line.id)
-                    is_cylindrical2 = True
+                    if line.product_category == 'cylindrical':
+                        line_ids.append(line.id)
+                        is_cylindrical2 = True
                 result[obj.id] = line_ids
             self.write(cr,uid,obj.id,{'is_cylindrical2': is_cylindrical2},context=context)
         return result        
@@ -145,8 +146,9 @@ class mrp_production_workcenter_line(osv.osv):
             if move_lines:
                 line_ids = []
                 for line in move_lines:
-                    line_ids.append(line.id)
-                    is_cubic2 = True
+                    if line.product_category == 'cubic':
+                        line_ids.append(line.id)
+                        is_cubic2 = True
                 result[obj.id] = line_ids
             self.write(cr,uid,obj.id,{'is_cubic2': is_cubic2},context=context)
         return result 
@@ -164,8 +166,9 @@ class mrp_production_workcenter_line(osv.osv):
             if move_lines:
                 line_ids = []
                 for line in move_lines:
-                    line_ids.append(line.id)
-                    is_volume2 = True
+                    if line.product_category == 'volume':
+                        line_ids.append(line.id)
+                        is_volume2 = True
                 result[obj.id] = line_ids
             self.write(cr,uid,obj.id,{'is_volume2': is_volume2},context=context)
         return result
