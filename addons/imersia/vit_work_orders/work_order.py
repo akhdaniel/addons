@@ -51,48 +51,130 @@ class mrp_production_workcenter_line(osv.osv):
         return result   
 
 
-    def _get_product_to_consume(self, cr, uid, ids, field_name, arg, context=None):
+    def _get_product_to_consume_cylindrical(self, cr, uid, ids, field_name, arg, context=None):
 
         if context is None:
             context = {}
         result = {}
         mrp_obj     = self.pool.get('mrp.production')
         move_obj  = self.pool.get('stock.move')
-
+        is_cylindrical = False
         for obj in self.browse(cr,uid,ids,context=context):
             move_lines  = obj.production_id.move_lines
             if move_lines:
                 line_ids = []
                 for line in move_lines:
-                    line_ids.append(line.id)
+                    if line.product_category == 'cylindrical':
+                        line_ids.append(line.id)
+                        is_cylindrical = True
                 result[obj.id] = line_ids
-
+            self.write(cr,uid,obj.id,{'is_cylindrical': is_cylindrical},context=context)
         return result
 
-    def _get_product_to_produce(self, cr, uid, ids, field_name, arg, context=None):
+    def _get_product_to_consume_cubic(self, cr, uid, ids, field_name, arg, context=None):
 
         if context is None:
             context = {}
         result = {}
         mrp_obj     = self.pool.get('mrp.production')
         move_obj  = self.pool.get('stock.move')
+        is_cubic = False
+        for obj in self.browse(cr,uid,ids,context=context):
+            move_lines  = obj.production_id.move_lines
+            if move_lines:
+                line_ids = []
+                for line in move_lines:
+                    if line.product_category == 'cubic':
+                        line_ids.append(line.id)
+                        is_cubic = True
+                result[obj.id] = line_ids
+            self.write(cr,uid,obj.id,{'is_cubic': is_cubic},context=context)
+        return result
 
+    def _get_product_to_consume_volume(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+        mrp_obj     = self.pool.get('mrp.production')
+        move_obj  = self.pool.get('stock.move')
+        is_volume = False
+        for obj in self.browse(cr,uid,ids,context=context):
+            move_lines  = obj.production_id.move_lines
+            if move_lines:
+                line_ids = []
+                for line in move_lines:
+                    if line.product_category == 'volume':
+                        line_ids.append(line.id)
+                        is_volume = True
+                result[obj.id] = line_ids
+            self.write(cr,uid,obj.id,{'is_volume': is_volume},context=context)
+        return result        
+
+
+
+    def _get_product_to_produce_cylindrical(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+        mrp_obj     = self.pool.get('mrp.production')
+        move_obj  = self.pool.get('stock.move')
+        is_cylindrical2 = False
         for obj in self.browse(cr,uid,ids,context=context):
             move_lines  = obj.production_id.move_created_ids
             if move_lines:
                 line_ids = []
                 for line in move_lines:
                     line_ids.append(line.id)
+                    is_cylindrical2 = True
                 result[obj.id] = line_ids
-
+            self.write(cr,uid,obj.id,{'is_cylindrical2': is_cylindrical2},context=context)
         return result        
+
+    def _get_product_to_produce_cubic(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+        mrp_obj     = self.pool.get('mrp.production')
+        move_obj  = self.pool.get('stock.move')
+        is_cubic2 = False
+        for obj in self.browse(cr,uid,ids,context=context):
+            move_lines  = obj.production_id.move_created_ids
+            if move_lines:
+                line_ids = []
+                for line in move_lines:
+                    line_ids.append(line.id)
+                    is_cubic2 = True
+                result[obj.id] = line_ids
+            self.write(cr,uid,obj.id,{'is_cubic2': is_cubic2},context=context)
+        return result 
+
+    def _get_product_to_produce_volume(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+        mrp_obj     = self.pool.get('mrp.production')
+        move_obj  = self.pool.get('stock.move')
+        is_volume2 = False
+        for obj in self.browse(cr,uid,ids,context=context):
+            move_lines  = obj.production_id.move_created_ids
+            if move_lines:
+                line_ids = []
+                for line in move_lines:
+                    line_ids.append(line.id)
+                    is_volume2 = True
+                result[obj.id] = line_ids
+            self.write(cr,uid,obj.id,{'is_volume2': is_volume2},context=context)
+        return result
 
     def _get_rate_production_time(self, cr, uid, ids, field_name, arg, context=None):
 
         if context is None:
             context = {}
         result = {}
-
         rate = 0
         for obj in self.browse(cr,uid,ids,context=context):
             working_hour  = obj.delay
@@ -125,11 +207,27 @@ class mrp_production_workcenter_line(osv.osv):
         'product_name': fields.related('product','name',type='char',string='Product Finished Name',readonly=True),
         'ean_barcode': fields.related('product','ean13',type='char',relation='product.template',string='Barcode',readonly=True),
         'origin': fields.related('production_id','origin',type='char',relation='mrp.production',string='Order List Ref',readonly=True),
-        'move_lines' : fields.function(_get_product_to_consume, type='many2many', relation="stock.move", string="Product to Consume"),
-        'move_created_ids' : fields.function(_get_product_to_produce, type='many2many', relation="stock.move", string="Product to Produce"),
+
+        'move_lines' : fields.function(_get_product_to_consume_cylindrical, type='many2many', relation="stock.move", string="Product to Consume Cylindrical"),
+        'move_lines2' : fields.function(_get_product_to_consume_cubic, type='many2many', relation="stock.move", string="Product to Consume Cubic"),
+        'move_lines3' : fields.function(_get_product_to_consume_volume, type='many2many', relation="stock.move", string="Product to Consume Volume"),
+        'is_cylindrical' : fields.boolean('Is Cylindrical'),
+        'is_cubic' : fields.boolean('Is Cubic'),
+        'is_volume' : fields.boolean('Is Volume'),
+
+
+        'move_created_ids' : fields.function(_get_product_to_produce_cylindrical, type='many2many', relation="stock.move", string="Product to Produce Cylindrical"),
+        'move_created_ids2' : fields.function(_get_product_to_produce_cubic, type='many2many', relation="stock.move", string="Product to Produce Cubic"),
+        'move_created_ids3' : fields.function(_get_product_to_produce_volume, type='many2many', relation="stock.move", string="Product to Produce Volume"),
+        'is_cylindrical2' : fields.boolean('Is Cylindrical2'),
+        'is_cubic2' : fields.boolean('Is Cubic2'),
+        'is_volume2' : fields.boolean('Is Volume2'),
+
+
         'rate_production_time' : fields.function(_get_rate_production_time,type="char",string='Rate Production Time'),
         'bom_line_detail_ids' : fields.function(_get_bom_line_detail_ids,type="many2many",relation="mrp.bom.line",string='Rate Production Time'),
     }
+
 
 
 class mrp_bom_line(osv.osv):
