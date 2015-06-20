@@ -29,20 +29,20 @@
                 <form string="Order List">
                 <header>                                             
                     <button string="Confirm" type="object" 
-                        states="draft" name="action_confirm"
+                        states="draft" name="action_create_manufacturing_orders"
                         groups="base.group_sale_salesman,base.group_sale_manager"/>                 
                                              
-                    <button string="Cancel" type="object" 
+<!--                     <button string="Cancel" type="object" 
                         states="confirm" name="action_cancel"
-                        groups="base.group_sale_salesman,base.group_sale_manager"/>
+                        groups="base.group_sale_salesman,base.group_sale_manager"/> -->
 
                     <button name="action_order_list_send" string="Send by Email" 
                         type="object" states="draft,confirm" class="oe_highlight" 
                         groups="base.group_user"/>    
 
-                    <button string="Create Manufacturing Orders" type="object" 
+<!--                     <button string="Create Manufacturing Orders" type="object" 
                         states="confirm" name="action_create_manufacturing_orders"
-                        groups="base.group_sale_salesman,base.group_sale_manager"/>
+                        groups="base.group_sale_salesman,base.group_sale_manager"/> -->
 
                     <field name="state" widget="statusbar"/>
 

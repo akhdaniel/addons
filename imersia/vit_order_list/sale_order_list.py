@@ -105,7 +105,7 @@ class sale_order_list(osv.Model):
 			required=True),	
 		'sale_order_line_ids2'	: fields.function(_get_sale_order_line_ids, type="many2many", relation="sale.order.line", string="Measurement"),
 		#'sale_order_line_ids2'	: fields.many2many("sale.order.line", string="Measurement",compute='_get_sale_order_line_ids'),
-		'state'					: fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('done', 'Done')], 'Status'),
+		'state'					: fields.selection([('draft', 'Draft'),('confirm', 'Confirm')], 'Status'),
 		'note'					: fields.text('Note'),
 		'user_id'				: fields.many2one('res.users','User',readonly=True, select=True, track_visibility='onchange'),
 		'company_id'			: fields.many2one('res.company', 'Company'),
@@ -231,7 +231,9 @@ class sale_order_list(osv.Model):
 
 																		})
 				#workflow.trg_validate(uid, 'mrp.production', mo_create, 'moves_ready', cr)
+			self.pool.get('sale.order.line').write(cr,uid,line.id,{'is_order_list':True},context=context)
 
-		self.write(cr,uid,ids,{'state': 'done'},context=context)
+		self.write(cr,uid,ids,{'state':'confirm'},context=context)	
+		#self.write(cr,uid,ids,{'state': 'done'},context=context)
 						  
 		return  True
