@@ -36,44 +36,129 @@
                                 </tree>
                             </field>                            
                         </group>                                             
-                    </page>  
+                    </page>               
+
                     <page string="Product to Consume">
-                        <field view_mode="tree,form" name="move_lines" nolabel="1">
-                            <tree string="Product to Consume">
-                                <field name="default_code"/>
-                                <field name="product_id"/>
-                                <field name="product_category" invisible="1"/>
-                                <field name="product_larg" style="text-align: center;" string="W" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
-                                <field name="product_length" style="text-align: center;" string="L" attrs="{'invisible': [('product_category','=','volume')]}"/>                                
-                                <field name="product_height" style="text-align: center;" string="H" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>          
-                                <field name="product_diameter" style="text-align: center;" string="D" attrs="{'invisible': [('product_category','!=','cubic')]}"/>                                
-                                <field name="product_volume_volume" string="Vol" attrs="{'invisible': [('product_category','!=','volume')]}"/>    
-                                <field name="product_uom_qty" sum="Total Amount"/>
-                                <field name="material_id" />
-                                <field name="quality_id"/>  
-                                <field name="position"/>                   
-                                <field name="state" invisible="1"/>
-                            </tree>
-                        </field>                    
-                    </page>    
+                        <!-- W L H -->
+                        <group string="Cubic" attrs="{'invisible':[('is_cubic','=',False)]}">
+                            <field name="is_cubic" invisible="1"/>
+                            <field view_mode="tree" name="move_lines2" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_category" invisible="1"/>
+                                    <field name="product_larg" style="text-align: center;" string="L" />
+                                    <field name="product_length" style="text-align: center;" string="W" />                                
+                                    <field name="product_height" style="text-align: center;" string="T" />    
+                                    <field name="product_uom_qty" sum="Total Amount"/>
+                                    <field name="material_id" />
+                                    <field name="quality_id"/>  
+                                    <field name="position"/>                   
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>                    
+                        </group> 
+
+                        <!-- D -->
+                        <group string="Cylindrical" attrs="{'invisible':[('is_cylindrical','=',False)]}">
+                            <field name="is_cylindrical" invisible="1"/>
+                            <field view_mode="tree" name="move_lines" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_category" invisible="1"/>
+                                    <field name="product_larg" style="text-align: center;" string="L" />         
+                                    <field name="product_diameter" style="text-align: center;" string="D"/>                                    
+                                    <field name="product_uom_qty" sum="Total Amount"/>
+                                    <field name="material_id" />
+                                    <field name="quality_id"/>  
+                                    <field name="position"/>                  
+                                    <field name="state" invisible="1"/>
+                                </tree>        
+                            </field>   
+                        </group> 
+
+                        <!-- volume -->
+                        <group string="Volume" attrs="{'invisible':[('is_volume','=',False)]}">
+                            <field name="is_volume" invisible="1"/>
+                            <field view_mode="tree" name="move_lines3" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_category" invisible="1"/>                             
+                                    <field name="product_volume_volume" string="V"/>    
+                                    <field name="product_uom_qty" sum="Total Amount"/>
+                                    <field name="material_id" />
+                                    <field name="quality_id"/>  
+                                    <field name="position"/>                   
+                                    <field name="state" invisible="1"/>
+                                </tree>  
+                            </field>  
+                        </group> 
+
+                        <group string="Product to consume is empty..." attrs="{'invisible':['|','|',('is_cubic','=',True),('is_cylindrical','=',True),('is_volume','=',True)]}"/>
+                    </page> 
+
+
                     <page string="Product to Produce">
-                        <field view_mode="tree,form" name="move_created_ids" nolabel="1">
-                            <tree string="Product to Consume">
-                                <field name="default_code"/>
-                                <field name="product_id"/>
-                                <field name="product_category" invisible="1"/>
-                                <field name="product_larg" string="W" attrs="{'invisible': [('product_category','!=','cubic')]}"/>
-                                <field name="product_length" string="L" attrs="{'invisible': [('product_category','=','volume')]}"/>                                
-                                <field name="product_height" string="H" attrs="{'invisible': [('product_category','!=','cylindrical')]}"/>          
-                                <field name="product_diameter" string="D" attrs="{'invisible': [('product_category','!=','cubic')]}"/>                                
-                                <field name="product_volume_volume" string="Vol" attrs="{'invisible': [('product_category','!=','volume')]}"/>    
-                                <field name="product_uom_qty" sum="Total Amount"/>
-                                <field name="material_id" />
-                                <field name="quality_id"/>     
-                                <field name="state" invisible="1"/>
-                            </tree>
-                        </field> 
-                  
+                        <!-- W L H -->
+                        <group string="Cubic" attrs="{'invisible':[('is_cubic2','=',False)]}">
+                            <field name="is_cubic2" invisible="1"/>
+                            <field view_mode="tree" name="move_created_ids2" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_category" invisible="1"/>
+                                    <field name="product_larg" style="text-align: center;" string="L" />
+                                    <field name="product_length" style="text-align: center;" string="W" />                                
+                                    <field name="product_height" style="text-align: center;" string="T" />    
+                                    <field name="product_uom_qty" sum="Total Amount"/>
+                                    <field name="material_id" />
+                                    <field name="quality_id"/>  
+                                    <field name="position"/>                   
+                                    <field name="state" invisible="1"/>
+                                </tree>
+                            </field>                    
+                        </group>                         
+
+                        <!-- D -->
+                        <group string="Cylindrical" attrs="{'invisible':[('is_cylindrical2','=',False)]}">
+                            <field name="is_cylindrical2" invisible="1"/>
+                            <field view_mode="tree" name="move_created_ids" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_category" invisible="1"/>
+                                    <field name="product_larg" style="text-align: center;" string="L" />         
+                                    <field name="product_diameter" style="text-align: center;" string="D"/>                                    
+                                    <field name="product_uom_qty" sum="Total Amount"/>
+                                    <field name="material_id" />
+                                    <field name="quality_id"/>  
+                                    <field name="position"/>                  
+                                    <field name="state" invisible="1"/>
+                                </tree>        
+                            </field>   
+                        </group>
+
+                        <!-- volume -->
+                        <group string="Volume" attrs="{'invisible':[('is_volume2','=',False)]}">
+                            <field name="is_volume2" invisible="1"/>
+                            <field view_mode="tree" name="move_created_ids3" nolabel="1">
+                                <tree string="Product to Consume">
+                                    <field name="default_code"/>
+                                    <field name="product_id"/>
+                                    <field name="product_category" invisible="1"/>                             
+                                    <field name="product_volume_volume" string="V"/>    
+                                    <field name="product_uom_qty" sum="Total Amount"/>
+                                    <field name="material_id" />
+                                    <field name="quality_id"/>  
+                                    <field name="position"/>                   
+                                    <field name="state" invisible="1"/>
+                                </tree>  
+                            </field>  
+                        </group> 
+
+                        <group string="Product to consume is empty..." attrs="{'invisible':['|','|',('is_cubic2','=',True),('is_cylindrical2','=',True),('is_volume2','=',True)]}"/>                                          
                     </page>                                          
                 </page>
 
