@@ -158,7 +158,7 @@
                             </field>  
                         </group> 
 
-                        <group string="Product to consume is empty..." attrs="{'invisible':['|','|',('is_cubic2','=',True),('is_cylindrical2','=',True),('is_volume2','=',True)]}"/>                                          
+                        <group string="Product to produce is empty..." attrs="{'invisible':['|','|',('is_cubic2','=',True),('is_cylindrical2','=',True),('is_volume2','=',True)]}"/>                                          
                     </page>                                          
                 </page>
 
