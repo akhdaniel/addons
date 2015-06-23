@@ -6,17 +6,17 @@ define('NUL' , chr(0x00));
 class RawPrinter {
 	var $printername ;
 
-	function __construct($printername = 'EPSON L110 Series' ) {
+	function __construct($printername = 'ZDesigner GC420t (EPL)' ) {
 	   $this->printername = $printername;
 	}
 
 	public function openPrinter(){
 		$handle = printer_open($this->printername); 
 		printer_set_option($handle, PRINTER_MODE, 'text');		
-		printer_set_option($handle, PRINTER_COPIES, 3);		
+		/*printer_set_option($handle, PRINTER_COPIES, 3);		
 		printer_set_option($handle, PRINTER_PAPER_FORMAT, PRINTER_FORMAT_A4);		
 		printer_set_option($handle, PRINTER_TEXT_COLOR, "005533");		
-		printer_set_option($handle, PRINTER_TEXT_ALIGN, PRINTER_TA_BASELINE);		
+		printer_set_option($handle, PRINTER_TEXT_ALIGN, PRINTER_TA_BASELINE);	*/	
 		return $handle;
 	}
 	
