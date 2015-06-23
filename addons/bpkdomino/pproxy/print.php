@@ -6,7 +6,7 @@ header("Content-type: application/json");
 $json = json_decode(file_get_contents("php://input"));
 
 require_once("printer.php");
-$printername = 'EPSON L110 Series';
+$printername = 'Zebra';
 
 if(isset($json->barcode)){
 	$printer = new RawPrinter($printername);
