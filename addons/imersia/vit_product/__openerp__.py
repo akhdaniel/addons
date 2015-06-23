@@ -28,7 +28,7 @@
         'mrp_view.xml',
         # 'stock_view.xml',
         'product_views.xml',
-        'product_data.xml',
+        # 'product_data.xml',
         'sales_views.xml',
         'sales_lines_views.xml',
         'reports/proforma.xml',
