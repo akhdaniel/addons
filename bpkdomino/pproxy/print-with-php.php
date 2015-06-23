@@ -8,7 +8,7 @@
 <script>
 $(document).ready(function(){
     $("#print").click(function(){
-        var barcode = "ini dua kali";
+        var barcode = 'N\nA1,0,0,1,1,1,N,"Buku A4"\nB1,10,0,E30,2,2,40,B,"0123012340008"\nP' ;
         barcode = encodeURIComponent(barcode);
         
         $.ajax("http://127.0.0.1/pproxy/print.php", {
