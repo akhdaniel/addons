@@ -327,3 +327,14 @@ class product_template(osv.osv):
             return {'value': {'product_category': 'cubic'}}
 
 product_template()
+
+
+class product_product(osv.osv):
+    _name = "product.product"
+    _inherit = "product.product"
+
+    def categ_change(self, cr, uid, ids ,product_category,sale_ok):
+        if sale_ok :
+            return {'value': {'product_category': 'cubic'}}
+
+product_product()

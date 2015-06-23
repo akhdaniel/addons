@@ -309,4 +309,5 @@ class sale_order_line(osv.osv):
         'product_length':fields.related('product_id','product_length',type='float',string='Depth (mm)'),
         'product_larg':fields.related('product_id','product_larg',type='float',string='Width (mm)'),
         'product_height':fields.related('product_id','product_height',type='float',string='Height (mm)'), 
+        # 'description': fields.related('product_id','description',type='text',string='Description',readonly=True),
         }

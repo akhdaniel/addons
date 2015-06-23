@@ -143,6 +143,24 @@
                           <field name='desc_goods'/>
                     </group>
                 </xpath>
+                
+                <!-- so line details form -->
+                <!-- <xpath expr="//notebook/page[@string='Order Lines']/field[@name='order_line']/form[@string='Sales Order Lines']/field[@name='name']" position='attributes'>
+                    <attribute name='invisible'>True</attribute>
+                </xpath> -->
+                <!-- <label for="name" position='replace'>
+                    <label for="description"/>
+                    <field name='description' />
+                </label> -->
+
+                <!-- so line details tree -->
+                <!-- <xpath expr="//notebook/page[@string='Order Lines']/field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='name']" position='attributes'>
+                    <attribute name='invisible'>True</attribute>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Order Lines']/field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='product_id']" position='after'>
+                    <field name='description' />
+                </xpath> -->
+
                 <xpath expr="//form/header//button[@name='copy_quotation']" position='attributes'>
                     <attribute name='string'>New Copy of Proforma Invoice</attribute>
                 </xpath>
@@ -151,7 +169,7 @@
                 </xpath>
                 <page string="Order Lines" position='after'>
                 	<page string="Measurement"> 
-                	   <!-- <group><group style="width:400"> -->
+                	   <group><group style="width:600">
                             <field view_mode="tree,form" name="sale_line_measurements" nolabel="1">
                                 <tree string="Measurements">
                                     <field name="product_larg" class="text-center"/>
@@ -161,7 +179,7 @@
                                     <field name="product_unbuilt_volume12" class="text-center"/>
                                 </tree>                                                              
                             </field>  
-                        <!-- </group><group/></group> -->
+                        </group><group/></group>
                      </page>  
                 </page>   
             </field>
