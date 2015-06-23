@@ -329,7 +329,7 @@
         </record>
 
         <record id="vi_finishing_product_action" model="ir.actions.act_window">
-            <field name="name">Product Fin</field>
+            <field name="name">Product finishing</field>
             <field name="res_model">product.finishing</field>
             <field name="view_mode">tree,form</field>
             <field name="view_type">form</field>

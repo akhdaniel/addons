@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['product','stock','mrp','sale'],
+    'depends': ['product','stock','mrp','sale','purchase'],
 
     # always loaded
     'data': [
@@ -31,7 +31,8 @@
         'product_data.xml',
         'sales_views.xml',
         'sales_lines_views.xml',
-        'reports/proforma.xml'
+        'reports/proforma.xml',
+        'purchase_line.xml'
     ],
 
     # only loaded in demonstration mode
