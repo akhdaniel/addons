@@ -1,0 +1,110 @@
+<openerp>
+	<data>
+
+
+		<record id="view_batch_number_tree" model="ir.ui.view">
+            <field name="name">Batch Number</field>
+            <field name="model">batch.number</field>
+            <field name="arch" type="xml">
+                <tree string="Years" editable="bottom">
+                    <field name="number"/>
+                    <field name="year_id" widget="selection"/>
+                    <field name="month"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="is_used"/>
+                </tree>
+            </field>
+        </record>	
+
+        <record id="view_year_tree" model="ir.ui.view">
+            <field name="name">Year</field>
+            <field name="model">batch.year</field>
+            <field name="arch" type="xml">
+                <tree string="Years" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>   
+
+		<record model="ir.actions.act_window" id="action_batch_number_view">
+            <field name="name">Batch Number</field>
+            <field name="res_model">batch.number</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_year_view">
+            <field name="name">Years</field>
+            <field name="res_model">batch.year</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="view_batch_number_search" model="ir.ui.view">
+            <field name="name">Batch</field>
+            <field name="model">batch.number</field>
+            <field name="arch" type="xml">
+                <search string="Batch Number">
+                    <field name="number" filter_domain="[('number','ilike',self)]" string="Number"/>
+                    <filter icon="terp-sale" string="Not Used" name='not_used' domain="[('is_used','=',False)]"/>
+                    <filter icon="terp-sale" string="Used" name='used' domain="[('is_used','=',True)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter icon="terp-folder-orange" string="Year" name='year_id' domain="" context="{'group_by':'year_id'}"/>
+                        <filter icon="terp-folder-orange" string="Month" name='month' domain="" context="{'group_by':'month'}"/>
+                        <filter icon="terp-folder-orange" string="Date" name='date' domain="" context="{'group_by':'date'}"/>       
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- state draft -->
+        <record id="action_batch_number_list" model="ir.actions.act_window">
+            <field name="name">Batch Number</field>
+            <field name="res_model">batch.number</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_batch_number_tree"/>
+            <field name="search_view_id" ref="view_batch_number_search"/>
+            <field name="context">{"search_default_not_used":1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Sorry....
+              </p><p>
+                No record now...
+              </p>
+            </field>
+
+        </record>
+
+        <menuitem action="action_year_view" id="menu_years_conf" name="Years" parent="mrp.menu_mrp_configuration" sequence="400"/>
+        <menuitem action="action_batch_number_list" id="menu_batch_conf" name="Batch Number" parent="mrp.menu_mrp_configuration" sequence="500"/>
+
+        <!-- Inherit Produce untuk invisible lot_id karena otomatis dibuat oleh batch number-->
+        <record id="vit_view_mrp_product_produce_wizard" model="ir.ui.view">
+            <field name="name">MRP Product Produce</field>
+            <field name="model">mrp.product.produce</field>
+            <field name="inherit_id" ref="mrp.view_mrp_product_produce_wizard"/>
+            <field name="arch" type="xml">   
+                <field name="lot_id" position="replace">
+                    <field name="lot_id" invisible="1"/>
+                </field>    
+            </field>
+        </record>
+
+
+        <!--sequence-->
+        <record forcecreate="1" id="seq_batch_number" model="ir.sequence.type">
+            <field name="name">Batch</field>
+            <field name="code">batch.number</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_batch" model="ir.sequence">
+            <field name="name">Batch</field>
+            <field name="code">batch.number</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>
+
+    </data>
+</openerp>
