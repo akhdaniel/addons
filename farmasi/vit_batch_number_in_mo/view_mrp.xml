@@ -1,0 +1,17 @@
+<openerp>
+<data>      
+
+
+        <record id="vit_mrp_man_orders" model="ir.ui.view">
+            <field name="name">mrp.production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <field name="date_planned" position="after">
+                    <field name="batch_number_id"/>
+                </field>     
+            </field>
+        </record> 
+
+</data>
+</openerp>        

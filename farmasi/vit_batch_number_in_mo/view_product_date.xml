@@ -1,0 +1,43 @@
+<openerp>
+<data>      
+
+
+        <record id="vit_product_template_only_form_view" model="ir.ui.view">
+            <field name="name">product.template</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <page string="Accounting" position="after">
+                    <page string="Batch Number Days" position="after">
+                        <group>
+                            <group>
+                                <field name="best_before_days"/>
+                                <field name="removal_days"/>
+                            </group>
+                            <group>                                
+                                <field name="end_of_life_days"/>
+                                <field name="alert_days"/>
+                            </group>
+                        </group>
+                    </page> 
+                </page>     
+            </field>
+        </record> 
+
+
+        <record id="vit_product_category_form_view" model="ir.ui.view">
+            <field name="name">product.category</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="best_before_days"/>
+                    <field name="end_of_life_days"/>
+                    <field name="removal_days"/>
+                    <field name="alert_days"/>
+                </field>     
+            </field>
+        </record>
+
+</data>
+</openerp> 
