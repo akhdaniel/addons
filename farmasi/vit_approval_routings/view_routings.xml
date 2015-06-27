@@ -1,0 +1,39 @@
+<openerp>
+<data>      
+
+
+        <record id="vit_mrp_workcenter_approval_view" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <button name="button_start_working" position="replace">
+                    <button name="button_start_working" string="Start" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('previous_wo_finished','=',False)]}"/>
+                </button>    
+                <field name="sequence" position="after">
+                    <field name="previous_wo_finished" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="vit_mrp_routing_workcenter_approval_form_view" model="ir.ui.view">
+            <field name="name">mrp.routing.workcenter</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+            <field name="arch" type="xml">
+                <label for="note" position="before">
+                    <group>
+                        <group>
+                            <field name="waiting_previous_wo_to_start"/>
+                        </group>
+                        <group>
+                            <field name="sampling"/>
+                        </group>
+                    </group>
+                </label>     
+            </field>
+        </record> 
+ 
+
+</data>
+</openerp>
