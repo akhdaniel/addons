@@ -1,7 +1,6 @@
 <openerp>
 <data>      
 
-
         <record id="vit_view_production_lot_form_view" model="ir.ui.view">
             <field name="name">stock.production.lot</field>
             <field name="model">stock.production.lot</field>
@@ -37,6 +36,19 @@
             </field>
         </record> 
 
+        <record id="vit_view_production_lot_tree_view" model="ir.ui.view">
+            <field name="name">stock.production.lot</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="arch" type="xml">
+                <field name="prefix" position="replace">
+                        <field name="spk_cutting_id"/>
+                        <field name="spk_makloon_id"/>                            
+                        <field name="makloon" readonly="1"/>
+                </field>
+     
+            </field>
+        </record> 
 
 </data>
 </openerp> 
