@@ -1,0 +1,83 @@
+<openerp>
+  <data>
+ 
+        <record id="view_hand_tag_tree" model="ir.ui.view">
+            <field name="name">vit.hand.tag</field>
+            <field name="model">vit.hand.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Hand Tag List">
+                    <field name="name" />
+                    <field name="spk_cutting_id" />
+                    <field name="spk_makloon_id"/> 
+                    <field name="makloon"/> 
+                    <field name="tanggal"/>                  
+                    <field name="state"/>                 
+                </tree>
+            </field>
+        </record> 
+
+         <record id="view_vit_hand_tag__form" model="ir.ui.view">
+            <field name="name">vit.hand.tag</field>
+            <field name="model">vit.hand.tag</field>
+            <field name="arch" type="xml">
+                <form string="Penyerahan Hand Tag" version="7.0">
+                    <header>
+                        <button name="confirm" states="draft" string="Confirm" confirm="Data yang sudah di confirm tidak bisa di cancel, anda yakin ?" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>                                
+                                <field name="name"/>
+                                <field name="tanggal"/>   
+                            </group>
+                            <group>
+                                <field name="spk_cutting_id" />
+                                <field name="spk_makloon_id"/> 
+                                <field name="makloon"/> 
+                            </group>
+                        </group>
+                        <notebook colspan="4" rowspan="4">
+                             <page string="Barcode">
+                                 <field name="vit_hand_tag_barcode_ids" view_mode="tree" nolabel="1">
+                                    <tree editable="bottom">
+                                         <field name="name" />                             
+                                    </tree>                 
+                                 </field>        
+                            </page>                           
+                        </notebook>
+                        <field name='notes' nolabel="1" placeholder="Notes..."/> 
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="action_view_hand_tag" >
+        <field name="name">Hand Tag</field>
+        <field name="res_model">vit.hand.tag</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Penyerahan Hand Tag</p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_vit_hand_tag" action="action_view_hand_tag" parent="stock.menu_traceability" name="Hand Tag" sequence="1" />
+
+
+        <record id="seq_create_hand_tag" forcecreate="1" model="ir.sequence.type">
+            <field name="name">Hand Tag</field>
+            <field name="code">vit.hand.tag.seq</field>
+        </record>
+        <record id="seq_c_spk" forcecreate="1" model="ir.sequence">
+            <field name="name">Hand tag</field>
+            <field name="code">vit.hand.tag.seq</field>
+            <field name="prefix"></field>
+            <field name="suffix">/HandTag/%(year)s</field>
+            <field name="padding">3</field>
+        </record>
+
+
+
+ </data>
+</openerp>

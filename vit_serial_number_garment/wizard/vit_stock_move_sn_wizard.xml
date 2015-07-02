@@ -1,0 +1,93 @@
+<openerp>
+<data>
+
+         <record id="view_stock_move_sn_wizard_form" model="ir.ui.view">
+            <field name="name">stock.move.serial.number.wizard</field>
+            <field name="model">stock.move.serial.number.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Input Serial Number" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product_id" readonly="1"/>
+                                <field name="qty" readonly="1"/>
+                                <field name="product_uom" readonly="1"/> 
+                                <field name="type" invisible="1"/>
+			                    <group colspan='4' attrs="{'invisible':[('type','!=','in')]}">
+			                        <field name="line_in_ids" nolabel='1' view_mode="tree,form">
+			                            <tree string="Add Serial Number" editable='bottom'>
+			                                <field name="serial_number_id" domain="[('product_id','=',False)]"/>
+			                                <field name="qty" readonly="1"/>
+			                            </tree>    
+			                        </field> 
+			                    </group> 
+			                    <group colspan='4' attrs="{'invisible':[('type','=','in')]}">   
+			                        <field name="line_out_ids" nolabel='1' view_mode="tree,form">
+			                            <tree string="Add Serial Number" editable='bottom'>
+			                                <field name="serial_number_id" domain="[('product_id','=',parent.product_id)]"/>
+			                                <field name="qty" readonly="1"/>
+			                            </tree>    
+			                        </field>			                           
+			                    </group>
+                            </group>
+                        </group>
+	                    <footer>
+	                        <button name="update_serial_number" string="OK" type="object" class="oe_highlight"/>
+	                        or
+	                        <button string="Cancel" class="oe_link" special="cancel"/>
+	                    </footer>                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="track_sn_stock_move" model="ir.actions.act_window">
+            <field name="name">Split Serial Numbers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.move.serial.number.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'form_view_ref': False}</field>
+        </record>
+
+        <record id="vit_view_move_picking_tree" model="ir.ui.view">
+            <field name="name">stock.move.tree</field>
+            <field name="model">stock.move</field>
+             <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                    <button
+                       name="%(stock.track_line)d"
+                       string="Split in Serial Number"
+                       groups="stock.group_production_lot"
+                       type="action" icon="gtk-justify-fill"
+                       states="draft,waiting,confirmed,assigned" position="replace">
+                    <button
+                       name="%(track_sn_stock_move)d"
+                       string="Split Serial Number"
+                       groups="stock.group_production_lot"
+                       type="action" icon="gtk-justify-fill"
+                       attrs="{'invisible':[('is_serial_number','=',True)]}"/> 
+                       <field name="is_serial_number" invisible="1"/>                      
+                       <field name="stock_move_serial_number_ids"/>
+                    </button>  
+                    <field name="prodlot_id" position="replace"/> 
+            </field>
+        </record>
+
+
+        <record id="vit_view_move_form_view" model="ir.ui.view">
+            <field name="name">stock.move</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <group string="Traceability" position="after">
+                    <group colspan='4'>
+                        <field name="stock_move_serial_number_ids" nolabel='1'/>   
+                    </group>
+                </group>     
+            </field>
+        </record>
+
+</data>
+</openerp>
