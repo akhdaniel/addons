@@ -51,16 +51,6 @@
             </field>
         </record>
 
-    <record model="ir.actions.act_window" id="action_view_stock_move_sn1" >
-        <field name="name">Vit Serial Number</field>
-        <field name="res_model">stock.move.serial.number</field>
-        <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="view_stock_move_sn_search"/>
-        <field name="context">{"search_default_product_id":1}</field>        
-        <field name="help" type="html">
-            <p>Serial Number</p>
-        </field>
-    </record>
 
         <record id="view_stock_move_sn_search" model="ir.ui.view">
             <field name="name">Search Serial Number</field>
@@ -81,6 +71,17 @@
                 </search>
             </field>
         </record>
+
+    <record model="ir.actions.act_window" id="action_view_stock_move_sn1" >
+        <field name="name">Vit Serial Number</field>
+        <field name="res_model">stock.move.serial.number</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_stock_move_sn_search"/>
+        <field name="context">{"search_default_picking_id":1}</field>        
+        <field name="help" type="html">
+            <p>Serial Number</p>
+        </field>
+    </record>
 
     <menuitem id="menu_vit_stock_move_sn" action="action_view_stock_move_sn1" parent="stock.menu_traceability" name="Track Serial Number" sequence="99" />       
 

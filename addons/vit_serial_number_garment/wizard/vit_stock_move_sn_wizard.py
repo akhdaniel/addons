@@ -104,7 +104,8 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                     picking_id  = move.picking_id.id
                 if move.picking_id.sale_id :
                     sale_order_id   = move.picking_id.sale_id.id
-                    inv_origin      = str(move.picking_id.name)+':'+str(move.picking_id.sale_id.name)
+                    #inv_origin      = str(move.picking_id.name)+':'+str(move.picking_id.sale_id.name)
+                    inv_origin      = move.picking_id.sale_id.name
                     invoice         = inv_obj.search(cr,uid,[('origin','=','inv_origin')],context=context)
                     if invoice :
                         invoice_id  = invoice[0]
@@ -132,7 +133,7 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                                                 'product_id'        : move.picking_id.id,
                                                 'qty'               : quantity,
                                                 'sale_order_id'     : sale_order_id,
-                                                'invoice_id'        : invoice_id,
+                                                #'invoice_id'        : invoice_id,
                                             })                   
                 #import pdb;pdb.set_trace()
                 if move_qty != total_move_qty:
