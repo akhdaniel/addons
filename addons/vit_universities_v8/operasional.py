@@ -233,7 +233,7 @@ class operasional_krs (osv.Model):
 		if form_id.invoice_id.state != 'paid':
 			raise osv.except_osv(_('Error!'), _('Pembayaran atas KRS ini harus dibayar lunas dahulu !'))	
 		self.write(cr, uid, ids, {'state' : 'confirm'}, context=context)
-		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities', 'krs_tree_view')
+		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities_v8', 'krs_tree_view')
 		view_id = view_ref and view_ref[1] or False,		
 		return {
 			'name' : _('Temporary View'),
