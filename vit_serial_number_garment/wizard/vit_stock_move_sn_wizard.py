@@ -130,7 +130,7 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                     move_sn_obj.create(cr,uid,{'stock_move_id'      : move.id,
                                                 'serial_number_id'  : sn,
                                                 'picking_id'        : picking_id,
-                                                'product_id'        : move.picking_id.id,
+                                                'product_id'        : move.product_id.id,
                                                 'qty'               : quantity,
                                                 'sale_order_id'     : sale_order_id,
                                                 #'invoice_id'        : invoice_id,
