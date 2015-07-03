@@ -77,6 +77,12 @@ class stock_production_lot(osv.osv):
         'makloon'       	: fields.related('spk_makloon_id','partner_id',type='many2one',relation='res.partner',string='Makloon',store=True),  
         'tanggal'       	: fields.date('Tanggal Penyerahan'),
         'history_sn_ids'	: fields.function(_get_history_sn,type='many2many',relation='stock.move.serial.number',string='History'),
+        'is_used'			: fields.boolean('Is Used'),
+
+    }
+
+    _defaults = {
+    	'is_used' 	: False,
     }
 
 

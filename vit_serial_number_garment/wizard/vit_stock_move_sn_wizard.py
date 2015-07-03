@@ -120,6 +120,8 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                     #jika out kasih minus karena barang keluar
                     if wz_type == 'out' :
                         quantity = -quantity 
+                        #ceklis fields is_used agar di DO sebelumnya tidak bisa digunakan kembali
+                        prodlot_obj.write(cr,uid,sn,{'is_used': True},context=context)
                     #jika internal kasih 0 karena barang pindah di internal
                     if wz_type == 'internal' :
                         quantity = 0                                           
@@ -139,7 +141,7 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                 if move_qty != total_move_qty:
                     raise osv.except_osv(_('Processing Error!'), _('Jumlah Qty serial number (%d) tidak sama dengan jumlah qty product(%d)!') \
                         % (total_move_qty, move_qty))
-
+                #untuk mengilangkan tombol insert SN
                 move_obj.write(cr,uid,move_ids[0],{'is_serial_number':True},context=context)   
 
         return True
