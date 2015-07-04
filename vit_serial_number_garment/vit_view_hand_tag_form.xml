@@ -41,8 +41,8 @@
                                 <field name="tanggal"/>   
                             </group>
                             <group>
-                                <field name="spk_cutting_id"/>
-                                <field name="spk_makloon_id"/> 
+                                <field name="spk_cutting_id" domain="[('is_used_handtag','=',False)]"/>
+                                <field name="spk_makloon_id" domain="[('is_used_handtag','=',False)]"/> 
                                 <field name="makloon"/> 
                             </group>
                         </group>

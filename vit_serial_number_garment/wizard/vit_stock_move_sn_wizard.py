@@ -137,7 +137,6 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                                                 'sale_order_id'     : sale_order_id,
                                                 #'invoice_id'        : invoice_id,
                                             })                   
-                #import pdb;pdb.set_trace()
                 if move_qty != total_move_qty:
                     raise osv.except_osv(_('Processing Error!'), _('Jumlah Qty serial number (%d) tidak sama dengan jumlah qty product(%d)!') \
                         % (total_move_qty, move_qty))
