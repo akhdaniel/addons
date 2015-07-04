@@ -41,8 +41,8 @@ class vit_hand_tag(osv.osv):
 
     _columns = {
         'name'          : fields.char('Nomor Penyerahan',required=True,readonly=True),
-        'spk_cutting_id'   : fields.many2one('vit.cutting.order',string='SPK Cutting',required=True,readonly=True,states={'draft':[('readonly',False)]}),
-        'spk_makloon_id'   : fields.many2one('vit.makloon.order',string='SPK Makloon',required=True,readonly=True,states={'draft':[('readonly',False)]}),
+        'spk_cutting_id'   : fields.many2one('vit.cutting.order',string='SPK Cutting'),#readonly=True,states={'draft':[('readonly',False)]}),
+        'spk_makloon_id'   : fields.many2one('vit.makloon.order',string='SPK Makloon'),#readonly=True,states={'draft':[('readonly',False)]}),
         'makloon'       : fields.related('spk_makloon_id','partner_id',type='many2one',relation='res.partner',string='Makloon',readonly=True,store=True),  
         'tanggal'       : fields.date('Tanggal Penyerahan',required=True,readonly=True,states={'draft':[('readonly',False)]}),
         'notes'         : fields.text('Notes'),
@@ -63,9 +63,13 @@ class vit_hand_tag(osv.osv):
         return super(vit_hand_tag, self).create(cr, uid, vals, context=context)
 
     def confirm(self,cr,uid,ids,context=None):
+        spk_makloon_id = False
+        spk_cutting_id = False
         for my_form in self.browse(cr,uid,ids):
-            spk_makloon_id = my_form.spk_makloon_id.id
-            spk_cutting_id = my_form.spk_cutting_id.id
+            if my_form.spk_makloon_id:
+                spk_makloon_id = my_form.spk_makloon_id.id
+            if my_form.spk_cutting_id:
+                spk_cutting_id = my_form.spk_cutting_id.id
             tanggal        = my_form.tanggal
             number         = my_form.name
             if not my_form.vit_hand_tag_barcode_ids:
@@ -82,6 +86,25 @@ class vit_hand_tag(osv.osv):
                
             self.write(cr,uid,my_form.id,{'state':'confirm'},context=context)
         return True 
+
+    def update_spk_cutting_dan_spk_makloon(self,cr,uid,ids,context=None):
+        sn_obj         = self.pool.get('stock.production.lot')
+        spk_makloon_id = False
+        spk_cutting_id = False
+        for my_form in self.browse(cr,uid,ids):
+            if my_form.spk_makloon_id:
+                spk_makloon_id = my_form.spk_makloon_id.id
+            if my_form.spk_cutting_id:
+                spk_cutting_id = my_form.spk_cutting_id.id
+            for tag in my_form.vit_hand_tag_barcode_ids:
+                #import pdb;pdb.set_trace()
+                name = tag.name
+                sn_id = sn_obj.search(cr,uid,[('name','=',name)],context=context)
+                if sn_id :
+                    sn_obj.write(cr,uid,sn_id[0],{'spk_makloon_id':spk_makloon_id,
+                                                    'spk_cutting_id':spk_cutting_id},
+                                                    context=context)
+        return True         
 
     def unlink(self, cr, uid, ids, context=None):
         if context is None:

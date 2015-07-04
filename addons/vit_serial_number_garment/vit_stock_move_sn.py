@@ -50,24 +50,46 @@ stock_move()
 
 class stock_move_serial_number(osv.osv):
 	_name = 'stock.move.serial.number'
+	_rec_name = 'stock_move_id'
 
-	# def get_invoice_net(self, cr, uid, ids, field_name, arg, context=None):
-	# 	if context is None:
-	# 		context = {}
-	# 	result = {}
-	# 	inv_obj = self.pool.get('account.invoice')
-	# 	net_total = False
-	# 	for obj in self.browse(cr,uid,ids,context=context):
-	# 		so_obj  = obj.sale_order_id
-	# 		so_name = '-'
-	# 		if so_obj :
-	# 			so_name = so_obj.name
-	# 		inv_search = inv_obj.search(cr,uid,[('origin','=',so_name)],context=context)
-	# 		if inv_search :
-	# 			invoice_id = inv_search[0]
-	# 			net_total  = inv_obj.browse(cr,uid,invoice_id).amount_total#net_total
-	# 		result[obj.id] = net_total
-	# 	return result
+	def get_invoice_net(self, cr, uid, ids, field_name, arg, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		result = {}
+		inv_obj = self.pool.get('account.invoice')
+		net_total = False
+		for obj in self.browse(cr,uid,ids,context=context):
+			so_obj  = obj.sale_order_id
+			so_name = '-'
+
+			if so_obj :
+				so_name = so_obj.name
+			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
+			if inv_search :
+				invoice_id = inv_search[0]
+				net_total  = inv_obj.browse(cr,uid,invoice_id).net_total
+			result[obj.id] = net_total
+		return result
+
+	def get_invoice_date(self, cr, uid, ids, field_name, arg, context=None):
+		
+		if context is None:
+			context = {}
+		result = {}
+		inv_obj = self.pool.get('account.invoice')
+		date = False
+		for obj in self.browse(cr,uid,ids,context=context):
+			so_obj  = obj.sale_order_id
+			so_name = '-'
+			if so_obj :
+				so_name = so_obj.name
+			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
+			if inv_search :
+				invoice_id = inv_search[0]
+				date = inv_obj.browse(cr,uid,invoice_id).date_invoice
+			result[obj.id] = date
+		return result
 
 	def get_invoice(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
@@ -80,30 +102,11 @@ class stock_move_serial_number(osv.osv):
 			so_name = '-'
 			if so_obj :
 				so_name = so_obj.name
-			inv_search = inv_obj.search(cr,uid,[('origin','=',so_name)],context=context)
+			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
 			if inv_search :
 				invoice_id = inv_search[0]
 			result[obj.id] = invoice_id
-		return result 
-
-	# def get_invoice_date(self, cr, uid, ids, field_name, arg, context=None):
-	# 	if context is None:
-	# 		context = {}
-	# 	result = {}
-	# 	inv_obj = self.pool.get('account.invoice')
-	# 	date = False
-	# 	import pdb;pdb.set_trace()
-	# 	for obj in self.browse(cr,uid,ids,context=context):
-	# 		so_obj  = obj.sale_order_id
-	# 		so_name = '-'
-	# 		if so_obj :
-	# 			so_name = so_obj.name
-	# 		inv_search = inv_obj.search(cr,uid,[('origin','=',so_name)],context=context)
-	# 		if inv_search :
-	# 			invoice_id = inv_search[0]
-	# 			date = inv_obj.browse(cr,uid,invoice_id).date_invoice
-	# 		result[obj.id] = date
-	# 	return result  
+		return result   
 
 	_columns = {
 		'stock_move_id' 	: fields.many2one('stock.move',string='Stock Move'),
@@ -116,12 +119,12 @@ class stock_move_serial_number(osv.osv):
 		'qty'				: fields.float('Qty'),
 		'sale_order_id'		: fields.many2one('sale.order',string='Sales Order'),
 		'date_sale'			: fields.related('sale_order_id','date_order',type='date',string='SO Date',store=True),
-		'invoice_id'		: fields.many2one('account.invoice',string='Invoice'),
-		#'invoice_id' 		: fields.function(get_invoice,type='many2one',relation='account.invoice',string='Invoice',store=True),
-		'date_invoice'		: fields.related('invoice_id','date_invoice',type='date',string='Invoice Date',store=True),
-		#'date_invoice'		: fields.function(get_invoice_date,type='date',string='Invoice Date',store=True),
-		'unit_price'		: fields.related('invoice_id','net_total',type='float',string='Invoice Price',store=True),
-		#'unit_price'		: fields.function(get_invoice_net,type='float',string='Invoice Price',store=True),
+		#'invoice_id'		: fields.many2one('account.invoice',string='Invoice'),
+		'invoice_id' 		: fields.function(get_invoice,type='many2one',relation='account.invoice',string='Invoice',store=True),
+		#'date_invoice'		: fields.related('invoice_id','date_invoice',type='date',string='Invoice Date',store=True),
+		'date_invoices'		: fields.function(get_invoice_date,type='date',string='Invoice Date',store=False),
+		#'unit_price'		: fields.related('invoice_id','net_total',type='float',string='Invoice Price',store=True),
+		'unit_prices'		: fields.function(get_invoice_net,type='float',string='Invoice Price',store=False),
 
 	}    
 

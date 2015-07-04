@@ -135,7 +135,7 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                                                 'product_id'        : move.product_id.id,
                                                 'qty'               : quantity,
                                                 'sale_order_id'     : sale_order_id,
-                                                'invoice_id'        : invoice_id,
+                                                #'invoice_id'        : invoice_id,
                                             })                   
                 #import pdb;pdb.set_trace()
                 if move_qty != total_move_qty:
