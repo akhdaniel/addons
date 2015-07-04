@@ -6,18 +6,18 @@
             <field name="model">stock.move.serial.number</field>
             <field name="arch" type="xml">
                 <tree string="Track Serial Number">
-                    <field name="stock_move_id"/>
-                    <field name="type" />
-                    <field name="serial_number_id" />
-                    <field name="picking_id"/> 
-                    <field name="date_picking"/> 
-                    <field name="product_id"/>                  
+                    <field name="stock_move_id" invisible="1"/>
+                    <field name="type" invisible="1"/>
+                    <field name="sale_order_id" invisible="1"/>
+                    <field name="date_sale"/>
                     <field name="qty" sum="Total Amount"/>
-                    <field name="sale_order_id" />
-                    <field name="date_sale" />
                     <field name="invoice_id"/> 
                     <field name="date_invoices"/>
-                    <field name="unit_prices"/>                                                        
+                    <field name="unit_prices"/>                     
+                    <field name="picking_id"/>                    
+                    <field name="date_picking"/> 
+                    <field name="product_id"/>                  
+                    <field name="serial_number_id" />                                   
                 </tree>
             </field>
         </record> 
@@ -30,7 +30,7 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="stock_move_id" readonly="0"/>
+                                <field name="stock_move_id" readonly="1"/>
                                 <field name="type" readonly="1" />
                                 <field name="serial_number_id" readonly="1" />
                                 <field name="picking_id" readonly="0"/> 
@@ -73,17 +73,18 @@
         </record>
 
     <record model="ir.actions.act_window" id="action_view_stock_move_sn1" >
-        <field name="name">Vit Serial Number</field>
+        <field name="name">Serial Number Analisys</field>
         <field name="res_model">stock.move.serial.number</field>
         <field name="view_mode">tree,form</field>
         <field name="search_view_id" ref="view_stock_move_sn_search"/>
-        <field name="context">{"search_default_picking_id":1}</field>        
+        <field name="domain">[('type','=','out')]</field>
+        <field name="context">{"search_default_sale_order_id":1}</field>        
         <field name="help" type="html">
             <p>Serial Number</p>
         </field>
     </record>
 
-    <menuitem id="menu_vit_stock_move_sn" action="action_view_stock_move_sn1" parent="stock.menu_traceability" name="Track Serial Number" sequence="99" />       
+    <menuitem id="menu_vit_stock_move_sn" action="action_view_stock_move_sn1" parent="stock.menu_traceability" name="Serial Number Analisys" sequence="99" />       
 
 </data>
 </openerp> 

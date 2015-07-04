@@ -63,13 +63,19 @@ class vit_hand_tag(osv.osv):
         return super(vit_hand_tag, self).create(cr, uid, vals, context=context)
 
     def confirm(self,cr,uid,ids,context=None):
+        makloon_obj    = self.pool.get('vit.makloon.order')
+        cutting_obj    = self.pool.get('vit.cutting.order')
         spk_makloon_id = False
         spk_cutting_id = False
         for my_form in self.browse(cr,uid,ids):
             if my_form.spk_makloon_id:
                 spk_makloon_id = my_form.spk_makloon_id.id
+                # True kan agar hanya bisa di pakai satu kali per handtag
+                makloon_obj.write(cr,uid,spk_makloon_id,{'is_used_handtag':True},context=context)
             if my_form.spk_cutting_id:
                 spk_cutting_id = my_form.spk_cutting_id.id
+                # True kan agar hanya bisa di pakai satu kali per handtag
+                cutting_obj.write(cr,uid,spk_cutting_id,{'is_used_handtag':True},context=context)
             tanggal        = my_form.tanggal
             number         = my_form.name
             if not my_form.vit_hand_tag_barcode_ids:
@@ -88,14 +94,20 @@ class vit_hand_tag(osv.osv):
         return True 
 
     def update_spk_cutting_dan_spk_makloon(self,cr,uid,ids,context=None):
+        makloon_obj    = self.pool.get('vit.makloon.order')
+        cutting_obj    = self.pool.get('vit.cutting.order')        
         sn_obj         = self.pool.get('stock.production.lot')
         spk_makloon_id = False
         spk_cutting_id = False
         for my_form in self.browse(cr,uid,ids):
             if my_form.spk_makloon_id:
                 spk_makloon_id = my_form.spk_makloon_id.id
+                # True kan agar hanya bisa di pakai satu kali per handtag
+                makloon_obj.write(cr,uid,spk_makloon_id,{'is_used_handtag':True},context=context)                
             if my_form.spk_cutting_id:
                 spk_cutting_id = my_form.spk_cutting_id.id
+                # True kan agar hanya bisa di pakai satu kali per handtag
+                cutting_obj.write(cr,uid,spk_cutting_id,{'is_used_handtag':True},context=context)                
             for tag in my_form.vit_hand_tag_barcode_ids:
                 #import pdb;pdb.set_trace()
                 name = tag.name
