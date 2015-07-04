@@ -34,30 +34,31 @@ class res_partner (osv.osv):
 
 	def create(self, cr, uid, vals, context=None):
 		#import pdb;pdb.set_trace()
-		if vals['status_mahasiswa'] == 'calon':
-			if vals.get('reg','/')=='/':
-				vals['reg'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner') or '/'
-		if vals['status_mahasiswa'] == 'Mahasiswa':
-			if vals.get('npm','/')=='/':
-				ta = vals['tahun_ajaran_id']
-				t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
-				ta_tuple =  tuple(t_idd)
-				ta_id = ta_tuple[2]+ta_tuple[3]#ambil 2 digit paling belakang dari tahun saja		
+		if 'status_mahasiswa' in vals :
+			if vals['status_mahasiswa'] == 'calon':
+				if vals.get('reg','/')=='/':
+					vals['reg'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner') or '/'
+			if vals['status_mahasiswa'] == 'Mahasiswa':
+				if vals.get('npm','/')=='/':
+					ta = vals['tahun_ajaran_id']
+					t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
+					ta_tuple =  tuple(t_idd)
+					ta_id = ta_tuple[2]+ta_tuple[3]#ambil 2 digit paling belakang dari tahun saja		
 
-				fak = vals['fakultas_id']
-				fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
+					fak = vals['fakultas_id']
+					fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
 
-				jur = vals['jurusan_id']
-				jur_id = self.pool.get('master.jurusan').browse(cr,uid,jur,context=context).kode
+					jur = vals['jurusan_id']
+					jur_id = self.pool.get('master.jurusan').browse(cr,uid,jur,context=context).kode
 
-				pro = vals['prodi_id']
-				pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
+					pro = vals['prodi_id']
+					pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
-				sequence = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
+					sequence = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 
-				vals['npm'] = ta_id+fak_id+jur_id+pro_id+sequence
-		if vals['status_mahasiswa'] == 'alumni':
-				raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))			
+					vals['npm'] = ta_id+fak_id+jur_id+pro_id+sequence
+			if vals['status_mahasiswa'] == 'alumni':
+					raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))			
 		return super(res_partner, self).create(cr, uid, vals, context=context)
 
 	def _calc_age(self, cr, uid, ids, name, arg, context=None):
