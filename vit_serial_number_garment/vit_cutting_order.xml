@@ -1,0 +1,17 @@
+<openerp>
+<data>      
+
+        <record id="vit_view_vit_cutting_order_form" model="ir.ui.view">
+            <field name="name">vit.cutting.order</field>
+            <field name="model">vit.cutting.order</field>
+            <field name="inherit_id" ref="vit_n_cutting_order.view_vit_cutting_order_form"/>
+            <field name="arch" type="xml">
+                <field name="date_end_cutting" position="after">
+                        <field name="is_used_handtag"/>
+                </field>
+     
+            </field>
+        </record> 
+
+</data>
+</openerp> 
