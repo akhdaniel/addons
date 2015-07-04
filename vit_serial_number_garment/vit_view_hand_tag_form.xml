@@ -22,17 +22,26 @@
             <field name="arch" type="xml">
                 <form string="Penyerahan Hand Tag" version="7.0">
                     <header>
-                        <button name="confirm" states="draft" string="Confirm" confirm="Data yang sudah di confirm tidak bisa di cancel, anda yakin ?" type="object"/>
+                        <button name="confirm" states="draft" string="Confirm" confirm="Data yang sudah di confirm tidak bisa di cancel, anda yakin ?" type="object"/>                        
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
                     </header>
                     <sheet>
+                    <xpath expr="//div[@name='buttons']" position="inside">
+                        <group>
+                            <group>
+                            </group>
+                            <group>
+                                 <button name="update_spk_cutting_dan_spk_makloon" states="confirm" string="Update SPK Cutting dan SPK Makloon" confirm="Data SPK Cutting dan SPK Makloon pada Barcode akan diupdate , anda yakin ?" type="object" class="oe_link"/>
+                            </group>
+                        </group>    
+                    </xpath>
                         <group>
                             <group>                                
                                 <field name="name"/>
                                 <field name="tanggal"/>   
                             </group>
                             <group>
-                                <field name="spk_cutting_id" />
+                                <field name="spk_cutting_id"/>
                                 <field name="spk_makloon_id"/> 
                                 <field name="makloon"/> 
                             </group>

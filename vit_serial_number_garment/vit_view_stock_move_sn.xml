@@ -16,8 +16,8 @@
                     <field name="sale_order_id" />
                     <field name="date_sale" />
                     <field name="invoice_id"/> 
-                    <field name="date_invoice"/> 
-                    <field name="unit_price"/>                                                        
+                    <field name="date_invoices"/>
+                    <field name="unit_prices"/>                                                        
                 </tree>
             </field>
         </record> 
@@ -42,8 +42,8 @@
                                 <field name="sale_order_id" readonly="1" />
                                 <field name="date_sale" readonly="1"/>
                                 <field name="invoice_id" readonly="0"/> 
-                                <field name="date_invoice" readonly="0"/> 
-                                <field name="unit_price" readonly="1"/>  
+                                <field name="date_invoices"/> 
+                                <field name="unit_prices"/>  
                             </group>
                         </group>
                     </sheet>

@@ -30,8 +30,8 @@
                                 <field name="sale_order_id" />
                                 <field name="date_sale" />
                                 <field name="invoice_id"/> 
-                                <field name="date_invoice"/> 
-                                <field name="unit_price"/>    
+                                <field name="date_invoices"/> 
+                                <field name="unit_prices"/>    
                             </tree>
                         </field>
                     </page>
