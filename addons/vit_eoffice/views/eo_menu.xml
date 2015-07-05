@@ -1,0 +1,63 @@
+<openerp>
+	<data>
+		<!-- action list eo_plan -->
+		<record id="action_eo_doc_list" model="ir.actions.act_window">
+			<field name="name">Document List</field>
+			<field name="res_model">eo.doc</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- action list doc_type -->
+		<record id="action_eo_doc_type_list" model="ir.actions.act_window">
+			<field name="name">Document Type List</field>
+			<field name="res_model">eo.doc_type</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- action list doc_template -->
+		<record id="action_eo_doc_template_list" model="ir.actions.act_window">
+			<field name="name">Document Template List</field>
+			<field name="res_model">eo.doc_template</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- root menu -->
+		<menuitem id="menu_eo_top"
+			 name="e-Office"
+			 sequence="10"
+		/>
+
+		<!--  menu_eo_transaction -->
+		<menuitem id="menu_eo_transaction"
+			 name="Transactions"
+			 sequence="10"
+			 parent="menu_eo_top"/>
+
+		<!--  menu_eo_doc -->
+		<menuitem id="menu_eo_doc"
+			 name="Surat"
+			 action="action_eo_doc_list"
+			 sequence="20"
+			 parent="menu_eo_transaction"/>
+
+		<!--  menu_eo_configuration -->
+		<menuitem id="menu_eo_configuration"
+			 name="Configuration"
+			 sequence="210"
+			 parent="menu_eo_top"/>
+
+		<!-- menu_eo_plan -->
+		<menuitem id="menu_eo_doc_type"
+			 action="action_eo_doc_type_list"
+			 name="Klasifikasi Surat"
+			 sequence="10"
+			 parent="menu_eo_configuration"/>
+		<!-- menu_eo_plan -->
+		<menuitem id="menu_eo_doc_template"
+			 action="action_eo_doc_template_list"
+			 name="Template Surat"
+			 sequence="20"
+			 parent="menu_eo_configuration"/>
+
+	</data>
+</openerp>

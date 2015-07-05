@@ -1,0 +1,50 @@
+<openerp>
+	<data>
+        <record id="view_doc_template_form" model="ir.ui.view">
+            <field name="name">eo_doc_template_form</field>
+            <field name="model">eo.doc_template</field>
+            <field name="arch" type="xml">
+            	<form string="doc_template form" version="7.0">
+            		<header>
+						<!-- <button string="Confirm" type="object" name="action_confirm" class="oe_highlight" states="draft" /> -->
+						<!-- <button string="Cancel" type="object" name="action_draft" states="open" /> -->
+            			<!-- <field name="state" widget="statusbar" /> -->
+            		</header>
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Doc Template Name" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+		            	<group>
+			                <field name="code"/>       
+			            </group>
+
+		            	<!--xpath expr="">
+		            	</xpath-->
+
+			            <notebook>
+			            	<page string="Isi Template">
+					            <field name="body" widget="html"/>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+
+        <record id="view_doc_template_tree" model="ir.ui.view">
+            <field name="name">eo_doc_template_tree</field>
+            <field name="model">eo.doc_template</field>
+            <field name="arch" type="xml">
+            	<tree string="list doc_template">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>    
+            </field>
+        </record>
+	</data>
+</openerp>

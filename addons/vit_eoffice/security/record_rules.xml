@@ -1,0 +1,22 @@
+<openerp>
+	<data noupdate="0">
+		<record id="only_receipent_or_sender" model="ir.rule">
+			<field name="name">Cuma sender dan recipents yang bisa lihat surat</field>
+			<field name="model_id" ref="model_eo_doc"/>
+			<!-- <field name="groups" eval="[(4, ref('academic.group_manager'))]"/>  -->
+			<field name="perm_read" eval="1"/>
+			<field name="perm_write" eval="0"/>
+			<field name="perm_create" eval="0"/>
+			<field name="perm_unlink" eval="1"/>
+			<field name="domain_force"> [  
+'|',
+( 'user_id' , '=', user.id ),
+'&amp;',
+( 'state',     'in', ['unread','read']),
+'|',
+( 'to_user_ids.user_id', 'in' , [user.id] ),
+( 'cc_user_ids.user_id', 'in' , [user.id] )
+] </field>
+		</record>        
+    </data>
+</openerp>

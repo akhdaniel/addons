@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="doc_type_umum" model="eo.doc_type">
+			<field name="name">Umum</field>
+			<field name="code">UM</field>
+		</record>	
+		
+		<record id="doc_type_rahasia" model="eo.doc_type">
+			<field name="name">Rahasia</field>
+			<field name="code">RH</field>
+		</record>			
+		<record id="doc_type_sangat_rahasia" model="eo.doc_type">
+			<field name="name">Sangat Rahasia</field>
+			<field name="code">SRH</field>
+		</record>	
+		
+	</data>
+</openerp>

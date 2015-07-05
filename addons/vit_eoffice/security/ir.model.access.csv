@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_eo_doc,access_eo_doc,model_eo_doc,,1,1,1,1
+access_eo_doc_type,access_eo_doc_type,model_eo_doc_type,,1,1,1,1
+access_eo_cc_user,access_eo_cc_user,model_eo_cc_user,,1,1,1,1
+access_eo_doc_template,access_eo_doc_template,model_eo_doc_template,,1,1,1,1
+access_eo_to_user,access_eo_to_user,model_eo_to_user,,1,1,1,1
+access_eo_doc_history,access_eo_doc_history,model_eo_doc_history,,1,1,1,1

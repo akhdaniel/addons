@@ -1,0 +1,14 @@
+<openerp>
+<data>
+    
+    <report 
+        id="report_doc_menu"
+        string="Print Surat"
+        model="eo.doc" 
+        report_type="qweb-pdf"
+        file="vit_eoffice.doc" 
+        name="vit_eoffice.report_doc_document" 
+    />
+
+</data>
+</openerp>

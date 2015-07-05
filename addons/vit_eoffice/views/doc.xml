@@ -1,0 +1,146 @@
+<openerp>
+	<data>
+        <record id="view_doc_form" model="ir.ui.view">
+            <field name="name">eo_doc_form</field>
+            <field name="model">eo.doc</field>
+            <field name="arch" type="xml">
+            	<form string="doc form" version="7.0">
+            		<header>
+                        <!-- waktu draft -->
+						<button string="Kirim Approval" type="object" name="action_open" class="oe_highlight" states="draft" />
+
+                        <!-- waktu open -->
+                        <button string="Setuju" type="object" name="action_send" class="
+                        oe_highlight" states="open" />
+                        <button string="Batal" type="object" name="action_draft" states="open" />
+
+                        <!-- waktu approved -->
+						<button string="Kirim" type="object" name="action_send" class="
+                        oe_highlight" states="approved" />
+						
+                        <!-- waktu read -->                        
+						<!-- <button string="Reply" type="object" name="action_reply" states="read" /> attrs="{'invisible': ['|', ('spm_exists', '=', True), ('state','&lt;&gt;','done')]}" 
+                        -->
+                        <button string="Reply" type="object" name="action_reply"
+                             class="oe_highlight"
+                             states="read" 
+                             />
+
+						<button string="Forward" type="object" name="action_forward" states="read" />
+
+            			<field name="state" widget="statusbar" />
+            		</header>
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Nomor" />
+							<h1>
+								<field name="name" readonly="1"/>
+							</h1>
+						</div>
+			            <group>
+			            	<group>
+				                <field name="subject"  />       
+				                <field name="date"  />       
+				                <field name="user_id"  />
+				            </group>
+				            <group>
+				                <field name="doc_type_id"  />       
+				                <field name="doc_template_id" on_change="onchange_doc_template(doc_template_id)"  /> 
+                                <field name="parent_id"  />       
+				            </group>
+				        </group>
+
+                        <group>
+                            <group>
+                                <field name="to_user_ids"  >
+                                    <tree editable="bottom">
+                                        <field name="user_id"/>
+                                        <field name="read_status"/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group>
+                                <field name="cc_user_ids"  >
+                                    <tree editable="bottom">
+                                        <field name="user_id"/>
+                                        <field name="read_status"/>
+                                    </tree>
+                                </field>                                  
+                            </group>
+                        </group>
+
+
+
+
+			            <notebook>
+			            	<page string="Isi Surat">
+					            <field name="body" widget="html"/>
+						    </page>
+                            <page string="History Surat">
+                                <field name="doc_history">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="user_id"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+						</notebook>
+					</sheet>
+
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+
+			    </form>
+            </field>
+        </record>		
+
+
+        <record id="view_doc_tree" model="ir.ui.view">
+            <field name="name">eo_doc_tree</field>
+            <field name="model">eo.doc</field>
+            <field name="arch" type="xml">
+            	<tree string="list doc" colors="green:state=='read'; blue:state=='draft'">
+                    <field name="name"/>
+                    <field name="subject"/>
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="to_user_ids"/>
+                    <field name="doc_type_id"/>
+                    <!-- <field name="read_status"/> -->
+                    <field name="state"/>
+                </tree>    
+            </field>
+        </record>
+
+        <!-- ini definisi search doc -->
+        <record id="view_doc_filter" model="ir.ui.view">
+            <field name="name">doc.filter</field>
+            <field name="model">eo.doc</field>
+            <field name="arch" type="xml">
+                <search string="Search Docs">
+        
+                    <filter icon="terp-mail-message-new"  string="My Docs"  name="mysurat" domain="[('user_id','=',user.id)]"/>
+                    <filter icon="terp-mail-message-new"  string="Belum dibaca"  name="unread" domain="[('state','=','unread')]"/>
+                    <filter icon="terp-mail-message-new"  string="Sudah dibaca"  name="read" domain="[('state','=','read')]"/>
+                    <separator/>
+                    
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="to_user_ids"/>
+                    <field name="cc_user_ids"/>
+                    
+                    <group expand="1" string="Group By...">
+                        <filter string="Klasifikasi" icon="terp-personal"  domain="[]"  context="{'group_by':'doc_type_id'}"/>
+                        <filter string="Template" icon="terp-personal"  domain="[]"  context="{'group_by':'doc_template_id'}"/>
+                        <filter string="Sender" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>        
+                    </group>                                        
+        
+                </search>
+            </field>
+        </record>
+	</data>
+</openerp>
