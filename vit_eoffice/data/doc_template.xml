@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record id="doc_template_undangan" model="eo.doc_template">
+			<field name="name">Undangan</field>
+			<field name="code">UN</field>
+			<field name="body">template surat undangan</field>
+		</record>	
+		
+		<record id="doc_template_edaran" model="eo.doc_template">
+			<field name="name">Edaran</field>
+			<field name="code">ED</field>
+			<field name="body">template surat edaran</field>
+		</record>	
+				
+		<record id="doc_template_kontrak" model="eo.doc_template">
+			<field name="name">Kontrak</field>
+			<field name="code">K</field>
+			<field name="body">template surat kontrak</field>
+		</record>	
+		
+
+	</data>
+</openerp>
