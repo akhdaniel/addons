@@ -13,7 +13,7 @@ DOC_STATES =[('draft','Draft'),
         ('read','Read')]
 class doc(osv.osv):
 	_name 		= "eo.doc"
-	_inherit 	= 'mail.thread'
+	_inherit 	= ['mail.thread']
 	_description = "Surat"
 
 	_columns 	= {
@@ -133,6 +133,15 @@ class doc(osv.osv):
 	# 	return self.write(cr,uid,ids,{'state':DOC_STATES[2][0]},context=context)
 		
 	def action_send(self,cr,uid,ids,context=None):
+
+		doc = self.browse(cr, uid, ids, context=context)[0]
+
+		partner_ids = [ to_user.user_id.partner_id.id for to_user in doc.to_user_ids ]
+		partner_ids += [ cc_user.user_id.partner_id.id for cc_user in doc.cc_user_ids ]
+
+		body = _("Anda mendapat Surat No:%s dari %s, silahkan dibuka") % (doc.name, doc.user_id.name)
+		self.message_post(cr, uid, ids , body=body, partner_ids=partner_ids, context=context)
+
 		self.insert_history(cr, uid, ids[0], 'Set to Unread')
 		return self.write(cr,uid,ids,{'state':DOC_STATES[2][0]},context=context)
 	
