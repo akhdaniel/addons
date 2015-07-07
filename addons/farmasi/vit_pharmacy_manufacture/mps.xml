@@ -1,0 +1,82 @@
+<openerp>
+
+    <data>
+        <record id="view_mps_tree" model="ir.ui.view">
+            <field name="name">mps_tree</field>
+            <field name="model">vit_pharmacy_manufacture.mps</field>
+            <field name="arch" type="xml">
+                <tree string="MPS">
+                    <field name="name"/>
+                    <field name="month"/>
+                    <field name="year"/> 
+                    <field name="create_uid"/> 
+                    <field name="created_date"/>          
+                </tree>
+            </field>
+        </record>
+        <record id="view_mps_form" model="ir.ui.view">
+            <field name="name">mps_form</field>
+            <field name="model">vit_pharmacy_manufacture.mps</field>
+            <field name="arch" type="xml">
+                 <form string="MPS" version="7.0">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                        <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                        <button name="action_create_wps"  type="object" states="done" string="Create WPS" class="oe_highlight"/>
+                    </header>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="month" />
+                                <field name="year"/> 
+                            </group>
+                            <group> 
+                                <field name="create_uid"/> 
+                                <field name="created_date"/> 
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <field name="mps_detail_ids"  view_mode="tree"  widget="one2many_list">
+                                    <tree string="Details" editable="bottom">
+                                        <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                        <field name="product_uom" />
+                                        <field name="production_order" />
+                                        <field name="w1" />
+                                        <field name="w2" />
+                                        <field name="w3" />
+                                        <field name="w4" />
+                                        <field name="note"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                </form>                         
+            </field>
+        </record>
+
+
+        <record id="view_mps_filter" model="ir.ui.view">
+            <field name="name">mps_form_filter</field>
+            <field name="model">vit_pharmacy_manufacture.mps</field>
+            <field name="arch" type="xml">
+                <search string="Search MPS">
+                    <field name="month" />        
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="field_mps" >
+            <field name="name">MPS</field>
+            <field name="res_model">vit_pharmacy_manufacture.mps</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>Master Production Schedule</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_conf4" parent="menu_conf" name="Master Production Schedule" sequence="32" action="field_mps" />
+    </data>
+</openerp>
+
