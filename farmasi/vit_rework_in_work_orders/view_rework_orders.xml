@@ -1,0 +1,35 @@
+<openerp>
+<data>
+ 
+        <record id="input_rework" model="ir.actions.act_window">
+            <field name="name">Input Rework</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit.rework.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'form_view_ref': False}</field>
+        </record>
+
+        <record id="vit_rework_workorder_view" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+            <field name="arch" type="xml">            
+            	<page string="Information" position="after">
+                    <field name="is_origin" invisible="1"/>
+                    <page string="Rework">
+                        <button
+                           name="%(input_rework)d"
+                           string="Create Rework"
+                           type="action" icon="gtk-justify-fill"
+                           attrs="{'invisible':[('state','not in',('pause','startworking'))]}"/>
+                        <field name="picking_ids" nolabel="1"/>                             
+                        <field name="notes" nolabel="1" placeholder="Notes..."/>   
+                    </page>                                                               
+                </page>
+            </field>
+        </record>	
+
+</data>
+</openerp>
