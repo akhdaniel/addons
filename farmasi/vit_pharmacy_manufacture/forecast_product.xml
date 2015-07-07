@@ -1,0 +1,90 @@
+<openerp>
+
+    <data>
+        <record id="view_forecast_product_tree" model="ir.ui.view">
+            <field name="name">forecast_product_tree</field>
+            <field name="model">vit_pharmacy_manufacture.forecast_product</field>
+            <field name="arch" type="xml">
+                <tree string="Forecast Product">
+                    <field name="name"/>
+                    <field name="year"/>     
+                    <field name="create_uid"/> 
+                    <field name="created_date"/>          
+                </tree>
+            </field>
+        </record>
+        <record id="view_forecast_product_form" model="ir.ui.view">
+            <field name="name">forecast_product_form</field>
+            <field name="model">vit_pharmacy_manufacture.forecast_product</field>
+            <field name="arch" type="xml">
+                 <form string="Forecast Product" version="7.0">
+                    <header>
+                        <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                        <button name="action_create_mps"  type="object" states="done" string="Create MPS" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    </header>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="year"/> 
+                            </group>
+                            <group> 
+                                <field name="create_uid"/> 
+                                <field name="created_date"/> 
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <field name="forecast_detail_ids"  view_mode="tree"  widget="one2many_list">
+                                    <tree string="Details" editable="bottom">
+                                        <!-- <field name="forecast_product_id" /> -->
+                                        <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                        <field name="product_uom" />
+                                        <!-- <field name="year" on_change="0"/> -->
+                                        <field name="m1" />
+                                        <field name="m2" />
+                                        <field name="m3" />
+                                        <field name="m4" />
+                                        <field name="m5" />
+                                        <field name="m6" />
+                                        <field name="m7" />
+                                        <field name="m8" />
+                                        <field name="m9" />
+                                        <field name="m10" />
+                                        <field name="m11" />
+                                        <field name="m12" />
+                                        <field name="mTotal" on_change="0"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                </form>                         
+            </field>
+        </record>
+
+
+        <record id="view_forecast_product_filter" model="ir.ui.view">
+            <field name="name">forecast_product_form_filter</field>
+            <field name="model">vit_pharmacy_manufacture.forecast_product</field>
+            <field name="arch" type="xml">
+                <search string="Search Forecast Product">
+                    <field name="name" />        
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="field_forecast_product" >
+            <field name="name">Forecast Product</field>
+            <field name="res_model">vit_pharmacy_manufacture.forecast_product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>Forecast Product</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_conf" parent="base.menu_mrp_root" name="Pharmacy" sequence="7" />
+        <menuitem id="menu_conf3" parent="menu_conf" name="Forecast Product" sequence="31" action="field_forecast_product" />
+    </data>
+</openerp>
+
