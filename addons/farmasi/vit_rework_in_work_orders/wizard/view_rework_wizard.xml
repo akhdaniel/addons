@@ -1,0 +1,38 @@
+<openerp>
+<data>
+
+         <record id="view_vit_rework_wizard_form" model="ir.ui.view">
+            <field name="name">vit.rework.wizard</field>
+            <field name="model">vit.rework.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Input Rework" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="workorder_id" readonly="1"/>
+                                <field name="date"/>
+                                <field name="partner_id"/>
+			                    <group colspan='4'>
+			                        <field name="rework_detail_ids" nolabel='1' view_mode="tree,form">
+			                            <tree string="Add Product" editable='bottom'>
+			                                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+			                                <field name="qty"/>
+                                            <field name="uom_id"/>
+			                            </tree>    
+			                        </field> 
+			                    </group>
+                            </group>
+                        </group>
+	                    <footer>
+	                        <button name="create_internal_move" string="OK" type="object" class="oe_highlight"/>
+	                        or
+	                        <button string="Cancel" class="oe_link" special="cancel"/>
+	                    </footer>                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+</data>
+</openerp>
