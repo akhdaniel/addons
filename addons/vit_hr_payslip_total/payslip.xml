@@ -1,0 +1,24 @@
+<openerp>
+	<data>
+        <record id="view_payslip_form_total" model="ir.ui.view">
+            <field name="name">hr_payslip_form</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml">
+            	<field name="credit_note" position="after">
+            		<field name="total" />
+            	</field>
+            </field>
+        </record>
+        <record id="view_payslip_tree_total" model="ir.ui.view">
+            <field name="name">hr_payslip_tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="total" sum="Total Amount"/>
+                </field>
+            </field>
+        </record>
+	</data>
+</openerp>
