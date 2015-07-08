@@ -29,7 +29,7 @@
 "access_netpro_product_type","netpro.product_type","model_netpro_product_type","base.group_user",1,0,0,0
 "access_netpro_product_id","netpro.product_id","model_netpro_product_id","base.group_user",1,0,0,0
 "access_netpro_default_limit","netpro.default_limit","model_netpro_default_limit","base.group_user",1,0,0,0
-"access_netpro_product_plan","netpro.product_plan","model_netpro_product_plan","base.group_user",1,0,0,0
+"access_netpro_product_plan_base","netpro.product_plan_base","model_netpro_product_plan_base","base.group_user",1,0,0,0
 "access_netpro_provider_level","netpro.provider_level","model_netpro_provider_level","base.group_user",1,0,0,0
 "access_netpro_agent","netpro.agent","model_netpro_agent","base.group_user",1,0,0,0
 "access_netpro_business_source_type","netpro.business_source_type","model_netpro_business_source_type","base.group_user",1,0,0,0
@@ -39,3 +39,5 @@
 "access_netpro_plan_schedule_detail_diagnosis_exclusion_exception","netpro.plan_schedule_detail_diagnosis_exclusion_exception","model_netpro_plan_schedule_detail_diagnosis_exclusion_exception","base.group_user",1,0,0,0
 "access_netpro_benefit","netpro.benefit","model_netpro_benefit","base.group_user",1,0,0,0
 "access_netpro_master_diagnosis_exclusion","netpro.master_diagnosis_exclusion","model_netpro_master_diagnosis_exclusion","base.group_user",1,0,0,0
+"access_netpro_correspondence_rule","netpro.correspondence_rule","model_netpro_correspondence_rule","base.group_user",1,0,0,0
+"access_netpro_claim_rule","netpro.claim_rule","model_netpro_claim_rule","base.group_user",1,0,0,0
