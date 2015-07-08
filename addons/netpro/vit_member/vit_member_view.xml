@@ -1,0 +1,1027 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_netpro_member_form">
+        <field name="name">netpro.member.form</field>
+        <field name="model">netpro.member</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.member">
+                <group>
+                    <group col="4" string="General Member Data">
+                        <group col="2">
+                            <field name="policy_id" select="1"/>
+                            <field name="insurance_period_start" select="2"/>
+                            <field name="insurance_period_end" select="0"/>
+                            <field name="member_no" select="0"/>
+                            <field name="name" select="0"/>
+                            <field name="employee_id" select="0"/>
+                            <field name="parent_id" select="0"/>
+                            <field name="census_no" select="0"/>
+                            <field name="sex" select="0"/>
+                            <field name="marital_status" select="0"/>
+                            <field name="email" select="0"/>
+                            <field name="mobile_phone" select="0"/>
+                            <field name="date_of_birth" select="0"/>
+                            <field name="age" select="0"/>
+                            <field name="birth_place" select="0"/>
+                            <field name="salary" select="0"/>
+                            <field name="vip" select="0"/>
+                            <field name="black_listed" select="0"/>
+                            <field name="hold_car_swipe_claim" select="0"/>
+                            <separator string="Remarks" colspan="4"/>
+                            <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                        </group>
+
+                        <group col="2">
+                            <field name="class_id" select="0"/>
+                            <field name="membership" select="0"/>
+                            <field name="card_no" select="0"/>
+                            <field name="register_no" select="0"/>
+                            <field name="period_start" select="0"/>
+                            <field name="period_end" select="0"/>
+                            <field name="stnc" select="0"/>
+                            <field name="group_id" select="0"/>
+                            <field name="payor_id" select="0"/>
+                            <field name="premium_type_id" select="0"/>
+                            <field name="area_id" select="0"/>
+                            <field name="country_id" select="0"/>
+                            <field name="pre_existing_waived" select="0"/>
+                            <field name="exclude_this_member" select="0"/>
+                            <field name="dummy_member" select="0"/>
+                            <field name="mno" select="0"/>
+                            <field name="pmno" select="0"/>
+                            <field name="status" select="0"/>
+                            <field name="trans_type" select="0"/>
+                            <field name="suspend_tpa" select="0"/>
+                        </group>
+                    </group>
+                </group>
+
+                <group>
+                    <group col="2" string="Account, Company Info &amp; Personal Info">
+                        <group col="1">
+                            <group string="Account">
+                                <field name="account_no" select="0"/>
+                                <field name="account_name" select="0"/>
+                                <field name="bank" select="0"/>
+                                <field name="bank_name" select="0"/>
+                                <field name="bank_branch" select="0"/>
+                            </group>
+                            <group string="Company Info">
+                                <field name="company_name" select="0"/>
+                                <separator string="Address" colspan="4"/>
+                                <field name="company_address" colspan="4" nolabel="1" select="0"/>
+                                <field name="title" select="0"/>
+                                <field name="division" select="0"/>
+                                <field name="branch" select="0"/>
+                                <field name="occupation" select="0"/>
+                            </group>
+                        </group>
+
+                        <group col="1">
+                            <group string="Personal Info">
+                                <field name="id_no" select="0"/>
+                                <separator string="Address" colspan="4"/>
+                                <field name="personal_address" colspan="4" nolabel="1" select="0"/>
+                                <field name="city" select="0"/>
+                                <field name="province" select="0"/>
+                                <field name="zip_code" select="0"/>
+                                <field name="phone" select="0"/>
+                                <field name="mobile" select="0"/>
+                                <field name="fax" select="0"/>
+                                <field name="email" select="0"/>
+                                <field name="height" select="0"/>
+                                <field name="weight" select="0"/>
+                            </group>
+                        </group>                        
+                    </group>
+                </group>
+
+                <notebook>
+                    <page string="Plan">
+                        <field name="member_plan_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                    <page string="Family">
+                        <field name="family_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_member_tree">
+        <field name="name">netpro.member.tree</field>
+        <field name="model">netpro.member</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.member">
+                <field name="policy_id"/>
+                <field name="insurance_period_start"/>
+                <field name="insurance_period_end"/>
+                <field name="member_no"/>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="census_no"/>
+                <field name="sex"/>
+                <field name="marital_status"/>
+                <field name="email"/>
+                <field name="mobile_phone"/>
+                <field name="date_of_birth"/>
+                <field name="age"/>
+                <field name="birth_place"/>
+                <field name="salary"/>
+                <field name="vip"/>
+                <field name="black_listed"/>
+                <field name="hold_car_swipe_claim"/>
+                <field name="remarks"/>
+                <field name="class_id"/>
+                <field name="membership"/>
+                <field name="card_no"/>
+                <field name="register_no"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="stnc"/>
+                <field name="group_id"/>
+                <field name="payor_id"/>
+                <field name="premium_type_id"/>
+                <field name="area_id"/>
+                <field name="country_id"/>
+                <field name="pre_existing_waived"/>
+                <field name="exclude_this_member"/>
+                <field name="dummy_member"/>
+                <field name="mno"/>
+                <field name="pmno"/>
+                <field name="status"/>
+                <field name="trans_type"/>
+                <field name="suspend_tpa"/>
+                <field name="account_no"/>
+                <field name="account_name"/>
+                <field name="bank"/>
+                <field name="bank_name"/>
+                <field name="bank_branch"/>
+                <field name="company_name"/>
+                <field name="company_address"/>
+                <field name="title"/>
+                <field name="division"/>
+                <field name="branch"/>
+                <field name="occupation"/>
+                <field name="id_no"/>
+                <field name="personal_address"/>
+                <field name="city"/>
+                <field name="province"/>
+                <field name="zip_code"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="fax"/>
+                <field name="email"/>
+                <field name="height"/>
+                <field name="weight"/>
+                <field name="parent_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_member">
+        <field name="name">Member</field>
+        <field name="res_model">netpro.member</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Netpro Member" id="menu_netpro_member_header" parent="vit_policy.netpro_menu"/>
+    <menuitem name="Member" id="menu_netpro_member" parent="menu_netpro_member_header" action="action_netpro_member"/>
+        
+    <record model="ir.ui.view" id="view_netpro_product_form">
+        <field name="name">netpro.product.form</field>
+        <field name="model">netpro.product</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product">
+                <group>
+                    <field name="code" select="1"/>
+                    <field name="name" select="2"/>
+                    <field name="alternative_name" select="0"/>
+                    <field name="short_name" select="0"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="0"/>
+                    <separator string="Description (alt)" colspan="4"/>
+                    <field name="alternative_description" colspan="4" nolabel="1" select="0"/>
+                    <field name="rider" select="0"/>
+                    <field name="age_band_id" select="0"/>
+                    <field name="sub_class" select="0"/>
+                    <field name="product_type_id" select="0"/>
+                    <field name="min_member" select="0"/>
+                    <field name="max_age_coverage" select="0"/>
+                    <field name="release_date" select="0"/>
+                    <field name="status" select="0"/>
+                    <field name="provider_limit" select="0"/>
+                    <field name="reimbursement_limit" select="0"/>
+                    <field name="allowed_changing_inner_limit" select="0"/>
+                    <field name="allowed_changing_overall_limit" select="0"/>
+                    <separator string="Benefits" colspan="4"/>
+                    <field name="benefit_ids" colspan="4" nolabel="1" select="0"/>
+                    <separator string="Term And Condition" colspan="4"/>
+                    <field name="term_condition_ids" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_tree">
+        <field name="name">netpro.product.tree</field>
+        <field name="model">netpro.product</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="alternative_name"/>
+                <field name="short_name"/>
+                <field name="description"/>
+                <field name="alternative_description"/>
+                <field name="rider"/>
+                <field name="age_band_id"/>
+                <field name="sub_class"/>
+                <field name="product_type_id"/>
+                <field name="min_member"/>
+                <field name="max_age_coverage"/>
+                <field name="release_date"/>
+                <field name="status"/>
+                <field name="provider_limit"/>
+                <field name="reimbursement_limit"/>
+                <field name="allowed_changing_inner_limit"/>
+                <field name="allowed_changing_overall_limit"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product">
+        <field name="name">Product</field>
+        <field name="res_model">netpro.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product" id="menu_netpro_product" action="action_netpro_product"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_age_band_form">
+        <field name="name">netpro.age_band.form</field>
+        <field name="model">netpro.age_band</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.age_band">
+                <group>
+                    <field name="band_id" select="1"/>
+                    <field name="age_lower" select="2"/>
+                    <field name="age_upper" select="0"/>
+                    <field name="loading" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_age_band_tree">
+        <field name="name">netpro.age_band.tree</field>
+        <field name="model">netpro.age_band</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.age_band">
+                <field name="band_id"/>
+                <field name="age_lower"/>
+                <field name="age_upper"/>
+                <field name="loading"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_age_band">
+        <field name="name">Age Band</field>
+        <field name="res_model">netpro.age_band</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Age Band" id="menu_netpro_age_band" action="action_netpro_age_band"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_term_condition_form">
+        <field name="name">netpro.term_condition.form</field>
+        <field name="model">netpro.term_condition</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.term_condition">
+                <group>
+                    <field name="tc_id" select="1"/>
+                    <separator string="TC Name" colspan="4"/>
+                    <field name="name" colspan="4" nolabel="1" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_term_condition_tree">
+        <field name="name">netpro.term_condition.tree</field>
+        <field name="model">netpro.term_condition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.term_condition">
+                <field name="tc_id"/>
+                <field name="name"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_term_condition">
+        <field name="name">Term And Condition</field>
+        <field name="res_model">netpro.term_condition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Term And Condition" id="menu_netpro_term_condition" action="action_netpro_term_condition"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_product_term_condition_form">
+        <field name="name">netpro.product_term_condition.form</field>
+        <field name="model">netpro.product_term_condition</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_term_condition">
+                <group>
+                    <field name="product_id" select="1"/>
+                    <field name="term_condition_id" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_term_condition_tree">
+        <field name="name">netpro.product_term_condition.tree</field>
+        <field name="model">netpro.product_term_condition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_term_condition">
+                <field name="product_id"/>
+                <field name="term_condition_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_term_condition">
+        <field name="name">Product Term Condition</field>
+        <field name="res_model">netpro.product_term_condition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product Term Condition" id="menu_netpro_product_term_condition" action="action_netpro_product_term_condition"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_product_benefit_form">
+        <field name="name">netpro.product_benefit.form</field>
+        <field name="model">netpro.product_benefit</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_benefit">
+                <group>
+                    <field name="product_id" select="1"/>
+                    <field name="benefit_id" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_benefit_tree">
+        <field name="name">netpro.product_benefit.tree</field>
+        <field name="model">netpro.product_benefit</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_benefit">
+                <field name="product_id"/>
+                <field name="benefit_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_benefit">
+        <field name="name">Product Benefit</field>
+        <field name="res_model">netpro.product_benefit</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product Benefit" id="menu_netpro_product_benefit" action="action_netpro_product_benefit"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_product_plan_form">
+        <field name="name">netpro.product_plan.form</field>
+        <field name="model">netpro.product_plan</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_plan">
+                <group>
+                    <field name="code" select="1"/>
+                    <field name="name" select="2"/>
+                    <field name="short_name" select="0"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="0"/>
+                    <field name="product_id" select="0"/>
+                    <field name="currency_id" select="0"/>
+                    <field name="product_plan_base_id" select="0"/>
+                    <field name="overall_limit" select="0"/>
+                    <field name="family_overall_limit" select="0"/>
+                    <separator string="Remarks (Ind)" colspan="4"/>
+                    <field name="remarks_ind" colspan="4" nolabel="1" select="0"/>
+                    <separator string="Remarks (Eng)" colspan="4"/>
+                    <field name="remarks_eng" colspan="4" nolabel="1" select="0"/>
+                    <field name="no_refund" select="0"/>
+                    <field name="no_refund_if_already_claim" select="0"/>
+                    <field name="by_premium_table" select="0"/>
+                    <field name="by_membership_classification" select="0"/>
+                    <field name="benefit_limit_affect_to_calculation" select="0"/>
+                    <field name="rate_calculation_after_loading" select="0"/>
+                    <field name="reimbusement_affect_to_premium" select="0"/>
+                    <field name="card_fee" select="0"/>
+                    <field name="inner_limit_apply_card_fee" select="0"/>
+                    <field name="inner_limit_dependant_rate_base_on_male" select="0"/>
+                    <field name="inner_limit_limit_rate" select="0"/>
+                    <field name="inner_limit_claim_rate" select="0"/>
+                    <field name="inner_limit_annual_rate" select="0"/>
+                    <field name="inner_limit_overall_limit_loading" select="0"/>
+                    <field name="as_charge_apply_card_fee" select="0"/>
+                    <field name="as_charge_dependant_rate_base_on_male" select="0"/>
+                    <field name="as_charge_limit_rate" select="0"/>
+                    <field name="as_charge_claim_rate" select="0"/>
+                    <field name="as_charge_annual_rate" select="0"/>
+                    <field name="as_charge_overall_limit_loading" select="0"/>
+                    <field name="sub_as_charge_apply_card_fee" select="0"/>
+                    <field name="sub_as_charge_dependant_rate_base_on_male" select="0"/>
+                    <field name="sub_as_charge_limit_rate" select="0"/>
+                    <field name="sub_as_charge_claim_rate" select="0"/>
+                    <field name="sub_as_charge_annual_rate" select="0"/>
+                    <field name="sub_as_charge_overall_limit_loading" select="0"/>
+                    <separator string="Benefits" colspan="4"/>
+                    <field name="benefit_ids" colspan="4" nolabel="1" select="0"/>
+                    <separator string="Memberships" colspan="4"/>
+                    <field name="membership_ids" colspan="4" nolabel="1" select="0"/>
+                    <separator string="Premium Type" colspan="4"/>
+                    <field name="premium_type_ids" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_plan_tree">
+        <field name="name">netpro.product_plan.tree</field>
+        <field name="model">netpro.product_plan</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_plan">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="short_name"/>
+                <field name="description"/>
+                <field name="product_id"/>
+                <field name="currency_id"/>
+                <field name="product_plan_base_id"/>
+                <field name="overall_limit"/>
+                <field name="family_overall_limit"/>
+                <field name="remarks_ind"/>
+                <field name="remarks_eng"/>
+                <field name="no_refund"/>
+                <field name="no_refund_if_already_claim"/>
+                <field name="by_premium_table"/>
+                <field name="by_membership_classification"/>
+                <field name="benefit_limit_affect_to_calculation"/>
+                <field name="rate_calculation_after_loading"/>
+                <field name="reimbusement_affect_to_premium"/>
+                <field name="card_fee"/>
+                <field name="inner_limit_apply_card_fee"/>
+                <field name="inner_limit_dependant_rate_base_on_male"/>
+                <field name="inner_limit_limit_rate"/>
+                <field name="inner_limit_claim_rate"/>
+                <field name="inner_limit_annual_rate"/>
+                <field name="inner_limit_overall_limit_loading"/>
+                <field name="as_charge_apply_card_fee"/>
+                <field name="as_charge_dependant_rate_base_on_male"/>
+                <field name="as_charge_limit_rate"/>
+                <field name="as_charge_claim_rate"/>
+                <field name="as_charge_annual_rate"/>
+                <field name="as_charge_overall_limit_loading"/>
+                <field name="sub_as_charge_apply_card_fee"/>
+                <field name="sub_as_charge_dependant_rate_base_on_male"/>
+                <field name="sub_as_charge_limit_rate"/>
+                <field name="sub_as_charge_claim_rate"/>
+                <field name="sub_as_charge_annual_rate"/>
+                <field name="sub_as_charge_overall_limit_loading"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_plan">
+        <field name="name">Product Plan</field>
+        <field name="res_model">netpro.product_plan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product Plan" id="menu_netpro_product_plan" action="action_netpro_product_plan"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_product_plan_benefit_form">
+        <field name="name">netpro.product_plan_benefit.form</field>
+        <field name="model">netpro.product_plan_benefit</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_plan_benefit">
+                <group>
+                    <field name="product_plan_id" select="1"/>
+                    <field name="benefit_id" select="2"/>
+                    <field name="benefit_limit_start" select="0"/>
+                    <field name="benefit_limit_end" select="0"/>
+                    <field name="parent_benefit_id" select="0"/>
+                    <field name="reimbursement" select="0"/>
+                    <field name="benefit_seq_no" select="0"/>
+                    <field name="limit_from_main_benefit_start" select="0"/>
+                    <field name="limit_from_main_benefit_end" select="0"/>
+                    <field name="limit_from_annual_start" select="0"/>
+                    <field name="limit_from_annual_end" select="0"/>
+                    <field name="annual_limit_after_loading" select="0"/>
+                    <field name="average_benefit_rate_and_annual_rate" select="0"/>
+                    <field name="not_effect_to_overall_limit" select="0"/>
+                    <field name="default_benefit" select="0"/>
+                    <field name="provider_per_occurance" select="0"/>
+                    <field name="provider_per_occurance_amount_limit_1" select="0"/>
+                    <field name="provider_per_occurance_amount_limit_2" select="0"/>
+                    <field name="provider_per_occurance_amount_limit_3" select="0"/>
+                    <field name="provider_per_occurance_freq_limit" select="0"/>
+                    <field name="provider_per_confinement" select="0"/>
+                    <field name="provider_per_confinement_amount_limit_1" select="0"/>
+                    <field name="provider_per_confinement_amount_limit_2" select="0"/>
+                    <field name="provider_per_confinement_amount_limit_3" select="0"/>
+                    <field name="provider_per_confinement_freq_limit" select="0"/>
+                    <field name="provider_per_year" select="0"/>
+                    <field name="provider_per_year_amount_limit_1" select="0"/>
+                    <field name="provider_per_year_amount_limit_2" select="0"/>
+                    <field name="provider_per_year_amount_limit_3" select="0"/>
+                    <field name="provider_per_year_freq_limit" select="0"/>
+                    <field name="provider_per_year_family_amt_limit_1" select="0"/>
+                    <field name="provider_per_year_family_amt_limit_2" select="0"/>
+                    <field name="provider_per_year_family_amt_limit_3" select="0"/>
+                    <field name="provider_per_year_family_freq_limit" select="0"/>
+                    <field name="provider_per_company" select="0"/>
+                    <field name="provider_per_company_amount_limit_1" select="0"/>
+                    <field name="provider_per_company_amount_limit_2" select="0"/>
+                    <field name="provider_per_company_amount_limit_3" select="0"/>
+                    <field name="provider_per_company_freq_limit" select="0"/>
+                    <field name="non_provider_per_occurance" select="0"/>
+                    <field name="non_provider_per_occurance_amount_limit_1" select="0"/>
+                    <field name="non_provider_per_occurance_amount_limit_2" select="0"/>
+                    <field name="non_provider_per_occurance_amount_limit_3" select="0"/>
+                    <field name="non_provider_per_occurance_freq_limit" select="0"/>
+                    <field name="non_provider_per_confinement" select="0"/>
+                    <field name="non_provider_per_confinement_amount_limit_1" select="0"/>
+                    <field name="non_provider_per_confinement_amount_limit_2" select="0"/>
+                    <field name="non_provider_per_confinement_amount_limit_3" select="0"/>
+                    <field name="non_provider_per_confinement_freq_limit" select="0"/>
+                    <field name="non_provider_per_year" select="0"/>
+                    <field name="non_provider_per_year_amount_limit_1" select="0"/>
+                    <field name="non_provider_per_year_amount_limit_2" select="0"/>
+                    <field name="non_provider_per_year_amount_limit_3" select="0"/>
+                    <field name="non_provider_per_year_family_amt_limit_1" select="0"/>
+                    <field name="non_provider_per_year_family_amt_limit_2" select="0"/>
+                    <field name="non_provider_per_year_family_amt_limit_3" select="0"/>
+                    <field name="non_provider_per_year_family_freq_limit" select="0"/>
+                    <field name="non_provider_per_company" select="0"/>
+                    <field name="non_provider_per_company_amount_limit_1" select="0"/>
+                    <field name="non_provider_per_company_amount_limit_2" select="0"/>
+                    <field name="non_provider_per_company_amount_limit_3" select="0"/>
+                    <field name="non_provider_per_company_freq_limit" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_plan_benefit_tree">
+        <field name="name">netpro.product_plan_benefit.tree</field>
+        <field name="model">netpro.product_plan_benefit</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_plan_benefit">
+                <field name="product_plan_id"/>
+                <field name="benefit_id"/>
+                <field name="benefit_limit_start"/>
+                <field name="benefit_limit_end"/>
+                <field name="parent_benefit_id"/>
+                <field name="reimbursement"/>
+                <field name="benefit_seq_no"/>
+                <field name="limit_from_main_benefit_start"/>
+                <field name="limit_from_main_benefit_end"/>
+                <field name="limit_from_annual_start"/>
+                <field name="limit_from_annual_end"/>
+                <field name="annual_limit_after_loading"/>
+                <field name="average_benefit_rate_and_annual_rate"/>
+                <field name="not_effect_to_overall_limit"/>
+                <field name="default_benefit"/>
+                <field name="provider_per_occurance"/>
+                <field name="provider_per_occurance_amount_limit_1"/>
+                <field name="provider_per_occurance_amount_limit_2"/>
+                <field name="provider_per_occurance_amount_limit_3"/>
+                <field name="provider_per_occurance_freq_limit"/>
+                <field name="provider_per_confinement"/>
+                <field name="provider_per_confinement_amount_limit_1"/>
+                <field name="provider_per_confinement_amount_limit_2"/>
+                <field name="provider_per_confinement_amount_limit_3"/>
+                <field name="provider_per_confinement_freq_limit"/>
+                <field name="provider_per_year"/>
+                <field name="provider_per_year_amount_limit_1"/>
+                <field name="provider_per_year_amount_limit_2"/>
+                <field name="provider_per_year_amount_limit_3"/>
+                <field name="provider_per_year_freq_limit"/>
+                <field name="provider_per_year_family_amt_limit_1"/>
+                <field name="provider_per_year_family_amt_limit_2"/>
+                <field name="provider_per_year_family_amt_limit_3"/>
+                <field name="provider_per_year_family_freq_limit"/>
+                <field name="provider_per_company"/>
+                <field name="provider_per_company_amount_limit_1"/>
+                <field name="provider_per_company_amount_limit_2"/>
+                <field name="provider_per_company_amount_limit_3"/>
+                <field name="provider_per_company_freq_limit"/>
+                <field name="non_provider_per_occurance"/>
+                <field name="non_provider_per_occurance_amount_limit_1"/>
+                <field name="non_provider_per_occurance_amount_limit_2"/>
+                <field name="non_provider_per_occurance_amount_limit_3"/>
+                <field name="non_provider_per_occurance_freq_limit"/>
+                <field name="non_provider_per_confinement"/>
+                <field name="non_provider_per_confinement_amount_limit_1"/>
+                <field name="non_provider_per_confinement_amount_limit_2"/>
+                <field name="non_provider_per_confinement_amount_limit_3"/>
+                <field name="non_provider_per_confinement_freq_limit"/>
+                <field name="non_provider_per_year"/>
+                <field name="non_provider_per_year_amount_limit_1"/>
+                <field name="non_provider_per_year_amount_limit_2"/>
+                <field name="non_provider_per_year_amount_limit_3"/>
+                <field name="non_provider_per_year_family_amt_limit_1"/>
+                <field name="non_provider_per_year_family_amt_limit_2"/>
+                <field name="non_provider_per_year_family_amt_limit_3"/>
+                <field name="non_provider_per_year_family_freq_limit"/>
+                <field name="non_provider_per_company"/>
+                <field name="non_provider_per_company_amount_limit_1"/>
+                <field name="non_provider_per_company_amount_limit_2"/>
+                <field name="non_provider_per_company_amount_limit_3"/>
+                <field name="non_provider_per_company_freq_limit"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_plan_benefit">
+        <field name="name">Product Plan Benefit</field>
+        <field name="res_model">netpro.product_plan_benefit</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product Plan Benefit" id="menu_netpro_product_plan_benefit" action="action_netpro_product_plan_benefit"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_product_plan_membership_form">
+        <field name="name">netpro.product_plan_membership.form</field>
+        <field name="model">netpro.product_plan_membership</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_plan_membership">
+                <group>
+                    <field name="product_plan_id" select="1"/>
+                    <field name="membership_id" select="2"/>
+                    <field name="gender_id" select="0"/>
+                    <field name="marital_status_id" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_plan_membership_tree">
+        <field name="name">netpro.product_plan_membership.tree</field>
+        <field name="model">netpro.product_plan_membership</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_plan_membership">
+                <field name="product_plan_id"/>
+                <field name="membership_id"/>
+                <field name="gender_id"/>
+                <field name="marital_status_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_plan_membership">
+        <field name="name">Product Plan Membership</field>
+        <field name="res_model">netpro.product_plan_membership</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product Plan Membership" id="menu_netpro_product_plan_membership" action="action_netpro_product_plan_membership"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_product_plan_premium_type_form">
+        <field name="name">netpro.product_plan_premium_type.form</field>
+        <field name="model">netpro.product_plan_premium_type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_plan_premium_type">
+                <group>
+                    <field name="product_plan_id" select="1"/>
+                    <field name="premium_type_id" select="2"/>
+                    <field name="premium_table_id" select="0"/>
+                    <field name="apply_to_policy_holder" select="0"/>
+                    <field name="apply_to_spouse" select="0"/>
+                    <field name="apply_to_children" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_plan_premium_type_tree">
+        <field name="name">netpro.product_plan_premium_type.tree</field>
+        <field name="model">netpro.product_plan_premium_type</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_plan_premium_type">
+                <field name="product_plan_id"/>
+                <field name="premium_type_id"/>
+                <field name="premium_table_id"/>
+                <field name="apply_to_policy_holder"/>
+                <field name="apply_to_spouse"/>
+                <field name="apply_to_children"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_plan_premium_type">
+        <field name="name">Product Plan Premium Type</field>
+        <field name="res_model">netpro.product_plan_premium_type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Product Plan Premium Type" id="menu_netpro_product_plan_premium_type" action="action_netpro_product_plan_premium_type"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_premium_type_form">
+        <field name="name">netpro.premium_type.form</field>
+        <field name="model">netpro.premium_type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.premium_type">
+                <group>
+                    <field name="name" select="1"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_premium_type_tree">
+        <field name="name">netpro.premium_type.tree</field>
+        <field name="model">netpro.premium_type</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.premium_type">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_premium_type">
+        <field name="name">Premium Type</field>
+        <field name="res_model">netpro.premium_type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Premium Type" id="menu_netpro_premium_type" action="action_netpro_premium_type"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_premium_table_form">
+        <field name="name">netpro.premium_table.form</field>
+        <field name="model">netpro.premium_table</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.premium_table">
+                <group>
+                    <field name="name" select="1"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_premium_table_tree">
+        <field name="name">netpro.premium_table.tree</field>
+        <field name="model">netpro.premium_table</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.premium_table">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_premium_table">
+        <field name="name">Premium Table</field>
+        <field name="res_model">netpro.premium_table</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Premium Table" id="menu_netpro_premium_table" action="action_netpro_premium_table"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_membership_form">
+        <field name="name">netpro.membership.form</field>
+        <field name="model">netpro.membership</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.membership">
+                <group>
+                    <field name="membership_id" select="1"/>
+                    <field name="name_e" select="2"/>
+                    <field name="name_i" select="0"/>
+                    <field name="category" select="0"/>
+                    <field name="age_between_start" select="0"/>
+                    <field name="age_between_end" select="0"/>
+                    <field name="policy_owner" select="0"/>
+                    <field name="allowed" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_membership_tree">
+        <field name="name">netpro.membership.tree</field>
+        <field name="model">netpro.membership</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.membership">
+                <field name="membership_id"/>
+                <field name="name_e"/>
+                <field name="name_i"/>
+                <field name="category"/>
+                <field name="age_between_start"/>
+                <field name="age_between_end"/>
+                <field name="policy_owner"/>
+                <field name="allowed"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_membership">
+        <field name="name">Membership</field>
+        <field name="res_model">netpro.membership</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Membership" id="menu_netpro_membership" action="action_netpro_membership"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_gender_form">
+        <field name="name">netpro.gender.form</field>
+        <field name="model">netpro.gender</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.gender">
+                <group>
+                    <field name="name" select="1"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_gender_tree">
+        <field name="name">netpro.gender.tree</field>
+        <field name="model">netpro.gender</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.gender">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_gender">
+        <field name="name">Gender</field>
+        <field name="res_model">netpro.gender</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Gender" id="menu_netpro_gender" action="action_netpro_gender"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_marital_status_form">
+        <field name="name">netpro.marital_status.form</field>
+        <field name="model">netpro.marital_status</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.marital_status">
+                <group>
+                    <field name="name" select="1"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_marital_status_tree">
+        <field name="name">netpro.marital_status.tree</field>
+        <field name="model">netpro.marital_status</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.marital_status">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_marital_status">
+        <field name="name">Marital Status</field>
+        <field name="res_model">netpro.marital_status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Marital Status" id="menu_netpro_marital_status" action="action_netpro_marital_status"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_member_plan_form">
+        <field name="name">netpro.member_plan.form</field>
+        <field name="model">netpro.member_plan</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.member_plan">
+                <group>
+                    <field name="member_id" select="1"/>
+                    <field name="pplan" select="2"/>
+                    <field name="bamount" select="0"/>
+                    <field name="plan_limit" select="0"/>
+                    <field name="remaining_limit" select="0"/>
+                    <field name="family_limit" select="0"/>
+                    <field name="family_remaining_limit" select="0"/>
+                    <field name="hi_plan" select="0"/>
+                    <field name="aso" select="0"/>
+                    <field name="excess" select="0"/>
+                    <field name="per_disability" select="0"/>
+                    <separator string="Member Plan Details" colspan="4"/>
+                    <field name="member_plan_detail_ids" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_member_plan_tree">
+        <field name="name">netpro.member_plan.tree</field>
+        <field name="model">netpro.member_plan</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.member_plan">
+                <field name="member_id"/>
+                <field name="pplan"/>
+                <field name="bamount"/>
+                <field name="plan_limit"/>
+                <field name="remaining_limit"/>
+                <field name="family_limit"/>
+                <field name="family_remaining_limit"/>
+                <field name="hi_plan"/>
+                <field name="aso"/>
+                <field name="excess"/>
+                <field name="per_disability"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_member_plan">
+        <field name="name">Member Plan</field>
+        <field name="res_model">netpro.member_plan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Member Plan" id="menu_netpro_member_plan" action="action_netpro_member_plan"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_member_plan_detail_form">
+        <field name="name">netpro.member_plan_detail.form</field>
+        <field name="model">netpro.member_plan_detail</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.member_plan_detail">
+                <group>
+                    <field name="member_plan_id" select="1"/>
+                    <field name="detail_id" select="2"/>
+                    <field name="name" select="0"/>
+                    <field name="reim" select="0"/>
+                    <field name="provider_limit" select="0"/>
+                    <field name="non_provider_limit" select="0"/>
+                    <field name="unit" select="0"/>
+                    <field name="usage" select="0"/>
+                    <field name="remaining" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_member_plan_detail_tree">
+        <field name="name">netpro.member_plan_detail.tree</field>
+        <field name="model">netpro.member_plan_detail</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.member_plan_detail">
+                <field name="member_plan_id"/>
+                <field name="detail_id"/>
+                <field name="name"/>
+                <field name="reim"/>
+                <field name="provider_limit"/>
+                <field name="non_provider_limit"/>
+                <field name="unit"/>
+                <field name="usage"/>
+                <field name="remaining"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_member_plan_detail">
+        <field name="name">Member Plan Detail</field>
+        <field name="res_model">netpro.member_plan_detail</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Member Plan Detail" id="menu_netpro_member_plan_detail" action="action_netpro_member_plan_detail"/> -->
+        
+</data>
+</openerp>
