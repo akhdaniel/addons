@@ -38,7 +38,7 @@ class netpro_policy(osv.osv):
         'insurance_period_start': fields.date('Insurance Period Start'),
         'insurance_period_end': fields.date('Insurance Period End'),
         'exclusive_period': fields.boolean('Exclusive Period'),
-        'toc_id': fields.many2one('netpro.toc'),
+        'toc_id': fields.many2one('netpro.toc', 'TOC'),
         'ujroh': fields.float('Ujroh'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
         'policy_payor_id': fields.many2one('res.partner', 'Policy Payor'),
@@ -162,6 +162,22 @@ class netpro_policy(osv.osv):
         'ci_date': fields.date('C/I Date'),
     }
 netpro_policy()
+
+class netpro_branch(osv.osv):
+    _name = 'netpro.branch'
+    _inherit = 'res.partner'
+    _columns = {
+        'start_date': fields.date('Start Date'),
+    }
+netpro_branch()
+
+class netpro_tpa(osv.osv):
+    _name = 'netpro.tpa'
+    _columns = {
+        'name': fields.char('Name'),
+        'code': fields.char('Code'),
+    }
+netpro_tpa()
 
 class netpro_policy_category(osv.osv):
     _name = 'netpro.policy_category'
@@ -345,6 +361,7 @@ netpro_policy_status()
 
 class netpro_coverage(osv.osv):
     _name = 'netpro.coverage'
+    _rec_name = 'no_plan'
     _columns = {
         'product_type_id': fields.many2one('netpro.product_type', 'Product Type'),
         'product_id': fields.many2one('netpro.product_id', 'Product ID'),
@@ -384,6 +401,7 @@ netpro_coverage()
 
 class netpro_class(osv.osv):
     _name = 'netpro.class'
+    _rec_name = 'class_no'
     _columns = {
         'class_no': fields.integer('Class No'),
         'short_desc': fields.char('Short Desc'),
