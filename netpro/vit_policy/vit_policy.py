@@ -413,6 +413,7 @@ netpro_class()
 
 class netpro_plan_schedule(osv.osv):
     _name = 'netpro.plan_schedule'
+    _rec_name = 'product_plan_base_id'
     _columns = {
         'product_plan_base_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
         'bamount': fields.float('BAmount'),
@@ -455,6 +456,7 @@ netpro_plan_schedule()
 
 class netpro_business_source(osv.osv):
     _name = 'netpro.business_source'
+    _rec_name = 'agent_id'
     _columns = {
         'agent_id': fields.many2one('netpro.agent', 'Agent'),
         'business_source_type_id': fields.many2one('netpro.business_source_type', 'Type'),
@@ -478,16 +480,16 @@ netpro_product_type()
 class netpro_product_id(osv.osv):
     _name = 'netpro.product_id'
     _columns = {
-        'ProductID': fields.char('Product ID'),
-        'Description': fields.text('Description'),
+        'name': fields.char('Product ID'),
+        'description': fields.text('Description'),
     }
 netpro_product_id()
 
 class netpro_default_limit(osv.osv):
     _name = 'netpro.default_limit'
     _columns = {
-        'Name': fields.char('Name'),
-        'Description': fields.text('Description'),
+        'name': fields.char('Name'),
+        'description': fields.text('Description'),
     }
 netpro_default_limit()
 
@@ -501,6 +503,7 @@ netpro_product_plan_base()
 
 class netpro_provider_level(osv.osv):
     _name = 'netpro.provider_level'
+    _rec_name = 'plevel'
     _columns = {
         'plevel': fields.char('PLevel'),
         'description': fields.text('Description'),
@@ -525,6 +528,7 @@ netpro_business_source_type()
 
 class netpro_membership_plan(osv.osv):
     _name = 'netpro.membership_plan'
+    _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
         'as_employee': fields.boolean('Employee'),
@@ -538,6 +542,7 @@ netpro_membership_plan()
 
 class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
     _name = 'netpro.plan_schedule_detail_benefit_schedule'
+    _rec_name = 'plan_schedule_id'
     _columns = {
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'Plan Schedule'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
@@ -595,6 +600,7 @@ netpro_plan_schedule_detail_benefit_schedule()
 
 class netpro_plan_schedule_detail_diagnosis_exclusion(osv.osv):
     _name = 'netpro.plan_schedule_detail_diagnosis_exclusion'
+    _rec_name = 'plan_schedule_id'
     _columns = {
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'Plan Schedule'),
         'master_diagnosis_exclusion_id': fields.many2one('netpro.master_diagnosis_exclusion', 'Master Diagnosis Exclusion'),
@@ -604,6 +610,7 @@ netpro_plan_schedule_detail_diagnosis_exclusion()
 
 class netpro_plan_schedule_detail_diagnosis_exclusion_exception(osv.osv):
     _name = 'netpro.plan_schedule_detail_diagnosis_exclusion_exception'
+    _rec_name = 'plan_schedule_id'
     _columns = {
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'Plan Schedule'),
         'master_diagnosis_exclusion_id': fields.many2one('netpro.master_diagnosis_exclusion', 'Master Diagnosis Exclusion'),
@@ -622,6 +629,7 @@ netpro_benefit()
 
 class netpro_master_diagnosis_exclusion(osv.osv):
     _name = 'netpro.master_diagnosis_exclusion'
+    _rec_name = 'diagnosis_id'
     _columns = {
         'diagnosis_id': fields.char('Diagnosis ID'),
         'description': fields.text('Diagnosis Description'),

@@ -1466,9 +1466,9 @@
         <field name="arch" type="xml">
             <form string="netpro.product_id">
                 <group>
-                    <field name="ProductID" select="1"/>
+                    <field name="name" select="1"/>
                     <separator string="Description" colspan="4"/>
-                    <field name="Description" colspan="4" nolabel="1" select="2"/>
+                    <field name="description" colspan="4" nolabel="1" select="2"/>
                 </group>
             </form>
         </field>
@@ -1479,8 +1479,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.product_id">
-                <field name="ProductID"/>
-                <field name="Description"/>
+                <field name="name"/>
+                <field name="description"/>
 
             </tree>
         </field>
@@ -1500,9 +1500,9 @@
         <field name="arch" type="xml">
             <form string="netpro.default_limit">
                 <group>
-                    <field name="Name" select="1"/>
+                    <field name="name" select="1"/>
                     <separator string="Description" colspan="4"/>
-                    <field name="Description" colspan="4" nolabel="1" select="2"/>
+                    <field name="description" colspan="4" nolabel="1" select="2"/>
                 </group>
             </form>
         </field>
@@ -1513,8 +1513,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.default_limit">
-                <field name="Name"/>
-                <field name="Description"/>
+                <field name="name"/>
+                <field name="description"/>
 
             </tree>
         </field>
