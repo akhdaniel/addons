@@ -1250,7 +1250,7 @@
                     <separator string="Description" colspan="4"/>
                     <field name="description" colspan="4" nolabel="1" select="0"/>
                     <!-- <field name="policy_id" select="0"/> -->
-                    <separator string=" 'Membership Plans'" colspan="4"/>
+                    <separator string="Membership Plans" colspan="4"/>
                     <field name="membership_plan_ids" colspan="4" nolabel="1" select="0"/>
                 </group>
             </form>
@@ -1319,9 +1319,9 @@
                     <field name="maximum_age_children" select="0"/>
                     <field name="sequence_no" select="0"/>
                     <field name="provider_level_id" select="0"/>
-                    <separator string=" 'Plan Schedule'" colspan="4"/>
+                    <separator string="Plan Schedule" colspan="4"/>
                     <field name="plan_schedule_detail_benefit_schedule_ids" colspan="4" nolabel="1" select="0"/>
-                    <field name="policy_id" select="0"/>
+                    <!-- <field name="policy_id" select="0"/> -->
                 </group>
             </form>
         </field>
@@ -1394,7 +1394,7 @@
                     <field name="aso_commissiononly_apply_on_new_business" select="0"/>
                     <separator string="ASO Remarks by System" colspan="4"/>
                     <field name="aso_remarks_by_system" colspan="4" nolabel="1" select="0"/>
-                    <field name="policy_id" select="0"/>
+                    <!-- <field name="policy_id" select="0"/> -->
                 </group>
             </form>
         </field>
