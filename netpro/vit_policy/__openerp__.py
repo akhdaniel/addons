@@ -29,6 +29,11 @@
         "depends" : ['base'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
-        "update_xml" : ['vit_policy_view.xml', 'security/ir.model.access.csv'],
+        "update_xml" : [
+        'vit_policy_view.xml', 
+        'security/ir.model.access.csv',
+        'data/sequence.xml',
+        'data/master_data_policy.xml'
+        ],
         "installable": True
 }

@@ -1,0 +1,311 @@
+<openerp>
+	<data>
+		<!-- POLICY CATEGORY -->
+		<record model="netpro.policy_category" id="policy_category_group">
+			<field name="name">Group</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.policy_category" id="policy_category_individual">
+			<field name="name">Individual</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- PAYMENT MODE -->
+		<record model="netpro.payment_option_mode" id="payment_option_mode_annualy">
+			<field name="name">Annualy</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_mode" id="payment_option_mode_semi_annualy">
+			<field name="name">Semi-Annualy</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_mode" id="payment_option_mode_quarterly">
+			<field name="name">Quarterly</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_mode" id="payment_option_mode_consecutive">
+			<field name="name">Consecutive</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- INSTALLMENT -->
+		<record model="netpro.payment_option_installment" id="payment_option_installment_1">
+			<field name="name">1</field>
+			<field name="poin">1</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_2">
+			<field name="name">2</field>
+			<field name="poin">2</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_3">
+			<field name="name">3</field>
+			<field name="poin">3</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_4">
+			<field name="name">4</field>
+			<field name="poin">4</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_5">
+			<field name="name">5</field>
+			<field name="poin">5</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_6">
+			<field name="name">6</field>
+			<field name="poin">6</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_7">
+			<field name="name">7</field>
+			<field name="poin">7</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_8">
+			<field name="name">8</field>
+			<field name="poin">8</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_9">
+			<field name="name">9</field>
+			<field name="poin">9</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_10">
+			<field name="name">10</field>
+			<field name="poin">10</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_11">
+			<field name="name">11</field>
+			<field name="poin">11</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_option_installment" id="payment_option_installment_12">
+			<field name="name">12</field>
+			<field name="poin">12</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- REFUND TYPE -->
+		<record model="netpro.refund_type" id="refund_type_premium_addition">
+			<field name="name">Premium Addition</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.refund_type" id="refund_type_premium_decrease">
+			<field name="name">Premium Decrease</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.refund_type" id="refund_type_premium_refund">
+			<field name="name">Premium Refund</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.refund_type" id="refund_type_premium_cancellation">
+			<field name="name">Premium Cancellation</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.refund_type" id="refund_type_others">
+			<field name="name">Others</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.refund_type" id="refund_type_card_fee">
+			<field name="name">Card Fee</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- PRINT ORDER -->
+		<record model="netpro.print_card_order" id="print_card_order_member">
+			<field name="name">Member Number</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.print_card_order" id="print_card_order_branch">
+			<field name="name">Branch / Division</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.print_card_order" id="print_card_employee">
+			<field name="name">Employee ID</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- CALCULATION METHOD -->
+		<record model="netpro.calculation_method" id="calculation_method_full_premium">
+			<field name="name">Full Premium</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.calculation_method" id="calculation_method_prorate">
+			<field name="name">Prorate</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.calculation_method" id="calculation_method_short_period">
+			<field name="name">Short Period</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- PRORATE CALC METHOD -->
+		<record model="netpro.prorate_calc_method" id="prorate_calc_method_actual">
+			<field name="name">Actual Days (365/366)</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.prorate_calc_method" id="prorate_calc_method_basis">
+			<field name="name">30 Days Basis</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.prorate_calc_method" id="prorate_calc_method_days">
+			<field name="name">365 Days</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- EXPIRED CLAIM RECEIPT -->
+		<record model="netpro.expired_claim_receipt" id="expired_claim_receipt_30">
+			<field name="name">30</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.expired_claim_receipt" id="expired_claim_receipt_45">
+			<field name="name">45</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.expired_claim_receipt" id="expired_claim_receipt_60">
+			<field name="name">60</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.expired_claim_receipt" id="expired_claim_receipt_90">
+			<field name="name">90</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.expired_claim_receipt" id="expired_claim_receipt_120">
+			<field name="name">120</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- PAYMENT DUE INTERVAL -->
+		<record model="netpro.payment_due_interval" id="payment_due_interval_calendar_days">
+			<field name="name">Calendar Days</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.payment_due_interval" id="payment_due_interval_working_days">
+			<field name="name">Working Days</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- MAX CHILDREN -->
+		<record model="netpro.max_children" id="max_children_nolimit">
+			<field name="name">No Limit</field>
+			<field name="point">0</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children" id="max_children_1">
+			<field name="name">1</field>
+			<field name="point">1</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children" id="max_children_2">
+			<field name="name">2</field>
+			<field name="point">2</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children" id="max_children_3">
+			<field name="name">3</field>
+			<field name="point">3</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children" id="max_children_4">
+			<field name="name">4</field>
+			<field name="point">4</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children" id="max_children_5">
+			<field name="name">5</field>
+			<field name="point">5</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- MAX CHILDREN MATERNITY -->
+		<record model="netpro.max_children_maternity" id="max_children_maternity_nolimit">
+			<field name="name">No Limit</field>
+			<field name="point">0</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children_maternity" id="max_children_maternity_1">
+			<field name="name">1</field>
+			<field name="point">1</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children_maternity" id="max_children_maternity_2">
+			<field name="name">2</field>
+			<field name="point">2</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children_maternity" id="max_children_maternity_3">
+			<field name="name">3</field>
+			<field name="point">3</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children_maternity" id="max_children_maternity_4">
+			<field name="name">4</field>
+			<field name="point">4</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.max_children_maternity" id="max_children_maternity_5">
+			<field name="name">5</field>
+			<field name="point">5</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- CARD TYPE -->
+		<record model="netpro.card_type" id="card_type_magnetic">
+			<field name="name">Magnetic</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.card_type" id="card_type_showcard">
+			<field name="name">Show Card</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.card_type" id="card_type_none">
+			<field name="name">None</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- PRE EXISTING CONDITION -->
+		<record model="netpro.pre_existing_condition" id="pre_existing_condition_waived">
+			<field name="name">Waived</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.pre_existing_condition" id="pre_existing_condition_3months">
+			<field name="name">3 Months</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.pre_existing_condition" id="pre_existing_condition_6months">
+			<field name="name">6 Months</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.pre_existing_condition" id="pre_existing_condition_9months">
+			<field name="name">9 Months</field>
+			<field name="description"></field>
+		</record>
+		
+		<!-- UP ROOM CLASS -->
+		<record model="netpro.up_room_class" id="up_room_class_1class">
+			<field name="name">1 Class</field>
+			<field name="point">1</field>
+		</record>
+		<record model="netpro.up_room_class" id="up_room_class_2class">
+			<field name="name">2 Class</field>
+			<field name="point">2</field>
+		</record>
+		<record model="netpro.up_room_class" id="up_room_class_3class">
+			<field name="name">3 Class</field>
+			<field name="point">3</field>
+		</record>
+		<record model="netpro.up_room_class" id="up_room_class_4class">
+			<field name="name">4 Class</field>
+			<field name="point">4</field>
+		</record>
+		<record model="netpro.up_room_class" id="up_room_class_5class">
+			<field name="name">5 Class</field>
+			<field name="point">5</field>
+		</record>
+	</data>
+</openerp>
