@@ -126,7 +126,60 @@
 
                 <notebook>
                     <page string="Coverage">
-                        <field name="coverage_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="coverage_ids" nolabel="1" select="0">
+                            <form string="netpro.coverage">
+                                <group colspan="4">
+                                    <group string="Coverage">
+                                        <field name="product_type_id" select="1"/>
+                                        <field name="product_id" select="2"/>
+                                        <field name="reimbursement" select="0"/>
+                                        <field name="provider" select="0"/>
+                                        <field name="excess_pay_on_the_spot" select="0"/>
+                                        <field name="swipe_card" select="0"/>
+                                        <field name="show_card" select="0"/>
+                                        <field name="reimbursement_boolean" select="0"/>
+                                        <field name="no_plan" select="0"/>
+                                        <field name="no_of_benefit" select="0"/>
+                                        <field name="default_limit_id" select="0"/>
+                                        <field name="annual_limit_per_disability" select="0"/>
+                                        <field name="family_limit" select="0"/>
+                                        <field name="family_premium" select="0"/>
+                                        <field name="use_child_premium" select="0"/>
+                                        <field name="aso_coverage" select="0"/>
+                                        <field name="hi_plan" select="0"/>
+                                        <field name="maximum_age_employee" select="0"/>
+                                        <field name="maximum_age_spouse" select="0"/>
+                                        <field name="maximum_age_children" select="0"/>
+                                        <field name="aso_fee_per_member" select="0"/>
+                                        <field name="aso_commission" select="0"/>
+                                        <field name="aso_commission_in_percent" select="0"/>
+                                        <field name="aso_fee_per_claim" select="0"/>
+                                        <field name="aso_fee_per_claim_amount" select="0"/>
+                                        <field name="not_process_excesson_deposit" select="0"/>
+                                    </group>
+                                    <group string="Print Options">
+                                        <field name="print_option_seq_no" select="0"/>
+                                        <field name="print_option_print_text_on_card" select="0"/>
+                                        <field name="print_card_with_plan_amount" select="0"/>
+
+                                        <separator colspan="2" string="Membership Options" />
+                                        <field name="membership_option_not_allowed_for_employee" select="0"/>
+                                        <field name="membership_option_not_allowed_for_spouse" select="0"/>
+                                        <field name="membership_option_not_allowed_for_child" select="0"/>
+                                        <!-- <field name="policy_id" select="0"/> -->
+                                    </group>
+                                </group>
+                            </form>
+                            <tree string="netpro.coverage">
+                                <field name="product_type_id" select="1"/>
+                                <field name="product_id" select="2"/>
+                                <field name="family_limit" select="0"/>
+                                <field name="family_premium" select="0"/>
+                                <field name="hi_plan" select="0"/>
+                                <field name="aso_coverage" select="0"/>
+                                <field name="excess_pay_on_the_spot" select="0"/>
+                            </tree>
+                        </field>
                     </page>
                     <page string="Class">
                         <field name="class_ids" colspan="4" nolabel="1" select="0"/>
@@ -237,6 +290,7 @@
             </form>
         </field>
     </record>
+
     <record model="ir.ui.view" id="view_netpro_policy_tree">
         <field name="name">netpro.policy.tree</field>
         <field name="model">netpro.policy</field>
@@ -379,16 +433,20 @@
             </tree>
         </field>
     </record>
+
     <record model="ir.actions.act_window" id="action_netpro_policy">
         <field name="name">Policy</field>
         <field name="res_model">netpro.policy</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <menuitem name="Netpro" id="netpro_menu" sequence="10" />
+
     <menuitem name="Netpro Policy" id="menu_netpro_policy_header" parent="netpro_menu"/>
+
     <menuitem name="Policy" id="menu_netpro_policy" parent="menu_netpro_policy_header" action="action_netpro_policy"/>
-        
+
     <record model="ir.ui.view" id="view_netpro_policy_category_form">
         <field name="name">netpro.policy_category.form</field>
         <field name="model">netpro.policy_category</field>
@@ -403,6 +461,7 @@
             </form>
         </field>
     </record>
+
     <record model="ir.ui.view" id="view_netpro_policy_category_tree">
         <field name="name">netpro.policy_category.tree</field>
         <field name="model">netpro.policy_category</field>
@@ -415,12 +474,14 @@
             </tree>
         </field>
     </record>
+
     <record model="ir.actions.act_window" id="action_netpro_policy_category">
         <field name="name">Policy Category</field>
         <field name="res_model">netpro.policy_category</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Policy Category" id="menu_netpro_policy_category" action="action_netpro_policy_category"/> -->
         
     <record model="ir.ui.view" id="view_netpro_policy_type_form">
