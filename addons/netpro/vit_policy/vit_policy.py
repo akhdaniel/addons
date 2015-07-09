@@ -161,6 +161,16 @@ class netpro_policy(osv.osv):
         'business_source_ids': fields.one2many('netpro.business_source', 'policy_id', 'Business Sources', ondelete='cascade'),
         'ci_date': fields.date('C/I Date'),
     }
+    _defaults = {
+        'ci_date' : lambda*a : time.strftime("%Y-%m-%d")
+    }
+    def create(self, cr, uid, vals, context=None):
+        nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
+        vals.update({
+            'policy_no':nomor,
+        })
+        new_id = super(netpro_policy, self).create(cr, uid, vals, context=context)
+        return new_id
 netpro_policy()
 
 class netpro_branch(osv.osv):
