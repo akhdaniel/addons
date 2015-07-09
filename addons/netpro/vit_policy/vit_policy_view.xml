@@ -1182,7 +1182,7 @@
                     <field name="membership_option_not_allowed_for_employee" select="0"/>
                     <field name="membership_option_not_allowed_for_spouse" select="0"/>
                     <field name="membership_option_not_allowed_for_child" select="0"/>
-                    <field name="policy_id" select="0"/>
+                    <!-- <field name="policy_id" select="0"/> -->
                 </group>
             </form>
         </field>
@@ -1249,7 +1249,7 @@
                     <field name="short_desc" select="2"/>
                     <separator string="Description" colspan="4"/>
                     <field name="description" colspan="4" nolabel="1" select="0"/>
-                    <field name="policy_id" select="0"/>
+                    <!-- <field name="policy_id" select="0"/> -->
                     <separator string=" 'Membership Plans'" colspan="4"/>
                     <field name="membership_plan_ids" colspan="4" nolabel="1" select="0"/>
                 </group>
