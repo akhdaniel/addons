@@ -22,6 +22,7 @@
 from openerp.osv import fields,osv
 class netpro_policy(osv.osv):
     _name = 'netpro.policy'
+    _rec_name = 'policy_no'
     _columns = {
         'policy_no': fields.char('Policy No'),
         'reference_no': fields.char('Reference No'),
@@ -37,7 +38,7 @@ class netpro_policy(osv.osv):
         'insurance_period_start': fields.date('Insurance Period Start'),
         'insurance_period_end': fields.date('Insurance Period End'),
         'exclusive_period': fields.boolean('Exclusive Period'),
-        'toc_id': fields.many2one('netpro.tocTOC'),
+        'toc_id': fields.many2one('netpro.toc'),
         'ujroh': fields.float('Ujroh'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
         'policy_payor_id': fields.many2one('res.partner', 'Policy Payor'),
