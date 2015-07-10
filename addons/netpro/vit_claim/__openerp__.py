@@ -29,6 +29,8 @@
         "depends" : ['base'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
-        "update_xml" : ['vit_claim_view.xml', 'security/ir.model.access.csv'],
+        "data" : ['vit_claim_view.xml', 
+                'security/ir.model.access.csv'
+        ],
         "installable": True
 }
