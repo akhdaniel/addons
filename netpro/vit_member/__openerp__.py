@@ -26,9 +26,9 @@
         "website" : "http://openerp.com",
         "category" : "Unknown",
         "description": """  """,
-        "depends" : ['base'],
+        "depends" : ['base', 'vit_policy'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
-        "update_xml" : ['vit_member_view.xml', 'security/ir.model.access.csv'],
+        "data" : ['vit_member_view.xml', 'security/ir.model.access.csv'],
         "installable": True
 }
