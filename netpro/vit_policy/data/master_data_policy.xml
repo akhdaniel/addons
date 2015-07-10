@@ -307,5 +307,21 @@
 			<field name="name">5 Class</field>
 			<field name="point">5</field>
 		</record>
+
+		<!-- DEFAULT LIMIT -->
+		<record model="netpro.default_limit" id="default_limit_inner_limit">
+			<field name="name">Inner Limit</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.default_limit" id="default_limit_as_charge">
+			<field name="name">As Charge</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.default_limit" id="default_limit_ascharge_sub_limit">
+			<field name="name">Ascharge Sub Limi</field>
+			<field name="description"></field>
+		</record>
+	</data>
+	</data>
 	</data>
 </openerp>
