@@ -581,7 +581,7 @@ class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
     _rec_name = 'plan_schedule_id'
     _columns = {
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'Plan Schedule'),
-        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
         'bamount': fields.float('BAmount'),
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit ID'),
         'parent_benefit_id': fields.many2one('netpro.benefit', 'Parent Benefit'),
