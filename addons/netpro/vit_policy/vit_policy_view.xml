@@ -241,7 +241,7 @@
                                     </group>     
                                 </group> 
                                 
-                                <separator string="Plan Schedule" colspan="4"/>
+                                <separator string="Plan Schedule Benefits" colspan="4"/>
                                 <field name="plan_schedule_detail_benefit_schedule_ids" nolabel="1" select="0">
                                     <tree string="Details">
                                         <field name="product_plan_id" select="2"/>
@@ -274,68 +274,100 @@
 
                                             <group string="Provider">
                                                 <field name="occurance_inner_limit" select="0"/>
-                                                <field name="occurance_inner_limit_limit" select="0"/>
-                                                <field name="occurance_inner_limit_max" select="0"/>
-                                                <field name="occurance_inner_limit_std" select="0"/>
+                                                <field name="occurance_inner_limit_limit" 
+                                                    attrs="{'invisible': [('occurance_inner_limit','=',False)]}" />
+                                                <field name="occurance_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('occurance_inner_limit','=',False)]}" />
+                                                <field name="occurance_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('occurance_inner_limit','=',False)]}" />
+                                                    
                                                 <separator colspan="2"/>
                                                 
 
                                                 <field name="confinement_inner_limit" select="0"/>
-                                                <field name="confinement_inner_limit_limit" select="0"/>
-                                                <field name="confinement_inner_limit_max" select="0"/>
-                                                <field name="confinement_inner_limit_std" select="0"/>
+                                                <field name="confinement_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('confinement_inner_limit','=',False)]}" />
+                                                <field name="confinement_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('confinement_inner_limit','=',False)]}"/>
+                                                <field name="confinement_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('confinement_inner_limit','=',False)]}"/>
+
                                                 <separator colspan="2"/>
 
                                                 <field name="annual_inner_limit" select="0"/>
-                                                <field name="annual_inner_limit_limit" select="0"/>
-                                                <field name="annual_inner_limit_max" select="0"/>
-                                                <field name="annual_inner_limit_std" select="0"/>
-                                                <field name="annual_inner_limit_family" select="0"/>
-                                                <field name="annual_inner_limit_max_family" select="0"/>
-                                                <field name="annual_inner_limit_std_family" select="0"/>
+                                                <field name="annual_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('annual_inner_limit','=',False)]}"/>
+                                                <field name="annual_inner_limit_max" select="0"  
+                                                    attrs="{'invisible': [('annual_inner_limit','=',False)]}"/>
+                                                <field name="annual_inner_limit_std" select="0"  
+                                                    attrs="{'invisible': [('annual_inner_limit','=',False)]}"/>
+                                                <field name="annual_inner_limit_family" select="0"  
+                                                    attrs="{'invisible': [('annual_inner_limit','=',False)]}"/>
+                                                <field name="annual_inner_limit_max_family" select="0"  
+                                                    attrs="{'invisible': [('annual_inner_limit','=',False)]}"/>
+                                                <field name="annual_inner_limit_std_family" select="0" 
+                                                    attrs="{'invisible': [('annual_inner_limit','=',False)]}"/>
+
                                                 <separator colspan="2"/>
 
                                                 <field name="company_inner_limit" select="0"/>
-                                                <field name="company_inner_limit_limit" select="0"/>
-                                                <field name="company_inner_limit_max" select="0"/>
-                                                <field name="company_inner_limit_std" select="0"/>
-                                                <field name="company_inner_limit_reimbursement" select="0"/>
-                                                <field name="company_inner_limit_seq_no" select="0"/>
+                                                <field name="company_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('company_inner_limit','=',False)]}"/>
+                                                <field name="company_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('company_inner_limit','=',False)]}"/>
+                                                <field name="company_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('company_inner_limit','=',False)]}"/>
+                                                <field name="company_inner_limit_reimbursement" select="0" 
+                                                    attrs="{'invisible': [('company_inner_limit','=',False)]}"/>
+                                                <field name="company_inner_limit_seq_no" select="0" 
+                                                    attrs="{'invisible': [('company_inner_limit','=',False)]}"/>
+
                                                 <separator colspan="2"/>
                                             </group>
+
                                             <group string="Non Provider/Reimbursement">
                                                 <field name="non_provider_occurance_inner_limit" select="0"/>
-                                                <div>
-                                                    <field name="non_provider_occurance_inner_limit_limit" select="0"/>
-                                                    <field name="non_provider_occurance_inner_limit_max" select="0"/>
-                                                    <field name="non_provider_occurance_inner_limit_std" select="0"/>
-                                                </div>
+                                                <field name="non_provider_occurance_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('non_provider_occurance_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_occurance_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('non_provider_occurance_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_occurance_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('non_provider_occurance_inner_limit','=',False)]}"/>
+                                                 <separator colspan="2"/>
 
                                                 <field name="non_provider_confinement_inner_limit" select="0"/>
-                                                <div>
-                                                    <field name="non_provider_confinement_inner_limit_limit" select="0"/>
-                                                    <field name="non_provider_confinement_inner_limit_max" select="0"/>
-                                                    <field name="non_provider_confinement_inner_limit_std" select="0"/>
-                                                </div>
-
+                                                <field name="non_provider_confinement_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('non_provider_confinement_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_confinement_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('non_provider_confinement_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_confinement_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('non_provider_confinement_inner_limit','=',False)]}"/>
+ 
+                                                <separator colspan="2"/>
 
                                                 <field name="non_provider_annual_inner_limit" select="0"/>
-                                                <div>
-                                                    <field name="non_provider_annual_inner_limit_limit" select="0"/>
-                                                    <field name="non_provider_annual_inner_limit_max" select="0"/>
-                                                    <field name="non_provider_annual_inner_limit_std" select="0"/>
-                                                    <field name="non_provider_annual_inner_limit_family_limit" select="0"/>
-                                                    <field name="non_provider_annual_inner_limit_family_max" select="0"/>
-                                                    <field name="non_provider_annual_inner_limit_family_std" select="0"/>
-                                                </div>
+                                                 <field name="non_provider_annual_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('non_provider_annual_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_annual_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('non_provider_annual_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_annual_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('non_provider_annual_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_annual_inner_limit_family_limit" select="0" 
+                                                    attrs="{'invisible': [('non_provider_annual_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_annual_inner_limit_family_max" select="0" 
+                                                    attrs="{'invisible': [('non_provider_annual_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_annual_inner_limit_family_std" select="0" 
+                                                    attrs="{'invisible': [('non_provider_annual_inner_limit','=',False)]}"/>
+                                                 <separator colspan="2"/>
 
                                                 <field name="non_provider_company_inner_limit" select="0"/>
-                                                <div>
-                                                    <field name="non_provider_company_inner_limit_limit" select="0"/>
-                                                    <field name="non_provider_company_inner_limit_max" select="0"/>
-                                                    <field name="non_provider_company_inner_limit_std" select="0"/>
-                                                </div>
-                                            </group>
+                                                <field name="non_provider_company_inner_limit_limit" select="0" 
+                                                    attrs="{'invisible': [('non_provider_company_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_company_inner_limit_max" select="0" 
+                                                    attrs="{'invisible': [('non_provider_company_inner_limit','=',False)]}"/>
+                                                <field name="non_provider_company_inner_limit_std" select="0" 
+                                                    attrs="{'invisible': [('non_provider_company_inner_limit','=',False)]}"/>
+                                             </group>
                                         </group>
                                     </form>           
                                 </field>
