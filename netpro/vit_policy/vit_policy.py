@@ -178,8 +178,34 @@ class netpro_branch(osv.osv):
     _inherit = 'res.partner'
     _columns = {
         'start_date': fields.date('Start Date'),
+        'end_date': fields.date('End Date'),
+        'last_close_month': fields.integer('Last Close Month'),
+        'last_close_year': fields.integer('Last Close Year'),
+        'last_consolidated_month': fields.integer('Last Consolidated Year'),
+        'last_consolidated_year': fields.integer('Last Consolidated Year'),
+        'production_locked_date': fields.date('Production Locked Date'),
+        'finance_locked_date': fields.date('Finance Locked Date'),
+        'backdated_date': fields.date('Backdated Date'),
+        'backdated_date': fields.date('Backdated Date'),
+        'kpp_id': fields.many2one('netpro.kpp', 'KPP'),
+        'profit_loss_account': fields.many2one('account.account', 'Profit / Loss Account'),
+        'tax_account': fields.many2one('account.account', 'Tax Account'),
+        'dividen_account': fields.many2one('account.account', 'Dividen Account'),
+        'inter_office_account': fields.many2one('account.account', 'Inter-Office Account'),
+        'gain_loss_account': fields.many2one('account.account', 'Gain / Loss Account'),
+        'retained_earnings': fields.many2one('account.account', 'Retained Earnings'),
+        'active': fields.boolean('Active'),
+        'operating_branch': fields.boolean('Operating Branch'),
+        'syariah_branch': fields.boolean('Syariah Branch'),
     }
 netpro_branch()
+
+class netpro_kpp(osv.osv):
+    _name = 'netpro.kpp'
+    _columns = {
+        'kpp_id': fields.char('KPP ID'),
+        'name': fields.char('Name'),
+    }
 
 class netpro_tpa(osv.osv):
     _name = 'netpro.tpa'
@@ -452,7 +478,7 @@ class netpro_plan_schedule(osv.osv):
         'deductible': fields.float('Deductible'),
         'no_refund': fields.boolean('No Refund'),
         'no_refund_if_any_claim': fields.boolean('No Refund If Any Claim'),
-        'hi_plan': fields.boolean('Hi Plan (Apply As Charge if R&B Same or Lower than Taken Benefit)'),
+        'hi_plan': fields.boolean('Hi Plan', help='Apply As Charge if R&B Same or Lower than Taken Benefit'),
         'aso_plan': fields.boolean('ASO Plan'),
         'maximum_age_employee': fields.integer('For Employee'),
         'maximum_age_spouse': fields.integer('For Spouse'),

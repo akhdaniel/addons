@@ -2284,6 +2284,68 @@
         <field name="view_mode">tree,form</field>
     </record>
     <!-- <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_claim_rule"/> -->
+
+    <record model="ir.ui.view" id="view_netpro_kpp_form">
+        <field name="name">netpro.kpp.form</field>
+        <field name="model">netpro.kpp</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.kpp">
+                <group>
+                    <field name="kpp_id" select="1"/>
+                    <field name="name" select="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_kpp_tree">
+        <field name="name">netpro.kpp.tree</field>
+        <field name="model">netpro.kpp</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.kpp">
+                <field name="kpp_id"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_kpp">
+        <field name="name">KPP</field>
+        <field name="res_model">netpro.kpp</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_kpp"/> -->
+
+    <record model="ir.ui.view" id="view_netpro_branch_form">
+        <field name="name">netpro.branch.form</field>
+        <field name="model">netpro.branch</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.branch">
+                <group>
+                    <field name="kpp_id" select="1"/>
+                    <field name="name" select="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_branch_tree">
+        <field name="name">netpro.branch.tree</field>
+        <field name="model">netpro.branch</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.branch">
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_branch">
+        <field name="name">Branch</field>
+        <field name="res_model">netpro.branch</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_kpp"/> -->
         
 </data>
 </openerp>
