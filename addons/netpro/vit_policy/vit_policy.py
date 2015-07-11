@@ -174,7 +174,7 @@ class netpro_policy(osv.osv):
 netpro_policy()
 
 class netpro_branch(osv.osv):
-    _name = 'netpro.branch'
+    _name = 'res.partner'
     _inherit = 'res.partner'
     _columns = {
         'start_date': fields.date('Start Date'),
