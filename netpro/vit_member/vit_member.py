@@ -22,13 +22,14 @@
 from openerp.osv import fields,osv
 class netpro_member(osv.osv):
     _name = 'netpro.member'
+    _inherit = 'res.partner'
     _columns = {
         'policy_id': fields.many2one('netpro.policy', 'Policy', required=True),
         'insurance_period_start': fields.date('Insurance Period Start', required=True),
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.', required=True),
         'name': fields.char('Name', required=True),
-        'employee_id': fields.many2one('netpro.employee', 'Employee', required=True),
+        'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
         'census_no': fields.integer('Census No.'),
         'sex': fields.many2one('netpro.sex', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),

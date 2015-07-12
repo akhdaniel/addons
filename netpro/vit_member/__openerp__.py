@@ -22,13 +22,15 @@
 {
         "name" : "vit_member",
         "version" : "0.1",
-        "author" : "Tiny",
-        "website" : "http://openerp.com",
-        "category" : "Unknown",
+        "author" : "vitraining.com",
+        "website" : "http://vitraining.com",
+        "category" : "Other",
         "description": """  """,
-        "depends" : ['base', 'vit_policy'],
+        "depends" : ['base', 'hr', 'vit_policy'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
-        "data" : ['vit_member_view.xml', 'security/ir.model.access.csv'],
+        "data" : ['vit_member_view.xml', 
+                'security/ir.model.access.csv'
+        ],
         "installable": True
 }

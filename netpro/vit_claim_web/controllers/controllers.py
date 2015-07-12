@@ -16,8 +16,8 @@ class Member(http.Controller):
 		message = "";
 
 		if request.httprequest.method == 'POST':
-			Member = http.request.env['res.partner']
-			member = Member.search([('name','ilike',kw.get('card_no','') )])
+			Member = http.request.env['netpro.member']
+			member = Member.search([('member_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
 				return http.request.render('vit_claim_web.registration', {'message':message} )	
