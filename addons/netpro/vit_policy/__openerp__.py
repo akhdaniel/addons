@@ -31,6 +31,7 @@
         "demo_xml" : [ ],
         "data" : [
                 'vit_policy_view.xml', 
+                'menu.xml',
                 'security/ir.model.access.csv',
                 'data/sequence.xml',
                 'data/master_data_policy.xml'

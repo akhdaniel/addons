@@ -656,12 +656,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Netpro" id="netpro_menu" sequence="10" />
-
-    <menuitem name="Transactions" id="menu_netpro_transaction" parent="netpro_menu"/>
-
-    <menuitem name="Policy" id="menu_netpro_policy" parent="menu_netpro_transaction" action="action_netpro_policy"/>
-
     <record model="ir.ui.view" id="view_netpro_policy_category_form">
         <field name="name">netpro.policy_category.form</field>
         <field name="model">netpro.policy_category</field>
@@ -696,8 +690,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- <menuitem name="Policy Category" id="menu_netpro_policy_category" action="action_netpro_policy_category"/> -->
         
     <record model="ir.ui.view" id="view_netpro_policy_type_form">
         <field name="name">netpro.policy_type.form</field>
@@ -731,7 +723,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Policy Type" id="menu_netpro_policy_type" action="action_netpro_policy_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_policy_group_form">
         <field name="name">netpro.policy_group.form</field>
@@ -2359,7 +2350,7 @@
 
     <record model="ir.ui.view" id="view_netpro_branch_form">
         <field name="name">netpro.branch.form</field>
-        <field name="model">res.partner</field>
+        <field name="model">netpro.branch</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.branch">
@@ -2372,7 +2363,7 @@
     </record>
     <record model="ir.ui.view" id="view_netpro_branch_tree">
         <field name="name">netpro.branch.tree</field>
-        <field name="model">res.partner</field>
+        <field name="model">netpro.branch</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.branch">
@@ -2381,7 +2372,7 @@
     </record>
     <record model="ir.actions.act_window" id="action_netpro_branch">
         <field name="name">Branch</field>
-        <field name="res_model">res.partner</field>
+        <field name="res_model">netpro.branch</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>

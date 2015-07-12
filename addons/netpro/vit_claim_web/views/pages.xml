@@ -58,14 +58,16 @@
         <t t-set="title">Claim Registration</t>
         <div class="oe_structure">
             <div class="container">
+            	<h1>Enter your Card Number</h1>
 	            <div class="row">
 	            	<div class="col-md-8">
-						<div class="alert alert-error">
+	            		<t t-if="message">
+							<div class="alert alert-danger">
 		                        <t t-esc="message"/>
 		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-		                </div>
-
-		            	<h1>Enter your Card Number</h1>
+			                </div>
+			            </t>
+		            	
 		            	<form action="/claim/eligibility" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 				            <div t-attf-class="form-group">
 				                <label class="col-md-3 col-sm-4 control-label" for="card_no">Card Number</label>
@@ -84,18 +86,80 @@
 <template id="vit_claim_web.eligibility" name="Claim Eligibility" page="True">
     <t t-call="website.layout">
         <t t-set="title">Eligibility</t>
-        <div class="oe_structure">
-            <div class="container">
-	            <div class="row">
-	            	<div class="col-md-8">
+        <div class="container">
+        	<h1>Patient Name: <t t-esc="member.name"/></h1>
+            
+            <div class="row">
+				<div class="col-md-6 col-sm-6">            	
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Card No</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.email"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Date of Birth</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.email"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Policy No.</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.email"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Payor Member ID</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.email"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Policy Date</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.email"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Plan</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.email"/>
+			            </div>
+				    </div> 	
+				</div>	
+				<div class="col-md-6 col-sm-6">            	
+					Letter of Authorization	
+			    </div> 		
+		    </div> 		
+	
 
-		            	<h1><t t-esc="member.name" /></h1>
-
-    	        	</div>
-    	        </div>
-            </div>
+        	<div class="row">
+	            <div class="col-sm-8 col-md-7">
+                    <button class="btn btn-primary btn-sm">IP</button>
+                    <button class="btn btn-primary btn-sm">OP</button>
+                    <button class="btn btn-primary btn-sm">DT</button>
+                    <button class="btn btn-primary btn-sm">MAT</button>
+                    <button class="btn btn-primary btn-sm">CO</button>
+                    <button class="btn btn-primary btn-sm">EA</button>
+                </div>
+            </div>    	        
         </div>
-    </t>			
+        <br/>
+    </t>	
+
 </template>
 
 <template id="website.member_children">
