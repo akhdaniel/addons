@@ -58,18 +58,24 @@
         <t t-set="title">Claim Registration</t>
         <div class="oe_structure">
             <div class="container">
+	            <div class="row">
+	            	<div class="col-md-8">
+						<div class="alert alert-error">
+		                        <t t-esc="message"/>
+		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+		                </div>
 
-            	<div class="error"><t t-esc="message"/></div>
-
-            	<h1>Enter your Card Number</h1>
-            	<form action="/claim/eligibility" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
-		            <div t-attf-class="form-group">
-		                <label class="col-md-3 col-sm-4 control-label" for="card_no">Card Number</label>
-						<div class="col-md-7 col-sm-8">
-	            			<input name="card_no" />
-	            		</div>
-	            	</div>
-            	</form>
+		            	<h1>Enter your Card Number</h1>
+		            	<form action="/claim/eligibility" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+				            <div t-attf-class="form-group">
+				                <label class="col-md-3 col-sm-4 control-label" for="card_no">Card Number</label>
+								<div class="col-md-7 col-sm-8">
+			            			<input name="card_no" type="text" class="form-control" />
+			            		</div>
+			            	</div>
+		            	</form>
+		            </div>
+		        </div>
             </div>
         </div>
     </t>			
@@ -80,10 +86,13 @@
         <t t-set="title">Eligibility</t>
         <div class="oe_structure">
             <div class="container">
-            	<div class="error"><t t-esc="message"/></div>
+	            <div class="row">
+	            	<div class="col-md-8">
 
-            	<h1><t t-esc="member.name" /></h1>
+		            	<h1><t t-esc="member.name" /></h1>
 
+    	        	</div>
+    	        </div>
             </div>
         </div>
     </t>			

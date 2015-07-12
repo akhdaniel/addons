@@ -19,7 +19,9 @@ Homepage untuk aplikasi insurance
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website','website_blog','vit_policy', 'vit_member', 'vit_claim'],
+    'depends': ['website','website_blog','website_instantclick',
+        'vit_policy', 'vit_member', 'vit_claim'
+    ],
 
     # always loaded
     'data': [

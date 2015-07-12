@@ -19,7 +19,8 @@ class Member(http.Controller):
 			Member = http.request.env['res.partner']
 			member = Member.search([('name','ilike',kw.get('card_no','') )])
 			if not member:
-				message = "Member not found!"
+				message = "Member not found! Please try again."
+				return http.request.render('vit_claim_web.registration', {'message':message} )	
 
 		return http.request.render('vit_claim_web.eligibility', 
 			{'member': member, 'message':message})
