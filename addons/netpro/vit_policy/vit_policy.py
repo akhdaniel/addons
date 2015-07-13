@@ -33,7 +33,7 @@ class netpro_policy(osv.osv):
         'corporate_id': fields.char('Corporate ID'),
         'policy_category': fields.many2one('netpro.policy_category','Policy Category'),
         'policy_type': fields.many2one('netpro.policy_type', 'Policy Type'),
-        'branch': fields.many2one('netpro.branch', 'Branch'),
+        'branch_id': fields.many2one('res.partner', 'Branch'),
         'marketing_officer_id': fields.many2one('res.partner', 'Marketing Officer'),
         'policy_holder_id': fields.many2one('res.partner', 'Policy Holder'),
         'policy_group_id': fields.many2one('netpro.policy_group', 'Group'),
@@ -176,7 +176,7 @@ class netpro_policy(osv.osv):
 netpro_policy()
 
 class netpro_branch(osv.osv):
-    _name = 'netpro.branch'
+    _name = 'res.partner'
     _inherit = 'res.partner'
     _columns = {
         'start_date': fields.date('Start Date'),
