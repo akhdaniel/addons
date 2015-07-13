@@ -1,76 +1,84 @@
 <openerp>
 <data>
 
+    <!--Top Menu-->
     <menuitem name="Netpro" id="netpro_menu" sequence="10" />
 
     <!--Transactions-->
     <menuitem name="Transactions" id="menu_netpro_transaction" parent="netpro_menu"/>
-
-    <menuitem name="Policy" id="menu_netpro_policy" parent="menu_netpro_transaction" action="action_netpro_policy" sequence="10"/>
-
-
+	    <menuitem name="Policy" id="menu_netpro_policy" parent="menu_netpro_transaction" action="action_netpro_policy" sequence="10"/>
 
 
 
 
     <!-- Configurations -->
     <menuitem name="Configurations" id="menu_netpro_configuration" parent="netpro_menu" sequence="20"/>
+
+    <!-- Policy Configurations -->
     <menuitem name="Policy" id="menu_netpro_policy_configuration" parent="menu_netpro_configuration" sequence="10"/>
-    <menuitem name="General Policy Information" id="menu_netpro_policy_configuration_1" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Policy Category" id="menu_netpro_policy_category" action="action_netpro_policy_category" parent="menu_netpro_policy_configuration_1" sequence="10"/>
-	    <menuitem name="Policy Type" id="menu_netpro_policy_type" action="action_netpro_policy_type" parent="menu_netpro_policy_configuration_1" sequence="20"/>
-	    <menuitem name="Policy Group" id="menu_netpro_policy_group" action="action_netpro_policy_group" parent="menu_netpro_policy_configuration_1" sequence="30"/>    
-	    <menuitem name="TOC" id="menu_netpro_toc" action="action_netpro_toc" parent="menu_netpro_policy_configuration_1" sequence="40"/>
-	    <menuitem name="Segment" id="menu_netpro_segment" action="action_netpro_segment" parent="menu_netpro_policy_configuration_1" sequence="50"/>
-	    <menuitem name="LOB" id="menu_netpro_lob" action="action_netpro_lob" parent="menu_netpro_policy_configuration_1" sequence="60"/>
-	    <menuitem name="Occupation" id="menu_netpro_occupation" action="action_netpro_occupation" parent="menu_netpro_policy_configuration_1"  sequence="70"/>
-	    <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_policy_configuration_1"  sequence="80"/>
 
-    <menuitem name="Payment Options" id="menu_netpro_policy_configuration_2" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Payment Option Mode" id="menu_netpro_payment_option_mode" action="action_netpro_payment_option_mode" parent="menu_netpro_policy_configuration_2"  sequence="90"/>
-	    <menuitem name="Payment Option Installment" id="menu_netpro_payment_option_installment" action="action_netpro_payment_option_installment" parent="menu_netpro_policy_configuration_2"  sequence="100"/>
+	    <menuitem name="General Policy Information" id="menu_netpro_policy_configuration_1" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Policy Category" id="menu_netpro_policy_category" action="action_netpro_policy_category" parent="menu_netpro_policy_configuration_1" sequence="10"/>
+		    <menuitem name="Policy Type" id="menu_netpro_policy_type" action="action_netpro_policy_type" parent="menu_netpro_policy_configuration_1" sequence="20"/>
+		    <menuitem name="Policy Group" id="menu_netpro_policy_group" action="action_netpro_policy_group" parent="menu_netpro_policy_configuration_1" sequence="30"/>    
+		    <menuitem name="TOC" id="menu_netpro_toc" action="action_netpro_toc" parent="menu_netpro_policy_configuration_1" sequence="40"/>
+		    <menuitem name="Segment" id="menu_netpro_segment" action="action_netpro_segment" parent="menu_netpro_policy_configuration_1" sequence="50"/>
+		    <menuitem name="LOB" id="menu_netpro_lob" action="action_netpro_lob" parent="menu_netpro_policy_configuration_1" sequence="60"/>
+		    <menuitem name="Occupation" id="menu_netpro_occupation" action="action_netpro_occupation" parent="menu_netpro_policy_configuration_1"  sequence="70"/>
+		    <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_policy_configuration_1"  sequence="80"/>
 
-    <menuitem name="Endorsement Settings" id="menu_netpro_policy_configuration_3" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Refund Type" id="menu_netpro_refund_type" action="action_netpro_refund_type" parent="menu_netpro_policy_configuration_3"  sequence="110"/>
+	    <menuitem name="Payment Options" id="menu_netpro_policy_configuration_2" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Payment Option Mode" id="menu_netpro_payment_option_mode" action="action_netpro_payment_option_mode" parent="menu_netpro_policy_configuration_2"  sequence="90"/>
+		    <menuitem name="Payment Option Installment" id="menu_netpro_payment_option_installment" action="action_netpro_payment_option_installment" parent="menu_netpro_policy_configuration_2"  sequence="100"/>
 
-    <menuitem name="Print Card Option" id="menu_netpro_policy_configuration_4" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Print Card Order" id="menu_netpro_print_card_order" action="action_netpro_print_card_order" parent="menu_netpro_policy_configuration_4"  sequence="120"/>
+	    <menuitem name="Endorsement Settings" id="menu_netpro_policy_configuration_3" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Refund Type" id="menu_netpro_refund_type" action="action_netpro_refund_type" parent="menu_netpro_policy_configuration_3"  sequence="110"/>
 
-    <menuitem name="Policy Settings" id="menu_netpro_policy_configuration_5" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Calculation Method" id="menu_netpro_calculation_method" action="action_netpro_calculation_method" parent="menu_netpro_policy_configuration_5"  sequence="130"/>
-	    <menuitem name="Prorate Calc Method" id="menu_netpro_prorate_calc_method" action="action_netpro_prorate_calc_method" parent="menu_netpro_policy_configuration_5"  sequence="140"/>
-	    <menuitem name="Expired Claim Receipt" id="menu_netpro_expired_claim_receipt" action="action_netpro_expired_claim_receipt" parent="menu_netpro_policy_configuration_5"  sequence="150"/>
-	    <menuitem name="Payment Due Interval" id="menu_netpro_payment_due_interval" action="action_netpro_payment_due_interval" parent="menu_netpro_policy_configuration_5"  sequence="160"/>
-	    <menuitem name="Max Children" id="menu_netpro_max_children" action="action_netpro_max_children" parent="menu_netpro_policy_configuration_5"  sequence="170"/>
-	    <menuitem name="Max Children Maternity" id="menu_netpro_max_children_maternity" action="action_netpro_max_children_maternity" parent="menu_netpro_policy_configuration_5"  sequence="180"/>
-	    <menuitem name="Card Type" id="menu_netpro_card_type" action="action_netpro_card_type" parent="menu_netpro_policy_configuration_5"  sequence="190"/>
-	    <menuitem name="Pre Existing Condition" id="menu_netpro_pre_existing_condition" action="action_netpro_pre_existing_condition" parent="menu_netpro_policy_configuration_5" sequence="200"/>
+	    <menuitem name="Print Card Option" id="menu_netpro_policy_configuration_4" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Print Card Order" id="menu_netpro_print_card_order" action="action_netpro_print_card_order" parent="menu_netpro_policy_configuration_4"  sequence="120"/>
 
-    <menuitem name="Tolerance" id="menu_netpro_policy_configuration_6" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Up Room Class" id="menu_netpro_up_room_class" action="action_netpro_up_room_class" parent="menu_netpro_policy_configuration_6"  sequence="210"/>
-	    <!-- <menuitem name="Policy Status" id="menu_netpro_policy_status" action="action_netpro_policy_status" parent="menu_netpro_policy_configuration_6"  sequence="220"/> -->
+	    <menuitem name="Policy Settings" id="menu_netpro_policy_configuration_5" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Calculation Method" id="menu_netpro_calculation_method" action="action_netpro_calculation_method" parent="menu_netpro_policy_configuration_5"  sequence="130"/>
+		    <menuitem name="Prorate Calc Method" id="menu_netpro_prorate_calc_method" action="action_netpro_prorate_calc_method" parent="menu_netpro_policy_configuration_5"  sequence="140"/>
+		    <menuitem name="Expired Claim Receipt" id="menu_netpro_expired_claim_receipt" action="action_netpro_expired_claim_receipt" parent="menu_netpro_policy_configuration_5"  sequence="150"/>
+		    <menuitem name="Payment Due Interval" id="menu_netpro_payment_due_interval" action="action_netpro_payment_due_interval" parent="menu_netpro_policy_configuration_5"  sequence="160"/>
+		    <menuitem name="Max Children" id="menu_netpro_max_children" action="action_netpro_max_children" parent="menu_netpro_policy_configuration_5"  sequence="170"/>
+		    <menuitem name="Max Children Maternity" id="menu_netpro_max_children_maternity" action="action_netpro_max_children_maternity" parent="menu_netpro_policy_configuration_5"  sequence="180"/>
+		    <menuitem name="Card Type" id="menu_netpro_card_type" action="action_netpro_card_type" parent="menu_netpro_policy_configuration_5"  sequence="190"/>
+		    <menuitem name="Pre Existing Condition" id="menu_netpro_pre_existing_condition" action="action_netpro_pre_existing_condition" parent="menu_netpro_policy_configuration_5" sequence="200"/>
 
-    <menuitem name="Others" id="menu_netpro_policy_configuration_7" parent="menu_netpro_policy_configuration" sequence="10"/>
-	    <menuitem name="Coverage" id="menu_netpro_coverage" action="action_netpro_coverage" parent="menu_netpro_policy_configuration_7"  sequence="230"/>
-	    <menuitem name="Class" id="menu_netpro_class" action="action_netpro_class" parent="menu_netpro_policy_configuration_7"  sequence="240"/>
-	    <!-- <menuitem name="Plan Schedule" id="menu_netpro_plan_schedule" action="action_netpro_plan_schedule" parent="menu_netpro_policy_configuration_7"  sequence="250"/> -->
-	    <menuitem name="Business Source" id="menu_netpro_business_source" action="action_netpro_business_source" parent="menu_netpro_policy_configuration_7"  sequence="260"/>
-	    <menuitem name="Product Type" id="menu_netpro_product_type" action="action_netpro_product_type" parent="menu_netpro_policy_configuration_7"  sequence="270"/>
-	    <menuitem name="Product" id="menu_netpro_product_id" action="action_netpro_product_id" parent="menu_netpro_policy_configuration_7"  sequence="280"/>
-	    <menuitem name="Default Limit" id="menu_netpro_default_limit" action="action_netpro_default_limit" parent="menu_netpro_policy_configuration_7"  sequence="290"/>
-	    <menuitem name="Product Plan" id="menu_netpro_product_plan_base" action="action_netpro_product_plan_base" parent="menu_netpro_policy_configuration_7"  sequence="300"/>
-	    <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level" parent="menu_netpro_policy_configuration_7"  sequence="310"/>
-	    <menuitem name="Agent / Broker" id="menu_netpro_agent" action="action_netpro_agent" parent="menu_netpro_policy_configuration_7"  sequence="320"/>
-	    <menuitem name="Business Source Type" id="menu_netpro_business_source_type" action="action_netpro_business_source_type" parent="menu_netpro_policy_configuration_7"  sequence="330"/>
-	    <menuitem name="Membership Plan" id="menu_netpro_membership_plan" action="action_netpro_membership_plan" parent="menu_netpro_policy_configuration_7"  sequence="340"/>
-	    <!-- <menuitem name="Benefit Schedule" id="menu_netpro_plan_schedule_detail_benefit_schedule" action="action_netpro_plan_schedule_detail_benefit_schedule" parent="menu_netpro_policy_configuration_7"  sequence="350"/> -->
-	    <!-- <menuitem name="Diagnosis Exclusion" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion" action="action_netpro_plan_schedule_detail_diagnosis_exclusion" parent="menu_netpro_policy_configuration_7"  sequence="360"/> -->
-	    <!-- <menuitem name="Diagnosis Exclusion Exception" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion_exception" action="action_netpro_plan_schedule_detail_diagnosis_exclusion_exception" parent="menu_netpro_policy_configuration_7"  sequence="370"/> -->
-	    <!-- <menuitem name="Benefit" id="menu_netpro_benefit" action="action_netpro_benefit" parent="menu_netpro_policy_configuration_7"  sequence="380"/> -->
-	    <menuitem name="Master Diagnosis Exclusion" id="menu_netpro_master_diagnosis_exclusion" action="action_netpro_master_diagnosis_exclusion"  parent="menu_netpro_policy_configuration_7" sequence="390"/>
-	    <menuitem name="Correspondence Rule" id="menu_netpro_correspondence_rule" action="action_netpro_correspondence_rule" parent="menu_netpro_policy_configuration_7"  sequence="400"/>
-	    <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_claim_rule" parent="menu_netpro_policy_configuration_7"  sequence="410"/>
-	    <menuitem name="KPP" id="menu_netpro_kpp" action="action_netpro_kpp" parent="menu_netpro_policy_configuration_7"  sequence="420"/>
+	    <menuitem name="Tolerance" id="menu_netpro_policy_configuration_6" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Up Room Class" id="menu_netpro_up_room_class" action="action_netpro_up_room_class" parent="menu_netpro_policy_configuration_6"  sequence="210"/>
+		    <!-- <menuitem name="Policy Status" id="menu_netpro_policy_status" action="action_netpro_policy_status" parent="menu_netpro_policy_configuration_6"  sequence="220"/> -->
+
+	    <menuitem name="Others" id="menu_netpro_policy_configuration_7" parent="menu_netpro_policy_configuration" sequence="10"/>
+		    <menuitem name="Coverage" id="menu_netpro_coverage" action="action_netpro_coverage" parent="menu_netpro_policy_configuration_7"  sequence="230"/>
+		    <menuitem name="Class" id="menu_netpro_class" action="action_netpro_class" parent="menu_netpro_policy_configuration_7"  sequence="240"/>
+		    <!-- <menuitem name="Plan Schedule" id="menu_netpro_plan_schedule" action="action_netpro_plan_schedule" parent="menu_netpro_policy_configuration_7"  sequence="250"/> -->
+		    <menuitem name="Business Source" id="menu_netpro_business_source" action="action_netpro_business_source" parent="menu_netpro_policy_configuration_7"  sequence="260"/>
+		    <menuitem name="Product Type" id="menu_netpro_product_type" action="action_netpro_product_type" parent="menu_netpro_policy_configuration_7"  sequence="270"/>
+		    <menuitem name="Product" id="menu_netpro_product_id" action="action_netpro_product_id" parent="menu_netpro_policy_configuration_7"  sequence="280"/>
+		    <menuitem name="Default Limit" id="menu_netpro_default_limit" action="action_netpro_default_limit" parent="menu_netpro_policy_configuration_7"  sequence="290"/>
+		    <menuitem name="Product Plan" id="menu_netpro_product_plan_base" action="action_netpro_product_plan_base" parent="menu_netpro_policy_configuration_7"  sequence="300"/>
+		    <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level" parent="menu_netpro_policy_configuration_7"  sequence="310"/>
+		    <menuitem name="Agent / Broker" id="menu_netpro_agent" action="action_netpro_agent" parent="menu_netpro_policy_configuration_7"  sequence="320"/>
+		    <menuitem name="Business Source Type" id="menu_netpro_business_source_type" action="action_netpro_business_source_type" parent="menu_netpro_policy_configuration_7"  sequence="330"/>
+		    <menuitem name="Membership Plan" id="menu_netpro_membership_plan" action="action_netpro_membership_plan" parent="menu_netpro_policy_configuration_7"  sequence="340"/>
+		    <!-- <menuitem name="Benefit Schedule" id="menu_netpro_plan_schedule_detail_benefit_schedule" action="action_netpro_plan_schedule_detail_benefit_schedule" parent="menu_netpro_policy_configuration_7"  sequence="350"/> -->
+		    <!-- <menuitem name="Diagnosis Exclusion" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion" action="action_netpro_plan_schedule_detail_diagnosis_exclusion" parent="menu_netpro_policy_configuration_7"  sequence="360"/> -->
+		    <!-- <menuitem name="Diagnosis Exclusion Exception" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion_exception" action="action_netpro_plan_schedule_detail_diagnosis_exclusion_exception" parent="menu_netpro_policy_configuration_7"  sequence="370"/> -->
+		    <!-- <menuitem name="Benefit" id="menu_netpro_benefit" action="action_netpro_benefit" parent="menu_netpro_policy_configuration_7"  sequence="380"/> -->
+		    <menuitem name="Master Diagnosis Exclusion" id="menu_netpro_master_diagnosis_exclusion" action="action_netpro_master_diagnosis_exclusion"  parent="menu_netpro_policy_configuration_7" sequence="390"/>
+		    <menuitem name="Correspondence Rule" id="menu_netpro_correspondence_rule" action="action_netpro_correspondence_rule" parent="menu_netpro_policy_configuration_7"  sequence="400"/>
+		    <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_claim_rule" parent="menu_netpro_policy_configuration_7"  sequence="410"/>
+		    <menuitem name="KPP" id="menu_netpro_kpp" action="action_netpro_kpp" parent="menu_netpro_policy_configuration_7"  sequence="420"/>
+
+    <!-- Member Configurations -->
+    <menuitem name="Member" id="menu_netpro_member_configuration" parent="menu_netpro_configuration" sequence="20"/>
+
+    <!-- Claims Configurations -->
+    <menuitem name="Claim" id="menu_netpro_claim_configuration" parent="menu_netpro_configuration" sequence="30"/>
+
 
 </data>
 </openerp>
