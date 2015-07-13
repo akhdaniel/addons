@@ -1496,9 +1496,19 @@
                     <separator string="Description" colspan="4"/>
                     <field name="description" colspan="4" nolabel="1" select="0"/>
                     <!-- <field name="policy_id" select="0"/> -->
-                    <separator string="Membership Plans" colspan="4"/>
-                    <field name="membership_plan_ids" colspan="4" nolabel="1" select="0"/>
                 </group>
+
+                <notebook>
+                    <page string="Employee">
+                        <field name="membership_plan_employee_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                    <page string="Spouse">
+                        <field name="membership_plan_spouse_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                    <page string="Child">
+                        <field name="membership_plan_child_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>
@@ -1898,17 +1908,14 @@
         <field name="view_mode">tree,form</field>
     </record>
         
-    <record model="ir.ui.view" id="view_netpro_membership_plan_form">
-        <field name="name">netpro.membership_plan.form</field>
-        <field name="model">netpro.membership_plan</field>
+    <record model="ir.ui.view" id="view_netpro_membership_plan_empoyee_form">
+        <field name="name">netpro.membership_plan_employee.form</field>
+        <field name="model">netpro.membership_plan_employee</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="netpro.membership_plan">
+            <form string="netpro.membership_plan_employee">
                 <group>
                     <field name="class_id" select="1"/>
-                    <field name="as_employee" select="2"/>
-                    <field name="as_spouse" select="0"/>
-                    <field name="as_child" select="0"/>
                     <field name="product_plan_id" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
@@ -1916,26 +1923,92 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="view_netpro_membership_plan_tree">
-        <field name="name">netpro.membership_plan.tree</field>
-        <field name="model">netpro.membership_plan</field>
+    <record model="ir.ui.view" id="view_netpro_membership_plan_employee_tree">
+        <field name="name">netpro.membership_plan_employee.tree</field>
+        <field name="model">netpro.membership_plan_employee</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="netpro.membership_plan">
+            <tree string="netpro.membership_plan_employee">
                 <field name="class_id"/>
-                <field name="as_employee"/>
-                <field name="as_spouse"/>
-                <field name="as_child"/>
                 <field name="product_plan_id"/>
                 <field name="male_female_bamount"/>
                 <field name="occur_in_other_membership"/>
-
             </tree>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="action_netpro_membership_plan">
-        <field name="name">Membership Plan</field>
-        <field name="res_model">netpro.membership_plan</field>
+    <record model="ir.actions.act_window" id="action_netpro_membership_plan_employee">
+        <field name="name">Membership Plan Employee</field>
+        <field name="res_model">netpro.membership_plan_employee</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="view_netpro_membership_plan_spouse_form">
+        <field name="name">netpro.membership_plan_spouse.form</field>
+        <field name="model">netpro.membership_plan_spouse</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.membership_plan_spouse">
+                <group>
+                    <field name="class_id" select="1"/>
+                    <field name="product_plan_id" select="0"/>
+                    <field name="male_female_bamount" select="0"/>
+                    <field name="occur_in_other_membership" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_membership_plan_spouse_tree">
+        <field name="name">netpro.membership_plan_spouse.tree</field>
+        <field name="model">netpro.membership_plan_spouse</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.membership_plan_spouse">
+                <field name="class_id"/>
+                <field name="product_plan_id"/>
+                <field name="male_female_bamount"/>
+                <field name="occur_in_other_membership"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_membership_plan_spouse">
+        <field name="name">Membership Plan Spouse</field>
+        <field name="res_model">netpro.membership_plan_spouse</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="view_netpro_membership_plan_child_form">
+        <field name="name">netpro.membership_plan_child.form</field>
+        <field name="model">netpro.membership_plan_child</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.membership_plan_child">
+                <group>
+                    <field name="class_id" select="1"/>
+                    <field name="product_plan_id" select="0"/>
+                    <field name="male_female_bamount" select="0"/>
+                    <field name="occur_in_other_membership" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_membership_plan_child_tree">
+        <field name="name">netpro.membership_plan_child.tree</field>
+        <field name="model">netpro.membership_plan_child</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.membership_plan_child">
+                <field name="class_id"/>
+                <field name="product_plan_id"/>
+                <field name="male_female_bamount"/>
+                <field name="occur_in_other_membership"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_membership_plan_child">
+        <field name="name">Membership Plan Child</field>
+        <field name="res_model">netpro.membership_plan_child</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -2315,8 +2388,9 @@
         <field name="arch" type="xml">
             <form string="netpro.branch">
                 <group>
-                    <field name="kpp_id" select="1"/>
                     <field name="name" select="1"/>
+                    <field name="address" select="1"/>
+                    <field name="start_date" select="1"/>
                 </group>
             </form>
         </field>
