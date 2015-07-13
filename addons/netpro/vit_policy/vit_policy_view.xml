@@ -18,7 +18,7 @@
                             <field name="corporate_id" select="0"/>
                             <field name="policy_category" select="0"/>
                             <field name="policy_type" select="0"/>
-                            <field name="branch" select="0"/>
+                            <field name="branch_id" select="0"/>
                             <field name="marketing_officer_id" select="0"/>
                             <field name="policy_holder_id" select="0"/>
                             <field name="policy_group_id" select="0"/>
@@ -519,7 +519,7 @@
                 <field name="corporate_id"/>
                 <field name="policy_category"/>
                 <field name="policy_type"/>
-                <field name="branch"/>
+                <field name="branch_id"/>
                 <field name="marketing_officer_id"/>
                 <field name="policy_holder_id"/>
                 <field name="policy_group_id"/>
@@ -2387,8 +2387,11 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <field name="parent_id" position="replace">
+                <field name="parent_id" />
+            </field>
             <notebook position="inside">
-                <page string="Branch">
+                <page string="Branch" attrs="{'invisible': [('parent_id','=',False)]}">
                     <group>
                         <field name="name" select="1"/>
                         <field name="street" select="1"/>
