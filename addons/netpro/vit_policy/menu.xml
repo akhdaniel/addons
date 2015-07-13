@@ -63,7 +63,7 @@
 		    <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level" parent="menu_netpro_policy_configuration_7"  sequence="310"/>
 		    <menuitem name="Agent / Broker" id="menu_netpro_agent" action="action_netpro_agent" parent="menu_netpro_policy_configuration_7"  sequence="320"/>
 		    <menuitem name="Business Source Type" id="menu_netpro_business_source_type" action="action_netpro_business_source_type" parent="menu_netpro_policy_configuration_7"  sequence="330"/>
-		    <menuitem name="Membership Plan" id="menu_netpro_membership_plan" action="action_netpro_membership_plan" parent="menu_netpro_policy_configuration_7"  sequence="340"/>
+		    <!-- <menuitem name="Membership Plan" id="menu_netpro_membership_plan" action="action_netpro_membership_plan" parent="menu_netpro_policy_configuration_7"  sequence="340"/> -->
 		    <!-- <menuitem name="Benefit Schedule" id="menu_netpro_plan_schedule_detail_benefit_schedule" action="action_netpro_plan_schedule_detail_benefit_schedule" parent="menu_netpro_policy_configuration_7"  sequence="350"/> -->
 		    <!-- <menuitem name="Diagnosis Exclusion" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion" action="action_netpro_plan_schedule_detail_diagnosis_exclusion" parent="menu_netpro_policy_configuration_7"  sequence="360"/> -->
 		    <!-- <menuitem name="Diagnosis Exclusion Exception" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion_exception" action="action_netpro_plan_schedule_detail_diagnosis_exclusion_exception" parent="menu_netpro_policy_configuration_7"  sequence="370"/> -->
