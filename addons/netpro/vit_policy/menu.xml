@@ -28,8 +28,8 @@
 		    <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_policy_configuration_1"  sequence="80"/>
 
 	    <menuitem name="Payment Options" id="menu_netpro_policy_configuration_2" parent="menu_netpro_policy_configuration" sequence="10"/>
-		    <menuitem name="Payment Option Mode" id="menu_netpro_payment_option_mode" action="action_netpro_payment_option_mode" parent="menu_netpro_policy_configuration_2"  sequence="90"/>
-		    <menuitem name="Payment Option Installment" id="menu_netpro_payment_option_installment" action="action_netpro_payment_option_installment" parent="menu_netpro_policy_configuration_2"  sequence="100"/>
+		    <menuitem name="Mode" id="menu_netpro_payment_option_mode" action="action_netpro_payment_option_mode" parent="menu_netpro_policy_configuration_2"  sequence="90"/>
+		    <menuitem name="Installment" id="menu_netpro_payment_option_installment" action="action_netpro_payment_option_installment" parent="menu_netpro_policy_configuration_2"  sequence="100"/>
 
 	    <menuitem name="Endorsement Settings" id="menu_netpro_policy_configuration_3" parent="menu_netpro_policy_configuration" sequence="10"/>
 		    <menuitem name="Refund Type" id="menu_netpro_refund_type" action="action_netpro_refund_type" parent="menu_netpro_policy_configuration_3"  sequence="110"/>
