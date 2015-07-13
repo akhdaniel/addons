@@ -2382,31 +2382,34 @@
     </record>
 
     <record model="ir.ui.view" id="view_netpro_branch_form">
-        <field name="name">netpro.branch.form</field>
-        <field name="model">netpro.branch</field>
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
         <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <form string="netpro.branch">
-                <group>
-                    <field name="name" select="1"/>
-                    <field name="address" select="1"/>
-                    <field name="start_date" select="1"/>
-                </group>
-            </form>
+            <notebook position="inside">
+                <page string="Branch">
+                    <group>
+                        <field name="name" select="1"/>
+                        <field name="street" select="1"/>
+                        <field name="start_date" select="1"/>
+                    </group>
+                </page>
+            </notebook>
         </field>
     </record>
     <record model="ir.ui.view" id="view_netpro_branch_tree">
-        <field name="name">netpro.branch.tree</field>
-        <field name="model">netpro.branch</field>
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="netpro.branch">
+            <tree string="res.partner">
             </tree>
         </field>
     </record>
     <record model="ir.actions.act_window" id="action_netpro_branch">
         <field name="name">Branch</field>
-        <field name="res_model">netpro.branch</field>
+        <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
