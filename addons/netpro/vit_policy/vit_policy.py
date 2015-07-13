@@ -445,7 +445,9 @@ class netpro_class(osv.osv):
         'short_desc': fields.char('Short Desc'),
         'description': fields.text('Description'),
         'policy_id': fields.many2one('netpro.policy', 'Policy'),
-        'membership_plan_ids': fields.one2many('netpro.membership_plan', 'class_id', 'Membership Plans', ondelete='cascade'),
+        'membership_plan_employee_ids': fields.one2many('netpro.membership_plan_employee', 'class_id', 'Membership Plans Employee', ondelete='cascade'),
+        'membership_plan_spouse_ids': fields.one2many('netpro.membership_plan_spouse', 'class_id', 'Membership Plans spouse_limit', ondelete='cascade'),
+        'membership_plan_child_ids': fields.one2many('netpro.membership_plan_child', 'class_id', 'Membership Plans Child', ondelete='cascade'),
     }
 netpro_class()
 
@@ -564,19 +566,49 @@ class netpro_business_source_type(osv.osv):
     }
 netpro_business_source_type()
 
-class netpro_membership_plan(osv.osv):
-    _name = 'netpro.membership_plan'
+class netpro_membership_plan_employee(osv.osv):
+    _name = 'netpro.membership_plan_employee'
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'as_employee': fields.boolean('Employee'),
-        'as_spouse': fields.boolean('Spouse'),
-        'as_child': fields.boolean('Child'),
         'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
     }
-netpro_membership_plan()
+netpro_membership_plan_employee()
+
+class netpro_membership_plan_spouse(osv.osv):
+    _name = 'netpro.membership_plan_spouse'
+    _rec_name = 'class_id'
+    _columns = {
+        'class_id': fields.many2one('netpro.class', 'Class'),
+        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'male_female_bamount': fields.float('Male / Female BAmount'),
+        'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
+    }
+netpro_membership_plan_spouse()
+
+class netpro_membership_plan_child(osv.osv):
+    _name = 'netpro.membership_plan_child'
+    _rec_name = 'class_id'
+    _columns = {
+        'class_id': fields.many2one('netpro.class', 'Class'),
+        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'male_female_bamount': fields.float('Male / Female BAmount'),
+        'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
+    }
+netpro_membership_plan_child()
+
+class netpro_membership_plan_employee(osv.osv):
+    _name = 'netpro.membership_plan_employee'
+    _rec_name = 'class_id'
+    _columns = {
+        'class_id': fields.many2one('netpro.class', 'Class'),
+        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'male_female_bamount': fields.float('Male / Female BAmount'),
+        'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
+    }
+netpro_membership_plan_employee()
 
 class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
     _name = 'netpro.plan_schedule_detail_benefit_schedule'
