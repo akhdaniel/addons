@@ -89,38 +89,38 @@
         <div class="container">
         	<h1>Patient Name: <t t-esc="member.name"/></h1>
             
-            <div class="row">
+            <div class="row">x
 				<div class="col-md-6 col-sm-6">            	
 		            <div class="row">
 		            	<div class="col-md-6 col-sm-6">
-			                <label class="control-label" for="contact_name">Card No</label>
+			                <label class="control-label" for="member_no">Card No</label>
 			            </div>
 		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.email"/>
+				           	<t t-esc="member.member_no"/>
 			            </div>
 				    </div> 		
 		            <div class="row">
 		            	<div class="col-md-6 col-sm-6">
-			                <label class="control-label" for="contact_name">Date of Birth</label>
+			                <label class="control-label" for="date_of_birth">Date of Birth</label>
 			            </div>
 		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.email"/>
+				           	<t t-esc="member.date_of_birth"/>
 			            </div>
 				    </div> 		
 		            <div class="row">
 		            	<div class="col-md-6 col-sm-6">
-			                <label class="control-label" for="contact_name">Policy No.</label>
+			                <label class="control-label" for="policy_no">Policy No.</label>
 			            </div>
 		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.email"/>
+				           	<t t-esc="member.policy_id.policy_no"/>
 			            </div>
 				    </div> 		
 		            <div class="row">
 		            	<div class="col-md-6 col-sm-6">
-			                <label class="control-label" for="contact_name">Payor Member ID</label>
+			                <label class="control-label" for="company_name">Company</label>
 			            </div>
 		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.email"/>
+				           	<t t-esc="member.policy_id.policy_holder_id.name"/>
 			            </div>
 				    </div> 		
 		            <div class="row">
@@ -128,7 +128,7 @@
 			                <label class="control-label" for="contact_name">Policy Date</label>
 			            </div>
 		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.email"/>
+				           	<t t-esc="member.insurance_period_start"/>
 			            </div>
 				    </div> 		
 		            <div class="row">
