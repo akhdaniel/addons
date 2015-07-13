@@ -318,7 +318,57 @@
 			<field name="description"></field>
 		</record>
 		<record model="netpro.default_limit" id="default_limit_ascharge_sub_limit">
-			<field name="name">Ascharge Sub Limi</field>
+			<field name="name">Ascharge Sub Limit</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- CLAIM RULE -->
+		<record model="netpro.claim_rule" id="claim_rule_company">
+			<field name="name">Company</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.claim_rule" id="claim_rule_member">
+			<field name="name">Member</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.claim_rule" id="claim_rule_branch_payor">
+			<field name="name">Branch / Payor</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- CORRESPONDENCE RULE -->
+		<record model="netpro.correspondence_rule" id="correspondence_rule_company">
+			<field name="name">Company</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.correspondence_rule" id="correspondence_rule_source_agent">
+			<field name="name">Source (Agent / Broker)</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.correspondence_rule" id="correspondence_rule_member">
+			<field name="name">Member</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.correspondence_rule" id="correspondence_rule_group">
+			<field name="name">Group</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.correspondence_rule" id="correspondence_rule_sub_group">
+			<field name="name">Sub Group</field>
+			<field name="description"></field>
+		</record>
+
+		<!-- BUSINESS SOURCE TYPE -->
+		<record model="netpro.business_source_type" id="business_source_type_agent">
+			<field name="name">Agent</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.business_source_type" id="business_source_type_broker">
+			<field name="name">Broker</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.business_source_type" id="business_source_type_others">
+			<field name="name">Others</field>
 			<field name="description"></field>
 		</record>
 	</data>
