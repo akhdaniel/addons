@@ -756,7 +756,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Policy Group" id="menu_netpro_policy_group" action="action_netpro_policy_group"/> -->
         
     <record model="ir.ui.view" id="view_netpro_toc_form">
         <field name="name">netpro.toc.form</field>
@@ -792,7 +791,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="TOC" id="menu_netpro_toc" action="action_netpro_toc"/> -->
         
     <record model="ir.ui.view" id="view_netpro_segment_form">
         <field name="name">netpro.segment.form</field>
@@ -826,7 +824,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Segment" id="menu_netpro_segment" action="action_netpro_segment"/> -->
         
     <record model="ir.ui.view" id="view_netpro_lob_form">
         <field name="name">netpro.lob.form</field>
@@ -860,7 +857,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="LOB" id="menu_netpro_lob" action="action_netpro_lob"/> -->
         
     <record model="ir.ui.view" id="view_netpro_occupation_form">
         <field name="name">netpro.occupation.form</field>
@@ -894,7 +890,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Occupation" id="menu_netpro_occupation" action="action_netpro_occupation"/> -->
         
     <record model="ir.ui.view" id="view_netpro_province_form">
         <field name="name">netpro.province.form</field>
@@ -927,7 +922,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province"/> -->
         
     <record model="ir.ui.view" id="view_netpro_payment_option_mode_form">
         <field name="name">netpro.payment_option_mode.form</field>
@@ -961,7 +955,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Payment Option Mode" id="menu_netpro_payment_option_mode" action="action_netpro_payment_option_mode"/> -->
         
     <record model="ir.ui.view" id="view_netpro_payment_option_installment_form">
         <field name="name">netpro.payment_option_installment.form</field>
@@ -997,7 +990,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Payment Option Installment" id="menu_netpro_payment_option_installment" action="action_netpro_payment_option_installment"/> -->
         
     <record model="ir.ui.view" id="view_netpro_refund_type_form">
         <field name="name">netpro.refund_type.form</field>
@@ -1031,7 +1023,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Refund Type" id="menu_netpro_refund_type" action="action_netpro_refund_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_print_card_order_form">
         <field name="name">netpro.print_card_order.form</field>
@@ -1065,7 +1056,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Print Card Order" id="menu_netpro_print_card_order" action="action_netpro_print_card_order"/> -->
         
     <record model="ir.ui.view" id="view_netpro_calculation_method_form">
         <field name="name">netpro.calculation_method.form</field>
@@ -1099,7 +1089,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Calculation Method" id="menu_netpro_calculation_method" action="action_netpro_calculation_method"/> -->
         
     <record model="ir.ui.view" id="view_netpro_prorate_calc_method_form">
         <field name="name">netpro.prorate_calc_method.form</field>
@@ -1133,7 +1122,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Prorate Calc Method" id="menu_netpro_prorate_calc_method" action="action_netpro_prorate_calc_method"/> -->
         
     <record model="ir.ui.view" id="view_netpro_expired_claim_receipt_form">
         <field name="name">netpro.expired_claim_receipt.form</field>
@@ -1167,7 +1155,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Expired Claim Receipt" id="menu_netpro_expired_claim_receipt" action="action_netpro_expired_claim_receipt"/> -->
         
     <record model="ir.ui.view" id="view_netpro_payment_due_interval_form">
         <field name="name">netpro.payment_due_interval.form</field>
@@ -1201,7 +1188,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Payment Due Interval" id="menu_netpro_payment_due_interval" action="action_netpro_payment_due_interval"/> -->
         
     <record model="ir.ui.view" id="view_netpro_max_children_form">
         <field name="name">netpro.max_children.form</field>
@@ -1237,7 +1223,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Max Children" id="menu_netpro_max_children" action="action_netpro_max_children"/> -->
         
     <record model="ir.ui.view" id="view_netpro_max_children_maternity_form">
         <field name="name">netpro.max_children_maternity.form</field>
@@ -1273,7 +1258,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Max Children Maternity" id="menu_netpro_max_children_maternity" action="action_netpro_max_children_maternity"/> -->
         
     <record model="ir.ui.view" id="view_netpro_card_type_form">
         <field name="name">netpro.card_type.form</field>
@@ -1307,7 +1291,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Card Type" id="menu_netpro_card_type" action="action_netpro_card_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_pre_existing_condition_form">
         <field name="name">netpro.pre_existing_condition.form</field>
@@ -1341,7 +1324,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Pre Existing Condition" id="menu_netpro_pre_existing_condition" action="action_netpro_pre_existing_condition"/> -->
         
     <record model="ir.ui.view" id="view_netpro_up_room_class_form">
         <field name="name">netpro.up_room_class.form</field>
@@ -1374,7 +1356,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Up Room Class" id="menu_netpro_up_room_class" action="action_netpro_up_room_class"/> -->
         
     <record model="ir.ui.view" id="view_netpro_policy_status_form">
         <field name="name">netpro.policy_status.form</field>
@@ -1408,7 +1389,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Policy Status" id="menu_netpro_policy_status" action="action_netpro_policy_status"/> -->
         
     <record model="ir.ui.view" id="view_netpro_coverage_form">
         <field name="name">netpro.coverage.form</field>
@@ -1503,7 +1483,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Coverage" id="menu_netpro_coverage" action="action_netpro_coverage"/> -->
         
     <record model="ir.ui.view" id="view_netpro_class_form">
         <field name="name">netpro.class.form</field>
@@ -1543,7 +1522,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Class" id="menu_netpro_class" action="action_netpro_class"/> -->
         
     <record model="ir.ui.view" id="view_netpro_plan_schedule_form">
         <field name="name">netpro.plan_schedule.form</field>
@@ -1644,7 +1622,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Plan Schedule" id="menu_netpro_plan_schedule" action="action_netpro_plan_schedule"/> -->
         
     <record model="ir.ui.view" id="view_netpro_business_source_form">
         <field name="name">netpro.business_source.form</field>
@@ -1690,7 +1667,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Business Source" id="menu_netpro_business_source" action="action_netpro_business_source"/> -->
         
     <record model="ir.ui.view" id="view_netpro_product_type_form">
         <field name="name">netpro.product_type.form</field>
@@ -1724,7 +1700,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Product Type" id="menu_netpro_product_type" action="action_netpro_product_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_product_id_form">
         <field name="name">netpro.product_id.form</field>
@@ -1758,7 +1733,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Product ID" id="menu_netpro_product_id" action="action_netpro_product_id"/> -->
         
     <record model="ir.ui.view" id="view_netpro_default_limit_form">
         <field name="name">netpro.default_limit.form</field>
@@ -1792,7 +1766,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Default Limit" id="menu_netpro_default_limit" action="action_netpro_default_limit"/> -->
         
     <record model="ir.ui.view" id="view_netpro_product_plan_base_form">
         <field name="name">netpro.product_plan_base.form</field>
@@ -1825,7 +1798,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Product Plan" id="menu_netpro_product_plan_base" action="action_netpro_product_plan_base"/> -->
         
     <record model="ir.ui.view" id="view_netpro_provider_level_form">
         <field name="name">netpro.provider_level.form</field>
@@ -1859,7 +1831,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level"/> -->
         
     <record model="ir.ui.view" id="view_netpro_agent_form">
         <field name="name">netpro.agent.form</field>
@@ -1893,7 +1864,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Agent / Broker" id="menu_netpro_agent" action="action_netpro_agent"/> -->
         
     <record model="ir.ui.view" id="view_netpro_business_source_type_form">
         <field name="name">netpro.business_source_type.form</field>
@@ -1927,7 +1897,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Business Source Type" id="menu_netpro_business_source_type" action="action_netpro_business_source_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_membership_plan_form">
         <field name="name">netpro.membership_plan.form</field>
@@ -1970,7 +1939,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Membership Plan" id="menu_netpro_membership_plan" action="action_netpro_membership_plan"/> -->
         
     <record model="ir.ui.view" id="view_netpro_plan_schedule_detail_benefit_schedule_form">
         <field name="name">netpro.plan_schedule_detail_benefit_schedule.form</field>
@@ -2101,7 +2069,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Benefit Schedule" id="menu_netpro_plan_schedule_detail_benefit_schedule" action="action_netpro_plan_schedule_detail_benefit_schedule"/> -->
         
     <record model="ir.ui.view" id="view_netpro_plan_schedule_detail_diagnosis_exclusion_form">
         <field name="name">netpro.plan_schedule_detail_diagnosis_exclusion.form</field>
@@ -2137,7 +2104,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Diagnosis Exclusion" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion" action="action_netpro_plan_schedule_detail_diagnosis_exclusion"/> -->
         
     <record model="ir.ui.view" id="view_netpro_plan_schedule_detail_diagnosis_exclusion_exception_form">
         <field name="name">netpro.plan_schedule_detail_diagnosis_exclusion_exception.form</field>
@@ -2173,7 +2139,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Diagnosis Exclusion Exception" id="menu_netpro_plan_schedule_detail_diagnosis_exclusion_exception" action="action_netpro_plan_schedule_detail_diagnosis_exclusion_exception"/> -->
         
     <record model="ir.ui.view" id="view_netpro_benefit_form">
         <field name="name">netpro.benefit.form</field>
@@ -2208,7 +2173,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Benefit" id="menu_netpro_benefit" action="action_netpro_benefit"/> -->
         
     <record model="ir.ui.view" id="view_netpro_master_diagnosis_exclusion_form">
         <field name="name">netpro.master_diagnosis_exclusion.form</field>
@@ -2246,7 +2210,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Master Diagnosis Exclusion" id="menu_netpro_master_diagnosis_exclusion" action="action_netpro_master_diagnosis_exclusion"/> -->
         
     <record model="ir.ui.view" id="view_netpro_correspondence_rule_form">
         <field name="name">netpro.correspondence_rule.form</field>
@@ -2280,7 +2243,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Correspondence Rule" id="menu_netpro_correspondence_rule" action="action_netpro_correspondence_rule"/> -->
         
     <record model="ir.ui.view" id="view_netpro_claim_rule_form">
         <field name="name">netpro.claim_rule.form</field>
@@ -2314,7 +2276,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_claim_rule"/> -->
 
     <record model="ir.ui.view" id="view_netpro_kpp_form">
         <field name="name">netpro.kpp.form</field>
@@ -2346,7 +2307,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_kpp"/> -->
 
     <record model="ir.ui.view" id="view_netpro_branch_form">
         <field name="name">netpro.branch.form</field>
@@ -2376,7 +2336,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Rule" id="menu_netpro_claim_rule" action="action_netpro_kpp"/> -->
         
 </data>
 </openerp>
