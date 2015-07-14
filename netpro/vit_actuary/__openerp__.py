@@ -44,7 +44,7 @@
                 'views/membership_factor.xml', 
                 'views/modal_factor.xml', 
                 'menu.xml',
-                'security/ir.model.access.csv',
+                # 'security/ir.model.access.csv',
                 # 'data/sequence.xml',
                 # 'data/master_data_actuary.xml'
         ],
