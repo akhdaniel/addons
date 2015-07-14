@@ -1,7 +1,6 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "access_netpro_claim","netpro.claim","model_netpro_claim","base.group_user",1,0,0,0
 "access_netpro_claim_detail","netpro.claim_detail","model_netpro_claim_detail","base.group_user",1,0,0,0
-"access_netpro_diagnosis","netpro.diagnosis","model_netpro_diagnosis","base.group_user",1,0,0,0
 "access_netpro_claim_category","netpro.claim_category","model_netpro_claim_category","base.group_user",1,0,0,0
 "access_netpro_claim_type","netpro.claim_type","model_netpro_claim_type","base.group_user",1,0,0,0
 "access_netpro_claim_room","netpro.claim_room","model_netpro_claim_room","base.group_user",1,0,0,0
@@ -9,6 +8,5 @@
 "access_netpro_excess_payor","netpro.excess_payor","model_netpro_excess_payor","base.group_user",1,0,0,0
 "access_netpro_treatment","netpro.treatment","model_netpro_treatment","base.group_user",1,0,0,0
 "access_netpro_treatment_category","netpro.treatment_category","model_netpro_treatment_category","base.group_user",1,0,0,0
-"access_netpro_benefit","netpro.benefit","model_netpro_benefit","base.group_user",1,0,0,0
 "access_netpro_claim_detail_status","netpro.claim_detail_status","model_netpro_claim_detail_status","base.group_user",1,0,0,0
 "access_netpro_claim_diagnosis","netpro.claim_diagnosis","model_netpro_claim_diagnosis","base.group_user",1,0,0,0

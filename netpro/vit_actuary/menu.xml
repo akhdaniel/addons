@@ -1,16 +1,25 @@
 <openerp>
 <data>
 
+	<!--Top Menu-->
+    <menuitem name="Netpro" id="netpro_menu" sequence="10" />
+
+    <!--Transactions-->
+    <menuitem name="Transactions" id="menu_netpro_transaction" parent="netpro_menu"/>
+
+    <!-- Configurations -->
+    <menuitem name="Configurations" id="menu_netpro_configuration" parent="netpro_menu" sequence="20"/>
+
     <!-- Actuary Transaction -->
 
-	<menuitem name="Actuary" id="menu_netpro_actuary" parent="vit_policy.menu_netpro_transaction" sequence="5"/>
+	<menuitem name="Actuary" id="menu_netpro_actuary" parent="menu_netpro_transaction" sequence="5"/>
 		<menuitem name="Product" id="menu_netpro_actuary_product" parent="menu_netpro_actuary" sequence="10"/>
 			<menuitem name="Product Setting" id="menu_netpro_actuary_product_setting" parent="menu_netpro_actuary_product" sequence="10"/>
 			<menuitem name="Product Plan" id="menu_netpro_actuary_product_plan" parent="menu_netpro_actuary_product" sequence="20"/>
 
     <!-- Actuary Configurations -->
 
-    <menuitem name="Actuary" id="menu_netpro_actuary_configuration" parent="vit_policy.menu_netpro_configuration" sequence="5"/>
+    <menuitem name="Actuary" id="menu_netpro_actuary_configuration" parent="menu_netpro_configuration" sequence="5"/>
 		<menuitem name="Age Band" action="action_netpro_age_band" id="menu_netpro_actuary_age_band" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Benefit Setting" action="action_netpro_benefit" id="menu_netpro_actuary_benefit_setting" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Benefit Unit" action="action_netpro_benefit_unit" id="menu_netpro_actuary_benefit_unit" parent="menu_netpro_actuary_configuration" sequence="10"/>

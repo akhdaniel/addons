@@ -11,7 +11,6 @@
 "access_netpro_product_plan_premium_type","netpro.product_plan_premium_type","model_netpro_product_plan_premium_type","base.group_user",1,0,0,0
 "access_netpro_premium_type","netpro.premium_type","model_netpro_premium_type","base.group_user",1,0,0,0
 "access_netpro_premium_table","netpro.premium_table","model_netpro_premium_table","base.group_user",1,0,0,0
-"access_netpro_membership","netpro.membership","model_netpro_membership","base.group_user",1,0,0,0
 "access_netpro_gender","netpro.gender","model_netpro_gender","base.group_user",1,0,0,0
 "access_netpro_marital_status","netpro.marital_status","model_netpro_marital_status","base.group_user",1,0,0,0
 "access_netpro_member_plan","netpro.member_plan","model_netpro_member_plan","base.group_user",1,0,0,0

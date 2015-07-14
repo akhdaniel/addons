@@ -92,6 +92,14 @@ class netpro_member(osv.osv):
     }
 netpro_member()
 
+# class netpro_policy(osv.osv):
+#     _name = 'netpro.policy'
+#     _inherit = 'netpro.policy'
+#     _columns = {
+#         'member_ids' : fields.one2many('netpro.member', 'policy_id', 'Members', ondelete='cascade')
+#     }
+# netpro_policy()
+
 class netpro_product(osv.osv):
     _name = 'netpro.product'
     _columns = {
@@ -347,7 +355,7 @@ class netpro_member_plan(osv.osv):
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
-        #'product_plan': fields.char(string='Product Plan', store=True, related='plan_schedule_id'),
+        'product_plan': fields.related('plan_schedule_id', 'product_plan_base_id', type='many2one', string='Product Plan', store=True, readonly=True),
         'bamount': fields.float('BAmount'),
         'plan_limit': fields.float('Plan Limit'),
         'remaining_limit': fields.float('Remaining Limit'),
