@@ -1,0 +1,39 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_group_size_form">
+        <field name="name">netpro.group_size.form</field>
+        <field name="model">netpro.group_size</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.group_size">
+                <group>
+                    <field name='name'       />
+                    <field name='description'  />
+                    <field name='lower'      />
+                    <field name='upper'      />                    
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_group_size_tree">
+        <field name="name">netpro.group_size.tree</field>
+        <field name="model">netpro.group_size</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.group_size">
+                    <field name='name'       />
+                    <field name='description'  />
+                    <field name='lower'      />
+                    <field name='upper'      />                    
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_group_size">
+        <field name="name">Group Size</field>
+        <field name="res_model">netpro.group_size</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

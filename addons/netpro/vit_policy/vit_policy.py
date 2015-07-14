@@ -258,13 +258,14 @@ class netpro_segment(osv.osv):
     }
 netpro_segment()
 
-class netpro_lob(osv.osv):
-    _name = 'netpro.lob'
-    _columns = {
-        'name': fields.char('LOB'),
-        'description': fields.text('Description'),
-    }
-netpro_lob()
+# pindah ke vit_actuary
+# class netpro_lob(osv.osv):
+#     _name = 'netpro.lob'
+#     _columns = {
+#         'name': fields.char('LOB'),
+#         'description': fields.text('Description'),
+#     }
+# netpro_lob()
 
 class netpro_occupation(osv.osv):
     _name = 'netpro.occupation'
@@ -509,13 +510,14 @@ class netpro_business_source(osv.osv):
     }
 netpro_business_source()
 
-class netpro_product_type(osv.osv):
-    _name = 'netpro.product_type'
-    _columns = {
-        'name': fields.char('Product Type'),
-        'description': fields.text('Description'),
-    }
-netpro_product_type()
+#>>> pindah ke actuary
+# class netpro_product_type(osv.osv):
+#     _name = 'netpro.product_type'
+#     _columns = {
+#         'name': fields.char('Product Type'),
+#         'description': fields.text('Description'),
+#     }
+# netpro_product_type()
 
 class netpro_product_id(osv.osv):
     _name = 'netpro.product_id'
@@ -688,14 +690,15 @@ class netpro_plan_schedule_detail_diagnosis_exclusion_exception(osv.osv):
     }
 netpro_plan_schedule_detail_diagnosis_exclusion_exception()
 
-class netpro_benefit(osv.osv):
-    _name = 'netpro.benefit'
-    _columns = {
-        'benefit_id': fields.char('Benefit ID'),
-        'name': fields.char('Name'),
-        'as_parent': fields.boolean('As Parent'),
-    }
-netpro_benefit()
+# >>> pindah ke vit_actuary
+# class netpro_benefit(osv.osv):
+#     _name = 'netpro.benefit'
+#     _columns = {
+#         'benefit_id': fields.char('Benefit ID'),
+#         'name': fields.char('Name'),
+#         'as_parent': fields.boolean('As Parent'),
+#     }
+# netpro_benefit()
 
 class netpro_master_diagnosis_exclusion(osv.osv):
     _name = 'netpro.master_diagnosis_exclusion'

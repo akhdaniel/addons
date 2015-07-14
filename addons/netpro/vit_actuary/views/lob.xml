@@ -1,0 +1,37 @@
+<openerp>
+<data>
+        
+    <record model="ir.ui.view" id="view_netpro_lob_form">
+        <field name="name">netpro.lob.form</field>
+        <field name="model">netpro.lob</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.lob">
+                <group>
+                    <field name="name" />
+                    <field name="description" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_lob_tree">
+        <field name="name">netpro.lob.tree</field>
+        <field name="model">netpro.lob</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.lob">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_lob">
+        <field name="name">LOB</field>
+        <field name="res_model">netpro.lob</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</data>
+</openerp>

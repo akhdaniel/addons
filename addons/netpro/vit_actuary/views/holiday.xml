@@ -1,0 +1,34 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_holiday_form">
+        <field name="name">netpro.holiday.form</field>
+        <field name="model">netpro.holiday</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.holiday">
+                <group>
+                    <field name="name"/>
+                    <field name="description" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_holiday_tree">
+        <field name="name">netpro.holiday.tree</field>
+        <field name="model">netpro.holiday</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.holiday">
+                    <field name="name"/>
+                    <field name="description" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_holiday">
+        <field name="name">Holiday</field>
+        <field name="res_model">netpro.holiday</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

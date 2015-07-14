@@ -1,0 +1,47 @@
+<openerp>
+<data>       
+    <record model="ir.ui.view" id="view_netpro_membership_form">
+        <field name="name">netpro.membership.form</field>
+        <field name="model">netpro.membership</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.membership">
+                <group>
+                    <field name="membership_id" select="1"/>
+                    <field name="name" select="2"/>
+                    <field name="name_i" select="0"/>
+                    <field name="category" select="0"/>
+                    <field name="age_between_start" select="0"/>
+                    <field name="age_between_end" select="0"/>
+                    <field name="policy_owner" select="0"/>
+                    <field name="allowed" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_membership_tree">
+        <field name="name">netpro.membership.tree</field>
+        <field name="model">netpro.membership</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.membership">
+                <field name="membership_id"/>
+                <field name="name"/>
+                <field name="name_i"/>
+                <field name="category"/>
+                <field name="age_between_start"/>
+                <field name="age_between_end"/>
+                <field name="policy_owner"/>
+                <field name="allowed"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_membership">
+        <field name="name">Membership</field>
+        <field name="res_model">netpro.membership</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

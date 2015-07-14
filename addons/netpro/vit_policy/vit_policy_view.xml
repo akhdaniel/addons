@@ -824,7 +824,8 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-        
+
+<!--   pindah ke actuary      
     <record model="ir.ui.view" id="view_netpro_lob_form">
         <field name="name">netpro.lob.form</field>
         <field name="model">netpro.lob</field>
@@ -857,7 +858,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-        
+         -->
     <record model="ir.ui.view" id="view_netpro_occupation_form">
         <field name="name">netpro.occupation.form</field>
         <field name="model">netpro.occupation</field>
@@ -1678,7 +1679,7 @@
         <field name="view_mode">tree,form</field>
     </record>
         
-    <record model="ir.ui.view" id="view_netpro_product_type_form">
+<!-- pindah ke actuary    <record model="ir.ui.view" id="view_netpro_product_type_form">
         <field name="name">netpro.product_type.form</field>
         <field name="model">netpro.product_type</field>
         <field name="type">form</field>
@@ -1709,7 +1710,7 @@
         <field name="res_model">netpro.product_type</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
         
     <record model="ir.ui.view" id="view_netpro_product_id_form">
         <field name="name">netpro.product_id.form</field>
@@ -2213,6 +2214,7 @@
         <field name="view_mode">tree,form</field>
     </record>
         
+<!-- pindah ke vit_actuary
     <record model="ir.ui.view" id="view_netpro_benefit_form">
         <field name="name">netpro.benefit.form</field>
         <field name="model">netpro.benefit</field>
@@ -2226,7 +2228,8 @@
                 </group>
             </form>
         </field>
-    </record>
+    </record> 
+
     <record model="ir.ui.view" id="view_netpro_benefit_tree">
         <field name="name">netpro.benefit.tree</field>
         <field name="model">netpro.benefit</field>
@@ -2240,13 +2243,17 @@
             </tree>
         </field>
     </record>
+    
     <record model="ir.actions.act_window" id="action_netpro_benefit">
         <field name="name">Benefit</field>
         <field name="res_model">netpro.benefit</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-        
+    -->
+
+
+
     <record model="ir.ui.view" id="view_netpro_master_diagnosis_exclusion_form">
         <field name="name">netpro.master_diagnosis_exclusion.form</field>
         <field name="model">netpro.master_diagnosis_exclusion</field>

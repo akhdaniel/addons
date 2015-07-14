@@ -20,7 +20,7 @@ Homepage untuk aplikasi insurance
 
     # any module necessary for this one to work correctly
     'depends': ['website','website_blog','website_instantclick',
-        'vit_policy', 'vit_member', 'vit_claim'
+         'vit_actuary', 'vit_policy', 'vit_member', 'vit_claim'
     ],
 
     # always loaded

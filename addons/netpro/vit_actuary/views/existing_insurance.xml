@@ -1,0 +1,36 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_existing_insurance_form">
+        <field name="name">netpro.existing_insurance.form</field>
+        <field name="model">netpro.existing_insurance</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.existing_insurance">
+                <group>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="is_allowed"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_existing_insurance_tree">
+        <field name="name">netpro.existing_insurance.tree</field>
+        <field name="model">netpro.existing_insurance</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.existing_insurance">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="is_allowed"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_existing_insurance">
+        <field name="name">Existing Insurance</field>
+        <field name="res_model">netpro.existing_insurance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

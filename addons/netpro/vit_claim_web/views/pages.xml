@@ -90,7 +90,8 @@
         	<h1>Patient Name: <t t-esc="member.name"/></h1>
             
             <div class="row">
-				<div class="col-md-6 col-sm-6">            	
+            	<!-- kolom kiri -->
+				<div class="col-md-6 col-sm-6">
 		            <div class="row">
 		            	<div class="col-md-6 col-sm-6">
 			                <label class="control-label" for="member_no">Card No</label>
@@ -128,34 +129,31 @@
 			                <label class="control-label" for="contact_name">Policy Date</label>
 			            </div>
 		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.insurance_period_start"/>
+				           	<t t-esc="member.insurance_period_start"/> to 
+				           	<t t-esc="member.insurance_period_end"/>
 			            </div>
 				    </div> 		
-		            <div class="row">
-		            	<div class="col-md-6 col-sm-6">
-			                <label class="control-label" for="contact_name">Plan</label>
-			            </div>
-		                <div class="col-md-6 col-sm-6">
-				           	<t t-esc="member.email"/>
-			            </div>
-				    </div> 	
 				</div>	
-				<div class="col-md-6 col-sm-6">            	
-					Letter of Authorization	
-			    </div> 		
-		    </div> 		
-	
+
+				<!-- kolom kanan -->
+				<div class="col-md-6 col-sm-6">
+					<h2>Letter of Authorization</h2>
+		           	<t t-esc="member.email"/>
+		            <div class="row">
+		            	<div id="loa" />
+				    </div> 					
+			    </div> 
+
+		    </div> 
 
         	<div class="row">
 	            <div class="col-sm-8 col-md-7">
-                    <button class="btn btn-primary btn-sm">IP</button>
-                    <button class="btn btn-primary btn-sm">OP</button>
-                    <button class="btn btn-primary btn-sm">DT</button>
-                    <button class="btn btn-primary btn-sm">MAT</button>
-                    <button class="btn btn-primary btn-sm">CO</button>
-                    <button class="btn btn-primary btn-sm">EA</button>
+			        <t t-foreach="member.policy_id" t-as="child2">
+	                    <button class="btn btn-primary btn-sm" id="ip">IP</button>
+	                </t>
                 </div>
-            </div>    	        
+            </div>
+
         </div>
         <br/>
     </t>	

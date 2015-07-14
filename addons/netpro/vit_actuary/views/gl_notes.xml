@@ -1,0 +1,36 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_gl_notes_form">
+        <field name="name">netpro.gl_notes.form</field>
+        <field name="model">netpro.gl_notes</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.gl_notes">
+                <group>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="is_allowed"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_gl_notes_tree">
+        <field name="name">netpro.gl_notes.tree</field>
+        <field name="model">netpro.gl_notes</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.gl_notes">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="is_allowed"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_gl_notes">
+        <field name="name">GL Notes</field>
+        <field name="res_model">netpro.gl_notes</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

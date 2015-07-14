@@ -167,16 +167,17 @@ class netpro_claim_detail(osv.osv):
     }
 netpro_claim_detail()
 
-class netpro_diagnosis(osv.osv):
-    _name = 'netpro.diagnosis'
-    _columns = {
-        'diagnosis': fields.char('Diagnosis'),
-        'name': fields.char('Name'),
-        'exclusion_F': fields.boolean('ExclusionF'),
-        'pre_existing_f': fields.boolean('PreExistingF'),
-        'standard_fee': fields.float('StandardFee'),
-    }
-netpro_diagnosis()
+# pindah ke vit_actuary
+# class netpro_diagnosis(osv.osv):
+#     _name = 'netpro.diagnosis'
+#     _columns = {
+#         'diagnosis': fields.char('Diagnosis'),
+#         'name': fields.char('Name'),
+#         'exclusion_F': fields.boolean('ExclusionF'),
+#         'pre_existing_f': fields.boolean('PreExistingF'),
+#         'standard_fee': fields.float('StandardFee'),
+#     }
+# netpro_diagnosis()
 
 class netpro_claim_category(osv.osv):
     _name = 'netpro.claim_category'
@@ -237,19 +238,19 @@ class netpro_treatment_category(osv.osv):
     }
 netpro_treatment_category()
 
-class netpro_benefit(osv.osv):
-    _name = 'netpro.benefit'
-    _columns = {
-        'benefit_id': fields.char('ID'),
-        'name': fields.char('Name'),
-        'reim': fields.float('Reim'),
-        'provider_limit': fields.float('Provider Limit'),
-        'non_provider_limit': fields.float('Non Provider Limit'),
-        'unit': fields.char('Unit'),
-        'usage': fields.float('Usage'),
-        'remaining': fields.float('Remaining'),
-    }
-netpro_benefit()
+# class netpro_benefit(osv.osv):
+#     _name = 'netpro.benefit'
+#     _columns = {
+#         'benefit_id': fields.char('ID'),
+#         'name': fields.char('Name'),
+#         'reim': fields.float('Reim'),
+#         'provider_limit': fields.float('Provider Limit'),
+#         'non_provider_limit': fields.float('Non Provider Limit'),
+#         'unit': fields.char('Unit'),
+#         'usage': fields.float('Usage'),
+#         'remaining': fields.float('Remaining'),
+#     }
+# netpro_benefit()
 
 class netpro_claim_detail_status(osv.osv):
     _name = 'netpro.claim_detail_status'

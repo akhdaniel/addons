@@ -386,6 +386,7 @@
     </record>
     <!-- <menuitem name="Claim Detail" id="menu_netpro_claim_detail" action="action_netpro_claim_detail"/> -->
         
+<!-- pindah ke vit_actuary
     <record model="ir.ui.view" id="view_netpro_diagnosis_form">
         <field name="name">netpro.diagnosis.form</field>
         <field name="model">netpro.diagnosis</field>
@@ -422,7 +423,7 @@
         <field name="res_model">netpro.diagnosis</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Diagnosis" id="menu_netpro_diagnosis" action="action_netpro_diagnosis"/> -->
         
     <record model="ir.ui.view" id="view_netpro_claim_category_form">
@@ -668,7 +669,9 @@
         <field name="view_mode">tree,form</field>
     </record>
     <!-- <menuitem name="Treatment Category" id="menu_netpro_treatment_category" action="action_netpro_treatment_category"/> -->
-        
+<!-- 
+    ke vit_actuary
+            
     <record model="ir.ui.view" id="view_netpro_benefit_form">
         <field name="name">netpro.benefit.form</field>
         <field name="model">netpro.benefit</field>
@@ -711,7 +714,7 @@
         <field name="res_model">netpro.benefit</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Benefit" id="menu_netpro_benefit" action="action_netpro_benefit"/> -->
         
     <record model="ir.ui.view" id="view_netpro_claim_detail_status_form">
