@@ -16,14 +16,14 @@
                             <field name="insurance_period_end" select="0"/>
                             <field name="member_no" select="0"/>
                             <field name="name" select="0"/>
-                            <field name="employee_id" select="0"/>
+                            <field name="employee" select="0"/>
                             <field name="parent_id" select="0"/>
                             <field name="census_no" select="0"/>
                             <field name="sex" select="0"/>
                             <field name="marital_status" select="0"/>
                             <field name="email" select="0"/>
                             <field name="mobile_phone" select="0"/>
-                            <field name="date_of_birth" select="0"/>
+                            <field name="birthdate" select="0"/>
                             <field name="age" select="0"/>
                             <field name="birth_place" select="0"/>
                             <field name="salary" select="0"/>
@@ -70,7 +70,7 @@
                                 <field name="bank_branch" select="0"/>
                             </group>
                             <group string="Company Info">
-                                <field name="company_name" select="0"/>
+                                <field name="company_id" select="0"/>
                                 <separator string="Address" colspan="4"/>
                                 <field name="company_address" colspan="4" nolabel="1" select="0"/>
                                 <field name="title" select="0"/>
@@ -84,10 +84,10 @@
                             <group string="Personal Info">
                                 <field name="id_no" select="0"/>
                                 <separator string="Address" colspan="4"/>
-                                <field name="personal_address" colspan="4" nolabel="1" select="0"/>
+                                <field name="street" colspan="4" nolabel="1" select="0"/>
                                 <field name="city" select="0"/>
                                 <field name="province" select="0"/>
-                                <field name="zip_code" select="0"/>
+                                <field name="zip" select="0"/>
                                 <field name="phone" select="0"/>
                                 <field name="mobile" select="0"/>
                                 <field name="fax" select="0"/>
@@ -121,13 +121,13 @@
                 <field name="insurance_period_end"/>
                 <field name="member_no"/>
                 <field name="name"/>
-                <field name="employee_id"/>
+                <field name="employee"/>
                 <field name="census_no"/>
                 <field name="sex"/>
                 <field name="marital_status"/>
                 <field name="email"/>
-                <field name="mobile_phone"/>
-                <field name="date_of_birth"/>
+                <field name="mobile"/>
+                <field name="birthdate"/>
                 <field name="age"/>
                 <field name="birth_place"/>
                 <field name="salary"/>
@@ -167,10 +167,10 @@
                 <field name="branch"/>
                 <field name="occupation"/>
                 <field name="id_no"/>
-                <field name="personal_address"/>
+                <field name="street"/>
                 <field name="city"/>
                 <field name="province"/>
-                <field name="zip_code"/>
+                <field name="zip"/>
                 <field name="phone"/>
                 <field name="mobile"/>
                 <field name="fax"/>
@@ -339,7 +339,7 @@
         <field name="arch" type="xml">
             <form string="netpro.product_term_condition">
                 <group>
-                    <field name="product_id" select="1"/>
+                    <!-- <field name="product_id" select="1"/> -->
                     <field name="term_condition_id" select="2"/>
                 </group>
             </form>
@@ -372,7 +372,7 @@
         <field name="arch" type="xml">
             <form string="netpro.product_benefit">
                 <group>
-                    <field name="product_id" select="1"/>
+                    <!-- <field name="product_id" select="1"/> -->
                     <field name="benefit_id" select="2"/>
                 </group>
             </form>
@@ -517,7 +517,7 @@
         <field name="arch" type="xml">
             <form string="netpro.product_plan_benefit">
                 <group>
-                    <field name="product_plan_id" select="1"/>
+                    <!-- <field name="product_plan_id" select="1"/> -->
                     <field name="benefit_id" select="2"/>
                     <field name="benefit_limit_start" select="0"/>
                     <field name="benefit_limit_end" select="0"/>
@@ -670,7 +670,7 @@
         <field name="arch" type="xml">
             <form string="netpro.product_plan_membership">
                 <group>
-                    <field name="product_plan_id" select="1"/>
+                    <!-- <field name="product_plan_id" select="1"/> -->
                     <field name="membership_id" select="2"/>
                     <field name="gender_id" select="0"/>
                     <field name="marital_status_id" select="0"/>
@@ -707,7 +707,7 @@
         <field name="arch" type="xml">
             <form string="netpro.product_plan_premium_type">
                 <group>
-                    <field name="product_plan_id" select="1"/>
+                    <!-- <field name="product_plan_id" select="1"/> -->
                     <field name="premium_type_id" select="2"/>
                     <field name="premium_table_id" select="0"/>
                     <field name="apply_to_policy_holder" select="0"/>
@@ -929,8 +929,8 @@
         <field name="arch" type="xml">
             <form string="netpro.member_plan">
                 <group>
-                    <field name="member_id" select="1"/>
-                    <field name="pplan" select="2"/>
+                    <!-- <field name="member_id" select="1"/> -->
+                    <field name="plan_schedule_id" select="2"/>
                     <field name="bamount" select="0"/>
                     <field name="plan_limit" select="0"/>
                     <field name="remaining_limit" select="0"/>
@@ -953,7 +953,7 @@
         <field name="arch" type="xml">
             <tree string="netpro.member_plan">
                 <field name="member_id"/>
-                <field name="pplan"/>
+                <field name="plan_schedule_id"/>
                 <field name="bamount"/>
                 <field name="plan_limit"/>
                 <field name="remaining_limit"/>
@@ -982,7 +982,7 @@
         <field name="arch" type="xml">
             <form string="netpro.member_plan_detail">
                 <group>
-                    <field name="member_plan_id" select="1"/>
+                    <!-- <field name="member_plan_id" select="1"/> -->
                     <field name="detail_id" select="2"/>
                     <field name="name" select="0"/>
                     <field name="reim" select="0"/>
