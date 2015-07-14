@@ -1,21 +1,11 @@
 <openerp>
 <data>
 
-    <!--Top Menu-->
-    <menuitem name="Netpro" id="netpro_menu" sequence="10" />
-
-    <!--Transactions-->
-    <menuitem name="Transactions" id="menu_netpro_transaction" parent="netpro_menu"/>
-	    <menuitem name="Policy" id="menu_netpro_policy" parent="menu_netpro_transaction" action="action_netpro_policy" sequence="10"/>
-
-
-
-
-    <!-- Configurations -->
-    <menuitem name="Configurations" id="menu_netpro_configuration" parent="netpro_menu" sequence="20"/>
+    
+	<menuitem name="Policy" id="menu_netpro_policy" parent="vit_actuary.menu_netpro_transaction" action="action_netpro_policy" sequence="10"/>
 
     <!-- Policy Configurations -->
-    <menuitem name="Policy" id="menu_netpro_policy_configuration" parent="menu_netpro_configuration" sequence="10"/>
+    <menuitem name="Policy" id="menu_netpro_policy_configuration" parent="vit_actuary.menu_netpro_configuration" sequence="10"/>
 
 	    <menuitem name="General Policy Information" id="menu_netpro_policy_configuration_1" parent="menu_netpro_policy_configuration" sequence="10"/>
 		    <menuitem name="Policy Category" id="menu_netpro_policy_category" action="action_netpro_policy_category" parent="menu_netpro_policy_configuration_1" sequence="10"/>
@@ -77,10 +67,10 @@
 		    <menuitem name="KPP" id="menu_netpro_kpp" action="action_netpro_kpp" parent="menu_netpro_policy_configuration_7"  sequence="420"/>
 
     <!-- Member Configurations -->
-    <menuitem name="Member" id="menu_netpro_member_configuration" parent="menu_netpro_configuration" sequence="20"/>
+    <menuitem name="Member" id="menu_netpro_member_configuration" parent="vit_actuary.menu_netpro_configuration" sequence="20"/>
 
     <!-- Claims Configurations -->
-    <menuitem name="Claim" id="menu_netpro_claim_configuration" parent="menu_netpro_configuration" sequence="30"/>
+    <menuitem name="Claim" id="menu_netpro_claim_configuration" parent="vit_actuary.menu_netpro_configuration" sequence="30"/>
 
 
 </data>
