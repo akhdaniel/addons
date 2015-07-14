@@ -1,7 +1,6 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
 "access_netpro_member","netpro.member","model_netpro_member","base.group_user",1,0,0,0
 "access_netpro_product","netpro.product","model_netpro_product","base.group_user",1,0,0,0
-"access_netpro_age_band","netpro.age_band","model_netpro_age_band","base.group_user",1,0,0,0
 "access_netpro_term_condition","netpro.term_condition","model_netpro_term_condition","base.group_user",1,0,0,0
 "access_netpro_product_term_condition","netpro.product_term_condition","model_netpro_product_term_condition","base.group_user",1,0,0,0
 "access_netpro_product_benefit","netpro.product_benefit","model_netpro_product_benefit","base.group_user",1,0,0,0
