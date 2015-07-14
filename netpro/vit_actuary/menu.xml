@@ -1,0 +1,41 @@
+<openerp>
+<data>
+
+    <!-- Actuary Transaction -->
+
+	<menuitem name="Actuary" id="menu_netpro_actuary" parent="vit_policy.menu_netpro_transaction" sequence="5"/>
+		<menuitem name="Product" id="menu_netpro_actuary_product" parent="menu_netpro_actuary" sequence="10"/>
+			<menuitem name="Product Setting" id="menu_netpro_actuary_product_setting" parent="menu_netpro_actuary_product" sequence="10"/>
+			<menuitem name="Product Plan" id="menu_netpro_actuary_product_plan" parent="menu_netpro_actuary_product" sequence="20"/>
+
+    <!-- Actuary Configurations -->
+
+    <menuitem name="Actuary" id="menu_netpro_actuary_configuration" parent="vit_policy.menu_netpro_configuration" sequence="5"/>
+		<menuitem name="Age Band" action="action_netpro_age_band" id="menu_netpro_actuary_age_band" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Benefit Setting" action="action_netpro_benefit" id="menu_netpro_actuary_benefit_setting" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Benefit Unit" action="action_netpro_benefit_unit" id="menu_netpro_actuary_benefit_unit" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Claim Document" id="menu_netpro_actuary_claim_document" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Diagnosis" action="action_netpro_diagnosis" id="menu_netpro_actuary_diagnosis" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="EMail Rule" id="menu_netpro_actuary_email_rule" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Existing Insurance" action="action_netpro_existing_insurance" id="menu_netpro_actuary_existing_insurance" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="GL Notes" action="action_netpro_gl_notes" id="menu_netpro_actuary_gl_notes" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Group Size" action="action_netpro_group_size" id="menu_netpro_actuary_group_size" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Holiday" action="action_netpro_holiday" id="menu_netpro_actuary_holiday" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="LOB" action="action_netpro_lob" id="menu_netpro_actuary_lob" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Membership" action="action_netpro_membership" id="menu_netpro_actuary_membership" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Membership Factor" action="action_netpro_membership_factor" id="menu_netpro_actuary_membership_factor" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Modal Factor" action="action_netpro_modal_factor" id="menu_netpro_actuary_modal_factor" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Number of Persons" id="menu_netpro_actuary_number_of_persons" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Occupation" id="menu_netpro_actuary_occupation" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Plan Rate Table" id="menu_netpro_actuary_plan_rate_table" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Policy Notes" id="menu_netpro_actuary_policy_notes" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Product Type" action="action_netpro_product_type" id="menu_netpro_actuary_product_type" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Product Type TC" id="menu_netpro_actuary_product_type_tc" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Reason" id="menu_netpro_actuary_reason" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="SMS Rule" id="menu_netpro_actuary_sms_rule" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="TC" id="menu_netpro_actuary_tc" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Treatment" id="menu_netpro_actuary_treatment" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="User Approval" id="menu_netpro_actuary_user_approval" parent="menu_netpro_actuary_configuration" sequence="10"/>
+
+</data>
+</openerp>

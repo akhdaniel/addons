@@ -1,0 +1,50 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_age_band_form">
+        <field name="name">netpro.age_band.form</field>
+        <field name="model">netpro.age_band</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.age_band">
+                <group>
+                    <field name="name" select="2"/>
+                </group>
+                <notebook>
+                    <page string="Age Band Details">
+                        <field name="age_band_detail_ids">
+                            <tree string="age_band_detail_ids">
+                                <field name='age_lower' />
+                                <field name='age_upper' />
+                                <field name='loading'    />
+                            </tree>
+                            <form string="age_band_detail_ids">
+                                <group>
+                                    <field name='age_lower' />
+                                    <field name='age_upper' />
+                                    <field name='loading'    />
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_age_band_tree">
+        <field name="name">netpro.age_band.tree</field>
+        <field name="model">netpro.age_band</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.age_band">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_age_band">
+        <field name="name">Diagnosis</field>
+        <field name="res_model">netpro.age_band</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

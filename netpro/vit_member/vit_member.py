@@ -118,15 +118,16 @@ class netpro_product(osv.osv):
     }
 netpro_product()
 
-class netpro_age_band(osv.osv):
-    _name = 'netpro.age_band'
-    _columns = {
-        'band_id': fields.integer('Band ID'),
-        'age_lower': fields.integer('Age Lower'),
-        'age_upper': fields.integer('Age Upper'),
-        'loading': fields.integer('Loading'),
-    }
-netpro_age_band()
+# pindah ke vit_actuary
+#   class netpro_age_band(osv.osv):
+#     _name = 'netpro.age_band'
+#     _columns = {
+#         'band_id': fields.integer('Band ID'),
+#         'age_lower': fields.integer('Age Lower'),
+#         'age_upper': fields.integer('Age Upper'),
+#         'loading': fields.integer('Loading'),
+#     }
+# netpro_age_band()
 
 class netpro_term_condition(osv.osv):
     _name = 'netpro.term_condition'
@@ -309,19 +310,20 @@ class netpro_premium_table(osv.osv):
     }
 netpro_premium_table()
 
-class netpro_membership(osv.osv):
-    _name = 'netpro.membership'
-    _columns = {
-        'membership_id': fields.char('Membership ID'),
-        'name_e': fields.char('Name (E)'),
-        'name_i': fields.char('Name (I)'),
-        'category': fields.char('Category'),
-        'age_between_start': fields.integer('Age Between Start'),
-        'age_between_end': fields.integer('Age Between End'),
-        'policy_owner': fields.boolean('Policy Owner'),
-        'allowed': fields.boolean('Allowed'),
-    }
-netpro_membership()
+# pindah ke actuary
+# class netpro_membership(osv.osv):
+#     _name = 'netpro.membership'
+#     _columns = {
+#         'membership_id': fields.char('Membership ID'),
+#         'name_e': fields.char('Name (E)'),
+#         'name_i': fields.char('Name (I)'),
+#         'category': fields.char('Category'),
+#         'age_between_start': fields.integer('Age Between Start'),
+#         'age_between_end': fields.integer('Age Between End'),
+#         'policy_owner': fields.boolean('Policy Owner'),
+#         'allowed': fields.boolean('Allowed'),
+#     }
+# netpro_membership()
 
 class netpro_gender(osv.osv):
     _name = 'netpro.gender'

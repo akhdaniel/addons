@@ -261,6 +261,7 @@
     </record>
     <!-- <menuitem name="Product" id="menu_netpro_product" action="action_netpro_product"/> -->
         
+<!-- pindah ke actuary
     <record model="ir.ui.view" id="view_netpro_age_band_form">
         <field name="name">netpro.age_band.form</field>
         <field name="model">netpro.age_band</field>
@@ -295,7 +296,7 @@
         <field name="res_model">netpro.age_band</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Age Band" id="menu_netpro_age_band" action="action_netpro_age_band"/> -->
         
     <record model="ir.ui.view" id="view_netpro_term_condition_form">
@@ -808,7 +809,7 @@
         <field name="view_mode">tree,form</field>
     </record>
     <!-- <menuitem name="Premium Table" id="menu_netpro_premium_table" action="action_netpro_premium_table"/> -->
-        
+ <!-- pindah ke vit_actuary       
     <record model="ir.ui.view" id="view_netpro_membership_form">
         <field name="name">netpro.membership.form</field>
         <field name="model">netpro.membership</field>
@@ -851,7 +852,7 @@
         <field name="res_model">netpro.membership</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Membership" id="menu_netpro_membership" action="action_netpro_membership"/> -->
         
     <record model="ir.ui.view" id="view_netpro_gender_form">

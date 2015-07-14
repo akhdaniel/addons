@@ -26,7 +26,7 @@
         "website" : "http://vitraining.com",
         "category" : "Other",
         "description": """  """,
-        "depends" : ['base', 'hr', 'vit_policy'],
+        "depends" : ['base', 'hr', 'vit_actuary' , 'vit_policy'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : ['vit_member_view.xml', 

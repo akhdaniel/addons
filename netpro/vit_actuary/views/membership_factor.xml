@@ -1,0 +1,40 @@
+<openerp>
+<data>
+        
+    <record model="ir.ui.view" id="view_netpro_membership_factor_form">
+        <field name="name">netpro.membership_factor.form</field>
+        <field name="model">netpro.membership_factor</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.membership_factor">
+                <group>
+                    <field name='membership_id'      />
+                    <field name='sex'                />
+                    <field name='factor'             />
+                    <field name='is_allowed'        /> 
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_membership_factor_tree">
+        <field name="name">netpro.membership_factor.tree</field>
+        <field name="model">netpro.membership_factor</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.membership_factor">
+                    <field name='membership_id'      />
+                    <field name='sex'                />
+                    <field name='factor'             />
+                    <field name='is_allowed'        /> 
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_membership_factor">
+        <field name="name">Membership Factor</field>
+        <field name="res_model">netpro.membership_factor</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</data>
+</openerp>

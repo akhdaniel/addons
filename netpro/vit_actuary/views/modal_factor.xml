@@ -1,0 +1,46 @@
+<openerp>
+<data>
+        
+    <record model="ir.ui.view" id="view_netpro_modal_factor_form">
+        <field name="name">netpro.modal_factor.form</field>
+        <field name="model">netpro.modal_factor</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.modal_factor">
+                <group>
+                    <field name='currency_id'    />
+                    <field name='annualy'        />
+                    <field name='semi_annualy'  />
+                    <field name='quarterly'      />
+                    <field name='monthly'        />
+                    <field name='is_allowed'     />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_modal_factor_tree">
+        <field name="name">netpro.modal_factor.tree</field>
+        <field name="model">netpro.modal_factor</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.modal_factor">
+
+                    <field name='currency_id'    />
+                    <field name='annualy'        />
+                    <field name='semi_annualy'  />
+                    <field name='quarterly'      />
+                    <field name='monthly'        />
+                    <field name='is_allowed'     />
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_modal_factor">
+        <field name="name">Modal Factor</field>
+        <field name="res_model">netpro.modal_factor</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</data>
+</openerp>
