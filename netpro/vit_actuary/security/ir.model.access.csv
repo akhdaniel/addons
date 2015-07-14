@@ -5,3 +5,4 @@
 "access_netpro_diagnosis","netpro.diagnosis","model_netpro_diagnosis","base.group_user",1,0,0,0
 "access_netpro_membership_plan","netpro.membership_plan","model_netpro_membership_plan","base.group_user",1,0,0,0
 "access_netpro_benefit","netpro.benefit","model_netpro_benefit","base.group_user",1,0,0,0
+"access_netpro_age_band","netpro.age_band","model_netpro_age_band","base.group_user",1,0,0,0
