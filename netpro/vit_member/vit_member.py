@@ -28,14 +28,14 @@ class netpro_member(osv.osv):
         'insurance_period_start': fields.date('Insurance Period Start', required=True),
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.', required=True),
-        'name': fields.char('Name', required=True),
-        'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
+        #'name': fields.char('Name', required=True),
+        #'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
         'census_no': fields.integer('Census No.'),
         'sex': fields.many2one('netpro.sex', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
-        'email': fields.char('Email'),
+        #'email': fields.char('Email'),
         'mobile_phone': fields.char('Mobile Phone'),
-        'date_of_birth': fields.date('DOB'),
+        #'date_of_birth': fields.date('DOB'),
         'age': fields.integer('Age'),
         'birth_place': fields.char('Birth Place'),
         'salary': fields.float('Salary'),
@@ -54,7 +54,7 @@ class netpro_member(osv.osv):
         'payor_id': fields.many2one('netpro.payor', 'Payor'),
         'premium_type_id': fields.many2one('netpro.premium_type', 'Premium Type'),
         'area_id': fields.many2one('netpro.area', 'Area'),
-        'country_id': fields.many2one('netpro.country', 'Country'),
+        #'country_id': fields.many2one('netpro.country', 'Country'),
         'pre_existing_waived': fields.boolean('Pre Existing Waived'),
         'exclude_this_member': fields.boolean('Exclude this Member'),
         'dummy_member': fields.boolean('Dummy Member'),
@@ -68,25 +68,26 @@ class netpro_member(osv.osv):
         'bank': fields.char('Bank'),
         'bank_name': fields.char('Bank Name'),
         'bank_branch': fields.char('Bank Branch'),
-        'company_name': fields.char('Company Name'),
+        #'company_name': fields.char('Company Name'),
         'company_address': fields.text('Address'),
         'title': fields.char('Title'),
         'division': fields.char('Division'),
         'branch': fields.char('Branch'),
         'occupation': fields.char('Occupation'),
         'id_no': fields.char('ID No'),
-        'personal_address': fields.text('Address'),
-        'city': fields.char('City'),
+        #'personal_address': fields.text('Address'),
+        #'city': fields.char('City'),
         'province': fields.char('Province'),
-        'zip_code': fields.char('ZIP Code'),
-        'phone': fields.char('Phone'),
-        'mobile': fields.char('Mobile'),
-        'fax': fields.char('Fax'),
-        'email': fields.char('Email'),
+        #'zip_code': fields.char('ZIP Code'),
+        #'phone': fields.char('Phone'),
+        #'mobile': fields.char('Mobile'),
+        #'fax': fields.char('Fax'),
+        #'email': fields.char('Email'),
         'height': fields.integer('Height'),
         'weight': fields.integer('Weight'),
         'member_plan_ids': fields.one2many('netpro.member_plan', 'member_id', 'Plans', ondelete='cascade'),
         'family_ids': fields.one2many('netpro.member', 'parent_id', 'Families', ondelete='cascade'),
+        'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
         'parent_id': fields.many2one('netpro.member', 'Family'),
     }
 netpro_member()
@@ -137,6 +138,7 @@ netpro_term_condition()
 
 class netpro_product_term_condition(osv.osv):
     _name = 'netpro.product_term_condition'
+    _rec_name = 'product_id'
     _columns = {
         'product_id': fields.many2one('netpro.product', 'Product'),
         'term_condition_id': fields.many2one('netpro.term_condition', 'Term And Condition'),
@@ -145,6 +147,7 @@ netpro_product_term_condition()
 
 class netpro_product_benefit(osv.osv):
     _name = 'netpro.product_benefit'
+    _rec_name = 'product_id'
     _columns = {
         'product_id': fields.many2one('netpro.product', 'Product'),
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit'),
@@ -160,7 +163,7 @@ class netpro_product_plan(osv.osv):
         'description': fields.text('Description'),
         'product_id': fields.many2one('netpro.product', 'Product Code'),
         'currency_id': fields.many2one('res.currency', 'Currency'),
-        'product_plan_base_id': fields.many2one('netpro.product_plan_base'),
+        'product_plan_base_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
         'overall_limit': fields.float('Overall Limit'),
         'family_overall_limit': fields.float('Family Overall Limit'),
         'remarks_ind': fields.text('Remarks (Ind)'),
@@ -199,6 +202,7 @@ netpro_product_plan()
 
 class netpro_product_plan_benefit(osv.osv):
     _name = 'netpro.product_plan_benefit'
+    _rec_name = 'product_plan_id'
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit'),
@@ -267,6 +271,7 @@ netpro_product_plan_benefit()
 
 class netpro_product_plan_membership(osv.osv):
     _name = 'netpro.product_plan_membership'
+    _rec_name = 'product_plan_id'
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'membership_id': fields.many2one('netpro.membership', 'Membership'),
@@ -277,6 +282,7 @@ netpro_product_plan_membership()
 
 class netpro_product_plan_premium_type(osv.osv):
     _name = 'netpro.product_plan_premium_type'
+    _rec_name = 'product_plan_id'
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'premium_type_id': fields.many2one('netpro.premium_type', 'Premium Type'),
@@ -335,9 +341,11 @@ netpro_marital_status()
 
 class netpro_member_plan(osv.osv):
     _name = 'netpro.member_plan'
+    _rec_name = 'member_id'
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
-        'pplan': fields.char('PPlan'),
+        'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
+        #'product_plan': fields.char(string='Product Plan', store=True, related='plan_schedule_id'),
         'bamount': fields.float('BAmount'),
         'plan_limit': fields.float('Plan Limit'),
         'remaining_limit': fields.float('Remaining Limit'),
@@ -366,3 +374,10 @@ class netpro_member_plan_detail(osv.osv):
     }
 netpro_member_plan_detail()
 
+class netpro_member_claim_history(osv.osv):
+    _name = 'netpro.member_claim_history'
+    _columns = {
+        'member_id': fields.many2one('netpro.member', 'Member'),
+        'claim_id': fields.many2one('netpro.claim', 'Claim'),
+    }
+netpro_member_claim_history()
