@@ -29,8 +29,11 @@
         "depends" : ['base', 'hr', 'vit_actuary' , 'vit_policy'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
-        "data" : ['vit_member_view.xml', 
-                'security/ir.model.access.csv'
+        "data" : [
+                'vit_member_view.xml', 
+                'menu.xml',
+                'security/ir.model.access.csv',
+
         ],
         "installable": True
 }
