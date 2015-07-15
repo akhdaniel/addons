@@ -189,7 +189,6 @@
         <field name="view_mode">tree,form</field>
     </record>
     
-    <menuitem name="Member" id="menu_netpro_member" parent="vit_actuary.menu_netpro_transaction" action="action_netpro_member"/>
         
 <!-- pindah ke actuary:
     <record model="ir.ui.view" id="view_netpro_product_form">
@@ -884,7 +883,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Gender" id="menu_netpro_gender" action="action_netpro_gender"/> -->
         
     <record model="ir.ui.view" id="view_netpro_marital_status_form">
         <field name="name">netpro.marital_status.form</field>
@@ -918,7 +916,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Marital Status" id="menu_netpro_marital_status" action="action_netpro_marital_status"/> -->
         
     <record model="ir.ui.view" id="view_netpro_member_plan_form">
         <field name="name">netpro.member_plan.form</field>
@@ -971,7 +968,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Member Plan" id="menu_netpro_member_plan" action="action_netpro_member_plan"/> -->
         
     <record model="ir.ui.view" id="view_netpro_member_plan_detail_form">
         <field name="name">netpro.member_plan_detail.form</field>
@@ -1018,7 +1014,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Member Plan Detail" id="menu_netpro_member_plan_detail" action="action_netpro_member_plan_detail"/> -->
         
 </data>
 </openerp>
