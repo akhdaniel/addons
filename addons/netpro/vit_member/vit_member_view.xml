@@ -188,8 +188,10 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+    
     <menuitem name="Member" id="menu_netpro_member" parent="vit_actuary.menu_netpro_transaction" action="action_netpro_member"/>
         
+<!-- pindah ke actuary:
     <record model="ir.ui.view" id="view_netpro_product_form">
         <field name="name">netpro.product.form</field>
         <field name="model">netpro.product</field>
@@ -258,7 +260,7 @@
         <field name="res_model">netpro.product</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product" id="menu_netpro_product" action="action_netpro_product"/> -->
         
 <!-- pindah ke actuary
@@ -299,7 +301,7 @@
     </record> -->
     <!-- <menuitem name="Age Band" id="menu_netpro_age_band" action="action_netpro_age_band"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_term_condition_form">
+<!--     <record model="ir.ui.view" id="view_netpro_term_condition_form">
         <field name="name">netpro.term_condition.form</field>
         <field name="model">netpro.term_condition</field>
         <field name="type">form</field>
@@ -330,17 +332,16 @@
         <field name="res_model">netpro.term_condition</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Term And Condition" id="menu_netpro_term_condition" action="action_netpro_term_condition"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_term_condition_form">
+    <!-- <record model="ir.ui.view" id="view_netpro_product_term_condition_form">
         <field name="name">netpro.product_term_condition.form</field>
         <field name="model">netpro.product_term_condition</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.product_term_condition">
                 <group>
-                    <!-- <field name="product_id" select="1"/> -->
                     <field name="term_condition_id" select="2"/>
                 </group>
             </form>
@@ -363,17 +364,16 @@
         <field name="res_model">netpro.product_term_condition</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product Term Condition" id="menu_netpro_product_term_condition" action="action_netpro_product_term_condition"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_benefit_form">
+    <!-- <record model="ir.ui.view" id="view_netpro_product_benefit_form">
         <field name="name">netpro.product_benefit.form</field>
         <field name="model">netpro.product_benefit</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.product_benefit">
                 <group>
-                    <!-- <field name="product_id" select="1"/> -->
                     <field name="benefit_id" select="2"/>
                 </group>
             </form>
@@ -396,10 +396,10 @@
         <field name="res_model">netpro.product_benefit</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product Benefit" id="menu_netpro_product_benefit" action="action_netpro_product_benefit"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_plan_form">
+<!--     <record model="ir.ui.view" id="view_netpro_product_plan_form">
         <field name="name">netpro.product_plan.form</field>
         <field name="model">netpro.product_plan</field>
         <field name="type">form</field>
@@ -508,17 +508,16 @@
         <field name="res_model">netpro.product_plan</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product Plan" id="menu_netpro_product_plan" action="action_netpro_product_plan"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_plan_benefit_form">
+<!--     <record model="ir.ui.view" id="view_netpro_product_plan_benefit_form">
         <field name="name">netpro.product_plan_benefit.form</field>
         <field name="model">netpro.product_plan_benefit</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.product_plan_benefit">
                 <group>
-                    <!-- <field name="product_plan_id" select="1"/> -->
                     <field name="benefit_id" select="2"/>
                     <field name="benefit_limit_start" select="0"/>
                     <field name="benefit_limit_end" select="0"/>
@@ -661,17 +660,16 @@
         <field name="res_model">netpro.product_plan_benefit</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product Plan Benefit" id="menu_netpro_product_plan_benefit" action="action_netpro_product_plan_benefit"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_plan_membership_form">
+<!--     <record model="ir.ui.view" id="view_netpro_product_plan_membership_form">
         <field name="name">netpro.product_plan_membership.form</field>
         <field name="model">netpro.product_plan_membership</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.product_plan_membership">
                 <group>
-                    <!-- <field name="product_plan_id" select="1"/> -->
                     <field name="membership_id" select="2"/>
                     <field name="gender_id" select="0"/>
                     <field name="marital_status_id" select="0"/>
@@ -698,17 +696,16 @@
         <field name="res_model">netpro.product_plan_membership</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product Plan Membership" id="menu_netpro_product_plan_membership" action="action_netpro_product_plan_membership"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_plan_premium_type_form">
+<!--     <record model="ir.ui.view" id="view_netpro_product_plan_premium_type_form">
         <field name="name">netpro.product_plan_premium_type.form</field>
         <field name="model">netpro.product_plan_premium_type</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.product_plan_premium_type">
                 <group>
-                    <!-- <field name="product_plan_id" select="1"/> -->
                     <field name="premium_type_id" select="2"/>
                     <field name="premium_table_id" select="0"/>
                     <field name="apply_to_policy_holder" select="0"/>
@@ -739,10 +736,10 @@
         <field name="res_model">netpro.product_plan_premium_type</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Product Plan Premium Type" id="menu_netpro_product_plan_premium_type" action="action_netpro_product_plan_premium_type"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_premium_type_form">
+<!--     <record model="ir.ui.view" id="view_netpro_premium_type_form">
         <field name="name">netpro.premium_type.form</field>
         <field name="model">netpro.premium_type</field>
         <field name="type">form</field>
@@ -773,10 +770,10 @@
         <field name="res_model">netpro.premium_type</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Premium Type" id="menu_netpro_premium_type" action="action_netpro_premium_type"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_premium_table_form">
+<!--     <record model="ir.ui.view" id="view_netpro_premium_table_form">
         <field name="name">netpro.premium_table.form</field>
         <field name="model">netpro.premium_table</field>
         <field name="type">form</field>
@@ -807,7 +804,7 @@
         <field name="res_model">netpro.premium_table</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="Premium Table" id="menu_netpro_premium_table" action="action_netpro_premium_table"/> -->
  <!-- pindah ke vit_actuary       
     <record model="ir.ui.view" id="view_netpro_membership_form">

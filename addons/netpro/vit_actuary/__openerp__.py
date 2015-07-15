@@ -43,6 +43,8 @@
                 'views/lob.xml', 
                 'views/membership_factor.xml', 
                 'views/modal_factor.xml', 
+                'views/product.xml', 
+                'views/product_plan.xml', 
                 'menu.xml',
                 # 'security/ir.model.access.csv',
                 # 'data/sequence.xml',
