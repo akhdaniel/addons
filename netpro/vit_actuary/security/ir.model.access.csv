@@ -6,3 +6,13 @@
 "access_netpro_membership_plan","netpro.membership_plan","model_netpro_membership_plan","base.group_user",1,0,0,0
 "access_netpro_benefit","netpro.benefit","model_netpro_benefit","base.group_user",1,0,0,0
 "access_netpro_age_band","netpro.age_band","model_netpro_age_band","base.group_user",1,0,0,0
+"access_netpro_product","netpro.product","model_netpro_product","base.group_user",1,0,0,0
+"access_netpro_term_condition","netpro.term_condition","model_netpro_term_condition","base.group_user",1,0,0,0
+"access_netpro_product_term_condition","netpro.product_term_condition","model_netpro_product_term_condition","base.group_user",1,0,0,0
+"access_netpro_product_benefit","netpro.product_benefit","model_netpro_product_benefit","base.group_user",1,0,0,0
+"access_netpro_product_plan","netpro.product_plan","model_netpro_product_plan","base.group_user",1,0,0,0
+"access_netpro_product_plan_benefit","netpro.product_plan_benefit","model_netpro_product_plan_benefit","base.group_user",1,0,0,0
+"access_netpro_product_plan_membership","netpro.product_plan_membership","model_netpro_product_plan_membership","base.group_user",1,0,0,0
+"access_netpro_product_plan_premium_type","netpro.product_plan_premium_type","model_netpro_product_plan_premium_type","base.group_user",1,0,0,0
+"access_netpro_premium_type","netpro.premium_type","model_netpro_premium_type","base.group_user",1,0,0,0
+"access_netpro_premium_table","netpro.premium_table","model_netpro_premium_table","base.group_user",1,0,0,0
