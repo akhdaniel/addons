@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_product_form">
+        <field name="name">netpro.product.form</field>
+        <field name="model">netpro.product</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product">
+            	<group>
+	                <group string="Product Information">
+	                    <field name="code" />
+	                    <field name="name"  />
+	                    <field name="alternative_name"  />
+	                    <field name="short_name"  />
+	                    <field name="description" />
+	                    <field name="alternative_description"/>
+	                    <field name="rider"  />
+	                    <field name="age_band_id"  />
+	                    <field name="sub_class"  />
+	                    <field name="product_type_id"  />
+	                    <field name="min_member"  />
+	                    <field name="max_age_coverage" />
+	                    <field name="release_date" />
+	                    <field name="status" />
+	                </group>
+	                <group string="Product Option">
+	                    <field name="provider_limit" />
+	                    <field name="reimbursement_limit" />
+	                    <field name="allowed_changing_inner_limit" />
+	                    <field name="allowed_changing_overall_limit" />
+	                </group>
+                </group>
+
+                <notebook>
+                	<page string="Benefits">
+	                    <field name="benefit_ids"  />
+                	</page>
+                	<page string="Term and Condition">
+	                    <field name="term_condition_ids"   />
+                	</page>
+                </notebook>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_tree">
+        <field name="name">netpro.product.tree</field>
+        <field name="model">netpro.product</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product">
+                <field name="code"/>
+                <field name="name"/>
+                <!-- <field name="alternative_name"/> -->
+                <!-- <field name="short_name"/> -->
+                <field name="description"/>
+                <!-- <field name="alternative_description"/>
+                <field name="rider"/>
+                <field name="age_band_id"/>
+                <field name="sub_class"/>
+                <field name="product_type_id"/>
+                <field name="min_member"/>
+                <field name="max_age_coverage"/>
+                <field name="release_date"/>
+                <field name="status"/>
+                <field name="provider_limit"/>
+                <field name="reimbursement_limit"/>
+                <field name="allowed_changing_inner_limit"/>
+                <field name="allowed_changing_overall_limit"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product">
+        <field name="name">Product</field>
+        <field name="res_model">netpro.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="view_netpro_term_condition_form">
+        <field name="name">netpro.term_condition.form</field>
+        <field name="model">netpro.term_condition</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.term_condition">
+                <group>
+                    <field name="tc_id" />
+                    <field name="name" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_term_condition_tree">
+        <field name="name">netpro.term_condition.tree</field>
+        <field name="model">netpro.term_condition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.term_condition">
+                <field name="tc_id"/>
+                <field name="name"/>
+
+            </tree>
+        </field>
+    </record>
+<!--     <record model="ir.actions.act_window" id="action_netpro_term_condition">
+        <field name="name">Term And Condition</field>
+        <field name="res_model">netpro.term_condition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record> -->
+
+	<record model="ir.ui.view" id="view_netpro_product_term_condition_form">
+        <field name="name">netpro.product_term_condition.form</field>
+        <field name="model">netpro.product_term_condition</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_term_condition">
+                <group>
+                    <!-- <field name="product_id" select="1"/> -->
+                    <field name="term_condition_id"  />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_netpro_product_term_condition_tree">
+        <field name="name">netpro.product_term_condition.tree</field>
+        <field name="model">netpro.product_term_condition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_term_condition">
+                <field name="term_condition_id"/>
+            </tree>
+        </field>
+    </record>
+<!--     <record model="ir.actions.act_window" id="action_netpro_product_term_condition">
+        <field name="name">Product Term Condition</field>
+        <field name="res_model">netpro.product_term_condition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>     -->
+
+	<record model="ir.ui.view" id="view_netpro_product_benefit_form">
+        <field name="name">netpro.product_benefit.form</field>
+        <field name="model">netpro.product_benefit</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_benefit">
+                <group>
+                    <!-- <field name="product_id" select="1"/> -->
+                    <field name="benefit_id" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_netpro_product_benefit_tree">
+        <field name="name">netpro.product_benefit.tree</field>
+        <field name="model">netpro.product_benefit</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_benefit" editable="bottom">
+                <field name="benefit_id"/>
+            </tree>
+        </field>
+    </record>
+<!--     <record model="ir.actions.act_window" id="action_netpro_product_benefit">
+        <field name="name">Product Benefit</field>
+        <field name="res_model">netpro.product_benefit</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record> -->
+</data>
+</openerp>
