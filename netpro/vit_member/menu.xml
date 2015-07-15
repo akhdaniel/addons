@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <menuitem name="Member" id="menu_netpro_member" parent="vit_actuary.menu_netpro_transaction" action="action_netpro_member"/>
+    <menuitem name="Member" id="menu_netpro_configuration_member" parent="vit_actuary.menu_netpro_configuration" sequence="20"/>
+	    <menuitem name="Gender" id="menu_netpro_gender" action="action_netpro_gender" parent="menu_netpro_configuration_member"/>
+	    <menuitem name="Marital Status" id="menu_netpro_marital_status" action="action_netpro_marital_status" parent="menu_netpro_configuration_member"/>
+<!-- 	    <menuitem name="Member Plan" id="menu_netpro_member_plan" action="action_netpro_member_plan" parent="menu_netpro_configuration_member"/>
+	    <menuitem name="Member Plan Detail" id="menu_netpro_member_plan_detail" action="action_netpro_member_plan_detail" parent="menu_netpro_configuration_member"/>
+ --></data>
+</openerp>
