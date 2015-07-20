@@ -8,10 +8,10 @@
                 <form string="Input Serial Number" version="7.0">
                     <sheet>
                         <group>
-                            <group>
-                                <field name="product_id" readonly="1"/>
-                                <field name="qty" readonly="1"/>
-                                <field name="product_uom" readonly="1"/> 
+                            <group>                              
+                                <field name="product_id" readonly="1" attrs="{'invisible':[('product_id','=',False)]}"/>
+                                <field name="qty" readonly="1" attrs="{'invisible':[('product_id','=',False)]}"/>
+                                <field name="product_uom" readonly="1" attrs="{'invisible':[('product_id','=',False)]}"/> 
                                 <field name="type" invisible="1"/>
                                 <!-- picking in -->
 			                    <group colspan='4' attrs="{'invisible':[('type','!=','in')]}">
@@ -26,7 +26,7 @@
 			                    <group colspan='4' attrs="{'invisible':[('type','=','in')]}">   
 			                        <field name="line_out_ids" nolabel='1' view_mode="tree,form">
 			                            <tree string="Add Serial Number" editable='bottom'>
-			                                <field name="serial_number_id" domain="[('product_id','=',parent.product_id),('is_used','=',False)]"/>
+			                                <field name="serial_number_id" domain="[('product_id','!=',False),('is_used','=',False)]"/>
 			                                <field name="qty" readonly="1"/>
 			                            </tree>    
 			                        </field>			                           
@@ -53,6 +53,7 @@
             <field name="context">{'form_view_ref': False}</field>
         </record>
 
+<!-- Stock move -->
         <record id="vit_view_move_picking_tree" model="ir.ui.view">
             <field name="name">stock.move.tree</field>
             <field name="model">stock.move</field>
@@ -69,7 +70,7 @@
                        string="Split Serial Number"
                        groups="stock.group_production_lot"
                        type="action" icon="gtk-justify-fill"
-                       attrs="{'invisible':[('is_serial_number','=',True)]}"/> 
+                       attrs="{'invisible':['|',('is_serial_number','=',True),('picking_id','=','out')]}"/>
                        <field name="is_serial_number" invisible="1"/>                      
                        <field name="stock_move_serial_number_ids"/>
                     </button>  
@@ -90,6 +91,27 @@
                 </group>     
             </field>
         </record>
+
+<!-- Stock picking out -->
+        <record id="track_sn_picking_out" model="ir.ui.view">
+            <field name="name">stock.picking.out</field>
+            <field name="model">stock.picking.out</field>
+             <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <button name="button_cancel" position="after">
+                    <button
+                       name="%(track_sn_stock_move)d"
+                       string="Split Serial Number"
+                       groups="stock.group_production_lot"
+                       type="action" icon="gtk-justify-fill"
+                       attrs="{'invisible':['|',('type','!=','out'),('used_sn','=',True)]}"/>                 
+                </button> 
+                <field name="date_done" position="after">
+                        <field name="used_sn" invisible="1"/>
+                </field>                 
+            </field>
+        </record>
+
 
 </data>
 </openerp>
