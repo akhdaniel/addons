@@ -7,14 +7,6 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
-class netpro_product_plan_base(osv.osv):
-    _name = 'netpro.product_plan_base'
-    _columns = {
-        'pplan': fields.char('PPlan'),
-        'name': fields.char('Name'),
-    }
-netpro_product_plan_base()
-
 class netpro_product_plan(osv.osv):
     _name = 'netpro.product_plan'
     _columns = {
@@ -153,19 +145,3 @@ class netpro_product_plan_premium_type(osv.osv):
         'apply_to_children': fields.boolean('Apply To Children'),
     }
 netpro_product_plan_premium_type()
-
-class netpro_premium_type(osv.osv):
-    _name = 'netpro.premium_type'
-    _columns = {
-        'name': fields.char('Name'),
-        'description': fields.text('Description'),
-    }
-netpro_premium_type()
-
-class netpro_premium_table(osv.osv):
-    _name = 'netpro.premium_table'
-    _columns = {
-        'name': fields.char('Name'),
-        'description': fields.text('Description'),
-    }
-netpro_premium_table()
