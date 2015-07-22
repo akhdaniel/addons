@@ -27,6 +27,9 @@ Homepage untuk aplikasi insurance
     'data': [
         # 'security/ir.model.access.csv',
         'views/pages.xml',
+        'views/search.xml',
+        'views/registration.xml',
+        'views/discharge.xml',
 
     ],
     'css':['static/src/css/*.css'],
