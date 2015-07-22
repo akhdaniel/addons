@@ -48,5 +48,8 @@
 		<menuitem name="Treatment" id="menu_netpro_actuary_treatment" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="User Approval" id="menu_netpro_actuary_user_approval" parent="menu_netpro_actuary_configuration" sequence="10"/>
 
+	    <menuitem name="Gender" id="menu_netpro_gender" action="action_netpro_gender" parent="menu_netpro_actuary_configuration"/>
+	    
+	    <menuitem name="Marital Status" id="menu_netpro_marital_status" action="action_netpro_marital_status" parent="menu_netpro_actuary_configuration"/>
 </data>
 </openerp>

@@ -35,7 +35,7 @@ class netpro_member(osv.osv):
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
         #'email': fields.char('Email'),
         'mobile_phone': fields.char('Mobile Phone'),
-        #'date_of_birth': fields.date('DOB'),
+        'date_of_birth': fields.date('DOB'),
         'age': fields.integer('Age'),
         'birth_place': fields.char('Birth Place'),
         'salary': fields.float('Salary'),
@@ -343,7 +343,10 @@ class netpro_member_plan(osv.osv):
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
-        'product_plan': fields.related('plan_schedule_id', 'product_plan_base_id', type='many2one', string='Product Plan', store=True, readonly=True),
+        'product_plan': fields.related('plan_schedule_id', 'product_plan_base_id', 
+            relation="netpro.product_plan_base",
+            type='many2one', string='Product Plan', store=True, readonly=True),
+
         'bamount': fields.float('BAmount'),
         'plan_limit': fields.float('Plan Limit'),
         'remaining_limit': fields.float('Remaining Limit'),
