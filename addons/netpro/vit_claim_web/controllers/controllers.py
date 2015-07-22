@@ -5,12 +5,13 @@ import base64
 import simplejson
 
 class Member(http.Controller):
-	@http.route('/claim/registration', auth='public', website=True)
+	@http.route('/claim/registration', auth='user', website=True)
 	def registration(self, **kw):
-		return http.request.render('vit_claim_web.registration', {} )	
+		message = kw.get('message','')
+		return http.request.render('vit_claim_web.search',
+			{'target':'/claim/eligibility', 'target_title':'Registration', 'message':message} )	
 
-
-	@http.route('/claim/eligibility', auth='public', website=True)
+	@http.route('/claim/eligibility', auth='user', website=True)
 	def eligibility(self, **kw):
 		member = False
 		message = "";
@@ -20,10 +21,33 @@ class Member(http.Controller):
 			member = Member.search([('member_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
-				return http.request.render('vit_claim_web.registration', {'message':message} )	
+				# return http.request.render('vit_claim_web.registration', {'message':message} )	
+				return request.redirect('/claim/registration?message=%s'% (message), code=301)
 
 		return http.request.render('vit_claim_web.eligibility', 
 			{'member': member, 'message':message})
+
+	@http.route('/claim/discharge', auth='user', website=True)
+	def discharge(self, **kw):
+		message = kw.get('message','')
+		return http.request.render('vit_claim_web.search', 
+			{'target':'/claim/discharge_confirm' , 'target_title':'Discharge', 'message':message} )	
+
+	@http.route('/claim/discharge_confirm', auth='user', website=True)
+	def discharge_confirm(self, **kw):
+		member = False
+		message = "";
+
+		if request.httprequest.method == 'POST':
+			Member = http.request.env['netpro.member']
+			member = Member.search([('member_no','=',kw.get('card_no','') )])
+			if not member:
+				message = "Member not found! Please try again."
+				return request.redirect('/claim/discharge?message=%s'% (message), code=301)
+
+		return http.request.render('vit_claim_web.discharge_confirm', 
+			{'member': member, 'message':message})
+
 
 	# @http.route('/mlm/member/list', auth='user', website=True)
 	# def list(self, **kw):		
