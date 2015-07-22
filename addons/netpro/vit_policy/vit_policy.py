@@ -403,7 +403,7 @@ class netpro_coverage(osv.osv):
     _rec_name = 'no_plan'
     _columns = {
         'product_type_id': fields.many2one('netpro.product_type', 'Product Type'),
-        'product_id': fields.many2one('netpro.product_id', 'Product ID'),
+        'product_id': fields.many2one('netpro.product', 'Product ID'),
         'reimbursement': fields.float('Reimbursement'),
         'provider': fields.float('Provider'),
         'excess_pay_on_the_spot': fields.boolean('Excess Pay on the Spot'),
@@ -519,13 +519,14 @@ netpro_business_source()
 #     }
 # netpro_product_type()
 
-class netpro_product_id(osv.osv):
-    _name = 'netpro.product_id'
-    _columns = {
-        'name': fields.char('Product ID'),
-        'description': fields.text('Description'),
-    }
-netpro_product_id()
+# KE ACTUARY
+# class netpro_product_id(osv.osv):
+#     _name = 'netpro.product_id'
+#     _columns = {
+#         'name': fields.char('Product ID'),
+#         'description': fields.text('Description'),
+#     }
+# netpro_product_id()
 
 class netpro_default_limit(osv.osv):
     _name = 'netpro.default_limit'

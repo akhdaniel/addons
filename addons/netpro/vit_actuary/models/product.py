@@ -33,14 +33,6 @@ class netpro_product(osv.osv):
     }
 netpro_product()
 
-class netpro_term_condition(osv.osv):
-    _name = 'netpro.term_condition'
-    _columns = {
-        'tc_id': fields.char('TC ID'),
-        'name': fields.text('TC Name'),
-    }
-netpro_term_condition()
-
 class netpro_product_term_condition(osv.osv):
     _name = 'netpro.product_term_condition'
     _rec_name = 'product_id'
@@ -58,4 +50,3 @@ class netpro_product_benefit(osv.osv):
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit'),
     }
 netpro_product_benefit()
-

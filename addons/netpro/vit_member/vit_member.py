@@ -35,7 +35,7 @@ class netpro_member(osv.osv):
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
         #'email': fields.char('Email'),
         'mobile_phone': fields.char('Mobile Phone'),
-        'date_of_birth': fields.date('DOB'),
+        #'date_of_birth': fields.date('DOB'),
         'age': fields.integer('Age'),
         'birth_place': fields.char('Birth Place'),
         'salary': fields.float('Salary'),
@@ -92,8 +92,6 @@ class netpro_member(osv.osv):
     }
 netpro_member()
 
-# pindah ke vit_actuary
-
 # class netpro_policy(osv.osv):
 #     _name = 'netpro.policy'
 #     _inherit = 'netpro.policy'
@@ -102,6 +100,7 @@ netpro_member()
 #     }
 # netpro_policy()
 
+# KE ACTUARY
 # class netpro_product(osv.osv):
 #     _name = 'netpro.product'
 #     _columns = {
@@ -128,6 +127,7 @@ netpro_member()
 #     }
 # netpro_product()
 
+# pindah ke vit_actuary
 #   class netpro_age_band(osv.osv):
 #     _name = 'netpro.age_band'
 #     _columns = {
@@ -138,6 +138,7 @@ netpro_member()
 #     }
 # netpro_age_band()
 
+# KE ACTUARY
 # class netpro_term_condition(osv.osv):
 #     _name = 'netpro.term_condition'
 #     _columns = {
@@ -146,24 +147,7 @@ netpro_member()
 #     }
 # netpro_term_condition()
 
-# class netpro_product_term_condition(osv.osv):
-#     _name = 'netpro.product_term_condition'
-#     _rec_name = 'product_id'
-#     _columns = {
-#         'product_id': fields.many2one('netpro.product', 'Product'),
-#         'term_condition_id': fields.many2one('netpro.term_condition', 'Term And Condition'),
-#     }
-# netpro_product_term_condition()
-
-# class netpro_product_benefit(osv.osv):
-#     _name = 'netpro.product_benefit'
-#     _rec_name = 'product_id'
-#     _columns = {
-#         'product_id': fields.many2one('netpro.product', 'Product'),
-#         'benefit_id': fields.many2one('netpro.benefit', 'Benefit'),
-#     }
-# netpro_product_benefit()
-
+# GO TO ACTUARY
 # class netpro_product_plan(osv.osv):
 #     _name = 'netpro.product_plan'
 #     _columns = {
@@ -303,6 +287,7 @@ netpro_member()
 #     }
 # netpro_product_plan_premium_type()
 
+# GO TO ACTUARY
 # class netpro_premium_type(osv.osv):
 #     _name = 'netpro.premium_type'
 #     _columns = {
@@ -334,21 +319,23 @@ netpro_member()
 #     }
 # netpro_membership()
 
-class netpro_gender(osv.osv):
-    _name = 'netpro.gender'
-    _columns = {
-        'name': fields.char('Name'),
-        'description': fields.text('Description'),
-    }
-netpro_gender()
+# GO TO ACTUARY
+# class netpro_gender(osv.osv):
+#     _name = 'netpro.gender'
+#     _columns = {
+#         'name': fields.char('Name'),
+#         'description': fields.text('Description'),
+#     }
+# netpro_gender()
 
-class netpro_marital_status(osv.osv):
-    _name = 'netpro.marital_status'
-    _columns = {
-        'name': fields.char('Name'),
-        'description': fields.text('Description'),
-    }
-netpro_marital_status()
+# GOTO ACTUARY
+# class netpro_marital_status(osv.osv):
+#     _name = 'netpro.marital_status'
+#     _columns = {
+#         'name': fields.char('Name'),
+#         'description': fields.text('Description'),
+#     }
+# netpro_marital_status()
 
 class netpro_member_plan(osv.osv):
     _name = 'netpro.member_plan'
@@ -356,8 +343,7 @@ class netpro_member_plan(osv.osv):
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
-        'product_plan'  : fields.related('plan_schedule_id', 'product_plan_base_id' , type="many2one", relation="netpro.product_plan_base", string="Product Plan", store=True),
-        # 'product_plan': fields.related('plan_schedule_id', 'product_plan_base_id', type='many2one', string='Product Plan', store=True, readonly=True),
+        'product_plan': fields.related('plan_schedule_id', 'product_plan_base_id', type='many2one', string='Product Plan', store=True, readonly=True),
         'bamount': fields.float('BAmount'),
         'plan_limit': fields.float('Plan Limit'),
         'remaining_limit': fields.float('Remaining Limit'),
