@@ -535,13 +535,13 @@ class netpro_default_limit(osv.osv):
     }
 netpro_default_limit()
 
-class netpro_product_plan_base(osv.osv):
-    _name = 'netpro.product_plan_base'
-    _columns = {
-        'pplan': fields.char('PPlan'),
-        'name': fields.char('Name'),
-    }
-netpro_product_plan_base()
+# class netpro_product_plan_base(osv.osv):
+#     _name = 'netpro.product_plan_base'
+#     _columns = {
+#         'pplan': fields.char('PPlan'),
+#         'name': fields.char('Name'),
+#     }
+# netpro_product_plan_base()
 
 class netpro_provider_level(osv.osv):
     _name = 'netpro.provider_level'
