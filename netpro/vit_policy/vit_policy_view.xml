@@ -1712,7 +1712,7 @@
         <field name="view_mode">tree,form</field>
     </record> -->
         
-    <record model="ir.ui.view" id="view_netpro_product_id_form">
+<!--     <record model="ir.ui.view" id="view_netpro_product_id_form">
         <field name="name">netpro.product_id.form</field>
         <field name="model">netpro.product_id</field>
         <field name="type">form</field>
@@ -1744,7 +1744,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-        
+         -->
     <record model="ir.ui.view" id="view_netpro_default_limit_form">
         <field name="name">netpro.default_limit.form</field>
         <field name="model">netpro.default_limit</field>

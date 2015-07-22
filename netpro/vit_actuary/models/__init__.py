@@ -12,3 +12,5 @@ import lob
 import modal_factor
 import product
 import product_plan
+import product_type
+import term_condition
