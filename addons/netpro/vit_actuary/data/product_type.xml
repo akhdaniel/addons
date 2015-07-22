@@ -1,0 +1,36 @@
+<openerp>
+<data>
+    <record model="netpro.product_type" id="product_type1">
+        <field name="name">RI</field>
+        <field name="description">Rawat Inap</field>
+    </record>
+    <record model="netpro.product_type" id="product_type2">
+        <field name="name">RJ</field>
+        <field name="description">Rawat Jalan</field>
+    </record>
+    <record model="netpro.product_type" id="product_type3">
+        <field name="name">DT</field>
+        <field name="description">Dental</field>
+    </record>
+    <record model="netpro.product_type" id="product_type4">
+        <field name="name">MAT</field>
+        <field name="description">Maternity</field>
+    </record>
+    <record model="netpro.product_type" id="product_type5">
+        <field name="name">SP</field>
+        <field name="description">Spesialis</field>
+    </record>
+    <record model="netpro.product_type" id="product_type6">
+        <field name="name">OP</field>
+        <field name="description">Optic</field>
+    </record>
+    <record model="netpro.product_type" id="product_type7">
+        <field name="name">LAB</field>
+        <field name="description">Laboratorium</field>
+    </record>
+    <record model="netpro.product_type" id="product_type8">
+        <field name="name">PHAR</field>
+        <field name="description">Pharmacy</field>
+    </record>
+</data>
+</openerp>

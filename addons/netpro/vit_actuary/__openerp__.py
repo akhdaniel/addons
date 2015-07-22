@@ -47,6 +47,8 @@
                 'views/product.xml', 
                 'views/product_plan.xml', 
                 'views/product_type.xml', 
+                
+                'data/product_type.xml', 
                 'menu.xml',
                 # 'security/ir.model.access.csv',
                 # 'data/sequence.xml',

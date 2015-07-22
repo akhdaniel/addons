@@ -1,0 +1,160 @@
+<openerp>
+<data>
+<!-- LO Confirmation -->
+
+<template id="vit_claim_web.loc">
+    <t t-call="website.layout">
+        <t t-set="title">Discharge</t>
+        <div class="container">
+
+			<h2>Letter of Confirmation</h2>
+		   	<t t-esc="member.email"/>
+			<p>Benefit Rawat Jalan</p>
+
+			<form t-attf-action="/claim/discharge_confirm" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+
+			    <div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label">Jenis Kelamin</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6">
+			           	Laki-laki
+			        </div>
+			    </div>
+			 	<div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label" for="b1">B. Admin</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6">
+			           	<input type="text" name="b1"/>
+			        </div>
+			    </div> 	
+			 	<div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label" for="b2">B. Dr. Umum</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6">
+			           	<input type="text" name="b2"/>
+			        </div>
+				</div>
+			 	<div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label">B. Dr. Specialis</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6" for="b3">
+			           	<input type="text" name="b3"/>
+			        </div>
+			    </div> 	
+			 	<div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label" for="b4">B. Obat</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6">
+			           	<input type="text" name="b4"/>
+			        </div>
+			    </div> 	
+			 	<div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label">B. Test Diagnosis</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6" for="b5">
+			           	<input type="text" name="b5"/>
+			        </div>
+			    </div> 	
+			 	<div class="row">
+			    	<div class="col-md-6 col-sm-6">
+			            <label class="control-label" for="b6">B. Fisioterapi</label>
+			        </div>
+			        <div class="col-md-6 col-sm-6">
+			           	<input type="text" name="b6"/>
+			        </div>
+			    </div> 	
+
+				<div class="row">
+			        <div class="col-sm-8 col-md-7">
+			            <button type="submit" name="confirm" class="btn btn-primary">
+			            	Confirm
+			            </button>
+			            <button type="submit" name="email"  class="btn btn-warning">
+			            	Email
+			            </button>
+			            <button type="submit" name="print"  class="btn btn-danger">
+			            	Print
+			            </button>
+			        </div>
+			    </div>
+			</form>
+		</div>
+	</t>
+</template>
+
+<!-- discharge -->
+
+<template id="vit_claim_web.discharge_confirm" name="Discharge Confirmation" page="True">
+    <t t-call="website.layout">
+        <t t-set="title">Discharge Confirmation</t>
+        <div class="container">
+        	<h1>Patient Name: <t t-esc="member.name"/></h1>
+            
+            <div class="row">
+            	<!-- kolom kiri -->
+				<div class="col-md-6 col-sm-6">
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="member_no">Card No</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.member_no"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="date_of_birth">Date of Birth</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.date_of_birth"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="policy_no">Policy No.</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.policy_id.policy_no"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="company_name">Company</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.policy_id.policy_holder_id.name"/>
+			            </div>
+				    </div> 		
+		            <div class="row">
+		            	<div class="col-md-6 col-sm-6">
+			                <label class="control-label" for="contact_name">Policy Date</label>
+			            </div>
+		                <div class="col-md-6 col-sm-6">
+				           	<t t-esc="member.insurance_period_start"/> to 
+				           	<t t-esc="member.insurance_period_end"/>
+			            </div>
+				    </div> 		
+				</div>	
+
+				<!-- kolom kanan -->
+				<div class="col-md-6 col-sm-6">
+					<t t-call="vit_claim_web.loc">
+						<t t-set="member" t-value="member"/>
+					</t>
+			    </div> 
+
+		    </div> 
+
+
+        </div>
+        <br/>
+    </t>	
+</template>
+</data>
+</openerp>
