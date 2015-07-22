@@ -3,6 +3,8 @@ from openerp import http, SUPERUSER_ID
 from openerp.http import request
 import base64
 import simplejson
+import logging
+_logger = logging.getLogger(__name__)
 
 class Member(http.Controller):
 	@http.route('/claim/registration', auth='user', website=True)
@@ -25,6 +27,20 @@ class Member(http.Controller):
 				return request.redirect('/claim/registration?message=%s'% (message), code=301)
 
 		return http.request.render('vit_claim_web.eligibility', 
+			{'member': member, 'message':message})
+
+
+	@http.route('/claim/loa/<model("netpro.member"):member>/<model("netpro.product_type"):product_type>', auth='user', website=True)
+	def loa(self, member, product_type, **kw):
+		message = "";
+
+		if request.httprequest.method == 'GET':
+			if not member:
+				message = "Member not found! Please try again."
+				# return http.request.render('vit_claim_web.registration', {'message':message} )	
+				return request.redirect('/claim/registration?message=%s'% (message), code=301)
+
+		return http.request.render('vit_claim_web.loa', 
 			{'member': member, 'message':message})
 
 	@http.route('/claim/discharge', auth='user', website=True)
