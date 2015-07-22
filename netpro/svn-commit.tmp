@@ -1,0 +1,23 @@
+menu 
+form actuary product
+--This line, and those below, will be ignored--
+
+AM   vit_actuary/models/age_band.pyc
+AM   vit_actuary/models/diagnosis.pyc
+AM   vit_actuary/models/product.pyc
+AM   vit_actuary/models/product_type.pyc
+AM   vit_actuary/models/group_size.pyc
+A    vit_actuary/models/product_plan.py
+AM   vit_actuary/models/holiday.pyc
+AM   vit_actuary/models/modal_factor.pyc
+AM   vit_actuary/models/product_plan.pyc
+AM   vit_actuary/models/membership.pyc
+AM   vit_actuary/models/__init__.pyc
+AM   vit_actuary/models/existing_insurance.pyc
+AM   vit_actuary/models/gl_notes.pyc
+AM   vit_actuary/models/benefit_unit.pyc
+AM   vit_actuary/models/benefit.pyc
+AM   vit_actuary/models/lob.pyc
+A    vit_actuary/models/product.py
+A    vit_actuary/views/product_plan.xml
+A    vit_actuary/views/product.xml

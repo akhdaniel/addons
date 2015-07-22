@@ -1,0 +1,153 @@
+<openerp>
+<data>
+
+
+<!-- patient data -->
+<template id="vit_claim_web.patient_data">
+    <h1>Patient Name: <t t-esc="member.name"/></h1>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="member_no">Card No</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.member_no"/>
+        </div>
+    </div>      
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="date_of_birth">Date of Birth</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.date_of_birth"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label">Sex</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.sex"/>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="policy_no">Policy No.</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.policy_id.policy_no"/>
+        </div>
+    </div>      
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="company_name">Company</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.policy_id.policy_holder_id.name"/>
+        </div>
+    </div>      
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="contact_name">Policy Date</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.insurance_period_start"/> to 
+            <t t-esc="member.insurance_period_end"/>
+        </div>
+    </div>      
+</template>
+
+<!-- LOA -->
+
+<template id="vit_claim_web.loa">
+    <t t-call="website.layout">
+        <t t-set="title">Eligibility</t>
+        <div class="container">
+
+        	<h2>Letter of Authorization</h2>
+
+            <t t-call="vit_claim_web.patient_data">
+                <t t-set="member" t-value="member"/>
+            </t>    
+
+        	<p>Benefit Rawat Jalan</p>
+
+
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label">B. Admin</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	Sesuai Tagihan
+                </div>
+            </div> 	
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label">B. Dr. Umum</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	Sesuai Tagihan
+                </div>
+        	</div>
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label">B. Dr. Specialis</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	Sesuai Tagihan
+                </div>
+            </div> 	
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label">B. Obat</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	Sesuai Tagihan
+                </div>
+            </div> 	
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label">B. Test Diagnosis</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	Sesuai Tagihan
+                </div>
+            </div> 	
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label">B. Fisioterapi</label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	Sesuai Tagihan
+                </div>
+            </div> 	
+        </div>
+    </t>
+</template>
+
+<!-- Eligibility -->
+
+<template id="vit_claim_web.eligibility" name="Claim Eligibility" page="True">
+    <t t-call="website.layout">
+        <t t-set="title">Eligibility</t>
+        <div class="container">
+        	<t t-call="vit_claim_web.patient_data"/>	
+
+            <div class="col-sm-12 col-md-12">
+		        <t t-foreach="member.policy_id.coverage_ids" t-as="cov">
+                    <!-- /claim/loa/<member>/<product_type> -->
+                    <a t-attf-href="/claim/loa/{{ slug(member) }}/{{ slug(cov.product_type_id) }}">
+	                    <button class="btn btn-primary" t-attf-id="cov.product_type_id.name">
+	                    	<t t-esc="cov.product_type_id.name" />
+	                    </button>
+                    </a>
+                </t>
+            </div>
+
+        </div>
+        <br/>
+    </t>	
+</template>
+
+</data>
+</openerp>

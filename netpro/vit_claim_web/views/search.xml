@@ -1,0 +1,35 @@
+<openerp>
+<data>
+<!-- search patient -->
+
+<template id="vit_claim_web.search" name="Search Patient" page="True">
+    <t t-call="website.layout">
+        <t t-set="title"><t t-esc="target_title"/>: Search Patient</t>
+        <div class="oe_structure">
+            <div class="container">
+            	<h2><t t-esc="target_title"/>: Enter your Card Number</h2>
+	            <div class="row">
+	            	<div class="col-md-8">
+	            		<t t-if="message">
+							<div class="alert alert-danger">
+		                        <t t-esc="message"/>
+		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+			                </div>
+			            </t>
+		            	
+		            	<form t-attf-action="{{target}}" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+				            <div t-attf-class="form-group">
+				                <label class="col-md-3 col-sm-4 control-label" for="card_no">Card Number</label>
+								<div class="col-md-7 col-sm-8">
+			            			<input name="card_no" type="text" class="form-control" />
+			            		</div>
+			            	</div>
+		            	</form>
+		            </div>
+		        </div>
+            </div>
+        </div>
+    </t>			
+</template>
+</data>
+</openerp>

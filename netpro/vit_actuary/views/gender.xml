@@ -1,0 +1,35 @@
+<openerp>
+<data>        
+    <record model="ir.ui.view" id="view_netpro_gender_form">
+        <field name="name">netpro.gender.form</field>
+        <field name="model">netpro.gender</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.gender">
+                <group>
+                    <field name="name" select="1"/>
+                    <field name="description" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_gender_tree">
+        <field name="name">netpro.gender.tree</field>
+        <field name="model">netpro.gender</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.gender">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_gender">
+        <field name="name">Gender</field>
+        <field name="res_model">netpro.gender</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>
