@@ -850,7 +850,7 @@
         <field name="view_mode">tree,form</field>
     </record> -->
     <!-- <menuitem name="Membership" id="menu_netpro_membership" action="action_netpro_membership"/> -->
-        
+<!--         
     <record model="ir.ui.view" id="view_netpro_gender_form">
         <field name="name">netpro.gender.form</field>
         <field name="model">netpro.gender</field>
@@ -882,9 +882,9 @@
         <field name="res_model">netpro.gender</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
         
-    <record model="ir.ui.view" id="view_netpro_marital_status_form">
+<!--     <record model="ir.ui.view" id="view_netpro_marital_status_form">
         <field name="name">netpro.marital_status.form</field>
         <field name="model">netpro.marital_status</field>
         <field name="type">form</field>
@@ -915,7 +915,7 @@
         <field name="res_model">netpro.marital_status</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
         
     <record model="ir.ui.view" id="view_netpro_member_plan_form">
         <field name="name">netpro.member_plan.form</field>
