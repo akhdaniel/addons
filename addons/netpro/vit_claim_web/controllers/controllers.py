@@ -41,7 +41,7 @@ class Member(http.Controller):
 				return request.redirect('/claim/registration?message=%s'% (message), code=301)
 
 		return http.request.render('vit_claim_web.loa', 
-			{'member': member, 'message':message})
+			{'member': member, 'product_type':product_type, 'message':message})
 
 	@http.route('/claim/discharge', auth='user', website=True)
 	def discharge(self, **kw):
