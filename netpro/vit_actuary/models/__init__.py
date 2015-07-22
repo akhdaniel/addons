@@ -12,5 +12,9 @@ import lob
 import modal_factor
 import product
 import product_plan
+import product_plan_base
 import product_type
 import term_condition
+import premium_type
+import premium_table
+import marital_status
