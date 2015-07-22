@@ -1,0 +1,61 @@
+<openerp>
+<data>
+    <record model="netpro.product" id="product1">
+        <field name="product_type_id" ref="vit_actuary.product_type1"/>
+        <field name="code">RI</field>
+        <field name="name">Rawat Inap</field>
+        <field name="description">Rawat Inap</field>
+    </record>
+
+    <record model="netpro.product" id="product2">
+        <field name="product_type_id" ref="vit_actuary.product_type2"/>
+        <field name="code">RJ</field>
+        <field name="name">Rawat Jalan</field>
+        <field name="description">Rawat Jalan</field>
+    </record>
+
+    <record model="netpro.product" id="product3">
+        <field name="product_type_id" ref="vit_actuary.product_type3"/>
+        <field name="code">DT</field>
+        <field name="name">Dental</field>
+        <field name="description">Dental</field>
+    </record>
+
+    <record model="netpro.product" id="product4">
+        <field name="product_type_id" ref="vit_actuary.product_type4"/>
+        <field name="code">MAT</field>
+        <field name="name">Maternity</field>
+        <field name="description">Maternity</field>
+    </record>
+
+    <record model="netpro.product" id="product5">
+        <field name="product_type_id" ref="vit_actuary.product_type5"/>
+        <field name="code">SP</field>
+        <field name="name">Spesialis</field>
+        <field name="description">Spesialis</field>
+    </record>
+
+    <record model="netpro.product" id="product6">
+        <field name="product_type_id" ref="vit_actuary.product_type6"/>
+        <field name="code">OP</field>
+        <field name="name">Optic</field>
+        <field name="description">Optic</field>
+    </record>
+
+    <record model="netpro.product" id="product7">
+        <field name="product_type_id" ref="vit_actuary.product_type7"/>
+        <field name="code">LAB</field>
+        <field name="name">Laboratorium</field>
+        <field name="description">Laboratorium</field>
+    </record>
+
+    <record model="netpro.product" id="product8">
+        <field name="product_type_id" ref="vit_actuary.product_type8"/>
+        <field name="code">PHAR</field>
+        <field name="name">Pharmacy</field>
+        <field name="description">Pharmacy</field>
+    </record>
+
+
+</data>
+</openerp>
