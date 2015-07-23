@@ -1,0 +1,12 @@
+<openerp>
+<data>
+    <record model="netpro.product_plan" id="product_plan1">
+        <field name="product_type_id" ref="vit_actuary.product_type1"/>
+        <field name="code">RI</field>
+        <field name="name">Rawat Inap</field>
+        <field name="description">Rawat Inap</field>
+    </record>
+
+
+</data>
+</openerp>

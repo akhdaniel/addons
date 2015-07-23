@@ -37,3 +37,6 @@
 "access_netpro_claim_rule","netpro.claim_rule","model_netpro_claim_rule","base.group_user",1,0,0,0
 access_netpro_kpp,access_netpro_kpp,model_netpro_kpp,,1,1,1,1
 access_netpro_tpa,access_netpro_tpa,model_netpro_tpa,,1,1,1,1
+access_netpro_membership_plan_employee,access_netpro_membership_plan_employee,model_netpro_membership_plan_employee,,1,0,0,0
+access_netpro_membership_plan_spouse,access_netpro_membership_plan_spouse,model_netpro_membership_plan_spouse,,1,0,0,0
+access_netpro_membership_plan_child,access_netpro_membership_plan_child,model_netpro_membership_plan_child,,1,0,0,0

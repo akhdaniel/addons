@@ -70,57 +70,73 @@
                 <t t-set="member" t-value="member"/>
             </t>    
 
-        	<p>Benefit Rawat Jalan</p>
+        	<h3>Benefit <t t-esc="product_type.name"/> - <t t-esc="product_type.descriptopn"/> </h3>
 
+            <form t-attf-action="/claim/registration_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
-         	<div class="row">
-            	<div class="col-md-4 col-sm-4">
-                    <label class="control-label">B. Admin</label>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                   	Sesuai Tagihan
-                </div>
-            </div> 	
-         	<div class="row">
-            	<div class="col-md-4 col-sm-4">
-                    <label class="control-label">B. Dr. Umum</label>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                   	Sesuai Tagihan
-                </div>
-        	</div>
-         	<div class="row">
-            	<div class="col-md-4 col-sm-4">
-                    <label class="control-label">B. Dr. Specialis</label>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                   	Sesuai Tagihan
-                </div>
-            </div> 	
-         	<div class="row">
-            	<div class="col-md-4 col-sm-4">
-                    <label class="control-label">B. Obat</label>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                   	Sesuai Tagihan
-                </div>
-            </div> 	
-         	<div class="row">
-            	<div class="col-md-4 col-sm-4">
-                    <label class="control-label">B. Test Diagnosis</label>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                   	Sesuai Tagihan
-                </div>
-            </div> 	
-         	<div class="row">
-            	<div class="col-md-4 col-sm-4">
-                    <label class="control-label">B. Fisioterapi</label>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                   	Sesuai Tagihan
-                </div>
-            </div> 	
+             	<div class="row">
+                	<div class="col-md-4 col-sm-4">
+                        <label class="control-label">B. Admin</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                       	Sesuai Tagihan
+                    </div>
+                </div> 	
+             	<div class="row">
+                	<div class="col-md-4 col-sm-4">
+                        <label class="control-label">B. Dr. Umum</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                       	Sesuai Tagihan
+                    </div>
+            	</div>
+             	<div class="row">
+                	<div class="col-md-4 col-sm-4">
+                        <label class="control-label">B. Dr. Specialis</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                       	Sesuai Tagihan
+                    </div>
+                </div> 	
+             	<div class="row">
+                	<div class="col-md-4 col-sm-4">
+                        <label class="control-label">B. Obat</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                       	Sesuai Tagihan
+                    </div>
+                </div> 	
+             	<div class="row">
+                	<div class="col-md-4 col-sm-4">
+                        <label class="control-label">B. Test Diagnosis</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                       	Sesuai Tagihan
+                    </div>
+                </div> 	
+             	<div class="row">
+                	<div class="col-md-4 col-sm-4">
+                        <label class="control-label">B. Fisioterapi</label>
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                       	Sesuai Tagihan
+                    </div>
+                </div> 	
+
+                <div class="row">
+                    <div class="col-sm-8 col-md-7">
+                        <button type="submit" name="confirm" class="btn btn-primary">
+                            Confirm
+                        </button>
+                        <button type="submit" name="email"  class="btn btn-warning">
+                            Email
+                        </button>
+                        <button type="submit" name="print"  class="btn btn-danger">
+                            Print
+                        </button>
+                    </div>
+                </div>    
+            </form>
         </div>
     </t>
 </template>

@@ -11,7 +11,7 @@
 		   	<t t-esc="member.email"/>
 			<p>Benefit Rawat Jalan</p>
 
-			<form t-attf-action="/claim/discharge_confirm" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+			<form t-attf-action="/claim/discharge_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
 			    <div class="row">
 			    	<div class="col-md-6 col-sm-6">
@@ -90,7 +90,7 @@
 
 <!-- discharge -->
 
-<template id="vit_claim_web.discharge_confirm" name="Discharge Confirmation" page="True">
+<template id="vit_claim_web.discharge_confirmation" name="Discharge Confirmation" page="True">
     <t t-call="website.layout">
         <t t-set="title">Discharge Confirmation</t>
         <div class="container">
