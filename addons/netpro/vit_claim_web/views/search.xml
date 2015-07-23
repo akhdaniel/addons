@@ -1,5 +1,79 @@
 <openerp>
 <data>
+
+
+<!-- patient data -->
+<template id="vit_claim_web.patient_data">
+    <h1>Patient Name: <t t-esc="member.name"/></h1>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="member_no">Class</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.class_id.short_desc"/>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="member_no">Membership</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.membership.name"/>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="member_no">Card No</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.member_no"/>
+        </div>
+    </div>      
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="date_of_birth">Date of Birth</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.date_of_birth"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label">Sex</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.sex"/>
+        </div>
+    </div>    
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="policy_no">Policy No.</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.policy_id.policy_no"/>
+        </div>
+    </div>      
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="company_name">Company</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.policy_id.policy_holder_id.name"/>
+        </div>
+    </div>      
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <label class="control-label" for="contact_name">Policy Date</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <t t-esc="member.insurance_period_start"/> to 
+            <t t-esc="member.insurance_period_end"/>
+        </div>
+    </div>      
+</template>
+
+
 <!-- search patient -->
 
 <template id="vit_claim_web.search" name="Search Patient" page="True">
