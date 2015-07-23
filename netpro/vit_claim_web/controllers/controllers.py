@@ -7,12 +7,19 @@ import logging
 _logger = logging.getLogger(__name__)
 
 class Member(http.Controller):
+	######################################################################################
+	# halaman registration
+	# muncul search patient, action ke eligibility
+	######################################################################################
 	@http.route('/claim/registration', auth='user', website=True)
 	def registration(self, **kw):
 		message = kw.get('message','')
 		return http.request.render('vit_claim_web.search',
 			{'target':'/claim/eligibility', 'target_title':'Registration', 'message':message} )	
 
+	######################################################################################
+	# pengecekan eligibility pasien 
+	######################################################################################
 	@http.route('/claim/eligibility', auth='user', website=True)
 	def eligibility(self, **kw):
 		member = False
@@ -30,6 +37,12 @@ class Member(http.Controller):
 			{'member': member, 'message':message})
 
 
+	######################################################################################
+	# penampilan letter of authority
+	# benefit yg didapat patient dari suatu coverage yg dipilih
+	# == registration confirmation
+	# action POST ke registration_process
+	######################################################################################
 	@http.route('/claim/loa/<model("netpro.member"):member>/<model("netpro.product_type"):product_type>', auth='user', website=True)
 	def loa(self, member, product_type, **kw):
 		message = "";
@@ -43,14 +56,32 @@ class Member(http.Controller):
 		return http.request.render('vit_claim_web.loa', 
 			{'member': member, 'product_type':product_type, 'message':message})
 
+	######################################################################################
+	# proses registration patient: 
+	# print, email, save: insert transaksi claim
+	######################################################################################
+	@http.route('/claim/registration_process', auth='user', website=True)
+	def registration_process(self, **kw):
+		message = kw.get('message','')
+		return http.request.render('vit_claim_web.registration_process', {} )	
+
+
+	######################################################################################
+	# halaman utama discrhage, munculkan search patient
+	# action ke discharge_confirmation
+	######################################################################################
 	@http.route('/claim/discharge', auth='user', website=True)
 	def discharge(self, **kw):
 		message = kw.get('message','')
 		return http.request.render('vit_claim_web.search', 
-			{'target':'/claim/discharge_confirm' , 'target_title':'Discharge', 'message':message} )	
+			{'target':'/claim/discharge_confirmation' , 'target_title':'Discharge', 'message':message} )	
 
-	@http.route('/claim/discharge_confirm', auth='user', website=True)
-	def discharge_confirm(self, **kw):
+	######################################################################################
+	# discharge confirm, pengesahan
+	# masukkan angka2 yang di-claim
+	######################################################################################
+	@http.route('/claim/discharge_confirmation', auth='user', website=True)
+	def discharge_confirmation(self, **kw):
 		member = False
 		message = "";
 
@@ -61,9 +92,18 @@ class Member(http.Controller):
 				message = "Member not found! Please try again."
 				return request.redirect('/claim/discharge?message=%s'% (message), code=301)
 
-		return http.request.render('vit_claim_web.discharge_confirm', 
+		return http.request.render('vit_claim_web.discharge_confirmation', 
 			{'member': member, 'message':message})
 
+
+	######################################################################################
+	# proses discharge: insert transaksi claim
+	######################################################################################
+	@http.route('/claim/discharge_process', auth='user', website=True)
+	def discharge_process(self, **kw):
+		message = "";
+		return http.request.render('vit_claim_web.discharge_process', 
+			{ 'message':message })
 
 	# @http.route('/mlm/member/list', auth='user', website=True)
 	# def list(self, **kw):		

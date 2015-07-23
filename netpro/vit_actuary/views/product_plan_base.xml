@@ -1,0 +1,36 @@
+
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_product_plan_base_form">
+        <field name="name">netpro.product_plan_base.form</field>
+        <field name="model">netpro.product_plan_base</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.product_plan_base">
+                <group>
+                    <field name="pplan" select="1"/>
+                    <field name="name" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_product_plan_base_tree">
+        <field name="name">netpro.product_plan_base.tree</field>
+        <field name="model">netpro.product_plan_base</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.product_plan_base">
+                <field name="pplan"/>
+                <field name="name"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_product_plan_base">
+        <field name="name">Product Plan</field>
+        <field name="res_model">netpro.product_plan_base</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

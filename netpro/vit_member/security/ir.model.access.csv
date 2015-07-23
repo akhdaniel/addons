@@ -2,3 +2,4 @@
 "access_netpro_member","netpro.member","model_netpro_member","base.group_user",1,0,0,0
 "access_netpro_member_plan","netpro.member_plan","model_netpro_member_plan","base.group_user",1,0,0,0
 "access_netpro_member_plan_detail","netpro.member_plan_detail","model_netpro_member_plan_detail","base.group_user",1,0,0,0
+access_netpro_member_claim_history,access_netpro_member_claim_history,model_netpro_member_claim_history,,1,0,0,0
