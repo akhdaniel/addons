@@ -25,6 +25,8 @@ class netpro_member(osv.osv):
     _inherit = 'res.partner'
     _columns = {
         'policy_id': fields.many2one('netpro.policy', 'Policy', required=True),
+        'policy_holder': fields.related('policy_id', 'policy_holder_id', 
+            relation='res.partner', type='many2one', store=True, string='Policy Holder'),
         'insurance_period_start': fields.date('Insurance Period Start', required=True),
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.', required=True),

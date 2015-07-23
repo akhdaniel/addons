@@ -116,18 +116,21 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.member">
+                <field name="policy_holder"/>
                 <field name="policy_id"/>
+                <field name="name"/>
+                <field name="birthdate"/>
+                <field name="employee"/>
+                <field name="member_no"/>
                 <field name="insurance_period_start"/>
                 <field name="insurance_period_end"/>
-                <field name="member_no"/>
-                <field name="name"/>
-                <field name="employee"/>
+                <field name="status"/>
+                <!-- 
                 <field name="census_no"/>
                 <field name="sex"/>
                 <field name="marital_status"/>
                 <field name="email"/>
                 <field name="mobile"/>
-                <field name="birthdate"/>
                 <field name="age"/>
                 <field name="birth_place"/>
                 <field name="salary"/>
@@ -152,7 +155,6 @@
                 <field name="dummy_member"/>
                 <field name="mno"/>
                 <field name="pmno"/>
-                <field name="status"/>
                 <field name="trans_type"/>
                 <field name="suspend_tpa"/>
                 <field name="account_no"/>
@@ -160,8 +162,8 @@
                 <field name="bank"/>
                 <field name="bank_name"/>
                 <field name="bank_branch"/>
-                <!-- <field name="company_name"/> -->
-                <!-- <field name="company_address"/> -->
+                <field name="company_name"/>
+                <field name="company_address"/>
                 <field name="title"/>
                 <field name="division"/>
                 <field name="branch"/>
@@ -177,7 +179,7 @@
                 <field name="email"/>
                 <field name="height"/>
                 <field name="weight"/>
-                <field name="parent_id"/>
+                <field name="parent_id"/> -->
 
             </tree>
         </field>
