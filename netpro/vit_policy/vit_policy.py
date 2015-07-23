@@ -98,7 +98,7 @@ class netpro_policy(osv.osv):
         'vaccount_no': fields.char('V Account No'),
         'bank_optional_id': fields.many2one('res.partner.bank', 'Bank Optional', help='Relasi ke Partner Bank'),
         'vaccount_no_optional': fields.char('V Account No Optional'),
-        'policy_status': fields.char('Policy Status'),
+        'policy_status': fields.selection([('open','Open'), ('approved','Approved'), ('closed', 'Closed')],'Policy Status'),
         'endorsement_date': fields.date('Endorsement Date'),
         'email_date': fields.date('EmailDate'),
         'int_endorsement_no': fields.integer('Int. Endorsement No'),
@@ -389,14 +389,6 @@ class netpro_up_room_class(osv.osv):
         'point': fields.integer('Point'),
     }
 netpro_up_room_class()
-
-class netpro_policy_status(osv.osv):
-    _name = 'netpro.policy_status'
-    _columns = {
-        'name': fields.char('Name'),
-        'description': fields.text('Description'),
-    }
-netpro_policy_status()
 
 class netpro_coverage(osv.osv):
     _name = 'netpro.coverage'
