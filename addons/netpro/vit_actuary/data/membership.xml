@@ -1,0 +1,36 @@
+<openerp>
+<data>
+	<record model="netpro.membership" id="membership1">
+        <field name="membership_id">EMP</field>
+        <field name="name">Employee</field>
+        <field name="name_i">Karyawan</field>
+        <field name="category">A</field>
+        <field name="age_between_start">18</field>
+        <field name="age_between_End">70</field>
+        <field name="policy_owner">1</field>
+        <field name="allowed">0</field>
+    </record>
+
+    <record model="netpro.membership" id="membership2">
+        <field name="membership_id">SPO</field>
+        <field name="name">Spouse</field>
+        <field name="name_i">Pasangan</field>
+        <field name="category">A</field>
+        <field name="age_between_start">18</field>
+        <field name="age_between_End">70</field>
+        <field name="policy_owner">0</field>
+        <field name="allowed">0</field>
+    </record>
+
+    <record model="netpro.membership" id="membership3">
+        <field name="membership_id">CHI</field>
+        <field name="name">Children</field>
+        <field name="name_i">Anak</field>
+        <field name="category">C</field>
+        <field name="age_between_start">0</field>
+        <field name="age_between_End">25</field>
+        <field name="policy_owner">0</field>
+        <field name="allowed">0</field>
+    </record>
+</data>
+</openerp>
