@@ -513,7 +513,14 @@
         <field name="arch" type="xml">
             <tree string="netpro.policy">
                 <field name="policy_no"/>
-                <field name="reference_no"/>
+                <field name="pno"/>
+                <field name="policy_holder_id"/>
+                <field name="insurance_period_start"/>
+                <field name="insurance_period_end"/>
+                <field name="created_by_id"/>
+                <field name="created_by_date"/>
+
+                <!-- <field name="reference_no"/>
                 <field name="quotation_no"/>
                 <field name="ci"/>
                 <field name="corporate_id"/>
@@ -521,10 +528,7 @@
                 <field name="policy_type"/>
                 <field name="branch_id"/>
                 <field name="marketing_officer_id"/>
-                <field name="policy_holder_id"/>
                 <field name="policy_group_id"/>
-                <field name="insurance_period_start"/>
-                <field name="insurance_period_end"/>
                 <field name="exclusive_period"/>
                 <field name="toc_id"/>
                 <field name="ujroh"/>
@@ -589,12 +593,9 @@
                 <field name="email_date"/>
                 <field name="int_endorsement_no"/>
                 <field name="ext_endorsement_no"/>
-                <field name="pno"/>
                 <field name="ppno"/>
                 <field name="cancel_policy"/>
                 <field name="profit_sharing_endorsement"/>
-                <field name="created_by_id"/>
-                <field name="created_by_date"/>
                 <field name="last_edited_by_id"/>
                 <field name="last_edited_by_date"/>
                 <field name="approved_by_id"/>
@@ -643,7 +644,7 @@
                 <field name="profit_sharing_profit_sharing"/>
                 <field name="profit_sharing_adjustment"/>
                 <field name="profit_sharing_profit_sharing_amt"/>
-                <field name="ci_date"/>
+                <field name="ci_date"/> -->
 
             </tree>
         </field>
