@@ -43,8 +43,8 @@ class Member(http.Controller):
 	# == registration confirmation
 	# action POST ke registration_process
 	######################################################################################
-	@http.route('/claim/loa/<model("netpro.member"):member>/<model("netpro.product_type"):product_type>', auth='user', website=True)
-	def loa(self, member, product_type, **kw):
+	@http.route('/claim/loa/<model("netpro.member"):member>/<model("netpro.product_plan"):product_plan>', auth='user', website=True)
+	def loa(self, member, product_plan, **kw):
 		message = "";
 
 		if request.httprequest.method == 'GET':
@@ -53,8 +53,10 @@ class Member(http.Controller):
 				# return http.request.render('vit_claim_web.registration', {'message':message} )	
 				return request.redirect('/claim/registration?message=%s'% (message), code=301)
 
+		# cari benefit member sesuai product_type (RI, RJ, dll)
+		# dari member_plan_detail_ids yang plan_schedule_id
 		return http.request.render('vit_claim_web.loa', 
-			{'member': member, 'product_type':product_type, 'message':message})
+			{'member': member, 'product_plan':product_plan, 'message':message})
 
 	######################################################################################
 	# proses registration patient: 

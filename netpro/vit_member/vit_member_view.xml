@@ -21,7 +21,7 @@
                             <group>
                                 <field name="member_no" select="0"/>
                                 <field name="name" select="0"/>
-                                <field name="employee_id_id" select="0"/>
+                                <field name="employee_id" select="0"/>
                                 <field name="parent_id" select="0"/>
                                 <field name="census_no" select="0"/>
                                 <field name="sex" select="0"/>
@@ -987,8 +987,9 @@
             <form string="netpro.member_plan_detail">
                 <group>
                     <!-- <field name="member_plan_id" select="1"/> -->
-                    <field name="detail_id" select="2"/>
-                    <field name="name" select="0"/>
+                    <!-- <field name="detail_id" select="2"/> -->
+                    <!-- <field name="name" select="0"/> -->
+                    <field name="benefit_id"/>
                     <field name="reim" select="0"/>
                     <field name="provider_limit" select="0"/>
                     <field name="non_provider_limit" select="0"/>
@@ -1006,8 +1007,9 @@
         <field name="arch" type="xml">
             <tree string="netpro.member_plan_detail">
                 <field name="member_plan_id"/>
-                <field name="detail_id"/>
-                <field name="name"/>
+<!--                 <field name="detail_id"/>
+                <field name="name"/> -->
+                <field name="benefit_id"/>
                 <field name="reim"/>
                 <field name="provider_limit"/>
                 <field name="non_provider_limit"/>
