@@ -31,7 +31,7 @@ class netpro_member(osv.osv):
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.', required=True),
         #'name': fields.char('Name', required=True),
-        #'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
+        'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
         'census_no': fields.integer('Census No.'),
         'sex': fields.many2one('netpro.sex', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
@@ -366,8 +366,9 @@ class netpro_member_plan_detail(osv.osv):
     _name = 'netpro.member_plan_detail'
     _columns = {
         'member_plan_id': fields.many2one('netpro.member_plan', 'Member Plan'),
-        'detail_id': fields.char('ID'),
-        'name': fields.char('Name'),
+        'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
+        #'detail_id': fields.char('ID'),
+        #'name': fields.char('Name'),
         'reim': fields.float('Reim'),
         'provider_limit': fields.float('Provider Limit'),
         'non_provider_limit': fields.float('Non Provider Limit'),
