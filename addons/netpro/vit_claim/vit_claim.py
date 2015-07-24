@@ -252,6 +252,14 @@ netpro_treatment_category()
 #         'remaining': fields.float('Remaining'),
 #     }
 # netpro_benefit()
+class netpro_claim_status(osv.osv):
+    _name = 'netpro.claim_status'
+    _columns = {
+        'name': fields.char('Name'),
+        'description': fields.text('Description'),
+    }
+netpro_claim_status()
+
 
 class netpro_claim_detail_status(osv.osv):
     _name = 'netpro.claim_detail_status'
