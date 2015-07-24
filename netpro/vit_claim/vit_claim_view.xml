@@ -789,6 +789,19 @@
         <field name="view_mode">tree,form</field>
     </record>
     <!-- <menuitem name="Claim Diagnosis" id="menu_netpro_claim_diagnosis" action="action_netpro_claim_diagnosis"/> -->
-        
+
+
+    <record id="view_member_form_claim" model="ir.ui.view">
+        <field name="name">netpro_member_form_claim</field>
+        <field name="model">netpro.member</field>
+        <field name="inherit_id" ref="vit_member.view_netpro_member_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Claim History">
+                    <field name="claim_ids"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
 </data>
 </openerp>
