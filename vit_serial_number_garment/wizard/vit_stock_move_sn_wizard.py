@@ -218,7 +218,6 @@ class stock_move_serial_number_wizard_lines_out(osv.osv_memory):
 
     _columns = {
         'wizard_id'         : fields.many2one('stock.move.serial.number.wizard', 'Wizard'),
-        'wizard_picking_id' : fields.many2one('stock.move.serial.number.wizard.allproduct', 'Wizard'),
         'serial_number_id'  : fields.many2one('stock.production.lot',string='Serial Number',required=True),
         'product_id'        : fields.related('serial_number_id','product_id',type='many2one',relation='product.product',string='Product',store=True),
         'qty'               : fields.float('Qty'),
@@ -228,98 +227,4 @@ class stock_move_serial_number_wizard_lines_out(osv.osv_memory):
         'qty'   : 1,
     }
     
-stock_move_serial_number_wizard_lines_out()
-
-
-class stock_move_serial_number_wizard_allproduct(osv.osv_memory):
-    _name = "stock.move.serial.number.wizard.allproduct"
-
-    def default_get(self, cr, uid, fields, context=None):
-        if context is None:
-            context = {}
-        res = super(stock_move_serial_number_wizard_allproduct, self).default_get(cr, uid, fields, context=context)
-        if context.get('active_id'):
-           
-            picking = self.pool.get('stock.picking').browse(cr, uid, context['active_id'], context=context)
-            if 'move_lines' in fields:
-                move_ids    = []
-                qty_all     = 0
-                for move in picking.move_lines:
-                    move_ids.append(move.id)
-                    qty_all += move.product_qty
-                   
-                res.update({'move_lines': move_ids,'qty_all':qty_all})#[move.id for move in picking.move_lines]})
-            if 'type' in fields:
-                res.update({'type': picking.type})                
-        return res
-
-    _columns = {
-        'qty_all': fields.float('Quantity', digits_compute=dp.get_precision('Product Unit of Measure')),
-        'move_lines': fields.one2many('stock.move', 'picking_id', 'Internal Moves',),
-        'type': fields.selection([('out', 'Sending Goods'), ('in', 'Getting Goods'), ('internal', 'Internal')], 'Shipping Type'),
-        'line_out_ids': fields.one2many('stock.move.serial.number.wizard.lines.out', 'wizard_picking_id', 'Serial Numbers'),
-     }
-
-    def update_serial_number_allproduct(self, cr, uid, ids, context=None):
-        """ To update all product in SN"""
-        
-        if context is None:
-            context = {}
-        res = self.update_allproduct_in_serial_number(cr, uid, ids, context.get('active_ids'), context=context)
-        return {'type': 'ir.actions.act_window_close'}
-
-    def update_allproduct_in_serial_number(self, cr, uid, ids, picking_ids, context=None):
-        if context is None:
-            context = {}
-         
-        assert context.get('active_model') == 'stock.picking.out',\
-             'Incorrect use of the stock move in stock picking out split wizard'
-        picking_obj     = self.pool.get('stock.picking.out')     
-        prodlot_obj     = self.pool.get('stock.production.lot')
-        inventory_obj   = self.pool.get('stock.inventory')
-        move_obj        = self.pool.get('stock.move')
-        inv_obj         = self.pool.get('account.invoice')
-        move_sn_obj     = self.pool.get('stock.move.serial.number')
-        
-        move_ids        = move_obj.search(cr,uid,[('picking_id','=',picking_ids[0])],context=context)
-
-        sale_order_id   = False
-        picking_id      = False
-        for data in self.browse(cr, uid, ids, context=context):    
-            #looping stock move yang akan di masukan SN
-            for mv in move_obj.browse(cr, uid, move_ids, context=context):
-                product_move = mv.product_id.id
-                qty_move     = mv.product_qty
-                if mv.picking_id.sale_id :
-                    sale_order_id = mv.picking_id.sale_id.id
-                #cari SN yang di input berdasarkan stock move
-                sn_per_product = self.pool.get('stock.move.serial.number.wizard.lines.out').search(cr,uid,[('wizard_picking_id','=',data.id),('product_id','=',product_move)])
-                # jika qty satu stock move tidak sama dengan jumalh SN yang di inputkan
-                if qty_move != len(sn_per_product):
-                    raise osv.except_osv(_('Warning!'), _("Jumlah product %s sebesar %s tidak sama dengan \
-                     yang di inputkan di SN sebanyak %s !") % (mv.product_id.name,qty_move,len(sn_per_product)))
-                #looping SN yang diinputkan per stock move
-                for sn in self.pool.get('stock.move.serial.number.wizard.lines.out').browse(cr,uid,sn_per_product,context=context):
-                    sn_no       = sn.serial_number_id.name
-                    sn_product  = sn.serial_number_id.product_id.id
-                    sn_qty      = sn.qty
-
-                    #ceklis fields is_used agar di DO sebelumnya tidak bisa digunakan kembali
-                    prodlot_obj.write(cr,uid,sn.serial_number_id.id,{'is_used': True},context=context)
-
-                    # create stock_move_serial_number yang related ke stock_move ini
-                    move_sn_obj.create(cr,uid,{'stock_move_id'      : mv.id,
-                                                'serial_number_id'  : sn.serial_number_id.id,
-                                                'picking_id'        : picking_ids[0],
-                                                'product_id'        : product_move,
-                                                'qty'               : -sn_qty,
-                                                'sale_order_id'     : sale_order_id,
-                                            })                   
-                #untuk mengilangkan tombol insert SN di movelines
-                move_obj.write(cr,uid,mv.id,{'is_serial_number':True},context=context)
-            #untuk mengilangkan tombol insert SN di form picking   
-            picking_obj.write(cr,uid,picking_ids[0],{'is_used_sn':True},context=context)      
-
-        return True
-
-stock_move_serial_number_wizard_allproduct()     
+stock_move_serial_number_wizard_lines_out()  
