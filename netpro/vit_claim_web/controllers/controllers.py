@@ -5,6 +5,7 @@ import base64
 import simplejson
 import logging
 _logger = logging.getLogger(__name__)
+import time
 
 class Member(http.Controller):
 	######################################################################################
@@ -69,6 +70,16 @@ class Member(http.Controller):
 	@http.route('/claim/registration_process', auth='user', website=True)
 	def registration_process(self, **kw):
 		message = kw.get('message','')
+		member_id = kw.get('member_id', '')
+
+		#insert into netpro_claim
+		Claim = http.request.env['netpro.claim']
+		data = {
+			'claim_date'	: time.strftime("%Y-%m-%d"),
+			'member_id'		: member_id,
+		}
+		Claim.create(data)
+
 		return http.request.render('vit_claim_web.registration_process', {} )	
 
 

@@ -44,6 +44,8 @@
                         </button>
                     </div>
                 </div>    
+
+                <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
             </form>
         </div>
     </t>
@@ -71,6 +73,16 @@
         </div>
         <br/>
     </t>	
+</template>
+
+
+<template id="vit_claim_web.registration_process" name="Registration" page="True">
+    <t t-call="website.layout">
+        <t t-set="title">Registration</t>
+        <div class="container">
+            <h2>Registration Sukses</h2>
+        </div>
+    </t>
 </template>
 
 </data>
