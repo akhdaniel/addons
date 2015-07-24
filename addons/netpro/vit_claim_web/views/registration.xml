@@ -46,6 +46,7 @@
                 </div>    
 
                 <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
+                <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
             </form>
         </div>
     </t>

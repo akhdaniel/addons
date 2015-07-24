@@ -71,12 +71,19 @@ class Member(http.Controller):
 	def registration_process(self, **kw):
 		message = kw.get('message','')
 		member_id = kw.get('member_id', '')
+		member_plan_id = kw.get('member_plan_id', False)
+		MemberPlan = http.request.env['netpro.member_plan']
+		member_plan = MemberPlan.browse( int(member_plan_id))
+
+		if not member_plan:
+			raise osv.except_osv(_('Error'),_("Member Plan not found!") ) 
 
 		#insert into netpro_claim
 		Claim = http.request.env['netpro.claim']
 		data = {
 			'claim_date'	: time.strftime("%Y-%m-%d"),
-			'member_id'		: member_id,
+			'member_id'		: int(member_id),
+			'product_plan_base_id'	: member_plan.plan_schedule_id.product_plan_base_id.id 
 		}
 		Claim.create(data)
 
