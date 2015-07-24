@@ -89,7 +89,7 @@ class netpro_member(osv.osv):
         'weight': fields.integer('Weight'),
         'member_plan_ids': fields.one2many('netpro.member_plan', 'member_id', 'Plans', ondelete='cascade'),
         'family_ids': fields.one2many('netpro.member', 'parent_id', 'Families', ondelete='cascade'),
-        'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
+        # 'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
         'parent_id': fields.many2one('netpro.member', 'Family'),
     }
 netpro_member()

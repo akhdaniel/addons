@@ -72,9 +72,9 @@
                         <field name="family_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
 
-                    <page string="Claim History">
+<!--                     <page string="Claim History">
                         <field name="claim_history_ids" colspan="4" nolabel="1" select="0"/>
-                    </page>
+                    </page> -->
 
                     <page string="Account">
                         <group>

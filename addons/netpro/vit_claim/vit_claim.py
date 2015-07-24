@@ -22,6 +22,7 @@
 from openerp.osv import fields,osv
 class netpro_claim(osv.osv):
     _name = 'netpro.claim'
+    _rec_name = 'claim_no'
     _columns = {
         'claim_no': fields.char('Claim No.'),
         'claim_no_revision': fields.integer('Claim No Revision'),
@@ -271,3 +272,11 @@ class netpro_claim_diagnosis(osv.osv):
     }
 netpro_claim_diagnosis()
 
+
+class netpro_member(osv.osv):
+    _name           = "netpro.member"
+    _inherit        = "netpro.member"
+    _columns     = {
+        'claim_ids'  : fields.one2many('netpro.claim','member_id','Claim History', ondelete="cascade")
+    }
+netpro_member()
