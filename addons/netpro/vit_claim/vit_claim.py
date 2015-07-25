@@ -50,7 +50,7 @@ class netpro_claim(osv.osv):
         'member_id': fields.many2one('netpro.member', 'Member'),
         'claim_category_id': fields.many2one('netpro.claim_category', 'Category'),
         'claim_type_id': fields.many2one('netpro.claim_type', 'Claim Type'),
-        'product_plan_base_id': fields.many2one('netpro.product_plan_base', 'Claim Type'),
+        'member_plan_id': fields.many2one('netpro.member_plan', 'Claim Type (Member Plan)'),
         'diagnosis_id': fields.many2one('netpro.diagnosis', 'Diagnosis'),
         '2nd_diagnosis': fields.many2one('netpro.diagnosis', '2nd Diagnosis'),
         '3rd_diagnosis': fields.many2one('netpro.diagnosis', '3rd Diagnosis'),

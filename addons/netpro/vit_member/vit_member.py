@@ -368,7 +368,10 @@ class netpro_member_plan_detail(osv.osv):
     _columns = {
         'member_plan_id': fields.many2one('netpro.member_plan', 'Member Plan'),
         'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
-        'benefit_code' : fields.related('benefit_id', , 'Benefit Code'),
+        'benefit_code' : fields.related('benefit_id', 'code' , type="char", 
+            relation="netpro.benefit", string="Benefit Code", store=True),
+
+        # 'benefit_code' : fields.related('benefit_id', 'Benefit Code'),
         #'detail_id': fields.char('ID'),
         #'name': fields.char('Name'),
         'reim': fields.float('Reim'),
