@@ -1,0 +1,40 @@
+<openerp>
+	<data>
+		<record model="netpro.claim_status" id="claim_status_draft">
+			<field name="code">D</field>
+			<field name="name">draft</field>
+			<field name="description">Draft</field>
+		</record>
+		<record model="netpro.claim_status" id="claim_status_open">
+			<field name="code">O</field>
+			<field name="name">open</field>
+			<field name="description">Open</field>
+		</record>
+		<record model="netpro.claim_status" id="claim_status_approved">
+			<field name="code">A</field>
+			<field name="name">approved</field>
+			<field name="description">Approved by Adjuster</field>
+		</record>
+		<record model="netpro.claim_status" id="claim_status_revised">
+			<field name="code">C</field>
+			<field name="name">revised</field>
+			<field name="description">Revised</field>
+		</record>
+
+		<record model="netpro.claim_status" id="claim_status_released">
+			<field name="code">R</field>
+			<field name="name">released</field>
+			<field name="description">Released</field>
+		</record>
+		<record model="netpro.claim_status" id="claim_status_cancelled">
+			<field name="code">X</field>
+			<field name="name">cancelled</field>
+			<field name="description">Cancelled</field>
+		</record>
+		<record model="netpro.claim_status" id="claim_status_hold">
+			<field name="code">H</field>
+			<field name="name">hold</field>
+			<field name="description">Hold/Pending</field>
+		</record>
+	</data>
+</openerp>

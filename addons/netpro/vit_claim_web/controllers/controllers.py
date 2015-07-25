@@ -6,6 +6,7 @@ import simplejson
 import logging
 _logger = logging.getLogger(__name__)
 import time
+CLAIM_STATE_OPEN = 2
 
 class Member(http.Controller):
 	######################################################################################
@@ -102,6 +103,8 @@ class Member(http.Controller):
 
 	######################################################################################
 	# discharge confirm, pengesahan
+	# cari data registrasi awal (claim)
+	# jika ada:
 	# masukkan angka2 yang di-claim
 	######################################################################################
 	@http.route('/claim/discharge_confirmation', auth='user', website=True)
@@ -110,18 +113,27 @@ class Member(http.Controller):
 		message = "";
 
 		if request.httprequest.method == 'POST':
+			##############################################################################
+			# cari dulu data member
+			##############################################################################
 			Member = http.request.env['netpro.member']
 			member = Member.search([('member_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
 				return request.redirect('/claim/discharge?message=%s'% (message), code=301)
 
+			##############################################################################
+			# cari data claim member tsb yang masih open
+			##############################################################################
+			Claim  = http.request.env['netpro.claim']
+			claim = Claim.search([('member_id','=',member.id), ('status_id','=', CLAIM_STATE_OPEN)])
+
 		return http.request.render('vit_claim_web.discharge_confirmation', 
 			{'member': member, 'message':message})
 
 
 	######################################################################################
-	# proses discharge: insert transaksi claim
+	# proses discharge: update transaksi claim detail
 	######################################################################################
 	@http.route('/claim/discharge_process', auth='user', website=True)
 	def discharge_process(self, **kw):
