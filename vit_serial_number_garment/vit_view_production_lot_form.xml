@@ -53,5 +53,18 @@
             </field>
         </record> 
 
+        <record id="vit_search_product_lot_filter" model="ir.ui.view">
+            <field name="name">stock.production.lot</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Product" position="after">
+                        <filter string="SPK Cutting" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'spk_cutting_id'}"/>
+                        <filter string="SPK Makloon" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'spk_makloon_id'}"/>
+                        <filter string="Reference" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'ref'}"/>
+                </filter>                       
+            </field>
+        </record> 
+
 </data>
 </openerp> 
