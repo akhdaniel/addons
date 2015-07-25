@@ -32,6 +32,7 @@
         "data" : [
                 'vit_claim_view.xml', 
                 'data/claim_status.xml',
+                'data/sequence.xml',
                 'menu.xml',
                 'security/ir.model.access.csv'
         ],
