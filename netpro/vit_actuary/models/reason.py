@@ -8,7 +8,7 @@ from openerp.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 class netpro_reason(osv.osv):
-	_name = 'netpro.reason'
+    _name = 'netpro.reason'
     _columns = {
         'name': fields.char('Name'),
         'description': fields.text('Description'),

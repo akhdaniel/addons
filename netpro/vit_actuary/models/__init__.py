@@ -19,3 +19,5 @@ import premium_type
 import premium_table
 import marital_status
 import gender
+import reason
+import region

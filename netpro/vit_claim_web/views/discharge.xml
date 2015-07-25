@@ -15,9 +15,9 @@
                     <label class="control-label"><t t-esc="plan.benefit_id.name"/></label>
                 </div>
                 <div class="col-md-4 col-sm-4">
-                   	<t t-esc="plan.reim"/>
+                   	<input type="text" t-attf-name="{{plan.id}}" t-attf-value="{{plan.reim}}"/>
                 </div>
-            </div> 	
+            </div>
         </t>
      	
         <div class="row">
@@ -34,6 +34,10 @@
             </div>
         </div> 
 
+	    <input type="hidden" name="claim_id" t-attf-value="{{ claim.id }}" />
+	    <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
+	    <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
+
 	</form>
 </template>
 
@@ -43,13 +47,13 @@
     <t t-call="website.layout">
         <t t-set="title">Discharge Confirmation</t>
         <div class="container">
-        	<h1>Patient Name: <t t-esc="member.name"/></h1>
-            
             <t t-call="vit_claim_web.patient_data">
                 <t t-set="member" t-value="member"/>
             </t>    
+
             <t t-call="vit_claim_web.loc">
                 <t t-set="member" t-value="member"/>
+                <t t-set="member_plan" t-value="member_plan"/>
             </t>    
 
 
@@ -57,5 +61,8 @@
         <br/>
     </t>	
 </template>
+
+
+
 </data>
 </openerp>

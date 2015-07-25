@@ -6,7 +6,6 @@ import simplejson
 import logging
 _logger = logging.getLogger(__name__)
 import time
-CLAIM_STATE_OPEN = 2
 
 class Member(http.Controller):
 	######################################################################################
@@ -37,7 +36,6 @@ class Member(http.Controller):
 
 		return http.request.render('vit_claim_web.eligibility', 
 			{'member': member, 'message':message})
-
 
 	######################################################################################
 	# penampilan letter of authority
@@ -82,14 +80,14 @@ class Member(http.Controller):
 		#insert into netpro_claim
 		Claim = http.request.env['netpro.claim']
 		data = {
-			'claim_date'	: time.strftime("%Y-%m-%d"),
-			'member_id'		: int(member_id),
-			'product_plan_base_id'	: member_plan.plan_schedule_id.product_plan_base_id.id 
+			'claim_date'		: time.strftime("%Y-%m-%d"),
+			'member_id'			: int(member_id),
+			'member_plan_id'	: member_plan.id 
 		}
 		Claim.create(data)
 
-		return http.request.render('vit_claim_web.registration_process', {} )	
-
+		message = "Claim Registration Success!"
+		return request.redirect('/claim/registration?message=%s'% (message), code=301)
 
 	######################################################################################
 	# halaman utama discrhage, munculkan search patient
@@ -126,11 +124,13 @@ class Member(http.Controller):
 			# cari data claim member tsb yang masih open
 			##############################################################################
 			Claim  = http.request.env['netpro.claim']
-			claim = Claim.search([('member_id','=',member.id), ('status_id','=', CLAIM_STATE_OPEN)])
+			claim = Claim.search([('member_id','=',member.id), ('claim_status_id.name','=', 'draft')])
 
-		return http.request.render('vit_claim_web.discharge_confirmation', 
-			{'member': member, 'message':message})
-
+			return http.request.render('vit_claim_web.discharge_confirmation', 
+				{'member': member, 
+				'claim':claim, 
+				'member_plan': claim.member_plan_id,
+				'message':message})
 
 	######################################################################################
 	# proses discharge: update transaksi claim detail
@@ -138,8 +138,38 @@ class Member(http.Controller):
 	@http.route('/claim/discharge_process', auth='user', website=True)
 	def discharge_process(self, **kw):
 		message = "";
-		return http.request.render('vit_claim_web.discharge_process', 
-			{ 'message':message })
+
+		if request.httprequest.method == 'POST':
+			##############################################################################
+			# cari dulu data member
+			##############################################################################
+			Member = http.request.env['netpro.member']
+			MemberPlan = http.request.env['netpro.member_plan']
+			Claim  = http.request.env['netpro.claim']
+
+			# member = Member.search([('id','=',kw.get('member_id','') )])
+			# member_plan = MemberPlan.search([('id','=',kw.get('member_plan_id','') )])
+
+			# if not member:
+			# 	message = "Member not found! Please try again."
+			# 	return request.redirect('/claim/discharge?message=%s'% (message), code=301)
+
+			# ##############################################################################
+			# # cari data claim member tsb yang masih open
+			# ##############################################################################
+			# claim = Claim.search([('id','=', kw.get('claim_id','')])
+
+			# ##############################################################################
+			# # insert detail claim
+			# ##############################################################################
+			# claim_detail_ids = [
+			# 	(0,0,{})
+			# ]
+			# claim.update({'claim_detail_ids' : claim_detail_ids })
+
+			message = "Discharge Success!"
+			return request.redirect('/claim/discharge?message=%s'% (message), code=301)
+
 
 	# @http.route('/mlm/member/list', auth='user', website=True)
 	# def list(self, **kw):		
