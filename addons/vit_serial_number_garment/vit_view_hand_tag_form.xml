@@ -61,6 +61,21 @@
             </field>
         </record>
 
+        <record id="view_vit_hand_tag_search" model="ir.ui.view">
+            <field name="name">vit.hand.tag</field>
+            <field name="model">vit.hand.tag</field>
+            <field name="arch" type="xml">
+                <search string="Hand Tag">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="Nomor"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="SPK Cutting" icon="terp-folder-orange" domain="" context="{'group_by':'spk_cutting_id'}"/>
+                        <filter string="SPK Makloon" icon="terp-folder-orange" domain="" context="{'group_by':'spk_makloon_id'}"/>
+                        <filter string="Tanggal" icon="terp-folder-orange" domain="" context="{'group_by':'tanggal'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
     <record model="ir.actions.act_window" id="action_view_hand_tag" >
         <field name="name">Hand Tag</field>
         <field name="res_model">vit.hand.tag</field>
