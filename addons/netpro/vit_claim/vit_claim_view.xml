@@ -164,7 +164,7 @@
                         <field name="diagnosis_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
                     <page string="Reason">
-                        <field name="reason_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="claim_reason_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
                 </notebook>
             </form>

@@ -16,10 +16,10 @@ class benefit(osv.osv):
 		'description' 				: fields.char("Description"),
 		'description_alt' 			: fields.char("Description (alt language)"),
 		'short_name'				: fields.char("Short Name"),
-		'level'						: fields.char("Level"),
-		'unit'						: fields.many2one('netpro.benefit_unit', 'Unit'),
+		'level'						: fields.selection([('benefit', 'Benefit'), ('sub_benefit', 'Sub Benefit'), ('item', 'Item')], "Level"),
+		'unit_id'					: fields.many2one('netpro.benefit_unit', 'Unit'),
 		'unit_alt'					: fields.many2one('netpro.benefit_unit', 'Unit (alt language)'),
-		'claim_type'				: fields.many2one('netpro.product_type', 'Claim Type') ,
+		'claim_type_id'				: fields.many2one('netpro.product_type', 'Claim Type') ,
 		'max_frequency'				: fields.float("Max Frequency"),
 
 		'reinstate_in' 				: fields.float("Reinstate in", help="Day(s)"),
