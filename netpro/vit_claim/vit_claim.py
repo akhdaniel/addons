@@ -139,7 +139,7 @@ class netpro_claim(osv.osv):
         'summary_claim_count': fields.float('Claim Count'),
         'claim_detail_ids': fields.one2many('netpro.claim_detail', 'claim_id', 'Claim Details', ondelete='cascade'),
         'diagnosis_ids': fields.one2many('netpro.claim_diagnosis', 'claim_id', 'Diagnosis', ondelete='cascade'),
-        'reason_ids': fields.one2many('netpro.reason', 'claim_id', 'Reasons', ondelete='cascade'),
+        'claim_reason_ids': fields.one2many('netpro.claim_reason', 'claim_id', 'Reasons', ondelete='cascade'),
     }
 
 
@@ -225,14 +225,14 @@ class netpro_claim_room(osv.osv):
     }
 netpro_claim_room()
 
-class netpro_reason(osv.osv):
-    _name = 'netpro.reason'
+class netpro_claim_reason(osv.osv):
+    _name = 'netpro.claim_reason'
     _columns = {
         'name': fields.char('Name'),
         'description': fields.text('Description'),
         'claim_id': fields.many2one('netpro.claim', 'Claim'),
     }
-netpro_reason()
+netpro_claim_reason()
 
 class netpro_excess_payor(osv.osv):
     _name = 'netpro.excess_payor'

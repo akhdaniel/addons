@@ -14,7 +14,7 @@ class netpro_membership(osv.osv):
         'membership_id'		: fields.char('Membership ID'),
         'name'				: fields.char('Name (E)'),
         'name_i'			: fields.char('Name (I)'),
-        'category'			: fields.char('Category'),
+        'category'			: fields.selection([('A', 'Adult'), ('C', 'Child')],'Category'),
         'age_between_start'	: fields.integer('Age Between Start'),
         'age_between_end'	: fields.integer('Age Between End'),
         'policy_owner'		: fields.boolean('Policy Owner'),
