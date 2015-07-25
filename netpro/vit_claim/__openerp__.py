@@ -22,14 +22,17 @@
 {
         "name" : "vit_claim",
         "version" : "0.1",
-        "author" : "Tiny",
-        "website" : "http://openerp.com",
+        "author" : "vitraining.com",
+        "website" : "http://vitraining.com",
         "category" : "Unknown",
         "description": """  """,
         "depends" : ['base','vit_actuary', 'vit_member'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
-        "data" : ['vit_claim_view.xml', 
+        "data" : [
+                'vit_claim_view.xml', 
+                'data/claim_status.xml',
+                'menu.xml',
                 'security/ir.model.access.csv'
         ],
         "installable": True

@@ -81,7 +81,7 @@
                             <field name="edc_trc_claim_payable" select="0"/>
                         </group>
                         <group string="Claim Status">
-                            <field name="claim_status_id" select="0"/>
+                            <field name="claim_status_id" widget="selection" readonly="1"/>
                             <field name="acceptation_status" select="0"/>
                             <field name="cno" select="0"/>
                             <field name="pcno" select="0"/>
@@ -387,8 +387,8 @@
         <field name="view_mode">tree,form</field>
     </record>
     <!-- <menuitem name="Claim Detail" id="menu_netpro_claim_detail" action="action_netpro_claim_detail"/> -->
-        
-<!-- pindah ke vit_actuary
+
+    <!-- pindah ke vit_actuary
     <record model="ir.ui.view" id="view_netpro_diagnosis_form">
         <field name="name">netpro.diagnosis.form</field>
         <field name="model">netpro.diagnosis</field>
@@ -427,7 +427,7 @@
         <field name="view_mode">tree,form</field>
     </record> -->
     <!-- <menuitem name="Diagnosis" id="menu_netpro_diagnosis" action="action_netpro_diagnosis"/> -->
-        
+
     <record model="ir.ui.view" id="view_netpro_claim_category_form">
         <field name="name">netpro.claim_category.form</field>
         <field name="model">netpro.claim_category</field>
@@ -460,8 +460,9 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Category" id="menu_netpro_claim_category" action="action_netpro_claim_category"/> -->
-        
+
+    <!-- <menuitem name="Claim Category" id="menu_netpro_claim_category" action="action_netpro_claim_category"/>-->
+       
     <record model="ir.ui.view" id="view_netpro_claim_type_form">
         <field name="name">netpro.claim_type.form</field>
         <field name="model">netpro.claim_type</field>
@@ -494,6 +495,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Claim Type" id="menu_netpro_claim_type" action="action_netpro_claim_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_claim_room_form">
@@ -528,6 +530,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Claim Room" id="menu_netpro_claim_room" action="action_netpro_claim_room"/> -->
         
     <record model="ir.ui.view" id="view_netpro_reason_form">
@@ -564,6 +567,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Reason" id="menu_netpro_reason" action="action_netpro_reason"/> -->
         
     <record model="ir.ui.view" id="view_netpro_excess_payor_form">
@@ -598,6 +602,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Excess Payor" id="menu_netpro_excess_payor" action="action_netpro_excess_payor"/> -->
         
     <record model="ir.ui.view" id="view_netpro_treatment_form">
@@ -636,6 +641,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Treatment" id="menu_netpro_treatment" action="action_netpro_treatment"/> -->
         
     <record model="ir.ui.view" id="view_netpro_treatment_category_form">
@@ -670,8 +676,10 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+
     <!-- <menuitem name="Treatment Category" id="menu_netpro_treatment_category" action="action_netpro_treatment_category"/> -->
-<!-- 
+    
+    <!-- 
     ke vit_actuary
             
     <record model="ir.ui.view" id="view_netpro_benefit_form">
@@ -805,5 +813,40 @@
             </notebook>
         </field>
     </record>
+
+
+    <record model="ir.ui.view" id="view_netpro_claim_status_form">
+        <field name="name">netpro.claim_status.form</field>
+        <field name="model">netpro.claim_status</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.claim_status">
+                <group>
+                    <field name="code"/>
+                    <field name="name" select="1"/>
+                    <field name="description" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_claim_status_tree">
+        <field name="name">netpro.claim_status.tree</field>
+        <field name="model">netpro.claim_status</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.claim_status">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_claim_status">
+        <field name="name">Claim Status</field>
+        <field name="res_model">netpro.claim_status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>    
+
 </data>
 </openerp>

@@ -256,6 +256,7 @@ netpro_treatment_category()
 class netpro_claim_status(osv.osv):
     _name = 'netpro.claim_status'
     _columns = {
+        'code': fields.char('Code'),
         'name': fields.char('Name'),
         'description': fields.text('Description'),
     }

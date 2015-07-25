@@ -1,0 +1,24 @@
+<openerp>
+<data>
+    <!-- Claims Configurations -->
+    <menuitem name="Claim" id="menu_netpro_claim_configuration" parent="vit_actuary.menu_netpro_configuration" sequence="30"/>
+	    
+	    <menuitem name="Claim Status" id="menu_netpro_claim_status" action="action_netpro_claim_status" parent="menu_netpro_claim_configuration" sequence="10"/>
+	    
+	    <menuitem name="Claim Category" id="menu_netpro_claim_category" action="action_netpro_claim_category" parent="menu_netpro_claim_configuration" sequence="20"/>
+
+	    <menuitem name="Claim Room" id="menu_netpro_claim_room" action="action_netpro_claim_room" parent="menu_netpro_claim_configuration" sequence="30"/>
+
+	    <menuitem name="Claim Reasons" id="menu_netpro_reason" action="action_netpro_reason" parent="menu_netpro_claim_configuration" sequence="40"/>
+
+	    <menuitem name="Excess Payor" id="menu_netpro_excess_payor" action="action_netpro_excess_payor" parent="menu_netpro_claim_configuration" sequence="50"/>
+
+	    <menuitem name="Treatment" id="menu_netpro_treatment" action="action_netpro_treatment" parent="menu_netpro_claim_configuration" sequence="60"/>
+
+	    <menuitem name="Treatment Category" id="menu_netpro_treatment_category" action="action_netpro_treatment_category" parent="menu_netpro_claim_configuration" sequence="70"/>
+
+	    <menuitem name="Claim Detail Status" id="menu_netpro_claim_detail_status" action="action_netpro_claim_detail_status" parent="menu_netpro_claim_configuration" sequence="80"/>
+
+
+</data>
+</openerp>
