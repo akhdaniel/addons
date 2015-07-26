@@ -7,8 +7,57 @@
         <field name="model">netpro.claim</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="netpro.claim">
+            <form string="Claim Form" version="7.0">
+                <header>
+                    
+                    <button string="Confirm" type="object" name="action_open" 
+                    class="oe_highlight"
+                    states="draft"
+                    />
+
+                    <button string="Approve" type="object" name="action_approve"
+                    class="oe_highlight"
+                    states="open"
+                    />
+                    <button string="Release" type="object" name="action_release"
+                    class="oe_highlight"
+                    states="approved"
+                    />
+                    
+                    <button string="Revise" type="object" name="action_revise"
+                    states="open"
+                    />
+                    
+                    <button string="Cancel" type="object" name="action_cancel" 
+                    states="open"
+                    />
+
+                    <button string="Hold" type="object" name="action_hold" 
+                    states="open"
+                    />
+
+                    <button string="Reset to Draft" type="object" name="action_draft" 
+                    states="open"
+                    />
+                    <!-- <button string="Confirm" type="workflow"
+                         name="signal_confirm"
+                         groups="academic.group_manager"
+                           />
+                    <button string="Mark as Done" type="workflow"
+                         name="signal_done" 
+                         groups="academic.group_manager"
+                          />
+                    <button string="Reset to draft" type="workflow"
+                         name="signal_draft" 
+                         groups="academic.group_manager"
+                    /> -->
+
+                     <field name="state" widget="statusbar"  /> 
+
+                </header>
+
                 <group col="2">
+
                     <group col="1">
                         <group>
                             <field name="claim_no" select="1"/>
@@ -81,7 +130,7 @@
                             <field name="edc_trc_claim_payable" select="0"/>
                         </group>
                         <group string="Claim Status">
-                            <field name="claim_status_id" widget="selection" readonly="1"/>
+                            <field name="state" widget="selection" readonly="1"/>
                             <field name="acceptation_status" select="0"/>
                             <field name="cno" select="0"/>
                             <field name="pcno" select="0"/>
@@ -107,6 +156,7 @@
                             <field name="transaction_history_released_date" select="0"/>
                         </group>
                     </group>
+
                 </group>
 
                 <notebook>
@@ -161,12 +211,13 @@
                         </group>
                     </page>
                     <page string="Diagnosis">
-                        <field name="diagnosis_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="diagnosis_ids"/>
                     </page>
                     <page string="Reason">
-                        <field name="claim_reason_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="claim_reason_ids"/>
                     </page>
                 </notebook>
+
             </form>
         </field>
     </record>
@@ -176,18 +227,22 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.claim">
+                <field name="batch_id"/>
                 <field name="claim_no"/>
+                <field name="policy_id"/>
+                <field name="member_id"/>
+                <field name="claim_date"/>
+                <field name="summary_billed"/>
+                <field name="summary_accepted"/>
+                <field name="state"/>
+                <!--
                 <field name="claim_no_revision"/>
                 <field name="ext_claim_no"/>
-                <field name="claim_date"/>
                 <field name="claim_received_date"/>
                 <field name="claim_loss_date_start"/>
                 <field name="claim_loss_date_end"/>
-                <field name="policy_id"/>
-                <field name="member_id"/>
                 <field name="claim_category_id"/>
                 <field name="member_plan_id"/>
-                <!-- <field name="claim_type_id"/> -->
                 <field name="diagnosis_id"/>
                 <field name="2nd_diagnosis"/>
                 <field name="3rd_diagnosis"/>
@@ -226,11 +281,9 @@
                 <field name="refund_bank_name"/>
                 <field name="edc_trc_authorization"/>
                 <field name="edc_trc_claim_payable"/>
-                <field name="claim_status_id"/>
                 <field name="acceptation_status"/>
                 <field name="cno"/>
                 <field name="pcno"/>
-                <field name="batch_id"/>
                 <field name="glid"/>
                 <field name="prorate"/>
                 <field name="payment_status_request_date"/>
@@ -274,6 +327,7 @@
                 <field name="summary_family_usage"/>
                 <field name="summary_family_balance"/>
                 <field name="summary_claim_count"/>
+                -->
 
             </tree>
         </field>
