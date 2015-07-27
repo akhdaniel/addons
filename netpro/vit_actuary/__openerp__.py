@@ -55,6 +55,7 @@
                 'data/product_type.xml', 
                 'data/product.xml', 
                 'data/product_plan_base.xml', 
+                'data/product_plan.xml', 
                 'menu.xml',
                 'security/ir.model.access.csv',
                 'data/netpro.reason.csv',

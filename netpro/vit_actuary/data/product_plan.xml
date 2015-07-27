@@ -1,10 +1,143 @@
 <openerp>
 <data>
-    <record model="netpro.product_plan" id="product_plan1">
-        <field name="product_type_id" ref="vit_actuary.product_type1"/>
-        <field name="code">RI</field>
-        <field name="name">Rawat Inap</field>
-        <field name="description">Rawat Inap</field>
+    <record model="netpro.product_plan" id="product_plan11">
+        <field name="product_id" ref="vit_actuary.product1"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base1"/>
+        <field name="code">RI-1</field>
+        <field name="name">Rawat Inap Class 1</field>
+        <field name="description">Rawat Inap Class 1</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan12">
+        <field name="product_id" ref="vit_actuary.product1"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base1"/>
+        <field name="code">RI-2</field>
+        <field name="name">Rawat Inap Class 2</field>
+        <field name="description">Rawat Inap Class 2</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan13">
+        <field name="product_id" ref="vit_actuary.product1"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base1"/>
+        <field name="code">RI-3</field>
+        <field name="name">Rawat Inap Class 3</field>
+        <field name="description">Rawat Inap Class 3</field>
+    </record>
+
+
+
+    <record model="netpro.product_plan" id="product_plan21">
+        <field name="product_id" ref="vit_actuary.product2"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base2"/>
+        <field name="code">RJ-1</field>
+        <field name="name">Rawat Jalan Class 1</field>
+        <field name="description">Rawat Jalan Class 1</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan22">
+        <field name="product_id" ref="vit_actuary.product2"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base2"/>
+        <field name="code">RJ-2</field>
+        <field name="name">Rawat Jalan Class 2</field>
+        <field name="description">Rawat Jalan Class 2</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan23">
+        <field name="product_id" ref="vit_actuary.product2"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base2"/>
+        <field name="code">RJ-3</field>
+        <field name="name">Rawat Jalan Class 3</field>
+        <field name="description">Rawat Jalan Class 3</field>
+    </record>
+
+
+    <record model="netpro.product_plan" id="product_plan31">
+        <field name="product_id" ref="vit_actuary.product3"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base3"/>
+        <field name="code">DT-1</field>
+        <field name="name">Rawat Gigi Class 1</field>
+        <field name="description">Rawat Gigi Class 1</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan32">
+        <field name="product_id" ref="vit_actuary.product3"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base3"/>
+        <field name="code">DT-2</field>
+        <field name="name">Rawat Gigi Class 2</field>
+        <field name="description">Rawat Gigi Class 2</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan33">
+        <field name="product_id" ref="vit_actuary.product3"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base3"/>
+        <field name="code">DT-3</field>
+        <field name="name">Rawat Gigi Class 3</field>
+        <field name="description">Rawat Gigi Class 3</field>
+    </record>
+
+
+
+    <record model="netpro.product_plan" id="product_plan41">
+        <field name="product_id" ref="vit_actuary.product4"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base4"/>
+        <field name="code">MAT-1</field>
+        <field name="name">Maternity Class 1</field>
+        <field name="description">Maternity Class 1</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan42">
+        <field name="product_id" ref="vit_actuary.product4"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base4"/>
+        <field name="code">MAT-2</field>
+        <field name="name">Maternity Class 2</field>
+        <field name="description">Maternity Class 2</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan43">
+        <field name="product_id" ref="vit_actuary.product4"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base4"/>
+        <field name="code">MAT-3</field>
+        <field name="name">Maternity Class 3</field>
+        <field name="description">Maternity Class 3</field>
+    </record>
+
+
+    <record model="netpro.product_plan" id="product_plan51">
+        <field name="product_id" ref="vit_actuary.product5"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base5"/>
+        <field name="code">SP-1</field>
+        <field name="name">Spesialis Class 1</field>
+        <field name="description">Spesialis Class 1</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan52">
+        <field name="product_id" ref="vit_actuary.product5"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base5"/>
+        <field name="code">SP-2</field>
+        <field name="name">Spesialis Class 2</field>
+        <field name="description">Spesialis Class 2</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan53">
+        <field name="product_id" ref="vit_actuary.product5"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base5"/>
+        <field name="code">SP-3</field>
+        <field name="name">Spesialis Class 3</field>
+        <field name="description">Spesialis Class 3</field>
+    </record>
+
+
+
+    <record model="netpro.product_plan" id="product_plan61">
+        <field name="product_id" ref="vit_actuary.product6"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base6"/>
+        <field name="code">PHAR-1</field>
+        <field name="name">Pharmacy Class 1</field>
+        <field name="description">Pharmacy Class 1</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan62">
+        <field name="product_id" ref="vit_actuary.product6"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base6"/>
+        <field name="code">PHAR-2</field>
+        <field name="name">Pharmacy Class 2</field>
+        <field name="description">Pharmacy Class 2</field>
+    </record>
+    <record model="netpro.product_plan" id="product_plan63">
+        <field name="product_id" ref="vit_actuary.product6"/>
+        <field name="product_plan_base_id" ref="vit_actuary.product_plan_base6"/>
+        <field name="code">PHAR-3</field>
+        <field name="name">Pharmacy Class 3</field>
+        <field name="description">Pharmacy Class 3</field>
     </record>
 
 

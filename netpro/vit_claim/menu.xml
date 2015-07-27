@@ -9,7 +9,7 @@
 
 	    <menuitem name="Claim Room" id="menu_netpro_claim_room" action="action_netpro_claim_room" parent="menu_netpro_claim_configuration" sequence="30"/>
 
-	    <menuitem name="Claim Reasons" id="menu_netpro_reason" action="action_netpro_reason" parent="menu_netpro_claim_configuration" sequence="40"/>
+	    <!-- <menuitem name="Claim Reasons" id="menu_netpro_reason" action="action_netpro_reason" parent="menu_netpro_claim_configuration" sequence="40"/> -->
 
 	    <menuitem name="Excess Payor" id="menu_netpro_excess_payor" action="action_netpro_excess_payor" parent="menu_netpro_claim_configuration" sequence="50"/>
 
