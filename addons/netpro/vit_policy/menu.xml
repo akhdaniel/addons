@@ -18,7 +18,7 @@
  		    <menuitem name="LOB" id="menu_netpro_lob" action="action_netpro_lob" parent="menu_netpro_policy_configuration_1" sequence="60"/>
 			 -->		    
  			<menuitem name="Occupation" id="menu_netpro_occupation" action="action_netpro_occupation" parent="menu_netpro_policy_configuration_1"  sequence="70"/>
-		    <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_policy_configuration_1"  sequence="80"/>
+		    <!-- <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_policy_configuration_1"  sequence="80"/> -->
 
 	    <menuitem name="Payment Options" id="menu_netpro_policy_configuration_2" parent="menu_netpro_policy_configuration" sequence="10"/>
 		    <menuitem name="Mode" id="menu_netpro_payment_option_mode" action="action_netpro_payment_option_mode" parent="menu_netpro_policy_configuration_2"  sequence="90"/>

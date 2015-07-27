@@ -1,170 +1,170 @@
-name,description,type,allowed
-APK50;penggantian 50 %;;
-APK75;penggantian 75 %;;
-APK80;penggantian 80 %;;
-APK85;penggantian 85%;;
-APK90;penggantian 90 %;;
-H0001;Retur karena kuitansi tidak lengkap (tidak ada perincian, materai, kesesuaian nilai) ;;
-H0002;Retur karena tidak ada resume medis;;
-H0003;Retur karena tidak ada hasil lab;;
-H0004;Retur karena tidak ada perincian obat;;
-H0005;Retur karena info medis lebih lanjut;;
-H0006;Reject karena pengecualian polis;;
-H0007;Retur karena dokumen belum lengkap (GL, Form klaim, dll);;
-H0008;Adjustment Klaim;;
-H0009;Penggantian secara prorata;;
-H0010;Manfaat rawat jalan sudah habis;;
-H0011;Manfaat rawat inap sudah habis;;
-H0012;Ekses klaim tidak ditagih kepada peserta;;
-H0013;Pembayaran ex-gratia;;
-H0014;Kesalahan kode diagnosa;;
-P0000;mohon keterangan diagnosa dari dokter yang merawat;;
-P0001;Mohon lampirkan copy resep obat;;
-P0002;mohon lampirkan copy hasil Pemeriksaan diagnostik/ laboratorium;;
-P0003;mohon surat rujukan dokter untuk periksa laboratorium;;
-P0004;bukan kwitansi ; Mohon lampirkan kuitansi asli;;
-P0005;mohon lampirkan rincian biaya pengobatan;;
-P0006;mohon lampirkan rincian pemeriksaan laboratorium;;
-P0007;mohon diagnosa & hasil laboratorium/ USG/ Rontgent;;
-P0008;mohon lampirkan nama,ttd & stempel dokter yg merawat;;
-P0009;tidak bermeterai; mohon lampirkan materai 6.000 di kuitansi;;
-P0010;Mohon lampirkan tanggal perawatan/ pengobatan;;
-P0011;Mohon lampirkan nama pasien yg berobat;;
-P0012;mohon lampirkan diagnosa & kwitansi asli;;
-P0013;mohon lampirkan alamat, telpon & izin praktek dokter;;
-P0015;mohon informasi rincian letak gigi;;
-P0016;mohon lampirkan copy resep obat & kwitansi asli;;
-P0017;mohon lampirkan kuitansi asli dan hasil laboratorium/USG/rontgent ;;
-P0018;mohon lampirkan diagnosa dan tanggal perawatan/ pengobatan;;
-P0019;mohon lampirkan perincian biaya © resep obat;;
-P0020;mohon lampirkan perincian biaya & hasil Laboratorium/USG/Rontgent;;
-P0021;mohon lampirkan keterangan pemberian dosis obat;;
-P0022;mohon lampirkan diagnosa & nama pasien;;
-P0023;mohon lampirkan diagnosa & rincian biaya;;
-P0024;mohon lampirkan diagnosa, perincian biaya pengobatan & materai;;
-P0025;mohon lampirkan diagnosa & copy resep;;
-P0026;Mohon lampirkan perincian biaya & tgl Pemeriksaan/ pengobatan;;
-P0027;mohon lampirkan nama dokter yg merawat ;;
-P0028;mohon rincian tindakan dokter;;
-P0029;mohon lampirakan nama pasien yg melakukan pengobatan;;
-P0030;mohon lampirkan resume medis dari dokter;;
-P0031;kekurangan pembayaran klaim;;
-P0032;mohon rincian biaya obat;;
-P0033;mohon diganosa lebih spesifik;;
-P0034;mohon klaim persalinan-nya;;
-P0035;mohon lampirkan klaim perawatan/tindakan;;
-P0036;mohon isi formulir klaim dengan lengkap dan benar;;
-P0037;mohon tanda tangan kasir diatas materai;;
-P0038;mohon hasil pengukuran mata;;
-P0039;mohon usia kehamilan;;
-P0040;mohon lampirkan alamat & telepon dokter;;
-P0041;mohon lampirkan nomor telepon dokter;;
-P0042;mohon nama obat diperjelas;;
-P0043;Mohon surat keterangan co-insurance/ koordinasi manfaat dari Penanggung sebelumnya;;
-P0044;Mohon jenis vaksinasi yang diberikan;;
-P0045;Mohon Nomor Telpon Apotik;;
-P0046;mohon lampirkan hasil pemeriksaan dokter mata;;
-P0047;mohon surat keterangan dokter;;
-P0048;mohon nomor izin praktek dokter;;
-P0049;mohon alamat praktek dokter;;
-P0050;mohon lampirkan rincian pemeriksaan dan copy hasil laboratorium;;
-P0051;mohon isi formulir klaim rawat jalan dengan lengkap & benar;;
-P0052;Masih menunggu informasi dokter yg merawat;;
-P0053;Biaya sudah dibayar oleh pasien;;
-P0054;pengajuan ulang klaim (reklaim);;
-P0055;tunggu info dokter yg merawat;;
-P0056;sedang dalam proses pendaftaran peserta;;
-P0057;sedang dalam proses pembaruan/ renewal polis;;
-P0058;Mohon Nomor Telpon Optik;;
-P0059;mohon legalisir copy kwitansi;;
-P0060;diagnosa tidak dapat dibaca;;
-P0061;Kartu Kadaluarsa / Belum Diganti;;
-R0001;tidak ada manfaat out-patient/ rawat jalan;;
-R0002;tidak ada manfaat dental/ Gigi;;
-R0003;tidak ada manfaat kacamata;;
-R0004;tidak ada manfaat persalinan;;
-R0005;pembelian obat bebas (tanpa resep dokter);;
-R0006;biaya administrasi kartu kredit;;
-R0007;Diagnosa termasuk dalam pengecualian Polis;;
-R0008;bukan termasuk dalam keperluan medis;;
-R0009;Termasuk dalam perawatan pencegahan;;
-R0010;vaksinasi/ imunisasi tidak ditanggung;;
-R0011;kontrasepsi tidak ditanggung;;
-R0012;khitanan tidak ditanggung;;
-R0013;tidak ada indikasi medis untuk rawat inap;;
-R0014;pemeriksaan oleh bidan;;
-R0015;Termasuk dalam kategori manfaat rawat jalan ;;
-R0016;transaksi biaya pengobatan/ perawatan tidak lazim & wajar;;
-R0017;Keterangan diagnosa bukan o/dokter yg merawat;;
-R0018;merubah data kwitansi;;
-R0019;obat tidak sesuai diagnosa;;
-R0020;tidak ada indikasi medis untuk pengobatan/ perawatan;;
-R0021;tidak ada transaksi pembelian;;
-R0022;Perawatan rawat inap bukan di rumah sakit;;
-R0023;pengulangan resep maksimal 3 bulan;;
-R0024;diagnosa tidak sesuai/ berhubungan dengan pasien;;
-R0025;pembelian obat bukan di apotik tidak ditanggung;;
-R0026;pemeriksaan diagnostik/ laboratorium tidak sesuai Diagnosa;;
-R0027;penambahan harga pada kwitansi;;
-R0028;discount obat;;
-R0029;check-up tidak ditanggung;;
-R0030;bukan imunisasi dasar;;
-R0031;Termasuk dalam pengobatan tradisional ;;
-R0032;ramuan/obat-obatan tradisional;;
-R0033;Termasuk dalam obat kosmetik;;
-R0034;Bukan termasuk vaksinasi/ imunisasi dasar;;
-R0035;Duplikat/ penggandaan kwitansi;;
-R0036;Tindakan operasi tidak dilakukan di RS;;
-R0037;Tidak terdapat keluhan sakit (sehat);;
-R0038;gigi palsu tidak ditanggung;;
-R0039;kawat gigi tidak ditanggung;;
-R0040;tambal logam mulia tidak ditanggung;;
-R0041;capping/bridging tidak ditanggung;;
-R0042;crown/sarung gigi tidak ditanggung;;
-R0043;cosmetic on/inlay tidak ditanggung;;
-R0044;vitamin tidak diresepkan oleh dokter yang merawat;;
-R0045;pembelian kacamata dilakukan sebelum pemeriksaan dokter;;
-R0046;Pemeriksaan laboratorium atas permintaan sendiri;;
-R0047;Manfaat klaim tidak ditanggung untuk plan ini ;;
-R0048;Pengobatan/ perawatan masih dalam masa tunggu/pre-existing;;
-R0049;bukan termasuk dalam manfaat pre-hospital (HS13.1);;
-R0050;selisih jumlah kwitansi;;
-R0051;alat bantu kesehatan tidak ditanggung;;
-R0052;test hamil tidak ditanggung;;
-R0053;transaksi bukan untuk ybs/ tertanggung;;
-R0054;kartu pasien tidak ditanggung;;
-R0055;kwitansi yang diajukan adalah fiktif;;
-R0056;lampiran dari kwitansi;;
-R0057;vitamin tidak ditanggung;;
-R0058;Food supplement tidak ditanggung;;
-R0059;Proses dan pembayaran klaim secara ex-gratia;;
-R0060;Beli kacamata bukan di optik;;
-R0061;kontrol post natal > 40 hari;;
-R0062;pengurangan tagihan RS;;
-R0063;pemberian obat berlebihan;;
-R0064;perawatan/ pengobatan yg dilakukan sebelum Tertanggung terdaftar;;
-R0065;perawatan/ pengobatan yg dilakukan sebelum polis berlaku;;
-R0066;Tertanggung tidak terdaftar sebagai peserta;;
-R0067;kepesertaan Tertanggung sudah berakhir;;
-R0068;tidak ada tanggal kwitansi;;
-R0069;pengajuan klaim > 30 hari;;
-R0070;pengajuan klaim > 60 hari;;
-R0071;pengajuan klaim > 90 hari;;
-R0072;pengajuan polis lama berakhir;;
-R0073;Tidak termasuk kategori manfaat HS13; dokter RJ berbeda dengan dokter RI;;
-R0074;tanggal pada kwitansi tidak sesuai;;
-R0075;bukan termasuk dalam kategori obat itter;;
-R0076;nama pasien tidak sesuai dengan kepesertaan Asuransi;;
-R0077;Pengajuan klaim kacamata belum 1 tahun;;
-R0078;Pembelian kacamata pertama harus dengan surat rujukan dr. Sp. Mata;;
-R0079;Transaksi pembelian obat sebelum pemeriksaan dokter;;
-R0080;Termasuk dalam kategoti non medis ;;
-R0081;selisih kamar tidak ditanggung;;
-R0082;tisu,telpon,dll tidak ditanggung;;
-R0083;diagnosa rawat jalan berbeda diagnosa rawat inap;;
-R0084;obat tidak terdaftar dalam DOI;;
-R0085;Biaya pengobatan sudah dibayar oleh pasien;;
-R0086;Biaya pengobatan sudah ditanggung melalui penjaminan;;
-R0087;Pemeriksaan/ pengobatan maksimum satu kali dalam sehari;;
-R0088;Manfaat obat-obatan rawat jalan sudah habis;;
-R0089;Manfaat post rawat inap sudah habis;;
+id,name,description,type,allowed
+reason1,APK50,penggantian 50 %,,
+reason2,APK75,penggantian 75 %,,
+reason3,APK80,penggantian 80 %,,
+reason4,APK85,penggantian 85%,,
+reason5,APK90,penggantian 90 %,,
+reason6,H0001,"Retur karena kuitansi tidak lengkap (tidak ada perincian, materai, kesesuaian nilai) ",,
+reason7,H0002,Retur karena tidak ada resume medis,,
+reason8,H0003,Retur karena tidak ada hasil lab,,
+reason9,H0004,Retur karena tidak ada perincian obat,,
+reason10,H0005,Retur karena info medis lebih lanjut,,
+reason11,H0006,Reject karena pengecualian polis,,
+reason12,H0007,"Retur karena dokumen belum lengkap (GL, Form klaim, dll)",,
+reason13,H0008,Adjustment Klaim,,
+reason14,H0009,Penggantian secara prorata,,
+reason15,H0010,Manfaat rawat jalan sudah habis,,
+reason16,H0011,Manfaat rawat inap sudah habis,,
+reason17,H0012,Ekses klaim tidak ditagih kepada peserta,,
+reason18,H0013,Pembayaran ex-gratia,,
+reason19,H0014,Kesalahan kode diagnosa,,
+reason20,P0000,mohon keterangan diagnosa dari dokter yang merawat,,
+reason21,P0001,Mohon lampirkan copy resep obat,,
+reason22,P0002,mohon lampirkan copy hasil Pemeriksaan diagnostik/ laboratorium,,
+reason23,P0003,mohon surat rujukan dokter untuk periksa laboratorium,,
+reason24,P0004,bukan kwitansi  Mohon lampirkan kuitansi asli,,
+reason25,P0005,mohon lampirkan rincian biaya pengobatan,,
+reason26,P0006,mohon lampirkan rincian pemeriksaan laboratorium,,
+reason27,P0007,mohon diagnosa & hasil laboratorium/ USG/ Rontgent,,
+reason28,P0008,"mohon lampirkan nama,ttd & stempel dokter yg merawat",,
+reason29,P0009,tidak bermeterai  mohon lampirkan materai 6.000 di kuitansi,,
+reason30,P0010,Mohon lampirkan tanggal perawatan/ pengobatan,,
+reason31,P0011,Mohon lampirkan nama pasien yg berobat,,
+reason32,P0012,mohon lampirkan diagnosa & kwitansi asli,,
+reason33,P0013,"mohon lampirkan alamat, telpon & izin praktek dokter",,
+reason34,P0015,mohon informasi rincian letak gigi,,
+reason35,P0016,mohon lampirkan copy resep obat & kwitansi asli,,
+reason36,P0017,mohon lampirkan kuitansi asli dan hasil laboratorium/USG/rontgent ,,
+reason37,P0018,mohon lampirkan diagnosa dan tanggal perawatan/ pengobatan,,
+reason38,P0019,mohon lampirkan perincian biaya © resep obat,,
+reason39,P0020,mohon lampirkan perincian biaya & hasil Laboratorium/USG/Rontgent,,
+reason40,P0021,mohon lampirkan keterangan pemberian dosis obat,,
+reason41,P0022,mohon lampirkan diagnosa & nama pasien,,
+reason42,P0023,mohon lampirkan diagnosa & rincian biaya,,
+reason43,P0024,"mohon lampirkan diagnosa, perincian biaya pengobatan & materai",,
+reason44,P0025,mohon lampirkan diagnosa & copy resep,,
+reason45,P0026,Mohon lampirkan perincian biaya & tgl Pemeriksaan/ pengobatan,,
+reason46,P0027,mohon lampirkan nama dokter yg merawat ,,
+reason47,P0028,mohon rincian tindakan dokter,,
+reason48,P0029,mohon lampirakan nama pasien yg melakukan pengobatan,,
+reason49,P0030,mohon lampirkan resume medis dari dokter,,
+reason50,P0031,kekurangan pembayaran klaim,,
+reason51,P0032,mohon rincian biaya obat,,
+reason52,P0033,mohon diganosa lebih spesifik,,
+reason53,P0034,mohon klaim persalinan-nya,,
+reason54,P0035,mohon lampirkan klaim perawatan/tindakan,,
+reason55,P0036,mohon isi formulir klaim dengan lengkap dan benar,,
+reason56,P0037,mohon tanda tangan kasir diatas materai,,
+reason57,P0038,mohon hasil pengukuran mata,,
+reason58,P0039,mohon usia kehamilan,,
+reason59,P0040,mohon lampirkan alamat & telepon dokter,,
+reason60,P0041,mohon lampirkan nomor telepon dokter,,
+reason61,P0042,mohon nama obat diperjelas,,
+reason62,P0043,Mohon surat keterangan co-insurance/ koordinasi manfaat dari Penanggung sebelumnya,,
+reason63,P0044,Mohon jenis vaksinasi yang diberikan,,
+reason64,P0045,Mohon Nomor Telpon Apotik,,
+reason65,P0046,mohon lampirkan hasil pemeriksaan dokter mata,,
+reason66,P0047,mohon surat keterangan dokter,,
+reason67,P0048,mohon nomor izin praktek dokter,,
+reason68,P0049,mohon alamat praktek dokter,,
+reason69,P0050,mohon lampirkan rincian pemeriksaan dan copy hasil laboratorium,,
+reason70,P0051,mohon isi formulir klaim rawat jalan dengan lengkap & benar,,
+reason71,P0052,Masih menunggu informasi dokter yg merawat,,
+reason72,P0053,Biaya sudah dibayar oleh pasien,,
+reason73,P0054,pengajuan ulang klaim (reklaim),,
+reason74,P0055,tunggu info dokter yg merawat,,
+reason75,P0056,sedang dalam proses pendaftaran peserta,,
+reason76,P0057,sedang dalam proses pembaruan/ renewal polis,,
+reason77,P0058,Mohon Nomor Telpon Optik,,
+reason78,P0059,mohon legalisir copy kwitansi,,
+reason79,P0060,diagnosa tidak dapat dibaca,,
+reason80,P0061,Kartu Kadaluarsa / Belum Diganti,,
+reason81,R0001,tidak ada manfaat out-patient/ rawat jalan,,
+reason82,R0002,tidak ada manfaat dental/ Gigi,,
+reason83,R0003,tidak ada manfaat kacamata,,
+reason84,R0004,tidak ada manfaat persalinan,,
+reason85,R0005,pembelian obat bebas (tanpa resep dokter),,
+reason86,R0006,biaya administrasi kartu kredit,,
+reason87,R0007,Diagnosa termasuk dalam pengecualian Polis,,
+reason88,R0008,bukan termasuk dalam keperluan medis,,
+reason89,R0009,Termasuk dalam perawatan pencegahan,,
+reason90,R0010,vaksinasi/ imunisasi tidak ditanggung,,
+reason91,R0011,kontrasepsi tidak ditanggung,,
+reason92,R0012,khitanan tidak ditanggung,,
+reason93,R0013,tidak ada indikasi medis untuk rawat inap,,
+reason94,R0014,pemeriksaan oleh bidan,,
+reason95,R0015,Termasuk dalam kategori manfaat rawat jalan ,,
+reason96,R0016,transaksi biaya pengobatan/ perawatan tidak lazim & wajar,,
+reason97,R0017,Keterangan diagnosa bukan o/dokter yg merawat,,
+reason98,R0018,merubah data kwitansi,,
+reason99,R0019,obat tidak sesuai diagnosa,,
+reason100,R0020,tidak ada indikasi medis untuk pengobatan/ perawatan,,
+reason101,R0021,tidak ada transaksi pembelian,,
+reason102,R0022,Perawatan rawat inap bukan di rumah sakit,,
+reason103,R0023,pengulangan resep maksimal 3 bulan,,
+reason104,R0024,diagnosa tidak sesuai/ berhubungan dengan pasien,,
+reason105,R0025,pembelian obat bukan di apotik tidak ditanggung,,
+reason106,R0026,pemeriksaan diagnostik/ laboratorium tidak sesuai Diagnosa,,
+reason107,R0027,penambahan harga pada kwitansi,,
+reason108,R0028,discount obat,,
+reason109,R0029,check-up tidak ditanggung,,
+reason110,R0030,bukan imunisasi dasar,,
+reason111,R0031,Termasuk dalam pengobatan tradisional ,,
+reason112,R0032,ramuan/obat-obatan tradisional,,
+reason113,R0033,Termasuk dalam obat kosmetik,,
+reason114,R0034,Bukan termasuk vaksinasi/ imunisasi dasar,,
+reason115,R0035,Duplikat/ penggandaan kwitansi,,
+reason116,R0036,Tindakan operasi tidak dilakukan di RS,,
+reason117,R0037,Tidak terdapat keluhan sakit (sehat),,
+reason118,R0038,gigi palsu tidak ditanggung,,
+reason119,R0039,kawat gigi tidak ditanggung,,
+reason120,R0040,tambal logam mulia tidak ditanggung,,
+reason121,R0041,capping/bridging tidak ditanggung,,
+reason122,R0042,crown/sarung gigi tidak ditanggung,,
+reason123,R0043,cosmetic on/inlay tidak ditanggung,,
+reason124,R0044,vitamin tidak diresepkan oleh dokter yang merawat,,
+reason125,R0045,pembelian kacamata dilakukan sebelum pemeriksaan dokter,,
+reason126,R0046,Pemeriksaan laboratorium atas permintaan sendiri,,
+reason127,R0047,Manfaat klaim tidak ditanggung untuk plan ini ,,
+reason128,R0048,Pengobatan/ perawatan masih dalam masa tunggu/pre-existing,,
+reason129,R0049,bukan termasuk dalam manfaat pre-hospital (HS13.1),,
+reason130,R0050,selisih jumlah kwitansi,,
+reason131,R0051,alat bantu kesehatan tidak ditanggung,,
+reason132,R0052,test hamil tidak ditanggung,,
+reason133,R0053,transaksi bukan untuk ybs/ tertanggung,,
+reason134,R0054,kartu pasien tidak ditanggung,,
+reason135,R0055,kwitansi yang diajukan adalah fiktif,,
+reason136,R0056,lampiran dari kwitansi,,
+reason137,R0057,vitamin tidak ditanggung,,
+reason138,R0058,Food supplement tidak ditanggung,,
+reason139,R0059,Proses dan pembayaran klaim secara ex-gratia,,
+reason140,R0060,Beli kacamata bukan di optik,,
+reason141,R0061,kontrol post natal > 40 hari,,
+reason142,R0062,pengurangan tagihan RS,,
+reason143,R0063,pemberian obat berlebihan,,
+reason144,R0064,perawatan/ pengobatan yg dilakukan sebelum Tertanggung terdaftar,,
+reason145,R0065,perawatan/ pengobatan yg dilakukan sebelum polis berlaku,,
+reason146,R0066,Tertanggung tidak terdaftar sebagai peserta,,
+reason147,R0067,kepesertaan Tertanggung sudah berakhir,,
+reason148,R0068,tidak ada tanggal kwitansi,,
+reason149,R0069,pengajuan klaim > 30 hari,,
+reason150,R0070,pengajuan klaim > 60 hari,,
+reason151,R0071,pengajuan klaim > 90 hari,,
+reason152,R0072,pengajuan polis lama berakhir,,
+reason153,R0073,Tidak termasuk kategori manfaat HS13  dokter RJ berbeda dengan dokter RI,,
+reason154,R0074,tanggal pada kwitansi tidak sesuai,,
+reason155,R0075,bukan termasuk dalam kategori obat itter,,
+reason156,R0076,nama pasien tidak sesuai dengan kepesertaan Asuransi,,
+reason157,R0077,Pengajuan klaim kacamata belum 1 tahun,,
+reason158,R0078,Pembelian kacamata pertama harus dengan surat rujukan dr. Sp. Mata,,
+reason159,R0079,Transaksi pembelian obat sebelum pemeriksaan dokter,,
+reason160,R0080,Termasuk dalam kategoti non medis ,,
+reason161,R0081,selisih kamar tidak ditanggung,,
+reason162,R0082,"tisu,telpon,dll tidak ditanggung",,
+reason163,R0083,diagnosa rawat jalan berbeda diagnosa rawat inap,,
+reason164,R0084,obat tidak terdaftar dalam DOI,,
+reason165,R0085,Biaya pengobatan sudah dibayar oleh pasien,,
+reason166,R0086,Biaya pengobatan sudah ditanggung melalui penjaminan,,
+reason167,R0087,Pemeriksaan/ pengobatan maksimum satu kali dalam sehari,,
+reason168,R0088,Manfaat obat-obatan rawat jalan sudah habis,,
+reason169,R0089,Manfaat post rawat inap sudah habis,,

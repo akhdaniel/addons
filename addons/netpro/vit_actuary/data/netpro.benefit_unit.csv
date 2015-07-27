@@ -1,0 +1,12 @@
+id,name,description,unit_limit
+beneift_unit1,Per Confinement,Per Confinement,CON
+beneift_unit2,Per Day,Per Day,OCC
+beneift_unit3,Per Gigi,Per Gigi,CON
+beneift_unit4,Per Hari,Per Hari,OCC
+beneift_unit5,Per Kehamilan,Per Kehamilan,CON
+beneift_unit6,Per Kejadian,Per Kejadian,CON
+beneift_unit7,Per Kunjungan,Per Kunjungan,OCC
+beneift_unit8,Per Pembelian,Per Pembelian / Bantuan Alat,CON
+beneift_unit9,Per Tahun,Per Tahun,ANN
+beneift_unit10,Per Tooth,Per Tooth,CON
+beneift_unit11,Per Year,Per Year,ANN

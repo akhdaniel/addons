@@ -13,7 +13,7 @@ class netpro_diagnosis(osv.osv):
     _columns = {
         'diagnosis': fields.char('Diagnosis'),
         'name': fields.char('Name'),
-        'exclusion_F': fields.boolean('ExclusionF'),
+        'exclusion_f': fields.boolean('ExclusionF'),
         'pre_existing_f': fields.boolean('PreExistingF'),
         'standard_fee': fields.float('StandardFee'),
     }

@@ -1,0 +1,39 @@
+<openerp>
+<data>
+<record model="ir.ui.view" id="view_netpro_reason_form">
+    <field name="name">netpro.reason.form</field>
+    <field name="model">netpro.reason</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="netpro.reason">
+            <group>
+                <field name="name" select="1"/>
+                <field name="description"  />
+                <!-- <field name="claim_id" select="0"/> -->
+            </group>
+        </form>
+    </field>
+</record>
+<record model="ir.ui.view" id="view_netpro_reason_tree">
+    <field name="name">netpro.reason.tree</field>
+    <field name="model">netpro.reason</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="netpro.reason">
+            <field name="name"/>
+            <field name="description"/>
+            <!-- <field name="claim_id"/> -->
+        </tree>
+    </field>
+</record>
+<record model="ir.actions.act_window" id="action_netpro_reason">
+    <field name="name">Reason</field>
+    <field name="res_model">netpro.reason</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<!-- <menuitem name="Reason" id="menu_netpro_reason" action="action_netpro_reason"/> -->
+
+</data>
+</openerp>
