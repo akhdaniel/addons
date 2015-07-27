@@ -25,11 +25,18 @@
                           <p>Discharge Member</p>
                         </div>
                         <div class="col-md-4 text-center">
-                        	<span class="fa fa-suitcase fa-5x"/>
+                            <span class="fa fa-suitcase fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/claim/void">Void</a>
                             </h4>
                           <p>Void Transaction</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-search fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/claim/search">Search</a>
+                            </h4>
+                          <p>Search Transaction</p>
                         </div>
                         <!--div class="col-md-4 text-center">
                         	<span class="fa fa-shopping-cart fa-5x"/>

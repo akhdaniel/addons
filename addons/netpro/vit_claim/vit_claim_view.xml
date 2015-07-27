@@ -54,160 +54,191 @@
 
                      <field name="state" widget="statusbar" 
                     statusbar_visible="draft,open,approved,released" /> 
-
                 </header>
 
                 <group col="2">
-
                     <group col="1">
-                        <group>
+                        <group string="Main">
                             <field name="claim_no" select="1"/>
                             <field name="claim_no_revision" select="2"/>
-                            <field name="ext_claim_no" select="0"/>
-                            <field name="claim_date" select="0"/>
-                            <field name="claim_received_date" select="0"/>
-                            <field name="claim_loss_date_start" select="0"/>
-                            <field name="claim_loss_date_end" select="0"/>
-                            <field name="policy_id" select="0"/>
-                            <field name="member_id" select="0"/>
-                            <field name="claim_category_id" select="0"/>
-                            <!-- <field name="claim_type_id" select="0"/> -->
-                            <field name="member_plan_id" select="0"/>
-                            <field name="diagnosis_id" select="0"/>
-                            <field name="2nd_diagnosis" select="0"/>
-                            <field name="3rd_diagnosis" select="0"/>
-                            <field name="claim_id" select="0"/>
-                            <field name="branch_id" select="0"/>
-                            <field name="currency_id" select="0"/>
-                            <field name="claim_rate" select="0"/>
-                            <field name="policy_rate" select="0"/>
-                            <field name="reimbursement" select="0"/>
-                            <field name="claim_room_id" select="0"/>
-                            <field name="exgratia_claim" select="0"/>
-                            <field name="non_jabodetabek" select="0"/>
-                            <field name="disable_prorate" select="0"/>
-                            <field name="country_id" select="0"/>
-                            <separator string="Remarks" colspan="4"/>
-                            <field name="remarks" colspan="4" nolabel="1" select="0"/>
-                            <field name="reason_id" select="0"/>
-                            <separator string="Other Reason" colspan="4"/>
-                            <field name="other_reason" colspan="4" nolabel="1" select="0"/>
-                            <separator string="Sys Remarks" colspan="4"/>
-                            <field name="sys_remarks" colspan="4" nolabel="1" select="0"/>
+                            <field name="ext_claim_no" />
+                            <field name="claim_date" />
+                            <field name="claim_received_date" />
+                            <field name="claim_loss_date_start" />
+                            <field name="claim_loss_date_end" />
+                            <field name="policy_id" />
+                            <field name="member_id" />
+                            <field name="claim_category_id" />
+                            <!-- <field name="claim_type_id" /> -->
+                            <field name="member_plan_id" />
+                            <field name="diagnosis_id" />
+                            <field name="2nd_diagnosis" />
+                            <field name="3rd_diagnosis" />
+                            <field name="claim_id" />
+                            <field name="branch_id" />
+                            <field name="currency_id" />
+                            <field name="claim_rate" />
+                            <field name="policy_rate" />
+                            <field name="reimbursement" />
+                            <field name="claim_room_id" />
+                            <field name="exgratia_claim" />
+                            <field name="non_jabodetabek" />
+                            <field name="disable_prorate" />
+                            <field name="country_id" />
+                            <field name="remarks" />
+                            <field name="reason_id" />
+                            <field name="other_reason" />
+                            <field name="sys_remarks" />
                         </group>
                         <group string="Other Charge">
-                            <field name="discount" select="0"/>
-                            <field name="aso_charge" select="0"/>
+                            <field name="discount" />
+                            <field name="aso_charge" />
                         </group>
                     </group>
 
                     <group col="1">
                         <group string="Reference">
-                            <field name="reference_no" select="0"/>
-                            <field name="ref_tpa_payment" select="0"/>
-                            <field name="ref_excess" select="0"/>
+                            <field name="reference_no" />
+                            <field name="ref_tpa_payment" />
+                            <field name="ref_excess" />
                         </group>
                         <group string="Payment">
-                            <field name="pay_to" select="0"/>
-                            <field name="payment_id" select="0"/>
-                            <field name="account_no" select="0"/>
-                            <field name="account_name" select="0"/>
-                            <field name="bank_id" select="0"/>
-                            <field name="bank_name" select="0"/>
-                            <field name="bank_branch" select="0"/>
+                            <field name="pay_to" />
+                            <field name="payment_id" />
+                            <field name="account_no" />
+                            <field name="account_name" />
+                            <field name="bank_id" />
+                            <field name="bank_name" />
+                            <field name="bank_branch" />
                         </group>
                         <group string="Excess Recovery">
-                            <field name="excess_payor_id" select="0"/>
-                            <field name="excess_id" select="0"/>
-                            <field name="excess_tpa_id" select="0"/>
+                            <field name="excess_payor_id" />
+                            <field name="excess_id" />
+                            <field name="excess_tpa_id" />
                         </group>
                         <group string="Refund Account">
-                            <field name="refund_account_no" select="0"/>
-                            <field name="refund_account_name" select="0"/>
-                            <field name="refund_bank_name" select="0"/>
+                            <field name="refund_account_no" />
+                            <field name="refund_account_name" />
+                            <field name="refund_bank_name" />
                         </group>
                         <group string="EDC Information">
-                            <field name="edc_trc_authorization" select="0"/>
-                            <field name="edc_trc_claim_payable" select="0"/>
+                            <field name="edc_trc_authorization" />
+                            <field name="edc_trc_claim_payable" />
                         </group>
                         <group string="Claim Status">
                             <field name="state" widget="selection" readonly="1"/>
-                            <field name="acceptation_status" select="0"/>
-                            <field name="cno" select="0"/>
-                            <field name="pcno" select="0"/>
-                            <field name="batch_id" select="0"/>
-                            <field name="glid" select="0"/>
-                            <field name="prorate" select="0"/>
+                            <field name="acceptation_status" />
+                            <field name="cno" />
+                            <field name="pcno" />
+                            <field name="batch_id" />
+                            <field name="glid" />
+                            <field name="prorate" />
                         </group>
                         <group string="Payment Status">
-                            <field name="payment_status_request_date" select="0"/>
-                            <field name="payment_status_payment_date" select="0"/>
-                            <field name="payment_status_excess_payment_date" select="0"/>
+                            <field name="payment_status_request_date" />
+                            <field name="payment_status_payment_date" />
+                            <field name="payment_status_excess_payment_date" />
                         </group>
                         <group string="Transaction History">
-                            <field name="transaction_history_created_by_id" select="0"/>
-                            <field name="transaction_history_created_date" select="0"/>
-                            <field name="transaction_history_last_edited_by_id" select="0"/>
-                            <field name="transaction_history_last_edited_date" select="0"/>
-                            <field name="transaction_history_adjusted_by_id" select="0"/>
-                            <field name="transaction_history_adjusted_date" select="0"/>
-                            <field name="transaction_history_checked_by_id" select="0"/>
-                            <field name="transaction_history_checked_date" select="0"/>
-                            <field name="transaction_history_released_by_id" select="0"/>
-                            <field name="transaction_history_released_date" select="0"/>
+                            <field name="transaction_history_created_by_id" />
+                            <field name="transaction_history_created_date" />
+                            <field name="transaction_history_last_edited_by_id" />
+                            <field name="transaction_history_last_edited_date" />
+                            <field name="transaction_history_adjusted_by_id" />
+                            <field name="transaction_history_adjusted_date" />
+                            <field name="transaction_history_checked_by_id" />
+                            <field name="transaction_history_checked_date" />
+                            <field name="transaction_history_released_by_id" />
+                            <field name="transaction_history_released_date" />
                         </group>
                     </group>
-
                 </group>
 
                 <notebook>
                     <page string="Claim Detail">
-                        <field name="claim_detail_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="claim_detail_ids">
+                            <tree string="claim details">
+                                    <field name="benefit_id"/>
+                                    <field name="treatment_date_start"/>
+                                    <field name="treatment_date_end"/>
+                                    <field name="billed"/>
+                                    <field name="quantity"/>
+                                    <field name="benefit_limit"/>
+                                    <field name="overall_limit"/>
+                                    <field name="exclude"/>
+                                    <field name="accepted"/>
+                                    <field name="unpaid"/>
+                                    <field name="excess"/>
+                                    <field name="cash_member"/>
+                                    <field name="client_accepted"/>
+                                    <field name="claim_detail_status_id"/>                                    
+                                    <field name="remarks"/>
+
+                                    <!-- <field name="not_affectto_overall_limit"/>
+                                    <field name="usage"/>
+                                    <field name="balance"/>
+                                    <field name="family_limit"/>
+                                    <field name="family_usage"/>
+                                    <field name="family_balance"/>
+                                    <field name="system_remarks"/>
+                                    <field name="verified"/>
+                                    <field name="quantity_verified"/>
+                                    <field name="quantity_accepted"/>
+                                    <field name="reason_id"/>
+                                    <field name="other_reason"/>
+                                    <field name="manual_verfied"/>
+                                    <field name="manual_excess"/>
+                                    <field name="manual_accepted"/>
+                                    <field name="tolerance"/>
+                                    <field name="tolerance_days"/> -->
+
+                            </tree>
+                        </field>
                     </page>
                     <page string="Medical &amp; Treatment">
                         <group col="4">
                             <group col="2">
-                                <field name="doctor" select="0"/>
-                                <field name="symptoms" select="0"/>
-                                <field name="disease_history" select="0"/>
-                                <field name="phys_examination" select="0"/>
-                                <field name="consultation" select="0"/>
+                                <field name="doctor" />
+                                <field name="symptoms" />
+                                <field name="disease_history" />
+                                <field name="phys_examination" />
+                                <field name="consultation" />
                             </group>
                             <group col="2">
-                                <field name="treatment_id" select="0"/>
+                                <field name="treatment_id" />
                                 <separator string="Treatment Remarks" colspan="4"/>
-                                <field name="treatment_remarks" colspan="4" nolabel="1" select="0"/>
-                                <field name="treatment_place" select="0"/>
-                                <field name="place_id" select="0"/>
+                                <field name="treatment_remarks" colspan="4" nolabel="1" />
+                                <field name="treatment_place" />
+                                <field name="place_id" />
                             </group>
                         </group>
                     </page>
                     <page string="Summary">
                         <group col="6">
                             <group col="2">
-                                <field name="summary_billed" select="0"/>
-                                <field name="sumary_unpaid" select="0"/>
-                                <field name="summary_discount" select="0"/>
-                                <field name="summary_cash_member" select="0"/>
-                                <field name="summary_total_paid" select="0"/>
+                                <field name="summary_billed" />
+                                <field name="sumary_unpaid" />
+                                <field name="summary_discount" />
+                                <field name="summary_cash_member" />
+                                <field name="summary_total_paid" />
                             </group>
                             <group col="2">
-                                <field name="summary_accepted" select="0"/>
-                                <field name="summary_client_accepted" select="0"/>
-                                <field name="sumary_total_excess" select="0"/>
-                                <field name="summary_cash_member_accepted" select="0"/>
-                                <field name="summary_excess" select="0"/>
-                                <field name="summary_verified" select="0"/>
-                                <field name="summary_adjustment" select="0"/>
+                                <field name="summary_accepted" />
+                                <field name="summary_client_accepted" />
+                                <field name="sumary_total_excess" />
+                                <field name="summary_cash_member_accepted" />
+                                <field name="summary_excess" />
+                                <field name="summary_verified" />
+                                <field name="summary_adjustment" />
                             </group>
                             <group col="2">
-                                <field name="summary_overall_limit" select="0"/>
-                                <field name="summary_usage" select="0"/>
-                                <field name="summary_balance" select="0"/>
-                                <field name="summary_family_limit" select="0"/>
-                                <field name="summary_family_usage" select="0"/>
-                                <field name="summary_family_balance" select="0"/>
-                                <field name="summary_claim_count" select="0"/>
+                                <field name="summary_overall_limit" />
+                                <field name="summary_usage" />
+                                <field name="summary_balance" />
+                                <field name="summary_family_limit" />
+                                <field name="summary_family_usage" />
+                                <field name="summary_family_balance" />
+                                <field name="summary_claim_count" />
                             </group>
                         </group>
                     </page>
@@ -218,7 +249,6 @@
                         <field name="claim_reason_ids"/>
                     </page>
                 </notebook>
-
             </form>
         </field>
     </record>
@@ -347,45 +377,51 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.claim_detail">
-                <group>
-                    <field name="cno" select="1"/>
-                    <field name="claim_id" select="2"/>
-                    <field name="benefit_id" select="0"/>
-                    <field name="treatment_date_start" select="0"/>
-                    <field name="treatment_date_end" select="0"/>
-                    <field name="quantity" select="0"/>
-                    <field name="billed" select="0"/>
-                    <separator string="Remarks" colspan="4"/>
-                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
-                    <field name="claim_detail_status_id" select="0"/>
-                    <field name="exclude" select="0"/>
-                    <field name="benefit_limit" select="0"/>
-                    <field name="not_affectto_overall_limit" select="0"/>
-                    <field name="overall_limit" select="0"/>
-                    <field name="usage" select="0"/>
-                    <field name="balance" select="0"/>
-                    <field name="family_limit" select="0"/>
-                    <field name="family_usage" select="0"/>
-                    <field name="family_balance" select="0"/>
-                    <separator string="System Remarks" colspan="4"/>
-                    <field name="system_remarks" colspan="4" nolabel="1" select="0"/>
-                    <field name="verified" select="0"/>
-                    <field name="excess" select="0"/>
-                    <field name="accepted" select="0"/>
-                    <field name="unpaid" select="0"/>
-                    <field name="cash_member" select="0"/>
-                    <field name="client_accepted" select="0"/>
-                    <field name="quantity_verified" select="0"/>
-                    <field name="quantity_accepted" select="0"/>
-                    <field name="reason_id" select="0"/>
-                    <separator string="'Other Reason'" colspan="4"/>
-                    <field name="other_reason" colspan="4" nolabel="1" select="0"/>
-                    <field name="manual_verfied" select="0"/>
-                    <field name="manual_excess" select="0"/>
-                    <field name="manual_accepted" select="0"/>
-                    <field name="tolerance" select="0"/>
-                    <field name="tolerance_days" select="0"/>
-                    <field name="claim_id" select="0"/>
+                <group colspan="2">
+                    <group string="Loss Item">
+                        <field name="cno" select="1"/>
+                        <field name="claim_id" select="2"/>
+                        <field name="benefit_id" />
+                        <field name="treatment_date_start" />
+                        <field name="treatment_date_end" />
+                        <field name="quantity" />
+                        <field name="billed" />
+                        <field name="remarks"/>
+                        <field name="claim_detail_status_id" />
+                        <field name="exclude" />
+                    </group>
+                    <group string="Limit &amp; Balance">
+                        <field name="benefit_limit" />
+                        <field name="not_affectto_overall_limit" />
+                        <field name="overall_limit" />
+                        <field name="usage" />
+                        <field name="balance" />
+                        <field name="family_limit" />
+                        <field name="family_usage" />
+                        <field name="family_balance" />
+                        <field name="system_remarks"/>
+                    </group>
+                    <group string="Adjustment">
+                        <field name="verified" />
+                        <field name="excess" />
+                        <field name="accepted" />
+                        <field name="unpaid" />
+                        <field name="cash_member" />
+                        <field name="client_accepted" />
+                        <field name="quantity_verified" />
+                        <field name="quantity_accepted" />
+                        <field name="reason_id" />
+                        <field name="other_reason" />
+                    </group>
+                    <group string="Manual (Claim Import)">
+                        <field name="manual_verfied" />
+                        <field name="manual_excess" />
+                        <field name="manual_accepted" />
+                    </group>
+                    <group string="Tolerance">
+                        <field name="tolerance" />
+                        <field name="tolerance_days" />
+                    </group>
                 </group>
             </form>
         </field>
@@ -430,7 +466,6 @@
                 <field name="manual_accepted"/>
                 <field name="tolerance"/>
                 <field name="tolerance_days"/>
-                <field name="claim_id"/>
 
             </tree>
         </field>
@@ -453,9 +488,9 @@
                 <group>
                     <field name="diagnosis" select="1"/>
                     <field name="name" select="2"/>
-                    <field name="exclusion_F" select="0"/>
-                    <field name="pre_existing_f" select="0"/>
-                    <field name="standard_fee" select="0"/>
+                    <field name="exclusion_F" />
+                    <field name="pre_existing_f" />
+                    <field name="standard_fee" />
                 </group>
             </form>
         </field>
@@ -632,9 +667,9 @@
                 <group>
                     <field name="treatment" select="1"/>
                     <field name="name" select="2"/>
-                    <field name="treatment_category_id" select="0"/>
+                    <field name="treatment_category_id" />
                     <separator string="Description" colspan="4"/>
-                    <field name="description" colspan="4" nolabel="1" select="0"/>
+                    <field name="description" colspan="4" nolabel="1" />
                 </group>
             </form>
         </field>
@@ -709,12 +744,12 @@
                 <group>
                     <field name="benefit_id" select="1"/>
                     <field name="name" select="2"/>
-                    <field name="reim" select="0"/>
-                    <field name="provider_limit" select="0"/>
-                    <field name="non_provider_limit" select="0"/>
-                    <field name="unit" select="0"/>
-                    <field name="usage" select="0"/>
-                    <field name="remaining" select="0"/>
+                    <field name="reim" />
+                    <field name="provider_limit" />
+                    <field name="non_provider_limit" />
+                    <field name="unit" />
+                    <field name="usage" />
+                    <field name="remaining" />
                 </group>
             </form>
         </field>
@@ -788,9 +823,9 @@
                 <group>
                     <field name="claim_id" select="1"/>
                     <field name="diagnosis" select="2"/>
-                    <field name="diagnosis_name" select="0"/>
-                    <field name="remarks" select="0"/>
-                    <field name="standard_fee" select="0"/>
+                    <field name="diagnosis_name" />
+                    <field name="remarks" />
+                    <field name="standard_fee" />
                 </group>
             </form>
         </field>
