@@ -9,17 +9,21 @@
 
 	<form t-attf-action="/claim/discharge_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
-        <t t-foreach="member_plan.member_plan_detail_ids" t-as="plan">
+
+        <!-- loo for each claim details -->
+        <t t-foreach="claim.claim_detail_ids" t-as="detail">
          	<div class="row">
             	<div class="col-md-4 col-sm-4">
-                    <label class="control-label"><t t-esc="plan.benefit_id.name"/></label>
+                    <label class="control-label"><t t-esc="detail.benefit_id.name"/></label>
                 </div>
                 <div class="col-md-4 col-sm-4">
-                   	<input type="text" t-attf-name="{{plan.id}}" t-attf-value="{{plan.reim}}"/>
+                   	<input type="text" t-attf-name="claim_details.{{detail.id}}" 
+                        t-attf-value="{{detail.billed}}"/>
                 </div>
             </div>
         </t>
      	
+        <!-- buttons -->
         <div class="row">
             <div class="col-sm-8 col-md-7">
                 <button type="submit" name="confirm" class="btn btn-primary">
@@ -36,7 +40,7 @@
 
 	    <input type="hidden" name="claim_id" t-attf-value="{{ claim.id }}" />
 	    <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
-	    <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
+        <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
 
 	</form>
 </template>
@@ -47,15 +51,10 @@
     <t t-call="website.layout">
         <t t-set="title">Discharge Confirmation</t>
         <div class="container">
-            <t t-call="vit_claim_web.patient_data">
-                <t t-set="member" t-value="member"/>
-            </t>    
 
-            <t t-call="vit_claim_web.loc">
-                <t t-set="member" t-value="member"/>
-                <t t-set="member_plan" t-value="member_plan"/>
-            </t>    
-
+            <h3>Claim No: <t t-esc="claim.claim_no" /> </h3>
+            <t t-call="vit_claim_web.patient_data" />
+            <t t-call="vit_claim_web.loc" />
 
         </div>
         <br/>

@@ -84,9 +84,17 @@
             	<h2><t t-esc="target_title"/>: Enter your Card Number</h2>
 	            <div class="row">
 	            	<div class="col-md-8">
-	            		<t t-if="message">
-							<div class="alert alert-danger">
-		                        <t t-esc="message"/>
+                        
+                        <t t-if="message_error">
+                            <div class="alert alert-danger">
+                                <t t-esc="message_error"/>
+                                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                            </div>
+                        </t>
+
+	            		<t t-if="message_success">
+							<div class="alert alert-success">
+		                        <t t-esc="message_success"/>
 		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
 			                </div>
 			            </t>
