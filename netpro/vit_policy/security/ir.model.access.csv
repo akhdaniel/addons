@@ -6,7 +6,6 @@
 "access_netpro_toc","netpro.toc","model_netpro_toc","base.group_user",1,0,0,0
 "access_netpro_segment","netpro.segment","model_netpro_segment","base.group_user",1,0,0,0
 "access_netpro_occupation","netpro.occupation","model_netpro_occupation","base.group_user",1,0,0,0
-"access_netpro_province","netpro.province","model_netpro_province","base.group_user",1,0,0,0
 "access_netpro_payment_option_mode","netpro.payment_option_mode","model_netpro_payment_option_mode","base.group_user",1,0,0,0
 "access_netpro_payment_option_installment","netpro.payment_option_installment","model_netpro_payment_option_installment","base.group_user",1,0,0,0
 "access_netpro_refund_type","netpro.refund_type","model_netpro_refund_type","base.group_user",1,0,0,0
@@ -20,7 +19,6 @@
 "access_netpro_card_type","netpro.card_type","model_netpro_card_type","base.group_user",1,0,0,0
 "access_netpro_pre_existing_condition","netpro.pre_existing_condition","model_netpro_pre_existing_condition","base.group_user",1,0,0,0
 "access_netpro_up_room_class","netpro.up_room_class","model_netpro_up_room_class","base.group_user",1,0,0,0
-"access_netpro_policy_status","netpro.policy_status","model_netpro_policy_status","base.group_user",1,0,0,0
 "access_netpro_coverage","netpro.coverage","model_netpro_coverage","base.group_user",1,0,0,0
 "access_netpro_class","netpro.class","model_netpro_class","base.group_user",1,0,0,0
 "access_netpro_plan_schedule","netpro.plan_schedule","model_netpro_plan_schedule","base.group_user",1,0,0,0

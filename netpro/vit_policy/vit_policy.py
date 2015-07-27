@@ -52,7 +52,7 @@ class netpro_policy(osv.osv):
         'lob_id': fields.many2one('netpro.lob', 'LOB'),
         'occupation_id': fields.many2one('netpro.occupation', 'Occupation'),
         'existing_policy_no_id': fields.many2one('res.partner', 'Existing Policy No'),
-        'province_id': fields.many2one('netpro.province', 'Region'),
+        'province_id': fields.many2one('res.country.state', 'Region'),
         'remarks': fields.text('Remarks'),
         'payment_option_mode_id': fields.many2one('netpro.payment_option_mode', 'Payment Option Mode'),
         'payment_option_installment_id': fields.many2one('netpro.payment_option_installment', 'Payment Option Installment'),
@@ -274,14 +274,6 @@ class netpro_occupation(osv.osv):
         'description': fields.text('Description'),
     }
 netpro_occupation()
-
-class netpro_province(osv.osv):
-    _name = 'netpro.province'
-    _columns = {
-        'name': fields.char('Name'),
-        'country_id': fields.many2one('res.country', 'Country'),
-    }
-netpro_province()
 
 class netpro_payment_option_mode(osv.osv):
     _name = 'netpro.payment_option_mode'

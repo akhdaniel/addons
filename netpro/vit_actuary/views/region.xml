@@ -1,0 +1,37 @@
+<openerp>
+<data>
+<record model="ir.ui.view" id="view_netpro_region_form">
+    <field name="name">netpro.region.form</field>
+    <field name="model">netpro.region</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="netpro.region">
+            <group>
+                <field name="name" select="1"/>
+                <field name="description" select="2"/>
+                <field name="allowed" select="2"/>
+            </group>
+        </form>
+    </field>
+</record>
+<record model="ir.ui.view" id="view_netpro_region_tree">
+    <field name="name">netpro.region.tree</field>
+    <field name="model">netpro.region</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="netpro.region">
+            <field name="name" select="1"/>
+            <field name="description" select="2"/>
+            <field name="allowed" select="2"/>
+        </tree>
+    </field>
+</record>
+<record model="ir.actions.act_window" id="action_netpro_region">
+    <field name="name">Province</field>
+    <field name="res_model">netpro.region</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+</data>
+</openerp>

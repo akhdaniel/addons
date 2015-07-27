@@ -53,5 +53,9 @@
 	    <menuitem name="Gender" id="menu_netpro_gender" action="action_netpro_gender" parent="menu_netpro_actuary_configuration"/>
 	    
 	    <menuitem name="Marital Status" id="menu_netpro_marital_status" action="action_netpro_marital_status" parent="menu_netpro_actuary_configuration"/>
+
+	    <menuitem name="Reason" id="menu_netpro_reason" action="action_netpro_reason" parent="menu_netpro_actuary_configuration" />
+	    <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_actuary_configuration" />
+	    <menuitem name="Region" id="menu_netpro_region" action="action_netpro_region" parent="menu_netpro_actuary_configuration" />
 </data>
 </openerp>
