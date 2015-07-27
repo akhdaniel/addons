@@ -7,6 +7,7 @@ import logging
 _logger = logging.getLogger(__name__)
 import time
 
+
 class Member(http.Controller):
 	######################################################################################
 	# halaman registration
@@ -14,9 +15,14 @@ class Member(http.Controller):
 	######################################################################################
 	@http.route('/claim/registration', auth='user', website=True)
 	def registration(self, **kw):
-		message = kw.get('message','')
+		message_error = kw.get('message_error','')
+		message_success = kw.get('message_success','')
 		return http.request.render('vit_claim_web.search',
-			{'target':'/claim/eligibility', 'target_title':'Registration', 'message':message} )	
+			{'target'		: '/claim/eligibility', 
+			'target_title'	: 'Registration', 
+			'message_error'	: message_error,
+			'message_success': message_success
+		} )	
 
 	######################################################################################
 	# pengecekan eligibility pasien 
@@ -32,7 +38,16 @@ class Member(http.Controller):
 			if not member:
 				message = "Member not found! Please try again."
 				# return http.request.render('vit_claim_web.registration', {'message':message} )	
-				return request.redirect('/claim/registration?message=%s'% (message), code=301)
+				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
+
+			##############################################################################
+			# cari data claim member tsb yang masih draft
+			##############################################################################
+			Claim  = http.request.env['netpro.claim']
+			claim = Claim.search([('member_id','=',member.id), ('state','=', 'draft')])
+			if claim:
+				message = "Found existing draft Claim No %s, please discharge first. " % (claim.claim_no) 
+				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
 		return http.request.render('vit_claim_web.eligibility', 
 			{'member': member, 'message':message})
@@ -51,7 +66,7 @@ class Member(http.Controller):
 			if not member:
 				message = "Member not found! Please try again."
 				# return http.request.render('vit_claim_web.registration', {'message':message} )	
-				return request.redirect('/claim/registration?message=%s'% (message), code=301)
+				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
 		# cari benefit member sesuai member_plan (RI, RJ, dll)
 
@@ -75,19 +90,27 @@ class Member(http.Controller):
 		member_plan = MemberPlan.browse( int(member_plan_id))
 
 		if not member_plan:
-			raise osv.except_osv(_('Error'),_("Member Plan not found!") ) 
+			message = "Member Plan not found! Please try again."
+			return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
-		#insert into netpro_claim
-		Claim = http.request.env['netpro.claim']
+
+		##############################################################################
+		# insert into netpro_claim
+		##############################################################################
+		Claim  = http.request.env['netpro.claim']
+
+		claim_details = [(0,0,{'benefit_id' : x.benefit_id.id}) for x in member_plan.member_plan_detail_ids]
+
 		data = {
 			'claim_date'		: time.strftime("%Y-%m-%d"),
 			'member_id'			: int(member_id),
-			'member_plan_id'	: member_plan.id 
+			'member_plan_id'	: member_plan.id ,
+			'claim_detail_ids'  : claim_details,
 		}
 		Claim.create(data)
 
 		message = "Claim Registration Success!"
-		return request.redirect('/claim/registration?message=%s'% (message), code=301)
+		return request.redirect('/claim/registration?message_success=%s'% (message), code=301)
 
 	######################################################################################
 	# halaman utama discrhage, munculkan search patient
@@ -95,9 +118,14 @@ class Member(http.Controller):
 	######################################################################################
 	@http.route('/claim/discharge', auth='user', website=True)
 	def discharge(self, **kw):
-		message = kw.get('message','')
+		message_error = kw.get('message_error','')
+		message_success = kw.get('message_success','')
 		return http.request.render('vit_claim_web.search', 
-			{'target':'/claim/discharge_confirmation' , 'target_title':'Discharge', 'message':message} )	
+			{'target':'/claim/discharge_confirmation' , 
+			'target_title':'Discharge', 
+			'message_error':message_error,
+			'message_success':message_success
+			} )	
 
 	######################################################################################
 	# discharge confirm, pengesahan
@@ -118,19 +146,41 @@ class Member(http.Controller):
 			member = Member.search([('member_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
-				return request.redirect('/claim/discharge?message=%s'% (message), code=301)
+				return request.redirect('/claim/discharge?message_error=%s'% (message), code=301)
 
 			##############################################################################
 			# cari data claim member tsb yang masih open
 			##############################################################################
 			Claim  = http.request.env['netpro.claim']
-			claim = Claim.search([('member_id','=',member.id), ('claim_status_id.name','=', 'draft')])
+			claim = Claim.search([('member_id','=',member.id), ('state','=', 'draft')])
+			if not claim:
+				message = "Claim Registration not found!"
+				return request.redirect('/claim/discharge?message_error=%s'% (message), code=301)
+
+			if len(claim) > 1:
+				message = "Found more than 1 claim registration!"
+				return request.redirect('/claim/discharge?message_error=%s'% (message), code=301)
+
+			claim = claim[0]
 
 			return http.request.render('vit_claim_web.discharge_confirmation', 
-				{'member': member, 
-				'claim':claim, 
-				'member_plan': claim.member_plan_id,
-				'message':message})
+				{'member'	: member, 
+				'claim'		: claim, 
+				'member_plan' : claim.member_plan_id,
+				'message'	: message})
+
+	######################################################################################
+	# convert kw string to array
+	######################################################################################
+	def string2array(self, name, kw):
+		res = {}
+		for k in kw.keys():
+			if k.find('.') != -1:
+				x = k.split('.')
+				if x[0] == name:
+					res[ int(x[1]) ] = kw.get(k)
+
+		return res 
 
 	######################################################################################
 	# proses discharge: update transaksi claim detail
@@ -144,7 +194,7 @@ class Member(http.Controller):
 			# cari dulu data member
 			##############################################################################
 			Member = http.request.env['netpro.member']
-			MemberPlan = http.request.env['netpro.member_plan']
+			# MemberPlan = http.request.env['netpro.member_plan']
 			Claim  = http.request.env['netpro.claim']
 
 			# member = Member.search([('id','=',kw.get('member_id','') )])
@@ -157,18 +207,24 @@ class Member(http.Controller):
 			# ##############################################################################
 			# # cari data claim member tsb yang masih open
 			# ##############################################################################
-			# claim = Claim.search([('id','=', kw.get('claim_id','')])
+			claim = Claim.search([('id','=', kw.get('claim_id',''))])
 
-			# ##############################################################################
-			# # insert detail claim
-			# ##############################################################################
-			# claim_detail_ids = [
-			# 	(0,0,{})
-			# ]
-			# claim.update({'claim_detail_ids' : claim_detail_ids })
+			claim_details = self.string2array('claim_details', kw)
+			# import pdb; pdb.set_trace()
+
+			##############################################################################
+			# update detail claim
+			##############################################################################
+			claim_detail_ids = [
+				(1, x , { 'billed': float(claim_details[x]) }) for x in claim_details.keys()
+			]
+			claim.write({
+				'state'				: 'open',
+				'claim_detail_ids' 	: claim_detail_ids 
+			})
 
 			message = "Discharge Success!"
-			return request.redirect('/claim/discharge?message=%s'% (message), code=301)
+			return request.redirect('/claim/discharge?message_success=%s'% (message), code=301)
 
 
 	# @http.route('/mlm/member/list', auth='user', website=True)

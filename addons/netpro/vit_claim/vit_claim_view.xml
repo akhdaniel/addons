@@ -52,7 +52,8 @@
                          groups="academic.group_manager"
                     /> -->
 
-                     <field name="state" widget="statusbar"  /> 
+                     <field name="state" widget="statusbar" 
+                    statusbar_visible="draft,open,approved,released" /> 
 
                 </header>
 
