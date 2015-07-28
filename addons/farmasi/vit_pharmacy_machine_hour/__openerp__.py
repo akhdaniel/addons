@@ -1,0 +1,17 @@
+{
+    'name': 'Pharmacy Manufacture Machine Hour',
+    'version': '1.0',
+    'category': 'Manufacture',
+    'description': """
+        1. Menambahkan Master Mesin 
+        2. Menambahkan Bom Man Hour
+        3. Menambahkan Bom Mechine Hour
+       """,
+    'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
+    'depends': ['mrp'],
+    'data': ['machine_master.xml','bom_man_hour.xml'],
+    'test': [],    
+    'installable': True,
+    'active': False,
+    'certificate':''   
+}
