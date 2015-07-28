@@ -30,6 +30,7 @@ Homepage untuk aplikasi insurance
         'views/search.xml',
         'views/registration.xml',
         'views/discharge.xml',
+        'views/claim_list.xml',
 
     ],
     'css':['static/src/css/*.css'],

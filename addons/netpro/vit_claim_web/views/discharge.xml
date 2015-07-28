@@ -22,7 +22,26 @@
                 </div>
             </div>
         </t>
-     	
+
+        <!-- diagnosis -->
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="diagnosis_id">Diagnosis</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <select class="form-control" required="True" name="diagnosis_id" 
+                     t-attf-readonly="#{True if readonly==1 else False}">
+                    <option value="">Select Diagnosis...</option>
+                    <t t-foreach="diagnosis or []" t-as="diag">
+                        <option t-att-value="diag.id" 
+                            t-attf-selected="#{claim and claim.diagnosis_id.id == diag.id}">
+                            <t t-esc="diag.name"/>
+                        </option>
+                    </t>
+                </select>                
+            </div>
+        </div>
+ 	
         <!-- buttons -->
         <div class="row">
             <div class="col-sm-8 col-md-7">
