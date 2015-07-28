@@ -163,10 +163,17 @@ class Member(http.Controller):
 
 			claim = claim[0]
 
+			##############################################################################
+			# diagnosis data / harus autocomplete
+			##############################################################################
+			Diagnosis  = http.request.env['netpro.diagnosis']
+			diagnosis = Diagnosis.search([])
+
 			return http.request.render('vit_claim_web.discharge_confirmation', 
 				{'member'	: member, 
 				'claim'		: claim, 
 				'member_plan' : claim.member_plan_id,
+				'diagnosis'	: diagnosis,
 				'message'	: message})
 
 	######################################################################################
@@ -220,12 +227,65 @@ class Member(http.Controller):
 			]
 			claim.write({
 				'state'				: 'open',
-				'claim_detail_ids' 	: claim_detail_ids 
+				'claim_detail_ids' 	: claim_detail_ids ,
+				'diagnosis_id'		: int(kw.get('diagnosis_id',''))
 			})
 
 			message = "Discharge Success!"
 			return request.redirect('/claim/discharge?message_success=%s'% (message), code=301)
 
+
+	######################################################################################
+	# halaman search claim
+	# muncul search patient, action ke claim list
+	######################################################################################
+	@http.route('/claim/search', auth='user', website=True)
+	def search(self, **kw):
+		message_error = kw.get('message_error','')
+		message_success = kw.get('message_success','')
+		return http.request.render('vit_claim_web.search',
+			{'target'		: '/claim/claim_list', 
+			'target_title'	: 'Search Claim', 
+			'message_error'	: message_error,
+			'message_success': message_success
+		} )	
+
+	######################################################################################
+	# action ke claim list
+	######################################################################################
+	@http.route('/claim/claim_list', auth='user', website=True)
+	def claim_list(self, **kw):
+		message_error = kw.get('message_error','')
+		message_success = kw.get('message_success','')
+
+		if request.httprequest.method == 'POST':
+			##############################################################################
+			# cari dulu data member
+			##############################################################################
+			Member = http.request.env['netpro.member']
+			member = Member.search([('member_no','=',kw.get('card_no','') )])
+			if not member:
+				message = "Member not found! Please try again."
+				return request.redirect('/claim/search?message_error=%s'% (message), code=301)
+
+			##############################################################################
+			# cari data claim member tsb yang masih open
+			##############################################################################
+			Claim  = http.request.env['netpro.claim']
+			claim_ids = Claim.search([('member_id','=',member.id) ])
+			if not claim_ids:
+				message = "Claim Registration not found!"
+				return request.redirect('/claim/search?message_error=%s'% (message), code=301)
+
+			# import pdb; pdb.set_trace()
+			# claims = Claim.browse(claim_ids)
+
+			return http.request.render('vit_claim_web.claim_list',
+				{'message_error'	: message_error,
+				'message_success'	: message_success,
+				'claims' 			: claim_ids,
+				'member'			: member 
+			} )	
 
 	# @http.route('/mlm/member/list', auth='user', website=True)
 	# def list(self, **kw):		
