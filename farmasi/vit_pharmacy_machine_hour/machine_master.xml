@@ -1,0 +1,65 @@
+<openerp>
+
+    <data>
+        <record id="view_mm_tree" model="ir.ui.view">
+            <field name="name">mm_tree</field>
+            <field name="model">vit_pharmacy_machine_hour.machine_master</field>
+            <field name="arch" type="xml">
+                <tree string="Machine Master">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="type"/> 
+                    <field name="departement"/> 
+                    <field name="location"/>          
+                </tree>
+            </field>
+        </record>
+        <record id="view_mm_form" model="ir.ui.view">
+            <field name="name">mm_form</field>
+            <field name="model">vit_pharmacy_machine_hour.machine_master</field>
+            <field name="arch" type="xml">
+                 <form string="Machine Master" version="7.0">
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code" />
+                                <field name="type"/> 
+                            </group>
+                            <group> 
+                                <field name="departement"/> 
+                                <field name="location"/> 
+                            </group>
+                        </group>
+                </form>                         
+            </field>
+        </record>
+
+
+        <record id="view_mm_filter" model="ir.ui.view">
+            <field name="name">mps_form_filter</field>
+            <field name="model">vit_pharmacy_machine_hour.machine_master</field>
+            <field name="arch" type="xml">
+                <search string="Search MPS">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="type"/>
+                    <field name="departement"/> 
+                    <field name="location"/>        
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="field_mm">
+            <field name="name">Machine</field>
+            <field name="res_model">vit_pharmacy_machine_hour.machine_master</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>Machine Master</p>
+            </field>
+        </record>
+
+        <menuitem action="field_mm" id="menu_field_mm" parent="menu_pharmacy_bom" sequence="2"/>
+    </data>
+</openerp>
+
