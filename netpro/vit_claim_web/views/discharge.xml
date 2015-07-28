@@ -35,7 +35,7 @@
                     <t t-foreach="diagnosis or []" t-as="diag">
                         <option t-att-value="diag.id" 
                             t-attf-selected="#{claim and claim.diagnosis_id.id == diag.id}">
-                            <t t-esc="diag.name"/>
+                            <t t-esc="diag.diagnosis"/> - <t t-esc="diag.name"/>
                         </option>
                     </t>
                 </select>                
