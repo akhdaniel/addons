@@ -4,7 +4,7 @@
 "access_netpro_claim_category","netpro.claim_category","model_netpro_claim_category","base.group_user",1,0,0,0
 "access_netpro_claim_type","netpro.claim_type","model_netpro_claim_type","base.group_user",1,0,0,0
 "access_netpro_claim_room","netpro.claim_room","model_netpro_claim_room","base.group_user",1,0,0,0
-"access_netpro_reason","netpro.reason","model_netpro_reason","base.group_user",1,0,0,0
+"access_netpro_claim_reason","netpro.claim_reason","model_netpro_claim_reason","base.group_user",1,0,0,0
 "access_netpro_excess_payor","netpro.excess_payor","model_netpro_excess_payor","base.group_user",1,0,0,0
 "access_netpro_treatment","netpro.treatment","model_netpro_treatment","base.group_user",1,0,0,0
 "access_netpro_treatment_category","netpro.treatment_category","model_netpro_treatment_category","base.group_user",1,0,0,0
