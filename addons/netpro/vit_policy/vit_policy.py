@@ -438,9 +438,9 @@ netpro_class()
 
 class netpro_plan_schedule(osv.osv):
     _name = 'netpro.plan_schedule'
-    _rec_name = 'product_plan_base_id'
+    _rec_name = 'product_plan_id'
     _columns = {
-        'product_plan_base_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'bamount': fields.float('BAmount'),
         'reimbursement': fields.float('Reimbursement'),
         'reimbursement_affect_to_benefit': fields.boolean('Reimbursement Affect To Benefit'),
@@ -552,7 +552,7 @@ class netpro_membership_plan_employee(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
     }
@@ -563,7 +563,7 @@ class netpro_membership_plan_spouse(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
     }
@@ -574,7 +574,7 @@ class netpro_membership_plan_child(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
     }
@@ -585,7 +585,7 @@ class netpro_membership_plan_employee(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
     }
@@ -596,7 +596,7 @@ class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
     _rec_name = 'plan_schedule_id'
     _columns = {
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'Plan Schedule'),
-        'product_plan_id': fields.many2one('netpro.product_plan_base', 'Product Plan'),
+        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'bamount': fields.float('BAmount'),
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit ID'),
         'parent_benefit_id': fields.many2one('netpro.benefit', 'Parent Benefit'),

@@ -57,7 +57,7 @@
                                 <field name="dummy_member" select="0"/>
                                 <field name="mno" select="0"/>
                                 <field name="pmno" select="0"/>
-                                <field name="status" select="0"/>
+                                <field name="state" select="0"/>
                                 <field name="trans_type" select="0"/>
                                 <field name="suspend_tpa" select="0"/>
                             </group>
@@ -132,7 +132,7 @@
                 <field name="member_no"/>
                 <field name="insurance_period_start"/>
                 <field name="insurance_period_end"/>
-                <field name="status"/>
+                <field name="state"/>
                 <!-- 
                 <field name="census_no"/>
                 <field name="sex"/>

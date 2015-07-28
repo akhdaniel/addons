@@ -62,7 +62,7 @@ class netpro_member(osv.osv):
         'dummy_member': fields.boolean('Dummy Member'),
         'mno': fields.float('MNO', readonly=True),
         'pmno': fields.integer('PMNO', readonly=True),
-        'status': fields.char('Status', readonly=True),
+        'state': fields.char('Status', readonly=True),
         'trans_type': fields.char('Trans. Type', readonly=True),
         'suspend_tpa': fields.boolean('Suspend TPA', readonly=True),
         'account_no': fields.char('Account No'),
