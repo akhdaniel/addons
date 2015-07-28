@@ -74,7 +74,7 @@
                             <field name="diagnosis_id" />
                             <field name="2nd_diagnosis" />
                             <field name="3rd_diagnosis" />
-                            <field name="claim_id" />
+                            <!-- <field name="claim_id" /> -->
                             <field name="branch_id" />
                             <field name="currency_id" />
                             <field name="claim_rate" />
@@ -380,7 +380,7 @@
                 <group colspan="2">
                     <group string="Loss Item">
                         <field name="cno" select="1"/>
-                        <field name="claim_id" select="2"/>
+                        <!-- <field name="claim_id" select="2"/> -->
                         <field name="benefit_id" />
                         <field name="treatment_date_start" />
                         <field name="treatment_date_end" />
@@ -821,7 +821,7 @@
         <field name="arch" type="xml">
             <form string="netpro.claim_diagnosis">
                 <group>
-                    <field name="claim_id" select="1"/>
+                    <!-- <field name="claim_id" select="1"/> -->
                     <field name="diagnosis" select="2"/>
                     <field name="diagnosis_name" />
                     <field name="remarks" />
