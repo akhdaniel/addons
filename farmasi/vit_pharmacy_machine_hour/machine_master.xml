@@ -59,7 +59,7 @@
             </field>
         </record>
 
-        <menuitem action="field_mm" id="menu_field_mm" parent="menu_pharmacy_bom" sequence="2"/>
+        <menuitem action="field_mm" id="menu_field_mm" parent="menu_pharmacy_bom" sequence="3"/>
     </data>
 </openerp>
 

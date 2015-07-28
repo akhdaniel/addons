@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                     <page string="Workcenter Operation" position="inside">
+                     <page string="Workcenter Man Hour" position="inside">
                         <field name="workcenter_lines">
                             <tree string="workcenter operation"  editable="top">
                                     <field name="workcenter_operation_id" domain="[('routing_id','=',parent.routing_id)]"/>
@@ -84,7 +84,7 @@
                 parent="menu_pharmacy_bom" sequence="1"/>
 
 
-    
+
 <!-- 
         <record id="mrp_routing_workcenter_tree_view_ph" model="ir.ui.view">
             <field name="name">mrp.routing.workcenter.tree.ph</field>
