@@ -140,7 +140,7 @@ class netpro_claim(osv.osv):
         'summary_usage': fields.float('Usage'),
         'summary_balance': fields.float('Balance'),
         'summary_family_limit': fields.float('Family Limit'),
-        'summary_family_usage': fields.float('Family Usage'),
+        'summary_family_usage': fields.float('Family Usage'),   
         'summary_family_balance': fields.float('Family Balance'),
         'summary_claim_count': fields.float('Claim Count'),
         'claim_detail_ids': fields.one2many('netpro.claim_detail', 'claim_id', 'Claim Details', ondelete='cascade'),
