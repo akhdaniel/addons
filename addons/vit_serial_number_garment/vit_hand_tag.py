@@ -135,7 +135,7 @@ class vit_hand_tag_barcode(osv.osv):
 
     _columns ={
         'name'  : fields.char('Barcode',required=True,size=64),
-        'vit_hand_tag_id'   : fields.many2one('vit.hand.tag','Hand Tag'),
+        'vit_hand_tag_id'   : fields.many2one('vit.hand.tag','Hang Tag'),
     }
 
 vit_hand_tag_barcode()  
