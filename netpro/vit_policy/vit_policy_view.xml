@@ -8,6 +8,18 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.policy">
+                <header>                                             
+                    <button string="Approve" type="object" 
+                        states="open" name="action_approve" class="oe_highlight"/>                 
+                                             
+                    <button string="Cancel" type="object" 
+                        states="approved" name="action_cancel"/>
+
+                    <button string="Close" type="object" 
+                        name="action_close" states="approved"/>    
+
+                    <field name="state" widget="statusbar"/>
+                </header>                
                 <group col="2">
                     <group col="1">
                         <group string="General Policy Information">
@@ -103,7 +115,7 @@
                             <field name="vaccount_no_optional" select="0"/>
                         </group>
                         <group string="Policy Status">
-                            <field name="policy_status" select="0"/>
+                            <!-- <field name="policy_status" select="0"/> -->
                             <field name="endorsement_date" select="0"/>
                             <field name="email_date" select="0"/>
                             <field name="int_endorsement_no" select="0"/>
@@ -202,7 +214,9 @@
                                 <group>
                                     <group string="Plan Schedule" colspan="2">
                                         <group>
+                                            <field name="class_id" readonly="1"/>
                                             <field name="product_plan_id" select="1"/>
+                                            <field name="plan_for" readonly="1"/>
                                             <field name="bamount" select="2"/>
                                             <field name="reimbursement" select="0"/>
                                             <field name="reimbursement_affect_to_benefit" select="0"/>
@@ -252,7 +266,7 @@
                                 <separator string="Plan Schedule Benefits" colspan="4"/>
                                 <field name="plan_schedule_detail_benefit_schedule_ids" nolabel="1" select="0">
                                     <tree string="Details">
-                                        <field name="product_plan_id" select="2"/>
+                                        <!-- <field name="product_plan_id" select="2"/> -->
                                         <field name="benefit_id" select="0"/>
                                         <field name="company_inner_limit_seq_no" select="0"/>
                                         <field name="occurance_inner_limit" select="0"/>
@@ -265,7 +279,7 @@
                                         <group>
                                             <group string="Benefit Schedule" colspan="2">
                                                 <group>
-                                                    <field name="product_plan_id" select="2"/>
+                                                    <!-- <field name="product_plan_id" select="2"/> -->
                                                     <field name="bamount" select="0"/>
                                                     <field name="benefit_id" select="0"/>
                                                     <field name="parent_benefit_id" select="0"/>
@@ -383,7 +397,9 @@
                             </form>      
 
                             <tree string="Plan Schedule">
+                                <field name="class_id"/>
                                 <field name="product_plan_id" select="1"/>
+                                <field name="plan_for"/>
                                 <field name="bamount" select="2"/>
                                 <field name="individual_overall_limit_amount_point" select="0"/>
                                 <field name="individual_overall_limit_amount_interval" select="0"/>

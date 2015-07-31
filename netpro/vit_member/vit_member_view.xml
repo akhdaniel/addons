@@ -7,7 +7,22 @@
         <field name="model">netpro.member</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="netpro.member">
+            <form string="netpro.member" version="7.0">
+                <header>                                             
+                    <button string="Confirm" type="object" 
+                        attrs="{'invisible':[('status','!=','draft')]}" 
+                        name="action_confirm" class="oe_highlight"/>                 
+                                             
+                    <button string="Cancel" type="object" 
+                        attrs="{'invisible':[('status','!=','actived')]}"
+                        name="action_cancel"/>
+
+                    <button string="Non Active" type="object"
+                        attrs="{'invisible':[('status','!=','actived')]}"
+                        name="action_nonactive"/>    
+
+                    <field name="status" widget="statusbar"/>
+                </header>                  
                 <group string="Member Info">
                     <field name="policy_id" select="1"/>
                     <field name="policy_holder" select="1"/>

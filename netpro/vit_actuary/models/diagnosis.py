@@ -17,14 +17,4 @@ class netpro_diagnosis(osv.osv):
         'pre_existing_f': fields.boolean('PreExistingF'),
         'standard_fee': fields.float('StandardFee'),
     }
-    def _name_get(self, cr, uid, diagnosis, context=None):
-        name = diagnosis.diagnosis + '-' + diagnosis.name
-        return name
-
-    def name_get(self, cr, uid, ids, context=None):
-        res = []
-        for diagnosis in self.browse(cr, uid, ids, context=context):
-            res.append((diagnosis.id, self._name_get(cr, uid, diagnosis, context=context)))
-        return res
-
 netpro_diagnosis()

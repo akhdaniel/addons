@@ -99,6 +99,7 @@ class netpro_policy(osv.osv):
         'bank_optional_id': fields.many2one('res.partner.bank', 'Bank Optional', help='Relasi ke Partner Bank'),
         'vaccount_no_optional': fields.char('V Account No Optional'),
         'policy_status': fields.selection([('open','Open'), ('approved','Approved'), ('closed', 'Closed')],'Policy Status'),
+        'state': fields.selection([('open','Open'), ('approved','Approved'), ('closed', 'Closed')],'Policy Status'),
         'endorsement_date': fields.date('Endorsement Date'),
         'email_date': fields.date('EmailDate'),
         'int_endorsement_no': fields.integer('Int. Endorsement No'),
@@ -164,7 +165,8 @@ class netpro_policy(osv.osv):
         'ci_date': fields.date('C/I Date'),
     }
     _defaults = {
-        'ci_date' : lambda*a : time.strftime("%Y-%m-%d")
+        'ci_date'   : lambda*a : time.strftime("%Y-%m-%d"),
+        'state'     : 'open',
     }
     def create(self, cr, uid, vals, context=None):
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
@@ -173,6 +175,108 @@ class netpro_policy(osv.osv):
         })
         new_id = super(netpro_policy, self).create(cr, uid, vals, context=context)
         return new_id
+
+    def action_approve(self,cr,uid,ids,context=None):
+        # create schedule plan
+        self.create_plan_schedule(cr,uid,ids,context=context)
+        #set to "approve" state
+        self.write(cr,uid,ids,{'state':'approved'},context=context)
+        return 
+    
+    def action_cancel(self,cr,uid,ids,context=None):
+        #set to "cancel" state
+        return self.write(cr,uid,ids,{'state':'open'},context=context)
+    
+    def action_close(self,cr,uid,ids,context=None):
+        #set to "close" state
+        return self.write(cr,uid,ids,{'state':'closed'},context=context)
+
+    def create_plan_schedule(self, cr, uid, ids, context=None):
+
+        class_obj           = self.pool.get('netpro.class')
+        pplan_obj           = self.pool.get('netpro.product_plan')
+        pplan_bnft_obj      = self.pool.get('netpro.product_plan_benefit')
+        pplan_sch_obj       = self.pool.get('netpro.plan_schedule')
+        mplan_emp_obj       = self.pool.get('netpro.membership_plan_employee')
+        mplan_spo_obj       = self.pool.get('netpro.membership_plan_spouse')
+        mplan_chi_obj       = self.pool.get('netpro.membership_plan_child')
+        plan_schedule_obj   = self.pool.get('netpro.plan_schedule_detail_benefit_schedule')
+        self_obj    = self.browse(cr,uid,ids[0],context=context)
+        # jika belum ada schedule
+        if not self_obj.plan_schedule_ids:
+            #jika classnya diisi
+            if self_obj.class_ids:
+                #looping setiap class yang ada
+                for line in self_obj.class_ids:
+                    class_no = line.class_no
+                    #Class employee 
+                    if line.membership_plan_employee_ids:
+                        for plan_emp in line.membership_plan_employee_ids:
+                            product_plan_id = plan_emp.product_plan_id.id
+                            male_female_bamount = plan_emp.male_female_bamount
+                            #create schedule
+                            plan_schedule_id = pplan_sch_obj.create(cr,uid,{'policy_id':self_obj.id,
+                                                                            'product_plan_id':product_plan_id,
+                                                                            'bamount':male_female_bamount,
+                                                                            'plan_for':'Employee',
+                                                                            'class_id':line.id})
+                            plan_benefit_schedule_ids = pplan_bnft_obj.search(cr,uid,[('product_plan_id','=',product_plan_id)])
+                            #mport pdb;pdb.set_trace()
+                            if plan_benefit_schedule_ids :
+                                for benefit in pplan_bnft_obj.browse(cr,uid,plan_benefit_schedule_ids):
+                                    reimbursement = benefit.reimbursement 
+                                    #create schedule detail
+                                    plan_schedule_obj.create(cr,uid,{'plan_schedule_id':plan_schedule_id,
+                                                                     'product_plan_id':product_plan_id,
+                                                                     'benefit_id':benefit.benefit_id.id,
+                                                                     #'company_inner_limit_reimbursement':reimbursement
+                                                                     })
+
+                    #Class spouse 
+                    if line.membership_plan_spouse_ids:
+                        for plan_spouse in line.membership_plan_spouse_ids:
+                            product_plan_id = plan_spouse.product_plan_id.id
+                            male_female_bamount = plan_spouse.male_female_bamount
+                            #create schedule
+                            plan_schedule_id = pplan_sch_obj.create(cr,uid,{'policy_id':self_obj.id,
+                                                                            'product_plan_id':product_plan_id,
+                                                                            'bamount':male_female_bamount,
+                                                                            'plan_for':'Spouse',
+                                                                            'class_id':line.id})
+                            plan_benefit_schedule_ids = pplan_bnft_obj.search(cr,uid,[('product_plan_id','=',product_plan_id)])
+                            if plan_benefit_schedule_ids :
+                                for benefit in pplan_bnft_obj.browse(cr,uid,plan_benefit_schedule_ids):
+                                    reimbursement = benefit.reimbursement 
+                                    #create schedule detail
+                                    plan_schedule_obj.create(cr,uid,{'plan_schedule_id':plan_schedule_id,
+                                                                     'product_plan_id':product_plan_id,
+                                                                     'benefit_id':benefit.benefit_id.id,
+                                                                     #'company_inner_limit_reimbursement':reimbursement
+                                                                     })
+
+                    #Class spouse 
+                    if line.membership_plan_child_ids:
+                        for plan_child in line.membership_plan_child_ids:
+                            product_plan_id = plan_child.product_plan_id.id
+                            male_female_bamount = plan_child.male_female_bamount
+                            #create schedule
+                            plan_schedule_id = pplan_sch_obj.create(cr,uid,{'policy_id':self_obj.id,
+                                                                            'product_plan_id':product_plan_id,
+                                                                            'bamount':male_female_bamount,
+                                                                            'plan_for':'Child',
+                                                                            'class_id':line.id})
+                            plan_benefit_schedule_ids = pplan_bnft_obj.search(cr,uid,[('product_plan_id','=',product_plan_id)])
+                            if plan_benefit_schedule_ids :
+                                for benefit in pplan_bnft_obj.browse(cr,uid,plan_benefit_schedule_ids):
+                                    reimbursement = benefit.reimbursement
+                                    #create schedule detail 
+                                    plan_schedule_obj.create(cr,uid,{'plan_schedule_id':plan_schedule_id,
+                                                                     'product_plan_id':product_plan_id,
+                                                                     'benefit_id':benefit.benefit_id.id,
+                                                                     #'company_inner_limit_reimbursement':reimbursement
+                                                                     })  
+        return  True
+
 netpro_policy()
 
 class netpro_branch(osv.osv):
@@ -476,6 +580,8 @@ class netpro_plan_schedule(osv.osv):
         'provider_level_id': fields.many2one('netpro.provider_level', 'Provider Level'),
         'plan_schedule_detail_benefit_schedule_ids': fields.one2many('netpro.plan_schedule_detail_benefit_schedule', 'plan_schedule_id', 'Plan Schedule', ondelete='cascade'),
         'policy_id': fields.many2one('netpro.policy', 'Policy'),
+        'plan_for':fields.char('Plan For'),
+        'class_id':fields.many2one('netpro.class','Class'),
     }
 netpro_plan_schedule()
 
