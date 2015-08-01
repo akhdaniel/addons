@@ -1872,7 +1872,7 @@
         <field name="arch" type="xml">
             <form string="netpro.membership_plan_spouse">
                 <group>
-                    <field name="class_id" select="1"/>
+                    <!-- <field name="class_id" select="1"/> -->
                     <field name="product_plan_id" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
@@ -1907,7 +1907,7 @@
         <field name="arch" type="xml">
             <form string="netpro.membership_plan_child">
                 <group>
-                    <field name="class_id" select="1"/>
+                    <!-- <field name="class_id" select="1"/> -->
                     <field name="product_plan_id" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
@@ -1942,7 +1942,7 @@
         <field name="arch" type="xml">
             <form string="netpro.plan_schedule_detail_benefit_schedule">
                 <group>
-                    <field name="plan_schedule_id" select="1"/>
+                    <!-- <field name="plan_schedule_id" select="1"/> -->
                     <field name="product_plan_id" select="2"/>
                     <field name="bamount" select="0"/>
                     <field name="benefit_id" select="0"/>
@@ -2072,7 +2072,7 @@
         <field name="arch" type="xml">
             <form string="netpro.plan_schedule_detail_diagnosis_exclusion">
                 <group>
-                    <field name="plan_schedule_id" select="1"/>
+                    <!-- <field name="plan_schedule_id" select="1"/> -->
                     <field name="master_diagnosis_exclusion_id" select="2"/>
                     <separator string="Description" colspan="4"/>
                     <field name="description" colspan="4" nolabel="1" select="0"/>
@@ -2107,7 +2107,7 @@
         <field name="arch" type="xml">
             <form string="netpro.plan_schedule_detail_diagnosis_exclusion_exception">
                 <group>
-                    <field name="plan_schedule_id" select="1"/>
+                    <!-- <field name="plan_schedule_id" select="1"/> -->
                     <field name="master_diagnosis_exclusion_id" select="2"/>
                     <separator string="Description" colspan="4"/>
                     <field name="description" colspan="4" nolabel="1" select="0"/>
@@ -2183,7 +2183,7 @@
             <form string="netpro.master_diagnosis_exclusion">
                 <group>
                     <field name="diagnosis_id" select="1"/>
-                    <separator string="'Diagnosis Description'" colspan="4"/>
+                    <separator string="Diagnosis Description" colspan="4"/>
                     <field name="description" colspan="4" nolabel="1" select="2"/>
                     <field name="poly" select="0"/>
                     <field name="as_exception" select="0"/>
