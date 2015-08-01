@@ -53,6 +53,7 @@
                 'views/region.xml', 
 
                 'data/product_type.xml', 
+                'data/membership_data.xml', 
                 'data/product.xml', 
                 'data/product_plan_base.xml', 
                 'data/product_plan.xml', 

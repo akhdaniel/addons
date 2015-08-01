@@ -50,7 +50,7 @@ class netpro_member(osv.osv):
         'hold_car_swipe_claim': fields.boolean('Hold Card Swipe And Claim'),
         'remarks': fields.text('Remarks'),
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'membership': fields.selection([('EMP', 'Employee'), ('SPO', 'Spouse'), ('CHI', 'Child')], 'Membership'),
+        'membership_id': fields.many2one('netpro.membership', 'Membership'),
         'card_no': fields.char('Card No'),
         'register_no': fields.char('Register No.'),
         'period_start': fields.date('Period Start'),
@@ -451,7 +451,7 @@ class netpro_member_plan(osv.osv):
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
-        'product_plan': fields.related('plan_schedule_id', 'product_plan_base_id', 
+        'product_plan': fields.related('plan_schedule_id', 'product_plan_id', 'product_plan_base_id',
             relation="netpro.product_plan_base",
             type='many2one', string='Product Plan', store=True, readonly=True),
 
