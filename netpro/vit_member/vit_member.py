@@ -35,7 +35,7 @@ class netpro_member(osv.osv):
         'insurance_period_start': fields.date('Insurance Period Start', required=True),
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.', required=True),
-        'employee_id': fields.many2one('hr.employee', 'Employee'),
+        'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
         'census_no': fields.integer('Census No.'),
         'sex': fields.many2one('netpro.sex', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
@@ -50,7 +50,7 @@ class netpro_member(osv.osv):
         'hold_car_swipe_claim': fields.boolean('Hold Card Swipe And Claim'),
         'remarks': fields.text('Remarks'),
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'membership_id': fields.many2one('netpro.membership', 'Membership'),
+        'membership': fields.many2one('netpro.membership', 'Membership'),
         'card_no': fields.char('Card No'),
         'register_no': fields.char('Register No.'),
         'period_start': fields.date('Period Start'),
@@ -107,7 +107,7 @@ class netpro_member(osv.osv):
 
     def action_confirm(self,cr,uid,ids,context=None):
         # create schedule plan
-       # self.create_plan_schedule(cr,uid,ids,context=context)        
+        self.create_plan_schedule(cr,uid,ids,context=context)        
         #set to "actived" state
         self.write(cr,uid,ids,{'status':'actived'},context=context)
         return 
@@ -128,75 +128,42 @@ class netpro_member(osv.osv):
         self_obj            = self.browse(cr,uid,ids[0],context=context)
         # jika belum ada schedule
         if not self_obj.member_plan_ids:
-            #jika classnya diisi
-            if self_obj.class_id:
-                class_no = self_obj.class_id.class_no
-                class_id = self_obj.class_id.id
-                #Class employee 
-                if self_obj.class_id.membership_plan_employee_ids:
-                    for plan_emp in self_obj.class_id.membership_plan_employee_ids:
-                        product_plan_id = plan_emp.product_plan_id.id
-                        male_female_bamount = plan_emp.male_female_bamount
-                        #create schedule
-                        plan_schedule_id = member_plan_obj.create(cr,uid,{'member_id': ids[0],
-                                                                        'plan_schedule_id': product_plan_id,
-                                                                        'bamount' : male_female_bamount,
-                                                                        'plan_for':'Employee'})
-                        plan_benefit_schedule_ids = pplan_bnft_obj.search(cr,uid,[('product_plan_id','=',product_plan_id)])
-                        
-                        # if plan_benefit_schedule_ids :
-                        #     for benefit in pplan_bnft_obj.browse(cr,uid,plan_benefit_schedule_ids):
-                        #         reimbursement = benefit.reimbursement 
-                        #         #create schedule detail
-                        #         member_plan_det_obj.create(cr,uid,{'member_plan_id':plan_schedule_id,
-                        #                                          'benefit_id':benefit.benefit_id.id,
-                        #                                          'reim':reimbursement,
-                        #                                          })
+            if self_obj.policy_id:
+                #jika policy ny sdh aproved
+                if self_obj.policy_id.state == 'approved':
+                    plan_schedule_ids = self_obj.policy_id.plan_schedule_ids
+                    if plan_schedule_ids:
+                        for schedule in plan_schedule_ids:
+                            #jika plan for sama dan classnya sama
+                            if schedule.plan_for == self_obj.membership.membership_id and schedule.class_id.id == self_obj.class_id.id :
+                                #create schedule
+                                plan_schedule_id = member_plan_obj.create(cr,uid,{'member_id': ids[0],
+                                                                                'plan_schedule_id': schedule.id,
+                                                                                'bamount' : schedule.bamount,
+                                                                                'plan_for':self_obj.membership.membership_id})  
+                                # jika ada detail benefitnya maka di create juga benefit yang sama
+                                if schedule.plan_schedule_detail_benefit_schedule_ids :
+                                    for benefit in schedule.plan_schedule_detail_benefit_schedule_ids:
+                                        member_plan_det_obj.create(cr,uid,{'member_plan_id':plan_schedule_id,
+                                                                            'benefit_id': benefit.benefit_id.id,
+                                                                            'bamount':benefit.bamount})                                    
 
-                # #Class spouse 
-                # if line.membership_plan_spouse_ids:
-                #     for plan_spouse in line.membership_plan_spouse_ids:
-                #         product_plan_id = plan_spouse.product_plan_id.id
-                #         male_female_bamount = plan_spouse.male_female_bamount
-                #         #create schedule
-                #         plan_schedule_id = pplan_sch_obj.create(cr,uid,{'policy_id':self_obj.id,
-                #                                                         'product_plan_id':product_plan_id,
-                #                                                         'bamount':male_female_bamount,
-                #                                                         'plan_for':'Spouse',
-                #                                                         'class_id':line.id})
-                #         plan_benefit_schedule_ids = pplan_bnft_obj.search(cr,uid,[('product_plan_id','=',product_plan_id)])
-                #         if plan_benefit_schedule_ids :
-                #             for benefit in pplan_bnft_obj.browse(cr,uid,plan_benefit_schedule_ids):
-                #                 reimbursement = benefit.reimbursement 
-                #                 #create schedule detail
-                #                 plan_schedule_obj.create(cr,uid,{'plan_schedule_id':plan_schedule_id,
-                #                                                  'product_plan_id':product_plan_id,
-                #                                                  'benefit_id':benefit.benefit_id.id,
-                #                                                  #'company_inner_limit_reimbursement':reimbursement
-                #                                                  })
-
-                # #Class spouse 
-                # if line.membership_plan_child_ids:
-                #     for plan_child in line.membership_plan_child_ids:
-                #         product_plan_id = plan_child.product_plan_id.id
-                #         male_female_bamount = plan_child.male_female_bamount
-                #         #create schedule
-                #         plan_schedule_id = pplan_sch_obj.create(cr,uid,{'policy_id':self_obj.id,
-                #                                                         'product_plan_id':product_plan_id,
-                #                                                         'bamount':male_female_bamount,
-                #                                                         'plan_for':'Child',
-                #                                                         'class_id':line.id})
-                #         plan_benefit_schedule_ids = pplan_bnft_obj.search(cr,uid,[('product_plan_id','=',product_plan_id)])
-                #         if plan_benefit_schedule_ids :
-                #             for benefit in pplan_bnft_obj.browse(cr,uid,plan_benefit_schedule_ids):
-                #                 reimbursement = benefit.reimbursement
-                #                 #create schedule detail 
-                #                 plan_schedule_obj.create(cr,uid,{'plan_schedule_id':plan_schedule_id,
-                #                                                  'product_plan_id':product_plan_id,
-                #                                                  'benefit_id':benefit.benefit_id.id,
-                #                                                  #'company_inner_limit_reimbursement':reimbursement
-                #                                                  })  
         return  True
+
+    def onchange_class(self, cr, uid, ids, parent_id, context=None):
+
+        results = {}
+        if not parent_id:
+            return results 
+        member_obj = self.pool.get('netpro.member') 
+        parent_class = member_obj.browse(cr,uid,parent_id)
+
+        results = {
+            'value' : {
+                'class_id' : parent_class.class_id.id
+            }
+        }
+        return results
 
 netpro_member()
 
@@ -451,7 +418,7 @@ class netpro_member_plan(osv.osv):
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
         'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
-        'product_plan': fields.related('plan_schedule_id', 'product_plan_id', 'product_plan_base_id',
+        'product_plan': fields.related('plan_schedule_id','product_plan_id', 'product_plan_base_id', 
             relation="netpro.product_plan_base",
             type='many2one', string='Product Plan', store=True, readonly=True),
 
