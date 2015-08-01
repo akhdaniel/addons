@@ -17,7 +17,7 @@ class vit_cutting_order(osv.osv):
 
 
 	_columns = {
-		'is_used_handtag': fields.boolean('Is Used HandTag'),
+		'is_used_handtag': fields.boolean('Is Used HangTag'),
 			}
 
 	_defaults = {
@@ -31,7 +31,7 @@ class vit_makloon_order(osv.osv):
 	_inherit = "vit.makloon.order"
 
 	_columns = {
-		'is_used_handtag': fields.boolean('Is Used HandTag'),
+		'is_used_handtag': fields.boolean('Is Used HangTag'),
 			}	
 
 	_defaults = {

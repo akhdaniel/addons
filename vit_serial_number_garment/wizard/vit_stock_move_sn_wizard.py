@@ -98,23 +98,26 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                 if mv.picking_id.sale_id :
                     sale_order_id = mv.picking_id.sale_id.id
                 #cari SN yang di input berdasarkan stock move
-                sn_per_product = self.pool.get('stock.move.serial.number.wizard.lines.out').search(cr,uid,[('wizard_id','=',ids[0]),('product_id','=',product_move)])
+                sn_per_product = self.pool.get('stock.move.serial.number.wizard.lines.out').search(cr,uid,[('wizard_id','=',ids[0])])
                 # jika qty satu stock move tidak sama dengan jumalh SN yang di inputkan
                 if qty_move != len(sn_per_product):
                     raise osv.except_osv(_('Warning!'), _("Jumlah product %s sebesar %s tidak sama dengan \
                      yang di inputkan di SN sebanyak %s !") % (mv.product_id.name,qty_move,len(sn_per_product)))
                 #looping SN yang diinputkan per stock move
                 for sn in self.pool.get('stock.move.serial.number.wizard.lines.out').browse(cr,uid,sn_per_product,context=context):
-                    sn_no       = sn.serial_number_id.name
-                    sn_product  = sn.serial_number_id.product_id.id
+                    sn_no       = sn.serial_number
                     sn_qty      = sn.qty
 
+                    prodlot_id = prodlot_obj.search(cr,uid,[('name','=',sn_no),('product_id','=',product_move),('is_used','=',False)])
+                    if not prodlot_id:
+                        raise osv.except_osv(_('Warning!'), _("Serial number %s belum di input \
+                                    atau sudah dipakai atau tidak sesuai dengan product di DO ini !") % (sn_no))
                     #ceklis fields is_used agar di DO sebelumnya tidak bisa digunakan kembali
-                    prodlot_obj.write(cr,uid,sn.serial_number_id.id,{'is_used': True},context=context)
+                    prodlot_obj.write(cr,uid,prodlot_id[0],{'is_used': True},context=context)
 
                     # create stock_move_serial_number yang related ke stock_move ini
                     move_sn_obj.create(cr,uid,{'stock_move_id'      : mv.id,
-                                                'serial_number_id'  : sn.serial_number_id.id,
+                                                'serial_number_id'  : prodlot_id[0],
                                                 'picking_id'        : active_id,
                                                 'product_id'        : product_move,
                                                 'qty'               : -sn_qty,
@@ -164,30 +167,39 @@ class stock_move_serial_number_wizard(osv.osv_memory):
                     if not lines:
                         raise osv.except_osv(_('Error!'), _('Daftar Serial Number tidak boleh kosong !'))
                     total_move_qty = 0.0
-                    
+                    sn_free_text = [] 
                     for line in lines: 
                         sn       = line.serial_number_id.id
                         quantity = line.qty
                         total_move_qty += quantity
                         #jika out kasih minus karena barang keluar
                         if wz_type == 'out' :
-                            quantity = -quantity 
-                            #ceklis fields is_used agar di DO sebelumnya tidak bisa digunakan kembali
-                            prodlot_obj.write(cr,uid,sn,{'is_used': True},context=context)
+                            raise osv.except_osv(_('Warning!'), _("DO tidak bisa memasukan serial number di fitur ini !"))
+                            # quantity = -quantity 
+                            # #ceklis fields is_used agar di DO sebelumnya tidak bisa digunakan kembali
+                            # prodlot_obj.write(cr,uid,sn,{'is_used': True},context=context)
                         #jika internal kasih 0 karena barang pindah di internal
                         if wz_type == 'internal' :
                             quantity = 0                                           
                         if data.type == 'in' :
+                            prodlot_id = prodlot_obj.search(cr,uid,[('name','=',line.serial_number),('product_id','=',False),('is_used','=',False)])
+                            if not prodlot_id:
+                                raise osv.except_osv(_('Warning!'), _("Serial number %s belum di input \
+                                    atau sudah dipakai !") % (line.serial_number))
                             # update SN dengan product di wizard ini
-                            prodlot_obj.write(cr,uid,sn,{'product_id':data.product_id.id},context=context)
+                            prodlot_obj.write(cr,uid,prodlot_id[0],{'product_id':data.product_id.id},context=context)
                         # create stock_move_serial_number yang related ke stock_move ini
                         move_sn_obj.create(cr,uid,{'stock_move_id'      : move.id,
-                                                    'serial_number_id'  : sn,
+                                                    'serial_number_id'  : prodlot_id[0],
                                                     'picking_id'        : picking_id,
                                                     'product_id'        : move.product_id.id,
                                                     'qty'               : quantity,
                                                     'sale_order_id'     : sale_order_id,
-                                                })                   
+                                                })
+                        if line.serial_number in sn_free_text:
+                            raise osv.except_osv(_('Warning!'), _("Duplicate serial number entry %s !") % (line.serial_number))
+                        sn_free_text.append(line.serial_number)   
+                                                               
                     if move_qty != total_move_qty:
                         raise osv.except_osv(_('Processing Error!'), _('Jumlah Qty serial number (%d) tidak sama dengan jumlah qty product(%d)!') \
                             % (total_move_qty, move_qty))
@@ -202,7 +214,8 @@ class stock_move_serial_number_wizard_lines_in(osv.osv_memory):
 
 	_columns = {
         'wizard_id'         : fields.many2one('stock.move.serial.number.wizard', 'Wizard'),
-		'serial_number_id' 	: fields.many2one('stock.production.lot',string='Serial Number',required=True),
+        'serial_number'     : fields.char('Serial Number',size=100,required=True),
+		'serial_number_id' 	: fields.many2one('stock.production.lot',string='Serial Number'),
         'product_id'        : fields.related('serial_number_id','product_id',type='many2one',relation='product.product',string='Product',store=True),
 		'qty'				: fields.float('Qty'),
 	}    
@@ -218,7 +231,8 @@ class stock_move_serial_number_wizard_lines_out(osv.osv_memory):
 
     _columns = {
         'wizard_id'         : fields.many2one('stock.move.serial.number.wizard', 'Wizard'),
-        'serial_number_id'  : fields.many2one('stock.production.lot',string='Serial Number',required=True),
+        'serial_number'     : fields.char('Serial Number',size=100,required=True),
+        'serial_number_id'  : fields.many2one('stock.production.lot',string='Serial Number'),
         'product_id'        : fields.related('serial_number_id','product_id',type='many2one',relation='product.product',string='Product',store=True),
         'qty'               : fields.float('Qty'),
     }    

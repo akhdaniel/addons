@@ -17,7 +17,8 @@
 			                    <group colspan='4' attrs="{'invisible':[('type','!=','in')]}">
 			                        <field name="line_in_ids" nolabel='1' view_mode="tree,form">
 			                            <tree string="Add Serial Number" editable='bottom'>
-			                                <field name="serial_number_id" domain="[('product_id','=',False)]"/>
+			                                <!-- <field name="serial_number_id" domain="[('product_id','=',False)]"/> -->
+                                      <field name="serial_number" />
 			                                <field name="qty" readonly="1"/>
 			                            </tree>    
 			                        </field> 
@@ -26,7 +27,8 @@
 			                    <group colspan='4' attrs="{'invisible':[('type','=','in')]}">   
 			                        <field name="line_out_ids" nolabel='1' view_mode="tree,form">
 			                            <tree string="Add Serial Number" editable='bottom'>
-			                                <field name="serial_number_id" domain="[('product_id','!=',False),('is_used','=',False)]"/>
+			                                <!-- <field name="serial_number_id" domain="[('product_id','!=',False),('is_used','=',False)]"/> -->
+                                      <field name="serial_number" />
 			                                <field name="qty" readonly="1"/>
 			                            </tree>    
 			                        </field>			                           

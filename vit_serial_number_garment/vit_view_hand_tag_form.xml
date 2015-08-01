@@ -5,7 +5,7 @@
             <field name="name">vit.hand.tag</field>
             <field name="model">vit.hand.tag</field>
             <field name="arch" type="xml">
-                <tree string="Hang Tag List">
+                <tree string="Hand Tag List">
                     <field name="name" />
                     <field name="spk_cutting_id" />
                     <field name="spk_makloon_id"/> 
@@ -20,7 +20,7 @@
             <field name="name">vit.hand.tag</field>
             <field name="model">vit.hand.tag</field>
             <field name="arch" type="xml">
-                <form string="Penyerahan Hang Tag" version="7.0">
+                <form string="Penyerahan Hand Tag" version="7.0">
                     <header>
                         <button name="confirm" states="draft" string="Confirm" confirm="Data yang sudah di confirm tidak bisa di cancel, anda yakin ?" type="object"/>                        
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
@@ -65,7 +65,7 @@
             <field name="name">vit.hand.tag</field>
             <field name="model">vit.hand.tag</field>
             <field name="arch" type="xml">
-                <search string="Hang Tag">
+                <search string="Hand Tag">
                     <field name="name" filter_domain="[('name','ilike',self)]" string="Nomor"/>
                     <group expand="0" string="Group By...">
                         <filter string="SPK Cutting" icon="terp-folder-orange" domain="" context="{'group_by':'spk_cutting_id'}"/>
@@ -81,7 +81,7 @@
         <field name="res_model">vit.hand.tag</field>
         <field name="view_mode">tree,form</field>
         <field name="help" type="html">
-            <p>Penyerahan Hang Tag</p>
+            <p>Penyerahan Hand Tag</p>
         </field>
     </record>
 
