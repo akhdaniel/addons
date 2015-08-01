@@ -37,7 +37,7 @@
                                 <field name="member_no" select="0"/>
                                 <field name="name" select="0"/>
                                 <field name="employee_id" select="0"/>
-                                <field name="parent_id" select="0"/>
+                                <field name="parent_id" on_change="onchange_class(parent_id,class_id)"/>
                                 <field name="census_no" select="0"/>
                                 <field name="sex" select="0"/>
                                 <field name="marital_status" select="0"/>
@@ -56,7 +56,7 @@
 
                             <group>
                                 <field name="class_id" select="0"/>
-                                <field name="membership_id" select="0" widget="selection"/>
+                                <field name="membership" widget="selection"/>
                                 <field name="card_no" select="0"/>
                                 <field name="register_no" select="0"/>
                                 <field name="period_start" select="0"/>
