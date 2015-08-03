@@ -26,7 +26,7 @@
         "website" : "http://openerp.com",
         "category" : "Unknown",
         "description": """  """,
-        "depends" : ['base', 'portal', 'vit_actuary'],
+        "depends" : ['base', 'vit_actuary'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [

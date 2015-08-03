@@ -2,7 +2,7 @@
 <data>
 
 	<!-- Provider Menu -->
-	<menuitem name="Provider" id="menu_netpro_provider" action="action_netpro_provider" parent="vit_actuary.menu_netpro_transaction" sequence="50"/>
+	<menuitem name="Provider" id="menu_netpro_provider" action="action_netpro_provider" parent="vit_actuary.menu_netpro_transaction"/>
 
     <!-- Provider Configurations -->
     <menuitem name="Provider" id="menu_netpro_provider_configuration" parent="vit_actuary.menu_netpro_configuration" sequence="30"/>
