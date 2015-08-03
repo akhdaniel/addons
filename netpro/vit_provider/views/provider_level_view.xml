@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_netpro_provider_level_form">
+        <field name="name">netpro.provider_level.form</field>
+        <field name="model">netpro.provider_level</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_level">
+                <field name="name" select="1"/>
+                <separator string="'Description'" colspan="4"/>
+                <field name="description" colspan="4" nolabel="1" select="2"/>
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_level_tree">
+        <field name="name">netpro.provider_level.tree</field>
+        <field name="model">netpro.provider_level</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_level">
+                <field name="name"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_level">
+        <field name="name">Provider Level</field>
+        <field name="res_model">netpro.provider_level</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level"/> -->
+        
+</data>
+</openerp>

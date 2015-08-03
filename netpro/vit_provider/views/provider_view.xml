@@ -1,0 +1,479 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_netpro_provider_form">
+        <field name="name">netpro.provider.form</field>
+        <field name="model">netpro.provider</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider">
+                <group>
+                    <field name="ext_id" select="1"/>
+                    <field name="partner" select="2"/>
+                    <field name="non_partner" select="0"/>
+                    <field name="profile_id" select="0"/>
+                    <field name="provider_type_id" select="0"/>
+                    <field name="provider_level_id" select="0"/>
+                    <field name="claim_pic_id" select="0"/>
+                    <field name="corporate_type" select="0"/>
+                    <field name="ip_corporate_type" select="0"/>
+                    <field name="op_corporate_type" select="0"/>
+                    <field name="state" select="0"/>
+                    <field name="effective_date" select="0"/>
+                    <field name="expiry_date" select="0"/>
+                    <field name="document_number" select="0"/>
+                    <field name="signature_by" select="0"/>
+                    <field name="signature_position" select="0"/>
+                    <field name="billing_due" select="0"/>
+                    <field name="payment_due" select="0"/>
+                    <field name="penalty_amount" select="0"/>
+                    <separator string="Remarks Discount" colspan="4"/>
+                    <field name="remarks_discount" colspan="4" nolabel="1" select="0"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                    <field name="edc_merchant_id" select="0"/>
+                    <field name="online_date" select="0"/>
+                    <field name="offline_date" select="0"/>
+                    <separator string="Offline Remarks" colspan="4"/>
+                    <field name="offline_remarks" colspan="4" nolabel="1" select="0"/>
+                    <field name="price_effective_date" select="0"/>
+                    <field name="general_practitioner" select="0"/>
+                    <field name="specialist_doctor" select="0"/>
+                </group>
+
+                <notebook>
+                    <page string="Room &amp; Pricing">
+                        <group>
+                            <group>
+                                <field name="inpatient_room_ids" colspan="4" nolabel="1" select="0"/>
+                            </group>
+                            <group>
+                                <field name="maternity_package_ids" colspan="4" nolabel="1" select="0"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Facility">
+                        <field name="facility_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+
+                    <page string="Discount">
+                        <field name="discount_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+
+                    <page string="Service">
+                        <field name="service_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+
+                    <page string="E D C">
+                        <field name="edc_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+
+                    <page string="MAPPING">
+                        <field name="map_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+
+                    <page string="Network">
+                        <field name="network_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_tree">
+        <field name="name">netpro.provider.tree</field>
+        <field name="model">netpro.provider</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider">
+                <field name="ext_id"/>
+                <field name="partner"/>
+                <!-- <field name="non_partner"/>
+                <field name="profile_id"/>
+                <field name="provider_type_id"/>
+                <field name="provider_level_id"/>
+                <field name="claim_pic_id"/>
+                <field name="corporate_type"/>
+                <field name="ip_corporate_type"/>
+                <field name="op_corporate_type"/>
+                <field name="state"/>
+                <field name="effective_date"/>
+                <field name="expiry_date"/>
+                <field name="document_number"/>
+                <field name="signature_by"/>
+                <field name="signature_position"/>
+                <field name="billing_due"/>
+                <field name="payment_due"/>
+                <field name="penalty_amount"/>
+                <field name="remarks_discount"/>
+                <field name="remarks"/>
+                <field name="edc_merchant_id"/>
+                <field name="online_date"/>
+                <field name="offline_date"/>
+                <field name="offline_remarks"/>
+                <field name="price_effective_date"/>
+                <field name="general_practitioner"/>
+                <field name="specialist_doctor"/> -->
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider">
+        <field name="name">Provider</field>
+        <field name="res_model">netpro.provider</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+        
+    <record model="ir.ui.view" id="view_netpro_inpatient_room_form">
+        <field name="name">netpro.inpatient_room.form</field>
+        <field name="model">netpro.inpatient_room</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.inpatient_room">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="room_id" select="2"/>
+                    <field name="price" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_inpatient_room_tree">
+        <field name="name">netpro.inpatient_room.tree</field>
+        <field name="model">netpro.inpatient_room</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.inpatient_room">
+                <field name="provider_id"/>
+                <field name="room_id"/>
+                <field name="price"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_inpatient_room">
+        <field name="name">Inpatient Room</field>
+        <field name="res_model">netpro.inpatient_room</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Inpatient Room" id="menu_netpro_inpatient_room" action="action_netpro_inpatient_room"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_maternity_package_form">
+        <field name="name">netpro.maternity_package.form</field>
+        <field name="model">netpro.maternity_package</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.maternity_package">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="room_id" select="2"/>
+                    <field name="price" select="0"/>
+                    <field name="caesar_package" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_maternity_package_tree">
+        <field name="name">netpro.maternity_package.tree</field>
+        <field name="model">netpro.maternity_package</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.maternity_package">
+                <field name="provider_id"/>
+                <field name="room_id"/>
+                <field name="price"/>
+                <field name="caesar_package"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_maternity_package">
+        <field name="name">Maternity Package</field>
+        <field name="res_model">netpro.maternity_package</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Maternity Package" id="menu_netpro_maternity_package" action="action_netpro_maternity_package"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_facility_form">
+        <field name="name">netpro.provider_facility.form</field>
+        <field name="model">netpro.provider_facility</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_facility">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="product_type_id" select="2"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_facility_tree">
+        <field name="name">netpro.provider_facility.tree</field>
+        <field name="model">netpro.provider_facility</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_facility">
+                <field name="provider_id"/>
+                <field name="product_type_id"/>
+                <field name="remarks"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_facility">
+        <field name="name">Facility</field>
+        <field name="res_model">netpro.provider_facility</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Facility" id="menu_netpro_provider_facility" action="action_netpro_provider_facility"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_discount_form">
+        <field name="name">netpro.provider_discount.form</field>
+        <field name="model">netpro.provider_discount</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_discount">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="discount_type" select="2"/>
+                    <field name="lower" select="0"/>
+                    <field name="upper" select="0"/>
+                    <field name="claim_payment_discount" select="0"/>
+                    <field name="discount_start_date" select="0"/>
+                    <field name="discount_end_date" select="0"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_discount_tree">
+        <field name="name">netpro.provider_discount.tree</field>
+        <field name="model">netpro.provider_discount</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_discount">
+                <field name="provider_id"/>
+                <field name="discount_type"/>
+                <field name="lower"/>
+                <field name="upper"/>
+                <field name="claim_payment_discount"/>
+                <field name="discount_start_date"/>
+                <field name="discount_end_date"/>
+                <field name="remarks"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_discount">
+        <field name="name">Discount</field>
+        <field name="res_model">netpro.provider_discount</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Discount" id="menu_netpro_provider_discount" action="action_netpro_provider_discount"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_service_form">
+        <field name="name">netpro.provider_service.form</field>
+        <field name="model">netpro.provider_service</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_service">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="benefit_id" select="2"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                    <field name="schedule" select="0"/>
+                </group>
+                <notebook>
+                    <page string="Details">
+                        <field name="provider_service_detail_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_service_tree">
+        <field name="name">netpro.provider_service.tree</field>
+        <field name="model">netpro.provider_service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_service">
+                <field name="provider_id"/>
+                <field name="benefit_id"/>
+                <field name="remarks"/>
+                <field name="schedule"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_service">
+        <field name="name">Service</field>
+        <field name="res_model">netpro.provider_service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Service" id="menu_netpro_provider_service" action="action_netpro_provider_service"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_service_detail_form">
+        <field name="name">netpro.provider_service_detail.form</field>
+        <field name="model">netpro.provider_service_detail</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_service_detail">
+                <group>
+                    <!-- <field name="provider_service_id" select="1"/> -->
+                    <field name="service_item" select="2"/>
+                    <field name="price" select="0"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_service_detail_tree">
+        <field name="name">netpro.provider_service_detail.tree</field>
+        <field name="model">netpro.provider_service_detail</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_service_detail">
+                <field name="provider_service_id"/>
+                <field name="service_item"/>
+                <field name="price"/>
+                <field name="remarks"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_service_detail">
+        <field name="name">Service Detail</field>
+        <field name="res_model">netpro.provider_service_detail</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Service Detail" id="menu_netpro_provider_service_detail" action="action_netpro_provider_service_detail"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_edc_form">
+        <field name="name">netpro.provider_edc.form</field>
+        <field name="model">netpro.provider_edc</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_edc">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="tid" select="2"/>
+                    <field name="floor" select="0"/>
+                    <field name="room" select="0"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_edc_tree">
+        <field name="name">netpro.provider_edc.tree</field>
+        <field name="model">netpro.provider_edc</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_edc">
+                <field name="provider_id"/>
+                <field name="tid"/>
+                <field name="floor"/>
+                <field name="room"/>
+                <field name="remarks"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_edc">
+        <field name="name">EDC</field>
+        <field name="res_model">netpro.provider_edc</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="EDC" id="menu_netpro_provider_edc" action="action_netpro_provider_edc"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_map_form">
+        <field name="name">netpro.provider_map.form</field>
+        <field name="model">netpro.provider_map</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_map">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="external_mapping_id" select="2"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" colspan="4" nolabel="1" select="0"/>
+                    <field name="tpa_id" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_map_tree">
+        <field name="name">netpro.provider_map.tree</field>
+        <field name="model">netpro.provider_map</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_map">
+                <field name="provider_id"/>
+                <field name="external_mapping_id"/>
+                <field name="description"/>
+                <field name="tpa_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_map">
+        <field name="name">Mapping</field>
+        <field name="res_model">netpro.provider_map</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Mapping" id="menu_netpro_provider_map" action="action_netpro_provider_map"/> -->
+        
+    <record model="ir.ui.view" id="view_netpro_provider_network_form">
+        <field name="name">netpro.provider_network.form</field>
+        <field name="model">netpro.provider_network</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_network">
+                <group>
+                    <!-- <field name="provider_id" select="1"/> -->
+                    <field name="network_id" select="2"/>
+                    <separator string="Remarks" colspan="4"/>
+                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_network_tree">
+        <field name="name">netpro.provider_network.tree</field>
+        <field name="model">netpro.provider_network</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_network">
+                <field name="provider_id"/>
+                <field name="network_id"/>
+                <field name="remarks"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_network">
+        <field name="name">Network</field>
+        <field name="res_model">netpro.provider_network</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem name="Network" id="menu_netpro_provider_network" action="action_netpro_provider_network"/> -->
+        
+</data>
+</openerp>
