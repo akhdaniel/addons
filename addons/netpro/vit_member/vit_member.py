@@ -165,6 +165,25 @@ class netpro_member(osv.osv):
         }
         return results
 
+    def onchange_policy_member(self, cr, uid, ids, policy_id, insurance_period_start, insurance_period_end, context=None):
+
+        import pdb;pdb.set_trace()
+        results = {}
+        if not policy_id:
+            return results
+
+        policy_obj = self.pool.get('netpro.policy')
+        policy_data = policy_obj.browse(cr,uid,policy_id)
+
+        results = {
+            'value' : {
+                #'policy_holder'             : policy_data.policy_holder_id.id,
+                'insurance_period_start'    : policy_data.insurance_period_start,
+                'insurance_period_end'      : policy_data.insurance_period_end,
+            }
+        }
+        return results
+
 netpro_member()
 
 # class netpro_policy(osv.osv):

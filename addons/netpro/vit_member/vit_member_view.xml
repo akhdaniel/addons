@@ -24,7 +24,7 @@
                     <field name="status" widget="statusbar"/>
                 </header>                  
                 <group string="Member Info">
-                    <field name="policy_id" select="1"/>
+                    <field name="policy_id" on_change="onchange_policy_member(policy_id, insurance_period_start, insurance_period_end)"/>
                     <field name="policy_holder" select="1"/>
                     <field name="insurance_period_start" select="2"/>
                     <field name="insurance_period_end" select="0"/>
@@ -37,7 +37,7 @@
                                 <field name="member_no" select="0"/>
                                 <field name="name" select="0"/>
                                 <field name="employee_id" select="0"/>
-                                <field name="parent_id" on_change="onchange_class(parent_id,class_id)"/>
+                                <field name="parent_id" on_change="onchange_class(parent_id)"/>
                                 <field name="census_no" select="0"/>
                                 <field name="sex" select="0"/>
                                 <field name="marital_status" select="0"/>
