@@ -283,6 +283,10 @@ class netpro_branch(osv.osv):
     _name = 'netpro.branch'
     _inherit = 'res.partner'
     _columns = {
+        'id_branch'                 : fields.char('Branch ID'),
+        'code_alias'                : fields.char('Code Alias'),
+        'pic_id'                    : fields.many2one('res.users', 'Person In Charge'),
+        'title'                     : fields.char('Title'),
         'start_date'                : fields.date('Start Date'),
         'end_date'                  : fields.date('End Date'),
         'last_close_month'          : fields.integer('Last Close Month'),
@@ -291,7 +295,6 @@ class netpro_branch(osv.osv):
         'last_consolidated_year'    : fields.integer('Last Consolidated Year'),
         'production_locked_date'    : fields.date('Production Locked Date'),
         'finance_locked_date'       : fields.date('Finance Locked Date'),
-        'backdated_date'            : fields.date('Backdated Date'),
         'backdated_date'            : fields.date('Backdated Date'),
         'kpp_id'                    : fields.many2one('netpro.kpp', 'KPP'),
         'profit_loss_account'       : fields.many2one('account.account', 'Profit / Loss Account'),

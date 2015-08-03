@@ -2313,11 +2313,11 @@
         <field name="name">netpro.branch.form</field>
         <field name="model">netpro.branch</field>
         <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+        <!-- <field name="inherit_id" ref="base.view_partner_form"/> -->
         <field name="arch" type="xml">
-            <field name="parent_id" position="replace">
+            <!-- <field name="parent_id" position="replace">
                 <field name="parent_id" />
-            </field>
+            </field> 
             <notebook position="inside">
                 <page string="Branch" attrs="{'invisible': [('parent_id','=',False)]}">
                     <group>
@@ -2326,7 +2326,41 @@
                         <field name="start_date" select="1"/>
                     </group>
                 </page>
-            </notebook>
+            </notebook>-->
+            <form>
+                <group>
+                    <field name="id_branch" />
+                    <field name="name" />
+                    <field name="street" />
+                    <field name="city" />
+                    <field name="zip" />
+                    <field name="code_alias" />
+                    <field name="phone" />
+                    <field name="fax" />
+                    <field name="pic_id" />
+                    <field name="title" />
+                    <field name="vat" />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="last_close_month" />
+                    <field name="last_close_year" />
+                    <field name="last_consolidated_month" />
+                    <field name="last_consolidated_year" />
+                    <field name="production_locked_date" />
+                    <field name="finance_locked_date" />
+                    <field name="backdated_date" />
+                    <field name="kpp_id" />
+                    <field name="profit_loss_account" />
+                    <field name="tax_account" />
+                    <field name="dividen_account" />
+                    <field name="inter_office_account" />
+                    <field name="gain_loss_account" />
+                    <field name="retained_earnings" />
+                    <field name="active" />
+                    <field name="operating_branch" />
+                    <field name="syariah_branch" />
+                </group>
+            </form>
         </field>
     </record>
     <record model="ir.ui.view" id="view_netpro_branch_tree">
@@ -2335,6 +2369,10 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.branch">
+                <field name="id_branch" />
+                <field name="name" />
+                <field name="active" />
+                <field name="operating_branch" />
             </tree>
         </field>
     </record>
