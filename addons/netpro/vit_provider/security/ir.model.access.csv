@@ -1,0 +1,15 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_netpro_provider","netpro.provider","model_netpro_provider","base.group_user",1,0,0,0
+"access_netpro_inpatient_room","netpro.inpatient_room","model_netpro_inpatient_room","base.group_user",1,0,0,0
+"access_netpro_maternity_package","netpro.maternity_package","model_netpro_maternity_package","base.group_user",1,0,0,0
+"access_netpro_provider_facility","netpro.provider_facility","model_netpro_provider_facility","base.group_user",1,0,0,0
+"access_netpro_provider_discount","netpro.provider_discount","model_netpro_provider_discount","base.group_user",1,0,0,0
+"access_netpro_provider_service","netpro.provider_service","model_netpro_provider_service","base.group_user",1,0,0,0
+"access_netpro_provider_service_detail","netpro.provider_service_detail","model_netpro_provider_service_detail","base.group_user",1,0,0,0
+"access_netpro_provider_edc","netpro.provider_edc","model_netpro_provider_edc","base.group_user",1,0,0,0
+"access_netpro_provider_map","netpro.provider_map","model_netpro_provider_map","base.group_user",1,0,0,0
+"access_netpro_provider_network","netpro.provider_network","model_netpro_provider_network","base.group_user",1,0,0,0
+"access_netpro_provider_level","netpro.provider_level","model_netpro_provider_level","base.group_user",1,0,0,0
+"access_netpro_profile","netpro.profile","model_netpro_profile","base.group_user",1,0,0,0
+"access_netpro_alias","netpro.alias","model_netpro_alias","base.group_user",1,0,0,0
+"access_netpro_provider_type","netpro.provider_type","model_netpro_provider_type","base.group_user",1,0,0,0
