@@ -167,7 +167,7 @@ class netpro_member(osv.osv):
 
     def onchange_policy_member(self, cr, uid, ids, policy_id, insurance_period_start, insurance_period_end, context=None):
 
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         results = {}
         if not policy_id:
             return results

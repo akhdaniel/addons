@@ -55,7 +55,7 @@
                             </group>
 
                             <group>
-                                <field name="class_id" select="0"/>
+                                <field name="class_id" widget="selection"/>
                                 <field name="membership" widget="selection"/>
                                 <field name="card_no" select="0"/>
                                 <field name="register_no" select="0"/>
