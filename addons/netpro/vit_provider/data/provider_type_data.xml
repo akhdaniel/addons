@@ -1,0 +1,45 @@
+<openerp>
+	<data>
+		<!-- PROVIDER LEVEL -->
+		<record model="netpro.provider_type" id="provider_type_rs">
+			<field name="name">T1</field>
+			<field name="description">Rumah Sakit</field>
+			<field name="prefix">RS</field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_apotek">
+			<field name="name">T2</field>
+			<field name="description">Apotek</field>
+			<field name="prefix"></field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_rs_bersalin">
+			<field name="name">T3</field>
+			<field name="description">Rumah Sakit Bersalin</field>
+			<field name="prefix">RSB</field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_klinik">
+			<field name="name">T4</field>
+			<field name="description">Klinik</field>
+			<field name="prefix">KLINIK</field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_dokter">
+			<field name="name">T5</field>
+			<field name="description">Dokter</field>
+			<field name="prefix">DR</field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_klinik_gigi">
+			<field name="name">T6</field>
+			<field name="description">Klinik Gigi</field>
+			<field name="prefix">KG</field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_lab">
+			<field name="name">T7</field>
+			<field name="description">Laboratorium</field>
+			<field name="prefix">LAB</field>
+		</record>
+		<record model="netpro.provider_type" id="provider_type_rs_ibu_anak">
+			<field name="name">T8</field>
+			<field name="description">Rumah Sakit Ibu dan Anak</field>
+			<field name="prefix">RSIA</field>
+		</record>
+	</data>
+</openerp>

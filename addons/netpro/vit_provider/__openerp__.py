@@ -30,14 +30,16 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
-                'menu.xml',
-                
+                'data/provider_view_data.xml',
+                'data/provider_type_data.xml',
+
                 'views/provider_view.xml',
                 'views/provider_level_view.xml',
                 'views/provider_type_view.xml',
                 'views/profile_view.xml',
 
                 'security/ir.model.access.csv'
+                'menu.xml',
         ],
         "installable": True
 }
