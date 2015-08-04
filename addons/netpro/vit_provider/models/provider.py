@@ -22,6 +22,7 @@
 from openerp.osv import fields,osv
 class netpro_provider(osv.osv):
     _name = 'netpro.provider'
+    _rec_name = 'profile_id'
     _columns = {
         'ext_id': fields.integer('Ext ID'),
         'partner': fields.boolean('Partner'),
