@@ -28,8 +28,8 @@
                             <field name="quotation_no" select="0"/>
                             <field name="ci" select="0"/>
                             <field name="corporate_id" select="0"/>
-                            <field name="policy_category" select="0"/>
-                            <field name="policy_type" select="0"/>
+                            <field name="policy_category_id" select="0"/>
+                            <field name="policy_type_id" select="0"/>
                             <field name="branch_id" select="0"/>
                             <field name="marketing_officer_id" select="0"/>
                             <field name="policy_holder_id" select="0"/>
@@ -56,7 +56,7 @@
                             <field name="province3_id" nolabel="1">
                             <field name="province4_id" nolabel="1">
                             <field name="province5_id" nolabel="1">
-                                
+
                             <separator string="Remarks" colspan="4"/>
                             <field name="remarks" colspan="4" nolabel="1" select="0"/>
                         </group>
@@ -74,7 +74,7 @@
                         </group>
                         <group string="Print Card Option">
                             <field name="print_card_name" select="0"/>
-                            <field name="print_card_order" select="0"/>
+                            <field name="print_card_order_id" select="0"/>
                             <field name="print_card_birthdate" select="0"/>
                             <field name="print_card_sex" select="0"/>
                             <field name="print_card_plan" select="0"/>
