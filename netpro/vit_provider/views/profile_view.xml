@@ -82,10 +82,13 @@
                     <field name="default_comission" select="0"/>
                     <field name="net_comission" select="0"/>
                     <field name="max_out_go" select="0"/>
-                    <field name="purpose_of_insurance" select="0"/>
-                    <separator string="Profile" colspan="4"/>
-                    <field name="alias_ids" colspan="4" nolabel="1" select="0"/>
+                    <field name="purpose_of_insurance" select="0"/>                    
                 </group>
+                <notebook>
+                    <page string="Alias">
+                        <field name="alias_ids" colspan="4" nolabel="1" select="0"/>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>
