@@ -1,0 +1,13 @@
+<openerp>
+	<data>
+		<!-- PROVIDER LEVEL -->
+		<record model="netpro.provider_level" id="provider_level_silver">
+			<field name="name">Silver</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.provider_level" id="provider_level_gold">
+			<field name="name">Gold</field>
+			<field name="description"></field>
+		</record>
+	</data>
+</openerp>
