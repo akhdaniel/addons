@@ -38,7 +38,7 @@
                 'views/provider_type_view.xml',
                 'views/profile_view.xml',
 
-                'security/ir.model.access.csv'
+                'security/ir.model.access.csv',
                 'menu.xml',
         ],
         "installable": True
