@@ -1,5 +1,19 @@
 <openerp>
 	<data>
+		<!-- POLICY TYPE -->
+		<record model="netpro.policy_type" id="policy_type_new">
+			<field name="name">New</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.policy_type" id="policy_type_renew">
+			<field name="name">Renew</field>
+			<field name="description"></field>
+		</record>
+		<record model="netpro.policy_type" id="policy_type_endorse">
+			<field name="name">Endorse</field>
+			<field name="description"></field>
+		</record>
+
 		<!-- POLICY CATEGORY -->
 		<record model="netpro.policy_category" id="policy_category_group">
 			<field name="name">Group</field>
