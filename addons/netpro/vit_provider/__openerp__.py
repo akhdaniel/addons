@@ -30,7 +30,7 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
-                'data/provider_view_data.xml',
+                'data/provider_level_data.xml',
                 'data/provider_type_data.xml',
 
                 'views/provider_view.xml',
