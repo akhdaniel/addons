@@ -45,10 +45,10 @@
                 <notebook>
                     <page string="Room &amp; Pricing">
                         <group>
-                            <group>
+                            <group string="Inpatient Room Pricing">
                                 <field name="inpatient_room_ids" colspan="4" nolabel="1" select="0"/>
                             </group>
-                            <group>
+                            <group string="Maternity Package">
                                 <field name="maternity_package_ids" colspan="4" nolabel="1" select="0"/>
                             </group>
                         </group>
