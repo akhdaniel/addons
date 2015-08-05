@@ -36,9 +36,9 @@
                             </group>
                         </group>
 	                    <footer>
-	                        <button name="update_serial_number" string="OK" type="object" class="oe_highlight"/>
+	                        <button name="update_serial_number" string="OK" type="object" class="oe_highlight" groups="base.group_user"/>
 	                        or
-	                        <button string="Cancel" class="oe_link" special="cancel"/>
+	                        <button string="Cancel" class="oe_link" special="cancel" groups="base.group_user"/>
 	                    </footer>                        
                     </sheet>
                 </form>
@@ -86,7 +86,7 @@
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
-                <group string="Traceability" position="after">
+                <group string="Traceability" position="replace">
                     <group colspan='4'>
                         <field name="stock_move_serial_number_ids" nolabel='1'/>   
                     </group>
@@ -98,7 +98,7 @@
         <record id="track_sn_picking_out" model="ir.ui.view">
             <field name="name">stock.picking.out</field>
             <field name="model">stock.picking.out</field>
-             <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <button name="button_cancel" position="after">
                     <button
@@ -111,6 +111,28 @@
                 <field name="date_done" position="after">
                         <field name="used_sn" invisible="1"/>
                 </field>                 
+            </field>
+        </record>
+
+        <record id="vit_view_move_picking_form" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="date_expected" position="after">
+                    <field name="picking_id2" attrs="{'invisible':[('picking_id2','=',False)]}"/>
+                    <field name="sn_retur_id" attrs="{'invisible':[('picking_id2','=',False)]}"/>   
+                </field>              
+                <field name="location_dest_id" position="after">
+                    <group colspan="2" string="Serial Number" attrs="{'invisible':[('picking_id2','!=',False)]}">
+                        <field name="stock_move_serial_number_ids" nolabel="1" mode="tree"> 
+                            <tree string="Serial Number">
+                              <field name="serial_number_id"/>
+                            </tree>
+                        </field> 
+                    </group>     
+                </field>
+
             </field>
         </record>
 

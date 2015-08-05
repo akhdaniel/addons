@@ -41,6 +41,9 @@ class stock_move(osv.osv):
 	_columns = {
 		'stock_move_serial_number_ids' 	: fields.one2many('stock.move.serial.number','stock_move_id',string='Serial Number'),
 		'is_serial_number'		   		: fields.boolean('Has Entered SN'),
+		'picking_id2'					: fields.many2one('stock.picking','Origin Picking',readonly=True),
+		'sn_retur_id'					: fields.many2one('stock.production.lot','Serial Number')
+
 	}
 
 	_defaults = {
@@ -68,7 +71,7 @@ class stock_move_serial_number(osv.osv):
 			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
 			if inv_search :
 				invoice_id = inv_search[0]
-				net_total  = inv_obj.browse(cr,uid,invoice_id).net_total
+				net_total  = inv_obj.browse(cr,uid,invoice_id).amount_total#net_total
 			result[obj.id] = net_total
 		return result
 

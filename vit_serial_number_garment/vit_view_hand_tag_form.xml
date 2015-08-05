@@ -22,7 +22,7 @@
             <field name="arch" type="xml">
                 <form string="Penyerahan Hand Tag" version="7.0">
                     <header>
-                        <button name="confirm" states="draft" string="Confirm" confirm="Data yang sudah di confirm tidak bisa di cancel, anda yakin ?" type="object"/>                        
+                        <button name="confirm" states="draft" string="Confirm" confirm="Data yang sudah di confirm tidak bisa di cancel, anda yakin ?" type="object" groups="base.group_user"/>                        
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
                     </header>
                     <sheet>

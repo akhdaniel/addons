@@ -18,22 +18,42 @@
                 </field>
                 <page string="Revisions" position="before"> 
                     <page string="History Serial Number">
-                        <field name="history_sn_ids" view_type="tree,form">
-                            <tree string="History Serial Number">
-                                <field name="stock_move_id" />
-                                <field name="type" />
-                                <field name="serial_number_id" invisible="1"/>
-                                <field name="picking_id"/> 
-                                <field name="date_picking"/> 
-                                <field name="product_id" invisible="1"/>                  
-                                <field name="qty"/>
-                                <field name="sale_order_id" />
-                                <field name="date_sale" />
-                                <field name="invoice_id"/> 
-                                <field name="date_invoices"/> 
-                                <field name="unit_prices"/>    
-                            </tree>
-                        </field>
+                        <group string="In">
+                            <field name="history_sn_ids" view_type="tree,form" nolabel="1">
+                                <tree string="History Serial Number">
+                                    <field name="stock_move_id" />
+                                    <field name="type" invisible="1"/>
+                                    <field name="serial_number_id" invisible="1"/>
+                                    <field name="picking_id"/> 
+                                    <field name="date_picking"/> 
+                                    <field name="product_id" invisible="1"/>                  
+                                    <field name="qty"/>
+                                    <field name="sale_order_id" invisible="1"/>
+                                    <field name="date_sale" invisible="1"/>
+                                    <field name="invoice_id" invisible="1"/> 
+                                    <field name="date_invoices" invisible="1"/> 
+                                    <field name="unit_prices" invisible="1"/>    
+                                </tree>
+                            </field>  
+                        </group>
+                        <group string='Out'>                     
+                            <field name="history2_sn_ids" view_type="tree,form" nolabel="1">
+                                <tree string="History Serial Number">
+                                    <field name="stock_move_id" />
+                                    <field name="type" invisible="1" />
+                                    <field name="serial_number_id" invisible="1"/>
+                                    <field name="picking_id"/> 
+                                    <field name="date_picking"/> 
+                                    <field name="product_id" invisible="1"/>                  
+                                    <field name="qty"/>
+                                    <field name="sale_order_id" />
+                                    <field name="date_sale" />
+                                    <field name="invoice_id" groups="account.group_account_manager"/> 
+                                    <field name="date_invoices" groups="account.group_account_manager"/> 
+                                    <field name="unit_prices" groups="account.group_account_manager"/>    
+                                </tree>
+                            </field>
+                        </group>
                     </page>
                 </page>       
             </field>
