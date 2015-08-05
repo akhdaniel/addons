@@ -1,0 +1,120 @@
+<openerp>
+  <data>
+ 
+        <record id="view_retur_serial_number_tree" model="ir.ui.view">
+            <field name="name">retur.serial.number</field>
+            <field name="model">retur.serial.number</field>
+            <field name="arch" type="xml">
+                <tree string="Retur">
+                    <field name="name" />
+                    <field name="partner_id" />
+                    <field name="date" />
+                    <field name="picking_id"/> 
+                    <field name="state"/>
+                    <field name="user_id" invisible="1"/>                
+                </tree>
+            </field>
+        </record> 
+
+         <record id="view_retur_serial_number_form" model="ir.ui.view">
+            <field name="name">retur.serial.number</field>
+            <field name="model">retur.serial.number</field>
+            <field name="arch" type="xml">
+                <form string="Retur" version="7.0">
+                    <header>
+                        <button name="confirm" states="draft" string="Confirm" type="object" groups="base.group_user"/>
+                        <button name="cancel" states="open" string="Cancel" type="object" groups="base.group_user"/>
+                        <button name="approve" states="open" string="Approve" confirm="Data yang sudah di approve tidak bisa di cancel, anda yakin ?" type="object" groups="base.group_user" class="oe_highlight"/>                          
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,approved"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>                                
+                                <field name="name" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="partner_id" attrs="{'readonly':[('state','!=','draft')]}"/>   
+                            </group>
+                            <group attrs="{'readonly':[('state','!=','draft')]}">
+                                <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="user_id"/>
+                                <field name="picking_id" attrs="{'invisible':[('state','!=','approved')]}"/>  
+                            </group>
+                        </group>
+                        <notebook colspan="4" rowspan="4">
+                             <page string="Barcode" attrs="{'readonly':[('state','!=','draft')],'invisible':[('state','=','approved')]}">
+                                 <field name="serial_number_ids" view_mode="tree" nolabel="1">
+                                    <tree editable="bottom">
+                                         <field name="serial_number" />                             
+                                    </tree>                 
+                                 </field>        
+                            </page>    
+                             <page string="Barcode" attrs="{'invisible':[('state','!=','approved')]}">
+                                 <field name="stock_move_serial_number_ids" view_mode="tree" nolabel="1">
+                                    <tree >
+                                        <field name="stock_move_id" invisible="1"/>
+                                        <field name="type" invisible="1"/>
+                                        <field name="serial_number_id" /> 
+                                        <field name="sale_order_id"/>
+                                        <field name="date_sale"/>
+                                        <field name="picking_id" invisible="1"/>                    
+                                        <field name="date_picking" invisible="1"/>                                        
+                                        <field name="invoice_id" groups="account.group_account_usergroup_account_manager"/> 
+                                        <field name="date_invoices" groups="account.group_account_user"/>
+                                        <field name="unit_prices" groups="account.group_account_user"/>
+                                        <field name="qty" sum="Total Amount"/>                      
+                                        <field name="product_id"/>                                                
+                                    </tree>                 
+                                 </field>        
+                            </page>                                                    
+                        </notebook>
+                        <field name='notes' nolabel="1" placeholder="Notes..."/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_retur_serial_number_search" model="ir.ui.view">
+            <field name="name">retur.serial.number</field>
+            <field name="model">retur.serial.number</field>
+            <field name="arch" type="xml">
+                <search string="Hand Tag">
+                    <field name="name" filter_domain="[('name','ilike',self)]" string="Nomor"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="User" name="user_id" icon="terp-folder-orange" domain="" context="{'group_by':'user_id'}"/>
+                        <filter string="Customer" name="partner_id" icon="terp-folder-orange" domain="" context="{'group_by':'partner_id'}"/>
+                        <filter string="Tanggal" name="date" icon="terp-folder-orange" domain="" context="{'group_by':'date'}"/>
+                        <filter string="Status" name="state" icon="terp-folder-orange" domain="" context="{'group_by':'state'}"/>
+                        <filter string="Picking" name="picking_id" icon="terp-folder-orange" domain="" context="{'group_by':'picking_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    <record model="ir.actions.act_window" id="action_view_retur_serial_number" >
+        <field name="name">Retur</field>
+        <field name="res_model">retur.serial.number</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Penyerahan Retur</p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_vit_retur_serial_number" action="action_view_retur_serial_number" parent="stock.menu_traceability" name="Retur" sequence="90" groups="base.group_user"/>
+
+
+        <record id="seq_create_retur_sn" forcecreate="1" model="ir.sequence.type">
+            <field name="name">Retur SN</field>
+            <field name="code">retur.serial.number.seq</field>
+        </record>
+        <record id="seq_retur_sn" forcecreate="1" model="ir.sequence">
+            <field name="name">Retur SN</field>
+            <field name="code">retur.serial.number.seq</field>
+            <field name="prefix"></field>
+            <field name="suffix">/Retur/%(year)s</field>
+            <field name="padding">3</field>
+        </record>
+
+
+
+ </data>
+</openerp>
