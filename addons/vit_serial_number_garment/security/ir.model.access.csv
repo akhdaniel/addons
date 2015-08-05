@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_move_serial_number_user,stock.move.serial.number,model_stock_move_serial_number,stock.group_stock_user,1,1,1,1
+access_vit_hand_tag_user,vit.hand.tag,model_vit_hand_tag,stock.group_stock_user,1,1,1,1
+access_vit_hand_tag_barcode_user,vit.hand.tag.barcode,model_vit_hand_tag_barcode,stock.group_stock_user,1,1,1,1
+access_retur_serial_number_user,retur.serial.number,model_retur_serial_number,stock.group_stock_user,1,1,1,1
+access_retur_serial_number_detail_user,retur.serial.number.detail,model_retur_serial_number_detail,stock.group_stock_user,1,1,1,1
