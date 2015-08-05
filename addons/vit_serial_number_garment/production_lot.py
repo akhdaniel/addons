@@ -64,11 +64,24 @@ class stock_production_lot(osv.osv):
         for obj in self.browse(cr,uid,ids,context=context):
 			product_id 	= obj.product_id.id
 			sn_id 		= obj.id
-			history_ids = history_obj.search(cr,uid,[('serial_number_id','=',sn_id),('product_id','=',product_id)],context=context)			
+			history_ids = history_obj.search(cr,uid,[('serial_number_id','=',sn_id),('product_id','=',product_id),('type','=','in')],context=context)			
 			if history_ids :
 				result[obj.id] = history_ids
 			return result
 
+    def _get_history_sn2(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        result = {}
+        #import pdb;pdb.set_trace()
+        history_obj = self.pool.get('stock.move.serial.number')
+        for obj in self.browse(cr,uid,ids,context=context):
+            product_id  = obj.product_id.id
+            sn_id       = obj.id
+            history_ids = history_obj.search(cr,uid,[('serial_number_id','=',sn_id),('product_id','=',product_id),('type','=','out')],context=context)           
+            if history_ids :
+                result[obj.id] = history_ids
+            return result
 
     _columns = {
         'product_id'    	: fields.many2one('product.product', 'Product', required=False, domain=[('type', '<>', 'service')]),
@@ -76,14 +89,16 @@ class stock_production_lot(osv.osv):
         'spk_makloon_id'   	: fields.many2one('vit.makloon.order',string='SPK Makloon'),
         'makloon'       	: fields.related('spk_makloon_id','partner_id',type='many2one',relation='res.partner',string='Makloon',store=True),  
         'tanggal'       	: fields.date('Tanggal Penyerahan'),
-        'history_sn_ids'	: fields.function(_get_history_sn,type='many2many',relation='stock.move.serial.number',string='History'),
+        'history_sn_ids'	: fields.function(_get_history_sn,type='many2many',relation='stock.move.serial.number',string='History'),#in
+        'history2_sn_ids'   : fields.function(_get_history_sn2,type='many2many',relation='stock.move.serial.number',string='History'),#out
         'is_used'			: fields.boolean('Is Used'),
-
     }
 
+    _sql_constraints = [('name_uniq', 'unique(name)','Serial Number tidak boleh sama !')]
+    
     _defaults = {
     	'is_used' 	: False,
     }
 
-
+    
 stock_production_lot()

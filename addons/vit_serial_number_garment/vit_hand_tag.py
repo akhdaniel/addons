@@ -65,6 +65,7 @@ class vit_hand_tag(osv.osv):
     def confirm(self,cr,uid,ids,context=None):
         makloon_obj    = self.pool.get('vit.makloon.order')
         cutting_obj    = self.pool.get('vit.cutting.order')
+        sn_obj         = self.pool.get('stock.production.lot')
         spk_makloon_id = False
         spk_cutting_id = False
         for my_form in self.browse(cr,uid,ids):
@@ -83,12 +84,15 @@ class vit_hand_tag(osv.osv):
             for tag in my_form.vit_hand_tag_barcode_ids:
                 #import pdb;pdb.set_trace()
                 name = tag.name
-                self.pool.get('stock.production.lot').create(cr,uid,{'name'             : name,
-                                                                    'spk_makloon_id'    : spk_makloon_id,
-                                                                    'spk_cutting_id'    : spk_cutting_id,
-                                                                    'tanggal'           : tanggal,
-                                                                    'ref'               : number},
-                                                                    context=context)
+                sn_exist = sn_obj.search(cr,uid,[('name','=',name)],context=context)
+                if sn_exist :
+                    raise osv.except_osv(_('Duplicate Serial Number!'), _(' Serial Number %s sudah ada !') % (name))
+                sn_obj.create(cr,uid,{'name'            : name,
+                                    'spk_makloon_id'    : spk_makloon_id,
+                                    'spk_cutting_id'    : spk_cutting_id,
+                                    'tanggal'           : tanggal,
+                                    'ref'               : number},
+                                    context=context)
                
             self.write(cr,uid,my_form.id,{'state':'confirm'},context=context)
         return True 

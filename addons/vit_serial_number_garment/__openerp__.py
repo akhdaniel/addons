@@ -9,7 +9,7 @@
 *Metoda pemberian serial number untuk pabrik garment
 """,
     'version': '0.1',
-    'depends': ['base','stock','vit_n_cutting_order'],
+    'depends': ['base','stock','vit_n_cutting_order','account'],
     'author': 'vitraining.com',
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',
@@ -20,6 +20,8 @@
         'vit_view_stock_move_sn.xml',
         'vit_cutting_order.xml',
         'wizard/vit_stock_move_sn_wizard.xml',
+        'vit_view_retur_serial_number.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': False,
