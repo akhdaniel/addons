@@ -33,11 +33,23 @@
                                 <field name="name" attrs="{'readonly':[('state','!=','draft')]}"/>
                                 <field name="partner_id" attrs="{'readonly':[('state','!=','draft')]}"/>   
                             </group>
-                            <group attrs="{'readonly':[('state','!=','draft')]}">
-                                <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <group>
                                 <field name="user_id"/>
-                                <field name="picking_id" attrs="{'invisible':[('state','!=','approved')]}"/>  
+                                <field name="date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="invoicing" attrs="{'readonly':[('state','!=','draft')]}"/>
                             </group>
+                            <group>                                
+                                <field name="location_id" attrs="{'readonly':[('state','!=','draft')]}"/> 
+                                <field name="location_dest_id" attrs="{'readonly':[('state','!=','draft')]}"/> 
+                            </group> 
+                            <group>
+                                <field name="picking_id" attrs="{'invisible':[('state','!=','approved')]}"/> 
+                                <field name="journal_id" attrs="{
+                                    'invisible':[('invoicing','!=','2binvoiced')],
+                                    'readonly':[('state','!=','draft')],
+                                    'required':[('invoicing','=','2binvoiced')]}"/>
+                                <field name="invoice_id" attrs="{'invisible':['|',('state','!=','approved'),('invoicing','!=','2binvoiced')]}"/> 
+                            </group>                                                       
                         </group>
                         <notebook colspan="4" rowspan="4">
                              <page string="Barcode" attrs="{'readonly':[('state','!=','draft')],'invisible':[('state','=','approved')]}">
@@ -76,7 +88,7 @@
             <field name="name">retur.serial.number</field>
             <field name="model">retur.serial.number</field>
             <field name="arch" type="xml">
-                <search string="Hand Tag">
+                <search string="Retur">
                     <field name="name" filter_domain="[('name','ilike',self)]" string="Nomor"/>
                     <group expand="0" string="Group By...">
                         <filter string="User" name="user_id" icon="terp-folder-orange" domain="" context="{'group_by':'user_id'}"/>
