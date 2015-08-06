@@ -50,6 +50,49 @@ class retur_serial_number(osv.osv):
 			result[self_obj.id] = sn_detai_ids
 		return result
 
+	def _default_location_destination(self, cr, uid, context=None):
+		mod_obj = self.pool.get('ir.model.data')
+		location_dest_id = 'stock_location_stock'
+		try:
+			dest_location = mod_obj.get_object_reference(cr, uid, 'stock', location_dest_id)
+			with tools.mute_logger('openerp.osv.orm'):
+				self.pool.get('stock.location').check_access_rule(cr, uid, [dest_location[1]], 'read', context=context)
+		except (orm.except_orm, ValueError):
+			dest_location = False
+
+		return dest_location[1]
+
+	def _default_location_source(self, cr, uid, context=None):
+		mod_obj = self.pool.get('ir.model.data')
+		location_source_id = 'stock_location_customers'
+		try:
+			source_location = mod_obj.get_object_reference(cr, uid, 'stock', location_source_id)
+			with tools.mute_logger('openerp.osv.orm'):
+				self.pool.get('stock.location').check_access_rule(cr, uid, [source_location[1]], 'read', context=context)
+		except (orm.except_orm, ValueError):
+			source_location = False
+
+		return source_location[1]
+
+	def _get_journal(self, cr, uid, context=None):
+		res = self._get_journal_id(cr, uid, context=context)
+		if res:
+			return res[0][0]
+		return False
+
+	def _get_journal_id(self, cr, uid, context=None):
+		if context is None:
+			context = {}
+		journal_obj = self.pool.get('account.journal')
+		vals = []
+		journal_type = 'sale_refund'
+		value = journal_obj.search(cr, uid, [('type', '=',journal_type )])
+		for jr_type in journal_obj.browse(cr, uid, value, context=context):
+			t1 = jr_type.id,jr_type.name
+			if t1 not in vals:
+				vals.append(t1)
+		return vals
+
 	_columns = {
 		'name'				: fields.char('Nomor',size=36,required=True),
 		'date'				: fields.date('Tanggal',required=True),
@@ -60,13 +103,23 @@ class retur_serial_number(osv.osv):
 		'notes'				: fields.text('Notes'),
 		'picking_id'		: fields.many2one('stock.picking','Picking',readonly=True),
 		'stock_move_serial_number_ids' : fields.function(_get_stock_move_serial_number,type='many2many',relation='stock.move.serial.number',string='Details'),
-	}
+		'location_id'		: fields.many2one('stock.location', 'Location',required=True, select=True),
+		'location_dest_id'	: fields.many2one('stock.location', 'Dest. Location', required=True,select=True),
+		'invoicing'			: fields.selection([('2binvoiced', 'To be refunded/invoiced'), ('none', 'No invoicing')], 'Invoicing',required=True),
+		'invoice_id'		: fields.many2one('account.invoice','Invoice',readonly=True),
+		'journal_id'		: fields.many2one('account.journal','Destination Journal',domain="[('type','=','sale_refund')]"),
+
+		}
 
 	_defaults = {
 		'user_id': lambda obj, cr, uid, context: uid,
 		'date': fields.date.context_today,
 		'state' : 'draft',
 		'name': '/',
+		'invoicing':'none',
+		'location_id': _default_location_source,
+		'location_dest_id': _default_location_destination,		
+		'journal_id' : _get_journal,
 	}
 
 	def create(self, cr, uid, vals, context=None):
@@ -85,23 +138,34 @@ class retur_serial_number(osv.osv):
 
 	def approve(self,cr,uid,ids,context=None):
 		picking_in_obj    	= self.pool.get('stock.picking.in')
-		picking_out_obj   	= self.pool.get('stock.picking.out')
-		sale_order_obj    	= self.pool.get('sale.order')
+		invoice_obj   		= self.pool.get('account.invoice')
+		invoice_line_obj   	= self.pool.get('account.invoice.line')
 		move_analisys 		= self.pool.get('stock.move.serial.number')
 		prodlot_obj         = self.pool.get('stock.production.lot')
 		move_obj			= self.pool.get('stock.move')
-		mod_obj = self.pool.get('ir.model.data')
 		picking_id 	= False
 		order_id 	= False
 		
 		for my_form in self.browse(cr,uid,ids):
+			partner_id 		= my_form.partner_id.id
+			name 			= my_form.name
+			source_location	= my_form.location_id.id
+			dest_location 	= my_form.location_dest_id.id
+			invoice_id		= False
 			if my_form.serial_number_ids:
 				seq_obj_name = 'stock.picking.in'
 				new_pick_name = self.pool.get('ir.sequence').get(cr, uid, seq_obj_name)
-				picking_id = picking_in_obj.create(cr,uid,{'name':_('%s-return') % (new_pick_name),
-															'partner_id':my_form.partner_id.id,
-															'origin': my_form.name})
-
+				#create picking
+				picking_id = picking_in_obj.create(cr,uid,{'name'		:_('%s-return') % (new_pick_name),
+															'partner_id':partner_id,
+															'origin'	: name})
+				if my_form.invoicing == '2binvoiced':
+					#create invoice
+					invoice_id = invoice_obj.create(cr,uid,{'partner_id' 	: partner_id,
+															'type'			: 'out_refund',
+															'journal_id'	: my_form.journal_id.id,
+															'account_id'	: my_form.partner_id.property_account_receivable.id,
+															'origin'		: name})
 				for bcd in my_form.serial_number_ids:
 					barcode = bcd.serial_number
 					sn_id = prodlot_obj.search(cr,uid,[('name','=',barcode)])
@@ -117,30 +181,14 @@ class retur_serial_number(osv.osv):
 					product_qty = move.stock_move_id.product_qty
 					product_uom = move.stock_move_id.product_uom.id
 
-					location_source_id = 'stock_location_suppliers'
-					location_dest_id = 'stock_location_stock'
-
-					try:
-						source_location = mod_obj.get_object_reference(cr, uid, 'stock', location_source_id)
-						with tools.mute_logger('openerp.osv.orm'):
-							self.pool.get('stock.location').check_access_rule(cr, uid, [source_location[1]], 'read', context=context)
-					except (orm.except_orm, ValueError):
-						source_location = False
-					try:
-						dest_location = mod_obj.get_object_reference(cr, uid, 'stock', location_dest_id)
-						with tools.mute_logger('openerp.osv.orm'):
-							self.pool.get('stock.location').check_access_rule(cr, uid, [dest_location[1]], 'read', context=context)
-					except (orm.except_orm, ValueError):
-						dest_location = False
-
 					mv_id = move_obj.create(cr,uid,{'picking_id':picking_id,
 													'product_id':product_id,
 													'product_qty':1,#product_qty,
 													'product_uom':product_uom,
 													'name':'Retur - '+product_name,
 													'type':'in',
-													'location_id':source_location[1],
-													'location_dest_id':dest_location[1],
+													'location_id':source_location,
+													'location_dest_id':dest_location,
 													'is_serial_number':True,#set agar tidak bisa input SN lagi
 													'picking_id2': move.picking_id.id,
 													'sn_retur_id': sn_id[0],
@@ -154,8 +202,21 @@ class retur_serial_number(osv.osv):
 												'type'				: 'in',
 												'sale_order_id'     : move.sale_order_id.id or False,
 												}) 
+					if my_form.invoicing == '2binvoiced':
+						account = move.product_id.property_account_income.id
+						if not account:
+							account = move.product_id.categ_id.property_account_income_categ.id
+						#create invoice refund details
+						invoice_line_obj.create(cr,uid,{'invoice_id':invoice_id,
+														'product_id':product_id,
+														'name'		:'Retur - '+product_name,
+														'account_id':account,
+														'quatity'	: 1,
+														'uos_id'	: product_uom,
+														'price_unit':move.product_id.list_price,
+														})
 					prodlot_obj.write(cr,uid,sn_id[0],{'is_used':False},context=context)
-		self.write(cr,uid,ids[0],{'state':'approved','picking_id':picking_id},context=context)
+		self.write(cr,uid,ids[0],{'state':'approved','picking_id':picking_id,'invoice_id':invoice_id},context=context)
 		return True
 
 	def unlink(self, cr, uid, ids, context=None):
