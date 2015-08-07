@@ -1,0 +1,66 @@
+<openerp>
+	<data>
+
+		<!-- ini definisi tree tax_numbering -->
+		<record id="tax_numbering_list" model="ir.ui.view">
+			<field name="name">tax_numbering_list</field>
+			<field name="model">vit_dist_ppn.tax_numbering</field>
+			
+			<field name="arch" type="xml">
+				<tree string="Tax Numberings List">
+					<field name="year"/>         
+					<field name="prefix"/>         
+					<field name="start_no"/>    
+					<field name="end_no"/>    
+					<field name="current_no"/>    
+				</tree>
+			</field>
+		</record>
+
+		<!-- ini definisi form tax_numbering -->
+		<record id="tax_numbering_form" model="ir.ui.view">
+			<field name="name">tax_numbering_form</field>
+			<field name="model">vit_dist_ppn.tax_numbering</field>
+			
+			<field name="arch" type="xml">
+				<form string="Tax Numbering Form" version="7.0">
+					<sheet>					
+						<group>
+							<field name="year"/>    
+							<field name="prefix"/>    
+							<field name="start_no"/>    
+							<field name="end_no"/>    
+							<field name="current_no"/>    
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>		
+
+        <record id="action_tax_numbering_list" model="ir.actions.act_window">
+            <field name="name">Tax Numbering</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">vit_dist_ppn.tax_numbering</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a tax numbering
+              </p><p>
+                Click to add a tax numbering
+              </p>
+            </field>
+        </record>	
+
+
+
+
+
+
+		<!-- menu items -->
+	    <menuitem id="tax_numbering" 
+    	 parent="account.next_id_27" name="Tax Numbering" sequence="50" 
+    	 action="action_tax_numbering_list" />
+
+	</data>
+</openerp>
