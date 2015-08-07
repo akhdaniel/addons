@@ -50,7 +50,9 @@
                                     <field name="date_sale" />
                                     <field name="invoice_id" groups="account.group_account_manager"/> 
                                     <field name="date_invoices" groups="account.group_account_manager"/> 
-                                    <field name="unit_prices" groups="account.group_account_manager"/>    
+                                    <field name="unit_prices" groups="account.group_account_manager"/>
+                                    <field name="discount" groups="account.group_account_manager"/>
+                                    <field name="total" groups="account.group_account_manager"/>    
                                 </tree>
                             </field>
                         </group>
