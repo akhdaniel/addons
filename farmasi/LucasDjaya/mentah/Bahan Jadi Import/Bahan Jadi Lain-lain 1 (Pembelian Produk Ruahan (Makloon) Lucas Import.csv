@@ -1,0 +1,9 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DIC0010200,Camaag Strip,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 10 strip @ 10 tablet ",Box 100 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIC0020200,Camistan 250 mg Blister,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),Blister 10 kapsul dus 100 kapsul,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIC0030200,Camistan 500 mg Strip,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 10 strip @ 10 captab  ",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIF0010200,Fluza Blister,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 10 blister @ 10 kaplet",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIF0020200,Fluza Catch Cover,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 25 catch cover @ 4 kaplet",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIG0010300,Glocef 1 g,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 1 vial @ 1 gram ",Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIJ0010200,Jayacin 500 mg Strip,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 5 strip @ 6 kaptab ",Box 30 Kptab,Kptab,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DIR0010300,Renxon 1 g,Lain-Lain 1 (Pembelian Produk Ruahan (Makloon),"Dus, 1 vial @ 1 gram",Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

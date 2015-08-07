@@ -9,7 +9,11 @@
        """,
     'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
     'depends': ['mrp'],
-    'data': ['machine_master.xml','bom_man_hour.xml','bom_machine_hour.xml'],
+    'data': [
+        'bom_man_hour.xml',
+        'bom_machine_hour.xml',
+        'machine_master.xml',
+    ],
     'test': [],    
     'installable': True,
     'active': False,

@@ -1,0 +1,226 @@
+bom_id,workcenter_operation_id,jumlah orang,man_hour
+Amoxicillin DS 125 mg 60 ml,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,60
+,Labelling,4,360
+,Packing,,
+Ampicillin DS 125mg 60 ml PD,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Ampicillin DS 125mg 60 ml TD,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,60
+,Labelling,4,360
+,Packing,,
+Camillin DS 125,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Camillin DS 250,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Camoksil DS 125 mg,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Camoksil DS 250 mg,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Pacillin DS,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Pacimox DS,Cuci botol,2,240
+,Pengeringan botol,2,120
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,5,240
+,Sortir,4,240
+,Coding,1,120
+,Labelling,4,360
+,Packing,5,480
+Camoksil 250 mg Strip,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,420
+,Sortir,1,420
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Camoksil 500 mg Strip,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,210
+,Sortir,1,210
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Camoksil 250 mg Blister,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,420
+,Sortir,1,420
+,Coding,1,120
+,Labelling,,
+,Packing,5,480
+Amoxicillin 250 mg Strip 10,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Amoxicillin 250 mg Strip 12,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Ampicillin 250 mg Strip,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Camicillin 250 mg Strip,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Camicillin 500 mg Strip,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,720
+,Sortir,1,720
+,Coding,1,60
+,Labelling,,
+,Packing,5,480
+Camoksil 500 mg,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,720
+,Sortir,1,720
+,Coding,1,120
+,Labelling,,
+,Packing,5,480
+Camicillin 250 mg Blister,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,1,120
+,Labelling,,
+,Packing,5,480
+Camicillin 500 mg Blister,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,720
+,Sortir,1,720
+,Coding,1,120
+,Labelling,,
+,Packing,5,480
+Camoksil 500 mg Blister Export,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,720
+,Sortir,1,720
+,Coding,1,120
+,Labelling,,
+,Packing,5,480
+Ampicillin 250 mg Pot 100,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,,
+,Labelling,4,120
+,Packing,2,120
+Ampicillin 250 mg Pot 500,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,,
+,Labelling,4,90
+,Packing,2,90
+Camicillin 250 mg Pot 1000,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,1440
+,Sortir,1,1440
+,Coding,,
+,Labelling,4,60
+,Packing,2,60
+Camicillin 500 mg Pot 1000,Cuci botol,,
+,Pengeringan botol,,
+,Penimbangan,2,30
+,Mixing,1,60
+,Filling/cetak,1,720
+,Sortir,1,720
+,Coding,,
+,Labelling,4,60
+,Packing,2,60

@@ -1,0 +1,3 @@
+id,code,name,parent_id,type,user_type
+cogs_100,50,Cost of Goods Sold,0,View,Cost of Goods Sold
+cogs_110,5000,Cost of Goods Sold,50,Regular,Cost of Goods Sold

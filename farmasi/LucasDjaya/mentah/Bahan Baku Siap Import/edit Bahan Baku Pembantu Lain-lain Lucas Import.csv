@@ -1,0 +1,3 @@
+"id","default_code","name","uom_id","uom_po_id","categ_id","list_price","route_ids","cost_method","valuation","type","purchase_ok","active","sale_ok"
+"bahan_baku_pembantu_lainnya_100","LBB0010101","Kalium Pirosulfit","g","g","Bahan Baku Pembantu Lainnya",0,"Buy","Average Price","Real Time (automated)","Stockable Product","TRUE","TRUE","FALSE"
+"bahan_baku_pembantu_lainnya_110","LBB0020101","Selenium","g","g","Bahan Baku Pembantu Lainnya",0,"Buy","Average Price","Real Time (automated)","Stockable Product","TRUE","TRUE","FALSE"

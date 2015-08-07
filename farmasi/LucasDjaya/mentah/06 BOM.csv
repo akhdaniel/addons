@@ -1,0 +1,3176 @@
+name,Product,product_uom,product_qty,yield,Don't Import,BoM Lines / Product Unit of Measure,BoM Lines / Product Quantity,bom_lines/component_type,type,BoM Lines / Product
+Bio nigell,Bio nigell,Kp Lu,200000,, BGE0020101,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,,BMP0010101 ,kg,0.128,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.128,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Buah Merah Rediss,Buah Merah Rediss,Kp Lu,200000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.128,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.128,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Buah Merah W 600,Buah Merah W 600,Kp Lu,100000,, BGE0020101 ,kg,21.5,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,21.5,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,21.5,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,21.5,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,17,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,17,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,17,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.064,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.064,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.027,raw_material,,BPP0010101
+Biocelle,Biocelle,Kp Lu,200000,98.61%, BGE0020101 ,kg,33.786,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,33.786,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,33.786,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,33.786,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,26.714,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,26.714,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,26.714,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.101,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.101,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.042,raw_material,,BPP0010101
+Camiten,Camiten,Kp Lu,200000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.128,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.128,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+,,,,, BEC0020101 ,kg,0.3,raw_material,,BEC0020101
+,,,,, BET0020101 ,g,240,raw_material,,BET0020101
+,,,,, BTD0010101 ,kg,0.4,raw_material,,BTD0010101
+,,,,, BTD0010201 ,kg,0.4,raw_material,,BTD0010201
+DBS Habbazzaitun ,DBS Habbazzaitun ,Kp Lu,220000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+,,,,, BPL0010101 ,kg,0.008,raw_material,,BPL0010101
+Fish Oil 1000 mg,Fish Oil 1000 mg,Kp Lu,200000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Olive Oil 600 mg,Olive Oil 600 mg,Kp Lu,220000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+,,,,, BTD0010101 ,kg,0.4,raw_material,,BTD0010101
+,,,,, BTD0010201 ,kg,0.4,raw_material,,BTD0010201
+Habbatussauda 600 mg,Habbatussauda 600 mg,Kp Lu,220000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Inspira Vitamin E 400 IU,Inspira Vitamin E 400 IU,Kp Lu,320000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Isotretinoin 10 mg,Isotretinoin 10 mg,Kp Lu,200000,, BGE0020101 ,kg,38.37,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,38.37,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,38.37,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,38.37,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.115,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.115,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.048,raw_material,,BPP0010101
+,,,,, BEC0020101 ,kg,0.268,raw_material,,BEC0020101
+,,,,, BET0020101 ,g,214.15,raw_material,,BET0020101
+,,,,,BTD0010101,kg,0.357,raw_material,,BTD0010101
+,,,,, BTD0010201 ,kg,0.357,raw_material,,BTD0010201
+Lamata,Lamata,Kp Lu,100000,, BGL0020101 ,kg,17,raw_material,Normal,BGL0020101
+,,,,, BGL0020201 ,kg,17,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,17,raw_material,,BGL0020301
+,,,,,BMP0010101,kg,0.064,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.064,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.027,raw_material,,BPP0010101
+,,,,, ABE0010101 ,kg,6,raw_material,,ABE0010101
+,,,,, AVE0020101 ,kg,5,raw_material,,AVE0020101
+,,,,, ABC0010101 ,kg,0.3,raw_material,,ABC0010101
+,,,,, ABC0010201 ,kg,0.3,raw_material,,ABC0010201
+,,,,, APH0070101 ,kg,0.7,raw_material,,APH0070101
+,,,,, ALG0010101 ,kg,0.8,raw_material,,ALG0010101
+,,,,, ALH0020101 ,kg,0.8,raw_material,,ALH0020101
+,,,,, ALH0020201 ,kg,0.8,raw_material,,ALH0020201
+,,,,, ATA0010101 ,kg,0.8,raw_material,,ATA0010101
+,,,,, BSO0010101 ,kg,35.6,raw_material,,BSO0010101
+,,,,, BGE0020101 ,kg,21.5,raw_material,,BGE0020101
+,,,,, BGE0020201 ,kg,21.5,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,21.5,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,21.5,raw_material,,BGE0040101
+,,,,, CBO0120100 ,Pcs,"3,333", kemas_primer ,,CBO0120100
+,,,,, CTB0170100 ,Pcs,"3,333", kemas_primer ,,CTB0170100
+,,,,, CSG0010100 ,kg,3, kemas_primer ,,CSG0010100
+,,,,, LBK0010100 ,Pcs,"3,333", kemas_primer ,,LBK0010100
+,,,,, CET0730100 ,Pcs,"3,390", kemas_sekunder ,,CET0730100
+,,,,, CET0730200 ,Pcs,"3,390", kemas_sekunder ,,CET0730200
+,,,,, CIN0800100 ,Pcs,"3,334", kemas_sekunder ,,CIN0800100
+,,,,, CIN0800200 ,Pcs,"3,334", kemas_sekunder ,,CIN0800200
+,,,,, CSH0200100 ,Pcs,19, kemas_sekunder ,,CSH0200100
+,,,,, LBK0100100 ,Pcs,68, kemas_sekunder ,,LBK0100100
+,,,,, CPB0010100 ,Roll,1, kemas_sekunder ,,CPB0010100
+,,,,, CPB0010200 ,Roll,1, kemas_sekunder ,,CPB0010200
+Mamavita 400 mg Soft Capsule,Mamavita 400 mg Soft Capsule,Kp Lu,220000,100.60%, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+,,,,, BTD0010101 ,kg,0.4,raw_material,,BTD0010101
+,,,,, BTD0010201 ,kg,0.4,raw_material,,BTD0010201
+Natura Nigela S 700,Natura Nigela S 700,Kp Lu,220000,98.97%, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Natura Omega S 650,Natura Omega S 650,Kp Lu,220000,99.62%, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Pure Fish Oil ,Pure Fish Oil ,Kp Lu,220000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.054,raw_material,,BPP0010101
+Vitamin A 100.000 IU,Vitamin A 100.000 IU,Kp Lu,310000,, BGE0020101 ,kg,43,raw_material,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43,raw_material,,BGE0020201
+,,,,, BGE0020301 ,kg,43,raw_material,,BGE0020301
+,,,,, BGE0040101 ,kg,43,raw_material,,BGE0040101
+,,,,, BGL0020101 ,kg,34,raw_material,,BGL0020101
+,,,,, BGL0020201 ,kg,34,raw_material,,BGL0020201
+,,,,, BGL0020301 ,kg,34,raw_material,,BGL0020301
+,,,,, BPW0010101 ,Liter(s),76,raw_material,,BPW0010101
+,,,,, BMP0010101 ,kg,0.129,raw_material,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129,raw_material,,BMP0010201
+,,,,, BPP0010101 ,kg,0.54,raw_material,,BPP0010101
+,,,,, BEP0010101 ,kg,0.3,raw_material,,BEP0010101
+,,,,, BTD0010101 ,kg,0.1,raw_material,,BTD0010101
+,,,,, BTD0010201 ,kg,0.1,raw_material,,BTD0010201
+,,,,, AVA0010101 ,kg,19.51,raw_material,,AVA0010101
+,,,,, AVA0010201 ,kg,19.51,raw_material,,AVA0010201
+,,,,, BSO0030101 ,kg,65.74,raw_material,,BSO0030101
+,,,,, BSO0030201 ,kg,65.74,raw_material,,BSO0030201
+,,,,, BSO0030301 ,kg,65.74,raw_material,,BSO0030301
+,,,,, BSO0030401 ,kg,65.74,raw_material,,BSO0030401
+,,,,, CBO0290100 ,Pcs,"6,200",kemas_primer,,CBO0290100
+,,,,, CTB0120100 ,Pcs,"6,200",kemas_primer,,CTB0120100
+,,,,, CSG0010100 ,kg,6,kemas_primer,,CSG0010100
+,,,,, LBK0010100 ,Pcs,"6,200",kemas_primer,,LBK0010100
+,,,,, CET1080100 ,Pcs,"6,201",kemas_sekunder,,CET1080100
+,,,,, CET1080200 ,Pcs,"6,201",kemas_sekunder,,CET1080200
+,,,,, CET1080300 ,Pcs,"6,201",kemas_sekunder,,CET1080300
+,,,,, CET1080400 ,Pcs,"6,201",kemas_sekunder,,CET1080400
+,,,,, CBR0980100 ,Pcs,"6,201",kemas_sekunder,,CBR0980100
+,,,,, CBR0980200 ,Pcs,"6,201",kemas_sekunder,,CBR0980200
+,,,,, CBR0980300 ,Pcs,"6,201",kemas_sekunder,,CBR0980300
+,,,,, LBK0160100 ,Pcs,62,kemas_sekunder,,LBK0160100
+,,,,, CSH0200100 ,Pcs,21,kemas_sekunder,,CSH0200100
+,,,,, LBK0100100 ,Pcs,63,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,3,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,3,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Vitamin A 200.000 IU,Vitamin A 200.000 IU,Kp Lu,320000,99.44%, BGE0020101 ,kg,43, raw_material ,Normal,BGE0020101
+,,,,, BGE0020201 ,kg,43, raw_material ,,BGE0020201
+,,,,, BGE0020301 ,kg,43, raw_material ,,BGE0020301
+,,,,, BGE0040101 ,kg,43, raw_material ,,BGE0040101
+,,,,, BGL0020101 ,kg,34, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,34, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,34, raw_material ,,BGL0020301
+,,,,, BPW0010101 ,Liter(s),76, raw_material ,,BPW0010101
+,,,,, BMP0010101 ,kg,0.129, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.129, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.54, raw_material ,,BPP0010101
+,,,,, BET0020101 ,g,240, raw_material ,,BET0020101
+,,,,, BEC0020101 ,kg,0.3, raw_material ,,BEC0020101
+,,,,, BTD0010101 ,kg,0.4, raw_material ,,BTD0010101
+,,,,, BTD0010201 ,kg,0.4, raw_material ,,BTD0010201
+,,,,, AVA0010101 ,kg,40.282, raw_material ,,AVA0010101
+,,,,, AVA0010201 ,kg,40.282, raw_material ,,AVA0010201
+,,,,, BSO0030101 ,kg,79.718, raw_material ,,BSO0030101
+,,,,, BSO0030201 ,kg,79.718, raw_material ,,BSO0030201
+,,,,, BSO0030301 ,kg,79.718, raw_material ,,BSO0030301
+,,,,, BSO0030401 ,kg,79.718, raw_material ,,BSO0030401
+,,,,, CBO0290100 ,Pcs,"6,400", kemas_primer ,,CBO0290100
+,,,,, CTB0140100 ,Pcs,"6,400", kemas_primer ,,CTB0140100
+,,,,, CSG0010100 ,kg,6, kemas_primer ,,CSG0010100
+,,,,, LBK0010100 ,Pcs,"6,400", kemas_primer ,,LBK0010100
+,,,,, CET1090100 ,Pcs,"6,401", kemas_sekunder ,,CET1090100
+,,,,, CET1090200 ,Pcs,"6,401", kemas_sekunder ,,CET1090200
+,,,,, CET1090300 ,Pcs,"6,401", kemas_sekunder ,,CET1090300
+,,,,, CET1090400 ,Pcs,"6,401", kemas_sekunder ,,CET1090400
+,,,,, CBR0980100 ,Pcs,"6,401", kemas_sekunder ,,CBR0980100
+,,,,, CBR0980200 ,Pcs,"6,401", kemas_sekunder ,,CBR0980200
+,,,,, CBR0980300 ,Pcs,"6,401", kemas_sekunder ,,CBR0980300
+,,,,, LBK0160100 ,Pcs,64, kemas_sekunder ,,LBK0160100
+,,,,, CSH0200100 ,Pcs,21, kemas_sekunder ,,CSH0200100
+,,,,, LBK0100100 ,Pcs,65, kemas_sekunder ,,LBK0100100
+,,,,, CCT0010100 ,Roll,3, kemas_sekunder ,,CCT0010100
+,,,,, CCT0010200 ,Roll,3, kemas_sekunder ,,CCT0010200
+,,,,, CPB0010100 ,Roll,1, kemas_sekunder ,,CPB0010100
+,,,,, CPB0010200 ,Roll,1, kemas_sekunder ,,CPB0010200
+Antasida Doen 60 ml,Antasida Doen 60 ml,Botol,3225,99.31%, AAH0010101 ,kg,10.46, raw_material ,Normal,AAH0010101
+,,,,, AAH0010201 ,kg,10.46, raw_material ,,AAH0010201
+,,,,, AAH0010301 ,kg,10.46, raw_material ,,AAH0010301
+,,,,, AMH0010101 ,kg,8, raw_material ,,AMH0010101
+,,,,, AMH0010201 ,kg,8, raw_material ,,AMH0010201
+,,,,, AMH0010301 ,kg,8, raw_material ,,AMH0010301
+,,,,, BXG0010101 ,kg,0.7, raw_material ,,BXG0010101
+,,,,, BCS0010101 ,kg,0.65, raw_material ,,BCS0010101
+,,,,, BCA0010101 ,kg,2.012, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,2.012, raw_material ,,BCA0010201
+,,,,, BMP0010101 ,kg,0.175, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.175, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.105, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.25, raw_material ,,BSC0050101
+,,,,, BSU0020101 ,kg,3, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,3, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,3, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,3, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,3, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,3, raw_material ,,BSU0020601
+,,,,, BGL0020101 ,kg,25.238, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,25.238, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,25.238, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.174, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.174, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.174, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.174, raw_material ,,BPG0010401
+,,,,, BSO0020101 ,kg,39.144, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,39.144, raw_material ,,BSO0020201
+,,,,, BPO0030101 ,kg,0.135, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.135, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300", kemas_primer ,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300", kemas_primer ,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300", kemas_primer ,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300", kemas_primer ,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300", kemas_primer ,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300", kemas_primer ,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300", kemas_primer ,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300", kemas_primer ,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300", kemas_primer ,,CDO0040400
+,,,,, CET0120100 ,Pcs,"3,226", kemas_sekunder ,,CET0120100
+,,,,, CET0120200 ,Pcs,"3,226", kemas_sekunder ,,CET0120200
+,,,,, CET0120300 ,Pcs,"3,226", kemas_sekunder ,,CET0120300
+,,,,, CET0120400 ,Pcs,"3,226", kemas_sekunder ,,CET0120400
+,,,,, CBR0070100 ,Pcs,"3,226", kemas_sekunder ,,CBR0070100
+,,,,, CBR0070200 ,Pcs,"3,226", kemas_sekunder ,,CBR0070200
+,,,,, CBR0070300 ,Pcs,"3,226", kemas_sekunder ,,CBR0070300
+,,,,, CRA0070100 ,Set,65, kemas_sekunder ,,CRA0070100
+,,,,, CSH0170100 ,Pcs,22, kemas_sekunder ,,CSH0170100
+,,,,, LBK0100100 ,Pcs,66, kemas_sekunder ,,LBK0100100
+,,,,, CCT0010100 ,Roll,2, kemas_sekunder ,,CCT0010100
+,,,,, CCT0010200 ,Roll,2, kemas_sekunder ,,CCT0010200
+,,,,, CPB0010100 ,Roll,1, kemas_sekunder ,,CPB0010100
+,,,,, CPB0010200 ,Roll,1, kemas_sekunder ,,CPB0010200
+BAB 100 ml,BAB 100 ml,Botol,1980,97.88%, AVA0010101 ,kg,0.063, raw_material ,Normal,AVA0010101
+,,,,, AVA0010201 ,kg,0.063, raw_material ,,AVA0010201
+,,,,, ATH0030101 ,kg,0.04, raw_material ,,ATH0030101
+,,,,, ARP0010101 ,g,55, raw_material ,,ARP0010101
+,,,,, APH0060101 ,kg,0.08, raw_material ,,APH0060101
+,,,,, ACY0010101 ,g,0.12, raw_material ,,ACY0010101
+,,,,, ACY0010201 ,g,0.12, raw_material ,,ACY0010201
+,,,,, ANI0010101 ,g,600, raw_material ,,ANI0010101
+,,,,, ACP0010101 ,kg,0.2, raw_material ,,ACP0010101
+,,,,, ALH0020101 ,kg,8, raw_material ,,ALH0020101
+,,,,, ALH0020201 ,kg,8, raw_material ,,ALH0020201
+,,,,, AVE0010101 ,kg,0.2, raw_material ,,AVE0010101
+,,,,, AVE0010201 ,kg,0.2, raw_material ,,AVE0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.04, raw_material ,,BPP0010101
+,,,,, BSU0020101 ,kg,50, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,50, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,50, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,50, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,50, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,50, raw_material ,,BSU0020601
+,,,,, BSS0010101 ,kg,0.12, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.12, raw_material ,,BSS0010201
+,,,,, BCA0010101 ,kg,0.72, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.72, raw_material ,,BCA0010201
+,,,,, BSC0030101 ,kg,1.2, raw_material ,,BSC0030101
+,,,,, BSC0030201 ,kg,1.2, raw_material ,,BSC0030201
+,,,,, BGL0020101 ,kg,18.929, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,18.929, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,18.929, raw_material ,,BGL0020301
+,,,,, BPH0030101 ,kg,0.352, raw_material ,,BPH0030101
+,,,,, BXG0010101 ,kg,0.4, raw_material ,,BXG0010101
+,,,,, BPG0010101 ,kg,6.209, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,6.209, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,6.209, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,6.209, raw_material ,,BPG0010401
+,,,,, BSO0020101 ,kg,26.096, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,26.096, raw_material ,,BSO0020201
+,,,,, BEO0010101 ,kg,0.421, raw_material ,,BEO0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0020100 ,Pcs,"2,000", kemas_primer ,,CBO0020100
+,,,,, CBO0020200 ,Pcs,"2,000", kemas_primer ,,CBO0020200
+,,,,, CBO0020300 ,Pcs,"2,000", kemas_primer ,,CBO0020300
+,,,,, CBO0020400 ,Pcs,"2,000", kemas_primer ,,CBO0020400
+,,,,, CBO0020500 ,Pcs,"2,000", kemas_primer ,,CBO0020500
+,,,,, CBO0020600 ,Pcs,"2,000", kemas_primer ,,CBO0020600
+,,,,, CDO0040100 ,Pcs,"2,000", kemas_primer ,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000", kemas_primer ,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000", kemas_primer ,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000", kemas_primer ,,CDO0040400
+,,,,, CSP0010100 ,Pcs,"1,980", kemas_primer ,,CSP0010100
+,,,,, CET0160100 ,Pcs,"1,982", kemas_sekunder ,,CET0160100
+,,,,, CET0160200 ,Pcs,"1,982", kemas_sekunder ,,CET0160200
+,,,,, CIN0120100 ,Pcs,"1,981", kemas_sekunder ,,CIN0120100
+,,,,, CIN0120200 ,Pcs,"1,981", kemas_sekunder ,,CIN0120200
+,,,,, CBR0080100 ,Pcs,"1,981", kemas_sekunder ,,CBR0080100
+,,,,, CBR0080200 ,Pcs,"1,981", kemas_sekunder ,,CBR0080200
+,,,,, CBR0080300 ,Pcs,"1,981", kemas_sekunder ,,CBR0080300
+,,,,, CSH0260100 ,Pcs,13, kemas_sekunder ,,CSH0260100
+,,,,, CPB0010100 ,Roll,1, kemas_sekunder ,,CPB0010100
+,,,,, CPB0010200 ,Roll,1, kemas_sekunder ,,CPB0010200
+Calcivita 200 ml,Calcivita 200 ml,Botol,990,95.95%, ACG0010101 ,kg,1.28, raw_material ,Normal,ACG0010101
+,,,,, ACL0010101 ,kg,0.32, raw_material ,,ACL0010101
+,,,,, AVA0010101 ,kg,0.031, raw_material ,,AVA0010101
+,,,,, AVA0010201 ,kg,0.031, raw_material ,,AVA0010201
+,,,,, AVD0010101 ,g,4, raw_material ,,AVD0010101
+,,,,, ATH0030101 ,kg,0.046, raw_material ,,ATH0030101
+,,,,, ARP0010101 ,g,61.9, raw_material ,,ARP0010101
+,,,,, APH0070101 ,kg,0.021, raw_material ,,APH0070101
+,,,,, ANI0010101 ,g,200, raw_material ,,ANI0010101
+,,,,, ADE0010101 ,kg,0.091, raw_material ,,ADE0010101
+,,,,, AAA0020101 ,kg,2.24, raw_material ,,AAA0020101
+,,,,, AVE0010101 ,kg,0.04, raw_material ,,AVE0010101
+,,,,, AVE0010201 ,kg,0.04, raw_material ,,AVE0010201
+,,,,, BXG0010101 ,kg,0.6, raw_material ,,BXG0010101
+,,,,, BSU0020101 ,kg,48, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,48, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,48, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,48, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,48, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,48, raw_material ,,BSU0020601
+,,,,, BCA0010101 ,kg,0.5, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.5, raw_material ,,BCA0010201
+,,,,, BSO0020101 ,kg,32.62, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,32.62, raw_material ,,BSO0020201
+,,,,, BGL0020101 ,kg,18.93, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,18.93, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,18.93, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.174, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.174, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.174, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.174, raw_material ,,BPG0010401
+,,,,, BDE0010101 ,g,400, raw_material ,,BDE0010101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BPH0030101 ,kg,0.32, raw_material ,,BPH0030101
+,,,,, BSC0020101 ,kg,0.6, raw_material ,,BSC0020101
+,,,,, BSC0020201 ,kg,0.6, raw_material ,,BSC0020201
+,,,,, BET0010101 ,Liter(s),0.95, raw_material ,,BET0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, BDE0020101 ,g,30, raw_material ,,BDE0020101
+,,,,, CBO0070100 ,Pcs,"1,000",kemas_primer,,CBO0070100
+,,,,, CDO0040100 ,Pcs,"1,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"1,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"1,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"1,000",kemas_primer,,CDO0040400
+,,,,, CPC0010100 ,Pcs,991,kemas_primer,,CPC0010100
+,,,,, CET0180100 ,Pcs,991,kemas_sekunder,,CET0180100
+,,,,, CET0180200 ,Pcs,991,kemas_sekunder,,CET0180200
+,,,,, CBR0100100 ,Pcs,991,kemas_sekunder,,CBR0100100
+,,,,, CBR0100200 ,Pcs,991,kemas_sekunder,,CBR0100200
+,,,,, CBR0100300 ,Pcs,991,kemas_sekunder,,CBR0100300
+,,,,, CIN0010100 ,Pcs,991,kemas_sekunder,,CIN0010100
+,,,,, CIN0010200 ,Pcs,991,kemas_sekunder,,CIN0010200
+,,,,, LBK0250100 ,Set,28,kemas_sekunder,,LBK0250100
+,,,,, LBK0220100 ,Pcs,56,kemas_sekunder,,LBK0220100
+,,,,, CPB0010100 ,Roll,2,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,2,kemas_sekunder,,CPB0010200
+Camaag 100 ml,Camaag 100 ml,Botol,1960,98.48, AAH0010101 ,kg,26, raw_material ,Normal,AAH0010101
+,,,,, AAH0010201 ,kg,26, raw_material ,,AAH0010201
+,,,,, AAH0010301 ,kg,26, raw_material ,,AAH0010301
+,,,,, AMH0010101 ,kg,14, raw_material ,,AMH0010101
+,,,,, AMH0010201 ,kg,14, raw_material ,,AMH0010201
+,,,,, AMH0010301 ,kg,14, raw_material ,,AMH0010301
+,,,,, ADI0010101 ,kg,4, raw_material ,,ADI0010101
+,,,,, BCS0010101 ,kg,0.16, raw_material ,,BCS0010101
+,,,,, BXG0010101 ,kg,0.5, raw_material ,,BXG0010101
+,,,,, BCA0010101 ,kg,2.012, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,2.012, raw_material ,,BCA0010201
+,,,,, BMP0010101 ,kg,0.175, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.175, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.105, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.25, raw_material ,,BSC0050101
+,,,,, BSU0020101 ,kg,3, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,3, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,3, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,3, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,3, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,3, raw_material ,,BSU0020601
+,,,,, BPO0030101 ,kg,0.135, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.135, raw_material ,,BPO0030201
+,,,,, BGL0020101 ,kg,25.238, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,25.238, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,25.238, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.174, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.174, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.174, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.174, raw_material ,,BPG0010401
+,,,,, BSO0020101 ,kg,39.144, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,39.144, raw_material ,,BSO0020201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0050100 ,Pcs,"2,000", kemas_primer ,,CBO0050100
+,,,,, CDO0040100 ,Pcs,"2,000", kemas_primer ,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000", kemas_primer ,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000", kemas_primer ,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000", kemas_primer ,,CDO0040400
+,,,,, CET0190100 ,Pcs,"1,961", kemas_sekunder ,,CET0190100
+,,,,, CET0190200 ,Pcs,"1,961", kemas_sekunder ,,CET0190200
+,,,,, CIN0140100 ,Pcs,"1,961", kemas_sekunder ,,CIN0140100
+,,,,, CIN0140200 ,Pcs,"1,961", kemas_sekunder ,,CIN0140200
+,,,,, CBR0110100 ,Pcs,"1,961", kemas_sekunder ,,CBR0110100
+,,,,, CBR0110200 ,Pcs,"1,961", kemas_sekunder ,,CBR0110200
+,,,,, CBR0110300 ,Pcs,"1,961", kemas_sekunder ,,CBR0110300
+,,,,, CSH0260100 ,Pcs,13, kemas_sekunder ,,CSH0260100
+,,,,, LBK0100100 ,Pcs,40, kemas_sekunder ,,LBK0100100
+,,,,, CPB0010100 ,Roll,1, kemas_sekunder ,,CPB0010100
+,,,,, CPB0010200 ,Roll,1, kemas_sekunder ,,CPB0010200
+Camaag 200 ml,Camaag 200 ml,Botol,980,99.03%, AAH0010101 ,kg,10.46, raw_material ,Normal,AAH0010101
+,,,,, AAH0010201 ,kg,10.46, raw_material ,,AAH0010201
+,,,,, AAH0010301 ,kg,10.46, raw_material ,,AAH0010301
+,,,,, AMH0010101 ,kg,8, raw_material ,,AMH0010101
+,,,,, AMH0010201 ,kg,8, raw_material ,,AMH0010201
+,,,,, AMH0010301 ,kg,8, raw_material ,,AMH0010301
+,,,,, ADI0010101 ,kg,1.2, raw_material ,,ADI0010101
+,,,,, BXG0010101 ,kg,0.8, raw_material ,,BXG0010101
+,,,,, BCS0010101 ,kg,0.65, raw_material ,,BCS0010101
+,,,,, BCA0010101 ,kg,2.012, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,2.012, raw_material ,,BCA0010201
+,,,,, BMP0010101 ,kg,0.175, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.175, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.105, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.25, raw_material ,,BSC0050101
+,,,,, BSU0020101 ,kg,3, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,3, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,3, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,3, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,3, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,3, raw_material ,,BSU0020601
+,,,,, BGL0020101 ,kg,25.238, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,25.238, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,25.238, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.174, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.174, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.174, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.174, raw_material ,,BPG0010401
+,,,,, BSO0020101 ,kg,39.144, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,39.144, raw_material ,,BSO0020201
+,,,,, BPO0030101 ,kg,0.135, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.135, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0070100 ,Pcs,"1,000",kemas_primer,,CBO0070100
+,,,,, CDO0040100 ,Pcs,"1,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"1,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"1,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"1,000",kemas_primer,,CDO0040400
+,,,,, CET0200101 ,Pcs,981,kemas_sekunder,,CET0200101
+,,,,, CET0200201 ,Pcs,981,kemas_sekunder,,CET0200201
+,,,,, CIN0150101 ,Pcs,981,kemas_sekunder,,CIN0150101
+,,,,, CIN0150201 ,Pcs,981,kemas_sekunder,,CIN0150201
+,,,,, CBR0120100 ,Pcs,981,kemas_sekunder,,CBR0120100
+,,,,, CBR0120200 ,Pcs,981,kemas_sekunder,,CBR0120200
+,,,,, CBR0120300 ,Pcs,981,kemas_sekunder,,CBR0120300
+,,,,, CSH0210100 ,Pcs,14,kemas_sekunder,,CSH0210100
+,,,,, CPS0020100 ,kg,,kemas_sekunder,,CPS0020100
+,,,,, LBK0230100 ,Pcs,27,kemas_sekunder,,LBK0230100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Came 60 ml,Came 60 ml,Botol,3292,, APH0050101 ,kg,0.21, raw_material ,Normal,APH0050101
+,,,,, BMP0010101 ,kg,0.175, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.175, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.025, raw_material ,,BPP0010101
+,,,,, BSC0030101 ,kg,1, raw_material ,,BSC0030101
+,,,,, BSC0030201 ,kg,1, raw_material ,,BSC0030201
+,,,,, BCA0010101 ,kg,1.5, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,1.5, raw_material ,,BCA0010201
+,,,,, BXG0010101 ,kg,0.2, raw_material ,,BXG0010101
+,,,,, BSC0050101 ,kg,0.9, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.09, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.09, raw_material ,,BSS0010201
+,,,,, BPK0010101 ,kg,1, raw_material ,,BPK0010101
+,,,,, BPK0010201 ,kg,1, raw_material ,,BPK0010201
+,,,,, BSU0020101 ,kg,5, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,5, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,5, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,5, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,5, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,5, raw_material ,,BSU0020601
+,,,,, BET0020101 ,g,25, raw_material ,,BET0020101
+,,,,, BAL0010101 ,Liter(s),0.5, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),0.5, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,6.31, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,6.31, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,6.31, raw_material ,,BGL0020301
+,,,,, BPO0030101 ,kg,0.135, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.135, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0210100 ,Pcs,"3,358",kemas_sekunder,,CET0210100
+,,,,, CET0210200 ,Pcs,"3,358",kemas_sekunder,,CET0210200
+,,,,, CIN0170100 ,Pcs,"3,292",kemas_sekunder,,CIN0170100
+,,,,, CIN0170200 ,Pcs,"3,292",kemas_sekunder,,CIN0170200
+,,,,, CBR0140100 ,Pcs,"3,292",kemas_sekunder,,CBR0140100
+,,,,, CBR0140200 ,Pcs,"3,292",kemas_sekunder,,CBR0140200
+,,,,, CBR0140300 ,Pcs,"3,292",kemas_sekunder,,CBR0140300
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,66,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camexine 60 ml,Camexine 60 ml,Botol,3278,, ABH0010101 ,kg,0.17, raw_material ,Normal,ABH0010101
+,,,,, ABH0010201 ,kg,0.17, raw_material ,,ABH0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BPK0010101 ,kg,2, raw_material ,,BPK0010101
+,,,,, BPK0010201 ,kg,2, raw_material ,,BPK0010201
+,,,,, BSU0020101 ,kg,50, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,50, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,50, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,50, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,50, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,50, raw_material ,,BSU0020601
+,,,,, BAL0010101 ,Liter(s),10.7, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),10.7, raw_material ,,BAL0010201
+,,,,, BSO0020101 ,kg,26.096, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,26.096, raw_material ,,BSO0020201
+,,,,, BGL0020101 ,kg,50.476, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,50.476, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,50.476, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.277, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.277, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.277, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.277, raw_material ,,BPG0010401
+,,,,, BAG0010101 ,g,1.25, raw_material ,,BAG0010101
+,,,,, BEJ0010101 ,kg,0.492, raw_material ,,BEJ0010101
+,,,,, BPO0030101 ,kg,0.045, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.045, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0220100 ,Pcs,"3,279",kemas_sekunder,,CET0220100
+,,,,, CET0220200 ,Pcs,"3,279",kemas_sekunder,,CET0220200
+,,,,, CIN0180100 ,Pcs,"3,279",kemas_sekunder,,CIN0180100
+,,,,, CIN0180200 ,Pcs,"3,279",kemas_sekunder,,CIN0180200
+,,,,, CBR0150100 ,Pcs,"3,279",kemas_sekunder,,CBR0150100
+,,,,, CBR0150200 ,Pcs,"3,279",kemas_sekunder,,CBR0150200
+,,,,, CBR0150300 ,Pcs,"3,279",kemas_sekunder,,CBR0150300
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,67,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camicetine 60 ml,Camicetine 60 ml,Botol,3225,99.38%, ACP0020101 ,kg,9, raw_material ,Normal,ACP0020101
+,,,,, ACP0020201 ,kg,9, raw_material ,,ACP0020201
+,,,,, BPO0010101 ,kg,1.716, raw_material ,,BPO0010101
+,,,,, BPO0010201 ,kg,1.716, raw_material ,,BPO0010201
+,,,,, BCS0010101 ,kg,2.6, raw_material ,,BCS0010101
+,,,,, BMP0010101 ,kg,0.36, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.36, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BSS0010101 ,kg,0.05, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.05, raw_material ,,BSS0010201
+,,,,, BSC0050101 ,kg,0.3, raw_material ,,BSC0050101
+,,,,, BMA0020101 ,kg,0.2, raw_material ,,BMA0020101
+,,,,, BSC0020101 ,kg,0.1, raw_material ,,BSC0020101
+,,,,, BSC0020201 ,kg,0.1, raw_material ,,BSC0020201
+,,,,, BEV0010101 ,kg,0.174, raw_material ,,BEV0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0260100 ,Pcs,"3,226",kemas_sekunder,,CET0260100
+,,,,, CET0260200 ,Pcs,"3,226",kemas_sekunder,,CET0260200
+,,,,, CIN0220100 ,Pcs,"3,226",kemas_sekunder,,CIN0220100
+,,,,, CIN0220200 ,Pcs,"3,226",kemas_sekunder,,CIN0220200
+,,,,, CBR0180100 ,Pcs,"3,226",kemas_sekunder,,CBR0180100
+,,,,, CBR0180200 ,Pcs,"3,226",kemas_sekunder,,CBR0180200
+,,,,, CBR0180300 ,Pcs,"3,226",kemas_sekunder,,CBR0180300
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,66,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camicetine 60 ml Export,Camicetine 60 ml Export,Botol,3225,99.55%, ACP0020101 ,kg,9, raw_material ,Normal,ACP0020101
+,,,,, ACP0020201 ,kg,9, raw_material ,,ACP0020201
+,,,,, BMA0020101 ,kg,0.2, raw_material ,,BMA0020101
+,,,,, BEV0010101 ,kg,0.174, raw_material ,,BEV0010101
+,,,,, BSC0050101 ,kg,0.3, raw_material ,,BSC0050101
+,,,,, BSC0020101 ,kg,0.1, raw_material ,,BSC0020101
+,,,,, BSC0020201 ,kg,0.1, raw_material ,,BSC0020201
+,,,,, BSS0010101 ,kg,0.05, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.05, raw_material ,,BSS0010201
+,,,,, BMP0010101 ,kg,0.36, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.36, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BPO0010101 ,kg,1.716, raw_material ,,BPO0010101
+,,,,, BPO0010201 ,kg,1.716, raw_material ,,BPO0010201
+,,,,, BCS0010101 ,kg,2.6, raw_material ,,BCS0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CBR0170100 ,Pcs,"3,226",kemas_sekunder,,CBR0170100
+,,,,, CBR0170200 ,Pcs,"3,226",kemas_sekunder,,CBR0170200
+,,,,, CBR0170300 ,Pcs,"3,226",kemas_sekunder,,CBR0170300
+,,,,, CET0250100 ,Pcs,"3,226",kemas_sekunder,,CET0250100
+,,,,, CET0250200 ,Pcs,"3,226",kemas_sekunder,,CET0250200
+,,,,, CIN0210100 ,Pcs,"3,226",kemas_sekunder,,CIN0210100
+,,,,, CIN0210200 ,Pcs,"3,226",kemas_sekunder,,CIN0210200
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+Camidex 100 ml,Camidex 100 ml,Botol,1980,, ADH0050101 ,kg,0.42, raw_material ,Normal,ADH0050101
+,,,,, ADH0050201 ,kg,0.42, raw_material ,,ADH0050201
+,,,,, BSC0030101 ,kg,1, raw_material ,,BSC0030101
+,,,,, BSC0030201 ,kg,1, raw_material ,,BSC0030201
+,,,,, BCA0010101 ,kg,0.389, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.389, raw_material ,,BCA0010201
+,,,,, BCS0010101 ,kg,0.5, raw_material ,,BCS0010101
+,,,,, BSU0020101 ,kg,2, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,2, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,2, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,2, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,2, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,2, raw_material ,,BSU0020601
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.04, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BET0020101 ,g,25, raw_material ,,BET0020101
+,,,,, BEK0010101 ,Liter(s),0.12, raw_material ,,BEK0010101
+,,,,, BPO0030101 ,kg,0.09, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.09, raw_material ,,BPO0030201
+,,,,, BAL0010101 ,Liter(s),10, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),10, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,3.786, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,3.786, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,3.786, raw_material ,,BGL0020301
+,,,,, BSO0020101 ,kg,6.31, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,6.31, raw_material ,,BSO0020201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0040100 ,Pcs,"2,000",kemas_primer,,CBO0040100
+,,,,, CDO0040100 ,Pcs,"2,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000",kemas_primer,,CDO0040400
+,,,,, CET0320100 ,Pcs,"1,981",kemas_sekunder,,CET0320100
+,,,,, CET0320200 ,Pcs,"1,981",kemas_sekunder,,CET0320200
+,,,,, CIN0270100 ,Pcs,"1,981",kemas_sekunder,,CIN0270100
+,,,,, CIN0270200 ,Pcs,"1,981",kemas_sekunder,,CIN0270200
+,,,,, CIN0270300 ,Pcs,"1,981",kemas_sekunder,,CIN0270300
+,,,,, CBR0230100 ,Pcs,"1,981",kemas_sekunder,,CBR0230100
+,,,,, CBR0230200 ,Pcs,"1,981",kemas_sekunder,,CBR0230200
+,,,,, CBR0230300 ,Pcs,"1,981",kemas_sekunder,,CBR0230300
+,,,,, CSH0240100 ,Pcs,13,kemas_sekunder,,CSH0240100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camidryl 60 ml,Camidryl 60 ml,Botol,3278,99.10%, ADH0010101 ,kg,0.53, raw_material ,Normal,ADH0010101
+,,,,, ADH0010201 ,kg,0.53, raw_material ,,ADH0010201
+,,,,, AAC0020101 ,kg,4, raw_material ,,AAC0020101
+,,,,, AAC0020201 ,kg,4, raw_material ,,AAC0020201
+,,,,, BSC0020101 ,kg,2, raw_material ,,BSC0020101
+,,,,, BSC0020201 ,kg,2, raw_material ,,BSC0020201
+,,,,, BCA0010101 ,kg,1.234, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,1.234, raw_material ,,BCA0010201
+,,,,, BSU0020101 ,kg,10, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,10, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,10, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,10, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,10, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,10, raw_material ,,BSU0020601
+,,,,, BMP0010101 ,kg,0.175, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.175, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.025, raw_material ,,BPP0010101
+,,,,, BXG0010101 ,kg,0.1, raw_material ,,BXG0010101
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BAG0010101 ,g,12.5, raw_material ,,BAG0010101
+,,,,, BAL0010101 ,Liter(s),0.5, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),0.5, raw_material ,,BAL0010201
+,,,,, BEA0010101 ,kg,0.103, raw_material ,,BEA0010101
+,,,,, BSO0020101 ,kg,26.096, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,26.096, raw_material ,,BSO0020201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0350100 ,Pcs,"3,279",kemas_sekunder,,CET0350100
+,,,,, CET0350200 ,Pcs,"3,279",kemas_sekunder,,CET0350200
+,,,,, CIN0310100 ,Pcs,"3,279",kemas_sekunder,,CIN0310100
+,,,,, CIN0310200 ,Pcs,"3,279",kemas_sekunder,,CIN0310200
+,,,,, CBR0260100 ,Pcs,"3,279",kemas_sekunder,,CBR0260100
+,,,,, CBR0260200 ,Pcs,"3,279",kemas_sekunder,,CBR0260200
+,,,,, CBR0260300 ,Pcs,"3,279",kemas_sekunder,,CBR0260300
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,67,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camikolin 60 ml,Camikolin 60 ml,Botol,3278,, AKA0010101 ,kg,59.16, raw_material ,Normal,AKA0010101
+,,,,, APE0010101 ,kg,1.307, raw_material ,,APE0010101
+,,,,, BSS0010101 ,kg,0.064, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.064, raw_material ,,BSS0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.02, raw_material ,,BPP0010101
+,,,,, BCA0010101 ,kg,0.2, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.2, raw_material ,,BCA0010201
+,,,,, BPK0010101 ,kg,1, raw_material ,,BPK0010101
+,,,,, BPK0010201 ,kg,1, raw_material ,,BPK0010201
+,,,,, BCP0010101 ,kg,2, raw_material ,,BCP0010101
+,,,,, BXG0010101 ,kg,0.4, raw_material ,,BXG0010101
+,,,,, BGL0020101 ,kg,18.93, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,18.93, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,18.93, raw_material ,,BGL0020301
+,,,,, BSO0020101 ,kg,26.096, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,26.096, raw_material ,,BSO0020201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0020100 ,Pcs,"3,300",kemas_primer,,CBO0020100
+,,,,, CBO0020200 ,Pcs,"3,300",kemas_primer,,CBO0020200
+,,,,, CBO0020300 ,Pcs,"3,300",kemas_primer,,CBO0020300
+,,,,, CBO0020400 ,Pcs,"3,300",kemas_primer,,CBO0020400
+,,,,, CBO0020500 ,Pcs,"3,300",kemas_primer,,CBO0020500
+,,,,, CBO0020600 ,Pcs,"3,300",kemas_primer,,CBO0020600
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0380100 ,Pcs,"3,278",kemas_sekunder,,CET0380100
+,,,,, CET0380200 ,Pcs,"3,278",kemas_sekunder,,CET0380200
+,,,,, CIN0350100 ,Pcs,"3,278",kemas_sekunder,,CIN0350100
+,,,,, CIN0350200 ,Pcs,"3,278",kemas_sekunder,,CIN0350200
+,,,,, CBR0290100 ,Pcs,"3,278",kemas_sekunder,,CBR0290100
+,,,,, CBR0290200 ,Pcs,"3,278",kemas_sekunder,,CBR0290200
+,,,,, CBR0290300 ,Pcs,"3,278",kemas_sekunder,,CBR0290300
+,,,,, CSH0260100 ,Pcs,22,kemas_sekunder,,CSH0260100
+,,,,, LBK0100100 ,Pcs,67,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camivita Syrup 60 ml,Camivita Syrup 60 ml,Botol,3278,97.48%, AVA0010101 ,kg,0.063, raw_material ,Normal,AVA0010101
+,,,,, AVA0010201 ,kg,0.063, raw_material ,,AVA0010201
+,,,,, ATH0030101 ,kg,0.12, raw_material ,,ATH0030101
+,,,,, ARP0010101 ,g,0.055, raw_material ,,ARP0010101
+,,,,, APH0070101 ,kg,0.08, raw_material ,,APH0070101
+,,,,, ACY0010101 ,g,0.12, raw_material ,,ACY0010101
+,,,,, ACY0010201 ,g,0.12, raw_material ,,ACY0010201
+,,,,, ANI0010101 ,g,0.6, raw_material ,,ANI0010101
+,,,,, ACP0010101 ,kg,0.2, raw_material ,,ACP0010101
+,,,,, BPH0030101 ,kg,0.2, raw_material ,,BPH0030101
+,,,,, BXG0010101 ,kg,0.2, raw_material ,,BXG0010101
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BSU0020101 ,kg,22.5, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,22.5, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,22.5, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,22.5, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,22.5, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,22.5, raw_material ,,BSU0020601
+,,,,, BCA0010101 ,kg,0.914, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.914, raw_material ,,BCA0010201
+,,,,, BPH0040101 ,g,10, raw_material ,,BPH0040101
+,,,,, BET0020101 ,g,25, raw_material ,,BET0020101
+,,,,, BSO0020101 ,kg,65.24, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,65.24, raw_material ,,BSO0020201
+,,,,, BGL0020101 ,kg,25.238, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,25.238, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,25.238, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.174, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.174, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.174, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.174, raw_material ,,BPG0010401
+,,,,, BEK0010101 ,Liter(s),0.36, raw_material ,,BEK0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0440100 ,Pcs,"3,279",kemas_sekunder,,CET0440100
+,,,,, CET0440200 ,Pcs,"3,279",kemas_sekunder,,CET0440200
+,,,,, CIN0440100 ,Pcs,"3,279",kemas_sekunder,,CIN0440100
+,,,,, CIN0440200 ,Pcs,"3,279",kemas_sekunder,,CIN0440200
+,,,,, CBR0390100 ,Pcs,"3,279",kemas_sekunder,,CBR0390100
+,,,,, CBR0390200 ,Pcs,"3,279",kemas_sekunder,,CBR0390200
+,,,,, CBR0390300 ,Pcs,"3,279",kemas_sekunder,,CBR0390300
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,67,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camivita Syrup 120 ml,Camivita Syrup 120 ml,Botol,1639,, AVA0010101 ,kg,0.063, raw_material ,Normal,AVA0010101
+,,,,, AVA0010201 ,kg,0.063, raw_material ,,AVA0010201
+,,,,, ATH0030101 ,kg,0.12, raw_material ,,ATH0030101
+,,,,, ARP0010101 ,g,0.055, raw_material ,,ARP0010101
+,,,,, APH0070101 ,kg,0.08, raw_material ,,APH0070101
+,,,,, ACY0010101 ,g,0.12, raw_material ,,ACY0010101
+,,,,, ACY0010201 ,g,0.12, raw_material ,,ACY0010201
+,,,,, ANI0010101 ,g,0.6, raw_material ,,ANI0010101
+,,,,, ACP0010101 ,kg,0.2, raw_material ,,ACP0010101
+,,,,, BPH0030101 ,kg,0.2, raw_material ,,BPH0030101
+,,,,, BXG0010101 ,kg,0.2, raw_material ,,BXG0010101
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BSU0020101 ,kg,22.5, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,22.5, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,22.5, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,22.5, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,22.5, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,22.5, raw_material ,,BSU0020601
+,,,,, BCA0010101 ,kg,0.914, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.914, raw_material ,,BCA0010201
+,,,,, BPH0040101 ,g,10, raw_material ,,BPH0040101
+,,,,, BET0020101 ,g,25, raw_material ,,BET0020101
+,,,,, BSO0020101 ,kg,65.24, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,65.24, raw_material ,,BSO0020201
+,,,,, BGL0020101 ,kg,25.238, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,25.238, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,25.238, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,5.174, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.174, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.174, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.174, raw_material ,,BPG0010401
+,,,,, BEK0010101 ,Liter(s),0.36, raw_material ,,BEK0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0050100 ,Pcs,"1,650",kemas_primer,,CBO0050100
+,,,,, CDO0040100 ,Pcs,"1,650",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"1,650",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"1,650",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"1,650",kemas_primer,,CDO0040400
+,,,,, CRD0010100 ,Pcs,"1,639",kemas_primer,,CRD0010100
+,,,,, CET0450100 ,Pcs,"1,640",kemas_sekunder,,CET0450100
+,,,,, CET0450200 ,Pcs,"1,640",kemas_sekunder,,CET0450200
+,,,,, CIN0430100 ,Pcs,"1,640",kemas_sekunder,,CIN0430100
+,,,,, CIN0430200 ,Pcs,"1,640",kemas_sekunder,,CIN0430200
+,,,,, CBR0390100 ,Pcs,"3,279",kemas_sekunder,,CBR0390100
+,,,,, CBR0390200 ,Pcs,"3,279",kemas_sekunder,,CBR0390200
+,,,,, CBR0390300 ,Pcs,"3,279",kemas_sekunder,,CBR0390300
+,,,,, CSH0230100 ,Pcs,17,kemas_sekunder,,CSH0230100
+,,,,, LBK0100100 ,Pcs,33,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Casetamol 60 ml,Casetamol 60 ml,Botol,3606,, AAC0010101 ,kg,5.3, raw_material ,Normal,AAC0010101
+,,,,, AAC0010201 ,kg,5.3, raw_material ,,AAC0010201
+,,,,, BMP0010101 ,kg,0.22, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.22, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.066, raw_material ,,BPP0010101
+,,,,, BPK0010101 ,kg,1, raw_material ,,BPK0010101
+,,,,, BPK0010201 ,kg,1, raw_material ,,BPK0010201
+,,,,, BSC0050101 ,kg,0.9, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.09, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.09, raw_material ,,BSS0010201
+,,,,, BSU0020101 ,kg,5, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,5, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,5, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,5, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,5, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,5, raw_material ,,BSU0020601
+,,,,, BRR0010101 ,g,5, raw_material ,,BRR0010101
+,,,,, BAL0010101 ,Liter(s),10, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),10, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,12.619, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,12.619, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,12.619, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,20.696, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,20.696, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,20.696, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,20.696, raw_material ,,BPG0010401
+,,,,, BPO0030101 ,kg,0.135, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.135, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),220, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,620",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,620",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,620",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,620",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,620",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,620",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,620",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,620",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,620",kemas_primer,,CDO0040400
+,,,,, CET0500100 ,Pcs,"3,607",kemas_sekunder,,CET0500100
+,,,,, CET0500200 ,Pcs,"3,607",kemas_sekunder,,CET0500200
+,,,,, CIN0500100 ,Pcs,"3,607",kemas_sekunder,,CIN0500100
+,,,,, CIN0500200 ,Pcs,"3,607",kemas_sekunder,,CIN0500200
+,,,,, CBR0460100 ,Pcs,"3,607",kemas_sekunder,,CBR0460100
+,,,,, CBR0460200 ,Pcs,"3,607",kemas_sekunder,,CBR0460200
+,,,,, CBR0460300 ,Pcs,"3,607",kemas_sekunder,,CBR0460300
+,,,,, CSH0170100 ,Pcs,24,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,74,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,2,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,2,kemas_sekunder,,CPB0010200
+Chlorampenicol 60 ml,Chlorampenicol 60 ml,Botol,3225,, ACP0020101 ,kg,9, raw_material ,Normal,ACP0020101
+,,,,, ACP0020201 ,kg,9, raw_material ,,ACP0020201
+,,,,, BPO0010101 ,kg,1.716, raw_material ,,BPO0010101
+,,,,, BPO0010201 ,kg,1.716, raw_material ,,BPO0010201
+,,,,, BCS0010101 ,kg,2.6, raw_material ,,BCS0010101
+,,,,, BMP0010101 ,kg,0.36, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.36, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BSS0010101 ,kg,0.05, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.05, raw_material ,,BSS0010201
+,,,,, BSC0050101 ,kg,0.3, raw_material ,,BSC0050101
+,,,,, BMA0020101 ,kg,0.2, raw_material ,,BMA0020101
+,,,,, BSC0020101 ,kg,0.1, raw_material ,,BSC0020101
+,,,,, BSC0020201 ,kg,0.1, raw_material ,,BSC0020201
+,,,,, BEV0010101 ,kg,174.048, raw_material ,,BEV0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0540100 ,Pcs,"3,226",kemas_sekunder,,CET0540100
+,,,,, CET0540200 ,Pcs,"3,226",kemas_sekunder,,CET0540200
+,,,,, CET0540300 ,Pcs,"3,226",kemas_sekunder,,CET0540300
+,,,,, CBR0510100 ,Pcs,"3,226",kemas_sekunder,,CBR0510100
+,,,,, CBR0510200 ,Pcs,"3,226",kemas_sekunder,,CBR0510200
+,,,,, CBR0510300 ,Pcs,"3,226",kemas_sekunder,,CBR0510300
+,,,,, CRA0070100 ,Set,65,kemas_sekunder,,CRA0070100
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,66,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,2,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,2,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Cotrimoksazole 60 ml,Cotrimoksazole 60 ml,Botol,3225,99.61%, ATR0010101 ,kg,1.64, raw_material ,Normal,ATR0010101
+,,,,, ATR0010201 ,kg,1.64, raw_material ,,ATR0010201
+,,,,, ASU0010101 ,kg,8.1, raw_material ,,ASU0010101
+,,,,, BCS0010101 ,kg,1.625, raw_material ,,BCS0010101
+,,,,, BMP0010101 ,kg,0.3, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.3, raw_material ,,BMP0010201
+,,,,, BSU0020101 ,kg,8, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,8, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,8, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,8, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,8, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,8, raw_material ,,BSU0020601
+,,,,, BSU0020101 ,kg,57, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,57, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,57, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,57, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,57, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,57, raw_material ,,BSU0020601
+,,,,, BSC0050101 ,kg,0.2, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.1, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.1, raw_material ,,BSS0010201
+,,,,, BSC0030101 ,kg,0.5, raw_material ,,BSC0030101
+,,,,, BSC0030201 ,kg,0.5, raw_material ,,BSC0030201
+,,,,, BCA0010101 ,kg,0.092, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.092, raw_material ,,BCA0010201
+,,,,, BRR0010101 ,g,2.5, raw_material ,,BRR0010101
+,,,,, BGL0020101 ,kg,2.524, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,2.524, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,2.524, raw_material ,,BGL0020301
+,,,,, BES0010101 ,Liter(s),0.1, raw_material ,,BES0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0590100 ,Pcs,"3,226",kemas_sekunder,,CET0590100
+,,,,, CET0590200 ,Pcs,"3,226",kemas_sekunder,,CET0590200
+,,,,, CET0590300 ,Pcs,"3,226",kemas_sekunder,,CET0590300
+,,,,, CBR0550100 ,Pcs,"3,226",kemas_sekunder,,CBR0550100
+,,,,, CBR0550200 ,Pcs,"3,226",kemas_sekunder,,CBR0550200
+,,,,, CBR0550300 ,Pcs,"3,226",kemas_sekunder,,CBR0550300
+,,,,, CRA0070100 ,Set,65,kemas_sekunder,,CRA0070100
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,66,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Daganak 100 ml,Daganak 100 ml,Botol,1990,98.88%, AGU0010101 ,kg,2.05, raw_material ,Normal,AGU0010101
+,,,,, AGU0010201 ,kg,2.05, raw_material ,,AGU0010201
+,,,,, AGU0010301 ,kg,2.05, raw_material ,,AGU0010301
+,,,,, BSU0020101 ,kg,50, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,50, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,50, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,50, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,50, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,50, raw_material ,,BSU0020601
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BAL0010101 ,Liter(s),2, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),2, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,12.619, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,12.619, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,12.619, raw_material ,,BGL0020301
+,,,,, BSO0020101 ,kg,13.048, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,13.048, raw_material ,,BSO0020201
+,,,,, BPO0030101 ,kg,0.045, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.045, raw_material ,,BPO0030201
+,,,,, BAO0010101 ,kg,0.092, raw_material ,,BAO0010101
+,,,,, BAS0010101 ,Liter(s),0.32, raw_material ,,BAS0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0020100 ,Pcs,"2,000",kemas_primer,,CBO0020100
+,,,,, CBO0020200 ,Pcs,"2,000",kemas_primer,,CBO0020200
+,,,,, CBO0020300 ,Pcs,"2,000",kemas_primer,,CBO0020300
+,,,,, CBO0020400 ,Pcs,"2,000",kemas_primer,,CBO0020400
+,,,,, CBO0020500 ,Pcs,"2,000",kemas_primer,,CBO0020500
+,,,,, CBO0020600 ,Pcs,"2,000",kemas_primer,,CBO0020600
+,,,,, CDO0040100 ,Pcs,"2,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000",kemas_primer,,CDO0040400
+,,,,, CET0010100 ,Pcs,"1,991",kemas_sekunder,,CET0010100
+,,,,, CET0010200 ,Pcs,"1,991",kemas_sekunder,,CET0010200
+,,,,, CET0010300 ,Pcs,"1,991",kemas_sekunder,,CET0010300
+,,,,, CBR0560100 ,Pcs,"1,991",kemas_sekunder,,CBR0560100
+,,,,, CBR0560200 ,Pcs,"1,991",kemas_sekunder,,CBR0560200
+,,,,, CBR0560300 ,Pcs,"1,991",kemas_sekunder,,CBR0560300
+,,,,, CRA0050100 ,Set,40,kemas_sekunder,,CRA0050100
+,,,,, CSH0240100 ,Pcs,13,kemas_sekunder,,CSH0240100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Dextromethorphan 60 ml,Dextromethorphan 60 ml,Botol,3278,, ADH0050101 ,kg,0.42, raw_material ,Normal,ADH0050101
+,,,,, ADH0050201 ,kg,0.42, raw_material ,,ADH0050201
+,,,,, BSU0020101 ,kg,30, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,30, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,30, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,30, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,30, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,30, raw_material ,,BSU0020601
+,,,,, BMP0010101 ,kg,0.165, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.165, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.025, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.2, raw_material ,,BSC0050101
+,,,,, BRR0010101 ,g,5, raw_material ,,BRR0010101
+,,,,, BES0010101 ,Liter(s),0.04, raw_material ,,BES0010101
+,,,,, BAL0010101 ,Liter(s),10, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),10, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,12.619, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,12.619, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,12.619, raw_material ,,BGL0020301
+,,,,, BSO0020101 ,kg,12.619, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,12.619, raw_material ,,BSO0020201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0610100 ,Pcs,"3,279",kemas_sekunder,,CET0610100
+,,,,, CET0610200 ,Pcs,"3,279",kemas_sekunder,,CET0610200
+,,,,, CET0610300 ,Pcs,"3,279",kemas_sekunder,,CET0610300
+,,,,, CBR0590100 ,Pcs,"3,279",kemas_sekunder,,CBR0590100
+,,,,, CBR0590200 ,Pcs,"3,279",kemas_sekunder,,CBR0590200
+,,,,, CBR0590300 ,Pcs,"3,279",kemas_sekunder,,CBR0590300
+,,,,, CRA0070100 ,Set,66,kemas_sekunder,,CRA0070100
+,,,,, CSH0120100 ,Pcs,22,kemas_sekunder,,CSH0120100
+,,,,, LBK0100100 ,Pcs,67,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Kosaka 60 ml,Kosaka 60 ml,Botol,3278,, AAC0010101 ,kg,4.8, raw_material ,Normal,AAC0010101
+,,,,, AAC0010201 ,kg,4.8, raw_material ,,AAC0010201
+,,,,, ADH0050101 ,kg,0.4, raw_material ,,ADH0050101
+,,,,, ADH0050201 ,kg,0.4, raw_material ,,ADH0050201
+,,,,, APH0030101 ,kg,0.14, raw_material ,,APH0030101
+,,,,, APH0030201 ,kg,0.14, raw_material ,,APH0030201
+,,,,, ACM0010101 ,kg,0.02, raw_material ,,ACM0010101
+,,,,, ACM0010201 ,kg,0.02, raw_material ,,ACM0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BSC0030101 ,kg,0.25, raw_material ,,BSC0030101
+,,,,, BSC0030201 ,kg,0.25, raw_material ,,BSC0030201
+,,,,, BCA0010101 ,kg,0.092, raw_material ,,BCA0010101
+,,,,, BCA0010101 ,kg,0.092, raw_material ,,BCA0010101
+,,,,, BSC0050101 ,kg,1.5, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.15, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.15, raw_material ,,BSS0010201
+,,,,, BPK0010101 ,kg,2, raw_material ,,BPK0010101
+,,,,, BPK0010201 ,kg,2, raw_material ,,BPK0010201
+,,,,, BSU0020101 ,kg,40, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,40, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,40, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,40, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,40, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,40, raw_material ,,BSU0020601
+,,,,, BEE0010101 ,g,40, raw_material ,,BEE0010101
+,,,,, BFB0020101 ,kg,0, raw_material ,,BFB0020101
+,,,,, BSO0020101 ,kg,39.144, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,39.144, raw_material ,,BSO0020201
+,,,,, BAL0010101 ,Liter(s),4, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),4, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,31.548, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,31.548, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,31.548, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,10.348, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,10.348, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,10.348, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,10.348, raw_material ,,BPG0010401
+,,,,, BEG0010101 ,kg,0.362, raw_material ,,BEG0010101
+,,,,, BPO0030101 ,kg,0.067, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.067, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,300",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,300",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,300",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,300",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,300",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,300",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,300",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,300",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,300",kemas_primer,,CDO0040400
+,,,,, CET0720100 ,Pcs,"3,279",kemas_sekunder,,CET0720100
+,,,,, CET0720200 ,Pcs,"3,279",kemas_sekunder,,CET0720200
+,,,,, CIN0780100 ,Pcs,"3,279",kemas_sekunder,,CIN0780100
+,,,,, CIN0780200 ,Pcs,"3,279",kemas_sekunder,,CIN0780200
+,,,,, CBR0720100 ,Pcs,"3,279",kemas_sekunder,,CBR0720100
+,,,,, CBR0720200 ,Pcs,"3,279",kemas_sekunder,,CBR0720200
+,,,,, CBR0720300 ,Pcs,"3,279",kemas_sekunder,,CBR0720300
+,,,,, CSH0170100 ,Pcs,22,kemas_sekunder,,CSH0170100
+,,,,, LBK0100100 ,Pcs,67,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+OBH 100 ml,OBH 100 ml,Botol,1990,, AGS0020101 ,kg,4, raw_material ,Normal,AGS0020101
+,,,,, AAC0020101 ,kg,4, raw_material ,,AAC0020101
+,,,,, AAC0020201 ,kg,4, raw_material ,,AAC0020201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BAL0010101 ,Liter(s),2, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),2, raw_material ,,BAL0010201
+,,,,, BPO0030101 ,kg,0.225, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.225, raw_material ,,BPO0030201
+,,,,, BAO0010101 ,kg,0.287, raw_material ,,BAO0010101
+,,,,, BAS0010101 ,Liter(s),0.35, raw_material ,,BAS0010101
+,,,,, BEC0010101 ,kg,0.05, raw_material ,,BEC0010101
+,,,,, BPW0010101 ,Liter(s),220, raw_material ,,BPW0010101
+,,,,, CBO0020100 ,Pcs,"2,000",kemas_primer,,CBO0020100
+,,,,, CBO0020200 ,Pcs,"2,000",kemas_primer,,CBO0020200
+,,,,, CBO0020300 ,Pcs,"2,000",kemas_primer,,CBO0020300
+,,,,, CBO0020400 ,Pcs,"2,000",kemas_primer,,CBO0020400
+,,,,, CBO0020500 ,Pcs,"2,000",kemas_primer,,CBO0020500
+,,,,, CBO0020600 ,Pcs,"2,000",kemas_primer,,CBO0020600
+,,,,, CDO0040100 ,Pcs,"2,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000",kemas_primer,,CDO0040400
+,,,,, CET0820100 ,Pcs,"2,021",kemas_sekunder,,CET0820100
+,,,,, CET0820200 ,Pcs,"2,021",kemas_sekunder,,CET0820200
+,,,,, CET0820300 ,Pcs,"2,021",kemas_sekunder,,CET0820300
+,,,,, CBR0780100 ,Pcs,"1,981",kemas_sekunder,,CBR0780100
+,,,,, CBR0780200 ,Pcs,"1,981",kemas_sekunder,,CBR0780200
+,,,,, CBR0780300 ,Pcs,"1,981",kemas_sekunder,,CBR0780300
+,,,,, CIN0890100 ,Pcs,"1,981",kemas_sekunder,,CIN0890100
+,,,,, CIN0890200 ,Pcs,"1,981",kemas_sekunder,,CIN0890200
+,,,,, CSH0260100 ,Pcs,13,kemas_sekunder,,CSH0260100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+OBH 100 ml TD,OBH 100 ml TD,Botol,1990,98.98%, AGS0020101 ,kg,4, raw_material ,Normal,AGS0020101
+,,,,, AAC0020101 ,kg,4, raw_material ,,AAC0020101
+,,,,, AAC0020201 ,kg,4, raw_material ,,AAC0020201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BAL0010101 ,Liter(s),2, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),2, raw_material ,,BAL0010201
+,,,,, BPO0030101 ,kg,0.225, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.225, raw_material ,,BPO0030201
+,,,,, BAO0010101 ,kg,0.287, raw_material ,,BAO0010101
+,,,,, BAS0010101 ,Liter(s),0.35, raw_material ,,BAS0010101
+,,,,, BEC0010101 ,kg,0.1, raw_material ,,BEC0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0020100 ,Pcs,"2,000",kemas_primer,,CBO0020100
+,,,,, CBO0020200 ,Pcs,"2,000",kemas_primer,,CBO0020200
+,,,,, CBO0020300 ,Pcs,"2,000",kemas_primer,,CBO0020300
+,,,,, CBO0020400 ,Pcs,"2,000",kemas_primer,,CBO0020400
+,,,,, CBO0020500 ,Pcs,"2,000",kemas_primer,,CBO0020500
+,,,,, CBO0020600 ,Pcs,"2,000",kemas_primer,,CBO0020600
+,,,,, CDO0040100 ,Pcs,"2,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000",kemas_primer,,CDO0040400
+,,,,, CET0820200 ,Pcs,"1,981",kemas_sekunder,,CET0820200
+,,,,, CET0820300 ,Pcs,"1,981",kemas_sekunder,,CET0820300
+,,,,, CBR0780100 ,Pcs,"1,981",kemas_sekunder,,CBR0780100
+,,,,, CBR0780200 ,Pcs,"1,981",kemas_sekunder,,CBR0780200
+,,,,, CBR0780300 ,Pcs,"1,981",kemas_sekunder,,CBR0780300
+,,,,, CSH0240100 ,Pcs,13,kemas_sekunder,,CSH0240100
+,,,,, CRA0050100 ,Set,40,kemas_sekunder,,CRA0050100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+OBH 100 ml Gepeng,OBH 100 ml Gepeng,Botol,1980,, AGS0020101 ,kg,6.67, raw_material ,Normal,AGS0020101
+,,,,, AAC0020101 ,kg,4, raw_material ,,AAC0020101
+,,,,, AAC0020201 ,kg,4, raw_material ,,AAC0020201
+,,,,, BXG0010101 ,kg,0.4, raw_material ,,BXG0010101
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.007, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.007, raw_material ,,BSS0010201
+,,,,, BAL0010101 ,Liter(s),2, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),2, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,25.238, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,25.238, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,25.238, raw_material ,,BGL0020301
+,,,,, BSO0020101 ,kg,26.096, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,26.096, raw_material ,,BSO0020201
+,,,,, BPO0030101 ,kg,0.225, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.225, raw_material ,,BPO0030201
+,,,,, BAO0010101 ,kg,0.287, raw_material ,,BAO0010101
+,,,,, BAS0010101 ,Liter(s),0.35, raw_material ,,BAS0010101
+,,,,, BCB0010101 ,g,100, raw_material ,,BCB0010101
+,,,,, BEC0010101 ,kg,0.05, raw_material ,,BEC0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0060100 ,Pcs,"2,000",kemas_primer,,CBO0060100
+,,,,, CBO0060200 ,Pcs,"2,000",kemas_primer,,CBO0060200
+,,,,, CDO0040100 ,Pcs,"2,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000",kemas_primer,,CDO0040400
+,,,,, CET0810100 ,Pcs,"1,981",kemas_sekunder,,CET0810100
+,,,,, CET0810200 ,Pcs,"1,981",kemas_sekunder,,CET0810200
+,,,,, CBR0780100 ,Pcs,"1,981",kemas_sekunder,,CBR0780100
+,,,,, CBR0780200 ,Pcs,"1,981",kemas_sekunder,,CBR0780200
+,,,,, CBR0780300 ,Pcs,"1,981",kemas_sekunder,,CBR0780300
+,,,,, CIN0880100 ,Pcs,"1,981",kemas_sekunder,,CIN0880100
+,,,,, CIN0880200 ,Pcs,"1,981",kemas_sekunder,,CIN0880200
+,,,,, CSH0260100 ,Pcs,13,kemas_sekunder,,CSH0260100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+OBH 100 ml Export,OBH 100 ml Export,Botol,1990,, AGS0020101 ,kg,4.5, raw_material ,Normal,AGS0020101
+,,,,, AAC0020101 ,kg,4, raw_material ,,AAC0020101
+,,,,, AAC0020201 ,kg,4, raw_material ,,AAC0020201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.06, raw_material ,,BPP0010101
+,,,,, BSC0050101 ,kg,0.67, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.067, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.067, raw_material ,,BSS0010201
+,,,,, BSU0020101 ,kg,2, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,2, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,2, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,2, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,2, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,2, raw_material ,,BSU0020601
+,,,,, BAL0010101 ,Liter(s),2, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),2, raw_material ,,BAL0010201
+,,,,, BPO0030101 ,kg,0.225, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.225, raw_material ,,BPO0030201
+,,,,, BAO0010101 ,kg,0.287, raw_material ,,BAO0010101
+,,,,, BAS0010101 ,Liter(s),0.35, raw_material ,,BAS0010101
+,,,,, BEC0010101 ,kg,0.26, raw_material ,,BEC0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0020100 ,Pcs,"2,000",kemas_primer,,CBO0020100
+,,,,, CBO0020200 ,Pcs,"2,000",kemas_primer,,CBO0020200
+,,,,, CBO0020300 ,Pcs,"2,000",kemas_primer,,CBO0020300
+,,,,, CBO0020400 ,Pcs,"2,000",kemas_primer,,CBO0020400
+,,,,, CBO0020500 ,Pcs,"2,000",kemas_primer,,CBO0020500
+,,,,, CBO0020600 ,Pcs,"2,000",kemas_primer,,CBO0020600
+,,,,, CDO0040100 ,Pcs,"2,000",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"2,000",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"2,000",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"2,000",kemas_primer,,CDO0040400
+,,,,, CET0830100 ,Pcs,"1,990",kemas_sekunder,,CET0830100
+,,,,, CET0830200 ,Pcs,"1,990",kemas_sekunder,,CET0830200
+,,,,, CET0830300 ,Pcs,"1,990",kemas_sekunder,,CET0830300
+,,,,, CBR0790100 ,Pcs,"1,990",kemas_sekunder,,CBR0790100
+,,,,, CBR0790200 ,Pcs,"1,990",kemas_sekunder,,CBR0790200
+,,,,, CBR0790300 ,Pcs,"1,990",kemas_sekunder,,CBR0790300
+,,,,, CIN0030100 ,Pcs,"1,990",kemas_sekunder,,CIN0030100
+,,,,, CIN0030200 ,Pcs,"1,990",kemas_sekunder,,CIN0030200
+,,,,, LBK0270100 ,Pcs,40,kemas_sekunder,,LBK0270100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Paracetamol 60 ml,Paracetamol 60 ml,Botol,3606,, AAC0010101 ,kg,5.3, raw_material ,Normal,AAC0010101
+,,,,, AAC0010201 ,kg,5.3, raw_material ,,AAC0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPP0010101 ,kg,0.1, raw_material ,,BPP0010101
+,,,,, BSU0020101 ,kg,30, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,30, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,30, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,30, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,30, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,30, raw_material ,,BSU0020601
+,,,,, BAG0010101 ,g,6.5, raw_material ,,BAG0010101
+,,,,, BSC0050101 ,kg,0.2, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.02, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.02, raw_material ,,BSS0010201
+,,,,, BAL0010101 ,Liter(s),20, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),20, raw_material ,,BAL0010201
+,,,,, BGL0020101 ,kg,12.619, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,12.619, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,12.619, raw_material ,,BGL0020301
+,,,,, BPG0010101 ,kg,10.348, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,10.348, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,10.348, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,10.348, raw_material ,,BPG0010401
+,,,,, BSO0020101 ,kg,26.096, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,26.096, raw_material ,,BSO0020201
+,,,,, BPO0030101 ,kg,0.045, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.045, raw_material ,,BPO0030201
+,,,,, BPW0010101 ,Liter(s),220, raw_material ,,BPW0010101
+,,,,, BPW0010101 ,Liter(s),900, raw_material ,,BPW0010101
+,,,,, CBO0090100 ,Pcs,"3,620",kemas_primer,,CBO0090100
+,,,,, CBO0090200 ,Pcs,"3,620",kemas_primer,,CBO0090200
+,,,,, CBO0090300 ,Pcs,"3,620",kemas_primer,,CBO0090300
+,,,,, CBO0090400 ,Pcs,"3,620",kemas_primer,,CBO0090400
+,,,,, CBO0090500 ,Pcs,"3,620",kemas_primer,,CBO0090500
+,,,,, CDO0040100 ,Pcs,"3,620",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"3,620",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"3,620",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"3,620",kemas_primer,,CDO0040400
+,,,,, CET0900100 ,Pcs,"3,607",kemas_sekunder,,CET0900100
+,,,,, CET0900200 ,Pcs,"3,607",kemas_sekunder,,CET0900200
+,,,,, CET0900300 ,Pcs,"3,607",kemas_sekunder,,CET0900300
+,,,,, CBR0850100 ,Pcs,"3,607",kemas_sekunder,,CBR0850100
+,,,,, CBR0850200 ,Pcs,"3,607",kemas_sekunder,,CBR0850200
+,,,,, CBR0850300 ,Pcs,"3,607",kemas_sekunder,,CBR0850300
+,,,,, CSH0170100 ,Pcs,24,kemas_sekunder,,CSH0170100
+,,,,, CRA0070100 ,Set,72,kemas_sekunder,,CRA0070100
+,,,,, LBK0100100 ,Pcs,73,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,2,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,2,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,2,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,2,kemas_sekunder,,CPB0010200
+Sanmino 120 ml,Sanmino 120 ml,Botol,1639,95.45%, ACD0010101 ,kg,"1,050.00", raw_material ,Normal,ACD0010101
+,,,,, ACX0010101 ,kg,"1,050.00", raw_material ,,ACX0010101
+,,,,, ALH0020101 ,kg,3, raw_material ,,ALH0020101
+,,,,, ALH0020201 ,kg,3, raw_material ,,ALH0020201
+,,,,, ATA0010101 ,kg,0.6, raw_material ,,ATA0010101
+,,,,, AIN0010101 ,kg,0.6, raw_material ,,AIN0010101
+,,,,, AIN0010201 ,kg,0.6, raw_material ,,AIN0010201
+,,,,, AIN0010301 ,kg,0.6, raw_material ,,AIN0010301
+,,,,, BCA0010101 ,kg,2, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,2, raw_material ,,BCA0010201
+,,,,, BSC0050101 ,kg,0.2, raw_material ,,BSC0050101
+,,,,, BSS0010101 ,kg,0.08, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.08, raw_material ,,BSS0010201
+,,,,, BGL0020101 ,kg,50.476, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,50.476, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,50.476, raw_material ,,BGL0020301
+,,,,, BSO0020101 ,kg,52.192, raw_material ,,BSO0020101
+,,,,, BSO0020201 ,kg,52.192, raw_material ,,BSO0020201
+,,,,, BSC0020101 ,kg,4, raw_material ,,BSC0020101
+,,,,, BSC0020201 ,kg,4, raw_material ,,BSC0020201
+,,,,, BPP0010101 ,kg,0.04, raw_material ,,BPP0010101
+,,,,, BXG0010101 ,kg,0.3, raw_material ,,BXG0010101
+,,,,, BSU0020101 ,kg,50, raw_material ,,BSU0020101
+,,,,, BSU0020201 ,kg,50, raw_material ,,BSU0020201
+,,,,, BSU0020301 ,kg,50, raw_material ,,BSU0020301
+,,,,, BSU0020401 ,kg,50, raw_material ,,BSU0020401
+,,,,, BSU0020501 ,kg,50, raw_material ,,BSU0020501
+,,,,, BSU0020601 ,kg,50, raw_material ,,BSU0020601
+,,,,, BEA0010101 ,kg,0.31, raw_material ,,BEA0010101
+,,,,, BMP0010101 ,kg,0.15, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.15, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0050100 ,Pcs,"1,650",kemas_primer,,CBO0050100
+,,,,, CDO0040100 ,Pcs,"1,650",kemas_primer,,CDO0040100
+,,,,, CDO0040200 ,Pcs,"1,650",kemas_primer,,CDO0040200
+,,,,, CDO0040300 ,Pcs,"1,650",kemas_primer,,CDO0040300
+,,,,, CDO0040400 ,Pcs,"1,650",kemas_primer,,CDO0040400
+,,,,, CBR0960100 ,Pcs,"1,640",kemas_sekunder,,CBR0960100
+,,,,, CBR0960200 ,Pcs,"1,640",kemas_sekunder,,CBR0960200
+,,,,, CBR0960300 ,Pcs,"1,640",kemas_sekunder,,CBR0960300
+,,,,, CIN1020100 ,Pcs,"1,640",kemas_sekunder,,CIN1020100
+,,,,, CIN1020200 ,Pcs,"1,640",kemas_sekunder,,CIN1020200
+,,,,, CET1060100 ,Pcs,"1,640",kemas_sekunder,,CET1060100
+,,,,, CET1060200 ,Pcs,"1,640",kemas_sekunder,,CET1060200
+,,,,, CSP0010100 ,Pcs,"1,639",kemas_sekunder,,CSP0010100
+,,,,, CSH0230100 ,Pcs,17,kemas_sekunder,,CSH0230100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Alkohol 70% 100 ml,Alkohol 70% 100 ml,Botol,1990,, BAL0010101 ,Liter(s),148, raw_material ,Normal,BAL0010101
+,,,,, BAL0010201 ,Liter(s),148, raw_material ,,BAL0010201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0190100 ,Pcs,"2,000",kemas_primer,,CBO0190100
+,,,,, CBO0190200 ,Pcs,"2,000",kemas_primer,,CBO0190200
+,,,,, CTB0070100 ,Pcs,"2,000",kemas_primer,,CTB0070100
+,,,,, CTB0070200 ,Pcs,"2,000",kemas_primer,,CTB0070200
+,,,,, CET0020100 ,Pcs,"1,991",kemas_sekunder,,CET0020100
+,,,,, CET0020200 ,Pcs,"1,991",kemas_sekunder,,CET0020200
+,,,,, CET0020300 ,Pcs,"1,991",kemas_sekunder,,CET0020300
+,,,,, CSH0150100 ,Pcs,13,kemas_sekunder,,CSH0150100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Alkohol 70% 1 L,Alkohol 70% 1 L,Botol,198,, BAL0010101 ,Liter(s),148, raw_material ,Normal,BAL0010101
+,,,,, BAL0010201 ,Liter(s),148, raw_material ,,BAL0010201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0180100 ,Pcs,200,kemas_primer,,CBO0180100
+,,,,, CTB0060100 ,Pcs,200,kemas_primer,,CTB0060100
+,,,,, CET0030100 ,Pcs,199,kemas_sekunder,,CET0030100
+,,,,, CET0030200 ,Pcs,199,kemas_sekunder,,CET0030200
+,,,,, CET0030300 ,Pcs,199,kemas_sekunder,,CET0030300
+,,,,, CSH0310100 ,Pcs,5,kemas_sekunder,,CSH0310100
+,,,,, LBK0110100 ,Pcs,10,kemas_sekunder,,LBK0110100
+,,,,, LBK0100100 ,Pcs,11,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Cayodine 30 ml,Cayodine 30 ml,Botol,3225,, API0020101 ,kg,10, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,10, raw_material ,,API0020201
+,,,,, API0020301 ,kg,10, raw_material ,,API0020301
+,,,,, API0020401 ,kg,10, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.1, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.1, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),4, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),4, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.1, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.1, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),100, raw_material ,,BPW0010101
+,,,,, CBO0150100 ,Pcs,"3,230",kemas_primer,,CBO0150100
+,,,,, CPI0020100 ,Pcs,"3,230",kemas_primer,,CPI0020100
+,,,,, CTB0020100 ,Pcs,"3,230",kemas_primer,,CTB0020100
+,,,,, CIN0520100 ,Pcs,"3,226",kemas_sekunder,,CIN0520100
+,,,,, CIN0520200 ,Pcs,"3,226",kemas_sekunder,,CIN0520200
+,,,,, CIN0520300 ,Pcs,"3,226",kemas_sekunder,,CIN0520300
+,,,,, CBR0480100 ,Pcs,,kemas_sekunder,,CBR0480100
+,,,,, CBR0480200 ,Pcs,,kemas_sekunder,,CBR0480200
+,,,,, CBR0480300 ,Pcs,"3,226",kemas_sekunder,,CBR0480300
+,,,,, CSH0100100 ,Pcs,17,kemas_sekunder,,CSH0100100
+,,,,, LBK0120100 ,Pcs,33,kemas_sekunder,,LBK0120100
+,,,,, LBK0100100 ,Pcs,34,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Cayodine 30 ml TD,Cayodine 30 ml TD,Botol,3225,, API0020101 ,kg,10, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,10, raw_material ,,API0020201
+,,,,, API0020301 ,kg,10, raw_material ,,API0020301
+,,,,, API0020401 ,kg,10, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.1, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.1, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),4, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),4, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.1, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.1, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),100, raw_material ,,BPW0010101
+,,,,, CBO0150100 ,Pcs,"3,230",kemas_primer,,CBO0150100
+,,,,, CPI0020100 ,Pcs,"3,231",kemas_primer,,CPI0020100
+,,,,, CTB0020100 ,Pcs,"3,230",kemas_primer,,CTB0020100
+,,,,, CBR0480100 ,Pcs,"3,226",kemas_sekunder,,CBR0480100
+,,,,, CBR0480200 ,Pcs,"3,226",kemas_sekunder,,CBR0480200
+,,,,, CBR0480300 ,Pcs,"3,226",kemas_sekunder,,CBR0480300
+,,,,, CSH0060100 ,Pcs,11,kemas_sekunder,,CSH0060100
+,,,,, LBK0120100 ,Pcs,33,kemas_sekunder,,LBK0120100
+,,,,, LBK0100100 ,Pcs,34,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Cayodine 60 ml,Cayodine 60 ml,Botol,1639,, API0020101 ,kg,10, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,10, raw_material ,,API0020201
+,,,,, API0020301 ,kg,10, raw_material ,,API0020301
+,,,,, API0020401 ,kg,10, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.1, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.1, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),4, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),4, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.1, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.1, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),100, raw_material ,,BPW0010101
+,,,,, CBO0170100 ,Pcs,"1,650",kemas_primer,,CBO0170100
+,,,,, CTB0050100 ,Pcs,"1,650",kemas_primer,,CTB0050100
+,,,,, CIN0530100 ,Pcs,"1,639",kemas_sekunder,,CIN0530100
+,,,,, CIN0530200 ,Pcs,"1,639",kemas_sekunder,,CIN0530200
+,,,,, CIN0530300 ,Pcs,"1,639",kemas_sekunder,,CIN0530300
+,,,,, CBR0480100 ,Pcs,"1,639",kemas_sekunder,,CBR0480100
+,,,,, CBR0480200 ,Pcs,"1,639",kemas_sekunder,,CBR0480200
+,,,,, CBR0480300 ,Pcs,"1,639",kemas_sekunder,,CBR0480300
+,,,,, CSH0330100 ,Pcs,33,kemas_sekunder,,CSH0330100
+,,,,, LBK0100100 ,Pcs,33,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Cayodine 60 ml TD,Cayodine 60 ml TD,Botol,1639,, API0020101 ,kg,10, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,10, raw_material ,,API0020201
+,,,,, API0020301 ,kg,10, raw_material ,,API0020301
+,,,,, API0020401 ,kg,10, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.1, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.1, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),4, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),4, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.1, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.1, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),100, raw_material ,,BPW0010101
+,,,,, CBO0170100 ,Pcs,"1,650",kemas_primer,,CBO0170100
+,,,,, CTB0050100 ,Pcs,"1,650",kemas_primer,,CTB0050100
+,,,,, CBR0480100 ,Pcs,"1,641",kemas_sekunder,,CBR0480100
+,,,,, CBR0480200 ,Pcs,"1,641",kemas_sekunder,,CBR0480200
+,,,,, CBR0480300 ,Pcs,"1,641",kemas_sekunder,,CBR0480300
+,,,,, CSH0400100 ,Pcs,2,kemas_sekunder,,CSH0400100
+,,,,, LBK0040100 ,Pcs,68,kemas_sekunder,,LBK0040100
+,,,,, LBK0100100 ,Roll,7,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Cayodine 1 L,Cayodine 1 L,Botol,198,, API0020101 ,kg,20, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,20, raw_material ,,API0020201
+,,,,, API0020301 ,kg,20, raw_material ,,API0020301
+,,,,, API0020401 ,kg,20, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.2, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.2, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),8, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),8, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0130100 ,Pcs,200,kemas_primer,,CBO0130100
+,,,,, CTB0010100 ,Pcs,200,kemas_primer,,CTB0010100
+,,,,, CET0510100 ,Pcs,200,kemas_sekunder,,CET0510100
+,,,,, CET0510200 ,Pcs,200,kemas_sekunder,,CET0510200
+,,,,, CET0510300 ,Pcs,200,kemas_sekunder,,CET0510300
+,,,,, CBR0480100 ,Pcs,199,kemas_sekunder,,CBR0480100
+,,,,, CBR0480200 ,Pcs,199,kemas_sekunder,,CBR0480200
+,,,,, CBR0480300 ,Pcs,199,kemas_sekunder,,CBR0480300
+,,,,, CSH0310100 ,Pcs,5,kemas_sekunder,,CSH0310100
+,,,,, LBK0130100 ,Pcs,10,kemas_sekunder,,LBK0130100
+,,,,, LBK0100100 ,Pcs,11,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Glyserol 100 ml,Glyserol 100 ml,Botol,1980,98.70%, BGL0020101 ,kg,252.38, raw_material ,Normal,BGL0020101
+,,,,, BGL0020201 ,kg,252.38, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,252.38, raw_material ,,BGL0020301
+,,,,, CBO0190100 ,Pcs,"2,000",kemas_primer,,CBO0190100
+,,,,, CBO0190200 ,Pcs,"2,000",kemas_primer,,CBO0190200
+,,,,, CTB0070100 ,Pcs,"2,000",kemas_primer,,CTB0070100
+,,,,, CTB0070200 ,Pcs,"2,000",kemas_primer,,CTB0070200
+,,,,, CET0700100 ,Pcs,"1,981",kemas_sekunder,,CET0700100
+,,,,, CET0700200 ,Pcs,"1,981",kemas_sekunder,,CET0700200
+,,,,, CET0700300 ,Pcs,"1,981",kemas_sekunder,,CET0700300
+,,,,, CBR0710100 ,Pcs,"1,981",kemas_sekunder,,CBR0710100
+,,,,, CBR0710200 ,Pcs,"1,981",kemas_sekunder,,CBR0710200
+,,,,, CBR0710300 ,Pcs,"1,981",kemas_sekunder,,CBR0710300
+,,,,, CSH0150100 ,Pcs,13,kemas_sekunder,,CSH0150100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Phenol Glycerol 5 ml,Phenol Glycerol 5 ml,Botol,7407,97.76%, BPH0020101 ,kg,4, raw_material ,Normal,BPH0020101
+,,,,, BGL0020101 ,kg,45.43, raw_material ,,BGL0020101
+,,,,, BGL0020201 ,kg,45.43, raw_material ,,BGL0020201
+,,,,, BGL0020301 ,kg,45.43, raw_material ,,BGL0020301
+,,,,, CBO0250100 ,Pcs,"8,000",kemas_primer,,CBO0250100
+,,,,, CPI0100100 ,Pcs,"8,000",kemas_primer,,CPI0100100
+,,,,, CET0910100 ,Pcs,"7,717",kemas_sekunder,,CET0910100
+,,,,, CET0910200 ,Pcs,"7,717",kemas_sekunder,,CET0910200
+,,,,, CET0910300 ,Pcs,"7,717",kemas_sekunder,,CET0910300
+,,,,, CET0910400 ,Pcs,"7,717",kemas_sekunder,,CET0910400
+,,,,, CBR0860100 ,Pcs,"7,407",kemas_sekunder,,CBR0860100
+,,,,, CBR0860200 ,Pcs,"7,407",kemas_sekunder,,CBR0860200
+,,,,, CBR0860300 ,Pcs,"7,407",kemas_sekunder,,CBR0860300
+,,,,, CIN0960100 ,Pcs,309,kemas_sekunder,,CIN0960100
+,,,,, CIN0960200 ,Pcs,309,kemas_sekunder,,CIN0960200
+,,,,, CIN0960300 ,Pcs,309,kemas_sekunder,,CIN0960300
+,,,,, CSH0190100 ,Pcs,5,kemas_sekunder,,CSH0190100
+,,,,, LBK0100100 ,Pcs,17,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Povidone iodine 30 ml,Povidone iodine 30 ml,Botol,3225,, API0020101 ,kg,10, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,10, raw_material ,,API0020201
+,,,,, API0020301 ,kg,10, raw_material ,,API0020301
+,,,,, API0020401 ,kg,10, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.1, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.1, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),4, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),4, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.1, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.1, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),100, raw_material ,,BPW0010101
+,,,,, CBO0140100 ,Pcs,"3,230",kemas_primer,,CBO0140100
+,,,,, CPI0030100 ,Pcs,"3,230",kemas_primer,,CPI0030100
+,,,,, CTB0190100 ,Pcs,"3,230",kemas_primer,,CTB0190100
+,,,,, CET0990100 ,Pcs,"3,227",kemas_sekunder,,CET0990100
+,,,,, CET0990200 ,Pcs,"3,227",kemas_sekunder,,CET0990200
+,,,,, CET0990300 ,Pcs,"3,227",kemas_sekunder,,CET0990300
+,,,,, CBR0900100 ,Pcs,"3,229",kemas_sekunder,,CBR0900100
+,,,,, CBR0900200 ,Pcs,"3,229",kemas_sekunder,,CBR0900200
+,,,,, CBR0900300 ,Pcs,"3,229",kemas_sekunder,,CBR0900300
+,,,,, CSH0060100 ,Pcs,11,kemas_sekunder,,CSH0060100
+,,,,, LBK0210100 ,Pcs,33,kemas_sekunder,,LBK0210100
+,,,,, LBK0100100 ,Pcs,33,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Povidone iodine 300 ml,Povidone iodine 300 ml,Botol,660,, API0020101 ,kg,20, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,20, raw_material ,,API0020201
+,,,,, API0020301 ,kg,20, raw_material ,,API0020301
+,,,,, API0020401 ,kg,20, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.2, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.2, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),8, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),8, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0170100 ,Pcs,660,kemas_primer,,CBO0170100
+,,,,, CTB0040100 ,Pcs,660,kemas_primer,,CTB0040100
+,,,,, CET1000100 ,Pcs,676,kemas_sekunder,,CET1000100
+,,,,, CET1000200 ,Pcs,676,kemas_sekunder,,CET1000200
+,,,,, CET1000300 ,Pcs,676,kemas_sekunder,,CET1000300
+,,,,, CBR0900100 ,Pcs,661,kemas_sekunder,,CBR0900100
+,,,,, CBR0900200 ,Pcs,661,kemas_sekunder,,CBR0900200
+,,,,, CBR0900300 ,Pcs,661,kemas_sekunder,,CBR0900300
+,,,,, CSH0380100 ,Pcs,7,kemas_sekunder,,CSH0380100
+,,,,, LBK0140100 ,Pcs,14,kemas_sekunder,,LBK0140100
+,,,,, LBK0100100 ,Pcs,14,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Povidone iodine 1 L,Povidone iodine 1 L,Botol,198,, API0020101 ,kg,20, raw_material ,Normal,API0020101
+,,,,, API0020201 ,kg,20, raw_material ,,API0020201
+,,,,, API0020301 ,kg,20, raw_material ,,API0020301
+,,,,, API0020401 ,kg,20, raw_material ,,API0020401
+,,,,, BSL0010101 ,kg,0.2, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.2, raw_material ,,BSL0010201
+,,,,, BAL0010101 ,Liter(s),8, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),8, raw_material ,,BAL0010201
+,,,,, BMP0010101 ,kg,0.2, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.2, raw_material ,,BMP0010201
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0130100 ,Pcs,200,kemas_primer,,CBO0130100
+,,,,, CTB0010100 ,Pcs,200,kemas_primer,,CTB0010100
+,,,,, CET0980100 ,Pcs,200,kemas_sekunder,,CET0980100
+,,,,, CET0980200 ,Pcs,200,kemas_sekunder,,CET0980200
+,,,,, CET0980300 ,Pcs,200,kemas_sekunder,,CET0980300
+,,,,, CBR0900100 ,Pcs,199,kemas_sekunder,,CBR0900100
+,,,,, CBR0900200 ,Pcs,199,kemas_sekunder,,CBR0900200
+,,,,, CBR0900300 ,Pcs,199,kemas_sekunder,,CBR0900300
+,,,,, CSH0310100 ,Pcs,5,kemas_sekunder,,CSH0310100
+,,,,, LBK0130100 ,Pcs,10,kemas_sekunder,,LBK0130100
+,,,,, LBK0100100 ,Pcs,11,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Rivanol 300 ml,Rivanol 300 ml,Botol,660,, AEL0010101 ,kg,0.201, raw_material ,Normal,AEL0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0240100 ,Pcs,680,kemas_primer,,CBO0240100
+,,,,, CPI0090100 ,Pcs,661,kemas_primer,,CPI0090100
+,,,,, CET1040100 ,Pcs,661,kemas_sekunder,,CET1040100
+,,,,, CET1040200 ,Pcs,661,kemas_sekunder,,CET1040200
+,,,,, CET1040300 ,Pcs,661,kemas_sekunder,,CET1040300
+,,,,, CBR0950100 ,Pcs,661,kemas_sekunder,,CBR0950100
+,,,,, CBR0950200 ,Pcs,661,kemas_sekunder,,CBR0950200
+,,,,, CBR0950300 ,Pcs,661,kemas_sekunder,,CBR0950300
+,,,,, CSH0380100 ,Pcs,7,kemas_sekunder,,CSH0380100
+,,,,, LBK0140100 ,Pcs,14,kemas_sekunder,,LBK0140100
+,,,,, LBK0100100 ,Pcs,14,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Rivanol 100 ml,Rivanol 100 ml,Botol,660,, AEL0010101 ,kg,0.201, raw_material ,Normal,AEL0010101
+,,,,, BPW0010101 ,Liter(s),200, raw_material ,,BPW0010101
+,,,,, CBO0190100 ,Pcs,680,kemas_primer,,CBO0190100
+,,,,, CBO0190200 ,Pcs,680,kemas_primer,,CBO0190200
+,,,,, CPI0060100 ,Pcs,661,kemas_primer,,CPI0060100
+,,,,, CET1030100 ,Pcs,661,kemas_sekunder,,CET1030100
+,,,,, CET1030200 ,Pcs,661,kemas_sekunder,,CET1030200
+,,,,, CET1030300 ,Pcs,661,kemas_sekunder,,CET1030300
+,,,,, CBR0950100 ,Pcs,661,kemas_sekunder,,CBR0950100
+,,,,, CBR0950200 ,Pcs,661,kemas_sekunder,,CBR0950200
+,,,,, CBR0950300 ,Pcs,661,kemas_sekunder,,CBR0950300
+,,,,, CSH0150100 ,Pcs,5,kemas_sekunder,,CSH0150100
+,,,,, LBK0140100 ,Pcs,14,kemas_sekunder,,LBK0140100
+,,,,, LBK0100100 ,Pcs,14,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Lysol 1 L,Lysol 1 L,Botol,99,, ACR0010101 ,Liter(s),50, raw_material ,Normal,ACR0010101
+,,,,, BAL0010101 ,Liter(s),10, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),10, raw_material ,,BAL0010201
+,,,,, BPH0020101 ,kg,0.006, raw_material ,,BPH0020101
+,,,,, BPW0010101 ,Liter(s),100, raw_material ,,BPW0010101
+,,,,, CBO0180100 ,Pcs,100,kemas_primer,,CBO0180100
+,,,,, CTB0060100 ,Pcs,100,kemas_primer,,CTB0060100
+,,,,, CET0790100 ,Pcs,99,kemas_sekunder,,CET0790100
+,,,,, CET0790200 ,Pcs,99,kemas_sekunder,,CET0790200
+,,,,, CET0790300 ,Pcs,99,kemas_sekunder,,CET0790300
+,,,,, CSH0310100 ,Pcs,3,kemas_sekunder,,CSH0310100
+,,,,, LBK0130100 ,Pcs,5,kemas_sekunder,,LBK0130100
+,,,,, LBK0100100 ,Pcs,5,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camicetine 250 mg Strip,Camicetine 250 mg Strip,Kpsul,120000,, ACB0010101 ,kg,30, raw_material ,Normal,ACB0010101
+,,,,, ACB0010201 ,kg,30, raw_material ,,ACB0010201
+,,,,, BCS0030101 ,kg,3.18, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,3.18, raw_material ,,BCS0030201
+,,,,, BSL0010101 ,kg,0.18, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.18, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,0.84, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.84, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,2.28, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,2.28, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,2.28, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,2.28, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.72, raw_material ,,BMS0010101
+,,,,, BCN0150101 ,Pcs,"120,000.00", raw_material ,,BCN0150101
+,,,,, CBA0010100 ,Roll,3,kemas_primer,,CBA0010100
+,,,,, CFA0060100 ,Roll,3,kemas_primer,,CFA0060100
+,,,,, CBR0160100 ,Pcs,"1,200",kemas_sekunder,,CBR0160100
+,,,,, CBR0160200 ,Pcs,"1,200",kemas_sekunder,,CBR0160200
+,,,,, CBR0160300 ,Pcs,"1,200",kemas_sekunder,,CBR0160300
+,,,,, CIN0190100 ,Pcs,"1,200",kemas_sekunder,,CIN0190100
+,,,,, CIN0190200 ,Pcs,"1,200",kemas_sekunder,,CIN0190200
+,,,,, CIN0190300 ,Pcs,"1,200",kemas_sekunder,,CIN0190300
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CSH0280100 ,Pcs,24,kemas_sekunder,,CSH0280100
+,,,,, LBK0100100 ,Pcs,24,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camicetine 500 mg Strip,Camicetine 500 mg Strip,Kpsul,60000,, ACB0010101 ,kg,30, raw_material ,Normal,ACB0010101
+,,,,, ACB0010201 ,kg,30, raw_material ,,ACB0010201
+,,,,, BCS0030101 ,kg,0.78, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.78, raw_material ,,BCS0030201
+,,,,, BSL0010101 ,kg,0.06, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.06, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,0.3, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.3, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,0.9, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.9, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.9, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.9, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.36, raw_material ,,BMS0010101
+,,,,, BCN0030101 ,Pcs,"60,000.00", raw_material ,,BCN0030101
+,,,,, CBA0030100 ,Roll,1,kemas_primer,,CBA0030100
+,,,,, CFA0070100 ,Roll,1,kemas_primer,,CFA0070100
+,,,,, CBR0160100 ,Pcs,600,kemas_sekunder,,CBR0160100
+,,,,, CBR0160200 ,Pcs,600,kemas_sekunder,,CBR0160200
+,,,,, CBR0160300 ,Pcs,600,kemas_sekunder,,CBR0160300
+,,,,, CIN0200100 ,Pcs,600,kemas_sekunder,,CIN0200100
+,,,,, CIN0200200 ,Pcs,600,kemas_sekunder,,CIN0200200
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CSH0280100 ,Pcs,12,kemas_sekunder,,CSH0280100
+,,,,, LBK0100100 ,Pcs,12,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camicyclin 250 mg Strip,Camicyclin 250 mg Strip,Kpsul,120000,, ATH0010101 ,kg,30, raw_material ,Normal,ATH0010101
+,,,,, ATH0010201 ,kg,30, raw_material ,,ATH0010201
+,,,,, BCS0030101 ,kg,1.401, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,1.401, raw_material ,,BCS0030201
+,,,,, BTA0010101 ,kg,1.845, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.845, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.845, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.845, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.115, raw_material ,,BMS0010101
+,,,,, BCN0120101 ,Pcs,"120,000.00", raw_material ,,BCN0120101
+,,,,, CBA0010100 ,Roll,3,kemas_primer,,CBA0010100
+,,,,, CFA0070100 ,Roll,3,kemas_primer,,CFA0070100
+,,,,, CBR0210100 ,Pcs,"1,200",kemas_sekunder,,CBR0210100
+,,,,, CBR0210200 ,Pcs,"1,200",kemas_sekunder,,CBR0210200
+,,,,, CBR0210300 ,Pcs,"1,200",kemas_sekunder,,CBR0210300
+,,,,, CIN0250100 ,Pcs,"1,200",kemas_sekunder,,CIN0250100
+,,,,, CIN0250200 ,Pcs,"1,200",kemas_sekunder,,CIN0250200
+,,,,, CIN0250300 ,Pcs,"1,200",kemas_sekunder,,CIN0250300
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CSH0300100 ,Pcs,24,kemas_sekunder,,CSH0300100
+,,,,, LBK0100100 ,Pcs,24,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camicyclin 500 mg Strip,Camicyclin 500 mg Strip,Kpsul,60000,, ATH0010101 ,kg,30, raw_material ,,ATH0010101
+,,,,, ATH0010201 ,kg,30, raw_material ,,ATH0010201
+,,,,, BCS0030101 ,kg,0.3, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.3, raw_material ,,BCS0030201
+,,,,, BTA0010101 ,kg,1.5, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.5, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.5, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.5, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.3, raw_material ,,BMS0010101
+,,,,, BCN0020101 ,Pcs,"60,000.00", raw_material ,,BCN0020101
+,,,,, CBA0030100 ,Roll,1,kemas_primer,,CBA0030100
+,,,,, CFA0110100 ,Roll,1,kemas_primer,,CFA0110100
+,,,,, CBR0220100 ,Pcs,601,kemas_sekunder,,CBR0220100
+,,,,, CBR0220200 ,Pcs,601,kemas_sekunder,,CBR0220200
+,,,,, CBR0220300 ,Pcs,601,kemas_sekunder,,CBR0220300
+,,,,, CIN0260100 ,Pcs,601,kemas_sekunder,,CIN0260100
+,,,,, CIN0260200 ,Pcs,601,kemas_sekunder,,CIN0260200
+,,,,, CIN0260300 ,Pcs,601,kemas_sekunder,,CIN0260300
+,,,,, CSH0280100 ,Pcs,12,kemas_sekunder,,CSH0280100
+,,,,, LBK0100100 ,Pcs,13,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camitrosin 250 mg Strip,Camitrosin 250 mg Strip,Kpsul,86480,, AES0010101 ,kg,30, raw_material ,Normal,AES0010101
+,,,,, AES0010201 ,kg,30, raw_material ,,AES0010201
+,,,,, AES0010301 ,kg,30, raw_material ,,AES0010301
+,,,,, AES0010401 ,kg,30, raw_material ,,AES0010401
+,,,,, AES0010501 ,kg,30, raw_material ,,AES0010501
+,,,,, BCS0030101 ,kg,0.779, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.779, raw_material ,,BCS0030201
+,,,,, BSL0010101 ,kg,1.038, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,1.038, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,0.692, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.692, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,1.038, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.038, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.038, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.038, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.519, raw_material ,,BMS0010101
+,,,,, BCN0060101 ,Pcs,"86,480.00", raw_material ,,BCN0060101
+,,,,, CBA0010100 ,Roll,2,kemas_primer,,CBA0010100
+,,,,, CFA0160100 ,Roll,2,kemas_primer,,CFA0160100
+,,,,, CBR0370100 ,Pcs,864,kemas_sekunder,,CBR0370100
+,,,,, CBR0370200 ,Pcs,864,kemas_sekunder,,CBR0370200
+,,,,, CBR0370300 ,Pcs,864,kemas_sekunder,,CBR0370300
+,,,,, CIN0410100 ,Pcs,864,kemas_sekunder,,CIN0410100
+,,,,, CIN0410200 ,Pcs,864,kemas_sekunder,,CIN0410200
+,,,,, CIN0410300 ,Pcs,864,kemas_sekunder,,CIN0410300
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CSH0280100 ,Pcs,18,kemas_sekunder,,CSH0280100
+,,,,, LBK0100100 ,Pcs,18,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Chlorampenicol 250 mg Pot 1000,Chlorampenicol 250 mg Pot 1000,Kpsul,120000,, ACB0010101 ,kg,30, raw_material ,Normal,ACB0010101
+,,,,, ACB0010201 ,kg,30, raw_material ,,ACB0010201
+,,,,, BCS0030101 ,kg,3.18, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,3.18, raw_material ,,BCS0030201
+,,,,, BSL0010101 ,kg,0.18, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.18, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,0.84, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.84, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,2.28, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,2.28, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,2.28, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,2.28, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.72, raw_material ,,BMS0010101
+,,,,, BCN0160101 ,Pcs,"120,000.00", raw_material ,,BCN0160101
+,,,,, BCN0160201 ,Pcs,"120,000.00", raw_material ,,BCN0160201
+,,,,, LBK0090100 ,Pcs,480,kemas_primer,,LBK0090100
+,,,,, CSG0010100 ,kg,0,kemas_primer,,CSG0010100
+,,,,, LBK0020100 ,Pcs,120,kemas_primer,,LBK0020100
+,,,,, CBR0490100 ,Pcs,121,kemas_sekunder,,CBR0490100
+,,,,, CBR0490200 ,Pcs,121,kemas_sekunder,,CBR0490200
+,,,,, CBR0490300 ,Pcs,121,kemas_sekunder,,CBR0490300
+,,,,, CET0520100 ,Pcs,121,kemas_sekunder,,CET0520100
+,,,,, CET0520200 ,Pcs,121,kemas_sekunder,,CET0520200
+,,,,, CET0520300 ,Pcs,121,kemas_sekunder,,CET0520300
+,,,,, CSH0250100 ,Pcs,5,kemas_sekunder,,CSH0250100
+,,,,, LBK0100100 ,Pcs,6,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Chlorampenicol 250 mg Strip 12,Chlorampenicol 250 mg Strip 12,Kpsul,120000,, ACB0010101 ,kg,30, raw_material ,Normal,ACB0010101
+,,,,, ACB0010201 ,kg,30, raw_material ,,ACB0010201
+,,,,, BCS0030101 ,kg,3.18, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,3.18, raw_material ,,BCS0030201
+,,,,, BSL0010101 ,kg,0.18, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,0.18, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,0.84, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.84, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,2.28, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,2.28, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,2.28, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,2.28, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.72, raw_material ,,BMS0010101
+,,,,, BCN0150101 ,Pcs,"120,000.00", raw_material ,,BCN0150101
+,,,,, CBA0010100 ,Roll,3,kemas_primer,,CBA0010100
+,,,,, CFA0200100 ,Roll,3,kemas_primer,,CFA0200100
+,,,,, CBR0500100 ,Pcs,"1,002",kemas_sekunder,,CBR0500100
+,,,,, CBR0500200 ,Pcs,"1,002",kemas_sekunder,,CBR0500200
+,,,,, CBR0500300 ,Pcs,"1,002",kemas_sekunder,,CBR0500300
+,,,,, CIN0550100 ,Pcs,"1,001",kemas_sekunder,,CIN0550100
+,,,,, CIN0550200 ,Pcs,"1,001",kemas_sekunder,,CIN0550200
+,,,,, CIN0550300 ,Pcs,"1,001",kemas_sekunder,,CIN0550300
+,,,,, CSH0190100 ,Pcs,10,kemas_sekunder,,CSH0190100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, LBK0100100 ,Pcs,21,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Erythromycin 250 mg Strip,Erythromycin 250 mg Strip,Kpsul,86480,, AES0010101 ,kg,30, raw_material ,Normal,AES0010101
+,,,,, AES0010201 ,kg,30, raw_material ,,AES0010201
+,,,,, AES0010301 ,kg,30, raw_material ,,AES0010301
+,,,,, AES0010401 ,kg,30, raw_material ,,AES0010401
+,,,,, AES0010501 ,kg,30, raw_material ,,AES0010501
+,,,,, BCS0030101 ,kg,0.779, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.779, raw_material ,,BCS0030201
+,,,,, BSL0010101 ,kg,1.038, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,1.038, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,0.692, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.692, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,1.038, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.038, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.038, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.038, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.519, raw_material ,,BMS0010101
+,,,,, BCN0060101 ,Pcs,"86,480.00", raw_material ,,BCN0060101
+,,,,, CBA0010100 ,Roll,2,kemas_primer,,CBA0010100
+,,,,, CFA0210100 ,Roll,2,kemas_primer,,CFA0210100
+,,,,, CBR0620100 ,Pcs,865,kemas_sekunder,,CBR0620100
+,,,,, CBR0620200 ,Pcs,865,kemas_sekunder,,CBR0620200
+,,,,, CBR0620300 ,Pcs,865,kemas_sekunder,,CBR0620300
+,,,,, CIN0640100 ,Pcs,865,kemas_sekunder,,CIN0640100
+,,,,, CIN0640200 ,Pcs,865,kemas_sekunder,,CIN0640200
+,,,,, CIN0640300 ,Pcs,865,kemas_sekunder,,CIN0640300
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CSH0280100 ,Pcs,18,kemas_sekunder,,CSH0280100
+,,,,, LBK0100100 ,Pcs,19,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Heparsan Pot 30,Heparsan Pot 30,Kpsul,60000,, ACD0010101 ,kg,3, raw_material ,Normal,ACD0010101
+,,,,, ACX0010101 ,kg,3, raw_material ,,ACX0010101
+,,,,, AAA0030101 ,kg,0.6, raw_material ,,AAA0030101
+,,,,, ALP0020101 ,kg,18, raw_material ,,ALP0020101
+,,,,, BSS0020101 ,kg,0.33, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.33, raw_material ,,BSS0020201
+,,,,, BLA0010101 ,kg,3.99, raw_material ,,BLA0010101
+,,,,, BMS0010101 ,kg,0.15, raw_material ,,BMS0010101
+,,,,, BTA0010101 ,kg,0.93, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.93, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.93, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.93, raw_material ,,BTA0010401
+,,,,, BCN0080101 ,Pcs,"60,000.00", raw_material ,,BCN0080101
+,,,,, LBK0030100 ,Pcs,"2,000",kemas_primer,,LBK0030100
+,,,,, CSG0010100 ,kg,2,kemas_primer,,CSG0010100
+,,,,, CSE0010100 ,Pcs,"2,000",kemas_primer,,CSE0010100
+,,,,, CET0710100 ,Pcs,"2,000",kemas_sekunder,,CET0710100
+,,,,, CET0710200 ,Pcs,"2,000",kemas_sekunder,,CET0710200
+,,,,, CIN0020100 ,Pcs,"2,000",kemas_sekunder,,CIN0020100
+,,,,, CIN0020200 ,Pcs,"2,000",kemas_sekunder,,CIN0020200
+,,,,, LBK0280100 ,Pcs,34,kemas_sekunder,,LBK0280100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Oximak Pot 30,Oximak Pot 30,Kpsul,100000,100.44%, ABC0010101 ,kg,0.3, raw_material ,Normal,ABC0010101
+,,,,, ABC0010201 ,kg,0.3, raw_material ,,ABC0010201
+,,,,, AVE0010101 ,kg,6.7, raw_material ,,AVE0010101
+,,,,, AVE0010201 ,kg,6.7, raw_material ,,AVE0010201
+,,,,, AAA0030101 ,kg,25, raw_material ,,AAA0030101
+,,,,, LBB0020101 ,g,1, raw_material ,,LBB0020101
+,,,,, AZS0010101 ,kg,2, raw_material ,,AZS0010101
+,,,,, AYE0010101 ,kg,10, raw_material ,,AYE0010101
+,,,,, AYE0010201 ,kg,10, raw_material ,,AYE0010201
+,,,,, ALP0010101 ,kg,15, raw_material ,,ALP0010101
+,,,,, BTA0010101 ,kg,1.2, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.2, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.2, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.2, raw_material ,,BTA0010401
+,,,,, BCN0070101 ,Pcs,"100,000.00", raw_material ,,BCN0070101
+,,,,, CBO0120100 ,Pcs,"3,333",kemas_primer,,CBO0120100
+,,,,, CSG0010100 ,kg,3,kemas_primer,,CSG0010100
+,,,,, CSE0010100 ,Pcs,"3,333",kemas_primer,,CSE0010100
+,,,,, CET0860100 ,Pcs,"3,389",kemas_sekunder,,CET0860100
+,,,,, CET0860200 ,Pcs,"3,389",kemas_sekunder,,CET0860200
+,,,,, CIN0910100 ,Pcs,"3,333",kemas_sekunder,,CIN0910100
+,,,,, CIN0910200 ,Pcs,"3,333",kemas_sekunder,,CIN0910200
+,,,,, CBR0810100 ,Pcs,"3,333",kemas_sekunder,,CBR0810100
+,,,,, CBR0810200 ,Pcs,"3,333",kemas_sekunder,,CBR0810200
+,,,,, CBR0810300 ,Pcs,"3,333",kemas_sekunder,,CBR0810300
+,,,,, CSH0190100 ,Pcs,28,kemas_sekunder,,CSH0190100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Phenytoin 100 mg Pot 100,Phenytoin 100 mg Pot 100,Kpsul,120000,, APS0010101 ,kg,12, raw_material ,Normal,APS0010101
+,,,,, BMC0010101 ,kg,8.4, raw_material ,,BMC0010101
+,,,,, BMC0010201 ,kg,8.4, raw_material ,,BMC0010201
+,,,,, BSS0020101 ,kg,1.2, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,1.2, raw_material ,,BSS0020201
+,,,,, BGP0020101 ,kg,3.6, raw_material ,,BGP0020101
+,,,,, BMS0010101 ,kg,1.2, raw_material ,,BMS0010101
+,,,,, BCN0160101 ,Pcs,"120,000.00", raw_material ,,BCN0160101
+,,,,, BCN0160201 ,Pcs,"120,000.00", raw_material ,,BCN0160201
+,,,,, LBK0090100 ,Pcs,"1,200",kemas_primer,,LBK0090100
+,,,,, CSG0010100 ,kg,1,kemas_primer,,CSG0010100
+,,,,, CBO0110100 ,Pcs,"1,200",kemas_primer,,CBO0110100
+,,,,, CTB0080100 ,Pcs,"1,200",kemas_primer,,CTB0080100
+,,,,, CET0920100 ,Pcs,"1,202",kemas_sekunder,,CET0920100
+,,,,, CET0920200 ,Pcs,"1,202",kemas_sekunder,,CET0920200
+,,,,, CBR0870100 ,Pcs,"1,201",kemas_sekunder,,CBR0870100
+,,,,, CBR0870200 ,Pcs,"1,201",kemas_sekunder,,CBR0870200
+,,,,, CBR0870300 ,Pcs,"1,201",kemas_sekunder,,CBR0870300
+,,,,, CSH0130100 ,Pcs,12,kemas_sekunder,,CSH0130100
+,,,,, LBK0150100 ,Pcs,12,kemas_sekunder,,LBK0150100
+,,,,, LBK0100100 , lbr ,13,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Phenytoin 100 mg Pot 250,Phenytoin 100 mg Pot 250,Kpsul,120000,, BMC0010101 ,kg,8.4, raw_material ,Normal,BMC0010101
+,,,,, BMC0010201 ,kg,8.4, raw_material ,,BMC0010201
+,,,,, BCN0160101 ,Pcs,"120,000.00", raw_material ,,BCN0160101
+,,,,, BCN0160201 ,Pcs,"120,000.00", raw_material ,,BCN0160201
+,,,,, BGP0020101 ,kg,3.6, raw_material ,,BGP0020101
+,,,,, BMS0010101 ,kg,1.2, raw_material ,,BMS0010101
+,,,,, APS0010101 ,kg,12, raw_material ,,APS0010101
+,,,,, BSS0020101 ,kg,1.2, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,1.2, raw_material ,,BSS0020201
+,,,,, CBO0200100 ,Pcs,480,kemas_primer,,CBO0200100
+,,,,, CTB0090100 ,Pcs,480,kemas_primer,,CTB0090100
+,,,,, CSG0010100 ,kg,0,kemas_primer,,CSG0010100
+,,,,, CBR0880100 ,Pcs,480,kemas_sekunder,,CBR0880100
+,,,,, CBR0880200 ,Pcs,480,kemas_sekunder,,CBR0880200
+,,,,, CBR0880300 ,Pcs,480,kemas_sekunder,,CBR0880300
+,,,,, CET0930100 ,Pcs,480,kemas_sekunder,,CET0930100
+,,,,, CET0930200 ,Pcs,480,kemas_sekunder,,CET0930200
+,,,,, CET0930300 ,Pcs,480,kemas_sekunder,,CET0930300
+,,,,, CSH0190100 ,Pcs,5,kemas_sekunder,,CSH0190100
+Phenytoin 30 mg Pot 100,Phenytoin 30 mg Pot 100,Kpsul,100000,, APS0010101 ,kg,3, raw_material ,Normal,APS0010101
+,,,,, BMC0010101 ,kg,10, raw_material ,,BMC0010101
+,,,,, BMC0010201 ,kg,10, raw_material ,,BMC0010201
+,,,,, BSS0020101 ,kg,3.5, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,3.5, raw_material ,,BSS0020201
+,,,,, BMS0010101 ,kg,0.8, raw_material ,,BMS0010101
+,,,,, BSL0010101 ,kg,4.7, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,4.7, raw_material ,,BSL0010201
+,,,,, BCN0210101 ,Pcs,"100,000.00", raw_material ,,BCN0210101
+,,,,, BCN0210201 ,Pcs,"100,000.00", raw_material ,,BCN0210201
+,,,,, LBK0090100 ,Pcs,"1,000",kemas_primer,,LBK0090100
+,,,,, CSG0010100 ,kg,1,kemas_primer,,CSG0010100
+,,,,, CBO0110100 ,Pcs,"1,000",kemas_primer,,CBO0110100
+,,,,, CTB0080100 ,Pcs,"1,000",kemas_primer,,CTB0080100
+,,,,, CET0940100 ,Pcs,"1,002",kemas_sekunder,,CET0940100
+,,,,, CET0940200 ,Pcs,"1,002",kemas_sekunder,,CET0940200
+,,,,, CBR0870100 ,Pcs,"1,001",kemas_sekunder,,CBR0870100
+,,,,, CBR0870200 ,Pcs,"1,001",kemas_sekunder,,CBR0870200
+,,,,, CBR0870300 ,Pcs,"1,001",kemas_sekunder,,CBR0870300
+,,,,, CSH0130100 ,Pcs,10,kemas_sekunder,,CSH0130100
+,,,,, LBK0150100 ,Pcs,10,kemas_sekunder,,LBK0150100
+,,,,, LBK0100100 , lbr ,11,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Phenytoin 30 mg Pot 250,Phenytoin 30 mg Pot 250,Kpsul,100000,, BMC0010101 ,kg,10, raw_material ,Normal,BMC0010101
+,,,,, BMC0010201 ,kg,10, raw_material ,,BMC0010201
+,,,,, BMS0010101 ,kg,0.8, raw_material ,,BMS0010101
+,,,,, APS0010101 ,kg,3, raw_material ,,APS0010101
+,,,,, BSL0010101 ,kg,4.7, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,4.7, raw_material ,,BSL0010201
+,,,,, BSS0020101 ,kg,3.5, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,3.5, raw_material ,,BSS0020201
+,,,,, BCN0210101 ,Pcs,"100,000.00", raw_material ,,BCN0210101
+,,,,, BCN0210201 ,Pcs,"100,000.00", raw_material ,,BCN0210201
+,,,,, CBO0200100 ,Pcs,400,kemas_primer,,CBO0200100
+,,,,, CTB0090100 ,Pcs,400,kemas_primer,,CTB0090100
+,,,,, CSG0010100 ,kg,0,kemas_primer,,CSG0010100
+,,,,, CBR0880100 ,Pcs,480,kemas_sekunder,,CBR0880100
+,,,,, CBR0880200 ,Pcs,480,kemas_sekunder,,CBR0880200
+,,,,, CBR0880300 ,Pcs,480,kemas_sekunder,,CBR0880300
+,,,,, CET0950100 ,Pcs,480,kemas_sekunder,,CET0950100
+,,,,, CET0950200 ,Pcs,480,kemas_sekunder,,CET0950200
+,,,,, CET0950300 ,Pcs,480,kemas_sekunder,,CET0950300
+,,,,, CSH0190100 ,Pcs,5,kemas_sekunder,,CSH0190100
+Tetracycline 250 mg Pot 1000,Tetracycline 250 mg Pot 1000,Kpsul,120000,, ATH0010101 ,kg,30, raw_material ,Normal,ATH0010101
+,,,,, ATH0010201 ,kg,30, raw_material ,,ATH0010201
+,,,,, BCS0030101 ,kg,1.401, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,1.401, raw_material ,,BCS0030201
+,,,,, BTA0010101 ,kg,1.845, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.845, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.845, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.845, raw_material ,,BTA0010401
+,,,,, BMS0010101 ,kg,0.115, raw_material ,,BMS0010101
+,,,,, BCN0170101 ,Pcs,"120,000.00", raw_material ,,BCN0170101
+,,,,, LBK0090100 ,Pcs,120,kemas_primer,,LBK0090100
+,,,,, CSG0010100 ,kg,0,kemas_primer,,CSG0010100
+,,,,, LBK0020100 ,Pcs,120,kemas_primer,,LBK0020100
+,,,,, CBR0970100 ,Pcs,121,kemas_sekunder,,CBR0970100
+,,,,, CBR0970200 ,Pcs,121,kemas_sekunder,,CBR0970200
+,,,,, CBR0970300 ,Pcs,121,kemas_sekunder,,CBR0970300
+,,,,, CET1070100 ,Pcs,121,kemas_sekunder,,CET1070100
+,,,,, CET1070200 ,Pcs,121,kemas_sekunder,,CET1070200
+,,,,, CET1070300 ,Pcs,121,kemas_sekunder,,CET1070300
+,,,,, CSH0250100 ,Pcs,5,kemas_sekunder,,CSH0250100
+,,,,, LBK0100100 ,Pcs,6,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Zentropil 100 mg Blister,Zentropil 100 mg Blister,Kpsul,120000,, APS0010101 ,kg,12, raw_material ,,APS0010101
+,,,,, BMC0010101 ,kg,8.4, raw_material ,,BMC0010101
+,,,,, BMC0010201 ,kg,8.4, raw_material ,,BMC0010201
+,,,,, BSS0020101 ,kg,1.2, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,1.2, raw_material ,,BSS0020201
+,,,,, BGP0020101 ,kg,3.6, raw_material ,,BGP0020101
+,,,,, BMS0010101 ,kg,1.2, raw_material ,,BMS0010101
+,,,,, BCN0200101 ,Pcs,"120,000.00", raw_material ,,BCN0200101
+Zentropil 100 mg Pot 250,Zentropil 100 mg Pot 250,Kpsul,120000,, APS0010101 ,kg,12, raw_material ,Normal,APS0010101
+,,,,, BMC0010101 ,kg,8.4, raw_material ,,BMC0010101
+,,,,, BMC0010201 ,kg,8.4, raw_material ,,BMC0010201
+,,,,, BSS0020101 ,kg,1.2, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,1.2, raw_material ,,BSS0020201
+,,,,, BGP0020101 ,kg,3.6, raw_material ,,BGP0020101
+,,,,, BMS0010101 ,kg,1.2, raw_material ,,BMS0010101
+,,,,, BCN0200101 ,Pcs,"120,000.00", raw_material ,,BCN0200101
+,,,,, LBK0090100 ,Pcs,480, raw_material ,,LBK0090100
+,,,,, CSG0010100 ,kg,0,kemas_primer,,CSG0010100
+,,,,, CBO0220100 ,Pcs,480,kemas_primer,,CBO0220100
+,,,,, CET1140100 ,Pcs,480,kemas_sekunder,,CET1140100
+,,,,, CET1140200 ,Pcs,480,kemas_sekunder,,CET1140200
+,,,,, CET1140300 ,Pcs,480,kemas_sekunder,,CET1140300
+,,,,, CBR1060100 ,Pcs,480,kemas_sekunder,,CBR1060100
+,,,,, CBR1060200 ,Pcs,480,kemas_sekunder,,CBR1060200
+,,,,, CBR1060300 ,Pcs,480,kemas_sekunder,,CBR1060300
+,,,,, CSH0190100 , bh ,10,kemas_sekunder,,CSH0190100
+,,,,, LBK0100100 , lbr ,10,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Zentropil 30 mg Pot 250,Zentropil 30 mg Pot 250,Kpsul,100000,, APS0010101 ,kg,3, raw_material ,Normal,APS0010101
+,,,,, BMC0010101 ,kg,10, raw_material ,,BMC0010101
+,,,,, BMC0010201 ,kg,10, raw_material ,,BMC0010201
+,,,,, BSS0020101 ,kg,3.5, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,3.5, raw_material ,,BSS0020201
+,,,,, BMS0010101 ,kg,0.8, raw_material ,,BMS0010101
+,,,,, BSL0010101 ,kg,4.7, raw_material ,,BSL0010101
+,,,,, BSL0010201 ,kg,4.7, raw_material ,,BSL0010201
+,,,,, BCN0210101 ,Pcs,"100,000.00", raw_material ,,BCN0210101
+,,,,, BCN0210201 ,Pcs,"100,000.00", raw_material ,,BCN0210201
+,,,,, LBK0090100 ,Pcs,400,kemas_primer,,LBK0090100
+,,,,, CSG0010100 ,kg,0,kemas_primer,,CSG0010100
+,,,,, CBO0220100 ,Pcs,400,kemas_primer,,CBO0220100
+,,,,, CET1150100 ,Pcs,400,kemas_sekunder,,CET1150100
+,,,,, CET1150200 ,Pcs,400,kemas_sekunder,,CET1150200
+,,,,, CET1150300 ,Pcs,400,kemas_sekunder,,CET1150300
+,,,,, CBR1060100 ,Pcs,400,kemas_sekunder,,CBR1060100
+,,,,, CBR1060200 ,Pcs,400,kemas_sekunder,,CBR1060200
+,,,,, CBR1060300 ,Pcs,400,kemas_sekunder,,CBR1060300
+,,,,, CSH0190100 ,Pcs,4,kemas_sekunder,,CSH0190100
+,,,,, LBK0100100 ,Pcs,8,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 , rol ,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 , rol ,0,kemas_sekunder,,CPB0010200
+Aminophylline  10 ml @ 30,Aminophylline  10 ml @ 30,Ampul,9523,96.04%, AAA0010101 ,kg,2.424, raw_material ,Normal,AAA0010101
+,,,,, AAA0010201 ,kg,2.424, raw_material ,,AAA0010201
+,,,,, AAA0010301 ,kg,2.424, raw_material ,,AAA0010301
+,,,,, BSC0010101 ,kg,0.47, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.47, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.47, raw_material ,,BSC0010301
+,,,,, AET0010101 , liter ," 0,15-0,20 ", raw_material ,,AET0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CAM0050100 ,Pcs,"9,600",kemas_primer,,CAM0050100
+,,,,, CET0060100 ,Pcs,"9,842",kemas_sekunder,,CET0060100
+,,,,, CET0060200 ,Pcs,"9,842",kemas_sekunder,,CET0060200
+,,,,, CET0060300 ,Pcs,"9,842",kemas_sekunder,,CET0060300
+,,,,, CIN0050100 ,Pcs,319,kemas_sekunder,,CIN0050100
+,,,,, CIN0050200 ,Pcs,319,kemas_sekunder,,CIN0050200
+,,,,, CIN0050300 ,Pcs,319,kemas_sekunder,,CIN0050300
+,,,,, CRA0030100 ,Set,318,kemas_sekunder,,CRA0030100
+,,,,, CRA0030200 ,Set,318,kemas_sekunder,,CRA0030200
+,,,,, CBR0010100 ,Pcs,319,kemas_sekunder,,CBR0010100
+,,,,, CBR0010200 ,Pcs,319,kemas_sekunder,,CBR0010200
+,,,,, CBR0010300 ,Pcs,319,kemas_sekunder,,CBR0010300
+,,,,, LBK0200100 ,Pcs,318,kemas_sekunder,,LBK0200100
+,,,,, CSH0160100 ,Pcs,7,kemas_sekunder,,CSH0160100
+,,,,, LBK0100100 ,Pcs,21,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Antalgin 250 mg 10 ml,Antalgin 250 mg 10 ml,Vial,9500,, AMS0020101 ,kg,26.5, raw_material ,Normal,AMS0020101
+,,,,, BSF0010101 ,kg,0.4, raw_material ,,BSF0010101
+,,,,, BPH0010101 ,kg,0.5, raw_material ,,BPH0010101
+,,,,, BHA0010101 , ml ,450, raw_material ,,BHA0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"9,500",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"9,500",kemas_primer,,CRS0010100
+,,,,, CDO0010100 ,Pcs,"9,500",kemas_primer,,CDO0010100
+,,,,, CET0100100 ,Pcs,"10,475",kemas_sekunder,,CET0100100
+,,,,, CET0100200 ,Pcs,"10,475",kemas_sekunder,,CET0100200
+,,,,, CET0100300 ,Pcs,"10,475",kemas_sekunder,,CET0100300
+,,,,, CIN0100100 ,Pcs,952,kemas_sekunder,,CIN0100100
+,,,,, CIN0100200 ,Pcs,952,kemas_sekunder,,CIN0100200
+,,,,, CIN0100300 ,Pcs,952,kemas_sekunder,,CIN0100300
+,,,,, CRA0080100 ,Set,952,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,952,kemas_sekunder,,CRA0080200
+,,,,, CBR0060100 ,Pcs,952,kemas_sekunder,,CBR0060100
+,,,,, CBR0060200 ,Pcs,952,kemas_sekunder,,CBR0060200
+,,,,, CBR0060300 ,Pcs,952,kemas_sekunder,,CBR0060300
+,,,,, CSH0050100 ,Pcs,32,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,95,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+Antalgin 250 mg/ml 2 ml @ 30,Antalgin 250 mg/ml 2 ml @ 30,Vial,47,, AMS0020101 ,kg,26.5, raw_material ,Normal,AMS0020101
+,,,,, BSF0010101 ,kg,0.4, raw_material ,,BSF0010101
+,,,,, BBA0010101 ,Liter(s),0.25, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.25, raw_material ,,BBA0010201
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CAM0070100 ,Pcs,"47,385",kemas_primer,,CAM0070100
+,,,,, CAM0070200 ,Pcs,"47,385",kemas_primer,,CAM0070200
+,,,,, CET0110100 ,Pcs,"1,551",kemas_sekunder,,CET0110100
+,,,,, CET0110200 ,Pcs,"1,551",kemas_sekunder,,CET0110200
+,,,,, CET0110300 ,Pcs,"1,551",kemas_sekunder,,CET0110300
+,,,,, CIN0110100 ,Pcs,"1,551",kemas_sekunder,,CIN0110100
+,,,,, CIN0110200 ,Pcs,"1,551",kemas_sekunder,,CIN0110200
+,,,,, CIN0110300 ,Pcs,"1,551",kemas_sekunder,,CIN0110300
+,,,,, CRA0020100 ,Set,"1,550",kemas_sekunder,,CRA0020100
+,,,,, CRA0020200 ,Set,"1,550",kemas_sekunder,,CRA0020200
+,,,,, CBR0060100 ,Pcs,"1,551",kemas_sekunder,,CBR0060100
+,,,,, CBR0060200 ,Pcs,"1,551",kemas_sekunder,,CBR0060200
+,,,,, CBR0060300 ,Pcs,"1,551",kemas_sekunder,,CBR0060300
+,,,,, CSH0180100 ,Pcs,20,kemas_sekunder,,CSH0180100
+,,,,, LBK0100100 ,Pcs,40,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Calcii chlorid  10 ml Ampul,Calcii chlorid  10 ml Ampul,Ampul,4761,, ACC0010101 ,kg,5, raw_material ,Normal,ACC0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0050100 ,Pcs,"4,800",kemas_primer,,CAM0050100
+,,,,, CET0170100 ,Pcs,"4,858",kemas_sekunder,,CET0170100
+,,,,, CET0170200 ,Pcs,"4,858",kemas_sekunder,,CET0170200
+,,,,, CET0170300 ,Pcs,"4,858",kemas_sekunder,,CET0170300
+,,,,, CIN0130100 ,Pcs,97,kemas_sekunder,,CIN0130100
+,,,,, CIN0130200 ,Pcs,97,kemas_sekunder,,CIN0130200
+,,,,, CIN0130300 ,Pcs,97,kemas_sekunder,,CIN0130300
+,,,,, CRA0040100 ,Set,96,kemas_sekunder,,CRA0040100
+,,,,, CRA0040200 ,Set,96,kemas_sekunder,,CRA0040200
+,,,,, LBK0180100 ,Pcs,96,kemas_sekunder,,LBK0180100
+,,,,, CBR0090100 ,Pcs,97,kemas_sekunder,,CBR0090100
+,,,,, CBR0090200 ,Pcs,97,kemas_sekunder,,CBR0090200
+,,,,, CBR0090300 ,Pcs,97,kemas_sekunder,,CBR0090300
+,,,,, CSH0320100 ,Pcs,3,kemas_sekunder,,CSH0320100
+,,,,, LBK0100100 ,Pcs,7,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camidexon 5 mg/ml 1 ml Ampul,Camidexon 5 mg/ml 1 ml Ampul,Ampul,45454,, ADS0010101 ,kg,0.26, raw_material ,Normal,ADS0010101
+,,,,, ADS0010201 ,kg,0.26, raw_material ,,ADS0010201
+,,,,, BSD0030101 ,kg,0.05, raw_material ,,BSD0030101
+,,,,, BSC0010101 ,kg,0.62, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.62, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.62, raw_material ,,BSC0010301
+,,,,, BSD0010101 ,kg,0.05, raw_material ,,BSD0010101
+,,,,, BDH0010101 ,kg,0.535, raw_material ,,BDH0010101
+,,,,, BDH0010101 ,Liter(s),0.25, raw_material ,,BDH0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0040100 ,Pcs,"45,500",kemas_primer,,CAM0040100
+,,,,, CAM0040200 ,Pcs,"45,500",kemas_primer,,CAM0040200
+,,,,, CET0740100 ,Pcs,456,kemas_sekunder,,CET0740100
+,,,,, CET0740200 ,Pcs,456,kemas_sekunder,,CET0740200
+,,,,, CET0740300 ,Pcs,456,kemas_sekunder,,CET0740300
+,,,,, CIN0280100 ,Pcs,456,kemas_sekunder,,CIN0280100
+,,,,, CIN0280200 ,Pcs,456,kemas_sekunder,,CIN0280200
+,,,,, CIN0280300 ,Pcs,456,kemas_sekunder,,CIN0280300
+,,,,, CRA0010100 ,Set,455,kemas_sekunder,,CRA0010100
+,,,,, CRA0010200 ,Set,455,kemas_sekunder,,CRA0010200
+,,,,, CBR0240100 ,Pcs,456,kemas_sekunder,,CBR0240100
+,,,,, CBR0240200 ,Pcs,456,kemas_sekunder,,CBR0240200
+,,,,, CBR0240300 ,Pcs,456,kemas_sekunder,,CBR0240300
+,,,,, LBK0180100 ,Pcs,910,kemas_sekunder,,LBK0180100
+,,,,, LBK0070100 ,Pcs,38,kemas_sekunder,,LBK0070100
+,,,,, LBK0100100 ,Pcs,39,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camidon 15 ml,Camidon 15 ml,Vial,6451,, AMS0020101 ,kg,25.25, raw_material ,Normal,AMS0020101
+,,,,, AAM0010101 ,kg,5, raw_material ,,AAM0010101
+,,,,, ALH0010101 ,kg,1.5, raw_material ,,ALH0010101
+,,,,, BSF0010101 ,kg,0.4, raw_material ,,BSF0010101
+,,,,, BBA0010101 ,Liter(s),0.5, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.5, raw_material ,,BBA0010201
+,,,,, BHA0010101 , ml ,900, raw_material ,,BHA0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"6,500",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"6,500",kemas_primer,,CRS0010100
+,,,,, CFO0010100 ,Pcs,"6,500",kemas_primer,,CFO0010100
+,,,,, CFO0010200 ,Pcs,"6,500",kemas_primer,,CFO0010200
+,,,,, CET0340100 ,Pcs,"7,096",kemas_sekunder,,CET0340100
+,,,,, CET0340200 ,Pcs,"7,096",kemas_sekunder,,CET0340200
+,,,,, CET0340300 ,Pcs,"7,096",kemas_sekunder,,CET0340300
+,,,,, CIN0300100 ,Pcs,645,kemas_sekunder,,CIN0300100
+,,,,, CIN0300200 ,Pcs,645,kemas_sekunder,,CIN0300200
+,,,,, CIN0300300 ,Pcs,645,kemas_sekunder,,CIN0300300
+,,,,, CRA0080100 ,Set,645,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,645,kemas_sekunder,,CRA0080200
+,,,,, CBR0250100 ,Pcs,645,kemas_sekunder,,CBR0250100
+,,,,, CBR0250200 ,Pcs,645,kemas_sekunder,,CBR0250200
+,,,,, CBR0250300 ,Pcs,645,kemas_sekunder,,CBR0250300
+,,,,, CSH0050100 ,Pcs,22,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,65,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+Camidon 10 ml,Camidon 10 ml,Vial,9523,, AMS0020101 ,kg,25.25, raw_material ,Normal,AMS0020101
+,,,,, AAM0010101 ,kg,5, raw_material ,,AAM0010101
+,,,,, ALH0010101 ,kg,1.5, raw_material ,,ALH0010101
+,,,,, BSF0010101 ,kg,0.4, raw_material ,,BSF0010101
+,,,,, BBA0010101 ,Liter(s),0.5, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.5, raw_material ,,BBA0010201
+,,,,, BHA0010101 , ml ,900, raw_material ,,BHA0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"10,000",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"10,000",kemas_primer,,CRS0010100
+,,,,, CFO0030100 ,Pcs,"10,000",kemas_primer,,CFO0030100
+,,,,, CFO0030200 ,Pcs,"10,000",kemas_primer,,CFO0030200
+,,,,, CET0330100 ,Pcs,"9,524",kemas_sekunder,,CET0330100
+,,,,, CET0330200 ,Pcs,"9,524",kemas_sekunder,,CET0330200
+,,,,, CET0330300 ,Pcs,"9,524",kemas_sekunder,,CET0330300
+,,,,, CIN0290100 ,Pcs,954,kemas_sekunder,,CIN0290100
+,,,,, CIN0290200 ,Pcs,954,kemas_sekunder,,CIN0290200
+,,,,, CIN0290300 ,Pcs,954,kemas_sekunder,,CIN0290300
+,,,,, CRA0080100 ,Set,953,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,953,kemas_sekunder,,CRA0080200
+,,,,, CBR0250100 ,Pcs,954,kemas_sekunder,,CBR0250100
+,,,,, CBR0250200 ,Pcs,954,kemas_sekunder,,CBR0250200
+,,,,, CBR0250300 ,Pcs,954,kemas_sekunder,,CBR0250300
+,,,,, CSH0050100 ,Pcs,32,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,97,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+Camidryl 10 mg/ml 15 ml,Camidryl 10 mg/ml 15 ml,Vial,6541,, ADH0020101 ,kg,1, raw_material ,Normal,ADH0020101
+,,,,, BPH0010101 ,kg,0.5, raw_material ,,BPH0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"6,500",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"6,500",kemas_primer,,CRS0010100
+,,,,, CFO0010100 ,Pcs,"10,000",kemas_primer,,CFO0010100
+,,,,, CFO0010200 ,Pcs,"10,000",kemas_primer,,CFO0010200
+,,,,, CET0370100 ,Pcs,"7,097",kemas_sekunder,,CET0370100
+,,,,, CET0370200 ,Pcs,"7,097",kemas_sekunder,,CET0370200
+,,,,, CET0370300 ,Pcs,"7,097",kemas_sekunder,,CET0370300
+,,,,, CIN0330100 ,Pcs,646,kemas_sekunder,,CIN0330100
+,,,,, CIN0330200 ,Pcs,646,kemas_sekunder,,CIN0330200
+,,,,, CIN0330300 ,Pcs,646,kemas_sekunder,,CIN0330300
+,,,,, CRA0080100 ,Set,646,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,646,kemas_sekunder,,CRA0080200
+,,,,, CBR0270100 ,Pcs,954,kemas_sekunder,,CBR0270100
+,,,,, CBR0270200 ,Pcs,954,kemas_sekunder,,CBR0270200
+,,,,, CBR0270300 ,Pcs,954,kemas_sekunder,,CBR0270300
+,,,,, CSH0050100 ,Pcs,22,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,65,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camidryl 10 mg/ml 10 ml,Camidryl 10 mg/ml 10 ml,Vial,9523,, ADH0020101 ,kg,1, raw_material ,Normal,ADH0020101
+,,,,, BBC0010101 ,g,10, raw_material ,,BBC0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"10,000",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"10,000",kemas_primer,,CRS0010100
+,,,,, CFO0010100 ,Pcs,"10,000",kemas_primer,,CFO0010100
+,,,,, CFO0010200 ,Pcs,"10,000",kemas_primer,,CFO0010200
+,,,,, CET0360100 ,Pcs,"9,524",kemas_sekunder,,CET0360100
+,,,,, CET0360200 ,Pcs,"9,524",kemas_sekunder,,CET0360200
+,,,,, CET0360300 ,Pcs,"9,524",kemas_sekunder,,CET0360300
+,,,,, CIN0320100 ,Pcs,954,kemas_sekunder,,CIN0320100
+,,,,, CIN0320200 ,Pcs,954,kemas_sekunder,,CIN0320200
+,,,,, CIN0320300 ,Pcs,954,kemas_sekunder,,CIN0320300
+,,,,, CRA0080100 ,Set,953,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,953,kemas_sekunder,,CRA0080200
+,,,,, CBR0270100 ,Pcs,954,kemas_sekunder,,CBR0270100
+,,,,, CBR0270200 ,Pcs,954,kemas_sekunder,,CBR0270200
+,,,,, CBR0270300 ,Pcs,954,kemas_sekunder,,CBR0270300
+,,,,, CSH0050100 ,Pcs,32,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,97,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camigesik 50 mg/ml 2 ml,Camigesik 50 mg/ml 2 ml,Ampul,46511,, ATH0040101 ,kg,5, raw_material ,Normal,ATH0040101
+,,,,, BSA0010101 ,kg,0.25, raw_material ,,BSA0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CAM0070100 ,Pcs,"47,385",kemas_primer,,CAM0070100
+,,,,, CAM0070200 ,Pcs,"47,385",kemas_primer,,CAM0070200
+,,,,, CIN0340100 ,Pcs,"4,653",kemas_sekunder,,CIN0340100
+,,,,, CIN0340200 ,Pcs,"4,653",kemas_sekunder,,CIN0340200
+,,,,, CRO0040100 ,Set,"9,303",kemas_sekunder,,CRO0040100
+,,,,, CBR0280100 ,Pcs,"4,653",kemas_sekunder,,CBR0280100
+,,,,, CBR0280200 ,Pcs,"4,653",kemas_sekunder,,CBR0280200
+,,,,, CBR0280300 ,Pcs,"4,653",kemas_sekunder,,CBR0280300
+,,,,, LBK0170100 ,Pcs,"2,326",kemas_sekunder,,LBK0170100
+,,,,, CSH0110100 ,Pcs,47,kemas_sekunder,,CSH0110100
+,,,,, LBK0100100 ,Pcs,95,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,3,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,3,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,2,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,2,kemas_sekunder,,CPB0010200
+Chlorpromazine 5 mg/ml 2 ml,Chlorpromazine 5 mg/ml 2 ml,Ampul,23809,, ACH0010101 ,kg,1.275, raw_material ,Normal,ACH0010101
+,,,,, BSC0010101 ,kg,0.325, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.325, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.325, raw_material ,,BSC0010301
+,,,,, LBB0010101 ,g,50, raw_material ,,LBB0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0070100 ,Pcs,"24,000",kemas_primer,,CAM0070100
+,,,,, CAM0070200 ,Pcs,"24,000",kemas_primer,,CAM0070200
+,,,,, CET0560100 ,Pcs,805,kemas_sekunder,,CET0560100
+,,,,, CET0560200 ,Pcs,805,kemas_sekunder,,CET0560200
+,,,,, CET0560300 ,Pcs,805,kemas_sekunder,,CET0560300
+,,,,, CIN0570100 ,Pcs,785,kemas_sekunder,,CIN0570100
+,,,,, CIN0570200 ,Pcs,785,kemas_sekunder,,CIN0570200
+,,,,, CIN0570300 ,Pcs,785,kemas_sekunder,,CIN0570300
+,,,,, CRA0020100 ,Set,785,kemas_sekunder,,CRA0020100
+,,,,, CRA0020200 ,Set,785,kemas_sekunder,,CRA0020200
+,,,,, CBR0520100 ,Pcs,785,kemas_sekunder,,CBR0520100
+,,,,, CBR0520200 ,Pcs,785,kemas_sekunder,,CBR0520200
+,,,,, CBR0520300 ,Pcs,785,kemas_sekunder,,CBR0520300
+,,,,, LBK0290100 ,Pcs,20,kemas_sekunder,,LBK0290100
+,,,,, LBK0100100 ,Pcs,20,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Chlorpromazine 25 mg/ml 1 ml,Chlorpromazine 25 mg/ml 1 ml,Ampul,45450,, ACH0010101 ,kg,1.275, raw_material ,Normal,ACH0010101
+,,,,, BSC0010101 ,kg,0.325, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.325, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.325, raw_material ,,BSC0010301
+,,,,, LBB0010101 ,g,50, raw_material ,,LBB0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0020100 ,Pcs,"50,000",kemas_primer,,CAM0020100
+,,,,, CET0550100 ,Pcs,"1,553",kemas_sekunder,,CET0550100
+,,,,, CET0550200 ,Pcs,"1,553",kemas_sekunder,,CET0550200
+,,,,, CET0550300 ,Pcs,"1,553",kemas_sekunder,,CET0550300
+,,,,, CIN0560100 ,Pcs,"1,515",kemas_sekunder,,CIN0560100
+,,,,, CIN0560200 ,Pcs,"1,515",kemas_sekunder,,CIN0560200
+,,,,, CIN0560300 ,Pcs,"1,515",kemas_sekunder,,CIN0560300
+,,,,, CRA0020100 ,Set,"1,515",kemas_sekunder,,CRA0020100
+,,,,, CRA0020200 ,Set,"1,515",kemas_sekunder,,CRA0020200
+,,,,, CBR0520100 ,Pcs,"1,515",kemas_sekunder,,CBR0520100
+,,,,, CBR0520200 ,Pcs,"1,515",kemas_sekunder,,CBR0520200
+,,,,, CBR0520300 ,Pcs,"1,515",kemas_sekunder,,CBR0520300
+,,,,, LBK0300100 ,Pcs,38,kemas_sekunder,,LBK0300100
+,,,,, LBK0100100 ,Pcs,38,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Cholimed 125 mg/ml 2 ml,Cholimed 125 mg/ml 2 ml,Ampul,23529,, ACS0010101 ,kg,6.56, raw_material ,Normal,ACS0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0070100 ,Pcs,"24,000",kemas_primer,,CAM0070100
+,,,,, CAM0070200 ,Pcs,"24,000",kemas_primer,,CAM0070200
+,,,,, CET0570100 ,Pcs,"23,257",kemas_sekunder,,CET0570100
+,,,,, CET0570200 ,Pcs,"23,257",kemas_sekunder,,CET0570200
+,,,,, CET0570300 ,Pcs,"23,257",kemas_sekunder,,CET0570300
+,,,,, CRO0040100 ,Set,"4,652",kemas_sekunder,,CRO0040100
+,,,,, CBR0530100 ,Pcs,"2,327",kemas_sekunder,,CBR0530100
+,,,,, CBR0530200 ,Pcs,"2,327",kemas_sekunder,,CBR0530200
+,,,,, CBR0530300 ,Pcs,"2,327",kemas_sekunder,,CBR0530300
+,,,,, CIN0580100 ,Pcs,"2,327",kemas_sekunder,,CIN0580100
+,,,,, CIN0580200 ,Pcs,"2,327",kemas_sekunder,,CIN0580200
+,,,,, CSH0110100 ,Pcs,24,kemas_sekunder,,CSH0110100
+,,,,, LBK0100100 ,Pcs,48,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Dexamethasone 5 mg/ml 1 ml,Dexamethasone 5 mg/ml 1 ml,Ampul,45454,, ADS0010101 ,kg,0.26, raw_material ,Normal,ADS0010101
+,,,,, ADS0010201 ,kg,0.26, raw_material ,,ADS0010201
+,,,,, BSD0030101 ,kg,0.05, raw_material ,,BSD0030101
+,,,,, BSC0010101 ,kg,0.62, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.62, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.62, raw_material ,,BSC0010301
+,,,,, BSD0010101 ,kg,0.05, raw_material ,,BSD0010101
+,,,,, BDH0010101 ,kg,0.535, raw_material ,,BDH0010101
+,,,,, BDH0010101 ,Liter(s),0.25, raw_material ,,BDH0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0040100 ,Pcs,"45,500",kemas_primer,,CAM0040100
+,,,,, CAM0040200 ,Pcs,"45,500",kemas_primer,,CAM0040200
+,,,,, CIN0610100 ,Pcs,456,kemas_sekunder,,CIN0610100
+,,,,, CIN0610200 ,Pcs,456,kemas_sekunder,,CIN0610200
+,,,,, CIN0610300 ,Pcs,456,kemas_sekunder,,CIN0610300
+,,,,, CRA0010100 ,Set,455,kemas_sekunder,,CRA0010100
+,,,,, CRA0010200 ,Set,455,kemas_sekunder,,CRA0010200
+,,,,, CBR0580100 ,Pcs,456,kemas_sekunder,,CBR0580100
+,,,,, CBR0580200 ,Pcs,456,kemas_sekunder,,CBR0580200
+,,,,, CBR0580300 ,Pcs,456,kemas_sekunder,,CBR0580300
+,,,,, LBK0180100 ,Pcs,910,kemas_sekunder,,LBK0180100
+,,,,, CSH0090100 ,Pcs,19,kemas_sekunder,,CSH0090100
+,,,,, LBK0100100 ,Pcs,39,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Diphenhydramine 10 mg/ml 1 ml,Diphenhydramine 10 mg/ml 1 ml,Ampul,45454,, ADH0020101 ,kg,0.5, raw_material ,Normal,ADH0020101
+,,,,, BBA0010101 ,Liter(s),0.125, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.125, raw_material ,,BBA0010201
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0040100 ,Pcs,"45,500",kemas_primer,,CAM0040100
+,,,,, CAM0040200 ,Pcs,"45,500",kemas_primer,,CAM0040200
+,,,,, CIN0620100 ,Pcs,"1,516",kemas_sekunder,,CIN0620100
+,,,,, CIN0620200 ,Pcs,"1,516",kemas_sekunder,,CIN0620200
+,,,,, CIN0620300 ,Pcs,"1,516",kemas_sekunder,,CIN0620300
+,,,,, CRA0020100 ,Set,"1,515",kemas_sekunder,,CRA0020100
+,,,,, CRA0020200 ,Set,"1,515",kemas_sekunder,,CRA0020200
+,,,,, CBR0600100 , lbr ,"1,516",kemas_sekunder,,CBR0600100
+,,,,, CBR0600200 , lbr ,"1,516",kemas_sekunder,,CBR0600200
+,,,,, CBR0600300 , lbr ,"1,516",kemas_sekunder,,CBR0600300
+,,,,, CSH0190100 ,Pcs,13,kemas_sekunder,,CSH0190100
+,,,,, LBK0100100 ,Pcs,39,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Dobutamine 25 mg/ml 10 ml,Dobutamine 25 mg/ml 10 ml,Vial,9523,, ADH0030101 ,kg,2.83, raw_material ,Normal,ADH0030101
+,,,,, ADH0030201 ,kg,2.83, raw_material ,,ADH0030201
+,,,,, ADH0030301 ,kg,2.83, raw_material ,,ADH0030301
+,,,,, ADH0030401 ,kg,2.83, raw_material ,,ADH0030401
+,,,,, BSD0030101 ,kg,0.1, raw_material ,,BSD0030101
+,,,,, BDE0010101 ,g,10, raw_material ,,BDE0010101
+,,,,, BHA0010101 , ml ,20, raw_material ,,BHA0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"10,000",kemas_primer,,CVI0020100
+,,,,, CRS0020100 ,Pcs,"10,000",kemas_primer,,CRS0020100
+,,,,, CDO0010100 ,Pcs,"10,000",kemas_primer,,CDO0010100
+,,,,, CET0620100 ,Pcs,"9,523",kemas_sekunder,,CET0620100
+,,,,, CET0620200 ,Pcs,"9,523",kemas_sekunder,,CET0620200
+,,,,, CET0620300 ,Pcs,"9,523",kemas_sekunder,,CET0620300
+,,,,, CIN0630100 ,Pcs,"9,523",kemas_sekunder,,CIN0630100
+,,,,, CIN0630200 ,Pcs,"9,523",kemas_sekunder,,CIN0630200
+,,,,, CIN0630300 ,Pcs,"9,523",kemas_sekunder,,CIN0630300
+,,,,, CBR0610100 ,Pcs,"9,523",kemas_sekunder,,CBR0610100
+,,,,, CBR0610200 ,Pcs,"9,523",kemas_sekunder,,CBR0610200
+,,,,, CBR0610300 ,Pcs,"9,523",kemas_sekunder,,CBR0610300
+,,,,, CSH0070100 ,Pcs,132,kemas_sekunder,,CSH0070100
+,,,,, LBK0100100 ,Pcs,397,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,2,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,2,kemas_sekunder,,CPB0010200
+"Glomethyl 0,2 mg/ml 1 ml","Glomethyl 0,2 mg/ml 1 ml",Ampul,45450,, AMM0010101 ,g,11, raw_material ,Normal,AMM0010101
+,,,,, BTA0020101 ,g,12.5, raw_material ,,BTA0020101
+,,,,, BSC0010101 ,kg,0.15, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.15, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.15, raw_material ,,BSC0010301
+,,,,, BDE0010101 ,g,5, raw_material ,,BDE0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0020100 ,Pcs,"45,450",kemas_primer,,CAM0020100
+,,,,, CRO0010100 ,Set,"9,090",kemas_primer,,CRO0010100
+,,,,, CIN0720100 ,Pcs,"4,545",kemas_sekunder,,CIN0720100
+,,,,, CIN0720200 ,Pcs,"4,545",kemas_sekunder,,CIN0720200
+,,,,, CBR0670100 ,Pcs,"4,545",kemas_sekunder,,CBR0670100
+,,,,, CBR0670200 ,Pcs,"4,545",kemas_sekunder,,CBR0670200
+,,,,, CBR0670300 ,Pcs,"4,545",kemas_sekunder,,CBR0670300
+,,,,, CSH0090100 ,Pcs,46,kemas_sekunder,,CSH0090100
+,,,,, LBK0100100 ,Pcs,91,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Glomin 40 mg/ml 5 ml,Glomin 40 mg/ml 5 ml,Ampul,9433,, ADH0040101 ,kg,2, raw_material ,Normal,ADH0040101
+,,,,, BSD0030101 ,kg,0.456, raw_material ,,BSD0030101
+,,,,, BCA0010101 ,kg,0.5, raw_material ,,BCA0010101
+,,,,, BCA0010201 ,kg,0.5, raw_material ,,BCA0010201
+,,,,, BSC0040101 ,g,0.25, raw_material ,,BSC0040101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0090100 ,,"9,500",kemas_primer,,CAM0090100
+,,,,, CET0680100 ,Pcs,"9,433",kemas_sekunder,,CET0680100
+,,,,, CET0680200 ,Pcs,"9,433",kemas_sekunder,,CET0680200
+,,,,, CRO0050100 ,Set,"1,887",kemas_sekunder,,CRO0050100
+,,,,, CIN0730100 ,Pcs,"1,887",kemas_sekunder,,CIN0730100
+,,,,, CIN0730200 ,Pcs,"1,887",kemas_sekunder,,CIN0730200
+,,,,, CBR0680100 ,Pcs,"1,887",kemas_sekunder,,CBR0680100
+,,,,, CBR0680200 ,Pcs,"1,887",kemas_sekunder,,CBR0680200
+,,,,, CBR0680300 ,Pcs,"1,887",kemas_sekunder,,CBR0680300
+,,,,, CSH0110100 ,Pcs,32,kemas_sekunder,,CSH0110100
+,,,,, LBK0100100 ,Pcs,64,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, LBK0240100 ,Roll,1,kemas_sekunder,,LBK0240100
+Lidocain compositum 2 ml,Lidocain compositum 2 ml,Ampul,47619,, ALH0010101 ,kg,2.06, raw_material ,Normal,ALH0010101
+,,,,, AEB0010101 ,g,2.6, raw_material ,,AEB0010101
+,,,,, BDE0010101 ,g,10, raw_material ,,BDE0010101
+,,,,, BSD0030101 ,kg,0.05, raw_material ,,BSD0030101
+,,,,, BMP0010101 ,kg,0.12, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.12, raw_material ,,BMP0010201
+,,,,, BTA0020101 ,g,7.02, raw_material ,,BTA0020101
+,,,,, BPG0010101 ,kg,5.195, raw_material ,,BPG0010101
+,,,,, BPG0010201 ,kg,5.195, raw_material ,,BPG0010201
+,,,,, BPG0010301 ,kg,5.195, raw_material ,,BPG0010301
+,,,,, BPG0010401 ,kg,5.195, raw_material ,,BPG0010401
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CAM0070100 ,Pcs,"47,650",kemas_primer,,CAM0070100
+,,,,, CAM0070200 ,Pcs,"47,650",kemas_primer,,CAM0070200
+,,,,, CIN0820100 ,Pcs,"1,588",kemas_sekunder,,CIN0820100
+,,,,, CIN0820200 ,Pcs,"1,588",kemas_sekunder,,CIN0820200
+,,,,, CIN0820300 ,Pcs,"1,588",kemas_sekunder,,CIN0820300
+,,,,, CRA0020100 ,Set,"1,588",kemas_sekunder,,CRA0020100
+,,,,, CRA0020200 ,Set,"1,588",kemas_sekunder,,CRA0020200
+,,,,, CBR0740100 ,Pcs,"1,588",kemas_sekunder,,CBR0740100
+,,,,, CBR0740200 ,Pcs,"1,588",kemas_sekunder,,CBR0740200
+,,,,, CBR0740300 ,Pcs,"1,588",kemas_sekunder,,CBR0740300
+,,,,, CSH0180100 ,Pcs,20,kemas_sekunder,,CSH0180100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Lidocaine 2% 2 ml,Lidocaine 2% 2 ml,Ampul,47619,, ALH0010101 ,kg,2.04, raw_material ,Normal,ALH0010101
+,,,,, BSC0010101 ,kg,0.214, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.214, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.214, raw_material ,,BSC0010301
+,,,,, BSD0030101 ,kg,0.1, raw_material ,,BSD0030101
+,,,,, BPD0010101 ,kg,0.477, raw_material ,,BPD0010101
+,,,,, BPD0010201 ,kg,0.477, raw_material ,,BPD0010201
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CAM0070100 ,Pcs,"47,650",kemas_primer,,CAM0070100
+,,,,, CAM0070200 ,Pcs,"47,650",kemas_primer,,CAM0070200
+,,,,, CIN0810100 ,Pcs,478,kemas_sekunder,,CIN0810100
+,,,,, CIN0810200 ,Pcs,478,kemas_sekunder,,CIN0810200
+,,,,, CIN0810300 ,Pcs,478,kemas_sekunder,,CIN0810300
+,,,,, CRA0010100 ,Set,477,kemas_sekunder,,CRA0010100
+,,,,, CRA0010200 ,Set,477,kemas_sekunder,,CRA0010200
+,,,,, LBK0180100 ,Pcs,954,kemas_sekunder,,LBK0180100
+,,,,, CBR0730100 ,Pcs,478,kemas_sekunder,,CBR0730100
+,,,,, CBR0730200 ,Pcs,478,kemas_sekunder,,CBR0730200
+,,,,, CBR0730300 ,Pcs,478,kemas_sekunder,,CBR0730300
+,,,,, CSH0080100 ,Pcs,20,kemas_sekunder,,CSH0080100
+,,,,, LBK0100100 ,Pcs,41,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Lunex 50 mg/ml 5 ml,Lunex 50 mg/ml 5 ml,Ampul,9433,, ATA0020101 ,kg,2.5, raw_material ,Normal,ATA0020101
+,,,,, ATA0020201 ,kg,2.5, raw_material ,,ATA0020201
+,,,,, BHA0010101 , ml ,250, raw_material ,,BHA0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0090100 ,Pcs,"10,000",kemas_primer,,CAM0090100
+,,,,, CET0780100 ,Pcs,"9,433",kemas_sekunder,,CET0780100
+,,,,, CET0780200 ,Pcs,"9,433",kemas_sekunder,,CET0780200
+,,,,, CRO0050100 ,Set,"1,887",kemas_sekunder,,CRO0050100
+,,,,, CIN0830100 ,Pcs,943,kemas_sekunder,,CIN0830100
+,,,,, CIN0830200 ,Pcs,943,kemas_sekunder,,CIN0830200
+,,,,, CBR0750100 ,Pcs,943,kemas_sekunder,,CBR0750100
+,,,,, CBR0750200 ,Pcs,943,kemas_sekunder,,CBR0750200
+,,,,, CBR0750300 ,Pcs,943,kemas_sekunder,,CBR0750300
+,,,,, CSH0110100 ,Pcs,16,kemas_sekunder,,CSH0110100
+,,,,, LBK0100100 ,Pcs,32,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Lunex 100mg/ml 5 ml,Lunex 100mg/ml 5 ml,Ampul,18867,, ATA0020101 ,kg,10, raw_material ,Normal,ATA0020101
+,,,,, ATA0020201 ,kg,10, raw_material ,,ATA0020201
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CAM0090100 ,Pcs,"20,000",kemas_primer,,CAM0090100
+,,,,, CET0770100 ,Pcs,"18,868",kemas_sekunder,,CET0770100
+,,,,, CET0770200 ,Pcs,"18,868",kemas_sekunder,,CET0770200
+,,,,, CRO0050100 ,Set,"3,773",kemas_sekunder,,CRO0050100
+,,,,, CBR0750100 ,Pcs,"1,888",kemas_sekunder,,CBR0750100
+,,,,, CBR0750200 ,Pcs,"1,888",kemas_sekunder,,CBR0750200
+,,,,, CBR0750300 ,Pcs,"1,888",kemas_sekunder,,CBR0750300
+,,,,, CSH0110100 ,Pcs,32,kemas_sekunder,,CSH0110100
+,,,,, LBK0100100 ,Pcs,64,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+"Methylergometrine 0,2mg/ml 1ml","Methylergometrine 0,2mg/ml 1ml",Ampul,45454,, AMM0010101 ,g,11, raw_material ,Normal,AMM0010101
+,,,,, BTA0020101 ,g,12.5, raw_material ,,BTA0020101
+,,,,, BSC0010101 ,kg,0.15, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.15, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.15, raw_material ,,BSC0010301
+,,,,, BDE0010101 ,g,5, raw_material ,,BDE0010101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0020100 ,Pcs,"45,500",kemas_primer,,CAM0020100
+,,,,, CIN0870100 ,Pcs,"1,516",kemas_sekunder,,CIN0870100
+,,,,, CIN0870200 ,Pcs,"1,516",kemas_sekunder,,CIN0870200
+,,,,, CIN0870300 ,Pcs,"1,516",kemas_sekunder,,CIN0870300
+,,,,, CRA0020100 ,Set,"1,515",kemas_sekunder,,CRA0020100
+,,,,, CRA0020200 ,Set,"1,515",kemas_sekunder,,CRA0020200
+,,,,, CBR0770100 ,Pcs,"1,516",kemas_sekunder,,CBR0770100
+,,,,, CBR0770200 ,Pcs,"1,516",kemas_sekunder,,CBR0770200
+,,,,, CBR0770300 ,Pcs,"1,516",kemas_sekunder,,CBR0770300
+,,,,, CSH0190100 ,Pcs,13,kemas_sekunder,,CSH0190100
+,,,,, LBK0100100 ,Pcs,39,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Papaverin 40 mg/ml 10 ml,Papaverin 40 mg/ml 10 ml,Vial,9523,, APH0010101 ,kg,4, raw_material ,Normal,APH0010101
+,,,,, BDE0010101 ,g,5, raw_material ,,BDE0010101
+,,,,, BCA0020101 ,kg,0.45, raw_material ,,BCA0020101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"9,600",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"9,600",kemas_primer,,CRS0010100
+,,,,, CFO0030100 ,Pcs,"9,600",kemas_primer,,CFO0030100
+,,,,, CFO0030200 ,Pcs,"9,600",kemas_primer,,CFO0030200
+,,,,, CET0890100 ,Pcs,"10,475",kemas_sekunder,,CET0890100
+,,,,, CET0890200 ,Pcs,"10,475",kemas_sekunder,,CET0890200
+,,,,, CET0890300 ,Pcs,"10,475",kemas_sekunder,,CET0890300
+,,,,, CIN0940100 ,Pcs,952,kemas_sekunder,,CIN0940100
+,,,,, CIN0940200 ,Pcs,952,kemas_sekunder,,CIN0940200
+,,,,, CIN0940300 ,Pcs,952,kemas_sekunder,,CIN0940300
+,,,,, CRA0080100 ,Set,952,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,952,kemas_sekunder,,CRA0080200
+,,,,, CBR0840100 ,Pcs,952,kemas_sekunder,,CBR0840100
+,,,,, CBR0840200 ,Pcs,952,kemas_sekunder,,CBR0840200
+,,,,, CBR0840300 ,Pcs,952,kemas_sekunder,,CBR0840300
+,,,,, CSH0050100 ,Pcs,32,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,95,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+Papaverin 40 mg/ml 1 ml,Papaverin 40 mg/ml 1 ml,Ampul,45454,, APH0010101 ,kg,2, raw_material ,Normal,APH0010101
+,,,,, BDE0010101 ,g,2.5, raw_material ,,BDE0010101
+,,,,, BCA0020101 ,kg,0.225, raw_material ,,BCA0020101
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0040100 ,Pcs,"45,500",kemas_primer,,CAM0040100
+,,,,, CAM0040200 ,Pcs,"45,500",kemas_primer,,CAM0040200
+,,,,, CIN0950100 ,Pcs,456,kemas_sekunder,,CIN0950100
+,,,,, CIN0950200 ,Pcs,456,kemas_sekunder,,CIN0950200
+,,,,, CIN0950300 ,Pcs,456,kemas_sekunder,,CIN0950300
+,,,,, CRA0010100 ,Set,455,kemas_sekunder,,CRA0010100
+,,,,, CRA0010200 ,Set,455,kemas_sekunder,,CRA0010200
+,,,,, LBK0180100 ,Pcs,910,kemas_sekunder,,LBK0180100
+,,,,, CBR0840100 ,Pcs,456,kemas_sekunder,,CBR0840100
+,,,,, CBR0840200 ,Pcs,456,kemas_sekunder,,CBR0840200
+,,,,, CBR0840300 ,Pcs,456,kemas_sekunder,,CBR0840300
+,,,,, CSH0080100 ,Pcs,19,kemas_sekunder,,CSH0080100
+,,,,, LBK0100100 ,Pcs,38,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Vitamin B complex 10 ml,Vitamin B complex 10 ml,Vial,9523,, ATH0020101 ,kg,0.22, raw_material ,Normal,ATH0020101
+,,,,, ARP0010101 ,g,0.297, raw_material ,,ARP0010101
+,,,,, APH0060101 ,kg,0.2, raw_material ,,APH0060101
+,,,,, ADE0010101 ,kg,1.05, raw_material ,,ADE0010101
+,,,,, ANI0010101 ,g,2, raw_material ,,ANI0010101
+,,,,, APH0040101 ,kg,0.204, raw_material ,,APH0040101
+,,,,, BSD0030101 ,kg,0.1, raw_material ,,BSD0030101
+,,,,, BPH0010101 ,kg,0.5, raw_material ,,BPH0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"9,600",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"9,600",kemas_primer,,CRS0010100
+,,,,, CFO0040100 ,Pcs,"9,600",kemas_primer,,CFO0040100
+,,,,, CFO0040200 ,Pcs,"9,600",kemas_primer,,CFO0040200
+,,,,, CET1100100 ,Pcs,"10,475",kemas_sekunder,,CET1100100
+,,,,, CET1100200 ,Pcs,"10,475",kemas_sekunder,,CET1100200
+,,,,, CET1100300 ,Pcs,"10,475",kemas_sekunder,,CET1100300
+,,,,, CIN1030100 ,Pcs,952,kemas_sekunder,,CIN1030100
+,,,,, CIN1030200 ,Pcs,952,kemas_sekunder,,CIN1030200
+,,,,, CIN1030300 ,Pcs,952,kemas_sekunder,,CIN1030300
+,,,,, CRA0080100 ,Set,952,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,952,kemas_sekunder,,CRA0080200
+,,,,, CBR0990100 ,Pcs,952,kemas_sekunder,,CBR0990100
+,,,,, CBR0990200 ,Pcs,952,kemas_sekunder,,CBR0990200
+,,,,, CBR0990300 ,Pcs,952,kemas_sekunder,,CBR0990300
+,,,,, CSH0050100 ,Pcs,32,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,95,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Vitamin B complex 20 ml,Vitamin B complex 20 ml,Vial,4854,, ATH0020101 ,kg,0.22, raw_material ,Normal,ATH0020101
+,,,,, ARP0010101 ,g,0.297, raw_material ,,ARP0010101
+,,,,, APH0060101 ,kg,0.2, raw_material ,,APH0060101
+,,,,, ADE0010101 ,kg,1.05, raw_material ,,ADE0010101
+,,,,, ANI0010101 ,g,2, raw_material ,,ANI0010101
+,,,,, APH0040101 ,kg,0.204, raw_material ,,APH0040101
+,,,,, BSD0030101 ,kg,0.1, raw_material ,,BSD0030101
+,,,,, BPH0010101 ,kg,0.5, raw_material ,,BPH0010101
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0030100 ,Pcs,"5,000",kemas_primer,,CVI0030100
+,,,,, CRS0010100 ,Pcs,"5,000",kemas_primer,,CRS0010100
+,,,,, CFO0040100 ,Pcs,"5,000",kemas_primer,,CFO0040100
+,,,,, CFO0040200 ,Pcs,"5,000",kemas_primer,,CFO0040200
+,,,,, CET1110100 ,Pcs,"4,855",kemas_sekunder,,CET1110100
+,,,,, CET1110200 ,Pcs,"4,855",kemas_sekunder,,CET1110200
+,,,,, CET1110300 ,Pcs,"4,855",kemas_sekunder,,CET1110300
+,,,,, CIN1040100 ,Pcs,487,kemas_sekunder,,CIN1040100
+,,,,, CIN1040200 ,Pcs,487,kemas_sekunder,,CIN1040200
+,,,,, CIN1040300 ,Pcs,487,kemas_sekunder,,CIN1040300
+,,,,, CRA0080100 ,Set,486,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,486,kemas_sekunder,,CRA0080200
+,,,,, CBR0990100 ,Pcs,487,kemas_sekunder,,CBR0990100
+,,,,, CBR0990200 ,Pcs,487,kemas_sekunder,,CBR0990200
+,,,,, CBR0990300 ,Pcs,487,kemas_sekunder,,CBR0990300
+,,,,, CSH0080100 ,Pcs,16,kemas_sekunder,,CSH0080100
+,,,,, LBK0100100 ,Pcs,50,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Vitamin B12 500mcg/ml 1 ml,Vitamin B12 500mcg/ml 1 ml,Ampul,,92.27%, ACY0010101 ,g,26.5, raw_material ,Normal,ACY0010101
+,,,,, ACY0010201 ,g,26.5, raw_material ,,ACY0010201
+,,,,, BSD0010101 ,kg,0.17, raw_material ,,BSD0010101
+,,,,, BSC0010101 ,kg,0.243, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.243, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.243, raw_material ,,BSC0010301
+,,,,, BBA0010101 ,Liter(s),0.125, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.125, raw_material ,,BBA0010201
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0040100 ,Pcs,"45,500",kemas_primer,,CAM0040100
+,,,,, CAM0040200 ,Pcs,"45,500",kemas_primer,,CAM0040200
+,,,,, CIN1060100 ,Pcs,456,kemas_sekunder,,CIN1060100
+,,,,, CIN1060200 ,Pcs,456,kemas_sekunder,,CIN1060200
+,,,,, CIN1060300 ,Pcs,456,kemas_sekunder,,CIN1060300
+,,,,, CRA0010100 ,Set,455,kemas_sekunder,,CRA0010100
+,,,,, CRA0010200 ,Set,455,kemas_sekunder,,CRA0010200
+,,,,, LBK0180100 ,Pcs,910,kemas_sekunder,,LBK0180100
+,,,,, CBR1010100 ,Pcs,456,kemas_sekunder,,CBR1010100
+,,,,, CBR1010200 ,Pcs,456,kemas_sekunder,,CBR1010200
+,,,,, CBR1010300 ,Pcs,456,kemas_sekunder,,CBR1010300
+,,,,, CSH0090100 ,Pcs,19,kemas_sekunder,,CSH0090100
+,,,,, LBK0100100 ,Pcs,39,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Vitamin B12 500 mcg/ml 10 ml,Vitamin B12 500 mcg/ml 10 ml,Vial,9523,, ACY0010101 ,g,53, raw_material ,Normal,ACY0010101
+,,,,, ACY0010201 ,g,53, raw_material ,,ACY0010201
+,,,,, BSD0010101 ,kg,0.339, raw_material ,,BSD0010101
+,,,,, BSC0010101 ,kg,0.486, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.486, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.486, raw_material ,,BSC0010301
+,,,,, BBA0010101 ,Liter(s),0.25, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.25, raw_material ,,BBA0010201
+,,,,, BWF0010101 ,Liter(s),100, raw_material ,,BWF0010101
+,,,,, CVI0020100 ,Pcs,"9,600",kemas_primer,,CVI0020100
+,,,,, CRS0010100 ,Pcs,"9,600",kemas_primer,,CRS0010100
+,,,,, CFO0040100 ,Pcs,"9,600",kemas_primer,,CFO0040100
+,,,,, CFO0040200 ,Pcs,"9,600",kemas_primer,,CFO0040200
+,,,,, CET1130100 ,Pcs,"9,524",kemas_sekunder,,CET1130100
+,,,,, CET1130200 ,Pcs,"9,524",kemas_sekunder,,CET1130200
+,,,,, CET1130300 ,Pcs,"9,524",kemas_sekunder,,CET1130300
+,,,,, CIN1070100 ,Pcs,954,kemas_sekunder,,CIN1070100
+,,,,, CIN1070200 ,Pcs,954,kemas_sekunder,,CIN1070200
+,,,,, CIN1070300 ,Pcs,954,kemas_sekunder,,CIN1070300
+,,,,, CRA0080100 ,Set,953,kemas_sekunder,,CRA0080100
+,,,,, CRA0080200 ,Set,953,kemas_sekunder,,CRA0080200
+,,,,, CBR1010100 ,Pcs,954,kemas_sekunder,,CBR1010100
+,,,,, CBR1010200 ,Pcs,954,kemas_sekunder,,CBR1010200
+,,,,, CBR1010300 ,Pcs,954,kemas_sekunder,,CBR1010300
+,,,,, CSH0050100 ,Pcs,32,kemas_sekunder,,CSH0050100
+,,,,, LBK0100100 ,Pcs,97,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Vitamin K 10 mg/ml 1 ml,Vitamin K 10 mg/ml 1 ml,Ampul,45454,, AMS0010101 ,kg,0.55, raw_material ,Normal,AMS0010101
+,,,,, BSD0030101 ,kg,0.1, raw_material ,,BSD0030101
+,,,,, BSC0010101 ,kg,0.195, raw_material ,,BSC0010101
+,,,,, BSC0010201 ,kg,0.195, raw_material ,,BSC0010201
+,,,,, BSC0010301 ,kg,0.195, raw_material ,,BSC0010301
+,,,,, BBA0010101 ,Liter(s),0.125, raw_material ,,BBA0010101
+,,,,, BBA0010201 ,Liter(s),0.125, raw_material ,,BBA0010201
+,,,,, BWF0010101 ,Liter(s),50, raw_material ,,BWF0010101
+,,,,, CAM0020100 ,Pcs,"45,500",kemas_primer,,CAM0020100
+,,,,, CIN1090101 ,Pcs,456,kemas_sekunder,,CIN1090101
+,,,,, CIN1090200 ,Pcs,456,kemas_sekunder,,CIN1090200
+,,,,, CIN1090300 ,Pcs,456,kemas_sekunder,,CIN1090300
+,,,,, CRA0010100 ,Set,455,kemas_sekunder,,CRA0010100
+,,,,, CRA0010200 ,Set,455,kemas_sekunder,,CRA0010200
+,,,,, CBR1040100 ,Pcs,456,kemas_sekunder,,CBR1040100
+,,,,, CBR1040200 ,Pcs,456,kemas_sekunder,,CBR1040200
+,,,,, CBR1040300 ,Pcs,456,kemas_sekunder,,CBR1040300
+,,,,, LBK0180100 ,Pcs,910,kemas_sekunder,,LBK0180100
+,,,,, CSH0090100 ,Pcs,19,kemas_sekunder,,CSH0090100
+,,,,, LBK0100100 ,Pcs,38,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,0,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,0,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Amoxicillin 250 mg Strip 12,Amoxicillin 250 mg Strip 12,Kpsul,208000,, AAT0010101 ,kg,60, raw_material ,Normal,AAT0010101
+,,,,, AAT0010201 ,kg,60, raw_material ,,AAT0010201
+,,,,, AAT0010301 ,kg,60, raw_material ,,AAT0010301
+,,,,, AAT0010401 ,kg,60, raw_material ,,AAT0010401
+,,,,, AAT0010501 ,kg,60, raw_material ,,AAT0010501
+,,,,, BTA0010101 ,kg,0.416, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.416, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.416, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.416, raw_material ,,BTA0010401
+,,,,, BCS0030101 ,kg,0.416, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.416, raw_material ,,BCS0030201
+,,,,, BMS0010101 ,kg,0.416, raw_material ,,BMS0010101
+,,,,, BCN0090101 ,Pcs,"208,000.00", raw_material ,,BCN0090101
+,,,,, BCN0090201 ,Pcs,"208,000.00", raw_material ,,BCN0090201
+,,,,, CBA0020100 ,Roll,4,kemas_primer,,CBA0020100
+,,,,, CFA0010100 ,Roll,4,kemas_primer,,CFA0010100
+,,,,, CBR0020100 ,Pcs,"1,734",kemas_sekunder,,CBR0020100
+,,,,, CBR0020200 ,Pcs,"1,734",kemas_sekunder,,CBR0020200
+,,,,, CBR0020300 ,Pcs,"1,734",kemas_sekunder,,CBR0020300
+,,,,, CIN0060100 ,Pcs,"1,734",kemas_sekunder,,CIN0060100
+,,,,, CIN0060200 ,Pcs,"1,734",kemas_sekunder,,CIN0060200
+,,,,, CIN0060300 ,Pcs,"1,734",kemas_sekunder,,CIN0060300
+,,,,, CSH0300100 ,Pcs,35,kemas_sekunder,,CSH0300100
+,,,,, LBK0100100 ,Pcs,36,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Ampicillin 250 mg Strip,Ampicillin 250 mg Strip,Kpsul,104000,, AAT0030101 ,kg,30, raw_material ,Normal,AAT0030101
+,,,,, AAT0030201 ,kg,30, raw_material ,,AAT0030201
+,,,,, BTA0010101 ,kg,0.208, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.208, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.208, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.208, raw_material ,,BTA0010401
+,,,,, BCS0030101 ,kg,0.208, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.208, raw_material ,,BCS0030201
+,,,,, BMS0010101 ,kg,0.208, raw_material ,,BMS0010101
+,,,,, BCN0200101 ,Pcs,"104,000.00", raw_material ,,BCN0200101
+,,,,, CBA0010100 ,Roll,2,kemas_primer,,CBA0010100
+,,,,, CFA0020100 ,Roll,2,kemas_primer,,CFA0020100
+,,,,, CIN0070100 ,Pcs,"1,041",kemas_sekunder,,CIN0070100
+,,,,, CIN0070200 ,Pcs,"1,041",kemas_sekunder,,CIN0070200
+,,,,, CIN0070300 ,Pcs,"1,041",kemas_sekunder,,CIN0070300
+,,,,, LBK0050100 ,Pcs,21,kemas_sekunder,,LBK0050100
+,,,,, LBK0100100 ,Pcs,22,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camicillin 250 mg Strip,Camicillin 250 mg Strip,Kpsul,104000,, AAT0030101 ,kg,30, raw_material ,Normal,AAT0030101
+,,,,, AAT0030201 ,kg,30, raw_material ,,AAT0030201
+,,,,, BTA0010101 ,kg,0.208, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.208, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.208, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.208, raw_material ,,BTA0010401
+,,,,, BCS0030101 ,kg,0.208, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.208, raw_material ,,BCS0030201
+,,,,, BMS0010101 ,kg,0.208, raw_material ,,BMS0010101
+,,,,, BCN0190101 ,Pcs,"104,000.00", raw_material ,,BCN0190101
+,,,,, CBA0010100 ,Roll,2,kemas_primer,,CBA0010100
+,,,,, CFA0080100 ,Roll,2,kemas_primer,,CFA0080100
+,,,,, CBR0190100 ,Pcs,"1,041",kemas_sekunder,,CBR0190100
+,,,,, CBR0190200 ,Pcs,"1,041",kemas_sekunder,,CBR0190200
+,,,,, CBR0190300 ,Pcs,"1,041",kemas_sekunder,,CBR0190300
+,,,,, CIN0230100 ,Pcs,"1,041",kemas_sekunder,,CIN0230100
+,,,,, CIN0230200 ,Pcs,"1,041",kemas_sekunder,,CIN0230200
+,,,,, CIN0230300 ,Pcs,"1,041",kemas_sekunder,,CIN0230300
+,,,,, LBK0310100 ,Pcs,21,kemas_sekunder,,LBK0310100
+,,,,, LBK0100100 ,Pcs,22,kemas_sekunder,,LBK0100100
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CPB0010100 ,Roll,0,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,0,kemas_sekunder,,CPB0010200
+Camoksil 250 mg Strip,Camoksil 250 mg Strip,Kpsul,208000,, AAT0010101 ,kg,30, raw_material ,Normal,AAT0010101
+,,,,, AAT0010201 ,kg,30, raw_material ,,AAT0010201
+,,,,, AAT0010301 ,kg,30, raw_material ,,AAT0010301
+,,,,, AAT0010401 ,kg,30, raw_material ,,AAT0010401
+,,,,, AAT0010501 ,kg,30, raw_material ,,AAT0010501
+,,,,, BTA0010101 ,kg,0.208, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.208, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.208, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.208, raw_material ,,BTA0010401
+,,,,, BCS0030101 ,kg,0.208, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.208, raw_material ,,BCS0030201
+,,,,, BMS0010101 ,kg,0.208, raw_material ,,BMS0010101
+,,,,, BCN0140101 ,Pcs,"104,000.00", raw_material ,,BCN0140101
+,,,,, CBA0010100 ,Roll,2,kemas_primer,,CBA0010100
+,,,,, CFA0170100 ,Roll,2,kemas_primer,,CFA0170100
+,,,,, LBK0090100 ,Pcs,"1,040",kemas_primer,,LBK0090100
+,,,,, CBR0420100 ,Pcs,"1,040",kemas_sekunder,,CBR0420100
+,,,,, CBR0420200 ,Pcs,"1,040",kemas_sekunder,,CBR0420200
+,,,,, CBR0420300 ,Pcs,"1,040",kemas_sekunder,,CBR0420300
+,,,,, CIN0470100 ,Pcs,"1,040",kemas_sekunder,,CIN0470100
+,,,,, CIN0470200 ,Pcs,"1,040",kemas_sekunder,,CIN0470200
+,,,,, CIN0470300 ,Pcs,"1,040",kemas_sekunder,,CIN0470300
+,,,,, CCT0010100 ,Roll,1,kemas_sekunder,,CCT0010100
+,,,,, CCT0010200 ,Roll,1,kemas_sekunder,,CCT0010200
+,,,,, CSH0280100 ,Pcs,21,kemas_sekunder,,CSH0280100
+,,,,, LBK0100100 ,Pcs,21,kemas_sekunder,,LBK0100100
+,,,,, CPB0010100 ,Roll,1,kemas_sekunder,,CPB0010100
+,,,,, CPB0010200 ,Roll,1,kemas_sekunder,,CPB0010200
+Camoksil 500 mg Blister Export,Camoksil 500 mg Blister Export,Kpsul,104000,98.84%, AAT0010101 ,kg,60, raw_material ,Normal,AAT0010101
+,,,,, AAT0010201 ,kg,60, raw_material ,,AAT0010201
+,,,,, AAT0010301 ,kg,60, raw_material ,,AAT0010301
+,,,,, AAT0010401 ,kg,60, raw_material ,,AAT0010401
+,,,,, AAT0010501 ,kg,60, raw_material ,,AAT0010501
+,,,,, BTA0010101 ,kg,0.416, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.416, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.416, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.416, raw_material ,,BTA0010401
+,,,,, BCS0030101 ,kg,0.416, raw_material ,,BCS0030101
+,,,,, BCS0030201 ,kg,0.416, raw_material ,,BCS0030201
+,,,,, BMS0010101 ,kg,0.416, raw_material ,,BMS0010101
+,,,,, BCN0050101 ,Pcs,"104,000.00", raw_material ,,BCN0050101
+,,,,, CPV0010100 ,Pcs,3,kemas_primer,,CPV0010100
+,,,,, CPV0010200 ,Pcs,3,kemas_primer,,CPV0010200
+,,,,, CFA0180100 ,Roll,3,kemas_primer,,CFA0180100
+,,,,, CBR0450100 ,Pcs,"1,040",kemas_sekunder,,CBR0450100
+,,,,, CBR0450200 ,Pcs,"1,040",kemas_sekunder,,CBR0450200
+,,,,, CBR0450300 ,Pcs,"1,040",kemas_sekunder,,CBR0450300
+,,,,, CIN0490100 ,Pcs,"1,040",kemas_sekunder,,CIN0490100
+,,,,, CIN0490200 ,Pcs,"1,040",kemas_sekunder,,CIN0490200
+,,,,, CSH0290100 ,Pcs,11,kemas_sekunder,,CSH0290100
+Camoksil 500 mg Strip,Camoksil 500 mg Strip,Kplet,104000,98.85%, AAT0010101 ,kg,60, raw_material ,Normal,AAT0010101
+,,,,, AAT0010201 ,kg,60, raw_material ,,AAT0010201
+,,,,, AAT0010301 ,kg,60, raw_material ,,AAT0010301
+,,,,, AAT0010401 ,kg,60, raw_material ,,AAT0010401
+,,,,, AAT0010501 ,kg,60, raw_material ,,AAT0010501
+,,,,, BMC0020101 ,kg,6.864, raw_material ,,BMC0020101
+,,,,, BMC0020201 ,kg,6.864, raw_material ,,BMC0020201
+,,,,, BCO0010101 ,kg,2.838, raw_material ,,BCO0010101
+,,,,, BSS0020101 ,kg,0.72, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.72, raw_material ,,BSS0020201
+,,,,, BMS0010101 ,kg,0.42, raw_material ,,BMS0010101
+,,,,, BOP0010101 ,kg,0.115, raw_material ,,BOP0010101
+,,,,, CFA0190100 ,Roll,1,kemas_primer,,CFA0190100
+,,,,, CBA0020100 ,Roll,1,kemas_primer,,CBA0020100
+,,,,, CBR0430100 ,Pcs,"1,041",kemas_sekunder,,CBR0430100
+,,,,, CBR0430200 ,Pcs,"1,041",kemas_sekunder,,CBR0430200
+,,,,, CBR0430300 ,Pcs,"1,041",kemas_sekunder,,CBR0430300
+,,,,, CIN0480100 ,Pcs,"1,041",kemas_sekunder,,CIN0480100
+,,,,, CIN0480200 ,Pcs,"1,041",kemas_sekunder,,CIN0480200
+,,,,, CIN0480300 ,Pcs,"1,041",kemas_sekunder,,CIN0480300
+,,,,, CSH0290100 ,Pcs,21,kemas_sekunder,,CSH0290100
+Camaag Strip,Camaag Strip,Table,100000,, BCS0020101 ,kg,0.6, raw_material ,Normal,BCS0020101
+,,,,, BCS0020201 ,kg,0.6, raw_material ,,BCS0020201
+,,,,, AAH0010101 ,kg,26.25, raw_material ,,AAH0010101
+,,,,, AAH0010201 ,kg,26.25, raw_material ,,AAH0010201
+,,,,, AAH0010301 ,kg,26.25, raw_material ,,AAH0010301
+,,,,, BAG0010101 ,g,65, raw_material ,,BAG0010101
+,,,,, ADI0010101 ,kg,3, raw_material ,,ADI0010101
+,,,,, AMH0010101 ,kg,21, raw_material ,,AMH0010101
+,,,,, AMH0010201 ,kg,21, raw_material ,,AMH0010201
+,,,,, AMH0010301 ,kg,21, raw_material ,,AMH0010301
+,,,,, BMS0010101 ,kg,0.325, raw_material ,,BMS0010101
+,,,,, BSS0010101 ,kg,0.1, raw_material ,,BSS0010101
+,,,,, BSS0010201 ,kg,0.1, raw_material ,,BSS0010201
+,,,,, BMP0010101 ,kg,0.065, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.065, raw_material ,,BMP0010201
+,,,,, BPO0030101 ,kg,0.2, raw_material ,,BPO0030101
+,,,,, BPO0030201 ,kg,0.2, raw_material ,,BPO0030201
+,,,,, BSS0020101 ,kg,0.6, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,0.6, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,1.8, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,1.8, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,1.8, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,1.8, raw_material ,,BTA0010401
+,,,,, BSC0050101 ,kg,0.2, raw_material ,,BSC0050101
+,,,,, BMA0010101 ,kg,10, raw_material ,,BMA0010101
+,,,,, BTS0010101 ,kg,2, raw_material ,,BTS0010101
+,,,,, CFA0050100 ,Roll,2,kemas_primer,,CFA0050100
+,,,,, CBA0010100 ,Roll,2,kemas_primer,,CBA0010100
+,,,,, CBR0130100 ,Pcs,900,kemas_sekunder,,CBR0130100
+,,,,, CBR0130200 ,Pcs,900,kemas_sekunder,,CBR0130200
+,,,,, CBR0130300 ,Pcs,900,kemas_sekunder,,CBR0130300
+,,,,, CIN0160100 ,Pcs,900,kemas_sekunder,,CIN0160100
+,,,,, CIN0160200 ,Pcs,900,kemas_sekunder,,CIN0160200
+,,,,, CSH0220100 ,Pcs,18,kemas_sekunder,,CSH0220100
+Camistan 500 mg Strip,Camistan 500 mg Strip,Kplet,120000,, BCS0020101 ,kg,0.72, raw_material ,Normal,BCS0020101
+,,,,, BCS0020201 ,kg,0.72, raw_material ,,BCS0020201
+,,,,, BAL0010101 ,Liter(s),10, raw_material ,,BAL0010101
+,,,,, BAL0010201 ,Liter(s),10, raw_material ,,BAL0010201
+,,,,, BMC0010101 ,kg,2.88, raw_material ,,BMC0010101
+,,,,, BMC0010201 ,kg,2.88, raw_material ,,BMC0010201
+,,,,, BET0020101 ,g,80, raw_material ,,BET0020101
+,,,,, BPK0010101 ,kg,2.88, raw_material ,,BPK0010101
+,,,,, BPK0010201 ,kg,2.88, raw_material ,,BPK0010201
+,,,,, BMS0010101 ,kg,0.36, raw_material ,,BMS0010101
+,,,,, BMP0010101 ,kg,0.072, raw_material ,,BMP0010101
+,,,,, BMP0010201 ,kg,0.072, raw_material ,,BMP0010201
+,,,,, BSS0020101 ,kg,2.88, raw_material ,,BSS0020101
+,,,,, BSS0020201 ,kg,2.88, raw_material ,,BSS0020201
+,,,,, BTA0010101 ,kg,0.72, raw_material ,,BTA0010101
+,,,,, BTA0010201 ,kg,0.72, raw_material ,,BTA0010201
+,,,,, BTA0010301 ,kg,0.72, raw_material ,,BTA0010301
+,,,,, BTA0010401 ,kg,0.72, raw_material ,,BTA0010401
+,,,,, AMA0010101 ,kg,60, raw_material ,,AMA0010101
+,,,,, AMA0010201 ,kg,60, raw_material ,,AMA0010201
+,,,,, BLA0010101 ,kg,2.16, raw_material ,,BLA0010101
+,,,,, BYN0010101 ,g,7, raw_material ,,BYN0010101
+,,,,, CFA0150100 ,Roll,2,kemas_primer,,CFA0150100
+,,,,, CBA0020100 ,Roll,2,kemas_primer,,CBA0020100
+,,,,, CBR0350100 ,Pcs,"1,200",kemas_sekunder,,CBR0350100
+,,,,, CBR0350200 ,Pcs,"1,200",kemas_sekunder,,CBR0350200
+,,,,, CBR0350300 ,Pcs,"1,200",kemas_sekunder,,CBR0350300
+,,,,, CIN0400100 ,Pcs,"1,200",kemas_sekunder,,CIN0400100
+,,,,, CIN0400200 ,Pcs,"1,200",kemas_sekunder,,CIN0400200
+,,,,, CIN0400300 ,Pcs,"1,200",kemas_sekunder,,CIN0400300
+,,,,, CSH0290100 ,Pcs,24,kemas_sekunder,,CSH0290100
