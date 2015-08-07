@@ -7,11 +7,11 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                        <xpath expr="//button[@name='action_button_confirm']" position="replace">
-                            <button name="action_button_confirm"  states="draft" string="Confirm Booking" type="object" groups="base.group_user"/>
+                            <button name="action_button_confirm"  states="draft" string="Booking" type="object" groups="base.group_user"/>
                        </xpath>
 
                        <xpath expr="//button[@name='action_cancel']" position="replace">
-                           <button name="action_cancel" states="manual,progress" string="Cancel Booking/Order" type="object" groups="base.group_user" confirm="Anda Yakin Akan Membatalkan Booking/order ini? Bila Iya, Action ini akan mendelete proses internal move atau delivery order di warehouse yang akan berlangsung"/>
+                           <button name="action_cancel" states="manual,progress" string="Cancel Booking" type="object" groups="base.group_user" confirm="Anda Yakin Akan Membatalkan Booking/order ini? Bila Iya, Action ini akan mendelete proses internal move atau delivery order di warehouse yang akan berlangsung"/>
                        </xpath>         
             </field>
         </record>
