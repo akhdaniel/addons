@@ -1,0 +1,27 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DHA0010100,Amoxicillin 250 mg Strip 10,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0020100,Amoxicillin 250 mg Strip 12,Betalaktam,"Dus, 12 strip @ 10 kapsul",Box 120 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0030100,Amoxicillin DS 125 mg 60 ml,Betalaktam,"Dus, botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0040100,Ampicillin 250 mg Pot 100,Betalaktam,Botol 100 kapsul,Pot 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0050100,Ampicillin 500 mg Pot 500,Betalaktam,botol 500 kapsul ,Pot 500 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0060100,Ampicillin 250 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0070100,Ampicillin DS 125mg 60 ml (PD),Betalaktam,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHA0080100,Ampicillin DS 125mg 60 ml (TD),Betalaktam,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0010100,Camicillin 250 mg Blister,Betalaktam,Blister 10 kapsul dus 100 kapsul,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0020100,Camicillin 250 mg Pot 1000,Betalaktam,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0030100,Camicillin 250 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0040100,Camicillin 500 mg Blister,Betalaktam,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0050100,Camicillin 500 mg Pot 1000,Betalaktam,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0060100,Camicillin 500 mg Strip,Betalaktam,"Dus, 10 Strip @ 10 kaplet",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0070100,Camillin 500 mg Blister Export,Betalaktam,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0080100,Camillin DS 125,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0090100,Camillin DS 250,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0100100,Camoksil 250 mg Blister,Betalaktam,Blister 10 kapsul ,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0110100,Camoksil 250 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0120100,Camoksil 500 mg Blister Export,Betalaktam,"Dus, 10 blister @ 10 kaplet",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0130100,Camoksil 500 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul ",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0140100,Camoksil 500 mg,Betalaktam,"Dus, 10 strip @ 10 kaplet",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0150100,Camoksil DS 125 mg,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHC0160100,Camoksil DS 250 mg,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHP0010100,Pacillin DS,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DHP0020100,Pacimox DS,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

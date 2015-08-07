@@ -1,0 +1,42 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DBA0010100,Antasida Doen 60 ml,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBB0010100,BAB 100 ml,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0010100,Calcivita 200 ml,Syrup,"Dus, Botol 200 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0020100,Camaag 100 ml,Syrup,Botol 100 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0030100,Camaag 200 ml,Syrup,"Dus, Botol 200 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0040100,Came 60 ml,Syrup,Botol @ 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0050100,Camexine 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0060100,Camicetine 60 ml,Syrup,"Dus, Botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0070100,Camicetine 60 ml Export,Syrup,"Dus, Botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0080100,Camidex 100 ml,Syrup,Botol 100 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0090100,Camidryl 60 ml,Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0100100,Camikolin 60 ml,Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0110100,Camivita Syrup 60 ml,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0120100,Camivita Syrup 120 ml,Syrup,"Dus, Botol 120 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0130100,Carisin 15 ml,Syrup,Botol 15 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0140100,Casetamol 60 ml,Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0150100,Casetamol 60 ml Export,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0160100,Chlorampenicol 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0170100,Cotrimoksazole 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBD0010100,Daganak 100 ml,Syrup,"Dus, Botol 100 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBD0020100,Daganak 100 ml Gepeng,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBD0030100,Dextromethorphan 60 ml,Syrup,Botol Plastik 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBK0010100,Kosaka 60 ml,Syrup,"Dus, Botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBL0010100,Lycivita 100 ml,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBO0010100,OBH 100 ml,Syrup,Botol 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBO0020100,OBH 100 ml TD,Syrup,Botol 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBO0030100,OBH 100 ml pet,Syrup,Botol Plastik 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBO0040100,OBH 100 ml Gepeng,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBO0050100,OBH 100 ml Export,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBO0060100,OBH 100 ml Gepeng Export,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBP0010100,Paracetamol 60 ml,Syrup,Botol  60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBP0020100,Piperazin 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBP0030100,Prometazine 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBP0040100,Promethazin 5 mg/ml 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBP0050100,Protusin 100 ml,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBS0010100,Sanmino 120 ml,Syrup,"Dus, Botol 120 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0180100,Camikolin 60 ml eksport,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBG0010100,Glosweet 100 ml Syrup,Syrup,Botol @ 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0190100,Camivita Plus,Syrup,Botol @ 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBC0200100,Camivita Grow,Syrup,"Dus, Botol 200 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DBG0020100,Glocetamol Forte,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

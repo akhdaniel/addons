@@ -1,0 +1,419 @@
+bom_id,workcenter_operation_id,mesin,no_mesin,is_paralel,work_center_id,waktu
+Antasida Doen 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,75
+,Packing/Coding,Alpha Jet C,,FALSE,,60
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+BAB 100 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,150
+,,Hand Mixer,,FALSE,PS.08,60
+,,Motor Pompa,,FALSE,PS.08,20
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,90
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,39
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Calcivita 200 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,30
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,50
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,60
+,Packing/Labeling,Jihcheng,,FALSE,,60
+,Packing/Timbang,,,FALSE,,27
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camaag 100 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,60
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,90
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,39
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camaag 200 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,30
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,50
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,60
+,Packing/Labeling,Jihcheng,,FALSE,,60
+,Packing/Timbang,,,FALSE,,27
+,Packing/Shrink,,,FALSE,,90
+,Packing/Lipat Brosur,,,FALSE,,15
+Camexine 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,60
+,Packing/Labeling,Jihcheng,,FALSE,,60
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camicetine 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,75
+,Packing/Coding,Alpha Jet C,,FALSE,,120
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camidryl 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,150
+,,Hand Mixer,,FALSE,PS.08,60
+,,Motor Pompa,,FALSE,PS.08,20
+,Filling,Jihcheng,,FALSE,PS.06,75
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,120
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camikolin 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,75
+,Packing/Coding,Alpha Jet C,,FALSE,,60
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camivita 60 Syrup ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,150
+,,Hand Mixer,,FALSE,PS.08,60
+,,Motor Pompa,,FALSE,PS.08,20
+,Filling,Jihcheng,,FALSE,PS.06,75
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,120
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Camivita 120 Syrup ml,Pengeringan,Oven Tumbler Machine,,FALSE,,30
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,50
+,Packing/Coding,Alpha Jet C,,FALSE,,60
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,60
+,Packing/Timbang,,,FALSE,,31
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Casetamol 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,75
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,120
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Chlorampenicol 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,150
+,,Coloid Mill,,FALSE,PS.07,30
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,75
+,Packing/Coding,Alpha Jet C,,FALSE,,60
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Cotrimoksazole 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,
+,,Hand Mixer,,FALSE,PS.06,
+,,Pompa Transfer,,FALSE,PS.06,
+,,Ultra Torax Mixer,,FALSE,PS.07,180
+,,Coloid Mill,,FALSE,PS.07,60
+,,Pompa Transfer,,FALSE,PS.07,30
+,,Hand Mixer,,FALSE,PS.08,60
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,
+,,Jihcheng,,FALSE,PS.07,75
+,Packing/Coding,Alpha Jet C,,FALSE,,60
+,,Image,,FALSE,,
+,Packing/Labeling,Jihcheng,,FALSE,,120
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Daganak 100 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,150
+,,Hand Mixer,,FALSE,PS.08,60
+,,Motor Pompa,,FALSE,PS.08,20
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,90
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,39
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+OBH 100 ml PD,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,90
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,39
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+OBH 100 ml TD,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,150
+,,Hand Mixer,,FALSE,PS.08,60
+,,Motor Pompa,,FALSE,PS.08,20
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,60
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,39
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Paracetamol 60 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,
+,,Hand Mixer,,FALSE,PS.08,
+,,Motor Pompa,,FALSE,PS.08,
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,60
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,65
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15
+Sanmino 120 ml,Pengeringan,Oven Tumbler Machine,,FALSE,,60
+,Penimbangan,Mettler Toledo,IND221,FALSE,,30
+,,Kern,,FALSE,,30
+,,Laminair Air Flow,,FALSE,,30
+,Mixing,Ultra Thorax Mixer,,FALSE,PS.06,120
+,,Hand Mixer,,FALSE,PS.06,60
+,,Pompa Transfer,,FALSE,PS.06,20
+,,Ultra Torax Mixer,,FALSE,PS.07,
+,,Coloid Mill,,FALSE,PS.07,
+,,Pompa Transfer,,FALSE,PS.07,
+,,Hand Mixer,,FALSE,PS.08,
+,,Ultra Thorax mixer,,FALSE,PS.08,150
+,,Hand Mixer,,FALSE,PS.08,60
+,,Motor Pompa,,FALSE,PS.08,20
+,Filling,Jihcheng,,FALSE,PS.06,60
+,,Jihcheng,,FALSE,PS.07,
+,Packing/Coding,Alpha Jet C,,FALSE,,
+,,Image,,FALSE,,90
+,Packing/Labeling,Jihcheng,,FALSE,,90
+,Packing/Timbang,,,FALSE,,31
+,Packing/Shrink,,,FALSE,,
+,Packing/Lipat Brosur,,,FALSE,,15

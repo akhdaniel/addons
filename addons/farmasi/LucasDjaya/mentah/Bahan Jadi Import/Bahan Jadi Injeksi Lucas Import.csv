@@ -1,0 +1,60 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DGA0010100,Aminophylline  10 ml @ 50,Injeksi,"Dus, 50 Ampul @ 10 ml",Box 50 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0020100,Aminophylline  10 ml @ 30,Injeksi,"Dus, 30 Ampul @ 10 ml",Box 30 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0030100,Antalgin 250 mg 10 ml,Injeksi,Vial 10 ml ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0040100,Antalgin 500 mg 10 ml,Injeksi,Ampul 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0050100,Antalgin 250 mg/ml 2 ml @ 30,Injeksi,"Dus, 30 Ampul @ 2 ml",Box 30 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0060100,Antalgin 500 mg/ml 1 ml @ 100,Injeksi,Ampul 1 ml Dus 100 Ampul ,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0070100,Aqua pro injection 2 ml,Injeksi,Ampul @ 2 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0080100,Aqua pro injection 4 ml,Injeksi,Ampul @ 4 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0090100,Aqua pro injection 5 ml,Injeksi,Ampul @ 5 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0100100,Aqua pro injection 10 ml,Injeksi,Ampul @ 10 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0110100,Aquabidestillata 20 ml,Injeksi,Ampul 20 ml,Shrink 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0120100,Aquabidestillata 100 ml,Injeksi,Vial 100 ml,Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0010100,Calcii chlorid  10 ml Ampul,Injeksi,"Dus, 50 Ampul @ 10 ml",Box 50 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0020100,Calcii chlorid 10 ml Vial,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0030100,Camidexon 5 mg/ml 1 ml Ampul,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0040100,Camidexon 5 mg/ml 10 ml Vial,Injeksi,"Dus, 10 Vial @ 10 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0050100,Camidon 15 ml,Injeksi,"Dus, 10 Vial @15 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0060100,Camidon 10 ml,Injeksi,Vial 10 ml Dus 10 Vial ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0070100,Camidryl 10 mg/ml 15 ml,Injeksi,"Dus, 10 Vial @ 15 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0080100,Camidryl 10 mg/ml 1 ml,Injeksi,Ampul 1 ml Dus 100 ml ,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0090100,Camidryl 10 mg/ml 10 ml,Injeksi,Vial 10 ml ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0100100,Camigesik 50 mg/ml 2 ml,Injeksi,"Dus, 10 Ampul @ 2 ml ",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0110100,Chlorpromazine 5 mg/ml 2 ml,Injeksi,"Dus, 10 Ampul @ 2 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0120100,Chlorpromazine 25 mg/ml 1 ml,Injeksi,"Dus, 10 Ampul @ 1 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0130100,Cholimed 125 mg/ml 2 ml,Injeksi,"Dus, 5 Ampul @ 2 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGC0140100,Cortison Acetate 25 mg/ml 10ml,Injeksi,Vial 10 ml ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGD0010100,Dexamethasone 5 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGD0020100,Diphenhydramine 10 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGD0030100,Dobutamine 25 mg/ml 10 ml,Injeksi,"Dus, 1 Vial @ 10 ml ",Box 1 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0010100,Glojaya 20 mg/ml 10 ml,Injeksi,Vial 10 ml ,Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0020100,Glojaya 2 mg/ml 100 ml,Injeksi,"Dus, Botol @ 100 ml ",Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0030100,"Glomethyl 0,2 mg/ml 1 ml",Injeksi,"Dus, 30 Ampul @ 1 ml",Box 30 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0040100,Glomin 40 mg/ml 5 ml,Injeksi,"Dus, 5 Ampul @ 5 ml ",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0050100,Glosix 10 mg/ml 2 ml,Injeksi,"Dus, 5 Ampul @ 2 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0060100,Glotron 2 ml,Injeksi,Ampul 1 ml ,Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGG0070100,Glotron 4 ml,Injeksi,Ampul 1 ml ,Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0010100,Lidocain compositum 2 ml,Injeksi,"Dus, 100 Ampul @ 2 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0020100,Lidocain HCl 2% 2 ml,Injeksi,"Ampul 2 ml, Dus 100 Ampul ",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0030100,Lidocaine 2% 2 ml,Injeksi,"Dus, 100 Ampul @ 2 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0040100,Lunex 50 mg/ml 5 ml,Injeksi,"Dus, 10 Ampul @ 5 ml ",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0050100,Lunex 100mg/ml 5 ml,Injeksi,"Dus, 10 Ampul @ 5 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0060100,Lusitren 20 mg/ml 5 ml,Injeksi,"Dus, 5 Ampul@ 5 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGL0070100,Lusitren 20 mg/ml 15 ml,Injeksi,"Dus, 5 Ampul@ 15 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGM0010100,Matosin 10 IU/ml 1 ml,Injeksi,"Dus, 5 Ampul @ 1 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGM0020100,"Methylergometrine 0,2mg/ml 1ml",Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGP0010100,Papaverin 40 mg/ml 10 ml,Injeksi,"Dus, 10 Vial @ 10 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGP0020100,Papaverin 40 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGP0030100,Piracetam 200 mg/ml 15 ml,Injeksi,"Dus, 5 Ampul @ 15 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGP0040100,Piracetam 200 mg/ml 5 ml,Injeksi,"Dus, 10 Ampul @ 5 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0010100,Vitamin B complex 10 ml,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0020100,Vitamin B complex 20 ml,Injeksi,Flacon 20 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0030100,Vitamin B1 1 ml,Injeksi,Ampul 1 ml,Box,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0040100,Vitamin B1 10 ml,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0050100,Vitamin B1 100 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0060100,Vitamin B12 500mcg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0070100,Vitamin B12 500 mcg/ml 10 ml,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0080100,Vitamin B6 1 ml @ 50,Injeksi,Ampul 1 ml,Box 50 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0090100,Vitamin B6 1 ml @ 100,Injeksi,Ampul 1 ml,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGV0100100,Vitamin K 10 mg/ml 1 ml,Injeksi,Ampul 1 ml,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

@@ -1,0 +1,31 @@
+bom_id,workcenter_operation_id,mesin,no_mesin,is_paralel,work_center_id,waktu
+Cayodine 30 ml,Penimbangan,Mettler Toledo,IND221,,,
+,,Kern,,,,30
+,Mixing,Hand Mixer,Makita,,,60
+,,Mesin Mixing Tank,,,,60
+,Filling,Enterprise Corp.,,,,
+,,Hersonber,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Timbang,,,,,30
+,Packing/Lipat Brosur,,,,,15
+Glyserol 100 ml,Penimbangan,Mettler Toledo,IND221,,,
+,,Kern,,,,30
+,Mixing,Hand Mixer,Makita,,,60
+,,Mesin Mixing Tank,,,,120
+,Filling,Enterprise Corp.,,,,
+,,Hersonber,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,45
+,Packing/Timbang,,,,,30
+,Packing/Lipat Brosur,,,,,15
+Phenol Glycerol 5 ml,Penimbangan,Mettler Toledo,IND221,,,
+,,Kern,,,,30
+,Mixing,Hand Mixer,Makita,,,60
+,,Mesin Mixing Tank,,,,120
+,Filling,Enterprise Corp.,,,,
+,,Hersonber,,,,600
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,120
+,Packing/Timbang,,,,,30
+,Packing/Lipat Brosur,,,,,15

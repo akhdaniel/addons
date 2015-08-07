@@ -1,0 +1,151 @@
+bom_id,workcenter_operation_id,jumlah orang,man_hour
+Biocelle,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Geriatrie,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Habbatussauda 600 mg,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Habbatzaitun 500 mg,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Habbatzaitun 600 mg,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Isotretinoin,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Lamata,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Mamavita,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Natura Nigela Sativa 700 mg,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Natura Omega Squa 650 mg,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Olive Oil,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+PDO 500,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+"Vitamin A 200,000 IU",Pencucian botol,2,90
+,Oven botol,2,20
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,1080
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+"Vitamin E 400,000 IU",Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300
+Vomil,Pencucian botol,2,90
+,Oven botol,2,15
+,Penimbangan,2,30
+,Melting,2,360
+,Mixing,2,30
+,Filling,4,840
+,Drying & polishing,4,420
+,"Counting,sealing,capping",6,420
+,Coding,1,60
+,Labelling + packing,4,300

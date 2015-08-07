@@ -1,0 +1,91 @@
+bom_id,workcenter_operation_id,mesin,no_mesin,is_paralel,work_center_id,waktu
+Aminophillyne 10 ml,Cuci ampul/vial/Rubber,AW-2S,,,,420
+,Sterilisasi Ampul/vial/rubber,ECHS-18K,,,,60
+,Sterilisasi baju ,Autoclave baju,,,,30
+,Sterilisasi peralatan,ECHS-85,,,,30
+,Penimbangan,IND221,,,,30
+,,kecil,,,,30
+,Mixing,Mixing Tank,,,,30
+,Filtrasi,Pressure Tangki,,,,30
+,Filling + Cappling,Shun Yi,,,,
+,,Shun Yi 10ml,,,,
+,,AFS20,,,,420
+,,Hersonber,,,,
+,Sterilisasi produk,Echung,,,,30
+,Printing,Markem,,,,
+,Packing,Avery Weight Tronex,,,,30
+Diphenhydramine 10 mg.ml 1 ml,Cuci ampul/vial/Rubber,AW-2S,,,,480
+,Sterilisasi Ampul/vial/rubber,ECHS-18K,,,,60
+,Sterilisasi baju ,Autoclave baju,,,,30
+,Sterilisasi peralatan,ECHS-85,,,,30
+,Penimbangan,IND221,,,,30
+,,kecil,,,,30
+,Mixing,Mixing Tank,,,,30
+,Filtrasi,Pressure Tangki,,,,30
+,Filling + Cappling,Shun Yi,,,,480
+,,Shun Yi 10ml,,,,
+,,AFS20,,,,
+,,Hersonber,,,,
+,Sterilisasi produk,Echung,,,,30
+,Printing,Markem,,,,720
+,Packing,Avery Weight Tronex,,,,30
+Vitamin B12 500mcg/ml 1 ml,Cuci ampul/vial/Rubber,AW-2S,,,,480
+,Sterilisasi Ampul/vial/rubber,ECHS-18K,,,,60
+,Sterilisasi baju ,Autoclave baju,,,,30
+,Sterilisasi peralatan,ECHS-85,,,,30
+,Penimbangan,IND221,,,,30
+,,kecil,,,,30
+,Mixing,Mixing Tank,,,,30
+,Filtrasi,Pressure Tangki,,,,30
+,Filling + Cappling,Shun Yi,,,,480
+,,Shun Yi 10ml,,,,
+,,AFS20,,,,
+,,Hersonber,,,,600
+,Sterilisasi produk,Echung,,,,30
+,Printing,Markem,,,,720
+,Packing,Avery Weight Tronex,,,,30
+Vitamin B12 500mcg/ml 10 ml,Cuci ampul/vial/Rubber,AW-2S,,,,420
+,Sterilisasi Ampul/vial/rubber,ECHS-18K,,,,60
+,Sterilisasi baju ,Autoclave baju,,,,30
+,Sterilisasi peralatan,ECHS-85,,,,
+,Penimbangan,IND221,,,,
+,,kecil,,,,
+,Mixing,Mixing Tank,,,,
+,Filtrasi,Pressure Tangki,,,,
+,Filling + Cappling,Shun Yi,,,,
+,,Shun Yi 10ml,,,,
+,,AFS20,,,,420
+,,Hersonber,,,,
+,Sterilisasi produk,Echung,,,,60
+,Printing,Markem,,,,
+,Packing,Avery Weight Tronex,,,,
+Lydocaine 2 ml,Cuci ampul/vial/Rubber,AW-2S,,,,480
+,Sterilisasi Ampul/vial/rubber,ECHS-18K,,,,60
+,Sterilisasi baju ,Autoclave baju,,,,30
+,Sterilisasi peralatan,ECHS-85,,,,
+,Penimbangan,IND221,,,,
+,,kecil,,,,
+,Mixing,Mixing Tank,,,,
+,Filtrasi,Pressure Tangki,,,,
+,Filling + Cappling,Shun Yi,,,,480
+,,Shun Yi 10ml,,,,
+,,AFS20,,,,
+,,Hersonber,,,,600
+,Sterilisasi produk,Echung,,,,60
+,Printing,Markem,,,,720
+,Packing,Avery Weight Tronex,,,,
+Camidryl 10 ml,Cuci ampul/vial/Rubber,AW-2S,,,,420
+,Sterilisasi Ampul/vial/rubber,ECHS-18K,,,,60
+,Sterilisasi baju ,Autoclave baju,,,,30
+,Sterilisasi peralatan,ECHS-85,,,,30
+,Penimbangan,IND221,,,,30
+,,kecil,,,,30
+,Mixing,Mixing Tank,,,,30
+,Filtrasi,Pressure Tangki,,,,30
+,Filling + Cappling,Shun Yi,,,,
+,,Shun Yi 10ml,,,,600
+,,AFS20,,,,
+,,Hersonber,,,,
+,Sterilisasi produk,Echung,,,,60
+,Printing,Markem,,,,
+,Packing,Avery Weight Tronex,,,,
