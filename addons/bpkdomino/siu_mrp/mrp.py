@@ -321,8 +321,7 @@ class MaterialRequirement(osv.osv):
                 plan = max - (product.qty_available - order)
                 
         return plan
-                
-        
+
 MaterialRequirement()
 
 

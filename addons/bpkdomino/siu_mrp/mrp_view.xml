@@ -2,10 +2,15 @@
 <openerp>
     <data>
 
-		<report id="print_rekap" string="Rekap Produksi" 
+		<report id="print_rekap" string="JOB ORDER BAKING" 
 				model="material.requirement" name="print.rekap" 
 				rml="siu_mrp/report/print_rekap_produksi.rml"
 				auto="False" menu="False"/>
+
+                        <report id="print_rekap_decor" string="JOB ORDER DECORATION" 
+                                                model="material.requirement" name="print.rekap.decor" 
+                                                rml="siu_mrp/report/print_rekap_produksi_decor.rml"
+                                                auto="False" menu="False"/>
 
 		<report id="print_produksi" string="Print Produksi" 
 				model="mrp.production" name="print.produksi" 
@@ -62,7 +67,8 @@
                         <button name="compute" type="object" states="approve" string="Compute Material" icon="gtk-execute"/>
 	           			<button name="material_validate" type="object" states="approve" string="Validate" icon="gtk-apply"/>
 	           			<button name="procurement" type="object" states="done" string="Create Procurement" icon="gtk-execute" invisible='1'/>
-	           			<button name="%(print_rekap)d" type="action" states="done" string="Rekap Produksi" icon="gtk-print"/>
+                                                <button name="%(print_rekap)d" type="action" states="done" string="Job Order Baking" icon="gtk-print"/>
+	           			<button name="%(print_rekap_decor)d" type="action" states="done" string="Job Order Decoration" icon="gtk-print"/>
 	           			<button name="%(print_order)d" type="action" states="done" string="Print Order" icon="gtk-print"/>
 	           			<button name="%(print_label)d" type="action" string="Print Label" icon="gtk-print"/>
 	           			<field name="state" widget="statusbar" statusbar_visible="draft,approve,done" statusbar_colors='{"draft":"red","approve":"blue"}'/>

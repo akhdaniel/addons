@@ -32,10 +32,10 @@ class account_invoice(osv.osv):
         #'alamat_kirim': fields.text('Delivery Address'),
         'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
         'party_datetime': fields.datetime('Party Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
-        'delivery_date': fields.date('Delivery Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
+        'delivery_date': fields.datetime('Delivery Date', required=True, readonly=True, select=True, states={'draft': [('readonly', False)]}),
     }
     
-    _defaults = {'delivery_date': time.strftime('%Y-%m-%d'), 'party_datetime': time.strftime('%Y-%m-%d %H:%M:%S')}
+    _defaults = {'delivery_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'party_datetime': time.strftime('%Y-%m-%d %H:%M:%S')}
     
     def onchange_backdate(self, cr, uid, ids, date):
         if date:
