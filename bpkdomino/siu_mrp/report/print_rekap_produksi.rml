@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <document filename="Invoice.pdf">
-  <template pageSize="(23cm,29.5cm)" title="Invoice" author="SUMBER INTEGRASI UTAMA" allowSplitting="20">
+  <template pageSize="(23cm,29.5cm)" title="Invoice" author="vitraining.com" allowSplitting="20">
     <pageTemplate id="first">
       <frame id="first" x1="1.0cm" y1="2.0cm" width="20cm" height="27cm"/>
       	<header>
@@ -240,7 +240,7 @@
 	<!-- ######################################################################### -->
 
 	<para style="terp_tblheader_Details">DOMINOCAKE</para>    
-    <para style="terp_tblheader_Details_Centre">REKAP PRODUKSI</para>
+    <para style="terp_tblheader_Details_Centre">JOB ORDER BAKING</para>
     <para style="terp_default_Bold_9">MRP No. : [[ o.name ]]</para>    
     
 	<para style="terp_default_Right_8"><font color="white">:</font></para>
@@ -269,7 +269,7 @@
 	    <tr>
 	        <td> <para style="terp_default_8">[[ nourut() ]]</para></td>
 	        <td> <para style="terp_default_8">[[ x.name ]]</para></td>
-	        <td> <para style="terp_default_8">[[ x.product_id.partner_ref ]]</para></td>
+	        <td> <para style="terp_default_8">[[ ' '.join([i.name for i in x.product_id.attribute_value_ids])  ]]</para></td>
 	        <td> <para style="terp_default_Right_8">[[ koma('%.0f', x.product_qty) ]]</para></td>
 	    </tr>
     	</blockTable>
@@ -283,16 +283,26 @@
     </tr>
     </blockTable>
     
-	<para style="terp_default_8"><font color="white">:</font></para>
 	
-
+  <!-- <para style="fontName:'Helvetica-Bold',fontSize:8.0;">Summary : </para>    
+  <section>
+  <blockTable colWidths="100.0,100.0,40.0">
+    <para >[[repeatIn(rekap_produk(o), 'rp')]]</para>
+          <tr>
+            <td><para>[[  rp['name'] ]]</para></td>
+            <td><para>[[  rp['product_atrs'] ]]</para></td>
+            <td><para>[[  rp['product_qty'] ]]</para></td>
+          </tr>
+        </blockTable>
+      <para style="terp_default_8"><font color="white">:</font></para>
+    </section> -->
 
     <blockTable colWidths="310.0,130.0" style="Table002">
     <tr>
       <td>
 	      <blockTable colWidths="310.0" style="Table002">
       		<tr>
-        		<td><para style="terp_default_Bold_Centre_8"><font color="white">:</font></para></td>
+        		<td><para style="terp_default_Bold_Centre_8"><font color="white">t</font></para></td>
       		</tr>
       		<tr>
         		<td>

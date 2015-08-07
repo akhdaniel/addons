@@ -1,0 +1,26 @@
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="view_sn_inherit_form_mrp">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//form[@string='Manufacturing Orders']/sheet/group/group/field[@name='date_planned']" position='after'>
+                    <field name="serialno"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="seq_create_sn" forcecreate="1" model="ir.sequence.type">
+            <field name="name">Lot serial number</field>
+            <field name="code">lot.sn.seq</field>
+        </record>
+        <record id="seq_c_spk" forcecreate="1" model="ir.sequence">
+            <field name="name">Lot serial number</field>
+            <field name="code">lot.sn.seq</field>
+            <field name="prefix">%(day)s%(month)s</field>
+            <field eval="5" name="padding"/>
+        </record>
+    </data>
+</openerp>

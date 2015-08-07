@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_material_requirement_line_form" model="ir.ui.view">
+            <field name="name">material.requirement.list.add.source</field>
+            <field name="model">material.requirement</field>
+            <field name='inherit_id' ref='siu_mrp.view_material_requirement_form'/>
+            <field name="arch" type="xml">
+                <field name="product_uom" position='replace'/>
+                <xpath expr="//field[@name='plan']" position='after'>
+                    <field name="product_uom"/>
+                    <field name="source"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_material_requirement_form_barcode" model="ir.ui.view">
+            <field name="name">material.requirement.form.barcode_txt</field>
+            <field name="model">material.requirement</field>
+            <field name="inherit_id" ref="siu_mrp.view_material_requirement_form" />
+            <field name="arch" type="xml">
+                <field name="plan_id" position="after">
+                    <label for="barcode_data" string='Barcode Data' invisible="1"/>         
+                    <div colspan='3'><field name="barcode_data" invisible="1"/></div>
+                </field>
+            </field>
+        </record>
+        <record id="view_production_plan_form_inherit" model="ir.ui.view">
+            <field name="name">production.plan.form</field>
+            <field name="model">production.plan</field>
+            <field name="inherit_id" ref="siu_mps.view_production_plan_form"/>
+            <field name="arch" type="xml">
+                <page string="Warehouse Order" position='after'>
+                    <page string="Product by Source">
+                        <field colspan="4" name="plan_list" nolabel="1">
+                            <tree string="" editable="top">
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="qty"/>
+                                <field name="ean13"/>
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+            </field>
+        </record>
+        <!-- <record id="mrp_bom_form_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.bom.form.inherit</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//form[@string="Bill of Material"]/group/group/field[@name="product_id"]' position='attributes'>
+                    <attribute name='required'>True</attribute>
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</openerp>

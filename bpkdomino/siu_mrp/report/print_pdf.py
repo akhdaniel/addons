@@ -5,6 +5,8 @@ import tempfile
 import datetime
 from openerp.report import report_sxw
 from pytz import timezone
+from operator import itemgetter
+from itertools import groupby
 
 
 class ReportStatus(report_sxw.rml_parse):
@@ -12,6 +14,8 @@ class ReportStatus(report_sxw.rml_parse):
         super(ReportStatus, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
+            'cr':cr,
+            'uid': uid,
             'urut': self.urut,
             'nourut': self.nourut,
             'koma': self.koma,
@@ -19,6 +23,7 @@ class ReportStatus(report_sxw.rml_parse):
             'get_label': self.get_label,
             'pencetak': self.pencetak,
             'get_order': self.get_order,
+            'rekap_produk':self.rekap_produk,
         })
         
         self.re_digits_nondigits = re.compile(r'\d+|\D+')
@@ -75,6 +80,7 @@ class ReportStatus(report_sxw.rml_parse):
                             'partner': x.partner_id.name,
                             'product': i.product_id.partner_ref,
                             'ucapan': i.ucapan,
+                            'catatan': i.catatan,
                             'qty': self.koma('%.0f', i.product_uom_qty)
                             })
                 
@@ -86,6 +92,7 @@ class ReportStatus(report_sxw.rml_parse):
                             'partner': '-',
                             'product': i.product_id.partner_ref,
                             'ucapan': '-',
+                            'catatan': '-',
                             'qty': self.koma('%.0f', i.product_qty)
                             })
                             
@@ -109,9 +116,31 @@ class ReportStatus(report_sxw.rml_parse):
             r.insert(0, c)
         return ''.join(r)
 
+    def rekap_produk(self,data):
+        sum_barang_booking = []
+        values = []
+        for rp in data.requirement_line:
+            values.append({
+                'product_id': rp.product_id.id,
+                'name': rp.product_id.name,
+                'atrs': ' '.join([ atr.name for atr in rp.product_id.attribute_value_ids]),
+                'product_qty':rp.plan,
+            })
+
+        # import pdb;pdb.set_trace()
+        for k,itr in groupby(sorted(values, key=itemgetter('product_id')),itemgetter('product_id')):
+            jml=0
+            for v in itr: jml+=v['product_qty']
+            sum_barang_booking.append({
+                    'product_id'  :k, 
+                    'product_atrs': v['atrs'],
+                    'name': v['name'],
+                    'product_qty' :jml,
+                })
+        return sum_barang_booking
 
 report_sxw.report_sxw('report.print.rekap', 'material.requirement', 'addons/siu_mrp/report/print_rekap_produksi.rml', parser=ReportStatus, header=False)
 report_sxw.report_sxw('report.print.produksi', 'mrp.production', 'addons/siu_mrp/report/print_produksi.rml', parser=ReportStatus, header=False)
 report_sxw.report_sxw('report.print.order', 'material.requirement', 'addons/siu_mrp/report/print_order.rml', parser=ReportStatus, header=False)
 report_sxw.report_sxw('report.print.label', 'material.requirement', 'addons/siu_mrp/report/print_label.rml', parser=ReportStatus, header=False)
-
+report_sxw.report_sxw('report.print.rekap.decor', 'material.requirement', 'addons/siu_mrp/report/print_rekap_produksi_decor.rml', parser=ReportStatus, header=False)

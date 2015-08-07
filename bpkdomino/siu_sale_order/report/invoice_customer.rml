@@ -241,6 +241,7 @@
     
 	<!-- ######################################################################### -->
 
+      <para style="terp_default_Center_7"><font color="white">t</font></para>
 	<para style="terp_tblheader_Details_Right">Form Pemesanan Kue</para>    
     
     <para style="terp_default_Right_8"><font color="white"> </font></para>
@@ -257,17 +258,17 @@
         <td>
         	<para style="terp_default_8">Kepada Yth. [[ o.partner_id.name ]]</para>
         	<para style="terp_default_8">[[ o.partner_id.street ]] [[ o.partner_id.street2 or '' ]]</para>
-        	<para style="terp_default_8">Telp. [[ o.partner_id.phone or '-' ]]</para>
+        	<para style="terp_default_8">Telp. [[ o.partner_id.phone or '-' ]] / HP. [[ o.partner_id.mobile or '-' ]]</para>
         </td>
     </tr>
     <tr>
         <td><para style="terp_default_7"></para></td>
         <td><para style="terp_default_7"></para></td>
-        <td><para style="terp_default_7">Delivery Date : [[ time.strftime('%d %B %Y', time.strptime(o.delivery_date,'%Y-%m-%d')) ]]</para></td>
+        <td><para style="terp_default_7">Delivery Date : [[ time.strftime('%d %B %Y, %H:%M:%S', time.strptime(o.delivery_date,'%Y-%m-%d %H:%M:%S')) ]]</para></td>
 	</tr>
 	<tr>
-        <td><para style="terp_default_7">Printed: [[ pencetak()[0] ]] by [[ pencetak()[1] ]]</para></td>
-		<td><para style="terp_default_7"></para></td>
+        <td><para style="terp_default_7">Printed: [[ time.strftime('%d/%m/%Y %H:%M:%S') ]] by [[ user.name ]]</para></td>
+		    <td><para style="terp_default_Center_7"><font color="white">t</font></para></td>
         <td><para style="terp_default_7"></para></td>
 	</tr>
     </blockTable>
@@ -349,8 +350,8 @@
 	          		<para style="terp_default_Center_7"><font color="white">t</font></para>
           			<para style="terp_default_Center_7"><font color="white">t</font></para>
 	          		<para style="terp_default_Center_7"><font color="white">t</font></para>
-        			<para style="terp_default_Center_7"><font color="white">t</font></para>
-	          		<para style="terp_default_Center_7"><u>[[ o.partner_id.name ]]</u></para>
+        			  <para style="terp_default_Center_7"><font color="white">t</font></para>
+                <para style="terp_default_Center_7"><u>[[ o.partner_id.name ]]</u></para>
         		</td>
       		</tr>
       	  </blockTable>
@@ -365,7 +366,7 @@
 	          		<para style="terp_default_Center_7"><font color="white">t</font></para>
           			<para style="terp_default_Center_7"><font color="white">t</font></para>
 	          		<para style="terp_default_Center_7"><font color="white">t</font></para>
-        			<para style="terp_default_Center_7"><font color="white">t</font></para>
+        			  <para style="terp_default_Center_7"><font color="white">t</font></para>
 	          		<para style="terp_default_Center_7"><u>[[ o.create_uid.name ]]</u></para>
         		</td>
       		</tr>
