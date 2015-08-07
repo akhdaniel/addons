@@ -1,0 +1,13 @@
+<openerp>
+    <data>
+		<report id="faktur_pajak" 
+			 string="Print Faktur Pajak" 
+			 model="account.invoice" 
+			 name="faktur.pajak" 
+			 rml="vit_dist_ppn/reports/faktur_pajak.rml" 
+		/>
+		
+
+    </data>
+</openerp>
+

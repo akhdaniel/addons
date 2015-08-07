@@ -1,0 +1,44 @@
+
+<openerp>
+	<data>
+		<!-- tambahi field instruktor di form-->
+		<record id="res_partner_tree_npwp" model="ir.ui.view">
+			<field name="name">res.partner.tree.npwp</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_tree" />
+			<field name="arch" type="xml">
+				<field name="email" position="after">
+					<field name="pkp" />
+					<field name="npwp" />
+				</field>
+			</field>
+		</record>
+		<!-- tambahi field instruktor di form-->
+		<record id="res_partner_form_npwp" model="ir.ui.view">
+			<field name="name">res.partner.form.npwp</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<field name="website" position="after">
+					<field name="pkp" />
+					<field name="npwp" />
+				</field>
+			</field>
+		</record>
+
+
+		<!-- tambahi filter instruktor -->
+       <!--record id="view_res_partner_filter2" model="ir.ui.view">
+            <field name="name">res.partner.select2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+	               <filter string="Instructors" 
+    	           	 name="instructor" domain="[('is_instructor','=',1)]" help="Instructor Partners"/>
+				</search>
+			</field>
+		</record-->
+
+	</data>
+</openerp>
