@@ -55,13 +55,13 @@ class stock_move_serial_number(osv.osv):
 	_name = 'stock.move.serial.number'
 	_rec_name = 'stock_move_id'
 
-	def get_invoice_net(self, cr, uid, ids, field_name, arg, context=None):
+	def get_invoice_net_discount(self, cr, uid, ids, field_name, arg, context=None):
 		#import pdb;pdb.set_trace()
 		if context is None:
 			context = {}
 		result = {}
 		inv_obj = self.pool.get('account.invoice')
-		net_total = False
+		net_discount = 0
 		for obj in self.browse(cr,uid,ids,context=context):
 			so_obj  = obj.sale_order_id
 			so_name = '-'
@@ -71,8 +71,60 @@ class stock_move_serial_number(osv.osv):
 			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
 			if inv_search :
 				invoice_id = inv_search[0]
-				net_total  = inv_obj.browse(cr,uid,invoice_id).amount_total#net_total
-			result[obj.id] = net_total
+				#net_total  = inv_obj.browse(cr,uid,invoice_id).amount_total#net_total
+				inv_line = inv_obj.browse(cr,uid,invoice_id)
+				for inv in inv_line.invoice_line:
+					if obj.product_id.id == inv.product_id.id :
+						net_discount = inv.price_unit - ((inv.price_unit*inv.discount)/100)
+			result[obj.id] = net_discount
+		return result
+
+	def get_invoice_discount(self, cr, uid, ids, field_name, arg, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		result = {}
+		inv_obj = self.pool.get('account.invoice')
+		discount = 0
+		for obj in self.browse(cr,uid,ids,context=context):
+			so_obj  = obj.sale_order_id
+			so_name = '-'
+
+			if so_obj :
+				so_name = so_obj.name
+			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
+			if inv_search :
+				invoice_id = inv_search[0]
+				#net_total  = inv_obj.browse(cr,uid,invoice_id).amount_total#net_total
+				inv_line = inv_obj.browse(cr,uid,invoice_id)
+				for inv in inv_line.invoice_line:
+					if obj.product_id.id == inv.product_id.id :
+						discount = inv.discount
+			result[obj.id] = discount
+		return result
+
+	def get_invoice_net(self, cr, uid, ids, field_name, arg, context=None):
+		#import pdb;pdb.set_trace()
+		if context is None:
+			context = {}
+		result = {}
+		inv_obj = self.pool.get('account.invoice')
+		price_unit = 0
+		for obj in self.browse(cr,uid,ids,context=context):
+			so_obj  = obj.sale_order_id
+			so_name = '-'
+
+			if so_obj :
+				so_name = so_obj.name
+			inv_search = inv_obj.search(cr,uid,[('origin','ilike',so_name)],context=context)
+			if inv_search :
+				invoice_id = inv_search[0]
+				#net_total  = inv_obj.browse(cr,uid,invoice_id).amount_total#net_total
+				inv_line = inv_obj.browse(cr,uid,invoice_id)
+				for inv in inv_line.invoice_line:
+					if obj.product_id.id == inv.product_id.id :
+						price_unit = inv.price_unit
+			result[obj.id] = price_unit
 		return result
 
 	def get_invoice_date(self, cr, uid, ids, field_name, arg, context=None):
@@ -128,6 +180,8 @@ class stock_move_serial_number(osv.osv):
 		'date_invoices'		: fields.function(get_invoice_date,type='date',string='Invoice Date',store=False),
 		#'unit_price'		: fields.related('invoice_id','net_total',type='float',string='Invoice Price',store=True),
 		'unit_prices'		: fields.function(get_invoice_net,type='float',string='Invoice Price',store=False),
+		'discount'			: fields.function(get_invoice_discount,type='float',string='Discount(%)',store=False),
+		'total'				: fields.function(get_invoice_net_discount,type='float',string='Net Total',store=False),
 
 	}    
 

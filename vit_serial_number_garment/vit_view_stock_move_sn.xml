@@ -11,9 +11,11 @@
                     <field name="sale_order_id" invisible="1"/>
                     <field name="date_sale"/>
                     <field name="qty" sum="Total Amount"/>
-                    <field name="invoice_id"/> 
-                    <field name="date_invoices"/>
-                    <field name="unit_prices"/>                     
+                    <field name="invoice_id" groups="account.group_account_manager"/> 
+                    <field name="date_invoices" groups="account.group_account_manager"/>
+                    <field name="unit_prices" groups="account.group_account_manager"/>  
+                    <field name="discount" groups="account.group_account_manager"/> 
+                    <field name="total" groups="account.group_account_manager"/>                    
                     <field name="picking_id"/>                    
                     <field name="date_picking"/> 
                     <field name="product_id"/>                  
@@ -41,9 +43,11 @@
                             <group>
                                 <field name="sale_order_id" readonly="1" />
                                 <field name="date_sale" readonly="1"/>
-                                <field name="invoice_id" readonly="0"/> 
-                                <field name="date_invoices"/> 
-                                <field name="unit_prices"/>  
+                                <field name="invoice_id" groups="account.group_account_manager"/> 
+                                <field name="date_invoices" groups="account.group_account_manager"/>
+                                <field name="unit_prices" groups="account.group_account_manager"/>  
+                                <field name="discount" groups="account.group_account_manager"/> 
+                                <field name="total" groups="account.group_account_manager"/>  
                             </group>
                         </group>
                     </sheet>
