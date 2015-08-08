@@ -182,11 +182,16 @@ class netpro_policy(osv.osv):
         new_id = super(netpro_policy, self).create(cr, uid, vals, context=context)
         return new_id
 
+    # def write(self,cr,uid,ids,vals,context=None):
+    #     #isi tanggal edit dan editor
+    #     self.write(cr,uid,ids,{'last_edited_by_date':time.strftime("%Y-%m-%d %H:%M:%S"), 'last_edited_by_id':uid},context=context)
+    #     return
+
     def action_approve(self,cr,uid,ids,context=None):
         # create schedule plan
         self.create_plan_schedule(cr,uid,ids,context=context)
         #set to "approve" state
-        self.write(cr,uid,ids,{'state':'approved'},context=context)
+        self.write(cr,uid,ids,{'state':'approved', 'approved_by_date':time.strftime("%Y-%m-%d %H:%M:%S"), 'approved_by_id':uid},context=context)
         return 
     
     def action_cancel(self,cr,uid,ids,context=None):
