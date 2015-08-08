@@ -12,5 +12,7 @@ class netpro_product_plan_base(osv.osv):
     _columns = {
         'pplan': fields.char('PPlan'),
         'name': fields.char('Name'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_product_plan_base()

@@ -94,8 +94,9 @@ class netpro_member(osv.osv):
         'weight': fields.integer('Weight'),
         'member_plan_ids': fields.one2many('netpro.member_plan', 'member_id', 'Plans', ondelete='cascade'),
         'family_ids': fields.one2many('netpro.member', 'parent_id', 'Families', ondelete='cascade'),
-        # 'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
+        'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
         'parent_id': fields.many2one('netpro.member', 'Family'),
+        'created_by_id': fields.many2one('res.users', 'Created By', readonly=True),
     }
 
     _defaults = {
@@ -484,3 +485,11 @@ class netpro_member_claim_history(osv.osv):
         'claim_id': fields.many2one('netpro.claim', 'Claim'),
     }
 netpro_member_claim_history()
+
+class netpro_policy(osv.osv):
+    _name = 'netpro.policy'
+    _inherit = 'netpro.policy'
+    _columns = {
+        'member_ids' : fields.one2many('netpro.member','policy_id','Member', ondelete="cascade")
+    }
+netpro_policy()

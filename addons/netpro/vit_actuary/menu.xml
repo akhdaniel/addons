@@ -57,5 +57,9 @@
 	    <menuitem name="Reason" id="menu_netpro_reason" action="action_netpro_reason" parent="menu_netpro_actuary_configuration" />
 	    <menuitem name="Province" id="menu_netpro_province" action="action_netpro_province" parent="menu_netpro_actuary_configuration" />
 	    <menuitem name="Region" id="menu_netpro_region" action="action_netpro_region" parent="menu_netpro_actuary_configuration" />
+	    <menuitem name="Religion" id="menu_netpro_religion" action="action_netpro_religion" parent="menu_netpro_actuary_configuration" />
+	    <menuitem name="Salutation" id="menu_netpro_salutation" action="action_netpro_salutation" parent="menu_netpro_actuary_configuration" />
+	    <menuitem name="Employment" id="menu_netpro_employment" action="action_netpro_employment" parent="menu_netpro_actuary_configuration" />
+	    <menuitem name="Annual Income" id="menu_netpro_annual_income" action="action_netpro_annual_income" parent="menu_netpro_actuary_configuration" />
 </data>
 </openerp>

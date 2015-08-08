@@ -1,0 +1,433 @@
+<openerp>
+	<data noupdate="0">
+		<record model="res.groups" id="user_client">
+			<field name="name">User Client</field>
+		</record>
+		<record model="res.groups" id="manager_client">
+			<field name="name">Manager Client</field>
+		</record>
+		<record model="res.groups" id="user_system_owner">
+			<field name="name">User System Owner</field>
+		</record>
+		<record model="res.groups" id="manager_system_owner">
+			<field name="name">Manager System Owner</field>
+		</record>
+		<record model="res.groups" id="user_provider">
+			<field name="name">User Provider</field>
+		</record>
+		<record model="res.groups" id="manager_provider">
+			<field name="name">Manager Provider</field>
+		</record>
+	</data>
+
+	<data noupdate="0">
+		<!-- PROVIDER -->
+	    <!-- <record model="ir.rule" id="tpa_for_user_provider">
+	        <field name="name">Client for Provider</field>
+	        <field name="model_id" ref="model_netpro_tpa"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="domain_force">[('id','in',[tpa.tpa_id.id for tpa in user.provider_id.map_ids])]</field>
+	    </record> -->
+	    <!-- PROVIDER END -->
+
+	    <!-- CLIENT USER -->
+		<record model="ir.rule" id="age_band_user_tpa">
+	        <field name="name">Age Band for Client</field>
+	        <field name="model_id" ref="model_netpro_age_band"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="benefit_for_user_tpa">
+	        <field name="name">Benefit for Client</field>
+	        <field name="model_id" ref="model_netpro_benefit"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="benfit_unit_for_user_tpa">
+	        <field name="name">Benefit Unit for Client</field>
+	        <field name="model_id" ref="model_netpro_benefit_unit"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="diagnosis_for_user_tpa">
+	        <field name="name">Diagnosis for Client</field>
+	        <field name="model_id" ref="model_netpro_diagnosis"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="existing_insurance_for_user_tpa">
+	        <field name="name">Age Band for Client</field>
+	        <field name="model_id" ref="model_netpro_existing_insurance"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="group_size_for_user_tpa">
+	        <field name="name">Group Size for Client</field>
+	        <field name="model_id" ref="model_netpro_group_size"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="holiday_for_user_tpa">
+	        <field name="name">Holiday for Client</field>
+	        <field name="model_id" ref="model_netpro_holiday"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="lob_for_user_tpa">
+	        <field name="name">LOB for Client</field>
+	        <field name="model_id" ref="model_netpro_lob"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="membership_for_user_tpa">
+	        <field name="name">Membership for Client</field>
+	        <field name="model_id" ref="model_netpro_membership"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+		<record model="ir.rule" id="modal_factor_for_user_tpa">
+	        <field name="name">Membership for Client</field>
+	        <field name="model_id" ref="model_netpro_modal_factor"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+		<record model="ir.rule" id="premium_table_for_user_tpa">
+	        <field name="name">Premium Table for Client</field>
+	        <field name="model_id" ref="model_netpro_premium_table"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+		<record model="ir.rule" id="premium_type_for_user_tpa">
+	        <field name="name">Premium Table for Client</field>
+	        <field name="model_id" ref="model_netpro_premium_type"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_for_user_tpa">
+	        <field name="name">Product for Client</field>
+	        <field name="model_id" ref="model_netpro_product"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_plans_for_user_tpa">
+	        <field name="name">Product Plan for Client</field>
+	        <field name="model_id" ref="model_netpro_product_plan"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_plan_base_for_user_tpa">
+	        <field name="name">Product Plan Base for Client</field>
+	        <field name="model_id" ref="model_netpro_product_plan_base"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_type_for_user_tpa">
+	        <field name="name">Product Type for Client</field>
+	        <field name="model_id" ref="model_netpro_product_type"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="reason_for_user_tpa">
+	        <field name="name">Reason for Client</field>
+	        <field name="model_id" ref="model_netpro_reason"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="term_condition_for_user_tpa">
+	        <field name="name">Term Condition for Client</field>
+	        <field name="model_id" ref="model_netpro_term_condition"/>
+	        <field name="groups" eval="[(4, ref('user_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record> -->
+	    <!-- CLIENT USER END -->
+
+	    <!-- CLIENT USER MANAGER -->
+		<record model="ir.rule" id="age_band_for_user_manager_tpa">
+	        <field name="name">Age Band for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_age_band"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="benefit_for_user_manager_tpa">
+	        <field name="name">Benefit for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_benefit"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="benfit_unit_for_user_manager_tpa">
+	        <field name="name">Benefit Unit for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_benefit_unit"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="diagnosis_for_user_manager_tpa">
+	        <field name="name">Diagnosis for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_diagnosis"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="existing_insurance_for_user_manager_tpa">
+	        <field name="name">Age Band for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_existing_insurance"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="group_size_for_user_manager_tpa">
+	        <field name="name">Group Size for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_group_size"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="holiday_for_user_manager_tpa">
+	        <field name="name">Holiday for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_holiday"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="lob_for_user_manager_tpa">
+	        <field name="name">LOB for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_lob"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="membership_for_user_manager_tpa">
+	        <field name="name">Membership for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_membership"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+		<record model="ir.rule" id="modal_factor_for_user_manager_tpa">
+	        <field name="name">Membership for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_modal_factor"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+		<record model="ir.rule" id="premium_table_for_user_manager_tpa">
+	        <field name="name">Premium Table for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_premium_table"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+		<record model="ir.rule" id="premium_type_for_user_manager_tpa">
+	        <field name="name">Premium Table for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_premium_type"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_for_user_manager_tpa">
+	        <field name="name">Product for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_product"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_plans_for_user_manager_tpa">
+	        <field name="name">Product Plan for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_product_plan"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_plan_base_for_user_manager_tpa">
+	        <field name="name">Product Plan Base for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_product_plan_base"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="product_type_for_user_manager_tpa">
+	        <field name="name">Product Type for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_product_type"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="reason_for_user_manager_tpa">
+	        <field name="name">Reason for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_reason"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <record model="ir.rule" id="term_condition_for_user_manager_tpa">
+	        <field name="name">Term Condition for Client Manager</field>
+	        <field name="model_id" ref="model_netpro_term_condition"/>
+	        <field name="groups" eval="[(4, ref('manager_client'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+	    <!-- CLIENT USER MANAGER END -->
+	</data>
+</openerp>

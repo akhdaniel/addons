@@ -44,7 +44,8 @@ class benefit(osv.osv):
 		'benefit_diagnosis_ids'		: fields.one2many('netpro.benefit_diagnosis','benefit_id','Diagnosis', ondelete="cascade"),
 		'benefit_edc_map_ids'		: fields.one2many('netpro.benefit_edc_map','benefit_id','EDC Maps', ondelete="cascade"),
 		'benefit_rate_ids'			: fields.one2many('netpro.benefit_rate','benefit_id','Rate', ondelete="cascade"),
-
+		'created_by_id' 			: fields.many2one('res.users', 'Creator'),
+		'tpa_id' 					: fields.many2one('netpro.tpa', 'TPA'),
 	}
 
 class benefit_diagnosis(osv.osv):

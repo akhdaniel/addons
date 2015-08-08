@@ -19,7 +19,9 @@ class netpro_membership(osv.osv):
         'age_between_end'	: fields.integer('Age Between End'),
         'policy_owner'		: fields.boolean('Policy Owner'),
         'allowed'			: fields.boolean('Allowed'),
-        'membership_factor_ids' : fields.one2many('netpro.membership_factor','membership_id','Membership Factor', ondelete="cascade")
+        'created_by_id'     : fields.many2one('res.users', 'Creator'),
+        'membership_factor_ids' : fields.one2many('netpro.membership_factor','membership_id','Membership Factor', ondelete="cascade"),
+        'tpa_id'            : fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_membership()
 

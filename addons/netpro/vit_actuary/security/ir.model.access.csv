@@ -46,3 +46,4 @@ access_netpro_premium_type,access_netpro_premium_type,model_netpro_premium_type,
 access_netpro_premium_table,access_netpro_premium_table,model_netpro_premium_table,,1,0,0,0
 access_netpro_marital_status,access_netpro_marital_status,model_netpro_marital_status,,1,0,0,0
 access_netpro_gender,access_netpro_gender,model_netpro_gender,,1,0,0,0
+access_netpro_tpa,access_netpro_tpa,model_netpro_tpa,,1,1,1,1

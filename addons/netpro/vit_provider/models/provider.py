@@ -28,6 +28,10 @@ class netpro_provider(osv.osv):
         'partner': fields.boolean('Partner'),
         'non_partner': fields.boolean('Non Partner'),
         'profile_id': fields.many2one('netpro.profile', 'Profile'),
+        'profile_name' : fields.related('profile_id', 'name', relation='netpro.profile', type='char', string='Name', store=False),
+        'profile_address' : fields.related('profile_id', 'street', relation='netpro.profile', type='char', string='Address', store=False),
+        'profile_phone' : fields.related('profile_id', 'phone', relation='netpro.profile', type='char', string='Phone', store=False),
+        'profile_fax' : fields.related('profile_id', 'fax', relation='netpro.profile', type='char', string='Fax', store=False),
         'provider_type_id': fields.many2one('netpro.provider_type', 'Provider Type'),
         'provider_level_id': fields.many2one('netpro.provider_level', 'Provider Level'),
         'claim_pic_id': fields.many2one('res.partner', 'Claim PIC'),
@@ -60,6 +64,7 @@ class netpro_provider(osv.osv):
         'edc_ids': fields.one2many('netpro.provider_edc', 'provider_id', 'EDC', ondelete='cascade'),
         'map_ids': fields.one2many('netpro.provider_map', 'provider_id', 'Mapping', ondelete='cascade'),
         'network_ids': fields.one2many('netpro.provider_network', 'provider_id', 'Network', ondelete='cascade'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }
 netpro_provider()
 

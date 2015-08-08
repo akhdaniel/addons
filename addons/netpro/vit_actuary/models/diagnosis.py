@@ -16,5 +16,7 @@ class netpro_diagnosis(osv.osv):
         'exclusion_f': fields.boolean('ExclusionF'),
         'pre_existing_f': fields.boolean('PreExistingF'),
         'standard_fee': fields.float('StandardFee'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' 		: fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_diagnosis()

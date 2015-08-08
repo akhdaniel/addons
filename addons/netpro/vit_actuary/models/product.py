@@ -30,6 +30,8 @@ class netpro_product(osv.osv):
         'allowed_changing_overall_limit': fields.boolean('Allowed Changing Overall Limit'),
         'benefit_ids': fields.one2many('netpro.product_benefit', 'product_id', 'Benefits', ondelete='cascade'),
         'term_condition_ids': fields.one2many('netpro.product_term_condition', 'product_id', 'Term And Condition', ondelete='cascade'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_product()
 

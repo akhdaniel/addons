@@ -14,5 +14,7 @@ class netpro_benefit_unit(osv.osv):
         'name'			: fields.char('Name'),
         'description'	: fields.char('Description'),
         'unit_limit'	:  fields.selection([('ANN','Annum'),('CON','Confinement'),('OCC','Occurence')],'Unit Limit By'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' 		: fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_benefit_unit()
