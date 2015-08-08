@@ -174,10 +174,10 @@ class netpro_policy(osv.osv):
     }
     def create(self, cr, uid, vals, context=None):
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
-        #creator = self.pool.get('res.users').browser(cr, uid, uid) or '/'
         vals.update({
             'policy_no':nomor,
             'created_by_id':uid,
+            'created_by_date':time.strftime("%Y-%m-%d %H:%M:%S"),
         })
         new_id = super(netpro_policy, self).create(cr, uid, vals, context=context)
         return new_id
