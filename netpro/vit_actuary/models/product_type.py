@@ -12,5 +12,7 @@ class netpro_product_type(osv.osv):
     _columns = {
         'name': fields.char('Product Type'),
         'description': fields.text('Description'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_product_type()

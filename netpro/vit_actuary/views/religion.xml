@@ -1,0 +1,37 @@
+<openerp>
+<data>        
+    <record model="ir.ui.view" id="view_netpro_religion_form">
+        <field name="name">netpro.religion.form</field>
+        <field name="model">netpro.religion</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.religion">
+                <group>
+                    <field name="name" select="1"/>
+                    <field name="code" select="1"/>
+                    <field name="description" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_religion_tree">
+        <field name="name">netpro.religion.tree</field>
+        <field name="model">netpro.religion</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.religion">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_religion">
+        <field name="name">Religion</field>
+        <field name="res_model">netpro.religion</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

@@ -50,6 +50,8 @@ class netpro_product_plan(osv.osv):
         'benefit_ids': fields.one2many('netpro.product_plan_benefit', 'product_plan_id', 'Benefits', ondelete='cascade'),
         'membership_ids': fields.one2many('netpro.product_plan_membership', 'product_plan_id', 'Memberships', ondelete='cascade'),
         'premium_type_ids': fields.one2many('netpro.product_plan_premium_type', 'product_plan_id', 'Premium Type', ondelete='cascade'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_product_plan()
 

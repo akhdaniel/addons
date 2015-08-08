@@ -21,4 +21,9 @@ import marital_status
 import gender
 import reason
 import region
+import tpa
+import annual_income
+import salutation
+import employment
+import religion
 #import province

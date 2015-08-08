@@ -174,8 +174,10 @@ class netpro_policy(osv.osv):
     }
     def create(self, cr, uid, vals, context=None):
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
+        #creator = self.pool.get('res.users').browser(cr, uid, uid) or '/'
         vals.update({
             'policy_no':nomor,
+            'created_by_id':uid,
         })
         new_id = super(netpro_policy, self).create(cr, uid, vals, context=context)
         return new_id
@@ -319,14 +321,6 @@ class netpro_kpp(osv.osv):
         'kpp_id': fields.char('KPP ID'),
         'name': fields.char('Name'),
     }
-
-class netpro_tpa(osv.osv):
-    _name = 'netpro.tpa'
-    _columns = {
-        'name': fields.char('Name'),
-        'code': fields.char('Code'),
-    }
-netpro_tpa()
 
 class netpro_policy_category(osv.osv):
     _name = 'netpro.policy_category'

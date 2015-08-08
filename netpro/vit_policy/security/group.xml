@@ -1,0 +1,27 @@
+<openerp>
+	<data noupdate="0">
+		<!-- TPA USER -->
+		<record model="ir.rule" id="policy_for_user_tpa">
+	        <field name="name">Policy for TPA</field>
+	        <field name="model_id" ref="model_netpro_policy"/>
+	        <field name="groups" eval="[4, ref('vit_actuary.user_client')]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+
+	    <!-- TPA MANAGER -->
+		<record model="ir.rule" id="policy_for_manager_tpa">
+	        <field name="name">Policy for TPA</field>
+	        <field name="model_id" ref="model_netpro_policy"/>
+	        <field name="groups" eval="[4, ref('vit_actuary.manager_client')]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	    </record>
+	</data>
+</openerp>

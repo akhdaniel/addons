@@ -13,6 +13,8 @@ class netpro_age_band(osv.osv):
     _columns = {
         'name': fields.integer('Band ID'),
         'age_band_detail_ids': fields.one2many('netpro.age_band_detail','age_band_id','Age Band Detail', ondelete="cascade"),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 netpro_age_band()
 

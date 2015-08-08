@@ -17,6 +17,8 @@ class netpro_modal_factor(osv.osv):
 		'quarterly' 		: fields.float("Quarterly"),
 		'monthly' 			: fields.float("Monthly"),
         'is_allowed'		: fields.boolean('Allowed'),
+        'created_by_id' 	: fields.many2one('res.users', 'Creator'),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
 	}
 
 netpro_modal_factor()

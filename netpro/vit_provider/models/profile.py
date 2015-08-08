@@ -94,6 +94,7 @@ class netpro_profile(osv.osv):
         'max_out_go': fields.float('Max Out Go'),
         'purpose_of_insurance': fields.selection([('POA', 'Perlindungan Objek Asuransi'), ('PK', 'Persyaratan Kredit'), ('KK', 'Keamanan Dan Kenyamanan'), ('L', 'Lainnya')], 'Purpose Of Insurance'),
         'alias_ids': fields.one2many('netpro.alias', 'profile_id', 'Profile', ondelete='cascade'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }
 netpro_profile()
 

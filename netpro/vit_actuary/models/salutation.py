@@ -7,12 +7,12 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
-class netpro_reason(osv.osv):
-    _name = 'netpro.reason'
+class netpro_salutation(osv.osv):
+    _name = 'netpro.salutation'
     _columns = {
         'name': fields.char('Name'),
+        'code': fields.text('Code'),
         'description': fields.text('Description'),
-        'type': fields.selection([('H', 'Header'), ('D', 'Detail Purpose')], 'Type'),
-        'allowed' : fields.boolean('Allowed'),
-        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }
+netpro_salutation()

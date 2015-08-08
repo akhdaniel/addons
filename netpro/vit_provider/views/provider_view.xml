@@ -88,8 +88,12 @@
         <field name="arch" type="xml">
             <tree string="netpro.provider">
                 <field name="ext_id"/>
-                <field name="partner"/>
-                <!-- <field name="non_partner"/>
+                <field name="profile_name"/>
+                <field name="profile_address"/>
+                <field name="profile_phone"/>
+                <field name="profile_fax"/>
+                <!--<field name="partner"/>
+                <field name="non_partner"/>
                 <field name="profile_id"/>
                 <field name="provider_type_id"/>
                 <field name="provider_level_id"/>

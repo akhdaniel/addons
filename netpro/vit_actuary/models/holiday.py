@@ -13,6 +13,7 @@ class holiday(osv.osv):
     _columns = {
         'name': fields.char('Name'),
         'description': fields.char('Description'),
-
+        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
+        'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 holiday()
