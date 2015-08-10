@@ -50,12 +50,11 @@
                             <field name="occupation_id" select="0"/>
                             <field name="existing_policy_no_id" select="0"/>
 
-                            <label for="province1_id">Region</label>
-                            <field name="province1_id" nolabel="1"/>
-                            <field name="province2_id" nolabel="1"/>
-                            <field name="province3_id" nolabel="1"/>
-                            <field name="province4_id" nolabel="1"/>
-                            <field name="province5_id" nolabel="1"/>
+                            <field name="province1_id"/>
+                            <field name="province2_id"/>
+                            <field name="province3_id"/>
+                            <field name="province4_id"/>
+                            <field name="province5_id"/>
 
                             <separator string="Remarks" colspan="4"/>
                             <field name="remarks" colspan="4" nolabel="1" select="0"/>
