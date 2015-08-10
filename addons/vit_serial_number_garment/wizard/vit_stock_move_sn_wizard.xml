@@ -87,9 +87,11 @@
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
                 <group string="Traceability" position="replace">
-                    <group colspan='4'>
-                        <field name="stock_move_serial_number_ids" nolabel='1'/>   
-                    </group>
+                        <field name="stock_move_serial_number_ids" nolabel="1" mode="tree"> 
+                            <tree string="Serial Number">
+                              <field name="serial_number_id"/>
+                            </tree>
+                        </field> 
                 </group>     
             </field>
         </record>
