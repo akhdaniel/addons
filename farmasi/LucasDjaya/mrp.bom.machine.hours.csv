@@ -1,4 +1,4 @@
-bom_id,workcenter_operation_id,Machine,no_mesin,is_paralel,workcenter_id,machine_hour
+bom_id,workcenter_operation_id,machine_id,no_mesin,is_paralel,workcenter_id,machine_hour
 Camoksil 250 mg Strip,Oven Botol,,,,,
 ,Penimbangan,Timbangan Mettler Toledo,,,,30
 ,,Printer Timbangan Mettler Toledo,,,,30
