@@ -54,6 +54,7 @@ Lalu import manual file ini:
         # 'bom.machine.hour.csv',
         # 'bom.man.hour.csv',
         'vit_pharmacy_manufacture.forecast_product.csv',
+        # batch.number,csv
     ],
     'installable': True,
     'auto_install': False,

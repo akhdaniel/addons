@@ -80,7 +80,7 @@ class mrp_production(osv.osv):
 
     _columns = {
         'batch_number_id': fields.many2one('batch.number', string='Batch Number',
-            domain="[('is_used','=',False)]",required=True,readonly=True,states={'draft':[('readonly',False)]}),
+            domain="[('is_used','=',False)]",required=False,readonly=True,states={'draft':[('readonly',False)]}),
 
     }
 
