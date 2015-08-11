@@ -42,3 +42,6 @@
 "product_uom_500","Pot 100 Table","Unit","Bigger than the reference Unit of Measure",100,"TRUE"
 "product_uom_510","ml","Volume","Smaller than the reference Unit of Measure",1000,"TRUE"
 "product_uom_520","Liter(s)","Volume","Reference Unit of Measure for this category",1,"TRUE"
+"product_uom_530","lbr","Unit","Reference Unit of Measure for this category",1,"TRUE"
+"product_uom_540","bh","Unit","Reference Unit of Measure for this category",1,"TRUE"
+

@@ -9,5 +9,4 @@
 "__export__.mrp_routing_800","DSPD","Dry Syrup Pakai Dus",
 "__export__.mrp_routing_900","DSTD","Dry Syrup Tanpa Dus",
 "__export__.mrp_routing_1000","LAR","Larutan",
-"__export__.mrp_routing_1100","INK 1-2","Injeksi 1 & 2 ML",
-"__export__.mrp_routing_1200","INK 10-20","Injeksi 10 & 20 ML",
+"__export__.mrp_routing_1100","INK","Injeksi",
