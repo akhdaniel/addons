@@ -53,6 +53,7 @@ Lalu import manual file ini:
         # 'vit_pharmacy_machine_hour.machine_master.csv',
         # 'bom.machine.hour.csv',
         # 'bom.man.hour.csv',
+        'vit_pharmacy_manufacture.forecast_product.csv',
     ],
     'installable': True,
     'auto_install': False,
