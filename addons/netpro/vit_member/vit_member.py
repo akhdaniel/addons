@@ -37,7 +37,7 @@ class netpro_member(osv.osv):
         'member_no': fields.char('Member No.', required=True),
         'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
         'census_no': fields.integer('Census No.'),
-        'sex': fields.many2one('netpro.sex', 'Sex'),
+        'gender_id': fields.many2one('netpro.gender', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
         #'email': fields.char('Email'),
         'mobile_phone': fields.char('Mobile Phone'),
