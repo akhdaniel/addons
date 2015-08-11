@@ -1,0 +1,97 @@
+<openerp>
+
+    <data>
+        <record id="view_wps_tree" model="ir.ui.view">
+            <field name="name">wps_tree</field>
+            <field name="model">vit_pharmacy_manufacture.wps</field>
+            <field name="arch" type="xml">
+                <tree string="WPS">
+                    <field name="name"/>
+                    <field name="mps_id"/>
+                    <field name="week_on_month"/>
+                    <field name="product_id"/>
+                    <field name="categ_id"/> 
+                    <field name="batch"/> 
+                    <field name="start_date"/>
+                    <field name="end_date"/>          
+                </tree>
+            </field>
+        </record>
+        <record id="view_wps_form" model="ir.ui.view">
+            <field name="name">wps_form</field>
+            <field name="model">vit_pharmacy_manufacture.wps</field>
+            <field name="arch" type="xml">
+                 <form string="WPS" version="7.0">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                        <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                        <!-- <button name="action_create_wps"  type="object" states="done" string="Create WPS" class="oe_highlight"/> -->
+                    </header>
+                        <group col='3'>
+                            <group>
+                                <field name="name"/>
+                                <field name="mps_id"/>
+                                <field name="product_id"/>
+                                <field name="categ_id"/> 
+                            </group>
+                            <group> 
+                                <field name="week_on_month"/>
+                                <field name="week_on_year"/>
+                                <field name="batch"/> 
+                                <field name="start_date"/>
+                                <field name="end_date"/>      
+                            </group>
+                            <group>
+                                <field name="year"/>
+                                <field name="create_uid"/>
+                                <field name="created_date"/> 
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <field name="mrp_detail_ids" nolabel="1" options="{'reload_on_button': true}">
+                                        <tree string="MO">
+                                            <field name="name"/>
+                                            <field name="bom_id"/>
+                                            <field name="routing_id"/>
+                                            <field name="state"/>
+                                        </tree>
+                                    </field>
+
+
+                                <!-- <field name="mrp_detail_ids" options="{'reload_on_button': true}" view_mode="tree"  widget="one2many_list">
+                                    <tree string="Details" editable="bottom">
+                                        <field name="mrp_id"/> 
+                                    </tree>
+                                </field> -->
+                            </page>
+                        </notebook>
+                </form>                         
+            </field>
+        </record>
+
+
+        <record id="view_wps_filter" model="ir.ui.view">
+            <field name="name">wps_form_filter</field>
+            <field name="model">vit_pharmacy_manufacture.wps</field>
+            <field name="arch" type="xml">
+                <search string="Search WPS">
+                    <field name="name" />        
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="field_wps" >
+            <field name="name">WPS</field>
+            <field name="res_model">vit_pharmacy_manufacture.wps</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>Week Production Schedule</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_conf5" parent="menu_conf" name="Week Production Schedule" sequence="33" action="field_wps" />
+    </data>
+</openerp>
+
