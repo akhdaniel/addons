@@ -50,6 +50,7 @@ Lalu import manual file ini:
         'res.partner.csv',
         'product.product.csv',
         'mrp.bom.csv',
+        # 'vit_pharmacy_machine_hour.machine_master.csv',
         # 'bom.machine.hour.csv',
         # 'bom.man.hour.csv',
     ],

@@ -1,12 +1,12 @@
-id,code,name,resource_type
+id,name,code,resource_type
 __export__.mrp_workcenter_101,Cuci Botol,Cuci Botol,user
 __export__.mrp_workcenter_102,Oven,Oven Botol,material
-__export__.mrp_workcenter_103,Scale,Penimbangan,material
+__export__.mrp_workcenter_103,Scale,Scale,material
 __export__.mrp_workcenter_104,Mesin Bilas,Kemas Primer/Bilas,material
 __export__.mrp_workcenter_105,Codding,Kemas Sekunder/Codding,material
 __export__.mrp_workcenter_106,Codding,Kemas Tersier/Codding,material
-__export__.mrp_workcenter_107,Mixer,Mixing,material
-__export__.mrp_workcenter_108,Mesin Pengeringan,Kemas Primer/Pengeringan,material
+__export__.mrp_workcenter_107,Mixer,Mixer,material
+__export__.mrp_workcenter_108,Mesin Pengeringan,Mesin Pengeringan,material
 __export__.mrp_workcenter_109,QC,QC,user
 __export__.mrp_workcenter_110,Mesin Filling,Filling,material
 __export__.mrp_workcenter_111,Visual,Sortir Visual,user
@@ -28,7 +28,7 @@ __export__.mrp_workcenter_126,Mesin Cetak,Cetak,material
 __export__.mrp_workcenter_127,Stripping/Blistering,Stripping/Blistering,material
 __export__.mrp_workcenter_128,Packing,"Packing (Fbox,Master Box)",user
 __export__.mrp_workcenter_129,Mesin Filling & Capping,Filling & Capping,material
-__export__.mrp_workcenter_130,Mesin Bilas,Bilas,material
+__export__.mrp_workcenter_130,Mesin Bilas,Mesin Bilas,material
 __export__.mrp_workcenter_131,Codding,Codding Botol,material
 __export__.mrp_workcenter_132,Codding,Codding Etiket,material
 __export__.mrp_workcenter_133,Cuci Ampul,Cuci Ampul/Vial,material
