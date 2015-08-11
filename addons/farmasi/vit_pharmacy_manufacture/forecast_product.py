@@ -85,11 +85,11 @@ class forecast_product(osv.osv):
                     product_id = detail.product_id.id
                     prod_order = detail.m9
                     self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
-                if m == "Nov":
+                if m == "Oct":
                     product_id = detail.product_id.id
                     prod_order = detail.m10
                     self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
-                if m == "Oct":
+                if m == "Nov":
                     product_id = detail.product_id.id
                     prod_order = detail.m11
                     self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)

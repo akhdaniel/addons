@@ -8,7 +8,7 @@
        """,
     'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
     'depends': ['mrp'],
-    'data': ['forecast_product.xml','mps.xml'],
+    'data': ['forecast_product.xml','mps.xml','wps.xml','mrp_view.xml'],
     'test': [],    
     'installable': True,
     'active': False,
