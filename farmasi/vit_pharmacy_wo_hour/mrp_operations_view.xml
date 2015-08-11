@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="ir.ui.view" id="mrp_production_workcenter_form_view_inherit_ph">
+        <field name="name">mrp.production.workcenter.line.form.ph</field>
+        <field name="model">mrp.production.workcenter.line</field>
+        <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                     <page string="Man Hour" position="inside">
+                        <group col='3'>
+                            <group string="Standard">
+                                <field name="man_hour_standard"/>
+                                <field name="man_number_standard"/>
+                            </group>
+
+                            <group string="Actual">
+                                <field name="man_hour_actual"/>
+                                <field name="man_number_actual"/>
+                            </group>
+
+                            <group string="Difference">
+                                <field name="man_hour_diff" on_change="0"/>
+                                <field name="man_number_diff" on_change="0"/>
+                            </group>
+
+                        </group>
+                    </page>
+                    <page string="Machine Hour" position="inside">
+                        <field name="wo_machine_hour_lines">
+                            <tree string="workcenter operation"  editable="top">
+                                    <field name="mpwcl_id" domain="[('name','=',parent.name)]"/>
+                                    <field name="machine_id"/>
+                                    <field name="machine_hour_standard"/>
+                                    <field name="machine_hour_actual"/>
+                                    <field name="machine_hour_diff" on_change="0"/>
+                                    <field name="is_parallel"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+        </field>
+    </record>
+</data>
+</openerp>
