@@ -1,69 +1,43 @@
 id,code,name,resource_type
-__export__.mrp_workcenter_101,Visual,Visual,user
-__export__.mrp_workcenter_102,Labelling,Labelling,material
-__export__.mrp_workcenter_103,Packing,Packing,material
-__export__.mrp_workcenter_104,Bilas,Mesin Bilas,user
-__export__.mrp_workcenter_105,Filling & Capping,Mesin Filling & Capping,material
-__export__.mrp_workcenter_106,Melting,Melting,material
-__export__.mrp_workcenter_107,Encapsulasi,Encapsulasi,material
-__export__.mrp_workcenter_108,Drying,Drying,material
-__export__.mrp_workcenter_109,Counting & Bottling,Counting & Bottling,material
-__export__.mrp_workcenter_110,Sterillisasi,Sterillisasi,user
-__export__.mrp_workcenter_111,Integrity Test,Integrity Test,user
-__export__.mrp_workcenter_112,Filtrasi,Filtrasi,material
-__export__.mrp_workcenter_113,Scale,Scale,material
-__export__.mrp_workcenter_114,Mixing,Mixer,material
-__export__.mrp_workcenter_115,QC,QC,user
-__export__.mrp_workcenter_116,Mesin Filling Tablet,Mesin Filling Tablet,material
-__export__.mrp_workcenter_117,Labelling,Labelling,material
-__export__.mrp_workcenter_118,Packing,Packing,material
-__export__.mrp_workcenter_119,Mesin Pengeringan,Mesin Pengeringan,material
-__export__.mrp_workcenter_120,Codding,Codding,user
-__export__.mrp_workcenter_121,Stripping,Stripping,material
-__export__.mrp_workcenter_122,Produk Jadi,Produk Jadi,material
-__export__.mrp_workcenter_123,Ayak,Mesin Ayak,material
-__export__.mrp_workcenter_124,Cetak,Mesin Cetak,material
-__export__.mrp_workcenter_125,Lipat,Lipat,user
-__export__.mrp_workcenter_126,Bottling,Bottling,material
-__export__.mrp_workcenter_127,Tutup Manual,Tutup Manual,user
-__export__.mrp_workcenter_128,Mouth Sealer,Mouth Sealer,material
-__export__.mrp_workcenter_129,Tempel Etiket,Tempel Etiket,user
-__export__.mrp_workcenter_130,Tapping,Tapping,material
-__export__.mrp_workcenter_131,Pembuatan Lar. Coating,Pembuatan Lar. Coating,material
-__export__.mrp_workcenter_132,Coating,Coating,material
-__export__.mrp_workcenter_133,Uji Lab,Uji Lab,user
-__export__.mrp_workcenter_134,Blistering,Blistering,material
-__export__.mrp_workcenter_135,Menutup Manual,Menutup Manual,user
-__export__.mrp_workcenter_136,Mixer Awal,Mixing Awal,material
-__export__.mrp_workcenter_137,Mixer Akhir,Mixing Akhir,material
-__export__.mrp_workcenter_138,Uji QC,Uji QC,user
-__export__.mrp_workcenter_139,Codding Tube,Codding Tube,user
-__export__.mrp_workcenter_140,Uji Lab QC,Uji Lab QC,user
-__export__.mrp_workcenter_141,Produk Ruahan,Produk Ruahan Tablet,material
-__export__.mrp_workcenter_142,Filling Tube @10 Tab Eff,Filling @10 Tab Eff,material
-__export__.mrp_workcenter_143,Oven Botol,Oven Botol,material
-__export__.mrp_workcenter_144,Cuci Ampul,Cuci Ampul,material
-__export__.mrp_workcenter_145,Sterilisasi Ampul/vial/rubber,Sterilisasi Ampul/vial/rubber,material
-__export__.mrp_workcenter_146,Sterilisasi Baju ,Sterilisasi baju ,material
-__export__.mrp_workcenter_147,Sterilisasi Peralatan,Sterilisasi peralatan,material
-__export__.mrp_workcenter_148,Sterilisasi Produk,Sterilisasi produk,material
-__export__.mrp_workcenter_149,Oven,Pengeringan,material
-__export__.mrp_workcenter_150,Sortir,Sortir,user
-__export__.mrp_workcenter_151,Printing Ampul,Printing ampul,material
-__export__.mrp_workcenter_152,Mesin Labeling,Mesin Labeling,material
-__export__.mrp_workcenter_153,Cuci Ampul/Vial,Cuci Ampul/Vial,material
-__export__.mrp_workcenter_154,Sterilisasi Ampul/Vial,Sterilisasi Ampul/Vial,material
-__export__.mrp_workcenter_155,Sterilisasi Baju & Peralatan,Sterilisasi Baju & Peralatan,material
-__export__.mrp_workcenter_156,Pengeringan botol,Pengeringan botol,material
-__export__.mrp_workcenter_157,Filling/Cetak,Filling/Cetak,material
-__export__.mrp_workcenter_158,Coding Botol,Coding Botol,material
-__export__.mrp_workcenter_159,Coding Etiket,Coding Etiket,material
-__export__.mrp_workcenter_160,Labelling & Packing,Labelling & Packing,user
-__export__.mrp_workcenter_161,Pencucian Botol,Pencucian Botol,material
-__export__.mrp_workcenter_162,Drying & Polishing,Drying & Polishing,material
-__export__.mrp_workcenter_163,"Counting,Sealing,Capping","Counting,Sealing,Capping",material
-__export__.mrp_workcenter_164,Sortir Visual,Sortir Visual,user
-__export__.mrp_workcenter_165,Oven,Oven,user
-__export__.mrp_workcenter_166,Mesin Filling,Mesin Filling,material
-__export__.mrp_workcenter_167,Stripping/Blistering,Stripping/Blistering,material
-__export__.mrp_workcenter_168,Mesin Printing,Mesin Printing,material
+__export__.mrp_workcenter_101,Cuci Botol,Cuci Botol,user
+__export__.mrp_workcenter_102,Oven,Oven Botol,material
+__export__.mrp_workcenter_103,Scale,Penimbangan,material
+__export__.mrp_workcenter_104,Mesin Bilas,Kemas Primer/Bilas,material
+__export__.mrp_workcenter_105,Codding,Kemas Sekunder/Codding,material
+__export__.mrp_workcenter_106,Codding,Kemas Tersier/Codding,material
+__export__.mrp_workcenter_107,Mixer,Mixing,material
+__export__.mrp_workcenter_108,Mesin Pengeringan,Kemas Primer/Pengeringan,material
+__export__.mrp_workcenter_109,QC,QC,user
+__export__.mrp_workcenter_110,Mesin Filling,Filling,material
+__export__.mrp_workcenter_111,Visual,Sortir Visual,user
+__export__.mrp_workcenter_112,Codding,Codding,material
+__export__.mrp_workcenter_113,Labelling,Labelling,user
+__export__.mrp_workcenter_114,Packing F.Box,Packing (Folding Box),user
+__export__.mrp_workcenter_115,Packing M.Box,Packing (Master Box),user
+__export__.mrp_workcenter_116,Oven,Pengeringan,material
+__export__.mrp_workcenter_117,Visual,Visual,user
+__export__.mrp_workcenter_118,Melting,Melting,material
+__export__.mrp_workcenter_119,Drying,Drying & Polishing,material
+__export__.mrp_workcenter_120,Counting,Counting,material
+__export__.mrp_workcenter_121,Labelling&Packing,Labelling & Packing,user
+__export__.mrp_workcenter_122,QC,Uji QC,user
+__export__.mrp_workcenter_123,QC,Sortir,user
+__export__.mrp_workcenter_124,Strip/Blist,Strip/Blist,material
+__export__.mrp_workcenter_125,Packing,Packing,user
+__export__.mrp_workcenter_126,Mesin Cetak,Cetak,material
+__export__.mrp_workcenter_127,Stripping/Blistering,Stripping/Blistering,material
+__export__.mrp_workcenter_128,Packing,"Packing (Fbox,Master Box)",user
+__export__.mrp_workcenter_129,Mesin Filling & Capping,Filling & Capping,material
+__export__.mrp_workcenter_130,Mesin Bilas,Bilas,material
+__export__.mrp_workcenter_131,Codding,Codding Botol,material
+__export__.mrp_workcenter_132,Codding,Codding Etiket,material
+__export__.mrp_workcenter_133,Cuci Ampul,Cuci Ampul/Vial,material
+__export__.mrp_workcenter_134,Sterillisasi,Sterillisasi Ampul/Vial,user
+__export__.mrp_workcenter_135,Sterillisasi,Sterillisasi Baju & Peralatan,user
+__export__.mrp_workcenter_136,Sterillisasi,Sterillisasi Produk,user
+__export__.mrp_workcenter_137,Integrity Test,Integrity Test,user
+__export__.mrp_workcenter_138,Filtrasi,Filtrasi,material
+__export__.mrp_workcenter_139,Printing,Printing Ampul,material
+__export__.mrp_workcenter_140,PS.06,PS.06,material
+__export__.mrp_workcenter_141,PS.07,PS.07,material
+__export__.mrp_workcenter_142,PS.08,PS.08,material
