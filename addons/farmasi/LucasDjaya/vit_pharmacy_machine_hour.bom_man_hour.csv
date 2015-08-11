@@ -1,0 +1,302 @@
+bom_id,workcenter_operation_id,man_number,man_hour
+Camoksil 250 mg Strip,Cuci Botol,,
+Camoksil 250 mg Strip,Pengeringan botol,,
+Camoksil 250 mg Strip,Penimbangan,2,30
+Camoksil 250 mg Strip,Mixing,1,60
+Camoksil 250 mg Strip,Filling,1,420
+Camoksil 250 mg Strip,Sortir,1,420
+Camoksil 250 mg Strip,Codding,1,60
+Camoksil 250 mg Strip,Labelling,,
+Camoksil 250 mg Strip,Packing,5,480
+Camoksil 500 mg Strip,Cuci Botol,,
+Camoksil 500 mg Strip,Pengeringan botol,,
+Camoksil 500 mg Strip,Penimbangan,2,30
+Camoksil 500 mg Strip,Mixing,1,60
+Camoksil 500 mg Strip,Filling,1,210
+Camoksil 500 mg Strip,Sortir,1,210
+Camoksil 500 mg Strip,Codding,1,60
+Camoksil 500 mg Strip,Labelling,,
+Camoksil 500 mg Strip,Packing,5,480
+Camoksil 250 mg Blister,Cuci Botol,,
+Camoksil 250 mg Blister,Pengeringan botol,,
+Camoksil 250 mg Blister,Penimbangan,2,30
+Camoksil 250 mg Blister,Mixing,1,60
+Camoksil 250 mg Blister,Filling,1,420
+Camoksil 250 mg Blister,Sortir,1,420
+Camoksil 250 mg Blister,Codding,1,120
+Camoksil 250 mg Blister,Labelling,,
+Camoksil 250 mg Blister,Packing,5,480
+Ampicillin 250 mg Strip,Cuci Botol,,
+Ampicillin 250 mg Strip,Pengeringan botol,,
+Ampicillin 250 mg Strip,Penimbangan,2,30
+Ampicillin 250 mg Strip,Mixing,1,60
+Ampicillin 250 mg Strip,Filling,1,1440
+Ampicillin 250 mg Strip,Sortir,1,1440
+Ampicillin 250 mg Strip,Codding,1,60
+Ampicillin 250 mg Strip,Labelling,,
+Ampicillin 250 mg Strip,Packing,5,480
+Vitamin B12 500mcg/ml 1 ml,Cuci Ampul/Vial,4,480
+Vitamin B12 500mcg/ml 1 ml,Sterilisasi Ampul/Vial,2,560
+Vitamin B12 500mcg/ml 1 ml,Sterilisasi Baju & Peralatan,2,60
+Vitamin B12 500mcg/ml 1 ml,Penimbangan,2,30
+Vitamin B12 500mcg/ml 1 ml,Mixing,1,45
+Vitamin B12 500mcg/ml 1 ml,Integrity test & filtrasi,1,60
+Vitamin B12 500mcg/ml 1 ml,Filling,2,480/600
+Vitamin B12 500mcg/ml 1 ml,Sterilisasi produk,2,60
+Vitamin B12 500mcg/ml 1 ml,Visual,5,760
+Vitamin B12 500mcg/ml 1 ml,Codding,1,60
+Vitamin B12 500mcg/ml 1 ml,Printing ampul,2,720
+Vitamin B12 500mcg/ml 1 ml,Mesin Labelling,,
+Vitamin B12 500mcg/ml 1 ml,Packing,6,420
+Vitamin B12 500 mcg/ml 10 ml,Cuci Ampul/Vial,4,480
+Vitamin B12 500 mcg/ml 10 ml,Sterilisasi Ampul/Vial,2,560
+Vitamin B12 500 mcg/ml 10 ml,Sterilisasi Baju & Peralatan,,
+Vitamin B12 500 mcg/ml 10 ml,Penimbangan,,
+Vitamin B12 500 mcg/ml 10 ml,Mixing,1,45
+Vitamin B12 500 mcg/ml 10 ml,Integrity test & filtrasi,1,90
+Vitamin B12 500 mcg/ml 10 ml,Filling,2,360
+Vitamin B12 500 mcg/ml 10 ml,Sterilisasi produk,2,90
+Vitamin B12 500 mcg/ml 10 ml,Visual,5,180
+Vitamin B12 500 mcg/ml 10 ml,Codding,1,160
+Vitamin B12 500 mcg/ml 10 ml,Printing ampul,,
+Vitamin B12 500 mcg/ml 10 ml,Mesin Labelling,4,480
+Vitamin B12 500 mcg/ml 10 ml,Packing,5,480
+Camidryl 10 mg/ml 10 ml,Cuci Ampul/Vial,4,420
+Camidryl 10 mg/ml 10 ml,Sterilisasi Ampul/Vial,2,420
+Camidryl 10 mg/ml 10 ml,Sterilisasi Baju & Peralatan,2,60
+Camidryl 10 mg/ml 10 ml,Penimbangan,2,30
+Camidryl 10 mg/ml 10 ml,Mixing,1,45
+Camidryl 10 mg/ml 10 ml,Integrity test & filtrasi,1,90
+Camidryl 10 mg/ml 10 ml,Filling,2,360
+Camidryl 10 mg/ml 10 ml,Sterilisasi produk,2,90
+Camidryl 10 mg/ml 10 ml,Visual,5,180
+Camidryl 10 mg/ml 10 ml,Codding,1,160
+Camidryl 10 mg/ml 10 ml,Printing ampul,,
+Camidryl 10 mg/ml 10 ml,Mesin Labelling,4,480
+Camidryl 10 mg/ml 10 ml,Packing,5,480
+Glyserol 100 ml,Penimbangan,2,30
+Glyserol 100 ml,Mixing,1,120
+Glyserol 100 ml,Filling & Capping,3,420
+Glyserol 100 ml,Coding Botol,,
+Glyserol 100 ml,Coding Etiket,1,45
+Glyserol 100 ml,Labelling & Packing,5,120
+Phenol Glycerol 5 ml,Penimbangan,2,30
+Phenol Glycerol 5 ml,Mixing,1,300
+Phenol Glycerol 5 ml,Filling & Capping,3,600
+Phenol Glycerol 5 ml,Coding Botol,,
+Phenol Glycerol 5 ml,Coding Etiket,1,120
+Phenol Glycerol 5 ml,Labelling & Packing,5,420
+Biocelle,Pencucian Botol,2,90
+Biocelle,Oven Botol,2,15
+Biocelle,Penimbangan,2,30
+Biocelle,Melting,2,360
+Biocelle,Mixing,2,30
+Biocelle,Filling,4,840
+Biocelle,Drying & Polishing,4,420
+Biocelle,Counting,6,420
+Biocelle,Codding,1,60
+Biocelle,Labelling & Packing,4,300
+Habbatussauda 600 mg,Pencucian Botol,2,90
+Habbatussauda 600 mg,Oven Botol,2,15
+Habbatussauda 600 mg,Penimbangan,2,30
+Habbatussauda 600 mg,Melting,2,360
+Habbatussauda 600 mg,Mixing,2,30
+Habbatussauda 600 mg,Filling,4,840
+Habbatussauda 600 mg,Drying & Polishing,4,420
+Habbatussauda 600 mg,Counting,6,420
+Habbatussauda 600 mg,Codding,1,60
+Habbatussauda 600 mg,Labelling & Packing,4,300
+Isotretinoin 10 mg,Pencucian Botol,2,90
+Isotretinoin 10 mg,Oven Botol,2,15
+Isotretinoin 10 mg,Penimbangan,2,30
+Isotretinoin 10 mg,Melting,2,360
+Isotretinoin 10 mg,Mixing,2,30
+Isotretinoin 10 mg,Filling,4,840
+Isotretinoin 10 mg,Drying & Polishing,4,420
+Isotretinoin 10 mg,Counting,6,420
+Isotretinoin 10 mg,Codding,1,60
+Isotretinoin 10 mg,Labelling & Packing,4,300
+Lamata,Pencucian Botol,2,90
+Lamata,Oven Botol,2,15
+Lamata,Penimbangan,2,30
+Lamata,Melting,2,360
+Lamata,Mixing,2,30
+Lamata,Filling,4,840
+Lamata,Drying & Polishing,4,420
+Lamata,Counting,6,420
+Lamata,Codding,1,60
+Lamata,Labelling & Packing,4,300
+Mamavita 400 mg Soft Capsule,Pencucian Botol,2,90
+Mamavita 400 mg Soft Capsule,Oven Botol,2,15
+Mamavita 400 mg Soft Capsule,Penimbangan,2,30
+Mamavita 400 mg Soft Capsule,Melting,2,360
+Mamavita 400 mg Soft Capsule,Mixing,2,30
+Mamavita 400 mg Soft Capsule,Filling,4,840
+Mamavita 400 mg Soft Capsule,Drying & Polishing,4,420
+Mamavita 400 mg Soft Capsule,Counting,6,420
+Mamavita 400 mg Soft Capsule,Codding,1,60
+Mamavita 400 mg Soft Capsule,Labelling & Packing,4,300
+Olive Oil 600 mg,Pencucian Botol,2,90
+Olive Oil 600 mg,Oven Botol,2,15
+Olive Oil 600 mg,Penimbangan,2,30
+Olive Oil 600 mg,Melting,2,360
+Olive Oil 600 mg,Mixing,2,30
+Olive Oil 600 mg,Filling,4,840
+Olive Oil 600 mg,Drying & Polishing,4,420
+Olive Oil 600 mg,Counting,6,420
+Olive Oil 600 mg,Codding,1,60
+Olive Oil 600 mg,Labelling & Packing,4,300
+Vitamin A 200.000 IU,Pencucian Botol,2,90
+Vitamin A 200.000 IU,Oven Botol,2,20
+Vitamin A 200.000 IU,Penimbangan,2,30
+Vitamin A 200.000 IU,Melting,2,360
+Vitamin A 200.000 IU,Mixing,2,30
+Vitamin A 200.000 IU,Filling,4,1080
+Vitamin A 200.000 IU,Drying & Polishing,4,420
+Vitamin A 200.000 IU,Counting,6,420
+Vitamin A 200.000 IU,Codding,1,60
+Vitamin A 200.000 IU,Labelling & Packing,4,300
+Antasida Doen 60 ml,Pencucian Botol,2,90
+Antasida Doen 60 ml,Oven Botol,2,60
+Antasida Doen 60 ml,Penimbangan,2,30
+Antasida Doen 60 ml,Mixing,2,150
+Antasida Doen 60 ml,Filling,3,60
+Antasida Doen 60 ml,Sortir Visual,2,60
+Antasida Doen 60 ml,Codding,1,90
+Antasida Doen 60 ml,Labelling,3,90
+Antasida Doen 60 ml,Packing,5,90
+BAB 100 ml,Pencucian Botol,2,90
+BAB 100 ml,Oven Botol,2,60
+BAB 100 ml,Penimbangan,2,30
+BAB 100 ml,Mixing,2,150
+BAB 100 ml,Filling,3,60
+BAB 100 ml,Sortir Visual,2,60
+BAB 100 ml,Codding,1,90
+BAB 100 ml,Labelling,3,90
+BAB 100 ml,Packing,5,90
+Calcivita 200 ml,Pencucian Botol,2,60
+Calcivita 200 ml,Oven Botol,2,30
+Calcivita 200 ml,Penimbangan,2,30
+Calcivita 200 ml,Mixing,2,180
+Calcivita 200 ml,Filling,3,50
+Calcivita 200 ml,Sortir Visual,2,30
+Calcivita 200 ml,Codding,1,60
+Calcivita 200 ml,Labelling,3,60
+Calcivita 200 ml,Packing,5,120
+Camaag 100 ml,Pencucian Botol,2,90
+Camaag 100 ml,Oven Botol,2,60
+Camaag 100 ml,Penimbangan,2,30
+Camaag 100 ml,Mixing,3,180
+Camaag 100 ml,Filling,3,60
+Camaag 100 ml,Sortir Visual,,
+Camaag 100 ml,Codding,1,90
+Camaag 100 ml,Labelling,3,90
+Camaag 100 ml,Packing,5,90
+Camaag 200 ml,Pencucian Botol,2,60
+Camaag 200 ml,Oven Botol,2,30
+Camaag 200 ml,Penimbangan,2,30
+Camaag 200 ml,Mixing,3,180
+Camaag 200 ml,Filling,3,50
+Camaag 200 ml,Sortir Visual,,
+Camaag 200 ml,Codding,1,60
+Camaag 200 ml,Labelling,3,60
+Camaag 200 ml,Packing,5,90
+Camexine 60 ml,Pencucian Botol,2,60
+Camexine 60 ml,Oven Botol,2,30
+Camexine 60 ml,Penimbangan,2,30
+Camexine 60 ml,Mixing,2,150
+Camexine 60 ml,Filling,3,75
+Camexine 60 ml,Sortir Visual,2,100
+Camexine 60 ml,Codding,1,60
+Camexine 60 ml,Labelling,3,60
+Camexine 60 ml,Packing,5,90
+Camicetine 60 ml,Pencucian Botol,2,120
+Camicetine 60 ml,Oven Botol,2,60
+Camicetine 60 ml,Penimbangan,2,30
+Camicetine 60 ml,Mixing,3,180
+Camicetine 60 ml,Filling,3,75
+Camicetine 60 ml,Sortir Visual,,
+Camicetine 60 ml,Codding,1,120
+Camicetine 60 ml,Labelling,3,150
+Camicetine 60 ml,Packing,5,120
+Camidryl 60 ml,Pencucian Botol,2,120
+Camidryl 60 ml,Oven Botol,2,60
+Camidryl 60 ml,Penimbangan,2,30
+Camidryl 60 ml,Mixing,2,150
+Camidryl 60 ml,Filling,3,75
+Camidryl 60 ml,Sortir Visual,2,100
+Camidryl 60 ml,Codding,1,120
+Camidryl 60 ml,Labelling,3,150
+Camidryl 60 ml,Packing,5,120
+Camikolin 60 ml,Pencucian Botol,2,120
+Camikolin 60 ml,Oven Botol,2,60
+Camikolin 60 ml,Penimbangan,2,30
+Camikolin 60 ml,Mixing,3,180
+Camikolin 60 ml,Filling,3,75
+Camikolin 60 ml,Sortir Visual,,
+Camikolin 60 ml,Codding,1,120
+Camikolin 60 ml,Labelling,3,150
+Camikolin 60 ml,Packing,5,120
+Casetamol 60 ml,Pencucian Botol,2,120
+Casetamol 60 ml,Oven Botol,2,30
+Casetamol 60 ml,Penimbangan,2,30
+Casetamol 60 ml,Mixing,2,150
+Casetamol 60 ml,Filling,3,75
+Casetamol 60 ml,Sortir Visual,2,100
+Casetamol 60 ml,Codding,1,120
+Casetamol 60 ml,Labelling,3,150
+Casetamol 60 ml,Packing,5,120
+Chlorampenicol 60 ml,Pencucian Botol,2,120
+Chlorampenicol 60 ml,Oven Botol,2,30
+Chlorampenicol 60 ml,Penimbangan,2,30
+Chlorampenicol 60 ml,Mixing,3,180
+Chlorampenicol 60 ml,Filling,3,75
+Chlorampenicol 60 ml,Sortir Visual,,
+Chlorampenicol 60 ml,Codding,1,60
+Chlorampenicol 60 ml,Labelling,5,150
+Chlorampenicol 60 ml,Packing,,
+Cotrimoksazole 60 ml,Pencucian Botol,2,120
+Cotrimoksazole 60 ml,Oven Botol,2,60
+Cotrimoksazole 60 ml,Penimbangan,2,30
+Cotrimoksazole 60 ml,Mixing,3,210
+Cotrimoksazole 60 ml,Filling,3,75
+Cotrimoksazole 60 ml,Sortir Visual,,
+Cotrimoksazole 60 ml,Codding,1,60
+Cotrimoksazole 60 ml,Labelling,5,150
+Cotrimoksazole 60 ml,Packing,,
+Daganak 100 ml,Pencucian Botol,2,90
+Daganak 100 ml,Oven Botol,2,60
+Daganak 100 ml,Penimbangan,2,30
+Daganak 100 ml,Mixing,2,150
+Daganak 100 ml,Filling,3,60
+Daganak 100 ml,Sortir Visual,2,100
+Daganak 100 ml,Codding,1,90
+Daganak 100 ml,Labelling,3,90
+Daganak 100 ml,Packing,5,90
+OBH 100 ml TD,Pencucian Botol,2,90
+OBH 100 ml TD,Oven Botol,2,60
+OBH 100 ml TD,Penimbangan,2,30
+OBH 100 ml TD,Mixing,2,150
+OBH 100 ml TD,Filling,3,60
+OBH 100 ml TD,Sortir Visual,2,100
+OBH 100 ml TD,Codding,1,60
+OBH 100 ml TD,Labelling,5,150
+OBH 100 ml TD,Packing,,
+Paracetamol 60 ml,Pencucian Botol,2,120
+Paracetamol 60 ml,Oven Botol,2,60
+Paracetamol 60 ml,Penimbangan,2,30
+Paracetamol 60 ml,Mixing,2,150
+Paracetamol 60 ml,Filling,3,75
+Paracetamol 60 ml,Sortir Visual,2,100
+Paracetamol 60 ml,Codding,1,60
+Paracetamol 60 ml,Labelling,5,150
+Paracetamol 60 ml,Packing,,
+Sanmino 120 ml,Pencucian Botol,2,90
+Sanmino 120 ml,Oven Botol,2,60
+Sanmino 120 ml,Penimbangan,2,30
+Sanmino 120 ml,Mixing,2,150
+Sanmino 120 ml,Filling,3,60
+Sanmino 120 ml,Sortir Visual,2,60
+Sanmino 120 ml,Codding,1,90
+Sanmino 120 ml,Labelling,3,90
+Sanmino 120 ml,Packing,5,75

@@ -1,0 +1,566 @@
+bom_id,workcenter_operation_id,machine_id,no_mesin,is_paralel,workcenter_id,machine_hour
+Camoksil 250 mg Strip,Oven Botol,,,,,
+,Penimbangan,Timbangan Mettler Toledo,,,,30
+,,Printer Timbangan Mettler Toledo,,,,30
+,,Timbangan Kern,,,,30
+,Mixing,Mesin Super Mixer,,,,60
+,Filling,Mesin Cetak Tablet JCMCO,,,,420
+,,Mesin Filling Capsule Chin Yi,,,,
+,,Mesin Filling AMS,,,,
+,,Mesin Capping Jie Cheng,,,,
+,Codding,Mesin Codding Kapsul Alpha Jet,,,,60
+,Labelling,Mesin Etiket Chyun Jye,,,,
+Camoksil 500 mg Strip,Pengeringan,,,,,
+,Penimbangan,Timbangan Mettler Toledo,,,,30
+,,Printer Timbangan Mettler Toledo,,,,30
+,,Timbangan Kern,,,,30
+,Mixing,Mesin Super Mixer,,,,60
+,Filling,Mesin Cetak Tablet JCMCO,,,,210
+,,Mesin Filling Capsule Chin Yi,,,,
+,,Mesin Filling AMS,,,,
+,,Mesin Capping Jie Cheng,,,,
+,Codding,Mesin Codding Kapsul Alpha Jet,,,,60
+,Labelling,Mesin Etiket Chyun Jye,,,,
+Ampicillin 250 mg Strip,Pengeringan,,,,,
+,Penimbangan,Timbangan Mettler Toledo,,,,30
+,,Printer Timbangan Mettler Toledo,,,,30
+,,Timbangan Kern,,,,30
+,Mixing,Mesin Super Mixer,,,,60
+,Filling,Mesin Cetak Tablet JCMCO,,,,
+,,Mesin Filling Capsule Chin Yi,,,,1440
+,,Mesin Filling AMS,,,,
+,,Mesin Capping Jie Cheng,,,,
+,Codding,Mesin Codding Kapsul Alpha Jet,,,,60
+,Labelling,Mesin Etiket Chyun Jye,,,,
+Vitamin B12 500mcg/ml 1 ml,Cuci Ampul/Vial,Mesin Cuci Ampul Shun Yi,,,,480
+,Sterillisasi Ampul/Vial,Mesin Oven Echung Kecil,,,,60
+,Sterillisasi Baju & Peralatan,Autoclave baju,,,,30
+,Sterillisasi Baju & Peralatan,Mesin Oven Echung Besar,,,,30
+,Penimbangan,Timbangan Mettler Toledo 0.1-30 Kg,,,,30
+,,Timbangan Mettler Toledo Kecil,,,,30
+,Mixing,Mixing Tank 50 Ltr,,,,30
+,Filtrasi,Pressure Tangki,,,,30
+,Filling & Capping,Mesin Ampul Shun Yi 1-2 ml,,,,480
+,,Mesin Ampul Shun Yi 10-20 ml,,,,
+,,Mesin Ampul Shun Yi 10-20 ml,,,,
+,,Mesin Ampul Hersonber 1-25 ml,,,,600
+,Sterillisasi Produk,Mesin Autoclave Echung,,,,30
+,Printing Ampul,Mesin Printing Ampul Markem,,,,720
+,Packing,Timbangan Avery Weight Tronex 60 Kg,,,,30
+Vitamin B12 500 mcg/ml 10 ml,Cuci Ampul/Vial,Mesin Cuci Ampul Shun Yi,,,,420
+,Sterillisasi Ampul/Vial,Mesin Oven Echung Kecil,,,,60
+,Sterillisasi Baju & Peralatan,Autoclave baju,,,,30
+,Sterillisasi Baju & Peralatan,Mesin Oven Echung Besar,,,,
+,Penimbangan,Timbangan Mettler Toledo 0.1-30 Kg,,,,
+,,Timbangan Mettler Toledo Kecil,,,,
+,Mixing,Mixing Tank 50 Ltr,,,,
+,Filtrasi,Pressure Tangki,,,,
+,Filling & Capping,Mesin Ampul Shun Yi 1-2 ml,,,,
+,,Mesin Ampul Shun Yi 10-20 ml,,,,
+,,Mesin Ampul Shun Yi 10-20 ml,,,,420
+,,Mesin Ampul Hersonber 1-25 ml,,,,
+,Sterillisasi Produk,Mesin Autoclave Echung,,,,60
+,Printing Ampul,Mesin Printing Ampul Markem,,,,
+,Packing,Timbangan Avery Weight Tronex 60 Kg,,,,
+Camidryl 10 mg/ml 10 ml,Cuci Ampul/Vial,Mesin Cuci Ampul Shun Yi,,,,420
+,Sterillisasi Ampul/Vial,Mesin Oven Echung Kecil,,,,60
+,Sterillisasi Baju & Peralatan,Autoclave baju,,,,30
+,Sterillisasi Baju & Peralatan,Mesin Oven Echung Besar,,,,30
+,Penimbangan,Timbangan Mettler Toledo 0.1-30 Kg,,,,30
+,,Timbangan Mettler Toledo Kecil,,,,30
+,Mixing,Mixing Tank 50 Ltr,,,,30
+,Filtrasi,Pressure Tangki,,,,30
+,Filling & Capping,Mesin Ampul Shun Yi 1-2 ml,,,,
+,,Mesin Ampul Shun Yi 10-20 ml,,,,600
+,,Mesin Ampul Shun Yi 10-20 ml,,,,
+,,Mesin Ampul Hersonber 1-25 ml,,,,
+,Sterillisasi Produk,Mesin Autoclave Echung,,,,60
+,Printing Ampul,Mesin Printing Ampul Markem,,,,
+,Packing,Timbangan Avery Weight Tronex 60 Kg,,,,
+Cayodine 30 ml,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,
+,,Timbangan Kern,,,,30
+,Mixing,Hand Mixer Makita ,Makita,,,60
+,,Mesin Mixing Tank Besto 200 Ltr,,,,60
+,Filling,Mesin Filling Larutan Enterprise Corp,,,,
+,,Mesin Filling Larutan Hersonber,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,,,,,30
+,Packing,,,,,15
+Glyserol 100 ml,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,
+,,Timbangan Kern,,,,30
+,Mixing,Hand Mixer Makita ,Makita,,,60
+,,Mesin Mixing Tank Besto 200 Ltr,,,,120
+,Filling,Mesin Filling Larutan Enterprise Corp,,,,
+,,Mesin Filling Larutan Hersonber,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,45
+,Packing,,,,,30
+,Packing,,,,,15
+Phenol Glycerol 5 ml,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,
+,,Timbangan Kern,,,,30
+,Mixing,Hand Mixer Makita ,Makita,,,60
+,,Mesin Mixing Tank Besto 200 Ltr,,,,120
+,Filling,Mesin Filling Larutan Enterprise Corp,,,,
+,,Mesin Filling Larutan Hersonber,,,,600
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,120
+,Packing,,,,,30
+,Packing,,,,,15
+Biocelle,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,840
+,,Tangki Penampung 200 Ltr,,,,840
+,Counting,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,
+,Packing,,,,,
+,Packing,,,,,
+Habbatussauda 600 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,840
+,,Tangki Penampung 200 Ltr,,,,840
+,Counting,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,
+,Packing,,,,,
+,Packing,,,,,
+Isotretinoin 10 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,840
+,,Tangki Penampung 200 Ltr,,,,840
+,Counting & Bottling,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,
+,Packing,,,,,
+,Packing,,,,,
+Lamata,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,840
+,,Tangki Penampung 200 Ltr,,,,840
+,Counting,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,300
+,Packing,,,,,300
+,Packing,,,,,15
+Mamavita 400 mg Soft Capsule,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,840
+,,Tangki Penampung 200 Ltr,,,,840
+,Counting,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,
+,Packing,,,,,
+,Packing,,,,,
+Olive Oil 600 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,840
+,,Tangki Penampung 200 Ltr,,,,840
+,Counting,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,
+,Packing,,,,,
+,Packing,,,,,
+Vitamin A 200.000 IU,Pengeringan,Oven Tumbler Machine,,,,20
+,Penimbangan,Timbangan Avery Beker 0.01 - 60 Kg,AL122,,,30
+,Melting,Tangki Gelatin With Pressure 200 Ltr,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer Makita,Makita,,,20
+,Filling,Tumbling Dryers System Chang Sung Phonetlan,,,,1080
+,,Tangki Penampung 200 Ltr,,,,1080
+,Counting,Mesin Counting Tamaru Mitra Sejati,,,,420
+,,Mesin Seal Rusak,,,,420
+,,Timbangan Jadever 16.2-30 Kg,,,,420
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Pot Shanghai Suny,,,,300
+,Packing,,,,,300
+,Packing,,,,,15
+Antasida Doen 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,150
+,,Coloid Mill Achtung,JV10,,PS.07,30
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,75
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+BAB 100 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,150
+,,Hand Mixer Makita,UT1301,,PS.08,60
+,,Motor Pompa Show Pov,,,PS.08,20
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,60
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,90
+,Packing,Mesin Labelling Botol Jihcheng,,,,90
+,Packing,,,,,39
+,Packing,,,,,
+,Packing,,,,,15
+Calcivita 200 ml,Pengeringan,Oven Tumbler Machine,,,,30
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,50
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Botol Jihcheng,,,,60
+,Packing,,,,,27
+,Packing,,,,,
+,Packing,,,,,15
+Camaag 100 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,
+,,Hand Mixer Makita,,,PS.06,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,
+,,Ultra Torax Mixer,S-007,,PS.07,150
+,,Coloid Mill Achtung,JV10,,PS.07,30
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,60
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,90
+,Packing,Mesin Labelling Botol Jihcheng,,,,90
+,Packing,,,,,39
+,Packing,,,,,
+,Packing,,,,,15
+Camaag 200 ml,Pengeringan,Oven Tumbler Machine,,,,30
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,
+,,Hand Mixer Makita,,,PS.06,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,
+,,Ultra Torax Mixer,S-007,,PS.07,150
+,,Coloid Mill Achtung,JV10,,PS.07,30
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,50
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Botol Jihcheng,,,,60
+,Packing,,,,,27
+,Packing,,,,,90
+,Packing,,,,,15
+Camexine 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,60
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Botol Jihcheng,,,,60
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Camicetine 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,
+,,Hand Mixer Makita,,,PS.06,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,
+,,Ultra Torax Mixer,S-007,,PS.07,150
+,,Coloid Mill Achtung,JV10,,PS.07,30
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,75
+,Packing,Mesin Codding Alpha Jet C,,,,120
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Camidryl 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,150
+,,Hand Mixer Makita,UT1301,,PS.08,60
+,,Motor Pompa Show Pov,,,PS.08,20
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,75
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,120
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Camikolin 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,
+,,Hand Mixer Makita,,,PS.06,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,
+,,Ultra Torax Mixer,S-007,,PS.07,150
+,,Coloid Mill Achtung,JV10,,PS.07,30
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,75
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Casetamol 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,75
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,120
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Chlorampenicol 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,
+,,Hand Mixer Makita,,,PS.06,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,
+,,Ultra Torax Mixer,S-007,,PS.07,150
+,,Coloid Mill Achtung,JV10,,PS.07,30
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,75
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Cotrimoksazole 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,
+,,Hand Mixer Makita,,,PS.06,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,
+,,Ultra Torax Mixer,S-007,,PS.07,180
+,,Coloid Mill Achtung,JV10,,PS.07,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,30
+,,Hand Mixer Makita,UT1301,,PS.07,60
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,
+,,Mesin Filling Jihcheng,,,PS.07,75
+,Packing,Mesin Codding Alpha Jet C,,,,60
+,,Mesin Codding Image,,,,
+,Packing,Mesin Labelling Botol Jihcheng,,,,120
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Daganak 100 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,150
+,,Hand Mixer Makita,UT1301,,PS.08,60
+,,Motor Pompa Show Pov,,,PS.08,20
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,60
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,90
+,Packing,Mesin Labelling Botol Jihcheng,,,,90
+,Packing,,,,,39
+,Packing,,,,,
+,Packing,,,,,15
+OBH 100 ml TD,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,150
+,,Hand Mixer Makita,UT1301,,PS.08,60
+,,Motor Pompa Show Pov,,,PS.08,20
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,60
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Botol Jihcheng,,,,90
+,Packing,,,,,39
+,Packing,,,,,
+,Packing,,,,,15
+Paracetamol 60 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,
+,,Hand Mixer Makita,UT1301,,PS.08,
+,,Motor Pompa Show Pov,,,PS.08,
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,60
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,60
+,Packing,Mesin Labelling Botol Jihcheng,,,,90
+,Packing,,,,,65
+,Packing,,,,,
+,Packing,,,,,15
+Sanmino 120 ml,Pengeringan,Oven Tumbler Machine,,,,60
+,Penimbangan,Timbangan Mettler Toledo 30 Kg,IND221,,,30
+,,Timbangan Kern 250,,,,30
+,,Laminair Air Flow,,,,30
+,Mixing,Ultra Thorax Mixer Koy,,,PS.06,120
+,,Hand Mixer Makita,,,PS.06,60
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.06,20
+,,Ultra Torax Mixer,S-007,,PS.07,
+,,Coloid Mill Achtung,JV10,,PS.07,
+,,Pompa Transfer Elepon Seal,SL7SN,,PS.07,
+,,Hand Mixer Makita,UT1301,,PS.07,
+,,Ultra Thorax Mixer,,,PS.08,150
+,,Hand Mixer Makita,UT1301,,PS.08,60
+,,Motor Pompa Show Pov,,,PS.08,20
+,Filling,Mesin Filling Syrup Jihcheng,,,PS.06,60
+,,Mesin Filling Jihcheng,,,PS.07,
+,Packing,Mesin Codding Alpha Jet C,,,,
+,,Mesin Codding Image,,,,90
+,Packing,Mesin Labelling Botol Jihcheng,,,,90
+,Packing,,,,,31
+,Packing,,,,,
+,Packing,,,,,15
