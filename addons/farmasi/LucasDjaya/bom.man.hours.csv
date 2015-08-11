@@ -1,4 +1,4 @@
-bom_id,workcenter_operation_id,jumlah orang,man_hour
+bom_id,workcenter_operation_id,man_number,man_hour
 Camoksil 250 mg Strip,Cuci Botol,,
 Camoksil 250 mg Strip,Pengeringan botol,,
 Camoksil 250 mg Strip,Penimbangan,2,30
