@@ -50,6 +50,7 @@
                                 <field name="machine_id"/>
                                 <field name="machine_hour"/>
                                 <field name="is_parallel"/>
+                                <field name="workcenter_id"/>
                                 <field name="routing_id" invisible="0"/>
                             </group>
                         </group>
