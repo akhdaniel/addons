@@ -134,7 +134,7 @@ class mps(osv.osv):
 			mo_obj = self.pool.get('mrp.production').create(cr,uid,{
 					# 'name' : 'MO/W'+'/'+str(w)
 					'product_id' : product_id,
-					'product_qty' : 1,
+					'product_qty' : mrp_bom.product_qty,
 					'product_uom' : self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id,
 					'wps_id' : wps_obj,
 					'bom_id' : mrp_bom.id,
