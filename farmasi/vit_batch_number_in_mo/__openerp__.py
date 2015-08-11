@@ -17,7 +17,8 @@
         
         'view_batch_number.xml',
         'view_mrp.xml',
-        'view_product_date.xml'
+        'view_product_date.xml',
+        'security/ir.model.access.csv',
     ],
     'installable': True,
     'auto_install': False,

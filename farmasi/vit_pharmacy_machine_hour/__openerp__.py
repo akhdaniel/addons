@@ -13,6 +13,7 @@
         'bom_man_hour.xml',
         'bom_machine_hour.xml',
         'machine_master.xml',
+        'security/ir.model.access.csv',
     ],
     'test': [],    
     'installable': True,

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_batch_number,access_batch_number,model_batch_number,,1,0,0,0
+access_batch_year,access_batch_year,model_batch_year,,1,0,0,0
