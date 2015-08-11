@@ -38,6 +38,7 @@
                 'views/provider_type_view.xml',
                 'views/profile_view.xml',
                 'views/room_view.xml',
+                'views/users.xml',
 
                 'security/ir.model.access.csv',
                 'menu.xml',

@@ -11,7 +11,6 @@ class res_users(osv.osv):
 	_name = 'res.users'
 	_inherit = 'res.users'
 	_columns = {
-		'provider_id' 	: fields.many2one('netpro.provider', 'Provider'),
 		'tpa_id' 		: fields.many2one('netpro.tpa', 'TPA'),
 	}
 res_users()
