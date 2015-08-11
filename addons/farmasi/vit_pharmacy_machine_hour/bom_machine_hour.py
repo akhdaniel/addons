@@ -22,6 +22,7 @@ class bom_machine_hour(osv.osv):
         'is_parallel'               : fields.boolean('Parallel'),
         'routing_id'  			    : fields.related('bom_id','routing_id', type='many2one', relation='mrp.routing', string='Routing', store=True, readonly=True),
         'workcenter_operation_id'   : fields.many2one('mrp.routing.workcenter',"Workcenter Operation",domain="[('routing_id','=',routing_id)]",required=False, change_default=True, track_visibility='always',),
+        'workcenter_id'             : fields.many2one('mrp.workcenter',"Workcenter")
     }
 
 
