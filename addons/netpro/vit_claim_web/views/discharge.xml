@@ -5,7 +5,7 @@
 <template id="vit_claim_web.loc">
 	<h2>Letter of Confirmation</h2>  
 
-	<h3>Benefit <t t-esc="member_plan.plan_schedule_id.product_plan_base_id.name"/> - <t t-esc="member_plan.plan_schedule_id.product_plan_base_id.pplan"/> </h3>
+	<h3>Benefit <t t-esc="member_plan.plan_schedule_id.product_plan_id.product_plan_base_id.name"/> - <t t-esc="member_plan.plan_schedule_id.product_plan_id.product_plan_base_id.pplan"/> </h3>
 
 	<form t-attf-action="/claim/discharge_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
