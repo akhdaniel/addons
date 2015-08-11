@@ -110,6 +110,7 @@ Sumber: http://www.pajak.net/
 		"invoice.xml",
 		"partner.xml",
 		"reports/faktur_pajak.xml",
+		'security/ir.model.access.csv',
 	],
 	"installable": True,
 	"auto_install": False,

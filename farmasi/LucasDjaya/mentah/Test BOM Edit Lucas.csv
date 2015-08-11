@@ -1,4 +1,4 @@
-"id","name","product_id","product_uom","product_qty","yield","type","routing_id","bom_line_ids/product_uom","bom_line_ids/product_qty","bom_line_ids/component_type","bom_line_ids/product_id"
+"id","name","Product","product_uom","product_qty","yield","type","routing","BoM Lines / Product Unit of Measure","BoM Lines / Product Quantity","bom_lines/component_type","BoM Lines / Product"
 "bom_bionigell","Bio nigell","Bio nigell","Kp Lu",200000,,"Normal","Soft Capsule","kg",43,"raw_material","BGE0020101"
 ,,,,,,,,"kg",43,"raw_material","BGE0020201"
 ,,,,,,,,"kg",43,"raw_material","BGE0020301"
