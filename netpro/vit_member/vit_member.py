@@ -106,6 +106,15 @@ class netpro_member(osv.osv):
         
     }
 
+    def create(self, cr, uid, vals, context=None):
+        #nomor = self.pool.get('ir.sequence').get(cr, uid, 'claim_seq') or '/'
+        #cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
+        vals.update({
+            'created_by_id' : uid,
+        })
+        new_id = super(netpro_member, self).create(cr, uid, vals, context=context)
+        return new_id
+
     def action_confirm(self,cr,uid,ids,context=None):
         # create schedule plan
         self.create_plan_schedule(cr,uid,ids,context=context)        
