@@ -21,6 +21,7 @@ class machine_master(osv.osv):
         'type': fields.char('Type'),
         'departement': fields.char('Departement'),
         'location': fields.char('Location'),       
+        'capacity': fields.char('Capacity'),       
     }
 
    
