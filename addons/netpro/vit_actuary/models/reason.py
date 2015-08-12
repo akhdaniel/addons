@@ -14,7 +14,7 @@ class netpro_reason(osv.osv):
         'description': fields.text('Description'),
         'type': fields.selection([('H', 'Header'), ('D', 'Detail Purpose')], 'Type'),
         'allowed' : fields.boolean('Allowed'),
-        'created_by_id' : fields.many2one('re.users', 'Creator'),
+        'created_by_id' : fields.many2one('res.users', 'Creator'),
         'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }
 
