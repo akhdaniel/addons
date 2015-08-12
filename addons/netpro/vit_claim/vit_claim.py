@@ -36,8 +36,21 @@ class netpro_claim(osv.osv):
     def create(self, cr, uid, vals, context=None):
         # claim_status_draft = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'D', context=context)
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'claim_seq') or '/'
+        cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
+        tpa_val = False
+        provider_val = False
+        if cur_user.tpa_id:
+            tpa_val = cur_user.tpa_id.id
+            pass
+        if cur_user.provider_id:
+            provider_val = cur_user.provider_id.id
+            pass
         vals.update({
             'claim_no'  : nomor,
+            'tpa_id':tpa_val,
+            'provider_id':provider_val,
+            'transaction_history_created_by_id' : uid,
+            'transaction_history_created_date' : time.strftime("%Y-%m-%d %H:%M:%S"),
             # 'state'     : claim_status_draft,
         })
         new_id = super(netpro_claim, self).create(cr, uid, vals, context=context)
@@ -156,6 +169,13 @@ class netpro_claim(osv.osv):
         'state'             : CLAIM_STATES[0][0]
     }
 
+    def write(self,cr,uid,ids,vals,context=None):
+        #isi tanggal edit dan editor
+        vals.update({
+            'transaction_history_last_edited_by_id':uid,
+            'transaction_history_last_edited_date':time.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+        return super(netpro_claim, self).write(cr, uid, ids, vals, context=context)
 
     def action_draft(self,cr,uid,ids,context=None):
         #set to "draft" state

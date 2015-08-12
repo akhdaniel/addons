@@ -7,7 +7,7 @@
 		    <field name="arch" type="xml">
 		        <field name="active" position="after">
 		        	<field name="tpa_id" />
-		        	<!-- <field name="provider_id" /> -->
+		        	<field name="provider_id" />
 		        </field>
 		    </field>
 		</record>

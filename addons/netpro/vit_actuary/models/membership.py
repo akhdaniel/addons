@@ -23,6 +23,19 @@ class netpro_membership(osv.osv):
         'membership_factor_ids' : fields.one2many('netpro.membership_factor','membership_id','Membership Factor', ondelete="cascade"),
         'tpa_id'            : fields.many2one('netpro.tpa', 'TPA'),
     }
+    def create(self, cr, uid, vals, context=None):
+        cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
+        tpa_val = False
+        if cur_user.tpa_id:
+            tpa_val = cur_user.tpa_id.id
+            pass
+        vals.update({
+            'created_by_id':uid,
+            'tpa_id':tpa_val,
+        })
+        
+        new_record = super(netpro_membership, self).create(cr, uid, vals, context=context)
+        return new_record
 netpro_membership()
 
 class membership_factor(osv.osv):

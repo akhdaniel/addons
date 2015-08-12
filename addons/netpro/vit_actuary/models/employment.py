@@ -15,4 +15,12 @@ class netpro_employment(osv.osv):
         'description': fields.text('Description'),
         'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }
+
+    def create(self, cr, uid, vals, context=None):
+        vals.update({
+            'created_by_id':uid,
+        })
+        
+        new_record = super(netpro_employment, self).create(cr, uid, vals, context=context)
+        return new_record
 netpro_employment()

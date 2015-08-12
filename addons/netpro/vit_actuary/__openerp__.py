@@ -55,7 +55,7 @@
                 'views/annual_income.xml', 
                 'views/religion.xml', 
                 'views/employment.xml', 
-                #'views/users.xml', 
+                'views/users.xml', 
 
                 'data/product_type.xml', 
                 'data/membership_data.xml', 
