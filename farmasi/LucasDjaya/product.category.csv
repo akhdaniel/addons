@@ -1,11 +1,11 @@
 "id","name","parent_id","property_account_expense_categ","property_account_income_categ","property_stock_account_input_categ","property_stock_account_output_categ","property_stock_valuation_account_id"
-"product_categ_100","Bahan Baku",,,,,,
+"product_categ_100","Bahan Baku",,"479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_110","Bahan Baku Aktif","Bahan Baku","479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_120","Bahan Baku Kemas","Bahan Baku","479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_130","Bahan Baku Kemas Lainnya","Bahan Baku","479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_140","Bahan Baku Pembantu","Bahan Baku","479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_150","Bahan Baku Pembantu Lainnya","Bahan Baku","479100 Sales","5000 Cost of Goods Sold",,,
-"product_categ_160","Obat Jadi",,,,,,
+"product_categ_160","Obat Jadi",,"479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_170","Betalaktam","Obat Jadi","479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_180","Dry Syrup","Obat Jadi","479100 Sales","5000 Cost of Goods Sold",,,
 "product_categ_190","Injeksi","Obat Jadi","479100 Sales","5000 Cost of Goods Sold",,,
