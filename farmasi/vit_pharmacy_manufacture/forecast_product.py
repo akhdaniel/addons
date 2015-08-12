@@ -7,6 +7,9 @@ from openerp import api
 import os
 import csv
 import re
+import logging
+from openerp.tools.translate import _
+_logger = logging.getLogger(__name__)
 
 
 
@@ -36,6 +39,15 @@ class forecast_product(osv.osv):
     def action_confirm(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'done'}, context=context)
 
+    def find_bom(self, cr, uid, product_id, context=None):
+        mrp_bom = self.pool.get('mrp.bom')
+        bom_ids = mrp_bom.search(cr, uid, [('product_tmpl_id','=', product_id.product_tmpl_id.id)], context=context)
+        if not bom_ids:
+            raise osv.except_osv(_('error'),_("no BOM for %s" % (product_id.name )) ) 
+        
+        bom = mrp_bom.browse(cr, uid, bom_ids[0], context=context)
+        return bom
+
     def action_create_mps(self, cr, uid, ids, context=None):
         """ Buat MPS Sebanyak 12 Bulan, kelompokan dalam tiap MPS (perbulan) """
         month = ['Jan','Feb','Mar','Apr','May','Jun','jul','Aug','Sep','Nov','Oct','Dec']
@@ -49,57 +61,40 @@ class forecast_product(osv.osv):
             """ Update Details Di MRP, dengan mengambil item di Detail Forecast """  
             for detail in self.browse(cr,uid,ids[0],).forecast_detail_ids:
                 # import pdb;pdb.set_trace()
-                if m == "Jan":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m1
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                if m == "Jan":   
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m1, detail.product_id )
                 if m == "Feb":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m2
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m2, detail.product_id )
                 if m == "Mar":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m3
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m3, detail.product_id )
                 if m == "Apr":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m4
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m4, detail.product_id )
                 if m == "May":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m5
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m5, detail.product_id )
                 if m == "Jun":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m6
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m6, detail.product_id )
                 if m == "Jul":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m7
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m7, detail.product_id )
                 if m == "Aug":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m8
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m8, detail.product_id )
                 if m == "Sep":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m9
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m9, detail.product_id )
                 if m == "Oct":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m10
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m10, detail.product_id )
                 if m == "Nov":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m11
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m11, detail.product_id )
                 if m == "Dec":
-                    product_id = detail.product_id.id
-                    prod_order = detail.m12
-                    self.update_line_mps(cr,uid,ids,mps_obj,product_id,prod_order)
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m12, detail.product_id )
 
 
-    def update_line_mps(self,cr,uid,ids,mps_obj,product_id,prod_order,context=None):
+    def update_line_mps(self,cr,uid,ids,mps_obj, detail_m, detail_product_id,context=None):
+        
+        product_id = detail_product_id.id
+        bom = self.find_bom(cr, uid, detail_product_id, context)
+        if bom.product_qty == 0:
+            raise osv.except_osv(_('error'),_("BOM qty cannot zero: %s" % (bom.product_tmpl_id.name)) ) 
+        prod_order = detail_m / bom.product_qty         
+
         if prod_order > 0:
             data_line = {
                 'product_id' : product_id,
