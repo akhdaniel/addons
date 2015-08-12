@@ -43,7 +43,7 @@
             <label class="control-label">Sex</label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <t t-esc="member.sex"/>
+            <t t-esc="member.gender_id.name"/>
         </div>
     </div>    
     <div class="row">
