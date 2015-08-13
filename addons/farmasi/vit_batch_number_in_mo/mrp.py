@@ -37,15 +37,17 @@ class mrp_production(osv.osv):
     _inherit = 'mrp.production'
 
     def create(self, cr, uid, vals, context=None):
-        batch_id = vals['batch_number_id']        
-        mo_obj = self.pool.get('mrp.production')
-        mo_search = mo_obj.search(cr,uid,[('batch_number_id','=',batch_id)])
-        mo_browse = mo_obj.browse(cr,uid,mo_search)
+        
+        if 'batch_number_id' in vals:
+            batch_id = vals['batch_number_id']        
+            mo_obj = self.pool.get('mrp.production')
+            mo_search = mo_obj.search(cr,uid,[('batch_number_id','=',batch_id)])
+            mo_browse = mo_obj.browse(cr,uid,mo_search)
 
-        if mo_search :
-            raise osv.except_osv(_('Error!'), _('Batch Number already in use !'))
-        #set is_used di batch number agar tidak bisa lagi dipakai oleh MO yang lain    
-        self.pool.get('batch.number').write(cr,uid,batch_id,{'is_used':True})
+            if mo_search :
+                raise osv.except_osv(_('Error!'), _('Batch Number already in use !'))
+            #set is_used di batch number agar tidak bisa lagi dipakai oleh MO yang lain    
+            self.pool.get('batch.number').write(cr,uid,batch_id,{'is_used':True})
         return super(mrp_production, self).create(cr, uid, vals, context=context)  
 
 
