@@ -26,5 +26,5 @@ import annual_income
 import salutation
 import employment
 import religion
-#import alter_model
+import alter_model
 #import province
