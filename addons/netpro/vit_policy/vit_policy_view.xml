@@ -10,13 +10,13 @@
             <form string="netpro.policy">
                 <header>                                             
                     <button string="Approve" type="object" 
-                        states="open" name="action_approve" class="oe_highlight"/>                 
+                        states="open" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_approve" class="oe_highlight"/>                 
                                              
                     <button string="Cancel" type="object" 
-                        states="approved" name="action_cancel"/>
+                        states="approved" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_cancel"/>
 
                     <button string="Close" type="object" 
-                        name="action_close" states="approved"/>    
+                        name="action_close" groups="vit_actuary.manager_system_owner" states="approved"/>    
 
                     <field name="state" widget="statusbar"/>
                 </header>                
@@ -222,7 +222,7 @@
                                         <group>
                                             <field name="class_id" readonly="1"/>
                                             <field name="product_plan_id" select="1"/>
-                                            <field name="plan_for" readonly="1"/>
+                                            <field name="plan_for" readonly="0"/>
                                             <field name="bamount" select="2"/>
                                             <field name="reimbursement" select="0"/>
                                             <field name="reimbursement_affect_to_benefit" select="0"/>

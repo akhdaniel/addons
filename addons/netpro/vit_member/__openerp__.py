@@ -33,7 +33,7 @@
                 'vit_member_view.xml', 
                 'menu.xml',
                 'security/ir.model.access.csv',
-
+                'data/sequence.xml',
         ],
         "installable": True
 }

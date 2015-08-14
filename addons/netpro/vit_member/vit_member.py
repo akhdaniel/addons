@@ -100,17 +100,18 @@ class netpro_member(osv.osv):
     }
 
     _defaults = {
-        'status'                     : 'draft',
+        'status'                    : 'draft',
         'insurance_period_start'    : lambda *a : time.strftime("%Y-%m-%d"),
         'insurance_period_end'      : lambda *a : time.strftime("%Y-%m-%d"),
-        
+        'member_no'                 : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'member_seq') or '/',
     }
 
     def create(self, cr, uid, vals, context=None):
-        #nomor = self.pool.get('ir.sequence').get(cr, uid, 'claim_seq') or '/'
+        #nomor = self.pool.get('ir.sequence').get(cr, uid, 'member_seq') or '/'
         #cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         vals.update({
             'created_by_id' : uid,
+            #'member_no' : nomor,
         })
         new_id = super(netpro_member, self).create(cr, uid, vals, context=context)
         return new_id
@@ -145,12 +146,12 @@ class netpro_member(osv.osv):
                     if plan_schedule_ids:
                         for schedule in plan_schedule_ids:
                             #jika plan for sama dan classnya sama
-                            if schedule.plan_for == self_obj.membership.membership_id and schedule.class_id.id == self_obj.class_id.id :
+                            if schedule.plan_for == self_obj.membership.name and schedule.class_id.id == self_obj.class_id.id :
                                 #create schedule
                                 plan_schedule_id = member_plan_obj.create(cr,uid,{'member_id': ids[0],
                                                                                 'plan_schedule_id': schedule.id,
                                                                                 'bamount' : schedule.bamount,
-                                                                                'plan_for':self_obj.membership.membership_id})  
+                                                                                'plan_for':self_obj.membership.name})  
                                 # jika ada detail benefitnya maka di create juga benefit yang sama
                                 if schedule.plan_schedule_detail_benefit_schedule_ids :
                                     for benefit in schedule.plan_schedule_detail_benefit_schedule_ids:

@@ -6,8 +6,8 @@
 		    <field name="inherit_id" ref="base.view_users_form"/>
 		    <field name="arch" type="xml">
 		        <field name="active" position="after">
-		        	<!-- <field name="tpa_id" />
-		        	<field name="provider_id" /> -->
+		        	<field name="tpa_id" />
+		        	<field name="provider_id" />
 		        </field>
 		    </field>
 		</record>

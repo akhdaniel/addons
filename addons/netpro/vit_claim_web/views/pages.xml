@@ -15,28 +15,28 @@
                             <h4 class="mt16">
                                 <a t-attf-href="/claim/registration">Registration</a>
                             </h4>
-                          <p>Member Claim Registration</p>
+                          <p>Pendaftaran</p>
                         </div>
                         <div class="col-md-4 text-center">
                         	<span class="fa fa-users fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/claim/discharge">Discharge</a>
                             </h4>
-                          <p>Discharge Member</p>
+                          <p>Penagihan</p>
                         </div>
                         <div class="col-md-4 text-center">
                             <span class="fa fa-suitcase fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/claim/void">Void</a>
                             </h4>
-                          <p>Void Transaction</p>
+                          <p>Pembatalan Transaksi</p>
                         </div>
                         <div class="col-md-4 text-center">
                         	<span class="fa fa-search fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/claim/search">Search</a>
                             </h4>
-                          <p>Search Transaction</p>
+                          <p>Pencarian Transaksi</p>
                         </div>
                         <!--div class="col-md-4 text-center">
                         	<span class="fa fa-shopping-cart fa-5x"/>
