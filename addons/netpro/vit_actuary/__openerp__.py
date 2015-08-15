@@ -30,6 +30,9 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
+                'security/ir.model.access.csv',
+                'security/group.xml',
+                
                 'views/age_band.xml', 
                 'views/benefit.xml', 
                 'views/benefit_unit.xml', 
@@ -69,8 +72,6 @@
                 'data/netpro.region.csv',
                 'data/res.country.state.csv',
 
-                'security/ir.model.access.csv',
-                'security/group.xml',
                 'menu.xml',
                 # 'data/sequence.xml',
                 # 'data/master_data_actuary.xml'
