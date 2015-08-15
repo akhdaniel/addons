@@ -301,14 +301,16 @@ netpro_policy()
 
 class netpro_branch(osv.osv):
     _name = 'netpro.branch'
-    _inherit = 'res.partner'
+    _inherits = {'res.partner':'partner_id'}
 
-    def create(self, cr, uid, vals, context=None):
-        import pdb;pdb.set_trace()
-        new_id = super(netpro_branch, self).create(cr, uid, vals, context=context)
-        return new_id
+    # def create(self, cr, uid, vals, context=None):
+    #     # import pdb;pdb.set_trace()
+    #     new_id = super(res_partner, self).create(cr, uid, vals, context=context)
+    #     return new_id
          
     _columns = {
+        'partner_id': fields.many2one('res.partner', 'Partner', 
+            required=True, select=True, ondelete='cascade'),
         'id_branch'                 : fields.char('Branch ID'),
         'code_alias'                : fields.char('Code Alias'),
         'pic_id'                    : fields.many2one('res.users', 'Person In Charge'),

@@ -22,8 +22,10 @@
 from openerp.osv import fields,osv
 class netpro_profile(osv.osv):
     _name = 'netpro.profile'
-    _inherit = 'res.partner'
+    _inherits = {'res.partner': 'partner_id'}
     _columns = {
+        'partner_id': fields.many2one('res.partner', 'Partner', 
+            required=True, select=True, ondelete='cascade'),
         #'name': fields.char('Profile ID'),
         'reference_id': fields.char('Reference ID'),
         'external_profile_id': fields.char('External Profile ID'),
