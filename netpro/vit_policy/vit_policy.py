@@ -302,6 +302,12 @@ netpro_policy()
 class netpro_branch(osv.osv):
     _name = 'netpro.branch'
     _inherit = 'res.partner'
+
+    def create(self, cr, uid, vals, context=None):
+        import pdb;pdb.set_trace()
+        new_id = super(netpro_branch, self).create(cr, uid, vals, context=context)
+        return new_id
+         
     _columns = {
         'id_branch'                 : fields.char('Branch ID'),
         'code_alias'                : fields.char('Code Alias'),

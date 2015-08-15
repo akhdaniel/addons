@@ -6,7 +6,6 @@
 		    <field name="inherit_id" ref="vit_actuary.view_alter_res_users"/>
 		    <field name="arch" type="xml">
 		        <field name="tpa_id" position="after">
-		        	<!-- <field name="tpa_id" /> -->
 		        	<field name="provider_id" />
 		        </field>
 		    </field>
