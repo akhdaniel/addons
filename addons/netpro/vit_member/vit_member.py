@@ -25,10 +25,12 @@ import time
 
 class netpro_member(osv.osv):
     _name = 'netpro.member'
-    _inherit = 'res.partner'
+    _inherits = {'res.partner': 'partner_id'}
     _rec_name = 'member_no'
 
     _columns = {
+        'partner_id': fields.many2one('res.partner', 'Partner', 
+            required=True, select=True, ondelete='cascade'),
         'policy_id': fields.many2one('netpro.policy', 'Policy', required=True),
         'policy_holder': fields.related('policy_id', 'policy_holder_id', 
             relation='res.partner', type='many2one', store=True, string='Policy Holder'),
