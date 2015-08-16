@@ -30,8 +30,8 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
-                'security/ir.model.access.csv',
                 'security/group.xml',
+                'security/ir.model.access.csv',
                 
                 'views/age_band.xml', 
                 'views/benefit.xml', 

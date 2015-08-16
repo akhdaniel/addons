@@ -1,26 +1,36 @@
 <openerp>
 	<data noupdate="0">
+		<record id="category_netpro" 
+			 model="ir.module.category">
+			<field name="name">Netpro</field>
+		</record>	
+
 		<record model="res.groups" id="user_client">
 			<field name="name">User Client</field>
+			<field name="category_id" ref="category_netpro" />
 		</record>
 		<record model="res.groups" id="manager_client">
 			<field name="name">Manager Client</field>
+			<field name="category_id" ref="category_netpro" />
 		</record>
 		<record model="res.groups" id="user_system_owner">
 			<field name="name">User System Owner</field>
+			<field name="category_id" ref="category_netpro" />
 		</record>
 		<record model="res.groups" id="manager_system_owner">
 			<field name="name">Manager System Owner</field>
+			<field name="category_id" ref="category_netpro" />
 		</record>
 		<record model="res.groups" id="user_provider">
 			<field name="name">User Provider</field>
+			<field name="category_id" ref="category_netpro" />
 		</record>
 		<record model="res.groups" id="manager_provider">
 			<field name="name">Manager Provider</field>
+			<field name="category_id" ref="category_netpro" />
 		</record>
-	</data>
 
-	<data noupdate="0">
+
 		<!-- PROVIDER -->
 	    <!-- <record model="ir.rule" id="tpa_for_user_provider">
 	        <field name="name">Client for Provider</field>
