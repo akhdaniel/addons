@@ -12,8 +12,7 @@ Fitur Modul
     'author': 'vitraining.com',
     'depends': ['stock'],
     'data': [
-        # 'product_views.xml',
-        # 'bom_views.xml',
+        'product_category_views.xml',
     ],
     'test': [],    
     'installable': True,
