@@ -30,26 +30,31 @@
 	                    <field name="rate_calculation_after_loading" />
 	                    <field name="reimbusement_affect_to_premium" />
 	                    <field name="card_fee" />
-	                    <field name="inner_limit_apply_card_fee" />
-	                    <field name="inner_limit_dependant_rate_base_on_male" />
-	                    <field name="inner_limit_limit_rate" />
-	                    <field name="inner_limit_claim_rate" />
-	                    <field name="inner_limit_annual_rate" />
-	                    <field name="inner_limit_overall_limit_loading" />
-	                    <field name="as_charge_apply_card_fee" />
-	                    <field name="as_charge_dependant_rate_base_on_male" />
-	                    <field name="as_charge_limit_rate" />
-	                    <field name="as_charge_claim_rate" />
-	                    <field name="as_charge_annual_rate" />
-	                    <field name="as_charge_overall_limit_loading" />
-	                    <field name="sub_as_charge_apply_card_fee" />
-	                    <field name="sub_as_charge_dependant_rate_base_on_male" />
-	                    <field name="sub_as_charge_limit_rate" />
-	                    <field name="sub_as_charge_claim_rate" />
-	                    <field name="sub_as_charge_annual_rate" />
-	                    <field name="sub_as_charge_overall_limit_loading" />
-	                </group>
 
+                        <separator string="Inner Limit" colspan="4"/>
+                        <field name="inner_limit_apply_card_fee" />
+                        <field name="inner_limit_dependant_rate_base_on_male" />
+                        <field name="inner_limit_limit_rate" />
+                        <field name="inner_limit_claim_rate" />
+                        <field name="inner_limit_annual_rate" />
+                        <field name="inner_limit_overall_limit_loading" />
+
+    	                <separator string="As Charge" colspan="4"/>
+                        <field name="as_charge_apply_card_fee" />
+                        <field name="as_charge_dependant_rate_base_on_male" />
+                        <field name="as_charge_limit_rate" />
+                        <field name="as_charge_claim_rate" />
+                        <field name="as_charge_annual_rate" />
+                        <field name="as_charge_overall_limit_loading" />
+
+                        <separator string="Sub As Charge" colspan="4"/>
+                        <field name="sub_as_charge_apply_card_fee" />
+                        <field name="sub_as_charge_dependant_rate_base_on_male" />
+                        <field name="sub_as_charge_limit_rate" />
+                        <field name="sub_as_charge_claim_rate" />
+                        <field name="sub_as_charge_annual_rate" />
+                        <field name="sub_as_charge_overall_limit_loading" />
+	                </group>
                 </group>
                 <notebook>
                 	<page string="Benefits">
