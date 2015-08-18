@@ -88,3 +88,44 @@ class mrp_routing_workcenter(osv.osv):
     _columns={
         'man_hour': fields.float('Man Hour', help="Time in hours for employee",digits=(16,4)),
     }
+
+
+class mrp_production(osv.osv):
+    _inherit = 'mrp.production'
+
+    # overwrite fungsi utk generate WO
+    def _action_compute_lines(self, cr, uid, ids, properties=None, context=None):
+        """ Compute product_lines and workcenter_lines from BoM structure
+        @return: product_lines
+        """
+        #import pdb;pdb.set_trace()
+        if properties is None:
+            properties = []
+        results = []
+        prod_line_obj = self.pool.get('mrp.production.product.line')
+        workcenter_line_obj = self.pool.get('mrp.production.workcenter.line')
+        for production in self.browse(cr, uid, ids, context=context):
+            #unlink product_lines
+            prod_line_obj.unlink(cr, SUPERUSER_ID, [line.id for line in production.product_lines], context=context)
+            #unlink workcenter_lines
+            workcenter_line_obj.unlink(cr, SUPERUSER_ID, [line.id for line in production.workcenter_lines], context=context)
+
+            res = self._prepare_lines(cr, uid, production, properties=properties, context=context)
+            results = res[0] # product_lines
+            results2 = res[1] # workcenter_lines
+
+            # reset product_lines in production order
+            for line in results:
+                line['production_id'] = production.id
+                prod_line_obj.create(cr, uid, line)
+
+            #reset workcenter_lines in production order
+            for line in results2:
+                # overwrite fungsi utk generate WO
+                if 'workcenter_id' in line:
+                    wc_obj = self.pool.get('mrp.workcenter')
+                    man_hour = wc_obj.browse(cr,uid,line['workcenter_id']).man_hour
+                    line['man_hour'] = man_hour
+                line['production_id'] = production.id
+                workcenter_line_obj.create(cr, uid, line, context)
+        return results
