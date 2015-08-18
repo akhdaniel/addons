@@ -14,8 +14,6 @@ data ini akan otomatis diimport:
 * product.uom.csv         : Product Unit Of Meassure and Ratio Unit Of Meassure, 
 * product.category.csv    : Category Bahan, 
 * res.partner.csv         : Supplier and Manufacture Supplier, 
-
-Lalu import manual file ini:
 * product.product.csv     : Produk Bahan Baku, Barang jadi, 
 * mrp.bom                 : BOM
 
@@ -26,6 +24,7 @@ Lalu import manual file ini:
         'mrp',
         'mrp_operations',
         'stock',
+        'vit_sediaan',
         'vit_ppn',
         'vit_approval_routings',
         'vit_batch_number_in_mo',
@@ -44,6 +43,7 @@ Lalu import manual file ini:
         'mrp.routing.csv',
         'mrp.routing.workcenter.csv',
         'product.uom.csv',
+        'vit.sediaan.csv',
         'product.category.csv',
         'res.partner.category.csv',
         'stock.location.csv',
