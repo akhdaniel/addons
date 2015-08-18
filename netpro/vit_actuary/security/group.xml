@@ -30,7 +30,7 @@
 			<field name="category_id" ref="category_netpro" />
 		</record>
 
-
+	<data noupdate="1">
 		<!-- PROVIDER -->
 	    <!-- <record model="ir.rule" id="tpa_for_user_provider">
 	        <field name="name">Client for Provider</field>
