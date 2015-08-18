@@ -29,6 +29,7 @@
 			<field name="name">Manager Provider</field>
 			<field name="category_id" ref="category_netpro" />
 		</record>
+	</data>
 
 	<data noupdate="1">
 		<!-- PROVIDER -->
