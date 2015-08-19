@@ -42,9 +42,9 @@ class netpro_claim(osv.osv):
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
             pass
-        if cur_user.provider_id:
-            provider_val = cur_user.provider_id.id
-            pass
+        # if cur_user.provider_id:
+        #     provider_val = cur_user.provider_id.id
+        #     pass
         vals.update({
             'claim_no'  : nomor,
             'tpa_id':tpa_val,
