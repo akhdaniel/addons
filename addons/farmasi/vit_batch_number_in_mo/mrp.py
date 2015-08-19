@@ -24,7 +24,7 @@ import datetime
 import openerp.addons.decimal_precision as dp
 from collections import OrderedDict
 from openerp.osv import fields, osv, orm
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT,DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools import float_compare, float_is_zero
 from openerp.tools.translate import _
 from openerp import tools, SUPERUSER_ID
@@ -36,54 +36,140 @@ from dateutil.relativedelta import relativedelta
 class mrp_production(osv.osv):
     _inherit = 'mrp.production'
 
-    def create(self, cr, uid, vals, context=None):
+    def action_confirm(self, cr, uid, ids, context=None):
+        """ Confirms production order.
+        @return: Newly generated Shipment Id.
+        """
         
-        if 'batch_number_id' in vals:
-            batch_id = vals['batch_number_id']        
-            mo_obj = self.pool.get('mrp.production')
-            mo_search = mo_obj.search(cr,uid,[('batch_number_id','=',batch_id)])
-            mo_browse = mo_obj.browse(cr,uid,mo_search)
-
-            if mo_search :
-                raise osv.except_osv(_('Error!'), _('Batch Number already in use !'))
-            #set is_used di batch number agar tidak bisa lagi dipakai oleh MO yang lain    
-            self.pool.get('batch.number').write(cr,uid,batch_id,{'is_used':True})
-        return super(mrp_production, self).create(cr, uid, vals, context=context)  
-
-
-    def write(self, cr, uid, ids, vals, context=None, update=True, mini=True):
-        direction = {}
+        user_lang = self.pool.get('res.users').browse(cr, uid, [uid]).partner_id.lang
+        context = dict(context, lang=user_lang)
+        uncompute_ids = filter(lambda x: x, [not x.product_lines and x.id or False for x in self.browse(cr, uid, ids, context=context)])
+        self.action_compute(cr, uid, uncompute_ids, context=context)
         
-        if 'batch_number_id' in vals:
-            batch_id = vals['batch_number_id']        
-            mo_obj = self.pool.get('mrp.production')
-            mo_search = mo_obj.search(cr,uid,[('batch_number_id','=',batch_id)])
+        for production in self.browse(cr, uid, ids, context=context):
+            self._make_production_produce_line(cr, uid, production, context=context)
 
-            if mo_search :
-                raise osv.except_osv(_('Error!'), _('Batch Number already in use !'))                 
-            self.pool.get('batch.number').write(cr,uid,batch_id,{'is_used':True}) 
+            ########################### modify disini ##############################
+            #Tahun
+            tahun_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[2]
+            tahun_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[3]
+            tahun_2_digit = tahun_digit1+tahun_digit2
+            #Sediaan
+            sediaan_code = '-'
+            if production.product_id.categ_id.sediaan_id:                   
+                sediaan_code =  production.product_id.categ_id.sediaan_id.code
+            #Bulan
+            bulan_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[5]
+            bulan_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[6]
+            bulan_2_digit = bulan_digit1+bulan_digit2  
+            if bulan_2_digit == '01':
+                bulan_huruf = 'A'              
+            elif bulan_2_digit == '02':
+                bulan_huruf = 'B'  
+            elif bulan_2_digit == '03':
+                bulan_huruf = 'C'  
+            elif bulan_2_digit == '04':
+                bulan_huruf = 'D'
+            elif bulan_2_digit == '05':
+                bulan_huruf = 'E'
+            elif bulan_2_digit == '06':
+                bulan_huruf = 'F'
+            elif bulan_2_digit == '07':
+                bulan_huruf = 'G'
+            elif bulan_2_digit == '08':
+                bulan_huruf = 'H'            
+            elif bulan_2_digit == '09':
+                bulan_huruf = 'I'
+            elif bulan_2_digit == '10':
+                bulan_huruf = 'J'  
+            elif bulan_2_digit == '11':
+                bulan_huruf = 'K'
+            elif bulan_2_digit == '12':
+                bulan_huruf = 'L'
+            
+            batch_rule = str(tahun_2_digit+sediaan_code+'%')
 
-        if vals.get('date_start', False):
-            for po in self.browse(cr, uid, ids, context=context):
-                direction[po.id] = cmp(po.date_start, vals.get('date_start', False))
-        result = super(mrp_production, self).write(cr, uid, ids, vals, context=context)
-        if (vals.get('workcenter_lines', False) or vals.get('date_start', False) or vals.get('date_planned', False)) and update:
-            self._compute_planned_workcenter(cr, uid, ids, context=context, mini=mini)
-        for d in direction:
-            if direction[d] == 1:
-                # the production order has been moved to the passed
-                self._move_pass(cr, uid, [d], context=context)
-                pass
-            elif direction[d] == -1:
-                self._move_futur(cr, uid, [d], context=context)
-                # the production order has been moved to the future
-                pass       
-        return result
+            # SUBSTRING ( expression ,start , length )
+            cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
+                            "WHERE state NOT IN ('draft','cancel') " \
+                            "AND batch_number like %s ORDER BY Initial DESC" \
+                            , (batch_rule,))         
+            batch_ids      = cr.fetchall()
+            # jika belum punya batch number buat dari 001
+            new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
+            if batch_ids :
+                seq_batch = int(batch_ids[0][1])+1
+                #import pdb;pdb.set_trace()
+                #mengakali angka 0 di depan angka positif
+                if len(str(seq_batch)) == 1:
+                    new_seq_batch = '00'+ str(seq_batch)
+                elif len(str(seq_batch)) == 2 :
+                    new_seq_batch = '0'+ str(seq_batch)
+                else:
+                    new_seq_batch = str(seq_batch)
+
+                new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+new_seq_batch)
+                       
+            stock_moves = []
+            for line in production.product_lines:
+                if line.product_id.type != 'service':
+                    stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
+                    stock_moves.append(stock_move_id)
+                else:
+                    self._make_service_procurement(cr, uid, line, context=context)
+            if stock_moves:
+                self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
+            production.write({'state': 'confirmed','batch_number':new_batch_number})
+        return 0
+    # def create(self, cr, uid, vals, context=None):
+        
+    #     if 'batch_number_id' in vals:
+    #         batch_id = vals['batch_number_id']        
+    #         mo_obj = self.pool.get('mrp.production')
+    #         mo_search = mo_obj.search(cr,uid,[('batch_number_id','=',batch_id)])
+    #         mo_browse = mo_obj.browse(cr,uid,mo_search)
+
+    #         if mo_search :
+    #             raise osv.except_osv(_('Error!'), _('Batch Number already in use !'))
+    #         #set is_used di batch number agar tidak bisa lagi dipakai oleh MO yang lain    
+    #         self.pool.get('batch.number').write(cr,uid,batch_id,{'is_used':True})
+    #     return super(mrp_production, self).create(cr, uid, vals, context=context)  
+
+
+    # def write(self, cr, uid, ids, vals, context=None, update=True, mini=True):
+    #     direction = {}
+        
+    #     if 'batch_number_id' in vals:
+    #         batch_id = vals['batch_number_id']        
+    #         mo_obj = self.pool.get('mrp.production')
+    #         mo_search = mo_obj.search(cr,uid,[('batch_number_id','=',batch_id)])
+
+    #         if mo_search :
+    #             raise osv.except_osv(_('Error!'), _('Batch Number already in use !'))                 
+    #         self.pool.get('batch.number').write(cr,uid,batch_id,{'is_used':True}) 
+
+    #     if vals.get('date_start', False):
+    #         for po in self.browse(cr, uid, ids, context=context):
+    #             direction[po.id] = cmp(po.date_start, vals.get('date_start', False))
+    #     result = super(mrp_production, self).write(cr, uid, ids, vals, context=context)
+    #     if (vals.get('workcenter_lines', False) or vals.get('date_start', False) or vals.get('date_planned', False)) and update:
+    #         self._compute_planned_workcenter(cr, uid, ids, context=context, mini=mini)
+    #     for d in direction:
+    #         if direction[d] == 1:
+    #             # the production order has been moved to the passed
+    #             self._move_pass(cr, uid, [d], context=context)
+    #             pass
+    #         elif direction[d] == -1:
+    #             self._move_futur(cr, uid, [d], context=context)
+    #             # the production order has been moved to the future
+    #             pass       
+    #     return result
 
     _columns = {
         'batch_number_id': fields.many2one('batch.number', string='Batch Number',
             domain="[('is_used','=',False)]",required=False,readonly=True,states={'draft':[('readonly',False)]}),
-
+        'batch_number': fields.char('Batch Number',readonly=True,),
+        'sediaan_id': fields.related('product_id','categ_id','sediaan_id',type='many2one',relation='vit.sediaan',string='Sediaan',readonly=True)
     }
 
     def hitung_batch_number(self, cr, uid, date_planned, date_batch, context=None):
@@ -131,7 +217,6 @@ class mrp_production(osv.osv):
                     remove_date     = False
                     alt_date        = False
 
-                   # import pdb;pdb.set_trace()
                     best_before_days = wiz.product_id.best_before_days
                     if best_before_days <= 0 :
                         best_before_days = wiz.product_id.categ_id.best_before_days
@@ -157,7 +242,7 @@ class mrp_production(osv.osv):
                         alt_date   = self.hitung_batch_number(cr, uid, date_planned, alert_days, context=context)                    
 
                     lot_id = self.pool.get('stock.production.lot').create(cr,uid,{'product_id'      : production.product_id.id,
-                                                                                    'name'          : production.batch_number_id.number,
+                                                                                    'name'          : production.batch_number,
                                                                                     'use_date'      : best_date,
                                                                                     'life_date'     : life_date,
                                                                                     'removal_date'  : remove_date,
