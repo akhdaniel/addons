@@ -99,7 +99,7 @@ class mrp_production(osv.osv):
             new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
             if batch_ids :
                 seq_batch = int(batch_ids[0][1])+1
-                #import pdb;pdb.set_trace()
+                
                 #mengakali angka 0 di depan angka positif
                 if len(str(seq_batch)) == 1:
                     new_seq_batch = '00'+ str(seq_batch)
@@ -108,7 +108,31 @@ class mrp_production(osv.osv):
                 else:
                     new_seq_batch = str(seq_batch)
 
-                new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+new_seq_batch)
+                new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+new_seq_batch) 
+
+                #jika ada batch yang di cancel cek dulu di MO yang state=cancel
+                cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
+                                "WHERE state = 'cancel' " \
+                                "AND batch_number like %s ORDER BY Initial ASC" \
+                                , (batch_rule,))  
+                batch_cancel_ids      = cr.fetchall()
+                if batch_cancel_ids:
+                    #import pdb;pdb.set_trace()
+                    for batch in batch_cancel_ids:
+                        cancel_batch = str(batch[0])
+                        #cek dulu apakah batch yang di cancel ini sudah pernah di buat lagi
+                        cr.execute("SELECT batch_number FROM mrp_production " \
+                                        "WHERE state NOT IN ('draft','cancel') " \
+                                        "AND batch_number = %s" \
+                                        , (cancel_batch,)) 
+                        batch_cancel_cek      = cr.fetchall()
+                        #jika sudah pernah di buat langsung continue
+                        if batch_cancel_cek:
+                            continue
+                        #jika belum pernah di buat langsung break
+                        if not batch_cancel_cek:
+                            new_batch_number = cancel_batch
+                            break
                        
             stock_moves = []
             for line in production.product_lines:
