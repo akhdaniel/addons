@@ -6,15 +6,14 @@
 {
     'name': 'Batch Number in Manufacturing Orders',
     'description': """
-*Tambah Batch Number di Manufakturing Orders
+*Tambah Batch Number di Manufacturing Orders
 """,
     'version': '0.1',
-    'depends': ['base','mrp','mrp','mrp_operations'],
+    'depends': ['base','mrp','mrp_operations','vit_sediaan'],
     'author': 'vitraining.com',
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',
     'data': [ 
-        
         'view_batch_number.xml',
         'view_mrp.xml',
         'view_product_date.xml',

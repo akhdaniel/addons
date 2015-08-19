@@ -77,8 +77,8 @@
 
         </record>
 
-        <menuitem action="action_year_view" id="menu_years_conf" name="Years" parent="mrp.menu_mrp_configuration" sequence="400"/>
-        <menuitem action="action_batch_number_list" id="menu_batch_conf" name="Batch Number" parent="mrp.menu_mrp_configuration" sequence="500"/>
+<!--         <menuitem action="action_year_view" id="menu_years_conf" name="Years" parent="mrp.menu_mrp_configuration" sequence="400"/>
+        <menuitem action="action_batch_number_list" id="menu_batch_conf" name="Batch Number" parent="mrp.menu_mrp_configuration" sequence="500"/> -->
 
         <!-- Inherit Produce untuk invisible lot_id karena otomatis dibuat oleh batch number-->
         <record id="vit_view_mrp_product_produce_wizard" model="ir.ui.view">
@@ -94,7 +94,7 @@
 
 
         <!--sequence-->
-        <record forcecreate="1" id="seq_batch_number" model="ir.sequence.type">
+<!--         <record forcecreate="1" id="seq_batch_number" model="ir.sequence.type">
             <field name="name">Batch</field>
             <field name="code">batch.number</field>
         </record>
@@ -104,7 +104,7 @@
             <field name="code">batch.number</field>
             <field name="prefix"></field>
             <field name="padding">3</field>
-        </record>
+        </record> -->
 
     </data>
 </openerp>

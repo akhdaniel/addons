@@ -30,12 +30,23 @@
             <field name="model">product.category</field>
             <field name="inherit_id" ref="product.product_category_form_view"/>
             <field name="arch" type="xml">
-                <field name="type" position="after">
-                    <field name="best_before_days"/>
-                    <field name="end_of_life_days"/>
-                    <field name="removal_days"/>
-                    <field name="alert_days"/>
-                </field>     
+                <xpath expr="//group[@name='parent']" position="inside">
+                    <group string="Batch Number Days" colspan="4">
+                        <div class="oe_inline" colspan="4">
+                            <p attrs="{'invisible':[('parent_id','=',False)]}">
+                            Di hitung jika batch number days pada product di isi 0 atau minus 
+                            </p>
+                        </div>
+                        <group>
+                            <field name="best_before_days"/>
+                            <field name="removal_days"/>
+                        </group>
+                        <group>                                
+                            <field name="end_of_life_days"/>
+                            <field name="alert_days"/>
+                        </group>
+                    </group>
+                </xpath>                   
             </field>
         </record>
 
