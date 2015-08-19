@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+     <record model="ir.ui.view" id="purchase_order_search_inherit">
+        <field name="name">purchase.order.list.select.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='draft']" position="after">
+                <filter icon="terp-gtk-jump-to-ltr" name="confirmed0" string="To Second Approve" domain="[('state','=','confirmed0')]" help="Purchase orders which are not approved yet."/>
+            </xpath>
+        </field>
+    </record>
+
+     <record model="ir.ui.view" id="vit_purchase_order_form">
+        <field name="name">purchase.order</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <button name="purchase_approve" position="replace">
+                <button name="purchase_approve" string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager" attrs="{'invisible': ['|',('state','!=','confirmed'),('is_triple_validation','=',True)]}"/> 
+
+                <button name="purchase_approve0" string="First Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager" type="object" attrs="{'invisible': ['|',('state','!=','confirmed'),('is_triple_validation','=',False)]}"/>
+
+                <button name="purchase_approve" string="Second Approve Order" class="oe_highlight" groups="vit_purchase_triple_validation.group_purchase_manager2" attrs="{'invisible': ['|',('state','!=','confirmed0'),('is_triple_validation','=',False)]}"/> 
+
+                
+            </button>
+            <field name="partner_id" position="after">
+                <field name="is_triple_validation" invisible="1"/>
+                <field name="limit_amount" invisible="1"/>
+            </field>    
+        </field>
+    </record>
+
+        <record id="purchase_rfq" model="ir.actions.act_window">
+            <field name="name">Requests for Quotation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="context">{}</field>
+            <field name="domain">[('state','in',('draft','sent','bid','cancel', 'confirmed','confirmed0'))]</field>
+            <field name="view_mode">tree,form,graph,calendar</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a request for quotation.
+              </p><p>
+                The quotation contains the history of the discussion/negotiation
+                you had with your supplier. Once confirmed, a request for
+                quotation is converted into a purchase order.
+              </p><p>
+                Most propositions of purchase orders are created automatically
+                by Odoo based on inventory needs.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="purchase_rfq" id="purchase.menu_purchase_rfq"
+            parent="purchase.menu_procurement_management"
+            sequence="0"/>
+
+
+        <record id="purchase_form_action" model="ir.actions.act_window">
+            <field name="name">Purchase Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form,graph,calendar</field>
+            <field name="context">{}</field>
+            <field name="domain">[('state','not in',('draft','sent','bid', 'confirmed','confirmed0'))]</field>
+            <field name="search_view_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation that will be converted into a purchase order. 
+              </p><p>
+                Use this menu to search within your purchase orders by
+                references, supplier, products, etc. For each purchase order,
+                you can track the related discussion with the supplier, control
+                the products received and control the supplier invoices.
+              </p>
+            </field>
+        </record>
+        <menuitem action="purchase_form_action" id="purchase.menu_purchase_form_action" parent="purchase.menu_procurement_management" sequence="6"/>
+
+    </data>
+</openerp>
