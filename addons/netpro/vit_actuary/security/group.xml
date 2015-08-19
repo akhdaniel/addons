@@ -31,7 +31,7 @@
 		</record>
 	</data>
 
-	<data noupdate="1">
+	<data noupdate="0">
 		<!-- PROVIDER -->
 	    <!-- <record model="ir.rule" id="tpa_for_user_provider">
 	        <field name="name">Client for Provider</field>
@@ -50,7 +50,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="benefit_for_user_tpa">
@@ -61,7 +61,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="benfit_unit_for_user_tpa">
@@ -72,7 +72,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="diagnosis_for_user_tpa">
@@ -83,7 +83,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="existing_insurance_for_user_tpa">
@@ -94,7 +94,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="group_size_for_user_tpa">
@@ -105,7 +105,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="holiday_for_user_tpa">
@@ -116,7 +116,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="lob_for_user_tpa">
@@ -127,7 +127,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="membership_for_user_tpa">
@@ -138,7 +138,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 		<record model="ir.rule" id="modal_factor_for_user_tpa">
@@ -149,7 +149,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 		<record model="ir.rule" id="premium_table_for_user_tpa">
@@ -160,7 +160,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 		<record model="ir.rule" id="premium_type_for_user_tpa">
@@ -171,7 +171,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_for_user_tpa">
@@ -182,7 +182,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_plans_for_user_tpa">
@@ -193,7 +193,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_plan_base_for_user_tpa">
@@ -204,7 +204,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_type_for_user_tpa">
@@ -215,7 +215,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="reason_for_user_tpa">
@@ -226,7 +226,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="term_condition_for_user_tpa">
@@ -237,7 +237,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record> -->
 	    <!-- CLIENT USER END -->
 
@@ -250,7 +250,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="benefit_for_user_manager_tpa">
@@ -261,7 +261,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="benfit_unit_for_user_manager_tpa">
@@ -272,7 +272,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="diagnosis_for_user_manager_tpa">
@@ -283,7 +283,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="existing_insurance_for_user_manager_tpa">
@@ -294,7 +294,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="group_size_for_user_manager_tpa">
@@ -305,7 +305,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="holiday_for_user_manager_tpa">
@@ -316,7 +316,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="lob_for_user_manager_tpa">
@@ -327,7 +327,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="membership_for_user_manager_tpa">
@@ -338,7 +338,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 		<record model="ir.rule" id="modal_factor_for_user_manager_tpa">
@@ -349,7 +349,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 		<record model="ir.rule" id="premium_table_for_user_manager_tpa">
@@ -360,7 +360,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 		<record model="ir.rule" id="premium_type_for_user_manager_tpa">
@@ -371,7 +371,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_for_user_manager_tpa">
@@ -382,7 +382,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_plans_for_user_manager_tpa">
@@ -393,7 +393,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_plan_base_for_user_manager_tpa">
@@ -404,7 +404,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="product_type_for_user_manager_tpa">
@@ -415,7 +415,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="reason_for_user_manager_tpa">
@@ -426,7 +426,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <record model="ir.rule" id="term_condition_for_user_manager_tpa">
@@ -437,7 +437,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 	    <!-- CLIENT USER MANAGER END -->
 	</data>

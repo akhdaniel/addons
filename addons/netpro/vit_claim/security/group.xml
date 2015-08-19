@@ -9,7 +9,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('provider_id','=',user.provider_id)]</field>
+	        <field name="domain_force">[('provider_id','=',user.provider_id.id)]</field>
 	    </record>
 
 	    <!-- PROVIDER MANAGER -->
@@ -21,7 +21,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('provider_id','=',user.provider_id)]</field>
+	        <field name="domain_force">[('provider_id','=',user.provider_id.id)]</field>
 	    </record>
 
 	    <!-- TPA USER -->
@@ -33,7 +33,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="0"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 
 	    <!-- TPA MANAGER -->
@@ -45,7 +45,7 @@
 	        <field name="perm_write" eval="1"/>
 	        <field name="perm_create" eval="1"/>
 	        <field name="perm_unlink" eval="1"/>
-	        <field name="domain_force">[('tpa_id','=',user.tpa_id)]</field>
+	        <field name="domain_force">[('tpa_id','=',user.tpa_id.id)]</field>
 	    </record>
 	</data>
 </openerp>
