@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+         <record id="view_tree_validation_wizard_form" model="ir.ui.view">
+            <field name="name">tree.validation</field>
+            <field name="model">tree.validation</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false" string="Update Tree Validation" version="7.0">
+                    <sheet>
+                    <group> 
+                        <group>                       
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="limit_amount" attrs="{'invisible': [('name','=',False)]}"/>  
+                        </group>
+                    </group>    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <record id="view_tree_validation_wizard_tree" model="ir.ui.view">
+            <field name="name">tree.validation</field>
+            <field name="model">tree.validation</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" string="Update Tree Validation" version="7.0">
+                    <field name="name"/>
+                    <field name="limit_amount" attrs="{'invisible': [('name','=',False)]}"/>  
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_purchase_configuration_tree_validation" model="ir.actions.act_window">
+            <field name="name">Configure Purchases Tree Validation</field>
+            <field name="res_model">tree.validation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('id','=',1)]</field>
+            <field name="context">{}</field>
+            <!-- <field name="target">inline</field> -->
+        </record>
+
+    <menuitem id="menu_purchase_config" name="Purchases Triple Validation" parent="base.menu_config"
+            sequence="4" action="action_purchase_configuration_tree_validation"/>
+
+    </data>
+</openerp>
