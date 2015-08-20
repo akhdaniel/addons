@@ -14,6 +14,8 @@
                                     <field name="workcenter_operation_id" domain="[('routing_id','=',parent.routing_id)]"/>
                                     <field name="man_hour"/>
                                     <field name="man_number"/>
+                                    <field name="lead_time_process"/>
+                                    
                             </tree>
                         </field>
                     </page>
@@ -33,6 +35,7 @@
                     <field name="workcenter_operation_id"/>
                     <field name="man_hour"/>
                     <field name="man_number"/>
+                    <field name="lead_time_process"/>
                     <field name="routing_id" invisible="1"/>     
                 </tree>
             </field>
@@ -48,6 +51,7 @@
                                 <field name="workcenter_operation_id"/>
                                 <field name="man_hour"/>  
                                 <field name="man_number"/>
+                                <field name="lead_time_process"/>
                                 <field name="routing_id" invisible="0"/>
                             </group>
                         </group>
