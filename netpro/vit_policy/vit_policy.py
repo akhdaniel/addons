@@ -171,7 +171,7 @@ class netpro_policy(osv.osv):
     _defaults = {
         'ci_date'   : lambda*a : time.strftime("%Y-%m-%d"),
         'state'     : 'open',
-        'member_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
+        'policy_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
     }
     def create(self, cr, uid, vals, context=None):
         #nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
