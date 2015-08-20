@@ -1,0 +1,23 @@
+<openerp>
+<data>      
+
+
+        <record id="vit_mrp_edit_prod_qty_man_orders" model="ir.ui.view">
+            <field name="name">mrp.production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <button type="action"
+                name="%(mrp.action_change_production_qty)d"
+                string="Update" states="confirmed" class="oe_edit_only oe_link" position='replace'>       
+                    <button type="action"
+                    name="%(mrp.action_change_production_qty)d"
+                    string="Update" states="draft,confirmed" 
+                    class="oe_edit_only oe_link"
+                    groups="vit_security_product_qty_in_mo.group_mrp_manager_2"/> 
+                </button>            
+            </field>
+        </record> 
+
+</data>
+</openerp>        
