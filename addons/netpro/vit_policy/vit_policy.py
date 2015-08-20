@@ -26,7 +26,7 @@ class netpro_policy(osv.osv):
     _name = 'netpro.policy'
     _rec_name = 'policy_no'
     _columns = {
-        'policy_no': fields.char('Policy No'),
+        'policy_no': fields.char('Policy No', required=True),
         'reference_no': fields.char('Reference No'),
         'quotation_no': fields.char('Quotation No'),
         'ci': fields.char('C/I'),
@@ -35,10 +35,10 @@ class netpro_policy(osv.osv):
         'policy_type_id': fields.many2one('netpro.policy_type', 'Policy Type'),
         'branch_id': fields.many2one('netpro.branch', 'Branch'),
         'marketing_officer_id': fields.many2one('res.partner', 'Marketing Officer'),
-        'policy_holder_id': fields.many2one('res.partner', 'Policy Holder'),
+        'policy_holder_id': fields.many2one('res.partner', 'Policy Holder', required=True),
         'policy_group_id': fields.many2one('netpro.policy_group', 'Group'),
-        'insurance_period_start': fields.date('Insurance Period Start'),
-        'insurance_period_end': fields.date('Insurance Period End'),
+        'insurance_period_start': fields.date('Insurance Period Start', required=True),
+        'insurance_period_end': fields.date('Insurance Period End', required=True),
         'exclusive_period': fields.boolean('Exclusive Period'),
         'toc_id': fields.many2one('netpro.toc', 'TOC'),
         'ujroh': fields.float('Ujroh'),
@@ -171,16 +171,16 @@ class netpro_policy(osv.osv):
     _defaults = {
         'ci_date'   : lambda*a : time.strftime("%Y-%m-%d"),
         'state'     : 'open',
+        'member_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
     }
     def create(self, cr, uid, vals, context=None):
-        nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
+        #nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
-            pass
         vals.update({
-            'policy_no':nomor,
+            #'policy_no':nomor,
             'created_by_id':uid,
             'tpa_id':tpa_val,
             'created_by_date':time.strftime("%Y-%m-%d %H:%M:%S"),
