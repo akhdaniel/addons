@@ -7,6 +7,13 @@
             <field name="model">mrp.bom</field>
             <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
             <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <!-- <field name="lead_time_product"/><div>days</div> -->
+                    <label for="lead_time_product"/>
+                    <div>
+                        <field name="lead_time_product" class="oe_inline" style="vertical-align:baseline"/> days
+                    </div>
+                </field>
                 <notebook position="inside">
                      <page string="Workcenter Machine Hour" position="inside">
                         <field name="machine_hour_lines">

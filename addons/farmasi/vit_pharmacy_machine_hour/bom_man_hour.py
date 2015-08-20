@@ -20,9 +20,8 @@ class bom_man_hour(osv.osv):
         'man_hour'	 				: fields.float('Man Hour',digits=(16, 2)),  
         'man_number'				: fields.integer('Man Number'), 
         'routing_id'  			    : fields.related('bom_id','routing_id', type='many2one', relation='mrp.routing', string='Routing', store=True, readonly=True),
-
-        'workcenter_operation_id'      : fields.many2one('mrp.routing.workcenter',"Workcenter Operation",domain="[('routing_id','=',routing_id)]",required=False, change_default=True, track_visibility='always',),
-       
+        'workcenter_operation_id'   : fields.many2one('mrp.routing.workcenter',"Workcenter Operation",domain="[('routing_id','=',routing_id)]",required=False, change_default=True, track_visibility='always',),
+        'lead_time_process'         : fields.float('Lead Time Process',digits=(16, 2)),  
         # 'workcenter_lines'			: fields.one2many('mrp.routing.workcenter', 'bom_man_hour_id', 'Work Centers'),
         # 'workcenter_operation_id'	: fields.many2one('mrp.routing.workcenter','Workcenter Operation'),
     }

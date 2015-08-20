@@ -58,7 +58,7 @@
                 <p>Machine Master</p>
             </field>
         </record>
-
+        <!-- <menuitem action="field_mm" id="menu_field_mm" parent="mrp.menu_mrp_configuration" sequence="3"/> -->
         <menuitem action="field_mm" id="menu_field_mm" parent="menu_pharmacy_bom" sequence="3"/>
     </data>
 </openerp>

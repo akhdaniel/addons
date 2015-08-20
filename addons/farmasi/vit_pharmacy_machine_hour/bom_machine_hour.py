@@ -57,5 +57,6 @@ class mrp_bom(osv.osv):
 
     _columns = {
     	'machine_hour_lines': fields.one2many('vit_pharmacy_machine_hour.bom_machine_hour', 'bom_id', 'Machine Hour'),
+        'lead_time_product' : fields.float('Lead Time Product')
     }
    
