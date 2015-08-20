@@ -7,12 +7,26 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                <field name="date_planned" position="after">
+                <field name="date_planned" position="replace">
+                    <field name="date_planned" string="Manufacturing Date"/>
                     <field name="batch_number"/>
                 </field>     
                 <field name="origin" position="after">
                     <field name="sediaan_id"/>
-                </field>                 
+                </field> 
+
+            </field>
+        </record> 
+
+        <record id="vit_mrp_man_orders_tree" model="ir.ui.view">
+            <field name="name">mrp.production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="date_planned" position="replace">
+                    <field name="date_planned" string="Manufacturing Date"/>
+                </field> 
+
             </field>
         </record> 
 
