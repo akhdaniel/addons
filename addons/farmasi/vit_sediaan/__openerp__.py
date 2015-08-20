@@ -13,6 +13,7 @@ Fitur Modul
     'depends': ['stock'],
     'data': [
         'product_category_views.xml',
+        'security/ir.model.access.csv',
     ],
     'test': [],    
     'installable': True,
