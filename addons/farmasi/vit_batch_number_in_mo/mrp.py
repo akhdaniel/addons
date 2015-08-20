@@ -104,7 +104,7 @@ class mrp_production(osv.osv):
                 if len(str(seq_batch)) == 1:
                     new_seq_batch = '00'+ str(seq_batch)
                 elif len(str(seq_batch)) == 2 :
-                    new_seq_batch = '0'+ str(seq_batch)
+                    new_seq_batch = '0'+ str(seq_batch) 
                 else:
                     new_seq_batch = str(seq_batch)
 
@@ -193,7 +193,7 @@ class mrp_production(osv.osv):
         'batch_number_id': fields.many2one('batch.number', string='Batch Number',
             domain="[('is_used','=',False)]",required=False,readonly=True,states={'draft':[('readonly',False)]}),
         'batch_number': fields.char('Batch Number',readonly=True,),
-        'sediaan_id': fields.related('product_id','categ_id','sediaan_id',type='many2one',relation='vit.sediaan',string='Sediaan',readonly=True)
+        'sediaan_id': fields.related('product_id','categ_id','sediaan_id',type='many2one',relation='vit.sediaan',string='Sediaan',readonly=True),
     }
 
     def hitung_batch_number(self, cr, uid, date_planned, date_batch, context=None):
