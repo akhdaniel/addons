@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>      
+
+        <record id="action_start_wo" model="ir.actions.server">
+            <field name="name">Start WO</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="model_mrp_production_workcenter_line"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('mrp.production.workcenter.line').action_start_wo(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_partial_move_wizard1" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'mrp.production.workcenter.line'" name="model"/>
+            <field name="name">Start WO</field>
+            <field eval="'ir.actions.server,%d'%action_start_wo" name="value"/>
+        </record>
+
+
+        <record id="action_finish_wo" model="ir.actions.server">
+            <field name="name">Finish WO</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="model_mrp_production_workcenter_line"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('mrp.production.workcenter.line').action_finish_wo(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_partial_move_wizard2" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'mrp.production.workcenter.line'" name="model"/>
+            <field name="name">Finish WO</field>
+            <field eval="'ir.actions.server,%d'%action_finish_wo" name="value"/>
+        </record>
+        
+    </data>
+</openerp>
