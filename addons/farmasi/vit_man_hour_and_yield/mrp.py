@@ -73,7 +73,8 @@ class mrp_production_workcenter_line(osv.osv):
         return result
 
     _columns = {
-        'man_hour': fields.function(_get_man_hour, type="float",string='Planned Man of Hour', digits=(16, 4)),
+        # 'man_hour': fields.function(_get_man_hour, type="float",string='Planned Man of Hour', digits=(16, 4)),
+        'man_hour': fields.float('Planned Man of Hour', digits=(16, 4)),
         'actual_man_hour': fields.float('Actual Man of Hours', digits=(16, 4)),
         'result_qty' : fields.float('Result Qty', digits=(16, 2)),
         'yield': fields.function(_get_yield, type="float",string='Yield', digits=(16, 4)),
@@ -86,7 +87,7 @@ class mrp_routing_workcenter(osv.osv):
     _inherit = 'mrp.routing.workcenter'
 
     _columns={
-        'man_hour': fields.float('Man Hour', help="Time in hours for employee",digits=(16,4)),
+        'man_hour': fields.related('workcenter_id','man_hour',type='float',string='Man Hour',readonly=True)#float('Man Hour', help="Time in hours for employee",digits=(16,4)),
     }
 
 
@@ -98,7 +99,7 @@ class mrp_production(osv.osv):
         """ Compute product_lines and workcenter_lines from BoM structure
         @return: product_lines
         """
-        #import pdb;pdb.set_trace()
+        
         if properties is None:
             properties = []
         results = []
@@ -118,7 +119,7 @@ class mrp_production(osv.osv):
             for line in results:
                 line['production_id'] = production.id
                 prod_line_obj.create(cr, uid, line)
-
+            #import pdb;pdb.set_trace()
             #reset workcenter_lines in production order
             for line in results2:
                 # overwrite fungsi utk generate WO
