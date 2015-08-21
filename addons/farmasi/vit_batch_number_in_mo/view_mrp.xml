@@ -24,6 +24,7 @@
             <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
             <field name="arch" type="xml">
                 <field name="date_planned" position="replace">
+                    <field name="batch_number"/>
                     <field name="date_planned" string="Manufacturing Date"/>
                 </field> 
 
