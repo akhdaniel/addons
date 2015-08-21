@@ -8,6 +8,7 @@
     'description': """
 *On change Product qty pada MO di buat readonly dan berubah sesuai peroduct qty di BoM
 *Tambah group baru untuk user yang bisa edit product qty di form MO
+
 """,
     'version': '0.1',
     'depends': ['base','mrp','mrp_operations'],
