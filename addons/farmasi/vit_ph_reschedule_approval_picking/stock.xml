@@ -18,19 +18,8 @@
                         <field name="min_date" attrs="{'readonly': [('req_scheduled', '!=', 'approved')]}" />
                 </field>
 
-<!-- 
-                <xpath expr="//button[@name='action_cancel']" position="after">
-                    <button name="reschedule" string="Request Reschedule" type="object" class="oe_highlight" groups="base.group_user"  attrs="{'invisible': [('picking_type_id','!=',1)]}"/>
-                    <button name="approve_reschedule" string="Approve Reschedule" type="object" class="oe_highlight" attrs="{'invisible': ['|',('picking_type_id','!=',1),('req_scheduled','!=','req')]}" groups="stock.group_stock_manager"/>
-                </xpath>
-                <field name="origin" position="after">
-                    <field name="req_scheduled" invisible="1"/>
-                </field>
 
-                <field name="min_date" position="replace">
-                        <field name="min_date" attrs="{'readonly': ['|','|',('state','!=','draft'),('picking_type_id','==',1),('req_scheduled', '==', 'req')]}" />
-                </field>
-     -->
+                
     
             </field>
         </record>
