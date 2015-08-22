@@ -4,7 +4,7 @@
     'category': 'Manufacture',
     'description': """
         Modul untuk menambahkan Fields baru
-        1. Field keterangan di stock.picking (note release)
+        1. Field keterangan di stock.move (note release)
 
 
 
