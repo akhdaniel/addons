@@ -1,0 +1,17 @@
+<openerp>
+<data>      
+
+        <record id="vit_product_category_form_view_kemas" model="ir.ui.view">
+            <field name="name">product.category</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <field name="type" position="after">
+                    <field name="kategori_kemas"/>                               
+                </field>                 
+            </field>
+        </record>
+
+
+</data>
+</openerp> 
