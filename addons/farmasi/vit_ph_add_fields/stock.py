@@ -11,12 +11,9 @@ import re
 
 
 
-class stock_picking(osv.osv):
-    _name = "stock.picking"
-    _inherit = "stock.picking"
-    _description = "Picking List"
-
-
+class stock_move(osv.osv):
+    _name = "stock.move"
+    _inherit = "stock.move"
     _columns = {
 
         'note_release': fields.char('Note Release'),
