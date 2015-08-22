@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+<!--      <record model="ir.ui.view" id="purchase_order_search_inherit">
+        <field name="name">purchase.order.list.select.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='draft']" position="after">
+                <filter icon="terp-gtk-jump-to-ltr" name="confirmed0" string="To Second Approve" domain="[('state','=','confirmed0')]" help="Purchase orders which are not approved yet."/>
+            </xpath>
+        </field>
+    </record> -->
+
+        <record id="revision_po" model="ir.actions.act_window">
+            <field name="name">Kenapa Purchase Order ini di revisi ?</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order.revision</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'form_view_ref': False}</field>
+        </record>
+  
+
+     <record model="ir.ui.view" id="vit_purchase_order_form_revision">
+        <field name="name">purchase.order</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <button name="action_cancel" position="after">
+                <button name="%(revision_po)d" string="Create Revision" type="action" groups="purchase.group_purchase_manager" states="cancel"/> 
+            </button>
+            <field name="notes" position="before">
+                <label for="user_revision_id" attrs="{'user_revision_id':[('notes','=',False)]}"/>
+                <field name="user_revision_id" class="oe_inline"/>
+            </field>              
+            <field name="notes" position="replace">
+                <field name="notes"/>
+                <label for="reason" attrs="{'invisible':[('reason','=',False)]}"/>
+                <field name="reason" readonly="1" class="oe_inline"/>
+                <field name="notes2" placeholder="Terms and conditions..."/>
+            </field>    
+        </field>
+    </record>
+
+
+    </data>
+</openerp>

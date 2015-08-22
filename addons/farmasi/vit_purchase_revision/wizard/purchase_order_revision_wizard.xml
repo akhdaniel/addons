@@ -1,0 +1,21 @@
+<openerp>
+<data>
+
+         <record id="view_vit_po_revision_form" model="ir.ui.view">
+            <field name="name">purchase.order.revision</field>
+            <field name="model">purchase.order.revision</field>
+            <field name="arch" type="xml">
+                <form string="Kenapa Purchase Order ini di revisi ?" version="7.0">
+                            <field name="name" placeholder="isi alasan kenapa PO ini direvisi disini..." nolabel="1"/>
+	                    <footer>
+	                        <button name="create_revision_po" string="OK" type="object" class="oe_highlight"/>
+	                        or
+	                        <button string="Cancel" class="oe_link" special="cancel"/>
+	                    </footer>                        
+                </form>
+            </field>
+        </record>
+
+
+</data>
+</openerp>
