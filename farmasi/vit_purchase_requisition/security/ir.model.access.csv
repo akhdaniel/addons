@@ -1,0 +1,9 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"pr_manager","pr_manager","model_purchase_requisition","purchase_requisition.group_purchase_requisition_manager",1,1,1,1
+"pr_line_manager","pr_line_manager","model_purchase_requisition_line","purchase_requisition.group_purchase_requisition_manager",1,1,1,1
+"pr_user","pr_user","model_purchase_requisition","purchase_requisition.group_purchase_requisition_user",1,1,1,0
+"pr_line_user","pr_line_user","model_purchase_requisition_line","purchase_requisition.group_purchase_requisition_user",1,1,1,0
+"po_manager","po_manager","model_purchase_order","purchase_requisition.group_purchase_requisition_manager",1,0,0,0
+"po_line_manager","po_line_manager","model_purchase_order_line","purchase_requisition.group_purchase_requisition_manager",1,0,0,0
+"po_user","po_user","model_purchase_order","purchase_requisition.group_purchase_requisition_user",1,0,0,0
+"po_line_user","po_line_user","model_purchase_order_line","purchase_requisition.group_purchase_requisition_user",1,0,0,0
