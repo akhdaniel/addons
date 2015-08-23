@@ -1,0 +1,21 @@
+<openerp>
+	<data>
+	    <record model="ir.ui.view" id="view_purchase_requisition_form_multi">
+	        <field name="name">view.purchase.requisition.form.multi</field>
+	        <field name="model">purchase.requisition</field>
+	        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+	        <field name="priority" eval="17"/>
+	        <field name="arch" type="xml">
+                
+
+                <xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_id']" position="replace">
+                    <field name="product_id" 
+                    	domain="[('is_header','=','True')]"
+                    	on_change="onchange_product_id(product_id,product_uom_id,parent.account_analytic_id,account_analytic_id,parent.schedule_date,schedule_date)"/>
+
+                </xpath>
+
+			</field>
+	    </record>
+	</data>
+</openerp>

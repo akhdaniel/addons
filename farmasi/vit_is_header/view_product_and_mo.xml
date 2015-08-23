@@ -34,13 +34,13 @@
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
                 <field name="product_id" position="replace">
-                    <field name="product_id" on_change="product_id_change(product_id, product_qty)" domain="[('bom_ids','!=',False),('bom_ids.type','!=','phantom'),('is_header','=',False)]" class="oe_inline" context='{"default_type": "product"}'/>
+                    <field name="product_id" on_change="product_id_change(product_id, product_qty)" domain="[('bom_ids','!=',False),('bom_ids.type','!=','phantom')]" class="oe_inline" context='{"default_type": "product"}'/>
                 </field>     
                 <group string="Products to Consume" position="replace">
                     <group string="Products to Consume">
                         <field name="move_lines" nolabel="1" options="{'reload_on_button': true}">
-                            <tree colors="blue:state == 'draft';black:state in ('ready','assigned','in_production');gray:state in ('cancel','done');red:state in ('confirmed','waiting')" string="Products to Consume">
-                                <field name="product_id" domain="[('is_header','=',True)]"/>
+                            <tree colors="blue:state == 'draft';black:state in ('ready','assigned','in_production');gray:state in ('cancel','done');red:state in ('confirmed','waiting')" string="Products to Consume" editable="bottom">
+                                <field name="product_id" domain="[('is_header','=',False)]"/>
                                 <field name="product_uom_qty"  string="Quantity"/>
                                 <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
                                 <field name="state" invisible="1"/>
@@ -54,10 +54,10 @@
                                     icon="terp-gtk-jump-to-ltr" context="{'scrap': True}"
                                     states="draft,waiting,confirmed,assigned"/>
                             </tree>
-                            <form string="Products to Consume">
+                            <!--form string="Products to Consume">
                                 <group>
                                     <group>
-                                        <field name="product_id" domain="[('is_header','=',True)]" on_change="onchange_product_id(product_id,location_id,location_dest_id, False)"/>
+                                        <field name="product_id" domain="[('is_header','=',False)]" on_change="onchange_product_id(product_id,location_id,location_dest_id, False)"/>
                                         <field name="product_uom_qty"  string="Quantity"/>
                                         <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
                                     </group>
@@ -67,7 +67,7 @@
                                         <field name="location_dest_id"/>
                                     </group>
                                 </group>    
-                            </form>                            
+                            </form-->                            
                         </field>
                     </group>
                 </group>
