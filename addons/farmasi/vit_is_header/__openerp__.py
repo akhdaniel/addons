@@ -17,12 +17,13 @@ MO :
 * product_id domain  ===> is_header = FALSE
 """,
     'version': '0.1',
-    'depends': ['base','mrp','mrp_operations'],
+    'depends': ['base','mrp','mrp_operations', 'purchase_requisition'],
     'author': 'vitraining.com',
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',
     'data': [ 
         'view_product_and_mo.xml',
+        'pr.xml',
     ],
     'installable': True,
     'auto_install': False,
