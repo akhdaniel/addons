@@ -74,7 +74,9 @@ class mrp_production_workcenter_line(osv.osv):
 
 			waktu_hasil = date_start+waktu_bagi_rata
 
-			self.write(cr,uid,wo.id,{'state':'done','date_finished':str(waktu_hasil)})
+			delay = waktu_bagi_rata.days + (float(waktu_bagi_rata.seconds)/3600)
+
+			self.write(cr,uid,wo.id,{'state':'done','date_finished':str(waktu_hasil),'delay':delay})
 		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'mrp_operations', 'mrp_production_workcenter_tree_view_inherit')
 		view_id = view_ref and view_ref[1] or False,	
 		return {
@@ -89,4 +91,4 @@ class mrp_production_workcenter_line(osv.osv):
 			'target': 'current',
 			"context":"{}",
 			'nodestroy': False,
-		}		
+		}			
