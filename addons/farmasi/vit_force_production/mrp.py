@@ -47,7 +47,7 @@ class mrp_production(osv.osv):
 		for order in self.browse(cr, uid, ids):
 			#move_obj.force_assign(cr, uid, [x.id for x in order.move_lines])
 			#eksekusi yg product categ == kategory kemas
-			move_obj.force_assign(cr, uid, [x.id for x in order.move_lines if x.product_id.categ_id.kategori_kemas == 'primer'])
+			move_obj.force_assign(cr, uid, [x.id for x in order.move_lines if x.product_id.categ_id.kategori_kemas == 'sekunder'])
 			if self.pool.get('mrp.production').test_ready(cr, uid, [order.id]):
 				workflow.trg_validate(uid, 'mrp.production', order.id, 'moves_ready', cr)
 		return True
