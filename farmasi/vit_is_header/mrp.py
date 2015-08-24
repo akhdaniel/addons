@@ -40,3 +40,29 @@ class mrp_production(osv.osv):
         'move_lines': fields.one2many('stock.move', 'raw_material_production_id', 'Products to Consume',
             domain=[('state', 'not in', ('done', 'cancel'))], readonly=True, states={'draft': [('readonly', False)],'confirmed': [('readonly', False)]}),       
     }
+
+    def action_confirm(self, cr, uid, ids, context=None):
+        """ Confirms production order.
+        @return: Newly generated Shipment Id.
+        """
+        user_lang = self.pool.get('res.users').browse(cr, uid, [uid]).partner_id.lang
+        context = dict(context, lang=user_lang)
+        uncompute_ids = filter(lambda x: x, [not x.product_lines and x.id or False for x in self.browse(cr, uid, ids, context=context)])
+        self.action_compute(cr, uid, uncompute_ids, context=context)
+
+        for production in self.browse(cr, uid, ids, context=context):
+            self._make_production_produce_line(cr, uid, production, context=context)
+
+            stock_moves = []
+            for line in production.product_lines:
+            	if line.product_id.is_header == True:
+            		raise osv.except_osv(_('Error !'),_("Product %s is header True !")%(line.product_id.name) )
+                if line.product_id.type != 'service':
+                    stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
+                    stock_moves.append(stock_move_id)
+                else:
+                    self._make_service_procurement(cr, uid, line, context=context)
+            if stock_moves:
+                self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
+            production.write({'state': 'confirmed'})
+        return 0
