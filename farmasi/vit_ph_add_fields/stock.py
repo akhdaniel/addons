@@ -17,7 +17,16 @@ class stock_move(osv.osv):
     _columns = {
 
         'note_release': fields.char('Note Release'),
+        
+    }
 
+class stock_picking(osv.osv):
+    _name = "stock.picking"
+    _inherit = "stock.picking"
+    _columns = {
+
+       
+        'release_date': fields.datetime('Release Date'),
 
     }
 
