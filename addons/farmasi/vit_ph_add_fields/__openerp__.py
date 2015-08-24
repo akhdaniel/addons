@@ -5,6 +5,7 @@
     'description': """
         Modul untuk menambahkan Fields baru
         1. Field keterangan di stock.move (note release)
+        2. Field Release Date Di Stock Picking
 
 
 
