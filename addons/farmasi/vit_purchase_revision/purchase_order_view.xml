@@ -30,16 +30,22 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <button name="action_cancel" position="after">
-                <button name="%(revision_po)d" string="Create Revision" type="action" groups="purchase.group_purchase_manager" states="cancel"/> 
+                <button name="%(revision_po)d" string="Create Revision" type="action" groups="purchase.group_purchase_manager" attrs="{'invisible':['|',('state','!=','cancel'),('po_revisi_id','!=',False)]}"/> 
             </button>
-            <field name="notes" position="before">
-                <label for="user_revision_id" attrs="{'user_revision_id':[('notes','=',False)]}"/>
+            <field name="partner_ref" position="after">
+                <field name="po_revisi_id" attrs="{'invisible':[('po_revisi_id','=',False)]}"/>
+            </field>             
+<!--             <field name="notes" position="before">
+                <label for="user_revision_id" attrs="{'invisible':[('user_revision_id','=',False)]}"/>
                 <field name="user_revision_id" class="oe_inline"/>
-            </field>              
+            </field>  -->             
             <field name="notes" position="replace">
                 <field name="notes"/>
-                <label for="reason" attrs="{'invisible':[('reason','=',False)]}"/>
-                <field name="reason" readonly="1" class="oe_inline"/>
+                    <group>
+                        <field name="po_asal_id" readonly="1" attrs="{'invisible':[('po_asal_id','=',False)]}" />              
+                        <field name="reason" readonly="1" attrs="{'invisible':[('reason','=',False)]}"/>
+                        <field name="user_revision_id" attrs="{'invisible':[('user_revision_id','=',False)]}"/>
+                    </group>  
                 <field name="notes2" placeholder="Terms and conditions..."/>
             </field>    
         </field>
