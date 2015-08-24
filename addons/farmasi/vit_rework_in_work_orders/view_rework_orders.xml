@@ -31,5 +31,17 @@
             </field>
         </record>	
 
+        <!--  WO List View -->
+        <record id="vit_mrp_production_workcenter_tree_view_inherit2" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <field name="notes"/>
+                </field>
+            </field>
+        </record>  
+
 </data>
 </openerp>
