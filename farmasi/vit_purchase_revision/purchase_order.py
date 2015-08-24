@@ -29,7 +29,9 @@ class purchase_order(osv.osv):
         'user_revision_id'  : fields.many2one('res.users','Revision By',readonly=True),
         'notes'             : fields.text('Notes',readonly=True),
         'notes2'            : fields.text('Notes'),
-        'reason'            : fields.text('Alasan Revisi',required=True),
+        'reason'            : fields.text('Alasan Revisi'),
+        'po_revisi_id'      : fields.many2one('purchase.order','PO Revisi',readonly=True),
+        'po_asal_id'        : fields.many2one('purchase.order','Dari PO',readonly=True),
     }  
 
     _sql_constraints = [
