@@ -1,5 +1,5 @@
 <openerp>
-	<data noupdate="0">
+	<data>
 		<!-- PROVIDER USER -->
 		<record model="ir.rule" id="claim_for_user_provider">
 	        <field name="name">Claim for Provider</field>
