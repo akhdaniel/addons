@@ -30,12 +30,13 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
+                'security/ir.model.access.csv',
+                'security/group.xml',
+
                 'vit_policy_view.xml', 
                 'menu.xml',
                 'data/sequence.xml',
                 'data/master_data_policy.xml',
-                'security/ir.model.access.csv',
-                'security/group.xml',
         ],
         "installable": True
 }

@@ -30,12 +30,13 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
+                'security/ir.model.access.csv',
+                'security/group.xml',
+
                 'vit_claim_view.xml', 
                 'data/claim_status.xml',
                 'data/sequence.xml',
                 'menu.xml',
-                'security/ir.model.access.csv',
-                'security/group.xml',
         ],
         "installable": True
 }
