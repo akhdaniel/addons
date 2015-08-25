@@ -55,8 +55,8 @@ class mrp_production(osv.osv):
 
             stock_moves = []
             for line in production.product_lines:
-            	if line.product_id.is_header == True:
-            		raise osv.except_osv(_('Error !'),_("Product %s is header True !")%(line.product_id.name) )
+            	# if line.product_id.is_header == True:
+            	# 	raise osv.except_osv(_('Error !'),_("Product %s is header True !")%(line.product_id.name) )
                 if line.product_id.type != 'service':
                     stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
                     stock_moves.append(stock_move_id)
