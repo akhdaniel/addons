@@ -11,7 +11,7 @@
 
 		    <menuitem name="Profile" id="menu_netpro_profile" action="action_netpro_profile" parent="menu_netpro_profile_parent" sequence="10"/>
 
-		    <menuitem name="Alias" id="menu_netpro_alias" action="action_netpro_alias" parent="menu_netpro_profile_parent" sequence="10"/>
+		    <!-- <menuitem name="Alias" id="menu_netpro_alias" action="action_netpro_alias" parent="menu_netpro_profile_parent" sequence="10"/> -->
 
 	    <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level" parent="menu_netpro_provider_configuration" sequence="10"/>
 

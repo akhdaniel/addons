@@ -28,11 +28,13 @@ class netpro_provider(osv.osv):
         'partner': fields.boolean('Partner'),
         'non_partner': fields.boolean('Non Partner'),
         'profile_id': fields.many2one('netpro.profile', 'Profile'),
+        'profile_id_text' : fields.related('profile_id', 'profile_id', relation='netpro.profile', type='char', string='ID', store=False),
         'profile_name' : fields.related('profile_id', 'name', relation='netpro.profile', type='char', string='Name', store=False),
         'profile_address' : fields.related('profile_id', 'street', relation='netpro.profile', type='char', string='Address', store=False),
         'profile_phone' : fields.related('profile_id', 'phone', relation='netpro.profile', type='char', string='Phone', store=False),
         'profile_fax' : fields.related('profile_id', 'fax', relation='netpro.profile', type='char', string='Fax', store=False),
         'provider_type_id': fields.many2one('netpro.provider_type', 'Provider Type'),
+        'provider_type_desc': fields.related('provider_type_id', 'description' , type="char", relation="netpro.provider_type", string=" ", store=False),
         'provider_level_id': fields.many2one('netpro.provider_level', 'Provider Level'),
         'claim_pic_id': fields.many2one('res.partner', 'Claim PIC'),
         'corporate_type': fields.selection([('BO', 'Both Insurance And TPA'),('IO', 'Insurance Only'),('TO', 'TPA Only')], 'Corporate Type'),
@@ -66,6 +68,22 @@ class netpro_provider(osv.osv):
         'network_ids': fields.one2many('netpro.provider_network', 'provider_id', 'Network', ondelete='cascade'),
         'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }
+
+    def onchange_prov_type(self, cr, uid, ids, provider_type_id, context=None):
+
+        results = {}
+        if not provider_type_id:
+            return results
+
+        prov_type_obj = self.pool.get('netpro.provider_type')
+        prov_type_data = prov_type_obj.browse(cr,uid,provider_type_id)
+
+        results = {
+            'value' : {
+                'provider_type_desc'    : prov_type_data.description,
+            }
+        }
+        return results
 netpro_provider()
 
 class netpro_inpatient_room(osv.osv):

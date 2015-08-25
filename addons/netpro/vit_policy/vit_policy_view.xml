@@ -30,7 +30,7 @@
                             <field name="corporate_id" select="0"/>
                             <field name="policy_category_id" select="0"/>
                             <field name="policy_type_id" select="0"/>
-                            <field name="branch_id" select="0"/>
+                            <field name="branch_id" select="0" context="{}"/>
                             <field name="marketing_officer_id" select="0"/>
                             <field name="policy_holder_id" select="0"/>
                             <field name="policy_group_id" select="0"/>

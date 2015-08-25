@@ -19,6 +19,7 @@ class netpro_diagnosis(osv.osv):
         'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
         'tpa_id' 		: fields.many2one('netpro.tpa', 'TPA'),
     }
+    _order = "name"
     def create(self, cr, uid, vals, context=None):
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False

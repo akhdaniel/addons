@@ -2,6 +2,20 @@
 <openerp>
 <data>
 
+    <record model="ir.ui.view" id="view_netpro_branch_ext">
+        <field name="name">netpro.branch.form2</field>
+        <field name="model">netpro.branch</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Branch Form" version="7.0">
+                <group>
+                    <field name="name" />
+                    <field name="id_branch" />
+                </group>
+            </form>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="view_netpro_claim_form">
         <field name="name">netpro.claim.form</field>
         <field name="model">netpro.claim</field>
@@ -75,7 +89,7 @@
                             <field name="2nd_diagnosis" />
                             <field name="3rd_diagnosis" />
                             <!-- <field name="claim_id" /> -->
-                            <field name="branch_id" />
+                            <field name="branch_id" context="{'form_view_ref':'vit_claim.view_netpro_branch_ext'}" />
                             <field name="currency_id" />
                             <field name="claim_rate" />
                             <field name="policy_rate" />
