@@ -61,5 +61,21 @@
 	    <menuitem name="Salutation" id="menu_netpro_salutation" action="action_netpro_salutation" parent="menu_netpro_actuary_configuration" />
 	    <menuitem name="Employment" id="menu_netpro_employment" action="action_netpro_employment" parent="menu_netpro_actuary_configuration" />
 	    <menuitem name="Annual Income" id="menu_netpro_annual_income" action="action_netpro_annual_income" parent="menu_netpro_actuary_configuration" />
+
+	    <!-- Provider -->
+	    <menuitem name="Provider" id="menu_netpro_provider" action="action_netpro_provider" parent="menu_netpro_transaction"/>
+
+	    <!-- Provider Configurations -->
+	    <menuitem name="Provider" id="menu_netpro_provider_configuration" parent="menu_netpro_configuration" sequence="30"/>
+		    
+		    <menuitem name="Provider Profile" id="menu_netpro_profile_parent" parent="menu_netpro_provider_configuration" sequence="10"/>
+
+			    <menuitem name="Profile" id="menu_netpro_profile" action="action_netpro_profile" parent="menu_netpro_profile_parent" sequence="10"/>
+
+		    <menuitem name="Provider Level" id="menu_netpro_provider_level" action="action_netpro_provider_level" parent="menu_netpro_provider_configuration" sequence="10"/>
+
+		    <menuitem name="Provider Type" id="menu_netpro_provider_type" action="action_netpro_provider_type" parent="menu_netpro_provider_configuration" sequence="10"/>
+
+		    <menuitem name="Room" id="menu_netpro_room" action="action_netpro_room" parent="menu_netpro_provider_configuration" sequence="10"/>
 </data>
 </openerp>
