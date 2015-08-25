@@ -43,7 +43,7 @@
                                 <field name="marital_status" select="0"/>
                                 <field name="email" select="0"/>
                                 <field name="mobile_phone" select="0"/>
-                                <field name="birthdate" select="0"/>
+                                <field name="date_of_birth" select="0" on_change="onchange_DoB(date_of_birth)"/>
                                 <field name="age" select="0"/>
                                 <field name="birth_place" select="0"/>
                                 <field name="salary" select="0"/>
