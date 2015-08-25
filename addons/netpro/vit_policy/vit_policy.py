@@ -53,8 +53,8 @@ class netpro_policy(osv.osv):
         'occupation_id': fields.many2one('netpro.occupation', 'Occupation'),
         'existing_policy_no_id': fields.many2one('netpro.policy', 'Existing Policy No'),
         'province1_id': fields.many2one('res.country.state', 'Region'),
-        'province2_id': fields.many2one('res.country.state', ' '),
         'province3_id': fields.many2one('res.country.state', ' '),
+        'province2_id': fields.many2one('res.country.state', ' '),
         'province4_id': fields.many2one('res.country.state', ' '),
         'province5_id': fields.many2one('res.country.state', ' '),
         'remarks': fields.text('Remarks'),
@@ -651,14 +651,14 @@ netpro_default_limit()
 
 
 
-class netpro_provider_level(osv.osv):
-    _name = 'netpro.provider_level'
-    _rec_name = 'plevel'
-    _columns = {
-        'plevel': fields.char('PLevel'),
-        'description': fields.text('Description'),
-    }
-netpro_provider_level()
+# class netpro_provider_level(osv.osv):
+#     _name = 'netpro.provider_level'
+#     _rec_name = 'plevel'
+#     _columns = {
+#         'plevel': fields.char('PLevel'),
+#         'description': fields.text('Description'),
+#     }
+# netpro_provider_level()
 
 class netpro_agent(osv.osv):
     _name = 'netpro.agent'

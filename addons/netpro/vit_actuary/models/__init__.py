@@ -26,5 +26,10 @@ import annual_income
 import salutation
 import employment
 import religion
+import profile
+import provider
+import provider_level
+import provider_type
+import room
 import alter_model
 #import province

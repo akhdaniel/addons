@@ -9,9 +9,9 @@
         <field name="arch" type="xml">
             <form string="netpro.provider_level">
                 <group>
-                    <field name="name" select="1"/>
-                    <separator string="Description" colspan="4"/>
-                    <field name="description" colspan="4" nolabel="1" select="2"/>
+                    <field name="name" />
+                    <separator string="Description" />
+                    <field name="description" colspan="4" nolabel="1" />
                 </group>
             </form>
         </field>
