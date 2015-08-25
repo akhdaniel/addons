@@ -325,4 +325,12 @@ class mrp_production(osv.osv):
             stock_mov_obj.action_cancel(cr, uid, [x.id for x in production.move_lines], context=context)
 
         self.signal_workflow(cr, uid, [production_id], 'button_produce_done')
-        return True    
+        return True
+
+
+class mrp_production_workcenter_line(osv.osv):
+    _inherit = 'mrp.production.workcenter.line'
+
+    _columns={
+        'batch_number'   : fields.related('production_id','batch_number',type='char',readonly=True,store=True,string="Batch Number"),
+    }            

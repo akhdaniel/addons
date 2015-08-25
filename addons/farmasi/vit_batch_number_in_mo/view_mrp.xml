@@ -31,5 +31,29 @@
             </field>
         </record> 
 
+        <!--  WO List View -->
+        <record id="vit_mrp_production_workcenter_tree_view_inherit3" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="production_id" position="after">
+                    <field name="batch_number"/>
+                </field>
+            </field>
+        </record>  
+
+        <!--  WO List filter -->
+        <record id="vit_view_mrp_production_workcenter_form_view_filter" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Production" position="after">
+                    <filter string="Batch Number" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'batch_number'}"/>
+                </filter>
+            </field>
+        </record> 
+
 </data>
 </openerp>        
