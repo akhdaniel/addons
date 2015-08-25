@@ -8,8 +8,9 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.profile">
+                <sheet>
                 <group>
-                    <field name="name" select="1"/>
+                    <field name="profile_id" select="1"/>
                     <field name="reference_id" select="2"/>
                     <field name="external_profile_id" select="0"/>
                     <field name="corporate" select="0"/>
@@ -19,76 +20,121 @@
                     <field name="salutation_id" select="0"/>
                     <field name="initial" select="0"/>
                     <field name="branch" select="0"/>
-                    <field name="profile_type" select="0"/>
-                    <field name="line_of_business_id" select="0"/>
-                    <field name="referral" select="0"/>
-                    <field name="pic_name" select="0"/>
-                    <field name="pic_title" select="0"/>
-                    <separator string="PIC Address" colspan="4"/>
-                    <field name="pic_address" colspan="4" nolabel="1" select="0"/>
-                    <field name="pic_phone" select="0"/>
-                    <field name="company_group_id" select="0"/>
-                    <field name="sub_company_category_id" select="0"/>
-                    <field name="company_type" select="0"/>
-                    <field name="company_rating" select="0"/>
-                    <field name="company_siup" select="0"/>
-                    <field name="company_tdp" select="0"/>
-                    <field name="biz_license_no" select="0"/>
-                    <field name="biz_license_date" select="0"/>
-                    <field name="bod_name_1" select="0"/>
-                    <field name="bod_function_1" select="0"/>
-                    <field name="bod_name_2" select="0"/>
-                    <field name="bod_function_2" select="0"/>
-                    <field name="bod_name_3" select="0"/>
-                    <field name="bod_function_3" select="0"/>
-                    <field name="share_holder_name_1" select="0"/>
-                    <field name="share_holder_name_2" select="0"/>
-                    <field name="share_holder_name_3" select="0"/>
-                    <field name="gender" select="0"/>
-                    <field name="birthplace" select="0"/>
-                    <field name="marital_status" select="0"/>
-                    <field name="religion_id" select="0"/>
-                    <field name="idcard_type" select="0"/>
-                    <field name="personal_id_no" select="0"/>
-                    <field name="personal_id_name" select="0"/>
-                    <field name="personal_id_date" select="0"/>
-                    <field name="nickname" select="0"/>
-                    <field name="citizenship" select="0"/>
-                    <field name="employment_id" select="0"/>
-                    <field name="annual_income_id" select="0"/>
-                    <field name="other_source_income" select="0"/>
-                    <field name="company_working_name" select="0"/>
-                    <separator string="Company Working Address" colspan="4"/>
-                    <field name="company_working_address" colspan="4" nolabel="1" select="0"/>
-                    <field name="company_working_phone" select="0"/>
-                    <field name="vat" select="0"/>
-                    <field name="tax" select="0"/>
-                    <field name="taxation_id" select="0"/>
-                    <field name="taxation_name" select="0"/>
-                    <separator string="Taxation Address" colspan="4"/>
-                    <field name="taxation_address" colspan="4" nolabel="1" select="0"/>
-                    <field name="restrict_this_profile" select="0"/>
-                    <separator string="Restrict Remarks" colspan="4"/>
-                    <field name="restrict_remarks" colspan="4" nolabel="1" select="0"/>
-                    <field name="reflag_this_profile" select="0"/>
-                    <field name="reflag_date" select="0"/>
-                    <field name="user_id" select="0"/>
-                    <separator string="Reflag Remarks" colspan="4"/>
-                    <field name="reflag_remarks" colspan="4" nolabel="1" select="0"/>
-                    <field name="agent_license_no" select="0"/>
-                    <field name="default_wpc" select="0"/>
-                    <field name="default_grace_period" select="0"/>
-                    <field name="default_discount" select="0"/>
-                    <field name="default_comission" select="0"/>
-                    <field name="net_comission" select="0"/>
-                    <field name="max_out_go" select="0"/>
-                    <field name="purpose_of_insurance" select="0"/>                    
+                    <field name="name" select="1" required="True"/>
+                    <field name="street" select="1" required="True"/>
+                    <field name="city" select="1" required="True"/>
+                    <field name="zip" select="1" required="True"/>
+                    <field name="province_id" select="1" required="True"/>
+                    <!-- <field name="area_id" select="1" required="True"/> -->
+                    <field name="country_id" select="1" required="True"/>
+                    <field name="phone" select="1" required="True"/>
+                    <field name="mobile" select="1"/>
+                    <field name="fax" select="1"/>
+                    <field name="email" select="1" required="True"/>
+                    <field name="profile_type" select="0" required="True"/>
+                    <field name="line_of_business_id" select="0" required="True"/>
+                    <field name="referral" select="0" required="True"/>
                 </group>
+                    
                 <notebook>
+                    <page string="Company Info">
+                        <group>
+                            <group>
+                                <field name="pic_name" select="0"/>
+                                <field name="pic_title" select="0"/>
+                                <separator string="PIC Address" colspan="4"/>
+                                <field name="pic_address" colspan="4" nolabel="1" select="0"/>
+                                <field name="pic_phone" select="0"/>
+                                <field name="company_group_id" select="0"/>
+                                <field name="sub_company_category_id" select="0"/>
+                                <field name="company_type" select="0"/>
+                                <field name="company_rating" select="0"/>
+                                <field name="company_siup" select="0"/>
+                                <field name="company_tdp" select="0"/>
+                            </group>
+                            <group>
+                                <field name="biz_license_no" select="0"/>
+                                <field name="biz_license_date" select="0"/>
+                                <field name="bod_name_1" select="0"/>
+                                <field name="bod_function_1" select="0"/>
+                                <field name="bod_name_2" select="0"/>
+                                <field name="bod_function_2" select="0"/>
+                                <field name="bod_name_3" select="0"/>
+                                <field name="bod_function_3" select="0"/>
+                                <field name="share_holder_name_1" select="0"/>
+                                <field name="share_holder_name_2" select="0"/>
+                                <field name="share_holder_name_3" select="0"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Personal Info">
+                        <group>
+                            <group>
+                                <field name="gender" select="0"/>
+                                <field name="birthplace" select="0"/>
+                                <field name="marital_status" select="0"/>
+                                <field name="religion_id" select="0"/>
+                                <field name="idcard_type" select="0"/>
+                                <field name="personal_id_no" select="0"/>
+                                <field name="personal_id_name" select="0"/>
+                                <field name="personal_id_date" select="0"/>
+                                <field name="nickname" select="0"/>
+                            </group>
+                            <group>
+                                <field name="citizenship" select="0"/>
+                                <field name="employment_id" select="0"/>
+                                <field name="annual_income_id" select="0"/>
+                                <field name="other_source_income" select="0"/>
+                                <field name="company_working_name" select="0"/>
+                                <separator string="Company Working Address" colspan="4"/>
+                                <field name="company_working_address" colspan="4" nolabel="1" select="0"/>
+                                <field name="company_working_phone" select="0"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Taxation">
+                        <group>
+                            <field name="vat" select="0"/>
+                            <field name="tax" select="0"/>
+                            <field name="taxation_id" select="0"/>
+                            <field name="taxation_name" select="0"/>
+                            <separator string="Taxation Address" colspan="4"/>
+                            <field name="taxation_address" colspan="4" nolabel="1" select="0"/>
+                        </group>
+                    </page>
+
                     <page string="Alias">
                         <field name="alias_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
+
+                    <page strng="Restriction &amp; Redflag">
+                        <field name="restrict_this_profile" select="0"/>
+                        <separator string="Restrict Remarks" colspan="4"/>
+                        <field name="restrict_remarks" colspan="4" nolabel="1" select="0"/>
+                        <field name="reflag_this_profile" select="0"/>
+                        <field name="reflag_date" select="0"/>
+                        <field name="user_id" select="0"/>
+                        <separator string="Reflag Remarks" colspan="4"/>
+                        <field name="reflag_remarks" colspan="4" nolabel="1" select="0"/>
+                    </page>
+
+                    <page string="Business Related">
+                        <field name="agent_license_no" select="0"/>
+                        <field name="default_wpc" select="0"/>
+                        <field name="default_grace_period" select="0"/>
+                        <field name="default_discount" select="0"/>
+                        <field name="default_comission" select="0"/>
+                        <field name="net_comission" select="0"/>
+                        <field name="max_out_go" select="0"/>
+                    </page>
+
+                    <page string="Others">
+                        <field name="purpose_of_insurance" select="0"/>
+                    </page>
                 </notebook>
+                </sheet>
             </form>
         </field>
     </record>

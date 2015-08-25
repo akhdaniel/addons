@@ -13,7 +13,11 @@
                     <field name="partner" select="2"/>
                     <field name="non_partner" select="0"/>
                     <field name="profile_id" select="0"/>
-                    <field name="provider_type_id" select="0"/>
+                    <label string="Provider Type" />
+                    <div>
+                        <field name="provider_type_id" select="0" class="oe_inline" on_change="onchange_prov_type(provider_type_id)"/>
+                        <field name="provider_type_desc" select="0" readonly="True" class="oe_inline"/>
+                    </div>
                     <field name="provider_level_id" select="0"/>
                     <field name="claim_pic_id" select="0"/>
                     <field name="corporate_type" select="0"/>
@@ -87,12 +91,12 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.provider">
-                <field name="ext_id"/>
+                <field name="profile_id_text"/>
                 <field name="profile_name"/>
                 <field name="profile_address"/>
-                <field name="profile_phone"/>
-                <field name="profile_fax"/>
-                <!--<field name="partner"/>
+                <field name="expiry_date"/>
+                <!--<field name="profile_fax"/>
+                <field name="partner"/>
                 <field name="non_partner"/>
                 <field name="profile_id"/>
                 <field name="provider_type_id"/>

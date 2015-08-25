@@ -39,18 +39,21 @@ class netpro_claim(osv.osv):
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False
         provider_val = False
+        excess_val = False
+
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
-            pass
-        # if cur_user.provider_id:
-        #     provider_val = cur_user.provider_id.id
-        #     pass
+
+        if vals.member_id:
+            excess_val = member_id.policy_id.policy_holder_id.id
+
         vals.update({
             'claim_no'  : nomor,
             'tpa_id':tpa_val,
             'provider_id':provider_val,
             'transaction_history_created_by_id' : uid,
             'transaction_history_created_date' : time.strftime("%Y-%m-%d %H:%M:%S"),
+            'excess_id' : excess_val,
             # 'state'     : claim_status_draft,
         })
         new_id = super(netpro_claim, self).create(cr, uid, vals, context=context)
@@ -165,8 +168,8 @@ class netpro_claim(osv.osv):
 
 
     _defaults = {
-        'claim_date'        : lambda *a : time.strftime("%Y-%m-%d") ,
-        'state'             : CLAIM_STATES[0][0]
+        'claim_date'        : lambda *a : time.strftime("%Y-%m-%d"),
+        'state'             : CLAIM_STATES[0][0],
     }
 
     def write(self,cr,uid,ids,vals,context=None):
