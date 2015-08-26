@@ -23,7 +23,7 @@
                 <tr>
                     <td><t t-esc="claim.claim_no"/></td>
                     <td><t t-esc="claim.claim_date"/></td>
-                    <!-- <td><t t-esc="claim.member_plan_id.plan_schedule_id.product_plan_base_id.name"/></td> -->
+                    <!-- <td><t t-esc="claim.member_plan_id.plan_schedule_id.product_plan_id.product_plan_base_id.name"/></td> -->
                     <td><span t-field="claim.member_plan_id.plan_schedule_id"/></td>
                     <td><t t-esc="claim.diagnosis_id.name"/></td>
                     <td><t t-esc="claim.summary_billed"/></td>

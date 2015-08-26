@@ -15,7 +15,7 @@
                 <t t-set="member" t-value="member"/>
             </t>    
 
-        	<h3>Benefit <t t-esc="member_plan.plan_schedule_id.product_plan_base_id.name"/> - <t t-esc="member_plan.plan_schedule_id.product_plan_base_id.pplan"/> </h3>
+        	<h3>Benefit <t t-esc="member_plan.plan_schedule_id.product_plan_id.product_plan_base_id.name"/> - <t t-esc="member_plan.plan_schedule_id.product_plan_id.product_plan_base_id.pplan"/> </h3>
 
             <form t-attf-action="/claim/registration_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
@@ -65,7 +65,7 @@
                     <!-- /claim/loa/<member>/<product_type> -->
                     <a t-attf-href="/claim/loa/{{ slug(member) }}/{{ slug(plan) }}">
 	                    <button class="btn btn-primary">
-	                    	<t t-esc="plan.plan_schedule_id.product_plan_base_id.pplan" />
+	                    	<t t-esc="plan.plan_schedule_id.product_plan_id.product_plan_base_id.pplan" />
 	                    </button>
                     </a>
                 </t>
