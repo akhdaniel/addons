@@ -37,13 +37,13 @@ class netpro_member(osv.osv):
             relation='res.partner', type='many2one', store=True, string='Policy Holder', readonly=True),
         'insurance_period_start': fields.date('Insurance Period Start', required=True),
         'insurance_period_end': fields.date('Insurance Period End', required=True),
-        'member_no': fields.char('Member No.', required=True),
+        'member_no': fields.char('Member No.',help="Kosongkan untuk diisi oleh sistem"),
         'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
         'census_no': fields.integer('Census No.'),
         'gender_id': fields.many2one('netpro.gender', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
         'mobile_phone': fields.char('Mobile Phone'),
-        'date_of_birth': fields.date('Date of Birth'),
+        'date_of_birth': fields.date('DoB'),
         'age': fields.integer('Age'),
         'birth_place': fields.char('Birth Place'),
         'salary': fields.float('Salary'),
@@ -96,15 +96,15 @@ class netpro_member(osv.osv):
         'status'                    : 'draft',
         'insurance_period_start'    : lambda *a : time.strftime("%Y-%m-%d"),
         'insurance_period_end'      : lambda *a : time.strftime("%Y-%m-%d"),
-        'member_no'                 : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'member_seq') or '/',
+        'created_by_id' : lambda obj, cr, uid, context: uid,
     }
 
     def create(self, cr, uid, vals, context=None):
-        vals.update({
-            'created_by_id' : uid,
-        })
-        new_id = super(netpro_member, self).create(cr, uid, vals, context=context)
-        return new_id
+        if not vals['member_no']:
+            vals.update({
+                'member_no' : self.pool.get('ir.sequence').get(cr, uid, 'member_seq') or '/',
+            })
+        return super(netpro_member, self).create(cr, uid, vals, context=context)
 
     def action_confirm(self,cr,uid,ids,context=None):
         # create schedule plan
@@ -250,3 +250,11 @@ class netpro_policy(osv.osv):
         'member_ids' : fields.one2many('netpro.member','policy_id','Member', ondelete="cascade")
     }
 netpro_policy()
+
+class netpro_area(osv.osv):
+    _name = 'netpro.area'
+    _columns={
+    'name':fields.char("Name"),
+    'code':fields.char("Code"),
+    }
+netpro_area()
