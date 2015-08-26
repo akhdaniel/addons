@@ -43,9 +43,9 @@
                 <field name="notes"/>
                     <group>
                         <field name="po_asal_id" readonly="1" attrs="{'invisible':[('po_asal_id','=',False)]}" />              
-                        <field name="reason" readonly="1" attrs="{'invisible':[('reason','=',False)]}"/>
                         <field name="user_revision_id" attrs="{'invisible':[('user_revision_id','=',False)]}"/>
                     </group>  
+                    <field name="reason" readonly="1" attrs="{'invisible':[('reason','=',False)]}" nolabel="1"/>
                 <field name="notes2" placeholder="Terms and conditions..."/>
             </field>    
         </field>
