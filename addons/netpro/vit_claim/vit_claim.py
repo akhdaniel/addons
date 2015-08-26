@@ -43,9 +43,8 @@ class netpro_claim(osv.osv):
 
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
-
-        if vals.member_id:
-            excess_val = member_id.policy_id.policy_holder_id.id
+        if vals['member_id']:
+            excess_val = self.pool.get('netpro.member').browse(cr,uid,vals['member_id'],).policy_id.policy_holder_id.id
 
         vals.update({
             'claim_no'  : nomor,
