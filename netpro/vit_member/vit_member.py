@@ -39,7 +39,7 @@ class netpro_member(osv.osv):
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.',help="Kosongkan untuk diisi oleh sistem"),
         'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
-        'census_no': fields.integer('Census No.'),
+        'census_no': fields.selection([('0','0 = Employee'),('1','1 = Spouse'),('2','2 = 1st Child')],'Census No.'),
         'gender_id': fields.many2one('netpro.gender', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
         'mobile_phone': fields.char('Mobile Phone'),
