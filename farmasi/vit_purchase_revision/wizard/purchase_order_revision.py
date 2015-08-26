@@ -42,9 +42,9 @@ class purchase_order_revision(osv.osv_memory):
             po_obj.write(cr,uid,po_revision,{'notes':'Revisi ke - '+str(total_po_exist),
                                             'name':po_name,
                                             'user_revision_id':uid,
-                                            'reason':data.name,
+                                            'reason':'Alasan Revisi : '+data.name,
                                             'po_asal_id':context['active_id']},context=context)
-            po_obj.write(cr,uid,context['active_id'],{'po_revisi_id':po_revision},context=context)    
+            po_obj.write(cr,uid,context['active_id'],{'po_revisi_id':po_revision,'reason':'Alasan Cancel : '+data.name,},context=context)    
 
         view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'purchase', 'purchase_order_form')
         view_id = view_ref and view_ref[1] or False,    
