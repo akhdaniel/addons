@@ -1,0 +1,28 @@
+<openerp>
+<data>      
+
+        <record id="vit_view_location_bb_karantina_form" model="ir.ui.view">
+            <field name="name">stock.location</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <field name="scrap_location" position="after">
+                    <field name="is_gudang_bahan_baku"/>
+                    <field name="is_gudang_karantina"/>
+                </field>     
+            </field>
+        </record> 
+
+<!--         <record id="vit_stock_view_production_lot_form" model="ir.ui.view">
+            <field name="name">stock.production.lot</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <button name="cron_product_retest" string="Exec" type="object"/>
+                </field>     
+            </field>
+        </record>  -->
+
+</data>
+</openerp>        
