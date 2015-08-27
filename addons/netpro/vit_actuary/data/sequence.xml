@@ -1,0 +1,18 @@
+<openerp>
+	<data>
+		<record model="ir.sequence.type" id="profile_seq_code">
+			<field name="name">Profile Sequence</field>
+			<field name="code">profile_seq</field>
+		</record>
+
+		<record model="ir.sequence" id="profile_seq">
+			<field name="name">Profile Sequence</field>
+			<field name="code">profile_seq</field>
+			<field name="padding">5</field>
+			<field name="number_next_actual">5</field>
+			<field name="number_increment">1</field>
+			<field name="implementation">standard</field>
+			<field name="prefix">%(year)s/%(month)s/</field>
+		</record>
+	</data>
+</openerp>
