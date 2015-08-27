@@ -6,8 +6,8 @@
 		    <field name="inherit_id" ref="base.view_users_form"/>
 		    <field name="arch" type="xml">
 		        <field name="active" position="after">
-		        	<field name="tpa_id" />
-		        	<!-- <field name="provider_id" /> -->
+		        	<field name="tpa_id" on_change="onchange_tpa(tpa_id,provider_id)"/>
+		        	<field name="provider_id" on_change="onchange_pro(tpa_id,provider_id)"/>
 		        </field>
 		    </field>
 		</record>
