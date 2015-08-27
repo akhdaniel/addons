@@ -78,6 +78,7 @@
                 'data/netpro.benefit_unit.csv',
                 'data/netpro.region.csv',
                 'data/res.country.state.csv',
+                'data/sequence.xml',
 
                 'menu.xml',
                 # 'data/sequence.xml',

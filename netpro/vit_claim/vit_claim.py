@@ -114,7 +114,7 @@ class netpro_claim(osv.osv):
         'acceptation_status': fields.char('Acceptation Status'),
         'cno': fields.integer('CNO'),
         'pcno': fields.integer('PCNO'),
-        'batch_id': fields.integer('Batch ID'),
+        'batch_id': fields.many2one('netpro.batch', 'Batch ID'),
         'glid': fields.integer('GL ID'),
         'prorate': fields.float('Prorate'),
         'payment_status_request_date': fields.date('Request Date'),
@@ -224,6 +224,58 @@ class netpro_claim(osv.osv):
         
 
 netpro_claim()
+
+class netpro_batch(osv.osv):
+    _name = 'netpro.batch'
+    _rec_name = 'batch_id'
+
+    def create(self, cr, uid, vals, context=None):
+        nomor = self.pool.get('ir.sequence').get(cr, uid, 'batch_seq') or '/'
+        # cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
+        # tpa_val = False
+        # provider_val = False
+        # excess_val = False
+
+        # if cur_user.tpa_id:
+        #     tpa_val = cur_user.tpa_id.id
+
+        # if vals.member_id:
+        #     excess_val = member_id.policy_id.policy_holder_id.id
+
+        vals.update({
+            'batch_id' : nomor,
+            'created_by_id' : uid,
+            # 'tpa_id':tpa_val,
+            # 'provider_id':provider_val,
+            # 'transaction_history_created_by_id' : uid,
+            # 'transaction_history_created_date' : time.strftime("%Y-%m-%d %H:%M:%S"),
+            # 'excess_id' : excess_val,
+            # 'state'     : claim_status_draft,
+        })
+        new_id = super(netpro_batch, self).create(cr, uid, vals, context=context)
+        return new_id
+
+    _columns = {
+        'batch_id' : fields.char('Batch ID'),
+        'received_date' : fields.date('Received Date'),
+        'provider' : fields.boolean('Provider'),
+        'reimbursement' : fields.boolean('Reimbursement'),
+        'provider_id' : fields.many2one('netpro.provider', 'Provider'),
+        'branch_id' : fields.many2one('netpro.branch', 'Branch'),
+        'reference_no' : fields.char('Reference No.'),
+        'document' : fields.float('#Document'),
+        'claim_amount' : fields.float('Claim Amount'),
+        'provider_discount' : fields.float('Provider Discount'),
+        'provider_remarks' : fields.text('Provider Remarks'),
+        'remarks' : fields.text('Remarks'),
+        'bill_date' : fields.date('Bill Date'),
+        'payment_due' : fields.date('Payment Due'),
+        'received_fr_tpa' : fields.date('Received Fr TPA'),
+        'created_by_id' : fields.many2one('res.users', 'Created By'),
+        'last_edited_by_id' : fields.many2one('res.users', 'Last Edited By'),
+    }
+netpro_batch()
+
 
 class netpro_claim_detail(osv.osv):
     _name = 'netpro.claim_detail'

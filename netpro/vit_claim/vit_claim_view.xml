@@ -127,7 +127,7 @@
                         </group>
                         <group string="Excess Recovery">
                             <field name="excess_payor_id" />
-                            <field name="excess_id" />
+                            <field name="excess_id" readonly="True"/>
                             <field name="excess_tpa_id" />
                         </group>
                         <group string="Refund Account">
@@ -280,100 +280,6 @@
                 <field name="summary_billed"/>
                 <field name="summary_accepted"/>
                 <field name="state"/>
-                <!--
-                <field name="claim_no_revision"/>
-                <field name="ext_claim_no"/>
-                <field name="claim_received_date"/>
-                <field name="claim_loss_date_start"/>
-                <field name="claim_loss_date_end"/>
-                <field name="claim_category_id"/>
-                <field name="member_plan_id"/>
-                <field name="diagnosis_id"/>
-                <field name="2nd_diagnosis"/>
-                <field name="3rd_diagnosis"/>
-                <field name="claim_id"/>
-                <field name="branch_id"/>
-                <field name="currency_id"/>
-                <field name="claim_rate"/>
-                <field name="policy_rate"/>
-                <field name="reimbursement"/>
-                <field name="claim_room_id"/>
-                <field name="exgratia_claim"/>
-                <field name="non_jabodetabek"/>
-                <field name="disable_prorate"/>
-                <field name="country_id"/>
-                <field name="remarks"/>
-                <field name="reason_id"/>
-                <field name="other_reason"/>
-                <field name="sys_remarks"/>
-                <field name="discount"/>
-                <field name="aso_charge"/>
-                <field name="reference_no"/>
-                <field name="ref_tpa_payment"/>
-                <field name="ref_excess"/>
-                <field name="pay_to"/>
-                <field name="payment_id"/>
-                <field name="account_no"/>
-                <field name="account_name"/>
-                <field name="bank_id"/>
-                <field name="bank_name"/>
-                <field name="bank_branch"/>
-                <field name="excess_payor_id"/>
-                <field name="excess_id"/>
-                <field name="excess_tpa_id"/>
-                <field name="refund_account_no"/>
-                <field name="refund_account_name"/>
-                <field name="refund_bank_name"/>
-                <field name="edc_trc_authorization"/>
-                <field name="edc_trc_claim_payable"/>
-                <field name="acceptation_status"/>
-                <field name="cno"/>
-                <field name="pcno"/>
-                <field name="glid"/>
-                <field name="prorate"/>
-                <field name="payment_status_request_date"/>
-                <field name="payment_status_payment_date"/>
-                <field name="payment_status_excess_payment_date"/>
-                <field name="transaction_history_created_by_id"/>
-                <field name="transaction_history_created_date"/>
-                <field name="transaction_history_last_edited_by_id"/>
-                <field name="transaction_history_last_edited_date"/>
-                <field name="transaction_history_adjusted_by_id"/>
-                <field name="transaction_history_adjusted_date"/>
-                <field name="transaction_history_checked_by_id"/>
-                <field name="transaction_history_checked_date"/>
-                <field name="transaction_history_released_by_id"/>
-                <field name="transaction_history_released_date"/>
-                <field name="doctor"/>
-                <field name="symptoms"/>
-                <field name="disease_history"/>
-                <field name="phys_examination"/>
-                <field name="consultation"/>
-                <field name="treatment_id"/>
-                <field name="treatment_remarks"/>
-                <field name="treatment_place"/>
-                <field name="place_id"/>
-                <field name="summary_billed"/>
-                <field name="sumary_unpaid"/>
-                <field name="summary_discount"/>
-                <field name="summary_cash_member"/>
-                <field name="summary_total_paid"/>
-                <field name="summary_accepted"/>
-                <field name="summary_client_accepted"/>
-                <field name="sumary_total_excess"/>
-                <field name="summary_cash_member_accepted"/>
-                <field name="summary_excess"/>
-                <field name="summary_verified"/>
-                <field name="summary_adjustment"/>
-                <field name="summary_overall_limit"/>
-                <field name="summary_usage"/>
-                <field name="summary_balance"/>
-                <field name="summary_family_limit"/>
-                <field name="summary_family_usage"/>
-                <field name="summary_family_balance"/>
-                <field name="summary_claim_count"/>
-                -->
-
             </tree>
         </field>
     </record>
@@ -394,7 +300,6 @@
                 <group colspan="2">
                     <group string="Loss Item">
                         <field name="cno" select="1"/>
-                        <!-- <field name="claim_id" select="2"/> -->
                         <field name="benefit_id" />
                         <field name="treatment_date_start" />
                         <field name="treatment_date_end" />
@@ -490,47 +395,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Detail" id="menu_netpro_claim_detail" action="action_netpro_claim_detail"/> -->
-
-    <!-- pindah ke vit_actuary
-    <record model="ir.ui.view" id="view_netpro_diagnosis_form">
-        <field name="name">netpro.diagnosis.form</field>
-        <field name="model">netpro.diagnosis</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="netpro.diagnosis">
-                <group>
-                    <field name="diagnosis" select="1"/>
-                    <field name="name" select="2"/>
-                    <field name="exclusion_F" />
-                    <field name="pre_existing_f" />
-                    <field name="standard_fee" />
-                </group>
-            </form>
-        </field>
-    </record>
-    <record model="ir.ui.view" id="view_netpro_diagnosis_tree">
-        <field name="name">netpro.diagnosis.tree</field>
-        <field name="model">netpro.diagnosis</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="netpro.diagnosis">
-                <field name="diagnosis"/>
-                <field name="name"/>
-                <field name="exclusion_F"/>
-                <field name="pre_existing_f"/>
-                <field name="standard_fee"/>
-
-            </tree>
-        </field>
-    </record>
-    <record model="ir.actions.act_window" id="action_netpro_diagnosis">
-        <field name="name">Diagnosis</field>
-        <field name="res_model">netpro.diagnosis</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-    </record> -->
-    <!-- <menuitem name="Diagnosis" id="menu_netpro_diagnosis" action="action_netpro_diagnosis"/> -->
 
     <record model="ir.ui.view" id="view_netpro_claim_category_form">
         <field name="name">netpro.claim_category.form</field>
@@ -564,8 +428,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- <menuitem name="Claim Category" id="menu_netpro_claim_category" action="action_netpro_claim_category"/>-->
        
     <record model="ir.ui.view" id="view_netpro_claim_type_form">
         <field name="name">netpro.claim_type.form</field>
@@ -599,8 +461,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- <menuitem name="Claim Type" id="menu_netpro_claim_type" action="action_netpro_claim_type"/> -->
         
     <record model="ir.ui.view" id="view_netpro_claim_room_form">
         <field name="name">netpro.claim_room.form</field>
@@ -634,8 +494,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- <menuitem name="Claim Room" id="menu_netpro_claim_room" action="action_netpro_claim_room"/> -->
         
     <record model="ir.ui.view" id="view_netpro_excess_payor_form">
         <field name="name">netpro.excess_payor.form</field>
@@ -669,8 +527,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- <menuitem name="Excess Payor" id="menu_netpro_excess_payor" action="action_netpro_excess_payor"/> -->
         
     <record model="ir.ui.view" id="view_netpro_treatment_form">
         <field name="name">netpro.treatment.form</field>
@@ -708,8 +564,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <!-- <menuitem name="Treatment" id="menu_netpro_treatment" action="action_netpro_treatment"/> -->
         
     <record model="ir.ui.view" id="view_netpro_treatment_category_form">
         <field name="name">netpro.treatment_category.form</field>
@@ -744,56 +598,6 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <!-- <menuitem name="Treatment Category" id="menu_netpro_treatment_category" action="action_netpro_treatment_category"/> -->
-    
-    <!-- 
-    ke vit_actuary
-            
-    <record model="ir.ui.view" id="view_netpro_benefit_form">
-        <field name="name">netpro.benefit.form</field>
-        <field name="model">netpro.benefit</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="netpro.benefit">
-                <group>
-                    <field name="benefit_id" select="1"/>
-                    <field name="name" select="2"/>
-                    <field name="reim" />
-                    <field name="provider_limit" />
-                    <field name="non_provider_limit" />
-                    <field name="unit" />
-                    <field name="usage" />
-                    <field name="remaining" />
-                </group>
-            </form>
-        </field>
-    </record>
-    <record model="ir.ui.view" id="view_netpro_benefit_tree">
-        <field name="name">netpro.benefit.tree</field>
-        <field name="model">netpro.benefit</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="netpro.benefit">
-                <field name="benefit_id"/>
-                <field name="name"/>
-                <field name="reim"/>
-                <field name="provider_limit"/>
-                <field name="non_provider_limit"/>
-                <field name="unit"/>
-                <field name="usage"/>
-                <field name="remaining"/>
-
-            </tree>
-        </field>
-    </record>
-    <record model="ir.actions.act_window" id="action_netpro_benefit">
-        <field name="name">Benefit</field>
-        <field name="res_model">netpro.benefit</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-    </record> -->
-    <!-- <menuitem name="Benefit" id="menu_netpro_benefit" action="action_netpro_benefit"/> -->
-        
     <record model="ir.ui.view" id="view_netpro_claim_detail_status_form">
         <field name="name">netpro.claim_detail_status.form</field>
         <field name="model">netpro.claim_detail_status</field>
@@ -826,7 +630,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Detail Status" id="menu_netpro_claim_detail_status" action="action_netpro_claim_detail_status"/> -->
         
     <record model="ir.ui.view" id="view_netpro_claim_diagnosis_form">
         <field name="name">netpro.claim_diagnosis.form</field>
@@ -835,7 +638,6 @@
         <field name="arch" type="xml">
             <form string="netpro.claim_diagnosis">
                 <group>
-                    <!-- <field name="claim_id" select="1"/> -->
                     <field name="diagnosis" select="2"/>
                     <field name="diagnosis_name" />
                     <field name="remarks" />
@@ -865,8 +667,6 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <!-- <menuitem name="Claim Diagnosis" id="menu_netpro_claim_diagnosis" action="action_netpro_claim_diagnosis"/> -->
-
 
     <record id="view_member_form_claim" model="ir.ui.view">
         <field name="name">netpro_member_form_claim</field>
@@ -880,7 +680,6 @@
             </notebook>
         </field>
     </record>
-
 
     <record model="ir.ui.view" id="view_netpro_claim_status_form">
         <field name="name">netpro.claim_status.form</field>
@@ -913,7 +712,64 @@
         <field name="res_model">netpro.claim_status</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>    
+    </record>
+
+
+
+    <record model="ir.ui.view" id="view_netpro_batch_form">
+        <field name="name">netpro.batch.form</field>
+        <field name="model">netpro.batch</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.batch">
+                <group>
+                    <group>
+                        <separator string="Batch Information" colspan="2"/>
+                        <field name="batch_id" readonly="True" />
+                        <field name="received_date" />
+                        <field name="provider" />
+                        <field name="reimbursement" />
+                        <field name="provider_id" />
+                        <field name="branch_id" />
+                        <field name="reference_no" />
+                        <field name="document" />
+                        <field name="claim_amount" />
+                        <field name="provider_discount" />
+                        <field name="provider_remarks" />
+                        <field name="remarks" />
+                    </group>
+                    <group>
+                        <separator string="Billing Date" colspan="2"/>
+                        <field name="bill_date" />
+                        <field name="payment_due" />
+                        <field name="received_fr_tpa" />
+
+                        <separator string="Transaction History" colspan="2"/>
+                        <field name="created_by_id" />
+                        <field name="last_edited_by_id" />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_batch_tree">
+        <field name="name">netpro.batch.tree</field>
+        <field name="model">netpro.batch</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.batch">
+                <field name="batch_id" />
+                <field name="received_date" />
+                <field name="provider" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_batch">
+        <field name="name">Batch</field>
+        <field name="res_model">netpro.batch</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
 </data>
 </openerp>

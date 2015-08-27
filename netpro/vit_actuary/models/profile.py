@@ -23,6 +23,22 @@ from openerp.osv import fields,osv
 class netpro_profile(osv.osv):
     _name = 'netpro.profile'
     _inherits = {'res.partner': 'partner_id'}
+
+    def create(self, cr, uid, vals, context=None):
+        nomor = self.pool.get('ir.sequence').get(cr, uid, 'profile_seq') or '/'
+        # cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
+        # tpa_val = False
+        # if cur_user.tpa_id:
+        #     tpa_val = cur_user.tpa_id.id
+        vals.update({
+            'profile_id':nomor,
+            'created_by_id':uid,
+            # 'tpa_id':tpa_val,
+            # 'created_by_date':time.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+        new_id = super(netpro_profile, self).create(cr, uid, vals, context=context)
+        return new_id
+
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner', 
             required=True, select=True, ondelete='cascade'),
