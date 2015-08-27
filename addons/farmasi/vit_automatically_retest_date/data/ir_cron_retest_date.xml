@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model="ir.cron" id="retest_date_cron">
+            <field name="name">Retest Date</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'stock.production.lot'"/>
+            <field name="function" eval="'cron_product_retest'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</openerp>
