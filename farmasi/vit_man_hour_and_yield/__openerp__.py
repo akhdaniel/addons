@@ -10,7 +10,7 @@
 *Tambah informasi yield di work center
 """,
     'version': '0.1',
-    'depends': ['base','mrp','mrp','mrp_operations'],
+    'depends': ['base','mrp','mrp','mrp_operations','vit_pharmacy_machine_hour'],
     'author': 'vitraining.com',
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',

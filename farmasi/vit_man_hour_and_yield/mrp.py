@@ -124,8 +124,14 @@ class mrp_production(osv.osv):
             for line in results2:
                 # overwrite fungsi utk generate WO
                 if 'workcenter_id' in line:
-                    wc_obj = self.pool.get('mrp.workcenter')
-                    man_hour = wc_obj.browse(cr,uid,line['workcenter_id']).man_hour
+                    # wc_obj = self.pool.get('mrp.workcenter')
+                    # man_hour = wc_obj.browse(cr,uid,line['workcenter_id']).man_hour
+                    if production.bom_id.workcenter_lines:
+                        man_hour = 0
+                        for man in production.bom_id.workcenter_lines:
+                            if man.workcenter_operation_id.workcenter_id.id == line ['workcenter_id']:
+                                man_hour = man.man_hour
+                                break
                     line['man_hour'] = man_hour
                 line['production_id'] = production.id
                 workcenter_line_obj.create(cr, uid, line, context)
