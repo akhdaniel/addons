@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-     <!--    <record id="release_action" model="ir.actions.act_window">
-            <field name="name">Release</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">stock.picking</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="context">{}</field>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    
-                </p>
-            </field>
-        </record>
- -->
-       
-
         <record id="view_picking_internal_search" model="ir.ui.view">
             <field name="name">stock.picking.internal.search</field>
             <field name="model">stock.picking</field>
@@ -75,7 +59,7 @@
         </record>
 
 
-        <menuitem  id="menu_release_root" name="Release" />
+        <menuitem  id="menu_release_root" name="Release" groups="stock.group_stock_manager" />
         <menuitem  id="menu_release"  parent="menu_release_root" name="Release QA/QC"/>
         <menuitem  action="action_qa" id="menu1" parent="menu_release" sequence="10" />    
         <menuitem  action="action_qc" id="menu2" parent="menu_release" sequence="20" />    
