@@ -384,7 +384,7 @@ class mrp_routing_workcenter(osv.osv):
     _inherit = 'mrp.routing.workcenter'
 
     _columns={
-        'limit_batch_number_cancel': fields.boolean('limit Batch Number Cancel', 
+        'limit_batch_number_cancel': fields.boolean('Limit Batch Number Cancel', 
             help="Centang, jika WO ini sudah di start maka menjadi batasan batch number untuk tidak bisa di gunakan kembali"),
     }
 
