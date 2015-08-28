@@ -61,7 +61,7 @@ class netpro_member(osv.osv):
         'group_id': fields.char('Group ID'),
         'payor_id': fields.many2one('res.partner', 'Payor'),
         'premium_type_id': fields.many2one('netpro.premium_type', 'Premium Type'),
-        'area_id': fields.many2one('netpro.area', 'Area'),
+        'area_id': fields.many2one('res.country.state', 'Area'),
         'pre_existing_waived': fields.boolean('Pre Existing Waived'),
         'exclude_this_member': fields.boolean('Exclude this Member'),
         'dummy_member': fields.boolean('Dummy Member'),
@@ -88,7 +88,7 @@ class netpro_member(osv.osv):
         'member_plan_ids': fields.one2many('netpro.member_plan', 'member_id', 'Plans', ondelete='cascade'),
         'family_ids': fields.one2many('netpro.member', 'parent_id', 'Families', ondelete='cascade'),
         'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
-        'parent_id': fields.many2one('netpro.member', 'Family'),
+        'parent_id': fields.many2one('netpro.member', 'Parent'),
         'created_by_id': fields.many2one('res.users', 'Created By', readonly=True),
     }
 

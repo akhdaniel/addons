@@ -46,7 +46,7 @@
                     <page string="General Member Data">
                         <group>
                             <group>
-                                <field name="member_no" select="0"/>
+                                <field name="member_no" select="0" widget="statinfo"/>
                                 <field name="name" select="0"/>
                                 <field name="employee_id" select="0"/>
                                 <field name="parent_id" on_change="onchange_class(parent_id)"/>
