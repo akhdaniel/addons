@@ -36,6 +36,91 @@ from dateutil.relativedelta import relativedelta
 class mrp_production(osv.osv):
     _inherit = 'mrp.production'
 
+    ########################### pembuatan char batch number ##############################
+    def create_batch_number(self,cr,uid,production,context=None):
+        #Tahun
+        tahun_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[2]
+        tahun_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[3]
+        tahun_2_digit = tahun_digit1+tahun_digit2
+        #Sediaan
+        sediaan_code = '-'
+        if production.product_id.categ_id.sediaan_id:                   
+            sediaan_code =  production.product_id.categ_id.sediaan_id.code
+        #Bulan
+        bulan_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[5]
+        bulan_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[6]
+        bulan_2_digit = bulan_digit1+bulan_digit2  
+        if bulan_2_digit == '01':
+            bulan_huruf = 'A'              
+        elif bulan_2_digit == '02':
+            bulan_huruf = 'B'  
+        elif bulan_2_digit == '03':
+            bulan_huruf = 'C'  
+        elif bulan_2_digit == '04':
+            bulan_huruf = 'D'
+        elif bulan_2_digit == '05':
+            bulan_huruf = 'E'
+        elif bulan_2_digit == '06':
+            bulan_huruf = 'F'
+        elif bulan_2_digit == '07':
+            bulan_huruf = 'G'
+        elif bulan_2_digit == '08':
+            bulan_huruf = 'H'            
+        elif bulan_2_digit == '09':
+            bulan_huruf = 'J' # tanpa I
+        elif bulan_2_digit == '10':
+            bulan_huruf = 'K'  
+        elif bulan_2_digit == '11':
+            bulan_huruf = 'L'
+        elif bulan_2_digit == '12':
+            bulan_huruf = 'M'
+        
+        batch_rule = str(tahun_2_digit+sediaan_code+'%')
+
+        # SUBSTRING ( expression ,start , length )
+        cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
+                        "WHERE state NOT IN ('draft','cancel') " \
+                        "AND batch_number like %s ORDER BY Initial DESC" \
+                        , (batch_rule,))         
+        batch_ids      = cr.fetchall()
+        # jika belum punya batch number buat dari 001
+        new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
+        if batch_ids :
+            seq_batch = int(batch_ids[0][1])+1
+            
+            #mengakali angka 0 di depan angka positif
+            if len(str(seq_batch)) == 1:
+                new_seq_batch = '00'+ str(seq_batch)
+            elif len(str(seq_batch)) == 2 :
+                new_seq_batch = '0'+ str(seq_batch) 
+            else:
+                new_seq_batch = str(seq_batch)
+
+            new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+new_seq_batch) 
+
+            #jika ada batch yang di cancel cek dulu di MO yang state=cancel dan allow_batch = False
+            cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
+                            "WHERE state = 'cancel' AND allow_batch = False " \
+                            "AND batch_number like %s ORDER BY Initial ASC" \
+                            , (batch_rule,))  
+            batch_cancel_ids      = cr.fetchall()
+            if batch_cancel_ids:
+                #import pdb;pdb.set_trace()
+                for batch in batch_cancel_ids:
+                    cancel_batch = str(batch[0])
+                    #cek dulu apakah batch yang di cancel ini sudah pernah di buat lagi
+                    cr.execute("SELECT batch_number FROM mrp_production " \
+                                    "WHERE state NOT IN ('draft','cancel') " \
+                                    "AND batch_number = %s" \
+                                    , (cancel_batch,)) 
+                    batch_cancel_cek      = cr.fetchall()
+                    #jika belum pernah di buat langsung break
+                    if not batch_cancel_cek:
+                        new_batch_number = cancel_batch
+                        break
+
+        return new_batch_number
+                           
     def action_confirm(self, cr, uid, ids, context=None):
         """ Confirms production order.
         @return: Newly generated Shipment Id.
@@ -45,97 +130,14 @@ class mrp_production(osv.osv):
         context = dict(context, lang=user_lang)
         uncompute_ids = filter(lambda x: x, [not x.product_lines and x.id or False for x in self.browse(cr, uid, ids, context=context)])
         self.action_compute(cr, uid, uncompute_ids, context=context)
-        
         for production in self.browse(cr, uid, ids, context=context):
-            self._make_production_produce_line(cr, uid, production, context=context)
-
-            ########################### modify disini ##############################
-            #Tahun
-            tahun_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[2]
-            tahun_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[3]
-            tahun_2_digit = tahun_digit1+tahun_digit2
-            #Sediaan
-            sediaan_code = '-'
-            if production.product_id.categ_id.sediaan_id:                   
-                sediaan_code =  production.product_id.categ_id.sediaan_id.code
-            #Bulan
-            bulan_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[5]
-            bulan_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[6]
-            bulan_2_digit = bulan_digit1+bulan_digit2  
-            if bulan_2_digit == '01':
-                bulan_huruf = 'A'              
-            elif bulan_2_digit == '02':
-                bulan_huruf = 'B'  
-            elif bulan_2_digit == '03':
-                bulan_huruf = 'C'  
-            elif bulan_2_digit == '04':
-                bulan_huruf = 'D'
-            elif bulan_2_digit == '05':
-                bulan_huruf = 'E'
-            elif bulan_2_digit == '06':
-                bulan_huruf = 'F'
-            elif bulan_2_digit == '07':
-                bulan_huruf = 'G'
-            elif bulan_2_digit == '08':
-                bulan_huruf = 'H'            
-            elif bulan_2_digit == '09':
-                bulan_huruf = 'I'
-            elif bulan_2_digit == '10':
-                bulan_huruf = 'J'  
-            elif bulan_2_digit == '11':
-                bulan_huruf = 'K'
-            elif bulan_2_digit == '12':
-                bulan_huruf = 'L'
-            
-            batch_rule = str(tahun_2_digit+sediaan_code+'%')
-
-            # SUBSTRING ( expression ,start , length )
-            cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
-                            "WHERE state NOT IN ('draft','cancel') " \
-                            "AND batch_number like %s ORDER BY Initial DESC" \
-                            , (batch_rule,))         
-            batch_ids      = cr.fetchall()
-            # jika belum punya batch number buat dari 001
-            new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
-            if batch_ids :
-                seq_batch = int(batch_ids[0][1])+1
-                
-                #mengakali angka 0 di depan angka positif
-                if len(str(seq_batch)) == 1:
-                    new_seq_batch = '00'+ str(seq_batch)
-                elif len(str(seq_batch)) == 2 :
-                    new_seq_batch = '0'+ str(seq_batch) 
-                else:
-                    new_seq_batch = str(seq_batch)
-
-                new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+new_seq_batch) 
-
-                #jika ada batch yang di cancel cek dulu di MO yang state=cancel
-                cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
-                                "WHERE state = 'cancel' " \
-                                "AND batch_number like %s ORDER BY Initial ASC" \
-                                , (batch_rule,))  
-                batch_cancel_ids      = cr.fetchall()
-                if batch_cancel_ids:
-                    #import pdb;pdb.set_trace()
-                    for batch in batch_cancel_ids:
-                        cancel_batch = str(batch[0])
-                        #cek dulu apakah batch yang di cancel ini sudah pernah di buat lagi
-                        cr.execute("SELECT batch_number FROM mrp_production " \
-                                        "WHERE state NOT IN ('draft','cancel') " \
-                                        "AND batch_number = %s" \
-                                        , (cancel_batch,)) 
-                        batch_cancel_cek      = cr.fetchall()
-                        #jika sudah pernah di buat langsung continue
-                        if batch_cancel_cek:
-                            continue
-                        #jika belum pernah di buat langsung break
-                        if not batch_cancel_cek:
-                            new_batch_number = cancel_batch
-                            break
-                       
+            self._make_production_produce_line(cr, uid, production, context=context)   
+            # create batch number
+            new_batch_number = self.create_batch_number(cr,uid,production,context=context)                   
             stock_moves = []
             for line in production.product_lines:
+              # if line.product_id.is_header == True:
+              #   raise osv.except_osv(_('Error !'),_("Product %s is header True !")%(line.product_id.name) )                
                 if line.product_id.type != 'service':
                     stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
                     stock_moves.append(stock_move_id)
@@ -194,6 +196,7 @@ class mrp_production(osv.osv):
             domain="[('is_used','=',False)]",required=False,readonly=True,states={'draft':[('readonly',False)]}),
         'batch_number': fields.char('Batch Number',readonly=True,),
         'sediaan_id': fields.related('product_id','categ_id','sediaan_id',type='many2one',relation='vit.sediaan',string='Sediaan',readonly=True),
+        'allow_batch' : fields.boolean('Batch Number tidak bisa digunakan kembali?',readonly=True),
     }
 
     def hitung_batch_number(self, cr, uid, date_planned, date_batch, context=None):
@@ -327,10 +330,64 @@ class mrp_production(osv.osv):
         self.signal_workflow(cr, uid, [production_id], 'button_produce_done')
         return True
 
+    def action_cancel(self, cr, uid, ids, context=None):
+        """ Cancels the production order and related stock moves.
+        @return: True
+        """
+        if context is None:
+            context = {}
+        move_obj = self.pool.get('stock.move')
+        proc_obj = self.pool.get('procurement.order')
+        for production in self.browse(cr, uid, ids, context=context):
+            if production.move_created_ids:
+                move_obj.action_cancel(cr, uid, [x.id for x in production.move_created_ids])
+            procs = proc_obj.search(cr, uid, [('move_dest_id', 'in', [x.id for x in production.move_lines])], context=context)
+            if procs:
+                proc_obj.cancel(cr, uid, procs, context=context)
+            move_obj.action_cancel(cr, uid, [x.id for x in production.move_lines])
+
+            # overwrite utk limit batch yang bisa digunakan kembali ketika cancel
+            limit = False
+            if production.workcenter_lines :
+                if production.routing_id:
+                    if production.routing_id.workcenter_lines:
+                        for rout in production.routing_id.workcenter_lines:
+                            workcenter_rout = rout.workcenter_id.id
+                            #cek di wo routing apakah limit batch ada yang di set True 
+                            #jika ada, cek dengan wo yang berasal dari MO
+                            #import pdb;pdb.set_trace()
+                            if rout.limit_batch_number_cancel == True:
+                                for wo in production.workcenter_lines:
+                                    if wo.workcenter_id.id == workcenter_rout:
+                                        if wo.state != 'draft':
+                                            limit = True
+                                        break
+                                break        
+        self.write(cr, uid, ids, {'state': 'cancel','allow_batch':limit})
+        # Put related procurements in exception
+        proc_obj = self.pool.get("procurement.order")
+        procs = proc_obj.search(cr, uid, [('production_id', 'in', ids)], context=context)
+        if procs:
+            proc_obj.write(cr, uid, procs, {'state': 'exception'}, context=context)
+        return True
+
 
 class mrp_production_workcenter_line(osv.osv):
     _inherit = 'mrp.production.workcenter.line'
 
     _columns={
         'batch_number'   : fields.related('production_id','batch_number',type='char',readonly=True,store=True,string="Batch Number"),
-    }            
+    } 
+
+class mrp_routing_workcenter(osv.osv):
+
+    _inherit = 'mrp.routing.workcenter'
+
+    _columns={
+        'limit_batch_number_cancel': fields.boolean('limit Batch Number Cancel', 
+            help="Centang, jika WO ini sudah di start maka menjadi batasan batch number untuk tidak bisa di gunakan kembali"),
+    }
+
+    _defaults = {
+        'limit_batch_number_cancel' : False
+    }               
