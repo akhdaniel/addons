@@ -39,10 +39,10 @@ class product_category(osv.osv):
     _inherit = "product.category"
 
     _columns = {
-        'best_before_days'	: fields.integer('Best Before Days'),
-        'end_of_life_days'	: fields.integer('End of Life Days'),
-        'removal_days'		: fields.integer('Removal Days'),
-        'alert_days' 		: fields.integer('Alert Days'),
+        'best_before_days'	: fields.integer('Best Before Months'),
+        'end_of_life_days'	: fields.integer('End of Life Months'),
+        'removal_days'		: fields.integer('Removal Months'),
+        'alert_days' 		: fields.integer('Retest Months'),
     }
 product_category()
 
@@ -51,9 +51,9 @@ class product_template(osv.osv):
     _inherit = "product.template"    
 
     _columns = {
-        'best_before_days'	: fields.integer('Best Before Days'),
-        'end_of_life_days'	: fields.integer('End of Life Days'),
-        'removal_days'		: fields.integer('Removal Days'),
-        'alert_days' 		: fields.integer('Alert Days'),
+        'best_before_days'	: fields.integer('Best Before Months'),
+        'end_of_life_days'	: fields.integer('End of Life Months'),
+        'removal_days'		: fields.integer('Removal Months'),
+        'alert_days' 		: fields.integer('Retest Months'),
     }
 product_template()        

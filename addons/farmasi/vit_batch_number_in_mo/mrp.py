@@ -201,7 +201,7 @@ class mrp_production(osv.osv):
 
     def hitung_batch_number(self, cr, uid, date_planned, date_batch, context=None):
         date        = datetime.datetime.strptime(date_planned,"%Y-%m-%d %H:%M:%S")
-        total_date  = date + datetime.timedelta(days=date_batch)
+        total_date  = date + datetime.timedelta(days=(date_batch*30))#kali 30 karena perbulan
         str_date    = str(total_date)
         return str_date
 
