@@ -35,42 +35,60 @@
             <field name="arch" type="xml">
                 <field name="product_id" position="replace">
                     <field name="product_id" on_change="product_id_change(product_id, product_qty)" domain="[('bom_ids','!=',False),('bom_ids.type','!=','phantom')]" class="oe_inline" context='{"default_type": "product"}'/>
-                </field>     
-                <group string="Products to Consume" position="replace">
-                    <group string="Products to Consume">
-                        <field name="move_lines" nolabel="1" options="{'reload_on_button': true}">
-                            <tree colors="blue:state == 'draft';black:state in ('ready','assigned','in_production');gray:state in ('cancel','done');red:state in ('confirmed','waiting')" string="Products to Consume" editable="bottom">
-                                <field name="product_id" domain="[('is_header','=',False)]"/>
-                                <field name="product_uom_qty"  string="Quantity"/>
-                                <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
-                                <field name="state" invisible="1"/>
-                                <button name="%(mrp.move_consume)d"
-                                    string="Consume Products" type="action"
-                                    icon="gtk-go-forward" context="{'consume': True}"
-                                    states="assigned"
-                                     />
-                                <button name="%(stock.move_scrap)d"
-                                    string="Scrap Products" type="action"
-                                    icon="terp-gtk-jump-to-ltr" context="{'scrap': True}"
-                                    states="draft,waiting,confirmed,assigned"/>
-                            </tree>
-                            <!--form string="Products to Consume">
-                                <group>
+                </field> 
+                <page string="Consumed Products" position="replace">
+                    <page string="Consumed Products">
+                            <group string="Products to Consume">
+                            <field name="move_lines" nolabel="1" options="{'reload_on_button': true}">
+                                <tree colors="blue:state == 'draft';black:state in ('ready','assigned','in_production');gray:state in ('cancel','done');red:state in ('confirmed','waiting')" string="Products to Consume">
+                                    <field name="product_id" domain="[('is_header','=',False)]"/>
+                                    <field name="restrict_lot_id" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
+                                    <field name="product_uom_qty"  string="Quantity"/>
+                                    <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                                    <field name="state" invisible="1"/>
+                                    <button name="%(mrp.move_consume)d"
+                                        string="Consume Products" type="action"
+                                        icon="gtk-go-forward" context="{'consume': True}"
+                                        states="assigned"
+                                         />
+                                    <button name="%(stock.move_scrap)d"
+                                        string="Scrap Products" type="action"
+                                        icon="terp-gtk-jump-to-ltr" context="{'scrap': True}"
+                                        states="draft,waiting,confirmed,assigned"/>
+                                </tree>
+                                <form string="Products to Consume">
                                     <group>
-                                        <field name="product_id" domain="[('is_header','=',False)]" on_change="onchange_product_id(product_id,location_id,location_dest_id, False)"/>
-                                        <field name="product_uom_qty"  string="Quantity"/>
-                                        <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
-                                    </group>
-                                    <group>
-                                        <field name="state" invisible="1"/>
-                                        <field name="location_id" />
-                                        <field name="location_dest_id"/>
-                                    </group>
-                                </group>    
-                            </form-->                            
-                        </field>
-                    </group>
-                </group>
+                                        <group>
+                                            <field name="product_id" domain="[('is_header','=',False)]" on_change="onchange_product_id(product_id,location_id,location_dest_id, False)"/>
+                                            <field name="restrict_lot_id" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
+                                            <field name="product_uom_qty"  string="Quantity"/>
+                                            <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                                        </group>
+                                        <group>
+                                            <field name="state" invisible="1"/>
+                                            <field name="location_id" />
+                                            <field name="location_dest_id"/>
+                                        </group>
+                                    </group>    
+                                </form>                            
+                            </field>
+                            </group>
+                            <group string="Consumed Products">
+                                <field name="move_lines2" nolabel="1" options="{'reload_on_button': true}">
+                                   <tree colors="red:scrapped==True;blue:state == 'draft';black:state in ('confirmed','ready','in_production');gray:state == 'cancel' " string="Consumed Products" editable="bottom">
+                                       <field name="product_id" readonly="1"/>
+                                       <field name="restrict_lot_id" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
+                                       <field name="product_uom_qty" readonly="1"/>
+                                       <field name="product_uom" readonly="1" string="Unit of Measure" groups="product.group_uom"/>
+                                       <field name="state" invisible="1"/>
+                                       <field name="scrapped" invisible="1"/>
+                                   </tree>
+                                </field>
+                            </group>
+
+                    </page>  
+                </page>
+
             </field>
         </record> 
 
