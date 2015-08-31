@@ -9,7 +9,7 @@
 *Tambah Batch Number di Manufacturing Orders
 """,
     'version': '0.1',
-    'depends': ['base','mrp','mrp_operations','vit_sediaan'],
+    'depends': ['base','mrp','mrp_operations','vit_sediaan','vit_is_header'],
     'author': 'vitraining.com',
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',
