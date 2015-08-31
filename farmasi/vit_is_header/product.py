@@ -40,5 +40,7 @@ class product_template(osv.osv):
 
     _columns = {
         'is_header'	: fields.boolean('Is Header'),
+        'het': fields.float('HET', digits_compute=dp.get_precision('Product Price'), help="Harga Eceran Tertinggi"),
+        'big_het': fields.float('HET Besar', digits_compute=dp.get_precision('Product Price'), help="Harga Eceran Besar Tertinggi"),
     }
 product_template()        
