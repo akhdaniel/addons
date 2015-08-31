@@ -337,4 +337,20 @@ class product_product(osv.osv):
         if sale_ok :
             return {'value': {'product_category': 'cubic'}}
 
+    def product_qty_change(self, cr, uid, ids, product_category, 
+        product_height, product_larg, product_diameter, product_length):
+        volume = None
+        try:
+            if product_category:
+                if product_category == 'cylindrical':
+                    volume = (product_length * (product_diameter/2.0) * float(22/7))/1000000000.0
+                    return {'value': {'product_cylindrical_volume': volume}}
+                elif product_category == 'cubic':
+                    volume = (product_length * product_height * product_larg)/1000000000.0
+                    #volume = (product_length * (product_diameter/2.0) * float(22/7))/1000000000.0
+                    return {'value': {'product_cubic_volume': volume,'product_classic_volume12':volume}}
+        except ZeroDivisionError:
+            raise osv.except_osv(_('No could not divide by zwero'), _('Pls Check The values of Product Mesurement Tab'))
+        return True
+
 product_product()
