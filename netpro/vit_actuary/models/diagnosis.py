@@ -33,4 +33,20 @@ class netpro_diagnosis(osv.osv):
         
         new_record = super(netpro_diagnosis, self).create(cr, uid, vals, context=context)
         return new_record
+
+    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
+        if not args:
+            args = []
+        if not context:
+            context = {}
+        if name:
+            # Be sure name_search is symetric to name_get
+            # name = name.split(' / ')[-1]
+            ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
+
+            if not ids:
+                ids = self.search(cr, uid, [('diagnosis', operator, name)] + args, limit=limit, context=context)
+        else:
+            ids = self.search(cr, uid, args, limit=limit, context=context)
+        return self.name_get(cr, uid, ids, context)
 netpro_diagnosis()
