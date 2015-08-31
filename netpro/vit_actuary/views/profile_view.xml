@@ -110,28 +110,34 @@
                     </page>
 
                     <page strng="Restriction &amp; Redflag">
-                        <field name="restrict_this_profile" select="0"/>
-                        <separator string="Restrict Remarks" colspan="4"/>
-                        <field name="restrict_remarks" colspan="4" nolabel="1" select="0"/>
-                        <field name="reflag_this_profile" select="0"/>
-                        <field name="reflag_date" select="0"/>
-                        <field name="user_id" select="0"/>
-                        <separator string="Reflag Remarks" colspan="4"/>
-                        <field name="reflag_remarks" colspan="4" nolabel="1" select="0"/>
+                        <group>
+                            <field name="restrict_this_profile" select="0"/>
+                            <separator string="Restrict Remarks" colspan="4"/>
+                            <field name="restrict_remarks" colspan="4" nolabel="1" select="0"/>
+                            <field name="reflag_this_profile" select="0"/>
+                            <field name="reflag_date" select="0"/>
+                            <field name="user_id" select="0"/>
+                            <separator string="Reflag Remarks" colspan="4"/>
+                            <field name="reflag_remarks" colspan="4" nolabel="1" select="0"/>
+                        </group>
                     </page>
 
                     <page string="Business Related">
-                        <field name="agent_license_no" select="0"/>
-                        <field name="default_wpc" select="0"/>
-                        <field name="default_grace_period" select="0"/>
-                        <field name="default_discount" select="0"/>
-                        <field name="default_comission" select="0"/>
-                        <field name="net_comission" select="0"/>
-                        <field name="max_out_go" select="0"/>
+                        <group>
+                            <field name="agent_license_no" select="0"/>
+                            <field name="default_wpc" select="0"/>
+                            <field name="default_grace_period" select="0"/>
+                            <field name="default_discount" select="0"/>
+                            <field name="default_comission" select="0"/>
+                            <field name="net_comission" select="0"/>
+                            <field name="max_out_go" select="0"/>
+                        </group>
                     </page>
 
                     <page string="Others">
-                        <field name="purpose_of_insurance" select="0"/>
+                        <group>
+                            <field name="purpose_of_insurance" select="0"/>
+                        </group>
                     </page>
                 </notebook>
                 </sheet>
@@ -144,76 +150,12 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.profile">
+                <field name="profile_id"/>
                 <field name="name"/>
-                <field name="reference_id"/>
-                <field name="external_profile_id"/>
-                <field name="corporate"/>
-                <field name="provider"/>
-                <field name="tpa"/>
-                <field name="dump_profile"/>
-                <field name="salutation_id"/>
-                <field name="initial"/>
-                <field name="branch"/>
+                <field name="street"/>
+                <field name="phone"/>
                 <field name="profile_type"/>
                 <field name="line_of_business_id"/>
-                <field name="referral"/>
-                <field name="pic_name"/>
-                <field name="pic_title"/>
-                <field name="pic_address"/>
-                <field name="pic_phone"/>
-                <field name="company_group_id"/>
-                <field name="sub_company_category_id"/>
-                <field name="company_type"/>
-                <field name="company_rating"/>
-                <field name="company_siup"/>
-                <field name="company_tdp"/>
-                <field name="biz_license_no"/>
-                <field name="biz_license_date"/>
-                <field name="bod_name_1"/>
-                <field name="bod_function_1"/>
-                <field name="bod_name_2"/>
-                <field name="bod_function_2"/>
-                <field name="bod_name_3"/>
-                <field name="bod_function_3"/>
-                <field name="share_holder_name_1"/>
-                <field name="share_holder_name_2"/>
-                <field name="share_holder_name_3"/>
-                <field name="gender"/>
-                <field name="birthplace"/>
-                <field name="marital_status"/>
-                <field name="religion_id"/>
-                <field name="idcard_type"/>
-                <field name="personal_id_no"/>
-                <field name="personal_id_name"/>
-                <field name="personal_id_date"/>
-                <field name="nickname"/>
-                <field name="citizenship"/>
-                <field name="employment_id"/>
-                <field name="annual_income_id"/>
-                <field name="other_source_income"/>
-                <field name="company_working_name"/>
-                <field name="company_working_address"/>
-                <field name="company_working_phone"/>
-                <field name="vat"/>
-                <field name="tax"/>
-                <field name="taxation_id"/>
-                <field name="taxation_name"/>
-                <field name="taxation_address"/>
-                <field name="restrict_this_profile"/>
-                <field name="restrict_remarks"/>
-                <field name="reflag_this_profile"/>
-                <field name="reflag_date"/>
-                <field name="user_id"/>
-                <field name="reflag_remarks"/>
-                <field name="agent_license_no"/>
-                <field name="default_wpc"/>
-                <field name="default_grace_period"/>
-                <field name="default_discount"/>
-                <field name="default_comission"/>
-                <field name="net_comission"/>
-                <field name="max_out_go"/>
-                <field name="purpose_of_insurance"/>
-
             </tree>
         </field>
     </record>
