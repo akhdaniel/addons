@@ -120,6 +120,129 @@ class mrp_production(osv.osv):
                         break
 
         return new_batch_number
+
+    def _vit_create_stock_move_make_consume_line_from_data(self, cr, uid, production, product, uom_id, qty, uos_id, uos_qty, lot, qty_available, source_location_id, destination_location_id, prev_move, context=None):
+        move_id = self.pool.get('stock.move').create(cr, uid, {
+            'name': production.name,
+            'date': production.date_planned,
+            'product_id': product.id,
+            'restrict_lot_id' : lot or False,
+            'product_uom_qty': qty,
+            'product_uom': uom_id,
+            'product_uos_qty': uos_id and uos_qty or False,
+            'product_uos': uos_id or False,
+            'qty_available': qty_available,
+            'location_id': source_location_id,
+            'location_dest_id': destination_location_id,
+            'company_id': production.company_id.id,
+            'procure_method': prev_move and 'make_to_stock' or self._get_raw_material_procure_method(cr, uid, product, location_id=source_location_id,
+                                                                                                     location_dest_id=destination_location_id, context=context), #Make_to_stock avoids creating procurement
+            'raw_material_production_id': production.id,
+            #this saves us a browse in create()
+            'price_unit': product.standard_price,
+            'origin': production.name,
+            'warehouse_id': self.pool.get('stock.location').get_warehouse(cr, uid, production.location_src_id, context=context),
+            'group_id': production.move_prod_id.group_id.id,
+        }, context=context)
+        return move_id
+
+    def _vit_make_consume_line_from_data(self, cr, uid, production, product, uom_id, qty, uos_id, uos_qty, context=None):
+        stock_move = self.pool.get('stock.move')
+        loc_obj = self.pool.get('stock.location')
+        # Internal shipment is created for Stockable and Consumer Products
+        if product.type not in ('product', 'consu'):
+            return False
+        # Take routing location as a Source Location.
+        source_location_id = production.location_src_id.id
+        prod_location_id = source_location_id
+        prev_move= False
+        if production.bom_id.routing_id and production.bom_id.routing_id.location_id and production.bom_id.routing_id.location_id.id != source_location_id:
+            source_location_id = production.bom_id.routing_id.location_id.id
+            prev_move = True
+
+        destination_location_id = production.product_id.property_stock_production.id
+        #search dulu product yang sama
+        product_ref = product.default_code[:6]
+        lot_id = False
+        qty_available = 0
+        move_ids = []
+        #import pdb;pdb.set_trace()
+        # cari produk yang is_header = false dan kode produknya 6 digi pertama sama
+        same_product = self.pool.get('product.product').search(cr,uid,[('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
+        if same_product :
+            #- cek satu per satu di serial number yang produk_id nya sama, 
+            #   ambil yang ED nya paling dekat expired             
+            cr.execute("SELECT id FROM stock_production_lot \
+                        WHERE product_id IN %s AND alert_date IS NOT NULL \
+                        ORDER BY alert_date ASC" , (tuple(same_product),))  
+            lot_ids    = cr.fetchall()
+            # jika di temukan            
+            if lot_ids :
+                qty_bom = qty
+                for lot in lot_ids:
+                    #cari di quant qty product sesuai dengan id lot
+                    cr.execute ('SELECT sum(qty) FROM stock_quant \
+                        WHERE location_id = %s AND lot_id = %s',(source_location_id,lot[0]))
+                    hasil   = cr.fetchone()
+                    if hasil:
+                        if hasil[0] != None :
+                            lot_id = lot[0]
+                            hasil = hasil[0]
+                            if hasil >= qty_bom :           
+                                move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
+                                    production, product, uom_id, qty, uos_id, uos_qty, lot_id, hasil, source_location_id, destination_location_id, prev_move, context=context)
+                                qty_bom -= qty_bom
+                                move_ids.append(move_id)
+                                break
+                            elif hasil < qty_bom :
+                                move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
+                                    production, product, uom_id, hasil, uos_id, uos_qty, lot_id, hasil, source_location_id, destination_location_id, prev_move, context=context)
+                                
+                                qty_bom -= hasil
+                                move_ids.append(move_id)
+                # jika sesudah di looping dari lot permintaan dari bom belum terpenuhi maka buatkan move sisanya tanpa Lot
+                if qty_bom != 0.00 :
+                    lot_id = False
+                    move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
+                            production, product, uom_id, qty_bom, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
+                    move_ids.append(move_id)
+            # jika tidak lot_ids, maka create move seadanya(tanpa lot, dan qty available=0)       
+            else: 
+                lot_id = False 
+                
+                move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, production, product, uom_id, 
+                    qty, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
+                move_ids.append(move_id)                                                              
+        
+        if prev_move:
+            # karena array, maka harus di looping
+            for mv in move_ids:
+                prev_move = self._create_previous_move(cr, uid, mv, product, prod_location_id, source_location_id, context=context)
+                stock_move.action_confirm(cr, uid, [prev_move], context=context)
+        return move_ids
+
+# default produk terpilih otomatis berdasarkan:
+# - ED
+# - stock
+
+# pada waktu confirm MO:
+# - didapatkan produk header dari BOM
+# - utk setiap produk yang di BOM:
+#    - cari produk yang is_header = false dan kode produknya 6 digi pertama sama
+#    - cek satu per satu di serial number yang produk_id nya sama, 
+#       ambil yang ED nya paling dekat expired 
+#    - jika qty kurang dari yg diminta BOM, ambil ED terdekat berikutnya: jadi ada 2 record BB dengan serial no yang berbeda
+
+# muncukan field di produk to consume:
+# - ED
+# - Serial Nunber
+# - On Hand sebleum di kurangi
+# - Nomor Analisa (internal Reference)
+
+
+    def _vit_make_production_consume_line(self, cr, uid, line, context=None):
+        return self._vit_make_consume_line_from_data(cr, uid, line.production_id, line.product_id, line.product_uom.id, line.product_qty, line.product_uos.id, line.product_uos_qty, context=context)
+
                            
     def action_confirm(self, cr, uid, ids, context=None):
         """ Confirms production order.
@@ -135,14 +258,18 @@ class mrp_production(osv.osv):
             # create batch number
             new_batch_number = self.create_batch_number(cr,uid,production,context=context)                   
             stock_moves = []
+
             for line in production.product_lines:
               # if line.product_id.is_header == True:
               #   raise osv.except_osv(_('Error !'),_("Product %s is header True !")%(line.product_id.name) )                
                 if line.product_id.type != 'service':
-                    stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
-                    stock_moves.append(stock_move_id)
+                    # ganti dg fungsi custom
+                    # stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
+                    stock_move_id = self._vit_make_production_consume_line(cr, uid, line, context=context)
+                    for smi in stock_move_id:
+                        stock_moves.append(smi)
                 else:
-                    self._make_service_procurement(cr, uid, line, context=context)
+                    self._make_service_procurement(cr, uid, line, context=context)       
             if stock_moves:
                 self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
             production.write({'state': 'confirmed','batch_number':new_batch_number})
