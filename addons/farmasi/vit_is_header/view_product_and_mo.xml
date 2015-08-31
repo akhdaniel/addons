@@ -45,6 +45,7 @@
                                     <field name="restrict_lot_id" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
                                     <field name="product_uom_qty"  string="Quantity"/>
                                     <field name="product_uom" string="Unit of Measure" groups="product.group_uom"/>
+                                    <field name="qty_available"/>
                                     <field name="state" invisible="1"/>
                                     <button name="%(mrp.move_consume)d"
                                         string="Consume Products" type="action"
