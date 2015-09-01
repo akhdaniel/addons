@@ -1,0 +1,112 @@
+<openerp>
+
+    <data>
+        <record id="view_master_checklist_tree" model="ir.ui.view">
+            <field name="name">master_checklist_tree</field>
+            <field name="model">vit_ph_checklist_bahan_lucas.master_checklist</field>
+            <field name="arch" type="xml">
+                <tree string="List Master Checklist">
+                    <field name="name" />
+                    <field name="appeareance"/>                   
+                </tree>
+            </field>
+        </record>
+        <record id="view_master_checklist_form" model="ir.ui.view">
+            <field name="name">master_checklist_form</field>
+            <field name="model">vit_ph_checklist_bahan_lucas.master_checklist</field>
+            <field name="arch" type="xml">
+                 <form string="Master Checklist" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="appeareance"/>       
+                        </group>
+                    </sheet>
+                </form>
+                                      
+            </field>
+        </record>
+
+
+        <record id="view_master_checklist_filter" model="ir.ui.view">
+            <field name="name">master_checklist_filter</field>
+            <field name="model">vit_ph_checklist_bahan_lucas.master_checklist</field>
+            <field name="arch" type="xml">
+                <search string="Search Master Checklist">
+                   <field name="name" />
+                   <field name="appeareance"/>    
+                </search>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="field_checklist" >
+            <field name="name">Field Master Checklist</field>
+            <field name="res_model">vit_ph_checklist_bahan_lucas.master_checklist</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>Master Checklist</p>
+            </field>
+        </record>
+
+        
+
+        <record id="view_master_advance_checklist_tree" model="ir.ui.view">
+            <field name="name">master_advance_checklist_tree</field>
+            <field name="model">vit_ph_checklist_bahan_lucas.master_advance_checklist</field>
+            <field name="arch" type="xml">
+                <tree string="List Master Advance Checklist">
+                    <field name="name" />
+                    <field name="appeareance"/>                   
+                </tree>
+            </field>
+        </record>
+        <record id="view_master_advance_checklist_form" model="ir.ui.view">
+            <field name="name">master_checklist_advance_form</field>
+            <field name="model">vit_ph_checklist_bahan_lucas.master_advance_checklist</field>
+            <field name="arch" type="xml">
+                 <form string="Master Advance Checklist" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="appeareance"/>       
+                        </group>
+                    </sheet>
+                </form>
+                                      
+            </field>
+        </record>
+
+
+        <record id="view_master_advance_checklist_filter" model="ir.ui.view">
+            <field name="name">master_checklist_advance_filter</field>
+            <field name="model">vit_ph_checklist_bahan_lucas.master_advance_checklist</field>
+            <field name="arch" type="xml">
+                <search string="Search Master Advance Checklist">
+                   <field name="name" />
+                   <field name="appeareance"/>    
+                </search>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="field_advance_checklist" >
+            <field name="name">Field Master Advance Checklist</field>
+            <field name="res_model">vit_ph_checklist_bahan_lucas.master_advance_checklist</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>Master  Advance Checklist</p>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_check" parent="stock.menu_stock_root" name="Configuration Checklist" sequence="7" />
+        <menuitem id="menu_check2" parent="menu_check" name="Master Checklist" sequence="31" action="field_checklist" />
+        <menuitem id="menu_check3" parent="menu_check" name="Master Advance Checklist" sequence="32" action="field_advance_checklist" />
+
+
+    </data>
+</openerp>
+
