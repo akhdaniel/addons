@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="product_template_search_view_category" model="ir.ui.view">
+            <field name="name">product.template.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <search string="Product">
+                    <filter string="Bahan Awal" name="starting" icon="terp-accessories-archiver" domain="[('categ_id.name','ilike','Bahan Awal')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="field_starting" >
+            <field name="name">Product Starting Material</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"></field>
+            <field name="context">{"search_default_starting":1}</field> 
+            <field name="help" type="html">
+                <p>Product Starting Material</p>
+            </field>
+        </record>
+
+        <menuitem id="menu_starting_material" parent="stock.menu_stock_product" name="Product Starting Material" sequence="3" action="field_starting" />
+    </data>
+</openerp>
