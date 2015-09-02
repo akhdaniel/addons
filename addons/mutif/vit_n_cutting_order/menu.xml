@@ -1,0 +1,84 @@
+<openerp>
+  <data>
+  
+    <record model="ir.actions.act_window" id="action_cutting_order" >
+        <field name="name">Cutting Order</field>
+        <field name="res_model">vit.cutting.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Cutting Order</p>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_makloon_order" >
+        <field name="name">Makloon Order</field>
+        <field name="res_model">vit.makloon.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Makloon Order</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_master_type" >
+        <field name="name">Master Type</field>
+        <field name="res_model">vit.master.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Master Type</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_category" >
+        <field name="name">Category</field>
+        <field name="res_model">vit.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Category</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_conf" >
+        <field name="name">Configuration Cutting</field>
+        <field name="res_model">conf.cutting</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Category Configuration</p>
+        </field>
+    </record>
+
+     <record model="ir.actions.act_window" id="field_journal" >
+        <field name="name">Field Master Journal</field>
+        <field name="res_model">vit.master.journal</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Master Journal</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="master_location" >
+        <field name="name">Master Location</field>
+        <field name="res_model">vit.master.location</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Master Location</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_vit2" parent="base.menu_mrp_root" name="Cutting" sequence="1" />
+    <menuitem id="menu_vit3" parent="menu_vit2" name="Cutting Orders" sequence="30" action="action_cutting_order" />
+
+    <menuitem id="menu_vit4" parent="base.menu_mrp_root" name="Makloon" sequence="1" />
+    <menuitem id="menu_vit5" parent="menu_vit4" name="Makloon Orders" sequence="30" action="action_makloon_order" />
+
+    <menuitem id="menu_master" parent="base.menu_mrp_root" name="Master" sequence="5" />
+    <menuitem id="menu_master2" parent="menu_master" name="Master Type" sequence="30" action="action_master_type" />
+    <menuitem id="menu_category" parent="menu_master" name="Category" sequence="10" action="action_category" />
+
+    <menuitem id="menu_conf" parent="base.menu_mrp_root" name="Configuration Cutting" sequence="6" />
+    <menuitem id="menu_conf2" parent="menu_conf" name="Cutting" sequence="30" action="action_conf" />
+    <menuitem id="menu_conf3" parent="menu_conf" name="Master Journal" sequence="31" action="field_journal" />
+    <menuitem id="menu_conf4" parent="menu_conf" name="Master Location" sequence="32" action="master_location" />
+
+ </data>
+</openerp>
