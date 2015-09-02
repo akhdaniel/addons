@@ -8,13 +8,13 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <field name="note_release"/>
-                </field> 
+                </field>
                
             </field>
         </record>
 
-        <record id="view_move_picking_form+ph" model="ir.ui.view">
-            <field name="name">stock.move.form..ph</field>
+        <record id="view_move_picking_form_ph2" model="ir.ui.view">
+            <field name="name">stock.move.form.ph2</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
@@ -32,6 +32,7 @@
                 <field name="product_uos" position="after">
                     <field name="note_release"/>
                 </field> 
+                
             </field>
         </record>
 
@@ -42,7 +43,22 @@
             <field name="arch" type="xml">
                 <field name="origin" position="after">
                     <field name="release_date"/>
-                </field>    
+                </field>
+                <field name="partner_id" position="before">
+                    <field name="priority" widget="priority"/>
+                </field>     
+            </field>
+        </record>
+
+        <record id="vpicktree2" model="ir.ui.view">
+            <field name="name">stock.picking.tree2</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                    <field name="location_dest_id" position="before">
+                        <field name="priority" widget="priority"/>
+                    </field>
+                
             </field>
         </record>
 
