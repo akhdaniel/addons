@@ -1,0 +1,45 @@
+<openerp>
+	<data>
+
+		<!-- Menambahkan Informasi Quantity Total wizard -->
+		<record model="ir.ui.view" id="stock_partial_picking_form_forec6">
+		    <field name="name">stock.partial.picking.form.forec6</field>
+		    <field name="model">stock.partial.picking</field>
+		    <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+		    <field name="arch" type="xml">
+		    	<field name="move_ids" position="replace">
+                	<field name="move_ids" context="{'hide_tracking': hide_tracking}" on_change="on_change_qty(move_ids, context)">
+                        <tree editable="bottom" string="Product Moves">
+                            <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                            <field name="quantity" />
+                            <field name="product_uom" groups="product.group_uom"/>
+                            <field name="tracking" invisible="1"/>
+                            <field name="prodlot_id" domain="[('product_id', '=', product_id)]" invisible="context.get('hide_tracking',False)" attrs="{'required':[('tracking','=',True), ('quantity', '!=', 0)]}" groups="stock.group_production_lot" context="{'default_product_id':product_id}"/>
+                            <!-- Removed as this feature is not logic: price must be updated upon reception of invoice -->
+                            <field name="update_cost" invisible="1"/>
+                            <field name="cost"  invisible="1"/>
+                            <field name="currency"  invisible="1"/>
+                        </tree>
+                    </field>
+                </field>	 
+	
+		   	</field>
+		</record>
+
+		<record model="ir.ui.view" id="stock_partial_picking_form_forec2">
+		    <field name="name">stock.partial.picking.form.forec2</field>
+		    <field name="model">stock.partial.picking</field>
+		    <field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+		    <field name="arch" type="xml">
+		    	<field name="quantity" position="after">
+		    	</field>
+		    	<xpath expr="//form[@string='Stock partial Picking']/field[@name='move_ids']" position="after">
+		    		<group>
+                        <field name="quantity_total" readonly="1"/>
+                    </group>
+                </xpath>
+
+		   	</field>
+		</record>				
+	</data>
+</openerp>
