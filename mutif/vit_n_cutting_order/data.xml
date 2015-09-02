@@ -1,0 +1,37 @@
+<openerp>
+    <data>   
+        <record id="product_uom_categ_kgm" model="product.uom.categ">
+            <field name="name">Weight</field>
+        </record>
+
+        <record id="product_uom_kgm" model="product.uom">
+            <field name="category_id" ref="product_uom_categ_kgm"/>
+            <field name="name">kg</field>
+            <field name="factor" eval="1"/>
+        </record>
+
+        <record forcecreate="True" model="product.product" id="data_email_majun">
+            <field name="name">Majun</field>
+             <field name="uom_id" ref="product_uom_kgm"/>
+             <field name="uom_po_id" ref="product_uom_kgm"/>
+        </record>
+
+        <!-- <record id="mutif" model="product.category">
+            <field name="name">Mutif</field>
+        </record>
+
+        <record id="litte_mutif" model="product.category">
+            <field name="name">Litte Mutif</field>
+        </record>
+
+        <record forcecreate="True" model="conf.cutting" id="data_5">
+            <field name="loop_size">5</field>
+            <field name="categ_id" ref="mutif"/>
+        </record>
+
+         <record forcecreate="True" model="conf.cutting" id="data_6">
+            <field name="loop_size">6</field>
+            <field name="categ_id" ref="litte_mutif"/>
+        </record>   -->
+    </data>
+</openerp>

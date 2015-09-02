@@ -1,0 +1,300 @@
+<openerp>
+	<data>
+        <record id="view_vit_makloon_order_tree" model="ir.ui.view">
+            <field name="name">vit.makloon.order.tree</field>
+            <field name="model">vit.makloon.order</field>
+            <field name="arch" type="xml">
+                <tree string="List makloon Order">
+                    <field name="name" />
+                    <field name="origin" />
+                    <field name="partner_id"/>
+                    <field name="model" />
+                    <field name="qty_order" string="Total Order"/>
+                    <field name="date_taking"/> 
+                    <field name="date_end_completion"/>                     
+                    <field name="date_received"/>   
+                    <field name="state"/>  
+                                  
+                </tree>
+            </field>
+        </record>
+
+         <record id="view_vit_makloon_order_form" model="ir.ui.view">
+            <field name="name">vit.makloon.order.form</field>
+            <field name="model">vit.makloon.order</field>
+            <field name="arch" type="xml">
+                <form string="Makloon Order" version="7.0">
+                    <header>
+                        <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                        <button name="action_inprogress" type="object" states="open" string="Send to Makloon" class="oe_highlight"/>
+                        <button name="action_receive" states="inprogres"  type="object" string="Receive" class="oe_highlight" confirm="Action Received Akan Dijalankan ?" />
+                        <button name="action_view_receive" states="inprogres,tobereceived,grade,split,done"  type="object" string="View Incoming" class="oe_highlight" />
+                        <button name="action_split_grade" states="tobereceived,tobeupdatedhpp"  type="object" string="Split Grade" class="oe_highlight" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,inprogres,tobereceived,done"/>
+                    </header>
+                    <sheet>
+                    <h1>
+                        <label string="Surat Perintah Kerja (SPK) Makloon"/>
+                        <div class="oe_header_row">
+                            <h4 class="oe_view_title">
+                                 <field name="name" class="oe_inline" readonly="1"/>
+                            </h4>
+                        
+                         </div>
+                 
+                    </h1>
+                        <group>
+                            <group>                                
+                                <field name="partner_id" on_change="on_partner_id(partner_id, context)" domain="[('category_id','=','makloon'),('supplier','=','True)]" required="1"/>
+                                <field name="address"/>  
+                                <field name="date_taking"/> 
+                                <field name="date_end_completion"/>  
+                            </group>
+                            <group>
+                                <field name="origin" readonly="1"/>
+                                <field name="model" invisible="1" />
+                                <field name="type_product_id" on_change="on_type_product_id(type_product_id, context)"/>
+                                <field name="state_incoming" invisible="1"/>
+                                <field name="is_receive" invisible="1"/>
+                                <field name="invoice_id" />
+                                
+                                
+                                
+                            </group>
+                        </group>
+                        <group>
+                             <group string="Material Requirement">
+                                <field name="material_req_line_ids" view_mode="tree,form" nolabel="1" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="material"/>
+                                        <field name="type"/>
+    
+                                    </tree>
+                                    <form>
+                                        <field name="material"/>
+                                        <field name="type"/>
+                                    </form>
+                    
+                                 </field>  
+                                </group>
+                    
+                        </group>
+                        <group>
+                            <notebook colspan="4" rowspan="4">
+                                <page string="Order Quantity">
+                                    <group col='5'>
+                                        <group col='1'>
+                                            <label for="s_order" />
+                                            <field name="s_order" nolabel="1" placeholder="S"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="m_order" />
+                                            <field name="m_order" nolabel="1" placeholder="L"/> 
+                                        </group>
+                                         <group col='1'>
+                                             <label for="l_order" />
+                                             <field name="l_order"  nolabel="1" placeholder="M"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="xl_order" />
+                                            <field name="xl_order"  nolabel="1" placeholder="XL"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="xxl_order" />
+                                            <field name="xxl_order"  nolabel="1" placeholder="XXL"/>
+                                        </group>
+                                        <group col='1'>
+                                            <label for="xxxl_order" />
+                                            <field name="xxxl_order"  nolabel="1" placeholder="12"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                        <field name="qty_order" readonly="1"/>
+                                    </group>
+                                </page>
+                               
+                                <page string="Usage Material Accesories" >
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <button name="qty_acc_reload2" string="Load..Qty" type="object"/>
+                                    </group>
+                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft'),('state','!=','open')]}">
+                                    <tree  editable="bottom">
+                                        <field name="material"/>
+                                        <field name="type"/>
+                                        <field name="qty" on_change="on_change_qty_total(material,qty,context)"/>
+                                        <field name="uom_id"/>
+                                        <field name="total_harga"/>
+                                        <field name="size_s" invisible="1"/>
+                                        <field name="size_m" invisible="1"/>
+                                        <field name="size_l" invisible="1"/>
+                                        <field name="size_xl" invisible="1"/>
+                                        <field name="size_xxl" invisible="1"/>
+                                        <field name="size_xxxl" invisible="1"/>
+                                    </tree>
+                                    <form>
+                                        <field name="material"/>
+                                        <field name="type"/>
+                                        <field name="qty"/>
+                                    </form>
+                    
+                                 </field> 
+                                </page>
+
+                                <page string="Grade B" attrs="{'invisible':[('state','not in',('grade','split','done'))]}">
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <button name="action_grade_b" states="grade,done"  type="object" string="Finish..Split"/>
+                                        <button name="button_dummy" type="object" string="Refresh"/>
+                                     </group>   
+                                    <field name="grade_ids" view_mode="tree" nolabel="1">
+                                        <tree  editable="bottom">
+                                            <field name="date"/>
+                                            <field name="size_s"/>
+                                            <field name="size_m" />
+                                            <field name="size_l" />
+                                            <field name="size_xl" />
+                                            <field name="size_xxl" />
+                                            <field name="size_xxxl"/>
+                                            
+                                            <field name="picking_ids" readonly="0"/>
+                                            <button name="action_grade_b"
+                                                string="" type="object"
+                                                icon="terp-gtk-jump-to-ltr" 
+                                                attrs="{'invisible':[('picking_ids','not in',False)]}"
+                                                />
+                                        </tree>
+                                 </field> 
+                                </page>
+
+                                <page string="Int Move List" >
+                                     <group class="oe_subtotal_footer oe_right" colspan="2">
+                                        <button name="button_dummy" type="object" string="Refresh"/>
+                                        <button name="updated_hpp" type="object" string="Updated Hpp"/>
+                                        <button name="move_dest" type="object" string="Move To Gudang Jadi"/>
+
+                                     </group>   
+                                    <field name="int_move_ids" nolabel="1"/>
+                                   
+                                </page> 
+                                <page string="Accounting" >
+                                <field name="jurnal_value_ids" widget="one2many_list" view_mode="tree" nolabel="1">
+                                            <tree  editable="bottom">
+                                                 <field name="master_jurnal_id"/>
+                                                 <field name="value"/>
+                                            </tree>
+                                </field> 
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <!-- <group> -->
+                                            <label for="qty_order"  string="Total Pcs"/>    
+                                            <field name="qty_order" nolabel="1" class="oe_inline" readonly="1"/>
+                                            <field name="qty_total_harga_journal_value"/>
+                                            <field name="qty_total_harga_journal_value_all_pcs" class="oe_inline"/>
+                                        <!-- </group> -->
+                                    </group>
+                                     
+                                    <group col='3'>
+                                        <group>
+                                            <field name="qty_total_wip_spk_cut" />
+                                            <field name="avg_qty_material_total" invisible="1"/>
+                                            <field name="avg_qty_total_wip_spk_cut" />             
+                                        </group>
+                                        <group>
+                                            <field name="qty_total_harga_acc_line" />
+                                            <field name="avg_qty_acc_total" />
+                                        </group>
+                                         <group>
+                                           <field name="qty_all_total_wip"/>  
+                                           <field name="qty_all_total_wip_pcs"/>         
+                                        </group>
+                                    </group>  
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <!-- <group> -->
+                                
+                                            <field name="last_qty_incoming"/>
+                                            <field name="reward_steam"/>
+                                            <field name="hpp_reward"/>
+                                        <!-- </group> -->
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <!-- <group> -->
+                                            <field name="last_qty_all_total_wip"/>
+                                            <field name="last_qty_all_total_wip_pcs"/>
+                                        <!-- </group> -->
+                                    </group> 
+
+                                  <!--   <group class="oe_subtotal_footer oe_right">
+                                          <field name="last_qty_all_total_wip_last_incoming"/>  
+                                          <field name="last_qty_all_total_wip_last_incoming_pcs"/>        
+                                    </group>       -->         
+                                  <!--   <group> 
+                                        <label for="direct_labour"/>                       
+                                        <field name="direct_labour"  nolabel="1"/>                 
+                                    </group>
+                                    <group> 
+                                        <label for="electricity_cost"/> 
+                                        <field name="electricity_cost"  nolabel="1"/>                    
+                                    </group>
+                                    <group>
+                                        <label for="factory_rent_cost"/> 
+                                        <field name="factory_rent_cost"  nolabel="1"/>   
+                                    </group>
+                                     <group>
+                                        <label for="sewing_cost"/> 
+                                        <field name="sewing_cost"  nolabel="1"/>   
+                                    </group> -->
+                                    <!--  <group>
+                                        <label for="cutting_cost"/> 
+                                        <field name="cutting_cost"  nolabel="1"/>   
+                                    </group> -->
+                                   <!--  <group>
+                                        <label for="avg_qty_material_total"/> 
+                                        <field name="avg_qty_material_total"  nolabel="1"/>   
+                                    </group> -->
+                                    </page> 
+
+                            </notebook>
+                        </group>
+        
+                       
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="action_makloon_tree" model="ir.actions.act_window">
+            <field name="name">Makloon Order Tree</field>
+            <field name="res_model">vit.makloon.order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+           <!--  <field name="domain"></field>
+            <field name="context"></field> -->
+            <!-- <field name="search_view_id" ref="view_picking_in_search"/> -->
+        </record>
+
+        <record id="seq_create_spk_makloon" forcecreate="1" model="ir.sequence.type">
+            <field name="name">SPK Makloon</field>
+            <field name="code">vit.makloon.order.seq</field>
+        </record>
+        <record id="seq_c_spk_makloon" forcecreate="1" model="ir.sequence">
+            <field name="name">SPK</field>
+            <field name="code">vit.makloon.order.seq</field>
+            <field name="prefix"></field>
+            <field name="suffix">/SPK-MKL/VI/%(year)s</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="view_vit_makloon_order_filter" model="ir.ui.view">
+            <field name="name">vit.makloon.order.filter</field>
+            <field name="model">vit.makloon.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Makloon">
+                    <field name="name" />          
+                </search>
+            </field>
+        </record>
+    </data>
+</openerp>
+
