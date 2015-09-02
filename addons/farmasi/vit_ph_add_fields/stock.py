@@ -37,7 +37,12 @@ class stock_picking(osv.osv):
 
        
         'release_date': fields.datetime('Release Date'),
+        'priority': fields.selection([('0','Low'), ('1','Normal'), ('2','High')], 'Priority', select=True),
 
+    }
+
+    _defaults = {
+        'priority': '0',   
     }
 
 class stock_pack_operation(osv.osv):
