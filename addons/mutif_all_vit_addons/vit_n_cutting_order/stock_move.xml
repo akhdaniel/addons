@@ -1,0 +1,98 @@
+<openerp>
+    <data>        		
+        <record id="view_picking_in_form_endil" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="makloon_id"/>
+                </xpath>
+                <xpath expr="//field[@name='stock_journal_id']" position="after">
+                     <field name="reward_steam"  attrs="{'invisible': [('partner_id','==',False)]}" /> 
+                </xpath>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="is_updated"/>
+                </xpath>
+               
+                
+            </field>
+        </record>
+
+
+        <record id="view_move_form_on_cutting" model="ir.ui.view">
+            <field name="name">stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="spk_mkl_id" /> 
+                </field>
+            </field>
+        </record>
+
+         <record id="stock_vpicktree_endil" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="type"/>
+                    <field name="reward_steam"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="is_updated"/>
+                </xpath>
+                 <xpath expr="//field[@name='state']" position="after">
+                    <field name="note"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_picking_in_form" model="ir.ui.view">
+            <field name="name">stock.picking.in.form</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+                <field name="stock_journal_id" position="after">
+                    <field name="reward_steam"  attrs="{'invisible': ['|',('partner_id','==',False),('is_makloon_categ','==',False)]}" /> 
+                    <field name="is_invoiced" invisible="1" />
+                    <field name="is_makloon_categ" invisible="1" />
+
+                </field>
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                    <button name="create_invoice" string="Create Invoice" type="object" class="oe_highlight"
+                    attrs="{'invisible': ['|',('state','!=', 'done'),('is_invoiced','==', False)]}" groups="base.group_user"/>
+                </xpath>
+                
+            </field>
+        </record>
+
+        <record id="view_picking_in_tree2" model="ir.ui.view">
+            <field name="name">stock.picking.in.tree</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_tree"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="after">
+                          <field name="reward_steam" /> 
+                    </field>
+            </field>
+        </record>
+
+
+        <record id="account.invoice_supplier_form_cutting" model="ir.ui.view">
+            <field name="name">account.invoice_supplier_form_cutting</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="spk_mkl_id" /> 
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
+        

@@ -1,0 +1,42 @@
+
+<openerp>
+	<data>
+		<!-- tambahi field instruktor di form-->
+		<record id="account_invoice_tree_tax_number" model="ir.ui.view">
+			<field name="name">account.invoice.tree.tax_number</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree" />
+			<field name="arch" type="xml">
+				<field name="state" position="after">
+					<field name="tax_number" />
+				</field>
+			</field>
+		</record>
+		<!-- tambahi field instruktor di form-->
+		<record id="account_invoice_form_tax_number" model="ir.ui.view">
+			<field name="name">account.invoice.form.tax_number</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<field name="account_id" position="after">
+					<field name="tax_number" />
+				</field>
+			</field>
+		</record>
+
+
+		<!-- tambahi filter instruktor -->
+       <!--record id="view_res_partner_filter2" model="ir.ui.view">
+            <field name="name">res.partner.select2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+	               <filter string="Instructors" 
+    	           	 name="instructor" domain="[('is_instructor','=',1)]" help="Instructor Partners"/>
+				</search>
+			</field>
+		</record-->
+
+	</data>
+</openerp>

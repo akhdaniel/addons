@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="view_partner_tree_vit1" model="ir.ui.view">
+            <field name="name">res.partner.tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<field name="name" position="before">
+            		<field name="code"/>
+            	</field>
+			</field>
+		</record>
+
+
+    	<record id="view_partner_form_vit1" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="function" position="before">
+                    <field name="status_pelanggan"/>
+                </field>
+            	<field name="name" position="after">
+            		<field name="code" placeholder="code"/>
+            	</field>
+            	<field name="phone" position="after">
+            		<field name="pin_bb"/>
+            	</field>
+            	<field name="title" position="after">
+            		<field name="no_rek"/>
+            	</field>
+			</field>
+		</record>
+
+        <record id="view_partner_form_vit" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+            	<page string="Internal Notes" position="after">
+            		<page string="Discount Point" name="mutif">
+            			<group>
+            				<field name="discount"/>
+				            <field name="point"/>
+				        </group>
+			        </page>
+                </page>
+			</field>
+		</record>
+
+        <record id="view_res_partner_filter2" model="ir.ui.view">
+            <field name="name">res.partner.select</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+                    <!-- <xpath expr="//field[@name='name']" position="replace">
+                                <field name="name"
+                                    filter_domain="['|','|','|',('name','ilike',self),('parent_id','ilike',self),('ref','=',self),('code','ilike', self)]"/>
+                        </xpath> -->
+                    <field name="name" position="replace">
+                         <field name="name"
+                           filter_domain="['|','|','|',('name','ilike',self),('parent_id','ilike',self),('ref','=',self),('code','ilike', self)]"/>
+                     </field>
+               </search>
+            </field>
+        </record>
+    </data>
+</openerp>

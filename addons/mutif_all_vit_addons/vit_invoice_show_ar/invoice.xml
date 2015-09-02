@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+		
+	<!-- Customer Invoice Form-->
+	<record id="invoice_form_ar" model="ir.ui.view">
+        <field name="name">account.invoice_form_ar</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+	    <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <page string="Payments" position="after">
+                <page string="Outstanding AR">
+                    <button name="fill_ar" type="object" string="Fill AR"
+                        states="draft"/>
+                    <field name="outstanding_ar_ids" nolabel="1" >
+						<tree string="Outstanding AR" readonly="1">
+                            <field name="invoice" />
+                            <field name="name" />
+							<field name="journal_id" />
+                            <field name="date" />
+                            <field name="account_id" />
+							<field name="debit" />
+                            <field name="credit" />
+                            <field name="is_used" />
+                            <field name="reconcile_partial_id" />
+							<field name="reconcile_id" />
+						</tree>
+                    </field>
+                </page>
+
+
+            </page>
+
+            <field name="residual" position="after">
+                <field name="outstanding_debit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="outstanding_credit" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="net_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+            </field>
+
+    	</field>
+    </record>
+</data>
+</openerp>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="stock" 
+        string="Receipt Slip with Signature" 
+        model="stock.picking.in" 
+        name="stock" 
+        rml="vit_receipt_slip_print/report/stock.rml" 
+        auto="False" 
+        header="True"/>          
+    </data> 
+</openerp>

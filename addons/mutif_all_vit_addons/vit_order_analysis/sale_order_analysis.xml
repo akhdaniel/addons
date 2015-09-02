@@ -1,0 +1,81 @@
+<openerp>
+	<data>
+		<!-- action window sales_order_analysis -->
+		<record id="action_sale_order_analysis" model="ir.actions.act_window">
+			<field name="name">Sale Order Analysis</field>
+			<field name="res_model">vit_order_analysis.sale_order_analysis</field>
+			<field name="view_mode">tree,form,graph</field>
+            <field name="context">{"search_default_category":1,"search_default_product":1}</field>
+		</record>
+
+		<!-- tree -->
+		<record id="view_classname_tree" model="ir.ui.view">
+		    <field name="name">sale_order_analysis_tree</field>
+		    <field name="model">vit_order_analysis.sale_order_analysis</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list sale_order_analysis">
+					<field name="order_id"/> 		
+					<field name="order_date"/> 	
+					<field name="categ_id" invisible="1"/>	
+					<field name="product_id"/>	
+					<field name="name_template"/>
+					<field name="real_order"/> 	
+					<field name="qty_order"/> 	
+					<field name="delivered"/> 	
+					<field name="back_order"/> 	
+					<field name="unfilled"/> 	
+		        </tree>    
+		    </field>
+		</record>
+
+        <!-- graph -->
+        <record id="view_sale_order_analysis_graph" model="ir.ui.view">
+            <field name="name">sale_order_analysis.graph</field>
+            <field name="model">vit_order_analysis.sale_order_analysis</field>
+            <field name="arch" type="xml">
+                <graph string="sale_order_analysis" type="bar">
+                    <field name="categ_id"/>
+                    <field name="real_order" operator="+"/>
+                    <field name="unfilled" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+		<!-- filter -->
+		<record id="view_sale_order_analysis_filter" model="ir.ui.view">
+		    <field name="name">sale_order_analysis.filter</field>
+		    <field name="model">vit_order_analysis.sale_order_analysis</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Orders">
+		            
+		            <field name="product_id"/>
+
+		            <group expand="1" string="Group By...">
+		                <filter string="Category" name="category"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'categ_id'}"/>
+
+		                <filter string="Product" name="product"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>
+
+			            <filter string="SO" 
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'order_id'}"/>
+
+		                <filter string="Date" 
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'order_date'}"/>
+		            </group>                                        
+		        </search>
+		    </field>
+		</record>
+
+		<!-- menu sale order alanysis di bawah Reporting - Sales Analysis  -->
+		<menuitem id="menu_master_reward"
+			 action="action_sale_order_analysis"
+			 name="View Order Analysis"
+			 sequence="210"
+			 parent="base.next_id_64" />		
+	</data>
+</openerp>

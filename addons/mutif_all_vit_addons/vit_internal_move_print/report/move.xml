@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="move" 
+        string="Picking Slip with Signature." 
+        model="stock.picking" 
+        name="move" 
+        rml="vit_internal_move_print/report/move.rml" 
+        auto="False" 
+        header="True"/>               
+    </data> 
+</openerp>

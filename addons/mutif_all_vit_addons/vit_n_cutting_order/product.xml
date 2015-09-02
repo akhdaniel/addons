@@ -1,0 +1,31 @@
+ <openerp>
+    <data>   
+
+        <record id="product_normal_form_view31" model="ir.ui.view">
+            <field name="name">product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="before"> 
+                        <!-- <field name="master_model_id"/>  -->
+                        <field name="type_model"/>          
+                    </field>                                      
+            </field>
+        </record>
+
+
+        <record id="product_product_tree_view3" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                    <field name="name" position="before"> 
+                        <!-- <field name="master_model_id"/> -->
+                        <field name="type_model"/>             
+                    </field>                                        
+            </field>
+        </record>       
+
+
+    </data>
+</openerp>        

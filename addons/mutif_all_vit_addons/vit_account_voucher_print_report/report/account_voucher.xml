@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="account_voucher" 
+        string="Voucher Print" 
+        model="account.voucher" 
+        name="account_voucher" 
+        rml="vit_account_voucher_print_report/report/account_voucher.rml" 
+        auto="False" 
+        header="True"/>    
+    </data> 
+</openerp>

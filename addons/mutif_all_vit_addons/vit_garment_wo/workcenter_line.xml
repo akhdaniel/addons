@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<!-- tambahi field instruktor di form-->
+		<record id="mrp_production_workcenter_line_tree_partner" model="ir.ui.view">
+			<field name="name">mrp.production.workcenter.line.tree.partner</field>
+            <field name="model">mrp.production.workcenter.line</field>
+			<field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit" />
+			<field name="arch" type="xml">
+				<field name="state" position="after">
+					<field name="partner_id" />
+					<field name="input"/>
+					<field name="output"/>
+					<field name="efficiency" widget="progressbar"/>
+				</field>
+			</field>
+		</record>
+
+		<record id="mrp_production_workcenter_line_form_partner" model="ir.ui.view">
+			<field name="name">mrp.production.workcenter.line.form.partner</field>
+            <field name="model">mrp.production.workcenter.line</field>
+			<field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit" />
+			<field name="arch" type="xml">
+				<field name="workcenter_id" position="after">
+					<field name="partner_id"/>
+				</field>
+
+				<notebook>
+					<page string="Efficiency">
+						<group>
+							<field name="input" on_change="onchange_input(input, output)"/>
+							<field name="output" on_change="onchange_output(input, output)"/>
+							<field name="efficiency" widget="progressbar"/>
+						</group>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+
+		<record id="mrp_production_workcenter_line_filter_partner" model="ir.ui.view">
+			<field name="name">mrp.production.workcenter.line.filter.partner</field>
+            <field name="model">mrp.production.workcenter.line</field>
+			<field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
+			<field name="arch" type="xml">
+				<search string="Search Work Orders">
+	                <field name="partner_id"/>
+	                <group string="Group By..." position="inside">
+	                    <filter string="Partner Makloon" icon="terp-go-home" domain="[]" context="{'group_by':'partner_id'}"/>
+	                </group>
+	            </search>
+			</field>
+		</record>
+
+
+		<!-- tampilan work order di MO form view -->
+		<record id="mrp_production_form_partner" model="ir.ui.view">
+			<field name="name">mrp.production.form.partner</field>
+            <field name="model">mrp.production</field>
+			<field name="inherit_id" ref="mrp.mrp_production_form_view" />
+			<field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page[@string='Work Orders']/field[@name='workcenter_lines']/form/group/field[@name='workcenter_id']" position="after">
+                	<field name="partner_id" />
+					<field name="input" on_change="onchange_input(input, output)"/>
+					<field name="output" on_change="onchange_output(input, output)"/>
+					<field name="efficiency" widget="progressbar"/>                	
+				</xpath>
+                <xpath expr="//form/sheet/notebook/page[@string='Work Orders']/field[@name='workcenter_lines']/tree/field[@name='workcenter_id']" position="after">
+                	<field name="partner_id" />
+					<field name="input"/>
+					<field name="output"/>
+					<field name="efficiency" widget="progressbar"/>                	
+				</xpath>				
+			</field>
+		</record>
+
+
+
+		<!-- record work center-->
+		<record id="mrp_workcenter_cutting" model="mrp.workcenter">
+			<field name="name">CUTTING</field>
+			<field name="resource_type">user</field>
+			<field name="code">CT</field>
+		</record>		
+
+		<record id="mrp_workcenter_makloon" model="mrp.workcenter">
+			<field name="name">MAKLOON</field>
+			<field name="resource_type">user</field>
+			<field name="code">MK</field>
+		</record>		
+		<record id="mrp_workcenter_acc" model="mrp.workcenter">
+			<field name="name">ACCESSORIES</field>
+			<field name="resource_type">user</field>
+			<field name="code">ACC</field>
+		</record>		
+
+		<record id="mrp_workcenter_inspect" model="mrp.workcenter">
+			<field name="name">INSPECT</field>
+			<field name="resource_type">user</field>
+			<field name="code">INS</field>
+		</record>		
+
+		<record id="mrp_workcenter_packing" model="mrp.workcenter">
+			<field name="name">PACKING</field>
+			<field name="resource_type">user</field>
+			<field name="code">PAK</field>
+		</record>		
+
+		<!-- mrp.routing -->
+		<record id="mrp_routing_baju" model="mrp.routing">
+			<field name="name">BAJU</field>
+			<field name="code">BAJU</field>
+		</record>
+		<record id="mrp_routing_workcenter_cutting" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Cutting</field>
+			<field name="sequence">10</field>
+			<field name="workcenter_id" ref="mrp_workcenter_cutting"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_acc" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Accessories</field>
+			<field name="sequence">20</field>
+			<field name="workcenter_id" ref="mrp_workcenter_acc"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_makloon" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Makloon</field>
+			<field name="sequence">30</field>
+			<field name="workcenter_id" ref="mrp_workcenter_makloon"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_inspect" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Inspect</field>
+			<field name="sequence">40</field>
+			<field name="workcenter_id" ref="mrp_workcenter_inspect"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+		<record id="mrp_routing_workcenter_packing" model="mrp.routing.workcenter">
+			<field name="routing_id" ref="mrp_routing_baju" />
+			<field name="name">Packing</field>
+			<field name="sequence">50</field>
+			<field name="workcenter_id" ref="mrp_workcenter_packing"></field>
+			<field name="cycle_nbr">1</field>
+			<field name="hour_nbr">1</field>
+		</record>		
+    </data>
+</openerp>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_order_form11" model="ir.ui.view">
+            <field name="name">sale.order.form.cust</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="before">
+                    <field name="qty_hand"/>
+                    <field name="outgoing"/>
+                    <field name="forecast"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='name']" position="replace">
+                    <field name="name" invisible="1"/>
+                </xpath>
+          <!--       <xpath expr="//group[@name='sale_total']/field[@name='amount_tax']" position="after">
+                    <field name="discount" widget='monetary' />
+                </xpath> -->
+            </field>
+        </record>
+    </data>
+</openerp>

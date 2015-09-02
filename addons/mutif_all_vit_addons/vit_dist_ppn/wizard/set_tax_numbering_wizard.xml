@@ -1,0 +1,56 @@
+<openerp>
+	<data>
+
+        <!-- wizard action -->
+		<record model="ir.actions.act_window" id="set_tax_numbering_wizard"> 
+			<field name="name">Fill Tax Numbering</field>
+			<field name="res_model">vit_dist_ppn.set_tax_numbering_wizard</field> 
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field> 
+		</record>
+
+		<record model="ir.ui.view" id="create_attendee_form_view">
+			<field name="name">vit_dist_ppn.set_tax_numbering_wizard.form</field>
+			<field name="model">vit_dist_ppn.set_tax_numbering_wizard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Set Tax Numbering" version="7.0">
+					<group>
+						<field name="date_start" on_change="onchange_date_start(date_start, date_end)"/>
+						<field name="date_end"   on_change="onchange_date_start(date_start, date_end)"/>
+					</group>
+					<field name="invoice_ids" mode="tree">
+						<tree string="Invoices">
+							<field name="invoice_id"/>
+							<field name="amount"/>
+							<field name="customer"/>
+							<field name="npwp"/>
+							<field name="date"/>
+							<field name="tax_number"/>
+						</tree>
+					</field>
+
+					<footer>
+						<button type="special" 
+							 special="cancel" 
+							 string="Cancel" 
+							 icon="gtk-cancel"/>
+						
+						<button type="object" 
+							 name="set_tax_numbering"
+							 string="Fill Tax Numbering" 
+							 icon="gtk-ok"
+							 confirm="Are you sure you want to fill those tax number to the invoices?"
+							 />
+					</footer>
+				</form>
+			</field>
+		</record>	
+
+	    <menuitem id="set_tax_numbering" 
+    	 parent="account.menu_finance_receivables" name="Set Tax Numbering" sequence="50" 
+    	 action="set_tax_numbering_wizard" />
+			
+	</data>
+</openerp>

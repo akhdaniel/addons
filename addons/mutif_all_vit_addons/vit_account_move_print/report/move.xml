@@ -1,0 +1,22 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="move1" 
+        string="Bukti Kas Masuk" 
+        model="account.move" 
+        name="move1" 
+        rml="vit_account_move_print/report/move1.rml" 
+        auto="False" 
+        header="True"/>    
+
+        <report 
+        id="move2" 
+        string="Bukti Kas Keluar" 
+        model="account.move" 
+        name="move2" 
+        rml="vit_account_move_print/report/move2.rml" 
+        auto="False" 
+        header="True"/>        
+    </data> 
+</openerp>
