@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+	    <!-- search view -->
+        <record id="view_pr_line_search" model="ir.ui.view">
+            <field name="name">purchase.requisition.line.search</field>
+            <field name="model">purchase.requisition.line</field>
+            <field name="arch" type="xml">
+                <search string="PR Line List">
+                    <filter name="open_prline" string="Open PR Line" domain="[('state','=','draft')]" help="Open PR Line"/>
+                    
+                    <filter name="in_purchase_prline" string="In-Progress PR Line" domain="[('state','=','in_purchase')]" help="Open PR Line"/>
+
+                    <filter name="done_prline" string="Done PR Line" domain="[('state','=','done')]" help="Open PR Line"/>
+
+                    <field name="product_id"/>
+                    <field name="state"/>
+
+                    <group expand="0" string="Group By...">
+                        <filter string="Partner" domain="[]" context="{'group_by':'partner_ids'}"/>
+                        <filter string="Purchase Requistion" domain="[]" context="{'group_by':'requisition_id'}"/>
+                        <filter string="Date" icon="terp-go-month" domain="[]"  context="{'group_by':'date'}"/>
+                        <filter string="State" icon="terp-go-month" domain="[]"  context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>	
+
+
+
+	    <record model="ir.ui.view" id="view_pr_line_tree">
+	        <field name="name">purchase.requisition.line.tree</field>
+	        <field name="model">purchase.requisition.line</field>
+	        <field name="arch" type="xml">
+	            <tree string="Purchase Requisition">
+	                <field name="requisition_id" />
+	                <field name="requisition_state"/>
+	                <field name="requisition_date"/>
+	                <field name="product_id" />
+	                <field name="product_qty"/>
+	                <field name="product_uom_id"/>
+	                <field name="user_id"/>
+	                <field name="partner_ids"/>
+	                <field name="state"/>
+	           	 	<button name="%(action_purchase_order_info)d" string="Purchase Orders" type="action" icon="gtk-justify-fill"/>	                                
+	                <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+	            </tree>
+
+	      </field>
+	    </record>	  
+
+        <record model="ir.ui.view" id="view_pr_line_form">
+            <field name="name">PR Lines</field>
+            <field name="model">purchase.requisition.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="PR Lines" version="7.0">
+                    <h1>
+                        <field name="product_id" class="oe_inline" readonly="1"/>
+                    </h1>
+                    <sheet>                	
+                        <group>
+	                        <group>
+				                <field name="product_qty" readonly="1"/>
+				                <field name="product_uom_id" readonly="1"/>
+				                <field name="user_id" readonly="1"/>
+				                <field name="state"/>
+				                <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+	                        </group>
+	                        <group>
+				                <field name="requisition_id" readonly="1"/>
+				                <field name="requisition_state" readonly="1"/>
+				                <field name="requisition_date" readonly="1"/>
+	                        </group>
+                        </group>
+
+	                    <notebook>
+	                        <page string="Suppliers">
+				                <field name="partner_ids"/>
+				            </page>
+                        </notebook>
+		            </sheet>
+	            </form>
+            </field>
+        </record>   
+    
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_create_po" model="ir.actions.server">
+	        <field name="name">Create Quotation</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="purchase_requisition.model_purchase_requisition_line"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('purchase.requisition.line').action_createPO(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_create_po_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'purchase.requisition.line'" name="model"/>
+	        <field name="name">Create Quotation</field>
+	        <field eval="'ir.actions.server,%d'%action_create_po" name="value"/>
+	    </record>
+
+	</data>
+</openerp>

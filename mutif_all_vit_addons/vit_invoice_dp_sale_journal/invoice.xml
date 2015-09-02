@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+		
+	<!-- Customer Invoice Form-->
+	<record id="invoice_form_dp" model="ir.ui.view">
+        <field name="name">account.invoice.form_dp</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+	    <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <page string="Payments" position="after">
+                <page string="Down Payments">
+                	<button name="fill_sale_dp" type="object" string="Fill Down Payments"
+                	    states="draft"/>
+                    <field name="dp_line" nolabel="1" widget="one2many_list" >
+						<tree string="DP Journal Lines" editable="bottom">
+							<field name="account_move_line_id" 
+							 on_change="account_move_line_change(account_move_line_id)"  
+							 domain="[('account_id','ilike', 'Uang Muka'), 
+							 ('is_used','=',False), 
+							 ('credit','>',0), 
+							 ('partner_id','=', parent.partner_id)]"/>
+							<field name="date" />
+							<field name="account_id" />
+							<field name="amount" />
+						</tree>
+                    </field>
+                </page>
+            </page>
+			<field name="amount_untaxed" position="before">
+				<field name="sub_total" widget="monetary"/>
+				<field name="dp_total" widget="monetary"/>
+			</field>
+
+			<field name="reconciled" position="before">
+				<label string="" colspan="4"/>
+			</field>
+
+    	</field>
+    </record>
+
+       <!-- Supplier Invoice Form -->
+	<record id="invoice_supplier_form_dp" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.form_dp</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+	    <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <page string="Payments" position="after">
+                    <page string="Down Payments">
+	                	<button name="fill_purchase_dp" type="object" 
+	                		 string="Fill Down Payments"
+	                	     states="draft"/>
+
+                        <field name="dp_line" nolabel="1" widget="one2many_list" >
+							<tree string="DP Journal Lines" editable="bottom">
+								<field name="account_move_line_id"
+								 on_change="account_move_line_change2(account_move_line_id)"  
+								 domain="[ ('account_id','ilike','Uang Muka'), ('is_used','=',False), ('debit','>',0), ('partner_id','=',parent.partner_id)]"
+								/>
+								<field name="date" />
+								<field name="account_id" />
+								<field name="amount" />
+							</tree>		                    
+
+                        </field>
+                    </page>
+                </page>
+				<field name="fiscal_position" position='after'>
+					<newline/>
+					<field string="Customer"
+						name="ref_partner_id"
+						context="{'default_customer': 0,'search_default_customer': 1,'default_customer': 1}"
+						domain="[('customer', '=', True)]"/>
+				</field>
+
+				<field name="ref_partner_id" position='after'>
+					<field name="sales_inv"/>
+				</field>		
+
+				<field name="amount_untaxed" position="before">
+					<field name="sub_total"/>
+					<field name="dp_total"/>
+				</field>
+
+				<field name="reconciled" position="before">
+					<label string="" colspan="4"/>
+				</field>
+
+            </field>
+        </record>
+
+	<!-- invioce lines -->
+    <record id="view_invoice_line_form_noqty" model="ir.ui.view">
+        <field name="name">account.invoice.line.form.noqty</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="model">account.invoice.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+			<field name="quantity" position="replace">
+				<field name="quantity" readonly="True" nolabel="1"/>
+			</field>
+        </field>
+	</record>
+
+	<!-- supplier invoice tree -->
+    <record id="invoice_tree" model="ir.ui.view">
+        <field name="name">account.invoice.tree20</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="model">account.invoice</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+        	<!-- show these Customer and Sales Invoice No fields kalau type nya Supplier Invoice (type=out_invoice') -->
+            <field name="state" position="after" >
+                <field name="ref_partner_id" string="Customer (name)" invisible=" context.get('type') == 'out_invoice'"/>
+                <field name="sales_inv" invisible="context.get('type') == 'out_invoice'"/>
+                <field name="type" />
+	    	</field>
+	    	<field name="currency_id" position="after">
+	    		<field name="sub_total"/>
+	    		<field name="dp_total"/>
+	    	</field>
+        </field>
+    </record>	
+
+    <record id="account_move_line_tree_is_used" model="ir.ui.view">
+        <field name="name">account_move_line_tree_is_used</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="reconcile" position="after">
+            	<field name="is_used"/>
+            </field>
+        </field>
+    </record>
+
+
+</data>
+
+</openerp>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="invoice1_sign" 
+        string="Invoice with Signature." 
+        model="account.invoice" 
+        name="invoice1_sign" 
+        rml="vit_invoice_print_extra/report/invoice1_sign.rml" 
+        auto="False" 
+        header="True"/>
+
+        <report 
+        id="invoice1" 
+        string="Permohonan Pembayaran." 
+        model="account.invoice" 
+        name="invoice1" 
+        rml="vit_invoice_print_extra/report/invoice1.rml" 
+        auto="False" 
+        header="True"/>                     
+    </data> 
+</openerp>

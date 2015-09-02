@@ -1,0 +1,109 @@
+<openerp>
+	<data>
+        <record id="view_conf_cutting_tree" model="ir.ui.view">
+            <field name="name">conf.cutting</field>
+            <field name="model">conf.cutting</field>
+            <field name="arch" type="xml">
+                <tree string="List Conf Cutting">
+                    <field name="loop_size"/>                
+                    <field name="categ_id"/>
+                    <field name="notes"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_conf_cutting_form" model="ir.ui.view">
+            <field name="name">conf.cutting.form</field>
+            <field name="model">conf.cutting</field>
+            <field name="arch" type="xml">
+                 <form string="Conf Cutting" version="7.0">
+                    <field name="loop_size"/>       
+                    <field name="categ_id"/>
+                    <field name="notes"/>
+                </form>
+                                      
+            </field>
+        </record>
+
+
+        <record id="view_conf_cutting_filter" model="ir.ui.view">
+            <field name="name">conf.cutting</field>
+            <field name="model">conf.cutting</field>
+            <field name="arch" type="xml">
+                <search string="Search Conf">
+                    <field name="categ_id" />          
+                </search>
+            </field>
+        </record>
+    </data>
+
+    <data>
+        <record id="view_vit_master_journal_tree" model="ir.ui.view">
+            <field name="name">vit.master.journal.tree</field>
+            <field name="model">vit.master.journal</field>
+            <field name="arch" type="xml">
+                <tree string="List Master Journal">
+                    <field name="name" />
+                    <field name="appeareance"/>     
+                    <field name="journal_id"/> 
+                    <field name="debit_account_id"/>           
+                    <field name="credit_account_id"/>
+                    <field name="product_id"/> 
+                    <field name="is_active"/>                   
+                </tree>
+            </field>
+        </record>
+        <record id="view_vit_master_journal_form" model="ir.ui.view">
+            <field name="name">vit.master.journal.form</field>
+            <field name="model">vit.master.journal</field>
+            <field name="arch" type="xml">
+                 <form string="Master Journal" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="appeareance"/>     
+                            <field name="journal_id"/> 
+                            <field name="debit_account_id"/>       
+                            <field name="credit_account_id"/>
+                            <field name="product_id"/> 
+                            <field name="is_active"/> 
+                            
+                        </group>
+                    </sheet>
+                </form>
+                                      
+            </field>
+        </record>
+
+
+        <record id="view_vit_master_journal_filter" model="ir.ui.view">
+            <field name="name">vit.master.journal.filter</field>
+            <field name="model">vit.master.journal</field>
+            <field name="arch" type="xml">
+                <search string="Search Master Journal">
+                    <field name="journal_id" />  
+                    <field name="credit_account_id"/> 
+                    <field name="debit_account_id"/>         
+                </search>
+            </field>
+        </record>
+        
+        <record id="view_vit_master_location_form" model="ir.ui.view">
+            <field name="name">vit.master.location.form</field>
+            <field name="model">vit.master.location</field>
+            <field name="arch" type="xml">
+                 <form string="Master Location" version="7.0">
+                    <sheet>
+                        <group>
+                            <field name="name" />
+                            <field name="source_loc_id"/>     
+                            <field name="dest_loc_id"/> 
+                        </group>
+                    </sheet>
+                </form>
+                                      
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

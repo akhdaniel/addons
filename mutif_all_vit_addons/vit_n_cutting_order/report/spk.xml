@@ -1,0 +1,15 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="spk" 
+        string="SPK" 
+        model="vit.cutting.order" 
+        name="spk" 
+        rml="vit_n_cutting_order/report/spk.rml" 
+        auto="False"
+        header="False"
+        />
+  
+    </data> 
+</openerp>

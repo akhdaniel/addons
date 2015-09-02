@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="purchase_requisition" 
+        string="Purchase Requisitions With Signature." 
+        model="purchase.requisition" 
+        name="purchase_requisition" 
+        rml="vit_pr_print_sign/report/purchase_requisition_sign.rml" 
+        auto="False" 
+        header="True"/>          
+    </data> 
+</openerp>

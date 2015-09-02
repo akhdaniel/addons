@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_order_form_order_booking" model="ir.ui.view">
+            <field name="name">sale.order.form.order.booking</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                       <xpath expr="//button[@name='action_button_confirm']" position="replace">
+                            <button name="action_button_confirm"  states="draft" string="Booking" type="object" groups="base.group_user"/>
+                       </xpath>
+
+                       <xpath expr="//button[@name='action_cancel']" position="replace">
+                           <button name="action_cancel" states="manual,progress" string="Cancel Booking" type="object" groups="base.group_user" confirm="Anda Yakin Akan Membatalkan Booking/order ini? Bila Iya, Action ini akan mendelete proses internal move atau delivery order di warehouse yang akan berlangsung"/>
+                       </xpath>         
+            </field>
+        </record>
+    </data>
+</openerp>

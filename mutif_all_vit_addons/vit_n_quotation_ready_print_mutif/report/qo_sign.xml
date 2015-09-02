@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="qo_sign" 
+        string="Ready To Order" 
+        model="sale.order" 
+        name="qo_sign" 
+        rml="vit_n_quotation_ready_print_mutif/report/qo_sign.rml" 
+        auto="False" 
+        header="True"/>         
+    </data> 
+</openerp>

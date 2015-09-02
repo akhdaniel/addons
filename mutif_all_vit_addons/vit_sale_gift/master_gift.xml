@@ -1,0 +1,67 @@
+<openerp>
+	<data>
+        <record id="view_master_gift_form" model="ir.ui.view">
+            <field name="name">master_gift_form</field>
+            <field name="model">vit_sale_gift.master_gift</field>
+            <field name="arch" type="xml">
+            	<form string="master gift form" version="7.0">
+            		<sheet>
+            			<h1>
+				            <field name="name"/>
+				        </h1>
+			            <group>
+			            	<group>
+				                <field name="product_id"/>       
+				                <field name="qty"/>       
+				                <field name="multiple"/>       
+				                <field name="total_qty"/>       
+				            </group>
+				            <group>
+				                <field name="is_active"/>       
+				                <field name="date_from"/>       
+				                <field name="date_to"/>       
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<!--page string="Product Conditions">
+					            <field name="product_condition_ids">
+					            	<tree string="Product Conditions" editable="bottom">
+						                <field name="product_id"/>       
+						                <field name="min_qty"/>       
+						            </tree>
+						        </field>
+						    </page-->
+			            	<page string="Category Conditions">
+					            <field name="categ_condition_ids">
+					            	<tree string="Category Conditions" editable="bottom">
+						                <field name="product_categ_id"/>       
+						                <field name="min_qty"/>       
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+
+        <record id="view_master_gift_tree" model="ir.ui.view">
+            <field name="name">vit_sale_gift_master_gift_tree</field>
+            <field name="model">vit_sale_gift.master_gift</field>
+            <field name="arch" type="xml">
+            	<tree string="list master gift" colors="grey:is_active==False">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="total_qty"/>
+                    <field name="is_active"/>
+                </tree>    
+            </field>
+        </record>
+
+	</data>
+</openerp>
