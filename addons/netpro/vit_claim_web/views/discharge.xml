@@ -23,46 +23,34 @@
             </div>
         </t>
 
-        <!-- text diagnosis -->
+        <!-- diagnosis -->
         <div class="row">
             <div class="col-md-4 col-sm-4">
                 <label class="control-label">Diagnosis</label>
             </div>
             <div class="col-md-4 col-sm-4">
-                <input type="text" class="form-control" id="diagnose"/>
-                <script src="/vit_claim_web/static/src/js/jquery.js"></script>
-                <script src="/vit_claim_web/static/src/js/jquery-ui.js"></script>
-                <script>
+                <input type="text" class="form-control" name="diagnose" id="diagnose"/>
+                <script src="/vit_claim_web/static/src/js/jquery-ui/jquery.js"></script>
+                <script src="/vit_claim_web/static/src/js/jquery-ui/jquery-ui.js"></script>
+                <script src="/vit_claim_web/static/src/js/jquery-ui/jquery.ui.autocomplete.html.js"></script>
+                <script type='text/javascript'>
                     var Diagnoses = []
                     <t t-foreach="diagnosis or []" t-as="diag">
-                        Diagnoses.push("<t t-esc="diag.diagnosis"/> <t t-esc="diag.name"/>");
+                        Diagnoses.push({"id":"<t t-esc="diag.id"/>","value":"<t t-esc="diag.diagnosis"/> <t t-esc="diag.name"/>","label":"<t t-esc="diag.diagnosis"/> <t t-esc="diag.name"/>"});
                     </t>
                     Diagnoses = Diagnoses.sort();
                     $( "#diagnose" ).autocomplete({
-                        source: Diagnoses
+                        source: Diagnoses,
+                        minLength: 1,
+                        select: function(event, ui){
+                            console.log("ui.item : ",ui.item);
+                            $("#diagnosis_id").val(ui.item.id);
+                        },
+                        html:true,
                     });
                 </script>
             </div>
         </div>
-
-        <!-- diagnosis -->
-        <!-- <div class="row">
-            <div class="col-md-4 col-sm-4">
-                <label class="control-label" for="diagnosis_id">Diagnosis</label>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <select class="form-control" required="True" name="diagnosis_id" 
-                     t-attf-readonly="#{True if readonly==1 else False}">
-                    <option value="">Select Diagnosis...</option>
-                    <t t-foreach="diagnosis or []" t-as="diag">
-                        <option t-att-value="diag.id" 
-                            t-attf-selected="#{claim and claim.diagnosis_id.id == diag.id}">
-                            <t t-esc="diag.name"/>
-                        </option>
-                    </t>
-                </select>                
-            </div>
-        </div> -->
  	
         <!-- buttons -->
         <div class="row">
@@ -82,6 +70,7 @@
 	    <input type="hidden" name="claim_id" t-attf-value="{{ claim.id }}" />
 	    <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
         <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
+        <input type="hidden" name="diagnosis_id" id="diagnosis_id"/>
 
 	</form>
 </template>
