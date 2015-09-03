@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>      
+
+        <record id="vit_mrp_workcenter_split_view" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <button name="button_start_working" position="after">
+                    <button name="split_work_orders" string="Split" type="object" attrs="{'invisible':['|',('state','!=','draft'),('split','=',True)]}" confirm="Dengan Spilt WO ini maka seluruh WO selanjutnya ikut tersplit, Anda Yakin ?"/>
+                </button>    
+                <field name="sequence" position="after">
+                    <field name="split" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+
+        <record id="vit_mrp_man_orders_split" model="ir.ui.view">
+            <field name="name">mrp.production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="split" invisible="1"/>
+                </field> 
+            </field>
+        </record> 
+
+    </data>
+</openerp>
