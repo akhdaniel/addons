@@ -103,7 +103,7 @@ class netpro_policy(osv.osv):
         'bank_optional_id': fields.many2one('res.partner.bank', 'Bank Optional', help='Relasi ke Partner Bank'),
         'vaccount_no_optional': fields.char('V Account No Optional'),
         'policy_status': fields.selection([('open','Open'), ('approved','Approved'), ('closed', 'Closed')],'Policy Status'),
-        'state': fields.selection([('open','Open'), ('approved','Approved'), ('closed', 'Closed')],'Policy Status'),
+        'state': fields.selection([('open','Open'), ('approved','Approved'), ('closed', 'Closed'), ('endorsed', 'Endorsed')],'Policy Status'),
         'endorsement_date': fields.date('Endorsement Date'),
         'email_date': fields.date('EmailDate'),
         'int_endorsement_no': fields.integer('Int. Endorsement No'),
@@ -171,16 +171,16 @@ class netpro_policy(osv.osv):
     _defaults = {
         'ci_date'   : lambda*a : time.strftime("%Y-%m-%d"),
         'state'     : 'open',
-        'policy_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
+        #'policy_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
     }
     def create(self, cr, uid, vals, context=None):
-        #nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
+        nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
         vals.update({
-            #'policy_no':nomor,
+            'policy_no':nomor,
             'created_by_id':uid,
             'tpa_id':tpa_val,
             'created_by_date':time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -209,6 +209,25 @@ class netpro_policy(osv.osv):
     
     def action_close(self,cr,uid,ids,context=None):
         #set to "close" state
+        return self.write(cr,uid,ids,{'state':'closed'},context=context)
+
+    def action_endorse(self,cr,uid,ids,context=None):
+        #set to "close" state
+        #ext_policy = self.browse(cr, uid, ids[0], context=context)
+        data = self.browse(cr, uid, ids[0])
+        cov_ids = []
+        for x in data.coverage_ids:
+            cov_ids.append([0,0,{
+                'product_type_id' : x.product_type_id.id,
+                'product_id' : x.product_id.id,
+                'reimbursement' : x.reimbursement,
+                }])
+        default_val = {
+            'policy_no' : self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
+            'state' : 'endorsed',
+            'coverage_ids' : cov_ids,
+        }
+        new_policy = self.copy(cr, uid, ids[0], default_val, context=context)
         return self.write(cr,uid,ids,{'state':'closed'},context=context)
 
     def create_plan_schedule(self, cr, uid, ids, context=None):

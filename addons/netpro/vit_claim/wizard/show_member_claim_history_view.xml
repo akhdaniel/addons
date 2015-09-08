@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="show_member_history_tree">
+	        <field name="name">claim_member_history_tree</field>
+	        <field name="model">claim_member_history</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	        	<form>
+	        		<group string="Histories">
+	            		<field name="claim_history_ids" nolabel="1" readonly="1"/>
+	            	</group>
+	            </form>
+	        </field>
+	    </record>
+	</data>
+</openerp>

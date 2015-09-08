@@ -52,6 +52,9 @@ class netpro_product_plan(osv.osv):
         'premium_type_ids': fields.one2many('netpro.product_plan_premium_type', 'product_plan_id', 'Premium Type', ondelete='cascade'),
         'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
         'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
+
+        'co_share' : fields.boolean('Co Share'),
+        'co_share_value' : fields.float('Co Share (%)'),
     }
 
     def create(self, cr, uid, vals, context=None):

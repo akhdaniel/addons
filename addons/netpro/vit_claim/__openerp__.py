@@ -36,6 +36,10 @@
                 'vit_claim_view.xml', 
                 'data/claim_status.xml',
                 'data/sequence.xml',
+
+                'wizard/show_member_plan_view.xml',
+                'wizard/show_member_claim_history_view.xml',
+
                 'menu.xml',
         ],
         "installable": True

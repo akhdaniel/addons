@@ -16,6 +16,25 @@
         </field>
     </record>
 
+
+    <record model="ir.actions.act_window" id="show_member_plan">
+        <field name="name">View Benefit</field>
+        <field name="res_model">claim_member_plan</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <!-- <field name="domain">[('member_id', '=', parent.member_id)]</field> -->
+        <field name="target">new</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="show_member_history">
+        <field name="name">View Histories</field>
+        <field name="res_model">claim_member_history</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <!-- <field name="domain">[('member_id', '=', parent.member_id)]</field> -->
+        <field name="target">new</field>
+    </record>
+
     <record model="ir.ui.view" id="view_netpro_claim_form">
         <field name="name">netpro.claim.form</field>
         <field name="model">netpro.claim</field>
@@ -69,6 +88,11 @@
                      <field name="state" widget="statusbar" 
                     statusbar_visible="draft,open,approved,released" /> 
                 </header>
+                <br />
+                <div>
+                    <button string="View Claim History" type="action" name="%(show_member_history)d" />
+                    <button string="View Benefit" type="action" name="%(show_member_plan)d" />
+                </div>
 
                 <group col="2">
                     <group col="1">

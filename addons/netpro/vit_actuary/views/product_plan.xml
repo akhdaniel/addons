@@ -21,7 +21,9 @@
 	                    <field name="remarks_ind"/>
 	                    <field name="remarks_eng"/>
 	                    <field name="no_refund" />
-	                    <field name="no_refund_if_already_claim" />
+                        <field name="no_refund_if_already_claim" />
+                        <field name="co_share" />
+	                    <field name="co_share_value" attrs="{'invisible': [('co_share','=',False)]}" />
 	                </group>
 		            <group string="Premium Setting">
 	                    <field name="by_premium_table" />

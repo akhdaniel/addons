@@ -21,6 +21,7 @@ class benefit(osv.osv):
 		'unit_alt'					: fields.many2one('netpro.benefit_unit', 'Unit (alt language)'),
 		'claim_type_id'				: fields.many2one('netpro.product_type', 'Claim Type') ,
 		'max_frequency'				: fields.float("Max Frequency"),
+		'max_frequency_interval'	: fields.selection([('day', 'Per Day'), ('confinement', 'Per Disabiliy / Confinement'), ('year', 'Per Year')], " "),
 
 		'reinstate_in' 				: fields.float("Reinstate in", help="Day(s)"),
 		'pre_hospitalization'		: fields.float("Pre Hospitalization", help="Day(s)"),
