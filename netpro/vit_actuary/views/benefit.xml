@@ -37,7 +37,10 @@
 							<field name='unit_id'						 />
 							<field name='unit_alt' 					 />
 							<field name='claim_type_id'				 />
-							<field name='max_frequency'				 />
+							<div>
+								<field name='max_frequency' class="oe_inline" />
+								<field name='max_frequency_interval' class="oe_inline" />
+							</div>
 							<field name='reinstate_in' 				 />
 							<field name='pre_hospitalization'		 />
 							<field name='post_hospitalization' 		 />

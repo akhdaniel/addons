@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="show_member_plan_tree">
+	        <field name="name">clim_member_plan_tree</field>
+	        <field name="model">claim_member_plan</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	        	<form>
+	        		<group string="Benefit">
+	            		<field name="member_plan_ids" nolabel="1" readonly="1"/>
+	            	</group>
+	            </form>
+	        </field>
+	    </record>
+	</data>
+</openerp>

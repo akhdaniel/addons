@@ -4,6 +4,9 @@
 	<!--Top Menu-->
     <menuitem name="Netpro" id="netpro_menu" sequence="10" />
 
+    <!--Dashboard-->
+    <menuitem name="Dashboard" id="menu_netpro_dashboard" parent="netpro_menu"/>
+
     <!--Transactions-->
     <menuitem name="Transactions" id="menu_netpro_transaction" parent="netpro_menu"/>
 

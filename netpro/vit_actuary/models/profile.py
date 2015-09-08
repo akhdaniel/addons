@@ -56,6 +56,7 @@ class netpro_profile(osv.osv):
         'province_id': fields.many2one('res.country.state', 'Province'),
         'profile_type': fields.selection([('D', 'Direct Business'), ('C', 'Captive'), ('M', 'Intermediaries'), ('I', 'Inward Business'), ('O', 'Outward Business'), ('T', 'Others')], 'Profile Type'),
         'line_of_business_id': fields.many2one('netpro.lob', 'Line Of Business'),
+        'line_of_business_desc': fields.related('line_of_business_id', 'description' , type="char", relation="netpro.lob", string=" ", store=False),
         'referral': fields.many2one('netpro.profile', 'Referral'),
         'pic_name': fields.char('PIC Name'),
         'pic_title': fields.char('PIC Title'),
@@ -116,6 +117,22 @@ class netpro_profile(osv.osv):
         'alias_ids': fields.one2many('netpro.alias', 'profile_id', 'Profile', ondelete='cascade'),
         'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }
+
+    def onchange_lob(self, cr, uid, ids, line_of_business_id, context=None):
+        results = {}
+        if not line_of_business_id:
+            return results
+
+        lob_obj = self.pool.get('netpro.lob')
+        lob_data = prov_type_obj.browse(cr,uid,line_of_business_id)
+
+        results = {
+            'value' : {
+                'line_of_business_desc' : lob_data.description,
+            }
+        }
+        return results
+
 netpro_profile()
 
 class netpro_alias(osv.osv):

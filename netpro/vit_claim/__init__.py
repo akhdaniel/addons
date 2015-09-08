@@ -22,3 +22,4 @@
 #
 
 import vit_claim
+import wizard

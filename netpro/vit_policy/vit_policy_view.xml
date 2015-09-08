@@ -16,7 +16,10 @@
                         states="approved" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_cancel"/>
 
                     <button string="Close" type="object" 
-                        name="action_close" groups="vit_actuary.manager_system_owner" states="approved"/>    
+                        name="action_close" groups="vit_actuary.manager_system_owner" states="approved"/>
+
+                    <button string="Endorse" type="object" 
+                        name="action_endorse" groups="vit_actuary.manager_system_owner" states="closed"/>
 
                     <field name="state" widget="statusbar"/>
                 </header>                

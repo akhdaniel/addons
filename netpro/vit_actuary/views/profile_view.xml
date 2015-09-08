@@ -32,7 +32,10 @@
                     <field name="fax" select="1"/>
                     <field name="email" select="1" required="True"/>
                     <field name="profile_type" select="0" required="True"/>
-                    <field name="line_of_business_id" select="0" required="True"/>
+                    <div>
+                        <field name="line_of_business_id" select="0" class="oe_inline" required="True" on_change="onchange_lob(line_of_business_id)" />
+                        <field name="line_of_business_desc" select="0" class="oe_inline" readonly="True"/>
+                    </div>
                     <field name="referral" select="0"/>
                 </group>
                     
