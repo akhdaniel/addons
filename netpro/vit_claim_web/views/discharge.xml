@@ -41,7 +41,7 @@
                     Diagnoses = Diagnoses.sort();
                     $( "#diagnose" ).autocomplete({
                         source: Diagnoses,
-                        minLength: 1,
+                        minLength: 2,
                         select: function(event, ui){
                             console.log("ui.item : ",ui.item);
                             $("#diagnosis_id").val(ui.item.id);
