@@ -41,7 +41,7 @@
                     Diagnoses = Diagnoses.sort();
                     $( "#diagnose" ).autocomplete({
                         source: Diagnoses,
-                        minLength: 2,
+                        minLength: 1,
                         select: function(event, ui){
                             console.log("ui.item : ",ui.item);
                             $("#diagnosis_id").val(ui.item.id);
@@ -69,8 +69,8 @@
 
 	    <input type="hidden" name="claim_id" t-attf-value="{{ claim.id }}" />
 	    <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
-        <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
-        <input type="hidden" name="diagnosis_id" id="diagnosis_id"/>
+                <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
+                <input type="hidden" name="diagnosis_id" id="diagnosis_id"/>
 
 	</form>
 </template>
