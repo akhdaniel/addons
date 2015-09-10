@@ -74,7 +74,8 @@ class netpro_policy(osv.osv):
         'tpa_id': fields.many2one('netpro.tpa', 'TPA'),
         'calculation_method_id': fields.many2one('netpro.calculation_method', 'Calculation Method'),
         'prorate_calc_method_id': fields.many2one('netpro.prorate_calc_method', 'Prorate Calc Method'),
-        'expired_claim_receipt_id': fields.many2one('netpro.expired_claim_receipt', 'Expired Claim Receipt'),
+        'expired_claim_receipt_jabodetabek_id': fields.many2one('netpro.expired_claim_receipt', 'Expired Claim Receipt', help='Expired Claim Receipt Jabodetabek' ),
+        'expired_claim_receipt_non_jabodetabek_id': fields.many2one('netpro.expired_claim_receipt', 'Expired Claim Receipt Non Jabodetabek', help='Expired Claim Receipt Non Jabodetabek'),
         'payment_due_days': fields.integer('Payment Due Days'),
         'payment_due_interval_id': fields.many2one('netpro.payment_due_interval', 'Payment Due Interval'),
         'max_age_children': fields.integer('Max Age Children'),
@@ -315,6 +316,12 @@ class netpro_policy(osv.osv):
                                                                      #'company_inner_limit_reimbursement':reimbursement
                                                                      })  
         return  True
+
+    # def onchange_start_period(self, cr, uid, ids, insurance_period_start, context=None):
+    #     results = {}
+    #     if not insurance_period_start:
+    #         return results
+
 
 netpro_policy()
 
@@ -642,24 +649,6 @@ class netpro_business_source(osv.osv):
     }
 netpro_business_source()
 
-#>>> pindah ke actuary
-# class netpro_product_type(osv.osv):
-#     _name = 'netpro.product_type'
-#     _columns = {
-#         'name': fields.char('Product Type'),
-#         'description': fields.text('Description'),
-#     }
-# netpro_product_type()
-
-# KE ACTUARY
-# class netpro_product_id(osv.osv):
-#     _name = 'netpro.product_id'
-#     _columns = {
-#         'name': fields.char('Product ID'),
-#         'description': fields.text('Description'),
-#     }
-# netpro_product_id()
-
 class netpro_default_limit(osv.osv):
     _name = 'netpro.default_limit'
     _columns = {
@@ -667,17 +656,6 @@ class netpro_default_limit(osv.osv):
         'description': fields.text('Description'),
     }
 netpro_default_limit()
-
-
-
-# class netpro_provider_level(osv.osv):
-#     _name = 'netpro.provider_level'
-#     _rec_name = 'plevel'
-#     _columns = {
-#         'plevel': fields.char('PLevel'),
-#         'description': fields.text('Description'),
-#     }
-# netpro_provider_level()
 
 class netpro_agent(osv.osv):
     _name = 'netpro.agent'
@@ -697,9 +675,23 @@ netpro_business_source_type()
 
 class netpro_membership_plan_employee(osv.osv):
     _name = 'netpro.membership_plan_employee'
+
+    def create(self, cr, uid, vals, context=None):
+        import pdb;pdb.set_trace()
+        if vals.affect_all:
+            spouse = self.pool.get('netpro.membership_plan_spouse')
+            child = self.pool.get('netpro.membership_plan_child')
+            spouse.create(cr, uid, vals)
+            child.create(cr, uid, vals)
+
+            new_id = super(netpro_membership_plan_employee, self).create(cr, uid, vals, context=context)
+
+        return True
+
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
+        'affect_all' : fields.boolean('Affect to all'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
@@ -711,6 +703,7 @@ class netpro_membership_plan_spouse(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
+        'affect_all' : fields.boolean('Affect to all'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
@@ -722,22 +715,12 @@ class netpro_membership_plan_child(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
+        'affect_all' : fields.boolean('Affect to all'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
     }
 netpro_membership_plan_child()
-
-class netpro_membership_plan_employee(osv.osv):
-    _name = 'netpro.membership_plan_employee'
-    _rec_name = 'class_id'
-    _columns = {
-        'class_id': fields.many2one('netpro.class', 'Class'),
-        'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
-        'male_female_bamount': fields.float('Male / Female BAmount'),
-        'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
-    }
-netpro_membership_plan_employee()
 
 class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
     _name = 'netpro.plan_schedule_detail_benefit_schedule'

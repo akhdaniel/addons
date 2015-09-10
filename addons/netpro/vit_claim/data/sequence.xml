@@ -19,5 +19,15 @@
 			<field name="implementation">standard</field>
 			<field name="prefix">BATCH/%(year)s/%(month)s/</field>
 		</record>
+
+		<record model="ir.sequence" id="claim_seq">
+			<field name="name">Claim Sequence</field>
+			<field name="code">claim_seq</field>
+			<field name="padding">5</field>
+			<field name="number_next_actual">5</field>
+			<field name="number_increment">1</field>
+			<field name="implementation">standard</field>
+			<field name="prefix">CLAIM/%(year)s/%(month)s/</field>
+		</record>
 	</data>
 </openerp>
