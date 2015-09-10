@@ -34,7 +34,7 @@ class Member(http.Controller):
 
 		if request.httprequest.method == 'POST':
 			Member = http.request.env['netpro.member']
-			member = Member.search([('member_no','=',kw.get('card_no','') )])
+			member = Member.search([('card_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
 				# return http.request.render('vit_claim_web.registration', {'message':message} )	
@@ -143,7 +143,7 @@ class Member(http.Controller):
 			# cari dulu data member
 			##############################################################################
 			Member = http.request.env['netpro.member']
-			member = Member.search([('member_no','=',kw.get('card_no','') )])
+			member = Member.search([('card_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
 				return request.redirect('/claim/discharge?message_error=%s'% (message), code=301)
@@ -263,7 +263,7 @@ class Member(http.Controller):
 			# cari dulu data member
 			##############################################################################
 			Member = http.request.env['netpro.member']
-			member = Member.search([('member_no','=',kw.get('card_no','') )])
+			member = Member.search([('card_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
 				return request.redirect('/claim/search?message_error=%s'% (message), code=301)
