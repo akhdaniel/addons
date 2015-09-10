@@ -85,9 +85,11 @@ class Member(http.Controller):
 	def registration_process(self, **kw):
 		message = kw.get('message','')
 		member_id = kw.get('member_id', '')
+		member_data = http.request.env['netpro.member'].browse(int(member_id))
+		policy_id = http.request.env['netpro.policy'].browse(int(member_data.policy_id.id))
 		member_plan_id = kw.get('member_plan_id', False)
 		MemberPlan = http.request.env['netpro.member_plan']
-		member_plan = MemberPlan.browse( int(member_plan_id))
+		member_plan = MemberPlan.browse(int(member_plan_id))
 
 		if not member_plan:
 			message = "Member Plan not found! Please try again."
@@ -104,6 +106,7 @@ class Member(http.Controller):
 		data = {
 			'claim_date'		: time.strftime("%Y-%m-%d"),
 			'member_id'			: int(member_id),
+			'policy_id'			: int(policy_id.id),
 			'member_plan_id'	: member_plan.id ,
 			'claim_detail_ids'  : claim_details,
 		}
