@@ -26,7 +26,7 @@ class netpro_policy(osv.osv):
     _name = 'netpro.policy'
     _rec_name = 'policy_no'
     _columns = {
-        'policy_no': fields.char('Policy No', required=True),
+        'policy_no': fields.char('Policy No'),
         'reference_no': fields.char('Reference No'),
         'quotation_no': fields.char('Quotation No'),
         'ci': fields.char('C/I'),
