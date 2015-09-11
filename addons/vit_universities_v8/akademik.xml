@@ -337,7 +337,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="partner_tree_view2"/>  
             <field name="domain">[('status_mahasiswa','=','Mahasiswa')]</field> 
-            <field name="context">{'default_status_mahasiswa':'Mahasiswa'}</field>                    
+            <field name="context">{'default_status_mahasiswa':'Mahasiswa','default_is_mahasiswa':True}</field>                    
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data mahasiswa.</p><p>disini belum ada data tentang mahasiswa !</p></field>
             <!--field name="view_id" ref="personal_tree_view"/-->
@@ -350,7 +350,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="partner_tree_view"/> 
             <field name="domain">[('status_mahasiswa','=','calon')]</field>
-            <field name="context">{'default_status_mahasiswa':'calon'}</field>
+            <field name="context">{'default_status_mahasiswa':'calon','default_is_mahasiswa':True}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  calon mahasiswa.</p><p>disini belum ada data tentang calon mahasiswa !</p></field>
         </record>
@@ -362,7 +362,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="partner_tree_view3"/> 
             <field name="domain">[('status_mahasiswa','=','alumni')]</field>
-            <field name="context">{'default_status_mahasiswa':'alumni'}</field>
+            <field name="context">{'default_status_mahasiswa':'alumni','default_is_mahasiswa':True}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field>
         </record>

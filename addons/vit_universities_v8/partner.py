@@ -206,11 +206,11 @@ class res_partner (osv.osv):
 		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
 		'tempat_lahir':fields.char('Tempat Lahir'),
 		'tanggal_lahir':fields.date('Tanggal Lahir'),
-		'status_mahasiswa':fields.selection(SESSION_STATES,'Status Mhs',required=True),                  
-		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]",required=True),
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),
-		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
+		'status_mahasiswa':fields.selection(SESSION_STATES,'Status Mhs'),                  
+		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',),
+		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]"),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]"),
+		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik'),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',readonly=True),                
 		#'peserta_kelas_id':fields.many2one('master.peserta_kelas',string='Mahasiswa',),
 		'ipk':fields.float('IPK',digits=(2,2),readonly=True),
@@ -234,7 +234,8 @@ class res_partner (osv.osv):
 		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
 		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,readonly=True),
 		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
-		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True)
+		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True),
+		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
 				}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]
@@ -265,6 +266,7 @@ class res_partner (osv.osv):
 		#'npm':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'res.partner'), 
 		'npm' : '/',  
 		'reg': '/',
+		'is_mahasiswa': False,
 				}
 
 res_partner()
