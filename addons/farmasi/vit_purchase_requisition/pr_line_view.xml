@@ -10,8 +10,8 @@
                 <search string="PR Line List">
                     <filter name="new_prline" string="New PR Line" domain="[('state','=','draft')]" help="New PR Line"/>
                     
-<!--                     <filter name="open_prline" string="Open PR Line" domain="[('state','=','draft')]" help="Open PR Line"/>
- -->                    
+					<!--                     <filter name="open_prline" string="Open PR Line" domain="[('state','=','draft')]" help="Open PR Line"/>
+					 -->                    
                     <filter name="in_purchase_prline" string="In-Progress PR Line" domain="[('state','=','in_purchase')]" help="Open PR Line"/>
 
                     <filter name="done_prline" string="Done PR Line" domain="[('state','=','done')]" help="Open PR Line"/>
@@ -59,7 +59,7 @@
             <field name="arch" type="xml">
                 <form string="PR Lines" version="7.0">
                     <h1>
-                        <field name="product_id" class="oe_inline" readonly="1"/>
+                        <field name="product_id" class="oe_inline"/>
                     </h1>
                     <sheet>                	
                         <group>

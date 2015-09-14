@@ -40,9 +40,10 @@ Multi-Supplier Purchase Requisitions.
     'website': 'http://www.vitraining.com',
     'data': [
         'wizard/purchase_order_info_view.xml',
-        'purchase_workflow.xml',
+        # 'purchase_workflow.xml',
         'purchase_requisition_view.xml',
         'pr_line_view.xml',
+        'po_line_view.xml',
         'wizard/purchase_requisition_partner_view.xml',
         'menu.xml',
         'security/ir.model.access.csv'
