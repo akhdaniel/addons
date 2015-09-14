@@ -11,17 +11,18 @@
             <field name="domain">[('requisition_state','&lt;&gt;','draft')]</field>
             <field name="context">{'search_default_new_prline': 1}</field>
             <field name="search_view_id" ref="view_pr_line_search"/>
-  	        <field name="help" type="html">
-	          <p class="oe_view_nocontent_create">
-	            Click to start a new purchase requisition process. 
-	          </p><p>
-	            A purchase requisition is the step before a request for quotation.
-	            In a purchase requisition (or purchase tender), you can record the
-	            products you need to buy and trigger the creation of RfQs to
-	            suppliers. After the negotiation, once you have reviewed all the
-	            supplier's offers, you can validate some and cancel others.
-	          </p>
-	        </field>
+	    </record>
+
+        <!-- action window po line -->    	
+    	<record model="ir.actions.act_window" id="action_po_line">
+	        <field name="name">PO Items</field>
+	        <field name="type">ir.actions.act_window</field>
+	        <field name="res_model">purchase.order.line</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+            <field name="search_view_id" ref="view_po_line_search"/>
+            <field name="view_id" ref="view_po_line_tree"/>
 	    </record>
 
 
@@ -47,9 +48,16 @@
 	    <menuitem
 	        id="menu_pr_line_mgt"
 	        sequence="20"
-		    name="Requisition Line"
+		    name="Requisition Lines"
             groups="purchase_requisition.group_purchase_requisition_manager"
 	        parent="menu_pr_sub"
-	        action="action_pr_line"/>		
+	        action="action_pr_line"/>	
+
+	    <menuitem
+	        id="menu_po_line_mgt"
+	        sequence="20"
+		    name="Order Lines"
+	        parent="menu_pr_sub"
+	        action="action_po_line"/>
 	</data>
 </openerp>
