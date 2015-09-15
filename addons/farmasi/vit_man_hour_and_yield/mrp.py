@@ -132,7 +132,7 @@ class mrp_production(osv.osv):
                             if man.workcenter_operation_id.workcenter_id.id == line ['workcenter_id']:
                                 man_hour = man.man_hour
                                 break
-                    line['man_hour'] = man_hour
+                        line['man_hour'] = man_hour
                 line['production_id'] = production.id
                 workcenter_line_obj.create(cr, uid, line, context)
         return results
