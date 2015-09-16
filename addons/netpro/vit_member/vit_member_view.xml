@@ -96,7 +96,7 @@
                     </page>
 
                     <page string="Family">
-                        <field name="family_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="family_ids" colspan="4" nolabel="1" on_change="onchange_family(family_ids, policy_id)" />
                     </page>
 
                     <page string="Claim History">

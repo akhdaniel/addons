@@ -191,6 +191,20 @@ class netpro_member(osv.osv):
             result = int(usia)
         return {'value':{'age':result}}
 
+    def onchange_family(self, cr, uid, ids, fam_ids, policy_id, context=None):
+        
+        if policy_id:
+            raise osv.except_osv(_('Warning!'),_("Please choose Policy for this member") )
+
+        policy_obj = self.pool.get('netpro.policy').browse(cr, uid, policy_id, context=None)
+
+        if policy_obj.policy_category_id.name == 'Individual':
+            if policy_obj.individual_member_limit > 0:
+                if len(fam_ids) > policy_obj.individual_member_limit:
+                    raise osv.except_osv(_('Error!'),_("Please choose Policy for this member.") )
+
+        return
+
 netpro_member()
 
 class netpro_member_plan(osv.osv):
