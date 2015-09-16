@@ -32,6 +32,7 @@ class netpro_policy(osv.osv):
         'ci': fields.char('C/I'),
         'corporate_id': fields.char('Corporate ID'),
         'policy_category_id': fields.many2one('netpro.policy_category','Policy Category'),
+        'individual_member_limit': fields.integer('Individual Member Limit'),
         'policy_type_id': fields.many2one('netpro.policy_type', 'Policy Type'),
         'branch_id': fields.many2one('netpro.branch', 'Branch'),
         'marketing_officer_id': fields.many2one('res.partner', 'Marketing Officer'),
@@ -317,10 +318,22 @@ class netpro_policy(osv.osv):
                                                                      })  
         return  True
 
-    # def onchange_start_period(self, cr, uid, ids, insurance_period_start, context=None):
-    #     results = {}
-    #     if not insurance_period_start:
-    #         return results
+    #def onchange_category(self, cr, uid, ids, category_id, context=None):
+    #    results = {}
+    #    if not category_id:
+    #        return results
+
+    #    category_obj = self.pool.get('netpro.policy_category').browse(cr, uid, category_id, context=None)
+
+    #    if category_obj.name == 'Individual':
+    #        results = {
+    #            'domain' : {
+    #                'spouse_limit' : [('readonly', '=', False)],
+    #                'child_limit' : [('readonly', '=', False)],
+    #            }
+    #        }
+
+    #    return results
 
 
 netpro_policy()
