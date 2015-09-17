@@ -201,7 +201,7 @@ class netpro_member(osv.osv):
         if policy_obj.policy_category_id.name == 'Individual':
             if policy_obj.individual_member_limit > 0:
                 if len(fam_ids) > policy_obj.individual_member_limit:
-                    raise osv.except_osv(_('Error!'),_("Please choose Policy for this member.") )
+                    raise osv.except_osv(_('Error!'),_("Cannot add new member to this policy due to Individual Policy rule(s).") )
 
         return
 
