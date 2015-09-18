@@ -691,8 +691,7 @@ class netpro_membership_plan_employee(osv.osv):
     _name = 'netpro.membership_plan_employee'
 
     def create(self, cr, uid, vals, context=None):
-        import pdb;pdb.set_trace()
-        if vals.affect_all:
+        if vals['affect_all']:
             spouse = self.pool.get('netpro.membership_plan_spouse')
             child = self.pool.get('netpro.membership_plan_child')
             spouse.create(cr, uid, vals)

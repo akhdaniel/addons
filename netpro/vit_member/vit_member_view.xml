@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <search string="Search Invoice">
                     <group expand="0" string="Group By...">
-                        <filter name='company_id' string="Company" domain="[]"  context="{'group_by':'company_id'}"/>
+                        <filter name='policy_holder' string="Policy Holder" domain="[]"  context="{'group_by':'policy_holder'}"/>
                     </group>
                </search>
             </field>
@@ -151,7 +151,7 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.member">
-                <field name="policy_holder"/>
+                <field name="policy_holder" invisible='1'/>
                 <field name="policy_id"/>
                 <field name="name"/>
                 <field name="birthdate"/>
@@ -160,8 +160,8 @@
                 <field name="insurance_period_start"/>
                 <field name="insurance_period_end"/>
                 <field name="state"/>
-                <field name="company_id" select="0" invisible='1'/>
                 <!-- 
+                <field name="company_id" select="0" invisible='1'/>
                 <field name="census_no"/>
                 <field name="gender"/>
                 <field name="marital_status"/>
@@ -225,7 +225,7 @@
         <field name="res_model">netpro.member</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name='context'>{'search_default_company_id': 1}</field>
+        <field name='context'>{'search_default_policy_holder': 1}</field>
     </record>
     
         
