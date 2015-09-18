@@ -1,0 +1,5 @@
+<openerp>
+	<data>
+		<menuitem name="Contact Management" id="menu_netpro_contact_mgt" parent="vit_actuary.menu_netpro_transaction" action="action_netpro_contact_mgt" sequence="10"/>
+	</data>
+</openerp>
