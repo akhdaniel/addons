@@ -1,0 +1,67 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_netpro_contact_mgt">
+	        <field name="name">netpro.contact_mgt.form</field>
+	        <field name="model">netpro.contact_mgt</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	            <form string="netpro.contact_mgt">
+	                <group>
+	                	<group>
+	                		<field name="member_id" on_change="onchange_member(member_id)" />
+	                		<field name="provider_id"/>
+	                		<field name="caller_name"/>
+	                		<field name="card_no" readonly="1"/>
+                			<field name="employee_id" class="oe_inline" readonly="1" />
+                			<field name="employee_name" class="oe_inline" readonly="1" />
+                			<field name="birth_date" class="oe_inline" readonly="1" />
+                			<field name="birth_place" class="oe_inline" readonly="1" />
+	                		<field name="email" readonly="1" />
+	                		<field name="address" readonly="1" />
+	                		<field name="mobile" readonly="1" />
+	                		<field name="fax" readonly="1" />
+                			<field name="call_number" class="oe_inline" readonly="1" />
+                			<field name="call_date" class="oe_inline" />
+                			<field name="created_by_id" class="oe_inline" readonly="1" />
+                			<field name="created_date" class="oe_inline" readonly="1" />
+                			<field name="updated_by_id" class="oe_inline" readonly="1" />
+                			<field name="updated_date" class="oe_inline" readonly="1" />
+	                	</group>
+
+	                	<group>
+	                		<field name="relation_with_member" />
+                			<field name="membership" class="oe_inline" />
+                			<field name="census_no" class="oe_inline" />
+		                	<field name="gender_id" />
+		                	<field name="company_name" />
+		                	<field name="company_address" />
+		                	<field name="company_phone" />
+		                	<field name="company_fax" />
+	                	</group>
+	                </group>
+	            </form>
+	        </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="view_netpro_contact_mgt_tree">
+	        <field name="name">netpro.contact_mgt.tree</field>
+	        <field name="model">netpro.contact_mgt</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="netpro.contact_mgt">
+	                <field name="member_id" on_change="" />
+            		<field name="provider_id"/>
+            		<field name="caller_name"/>
+            		<field name="card_no"/>
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record model="ir.actions.act_window" id="action_netpro_contact_mgt">
+	        <field name="name">Contact Management</field>
+	        <field name="res_model">netpro.contact_mgt</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+	</data>
+</openerp>
