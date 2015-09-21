@@ -103,13 +103,18 @@
 				            <div t-attf-class="form-group">
 				                <label class="col-md-3 col-sm-4 control-label" for="card_no">Card Number</label>
 								<div class="col-md-7 col-sm-8">
-			            			<input name="card_no" type="text" class="form-control" />
+			            			<input name="card_no" id="card_no" type="text" class="form-control" />
 			            		</div>
 			            	</div>
 		            	</form>
 		            </div>
 		        </div>
             </div>
+            <script>
+                window.onload = function() {
+                    document.getElementById("card_no").focus();
+                };
+            </script>
         </div>
     </t>			
 </template>
