@@ -220,7 +220,6 @@ class Member(http.Controller):
 			claim = Claim.search([('id','=', kw.get('claim_id',''))])
 
 			claim_details = self.string2array('claim_details', kw)
-			# import pdb; pdb.set_trace()
 
 			##############################################################################
 			# update detail claim
@@ -231,7 +230,9 @@ class Member(http.Controller):
 			claim.write({
 				'state'				: 'open',
 				'claim_detail_ids' 	: claim_detail_ids ,
-				'diagnosis_id'		: int(kw.get('diagnosis_id',''))
+				'diagnosis_id'		: int(kw.get('diagnosis_id','')),
+				'2nd_diagnosis'		: int(kw.get('2nd_diagnosis','')),
+				'3rd_diagnosis'		: int(kw.get('3rd_diagnosis',''))
 			})
 
 			message = "Discharge Success!"
