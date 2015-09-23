@@ -36,8 +36,9 @@
                     <field name="status" widget="statusbar"/>
                 </header>                  
                 <group string="Member Info">
-                    <field name="policy_id" attrs="{'required':True}" on_change="onchange_policy_member(policy_id, insurance_period_start, insurance_period_end)"/>
-                    <field name="policy_holder" select="1"/>
+                    <field name="policy_id" attrs="{'required':True}" on_change="onchange_policy_member(policy_id)"/>
+                    <field name="policy_holder" readonly="True"/>
+                    <field name="policy_category" readonly="True"/>
                     <field name="insurance_period_start" attrs="{'required':True}" select="2"/>
                     <field name="insurance_period_end" attrs="{'required':True}" select="0"/>
                 </group>
@@ -74,6 +75,7 @@
                                 <field name="period_start" select="0"/>
                                 <field name="period_end" select="0"/>
                                 <field name="stnc" select="0"/>
+                                <field name="stnc" select="0"/>
                                 <field name="group_id" select="0"/>
                                 <field name="payor_id" select="0"/>
                                 <field name="premium_type_id" select="0"/>
@@ -87,6 +89,8 @@
                                 <field name="state" select="0"/>
                                 <field name="trans_type" select="0"/>
                                 <field name="suspend_tpa" select="0"/>
+                                <field name="upd_code" attrs="{'invisible':[('policy_category','in',[1, ''])]}"/>
+                                <field name="upd_date" attrs="{'invisible':[('policy_category','in',[1, ''])]}"/>
                             </group>
                         </group>
                     </page>
