@@ -2,7 +2,11 @@
 <data>
 
     
-	<menuitem name="Policy" id="menu_netpro_policy" parent="vit_actuary.menu_netpro_transaction" action="action_netpro_policy" sequence="10"/>
+	<menuitem name="Policy" id="menu_netpro_policy" parent="vit_actuary.menu_netpro_transaction" />
+
+	<menuitem name="Policy Group" id="menu_netpro_policy_group_transction" parent="menu_netpro_policy" action="action_netpro_policy" sequence="10"/>
+	
+	<menuitem name="Policy Individual" id="menu_netpro_policy_individu" parent="menu_netpro_policy" action="action_netpro_policy_individu" sequence="20"/>
 
     <!-- Policy Configurations -->
     <menuitem name="Policy" id="menu_netpro_policy_configuration" parent="vit_actuary.menu_netpro_configuration" sequence="10"/>
