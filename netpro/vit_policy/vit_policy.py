@@ -169,7 +169,6 @@ class netpro_policy(osv.osv):
         'plan_schedule_ids': fields.one2many('netpro.plan_schedule', 'policy_id', 'Plan Schedules', ondelete='cascade'),
         'business_source_ids': fields.one2many('netpro.business_source', 'policy_id', 'Business Sources', ondelete='cascade'),
         'ci_date': fields.date('C/I Date'),
-        'upd_code' : fields.selection([('d','D'),('n','N'),('r','R'),('l','L'),('u','U')], 'Update Code'),
     }
     _defaults = {
         'ci_date'   : lambda*a : time.strftime("%Y-%m-%d"),

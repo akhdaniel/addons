@@ -33,7 +33,6 @@
                             <field name="corporate_id" select="0"/>
                             <field name="policy_category_id" select="0" widget="selection" readonly="True" />
                             <field name="individual_member_limit" attrs="{'invisible': [('policy_category_id','!=',2)]}" />
-                            <field name="upd_code" attrs="{'invisible': [('policy_category_id','!=',2)]}" />
                             <field name="policy_type_id" select="0"/>
                             <field name="branch_id" select="0" context="{}"/>
                             <field name="marketing_officer_id" select="0"/>
