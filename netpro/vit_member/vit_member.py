@@ -34,11 +34,13 @@ class netpro_member(osv.osv):
             required=True, select=True, ondelete='cascade'),
         'policy_id': fields.many2one('netpro.policy', 'Policy', required=True, domain='[("state","=","approved"),]'),
         'policy_holder': fields.related('policy_id', 'policy_holder_id', 
-            relation='res.partner', type='many2one', store=True, string='Policy Holder', readonly=True),
+            relation='res.partner', type='many2one', store=True, string='Policy Holder'),
+        'policy_category': fields.related('policy_id', 'policy_category_id', 
+            relation='netpro.policy_category', type='many2one', store=False, string='Policy Category'),
         'insurance_period_start': fields.date('Insurance Period Start', required=True),
         'insurance_period_end': fields.date('Insurance Period End', required=True),
         'member_no': fields.char('Member No.',help="Kosongkan untuk diisi oleh sistem"),
-        'employee_id': fields.many2one('hr.employee', 'Employee', required=True),
+        'employee_id': fields.many2one('hr.employee', 'Employee'),
         'census_no': fields.selection([('0','0 = Employee'),('1','1 = Spouse'),('2','2 = 1st Child')],'Census No.'),
         'gender_id': fields.many2one('netpro.gender', 'Sex'),
         'marital_status': fields.many2one('netpro.marital_status', 'Marital Status'),
@@ -90,13 +92,16 @@ class netpro_member(osv.osv):
         'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
         'parent_id': fields.many2one('netpro.member', 'Parent'),
         'created_by_id': fields.many2one('res.users', 'Created By', readonly=True),
+        'upd_code' : fields.selection([('d','D'),('n','N'),('r','R'),('l','L'),('u','U')], 'Update Code'),
+        'upd_date' : fields.date('Update Date'),
     }
 
     _defaults = {
         'status'                    : 'draft',
         'insurance_period_start'    : lambda *a : time.strftime("%Y-%m-%d"),
         'insurance_period_end'      : lambda *a : time.strftime("%Y-%m-%d"),
-        'created_by_id' : lambda obj, cr, uid, context: uid,
+        'created_by_id'             : lambda obj, cr, uid, context: uid,
+        'upd_date'                  : lambda *a : time.strftime("%Y-%m-%d"),
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -166,7 +171,7 @@ class netpro_member(osv.osv):
         }
         return results
 
-    def onchange_policy_member(self, cr, uid, ids, policy_id, insurance_period_start, insurance_period_end, context=None):
+    def onchange_policy_member(self, cr, uid, ids, policy_id, context=None):
         results = {}
         if not policy_id:
             return results
@@ -178,6 +183,8 @@ class netpro_member(osv.osv):
             'value' : {
                 'insurance_period_start'    : policy_data.insurance_period_start,
                 'insurance_period_end'      : policy_data.insurance_period_end,
+                'policy_holder'             : policy_data.policy_holder_id.id,
+                'policy_category'           : policy_data.policy_category_id.id,
             }
         }
         return results
