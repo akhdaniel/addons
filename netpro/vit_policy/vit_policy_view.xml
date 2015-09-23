@@ -31,7 +31,7 @@
                             <field name="quotation_no" select="0"/>
                             <field name="ci" select="0"/>
                             <field name="corporate_id" select="0"/>
-                            <field name="policy_category_id" select="0"/>
+                            <field name="policy_category_id" select="0" widget="selection" readonly="True" />
                             <field name="individual_member_limit" attrs="{'invisible': [('policy_category_id','!=',2)]}" />
                             <field name="upd_code" attrs="{'invisible': [('policy_category_id','!=',2)]}" />
                             <field name="policy_type_id" select="0"/>
@@ -548,140 +548,35 @@
                 <field name="insurance_period_end"/>
                 <field name="created_by_id"/>
                 <field name="created_by_date"/>
-
-                <!-- <field name="reference_no"/>
-                <field name="quotation_no"/>
-                <field name="ci"/>
-                <field name="corporate_id"/>
-                <field name="policy_category"/>
-                <field name="policy_type"/>
-                <field name="branch_id"/>
-                <field name="marketing_officer_id"/>
-                <field name="policy_group_id"/>
-                <field name="exclusive_period"/>
-                <field name="toc_id"/>
-                <field name="ujroh"/>
-                <field name="currency_id"/>
-                <field name="policy_payor_id"/>
-                <field name="insurance_source_id"/>
-                <field name="segment_id"/>
-                <field name="pic_id"/>
-                <field name="policy_date"/>
-                <field name="business_source_id"/>
-                <field name="lob_id"/>
-                <field name="occupation_id"/>
-                <field name="existing_policy_no_id"/>
-                <field name="province_id"/>
-                <field name="remarks"/>
-                <field name="payment_option_mode_id"/>
-                <field name="payment_option_installment_id"/>
-                <field name="refund_adj"/>
-                <field name="refund_with_claim_deduction"/>
-                <field name="endorsement_fee"/>
-                <field name="endorsement_with_installment"/>
-                <field name="refund_type_id"/>
-                <field name="no_refund_changing_premium_difference"/>
-                <field name="print_card_name"/>
-                <field name="print_card_order"/>
-                <field name="print_card_birthdate"/>
-                <field name="print_card_sex"/>
-                <field name="print_card_plan"/>
-                <field name="tpa_id"/>
-                <field name="calculation_method_id"/>
-                <field name="prorate_calc_method_id"/>
-                <field name="expired_claim_receipt_id"/>
-                <field name="payment_due_days"/>
-                <field name="payment_due_interval_id"/>
-                <field name="max_age_children"/>
-                <field name="max_children_id"/>
-                <field name="max_children_maternity_id"/>
-                <field name="card_type_id"/>
-                <field name="pre_existing_condition_id"/>
-                <field name="tolerance_up_room_percent"/>
-                <field name="tolerance_up_room_amount"/>
-                <field name="up_room_class_id"/>
-                <field name="up_room_class_days"/>
-                <field name="prorate_after_tolerance_addition"/>
-                <field name="allow_adult_child_premium"/>
-                <field name="have_sub_company"/>
-                <field name="female_spouse_only"/>
-                <field name="profit_sharing"/>
-                <field name="use_in_house_clinic"/>
-                <field name="allow_plan_sharing"/>
-                <field name="renewal_with_old_card"/>
-                <field name="renewal_manual"/>
-                <field name="commission_by_gross_premium"/>
-                <field name="allow_excesson_reimbursement"/>
-                <field name="aso_deposit"/>
-                <field name="bank_id"/>
-                <field name="vaccount_no"/>
-                <field name="bank_optional_id"/>
-                <field name="vaccount_no_optional"/>
-                <field name="policy_status"/>
-                <field name="endorsement_date"/>
-                <field name="email_date"/>
-                <field name="int_endorsement_no"/>
-                <field name="ext_endorsement_no"/>
-                <field name="ppno"/>
-                <field name="cancel_policy"/>
-                <field name="profit_sharing_endorsement"/>
-                <field name="last_edited_by_id"/>
-                <field name="last_edited_by_date"/>
-                <field name="approved_by_id"/>
-                <field name="approved_by_date"/>
-                <field name="claim_rule_reimbursement_payee_id"/>
-                <field name="claim_rule_excess_payor_id"/>
-                <field name="claim_rule_refund_payee_id"/>
-                <field name="correspondence_rule_premium_id"/>
-                <field name="correspondence_rule_claim_id"/>
-                <field name="discount_special_discount"/>
-                <field name="discount_direct_discount"/>
-                <field name="discount_discount_amount"/>
-                <field name="discount_discount_only_apply_on_policy"/>
-                <field name="loading_cc_loading"/>
-                <field name="deposit_deposit_recovery"/>
-                <field name="claim_reimbursement_transfer_fee"/>
-                <field name="other_settings_admin_cost"/>
-                <field name="other_settings_card_fee"/>
-                <field name="other_settings_total_card_fee"/>
-                <field name="other_settings_total_cdmin_cost"/>
-                <field name="other_settings_stamp_duty"/>
-                <field name="other_settings_interest"/>
-                <field name="pool_fund_info_pool_fund"/>
-                <field name="pool_fund_info_max_pool_fund_member"/>
-                <field name="pool_fund_info_max_member_pool_fund"/>
-                <field name="pool_fund_info_remarks"/>
-                <field name="edc_apply_prorate"/>
-                <field name="edc_show_excess_amount"/>
-                <field name="edc_show_excess_remarks"/>
-                <field name="edc_excess_remarks"/>
-                <field name="edc_disable_edc_for_inpatient"/>
-                <field name="edc_disable_edc_for_outpatient"/>
-                <field name="edc_disable_edc_for_maternity"/>
-                <field name="edc_disable_edc_for_dental"/>
-                <field name="edc_disable_swipe_for_excessed_limit"/>
-                <field name="edc_ignore_claim_over_below_settings"/>
-                <field name="edc_inpatient"/>
-                <field name="edc_outpatient"/>
-                <field name="edc_maternity"/>
-                <field name="edc_dental"/>
-                <field name="profit_sharing_sharing_remarks"/>
-                <field name="profit_sharing_gross_premium"/>
-                <field name="profit_sharing_claim_paid"/>
-                <field name="profit_sharing_claim_ratio"/>
-                <field name="profit_sharing_formula"/>
-                <field name="profit_sharing_profit_sharing"/>
-                <field name="profit_sharing_adjustment"/>
-                <field name="profit_sharing_profit_sharing_amt"/>
-                <field name="ci_date"/> -->
-
             </tree>
         </field>
     </record>
 
+    <!-- <record id="view_policy_tree_search" model="ir.ui.view">
+        <field name="name">netpro.policy.search</field>
+        <field name="model">netpro.policy</field>
+        <field name="arch" type="xml">
+            <search string="Search Policy">
+                <filter name='policy_category_group' string="Group" domain="[('policy_category_id','=','Group')]" />
+                <filter name='policy_category_individu' string="Individu" domain="[('policy_category_id','=','Individual')]" />
+            </search>
+        </field>
+    </record> -->
+
     <record model="ir.actions.act_window" id="action_netpro_policy">
         <field name="name">Policy</field>
         <field name="res_model">netpro.policy</field>
+        <field name="context">{'default_policy_category_id':1}</field>
+        <field name="domain">[('policy_category_id', '=', 1)]</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_netpro_policy_individu">
+        <field name="name">Policy Individu</field>
+        <field name="res_model">netpro.policy</field>
+        <field name="context">{'default_policy_category_id':2}</field>
+        <field name="domain">[('policy_category_id', '=', 2)]</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>

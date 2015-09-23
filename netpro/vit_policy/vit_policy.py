@@ -339,6 +339,34 @@ class netpro_policy(osv.osv):
 
 netpro_policy()
 
+class netpro_policy_enroll_plan(osv.osv):
+    _name = 'netpro.policy_enroll_plan'
+    _columns = {
+        'policy_id' : fields.many2one('netpro.policy', 'Policy'),
+        'product_enroll_ids' : fields.one2many('netpro.product_enroll', 'policy_enroll_plan_id','Product Enroll'),
+    }
+netpro_policy_enroll_plan()
+
+class netpro_product_enroll(osv.osv):
+    _name = 'netpro.product_enroll'
+    _rec_name = 'product_id'
+    _columns = {
+        'policy_enroll_plan_id' : fields.many2one('netpro.policy_enroll_plan', 'Policy Enroll Plan'),
+        'product_id' : fields.many2one('netpro.product', 'Product'),
+        'benefit_enroll_ids' : fields.one2many('netpro.benefit_enroll', 'product_enroll_id', 'Benefit'),
+    }
+netpro_product_enroll()
+
+class netpro_benefit_enroll(osv.osv):
+    _name = 'netpro.benefit_enroll'
+    _columns = {
+        'product_enroll_id' : fields.many2one('netpro.product_enroll', 'Enroll Plan'),
+        'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
+        'type_of_claim' : fields.selection([('inner_limit','Inner Limit'),('as_charge','As Charge'),('sub_as_charge','Sub As Charge')],'Type Of Claim'),
+        'value_limit' : fields.float('Value Limit'),
+    }
+netpro_benefit_enroll()
+
 class netpro_branch(osv.osv):
     _name = 'netpro.branch'
     _inherits = {'res.partner':'partner_id'}
