@@ -7,7 +7,7 @@
         <field name="model">netpro.branch</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Branch Form" version="7.0">
+            <form string="Partner Form" version="7.0">
                 <group>
                     <field name="name" />
                     <field name="id_branch" />
