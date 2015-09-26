@@ -192,7 +192,7 @@
                                             <field name="swipe_card" select="0"/>
                                             <field name="show_card" select="0"/>
                                             <field name="reimbursement_boolean" select="0"/>
-                                            <field name="no_plan" select="0"/>
+                                            <field name="no_plan" required="True" />
                                             <field name="no_of_benefit" select="0"/>
                                             <field name="default_limit_id" select="0"/>
                                             <field name="annual_limit_per_disability" select="0"/>
@@ -2299,10 +2299,74 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="product_id" />
+                    <field name="product_id" readonly="True" />
+                    <field name="number_of_plan" readonly="True" />
                 </group>
                 <notebook>
-                    <page string="Benefit Enroll">
+                    <page string="Benefit Enroll (1)">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (2)" attrs="{'invisible':[('number_of_plan','&lt;',2)]}">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (3)" attrs="{'invisible':[('number_of_plan','&lt;',3)]}">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (4)" attrs="{'invisible':[('number_of_plan','&lt;',4)]}">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (5)" attrs="{'invisible':[('number_of_plan','&lt;',5)]}">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (6)" attrs="{'invisible':[('number_of_plan','&lt;',6)]}">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (7)" attrs="{'invisible':[('number_of_plan','&lt;',7)]}">
+                        <field name="benefit_enroll_ids">
+                            <tree string="Benefit Enroll" editable="bottom">
+                                <field name="benefit_id" />
+                                <field name="default_limit_id" widget="selection" />
+                                <field name="value_limit" />
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Benefit Enroll (8)" attrs="{'invisible':[('number_of_plan','&lt;',8)]}">
                         <field name="benefit_enroll_ids">
                             <tree string="Benefit Enroll" editable="bottom">
                                 <field name="benefit_id" />

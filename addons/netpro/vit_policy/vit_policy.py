@@ -248,11 +248,13 @@ class netpro_policy(osv.osv):
                 # loop setiap coverage
                 for cov in this.coverage_ids:
                     cov_product_id = cov.product_id.id
+                    cov_number_of_plan = int(cov.no_plan)
                     product_benefits = cov.product_id.benefit_ids
                     cov_default_limit_id = cov.default_limit_id.id
 
                     enroll_plan_id = enroll_plan_obj.create(cr, uid, {'policy_id':this.id,
-                                                                      'product_id':cov_product_id})
+                                                                      'product_id':cov_product_id,
+                                                                      'number_of_plan':cov_number_of_plan})
 
                     # check produknya ada benefit?
                     if product_benefits:
@@ -371,6 +373,7 @@ class netpro_policy_enroll_plan(osv.osv):
     _columns = {
         'policy_id' : fields.many2one('netpro.policy', 'Policy'),
         'product_id' : fields.many2one('netpro.product', 'Product'),
+        'number_of_plan' : fields.integer('Number Of Plan'),
         'benefit_enroll_ids' : fields.one2many('netpro.benefit_enroll', 'policy_enroll_plan_id', 'Benefit'),
     }
 netpro_policy_enroll_plan()
@@ -617,7 +620,7 @@ class netpro_coverage(osv.osv):
         'swipe_card': fields.boolean('Swipe Card'),
         'show_card': fields.boolean('ShowCard'),
         'reimbursement_boolean': fields.boolean('Reimbursement'),
-        'no_plan': fields.integer('No Plan'),
+        'no_plan': fields.selection([('1','1'),('2','2'),('3','3'),('4','4'),('5','5'),('6','6'),('7','7'),('8','8')],'No Of Plan'),
         'no_of_benefit': fields.integer('No Of Benefit'),
         'default_limit_id': fields.many2one('netpro.default_limit', 'Default Limit'),
         'annual_limit_per_disability': fields.boolean('Annual Limit Per Disability'),
