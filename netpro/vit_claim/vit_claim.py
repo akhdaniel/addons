@@ -438,10 +438,10 @@ class netpro_claim_diagnosis(osv.osv):
 netpro_claim_diagnosis()
 
 
-class netpro_member(osv.osv):
-    _name           = "netpro.member"
-    _inherit        = "netpro.member"
-    _columns     = {
-        'claim_ids'  : fields.one2many('netpro.claim','member_id','Claim History', ondelete="cascade")
-    }
-netpro_member()
+# class netpro_member(osv.osv):
+#     _name           = "netpro.member"
+#     _inherit        = "netpro.member"
+#     _columns     = {
+#         'claim_ids'  : fields.one2many('netpro.claim','member_id','Claim History', ondelete="cascade")
+#     }
+# netpro_member()

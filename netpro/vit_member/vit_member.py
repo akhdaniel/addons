@@ -94,6 +94,12 @@ class netpro_member(osv.osv):
         'created_by_id': fields.many2one('res.users', 'Created By', readonly=True),
         'upd_code' : fields.selection([('d','D'),('n','N'),('r','R'),('l','L'),('u','U')], 'Update Code'),
         'upd_date' : fields.date('Update Date'),
+        'masa_tunggu': fields.boolean('Masa Tunggu'),
+        'masa_tunggu_value': fields.integer('Lama Masa Tunggu'),
+        'grace_period': fields.boolean('Grace Period'),
+        'grace_period_value': fields.integer('Grace Period Days'),
+        'member_policy_exception_check' : fields.boolean('Policy Exception'),
+        'member_policy_exception_ids' : fields.one2many('netpro.member_policy_exception','member_id','Policy Exception', ondelete="cascade"),
     }
 
     _defaults = {
@@ -103,6 +109,10 @@ class netpro_member(osv.osv):
         'created_by_id'             : lambda obj, cr, uid, context: uid,
         'upd_date'                  : lambda *a : time.strftime("%Y-%m-%d"),
     }
+
+    _sql_constraints = [
+        ('member_no_unique', 'UNIQUE(member_no)', 'Member No. Must be Unique!'),
+    ]
 
     def create(self, cr, uid, vals, context=None):
         if not vals['member_no']:
@@ -213,6 +223,15 @@ class netpro_member(osv.osv):
         return
 
 netpro_member()
+
+class netpro_member_policy_exception(osv.osv):
+    _name = 'netpro.member_policy_exception'
+    _columns = {
+        'member_id' : fields.many2one('netpro.member', 'Member'),
+        'diagnosis_id' : fields.many2one('netpro.diagnosis', 'Diagnosis'),
+    }
+netpro_member_policy_exception()
+
 
 class netpro_member_plan(osv.osv):
     _name = 'netpro.member_plan'
