@@ -7,7 +7,7 @@
         <field name="model">netpro.branch</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Partner Form" version="7.0">
+            <form string="Branch Form" version="7.0">
                 <group>
                     <field name="name" />
                     <field name="id_branch" />
@@ -690,19 +690,6 @@
         <field name="res_model">netpro.claim_diagnosis</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
-
-    <record id="view_member_form_claim" model="ir.ui.view">
-        <field name="name">netpro_member_form_claim</field>
-        <field name="model">netpro.member</field>
-        <field name="inherit_id" ref="vit_member.view_netpro_member_form"/>
-        <field name="arch" type="xml">
-            <notebook position="inside">
-                <page string="Claim History">
-                    <field name="claim_ids"/>
-                </page>
-            </notebook>
-        </field>
     </record>
 
     <record model="ir.ui.view" id="view_netpro_claim_status_form">

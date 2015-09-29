@@ -915,5 +915,6 @@ class res_partner(osv.osv):
     _columns = {
         'policy_holder_flag' : fields.boolean('Is Policy Holder'),
         'marketing_officer_flag' : fields.boolean('Is Marketing Officer'),
+        'policy_ids' : fields.one2many('netpro.policy','policy_holder_id','Policy', ondelete="cascade"),
     }
 res_partner()
