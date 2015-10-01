@@ -34,7 +34,7 @@ class stock_transfer_details(models.TransientModel):
                 if prod.packop_id:
                     prod.packop_id.write(pack_datas)
                     processed_ids.append(prod.packop_id.id)
-                    import pdb;pdb.set_trace()
+                    # import pdb;pdb.set_trace()
                 else:
                     pack_datas['picking_id'] = self.picking_id.id
                     packop_id = self.env['stock.pack.operation'].create(pack_datas)

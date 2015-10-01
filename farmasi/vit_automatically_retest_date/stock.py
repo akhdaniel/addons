@@ -45,7 +45,7 @@ class stock_production_lot(osv.osv):
         #import pdb;pdb.set_trace()
         product_retest_date = self.search(cr,uid,[('alert_date','=',time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[:10])],context=context)
         if product_retest_date :
-            picking_id = picking_obj.create(cr,uid,{'origin':'Cron Job '+ time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[:10],'picking_type_id'   : 3,}) # id 3 == internal transfer
+            picking_id = picking_obj.create(cr,uid,{'origin':'Cron Job '+ time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[:10],'picking_type_id'   : 8,}) # id 3 == internal transfer
             for lot in self.browse(cr,uid,product_retest_date):
                 if lot.product_id.type != 'service':
                     loc_bb = location_obj.search(cr,uid,[('is_gudang_bahan_baku','=',True)])
