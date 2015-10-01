@@ -54,6 +54,7 @@ class mrp_production(osv.osv):
         @param product_id: Id of changed product.
         @return: Dictionary of values.
         """
+
         result = {}
         if not product_id:
             return {'value': {
