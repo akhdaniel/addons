@@ -208,16 +208,17 @@ class mrp_production(osv.osv):
                 for lot in lot_ids:
 
                     # cari dulu apa sudah ada stock move dengan lot_id yang ini
-                    cr.execute('SELECT id FROM stock_move WHERE restrict_lot_id = %s AND product_id = %s  ',(lot[0], lot[1]))
+                    cr.execute('SELECT id FROM stock_move WHERE restrict_lot_id = %s AND product_id = %s and raw_material_production_id = %s',(lot[0], lot[1], production.id))
                     ada = cr.fetchone()
                     if ada:
+                        print "lot sudah ada di move line MO", ada
                         continue
 
                     #cari apakah ada stock barang dengan lot tsb
                     #cari di quant qty product sesuai dengan id lot
                     cr.execute ('SELECT sum(qty) FROM stock_quant WHERE location_id = %s AND lot_id = %s',(source_location_id,lot[0]))
                     hasil   = cr.fetchone()
-                    # print "hasil",hasil
+                    print "hasil",hasil
                     if hasil:
                         if hasil[0] != None : # ada stock lot 
                             create_is_header_move = False 
