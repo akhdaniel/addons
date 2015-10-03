@@ -30,6 +30,9 @@ from openerp.tools.translate import _
 from openerp import tools, SUPERUSER_ID
 from openerp.addons.product import _common
 
+import logging
+_logger = logging.getLogger(__name__)
+
 # from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
@@ -149,7 +152,7 @@ class mrp_production(osv.osv):
         }, context=context)
         return move_id
 
-    def _vit_make_consume_line_from_data(self, cr, uid, production, product, uom_id, qty, uos_id, uos_qty, context=None):
+    def _vit_make_consume_line_from_data(self, cr, uid, line_id, production, product, uom_id, qty, uos_id, uos_qty, context=None):
         stock_move = self.pool.get('stock.move')
         loc_obj = self.pool.get('stock.location')
         product_obj = self.pool.get('product.product')
@@ -178,31 +181,50 @@ class mrp_production(osv.osv):
         # cari produk yang is_header = false dan kode produknya 6 digit pertama sama
         same_product = self.pool.get('product.product').search(cr,uid,
             [('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
+        print("product_ref",product_ref, "same_product",same_product)
+
         if same_product :
             
             #- cek satu per satu di serial number yang produk_id nya sama, 
             #   ambil yang ED nya paling dekat expired           
             # produk aslinya yg is_header dihapus dari daftar
 
+            # cr.execute("SELECT id,product_id FROM stock_production_lot \
+            #             WHERE product_id IN %s AND alert_date IS NOT NULL \
+            #             ORDER BY alert_date ASC" , (tuple(same_product),))  
             cr.execute("SELECT id,product_id FROM stock_production_lot \
-                        WHERE product_id IN %s AND alert_date IS NOT NULL \
-                        ORDER BY alert_date ASC" , (tuple(same_product),))  
+                        WHERE product_id IN %s AND life_date IS NOT NULL \
+                        ORDER BY life_date ASC" , (tuple(same_product),))  
             lot_ids    = cr.fetchall()
             
-            # jika di temukan   ada lot           
-            if lot_ids :
+            # jika di temukan   ada lot   
+            print "lot_ids",lot_ids
+            # import pdb; pdb.set_trace()     
+            
+            total_lot_qty = 0.00
+
+            if lot_ids : # ada lot / serial number
                 qty_bom = qty
                 for lot in lot_ids:
+
+                    # cari dulu apa sudah ada stock move dengan lot_id yang ini
+                    cr.execute('SELECT id FROM stock_move WHERE restrict_lot_id = %s AND product_id = %s  ',(lot[0], lot[1]))
+                    ada = cr.fetchone()
+                    if ada:
+                        continue
+
                     #cari apakah ada stock barang dengan lot tsb
                     #cari di quant qty product sesuai dengan id lot
-                    cr.execute ('SELECT sum(qty) FROM stock_quant \
-                        WHERE location_id = %s AND lot_id = %s',(source_location_id,lot[0]))
+                    cr.execute ('SELECT sum(qty) FROM stock_quant WHERE location_id = %s AND lot_id = %s',(source_location_id,lot[0]))
                     hasil   = cr.fetchone()
+                    # print "hasil",hasil
                     if hasil:
-                        if hasil[0] != None :
+                        if hasil[0] != None : # ada stock lot 
+                            create_is_header_move = False 
                             lot_id = lot[0]
                             hasil = hasil[0]
                             actual_product = product_obj.browse(cr, uid, lot[1], context=context)
+                            print("actual_product", actual_product.code)
 
                             # stock lebih banyak daripada yang diperlukan di BOM
                             if hasil >= qty_bom :           
@@ -211,11 +233,12 @@ class mrp_production(osv.osv):
                                     source_location_id, destination_location_id, prev_move, context=context)
                                 qty_bom -= qty_bom
                                 move_ids.append(move_id)
-    
+                                
                                 # delete produk asli yg is_header
-                                cr.execute("delete from stock_move where production_id=%s and product_id=%s" ,
-                                    (production.id, product.id))
-                                import pdb;pdb.set_trace()
+                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s"  % (production.id, product.id)
+                                _logger.error(sql)
+                                cr.execute(sql)
+                                total_lot_qty = total_lot_qty + hasil 
                                 break
 
                             # stock kurang daripada yang diperlukan di BOM
@@ -227,25 +250,40 @@ class mrp_production(osv.osv):
                                 move_ids.append(move_id)
 
                                 # delete produk asli yg is_header
-                                cr.execute("delete from stock_move where production_id=%s and product_id=%s" ,
-                                    (production.id, product.id))
+                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s"  % (production.id, product.id)
+                                _logger.error(sql)
+                                cr.execute(sql)
+                        else: # tidak ada stock lot 
+                            hasil = 0.00
+                    total_lot_qty = total_lot_qty + hasil 
 
-
-                # jika sesudah di looping dari lot permintaan dari bom belum terpenuhi maka buatkan 
+                # jika sesudah di looping dari lot, permintaan dari bom belum terpenuhi maka buatkan 
                 # move sisanya tanpa Lot (produk is_header)
-                if qty_bom != 0.00 :
+                # qty_bom = sisa qty 
+                # total_lot_qty = qty yang diambil dari lot
+
+                if qty_bom != 0.00 and total_lot_qty != 0.00:
                     lot_id = False
                     move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
                             production, product, uom_id, qty_bom, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
                     move_ids.append(move_id)
-            # jika tidak lot_ids, maka create move seadanya(tanpa lot, dan qty available=0)       
-            else: 
-                lot_id = False 
-                
-                move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, production, product, uom_id, 
-                    qty, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
-                move_ids.append(move_id)                                                              
-        
+
+                if qty_bom == 0.00:
+                    cr.execute("update mrp_production_product_line set state='%s' where id=%s" % ("done", line_id))
+
+
+            # jika tidak lot_ids, maka create move seadanya(tanpa lot, dan qty available=0)      
+            # ==> tdk perlu lagi krn bukan di action_confirm 
+            # else: 
+            #     lot_id = False 
+                # move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, production, product, uom_id, 
+                #     qty, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
+                # move_ids.append(move_id)
+
+
+        # import pdb; pdb.set_trace()     
+        self.pool.get('stock.move').action_confirm(cr, uid, move_ids, context=context)
+
         if prev_move:
             # karena array, maka harus di looping
             for mv in move_ids:
@@ -272,39 +310,37 @@ class mrp_production(osv.osv):
     # - Nomor Analisa (internal Reference)
 
     def _vit_make_production_consume_line(self, cr, uid, line, context=None):
-        return self._vit_make_consume_line_from_data(cr, uid, line.production_id, line.product_id, line.product_uom.id, line.product_qty, line.product_uos.id, line.product_uos_qty, context=context)
+        return self._vit_make_consume_line_from_data(cr, uid, line.id, line.raw_material_production_id, line.product_id, line.product_uom.id, line.product_uom_qty, False , False, context=context)
+        # return self._vit_make_consume_line_from_data(cr, uid, line.id, line.raw_material_production_id, line.product_id, line.product_uom.id, line.product_uom_qty, line.product_uos.id, line.product_uos_qty, context=context)
 
-                           
-    def action_confirm(self, cr, uid, ids, context=None):
-        """ Confirms production order.
-        @return: Newly generated Shipment Id.
-        """
-        
-        user_lang = self.pool.get('res.users').browse(cr, uid, [uid]).partner_id.lang
-        context = dict(context, lang=user_lang)
-        uncompute_ids = filter(lambda x: x, [not x.product_lines and x.id or False for x in self.browse(cr, uid, ids, context=context)])
-        self.action_compute(cr, uid, uncompute_ids, context=context)
+    def action_assign(self, cr, uid, ids, context=None):
+        _logger.info('action assign')
+
         for production in self.browse(cr, uid, ids, context=context):
-            self._make_production_produce_line(cr, uid, production, context=context)   
-            # create batch number
-            new_batch_number = self.create_batch_number(cr,uid,production,context=context)                   
             stock_moves = []
 
-            for line in production.product_lines:
-              # if line.product_id.is_header == True:
-              #   raise osv.except_osv(_('Error !'),_("Product %s is header True !")%(line.product_id.name) )                
+            #looping scheduled product
+            # for line in production.product_lines:
+            for line in production.move_lines:
+                print line.lot_ids, line.product_id.code, line.state 
+                # import pdb; pdb.set_trace()
+                # skip kalau sudah terisi lot 
+                if line.lot_ids.id != False:
+                    continue
+
                 if line.product_id.type != 'service':
                     # ganti dg fungsi custom
-                    # stock_move_id = self._make_production_consume_line(cr, uid, line, context=context)
                     stock_move_id = self._vit_make_production_consume_line(cr, uid, line, context=context)
                     for smi in stock_move_id:
                         stock_moves.append(smi)
                 else:
                     self._make_service_procurement(cr, uid, line, context=context)       
-            if stock_moves:
-                self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
-            production.write({'state': 'confirmed','batch_number':new_batch_number})
-        return 0
+
+            # if stock_moves:
+            #     self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
+
+        super(mrp_production, self).action_assign(cr, uid, ids, context=None)
+        return True 
     
     # def create(self, cr, uid, vals, context=None):
         
@@ -549,4 +585,16 @@ class mrp_routing_workcenter(osv.osv):
 
     _defaults = {
         'limit_batch_number_cancel' : False
-    }               
+    }   
+
+class stock_move_consume(osv.osv_memory):
+    _name = "stock.move.consume"
+    _inherit = "stock.move.consume"
+
+    def default_get(self, cr, uid, fields, context=None):
+        res = super(stock_move_consume, self).default_get(cr, uid, fields, context=context)
+        move = self.pool.get('stock.move').browse(cr, uid, context['active_id'], context=context)
+        if 'restrict_lot_id' in fields:
+            res.update({'restrict_lot_id': move.restrict_lot_id.id})
+        return res
+
