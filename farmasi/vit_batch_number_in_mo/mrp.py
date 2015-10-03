@@ -386,6 +386,13 @@ class mrp_production(osv.osv):
     #             pass       
     #     return result
 
+    def action_confirm(self, cr, uid, ids, context=None):
+        super(mrp_production, self).action_confirm(cr, uid, ids, context=context)
+        for production in self.browse(cr, uid, ids, context=context):
+            new_batch_number = self.create_batch_number(cr,uid,production,context=context)                   
+            production.write({'state': 'confirmed','batch_number':new_batch_number})
+        return 0
+
     _columns = {
         'batch_number_id': fields.many2one('batch.number', string='Batch Number',
             domain="[('is_used','=',False)]",required=False,readonly=True,states={'draft':[('readonly',False)]}),
