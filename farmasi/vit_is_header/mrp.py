@@ -40,3 +40,16 @@ class mrp_production(osv.osv):
         'move_lines': fields.one2many('stock.move', 'raw_material_production_id', 'Products to Consume',
             domain=[('state', 'not in', ('done', 'cancel'))], readonly=True, states={'draft': [('readonly', False)],'confirmed': [('readonly', False)]}),       
     }
+
+
+class mrp_production_product_line(osv.osv):
+    _name = 'mrp.production.product.line'            
+    _inherit = 'mrp.production.product.line'
+    _columns = {
+        'state': fields.selection([('draft','Draft'),('done','Done')],'Status'),        
+    }
+
+    _defaults = {
+        'state'         : 'draft' 
+    }
+

@@ -40,11 +40,13 @@
                 <field name="product_id" position="replace">
                     <field name="product_id" on_change="product_id_change(product_id, product_qty)" domain="[('bom_ids','!=',False),('bom_ids.type','!=','phantom')]" class="oe_inline" context='{"default_type": "product"}'/>
                 </field> 
+
                 <page string="Consumed Products" position="replace">
                     <page string="Consumed Products">
                             <group string="Products to Consume">
                             <field name="move_lines" nolabel="1" options="{'reload_on_button': true}">
                                 <tree colors="blue:state == 'draft';black:state in ('ready','assigned','in_production');gray:state in ('cancel','done');red:state in ('confirmed','waiting')" string="Products to Consume">
+                                    <field name="id"/>
                                     <field name="product_id" domain="[('is_header','=',False)]"/>
                                     <field name="restrict_lot_id" context="{'product_id': product_id}" groups="stock.group_production_lot"/>
                                     <field name="product_uom_qty"  string="Quantity"/>
@@ -52,7 +54,7 @@
                                     <field name="qty_available"/>
                                     <field name="alert_date" groups="stock.group_production_lot"/>
                                     <field name="ref_lot_id" groups="stock.group_production_lot"/>
-                                    <field name="state" invisible="1"/>
+                                    <field name="state" invisible="0" />
                                     <button name="%(mrp.move_consume)d"
                                         string="Consume Products" type="action"
                                         icon="gtk-go-forward" context="{'consume': True}"
@@ -96,6 +98,23 @@
                             </group>
 
                     </page>  
+                </page>
+
+                <page string="Scheduled Products"  position="replace">
+                    <page string="Scheduled Products">
+                        <button name="action_compute" states="draft"
+                            string="Compute Data" type="object"
+                            icon="terp-stock_format-scientific"/>
+                        <field name="product_lines">
+                            <tree string="product lines">
+                                <field name="name"/>
+                                <field name="product_qty"/>
+                                <field name="product_id"/>
+                                <field name="product_uom" invisible="1"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
                 </page>
 
             </field>
