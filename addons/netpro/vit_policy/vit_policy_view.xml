@@ -41,7 +41,6 @@
         <field name="model">netpro.policy</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <sheet>
             <form string="netpro.policy">
                 <header>                                             
                     <button string="Approve" type="object" 
@@ -57,14 +56,15 @@
                         name="action_endorse" groups="vit_actuary.manager_system_owner" states="closed"/>
 
                     <field name="state" widget="statusbar"/>
-                </header>                
+                </header>
+                <sheet>
                 <group col="2">
                     <group col="1">
                         <group string="General Policy Information">
                             <field name="policy_no" select="1" readonly="1" />
                             <field name="reference_no" select="2" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="quotation_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="ci" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <!-- <field name="ci" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/> -->
                             <field name="corporate_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="policy_category_id" select="0" widget="selection" readonly="True" />
                             <field name="individual_member_limit" attrs="{'invisible': [('policy_category_id','!=',2)]}" />
@@ -198,40 +198,40 @@
                                             <field name="swipe_card" select="0"/>
                                             <field name="show_card" select="0"/>
                                             <field name="reimbursement_boolean" select="0"/>
-                                            <field name="no_plan" required="True" />
+                                            <field name="no_plan" />
                                             <field name="no_of_benefit" select="0"/>
                                             <field name="default_limit_id" select="0"/>
                                             <field name="annual_limit_per_disability" select="0"/>
                                         </group>
-                                        <group>
-                                            <field name="family_limit" select="0"/>
-                                            <field name="family_premium" select="0"/>
-                                            <field name="use_child_premium" select="0"/>
-                                            <field name="aso_coverage" select="0"/>
-                                            <field name="hi_plan" select="0"/>
-                                            <field name="maximum_age_employee" select="0"/>
-                                            <field name="maximum_age_spouse" select="0"/>
-                                            <field name="maximum_age_children" select="0"/>
-                                            <field name="aso_fee_per_member" select="0"/>
-                                            <field name="aso_commission" select="0"/>
-                                            <field name="aso_commission_in_percent" select="0"/>
-                                            <field name="aso_fee_per_claim" select="0"/>
-                                            <field name="aso_fee_per_claim_amount" select="0"/>
-                                            <field name="not_process_excesson_deposit" select="0"/>
+                                        <group attrs="{'invisible': [('policy_category_id','!=',1)]}">
+                                            <field name="family_limit" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="family_premium" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="use_child_premium" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="aso_coverage" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="hi_plan" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="maximum_age_employee" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="maximum_age_spouse" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="maximum_age_children" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="aso_fee_per_member" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="aso_commission" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="aso_commission_in_percent" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="aso_fee_per_claim" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="aso_fee_per_claim_amount" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="not_process_excesson_deposit" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                                         </group>
                                     </group>
                                     <group>
                                     
-                                        <group string="Print Options">
-                                            <field name="print_option_seq_no" select="0"/>
-                                            <field name="print_option_print_text_on_card" select="0"/>
-                                            <field name="print_card_with_plan_amount" select="0"/>
+                                        <group string="Print Options" attrs="{'invisible': [('policy_category_id','!=',1)]}">
+                                            <field name="print_option_seq_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="print_option_print_text_on_card" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="print_card_with_plan_amount" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                                         </group>
 
-                                        <group string="Membership Options">
-                                            <field name="membership_option_not_allowed_for_employee" select="0"/>
-                                            <field name="membership_option_not_allowed_for_spouse" select="0"/>
-                                            <field name="membership_option_not_allowed_for_child" select="0"/>
+                                        <group string="Membership Options" attrs="{'invisible': [('policy_category_id','!=',1)]}">
+                                            <field name="membership_option_not_allowed_for_employee" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="membership_option_not_allowed_for_spouse" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                                            <field name="membership_option_not_allowed_for_child" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                                         </group>
                                     </group>
                                 </group>
@@ -455,7 +455,7 @@
                         </field>
                     </page>
 
-                    <page string="Enroll Plan" attrs="{'invisible': ['|',('state','in',['open','closed']),('policy_category_id','!=',1)]}">
+                    <page string="Enroll Plan" attrs="{'invisible': [('state','in',['open','closed'])]}">
                         <field name="policy_enroll_plan_ids" nolabel="1" />
                     </page>
 
@@ -568,8 +568,8 @@
                         </group>
                     </page>
                 </notebook>
+                </sheet>
             </form>
-            </sheet>
         </field>
     </record>
 
@@ -1398,13 +1398,13 @@
                 </group>
 
                 <notebook>
-                    <page string="Employee">
+                    <page string="Primary Member">
                         <field name="membership_plan_employee_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
-                    <page string="Spouse">
+                    <page string="Secondary Member">
                         <field name="membership_plan_spouse_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
-                    <page string="Child">
+                    <page string="Tertiary Member">
                         <field name="membership_plan_child_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
                 </notebook>
@@ -1750,8 +1750,8 @@
             <form string="netpro.membership_plan_employee">
                 <group>
                     <!-- <field name="class_id" select="1"/> -->
-                    <field name="affect_all" select="0"/>
-                    <field name="product_plan_id" select="0"/>
+                    <field name="product_plan_id" select="0" on_change="onchange_plan(product_plan_id)"/>
+                    <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
@@ -1786,8 +1786,8 @@
             <form string="netpro.membership_plan_spouse">
                 <group>
                     <!-- <field name="class_id" select="1"/> -->
-                    <field name="affect_all" select="0"/>
-                    <field name="product_plan_id" select="0"/>
+                    <field name="product_plan_id" select="0" on_change="onchange_plan(product_plan_id)"/>
+                    <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
@@ -1822,8 +1822,8 @@
             <form string="netpro.membership_plan_child">
                 <group>
                     <!-- <field name="class_id" select="1"/> -->
-                    <field name="affect_all" select="0"/>
-                    <field name="product_plan_id" select="0"/>
+                    <field name="product_plan_id" select="0" on_change="onchange_plan(product_plan_id)"/>
+                    <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
@@ -2299,7 +2299,7 @@
     </record>
 
 
-    <record model="ir.ui.view" id="view_netpro_policy_enroll_plan_form">
+    <!-- <record model="ir.ui.view" id="view_netpro_policy_enroll_plan_form">
         <field name="name">netpro.policy_enroll_plan.form</field>
         <field name="model">netpro.policy_enroll_plan</field>
         <field name="type">form</field>
@@ -2385,8 +2385,8 @@
                 </notebook>
             </form>
         </field>
-    </record>
-    <record model="ir.ui.view" id="view_netpro_policy_enroll_plan_tree">
+    </record> -->
+    <!-- <record model="ir.ui.view" id="view_netpro_policy_enroll_plan_tree">
         <field name="name">netpro.policy_enroll_plan.tree</field>
         <field name="model">netpro.policy_enroll_plan</field>
         <field name="type">tree</field>
@@ -2435,7 +2435,7 @@
         <field name="res_model">netpro.benefit_enroll</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
         
 </data>
 </openerp>
