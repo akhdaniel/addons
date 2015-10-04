@@ -170,7 +170,7 @@ class netpro_policy(osv.osv):
         'plan_schedule_ids': fields.one2many('netpro.plan_schedule', 'policy_id', 'Plan Schedules', ondelete='cascade'),
         'business_source_ids': fields.one2many('netpro.business_source', 'policy_id', 'Business Sources', ondelete='cascade'),
         'ci_date': fields.date('C/I Date'),
-        'policy_enroll_plan_ids' : fields.one2many('netpro.policy_enroll_plan','policy_id','Enroll Plan', ondelete="cascade"),
+        #'policy_enroll_plan_ids' : fields.one2many('netpro.policy_enroll_plan','policy_id','Enroll Plan', ondelete="cascade"),
     }
     _defaults = {
         'ci_date'   : lambda*a : time.strftime("%Y-%m-%d"),
@@ -178,13 +178,21 @@ class netpro_policy(osv.osv):
         #'policy_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
     }
     def create(self, cr, uid, vals, context=None):
+        import pdb;pdb.set_trace()
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False
+        pno_val = vals['pno']
+
+        if not pno_val:
+            pno_val = self.pool.get('ir.sequence').get(cr, uid, 'pno_seq') or 8888
+
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
+
         vals.update({
             'policy_no':nomor,
+            'pno':pno_val,
             'created_by_id':uid,
             'tpa_id':tpa_val,
             'created_by_date':time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -237,32 +245,67 @@ class netpro_policy(osv.osv):
         return self.write(cr,uid,ids,{'state':'closed'},context=context)
 
     def create_enroll_plan(self, cr, uid, ids, context=None):
-        enroll_plan_obj = self.pool.get('netpro.policy_enroll_plan')
-        benefit_enroll_obj = self.pool.get('netpro.benefit_enroll')
+        membership_benefit_obj = self.pool.get('netpro.membership_benefit')
         this = self.browse(cr, uid, ids[0], context=context)
 
+        if this.class_ids:
+            for cur_class in this.class_ids:
+
+                # Membership Employee
+                if len(cur_class.membership_plan_employee_ids) > 0:
+                    for mem_employee in cur_class.membership_plan_employee_ids:
+                        if len(mem_employee.product_plan_id.benefit_ids) > 0:
+                            for cur_benefit in mem_employee.product_plan_id.benefit_ids:
+                                membership_benefit_obj.create(cr, uid, {'membership_plan_employee_id':mem_employee.id,
+                                                                        'benefit_id':cur_benefit.id,
+                                                                        'default_limit_id':cur_benefit.default_limit_id.id,
+                                                                        'value_limit':cur_benefit.value_limit})
+
+                # Membership Spouse
+                if len(cur_class.membership_plan_spouse_ids) > 0:
+                    for mem_spouse in cur_class.membership_plan_spouse_ids:
+                        if len(mem_spouse.product_plan_id.benefit_ids) > 0:
+                            for cur_benefit in mem_spouse.product_plan_id.benefit_ids:
+                                membership_benefit_obj.create(cr, uid, {'membership_plan_spouse_id':mem_spouse.id,
+                                                                        'benefit_id':cur_benefit.id,
+                                                                        'default_limit_id':cur_benefit.default_limit_id.id,
+                                                                        'value_limit':cur_benefit.value_limit})
+
+                # Membership Child
+                if len(cur_class.membership_plan_child_ids) > 0:
+                    for mem_child in cur_class.membership_plan_child_ids:
+                        if len(mem_child.product_plan_id.benefit_ids) > 0:
+                            for cur_benefit in mem_child.product_plan_id.benefit_ids:
+                                membership_benefit_obj.create(cr, uid, {'membership_plan_child_id':mem_child.id,
+                                                                        'benefit_id':cur_benefit.id,
+                                                                        'default_limit_id':cur_benefit.default_limit_id.id,
+                                                                        'value_limit':cur_benefit.value_limit})
+
+            # END LOOP CLASS
+        # END IF CONDITION
+
         # check apakah sudah ada enroll plan
-        if not this.policy_enroll_plan_ids:
-            # check ada coverage
-            if this.coverage_ids:
-                # loop setiap coverage
-                for cov in this.coverage_ids:
-                    cov_product_id = cov.product_id.id
-                    cov_number_of_plan = int(cov.no_plan)
-                    product_benefits = cov.product_id.benefit_ids
-                    cov_default_limit_id = cov.default_limit_id.id
+        # if not this.policy_enroll_plan_ids:
+        #     # check ada coverage
+        #     if this.coverage_ids:
+        #         # loop setiap coverage
+        #         for cov in this.coverage_ids:
+        #             cov_product_id = cov.product_id.id
+        #             cov_number_of_plan = int(cov.no_plan)
+        #             product_benefits = cov.product_id.benefit_ids
+        #             cov_default_limit_id = cov.default_limit_id.id
 
-                    enroll_plan_id = enroll_plan_obj.create(cr, uid, {'policy_id':this.id,
-                                                                      'product_id':cov_product_id,
-                                                                      'number_of_plan':cov_number_of_plan})
+        #             enroll_plan_id = enroll_plan_obj.create(cr, uid, {'policy_id':this.id,
+        #                                                               'product_id':cov_product_id,
+        #                                                               'number_of_plan':cov_number_of_plan})
 
-                    # check produknya ada benefit?
-                    if product_benefits:
-                        # loop per benefit nya
-                        for bens in product_benefits:
-                            benefit_enroll_id = benefit_enroll_obj.create(cr, uid, {'policy_enroll_plan_id':enroll_plan_id,
-                                                                                    'benefit_id':bens.id,
-                                                                                    'default_limit_id':cov_default_limit_id})
+        #             # check produknya ada benefit?
+        #             if product_benefits:
+        #                 # loop per benefit nya
+        #                 for bens in product_benefits:
+        #                     benefit_enroll_id = benefit_enroll_obj.create(cr, uid, {'policy_enroll_plan_id':enroll_plan_id,
+        #                                                                             'benefit_id':bens.id,
+        #                                                                             'default_limit_id':cov_default_limit_id})
         return True
 
     def create_plan_schedule(self, cr, uid, ids, context=None):
@@ -368,15 +411,15 @@ class netpro_policy(osv.osv):
 
 netpro_policy()
 
-class netpro_policy_enroll_plan(osv.osv):
-    _name = 'netpro.policy_enroll_plan'
-    _columns = {
-        'policy_id' : fields.many2one('netpro.policy', 'Policy'),
-        'product_id' : fields.many2one('netpro.product', 'Product'),
-        'number_of_plan' : fields.integer('Number Of Plan'),
-        'benefit_enroll_ids' : fields.one2many('netpro.benefit_enroll', 'policy_enroll_plan_id', 'Benefit'),
-    }
-netpro_policy_enroll_plan()
+# class netpro_policy_enroll_plan(osv.osv):
+#     _name = 'netpro.policy_enroll_plan'
+#     _columns = {
+#         'policy_id' : fields.many2one('netpro.policy', 'Policy'),
+#         'product_id' : fields.many2one('netpro.product', 'Product'),
+#         'product_plan_id' : fields.integer('Number Of Plan'),
+#         'benefit_enroll_ids' : fields.one2many('netpro.benefit_enroll', 'policy_enroll_plan_id', 'Benefit'),
+#     }
+# netpro_policy_enroll_plan()
 
 # class netpro_product_enroll(osv.osv):
 #     _name = 'netpro.product_enroll'
@@ -387,16 +430,16 @@ netpro_policy_enroll_plan()
 #     }
 # netpro_product_enroll()
 
-class netpro_benefit_enroll(osv.osv):
-    _name = 'netpro.benefit_enroll'
-    _columns = {
-        #'product_enroll_id' : fields.many2one('netpro.product_enroll', 'Enroll Plan'),
-        'policy_enroll_plan_id' : fields.many2one('netpro.policy_enroll_plan', 'Policy Enroll Plan'),
-        'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
-        'default_limit_id': fields.many2one('netpro.default_limit', 'Default Limit'),
-        'value_limit' : fields.float('Value Limit'),
-    }
-netpro_benefit_enroll()
+# class netpro_benefit_enroll(osv.osv):
+#     _name = 'netpro.benefit_enroll'
+#     _columns = {
+#         #'product_enroll_id' : fields.many2one('netpro.product_enroll', 'Enroll Plan'),
+#         'policy_enroll_plan_id' : fields.many2one('netpro.policy_enroll_plan', 'Policy Enroll Plan'),
+#         'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
+#         'default_limit_id': fields.many2one('netpro.default_limit', 'Default Limit'),
+#         'value_limit' : fields.float('Value Limit'),
+#     }
+# netpro_benefit_enroll()
 
 class netpro_branch(osv.osv):
     _name = 'netpro.branch'
@@ -748,26 +791,33 @@ netpro_business_source_type()
 
 class netpro_membership_plan_employee(osv.osv):
     _name = 'netpro.membership_plan_employee'
-
-    def create(self, cr, uid, vals, context=None):
-        if vals['affect_all']:
-            spouse = self.pool.get('netpro.membership_plan_spouse')
-            child = self.pool.get('netpro.membership_plan_child')
-            spouse.create(cr, uid, vals)
-            child.create(cr, uid, vals)
-
-            new_id = super(netpro_membership_plan_employee, self).create(cr, uid, vals, context=context)
-
-        return True
-
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'affect_all' : fields.boolean('Affect to all'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
+        'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
+        'benefit_ids': fields.one2many('netpro.membership_benefit','membership_plan_employee_id','Class Benefit', ondelete="cascade"),
     }
+
+    def onchange_pplan(self, cr, uid, ids, plan_id, context=None):
+        res = {}
+        
+        if not plan_id:
+            return res
+        
+        plan_obj = self.pool.get('netpro.product_plan').browse(cr, uid, plan_id, context=None)
+        
+        if plan_obj.overall_limit:
+            res = {
+                'value' : {
+                    'overall_limit' : plan_obj.overall_limit,
+                }
+            }
+        
+        return res
+
 netpro_membership_plan_employee()
 
 class netpro_membership_plan_spouse(osv.osv):
@@ -775,11 +825,29 @@ class netpro_membership_plan_spouse(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'affect_all' : fields.boolean('Affect to all'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
+        'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
+        'benefit_ids': fields.one2many('netpro.membership_benefit','membership_plan_spouse_id','Class Benefit', ondelete="cascade"),
     }
+
+    def onchange_pplan(self, cr, uid, ids, plan_id, context=None):
+        res = {}
+        
+        if not plan_id:
+            return res
+        
+        plan_obj = self.pool.get('netpro.product_plan').browse(cr, uid, plan_id, context=None)
+        
+        if plan_obj.overall_limit:
+            res = {
+                'value' : {
+                    'overall_limit' : plan_obj.overall_limit,
+                }
+            }
+        
+        return res
 netpro_membership_plan_spouse()
 
 class netpro_membership_plan_child(osv.osv):
@@ -787,12 +855,42 @@ class netpro_membership_plan_child(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'affect_all' : fields.boolean('Affect to all'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
+        'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
+        'benefit_ids': fields.one2many('netpro.membership_benefit','membership_plan_child_id','Class Benefit', ondelete="cascade"),
     }
+
+    def onchange_pplan(self, cr, uid, ids, plan_id, context=None):
+        res = {}
+        
+        if not plan_id:
+            return res
+        
+        plan_obj = self.pool.get('netpro.product_plan').browse(cr, uid, plan_id, context=None)
+        
+        if plan_obj.overall_limit:
+            res = {
+                'value' : {
+                    'overall_limit' : plan_obj.overall_limit,
+                }
+            }
+        
+        return res
 netpro_membership_plan_child()
+
+class netpro_class_benefit(osv.osv):
+    _name = 'netpro.membership_benefit'
+    _columns = {
+        'membership_plan_employee_id' : fields.many2one('netpro.membership_plan_employee', 'Employee'),
+        'membership_plan_spouse_id' : fields.many2one('netpro.membership_plan_spouse', 'Spouse'),
+        'membership_plan_child_id' : fields.many2one('netpro.membership_plan_child', 'Child'),
+        'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
+        'default_limit_id': fields.many2one('netpro.default_limit', 'Default Limit'),
+        'value_limit' : fields.float('Value Limit'),
+    }
+netpro_class_benefit()
 
 class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
     _name = 'netpro.plan_schedule_detail_benefit_schedule'

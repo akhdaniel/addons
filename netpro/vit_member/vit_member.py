@@ -27,7 +27,7 @@ from datetime import date
 class netpro_member(osv.osv):
     _name = 'netpro.member'
     _inherits = {'res.partner': 'partner_id'}
-    _rec_name = 'member_no'
+    _rec_name = 'name'
 
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner', 
@@ -100,6 +100,7 @@ class netpro_member(osv.osv):
         'grace_period_value': fields.integer('Grace Period Days'),
         'member_policy_exception_check' : fields.boolean('Policy Exception'),
         'member_policy_exception_ids' : fields.one2many('netpro.member_policy_exception','member_id','Policy Exception', ondelete="cascade"),
+        'limit_member_excessed' : fields.boolean('Limit Member Excessed'),
     }
 
     _defaults = {
@@ -115,6 +116,22 @@ class netpro_member(osv.osv):
     ]
 
     def create(self, cr, uid, vals, context=None):
+
+        if vals['parent_id']:
+            this = self.browse(cr, uid, vals['parent_id'], context=None)
+            policy_obj = this.policy_id
+            vals.update({
+                'policy_id' : policy_obj.id,
+                'insurance_period_start' : policy_obj.insurance_period_start,
+                'insurance_period_end' : policy_obj.insurance_period_end,
+            })
+
+            if policy_obj.policy_category_id.name == 'Individual':
+                #import pdb;pdb.set_trace()
+                if policy_obj.individual_member_limit > 0:
+                    if len(this.family_ids) >= policy_obj.individual_member_limit:
+                        raise osv.except_orm(('Warning!'),("Member limit excessed. Cannot add more than "+ str(policy_obj.individual_member_limit) +" member(s) to this Policy."))
+
         if not vals['member_no']:
             vals.update({
                 'member_no' : self.pool.get('ir.sequence').get(cr, uid, 'member_seq') or '/',
@@ -208,19 +225,25 @@ class netpro_member(osv.osv):
             result = int(usia)
         return {'value':{'age':result}}
 
-    def onchange_family(self, cr, uid, ids, fam_ids, policy_id, context=None):
-        
-        if policy_id:
-            raise osv.except_osv(_('Warning!'),_("Please choose Policy for this member") )
+    # def onchange_family(self, cr, uid, ids, fam_ids, policy_id,context=None):
+    #     results = {}
 
-        policy_obj = self.pool.get('netpro.policy').browse(cr, uid, policy_id, context=None)
+    #     if not policy_id:
+    #         raise osv.except_osv(('Warning!'),("Please choose Policy for this member"))
+    #         return results
 
-        if policy_obj.policy_category_id.name == 'Individual':
-            if policy_obj.individual_member_limit > 0:
-                if len(fam_ids) > policy_obj.individual_member_limit:
-                    raise osv.except_osv(_('Error!'),_("Cannot add new member to this policy due to Individual Policy rule(s).") )
+    #     policy_obj = self.pool.get('netpro.policy').browse(cr, uid, policy_id, context=None)
 
-        return
+    #     if policy_obj.policy_category_id.name == 'Individual':
+    #         if policy_obj.individual_member_limit > 0:
+    #             if len(fam_ids) > policy_obj.individual_member_limit:
+    #                 results = {
+    #                     'value' : {
+    #                         'limit_member_excessed'    : True,
+    #                     }
+    #                 }
+
+    #     return results
 
 netpro_member()
 
@@ -228,7 +251,7 @@ class netpro_member_policy_exception(osv.osv):
     _name = 'netpro.member_policy_exception'
     _columns = {
         'member_id' : fields.many2one('netpro.member', 'Member'),
-        'diagnosis_id' : fields.many2one('netpro.diagnosis', 'Diagnosis'),
+        'diagnosis_id' : fields.many2one('netpro.diagnosis', 'List of Policy Exception'),
     }
 netpro_member_policy_exception()
 
