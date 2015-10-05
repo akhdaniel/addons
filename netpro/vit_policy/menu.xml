@@ -46,7 +46,7 @@
 		    <menuitem name="Coverage" id="menu_netpro_coverage" action="action_netpro_coverage" parent="menu_netpro_policy_configuration_7"  sequence="230"/>
 		    <menuitem name="Class" id="menu_netpro_class" action="action_netpro_class" parent="menu_netpro_policy_configuration_7"  sequence="240"/>
 		    <menuitem name="Business Source" id="menu_netpro_business_source" action="action_netpro_business_source" parent="menu_netpro_policy_configuration_7"  sequence="260"/>
-		    <menuitem name="Default Limit" id="menu_netpro_default_limit" action="action_netpro_default_limit" parent="menu_netpro_policy_configuration_7"  sequence="290"/>
+		    
 		    <menuitem name="Agent / Broker" id="menu_netpro_agent" action="action_netpro_agent" parent="menu_netpro_policy_configuration_7"  sequence="320"/>
 		    <menuitem name="Business Source Type" id="menu_netpro_business_source_type" action="action_netpro_business_source_type" parent="menu_netpro_policy_configuration_7"  sequence="330"/>
 		    <menuitem name="Master Diagnosis Exclusion" id="menu_netpro_master_diagnosis_exclusion" action="action_netpro_master_diagnosis_exclusion"  parent="menu_netpro_policy_configuration_7" sequence="390"/>

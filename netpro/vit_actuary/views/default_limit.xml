@@ -1,0 +1,36 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_netpro_default_limit_form">
+            <field name="name">netpro.default_limit.form</field>
+            <field name="model">netpro.default_limit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="netpro.default_limit">
+                    <group>
+                        <field name="name" select="1"/>
+                        <separator string="Description" colspan="4"/>
+                        <field name="description" colspan="4" nolabel="1" select="2"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_netpro_default_limit_tree">
+            <field name="name">netpro.default_limit.tree</field>
+            <field name="model">netpro.default_limit</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="netpro.default_limit">
+                    <field name="name"/>
+                    <field name="description"/>
+
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_netpro_default_limit">
+            <field name="name">Default Limit</field>
+            <field name="res_model">netpro.default_limit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</openerp>
