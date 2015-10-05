@@ -455,9 +455,9 @@
                         </field>
                     </page>
 
-                    <page string="Enroll Plan" attrs="{'invisible': [('state','in',['open','closed'])]}">
+                    <!-- <page string="Enroll Plan" attrs="{'invisible': [('state','in',['open','closed'])]}">
                         <field name="policy_enroll_plan_ids" nolabel="1" />
-                    </page>
+                    </page> -->
 
                     <!-- Policy Rule tab -->
                     <page string="Rule" attrs="{'invisible': [('policy_category_id','!=',1)]}">
