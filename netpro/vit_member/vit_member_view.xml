@@ -95,7 +95,7 @@
                                 <field name="masa_tunggu_value" attrs="{'invisible':['|',('masa_tunggu','=',False),('policy_category','in',[1, ''])]}" />
                                 <field name="grace_period" attrs="{'invisible':[('policy_category','in',[1, ''])]}" />
                                 <field name="grace_period_value" attrs="{'invisible':['|',('grace_period','=',False),('policy_category','in',[1, ''])]}" />
-                                <field name="member_policy_exception_check" attrs="{'invisible':[('policy_category','in',[1, ''])]}" readonly="True" />
+                                <field name="member_policy_exception_check" attrs="{'invisible':[('policy_category','in',[1, ''])]}" />
                             </group>
                         </group>
                     </page>
@@ -136,7 +136,7 @@
                                         </group>
 
                                         <group>
-                                            <field name="class_id" widget="selection"/>
+                                            <field name="class_id" widget="selection" domain="[('policy_id','=',policy_id)]"/>
                                             <field name="membership" widget="selection"/>
                                             <field name="card_no" select="0"/>
                                             <field name="register_no" select="0" attrs="{'invisible':[('policy_category','in',[2, ''])]}"/>
@@ -156,7 +156,7 @@
                                             <field name="masa_tunggu_value" attrs="{'invisible':['|',('masa_tunggu','=',False),('policy_category','in',[1, ''])]}" />
                                             <field name="grace_period" attrs="{'invisible':[('policy_category','in',[1, ''])]}" />
                                             <field name="grace_period_value" attrs="{'invisible':['|',('grace_period','=',False),('policy_category','in',[1, ''])]}" />
-                                            <field name="member_policy_exception_check" attrs="{'invisible':[('policy_category','in',[1, ''])]}" readonly="True" />
+                                            <field name="member_policy_exception_check" attrs="{'invisible':[('policy_category','in',[1, ''])]}" />
                                         </group>
                                     </group>
                                     </page>
@@ -209,11 +209,11 @@
                     </page>
 
                     <page string="Policy Exception">
-                        <group>
+                        <!-- <group>
                             <field name="member_policy_exception_check" />
-                        </group>
-                        <field name="member_policy_exception_ids" nolabel="1" attrs="{'invisible':[('member_policy_exception_check','=',False)]}">
-                            <tree string="List Of Policy Exception" editable="bottom">
+                        </group> -->
+                        <field name="member_policy_exception_ids" nolabel="1" attrs="{'invisible':[('member_policy_exception_check','=',False)]}" widget="many2many">
+                            <tree editable="bottom">
                                 <field name="diagnosis_id" />
                             </tree>
                         </field>

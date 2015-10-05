@@ -1717,7 +1717,6 @@
                     <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
-                    <!-- <field name="policy_state" select="0" readonly="True"/> -->
                 </group>
                 <notebook>
                     <page string="Benefit Enroll">
@@ -1765,7 +1764,6 @@
                     <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
-                    <!-- <field name="policy_state" select="0" readonly="True"/> -->
                 </group>
                 <notebook>
                     <page string="Benefit Enroll">
@@ -1813,7 +1811,6 @@
                     <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
-                    <!-- <field name="policy_state" select="0" readonly="True"/> -->
                 </group>
                 <notebook>
                     <page string="Benefit Enroll">
