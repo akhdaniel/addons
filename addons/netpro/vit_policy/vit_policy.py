@@ -111,7 +111,7 @@ class netpro_policy(osv.osv):
         'email_date': fields.date('EmailDate'),
         'int_endorsement_no': fields.integer('Int. Endorsement No'),
         'ext_endorsement_no': fields.integer('Ext. Endorsement No'),
-        'pno': fields.integer('PNO'),
+        'pno': fields.char('PNO'),
         'ppno': fields.integer('PPNO'),
         'cancel_policy': fields.boolean('Cancel Policy'),
         'profit_sharing_endorsement': fields.boolean('Profit Sharing Endorsement'),
@@ -178,14 +178,14 @@ class netpro_policy(osv.osv):
         #'policy_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
     }
     def create(self, cr, uid, vals, context=None):
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False
         pno_val = vals['pno']
 
         if not pno_val:
-            pno_val = self.pool.get('ir.sequence').get(cr, uid, 'pno_seq') or 8888
+            pno_val = self.pool.get('ir.sequence').get(cr, uid, 'pno_seq') or '/'
 
         if cur_user.tpa_id:
             tpa_val = cur_user.tpa_id.id
@@ -653,7 +653,7 @@ netpro_up_room_class()
 
 class netpro_coverage(osv.osv):
     _name = 'netpro.coverage'
-    _rec_name = 'no_plan'
+    _rec_name = 'product_id'
     _columns = {
         'product_type_id': fields.many2one('netpro.product_type', 'Product Type'),
         'product_id': fields.many2one('netpro.product', 'Product ID'),
@@ -688,6 +688,7 @@ class netpro_coverage(osv.osv):
         'membership_option_not_allowed_for_spouse': fields.boolean('Not Allowed for Spouse'),
         'membership_option_not_allowed_for_child': fields.boolean('Not Allowed for Child'),
         'policy_id': fields.many2one('netpro.policy', 'Policy'),
+        'policy_category_id': fields.related('policy_id', 'policy_category_id', type="integer", relation="netpro.policy_category", string="Policy Category", store=True),
     }
 netpro_coverage()
 
@@ -765,14 +766,6 @@ class netpro_business_source(osv.osv):
     }
 netpro_business_source()
 
-class netpro_default_limit(osv.osv):
-    _name = 'netpro.default_limit'
-    _columns = {
-        'name': fields.char('Name'),
-        'description': fields.text('Description'),
-    }
-netpro_default_limit()
-
 class netpro_agent(osv.osv):
     _name = 'netpro.agent'
     _columns = {
@@ -794,6 +787,7 @@ class netpro_membership_plan_employee(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
+        'policy_state' : fields.related('class_id', 'policy_id', 'state' , type="char", relation="netpro.policy", string="Policy State", store=True),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),

@@ -74,7 +74,6 @@ netpro_product_plan()
 
 class netpro_product_plan_benefit(osv.osv):
     _name = 'netpro.product_plan_benefit'
-    _rec_name = 'product_plan_id'
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit'),
@@ -145,7 +144,7 @@ netpro_product_plan_benefit()
 
 class netpro_product_plan_membership(osv.osv):
     _name = 'netpro.product_plan_membership'
-    _rec_name = 'product_plan_id'
+    #_rec_name = 'product_plan_id'
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'membership_id': fields.many2one('netpro.membership', 'Membership'),
@@ -156,7 +155,7 @@ netpro_product_plan_membership()
 
 class netpro_product_plan_premium_type(osv.osv):
     _name = 'netpro.product_plan_premium_type'
-    _rec_name = 'product_plan_id'
+    #_rec_name = 'product_plan_id'
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'premium_type_id': fields.many2one('netpro.premium_type', 'Premium Type'),

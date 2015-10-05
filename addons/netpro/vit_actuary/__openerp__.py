@@ -64,6 +64,7 @@
                 'views/provider_type_view.xml',
                 'views/profile_view.xml',
                 'views/room_view.xml',
+                'views/default_limit.xml',
 
                 'data/provider_level_data.xml',
                 'data/provider_type_data.xml',

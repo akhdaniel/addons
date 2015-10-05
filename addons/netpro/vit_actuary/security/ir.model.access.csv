@@ -61,3 +61,4 @@ access_netpro_tpa,access_netpro_tpa,model_netpro_tpa,,1,1,1,1
 "access_netpro_profile","netpro.profile","model_netpro_profile","base.group_user",1,0,0,0
 "access_netpro_alias","netpro.alias","model_netpro_alias","base.group_user",1,0,0,0
 "access_netpro_provider_type","netpro.provider_type","model_netpro_provider_type","base.group_user",1,0,0,0
+"access_netpro_default_limit","netpro.default_limit","model_netpro_default_limit","base.group_user",1,0,0,0
