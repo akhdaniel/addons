@@ -1717,11 +1717,11 @@
                     <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
-                    <field name="policy_state" select="0" attrs="{'invisible': [('policy_state','!=','approved')]}"/>
+                    <field name="policy_state" select="0" readonly="True"/>
                 </group>
-                <notebook attrs="{'invisible': [('policy_state','!=','approved')]}">
+                <notebook>
                     <page string="Benefit Enroll">
-                        <field name="benefit_ids">
+                        <field name="benefit_ids" readonly="True">
                             <tree editable="top">
                                 <field name="benefit_id" />
                                 <field name="default_limit_id" />
@@ -1765,11 +1765,11 @@
                     <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
-                    <field name="policy_state" select="0" attrs="{'invisible': [('policy_state','!=','approved')]}"/>
+                    <field name="policy_state" select="0" readonly="True"/>
                 </group>
-                <notebook attrs="{'invisible': [('policy_state','!=','approved')]}">
+                <notebook>
                     <page string="Benefit Enroll">
-                        <field name="benefit_ids">
+                        <field name="benefit_ids" readonly="True">
                             <tree editable="top">
                                 <field name="benefit_id" />
                                 <field name="default_limit_id" />
@@ -1813,11 +1813,11 @@
                     <field name="overall_limit" select="0"/>
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
-                    <field name="policy_state" select="0" attrs="{'invisible': [('policy_state','!=','approved')]}"/>
+                    <field name="policy_state" select="0" readonly="True"/>
                 </group>
-                <notebook attrs="{'invisible': [('policy_state','!=','approved')]}">
+                <notebook>
                     <page string="Benefit Enroll">
-                        <field name="benefit_ids">
+                        <field name="benefit_ids" readonly="True">
                             <tree editable="top">
                                 <field name="benefit_id" />
                                 <field name="default_limit_id" />
