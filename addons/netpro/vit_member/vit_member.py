@@ -129,7 +129,7 @@ class netpro_member(osv.osv):
             if policy_obj.policy_category_id.name == 'Individual':
                 #import pdb;pdb.set_trace()
                 if policy_obj.individual_member_limit > 0:
-                    if len(this.family_ids) >= policy_obj.individual_member_limit:
+                    if len(this.family_ids) == policy_obj.individual_member_limit-1:
                         raise osv.except_orm(('Warning!'),("Member limit excessed. Cannot add more than "+ str(policy_obj.individual_member_limit) +" member(s) to this Policy."))
 
         if not vals['member_no']:
@@ -251,7 +251,7 @@ class netpro_member_policy_exception(osv.osv):
     _name = 'netpro.member_policy_exception'
     _columns = {
         'member_id' : fields.many2one('netpro.member', 'Member'),
-        'diagnosis_id' : fields.many2one('netpro.diagnosis', 'List of Policy Exception'),
+        'diagnosis_id' : fields.many2one('netpro.diagnosis', 'List of Policy Exception', widget="many2many"),
     }
 netpro_member_policy_exception()
 
