@@ -35,7 +35,7 @@
 
                     <filter icon="terp-check" name="karantinagoj" string="Karantina GOJ" domain="[('location_id','ilike','Karantina')]"/>
 
-                    <filter icon="terp-check" name="karantinagoj_goj" string="GOJ: QA to Stock" domain="[('location_dest_id','ilike','GOJ / Stock'),('location_id','ilike','GBA / Input')]"/>
+                    <filter icon="terp-check" name="karantinagoj_goj" string="GOJ: QA to Stock" domain="[('location_dest_id','ilike','GOJ / Stock'),('location_id','ilike','GOJ / Input')]"/>
 
                     <filter icon="terp-check" name="karantinabb_bb" string="GBA: QC to Stock" domain="[('location_id','ilike','GBA / Input'),('location_dest_id','ilike','GBA / Stock')]"/>
                 </search>

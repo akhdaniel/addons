@@ -527,11 +527,54 @@ class mrp_production(osv.osv):
         self.message_post(cr, uid, production_id, body=_("%s produced") % self._description, context=context)
 
         # Remove remaining products to consume if no more products to produce
+        # if not production.move_created_ids and production.move_lines:
+        #     stock_mov_obj.action_cancel(cr, uid, [x.id for x in production.move_lines], context=context)
+
         if not production.move_created_ids and production.move_lines:
-            stock_mov_obj.action_cancel(cr, uid, [x.id for x in production.move_lines], context=context)
+            stock_mov_obj.action_done(cr, uid, [x.id for x in production.move_lines], context=context)
 
         self.signal_workflow(cr, uid, [production_id], 'button_produce_done')
+
+
+
+        #create QA release move
+        # GOJ Inout > GOJ Stock
+        # otomatis ternyata, yg penting Warehouse Gudang Obat jadi incoming set 2 steps
+
+        # print "create QA release move"
+        # self.create_qa_release(cr, uid, production, context=context)
+
         return True
+
+    def create_qa_release(self, cr, uid, production, context=None):
+        warehouse_obj    = self.pool.get('stock.warehouse')
+        location_obj    = self.pool.get('stock.location')
+        picking_obj     = self.pool.get('stock.picking')
+        picking_type_obj     = self.pool.get('stock.picking.type')
+
+        warehouse_dest_id = warehouse_obj.search(cr, uid, [('name','=','Gudang Obat Jadi Pusat')], context=context)
+        if not warehouse_dest_id:
+            raise osv.except_osv(_('error'),_("No Warehouse name Gudang Obat Jadi Pusat") ) 
+
+        warehouse_dest = warehouse_obj.browse(cr, uid, warehouse_dest_id, context=context)
+        picking_type_id = warehouse_dest[0].int_type_id
+        location_dest_id =  warehouse_dest[0].wh_output_stock_loc_id # destination
+        location_id = production.location_dest_id                    # source
+
+        picking_id = picking_obj.create(cr,uid,{
+            'origin':production.name ,
+            'picking_type_id'   : picking_type_id.id,}) 
+
+        for move in production.move_created_ids:
+            move_obj.create(cr,uid,{'picking_id'        : picking_id,
+                                    'product_id'        : move.product_id.id,
+                                    'product_uom_qty'   : move.product_uom_qty,
+                                    'product_uom'       : move.product_uom.id,
+                                    'name'              : move.name,
+                                    'location_id'       : location_id.id,
+                                    'location_dest_id'  : location_dest_id.id,
+            })
+        return 0
 
     def action_cancel(self, cr, uid, ids, context=None):
         """ Cancels the production order and related stock moves.
@@ -605,4 +648,24 @@ class stock_move_consume(osv.osv_memory):
         if 'restrict_lot_id' in fields:
             res.update({'restrict_lot_id': move.restrict_lot_id.id})
         return res
+
+
+class mrp_product_produce(osv.osv_memory):
+    _name = "mrp.product.produce"
+    _inherit = "mrp.product.produce"
+
+    def on_change_qty(self, cr, uid, ids, product_qty, consume_lines, context=None):
+        # prod_obj = self.pool.get("mrp.production")
+        # # uom_obj = self.pool.get("product.uom")
+        # production = prod_obj.browse(cr, uid, context['active_id'], context=context)
+        # consume_lines = []
+        # new_consume_lines = []
+        # if product_qty > 0.0:
+        #     # product_uom_qty = uom_obj._compute_qty(cr, uid, production.product_uom.id, product_qty, production.product_id.uom_id.id)
+        #     consume_lines = production.move_lines
+        
+        # for consume in consume_lines:
+        #     new_consume_lines.append([0, False, consume])
+        # return {'value': {'consume_lines': new_consume_lines}}
+        return False
 

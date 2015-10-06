@@ -46,6 +46,7 @@
                 </field>
                 <field name="partner_id" position="before">
                     <field name="priority" widget="priority"/>
+                    <field name="uji_mikro"  />
                 </field>     
             </field>
         </record>
