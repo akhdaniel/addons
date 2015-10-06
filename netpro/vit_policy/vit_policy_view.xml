@@ -478,39 +478,40 @@
                     <page string="Discount &amp; Fee" attrs="{'invisible': [('policy_category_id','!=',1)]}">
                         <group col="4">
                             <group col="2">
-                                <group string="Discount">
+                                <group>
+                                    <separator string="Discount" />
                                     <field name="discount_special_discount" select="0"/>
                                     <field name="discount_direct_discount" select="0"/>
                                     <field name="discount_discount_amount" select="0"/>
                                     <field name="discount_discount_only_apply_on_policy" select="0"/>
-                                </group>
-                                <group string="Loading">
+
+                                    <separator string="Loading" />
                                     <field name="loading_cc_loading" select="0"/>
                                 </group>
-                                <group string="Deposit">
+                                <group>
+                                    <separator string="Deposit" />
                                     <field name="deposit_deposit_recovery" select="0"/>
-                                </group>
-                                <group string="Claim Reimbursement Transfer Fee">
+
+                                    <separator string="Claim Reimbursement Transfer Fee" />
                                     <field name="claim_reimbursement_transfer_fee" select="0"/>
                                 </group>
                             </group>
 
                             <group col="2">
-                                <group string="Other Settings">
-                                    <field name="other_settings_admin_cost" select="0"/>
-                                    <field name="other_settings_card_fee" select="0"/>
-                                    <field name="other_settings_total_card_fee" select="0"/>
-                                    <field name="other_settings_total_cdmin_cost" select="0"/>
-                                    <field name="other_settings_stamp_duty" select="0"/>
-                                    <field name="other_settings_interest" select="0"/>
-                                </group>
-                                <group string="Pool Fund Info">
-                                    <field name="pool_fund_info_pool_fund" select="0"/>
-                                    <field name="pool_fund_info_max_pool_fund_member" select="0"/>
-                                    <field name="pool_fund_info_max_member_pool_fund" select="0"/>
-                                    <separator string="Remarks" colspan="4"/>
-                                    <field name="pool_fund_info_remarks" colspan="4" nolabel="1" select="0"/>
-                                </group>
+                                <separator string="Other Settings" />
+                                <field name="other_settings_admin_cost" select="0"/>
+                                <field name="other_settings_card_fee" select="0"/>
+                                <field name="other_settings_total_card_fee" select="0"/>
+                                <field name="other_settings_total_cdmin_cost" select="0"/>
+                                <field name="other_settings_stamp_duty" select="0"/>
+                                <field name="other_settings_interest" select="0"/>
+                                    
+                                <separator string="Pool Fund Info" />
+                                <field name="pool_fund_info_pool_fund" select="0"/>
+                                <field name="pool_fund_info_max_pool_fund_member" select="0"/>
+                                <field name="pool_fund_info_max_member_pool_fund" select="0"/>
+                                <separator string="Remarks" colspan="4"/>
+                                <field name="pool_fund_info_remarks" colspan="4" nolabel="1" select="0"/>
                             </group>
                         </group>
                     </page>

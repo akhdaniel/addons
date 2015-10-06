@@ -3,16 +3,16 @@
 <data>
 
     <record id="view_netpro_member_filter" model="ir.ui.view">
-            <field name="name">netpro.member.select</field>
-            <field name="model">netpro.member</field>
-            <field name="arch" type="xml">
-                <search string="Search Invoice">
-                    <group expand="0" string="Group By...">
-                        <filter name='policy_holder' string="Policy Holder" domain="[]"  context="{'group_by':'policy_holder'}"/>
-                    </group>
-               </search>
-            </field>
-        </record>
+        <field name="name">netpro.member.select</field>
+        <field name="model">netpro.member</field>
+        <field name="arch" type="xml">
+            <search string="Search Invoice">
+                <group expand="0" string="Group By...">
+                    <filter name='policy_holder' string="Policy Holder" domain="[]"  context="{'group_by':'policy_holder'}"/>
+                </group>
+           </search>
+        </field>
+    </record>
 
     <record model="ir.ui.view" id="view_netpro_member_form">
         <field name="name">netpro.member.form</field>
@@ -307,7 +307,17 @@
         <field name="res_model">netpro.member</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name='context'>{'search_default_policy_holder': 1}</field>
+        <field name='context'>{'group_by': 'policy_holder'}</field>
+        <field name="domain">[('policy_category', '=', 1)]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_netpro_member_individu">
+        <field name="name">Member</field>
+        <field name="res_model">netpro.member</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name='context'>{'group_by': 'policy_holder'}</field>
+        <field name="domain">[('policy_category', '=', 2)]</field>
     </record>
     
         
