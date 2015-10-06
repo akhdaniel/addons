@@ -476,43 +476,39 @@
 
                     <!-- Policy Discount &amp; Fee tab -->
                     <page string="Discount &amp; Fee" attrs="{'invisible': [('policy_category_id','!=',1)]}">
-                        <group col="4">
-                            <group col="2">
-                                <group>
-                                    <separator string="Discount" />
-                                    <field name="discount_special_discount" select="0"/>
-                                    <field name="discount_direct_discount" select="0"/>
-                                    <field name="discount_discount_amount" select="0"/>
-                                    <field name="discount_discount_only_apply_on_policy" select="0"/>
+                        <group>
+                            <group>
+                                <h2 colspan="2"> Discount </h2>
+                                <field name="discount_special_discount" select="0"/>
+                                <field name="discount_direct_discount" select="0"/>
+                                <field name="discount_discount_amount" select="0"/>
+                                <field name="discount_discount_only_apply_on_policy" select="0"/><br />
 
-                                    <separator string="Loading" />
-                                    <field name="loading_cc_loading" select="0"/>
-                                </group>
-                                <group>
-                                    <separator string="Deposit" />
-                                    <field name="deposit_deposit_recovery" select="0"/>
+                                <h2 colspan="2"> Loading </h2>
+                                <field name="loading_cc_loading" select="0"/><br />
 
-                                    <separator string="Claim Reimbursement Transfer Fee" />
-                                    <field name="claim_reimbursement_transfer_fee" select="0"/>
-                                </group>
+                                <h2 colspan="2"> Deposit </h2> 
+                                <field name="deposit_deposit_recovery" select="0"/><br />
+
+                                <h2 colspan="2"> Claim Reimbursement Transfer Fee </h2> 
+                                <field name="claim_reimbursement_transfer_fee" select="0"/><br />
                             </group>
-
-                            <group col="2">
-                                <separator string="Other Settings" />
+                            <group>
+                                <h2 colspan="2"> Other Settings </h2>
                                 <field name="other_settings_admin_cost" select="0"/>
                                 <field name="other_settings_card_fee" select="0"/>
                                 <field name="other_settings_total_card_fee" select="0"/>
                                 <field name="other_settings_total_cdmin_cost" select="0"/>
                                 <field name="other_settings_stamp_duty" select="0"/>
-                                <field name="other_settings_interest" select="0"/>
-                                    
-                                <separator string="Pool Fund Info" />
+                                <field name="other_settings_interest" select="0"/><br />
+
+                                <h2 colspan="2"> Pool Fund Info </h2>
                                 <field name="pool_fund_info_pool_fund" select="0"/>
                                 <field name="pool_fund_info_max_pool_fund_member" select="0"/>
                                 <field name="pool_fund_info_max_member_pool_fund" select="0"/>
                                 <separator string="Remarks" colspan="4"/>
-                                <field name="pool_fund_info_remarks" colspan="4" nolabel="1" select="0"/>
-                            </group>
+                                <field name="pool_fund_info_remarks" colspan="4" nolabel="1" select="0"/><br />
+                            </group>                            
                         </group>
                     </page>
 
