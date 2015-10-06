@@ -34,8 +34,8 @@ class stock_picking(osv.osv):
     _name = "stock.picking"
     _inherit = "stock.picking"
     _columns = {
-
        
+        'uji_mikro': fields.selection([('with_uji_mikro','Dengan Uji Mikro'),('without_uji_mikro','Tanpa Uji Mikro')],'Uji Mikro'),
         'release_date': fields.datetime('Release Date'),
         'priority': fields.selection([('0','Low'), ('1','Normal'), ('2','High')], 'Priority', select=True),
 
