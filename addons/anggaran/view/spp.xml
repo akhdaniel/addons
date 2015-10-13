@@ -1,0 +1,115 @@
+<openerp>
+	<data>
+		<!-- SPP from -->
+        <record id="view_spp_form" model="ir.ui.view">
+            <field name="name">anggaran_spp_form</field>
+            <field name="model">anggaran.spp</field>
+            <field name="arch" type="xml">
+            	<form string="spp form" version="7.0">
+            		<header>
+						<button string="Kirim Persetujuan" type="object" name="action_confirm" 
+							 class="oe_highlight" states="draft" />
+
+						<button string="Setuju" type="object" name="action_done" 
+							 class="oe_highlight" states="open" />
+
+						<button string="Cancel" type="object" name="action_draft"
+						 	 states="open" />
+
+						<button string="Tolak" type="object" name="action_reject"
+						 	 states="open" />
+
+						<button string="Catat SPM" type="object" name="action_create_spm"
+							 class="oe_highlight"
+                             attrs="{'invisible': ['|', ('spm_exists', '=', True), ('state','&lt;&gt;','done')]}" />
+
+						<button string="View SPM" type="object" name="action_view_spm"
+                             attrs="{'invisible': ['|', ('spm_exists', '=', False), ('state','&lt;&gt;','done')]}" />
+
+            			<field name="state" widget="statusbar" />
+            		</header>
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Nomor" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+			            <group>
+		            		<group>
+				            	<group>
+					                <field name="tanggal"/>       
+					                <field name="kepada"/>
+					                <field name="cara_bayar"/>       
+					                <field name="jumlah"/>       
+					                <field name="keperluan"/>       
+				                </group>
+				                <group>  
+					                <field name="unit_id"/>       
+					                <field name="nomor_rek"/>       
+					                <field name="nama_bank"/>  
+					                <field name="dasar_rkat"/>       
+				                </group>     
+			                </group>    				            
+				        </group>
+
+			            <notebook>
+
+			            	<page string="Rincian Penjelasan">
+					            <field name="spp_line_ids">
+					            	<tree string="Rincian Penjelasan" editable="bottom">
+										<field name="rka_kegiatan_id" />  
+										<field name="pagu"  readonly="1"/>   
+										<field name="spp_lalu" readonly="1"/>     
+										<field name="spp_ini" />
+										<field name="jumlah_spp" readonly="1"/>
+										<field name="sisa_dana"  readonly="1"/>      
+						            </tree>
+						        </field>
+						    </page>
+				            
+				            <page string="Persetujuan">
+				            	<group>
+				            		<group>
+						                <field name="pumkc_id"/>       
+						                <field name="nip_pumkc"/>       
+						            </group>
+						            <group>
+						                <field name="atasan_pumkc_id"/>       
+						                <field name="nip_atasan_pumkc"/>       
+						            </group>
+					            </group>
+				            </page>
+				            <page string="Other Info">
+			            		<group>
+					                <field name="spm_exists"/>		
+					            </group>
+				            </page>
+
+						</notebook>				        
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+		<!-- SPP from -->
+        <record id="view_spp_tree" model="ir.ui.view">
+            <field name="name">anggaran_spp_tree</field>
+            <field name="model">anggaran.spp</field>
+            <field name="arch" type="xml">
+            	<tree string="list spp" colors="grey:state=='done'; blue:state=='draft'">
+                    <field name="name"/>
+	                <field name="tanggal"/>         
+	                <field name="jumlah"/>       
+	                <field name="keperluan"/>       
+	                <field name="unit_id"/>       
+	                <field name="nomor_rek"/>       
+	                <field name="nama_bank"/>    	                    
+	                <field name="spm_exists"/>		
+	                <field name="state"/>    	                    
+                </tree>    
+            </field>
+        </record>
+	</data>
+</openerp>

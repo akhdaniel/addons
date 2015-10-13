@@ -1,0 +1,31 @@
+<openerp>
+	<data>
+		<record id="view_jurusan_tree" model="ir.ui.view">
+		    <field name="name">anggaran_jurusan_tree</field>
+		    <field name="model">anggaran.jurusan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list jurusan" >
+		            <field name="fakultas_id"/>
+		            <field name="code"/>
+		            <field name="name"/>
+		        </tree>    
+		    </field>
+		</record>
+		<!-- ini definisi search jurusan -->
+		<record id="view_jurusan_filter" model="ir.ui.view">
+		    <field name="name">jurusan.filter</field>
+		    <field name="model">anggaran.jurusan</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Jurusan">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="fakultas_id"/>
+		            <group expand="1" string="Group By...">
+		                <filter string="Fakultas" icon="terp-personal" 
+		                    domain="[]" context="{'group_by':'fakultas_id'}"/>
+		            </group>
+		        </search>
+		    </field>
+		</record>
+	</data>
+</openerp>

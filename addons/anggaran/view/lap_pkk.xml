@@ -1,0 +1,27 @@
+<openerp>
+	<data>
+		<record id="view_lap_pkk_tree" model="ir.ui.view">
+		    <field name="name">anggaran_lap_pkk_tree</field>
+		    <field name="model">anggaran.lap_pkk</field>
+		    <field name="arch" type="xml">
+		    	<tree string="lap pencapaian kinerja kegiatan">
+					<field name="unit_id" />  				
+					<field name="tahun_id" />  			
+					<field name="rka_kegiatan_id" /> 		
+					<field name="kebijakan_id" />			
+					<field name="program_id" />			
+					<field name="input_rencana" />			
+					<field name="input_realisasi" />		
+					<field name="proses_rencana" />		
+					<field name="proses_realisasi" />		
+					<field name="output_rencana" />		
+					<field name="output_realisasi" />		
+					<field name="cap_thn_lalu_rencana" /> 
+					<field name="cap_thn_lalu_realisasi" />
+					<field name="pct_capaian_target" /> 	
+					<field name="outcome" /> 
+		        </tree>    
+		    </field>
+		</record>
+</data>
+</openerp>
