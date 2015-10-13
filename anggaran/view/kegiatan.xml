@@ -1,0 +1,37 @@
+<openerp>
+	<data>
+		<record id="view_kegiatan_tree" model="ir.ui.view">
+		    <field name="name">anggaran_kegiatan_tree</field>
+		    <field name="model">anggaran.kegiatan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list kegiatan" >
+		            <field name="kebijakan_id" invisible="True"/>
+		            <field name="program_id"  invisible="True"/>
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="coa"/>
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- ini definisi search kegiatan -->
+		<record id="view_kegiatan_filter" model="ir.ui.view">
+		    <field name="name">kegiatan.filter</field>
+		    <field name="model">anggaran.kegiatan</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Kegiatan">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="program_id"/>
+		            <group expand="1" string="Group By...">
+		                <filter string="Kebijakan" icon="terp-personal" name="group_kebijakan"
+		                    domain="[]" context="{'group_by':'kebijakan_id'}"/>
+		                <filter string="Program" icon="terp-personal" name="group_program"
+		                    domain="[]" context="{'group_by':'program_id'}"/>
+		            </group>
+		        </search>
+		    </field>
+		</record>
+
+	</data>
+</openerp>
