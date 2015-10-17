@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">OdooCon2</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="registration">Registration</string>
+    <string name="discharge">Discharge</string>
+    <string name="void_transaction">Void</string>
+    <string name="eligibility">Eligibility</string>
+    <string name="company">Company</string>
+    <string name="sex">Sex</string>
+    <string name="dob">Date of Birth</string>
+    <string name="policy_date">Policy Date</string>
+    <string name="policy_number">Policy Number</string>
+    <string name="classname">Class</string>
+    <string name="membership">Membership</string>
+    <string name="cardNo">Card No</string>
+    <string name="policyCategory">Policy Category</string>
+    <string name="benefit">Benefit</string>
+    <string name="confirm">Confirm</string>
+    <string name="diagnosis">Diagnosis</string>
+</resources>
