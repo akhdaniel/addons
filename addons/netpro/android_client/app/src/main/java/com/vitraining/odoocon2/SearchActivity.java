@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
+    private TextView txtOperation;
 
     private long memberTaskId;
     private long policyTaskId;
@@ -36,6 +38,8 @@ public class SearchActivity extends AppCompatActivity {
     private String password;
     private String serverAddress;
     private String database;
+
+    private String operation;
 
     Member member;
     Claim claim;
@@ -55,8 +59,19 @@ public class SearchActivity extends AppCompatActivity {
         odoo = new OdooUtility(serverAddress, "object");
         member = new Member();
 
+        operation = SharedData.getKey( SearchActivity.this, "operation");
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // put your code here...
+
+        txtOperation = (TextView) findViewById(R.id.txtOperation);
+        txtOperation.setText(operation);
+
+    }
     public void onClick(View view){
         /*
         cari member ke odoo berdasarkan cardNo
@@ -141,7 +156,7 @@ public class SearchActivity extends AppCompatActivity {
         //when done, set benefits variable, and call setValues to set the activity values
         List conditions = Arrays.asList(Arrays.asList(
                         Arrays.asList("member_id", "=", member.getId()),
-                        Arrays.asList("state", "=", "open")
+                        Arrays.asList("state", "=", "draft")
                 )
         );
         Map fields = new HashMap() {{
@@ -185,6 +200,7 @@ public class SearchActivity extends AppCompatActivity {
     XMLRPCCallback listener = new XMLRPCCallback() {
         public void onResponse(long id, Object result) {
 
+            Looper.prepare();
             Object[] classObjs=(Object[])result;
             int length=classObjs.length;
 
@@ -193,14 +209,20 @@ public class SearchActivity extends AppCompatActivity {
              */
             if (id == memberTaskId) {
 
-                for (int i=0; i < length; i++) {
-                    @SuppressWarnings("unchecked") Map<String,Object> classObj=(Map<String,Object>)classObjs[i];
+                if(length>0){
+                    for (int i=0; i < length; i++) {
+                        @SuppressWarnings("unchecked") Map<String,Object> classObj=(Map<String,Object>)classObjs[i];
 
-                    member.fillData(classObj);
+                        member.fillData(classObj);
 
-                    List member_plan_ids = OdooUtility.getOne2Many(classObj, "member_plan_ids");
-                    searchMemberPlanIds(member_plan_ids);
+                        List member_plan_ids = OdooUtility.getOne2Many(classObj, "member_plan_ids");
+                        searchMemberPlanIds(member_plan_ids);
 
+                    }
+
+                }
+                else {
+                    odoo.MessageDialog(SearchActivity.this, "Member not found");
                 }
             }
 
@@ -239,19 +261,27 @@ public class SearchActivity extends AppCompatActivity {
                 claim = new Claim();
                 String operation =  SharedData.getKey(SearchActivity.this, "operation");
 
-                /**
-                 * fill selected member's currently open claim
-                 */
-                for (int i=0; i < length; i++) {
-                    @SuppressWarnings("unchecked") Map<String, Object> classObj = (Map<String, Object>) classObjs[i];
-                    claim.fillData(classObj);
-                }
+                if(length>0){
+                    /**
+                     * fill selected member's currently open claim
+                     */
+                    for (int i=0; i < length; i++) {
+                        @SuppressWarnings("unchecked") Map<String, Object> classObj = (Map<String, Object>) classObjs[i];
+                        claim.fillData(classObj);
+                    }
 
-                if (operation.equals("discharge")){
-                    openDischarge();
+                    if (operation.equals("discharge")){
+                        openDischarge();
+                    }
+                    else if (operation.equals("void")){
+                        openVoid();
+                    }
+
                 }
-                else if (operation.equals("void")){
-                    openVoid();
+                else
+                {
+                    odoo.MessageDialog(SearchActivity.this, "Claim data not found");
+
                 }
 
             }
@@ -286,36 +316,20 @@ public class SearchActivity extends AppCompatActivity {
                 member.setCoverages(coverages.toArray());
 
             }
-
+            Looper.loop();
         }
 
         public void onError(long id, XMLRPCException error) {
             Looper.prepare();
             Log.e("SEARCH ****", error.getMessage());
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SearchActivity.this);
-            alertDialogBuilder.setMessage( error.getMessage() )
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).create().show();
+            odoo.MessageDialog(SearchActivity.this, error.getMessage());
             Looper.loop();
         }
 
         public void onServerError(long id, XMLRPCServerException error) {
             Looper.prepare();
             Log.e("SEARCH ****", error.getMessage());
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(SearchActivity.this);
-            alertDialogBuilder.setMessage( error.getMessage() )
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).create().show();
+            odoo.MessageDialog(SearchActivity.this, error.getMessage());
             Looper.loop();
         }
     };

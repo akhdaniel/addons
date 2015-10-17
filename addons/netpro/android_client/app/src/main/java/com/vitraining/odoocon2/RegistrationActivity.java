@@ -206,9 +206,24 @@ public class RegistrationActivity extends AppCompatActivity {
             {
                 final Integer claimId =(Integer)result;
                 Log.v("CLAIM CREATED", "successfully created with id=" + claimId);
+                Log.v("CLAIM CONFIRMED", "successfully");
 
-                List data = Arrays.asList( claimId );
-                confirmClaimTaskId = odoo.exec(listener, database, uid, password, "netpro.claim", "action_open", data);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RegistrationActivity.this);
+                alertDialogBuilder.setMessage("Successfully created new Claim" )
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                // Do stuff if user accepts
+                                Intent myIntent = new Intent(RegistrationActivity.this, MenuActivity.class);
+                                myIntent.putExtra("member", member);
+                                RegistrationActivity.this.startActivity(myIntent);
+                            }
+                        }).create().show();
+
+//                List data = Arrays.asList( claimId );
+//                confirmClaimTaskId = odoo.exec(listener, database, uid, password, "netpro.claim", "action_open", data);
             }
             else if (id==confirmClaimTaskId)
             {
