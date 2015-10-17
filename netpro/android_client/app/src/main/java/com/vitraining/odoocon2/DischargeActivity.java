@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -41,13 +43,15 @@ public class DischargeActivity extends AppCompatActivity {
     Member member;
     Claim claim;
     long updateClaimTaskId;
+    long confirmClaimTaskId;
 
     private OdooUtility odoo;
     private String uid;
     private String password;
     private String serverAddress;
     private String database;
-    AlertDialog.Builder alertDialogBuilder;
+
+    List billedAmounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,8 @@ public class DischargeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         member = (Member) intent.getParcelableExtra("member");
         claim = (Claim) intent.getParcelableExtra("claim");
-        alertDialogBuilder = new AlertDialog.Builder(this);
+
+        billedAmounts = new ArrayList();
 
         setValues();
     }
@@ -125,6 +130,7 @@ public class DischargeActivity extends AppCompatActivity {
 
     private void showBenefitsForm(){
         TableLayout tl = (TableLayout) findViewById(R.id.tableLayoutBenefit);
+        tl.setColumnStretchable(2, true);
 
         TableRow th = new TableRow(this);
         th.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -134,8 +140,9 @@ public class DischargeActivity extends AppCompatActivity {
         col1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
         TextView col2 = new TextView(this);
-        col2.setText("Billed");
+        col2.setText("Billed Amount");
         col2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
 
         th.addView(col1);
         th.addView(col2);
@@ -159,13 +166,19 @@ public class DischargeActivity extends AppCompatActivity {
             tdcol1.setText((String)benefit.get("benefitName"));
             tdcol1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-            TextView tdcol2 = new TextView(this);
-            tdcol2.setText((String)benefit.get("unit"));
-            tdcol2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+            EditText billed = new EditText(this);
+            billed.setInputType(InputType.TYPE_CLASS_NUMBER);
+            billed.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
 
             tr.addView(tdcol1);
-            tr.addView(tdcol2);
+            tr.addView(billed);
+
+            HashMap detail = new HashMap();
+            detail.put( "benefitId", benefit.get("benefitId"));
+            detail.put( "billed", billed);
+
+            billedAmounts.add(detail);
 
             tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
@@ -178,18 +191,39 @@ public class DischargeActivity extends AppCompatActivity {
     public void onClick(View view){
         confirmUpdateClaim();
     }
+
+    /**
+     * update claim, add benefit billed, diagnosis
+     * if success, continue with executing action_open
+     */
     private void confirmUpdateClaim(){
 
         List data = Arrays.asList(
-                Arrays.asList("claim_id", "=",claim.getId()),
+                Arrays.asList(claim.getId()),
                 new HashMap() {{
+                    List details = new ArrayList();
+                    for(int i=0; i< billedAmounts.size(); i++)
+                    {
+                        final HashMap  bm = (HashMap ) billedAmounts.get(i);
+                        final Integer benefitId = (Integer)bm.get("benefitId");
+                        final EditText billed = (EditText)bm.get("billed");
+                        details.add(Arrays.asList(0, 0, new HashMap() {{
+                            put("benefit_id", benefitId);
+                            put("billed", billed.getText().toString());
+                            put("quantity", "1");
+//                            put("billed", bm.get("billed").getText());
+                        }}));
+                    }
+
                     put("claim_no_revision", 100);
                     put("reference_no", "android");
+                    put("claim_detail_ids",details);
                 }}
         );
         updateClaimTaskId = odoo.update(listener, database, uid, password, "netpro.claim", data);
 
     }
+
     XMLRPCCallback listener = new XMLRPCCallback() {
         public void onResponse(long id, Object result) {
 
@@ -197,33 +231,58 @@ public class DischargeActivity extends AppCompatActivity {
 
             if (id==updateClaimTaskId)
             {
-                final Integer claimId =(Integer)result;
+                final Boolean updateResult =(Boolean)result;
 
-                Log.v("CLAIM CONFIRMED", "successfully");
+                if(updateResult)
+                {
+                    Log.v("CLAIM UPDATE", "successfully");
+                    List data = Arrays.asList( claim.getId() );
+                    confirmClaimTaskId = odoo.exec(listener, database, uid, password, "netpro.claim", "action_open", data);
+                }
+                else{
+                    odoo.MessageDialog(DischargeActivity.this, "Update claim failed. Server return was false");
+                }
 
-                alertDialogBuilder.setMessage("Successfully discharged")
-                        .setCancelable(false)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
+            }
+            else if (id==confirmClaimTaskId)
+            {
+                final Boolean confirmResult =(Boolean)result;
 
-                                // Do stuff if user accepts
-                                Intent myIntent = new Intent(DischargeActivity.this, MenuActivity.class);
-                                myIntent.putExtra("member", member);
-                                DischargeActivity.this.startActivity(myIntent);
-                            }
-                        }).create().show();
+                if(confirmResult){
+
+                    Log.v("CLAIM CONFIRMED", "successfully");
+
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DischargeActivity.this);
+                    alertDialogBuilder.setMessage("Successfully created and confirmed new Claim" )
+                            .setCancelable(false)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    // Do stuff if user accepts
+                                    Intent myIntent = new Intent(DischargeActivity.this, MenuActivity.class);
+                                    myIntent.putExtra("member", member);
+                                    DischargeActivity.this.startActivity(myIntent);
+                                }
+                            }).create().show();
+
+                }
+                else
+                {
+                    odoo.MessageDialog(DischargeActivity.this, "Confirm Claim failed. Result from server is false");
+                }
             }
             Looper.loop();
 
         }
         public void onError(long id, XMLRPCException error) {
             Log.e("SEARCH ****", error.getMessage());
+            odoo.MessageDialog(DischargeActivity.this, error.getMessage());
 
         }
         public void onServerError(long id, XMLRPCServerException error) {
             Log.e("SEARCH ****",error.getMessage());
+            odoo.MessageDialog(DischargeActivity.this, error.getMessage());
         }
     };
 

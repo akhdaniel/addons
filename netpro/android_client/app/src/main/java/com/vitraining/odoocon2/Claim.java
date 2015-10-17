@@ -395,6 +395,10 @@ public class Claim implements Parcelable {
         }
     };
 
+    /**********************************************************************************************
+     *
+     * @return
+     */
     public Integer getProviderId() {
         return providerId;
     }

@@ -310,7 +310,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tableLayoutBenefit"
         android:showDividers="beginning|middle|end"
-        android:stretchColumns="[1]" />
+        android:stretchColumns="[1,2]" />
 
     <TextView
         android:layout_width="fill_parent"
