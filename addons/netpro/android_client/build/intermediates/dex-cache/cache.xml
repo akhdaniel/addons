@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/pre-dexed/debug/classes-325f4f62d88982891ede1d0b0d22520e21bd0ac6.jar" />
+    </item>
+    <item
+        jar="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/pre-dexed/debug/classes-6e3b456e8dc31e13471af1dbae9b52251af5892c.jar" />
+    </item>
+    <item
+        jar="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.1-86048c08ca07c0d9d6883cc4ae273fe6a8358b7a.jar" />
+    </item>
+    <item
+        jar="/Applications/android-sdk-mac_x86/extras/android/m2repository/com/android/support/support-annotations/22.2.1/support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="/Users/akhmaddanielsembiring/Documents/data/android-proj/OdooCon2/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-4b9ce1cbb6fd874bbfc8a0f07678bce4fd8abf7f.jar" />
+    </item>
+
+</items>

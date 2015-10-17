@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/linearLayout">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Main Menu"
+        android:id="@+id/textView3" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Registration"
+        android:id="@+id/btnRegistration"
+        android:layout_gravity="bottom"
+        android:onClick="onClickRegistration" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Discharge"
+        android:id="@+id/btnDischarge"
+        android:layout_gravity="center_vertical"
+        android:onClick="onClickDischarge" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Void"
+        android:id="@+id/btnVoid"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClickVoid" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtStatus"
+        android:layout_weight="0.10"
+        android:layout_gravity="bottom" />
+</LinearLayout>
