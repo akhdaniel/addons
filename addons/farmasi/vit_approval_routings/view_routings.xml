@@ -25,6 +25,7 @@
                     <group>
                         <group>
                             <field name="waiting_previous_wo_to_start"/>
+                            <field name="waiting_approval_to_start_next_wo"/>
                         </group>
                         <group>
                             <field name="sampling"/>
