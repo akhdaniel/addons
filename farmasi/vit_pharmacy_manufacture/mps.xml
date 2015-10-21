@@ -9,8 +9,10 @@
                     <field name="name"/>
                     <field name="month"/>
                     <field name="year"/> 
-                    <field name="create_uid"/> 
-                    <field name="created_date"/>          
+                    <field name="forecast_id"/> 
+                    <field name="state"/> 
+                    <!-- <field name="create_uid"/> 
+                    <field name="created_date"/>   -->        
                 </tree>
             </field>
         </record>
@@ -20,9 +22,9 @@
             <field name="arch" type="xml">
                  <form string="MPS" version="7.0">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
                         <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
-                        <button name="action_create_wps"  type="object" states="done" string="Create WPS" class="oe_highlight"/>
+                        <button name="action_create_wps"  type="object" states="open" string="Create WPS" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
                     </header>
                         <group>
                             <group>
@@ -33,6 +35,7 @@
                             <group> 
                                 <field name="create_uid"/> 
                                 <field name="created_date"/> 
+                                <field name="forecast_id"/> 
                             </group>
                         </group>
                         <notebook>
@@ -42,10 +45,22 @@
                                         <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                         <field name="product_uom" />
                                         <field name="production_order" />
+                                        
                                         <field name="w1" />
+                                        <field name="w1a" />
+
                                         <field name="w2" />
+                                        <field name="w2a" />
+
                                         <field name="w3" />
+                                        <field name="w3a" />
+
                                         <field name="w4" />
+                                        <field name="w4a" />
+
+                                        <field name="w5" />
+                                        <field name="w5a" />
+                                        
                                         <field name="note"/>
                                     </tree>
                                 </field>

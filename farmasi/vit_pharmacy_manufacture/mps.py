@@ -17,13 +17,15 @@ class mps(osv.osv):
 
 	_columns = {
 		'name': fields.char('Name'),
-		'year': fields.char('Year'),
+		'year': fields.integer('Year'),
 		'month' : fields.char('Month'),
 		'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
 		'created_date': fields.datetime('Created Date', required=True, readonly=True, select=True),
 		'mps_detail_ids':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_detail_id','Forecast Details'),
+		'forecast_id': fields.many2one('vit_pharmacy_manufacture.forecast_product', 'Forecast'),
 		'state': fields.selection([
 			('draft', 'Draft'),
+			('open', 'Open'),
 			('done', 'Done'),
 			], 'Status', readonly=True, track_visibility='onchange',
 			help="", select=True),
@@ -36,14 +38,14 @@ class mps(osv.osv):
 	}
 
 	def action_confirm(self, cr, uid, ids, context=None):
-		return self.write(cr, uid, ids, {'state':'done'}, context=context)
+		return self.write(cr, uid, ids, {'state':'open'}, context=context)
 
 	def action_create_wps(self, cr, uid, ids, context=None):
 		""" Create Sejumlah WPS dari Urutan Week Paling Pertama """
 		m = self.browse(cr,uid,ids[0],).month
 		year = self.browse(cr,uid,ids[0],).year
 		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids:
-			week_on_month = [1,2,3,4]
+			week_on_month = [1,2,3,4,5]
 			week_on_year = self.get_no_week(cr,uid,ids,m)
 			batch = [details_product.w1,details_product.w2,details_product.w3,details_product.w4]
 			for wm,wy,b in zip(week_on_month,week_on_year,batch):
@@ -66,6 +68,7 @@ class mps(osv.osv):
 					""" Create MO Berdasarkan batch (b) """
 					product_id = details_product.product_id.id
 					self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date)
+		self.write(cr, uid, ids, {'state':'done'}, context=context)
 
 
 	def get_start_date(self, cr, uid, ids, wy, context=None):
@@ -166,12 +169,19 @@ class mps_detail(osv.osv):
 	_columns = {
 		'mps_detail_id' : fields.many2one('vit_pharmacy_manufacture.mps', 'MPS Reference',required=True, ondelete='cascade', select=True),
 		'product_id': fields.many2one('product.product', 'Substance', required=True),
-		'production_order' : fields.float('Production Order'), 
+		'production_order' : fields.integer('Production Order (Batch)'), 
 		'product_uom': fields.many2one('product.uom', 'Uom'),
-		'w1': fields.float('W1'),
-		'w2': fields.float('W2'),
-		'w3': fields.float('W3'),
-		'w4': fields.float('W4'),
+		'w1': fields.integer('W1p'),
+		'w2': fields.integer('W2p'),
+		'w3': fields.integer('W3p'),
+		'w4': fields.integer('W4p'),
+		'w5': fields.integer('W5p'),
+		'w1a': fields.integer('W1a'),
+		'w2a': fields.integer('W2a'),
+		'w3a': fields.integer('W3a'),
+		'w4a': fields.integer('W4a'),
+		'w5a': fields.integer('W5a'),
+
 		'note'  : fields.char("Note"),
 	}
 

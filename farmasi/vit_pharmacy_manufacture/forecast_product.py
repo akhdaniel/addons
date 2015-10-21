@@ -19,12 +19,13 @@ class forecast_product(osv.osv):
 
     _columns = {
         'name': fields.char('Name',required=True),
-        'year': fields.char('Year'),
+        'year': fields.integer('Year'),
         'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
         'created_date': fields.datetime('Created Date', required=True, readonly=True, select=True),
         'forecast_detail_ids':fields.one2many('vit_pharmacy_manufacture.forecast_product_detail','forecast_product_id','Forecast Details'),
         'state': fields.selection([
             ('draft', 'Draft'),
+            ('open', 'Open'),
             ('done', 'Done'),
             ], 'Status', readonly=True, track_visibility='onchange',
             help="", select=True),
@@ -37,7 +38,7 @@ class forecast_product(osv.osv):
     }
 
     def action_confirm(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'done'}, context=context)
+        return self.write(cr, uid, ids, {'state':'open'}, context=context)
 
     def find_bom(self, cr, uid, product_id, context=None):
         mrp_bom = self.pool.get('mrp.bom')
@@ -49,56 +50,70 @@ class forecast_product(osv.osv):
         return bom
 
     def action_create_mps(self, cr, uid, ids, context=None):
-        """ Buat MPS Sebanyak 12 Bulan, kelompokan dalam tiap MPS (perbulan) """
-        month = ['Jan','Feb','Mar','Apr','May','Jun','jul','Aug','Sep','Nov','Oct','Dec']
+        """ Buat MPS Sebanyak 12 Bulan, kelompokan dalam tiap MPS (perbulan) 
+        dimundurkan 1 bulan karena forecast januari 2016 artinya produksi harus 
+        sudah dimulai dec 2015
+        """
+        forecast = self.browse(cr,uid,ids[0],context=context)
+
+        month = ['Dec','Jan','Feb','Mar','Apr','May','Jun','jul','Aug','Sep','Oct','Nov']
+        
         for m,r in zip(month,range(1,13)):
+            year = forecast.year
+            if m=="Dec":
+                year = year - 1
             mps_obj = self.pool.get('vit_pharmacy_manufacture.mps').create(cr,uid,{
-                'name' : 'MPS'+''+self.browse(cr,uid,ids[0],).year+''+m,
-                'year' : self.browse(cr,uid,ids[0],).year,
+                'name' : "MPS/%s/%s" % (year, m),
+                'year' : "%s" % (year),
                 'month': m,
+                'forecast_id': forecast.id
                 })
 
             """ Update Details Di MRP, dengan mengambil item di Detail Forecast """  
             for detail in self.browse(cr,uid,ids[0],).forecast_detail_ids:
                 # import pdb;pdb.set_trace()
-                if m == "Jan":   
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m1, detail.product_id )
-                if m == "Feb":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m2, detail.product_id )
-                if m == "Mar":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m3, detail.product_id )
-                if m == "Apr":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m4, detail.product_id )
-                if m == "May":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m5, detail.product_id )
-                if m == "Jun":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m6, detail.product_id )
-                if m == "Jul":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m7, detail.product_id )
-                if m == "Aug":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m8, detail.product_id )
-                if m == "Sep":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m9, detail.product_id )
-                if m == "Oct":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m10, detail.product_id )
-                if m == "Nov":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m11, detail.product_id )
                 if m == "Dec":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m12, detail.product_id )
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m1, detail.product_id, detail.product_uom )                
+                if m == "Jan":   
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m2, detail.product_id, detail.product_uom )
+                if m == "Feb":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m3, detail.product_id, detail.product_uom )
+                if m == "Mar":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m4, detail.product_id, detail.product_uom )
+                if m == "Apr":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m5, detail.product_id, detail.product_uom )
+                if m == "May":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m6, detail.product_id, detail.product_uom )
+                if m == "Jun":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m7, detail.product_id, detail.product_uom )
+                if m == "Jul":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m8, detail.product_id, detail.product_uom )
+                if m == "Aug":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m9, detail.product_id, detail.product_uom )
+                if m == "Sep":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m10, detail.product_id, detail.product_uom )
+                if m == "Oct":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m11, detail.product_id, detail.product_uom )
+                if m == "Nov":
+                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m12, detail.product_id, detail.product_uom )
+        
+        self.write(cr, uid, ids, {'state':'done'}, context=context)                
 
-
-    def update_line_mps(self,cr,uid,ids,mps_obj, detail_m, detail_product_id,context=None):
+    def update_line_mps(self,cr,uid,ids,mps_obj, detail_m, detail_product_id, detail_product_uom, context=None):
         
         product_id = detail_product_id.id
+        product_uom = detail_product_uom.id
+        
         bom = self.find_bom(cr, uid, detail_product_id, context)
         if bom.product_qty == 0:
             raise osv.except_osv(_('error'),_("BOM qty cannot zero: %s" % (bom.product_tmpl_id.name)) ) 
-        prod_order = detail_m / bom.product_qty         
+        prod_order = math.ceil(detail_m / bom.product_qty)
 
         if prod_order > 0:
             data_line = {
                 'product_id' : product_id,
                 'production_order' : prod_order,
+                'product_uom' : product_uom,
             }
 
             mps_detail_line = [(0,0,data_line)]
@@ -114,19 +129,19 @@ class forecast_product_detail(osv.osv):
         'product_id': fields.many2one('product.product', 'Substance', required=True),
         'product_uom': fields.many2one('product.uom', 'Uom'),
         # 'year': fields.char('Year'),
-        'm1': fields.float('Jan'),
-        'm2': fields.float('Feb'),
-        'm3': fields.float('Mar'),
-        'm4': fields.float('Apr'),
-        'm5': fields.float('May'),
-        'm6': fields.float('Jun'),
-        'm7': fields.float('Jul'),
-        'm8': fields.float('Aug'),
-        'm9': fields.float('Sep'),  
-        'm10': fields.float('Oct'),
-        'm11': fields.float('Nov'),
-        'm12': fields.float('Dec'), 
-        'mTotal'  : fields.float("Total", store=True),
+        'm1': fields.integer('Jan'),
+        'm2': fields.integer('Feb'),
+        'm3': fields.integer('Mar'),
+        'm4': fields.integer('Apr'),
+        'm5': fields.integer('May'),
+        'm6': fields.integer('Jun'),
+        'm7': fields.integer('Jul'),
+        'm8': fields.integer('Aug'),
+        'm9': fields.integer('Sep'),  
+        'm10': fields.integer('Oct'),
+        'm11': fields.integer('Nov'),
+        'm12': fields.integer('Dec'), 
+        'mTotal'  : fields.integer("Total", store=True),
     }
 
 
