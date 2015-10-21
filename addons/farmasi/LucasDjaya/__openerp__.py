@@ -4,7 +4,7 @@
 ##############################################################################
 
 {
-    'name': 'Import master data Lucas Marin',
+    'name': 'Install depends module',
     'description': """
 
 Install module:
@@ -52,7 +52,7 @@ data berikut ini akan otomatis diimport:
 """,
     'version': '0.1',
     'depends': [
-        'base',
+        # 'base',
         'mrp',
         'mrp_operations',
         'stock',
@@ -68,7 +68,6 @@ data berikut ini akan otomatis diimport:
 		'vit_automatically_retest_date',
         'vit_lucas_groups',
         'vit_ph_checklist_bahan_lucas',
-        'vit_automatically_retest_date',
         'vit_expired_date',
         'vit_force_production',
         'vit_mrp_stock_move_editable',
@@ -90,26 +89,7 @@ data berikut ini akan otomatis diimport:
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',
     'data': [ 
-        'account.account.csv',
-        'mrp.workcenter.csv',
-        'mrp.routing.csv',
-        'mrp.routing.workcenter.csv',
-        'product.uom.csv',
-        'vit.sediaan.csv',
-        'product.category.csv',
-        'res.partner.category.csv',
-        'stock.warehouse.csv',
-        'stock.location.csv',
-        'res.partner.csv',
-        'product.product.csv',
-        'mrp.bom.csv',
-        'vit_pharmacy_machine_hour.machine_master.csv',
-        'vit_pharmacy_machine_hour.bom_machine_hour.csv',
-        'vit_pharmacy_machine_hour.bom_man_hour.csv',
-        'vit_pharmacy_manufacture.forecast_product.csv',
-        # 'batch.year.csv',
-        # 'batch.number.csv',
-        'hr.department.csv',
+        
     ],
     'installable': True,
     'auto_install': False,
