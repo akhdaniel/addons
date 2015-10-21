@@ -1,0 +1,216 @@
+<openerp>
+	<data>
+
+		<!-- form -->
+
+        <record id="view_product_request_form" model="ir.ui.view">
+            <field name="name">vit_product.request_form</field>
+            <field name="model">vit.product.request</field>
+             <field name="arch" type="xml">
+            	<form string="product request form" version="7.0">
+            		<header>
+
+						<button string="Confirm" type="object" name="action_confirm" 
+							class="oe_highlight"
+						 	states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	states="open" />
+						<button string="Reject" type="object" name="action_reject"
+						 	states="open" />
+
+            			<field name="state" widget="statusbar" />
+
+            		</header>
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Product Request Number" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+			            <group>
+			            	<group>
+				                <field name="date"/>       
+				                <field name="user_id"/>       
+				            </group>
+				            <group>
+				                <field name="category_id" 
+				                	domain="[('type','=','normal')]"/>       
+				                <field name="department_id"/>       
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<page string="Lines">
+					            <field name="product_request_line_ids">
+					            	<tree string="Product Lines" editable="bottom">
+						                <field name="product_id" 
+						                	on_change="onchange_product_id(product_id, context)"
+						                	domain="[('is_header','=',1),('categ_id','=',parent.category_id)]"/>       
+						                <field name="name"/>       
+						                <field name="product_qty"/>       
+						                <field name="product_uom_id"/>       
+										<field name="product_qty_avail" readonly="1" />
+						                <field name="date_required"/>
+										<field name="purchase_requisition_id" />
+										<field name="state" />
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+
+		                <field name="notes"/>       
+
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+
+        <!-- tree -->
+
+        <record id="view_product_request_tree" model="ir.ui.view">
+            <field name="name">vit_product.request_tree</field>
+            <field name="model">vit.product.request</field>
+            <field name="arch" type="xml">
+            	<tree string="list product request" colors="grey:state=='done'; blue:state=='draft'">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </tree>    
+            </field>
+        </record>
+
+
+        <!-- pr search -->
+		<record id="view_product_request_filter" model="ir.ui.view">
+		    <field name="name">vit.product.request.filter</field>
+		    <field name="model">vit.product.request</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Product Request">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="My Request" 
+		            	 name="my_request" domain="[('user_id','=',uid)]"/>
+		            <separator/>
+		            
+		            <field name="user_id"/>
+		            <field name="department_id"/>
+		            <field name="category_id"/>
+		            
+		            <group expand="1" string="Group By...">
+		                <filter string="Department" icon="terp-personal" 
+		                    domain="[]" 
+		                	 context="{'group_by':'department_id'}"/>
+		                <filter string="Category" icon="terp-personal" 
+		                    domain="[]" 
+		                	 context="{'group_by':'category_id'}"/>
+		                <filter string="Requester" 
+		                    icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'user_id'}"/>
+
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+        <!-- pr tree line -->
+        <record id="view_product_request_line_tree" model="ir.ui.view">
+            <field name="name">vit_product.request.line_tree</field>
+            <field name="model">vit.product.request.line</field>
+            <field name="arch" type="xml">
+            	<tree string="list product request line" >
+					<field name="product_request_id" />
+					<field name="product_id" />
+					<field name="name" />
+					<field name="product_qty" />
+					<field name="product_uom_id" />
+					<field name="product_qty_avail" />
+					<field name="date_required" /> 
+					<field name="purchase_requisition_id" /> 
+					<field name="state" /> 
+                </tree>    
+            </field>
+        </record>
+
+        <!-- pr line tree search -->
+        <record id="view_product_request_line_filter" model="ir.ui.view">
+            <field name="name">product_request_line.filter</field>
+            <field name="model">vit.product.request.line</field>
+            <field name="arch" type="xml">
+                <search string="Search product request line">
+        
+                    <filter icon="terp-mail-message-new" string="Open" name="open" domain="[('state','=','open')]"/>
+
+                    <filter icon="terp-mail-message-new" string="On Progress" name="onprogress" domain="[('state','=','onprogress')]"/>
+                    
+                    <filter icon="terp-mail-message-new" string="Done" name="done" domain="[('state','=','done')]"/>
+                    
+                    <filter icon="terp-mail-message-new" string="Reject" name="reject" domain="[('state','=','reject')]"/>
+                    
+                    <separator/>
+                    
+                    <field name="product_id"/>
+                    <field name="product_request_id"/>
+                    <field name="name"/>
+                    <field name="purchase_requisition_id"/>
+                    
+                    <group expand="1" string="Group By...">
+                        <filter string="Request" icon="terp-personal" 
+                            domain="[]" name="group_by_request"
+                        	 context="{'group_by':'product_request_id'}"/>
+                        <filter string="Product"  name="group_by_product"
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'product_id'}"/>
+                        <filter string="State"  name="group_by_state"
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'state'}"/>
+                        <filter string="Call for Bid"  name="group_by_purchase_requisition_id"
+                            icon="terp-personal" domain="[]" 
+                        	 context="{'group_by':'purchase_requisition_id'}"/>
+                    </group>                                        
+        
+                </search>
+            </field>
+        </record>
+
+
+
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_create_pr" model="ir.actions.server">
+	        <field name="name">Create Call for Bid(s)</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_vit_product_request_line"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('vit.product.request.line').action_create_pr(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_create_pr_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'vit.product.request.line'" name="model"/>
+	        <field name="name">Create Call for Bid(s)</field>
+	        <field eval="'ir.actions.server,%d'%action_create_pr" name="value"/>
+	    </record>
+
+
+	    <!-- call for bid inherit -->
+	    <record model="ir.ui.view" id="view_purchase_requisition_form_inherit">
+	        <field name="name">purchase.requisition.form.inherit</field>
+	        <field name="model">purchase.requisition</field>
+	        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+	        <field name="arch" type="xml">
+	        	<xpath expr="//form/sheet/notebook/page/field[@name='purchase_ids']/tree/field[@name='state']" position="before">
+	        		<field name="amount_total" />
+	        	</xpath>
+	        </field>
+	    </record>
+
+
+
+	</data>
+</openerp>
