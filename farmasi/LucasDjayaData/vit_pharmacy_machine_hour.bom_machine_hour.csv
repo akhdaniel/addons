@@ -1,0 +1,566 @@
+"id","bom_id","workcenter_operation_id","machine_id","is_parallel","workcenter_id","machine_hour"
+"bom_machine_hour_100","Camoksil 250 mg Strip","Oven Botol",,,,
+"bom_machine_hour_110","Camoksil 250 mg Strip","Penimbangan","Timbangan Mettler Toledo",,,30
+"bom_machine_hour_120","Camoksil 250 mg Strip","Penimbangan","Printer Timbangan Mettler Toledo",,,30
+"bom_machine_hour_130","Camoksil 250 mg Strip","Penimbangan","Timbangan Kern",,,30
+"bom_machine_hour_140","Camoksil 250 mg Strip","Mixing","Mesin Super Mixer",,,60
+"bom_machine_hour_150","Camoksil 250 mg Strip","Filling","Mesin Cetak Tablet JCMCO",,,420
+"bom_machine_hour_160","Camoksil 250 mg Strip","Filling","Mesin Filling Capsule Chin Yi",,,
+"bom_machine_hour_170","Camoksil 250 mg Strip","Filling","Mesin Filling AMS",,,
+"bom_machine_hour_180","Camoksil 250 mg Strip","Filling","Mesin Capping Jie Cheng",,,
+"bom_machine_hour_190","Camoksil 250 mg Strip","Codding","Mesin Codding Kapsul Alpha Jet",,,60
+"bom_machine_hour_200","Camoksil 250 mg Strip","Labelling","Mesin Etiket Chyun Jye",,,
+"bom_machine_hour_210","Camoksil 500 mg Strip","Pengeringan",,,,
+"bom_machine_hour_220","Camoksil 500 mg Strip","Penimbangan","Timbangan Mettler Toledo",,,30
+"bom_machine_hour_230","Camoksil 500 mg Strip","Penimbangan","Printer Timbangan Mettler Toledo",,,30
+"bom_machine_hour_240","Camoksil 500 mg Strip","Penimbangan","Timbangan Kern",,,30
+"bom_machine_hour_250","Camoksil 500 mg Strip","Mixing","Mesin Super Mixer",,,60
+"bom_machine_hour_260","Camoksil 500 mg Strip","Filling","Mesin Cetak Tablet JCMCO",,,210
+"bom_machine_hour_270","Camoksil 500 mg Strip","Filling","Mesin Filling Capsule Chin Yi",,,
+"bom_machine_hour_280","Camoksil 500 mg Strip","Filling","Mesin Filling AMS",,,
+"bom_machine_hour_290","Camoksil 500 mg Strip","Filling","Mesin Capping Jie Cheng",,,
+"bom_machine_hour_300","Camoksil 500 mg Strip","Codding","Mesin Codding Kapsul Alpha Jet",,,60
+"bom_machine_hour_310","Camoksil 500 mg Strip","Labelling","Mesin Etiket Chyun Jye",,,
+"bom_machine_hour_320","Ampicillin 250 mg Strip","Pengeringan",,,,
+"bom_machine_hour_330","Ampicillin 250 mg Strip","Penimbangan","Timbangan Mettler Toledo",,,30
+"bom_machine_hour_340","Ampicillin 250 mg Strip","Penimbangan","Printer Timbangan Mettler Toledo",,,30
+"bom_machine_hour_350","Ampicillin 250 mg Strip","Penimbangan","Timbangan Kern",,,30
+"bom_machine_hour_360","Ampicillin 250 mg Strip","Mixing","Mesin Super Mixer",,,60
+"bom_machine_hour_370","Ampicillin 250 mg Strip","Filling","Mesin Cetak Tablet JCMCO",,,
+"bom_machine_hour_380","Ampicillin 250 mg Strip","Filling","Mesin Filling Capsule Chin Yi",,,1440
+"bom_machine_hour_390","Ampicillin 250 mg Strip","Filling","Mesin Filling AMS",,,
+"bom_machine_hour_400","Ampicillin 250 mg Strip","Filling","Mesin Capping Jie Cheng",,,
+"bom_machine_hour_410","Ampicillin 250 mg Strip","Codding","Mesin Codding Kapsul Alpha Jet",,,60
+"bom_machine_hour_420","Ampicillin 250 mg Strip","Labelling","Mesin Etiket Chyun Jye",,,
+"bom_machine_hour_430","Vitamin B12 500mcg/ml 1 ml","Cuci Ampul/Vial","Mesin Cuci Ampul Shun Yi",,,480
+"bom_machine_hour_440","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Ampul/Vial","Mesin Oven Echung Kecil",,,60
+"bom_machine_hour_450","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Baju & Peralatan","Autoclave baju",,,30
+"bom_machine_hour_460","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Baju & Peralatan","Mesin Oven Echung Besar",,,30
+"bom_machine_hour_470","Vitamin B12 500mcg/ml 1 ml","Penimbangan","Timbangan Mettler Toledo 0.1-30 Kg",,,30
+"bom_machine_hour_480","Vitamin B12 500mcg/ml 1 ml","Penimbangan","Timbangan Mettler Toledo Kecil",,,30
+"bom_machine_hour_490","Vitamin B12 500mcg/ml 1 ml","Mixing","Mixing Tank 50 Ltr",,,30
+"bom_machine_hour_500","Vitamin B12 500mcg/ml 1 ml","Filtrasi","Pressure Tangki",,,30
+"bom_machine_hour_510","Vitamin B12 500mcg/ml 1 ml","Filling & Capping","Mesin Ampul Shun Yi 1-2 ml",,,480
+"bom_machine_hour_520","Vitamin B12 500mcg/ml 1 ml","Filling & Capping","Mesin Ampul Shun Yi 10-20 ml",,,
+"bom_machine_hour_530","Vitamin B12 500mcg/ml 1 ml","Filling & Capping","Mesin Ampul Shun Yi 10-20 ml",,,
+"bom_machine_hour_540","Vitamin B12 500mcg/ml 1 ml","Filling & Capping","Mesin Ampul Hersonber 1-25 ml",,,600
+"bom_machine_hour_550","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Produk","Mesin Autoclave Echung",,,30
+"bom_machine_hour_560","Vitamin B12 500mcg/ml 1 ml","Printing Ampul","Mesin Printing Ampul Markem",,,720
+"bom_machine_hour_570","Vitamin B12 500mcg/ml 1 ml","Packing","Timbangan Avery Weight Tronex 60 Kg",,,30
+"bom_machine_hour_580","Vitamin B12 500 mcg/ml 10 ml","Cuci Ampul/Vial","Mesin Cuci Ampul Shun Yi",,,420
+"bom_machine_hour_590","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Ampul/Vial","Mesin Oven Echung Kecil",,,60
+"bom_machine_hour_600","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Baju & Peralatan","Autoclave baju",,,30
+"bom_machine_hour_610","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Baju & Peralatan","Mesin Oven Echung Besar",,,
+"bom_machine_hour_620","Vitamin B12 500 mcg/ml 10 ml","Penimbangan","Timbangan Mettler Toledo 0.1-30 Kg",,,
+"bom_machine_hour_630","Vitamin B12 500 mcg/ml 10 ml","Penimbangan","Timbangan Mettler Toledo Kecil",,,
+"bom_machine_hour_640","Vitamin B12 500 mcg/ml 10 ml","Mixing","Mixing Tank 50 Ltr",,,
+"bom_machine_hour_650","Vitamin B12 500 mcg/ml 10 ml","Filtrasi","Pressure Tangki",,,
+"bom_machine_hour_660","Vitamin B12 500 mcg/ml 10 ml","Filling & Capping","Mesin Ampul Shun Yi 1-2 ml",,,
+"bom_machine_hour_670","Vitamin B12 500 mcg/ml 10 ml","Filling & Capping","Mesin Ampul Shun Yi 10-20 ml",,,
+"bom_machine_hour_680","Vitamin B12 500 mcg/ml 10 ml","Filling & Capping","Mesin Ampul Shun Yi 10-20 ml",,,420
+"bom_machine_hour_690","Vitamin B12 500 mcg/ml 10 ml","Filling & Capping","Mesin Ampul Hersonber 1-25 ml",,,
+"bom_machine_hour_700","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Produk","Mesin Autoclave Echung",,,60
+"bom_machine_hour_710","Vitamin B12 500 mcg/ml 10 ml","Printing Ampul","Mesin Printing Ampul Markem",,,
+"bom_machine_hour_720","Vitamin B12 500 mcg/ml 10 ml","Packing","Timbangan Avery Weight Tronex 60 Kg",,,
+"bom_machine_hour_730","Camidryl 10 mg/ml 10 ml","Cuci Ampul/Vial","Mesin Cuci Ampul Shun Yi",,,420
+"bom_machine_hour_740","Camidryl 10 mg/ml 10 ml","Sterillisasi Ampul/Vial","Mesin Oven Echung Kecil",,,60
+"bom_machine_hour_750","Camidryl 10 mg/ml 10 ml","Sterillisasi Baju & Peralatan","Autoclave baju",,,30
+"bom_machine_hour_760","Camidryl 10 mg/ml 10 ml","Sterillisasi Baju & Peralatan","Mesin Oven Echung Besar",,,30
+"bom_machine_hour_770","Camidryl 10 mg/ml 10 ml","Penimbangan","Timbangan Mettler Toledo 0.1-30 Kg",,,30
+"bom_machine_hour_780","Camidryl 10 mg/ml 10 ml","Penimbangan","Timbangan Mettler Toledo Kecil",,,30
+"bom_machine_hour_790","Camidryl 10 mg/ml 10 ml","Mixing","Mixing Tank 50 Ltr",,,30
+"bom_machine_hour_800","Camidryl 10 mg/ml 10 ml","Filtrasi","Pressure Tangki",,,30
+"bom_machine_hour_810","Camidryl 10 mg/ml 10 ml","Filling & Capping","Mesin Ampul Shun Yi 1-2 ml",,,
+"bom_machine_hour_820","Camidryl 10 mg/ml 10 ml","Filling & Capping","Mesin Ampul Shun Yi 10-20 ml",,,600
+"bom_machine_hour_830","Camidryl 10 mg/ml 10 ml","Filling & Capping","Mesin Ampul Shun Yi 10-20 ml",,,
+"bom_machine_hour_840","Camidryl 10 mg/ml 10 ml","Filling & Capping","Mesin Ampul Hersonber 1-25 ml",,,
+"bom_machine_hour_850","Camidryl 10 mg/ml 10 ml","Sterillisasi Produk","Mesin Autoclave Echung",,,60
+"bom_machine_hour_860","Camidryl 10 mg/ml 10 ml","Printing Ampul","Mesin Printing Ampul Markem",,,
+"bom_machine_hour_870","Camidryl 10 mg/ml 10 ml","Packing","Timbangan Avery Weight Tronex 60 Kg",,,
+"bom_machine_hour_880","Cayodine 30 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,
+"bom_machine_hour_890","Cayodine 30 ml","Penimbangan","Timbangan Kern",,,30
+"bom_machine_hour_900","Cayodine 30 ml","Mixing","Hand Mixer Makita ",,,60
+"bom_machine_hour_910","Cayodine 30 ml","Mixing","Mesin Mixing Tank Besto 200 Ltr",,,60
+"bom_machine_hour_920","Cayodine 30 ml","Filling","Mesin Filling Larutan Enterprise Corp",,,
+"bom_machine_hour_930","Cayodine 30 ml","Filling","Mesin Filling Larutan Hersonber",,,420
+"bom_machine_hour_940","Cayodine 30 ml","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_950","Cayodine 30 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_960","Cayodine 30 ml","Packing",,,,30
+"bom_machine_hour_970","Cayodine 30 ml","Packing",,,,15
+"bom_machine_hour_980","Glyserol 100 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,
+"bom_machine_hour_990","Glyserol 100 ml","Penimbangan","Timbangan Kern",,,30
+"bom_machine_hour_1000","Glyserol 100 ml","Mixing","Hand Mixer Makita ",,,60
+"bom_machine_hour_1010","Glyserol 100 ml","Mixing","Mesin Mixing Tank Besto 200 Ltr",,,120
+"bom_machine_hour_1020","Glyserol 100 ml","Filling","Mesin Filling Larutan Enterprise Corp",,,
+"bom_machine_hour_1030","Glyserol 100 ml","Filling","Mesin Filling Larutan Hersonber",,,420
+"bom_machine_hour_1040","Glyserol 100 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_1050","Glyserol 100 ml","Packing","Mesin Codding Image",,,45
+"bom_machine_hour_1060","Glyserol 100 ml","Packing",,,,30
+"bom_machine_hour_1070","Glyserol 100 ml","Packing",,,,15
+"bom_machine_hour_1080","Phenol Glycerol 5 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,
+"bom_machine_hour_1090","Phenol Glycerol 5 ml","Penimbangan","Timbangan Kern",,,30
+"bom_machine_hour_1100","Phenol Glycerol 5 ml","Mixing","Hand Mixer Makita ",,,60
+"bom_machine_hour_1110","Phenol Glycerol 5 ml","Mixing","Mesin Mixing Tank Besto 200 Ltr",,,120
+"bom_machine_hour_1120","Phenol Glycerol 5 ml","Filling","Mesin Filling Larutan Enterprise Corp",,,
+"bom_machine_hour_1130","Phenol Glycerol 5 ml","Filling","Mesin Filling Larutan Hersonber",,,600
+"bom_machine_hour_1140","Phenol Glycerol 5 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_1150","Phenol Glycerol 5 ml","Packing","Mesin Codding Image",,,120
+"bom_machine_hour_1160","Phenol Glycerol 5 ml","Packing",,,,30
+"bom_machine_hour_1170","Phenol Glycerol 5 ml","Packing",,,,15
+"bom_machine_hour_1180","Biocelle","Pengeringan","Oven Tumbler Machine",,,15
+"bom_machine_hour_1190","Biocelle","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_1200","Biocelle","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_1210","Biocelle","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_1220","Biocelle","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_1230","Biocelle","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,840
+"bom_machine_hour_1240","Biocelle","Filling","Tangki Penampung 200 Ltr",,,840
+"bom_machine_hour_1250","Biocelle","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_1260","Biocelle","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_1270","Biocelle","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_1280","Biocelle","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_1290","Biocelle","Packing","Mesin Codding Image",,,
+"bom_machine_hour_1300","Biocelle","Packing","Mesin Labelling Pot Shanghai Suny",,,
+"bom_machine_hour_1310","Biocelle","Packing",,,,
+"bom_machine_hour_1320","Biocelle","Packing",,,,
+"bom_machine_hour_1330","Habbatussauda 600 mg","Pengeringan","Oven Tumbler Machine",,,15
+"bom_machine_hour_1340","Habbatussauda 600 mg","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_1350","Habbatussauda 600 mg","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_1360","Habbatussauda 600 mg","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_1370","Habbatussauda 600 mg","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_1380","Habbatussauda 600 mg","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,840
+"bom_machine_hour_1390","Habbatussauda 600 mg","Filling","Tangki Penampung 200 Ltr",,,840
+"bom_machine_hour_1400","Habbatussauda 600 mg","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_1410","Habbatussauda 600 mg","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_1420","Habbatussauda 600 mg","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_1430","Habbatussauda 600 mg","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_1440","Habbatussauda 600 mg","Packing","Mesin Codding Image",,,
+"bom_machine_hour_1450","Habbatussauda 600 mg","Packing","Mesin Labelling Pot Shanghai Suny",,,
+"bom_machine_hour_1460","Habbatussauda 600 mg","Packing",,,,
+"bom_machine_hour_1470","Habbatussauda 600 mg","Packing",,,,
+"bom_machine_hour_1480","Isotretinoin 10 mg","Pengeringan","Oven Tumbler Machine",,,15
+"bom_machine_hour_1490","Isotretinoin 10 mg","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_1500","Isotretinoin 10 mg","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_1510","Isotretinoin 10 mg","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_1520","Isotretinoin 10 mg","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_1530","Isotretinoin 10 mg","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,840
+"bom_machine_hour_1540","Isotretinoin 10 mg","Filling","Tangki Penampung 200 Ltr",,,840
+"bom_machine_hour_1550","Isotretinoin 10 mg","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_1560","Isotretinoin 10 mg","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_1570","Isotretinoin 10 mg","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_1580","Isotretinoin 10 mg","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_1590","Isotretinoin 10 mg","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_1600","Isotretinoin 10 mg","Packing","Mesin Labelling Pot Shanghai Suny",,,
+"bom_machine_hour_1610","Isotretinoin 10 mg","Packing",,,,
+"bom_machine_hour_1620","Isotretinoin 10 mg","Packing",,,,
+"bom_machine_hour_1630","Lamata","Pengeringan","Oven Tumbler Machine",,,15
+"bom_machine_hour_1640","Lamata","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_1650","Lamata","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_1660","Lamata","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_1670","Lamata","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_1680","Lamata","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,840
+"bom_machine_hour_1690","Lamata","Filling","Tangki Penampung 200 Ltr",,,840
+"bom_machine_hour_1700","Lamata","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_1710","Lamata","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_1720","Lamata","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_1730","Lamata","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_1740","Lamata","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_1750","Lamata","Packing","Mesin Labelling Pot Shanghai Suny",,,300
+"bom_machine_hour_1760","Lamata","Packing",,,,300
+"bom_machine_hour_1770","Lamata","Packing",,,,15
+"bom_machine_hour_1780","Mamavita 400 mg Soft Capsule","Pengeringan","Oven Tumbler Machine",,,15
+"bom_machine_hour_1790","Mamavita 400 mg Soft Capsule","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_1800","Mamavita 400 mg Soft Capsule","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_1810","Mamavita 400 mg Soft Capsule","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_1820","Mamavita 400 mg Soft Capsule","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_1830","Mamavita 400 mg Soft Capsule","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,840
+"bom_machine_hour_1840","Mamavita 400 mg Soft Capsule","Filling","Tangki Penampung 200 Ltr",,,840
+"bom_machine_hour_1850","Mamavita 400 mg Soft Capsule","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_1860","Mamavita 400 mg Soft Capsule","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_1870","Mamavita 400 mg Soft Capsule","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_1880","Mamavita 400 mg Soft Capsule","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_1890","Mamavita 400 mg Soft Capsule","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_1900","Mamavita 400 mg Soft Capsule","Packing","Mesin Labelling Pot Shanghai Suny",,,
+"bom_machine_hour_1910","Mamavita 400 mg Soft Capsule","Packing",,,,
+"bom_machine_hour_1920","Mamavita 400 mg Soft Capsule","Packing",,,,
+"bom_machine_hour_1930","Olive Oil 600 mg","Pengeringan","Oven Tumbler Machine",,,15
+"bom_machine_hour_1940","Olive Oil 600 mg","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_1950","Olive Oil 600 mg","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_1960","Olive Oil 600 mg","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_1970","Olive Oil 600 mg","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_1980","Olive Oil 600 mg","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,840
+"bom_machine_hour_1990","Olive Oil 600 mg","Filling","Tangki Penampung 200 Ltr",,,840
+"bom_machine_hour_2000","Olive Oil 600 mg","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_2010","Olive Oil 600 mg","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_2020","Olive Oil 600 mg","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_2030","Olive Oil 600 mg","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_2040","Olive Oil 600 mg","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_2050","Olive Oil 600 mg","Packing","Mesin Labelling Pot Shanghai Suny",,,
+"bom_machine_hour_2060","Olive Oil 600 mg","Packing",,,,
+"bom_machine_hour_2070","Olive Oil 600 mg","Packing",,,,
+"bom_machine_hour_2080","Vitamin A 200.000 IU","Pengeringan","Oven Tumbler Machine",,,20
+"bom_machine_hour_2090","Vitamin A 200.000 IU","Penimbangan","Timbangan Avery Beker 0.01 - 60 Kg",,,30
+"bom_machine_hour_2100","Vitamin A 200.000 IU","Melting","Tangki Gelatin With Pressure 200 Ltr",,,360
+"bom_machine_hour_2110","Vitamin A 200.000 IU","Mixing","Colloid Mill Rimek",,,10
+"bom_machine_hour_2120","Vitamin A 200.000 IU","Mixing","Hand Mixer Makita",,,20
+"bom_machine_hour_2130","Vitamin A 200.000 IU","Filling","Tumbling Dryers System Chang Sung Phonetlan",,,1080
+"bom_machine_hour_2140","Vitamin A 200.000 IU","Filling","Tangki Penampung 200 Ltr",,,1080
+"bom_machine_hour_2150","Vitamin A 200.000 IU","Counting","Mesin Counting Tamaru Mitra Sejati",,,420
+"bom_machine_hour_2160","Vitamin A 200.000 IU","Counting","Mesin Seal Rusak",,,420
+"bom_machine_hour_2170","Vitamin A 200.000 IU","Counting","Timbangan Jadever 16.2-30 Kg",,,420
+"bom_machine_hour_2180","Vitamin A 200.000 IU","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_2190","Vitamin A 200.000 IU","Packing","Mesin Codding Image",,,
+"bom_machine_hour_2200","Vitamin A 200.000 IU","Packing","Mesin Labelling Pot Shanghai Suny",,,300
+"bom_machine_hour_2210","Vitamin A 200.000 IU","Packing",,,,300
+"bom_machine_hour_2220","Vitamin A 200.000 IU","Packing",,,,15
+"bom_machine_hour_2230","Antasida Doen 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_2240","Antasida Doen 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_2250","Antasida Doen 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_2260","Antasida Doen 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_2270","Antasida Doen 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_2280","Antasida Doen 60 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_2290","Antasida Doen 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_2300","Antasida Doen 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",150
+"bom_machine_hour_2310","Antasida Doen 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",30
+"bom_machine_hour_2320","Antasida Doen 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_2330","Antasida Doen 60 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_2340","Antasida Doen 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_2350","Antasida Doen 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_2360","Antasida Doen 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_2370","Antasida Doen 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_2380","Antasida Doen 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",75
+"bom_machine_hour_2390","Antasida Doen 60 ml","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_2400","Antasida Doen 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_2410","Antasida Doen 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_2420","Antasida Doen 60 ml","Packing",,,,65
+"bom_machine_hour_2430","Antasida Doen 60 ml","Packing",,,,
+"bom_machine_hour_2440","Antasida Doen 60 ml","Packing",,,,15
+"bom_machine_hour_2450","BAB 100 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_2460","BAB 100 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_2470","BAB 100 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_2480","BAB 100 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_2490","BAB 100 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_2500","BAB 100 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_2510","BAB 100 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_2520","BAB 100 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_2530","BAB 100 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_2540","BAB 100 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_2550","BAB 100 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_2560","BAB 100 ml","Mixing","Ultra Thorax Mixer",,"PS.08",150
+"bom_machine_hour_2570","BAB 100 ml","Mixing","Hand Mixer Makita",,"PS.08",60
+"bom_machine_hour_2580","BAB 100 ml","Mixing","Motor Pompa Show Pov",,"PS.08",20
+"bom_machine_hour_2590","BAB 100 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",60
+"bom_machine_hour_2600","BAB 100 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_2610","BAB 100 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_2620","BAB 100 ml","Packing","Mesin Codding Image",,,90
+"bom_machine_hour_2630","BAB 100 ml","Packing","Mesin Labelling Botol Jihcheng",,,90
+"bom_machine_hour_2640","BAB 100 ml","Packing",,,,39
+"bom_machine_hour_2650","BAB 100 ml","Packing",,,,
+"bom_machine_hour_2660","BAB 100 ml","Packing",,,,15
+"bom_machine_hour_2670","Calcivita 200 ml","Pengeringan","Oven Tumbler Machine",,,30
+"bom_machine_hour_2680","Calcivita 200 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_2690","Calcivita 200 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_2700","Calcivita 200 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_2710","Calcivita 200 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_2720","Calcivita 200 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_2730","Calcivita 200 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_2740","Calcivita 200 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_2750","Calcivita 200 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_2760","Calcivita 200 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_2770","Calcivita 200 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_2780","Calcivita 200 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_2790","Calcivita 200 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_2800","Calcivita 200 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_2810","Calcivita 200 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",50
+"bom_machine_hour_2820","Calcivita 200 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_2830","Calcivita 200 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_2840","Calcivita 200 ml","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_2850","Calcivita 200 ml","Packing","Mesin Labelling Botol Jihcheng",,,60
+"bom_machine_hour_2860","Calcivita 200 ml","Packing",,,,27
+"bom_machine_hour_2870","Calcivita 200 ml","Packing",,,,
+"bom_machine_hour_2880","Calcivita 200 ml","Packing",,,,15
+"bom_machine_hour_2890","Camaag 100 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_2900","Camaag 100 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_2910","Camaag 100 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_2920","Camaag 100 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_2930","Camaag 100 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",
+"bom_machine_hour_2940","Camaag 100 ml","Mixing","Hand Mixer Makita",,"PS.06",
+"bom_machine_hour_2950","Camaag 100 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",
+"bom_machine_hour_2960","Camaag 100 ml","Mixing","Ultra Torax Mixer",,"PS.07",150
+"bom_machine_hour_2970","Camaag 100 ml","Mixing","Coloid Mill Achtung",,"PS.07",30
+"bom_machine_hour_2980","Camaag 100 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_2990","Camaag 100 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_3000","Camaag 100 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_3010","Camaag 100 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_3020","Camaag 100 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_3030","Camaag 100 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_3040","Camaag 100 ml","Filling","Mesin Filling Jihcheng",,"PS.07",60
+"bom_machine_hour_3050","Camaag 100 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_3060","Camaag 100 ml","Packing","Mesin Codding Image",,,90
+"bom_machine_hour_3070","Camaag 100 ml","Packing","Mesin Labelling Botol Jihcheng",,,90
+"bom_machine_hour_3080","Camaag 100 ml","Packing",,,,39
+"bom_machine_hour_3090","Camaag 100 ml","Packing",,,,
+"bom_machine_hour_3100","Camaag 100 ml","Packing",,,,15
+"bom_machine_hour_3110","Camaag 200 ml","Pengeringan","Oven Tumbler Machine",,,30
+"bom_machine_hour_3120","Camaag 200 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_3130","Camaag 200 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_3140","Camaag 200 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_3150","Camaag 200 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",
+"bom_machine_hour_3160","Camaag 200 ml","Mixing","Hand Mixer Makita",,"PS.06",
+"bom_machine_hour_3170","Camaag 200 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",
+"bom_machine_hour_3180","Camaag 200 ml","Mixing","Ultra Torax Mixer",,"PS.07",150
+"bom_machine_hour_3190","Camaag 200 ml","Mixing","Coloid Mill Achtung",,"PS.07",30
+"bom_machine_hour_3200","Camaag 200 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_3210","Camaag 200 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_3220","Camaag 200 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_3230","Camaag 200 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_3240","Camaag 200 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_3250","Camaag 200 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_3260","Camaag 200 ml","Filling","Mesin Filling Jihcheng",,"PS.07",50
+"bom_machine_hour_3270","Camaag 200 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_3280","Camaag 200 ml","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_3290","Camaag 200 ml","Packing","Mesin Labelling Botol Jihcheng",,,60
+"bom_machine_hour_3300","Camaag 200 ml","Packing",,,,27
+"bom_machine_hour_3310","Camaag 200 ml","Packing",,,,90
+"bom_machine_hour_3320","Camaag 200 ml","Packing",,,,15
+"bom_machine_hour_3330","Camexine 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_3340","Camexine 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_3350","Camexine 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_3360","Camexine 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_3370","Camexine 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_3380","Camexine 60 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_3390","Camexine 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_3400","Camexine 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_3410","Camexine 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_3420","Camexine 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_3430","Camexine 60 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_3440","Camexine 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_3450","Camexine 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_3460","Camexine 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_3470","Camexine 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",60
+"bom_machine_hour_3480","Camexine 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_3490","Camexine 60 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_3500","Camexine 60 ml","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_3510","Camexine 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,60
+"bom_machine_hour_3520","Camexine 60 ml","Packing",,,,65
+"bom_machine_hour_3530","Camexine 60 ml","Packing",,,,
+"bom_machine_hour_3540","Camexine 60 ml","Packing",,,,15
+"bom_machine_hour_3550","Camicetine 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_3560","Camicetine 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_3570","Camicetine 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_3580","Camicetine 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_3590","Camicetine 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",
+"bom_machine_hour_3600","Camicetine 60 ml","Mixing","Hand Mixer Makita",,"PS.06",
+"bom_machine_hour_3610","Camicetine 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",
+"bom_machine_hour_3620","Camicetine 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",150
+"bom_machine_hour_3630","Camicetine 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",30
+"bom_machine_hour_3640","Camicetine 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_3650","Camicetine 60 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_3660","Camicetine 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_3670","Camicetine 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_3680","Camicetine 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_3690","Camicetine 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_3700","Camicetine 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",75
+"bom_machine_hour_3710","Camicetine 60 ml","Packing","Mesin Codding Alpha Jet C",,,120
+"bom_machine_hour_3720","Camicetine 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_3730","Camicetine 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_3740","Camicetine 60 ml","Packing",,,,65
+"bom_machine_hour_3750","Camicetine 60 ml","Packing",,,,
+"bom_machine_hour_3760","Camicetine 60 ml","Packing",,,,15
+"bom_machine_hour_3770","Camidryl 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_3780","Camidryl 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_3790","Camidryl 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_3800","Camidryl 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_3810","Camidryl 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_3820","Camidryl 60 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_3830","Camidryl 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_3840","Camidryl 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_3850","Camidryl 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_3860","Camidryl 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_3870","Camidryl 60 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_3880","Camidryl 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",150
+"bom_machine_hour_3890","Camidryl 60 ml","Mixing","Hand Mixer Makita",,"PS.08",60
+"bom_machine_hour_3900","Camidryl 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",20
+"bom_machine_hour_3910","Camidryl 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",75
+"bom_machine_hour_3920","Camidryl 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_3930","Camidryl 60 ml","Packing","Mesin Codding Alpha Jet C",,,120
+"bom_machine_hour_3940","Camidryl 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_3950","Camidryl 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_3960","Camidryl 60 ml","Packing",,,,65
+"bom_machine_hour_3970","Camidryl 60 ml","Packing",,,,
+"bom_machine_hour_3980","Camidryl 60 ml","Packing",,,,15
+"bom_machine_hour_3990","Camikolin 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_4000","Camikolin 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_4010","Camikolin 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_4020","Camikolin 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_4030","Camikolin 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",
+"bom_machine_hour_4040","Camikolin 60 ml","Mixing","Hand Mixer Makita",,"PS.06",
+"bom_machine_hour_4050","Camikolin 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",
+"bom_machine_hour_4060","Camikolin 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",150
+"bom_machine_hour_4070","Camikolin 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",30
+"bom_machine_hour_4080","Camikolin 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_4090","Camikolin 60 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_4100","Camikolin 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_4110","Camikolin 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_4120","Camikolin 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_4130","Camikolin 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_4140","Camikolin 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",75
+"bom_machine_hour_4150","Camikolin 60 ml","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_4160","Camikolin 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_4170","Camikolin 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_4180","Camikolin 60 ml","Packing",,,,65
+"bom_machine_hour_4190","Camikolin 60 ml","Packing",,,,
+"bom_machine_hour_4200","Camikolin 60 ml","Packing",,,,15
+"bom_machine_hour_4210","Casetamol 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_4220","Casetamol 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_4230","Casetamol 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_4240","Casetamol 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_4250","Casetamol 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_4260","Casetamol 60 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_4270","Casetamol 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_4280","Casetamol 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_4290","Casetamol 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_4300","Casetamol 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_4310","Casetamol 60 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_4320","Casetamol 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_4330","Casetamol 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_4340","Casetamol 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_4350","Casetamol 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",75
+"bom_machine_hour_4360","Casetamol 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_4370","Casetamol 60 ml","Packing","Mesin Codding Alpha Jet C",,,120
+"bom_machine_hour_4380","Casetamol 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_4390","Casetamol 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_4400","Casetamol 60 ml","Packing",,,,65
+"bom_machine_hour_4410","Casetamol 60 ml","Packing",,,,
+"bom_machine_hour_4420","Casetamol 60 ml","Packing",,,,15
+"bom_machine_hour_4430","Chlorampenicol 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_4440","Chlorampenicol 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_4450","Chlorampenicol 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_4460","Chlorampenicol 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_4470","Chlorampenicol 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",
+"bom_machine_hour_4480","Chlorampenicol 60 ml","Mixing","Hand Mixer Makita",,"PS.06",
+"bom_machine_hour_4490","Chlorampenicol 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",
+"bom_machine_hour_4500","Chlorampenicol 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",150
+"bom_machine_hour_4510","Chlorampenicol 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",30
+"bom_machine_hour_4520","Chlorampenicol 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_4530","Chlorampenicol 60 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_4540","Chlorampenicol 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_4550","Chlorampenicol 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_4560","Chlorampenicol 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_4570","Chlorampenicol 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_4580","Chlorampenicol 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",75
+"bom_machine_hour_4590","Chlorampenicol 60 ml","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_4600","Chlorampenicol 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_4610","Chlorampenicol 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_4620","Chlorampenicol 60 ml","Packing",,,,65
+"bom_machine_hour_4630","Chlorampenicol 60 ml","Packing",,,,
+"bom_machine_hour_4640","Chlorampenicol 60 ml","Packing",,,,15
+"bom_machine_hour_4650","Cotrimoksazole 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_4660","Cotrimoksazole 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_4670","Cotrimoksazole 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_4680","Cotrimoksazole 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_4690","Cotrimoksazole 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",
+"bom_machine_hour_4700","Cotrimoksazole 60 ml","Mixing","Hand Mixer Makita",,"PS.06",
+"bom_machine_hour_4710","Cotrimoksazole 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",
+"bom_machine_hour_4720","Cotrimoksazole 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",180
+"bom_machine_hour_4730","Cotrimoksazole 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",60
+"bom_machine_hour_4740","Cotrimoksazole 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",30
+"bom_machine_hour_4750","Cotrimoksazole 60 ml","Mixing","Hand Mixer Makita",,"PS.07",60
+"bom_machine_hour_4760","Cotrimoksazole 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_4770","Cotrimoksazole 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_4780","Cotrimoksazole 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_4790","Cotrimoksazole 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",
+"bom_machine_hour_4800","Cotrimoksazole 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",75
+"bom_machine_hour_4810","Cotrimoksazole 60 ml","Packing","Mesin Codding Alpha Jet C",,,60
+"bom_machine_hour_4820","Cotrimoksazole 60 ml","Packing","Mesin Codding Image",,,
+"bom_machine_hour_4830","Cotrimoksazole 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,120
+"bom_machine_hour_4840","Cotrimoksazole 60 ml","Packing",,,,65
+"bom_machine_hour_4850","Cotrimoksazole 60 ml","Packing",,,,
+"bom_machine_hour_4860","Cotrimoksazole 60 ml","Packing",,,,15
+"bom_machine_hour_4870","Daganak 100 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_4880","Daganak 100 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_4890","Daganak 100 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_4900","Daganak 100 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_4910","Daganak 100 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_4920","Daganak 100 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_4930","Daganak 100 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_4940","Daganak 100 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_4950","Daganak 100 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_4960","Daganak 100 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_4970","Daganak 100 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_4980","Daganak 100 ml","Mixing","Ultra Thorax Mixer",,"PS.08",150
+"bom_machine_hour_4990","Daganak 100 ml","Mixing","Hand Mixer Makita",,"PS.08",60
+"bom_machine_hour_5000","Daganak 100 ml","Mixing","Motor Pompa Show Pov",,"PS.08",20
+"bom_machine_hour_5010","Daganak 100 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",60
+"bom_machine_hour_5020","Daganak 100 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_5030","Daganak 100 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_5040","Daganak 100 ml","Packing","Mesin Codding Image",,,90
+"bom_machine_hour_5050","Daganak 100 ml","Packing","Mesin Labelling Botol Jihcheng",,,90
+"bom_machine_hour_5060","Daganak 100 ml","Packing",,,,39
+"bom_machine_hour_5070","Daganak 100 ml","Packing",,,,
+"bom_machine_hour_5080","Daganak 100 ml","Packing",,,,15
+"bom_machine_hour_5090","OBH 100 ml TD","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_5100","OBH 100 ml TD","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_5110","OBH 100 ml TD","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_5120","OBH 100 ml TD","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_5130","OBH 100 ml TD","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_5140","OBH 100 ml TD","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_5150","OBH 100 ml TD","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_5160","OBH 100 ml TD","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_5170","OBH 100 ml TD","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_5180","OBH 100 ml TD","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_5190","OBH 100 ml TD","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_5200","OBH 100 ml TD","Mixing","Ultra Thorax Mixer",,"PS.08",150
+"bom_machine_hour_5210","OBH 100 ml TD","Mixing","Hand Mixer Makita",,"PS.08",60
+"bom_machine_hour_5220","OBH 100 ml TD","Mixing","Motor Pompa Show Pov",,"PS.08",20
+"bom_machine_hour_5230","OBH 100 ml TD","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",60
+"bom_machine_hour_5240","OBH 100 ml TD","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_5250","OBH 100 ml TD","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_5260","OBH 100 ml TD","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_5270","OBH 100 ml TD","Packing","Mesin Labelling Botol Jihcheng",,,90
+"bom_machine_hour_5280","OBH 100 ml TD","Packing",,,,39
+"bom_machine_hour_5290","OBH 100 ml TD","Packing",,,,
+"bom_machine_hour_5300","OBH 100 ml TD","Packing",,,,15
+"bom_machine_hour_5310","Paracetamol 60 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_5320","Paracetamol 60 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_5330","Paracetamol 60 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_5340","Paracetamol 60 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_5350","Paracetamol 60 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_5360","Paracetamol 60 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_5370","Paracetamol 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_5380","Paracetamol 60 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_5390","Paracetamol 60 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_5400","Paracetamol 60 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_5410","Paracetamol 60 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_5420","Paracetamol 60 ml","Mixing","Ultra Thorax Mixer",,"PS.08",
+"bom_machine_hour_5430","Paracetamol 60 ml","Mixing","Hand Mixer Makita",,"PS.08",
+"bom_machine_hour_5440","Paracetamol 60 ml","Mixing","Motor Pompa Show Pov",,"PS.08",
+"bom_machine_hour_5450","Paracetamol 60 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",60
+"bom_machine_hour_5460","Paracetamol 60 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_5470","Paracetamol 60 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_5480","Paracetamol 60 ml","Packing","Mesin Codding Image",,,60
+"bom_machine_hour_5490","Paracetamol 60 ml","Packing","Mesin Labelling Botol Jihcheng",,,90
+"bom_machine_hour_5500","Paracetamol 60 ml","Packing",,,,65
+"bom_machine_hour_5510","Paracetamol 60 ml","Packing",,,,
+"bom_machine_hour_5520","Paracetamol 60 ml","Packing",,,,15
+"bom_machine_hour_5530","Sanmino 120 ml","Pengeringan","Oven Tumbler Machine",,,60
+"bom_machine_hour_5540","Sanmino 120 ml","Penimbangan","Timbangan Mettler Toledo 30 Kg",,,30
+"bom_machine_hour_5550","Sanmino 120 ml","Penimbangan","Timbangan Kern 250",,,30
+"bom_machine_hour_5560","Sanmino 120 ml","Penimbangan","Laminair Air Flow",,,30
+"bom_machine_hour_5570","Sanmino 120 ml","Mixing","Ultra Thorax Mixer Koy",,"PS.06",120
+"bom_machine_hour_5580","Sanmino 120 ml","Mixing","Hand Mixer Makita",,"PS.06",60
+"bom_machine_hour_5590","Sanmino 120 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.06",20
+"bom_machine_hour_5600","Sanmino 120 ml","Mixing","Ultra Torax Mixer",,"PS.07",
+"bom_machine_hour_5610","Sanmino 120 ml","Mixing","Coloid Mill Achtung",,"PS.07",
+"bom_machine_hour_5620","Sanmino 120 ml","Mixing","Pompa Transfer Elepon Seal",,"PS.07",
+"bom_machine_hour_5630","Sanmino 120 ml","Mixing","Hand Mixer Makita",,"PS.07",
+"bom_machine_hour_5640","Sanmino 120 ml","Mixing","Ultra Thorax Mixer",,"PS.08",150
+"bom_machine_hour_5650","Sanmino 120 ml","Mixing","Hand Mixer Makita",,"PS.08",60
+"bom_machine_hour_5660","Sanmino 120 ml","Mixing","Motor Pompa Show Pov",,"PS.08",20
+"bom_machine_hour_5670","Sanmino 120 ml","Filling","Mesin Filling Syrup Jihcheng",,"PS.06",60
+"bom_machine_hour_5680","Sanmino 120 ml","Filling","Mesin Filling Jihcheng",,"PS.07",
+"bom_machine_hour_5690","Sanmino 120 ml","Packing","Mesin Codding Alpha Jet C",,,
+"bom_machine_hour_5700","Sanmino 120 ml","Packing","Mesin Codding Image",,,90
+"bom_machine_hour_5710","Sanmino 120 ml","Packing","Mesin Labelling Botol Jihcheng",,,90
+"bom_machine_hour_5720","Sanmino 120 ml","Packing",,,,31
+"bom_machine_hour_5730","Sanmino 120 ml","Packing",,,,
+"bom_machine_hour_5740","Sanmino 120 ml","Packing",,,,15

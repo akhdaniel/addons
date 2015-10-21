@@ -1,0 +1,234 @@
+id,Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+obat_jadi_100,DHA0010100,Amoxicillin 250 mg Strip 10,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_110,DHA0020100,Amoxicillin 250 mg Strip 12,Betalaktam,"Dus, 12 strip @ 10 kapsul",Box 120 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_120,DHA0030100,Amoxicillin DS 125 mg 60 ml,Betalaktam,"Dus, botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_130,DHA0040100,Ampicillin 250 mg Pot 100,Betalaktam,Botol 100 kapsul,Pot 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_140,DHA0050100,Ampicillin 500 mg Pot 500,Betalaktam,botol 500 kapsul ,Pot 500 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_150,DHA0060100,Ampicillin 250 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_160,DHA0070100,Ampicillin DS 125mg 60 ml (PD),Betalaktam,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_170,DHA0080100,Ampicillin DS 125mg 60 ml (TD),Betalaktam,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_180,DHC0010100,Camicillin 250 mg Blister,Betalaktam,Blister 10 kapsul dus 100 kapsul,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_190,DHC0020100,Camicillin 250 mg Pot 1000,Betalaktam,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_200,DHC0030100,Camicillin 250 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_210,DHC0040100,Camicillin 500 mg Blister,Betalaktam,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_220,DHC0050100,Camicillin 500 mg Pot 1000,Betalaktam,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_230,DHC0060100,Camicillin 500 mg Strip,Betalaktam,"Dus, 10 Strip @ 10 kaplet",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_240,DHC0070100,Camillin 500 mg Blister Export,Betalaktam,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_250,DHC0080100,Camillin DS 125,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_260,DHC0090100,Camillin DS 250,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_270,DHC0100100,Camoksil 250 mg Blister,Betalaktam,Blister 10 kapsul ,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_280,DHC0110100,Camoksil 250 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_290,DHC0120100,Camoksil 500 mg Blister Export,Betalaktam,"Dus, 10 blister @ 10 kaplet",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_300,DHC0130100,Camoksil 500 mg Strip,Betalaktam,"Dus, 10 strip @ 10 kapsul ",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_310,DHC0140100,Camoksil 500 mg,Betalaktam,"Dus, 10 strip @ 10 kaplet",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_320,DHC0150100,Camoksil DS 125 mg,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_330,DHC0160100,Camoksil DS 250 mg,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_340,DHP0010100,Pacillin DS,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_350,DHP0020100,Pacimox DS,Betalaktam,"Dus, botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_360,DFC0010100,Camitrosin DS 60 ml,Dry Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_370,DFD0010100,Doxycycline DS 20 ml,Dry Syrup,Botol @ 20 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_380,DFE0010100,Erythromycin DS 60 ml,Dry Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_390,DFT0010100,Tetracycline DS 125 60 ml,Dry Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_400,DGA0010100,Aminophylline  10 ml @ 50,Injeksi,"Dus, 50 Ampul @ 10 ml",Box 50 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_410,DGA0020100,Aminophylline  10 ml @ 30,Injeksi,"Dus, 30 Ampul @ 10 ml",Box 30 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_420,DGA0030100,Antalgin 250 mg 10 ml,Injeksi,Vial 10 ml ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_430,DGA0040100,Antalgin 500 mg 10 ml,Injeksi,Ampul 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_440,DGA0050100,Antalgin 250 mg/ml 2 ml @ 30,Injeksi,"Dus, 30 Ampul @ 2 ml",Box 30 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_450,DGA0060100,Antalgin 500 mg/ml 1 ml @ 100,Injeksi,Ampul 1 ml Dus 100 Ampul ,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_460,DGA0070100,Aqua pro injection 2 ml,Injeksi,Ampul @ 2 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_470,DGA0080100,Aqua pro injection 4 ml,Injeksi,Ampul @ 4 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_480,DGA0090100,Aqua pro injection 5 ml,Injeksi,Ampul @ 5 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_490,DGA0100100,Aqua pro injection 10 ml,Injeksi,Ampul @ 10 ml,Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_500,DGA0110100,Aquabidestillata 20 ml,Injeksi,Ampul 20 ml,Shrink 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_510,DGA0120100,Aquabidestillata 100 ml,Injeksi,Vial 100 ml,Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_520,DGC0010100,Calcii chlorid  10 ml Ampul,Injeksi,"Dus, 50 Ampul @ 10 ml",Box 50 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_530,DGC0020100,Calcii chlorid 10 ml Vial,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_540,DGC0030100,Camidexon 5 mg/ml 1 ml Ampul,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_550,DGC0040100,Camidexon 5 mg/ml 10 ml Vial,Injeksi,"Dus, 10 Vial @ 10 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_560,DGC0050100,Camidon 15 ml,Injeksi,"Dus, 10 Vial @15 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_570,DGC0060100,Camidon 10 ml,Injeksi,Vial 10 ml Dus 10 Vial ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_580,DGC0070100,Camidryl 10 mg/ml 15 ml,Injeksi,"Dus, 10 Vial @ 15 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_590,DGC0080100,Camidryl 10 mg/ml 1 ml,Injeksi,Ampul 1 ml Dus 100 ml ,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_600,DGC0090100,Camidryl 10 mg/ml 10 ml,Injeksi,Vial 10 ml ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_610,DGC0100100,Camigesik 50 mg/ml 2 ml,Injeksi,"Dus, 10 Ampul @ 2 ml ",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_620,DGC0110100,Chlorpromazine 5 mg/ml 2 ml,Injeksi,"Dus, 10 Ampul @ 2 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_630,DGC0120100,Chlorpromazine 25 mg/ml 1 ml,Injeksi,"Dus, 10 Ampul @ 1 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_640,DGC0130100,Cholimed 125 mg/ml 2 ml,Injeksi,"Dus, 5 Ampul @ 2 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_650,DGC0140100,Cortison Acetate 25 mg/ml 10ml,Injeksi,Vial 10 ml ,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_660,DGD0010100,Dexamethasone 5 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_670,DGD0020100,Diphenhydramine 10 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_680,DGD0030100,Dobutamine 25 mg/ml 10 ml,Injeksi,"Dus, 1 Vial @ 10 ml ",Box 1 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_690,DGG0010100,Glojaya 20 mg/ml 10 ml,Injeksi,Vial 10 ml ,Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_700,DGG0020100,Glojaya 2 mg/ml 100 ml,Injeksi,"Dus, Botol @ 100 ml ",Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_710,DGG0030100,"Glomethyl 0,2 mg/ml 1 ml",Injeksi,"Dus, 30 Ampul @ 1 ml",Box 30 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_720,DGG0040100,Glomin 40 mg/ml 5 ml,Injeksi,"Dus, 5 Ampul @ 5 ml ",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_730,DGG0050100,Glosix 10 mg/ml 2 ml,Injeksi,"Dus, 5 Ampul @ 2 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_740,DGG0060100,Glotron 2 ml,Injeksi,Ampul 1 ml ,Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_750,DGG0070100,Glotron 4 ml,Injeksi,Ampul 1 ml ,Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_760,DGL0010100,Lidocain compositum 2 ml,Injeksi,"Dus, 100 Ampul @ 2 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_770,DGL0020100,Lidocain HCl 2% 2 ml,Injeksi,"Ampul 2 ml, Dus 100 Ampul ",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_780,DGL0030100,Lidocaine 2% 2 ml,Injeksi,"Dus, 100 Ampul @ 2 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_790,DGL0040100,Lunex 50 mg/ml 5 ml,Injeksi,"Dus, 10 Ampul @ 5 ml ",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_800,DGL0050100,Lunex 100mg/ml 5 ml,Injeksi,"Dus, 10 Ampul @ 5 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_810,DGL0060100,Lusitren 20 mg/ml 5 ml,Injeksi,"Dus, 5 Ampul@ 5 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_820,DGL0070100,Lusitren 20 mg/ml 15 ml,Injeksi,"Dus, 5 Ampul@ 15 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_830,DGM0010100,Matosin 10 IU/ml 1 ml,Injeksi,"Dus, 5 Ampul @ 1 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_840,DGM0020100,"Methylergometrine 0,2mg/ml 1ml",Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_850,DGP0010100,Papaverin 40 mg/ml 10 ml,Injeksi,"Dus, 10 Vial @ 10 ml ",Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_860,DGP0020100,Papaverin 40 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_870,DGP0030100,Piracetam 200 mg/ml 15 ml,Injeksi,"Dus, 5 Ampul @ 15 ml",Box 5 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_880,DGP0040100,Piracetam 200 mg/ml 5 ml,Injeksi,"Dus, 10 Ampul @ 5 ml",Box 10 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_890,DGV0010100,Vitamin B complex 10 ml,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_900,DGV0020100,Vitamin B complex 20 ml,Injeksi,Flacon 20 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_910,DGV0030100,Vitamin B1 1 ml,Injeksi,Ampul 1 ml,Box,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_920,DGV0040100,Vitamin B1 10 ml,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_930,DGV0050100,Vitamin B1 100 mg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_940,DGV0060100,Vitamin B12 500mcg/ml 1 ml,Injeksi,"Dus, 100 Ampul @ 1 ml",Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_950,DGV0070100,Vitamin B12 500 mcg/ml 10 ml,Injeksi,Vial 10 ml,Box 10 Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_960,DGV0080100,Vitamin B6 1 ml @ 50,Injeksi,Ampul 1 ml,Box 50 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_970,DGV0090100,Vitamin B6 1 ml @ 100,Injeksi,Ampul 1 ml,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_980,DGV0100100,Vitamin K 10 mg/ml 1 ml,Injeksi,Ampul 1 ml,Box 100 Ampul,Ampul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_990,DEC0010100,Camicetine 250 mg Blister,Kapsul Kaplet Tablet,"Dus, 10 blister @ 10 kapsul  ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1000,DEC0020100,Camicetine 250 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Box 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1010,DEC0030100,Camicetine 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1020,DEC0040100,Camicetine 500 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul  ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1030,DEC0050100,Camicyclin 250 mg Blister,Kapsul Kaplet Tablet,Blister 10 kapsul Dus 100 kapsul ,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1040,DEC0060100,Camicyclin 250 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1050,DEC0070100,Camicyclin 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1060,DEC0080100,Camicyclin 500 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Box 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1070,DEC0090100,Camicyclin 500 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1080,DEC0100100,Camitrosin 250 mg Blister,Kapsul Kaplet Tablet,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1090,DEC0110100,Camitrosin 250 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1100,DEC0120100,Camitrosin 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1110,DEC0130100,Chlorampenicol 250 mg Pot 1000,Kapsul Kaplet Tablet,Pot plastik 1000 kapsul,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1120,DEC0140100,Chlorampenicol 250 mg Pot 250,Kapsul Kaplet Tablet,pot plastik @ 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1130,DEC0150100,Chlorampenicol 250 mg Strip 10,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1140,DEC0160100,Chlorampenicol 250 mg Strip 12,Kapsul Kaplet Tablet,"Dus, 12 strip @ 10 kapsul",Box 120 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1150,DEC0170200,Camistan 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1160,DED0010100,Doxycycline 100 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1170,DEE0010100,Erythromycin 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1180,DEG0010100,Glomasin 150 mg Strip,Kapsul Kaplet Tablet,"Dus, 3 strip @ 10 kapsul",Box 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1190,DEG0020100,Glomasin 300 mg Strip,Kapsul Kaplet Tablet,"Dus, 3 strip @ 10 kapsul",Box 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1200,DEH0010100,Heparsan Pot 30,Kapsul Kaplet Tablet,Botol @ 30 kapsul ,Pot 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1210,DEI0010100,Indometacin 25 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1220,DEK0010100,Kosaka Strip,Kapsul Kaplet Tablet,"Dus, 25 catch cover @ 1 strip @ 4 kapsul ",Box 100 Kpsul,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1230,DEO0010100,Oximak Pot 30,Kapsul Kaplet Tablet,Botol @ 30 kapsul,Pot 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1240,DEP0010100,Phenytoin 100 mg Pot 100,Kapsul Kaplet Tablet,Botol plastik @ 100 kapsul,Pot 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1250,DEP0020100,Phenytoin 100 mg Pot 250,Kapsul Kaplet Tablet,Botol plastik 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1260,DEP0030100,Phenytoin 30 mg Pot 100,Kapsul Kaplet Tablet,Botol plastik @ 100 kapsul,Pot 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1270,DEP0040100,Phenytoin 30 mg Pot 250,Kapsul Kaplet Tablet,Botol plastik 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1280,DER0010100,Rosan Pot 30,Kapsul Kaplet Tablet,Botol @ 30 kapsul,Pot 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1290,DET0010100,Tetracycline 250 mg Pot 1000,Kapsul Kaplet Tablet,Pot plastik 1000 kapsul,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1300,DET0020100,Tetracycline 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1310,DEZ0010100,Zentropil 100 mg Blister,Kapsul Kaplet Tablet,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1320,DEZ0020100,Zentropil 100 mg Pot 250,Kapsul Kaplet Tablet,Pot plastik @ 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1330,DEZ0030100,Zentropil 30 mg Pot 250,Kapsul Kaplet Tablet,Botol 250 kapsul ,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1340,DIC0010200,Camaag Strip,Produk Setangah Jadi,"Dus, 10 strip @ 10 tablet ",Box 100 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1350,DIC0020200,Camistan 250 mg Blister,Produk Setangah Jadi,Blister 10 kapsul dus 100 kapsul,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1360,DIC0030200,Camistan 500 mg Strip,Produk Setangah Jadi,"Dus, 10 strip @ 10 captab  ",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1370,DIF0010200,Fluza Blister,Produk Setangah Jadi,"Dus, 10 blister @ 10 kaplet",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1380,DIF0020200,Fluza Catch Cover,Produk Setangah Jadi,"Dus, 25 catch cover @ 4 kaplet",Box 100 Kplet,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1390,DIG0010300,Glocef 1 g,Produk Setangah Jadi,"Dus, 1 vial @ 1 gram ",Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1400,DIJ0010200,Jayacin 500 mg Strip,Produk Setangah Jadi,"Dus, 5 strip @ 6 kaptab ",Box 30 Kptab,Kptab,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1410,DIR0010300,Renxon 1 g,Produk Setangah Jadi,"Dus, 1 vial @ 1 gram",Vial,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1420,DJB0010200,Balcitin 1 % 5 g,Produk Belum Siap Jual,"Dus, tube @ 5 g ",Tube,Tube,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1430,DJB0020200,"Betametason 0,1% 5 g",Produk Belum Siap Jual,"Dus, 25 tube @ 5 g ",Tube,Tube,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1440,DJF0010200,Fluza Effervescent,Produk Belum Siap Jual,"Tube, 10 tabelt",Tube,Tube,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1450,DJG0010200,Galium 10 mg Strip,Produk Belum Siap Jual,"Dus, 5 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1460,DJG0020200,Galium 5 mg Strip,Produk Belum Siap Jual,"Dus, 5 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1470,DJG0030200,Glodin 5 mg Strip,Produk Belum Siap Jual,"Dus, 3 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1480,DJG0040200,Glomeson 4 mg Strip,Produk Belum Siap Jual,"Dus, 5 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1490,DJG0050200,Glomeson 8 mg Strip,Produk Belum Siap Jual,"Dus, 5 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1500,DJG0060200,Glomeson 16 mg Strip,Produk Belum Siap Jual,"Dus, 5 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1510,DJI0010200,Iglodep 50 mg Strip,Produk Belum Siap Jual,Dus 3 strip @ 10 tablet,Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1520,DJL0010200,Lutrotam 800 mg Strip,Produk Belum Siap Jual,"Dus, 5 strip @ 10 kaptab ",Box 50 Kptab,Kptab,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1530,DJM0010200,Methylergometrin Pot 100,Produk Belum Siap Jual,Botol plastik @ 100 tablet ,Pot 100 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1540,DJM0020200,Myoman 50 mg Strip,Produk Belum Siap Jual,"Dus, 3 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1550,DJP0010200,Paxicam 15 mg Strip,Produk Belum Siap Jual,"Dus, 3 strip @ 10 tablet ",Box 30 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1560,DJP0020200,Paxicam 7.5 mg Strip,Produk Belum Siap Jual,"Dus, 3 strip @ 10 tablet ",Box 30 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1570,DJP0030200,Phenoxymethyl-penicillin 250mg,Produk Belum Siap Jual,Botol plastik @ 100 tablet ,Pot 100 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1580,DJP0040200,Phenoxymethylpenicillin 500mg ,Produk Belum Siap Jual,Botol plastik @ 100 tablet ,Pot 100 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1590,DJT0010200,Trenxy  400 mg Strip,Produk Belum Siap Jual,"Dus, 3 strip @ 10 kaptab ",Box 30 Table,Kptab,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1600,DJV0010200,Vitamin A 50.000 IU Pot 1000,Produk Belum Siap Jual,Botol plastik 1000 tablet ,Pot 100 Table,Table,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1610,DJP0050200,Paclulic 10 mg,Produk Belum Siap Jual,"Dus, 3 strip @ 10 tablet ",Box,Box,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1620,DCA0010100,Alkohol 70% 100 ml,Larutan,Botol @ 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1630,DCA0020100,Alkohol 70% 1 L,Larutan,Botol @ 1 liter,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1640,DCC0010100,Cayodine 30 ml,Larutan,"Dus, botol 30 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1650,DCC0020100,Cayodine 30 ml TD,Larutan,Botol plastik 30 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1660,DCC0030100,Cayodine 60 ml,Larutan,"Dus, botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1670,DCC0040100,Cayodine 60 ml TD,Larutan,Botol plastik 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1680,DCC0050100,Cayodine 1 L,Larutan,Botol 1 liter ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1690,DCG0010100,Glyserol 100 ml,Larutan,Botol plastik 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1700,DCO0010100,Otedental 10 ml,Larutan,"Dus, botol plastik 10 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1710,DCP0020100,Povidone iodine 30 ml,Larutan,Botol 30 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1720,DCP0030100,Povidone iodine 300 ml,Larutan,Botol 300 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1730,DCP0040100,Povidone iodine 1 L,Larutan,Botol 1 liter,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1740,DCR0010100,Rivanol 300 ml,Larutan,Botol 300 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1750,DCR0020100,Rivanol 100 ml,Larutan, botol plastik @ 100 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1760,DDL0010100,Lysol 1 L,PKRT,Botol Plastik 1000 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1770,DAB0010100,Bio nigell,Soft Capsule,"Dus, Botol @ 60 kapsul lunak @ 500 mg",Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1780,DAB0020100,Buah Merah Rediss,Soft Capsule,Botol @30 dan 60 kapsul,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1790,DAB0030100,Buah Merah W 600,Soft Capsule,Botol Plastik 50 kapsul lunak ,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1800,DAD0010100,DBS Habbazzaitun ,Soft Capsule,"Dus, Botol @ 60 kapsul lunak @ 500 mg",Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1810,DAH0010100,Hebbat Yemen 600 mg,Soft Capsule,Botol Plastik @ 30 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1820,DAI0010100,Inspira Fish Oil,Soft Capsule,"Dus, Botol Plastik @ 30 kapsul lunak",Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1830,DAI0020100,Inspira Vitamin E 400 IU,Soft Capsule,"Dus, Botol Plastik @ 30 kapsul lunak",Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1840,DAL0010100,Lamata,Soft Capsule,"Dus, Botol @ 30 kapsul lunak",Pot 30 Kp Lu,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1850,DAP0010100,Pure Fish Oil ,Soft Capsule,"Dus, Botol @ 30 kapsul lunak",Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1860,DAV0010100,Vitamin A 100.000 IU,Soft Capsule,Botol Plastik 50 kapsul lunak ,Pot 50 Kp Lu,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1870,DAV0020100,Vitamin A 200.000 IU,Soft Capsule,Botol Plastik 50 kapsul lunak ,Pot 50 Kp Lu,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1880,DAN0010100,Natura Nigela S 700,Soft Capsule,Botol Plastik @60 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1890,DAN0020100,Natura Omega S 650,Soft Capsule,Botol Plastik @ 60 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1900,DAB0040100,Biocelle,Soft Capsule,Botol Plastik @ 60 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1910,DAH0020100,Habbatussauda 600 mg,Soft Capsule,Botol Plastik @ 50 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1920,DAI0030100,Isotretinoin 10 mg,Soft Capsule,Botol Plastik @ 100 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1930,DAF0010100,Fish Oil 1000 mg,Soft Capsule,Botol Plastik @ 400 dan 500 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1940,DAO0010100,Olive Oil 600 mg,Soft Capsule,Botol Plastik @ 50 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1950,DAC0010100,Carniten,Soft Capsule,Blister @ 10 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1960,DAC0020100,Colicol,Soft Capsule,Blister @ 10 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1970,DAV0030100,Vomil 650 mg,Soft Capsule,Blister @ 10 kapsul lunak,Kapsul,Kp Lu,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1980,DBA0010100,Antasida Doen 60 ml,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_1990,DBB0010100,BAB 100 ml,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2000,DBC0010100,Calcivita 200 ml,Syrup,"Dus, Botol 200 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2010,DBC0020100,Camaag 100 ml,Syrup,Botol 100 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2020,DBC0030100,Camaag 200 ml,Syrup,"Dus, Botol 200 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2030,DBC0040100,Came 60 ml,Syrup,Botol @ 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2040,DBC0050100,Camexine 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2050,DBC0060100,Camicetine 60 ml,Syrup,"Dus, Botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2060,DBC0070100,Camicetine 60 ml Export,Syrup,"Dus, Botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2070,DBC0080100,Camidex 100 ml,Syrup,Botol 100 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2080,DBC0090100,Camidryl 60 ml,Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2090,DBC0100100,Camikolin 60 ml,Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2100,DBC0110100,Camivita Syrup 60 ml,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2110,DBC0120100,Camivita Syrup 120 ml,Syrup,"Dus, Botol 120 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2120,DBC0130100,Carisin 15 ml,Syrup,Botol 15 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2130,DBC0140100,Casetamol 60 ml,Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2140,DBC0150100,Casetamol 60 ml Export,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2150,DBC0160100,Chlorampenicol 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2160,DBC0170100,Cotrimoksazole 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2170,DBD0010100,Daganak 100 ml,Syrup,"Dus, Botol 100 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2180,DBD0020100,Daganak 100 ml Gepeng,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2190,DBD0030100,Dextromethorphan 60 ml,Syrup,Botol Plastik 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2200,DBK0010100,Kosaka 60 ml,Syrup,"Dus, Botol 60 ml ",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2210,DBL0010100,Lycivita 100 ml,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2220,DBO0010100,OBH 100 ml,Syrup,Botol 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2230,DBO0020100,OBH 100 ml TD,Syrup,Botol 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2240,DBO0030100,OBH 100 ml pet,Syrup,Botol Plastik 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2250,DBO0040100,OBH 100 ml Gepeng,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2260,DBO0050100,OBH 100 ml Export,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2270,DBO0060100,OBH 100 ml Gepeng Export,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2280,DBP0010100,Paracetamol 60 ml,Syrup,Botol  60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2290,DBP0020100,Piperazin 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2300,DBP0030100,Prometazine 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2310,DBP0040100,Promethazin 5 mg/ml 60 ml,Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2320,DBP0050100,Protusin 100 ml,Syrup,"Dus, Botol 100 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2330,DBS0010100,Sanmino 120 ml,Syrup,"Dus, Botol 120 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2340,DBC0180100,Camikolin 60 ml eksport,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2350,DBG0010100,Glosweet 100 ml Syrup,Syrup,Botol @ 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2360,DBC0190100,Camivita Plus,Syrup,Botol @ 100 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2370,DBC0200100,Camivita Grow,Syrup,"Dus, Botol 200 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2380,DBG0020100,Glocetamol Forte,Syrup,"Dus, Botol 60 ml",Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2390,DGL0080100,Lutrotam 200 mg/ml 60 ml,Injeksi,"Dus, Botol @ 60 ml ",Box,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2400,DGM0030100,Metronidazol 500 mg 100 ml,Injeksi,"Dus, Botol @100 ml",Box,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2410,DGA0130100,Aquadestillata steril 500 ml,Injeksi,Botol 500 ml,Botol,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+obat_jadi_2420,DCP0010100,Phenol Glycerol 5 ml,Larutan,Botol plastik @ 5 ml,Box 24 Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

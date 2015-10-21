@@ -1,0 +1,43 @@
+id,name,code,resource_type
+mrp_workcenter_101,Cuci Botol,Cuci Botol,user
+mrp_workcenter_102,Oven,Oven Botol,material
+mrp_workcenter_103,Scale,Scale,material
+mrp_workcenter_104,Mesin Bilas,Kemas Primer/Bilas,material
+mrp_workcenter_105,Codding,Kemas Sekunder/Codding,material
+mrp_workcenter_106,Codding,Kemas Tersier/Codding,material
+mrp_workcenter_107,Mixer,Mixer,material
+mrp_workcenter_108,Mesin Pengeringan,Mesin Pengeringan,material
+mrp_workcenter_109,QC,QC,user
+mrp_workcenter_110,Mesin Filling,Filling,material
+mrp_workcenter_111,Visual,Sortir Visual,user
+mrp_workcenter_112,Codding,Codding,material
+mrp_workcenter_113,Labelling,Labelling,user
+mrp_workcenter_114,Packing F.Box,Packing (Folding Box),user
+mrp_workcenter_115,Packing M.Box,Packing (Master Box),user
+mrp_workcenter_116,Oven,Pengeringan,material
+mrp_workcenter_117,Visual,Visual,user
+mrp_workcenter_118,Melting,Melting,material
+mrp_workcenter_119,Drying,Drying & Polishing,material
+mrp_workcenter_120,Counting,Counting,material
+mrp_workcenter_121,Labelling&Packing,Labelling & Packing,user
+mrp_workcenter_122,QC,Uji QC,user
+mrp_workcenter_123,QC,Sortir,user
+mrp_workcenter_124,Strip/Blist,Strip/Blist,material
+mrp_workcenter_125,Packing,Packing,user
+mrp_workcenter_126,Mesin Cetak,Cetak,material
+mrp_workcenter_127,Stripping/Blistering,Stripping/Blistering,material
+mrp_workcenter_128,Packing,"Packing (Fbox,Master Box)",user
+mrp_workcenter_129,Mesin Filling & Capping,Filling & Capping,material
+mrp_workcenter_130,Mesin Bilas,Mesin Bilas,material
+mrp_workcenter_131,Codding,Codding Botol,material
+mrp_workcenter_132,Codding,Codding Etiket,material
+mrp_workcenter_133,Cuci Ampul,Cuci Ampul/Vial,material
+mrp_workcenter_134,Sterillisasi,Sterillisasi Ampul/Vial,user
+mrp_workcenter_135,Sterillisasi,Sterillisasi Baju & Peralatan,user
+mrp_workcenter_136,Sterillisasi,Sterillisasi Produk,user
+mrp_workcenter_137,Integrity Test,Integrity Test,user
+mrp_workcenter_138,Filtrasi,Filtrasi,material
+mrp_workcenter_139,Printing,Printing Ampul,material
+mrp_workcenter_140,PS.06,PS.06,material
+mrp_workcenter_141,PS.07,PS.07,material
+mrp_workcenter_142,PS.08,PS.08,material

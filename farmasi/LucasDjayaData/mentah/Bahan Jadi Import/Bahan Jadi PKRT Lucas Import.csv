@@ -1,0 +1,2 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DDL0010100,Lysol 1 L,PKRT,Botol Plastik 1000 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
