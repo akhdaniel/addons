@@ -1,0 +1,4 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DGL0080100,Lutrotam 200 mg/ml 60 ml,Injeksi,"Dus, Botol @ 60 ml ",Box,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGM0030100,Metronidazol 500 mg 100 ml,Injeksi,"Dus, Botol @100 ml",Box,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DGA0130100,Aquadestillata steril 500 ml,Injeksi,Botol 500 ml,Botol,Vial,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

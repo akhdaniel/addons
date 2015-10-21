@@ -1,0 +1,19 @@
+"id","name","parent_id","type","sediaan_id","removal_days","alert_days","end_of_life_days","best_before_days"
+"product_categ_100","Bahan Awal",,"view",,0,0,0,0
+"product_categ_110","Bahan Awal Aktif","Bahan Awal","normal",,0,0,0,0
+"product_categ_120","Bahan Awal Pembantu","Bahan Awal","normal",,0,0,0,0
+"product_categ_130","Bahan Pengemas",,"normal",,0,0,0,0
+"product_categ_140","Produk Jadi",,"view",,0,0,0,0
+"product_categ_150","Betalaktam","Produk Jadi","normal","Betalaktam",60,60,60,60
+"product_categ_160","Dry Syrup","Produk Jadi","normal","Syrup",60,60,60,60
+"product_categ_170","Injeksi","Produk Jadi","normal","Injeksi",60,60,60,60
+"product_categ_180","Kapsul Kaplet Tablet","Produk Jadi","normal","Kapsul",60,60,60,60
+"product_categ_190","Produk Setengah Jadi","Produk Jadi","normal",,60,60,60,60
+"product_categ_200","Produk Belum Siap Jual","Produk Jadi","normal",,60,60,60,60
+"product_categ_210","Larutan","Produk Jadi","normal","Larutan",60,60,60,60
+"product_categ_220","PKRT","Produk Jadi","normal",,60,60,60,60
+"product_categ_230","Soft Capsule","Produk Jadi","normal","Soft Capsule",60,60,60,60
+"product_categ_240","Syrup","Produk Jadi","normal","Syrup",60,60,60,60
+"product_categ_250","Non Starting Material",,"view",,0,0,0,0
+"product_categ_260","Asset","Non Starting Material","view",,0,0,0,0
+"product_categ_271","Rutin","Non Starting Material","view",,0,0,0,0

@@ -1,0 +1,172 @@
+bom_id,workcenter_operation_id,jumlah orang,man_hour
+Antasida Doen 60 ml,Pencucian Botol,2,90
+Antasida Doen 60 ml,Oven Botol,2,60
+Antasida Doen 60 ml,Penimbangan,2,30
+Antasida Doen 60 ml,Mixing,2,150
+Antasida Doen 60 ml,Filling,3,60
+Antasida Doen 60 ml,Sortir visual,2,60
+Antasida Doen 60 ml,Coding,1,90
+Antasida Doen 60 ml,Labelling,3,90
+Antasida Doen 60 ml,Packing,5,90
+BAB 100 ml,Pencucian Botol,2,90
+BAB 100 ml,Oven Botol,2,60
+BAB 100 ml,Penimbangan,2,30
+BAB 100 ml,Mixing,2,150
+BAB 100 ml,Filling,3,60
+BAB 100 ml,Sortir visual,2,60
+BAB 100 ml,Coding,1,90
+BAB 100 ml,Labelling,3,90
+BAB 100 ml,Packing,5,90
+Calcivita 200 ml,Pencucian Botol,2,60
+Calcivita 200 ml,Oven Botol,2,30
+Calcivita 200 ml,Penimbangan,2,30
+Calcivita 200 ml,Mixing,2,180
+Calcivita 200 ml,Filling,3,50
+Calcivita 200 ml,Sortir visual,2,30
+Calcivita 200 ml,Coding,1,60
+Calcivita 200 ml,Labelling,3,60
+Calcivita 200 ml,Packing,5,120
+Camaag 100 ml,Pencucian Botol,2,90
+Camaag 100 ml,Oven Botol,2,60
+Camaag 100 ml,Penimbangan,2,30
+Camaag 100 ml,Mixing,3,180
+Camaag 100 ml,Filling,3,60
+Camaag 100 ml,Sortir visual,,
+Camaag 100 ml,Coding,1,90
+Camaag 100 ml,Labelling,3,90
+Camaag 100 ml,Packing,5,90
+Camaag 200 ml,Pencucian Botol,2,60
+Camaag 200 ml,Oven Botol,2,30
+Camaag 200 ml,Penimbangan,2,30
+Camaag 200 ml,Mixing,3,180
+Camaag 200 ml,Filling,3,50
+Camaag 200 ml,Sortir visual,,
+Camaag 200 ml,Coding,1,60
+Camaag 200 ml,Labelling,3,60
+Camaag 200 ml,Packing,5,90
+Camexine 60 ml,Pencucian Botol,2,60
+Camexine 60 ml,Oven Botol,2,30
+Camexine 60 ml,Penimbangan,2,30
+Camexine 60 ml,Mixing,2,150
+Camexine 60 ml,Filling,3,75
+Camexine 60 ml,Sortir visual,2,100
+Camexine 60 ml,Coding,1,60
+Camexine 60 ml,Labelling,3,60
+Camexine 60 ml,Packing,5,90
+Camicetine 60 ml,Pencucian Botol,2,120
+Camicetine 60 ml,Oven Botol,2,60
+Camicetine 60 ml,Penimbangan,2,30
+Camicetine 60 ml,Mixing,3,180
+Camicetine 60 ml,Filling,3,75
+Camicetine 60 ml,Sortir visual,,
+Camicetine 60 ml,Coding,1,120
+Camicetine 60 ml,Labelling,3,150
+Camicetine 60 ml,Packing,5,120
+Camidryl 60 ml,Pencucian Botol,2,120
+Camidryl 60 ml,Oven Botol,2,60
+Camidryl 60 ml,Penimbangan,2,30
+Camidryl 60 ml,Mixing,2,150
+Camidryl 60 ml,Filling,3,75
+Camidryl 60 ml,Sortir visual,2,100
+Camidryl 60 ml,Coding,1,120
+Camidryl 60 ml,Labelling,3,150
+Camidryl 60 ml,Packing,5,120
+Camikolin 60 ml,Pencucian Botol,2,120
+Camikolin 60 ml,Oven Botol,2,60
+Camikolin 60 ml,Penimbangan,2,30
+Camikolin 60 ml,Mixing,3,180
+Camikolin 60 ml,Filling,3,75
+Camikolin 60 ml,Sortir visual,,
+Camikolin 60 ml,Coding,1,120
+Camikolin 60 ml,Labelling,3,150
+Camikolin 60 ml,Packing,5,120
+Camivita 60 Syrup ml,Pencucian Botol,2,120
+Camivita 60 Syrup ml,Oven Botol,2,60
+Camivita 60 Syrup ml,Penimbangan,2,30
+Camivita 60 Syrup ml,Mixing,2,150
+Camivita 60 Syrup ml,Filling,3,75
+Camivita 60 Syrup ml,Sortir visual,2,100
+Camivita 60 Syrup ml,Coding,1,120
+Camivita 60 Syrup ml,Labelling,3,150
+Camivita 60 Syrup ml,Packing,5,120
+Camivita 120 Syrup ml,Pencucian Botol,2,60
+Camivita 120 Syrup ml,Oven Botol,2,30
+Camivita 120 Syrup ml,Penimbangan,2,30
+Camivita 120 Syrup ml,Mixing,3,180
+Camivita 120 Syrup ml,Filling,3,75
+Camivita 120 Syrup ml,Sortir visual,2,60
+Camivita 120 Syrup ml,Coding,1,60
+Camivita 120 Syrup ml,Labelling,3,60
+Camivita 120 Syrup ml,Packing,5,60
+Casetamol 60 ml,Pencucian Botol,2,120
+Casetamol 60 ml,Oven Botol,2,30
+Casetamol 60 ml,Penimbangan,2,30
+Casetamol 60 ml,Mixing,2,150
+Casetamol 60 ml,Filling,3,75
+Casetamol 60 ml,Sortir visual,2,100
+Casetamol 60 ml,Coding,1,120
+Casetamol 60 ml,Labelling,3,150
+Casetamol 60 ml,Packing,5,120
+Chlorampenicol 60 ml,Pencucian Botol,2,120
+Chlorampenicol 60 ml,Oven Botol,2,30
+Chlorampenicol 60 ml,Penimbangan,2,30
+Chlorampenicol 60 ml,Mixing,3,180
+Chlorampenicol 60 ml,Filling,3,75
+Chlorampenicol 60 ml,Sortir visual,,
+Chlorampenicol 60 ml,Coding,1,60
+Chlorampenicol 60 ml,Labelling,5,150
+Chlorampenicol 60 ml,Packing,,
+Cotrimoksazole 60 ml,Pencucian Botol,2,120
+Cotrimoksazole 60 ml,Oven Botol,2,60
+Cotrimoksazole 60 ml,Penimbangan,2,30
+Cotrimoksazole 60 ml,Mixing,3,210
+Cotrimoksazole 60 ml,Filling,3,75
+Cotrimoksazole 60 ml,Sortir visual,,
+Cotrimoksazole 60 ml,Coding,1,60
+Cotrimoksazole 60 ml,Labelling,5,150
+Cotrimoksazole 60 ml,Packing,,
+Daganak 100 ml,Pencucian Botol,2,90
+Daganak 100 ml,Oven Botol,2,60
+Daganak 100 ml,Penimbangan,2,30
+Daganak 100 ml,Mixing,2,150
+Daganak 100 ml,Filling,3,60
+Daganak 100 ml,Sortir visual,2,100
+Daganak 100 ml,Coding,1,90
+Daganak 100 ml,Labelling,3,90
+Daganak 100 ml,Packing,5,90
+OBH 100 ml PD,Pencucian Botol,2,90
+OBH 100 ml PD,Oven Botol,2,60
+OBH 100 ml PD,Penimbangan,2,30
+OBH 100 ml PD,Mixing,2,150
+OBH 100 ml PD,Filling,3,75
+OBH 100 ml PD,Sortir visual,2,60
+OBH 100 ml PD,Coding,1,90
+OBH 100 ml PD,Labelling,3,90
+OBH 100 ml PD,Packing,5,90
+OBH 100 ml TD,Pencucian Botol,2,90
+OBH 100 ml TD,Oven Botol,2,60
+OBH 100 ml TD,Penimbangan,2,30
+OBH 100 ml TD,Mixing,2,150
+OBH 100 ml TD,Filling,3,60
+OBH 100 ml TD,Sortir visual,2,100
+OBH 100 ml TD,Coding,1,60
+OBH 100 ml TD,Labelling,5,150
+OBH 100 ml TD,Packing,,
+Paracetamol 60 ml,Pencucian Botol,2,120
+Paracetamol 60 ml,Oven Botol,2,60
+Paracetamol 60 ml,Penimbangan,2,30
+Paracetamol 60 ml,Mixing,2,150
+Paracetamol 60 ml,Filling,3,75
+Paracetamol 60 ml,Sortir visual,2,100
+Paracetamol 60 ml,Coding,1,60
+Paracetamol 60 ml,Labelling,5,150
+Paracetamol 60 ml,Packing,,
+Sanmino 120 ml,Pencucian Botol,2,90
+Sanmino 120 ml,Oven Botol,2,60
+Sanmino 120 ml,Penimbangan,2,30
+Sanmino 120 ml,Mixing,2,150
+Sanmino 120 ml,Filling,3,60
+Sanmino 120 ml,Sortir visual,2,60
+Sanmino 120 ml,Coding,1,90
+Sanmino 120 ml,Labelling,3,90
+Sanmino 120 ml,Packing,5,75

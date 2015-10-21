@@ -1,0 +1,2 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DCP0010100,Phenol Glycerol 5 ml,Larutan,Botol plastik @ 5 ml,Box 24 Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

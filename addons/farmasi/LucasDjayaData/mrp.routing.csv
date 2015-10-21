@@ -1,0 +1,12 @@
+"id","code","name","note"
+"mrp_routing_100","SYR1","Syrup Tanpa Dus",
+"mrp_routing_200","SYR2","Syrup Dengan Dus",
+"mrp_routing_300","STD","Suspensi Tanpa Dus",
+"mrp_routing_400","STD2","Suspensi Pakai Dus",
+"mrp_routing_500","SC","Soft Capsule",
+"mrp_routing_600","K","Kapsul",
+"mrp_routing_700","K/T","Kaplet/Tablet",
+"mrp_routing_800","DSPD","Dry Syrup Pakai Dus",
+"mrp_routing_900","DSTD","Dry Syrup Tanpa Dus",
+"mrp_routing_1000","LAR","Larutan",
+"mrp_routing_1100","INK","Injeksi",

@@ -1,0 +1,293 @@
+"id","bom_id","workcenter_operation_id","man_number","man_hour"
+"bom_man_hour_100","Camoksil 250 mg Strip","Cuci Botol",,
+"bom_man_hour_110","Camoksil 250 mg Strip","Pengeringan",,
+"bom_man_hour_120","Camoksil 250 mg Strip","Penimbangan",2,30
+"bom_man_hour_130","Camoksil 250 mg Strip","Mixing",1,60
+"bom_man_hour_140","Camoksil 250 mg Strip","Filling",1,420
+"bom_man_hour_150","Camoksil 250 mg Strip","Sortir",1,420
+"bom_man_hour_160","Camoksil 250 mg Strip","Codding",1,60
+"bom_man_hour_170","Camoksil 250 mg Strip","Labelling",,
+"bom_man_hour_180","Camoksil 250 mg Strip","Packing",5,480
+"bom_man_hour_190","Camoksil 500 mg Strip","Cuci Botol",,
+"bom_man_hour_200","Camoksil 500 mg Strip","Pengeringan",,
+"bom_man_hour_210","Camoksil 500 mg Strip","Penimbangan",2,30
+"bom_man_hour_220","Camoksil 500 mg Strip","Mixing",1,60
+"bom_man_hour_230","Camoksil 500 mg Strip","Filling",1,210
+"bom_man_hour_240","Camoksil 500 mg Strip","Sortir",1,210
+"bom_man_hour_250","Camoksil 500 mg Strip","Codding",1,60
+"bom_man_hour_260","Camoksil 500 mg Strip","Labelling",,
+"bom_man_hour_270","Camoksil 500 mg Strip","Packing",5,480
+"bom_man_hour_280","Ampicillin 250 mg Strip","Cuci Botol",,
+"bom_man_hour_290","Ampicillin 250 mg Strip","Pengeringan",,
+"bom_man_hour_300","Ampicillin 250 mg Strip","Penimbangan",2,30
+"bom_man_hour_310","Ampicillin 250 mg Strip","Mixing",1,60
+"bom_man_hour_320","Ampicillin 250 mg Strip","Filling",1,1440
+"bom_man_hour_330","Ampicillin 250 mg Strip","Sortir",1,1440
+"bom_man_hour_340","Ampicillin 250 mg Strip","Codding",1,60
+"bom_man_hour_350","Ampicillin 250 mg Strip","Labelling",,
+"bom_man_hour_360","Ampicillin 250 mg Strip","Packing",5,480
+"bom_man_hour_370","Vitamin B12 500mcg/ml 1 ml","Cuci Ampul/Vial",4,480
+"bom_man_hour_380","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Ampul/Vial",2,560
+"bom_man_hour_390","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Baju & Peralatan",2,60
+"bom_man_hour_400","Vitamin B12 500mcg/ml 1 ml","Penimbangan",2,30
+"bom_man_hour_410","Vitamin B12 500mcg/ml 1 ml","Mixing",1,45
+"bom_man_hour_420","Vitamin B12 500mcg/ml 1 ml","Integrity Test",1,60
+"bom_man_hour_430","Vitamin B12 500mcg/ml 1 ml","Filling",2,480
+"bom_man_hour_440","Vitamin B12 500mcg/ml 1 ml","Sterillisasi Produk",2,60
+"bom_man_hour_450","Vitamin B12 500mcg/ml 1 ml","Visual",5,760
+"bom_man_hour_460","Vitamin B12 500mcg/ml 1 ml","Codding",1,60
+"bom_man_hour_470","Vitamin B12 500mcg/ml 1 ml","Printing Ampul",2,720
+"bom_man_hour_480","Vitamin B12 500mcg/ml 1 ml","Labelling",,
+"bom_man_hour_490","Vitamin B12 500mcg/ml 1 ml","Packing",6,420
+"bom_man_hour_500","Vitamin B12 500 mcg/ml 10 ml","Cuci Ampul/Vial",4,480
+"bom_man_hour_510","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Ampul/Vial",2,560
+"bom_man_hour_520","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Baju & Peralatan",,
+"bom_man_hour_530","Vitamin B12 500 mcg/ml 10 ml","Penimbangan",,
+"bom_man_hour_540","Vitamin B12 500 mcg/ml 10 ml","Mixing",1,45
+"bom_man_hour_550","Vitamin B12 500 mcg/ml 10 ml","Integrity Test",1,90
+"bom_man_hour_560","Vitamin B12 500 mcg/ml 10 ml","Filling",2,360
+"bom_man_hour_570","Vitamin B12 500 mcg/ml 10 ml","Sterillisasi Produk",2,90
+"bom_man_hour_580","Vitamin B12 500 mcg/ml 10 ml","Visual",5,180
+"bom_man_hour_590","Vitamin B12 500 mcg/ml 10 ml","Codding",1,160
+"bom_man_hour_600","Vitamin B12 500 mcg/ml 10 ml","Printing Ampul",,
+"bom_man_hour_610","Vitamin B12 500 mcg/ml 10 ml","Labelling",4,480
+"bom_man_hour_620","Vitamin B12 500 mcg/ml 10 ml","Packing",5,480
+"bom_man_hour_630","Camidryl 10 mg/ml 10 ml","Cuci Ampul/Vial",4,420
+"bom_man_hour_640","Camidryl 10 mg/ml 10 ml","Sterillisasi Ampul/Vial",2,420
+"bom_man_hour_650","Camidryl 10 mg/ml 10 ml","Sterillisasi Baju & Peralatan",2,60
+"bom_man_hour_660","Camidryl 10 mg/ml 10 ml","Penimbangan",2,30
+"bom_man_hour_670","Camidryl 10 mg/ml 10 ml","Mixing",1,45
+"bom_man_hour_680","Camidryl 10 mg/ml 10 ml","Integrity Test",1,90
+"bom_man_hour_690","Camidryl 10 mg/ml 10 ml","Filling",2,360
+"bom_man_hour_700","Camidryl 10 mg/ml 10 ml","Sterillisasi Produk",2,90
+"bom_man_hour_710","Camidryl 10 mg/ml 10 ml","Visual",5,180
+"bom_man_hour_720","Camidryl 10 mg/ml 10 ml","Codding",1,160
+"bom_man_hour_730","Camidryl 10 mg/ml 10 ml","Printing Ampul",,
+"bom_man_hour_740","Camidryl 10 mg/ml 10 ml","Labelling",4,480
+"bom_man_hour_750","Camidryl 10 mg/ml 10 ml","Packing",5,480
+"bom_man_hour_760","Glyserol 100 ml","Penimbangan",2,30
+"bom_man_hour_770","Glyserol 100 ml","Mixing",1,120
+"bom_man_hour_780","Glyserol 100 ml","Filling & Capping",3,420
+"bom_man_hour_790","Glyserol 100 ml","Codding Botol",,
+"bom_man_hour_800","Glyserol 100 ml","Codding Etiket",1,45
+"bom_man_hour_810","Glyserol 100 ml","Labelling & Packing",5,120
+"bom_man_hour_820","Phenol Glycerol 5 ml","Penimbangan",2,30
+"bom_man_hour_830","Phenol Glycerol 5 ml","Mixing",1,300
+"bom_man_hour_840","Phenol Glycerol 5 ml","Filling & Capping",3,600
+"bom_man_hour_850","Phenol Glycerol 5 ml","Codding Botol",,
+"bom_man_hour_860","Phenol Glycerol 5 ml","Codding Etiket",1,120
+"bom_man_hour_870","Phenol Glycerol 5 ml","Labelling & Packing",5,420
+"bom_man_hour_880","Biocelle","Cuci Botol",2,90
+"bom_man_hour_890","Biocelle","Oven Botol",2,15
+"bom_man_hour_900","Biocelle","Penimbangan",2,30
+"bom_man_hour_910","Biocelle","Melting",2,360
+"bom_man_hour_920","Biocelle","Mixing",2,30
+"bom_man_hour_930","Biocelle","Filling",4,840
+"bom_man_hour_940","Biocelle","Drying & Polishing",4,420
+"bom_man_hour_950","Biocelle","Counting",6,420
+"bom_man_hour_960","Biocelle","Codding",1,60
+"bom_man_hour_970","Biocelle","Labelling & Packing",4,300
+"bom_man_hour_980","Habbatussauda 600 mg","Cuci Botol",2,90
+"bom_man_hour_990","Habbatussauda 600 mg","Oven Botol",2,15
+"bom_man_hour_1000","Habbatussauda 600 mg","Penimbangan",2,30
+"bom_man_hour_1010","Habbatussauda 600 mg","Melting",2,360
+"bom_man_hour_1020","Habbatussauda 600 mg","Mixing",2,30
+"bom_man_hour_1030","Habbatussauda 600 mg","Filling",4,840
+"bom_man_hour_1040","Habbatussauda 600 mg","Drying & Polishing",4,420
+"bom_man_hour_1050","Habbatussauda 600 mg","Counting",6,420
+"bom_man_hour_1060","Habbatussauda 600 mg","Codding",1,60
+"bom_man_hour_1070","Habbatussauda 600 mg","Labelling & Packing",4,300
+"bom_man_hour_1080","Isotretinoin 10 mg","Cuci Botol",2,90
+"bom_man_hour_1090","Isotretinoin 10 mg","Oven Botol",2,15
+"bom_man_hour_1100","Isotretinoin 10 mg","Penimbangan",2,30
+"bom_man_hour_1110","Isotretinoin 10 mg","Melting",2,360
+"bom_man_hour_1120","Isotretinoin 10 mg","Mixing",2,30
+"bom_man_hour_1130","Isotretinoin 10 mg","Filling",4,840
+"bom_man_hour_1140","Isotretinoin 10 mg","Drying & Polishing",4,420
+"bom_man_hour_1150","Isotretinoin 10 mg","Counting",6,420
+"bom_man_hour_1160","Isotretinoin 10 mg","Codding",1,60
+"bom_man_hour_1170","Isotretinoin 10 mg","Labelling & Packing",4,300
+"bom_man_hour_1180","Lamata","Cuci Botol",2,90
+"bom_man_hour_1190","Lamata","Oven Botol",2,15
+"bom_man_hour_1200","Lamata","Penimbangan",2,30
+"bom_man_hour_1210","Lamata","Melting",2,360
+"bom_man_hour_1220","Lamata","Mixing",2,30
+"bom_man_hour_1230","Lamata","Filling",4,840
+"bom_man_hour_1240","Lamata","Drying & Polishing",4,420
+"bom_man_hour_1250","Lamata","Counting",6,420
+"bom_man_hour_1260","Lamata","Codding",1,60
+"bom_man_hour_1270","Lamata","Labelling & Packing",4,300
+"bom_man_hour_1280","Mamavita 400 mg Soft Capsule","Cuci Botol",2,90
+"bom_man_hour_1290","Mamavita 400 mg Soft Capsule","Oven Botol",2,15
+"bom_man_hour_1300","Mamavita 400 mg Soft Capsule","Penimbangan",2,30
+"bom_man_hour_1310","Mamavita 400 mg Soft Capsule","Melting",2,360
+"bom_man_hour_1320","Mamavita 400 mg Soft Capsule","Mixing",2,30
+"bom_man_hour_1330","Mamavita 400 mg Soft Capsule","Filling",4,840
+"bom_man_hour_1340","Mamavita 400 mg Soft Capsule","Drying & Polishing",4,420
+"bom_man_hour_1350","Mamavita 400 mg Soft Capsule","Counting",6,420
+"bom_man_hour_1360","Mamavita 400 mg Soft Capsule","Codding",1,60
+"bom_man_hour_1370","Mamavita 400 mg Soft Capsule","Labelling & Packing",4,300
+"bom_man_hour_1380","Olive Oil 600 mg","Cuci Botol",2,90
+"bom_man_hour_1390","Olive Oil 600 mg","Oven Botol",2,15
+"bom_man_hour_1400","Olive Oil 600 mg","Penimbangan",2,30
+"bom_man_hour_1410","Olive Oil 600 mg","Melting",2,360
+"bom_man_hour_1420","Olive Oil 600 mg","Mixing",2,30
+"bom_man_hour_1430","Olive Oil 600 mg","Filling",4,840
+"bom_man_hour_1440","Olive Oil 600 mg","Drying & Polishing",4,420
+"bom_man_hour_1450","Olive Oil 600 mg","Counting",6,420
+"bom_man_hour_1460","Olive Oil 600 mg","Codding",1,60
+"bom_man_hour_1470","Olive Oil 600 mg","Labelling & Packing",4,300
+"bom_man_hour_1480","Vitamin A 200.000 IU","Cuci Botol",2,90
+"bom_man_hour_1490","Vitamin A 200.000 IU","Oven Botol",2,20
+"bom_man_hour_1500","Vitamin A 200.000 IU","Penimbangan",2,30
+"bom_man_hour_1510","Vitamin A 200.000 IU","Melting",2,360
+"bom_man_hour_1520","Vitamin A 200.000 IU","Mixing",2,30
+"bom_man_hour_1530","Vitamin A 200.000 IU","Filling",4,1080
+"bom_man_hour_1540","Vitamin A 200.000 IU","Drying & Polishing",4,420
+"bom_man_hour_1550","Vitamin A 200.000 IU","Counting",6,420
+"bom_man_hour_1560","Vitamin A 200.000 IU","Codding",1,60
+"bom_man_hour_1570","Vitamin A 200.000 IU","Labelling & Packing",4,300
+"bom_man_hour_1580","Antasida Doen 60 ml","Cuci Botol",2,90
+"bom_man_hour_1590","Antasida Doen 60 ml","Oven Botol",2,60
+"bom_man_hour_1600","Antasida Doen 60 ml","Penimbangan",2,30
+"bom_man_hour_1610","Antasida Doen 60 ml","Mixing",2,150
+"bom_man_hour_1620","Antasida Doen 60 ml","Filling",3,60
+"bom_man_hour_1630","Antasida Doen 60 ml","Sortir Visual",2,60
+"bom_man_hour_1640","Antasida Doen 60 ml","Codding",1,90
+"bom_man_hour_1650","Antasida Doen 60 ml","Labelling",3,90
+"bom_man_hour_1660","Antasida Doen 60 ml","Packing",5,90
+"bom_man_hour_1670","BAB 100 ml","Cuci Botol",2,90
+"bom_man_hour_1680","BAB 100 ml","Oven Botol",2,60
+"bom_man_hour_1690","BAB 100 ml","Penimbangan",2,30
+"bom_man_hour_1700","BAB 100 ml","Mixing",2,150
+"bom_man_hour_1710","BAB 100 ml","Filling",3,60
+"bom_man_hour_1720","BAB 100 ml","Sortir Visual",2,60
+"bom_man_hour_1730","BAB 100 ml","Codding",1,90
+"bom_man_hour_1740","BAB 100 ml","Labelling",3,90
+"bom_man_hour_1750","BAB 100 ml","Packing",5,90
+"bom_man_hour_1760","Calcivita 200 ml","Cuci Botol",2,60
+"bom_man_hour_1770","Calcivita 200 ml","Oven Botol",2,30
+"bom_man_hour_1780","Calcivita 200 ml","Penimbangan",2,30
+"bom_man_hour_1790","Calcivita 200 ml","Mixing",2,180
+"bom_man_hour_1800","Calcivita 200 ml","Filling",3,50
+"bom_man_hour_1810","Calcivita 200 ml","Sortir Visual",2,30
+"bom_man_hour_1820","Calcivita 200 ml","Codding",1,60
+"bom_man_hour_1830","Calcivita 200 ml","Labelling",3,60
+"bom_man_hour_1840","Calcivita 200 ml","Packing",5,120
+"bom_man_hour_1850","Camaag 100 ml","Cuci Botol",2,90
+"bom_man_hour_1860","Camaag 100 ml","Oven Botol",2,60
+"bom_man_hour_1870","Camaag 100 ml","Penimbangan",2,30
+"bom_man_hour_1880","Camaag 100 ml","Mixing",3,180
+"bom_man_hour_1890","Camaag 100 ml","Filling",3,60
+"bom_man_hour_1900","Camaag 100 ml","Sortir Visual",,
+"bom_man_hour_1910","Camaag 100 ml","Codding",1,90
+"bom_man_hour_1920","Camaag 100 ml","Labelling",3,90
+"bom_man_hour_1930","Camaag 100 ml","Packing",5,90
+"bom_man_hour_1940","Camaag 200 ml","Cuci Botol",2,60
+"bom_man_hour_1950","Camaag 200 ml","Oven Botol",2,30
+"bom_man_hour_1960","Camaag 200 ml","Penimbangan",2,30
+"bom_man_hour_1970","Camaag 200 ml","Mixing",3,180
+"bom_man_hour_1980","Camaag 200 ml","Filling",3,50
+"bom_man_hour_1990","Camaag 200 ml","Sortir Visual",,
+"bom_man_hour_2000","Camaag 200 ml","Codding",1,60
+"bom_man_hour_2010","Camaag 200 ml","Labelling",3,60
+"bom_man_hour_2020","Camaag 200 ml","Packing",5,90
+"bom_man_hour_2030","Camexine 60 ml","Cuci Botol",2,60
+"bom_man_hour_2040","Camexine 60 ml","Oven Botol",2,30
+"bom_man_hour_2050","Camexine 60 ml","Penimbangan",2,30
+"bom_man_hour_2060","Camexine 60 ml","Mixing",2,150
+"bom_man_hour_2070","Camexine 60 ml","Filling",3,75
+"bom_man_hour_2080","Camexine 60 ml","Sortir Visual",2,100
+"bom_man_hour_2090","Camexine 60 ml","Codding",1,60
+"bom_man_hour_2100","Camexine 60 ml","Labelling",3,60
+"bom_man_hour_2110","Camexine 60 ml","Packing",5,90
+"bom_man_hour_2120","Camicetine 60 ml","Cuci Botol",2,120
+"bom_man_hour_2130","Camicetine 60 ml","Oven Botol",2,60
+"bom_man_hour_2140","Camicetine 60 ml","Penimbangan",2,30
+"bom_man_hour_2150","Camicetine 60 ml","Mixing",3,180
+"bom_man_hour_2160","Camicetine 60 ml","Filling",3,75
+"bom_man_hour_2170","Camicetine 60 ml","Sortir Visual",,
+"bom_man_hour_2180","Camicetine 60 ml","Codding",1,120
+"bom_man_hour_2190","Camicetine 60 ml","Labelling",3,150
+"bom_man_hour_2200","Camicetine 60 ml","Packing",5,120
+"bom_man_hour_2210","Camidryl 60 ml","Cuci Botol",2,120
+"bom_man_hour_2220","Camidryl 60 ml","Oven Botol",2,60
+"bom_man_hour_2230","Camidryl 60 ml","Penimbangan",2,30
+"bom_man_hour_2240","Camidryl 60 ml","Mixing",2,150
+"bom_man_hour_2250","Camidryl 60 ml","Filling",3,75
+"bom_man_hour_2260","Camidryl 60 ml","Sortir Visual",2,100
+"bom_man_hour_2270","Camidryl 60 ml","Codding",1,120
+"bom_man_hour_2280","Camidryl 60 ml","Labelling",3,150
+"bom_man_hour_2290","Camidryl 60 ml","Packing",5,120
+"bom_man_hour_2300","Camikolin 60 ml","Cuci Botol",2,120
+"bom_man_hour_2310","Camikolin 60 ml","Oven Botol",2,60
+"bom_man_hour_2320","Camikolin 60 ml","Penimbangan",2,30
+"bom_man_hour_2330","Camikolin 60 ml","Mixing",3,180
+"bom_man_hour_2340","Camikolin 60 ml","Filling",3,75
+"bom_man_hour_2350","Camikolin 60 ml","Sortir Visual",,
+"bom_man_hour_2360","Camikolin 60 ml","Codding",1,120
+"bom_man_hour_2370","Camikolin 60 ml","Labelling",3,150
+"bom_man_hour_2380","Camikolin 60 ml","Packing",5,120
+"bom_man_hour_2390","Casetamol 60 ml","Cuci Botol",2,120
+"bom_man_hour_2400","Casetamol 60 ml","Oven Botol",2,30
+"bom_man_hour_2410","Casetamol 60 ml","Penimbangan",2,30
+"bom_man_hour_2420","Casetamol 60 ml","Mixing",2,150
+"bom_man_hour_2430","Casetamol 60 ml","Filling",3,75
+"bom_man_hour_2440","Casetamol 60 ml","Sortir Visual",2,100
+"bom_man_hour_2450","Casetamol 60 ml","Codding",1,120
+"bom_man_hour_2460","Casetamol 60 ml","Labelling",3,150
+"bom_man_hour_2470","Casetamol 60 ml","Packing",5,120
+"bom_man_hour_2480","Chlorampenicol 60 ml","Cuci Botol",2,120
+"bom_man_hour_2490","Chlorampenicol 60 ml","Oven Botol",2,30
+"bom_man_hour_2500","Chlorampenicol 60 ml","Penimbangan",2,30
+"bom_man_hour_2510","Chlorampenicol 60 ml","Mixing",3,180
+"bom_man_hour_2520","Chlorampenicol 60 ml","Filling",3,75
+"bom_man_hour_2530","Chlorampenicol 60 ml","Sortir Visual",,
+"bom_man_hour_2540","Chlorampenicol 60 ml","Codding",1,60
+"bom_man_hour_2550","Chlorampenicol 60 ml","Labelling",5,150
+"bom_man_hour_2560","Chlorampenicol 60 ml","Packing",,
+"bom_man_hour_2570","Cotrimoksazole 60 ml","Cuci Botol",2,120
+"bom_man_hour_2580","Cotrimoksazole 60 ml","Oven Botol",2,60
+"bom_man_hour_2590","Cotrimoksazole 60 ml","Penimbangan",2,30
+"bom_man_hour_2600","Cotrimoksazole 60 ml","Mixing",3,210
+"bom_man_hour_2610","Cotrimoksazole 60 ml","Filling",3,75
+"bom_man_hour_2620","Cotrimoksazole 60 ml","Sortir Visual",,
+"bom_man_hour_2630","Cotrimoksazole 60 ml","Codding",1,60
+"bom_man_hour_2640","Cotrimoksazole 60 ml","Labelling",5,150
+"bom_man_hour_2650","Cotrimoksazole 60 ml","Packing",,
+"bom_man_hour_2660","Daganak 100 ml","Cuci Botol",2,90
+"bom_man_hour_2670","Daganak 100 ml","Oven Botol",2,60
+"bom_man_hour_2680","Daganak 100 ml","Penimbangan",2,30
+"bom_man_hour_2690","Daganak 100 ml","Mixing",2,150
+"bom_man_hour_2700","Daganak 100 ml","Filling",3,60
+"bom_man_hour_2710","Daganak 100 ml","Sortir Visual",2,100
+"bom_man_hour_2720","Daganak 100 ml","Codding",1,90
+"bom_man_hour_2730","Daganak 100 ml","Labelling",3,90
+"bom_man_hour_2740","Daganak 100 ml","Packing",5,90
+"bom_man_hour_2750","OBH 100 ml TD","Cuci Botol",2,90
+"bom_man_hour_2760","OBH 100 ml TD","Oven Botol",2,60
+"bom_man_hour_2770","OBH 100 ml TD","Penimbangan",2,30
+"bom_man_hour_2780","OBH 100 ml TD","Mixing",2,150
+"bom_man_hour_2790","OBH 100 ml TD","Filling",3,60
+"bom_man_hour_2800","OBH 100 ml TD","Sortir Visual",2,100
+"bom_man_hour_2810","OBH 100 ml TD","Codding",1,60
+"bom_man_hour_2820","OBH 100 ml TD","Labelling",5,150
+"bom_man_hour_2830","OBH 100 ml TD","Packing",,
+"bom_man_hour_2840","Paracetamol 60 ml","Cuci Botol",2,120
+"bom_man_hour_2850","Paracetamol 60 ml","Oven Botol",2,60
+"bom_man_hour_2860","Paracetamol 60 ml","Penimbangan",2,30
+"bom_man_hour_2870","Paracetamol 60 ml","Mixing",2,150
+"bom_man_hour_2880","Paracetamol 60 ml","Filling",3,75
+"bom_man_hour_2890","Paracetamol 60 ml","Sortir Visual",2,100
+"bom_man_hour_2900","Paracetamol 60 ml","Codding",1,60
+"bom_man_hour_2910","Paracetamol 60 ml","Labelling",5,150
+"bom_man_hour_2920","Paracetamol 60 ml","Packing",,
+"bom_man_hour_2930","Sanmino 120 ml","Cuci Botol",2,90
+"bom_man_hour_2940","Sanmino 120 ml","Oven Botol",2,60
+"bom_man_hour_2950","Sanmino 120 ml","Penimbangan",2,30
+"bom_man_hour_2960","Sanmino 120 ml","Mixing",2,150
+"bom_man_hour_2970","Sanmino 120 ml","Filling",3,60
+"bom_man_hour_2980","Sanmino 120 ml","Sortir Visual",2,60
+"bom_man_hour_2990","Sanmino 120 ml","Codding",1,90
+"bom_man_hour_3000","Sanmino 120 ml","Labelling",3,90
+"bom_man_hour_3010","Sanmino 120 ml","Packing",5,75

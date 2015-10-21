@@ -1,0 +1,908 @@
+"id","name","comment","street","city","phone","npwp","mobile","fax","email","no_rek","is_company","supplier","category_id"
+"res_partner_100","AA ALUMUNIUM","SUPP001","Jl. Kiara condong No. 421 Bandung",,"022-7308986",,,"022-70667887",,,"TRUE","TRUE",
+"res_partner_110","ABADI RAYA","SUPP002","Melong Asih No. 24B Depan perum Pharmindo Cijerah Bandung",,"022-6037350",,,"022-6046889",,,"TRUE","TRUE",
+"res_partner_120","ABADINUSA USAHASEMESTA, PT","SUPP003","Jl. Surabaya No. 54",,,,,,,,"TRUE","TRUE",
+"res_partner_130","ACE HARDWARE INDONESIA, PT","SUPP004","Jl. Puri Kencana No. 1",,,,,,,,"TRUE","TRUE",
+"res_partner_140","ACE HARDWARE INDONESIA, PT.","SUPP004 HKI","Jl. Puri Kencana No. 1",,,,,,,,"TRUE","TRUE",
+"res_partner_150","AFAT BEARING","SUPP005","Ps. Cikapundung baru Blok H6-H7-H9 Bandung",,"022-4236236",,,,,,"TRUE","TRUE",
+"res_partner_160","AGAPE TRIKARSA LIBRATAMA, PT","SUPP006","Puri Anjasmoro H 5/6 Tawang Sari",,,"01.496.894.5-511.000",,,,,"TRUE","TRUE",
+"res_partner_170","AGENG SEMESTA TRISULA ABADI, PT","SUPP007","Mutiara Taman Palem Blok C19 No. 35 Jakarta Barat",,"021-54357037","01.930.393.2-085.000",,"021-36501975",,,"TRUE","TRUE",
+"res_partner_180","AGUNG TEKNIK","SUPP008","Ps. Cikapundung",,,,,,,,"TRUE","TRUE",
+"res_partner_190","ALAM SUBUR TIRTA KENCANA, PT","SUPP009","Jl. Daan Mogot Km. 12 Jakarta",,"021-6192265",,,"021-6190443",,,"TRUE","TRUE",
+"res_partner_200","ALAS MULIA, PT","SUPP010","Jl. Otista No. 357 Bandung",,"022-4208123",,,"022-4232890",,,"TRUE","TRUE",
+"res_partner_210","ALFA GALUH PERKASA","SUPP011","Jl. Leuwipanjang Rukunsari No. 6",,"022-5222737",,,,,,"TRUE","TRUE",
+"res_partner_220","ALMEGA SEJAHTERA, PT","SUPP012","Jl. Lengkong Besar No. 55 Bandung",,"022-4200282","01.612.112.1-046.000",,"022-6125412/15",,,"TRUE","TRUE",
+"res_partner_230","ALMEGA SEJAHTERA, PT","SUPP012 USD","Jl. Abdurrahman Saleh No. 9","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_240","ALTINEX, PT","SUPP013","Jl. Gempol Wetan no.125 Bandung",,"022-4206848/7811363","01.257.406.7-441.000",,"022-4236685",,,"TRUE","TRUE",
+"res_partner_250","AMSAL PERKASA","SUPP014","TKI Blok A2 No.98",,,,,,,,"TRUE","TRUE",
+"res_partner_260","ANCOL TERANG, PT","SUPP015","Jl. Ancol IX no.7 Jakarta",,"021-6900186/6911710-1",,,"021-6907569",,,"TRUE","TRUE",
+"res_partner_270","ANEKA ENGGINER","SUPP016","Psr. Cikapudnugn Baru Lt. 2 Blok U 11-12 Bandung",,"022-4207638/92116247",,,"022-4210265",,,"TRUE","TRUE",
+"res_partner_280","ANEKA PLASTIKINDO, PT","SUPP017","GG.SUNIARAJA NO. 2/13 RT/RW 002/002 BRAGA SUMUR Bandung",,"022-4201124","31.241.030.1-423.000",,"022-4201124",,,"TRUE","TRUE",
+"res_partner_290","ANGKUTAN WIBOWO","SUPP018","Bandung",,"022-7322482",,,,,,"TRUE","TRUE",
+"res_partner_300","ANISYA HAMSIR, CV","SUPP019","Jl. Margakencana Tengah No. 44",,,,,,,,"TRUE","TRUE",
+"res_partner_310","ANRES JOINT TECHNOLOGI, PT","SUPP020","Rukan Cempaka Mas Blok O No. 8 Jl. Letjen Suprapto Jakarta Pusat 10640",,"021-4242744/4242547","02.361.277.3-027.000",,"021-4242735",,,"TRUE","TRUE",
+"res_partner_320","ANUGERAH ABADI","SUPP021","Psr. Cikapundung Bandung",,"022-4218250",,,,,,"TRUE","TRUE",
+"res_partner_330","ANUGERAH ELEKTRIK","SUPP022","Cikapundung Lt. I Blok EE 16-35 Bandung",,"022-84460588-89",,,,,,"TRUE","TRUE",
+"res_partner_340","ANUGERAH KAYU","SUPP023","Taman Kopo 2 Kav Industri No. 7",,"022-5426757",,,"022-5424007",,,"TRUE","TRUE",
+"res_partner_350","ANUGERAH MANUNGGAL ABADI, PT","SUPP024","Jl. Daan Mogot Km.19,6",,,,,,,,"TRUE","TRUE",
+"res_partner_360","ANUGERAH MENTARI DISTRINDO, PT","SUPP025 USD","Jl. Daan Mogot Kav. 100 Jakarta",,"021-5681248","02.881.121.4-036.000",,"021-56952189",,,"TRUE","TRUE",
+"res_partner_370","ANUGERAH PHARMINDO LESTARI, PT","SUPP026","Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_380","ANUGRAH ABADI, CV","SUPP027","Jl. Terusan Kiaracondong No. 164 Bandung",,"022-604717",,,"022-6038342",,,"TRUE","TRUE",
+"res_partner_390","ANUGRAH KACA","SUPP028","Jl. Pasirluyu Selatan No. 27 Bandung",,"022-5212123/24",,,"022-5223088",,,"TRUE","TRUE",
+"res_partner_400","SOLAS LANGGENG SEJAHTERA, PT","SUPP029","Jl. Industri  No. 18 Cimareme",,,,,,,,"TRUE","TRUE",
+"res_partner_410","ANUGRAH MITRA DISTRINDO, PT","SUPP030","Jl. Raya Pondok Kelapa Blok G 17",,,,,,,,"TRUE","TRUE",
+"res_partner_420","ANUGRAH PRATAMA, CV","SUPP031","Pondok Ungu Permai Blok. A6 No. 14",,,,,,,,"TRUE","TRUE",
+"res_partner_430","ARITA PRIMA INDONESIA, PT","SUPP032","Buahbatu Commercial Area No. 1",,,,,,,,"TRUE","TRUE",
+"res_partner_440","ARTHA KHARISMA, CV","SUPP033","Jl. Raya Sapan No. 15 RT. 001/001 Bandung",,"022-7562925/26/27","02.735.178.2-444.000",,"022-7561520",,,"TRUE","TRUE",
+"res_partner_450","ASAHI AGUNG ABADI, CV","SUPP034",,,,"21.077.546.6-445.000",,,,,"TRUE","TRUE",
+"res_partner_460","BESTINDO PUTRA MANDIRI, PT","SUPP035","Jl. Soekarno-Hatta No. 503A Bandung","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_470","ASIA AFRIKA PLASTIK, PT","SUPP036","Jl.Laks M.U Nurtanio 91-93",,,,,,,,"TRUE","TRUE",
+"res_partner_480","ASTRA INTERNASIONAL Tbk., PT","SUPP037","Jl. Gaya Motor raya No. 8",,,"01.302.584.6-092.000",,,,,"TRUE","TRUE",
+"res_partner_490","ATLAS COPCO INDONESIA, PT","SUPP038","Jl. Soekarno-Hatta Kav. 550 Bandung",,"022-7563044/7563058",,,"022-7564181",,,"TRUE","TRUE",
+"res_partner_500","ATRINDO ASIA GLOBAL, PT","SUPP039","Jl. Riung Karya Juang No.16 Bandung",,"022-70401948","01.885.406.7-013.000",,"022-7562910",,,"TRUE","TRUE",
+"res_partner_510","AVESTA CONTINENTAL PACK, PT","SUPP040","Jl. Raya Bekasi Km 28, 5 Bekasi",,"022-6071715/021-88400","01.131.635.3-431.000",,"022-5204458",,,"TRUE","TRUE",
+"res_partner_520","BAGJA ENGINEERING, CV.","SUPP041","Jl. Lahan Jati Blok H No. 11 Bandung",,"022-7835720",,,"022-7832876",,,"TRUE","TRUE",
+"res_partner_530","BAGJA ENGINEERING, CV.","SUPP041 HKI","Jl. Lahan Jati Blok H No. 11 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_540","BAGUS JAYA TEKNIK, CV","SUPP042",,,,,,,,,"TRUE","TRUE",
+"res_partner_550","BAHTERA ADIJAYA, PT","SUPP043","Jl. Pangeran Jayakarta No. 123 Jakarta",,"021-6262846","01.961.037.7-511.000",,"021-6266978",,,"TRUE","TRUE",
+"res_partner_560","BALAI BESAR BAHAN & BARANG TEK","SUPP044","Jl. Sangkuriang No. 14",,,,,,,,"TRUE","TRUE",
+"res_partner_570","Bandung DIESEL","SUPP045","Jl. Soekarno-Hatta No.559-563 Sekelimus",,,,,,,,"TRUE","TRUE",
+"res_partner_580","Bandung ELECTRIC","SUPP046","Cikapundung Electronic",,,,,,,,"TRUE","TRUE",
+"res_partner_590","BANGUN JASA TRANS, CV","SUPP047","Perum Nirwana Estate Blok JJ No. 3",,,,,,,,"TRUE","TRUE",
+"res_partner_600","BANGUN RAHMAT TEKNIK","SUPP048","Jl. Cisaranten Wetan RT. 01/04 Soekarno-Hatta Bandung",,"022-7838260",,,"022-7838263",,,"TRUE","TRUE",
+"res_partner_610","BANGUNAN JAYA","SUPP049","Suniaraja No. 55-55A",,,,,,,,"TRUE","TRUE",
+"res_partner_620","BANGUNPERSADA MAKMURSENTOSA, PT","SUPP050","Jl. Sukarjo Wiryopranoto No. 2AA",,,"01.572.751.4-074.000",,,,,"TRUE","TRUE",
+"res_partner_630","BAPAK ACENG KURNIA","SUPP051","Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_640","BAPAK ADE IRAWAN","SUPP052","Komp. Suka Asih Jl. Suka Asih Atas IV No. 3/315 Bandung",,81321084419,,,,,,"TRUE","TRUE",
+"res_partner_650","BAPAK BUGAR BUDIMAN","SUPP053","Jl.Moh Toha Km.5 No.6 Bandung",,"022-70735033",,,,,,"TRUE","TRUE",
+"res_partner_660","BAPAK KUSUMA","SUPP054","Jl. Boulevard Gading Raya Blok AA3 No.37",,,,,,,,"TRUE","TRUE",
+"res_partner_670","BAPAK NUGROHO SAPUTRO","SUPP055","Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_680","BAPAK RAHMAT","SUPP056","Jl. Cisaranten Wetan RT. 01/04 Soekarno-Hatta Bandung",,"022-7838260",,,"022-7838263",,,"TRUE","TRUE",
+"res_partner_690","BAPAK ROSIDIN","SUPP057","Jl. Cikawung Sari RT 08/14 Ciparay, Bandung",,81394182397,,,,,,"TRUE","TRUE",
+"res_partner_700","BAPAK SANTOSO","SUPP058",,,,,,,,,"TRUE","TRUE",
+"res_partner_710","ANDALAN KEMIKA UTAMA PT","SUPP059","Rukan Garnd Wisata Jl.Celebration Bulevard Blok A.A12 No 8 Tambun Bekasi","Bekasi",,,,,,,"TRUE","TRUE",
+"res_partner_720","BAPAK SURYADI LOHANATHA","SUPP060",,,,,,,,,"TRUE","TRUE",
+"res_partner_730","BAPAK WIBOWO","SUPP060 USD",,,,,,,,,"TRUE","TRUE",
+"res_partner_740","GALIC BINA MADA","SUPP061","Jl. Gajah Mada Jakarta","Jakarta","021-6335808",,,"021-5200730",,,"TRUE","TRUE",
+"res_partner_750","BAPAK YUWONO","SUPP062","Jl. Ahmad Yani Bandung",,"08122146576/7501258",,,,,,"TRUE","TRUE",
+"res_partner_760","BEEBUCKS","SUPP063","Jl. Halimun No. 36",,,,,,,,"TRUE","TRUE",
+"res_partner_770","BENGKEL AHASS","SUPP064","Jl. Ibrahim Adji (Depan Marin)",,,,,,,,"TRUE","TRUE",
+"res_partner_780","BENGKEL AUTO 2000","SUPP065","Jl. Soekarno-Hatta",,,,,,,,"TRUE","TRUE",
+"res_partner_790","BENGKEL KIARACONDONG","SUPP066","Jl. Trs Kiaracondong",,,,,,,,"TRUE","TRUE",
+"res_partner_800","BENGKEL LAS LISTRIK","SUPP067","Jl. Soekarno-Hatta No. 48",,,,,,,,"TRUE","TRUE",
+"res_partner_810","BENGKEL MARGACINTA","SUPP068","Jl. Margacinta",,,,,,,,"TRUE","TRUE",
+"res_partner_820","BENLINDO SUBUR, CV","SUPP069","Jl. Soka V No. 92 Karang Timur Ciledug Tangerang 15157",,"021-70664632",,,"021-7329286",,,"TRUE","TRUE",
+"res_partner_830","BERTINDOMAS CIPTASATYA, PT","SUPP070","Kaw. Industri Mekar Jaya Jl. Karet Jaya KM.7 No. 3 Cadas Tangerang",,"021-59373239/40",,,"021-2159373240",,,"TRUE","TRUE",
+"res_partner_840","BHAKTI WIRA HUSADA, PT","SUPP071","Jl. Tebet Utara 1 No. 20 Jakarta",,"021-4758638",,,"021-4711551",,,"TRUE","TRUE",
+"res_partner_850","BINA ARTA, PT","SUPP072 USD","Rukan Taman Meruya N-33A Kembangan Jakarta Barat 11620",,"021-5860868",,,"021-5862164",,,"TRUE","TRUE",
+"res_partner_860","BINA ELEKTRIK, PT","SUPP073","Jl. Cibadak",,,,,,,,"TRUE","TRUE",
+"res_partner_870","BINANGUN BUANA WIGUNA, PT","SUPP074","Jl. Suryo Pranoto Blok B No. 41 Jakarta Pusat",,"021-6314632/6330533",,,"021-6314321 / 021-63851628",,,"TRUE","TRUE",
+"res_partner_880","BINONG BARU","SUPP075","Jl. Margacinta No. 54 Bandung",,"022-7566221",,,,,,"TRUE","TRUE",
+"res_partner_890","BINTANG LESTARI SEJAHTERA, PT","SUPP076","Jln. Manyar Kertoarjo V/18",,,,,,,,"TRUE","TRUE",
+"res_partner_900","BINTANG UTAMA, PD","SUPP077","Jl. ABC/Cikapundung Lt. I Blok HH No. 29 Bandung",,"022-84460493",,,"022-84460580",,,"TRUE","TRUE",
+"res_partner_910","BIROTIKA SEMESTA, PT","SUPP078","Jl. Pancoran, Jakarta Selatan",,8001333333,"01.310.774.3-062.000",,,,,"TRUE","TRUE",
+"res_partner_920","BIROTIKA SEMESTA, PT","SUPP078 USD","Jl. Pancoran, Jakarta Selatan",,,"01.310.774.3-062.000",,,,,"TRUE","TRUE",
+"res_partner_930","KAWAN BARU","SUPP079","Jl. Banceuy No. 120 Bandung","Bandung","022-4230057",,,"022-4220120",,,"TRUE","TRUE",
+"res_partner_940","BJ HYPERMART BANGUNAN","SUPP080","Jl. Jend. A. Yani IBCC Blok E1",,,,,,,,"TRUE","TRUE",
+"res_partner_950","BOLA MAS, CV","SUPP081","JL. Suniaraja 78-81 Bandung",,"022-230808",,,"022-4231818",,,"TRUE","TRUE",
+"res_partner_960","BONDOR INDONESIA, PT","SUPP082","Jl. Olympic Raya Kav. A-32 Sentul-Citeureup 16810",,,,,,,,"TRUE","TRUE",
+"res_partner_970","BONDOR INDONESIA, PT.","SUPP082 HKI","Jl. Olympic Raya Kav. A-32 Sentul-Citeureup 16810",,,,,,,,"TRUE","TRUE",
+"res_partner_980","BONDOR INDONESIA, PT.","SUPP082 HKU","Jl. Olympic Raya Kav. A-32 Sentul-Citeureup 16810",,,,,,,,"TRUE","TRUE",
+"res_partner_990","BONDOR INDONESIA, PT","SUPP082 USD","Jl. Olympic Raya Kav. A-32 Sentul-Citeureup 16810",,"021-8756001","01.869.275.6-055.000",,"021-8756017",,,"TRUE","TRUE",
+"res_partner_1000","BONE, CV","SUPP083","Ps. Cikapundung  Lt. 2 Blok S No. 5 Bandung",,"022-84460528/4200295",,,,,,"TRUE","TRUE",
+"res_partner_1010","BPK. HAJI BODOGOL","SUPP084","BODOGOL",,,,,,,,"TRUE","TRUE",
+"res_partner_1020","JOBS DB INDONESIA PT","SUPP085","Jl.Sultan Iskandar Muda Kav.V-TA Pondok Indah","Jakarta","021-29645588",,,"021-29645599",,,"TRUE","TRUE",
+"res_partner_1030","BRATACO, PT","SUPP086","Jln. Ters. Jakarta No. 77 G Bandung",,"022-7210308-09","01.130.689.1-441.000",,"022-7210310","wahyudinfeisal@yahoo.com",,"TRUE","TRUE",
+"res_partner_1040","BRATACO,PT.","SUPP086 USD","Jl. Kelenteng No. 14",,,,,,,,"TRUE","TRUE",
+"res_partner_1050","MEKAR BARU BAN","SUPP087","Jl. Ir. H.Djuanda Bandung","Bandung","022-4268521",,,,,,"TRUE","TRUE",
+"res_partner_1060","PANCA LOGAM, PD","SUPP088","Jl. Jend. Sudirman No. 289 Bandung","Bandung","022-6030859",,,"022-6031812",,,"TRUE","TRUE",
+"res_partner_1070","BRENNTAG, PT","SUPP089","Jl. Soekarno-Hatta No. 503 A Bandung",,"022-7315593","01.720.850.5-056.000",,"022-7315594",,,"TRUE","TRUE",
+"res_partner_1080","BRENNTAG,PT.","SUPP089 USD","Jl. Soekarno-Hatta No. 503 A Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_1090","TRIMAN,PT.","SUPP090","Jl. Banten No. 6 Bandung","Bandung","022-7273139",,,"022-7218999",,,"TRUE","TRUE",
+"res_partner_1100","BRILIAN TEKNIK","SUPP091","Jl. Margacinta No. 31",,,,,,,,"TRUE","TRUE",
+"res_partner_1110","BUANA CITRA ABADI, PT","SUPP092","Jl. Ahmad Yani No. 310 Bandung",,"022-7212376",,,"022-7212477",,,"TRUE","TRUE",
+"res_partner_1120","BUANA TEHNIK","SUPP093","Pasar Cikapundung",,,,,,,,"TRUE","TRUE",
+"res_partner_1130","BUMI PUSPA CEREMAI, PT","SUPP094","Jl. Taman Tanah Abang II/25 Jakarta",,"021-3440725","01.422.126.1-422.000",,"021-3809110",,,"TRUE","TRUE",
+"res_partner_1140","CAHAYA BERLIAN, PT","SUPP095","JL. Soekarno Hatta no.168 Bandung",,"022-86061881/86061818",,,"022-6005077",,,"TRUE","TRUE",
+"res_partner_1150","CAHAYA KERAMIK","SUPP096","Jl. A. yani No. 298 Bandung",,"022-7238178/79",,,"022-7238187",,,"TRUE","TRUE",
+"res_partner_1160","CAHAYA RODA","SUPP097","Jl. Suniaraja No.74",,,,,,,,"TRUE","TRUE",
+"res_partner_1170","CAHAYA SETIA MITRA, CV","SUPP098","Pondok Mitra Lestari Blok A7-6 Bekasi",,"021-98289025/8211624","02.510.644.4-432.000",,"021-8211624",,,"TRUE","TRUE",
+"res_partner_1180","CAKRAWALA MEGA INDAH, PT","SUPP099","Jl. Durman No. 10 Bandung",,"022-4233943","01.371.060.3-092.000",,"022-4204930",,,"TRUE","TRUE",
+"res_partner_1190","CANA PHARMATECH, CV","SUPP100","Jl. Taman Duren Sawit E 414 Jakarta",,"021-8604670",,,"021-8604670",,,"TRUE","TRUE",
+"res_partner_1200","CAPITOL","SUPP101","Jl. Cikapundung Baru Los D9 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_1210","CENTRAL Bandung RAYA","SUPP102","Jl. Supadio",,,,,,,,"TRUE","TRUE",
+"res_partner_1220","CENTRAL FILTER GUNATAMA, PT","SUPP103","Graha Raya Bintaro Jaya Blok.G 10/3B Tengerang 15324",,"021-53125942","02.287.355.8-415.000",,"021-53126169",,,"TRUE","TRUE",
+"res_partner_1230","CENTRAL SEAL","SUPP104","CEC Lt.1 Blok FF No.17-18",,,,,,,,"TRUE","TRUE",
+"res_partner_1240","CENTRAL TEKNIK","SUPP105","Jl. Pungkur 127-A Bandung",,"022-4201518",,,"022-4231685",,,"TRUE","TRUE",
+"res_partner_1250","CIB CARGO","SUPP106","Kopomas Regency Blok K No. 7",,,,,,,,"TRUE","TRUE",
+"res_partner_1260","CIGONDEWAH","SUPP107","Jl. Cigondewah Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_1270","CINTA WARNA","SUPP108","Jl. Margacinta No. 202 Ciwastra",,"022-7513968",,,,,,"TRUE","TRUE",
+"res_partner_1280","CIPTA ANEKA AIR, PT","SUPP109","Pergudangan Prima Centre 2 Jl. Pesing Poglar Blok A/32 Jakarta Barat",,"021-29031034/35","21.064.519.8-047.000",,"021-29031033",,,"TRUE","TRUE",
+"res_partner_1290","CIPTA ANEKA AIR, PT.","SUPP109 HKI","Pergudangan Prima Centre 2 Jl. Pesing Poglar Blok A/32 Jakarta Barat",,,,,,,,"TRUE","TRUE",
+"res_partner_1300","CIPTA ANEKA AIR, PT","SUPP109 USD","Pergudangan Prima Centre 2, Jl. Pesing Poglar Blok A/3","Jakarta Barat",,,,,,,"TRUE","TRUE",
+"res_partner_1310","CIPTA UTAMA","SUPP110","Rajawali Timur No. 48 Bandung",,"022-6037777",,,,,,"TRUE","TRUE",
+"res_partner_1320","CIPTA WATER TECH, PT","SUPP111","Pergudangan Prima Centre 2 Jl. Pesing Poglar Blok A/32 Jakarta Barat",,"021-29031034/35",,,"021-29031033",,,"TRUE","TRUE",
+"res_partner_1330","CISANGKAN, PT","SUPP112","JL. CIJERAH NO. 107 CARINGIN Bandung KULON Bandung",,,"01.104.370.0-441.000",,,,,"TRUE","TRUE",
+"res_partner_1340","CITRA GRAFIKA SEJAHTERA, PT","SUPP113","Jl.Cibatu Raya No.35-Antapani Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_1350","CITRA GRAFIKA, CV","SUPP114","Jl.Cibatu Raya No.35-Antapani Bandung",,"022-7209113",,,"022-7200475",,,"TRUE","TRUE",
+"res_partner_1360","CITRA SARI KIMIA","SUPP115","Jl. Gunung Sahari Raya No. 2C",,"021-6596632",,,"021-6255747",,,"TRUE","TRUE",
+"res_partner_1370","CITRA SELARAS MANDIRI, PT","SUPP116","Jl. Tanjungsari Raya No. 11 Antapani",,,,,,,,"TRUE","TRUE",
+"res_partner_1380","CKE (Industrial Multi Fan)","SUPP117","Komp. Ruko Banceuy Blok B3 Bo. 72 Bandung",,"022-4220373",,,"022-4235605",,,"TRUE","TRUE",
+"res_partner_1390","DAKOTA","SUPP118","Jl. Pahlawan Revolusi No. 123",,,,,,,,"TRUE","TRUE",
+"res_partner_1400","DAMASES SEJAHTERA, PT","SUPP119","GADING PERMAI AZ 32 RT.005 RW.010 GROGOL,GROGOL SUKOHARJO JAWA TENGAH",,,"02.782.413.5-532.000",,,,,"TRUE","TRUE",
+"res_partner_1410","DELTA MEGA ORITAMA, PT","SUPP120","Jl. H.S. Ronggowaluyo Kaumjaya No. 2 RT.10/04 Karawang",,"0267-8457353","02.627.824.2-408.000",,"0267-8457354",,,"TRUE","TRUE",
+"res_partner_1420","DEPO BANGUNAN","SUPP121","Jl. Soekarno-Hatta",,,,,,,,"TRUE","TRUE",
+"res_partner_1430","DHARMA BANDAR MANDALA, PT","SUPP122","Jl. Soekarno 447 Bandung",,"085624028733/85240187",,,"022-85240186",,,"TRUE","TRUE",
+"res_partner_1440","DIAN CIPTA PERKASA, PT","SUPP123","Puri Sentra Niaga Blok B No. 25Jl. Wiraloka Kalimalang Jakarta",,"021-86607760/62","01.553.455.5-007.000",,"021-86607761",,,"TRUE","TRUE",
+"res_partner_1450","DIAN CIPTA PERKASA,PT.","SUPP123 USD","Puri Sentra Niaga Blok B No. 25Jl. Wiraloka Kalimalang Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_1460","Bandung PURI TEKNOLOGI PT","SUPP124","TAMAN KOPO INDAH III NO E 16-186","Bandung","022-88887510",,,"022-88887511",,,"TRUE","TRUE",
+"res_partner_1470","DIGITAL AKURASI, PT","SUPP125","Jl. Taman Cibaduyut Indah Ruko No. 17 Bandung",,"022-5409272/5430982","01.860.151.8-032.000",,"022-5430980",,,"TRUE","TRUE",
+"res_partner_1480","DILIMAS MANDIRI, PT","SUPP126","Ruko Palem Lestari Blok C/3 Cengkareng Jakarta 11730",,"021-55953666",,,"021-55954888",,,"TRUE","TRUE",
+"res_partner_1490","DINAR RAYA SEJAHTERA, CV","SUPP127","Jl. Dr. Soemarno No. 1 Pulogebang Cakung Jakarta Timur 13950",,"021-46345258","02.998.735.1-004.000",,"021-4800154",,,"TRUE","TRUE",
+"res_partner_1500","DIONTEK PRIMA ANALISA, PT","SUPP128","Jl. Ampera Raya No. 5 Cilandak Jakarta",,"021-7816804/7816734","02.314.773.9-017.000",,"021-7816734",,,"TRUE","TRUE",
+"res_partner_1510","DIONTEK PRIMA ANALISA,PT.","SUPP128 USD","Jl. Ampera Raya No. 5 Cilandak Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_1520","RIMBA INSANTEK MANDIRI PD","SUPP129",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_1530","DIPA PHARMALAB INTERSAINS, PT","SUPP130","Jl. Tanah Abang III No. 25 Jakarta",,"021-3853274",,,"021-5481322",,,"TRUE","TRUE",
+"res_partner_1540","DIPA PUSPA LABSAINS, PT","SUPP131","Kom Sumber Sari Indah Jl. Sumber Mekar No. 61 Bandung",,"022-6018250","02.494.212.0-038.000",,"022-6062695",,,"TRUE","TRUE",
+"res_partner_1550","DITEK JAYA, PT","SUPP132","Jl. Panjang Kebon Jeruk Jakarta Barat 11520",,"021-5806862",,,"021-5807161",,,"TRUE","TRUE",
+"res_partner_1560","DJAMUDJU","SUPP133","Jl. Kopo No. 376 Bandung",,"022-6014920",,,"022-6034043",,,"TRUE","TRUE",
+"res_partner_1570","DOS NI ROHA, PT","SUPP134",,,"022-5412453",,,"022-5412454",,,"TRUE","TRUE",
+"res_partner_1580","DUMAS CATUR SATUJUAN, PT","SUPP135","Jl. Durimas IV Blok G Duri Kelapa Jakarta 11510",,"021-5652916/5630622","01.904.081.5-039.000",,"021-5652916",,,"TRUE","TRUE",
+"res_partner_1590","E.CHUNG MACHINERY(INSAN SURYA)","SUPP136","Jl. Mangga Dua Raya No. 8N",,,,,,,,"TRUE","TRUE",
+"res_partner_1600","EKACITA DIAN PERSADA, PT","SUPP137","Perkantoran Buana Soetta Residense No. A-27 Jl. Raya Gedebage Selatan","Bandung","022-87240965","01.776.232.9-038.000",,"022-87241076",,,"TRUE","TRUE",
+"res_partner_1610","EKACITA DIAN PERSADA,PT.","SUPP137 USD","Perkantoran Buana Soetta Residence No. A-27 Jl. Raya Gedebage Selatan","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_1620","INTRALAB EKATAMA PT","SUPP138","JL Terapi Raya AD 2 Bumi Menteng Asri Bogor","Bogor","0251-8359110","0251-8311662",,"00251-8315710",,,"TRUE","TRUE",
+"res_partner_1630","EKADHARMA INTERNASIONAL, PT","SUPP139","Jl. Singgasana Raya No. 23-25 Komp. Singgasana Bandung",,"022-5436172/73/74","01.360.179.4-054.000",,"022-5436175",,,"TRUE","TRUE",
+"res_partner_1640","EMBRIO BIOTEKINDO, PT","SUPP140","Jl. Pajajaran Indah V No. 1/C Baranangsiang, Bogor",,"0251-8377973/8332403","02.091.144.2-404.000",,"0251-8377973",,,"TRUE","TRUE",
+"res_partner_1650","ENSEVAL PUTERA MEGATRADING, PT","SUPP141","Jl. Soekarno-Hatta",,,,,,,,"TRUE","TRUE",
+"res_partner_1660","ESA DANA, PD","SUPP142","JL. Condet Raya Gg.Asem no.23 Jakarta",,"021-8098646",,,"021-8092893",,,"TRUE","TRUE",
+"res_partner_1670","EUTHICA UNGGUL JAYA, PT","SUPP143","Rukan Eksklusif Blok E No. 7 BGM Jakarta Utara",,"021-56946137/56946138","02.747.452.7-047.000",,"021-56946136",,,"TRUE","TRUE",
+"res_partner_1680","EUTHICA UNGGUL JAYA PT","SUPP143 USD","Rukan Exslusif Blok E no 7","Jakarta","021-56946137",,,,,,"TRUE","TRUE",
+"res_partner_1690","EXPEDISI KALI INTAN","SUPP144","Jl. Kalimas Baru No. 8A",,,,,,,,"TRUE","TRUE",
+"res_partner_1700","F & S (PUSAT INFORMASI ALARM)","SUPP145","Jl. Cipaganti No. 36 Bandung",,"022-4208921",,,"022-4237251",,,"TRUE","TRUE",
+"res_partner_1710","FADNOV AIR TECH","SUPP146","Jl. Raya Cileunyi 100m",,,,,,,,"TRUE","TRUE",
+"res_partner_1720","FAJAR ABADI","SUPP147","Jl. Kopo Jaya No. 5 Bandung",,"022-5417733",,,"022-5400933",,,"TRUE","TRUE",
+"res_partner_1730","FAJAR BEARING","SUPP148","Psr. Cikapundung Blok JJ No. 1 Bandung",,"022-84460548",,,,,,"TRUE","TRUE",
+"res_partner_1740","FARMARINDO, PT","SUPP149","Jl. Raya Bekasi KM. 24.5 Jakarta Timur",,"021-46821588","02.170.591.8-431.000",,"021-45854966",,,"TRUE","TRUE",
+"res_partner_1750","FELTINDO, CV","SUPP150","JL. Tongkol no.6 R Sunda Kelapa Jakarta",,"021-6910038-39",,,"021-6910039",,,"TRUE","TRUE",
+"res_partner_1760","FELTINDO, CV","SUPP150 USD","Jl. Tongkol No. 6R Sunda Kelapa","Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_1770","FLUIDA TEKNIKA, PT","SUPP151","Jl. Kebayoran Lama 16 3rd Floor Jakarta 12210",,,,,,,,"TRUE","TRUE",
+"res_partner_1780","FLUIDA TEKNIKA","SUPP151 HKU","Jl. Kebayoran Lama 16 3rd Floor Jakarta 12210",,,,,,,,"TRUE","TRUE",
+"res_partner_1790","FLUIDA TEKNIKA, PT","SUPP151 USD","Jl. Kebayoran Lama 16 3rd Floor Jakarta 12210",,"021-53678971-2","02.290.004.7-013.000",,"021-53675889",,,"TRUE","TRUE",
+"res_partner_1800","GALA LAKSANA KREASI, PT","SUPP152","Jl. Dr. Saharjo No. 96",,,"01.770.659.9-048.000",,,,,"TRUE","TRUE",
+"res_partner_1810","GALA LAKSANA KREASI, PT.","SUPP152 USD","Jl. Dr. Saharjo No. 96",,,"01.770.659.9-048.000",,,,,"TRUE","TRUE",
+"res_partner_1820","TOKO DOA IBU","SUPP153","Jl.Belakang Pasar No 90","Bandung","022-4218273",,,,,,"TRUE","TRUE",
+"res_partner_1830","GANESHA SAKTI ABADI, PT","SUPP154","Jl. Tanjung Duren Barat Raya No. 87 Jakarta Barat 11470",,"021-56943918-19-20","02.245.779.0-003.000",,"021-5673051",,,"TRUE","TRUE",
+"res_partner_1840","GLOBAL CHEMINDO MEGATRADING, PT","SUPP155","Jl. Pulo Kambing Raya Kav. IIE No.8 Cakung Jakarta Timur",,"021-46830028","02.313.070.1-007.000",,"021-46836167",,,"TRUE","TRUE",
+"res_partner_1850","GLOBAL CHEMINDO MEGATRADING, PT","SUPP155 USD","Jl. Pulo Kambing Raya Kav. IIE No.8 Cakung Jakarta Timur",,,,,,,,"TRUE","TRUE",
+"res_partner_1860","ANEVA BARAYA CV","SUPP156","Jl.Cibuntu Salam RT.18 Rw.08","Bekasi","021-87920989",,,"021-87920989",,,"TRUE","TRUE",
+"res_partner_1870","GLOBAL QUALITY INDONESIA, PT","SUPP157","Kopo Mas Regency Blok N 7C Bandung",,"022-5436533","01.983.801.0-422.000",,"022-5436637",,,"TRUE","TRUE",
+"res_partner_1880","GRATIA TIFARINDO, CV","SUPP158","Komp. Griya Bandung Indah",,,,,,,,"TRUE","TRUE",
+"res_partner_1890","GUNUNG CENDANA PERSADA, PT","SUPP159","Jl. Pakin No. 2 A-B",,,"02.379.489.4-047.000",,,,,"TRUE","TRUE",
+"res_partner_1900","HANNA INSTRUMENT INDOTAMA, PT","SUPP160","Jl. Penyu No. 6 Buahbatu Bandung",,"022-7830364","01.673.823.9-043.000",,,,,"TRUE","TRUE",
+"res_partner_1910","HANS PUTRA MANDIRI, CV","SUPP161","Jl. Setra Murni Tengah No.6 Bandung",,"022-6036355/60853592",,,"022-60880285",,,"TRUE","TRUE",
+"res_partner_1920","HARAPAN JAYA, PD","SUPP162","Jl. Banceuy Bandung",,"022-4235976",,,,,,"TRUE","TRUE",
+"res_partner_1930","HARISMA AGUNG Bandung, PT","SUPP163","Jl. Sunda No. 37 Bandung 40112",,"022-4210800/4264500",,,"022-4213413",,,"TRUE","TRUE",
+"res_partner_1940","HARTECH INDONESIA, PT","SUPP164","Jl. Pancaran Timur No. 1A Jakarta Selatan 12780",,"021-7994307","01.310.516.8-061.000",,"021-7989307",,,"TRUE","TRUE",
+"res_partner_1950","HASAN SADIKIN (IBU TUTI)","SUPP165",,,,,,,,,"TRUE","TRUE",
+"res_partner_1960","HASTA LUHUR","SUPP166","Jl. Gedebage Bandung",,"022-7816666",,,"022-7813721",,,"TRUE","TRUE",
+"res_partner_1970","HELAU FILTER","SUPP167","Jl. Gempol Elok I No.34 Cijerah Bandung",,"022-70568820",,,"022-86066141",,,"TRUE","TRUE",
+"res_partner_1980","HENDRO SAPUTRO","SUPP168","Graha Raya Bintaro Jaya Blok.G 10/3B Tengerang 15324",,"021-53125942",,,"021-53126169",,,"TRUE","TRUE",
+"res_partner_1990","HERMON PANCAKARSA(LIBRATAMA), PT","SUPP169","Jl. Guntur Sari No. 14 Bandung",,"022-7307575",,,"022-7305884",,,"TRUE","TRUE",
+"res_partner_2000","HERRY ALTER'S","SUPP170","Jl. Moh Toha Komp. Ruko Kurdi No. 25 Bandung",,"022-5204961/5223549",,,"022-5229960",,,"TRUE","TRUE",
+"res_partner_2010","HEXINDO GLOBAL, PT","SUPP171","Jl. Plaza Amsterdam Blok D no. 8 Bogor",,"021-82568884","31.425.761.9-403.000",,"021-87962880",,,"TRUE","TRUE",
+"res_partner_2020","HOME CENTER INDONESIA, PT","SUPP172","Jl. Puri Kencana No.1 Kembangan Selatan",,,"02.341.555.7-038.000",,,,,"TRUE","TRUE",
+"res_partner_2030","HONG KIE","SUPP173","Jl. Stasiun No. 28/30 Bandung",,"022-4230937/4240826",,,"022-4237161",,,"TRUE","TRUE",
+"res_partner_2040","HONG LIE, PD","SUPP174","JL.Suniaraja no.60 Bandung",,"022-4234161",,,"022-4237016",,,"TRUE","TRUE",
+"res_partner_2050","HUGE TRADING CO (D/H HONG KIE)","SUPP175","Jl. Suniaraja 75 Bandung",,"022-4203825/4233352",,,"022-4234794",,,"TRUE","TRUE",
+"res_partner_2060","IDOLA MOTOR SERVICE","SUPP176","Jl. Margacinta No. 33",,,,,,,,"TRUE","TRUE",
+"res_partner_2070","IDOLA TEKNIK","SUPP177","Jl. Margacinta No. 33 Bandung",,"022-4563193/91682523",,,,,,"TRUE","TRUE",
+"res_partner_2080","IGLAS, PT","SUPP178","JL.Jambu No. 18 Jakarta",,"021-3101359","01.000.030.5-051.000",,"021-3141293",,,"TRUE","TRUE",
+"res_partner_2090","IMAS ASRI MULIA, PT","SUPP179","JL.Kunir 32 Blok A-11 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_2100","IMAS ASRI MULIA, PT.","SUPP179 HKI","JL.Kunir 32 Blok A-11 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_2110","IMAS ASRI MULIA, PT.","SUPP179 HKU","JL.Kunir 32 Blok A-11 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_2120","IMAS ASRI MULIA, PT","SUPP179 USD","JL.Kunir 32 Blok A-11 Jakarta",,"021-6913130","01.560.828.4-038.000",,"021-6910659",,,"TRUE","TRUE",
+"res_partner_2130","INCAP ALTIN UTAMA, PT","SUPP180","JL. Rajawali II no.9 Jakarta",,"021-88320888","01.300.578.0-007.000",,"021-88321361",,,"TRUE","TRUE",
+"res_partner_2140","INDAH JAYA (HAFANDI LIJAYA)","SUPP181","Jl. Nyengseret No. 29 Bandung",,"022-5404979","04.041.952.5-422.000",,"022-5202046",,,"TRUE","TRUE",
+"res_partner_2150","INDALIN, PD","SUPP182","JL. Kebon Jukut Ruko No. 3-B Bandung",,"022-4219675/5206090",,,"022-4230873",,,"TRUE","TRUE",
+"res_partner_2160","INDO ELECTRON JAYA","SUPP183","Jl. Psm Dalam No. 214 Kiara Condong Bandung",,"022-70283031",,,"022-7311692",,,"TRUE","TRUE",
+"res_partner_2170","INDO MARITIM ASIATIC","SUPP184","Jl. Batu Indah VII No. 42",,,,,,,,"TRUE","TRUE",
+"res_partner_2180","INDO MARITIM ASIATIC, PT","SUPP184 USD","Jl. Batu Indah VII No. 42","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_2190","INDOCAL LAB. SISTEM , PT","SUPP185","Jl. PHH Mustopa No. 39 Bandung",,"022-87241432","02.008.918.1-429.000",,"022-87241432",,,"TRUE","TRUE",
+"res_partner_2200","INDOGEOTECH DARMA SOLUSI (IDS), PT","SUPP186","Jl. Haji Merin No. 1B Meruya Selatan",,,,,,,,"TRUE","TRUE",
+"res_partner_2210","INDOGRAVURE, PT","SUPP187","Jl.Pahlawan No.8 Desa Rempoa Ciputat",,,"01.000.742.5-415.000",,,,,"TRUE","TRUE",
+"res_partner_2220","INDOKEMIKA JAYATAMA, PT","SUPP188","Jl. Raya Padalarang KM. 2 Kampung Simpang Desa Kertajaya Bandung",,"022-6808537/6808538","01.328.570.5-007.000",,"022-6808381",,,"TRUE","TRUE",
+"res_partner_2230","INDOKEMIKA JAYATAMA,PT.","SUPP188 USD","Jl. Raya Padalarang KM. 2 Kampung Simpang Desa Kertajaya Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2240","INDAH JAYA TEKNIK","SUPP189",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_2250","INDOPACK NUSANTARA, PT","SUPP190","Jl. Anggrek No. 57 Petukangan Utara Jakarta",,"021-7355092","01.960.318.2-029.000",,"021-7355148","www.indopack.com",,"TRUE","TRUE",
+"res_partner_2260","INDOTECH SCIENTIFIC, PT","SUPP191","Jl. Raya Pondok Gede No. 5 Kramatjati",,,"03.063.655.9-005.000",,,,,"TRUE","TRUE",
+"res_partner_2270","INDOTECH SCIENTIFIC, PT","SUPP191 USD","Jl. Raya Pondok Gede No. 5 Kramatjati",,,,,,,,"TRUE","TRUE",
+"res_partner_2280","TOKO NUR, PD","SUPP192","Jl.Haji Basar No 56A","Bandung",85351185101,,,,,,"TRUE","TRUE",
+"res_partner_2290","INDRAGRAHA NUSAPLASINDO","SUPP193",,,"021-5981535-36",,,"021-6328227",,,"TRUE","TRUE",
+"res_partner_2300","INDUKSARANA KEMASINDO (ISKI), PT","SUPP194","Jl. Raya Prepedan II No. 11 Jakarta",,"021-5551226-27","01.647.154.2-085.001",,"021-55962822",,,"TRUE","TRUE",
+"res_partner_2310","INDUSTRIAL MULTI FAN, PT","SUPP195","Jl. ABC B-3/No. 72 Banceuy Permai",,,"02.321.234.3-038.000",,,,,"TRUE","TRUE",
+"res_partner_2320","INFILTRACO MURNI, PT","SUPP196","Jl. Surya Utama A4 No. 4 Kebon Jeruk Jakarta Barat 11520",,"021-5803283","01.333.772.0-038.000",,"021-5806738",,,"TRUE","TRUE",
+"res_partner_2330","INSAN SURYA PERSADA, PT","SUPP197","JL.P.Jayakarta 45 Blok A No. 21-22 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_2340","INSAN SURYA PERSADA, PT","SUPP197 HKI","JL.P.Jayakarta 45 Blok A No. 21-22 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_2350","INSAN SURYA PERSADA, PT.","SUPP197 HKU","JL.P.Jayakarta 45 Blok A No. 21-22 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_2360","INSAN SURYA PERSADA, PT","SUPP197 USD","JL.P.Jayakarta 45 Blok A No. 21-22 Jakarta",,"021-6007445","02.189.456.3-037.000",,"021-6391027",,,"TRUE","TRUE",
+"res_partner_2370","INTERGASTRA NUSANTARA, PT","SUPP198","Jl. P. Jayakarta 24/35",,"021-6493880",,,"021-6298649",,,"TRUE","TRUE",
+"res_partner_2380","ISS SERVISYSTEM, PT","SUPP199","Komp. Putraco Gading regency Blok B No. 7 Jl. Soekarno-Hatta Bandung",,"022-7316155","01.070.680.2-059.000",,"022-7305578",,,"TRUE","TRUE",
+"res_partner_2390","ISTANA Bandung RAYA MOTOR, PT","SUPP200","Jl. Cicendo No. 18",,,,,,,,"TRUE","TRUE",
+"res_partner_2400","ZAMZAM KOMPUTER","SUPP201",,"Bandung",85776555089,,,,,,"TRUE","TRUE",
+"res_partner_2410","JABAR MOTOR","SUPP202","Jl. Gatot Subroto No. 15 Bandung",,"022-7301964",,,,,,"TRUE","TRUE",
+"res_partner_2420","Jakarta SINERGI MULTIDIV","SUPP203","Graha Selaras lt.4 Mampang, Prap Raya 9",,,,,,,,"TRUE","TRUE",
+"res_partner_2430","JATI MOTOR","SUPP204","Jl. Kebon Jati No. 26 Bandung",,"022-4235447",,,"022-4202860",,,"TRUE","TRUE",
+"res_partner_2440","JAYA BATTERY","SUPP205","Jl. Ibrahim Adji trs Kiaracondong 1",,,,,,,,"TRUE","TRUE",
+"res_partner_2450","JAYA MAKMUR ABADI, CV","SUPP206","Perum Griya Shanta G-321 RT 05 RW 14 Malang",,"031-8535105","01.949.391.5-652.000",,"031-8706152",,,"TRUE","TRUE",
+"res_partner_2460","JAYA TEKNIK","SUPP207","Jl.Karapitan No.13",,,,,,,,"TRUE","TRUE",
+"res_partner_2470","JAYA MAKMUR MANDIRI CV","SUPP208","komp kopo mas regenvcy B9","Bandung","022-5436870",,,"022-5436860",,,"TRUE","TRUE",
+"res_partner_2480","JAYATAMA SELARAS, PT","SUPP209","Jl. Raya Narogong, Kembang Kuning Dusun II Cilengsi Bogor",,"021-8232168-69","02.142.006.2-431.000",,"021-82492546","info@jayatama.com",,"TRUE","TRUE",
+"res_partner_2490","JBS MAJU PRATAMA, PT","SUPP210","Jl. Kemuning No. 17",,,,,,,,"TRUE","TRUE",
+"res_partner_2500","JERINDO SARI UTAMA, PT","SUPP211 USD","Jl. Cempaka Putih Raya C-20 Jakarta Pusat",,"021-4200890","01.255.738.5-631.000",,"021-4200889",,,"TRUE","TRUE",
+"res_partner_2510","JNE Bandung","SUPP212","Jl. Bahagia Permai Raya Kav 27",,,,,,,,"TRUE","TRUE",
+"res_partner_2520","JONAS PHOTO","SUPP213","Jl. Banda No. 38 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2530","JUTARASA ABADI, PT","SUPP214","Jl. Babakan Jeruk III B No. 10 Bandung",,"022-2009264","01.371.119.7-007.000",,"022-2010191",,,"TRUE","TRUE",
+"res_partner_2540","JUTARASA ABADI, PT","SUPP214 USD","Jl. Babakan Jeruk III B No. 10 Bandung",,,"01.371.119.7-007.000",,,,,"TRUE","TRUE",
+"res_partner_2550","PUTRA JAYA PD","SUPP215","Jl Cigondewah Kidul",,81321295634,,,,,,"TRUE","TRUE",
+"res_partner_2560","KAIROS TRITUNGGAL, PT","SUPP216","Jl. Raya Bekasi KM. 25 Menteng","Jakarta Timur",,,,,,,"TRUE","TRUE",
+"res_partner_2570","KAIROS TRITUNGGAL, PT","SUPP216 USD","Ruko Inkopau Blk.A No.8-9 Jl. Raya Bekasi KM.25 Cakung Jakarta Timur",,"021-46802216-19","21.042.942.9-007.000",,"021-46802187",,,"TRUE","TRUE",
+"res_partner_2580","KANDAGA","SUPP217",,,,,,,,,"TRUE","TRUE",
+"res_partner_2590","KANGAR CONSOLIDATED INDUSTRIES, PT","SUPP218","Jl. Raya bekasi km. 24,5 Jakarta Timur",,"021-46951000/46951055","01.000.602.1-052.000",,"021-4600435",,,"TRUE","TRUE",
+"res_partner_2600","KAPSULINDO NUSANTARA, PT","SUPP219","Gd. Elektrindo Lt. 5 Jl. Kuningan Barat No. 8 Jakarta Selatan",,"021-8671164","01.060.278.7-431.000",,"021-8671168",,,"TRUE","TRUE",
+"res_partner_2610","KARSAVICTA SATYA, PT","SUPP220","Jl. Tanah Abang II No. 17 Jakarta",,"021-29229868","01.547.817.5-073.000",,"021-29229875",,,"TRUE","TRUE",
+"res_partner_2620","KARUNIA JASINDO, PT","SUPP221","Jl. Jembatan Tiga Raya No. 36AG Jakarta",,"021-6630353","02.239.430.8-415.000",,"021-6611085","ali@karusindo.com",,"TRUE","TRUE",
+"res_partner_2630","KARYA MANDIRI, CV","SUPP222","Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2640","KARYANA KEMASINDO PLASTIK, PT","SUPP223","JL.Raya Bogor Km.29,6 Cimanggis Bogor",,"021-8710252","01.241.567.5-412.000",,"021-8726079",,,"TRUE","TRUE",
+"res_partner_2650","KAWAN LAMA","SUPP224","Jl. Pungkur No. 219 Bandung",,"022-4213939/4213906",,,,,,"TRUE","TRUE",
+"res_partner_2660","KAWAN LAMA SEJAHTERA, PT","SUPP225","Jl.Puri Kencana No:1 Kembangan Selatan",,,"01.363.367.2-038.000",,,,,"TRUE","TRUE",
+"res_partner_2670","KENCANA PLASTIK /ANDREAS KAYUN","SUPP226","Jl. Industri V/149 Lik Km 4 Kaligawe Semarang",,"024-6580843",,,"024-6582531",,,"TRUE","TRUE",
+"res_partner_2680","KIKI JAYA MOTOR","SUPP227","Jl. Ciwastra No. 52-54 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2690","KIM HIEN","SUPP228","Jl. Banceuy No. 31 Bandung",,"022-4237902",,,"022-1238150",,,"TRUE","TRUE",
+"res_partner_2700","KIMU ENAM KEMASINDO, PT","SUPP229","Jl. Majalaya Km 1,5",,,,,,,,"TRUE","TRUE",
+"res_partner_2710","KINAS GLOBAL INDONUSA, PT","SUPP230","Jl. Bouraglio Baru No. 33 Batu Sari Tangerang",,"021-5581642/5581644","02.589.781.0-415.000",,"021-5581666",,,"TRUE","TRUE",
+"res_partner_2720","KOLOSAL PRATAMA, PT","SUPP231","RUKO GRAHA MAS PEMUDA, BLOK AC NO. 15-16, JL. PEMUDA, Jakarta TIMUR",,,"02.100.386.8-003.000",,,,,"TRUE","TRUE",
+"res_partner_2730","KRAMAT JAYA","SUPP232","Jl. Ahmad Yani Gg. Kramat Bandung",,"022-7274194/7505359",,,,,,"TRUE","TRUE",
+"res_partner_2740","KREASINDO","SUPP233","Komp. Segitiga Emas",,,,,,,,"TRUE","TRUE",
+"res_partner_2750","KROMTEKINDO UTAMA, PT","SUPP234","Jl. Palmerah Utara III/9 Jakarta 11480",,"021-5308962",,,"021-5307069",,,"TRUE","TRUE",
+"res_partner_2760","KURNIA DUTA ELEKTRIK, PT","SUPP235","Jl. Peta Lingkar Selatan Komp. Jl. Peta Lingkar Selatan Komp. Ruko Kopo Plaza Blok A/28 Bandung",,"022-6036263","21.068.145.8-422.000",,,,,"TRUE","TRUE",
+"res_partner_2770","KURNIA PLASTIK, PT","SUPP236","Jl. Gardujati No. 3 Bandung",,"022-60011631",,,"022-6001631",,,"TRUE","TRUE",
+"res_partner_2780","KURNIA SERVICE KUNCI","SUPP237","Komp. Bunga Bakung No.9 Margacinta Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2790","KUSUMA TEKNIK","SUPP238","Ps. Cikapundung Baru",,,,,,,,"TRUE","TRUE",
+"res_partner_2800","TOKO TAWAKAL","SUPP239",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_2810","KYOWA HAKKO INDUSTRY (S) PTE","SUPP240","260 Orchad Road",,,,,,,,"TRUE","TRUE",
+"res_partner_2820","LANGGENG KEMINDO GEMILANG, PT","SUPP241","Taman Kopo Indah III Blok D2-141 Bandung",,"022-61012168","31.634.174.2-445.000",,"022-5401045",,,"TRUE","TRUE",
+"res_partner_2830","LANGGENG KEMINDO GEMILANG, PT","SUPP241 USD","Taman Kopo Indah III Blok D2-141 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2840","BUANA JAYA ALKESINDO PT","SUPP242","Jl.Chandra Kirana No 50","Bandung",85448537,,,,,,"TRUE","TRUE",
+"res_partner_2850","LANGGENG, PD","SUPP243","Jl. ABC No. 78 Komp. Banceuy Bandung",,"022-4234695",,,"022-4236905",,,"TRUE","TRUE",
+"res_partner_2860","LAUTAN BAN","SUPP244","Jl. Astana Anyar No. 81 Bandung",,"022-4204048/4203443",,,,,,"TRUE","TRUE",
+"res_partner_2870","LAUTAN LUAS","SUPP245","Jl. Jend. Sudirman No.757 Bandung",,"022-6030590","01.315.900.9-054.000",,"022-6030967",,,"TRUE","TRUE",
+"res_partner_2880","LAWSIM ZECHA, PT","SUPP246","Jl. Kayu Jati Raya No. 1A Jakarta",,"021-4752920","01.303.282.6-007.000",,"021-4892659",,,"TRUE","TRUE",
+"res_partner_2890","LAWSIM ZECHA PT","SUPP246 USD",,,,,,,,,"TRUE","TRUE",
+"res_partner_2900","LENGKONG JAYA MOTOR","SUPP247","Jl. Lengkong Besar No. 48 Bandung",,"022-4239962",,,,,,"TRUE","TRUE",
+"res_partner_2910","LESTARI OFFSET","SUPP248","Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_2920","LIMAS RAGA INTI","SUPP249","Jl. Emong No. 21 Bandung",,"022-7300125",,,"022-7300238",,,"TRUE","TRUE",
+"res_partner_2930","LINTAS TEKNIK MANDIRI, CV","SUPP250","Jl. Adipati Kertamanah Dalam II/54",,,,,,,,"TRUE","TRUE",
+"res_partner_2940","LOKANIA HANDAL PERDANA, PT","SUPP251","Duta Harapan Indah Blok OO NO. 30 Kapuk Jakarta 14460",,"021-66694150",,,"021-66694154",,,"TRUE","TRUE",
+"res_partner_2950","LUCA'S PRINTING","SUPP252",,,,,,,,,"TRUE","TRUE",
+"res_partner_2960","LUCA'S PRINTING","SUPP252 USD","Jl. Karang Anyar No. 26 Bandung",,"022-4234426",,,"022-4202814",,,"TRUE","TRUE",
+"res_partner_2970","LUCAS TRANSMAMIN PERKASA, PT.","SUPP253",,,,,,,,,"TRUE","TRUE",
+"res_partner_2980","LYHOCK PLAST, PT","SUPP254","Jl. Raya Serang KM.18,8 Desa Sukanagara Tangerang 15710",,"021-5963303","02.287.897.9-451.000",,"021-5963305",,,"TRUE","TRUE",
+"res_partner_2990","MAESTRO PRINTING","SUPP255","BLOK KUPAT GG. MESJID NO.11 Bandung",,,"02.749.841.9-422.000",,,,,"TRUE","TRUE",
+"res_partner_3000","MAJU MAKMUR","SUPP256","Jl. Ciroyom 59A Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3010","PANCA LESTARI PRIMA MULYA PT","SUPP257","Jl.Soekarno Hatta No 136","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_3020","MAKTAL","SUPP258","Jl. Paralon I No. 20",,,,,,,,"TRUE","TRUE",
+"res_partner_3030","MANDIRI TEKNIK","SUPP259","Jl. ABC Ps. Cikapundung Baru LII",,,,,,,,"TRUE","TRUE",
+"res_partner_3040","MARIN LIZA FARMASI, PT","SUPP260","Jl. Trs Kiaracondong 43 Bandung",,"022-7566965/7501052","01.104.591.1-441.000",,"022-7566965",,,"TRUE","TRUE",
+"res_partner_3050","MARIN LIZA FARMASI, PT","SUPP260 USD","Jl. Trs Kiaracondong 43 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3060","MASIS EMBATAMA ENGINEERING","SUPP261","Cisaranten Wetan I No.143",,,,,,,,"TRUE","TRUE",
+"res_partner_3070","MEDI FORTUNA, PT","SUPP262","Jl.Cendana No. 11A Bandung",,"022-7271010","01.143.993.2-423.000",,"022-7213406",,,"TRUE","TRUE",
+"res_partner_3080","MEGA, PD","SUPP263",,,,,,,,,"TRUE","TRUE",
+"res_partner_3090","MEGAFUNINDO","SUPP264","Ps. Cikapundung",,,,,,,,"TRUE","TRUE",
+"res_partner_3100","MEGARIA, PD","SUPP265","Jl. Kalipah Apo No. 17 Bandung",,"022-4232900",,,"022-4264562",,,"TRUE","TRUE",
+"res_partner_3110","MEGASETIA AGUNG KIMIA, PT","SUPP266","Jl. Paradise Timur Raya F-21/58 Jakarta Timur",,"021-6451037","01.744.272.4-046.000",,"021-6452306","hendra.suhara@megasetia.com",,"TRUE","TRUE",
+"res_partner_3120","MEGASETIA AGUNG KIMIA, PT","SUPP266 USD","Jl. Paradise Timur Raya F-21/58 Jakarta Timur",,,,,,,,"TRUE","TRUE",
+"res_partner_3130","MEKAR BARU","SUPP267","Jl. Banceuy No. 121 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3140","MEKAR JAYA, UD","SUPP268","Jl. Mataram I No. 156",,,,,,,,"TRUE","TRUE",
+"res_partner_3150","MEKAR PRATAMA","SUPP269","Jl. Sudirman",,,,,,,,"TRUE","TRUE",
+"res_partner_3160","MEKAR PUTRA BAN","SUPP270","Jl. Dr. Cipto No. 5",,,,,,,,"TRUE","TRUE",
+"res_partner_3170","MENJANGAN SAKTI, PT","SUPP271","Jl. Rasuna Said Kav. B-34 Kuningan Jakarta Selatan",,"021-46824074","01.301.277.8-062.000",,"021-5264943","ferry.gunardi@mensa.co.id",,"TRUE","TRUE",
+"res_partner_3180","MENJANGAN SAKTI, PT","SUPP271 USD","Jl. Rasuna Said Kav. B-34 Kuningan Jakarta Selatan",,,"01.301.277.8-062.000",,,,,"TRUE","TRUE",
+"res_partner_3190","MENTARI, PD","SUPP272","JL. Banceuy No. 96",,,,,,,,"TRUE","TRUE",
+"res_partner_3200","MERCK TBK, PT","SUPP273","Jl. T.B. Simatupang No. 8 Pasar Rebo Jakarta",,"021-28565600","01.002.148.3-054.000",,"021-28565603",,,"TRUE","TRUE",
+"res_partner_3210","MEYTIV, PT","SUPP274","Ruko Sektor IV RF-28 BSD",,,,,,,,"TRUE","TRUE",
+"res_partner_3220","MITRA AC","SUPP275","Jl. Trs Pasir Koja No. 261",,,,,,,,"TRUE","TRUE",
+"res_partner_3230","MITRA CHEMINDO UTAMA, PT","SUPP276","Jl. Gading Utama Barat No. 11 A",,,,,,,,"TRUE","TRUE",
+"res_partner_3240","MITRA PACK, PT","SUPP277","Jl. P. Jayakarta 135 C 12-15 Jakarta",,"021-6240171","01.969.856.2-073.000",,"021-6258978",,,"TRUE","TRUE",
+"res_partner_3250","MITRA PACK PT","SUPP277 USD","Jl. PAngeran",,,,,,,,"TRUE","TRUE",
+"res_partner_3260","MITRA SELARAS ABADI, CV","SUPP278","JL. RAYA CILEBUT TIMUR NO. 77 KEL.CILEBUT TIMUR, KEC. SUKARAJA,Bogor-JAWA BARAT",,,"31.201.709.8-403.000",,,,,"TRUE","TRUE",
+"res_partner_3270","MIURA INDONESIA, PT","SUPP279","Jl. HR.Rasuna Said Kav. 62",,,,,,,,"TRUE","TRUE",
+"res_partner_3280","MODULISA TEKNIK","SUPP280","Jl. Sarijati 1 No. 5 Bandung",,"022-7531046",,,"022-7801995",,,"TRUE","TRUE",
+"res_partner_3290","MUGI, PT","SUPP281","Jl. H. Kurdi No.88 Moh. Toha Bandung",,"022-5206233","01.308.570.9-062.000",,"022-5206233",,,"TRUE","TRUE",
+"res_partner_3300","MULTI ASRI PUSAKA SEJATI, PT","SUPP282","Jl. Darmo Permai Selatan V No. 47",,,"01.822.788.4-618.000",,,,,"TRUE","TRUE",
+"res_partner_3310","MULTI HASTA MAS, PT","SUPP283","Jl. Kasir No. 108 Desa Gempor Tangerang",,"021-5904046","01.244.184.6-402.000",,"021-5900615",,,"TRUE","TRUE",
+"res_partner_3320","MULTI RANTAI SUKSES","SUPP284","Jl. ABC Pasar Cikapundung",,,,,,,,"TRUE","TRUE",
+"res_partner_3330","MULTI SARANA TEKKINDO","SUPP285","Jl. Srimahi No. 10",,,,,,,,"TRUE","TRUE",
+"res_partner_3340","MULTIBUANA CIPTA SEJAHTERA, PT","SUPP286","Jl. Wadaya Raya No. 67 Duren Sawit Jakarta timur",,"021-86601482/86604994","02.371.626.9-008.000",,"021-86601539","mcspt@indosat.net.id",,"TRUE","TRUE",
+"res_partner_3350","MULTIBUANA CIPTA SEJAHTERA, PT","SUPP286 USD","Jl. Wadaya Raya No. 67 Duren Sawit Jakarta timur",,,,,,,,"TRUE","TRUE",
+"res_partner_3360","MULTIREDJEKI KITA, PT","SUPP287","Jl. Kebayoran Lama No. 28",,,"01.301.288.5-059.000",,,,,"TRUE","TRUE",
+"res_partner_3370","MUNCUL JAYA","SUPP288",,,,,,,,,"TRUE","TRUE",
+"res_partner_3380","MUTIARA KITCHEN","SUPP289","Jl. Soekarno-Hatta 497",,,,,,,,"TRUE","TRUE",
+"res_partner_3390","MUTIARA, CV","SUPP290","Komplek Industri,Jl.Kopo Jaya No.17 Bandung",,"022-5400083","01.778.157.6-441.000",,"022-5401177",,,"TRUE","TRUE",
+"res_partner_3400","NARDA TITA, PT","SUPP291","Jl. Puri Kencana Kembangan Selatan Jakarta Pusat 11610",,"021-58303475","01.362.674.2-038.000",,"021-58303473",,,"TRUE","TRUE",
+"res_partner_3410","NITA, PD","SUPP292","Jl. Trs. Kiara Condong (Dekat Samsat)",,,,,,,,"TRUE","TRUE",
+"res_partner_3420","NUSA INTERNASIONAL, PT","SUPP293","Kompleks Ruko Singgasana Pradana No. 55",,,"02.366.520.1-441.000",,,,,"TRUE","TRUE",
+"res_partner_3430","NUSA INTERNASIONAL, PT","SUPP293 USD","Kompleks Ruko Singgasana Pradana No. 55",,,,,,,,"TRUE","TRUE",
+"res_partner_3440","NUSAPLAST, PT","SUPP294","Jl. Taman Kota Jaya Karta No. 12",,,"02.464.533.5-418.000",,,,,"TRUE","TRUE",
+"res_partner_3450","NUTRILAB PRATAMA, PT","SUPP295","Jl. Raya Kebayoran Lama 17D",,,"02.289.876.1-013.000",,,,,"TRUE","TRUE",
+"res_partner_3460","OK BATERAI","SUPP296","Jl. Banceuy No. 70",,,,,,,,"TRUE","TRUE",
+"res_partner_3470","OMEGA BIRO TEKNIK","SUPP297","Jl.Martadinata No.130 Bandung",,"022-4204102",,,"022-7279753",,,"TRUE","TRUE",
+"res_partner_3480","PACKINDO FARMA UTAMA, CV","SUPP298","Metro permata II Blok D8/18 Karang Tengah Jkt Barat",,"021-53669206","02.041.838.0-086.000",,"021-73440358",,,"TRUE","TRUE",
+"res_partner_3490","PADAJAYA MOTOR","SUPP299",,,,,,,,,"TRUE","TRUE",
+"res_partner_3500","PADASUKA MEUBEL","SUPP300","JL. Aceh 43 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3510","PADASUKA MOTOR","SUPP301","Jl. Banceuy No. 80 Bandung",,"022-4237479/4235794",,,,,,"TRUE","TRUE",
+"res_partner_3520","PAKET NUSANTARA, PT","SUPP302","Jl. Industri XX/BS-56",,,,,,,,"TRUE","TRUE",
+"res_partner_3530","PANCARAN MULIA SEJATI, PT","SUPP303","Jln. Raya Klari, K.p Krajan Gintungkerta",,,"01.392.457.6-431.000",,,,,"TRUE","TRUE",
+"res_partner_3540","PANCHA NUGRAHA, CV","SUPP304","Jl. Dr. Djunjunan",,,,,,,,"TRUE","TRUE",
+"res_partner_3550","PANCURAN BERNUANSA MAS, PT","SUPP305","Jl. Kebon Jati No. 41 Komp. Luxor Permai",,,"02.250.307.2-028.000",,,,,"TRUE","TRUE",
+"res_partner_3560","PANDU SIWI SENTOSA, PT","SUPP306","JL. RAYA BEKASI TIMUR KM.18 NO.30, JATINEGARA CAKUNG Jakarta TIMUR DKI Jakarta RAYA",,"022-7323075","01.602.236.0-007.000",,"022-7305167",,,"TRUE","TRUE",
+"res_partner_3570","PANGAN LESTARI, PT","SUPP307","Jl. Jati Raya Blok J1 No. 10B, CIkarang",,,"01.233.603.8-641.000",,,,,"TRUE","TRUE",
+"res_partner_3580","PARIT PADANG GLOBAL, PT","SUPP308","Jl. Rawa Sumur II Kav. BB No. 3 Jakarta",,"021-46834411","02.998.520.7-007.000",,"021-46831306",,,"TRUE","TRUE",
+"res_partner_3590","PARIT PADANG GLOBAL, PT","SUPP308 USD","Jl. Rawa Sumur II Kav. BB No. 3 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_3600","PASAR CIKAPUNDUNG","SUPP309","Jl. Cikapundung Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3610","PATRA BUANA PUTRA, PT","SUPP310","Jl. Cigugur Tengah RT.001/010",,,"02.761.307.4-441.000",,,,,"TRUE","TRUE",
+"res_partner_3620","PANCA HARAPAN, PD","SUPP311",,,,,,,,,"TRUE","TRUE",
+"res_partner_3630","PELITA ABADI SEJAHTERA, PT","SUPP312","JL. CISARANTEN WETAN NO. 56 BABAKAN PENGHULU,CINAMBO Bandung",,,"02.333.103.6-429.000",,,,,"TRUE","TRUE",
+"res_partner_3640","PEMASOK HANDUK BEKAS","SUPP313","Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3650","PEMBANGUNAN, PD","SUPP314","Jl. Jend. Sudirman no.96",,,,,,,,"TRUE","TRUE",
+"res_partner_3660","PENTA VALENT, CV","SUPP315","JL.Surya Sumantri no.15",,,,,,,,"TRUE","TRUE",
+"res_partner_3670","PETROLOG MULTI USAHA MANDIRI, PT","SUPP316","Jl. Sendi Kencana Blok C-9",,,,,,,,"TRUE","TRUE",
+"res_partner_3680","PETROLOG MULTI USAHA MANDIRI, PT","SUPP316 SGD","Jl. Sendi Kencana Blok C-9",,,,,,,,"TRUE","TRUE",
+"res_partner_3690","PHARMA TEKNIK","SUPP317","Jl. Dr. Setiabudi, Srondol Bumi Indah",,,,,,,,"TRUE","TRUE",
+"res_partner_3700","PHARMEQ, PT","SUPP318","JL. Nanas No. 17-19",,,,,,,,"TRUE","TRUE",
+"res_partner_3710","POLAR REPRO GRAPHIC","SUPP319","Jl. Pungkur No. 131-129C Bandung",,"022-4232484",,,"022-4231525",,,"TRUE","TRUE",
+"res_partner_3720","POLARIS ELDACO, PT","SUPP320",,,,"02.589.643.2-085.000",,,,,"TRUE","TRUE",
+"res_partner_3730","PRAJA ELTU ENGINEERING, PT.","SUPP321 HKI","Jl. Boulevard Gading Raya Blok AA3 No. 37 Serpong Tangerang",,,,,,,,"TRUE","TRUE",
+"res_partner_3740","PRAMBANAN KENCANA, PT","SUPP322","jl. Tanah Abang 2 No. 36 Petojo Selatan Jkt Pusat 10160",,"021-3810380",,,"021-3810344","Industry@prb.co.id",,"TRUE","TRUE",
+"res_partner_3750","PRAMTAMA","SUPP323",,,,,,,,,"TRUE","TRUE",
+"res_partner_3760","PRATAPA NIRMALA, PT","SUPP324","Jl. Raden Saleh No. 4",,,"01.302.575.4-073.000",,,,,"TRUE","TRUE",
+"res_partner_3770","PRIDHANA EKA, PT","SUPP325","Jl. Cibadak No. 215 Bandung",,"022-6031991","01.118.330.8-422.000",,"022-6034845",,,"TRUE","TRUE",
+"res_partner_3780","PRIMA MEDICHA , CV","SUPP326","Jl. Tubagus Ismail Raya No. 10A Bandung",,"022-2532413",,,,,,"TRUE","TRUE",
+"res_partner_3790","PRIMA PRINTER","SUPP327","Jl. Margacinta 50 Buahbatu",,,,,,,,"TRUE","TRUE",
+"res_partner_3800","PRIMA TEKNIK","SUPP328","Jl. ABC Cikapundung Electronic Center",,,,,,,,"TRUE","TRUE",
+"res_partner_3810","PRINTECHNINDO RAYA UTAMA, PT","SUPP329","Jl. Jababeka XVII B SIB Blok U7J Kaw. Industri Cikarang Bekasi",,"021-89111247","02.270.793.9-046.000",,"021-89111248",,,"TRUE","TRUE",
+"res_partner_3820","PRINTECHNINDO RAYA UTAMA, PT","SUPP329 SGD","Jl. Jababeka XVII B SIB Blok U7J Kaw. Industri Cikarang Bekasi",,,,,,,,"TRUE","TRUE",
+"res_partner_3830","PRISMA TEKNIK MANDIRI","SUPP330","Spare part & Maintenance",,,"31.568.161.9-422.000",,,,,"TRUE","TRUE",
+"res_partner_3840","PRISMA TEKNIK MANDIRI","SUPP330 HKI","Spare part & Maintenance",,,,,,,,"TRUE","TRUE",
+"res_partner_3850","PRISMA TEKNIK MANDIRI, CV","SUPP330 USD","Jl. Nana Rohana No. 51/82","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_3860","INDOFA UTAMA MULTI CORE PT","SUPP331","Jl.Mawar No 27-29 Rt.03 Rw.03","Surabaya",,,,,,,"TRUE","TRUE",
+"res_partner_3870","PUSAKA","SUPP332","Jl. Jend. A. Yani 108",,,,,,,,"TRUE","TRUE",
+"res_partner_3880","PUSAKA, PD","SUPP333","Jl. Sunda 35 Bandung",,"022-4232416",,,"022-7312848",,,"TRUE","TRUE",
+"res_partner_3890","PUTRA ANGKASA, CV","SUPP334","Jl. Jend Sudirman",,,"01.448.244.2-422.000",,,,,"TRUE","TRUE",
+"res_partner_3900","PYURI INTI PERSADA, CV","SUPP335","Puri Cipageran Indah II Blok C10 No. 3B",,,,,,,,"TRUE","TRUE",
+"res_partner_3910","QWINJAYA ADITAMA, PT","SUPP336","KOMP.PERTOKOAN GREEN GARDEN BLOK A-7/6,KEDOYA UTARA,KEBON JERUK,Jakarta 11520",,,"02.751.136.9-039.000",,,"nurdin.wijaya@qwinjaya.com",,"TRUE","TRUE",
+"res_partner_3920","QWORDS.COM","SUPP337","Jl. Cisitu Lama No. 48 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_3930","RAJAWALI NUSINDO, PT","SUPP338","Jl. Soekarno hatta",,,,,,,,"TRUE","TRUE",
+"res_partner_3940","RAMDAN FAMILI, PD","SUPP339","Batas Cijerah Cigondewah Kaler",,,,,,,,"TRUE","TRUE",
+"res_partner_3950","RANTAI SUKSES, PD","SUPP340","Jl. ABC Pasar Cikapundung Bandung",,"022-4200458",,,,,,"TRUE","TRUE",
+"res_partner_3960","RAPIDO","SUPP341","Jl. Melong kaler no. 3",,,,,,,,"TRUE","TRUE",
+"res_partner_3970","RKM","SUPP342","Jl. Ahmad Yani Bandung",,"022-7277108",,,,,,"TRUE","TRUE",
+"res_partner_3980","RONADAMAR SEJAHTERA, PT","SUPP343","Jl. Kopo Cirangrang No. 12 A Bandung",,"022-5400179","01.338.704.8-007.000",,"022-5400372",,,"TRUE","TRUE",
+"res_partner_3990","RSU PINDAD","SUPP344","Jl. Jend. Gatot Subroto No. 517 Bandung",,,"01.061.394.1-051.000",,,,,"TRUE","TRUE",
+"res_partner_4000","SAINGAN","SUPP345","PS. CIKAPUNDUNG",,,,,,,,"TRUE","TRUE",
+"res_partner_4010","SAKURA MEDICAL","SUPP346","Jl. Pajajaran No. 15 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_4020","SAMARTH CHEMICALS INDONESIA, PT","SUPP347","Jl. Penjernihan I No. 19-B",,,,,,,,"TRUE","TRUE",
+"res_partner_4030","SAMATOR INTI PEROKSIDA, PT","SUPP348","jl. Raya Utara Blok K Gresik",,"031-3950911","01.568.647.0-641.000",,"031-350910",,,"TRUE","TRUE",
+"res_partner_4040","SAMUDERA SEMESTA SEJAHTERA, PT","SUPP349","Gedung Mulia 3rd Floor Jl. Roa Malaka",,,,,,,,"TRUE","TRUE",
+"res_partner_4050","SAN CENTRAL INDAH, PT","SUPP350","Jl. Halteu Utara No. 1",,,,,,,,"TRUE","TRUE",
+"res_partner_4060","SAN CENTRAL INDAH, PT.","SUPP350 HKI","Jl. Halteu Utara No. 1",,,,,,,,"TRUE","TRUE",
+"res_partner_4070","SANKYO","SUPP351","Jl. Jamika No. 140 A",,,,,,,,"TRUE","TRUE",
+"res_partner_4080","SANLIT INTI PLASTIK, PT","SUPP352","JL.Industri III/8 Leuwigajah Cimahi",,"022-6031840","01.279.809.6-421.000",,"022-6036336",,,"TRUE","TRUE",
+"res_partner_4090","SANPACK UNGGUL, PT","SUPP353","Jl. Pancasila IV Cicadas Raya Km 9",,,,,,,,"TRUE","TRUE",
+"res_partner_4100","SANTO PLASTIK, CV","SUPP354","JL. CIROYOM 105 Bandung",,"022-6031840","01.524.933.7-428.000",,"022-6036336",,,"TRUE","TRUE",
+"res_partner_4110","SANTOSO TEGUH SAKTI, PT","SUPP355","Jl. Soekarno-Hatta 21 Bandung",,"022-6851867",,,,,,"TRUE","TRUE",
+"res_partner_4120","SARAKA MANDIRI SEMESTA, PT","SUPP356","Jl. Pancasila I Cicadas, Gunung Putri Bogor",,"021-86862116","01.340.939.6-403.000",,"021-86862299",,,"TRUE","TRUE",
+"res_partner_4130","SARANA BANGUNAN","SUPP357","Jl. Peta 231",,,,,,,,"TRUE","TRUE",
+"res_partner_4140","SARANA GLOBAL","SUPP358","Jl. Kopo",,,,,,,,"TRUE","TRUE",
+"res_partner_4150","SARASWATI INDO GENETECH, PT","SUPP359","Graha SIG Jl. Rasamala No. 20 Tmn Yasmin Bogor",,"0251-7532348",,,"0251-7540927-28",,,"TRUE","TRUE",
+"res_partner_4160","SARI ALAM SEJAHTERA, PT","SUPP360",,,,,,,,,"TRUE","TRUE",
+"res_partner_4170","SARTONET FILTRASI INDONESIA, PT","SUPP361","Jl. Terusan Elang IX/4",,,"01.698.649.9-027.000",,,"sfi_bandung@cbn.net.id",,"TRUE","TRUE",
+"res_partner_4180","SARTONET FILTRASI INDONESIA, PT","SUPP361 EUR","Jl. Terusan Elang IX/4",,,,,,,,"TRUE","TRUE",
+"res_partner_4190","SARTONET FILTRASI INDONESIA PT","SUPP361 USD",,,,,,,,,"TRUE","TRUE",
+"res_partner_4200","SATELIT PLASTIK, CV","SUPP362","JL.H.Alpi no.106",,,,,,,,"TRUE","TRUE",
+"res_partner_4210","SATYA SAMITRA NIAGATAMA, PT","SUPP363","Ruko Bidex Blok H12 BSD City",,,"31.379.238.4-411.000",,,"ferdy_andriawan@ssnchemicals.com",,"TRUE","TRUE",
+"res_partner_4220","SATYA SAMITRA NIAGATAMA, PT","SUPP363 USD","Ruko Bidex Blok H12 BSD City",,,,,,,,"TRUE","TRUE",
+"res_partner_4230","SAWARGI","SUPP364","Jl. Karawitan No. 21",,,,,,,,"TRUE","TRUE",
+"res_partner_4240","SCHOTT IGAR GLASS, PT","SUPP365","Jl. Meranti 3 Blok L8-06B Delta Silicon",,,"01.071.294.1-052.000",,,,,"TRUE","TRUE",
+"res_partner_4250","SEJAHTERA ARTHA GUNA, PT","SUPP366","Jl. KH. Hasyim Ashari No. 49 Jakarta",,,"02.239.306.0-416.000",,,,,"TRUE","TRUE",
+"res_partner_4260","SELATAN JAYA","SUPP367","Jl. Pungkur",,,,,,,,"TRUE","TRUE",
+"res_partner_4270","SENJAYA EXPRESS","SUPP368","Taman Kopo Indah II B2 No. 27",,,,,,,,"TRUE","TRUE",
+"res_partner_4280","SENTRA MULTIGAS UTAMA, PT","SUPP369","Jl.Rumah Sakit No. 129 Ujung Berung Bandung",,"022-7807878","01.610.213.9-631.000",,"022-7807978",,,"TRUE","TRUE",
+"res_partner_4290","SERBA JAYA, PD","SUPP370","Jl. Kopo No. 382 Bandung",,"022-5406381",,,"022-5431472",,,"TRUE","TRUE",
+"res_partner_4300","SETIA KAWAN ABADI, PT","SUPP371","Jl. Mangga Besar IV No. 18 C Jakarta",,"021-6012039","02.321.038.8-038.000",,"021-6012049",,,"TRUE","TRUE",
+"res_partner_4310","SETIA USAHA, PD","SUPP372","Jl. Otista No. 298 Bandung",,"022-4232775",,,"022-4206072",,,"TRUE","TRUE",
+"res_partner_4320","SETIA, PD","SUPP373","Jl. Cikapundung Baru No. D5-18",,,,,,,,"TRUE","TRUE",
+"res_partner_4330","SIGNA HUSADA, PT","SUPP374","Jl. Daan Mogot Km. 17 Jakarta Barat",,"021-5446344-45","01.324.123.7-038.000",,"021-5446346","veronika.lani@signahusada.com",,"TRUE","TRUE",
+"res_partner_4340","SIGNA HUSADA, PT","SUPP374 USD","Jl. Daan Mogot Km. 17 Jakarta Barat",,"021-5446344-45","01.324.123.7-038.000",,"021-5446346","veronika.lani@signahusada.com",,"TRUE","TRUE",
+"res_partner_4350","SILIWANGI, PD","SUPP375","Jl. A. Yani No. 203",,,,,,,,"TRUE","TRUE",
+"res_partner_4360","SINAR GOLDSINDO, PT","SUPP376","Jl. Cempaka Putih Timur 31 Jakarta Pusat",,"021-4202887","01.387.614.9-431.000",,"021-4246761",,,"TRUE","TRUE",
+"res_partner_4370","ARINDO CIPTA PERKASA PT","SUPP377",,"Bogor",81218396357,,,,,,"TRUE","TRUE",
+"res_partner_4380","SINAR SEKELIMUS","SUPP378","Jl. Soekarno-Hatta No. 569",,,,,,,,"TRUE","TRUE",
+"res_partner_4390","SINAR SURYA SEMESTARAYA, PT","SUPP379","Jl. Dewi sartika No. 323B Cawang Jakarta Timur",,"021-80876612","01.920.510.3-005.000",,"021-80870051","soedrajat@hotmail.com",,"TRUE","TRUE",
+"res_partner_4400","SINAR TERANG, UD","SUPP380","Jl. Perintis Kemerdekaan No. 4",,,,,,,,"TRUE","TRUE",
+"res_partner_4410","SINAR MENTARI INDOPRIMA, PT","SUPP381","Jl. P. Tubagus Angke",,,"01.644.985.2-038.000",,,,,"TRUE","TRUE",
+"res_partner_4420","SMART LAB INDONESIA, PT","SUPP382","Jl. Penjernihan I No. 19-B Bendungan Hilir Jakarta",,"021-5734410","31.194.199.1-411.000",,"021-5704809","siwi@smartlab.co.id",,"TRUE","TRUE",
+"res_partner_4430","SONINDO GEMILANG, CV","SUPP383","Jl. Kecamatan NO. 165 Cibabat",,,,,,,,"TRUE","TRUE",
+"res_partner_4440","SPECTRA SABLON","SUPP384","Jl. Jend A. Yani No. 34 Bandung",,"022-7307470",,,"022-7313396",,,"TRUE","TRUE",
+"res_partner_4450","SUKMA NIAGA, PD","SUPP385","Electronic Center Lt. 1 Blok JJ 06",,,,,,,,"TRUE","TRUE",
+"res_partner_4460","SUMBER JAYA /ISKANDAR TJIPTOGARSON","SUPP386","JL. Jend.Sudirman 188 Bandung",,"022-6015154","06.465.051.8-428.000",,"022-6042197",,,"TRUE","TRUE",
+"res_partner_4470","SUMBER KERAMIK","SUPP387","Jl. Otista No. 21",,,,,,,,"TRUE","TRUE",
+"res_partner_4480","SUMBER REJEKI","SUPP388","Jl. Kebon jati No. 57",,,,,,,,"TRUE","TRUE",
+"res_partner_4490","SUMBER UTAMA PRIANGAN, PT","SUPP389","Jl. A. Yani",,,,,,,,"TRUE","TRUE",
+"res_partner_4500","SUMBER WARNA","SUPP390","Jl. Pungkur No.33",,,,,,,,"TRUE","TRUE",
+"res_partner_4510","SUNDA JAYA, UD","SUPP391","JL.Sukapura no.32 Bandung",,"022-7334450/7312710","09.379.308.1-424.000",,"022-7312315",,,"TRUE","TRUE",
+"res_partner_4520","SUNDA MOTOR","SUPP392","Jl. Sunda No. 26 Bandung",,"022-4235616",,,,,,"TRUE","TRUE",
+"res_partner_4530","SUPER SINUS","SUPP393","Ps. Cikapundung baru Los G",,,,,,,,"TRUE","TRUE",
+"res_partner_4540","SUPRA INDUSTRI INSTRUMENTA, PT","SUPP394 USD","Rukan Graha Cempaka mas Blok C",,,"02.494.375.5-027.000",,,,,"TRUE","TRUE",
+"res_partner_4550","SURYA ABADI ISOLASI, PT","SUPP395","Bandung",,,"02.081.071.9-422.000",,,,,"TRUE","TRUE",
+"res_partner_4560","SURYA AGUNG PRATAMA, PT","SUPP396","Jl.Kopo no.302",,,,,,,,"TRUE","TRUE",
+"res_partner_4570","SURYA BUANA NUSANTARA, PT","SUPP397","Jl. Mulya No.5-11/5 Gn Sahari Ancol",,,"01.984.437.2-044.000",,,,,"TRUE","TRUE",
+"res_partner_4580","SURYA BUANA NUSANTARA, PT","SUPP397 USD","Jl. Mulya No.5-11/5 Gn Sahari Ancol",,,,,,,,"TRUE","TRUE",
+"res_partner_4590","SURYA DONASIN, PT","SUPP398","Jl. Kopo Jaya No. 1A",,,"01.224.584.1-428.000",,,,,"TRUE","TRUE",
+"res_partner_4600","SURYA FORKLIFT","SUPP399","Jl. Kebon Jati Bandung",,"022-6014247",,,,,,"TRUE","TRUE",
+"res_partner_4610","SURYA INFOKOM TEKINDO","SUPP400","Jl. Suryalaya Raya no. 29",,,,,,,,"TRUE","TRUE",
+"res_partner_4620","SURYA KEJAYAN JAYA FARMA, PT","SUPP401","JL.Sumatra no.66 Surabaya",,"031-5033751/5032182","01.454.118.9-631.000",,"031-5031145",,,"TRUE","TRUE",
+"res_partner_4630","SURYA PRATAMA EXPRESS, CV","SUPP402","Jl. Kali Cipamokolan 101",,,,,,,,"TRUE","TRUE",
+"res_partner_4640","SURYALAYA, PT","SUPP403","Komp Banceuy Permai Blok A No.12 Jl ABC",,,,,,,,"TRUE","TRUE",
+"res_partner_4650","SURYAMAKMUR AGUNG MANDIRI, PT","SUPP404","Jl. Mekar Mulya No. 12 Gede Bage",,,"01.340.185.6-046.000",,,,,"TRUE","TRUE",
+"res_partner_4660","TAMARU MITRA SEJATI, PT","SUPP405","Jl. Raya Barat Boulevard Blok BIV/89 Kelapa Gading Jkt Utara",,"021-45842531","01.698.829.7-043.000",,"021-45842230",,,"TRUE","TRUE",
+"res_partner_4670","TATARASA PRIMATAMA, PT","SUPP406","Rk Sen Niaga Puri Indah Bl.T2/23 Kembangan Jakarta 11610",,"021-5819123","01.998.077.0-038.000",,"021-5805558","tatarasa@indo.net.id",,"TRUE","TRUE",
+"res_partner_4680","TATARASA PRIMATAMA, PT","SUPP406 EUR","Rk Sen Niaga Puri Indah Bl.T2/23 Kembangan Jakarta 11610",,,,,,,,"TRUE","TRUE",
+"res_partner_4690","TATARASA PRIMATAMA, PT","SUPP406 USD","Rk Sen Niaga Puri Indah Bl.T2/23 Kembangan Jakarta 11610",,,,,,,,"TRUE","TRUE",
+"res_partner_4700","TECHCOMP INDOTECH, PT","SUPP407","Jl. Raya Pondok Gede No.5",,,"02.723.552.2-005.000",,,,,"TRUE","TRUE",
+"res_partner_4710","TEGAR INTI SENTOSA, PT","SUPP408","Jl. Teuku Cik Ditiro 16 Jakarta",,"021-3106767","01.323.954.6-073.000",,"021-3102256",,,"TRUE","TRUE",
+"res_partner_4720","TEGUH TEKNIK, PD","SUPP409","Ps. Cikapundung",,,,,,,,"TRUE","TRUE",
+"res_partner_4730","TEKAD MAKMUR","SUPP410","Jl. Cikapundung",,,,,,,,"TRUE","TRUE",
+"res_partner_4740","TEKAD, PD","SUPP411","JL. KARAPITAN",,,,,,,,"TRUE","TRUE",
+"res_partner_4750","TERATE PLASTIK, PD","SUPP412","JL.Terate no.22 Bandung",,"022-7312720",,,"022-7307409",,,"TRUE","TRUE",
+"res_partner_4760","TERUS JAYA","SUPP413","Jl. Astana Anyar No. 124B Bandung",,"022-6018712",,,,,,"TRUE","TRUE",
+"res_partner_4770","THE UNITED STORES PHARMACEUTICAL","SUPP414","12601 Twinbrook Parkway",,,,,,,,"TRUE","TRUE",
+"res_partner_4780","THE UNITED STORES PHARMACEUTICAL","SUPP414 USD","12601 Twinbrook Parkway",,,,,,,,"TRUE","TRUE",
+"res_partner_4790","TIGA ARGA, PD","SUPP415",,,,,,,,,"TRUE","TRUE",
+"res_partner_4800","TIGA SRIKANDI JAYA, PT","SUPP416","Jl. Raya Penggilingan TPI Blok M/19 Jakarta",,"021-4802118","02.010.160.6-007.000",,"021-48703026",,,"TRUE","TRUE",
+"res_partner_4810","TIGA SRIKANDI JAYA, PT","SUPP416 USD","Jl. Raya Penggilingan TPI Blok M/19 Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_4820","TIGAKA DISTRINDO PERKASA, PT","SUPP417 USD","Jl. Tanah Abang II/37 Jakarta",,"021-3508980","01.622.368.7-073.000",,"021-3455134",,,"TRUE","TRUE",
+"res_partner_4830","TIKA COPY CERVICE","SUPP418","Jl. K.H. Ibrahim Adji 4",,,,,,,,"TRUE","TRUE",
+"res_partner_4840","TIKINDO","SUPP419",,,,,,,,,"TRUE","TRUE",
+"res_partner_4850","TIRTA ALAM ABADI, PT","SUPP420","Jl. RE. Martadinata, Ancol",,,"01.984.175.8-044.000",,,,,"TRUE","TRUE",
+"res_partner_4860","TIRTAWENING","SUPP421","Jl. Atlas 6 Lt.2 Antapani",,,,,,,,"TRUE","TRUE",
+"res_partner_4870","TITIAN ABADI LESTARI, PT","SUPP422","Jl. Agung Karya III Blok D Kav. 6",,,"01.392.746.2-046.000",,,,,"TRUE","TRUE",
+"res_partner_4880","TITIAN ABADI LESTARI, PT","SUPP422 EUR","Jl. Agung Karya III Blok D Kav. 6",,,,,,,,"TRUE","TRUE",
+"res_partner_4890","TNT SKYPAK INTERNASIONAL, PT","SUPP423","Jl. Soekarno-Hatta Bandung",,"022-7335117","02.914.244.5-012.000",,,,,"TRUE","TRUE",
+"res_partner_4900","TNT SKYPAK INTERNASIONAL EXPRESS, PT","SUPP423 USD","Jl. Jend. Sudirman Kav 61-62 kebayoran Baru","Jakarta Selatan",,"02.914.244.5-012.000",,,,,"TRUE","TRUE",
+"res_partner_4910","TOGA PUTRA","SUPP424","Jl. Boulevard Gading Raya Blok AA3/37",,,,,,,,"TRUE","TRUE",
+"res_partner_4920","TOKO AN","SUPP425","Jl. Sudirman No. 55",,,,,,,,"TRUE","TRUE",
+"res_partner_4930","TOKO BESI TEGUH","SUPP426","JL. Karapitan",,,,,,,,"TRUE","TRUE",
+"res_partner_4940","TOKO BUDHI","SUPP427","JL. Cibadak No.110 Bandung",,"022-4206984",,,"022-4216238",,,"TRUE","TRUE",
+"res_partner_4950","TOKO DUCOLUX","SUPP428","Jl. Suniaraja No. 68 Bandung",,"022-4239618/4236938",,,,,,"TRUE","TRUE",
+"res_partner_4960","TOKO HAPSENG","SUPP429","Jl. Banceuy No. 61 Bandung",,"022-4207741/4235175",,,"022-4212265",,,"TRUE","TRUE",
+"res_partner_4970","TOKO IRON","SUPP430","Jl. Suniaraja No. 76 Bandung",,"022-4235362",,,"022-4234920",,,"TRUE","TRUE",
+"res_partner_4980","TOKO MARGACINTA","SUPP431","Jl. Margacinta",,,,,,,,"TRUE","TRUE",
+"res_partner_4990","TOKO MULIA","SUPP432","Jl. Banceuy No. 84",,,,,,,,"TRUE","TRUE",
+"res_partner_5000","TOKO PLASTIK RAJAWALI","SUPP433","Jl. Margacinta",,,,,,,,"TRUE","TRUE",
+"res_partner_5010","TOKO PLASTIK SEMAR","SUPP434","Jl. Margacinta",,,,,,,,"TRUE","TRUE",
+"res_partner_5020","TOKO SANIROSA","SUPP435","Jl. Trs. Kiaracondong 43 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_5030","TOKO SEGER","SUPP436","Jl. Ahmad Y No. 83",,,,,,,,"TRUE","TRUE",
+"res_partner_5040","TOKO SENTOSA","SUPP437","JL.Pungkur",,,,,,,,"TRUE","TRUE",
+"res_partner_5050","TOKO SETUJU","SUPP438","Jl. Jend. A. Yani No.205",,,,,,,,"TRUE","TRUE",
+"res_partner_5060","TOKO SINAR ABADI","SUPP439","JL.CIBADAK NO.226",,,,,,,,"TRUE","TRUE",
+"res_partner_5070","TOKO SINAR HARAPAN","SUPP440","Gg. Suniaraja No. 55 Bandung",,"022-4206245",,,"022-4202070",,,"TRUE","TRUE",
+"res_partner_5080","TOKO SINAR TERANG BAUD","SUPP441","Jl. Karapitan 16B",,,,,,,,"TRUE","TRUE",
+"res_partner_5090","TOKO TANI SUGIH","SUPP442","JL.Pasir Kaliki no.14",,,,,,,,"TRUE","TRUE",
+"res_partner_5100","TRANSLINDO NUSA PACIFIC, PT","SUPP443",,,,,,,,,"TRUE","TRUE",
+"res_partner_5110","TRI SAKTI","SUPP444","Ps Cikapuncung Lt. II Blok O No. 11 Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_5120","TRIJAYA PACK (WAWAN HALIM), PT","SUPP445","JL.Garuda no.99 Bandung",,"022-6034037","06.686.183.2-428.000",,"022-6030440",,,"TRUE","TRUE",
+"res_partner_5130","TRIJAYA USAHA MANDIRI, PT","SUPP446","Jl. Margacinta - Ciwastra",,,"02.576.020.8-415.000",,,,,"TRUE","TRUE",
+"res_partner_5140","TRIKI JAYA SENTOSA","SUPP447","Jl. Sumur Bor raya No. 31",,,,,,,,"TRUE","TRUE",
+"res_partner_5150","TRIPLEK PUNGKUR","SUPP448","Jl. Pungkur",,,,,,,,"TRUE","TRUE",
+"res_partner_5160","TRISAKTI MEKARMANDIRI, PT","SUPP449","Jl. Kedoya Duri raya Blok A2/4",,,"01.573.983.2-039.000",,,,,"TRUE","TRUE",
+"res_partner_5170","TRIVIA CARGOUTAMA EXPRESS","SUPP450","Jl. Parakan Indah No.2A Buahbatu",,,,,,,,"TRUE","TRUE",
+"res_partner_5180","TUNGGAL JAYA EXPRESSINDO, PT","SUPP451","Jl. Soekarno-Hatta No. 101 B",,,,,,,,"TRUE","TRUE",
+"res_partner_5190","TUNGGAL JAYA PLASTIK, PT","SUPP452","Jl. Raya Karanggan Muda Kav.A RT. 04/05 Bogor",,"021-8677888","01.445.696.6-425.001",,"021-8677878",,,"TRUE","TRUE",
+"res_partner_5200","UNIJAYA PRATAMA, PT","SUPP453","Jl. Jembatan Dua Raya 11N Jakarta",,"021-6600219","01.891.949.8-038.000",,"021-6680430",,,"TRUE","TRUE",
+"res_partner_5210","UNLIMIT KOMPUTER","SUPP454","Komp. Jaya Plaza",,,,,,,,"TRUE","TRUE",
+"res_partner_5220","USAHA JAYA, PD","SUPP455","Jl.Cibadak no.133",,,,,,,,"TRUE","TRUE",
+"res_partner_5230","USAHA TEKNIK","SUPP456","Jl. Raya Banjaran KM. 14 Bandung",,"022-5946985",,,,,,"TRUE","TRUE",
+"res_partner_5240","USAHA TEKNIK, PD","SUPP457","JL.ABC No.85 Ps. Cikapundung Los D8 Bandung",,"022-4207647",,,,,,"TRUE","TRUE",
+"res_partner_5250","UTAMI MAKMUR","SUPP458","JL. SUMBER NANJUNG I NO. 23-14 Bandung",,,"02.749.682.7-422.000",,,,,"TRUE","TRUE",
+"res_partner_5260","VIGANO TECHNICAL WORK SHOP","SUPP459","Jl. Asia Afrika",,,"06.070.884.9-423.000",,,,,"TRUE","TRUE",
+"res_partner_5270","VISION TEKNIK, PT","SUPP460","Jl. Let. Jend. S. Parman Kav. 106 A",,,"02.699.025.9-036.000",,,,,"TRUE","TRUE",
+"res_partner_5280","WAHID KIMIA RAYA, PD","SUPP461","Jl. Jember No. 20 Antapani",,,,,,,,"TRUE","TRUE",
+"res_partner_5290","WANGI JAYA","SUPP462","Jl. ABC Pasar Cikapundun",,,,,,,,"TRUE","TRUE",
+"res_partner_5300","WARGI SALUYU","SUPP463",,,,,,,,,"TRUE","TRUE",
+"res_partner_5310","WARIS, PT","SUPP464","JL.H.Ten no.41Jakarta",,"021-4890126","01.312.101.7-007.000",,"021-4759661",,,"TRUE","TRUE",
+"res_partner_5320","WARIS, PT","SUPP464 USD","JL.H.Ten no.41Jakarta",,,,,,,,"TRUE","TRUE",
+"res_partner_5330","WASTEC INTERNASIONAL, PT","SUPP465","KOmp. Majapahit Permai Blok C/109",,,"02.354.681.5-028.000",,,,,"TRUE","TRUE",
+"res_partner_5340","WICAKSANA BERLIAN MOTOR","SUPP466","Jl. A Yani 225-227",,,,,,,,"TRUE","TRUE",
+"res_partner_5350","WN MOTOR","SUPP467","Jl. Margasari No. 159 Ciwastra Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_5360","BORMA","SUPP468",,,,,,,,,"TRUE","TRUE",
+"res_partner_5370","PERDANA VICTORY CEMERLANG","SUPP469",,,,,,,,,"TRUE","TRUE",
+"res_partner_5380","ELO KARSA UTAMA, PT.","SUPP470",,,,,,,,,"TRUE","TRUE",
+"res_partner_5390","NUSANTARA JAYA SENTOSA, PT.","SUPP471",,,,,,,,,"TRUE","TRUE",
+"res_partner_5400","SPIRAX SARCO INDONESIA, PT","SUPP472 SGD","Jl. Dr. Saharjo No. 46 Manggarai-Tebet","Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_5410","ZULFA PRINTER","SUPP473","Jl.sasak gantung No 129","Bandung","022-92106026",,85797232455,,,,"TRUE","TRUE",
+"res_partner_5420","GENECRAFT LABS PT","SUPP474 USD","JL.MERUYA ILIR NO 88","Jakarta","021-58903119",,,"021-58903151",,,"TRUE","TRUE",
+"res_partner_5430","SETIAJAYA ERA UNGGUL PT","SUPP475",,"Jakarta",8159691912,,,,,,"TRUE","TRUE",
+"res_partner_5440","PERKASA JAYA UTAMA","SUPP476","JL.CIKADUT  NO 9 Bandung","Bandung","022-7234341",,,,,,"TRUE","TRUE",
+"res_partner_5450","TOKO TERUS MAJU","SUPP477",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5460","PLAZA AUTO PRIMA TOYOTA","SUPP478","JL PELAJAR PEJUANG 45 NO 103","Bandung","022-731555",,,,,,"TRUE","TRUE",
+"res_partner_5470","PASIFIK SAINTIFINDO PT","SUPP479","JL DAAN MOGOT RUKAN MANSION BLOK C NO 10","Jakarta Barat","021-29526930",,,"021-29526931",,,"TRUE","TRUE",
+"res_partner_5480","PROPAN RAYA PT","SUPP480",,"Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_5490","FC RENTAL MUFRI","SUPP481","Dipatiukur","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5500","Bandung PAPERA","SUPP482","jl Gatot Subroto","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5510","BALAI METROLOGI","SUPP483","Jl. Angkasa 1 No 2","Jakrta","021-4246321",,,"021-4246703",,,"TRUE","TRUE",
+"res_partner_5520","LECAPSEAL INDONESIA","SUPP484","Jl.Raya Narogong no 17 RT01/02 Cikiwul bantar Gebang","Bekasi",,,,,,,"TRUE","TRUE",
+"res_partner_5530","TRISAKTI PT","SUPP485",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5540","PRATAMA NIAGA CV","SUPP486","Jl.Kiara Condong","Bandung",81221268646,,,,,,"TRUE","TRUE",
+"res_partner_5550","FINGERPRINT PT","SUPP487","Jl. Kiara condong 244","Bandung","022-7317802",,85220007555,,,,"TRUE","TRUE",
+"res_partner_5560","MARGASARI PD","SUPP488","Margacinta",,,,,,,,"TRUE","TRUE",
+"res_partner_5570","TOKO PADA SETIA","SUPP489","Jl.Belakang PAsar No 73","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5580","ASURANSI ALLIANZ UTAMA INDONESIA PT","SUPP490","Wisma CIMB Niaga FL.7 jl.Gatot Subroto No 2","Bandung","022-7308889",,,"022-7300799",,,"TRUE","TRUE",
+"res_partner_5590","PRIMA PUTRA MAS,PT.","SUPP491 USD","Gedung Perkantoran Jiwasraya Gondongdia Lantai 3","Jakarta","021-3924206",,,,,,"TRUE","TRUE",
+"res_partner_5600","TOKO SAMA JAYA","SUPP492","Gg.SUNIARAJA no.29","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5610","SAMAJAYA","SUPP493","Gg.Suniaraja No.29","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5620","INTITREATMENT PERKASA","SUPP494","Jl.Angkasa No.20 I-J","Jakarta","021-4207810/021-4207819",,,,,,"TRUE","TRUE",
+"res_partner_5630","RESTU RAMA","SUPP495","JL.Blkg Pasar No.60 Roxi","Bandung","022-4240573",,81394027584,,,,"TRUE","TRUE",
+"res_partner_5640","KARUNIA ELEKTRIK","SUPP496","Cikapundung Electronic lt.1 Blok GG no.23","Bandung",8122056229,,81809388246,,,,"TRUE","TRUE",
+"res_partner_5650","SPECTRA CONSULTANTS, CV.","SUPP497","Kopo Permai Blok GG.No.19","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5660","CAHAYA TIRTA UTAMA","SUPP498","JL.PSM NO.2 KIARACINDONG","Bandung","022-7300454",,,"022-7332920",,,"TRUE","TRUE",
+"res_partner_5670","APOTIK BAHAGIA","SUPP499","Jl.Margacinta No.96 Bandung","Bandung","022-7568695",,,,,,"TRUE","TRUE",
+"res_partner_5680","BURSA BATTERY","SUPP500","Jl. Psr Cikapundung","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5690","Bandung JAYA","SUPP501","Jl. Cihampelas No. 80","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5700","TUKANG JAHIT","SUPP502","Jl. Margacinta","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5710","JASA MEDIVEST","SUPP503","Jl.Tubagus Ismail Depan No. 1A Lt.3","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5720","ARJUNA KARPET","SUPP504",,,,,,,,,"TRUE","TRUE",
+"res_partner_5730","TOSERBA GRIYA","SUPP505","Jl. Bauhbatu","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5740","INDOBUANA SARANA SUKSES","SUPP506","Taman Palem Lestari Komplek KFT","Jakarta","021-55959735/021-55959736",,,,,,"TRUE","TRUE",
+"res_partner_5750","IBCC","SUPP507","Jl. A. Yani","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5760","BANGUN INDAH, PD","SUPP508","Jl. Pacinan Lama No. 27","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5770","CARREFOUR","SUPP509","Jl. Kiaracondong","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5780","BAPAK SUDIRA","SUPP510","BAPAK SUDIRA","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5790","ABADI TEKNIK","SUPP511","Jl. ABC Psr Cikapundung Elektronik Center Lt. I Blok EE 34","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5800","TOKO MAKMUR","SUPP512","Jl. Jend. Sudriman No. 181","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5810","TRESNACO","SUPP513","Jl. Buahbatu No. 125","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5820","GRAHA CIPTA ABADI","SUPP514","JL.KANON NO.8 KOMP.ARTELERI & SANGKURIANG CIMAHI","Cimahi","022-6651553",,,"022-6626580",,,"TRUE","TRUE",
+"res_partner_5830","SENJAYA, PD","SUPP515","Jl. Otista No. 449","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5840","EDHB TEKNIK","SUPP516","Ps.Teknik Arjuna jaya blok L","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5850","INDO EFTI","SUPP517",,,,,,,,,"TRUE","TRUE",
+"res_partner_5860","LABORATORIUM PSIKOLOGI UNISBA","SUPP518","Jl. Taman Sari No. 1","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5870","MEKAR TEKNIK","SUPP519","Jl. ABC Lost DD-08-37","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5880","JAYA MANDIRI","SUPP520","Cikapundung Electronic Centre Lt.1 Blok GG 14","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5890","GALANG ANUGRAH","SUPP521","Bandung",,,,,,,,"TRUE","TRUE",
+"res_partner_5900","ADE AKMAL","SUPP522","JL ABC DEPAN PS KOHACHI","Bandung",81320723225,,8179286192,,,,"TRUE","TRUE",
+"res_partner_5910","SAMPURNA JAYA","SUPP523","Jl KOSAMBI","Bandung",4207946,,,,,,"TRUE","TRUE",
+"res_partner_5920","OSA PUTRA ENGINEERING, PT","SUPP524 USD","Jl. Arteri JORR Jati Melati No. 58F","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5930","INDOCARE","SUPP525",,"Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_5940","ISTANA ALUMUNIUM","SUPP526","Jl. Peta 79-81","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5950","TUKANG LAS","SUPP527","Jl. Ujung Berung","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5960","KANISIUS","SUPP528","Jl. Cempaka 9, Deresan","Yogyakarta",,,,,,,"TRUE","TRUE",
+"res_partner_5970","EASTERN PRO ENGINEERING, PT","SUPP529","Kaw. Wangsaniaga Wetab No. 27 Kota Baru Parahyangan","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5980","KENCANA, PD","SUPP530","Jl. Suniaraja","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_5990","NEO LIGHTING","SUPP531","Jl. Pecinan Lama No. 38C","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6000","BERKAH SEGARA USAHA, CV","SUPP532","Komp. BIR Jl. Merah Delima Blok C5/8","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6010","BHAKTI ARTHA COMPT","SUPP533","Jl.Achmad Yani No.416","Bandung","022-7216096",,,,,,"TRUE","TRUE",
+"res_partner_6020","PERINTIS, PBF","SUPP534","Jl. Belakang Pasar","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6030","AZZAMY MAJU MANDIRI","SUPP535","Jl. Ancol IX, Buah Batu","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6040","SINAR ABADI. PD","SUPP536","Jl. Cibadak No. 226 Karanganyar","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6050","KERATON ALAM INDONESIA, PT","SUPP537","Jl. Petaburan VI No. 19 RT.004 RW.006 Petamburan","Jakarta Pusat",,,,,,,"TRUE","TRUE",
+"res_partner_6060","KICHI ARZIKI INDUSTRI, PT","SUPP538","Jl. Kebantenan V No. 13 RT.003/007 Semper Timur Cilincing","Jakarta Utara",,,,,,,"TRUE","TRUE",
+"res_partner_6070","TIRTA INTI","SUPP539","Jl. Margacinta No. 28 Ciwastra","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6080","DAMAI SURYA TEKNINDO","SUPP540","Jl. Cikapundung","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6090","LARASCIPTA SARANA MANDIRI, PT","SUPP541","Jl. Sabang No. 31","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6100","LARASCIPTA SARANA MANDIRI, PT","SUPP541 EUR","Jl.Sabang No.31","Bandung","022-4261533/022-4262884",,,"022-4261606",,,"TRUE","TRUE",
+"res_partner_6110","ORIS TUNGGAL","SUPP542","Jl. Tera","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6120","MITRA ABADI JAYA","SUPP543","Jl. Cikapundung","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6130","BUDI KARYA, PD","SUPP544","Jl. Banceuy No. 10A","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6140","MIRAH JAYA","SUPP545","Jl. Rumas Sakit No. 67 Gedebage","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6150","KOSAMBI","SUPP546","Jl. A. Yani","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6160","JK ELEKTRIK","SUPP547","Pasar Cikapundung Lt. dasar Blok JV","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6170","PETRO MITRA ENERGI, PT","SUPP548","Jl. Letjen Sutopo Ruko Golden Madrid 1 Blok B No. 15 Bumi Serpong Damai","Tangerang",,"31.482.244.6-402.000",,,,,"TRUE","TRUE",
+"res_partner_6180","SUGEMA SERVICE DINAMO&RADIATOR","SUPP549","Jl. Trs. Margacinta Ciwastra","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6190","IMCD INDONESIA PT","SUPP550 USD","Jl.Lingkar luar barat Kav.88 Puri kembangan","Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_6200","HARJA GUNATAMA LESTARI, PT","SUPP551","Komp. Setrasari mall 33","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6210","KUSUMA PERSADA ENGINEERING, PT","SUPP551 USD","Ruko Barcelona Sektor XIV Blok E9 No. 38","Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_6220","MULTI RANTA MAS","SUPP552","Pasar Cikapundung Lt. 1 FF 8&36","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6230","INOVASI ELECTRIC","SUPP553","Pasar Cikapundung Baru Lt.2 Blok TT No. 23","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6240","TOKO BUKU GRAMEDIA","SUPP554","Jl. Merdeka","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6250","BAPAK RULLY","SUPP555","Gg. Vihara Curug Kulon RT. 01/01","Tangerang",,,,,,,"TRUE","TRUE",
+"res_partner_6260","CENTRAL NASIONAL","SUPP556","Taman Kopo Indah Raya 184B","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6270","WEIFOOD ANUGRAH UNGGUL PT","SUPP557","Jl.Nginden Intan Raya 1 C","Surabaya","0231-5949569/0231-78113366",,,"0231-5964581","weifood@indo.net.id",,"TRUE","TRUE",
+"res_partner_6280","TOKO ALAT PANCING","SUPP558","Jl. Margacinta","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6290","GALIH CIPTA WISESA, PT","SUPP559 SGD","Taman Tekno BSD Blok J-10 No. 11 Tangerang Selatan","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6300","RAHAYU TEKNIK","SUPP560","Jl. ABC Psr Cikapundung GG 35","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6310","SAHABAT, PD","SUPP561","Psr Cikapundung","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6320","TUKANG KUNCI","SUPP562","Jl. Ciwastra","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6330","RITA COPY CENTRE","SUPP563","Jl.Margacinta  Ruko Komp.Bahagia Permai No. 35","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6340","SUMBER KERANG INDAH, PT","SUPP564","Jl. Kopo Cirangrang No. 471","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6350","PESONA SCIENTIFIC","SUPP565","Komp. Kopo Mas Regency Blok B-1","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6360","FARMA EAST JAYA, PT","SUPP566","Jl. Pangeran Tubagus Angke No. 170","Jakarta",,,,,,,"TRUE","TRUE",
+"res_partner_6370","BAGOES ENGINEERING","SUPP567","Pasar Cikapundung Baru Tl. 2 Blok V 4","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6380","KARYA DIESEL","SUPP568","Psr Cikapundung Baru lantai bawah blok H2-H3",,,,,,,,"TRUE","TRUE",
+"res_partner_6390","MITRA MENTARI","SUPP569","Jl. Holis No. 252A","Bandung","022-6120777",,,,,,"TRUE","TRUE",
+"res_partner_6400","SETA SARI FARMA PT","SUPP570 USD","Jl.Kyai caringin No.26","Jakarta","021-63863561",,,,,,"TRUE","TRUE",
+"res_partner_6410","GURITA MANDALA,PD","SUPP571",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6420","KARUNIA ALAMINDO UTAMA,PT","SUPP572","Jl. Sampurna No.17","Bandung","022-2042626",,,,"karunia_alamindo@yahoo.co.id",,"TRUE","TRUE",
+"res_partner_6430","SUMBER KENCANA PD","SUPP573",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6440","SYARIF","SUPP574",,"Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6450","UNIVERSITAS PADJAJARAN","SUPP575","JL.JATINANGOR","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6460","ZHIVA COMPUTER","SUPP576","jaya plaza lt.2 blok C No.1 Bandung","Bandung","022-70256671","081321297087/081321479202",,,,,"TRUE","TRUE",
+"res_partner_6470","CENTRALINDO SEALING, PD.","SUPP577","JL.ABC PASAR CIKAPUNDUNG",,,,,,,,"TRUE","TRUE",
+"res_partner_6480","BIZMEDIA ANUGRAH ABADI, CV","SUPP578","KOMP.SEGITIGA EMAS KOSAMBI BLOK G NO.3","Bandung","022-7237008",,,"022-7210875",,,"TRUE","TRUE",
+"res_partner_6490","BIZMEDIA ANUGRAH ABADI, CV","SUPP578 USD",,,,,,,,,"TRUE","TRUE",
+"res_partner_6500","KILAT 88","SUPP579","JL.BANCEUY BO.88","Bandung","022-4230016/022-70070032",,,,,,"TRUE","TRUE",
+"res_partner_6510","GRAND FARMASINDO","SUPP580","Jl. Soekarno Hatta KM 12.5","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6520","SARANA ABDI BAKTI, CV","SUPP581","Jl. Rengasdengklok Raya No.26","Bandung","022-7206760",,81224766557,,,,"TRUE","TRUE",
+"res_partner_6530","KOKOBOR (PA EKO)","SUPP582","Jl.Bodogol","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6540","LINGGA MOTOR","SUPP583","JL.AH NASUTION NO.100","Bandung","022-7813145/022-7803197",,,,,,"TRUE","TRUE",
+"res_partner_6550","TOSERBA YOGYA","SUPP584","Jl.RE MARTADINATA 17","Bandung",,,,,,,"TRUE","TRUE",
+"res_partner_6560","TB SINAR FAMILI","SUPP585","Jl. CIganitri No 16","Bandung","022-7500205",,82118680573,,,,"TRUE","TRUE",
+"res_partner_6570","SUMBER AIR, PD","SUPP586","GG.Suniaraja No.58-60","Bandung","022-4241449/022-4241450",,,,,,"TRUE","TRUE",
+"res_partner_6580","Ahui Technology",,,,,,,,,,,,"Manufacturer"
+"res_partner_6590","Akzo Nobel Nederland",,,,,,,,,,,,"Manufacturer"
+"res_partner_6600","Aldamex",,,,,,,,,,,,"Manufacturer"
+"res_partner_6610","Altinex",,,,,,,,,,,,"Manufacturer"
+"res_partner_6620","Ancol Terang P. I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_6630","Andard Mount C.",,,,,,,,,,,,"Manufacturer"
+"res_partner_6640","Andenex-Chemie",,,,,,,,,,,,"Manufacturer"
+"res_partner_6650","Aneka Plastik",,,,,,,,,,,,"Manufacturer"
+"res_partner_6660","Angels Products",,,,,,,,,,,,"Manufacturer"
+"res_partner_6670","Anggel Yeast",,,,,,,,,,,,"Manufacturer"
+"res_partner_6680","Anhui Province Y. S.",,,,,,,,,,,,"Manufacturer"
+"res_partner_6690","Anuh Pharma LTD",,,,,,,,,,,,"Manufacturer"
+"res_partner_6700","Arta Kharisma",,,,,,,,,,,,"Manufacturer"
+"res_partner_6710","Avesta C. Pack",,,,,,,,,,,,"Manufacturer"
+"res_partner_6720","B.T. Gen S.A.",,,,,,,,,,,,"Manufacturer"
+"res_partner_6730","Baoji Tianxin Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_6740","Baselux S.A.",,,,,,,,,,,,"Manufacturer"
+"res_partner_6750","Basf",,,,,,,,,,,,"Manufacturer"
+"res_partner_6760","BASF",,,,,,,,,,,,"Manufacturer"
+"res_partner_6770","Basildon Chem",,,,,,,,,,,,"Manufacturer"
+"res_partner_6780","Beijing Taiyang Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_6790","Bharat Rubber W. PVT",,,,,,,,,,,,"Manufacturer"
+"res_partner_6800","Boegar",,,,,,,,,,,,"Manufacturer"
+"res_partner_6810","Brataco",,,,,,,,,,,,"Manufacturer"
+"res_partner_6820","Brataco/ Lokal",,,,,,,,,,,,"Manufacturer"
+"res_partner_6830","Budi Acid Jaya",,,,,,,,,,,,"Manufacturer"
+"res_partner_6840","Cabot",,,,,,,,,,,,"Manufacturer"
+"res_partner_6850","Cahaya Berlian L.",,,,,,,,,,,,"Manufacturer"
+"res_partner_6860","Calyx Chemical Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_6870","Candila",,,,,,,,,,,,"Manufacturer"
+"res_partner_6880","Cap bola golf",,,,,,,,,,,,"Manufacturer"
+"res_partner_6890","Capsugel",,,,,,,,,,,,"Manufacturer"
+"res_partner_6900","Cargill Bio-Chemical",,,,,,,,,,,,"Manufacturer"
+"res_partner_6910","Cartino Gelatin Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_6920","Cater Chem Gmbh",,,,,,,,,,,,"Manufacturer"
+"res_partner_6930","Cerestar China RMI",,,,,,,,,,,,"Manufacturer"
+"res_partner_6940","Chang zhou Kang Da P",,,,,,,,,,,,"Manufacturer"
+"res_partner_6950","Changzhou Nanjing",,,,,,,,,,,,"Manufacturer"
+"res_partner_6960","Cheetham Salt",,,,,,,,,,,,"Manufacturer"
+"res_partner_6970","Chemagis, Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_6980","Chemco",,,,,,,,,,,,"Manufacturer"
+"res_partner_6990","Cheng fong Chemical",,,,,,,,,,,,"Manufacturer"
+"res_partner_7000","China Jiangsu",,,,,,,,,,,,"Manufacturer"
+"res_partner_7010","China Mineral I/E C.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7020","China Soyabean",,,,,,,,,,,,"Manufacturer"
+"res_partner_7030","Cipta Perkasa Tunggal",,,,,,,,,,,,"Manufacturer"
+"res_partner_7040","Clariant Prod UK",,,,,,,,,,,,"Manufacturer"
+"res_partner_7050","Cognis",,,,,,,,,,,,"Manufacturer"
+"res_partner_7060","Cognis Indonesia",,,,,,,,,,,,"Manufacturer"
+"res_partner_7070","CP Kelco Brasil S/A",,,,,,,,,,,,"Manufacturer"
+"res_partner_7080","CSPC Hebei Zhongrun",,,,,,,,,,,,"Manufacturer"
+"res_partner_7090","CSPC Innovation Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7100","CSPC Weisheng Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7110","CSPC Zhongnuo S.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7120","CU Chemie Uetikon",,,,,,,,,,,,"Manufacturer"
+"res_partner_7130","Daewoong Riasima INA",,,,,,,,,,,,"Manufacturer"
+"res_partner_7140","Dai-ichi Fine Chem",,,,,,,,,,,,"Manufacturer"
+"res_partner_7150","Dai-ichi Kogyo S.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7160","Daimaru",,,,,,,,,,,,"Manufacturer"
+"res_partner_7170","Daixi Chem",,,,,,,,,,,,"Manufacturer"
+"res_partner_7180","Danisco France SAS",,,,,,,,,,,,"Manufacturer"
+"res_partner_7190","DBS",,,,,,,,,,,,"Manufacturer"
+"res_partner_7200","Divi's Laboratories",,,,,,,,,,,,"Manufacturer"
+"res_partner_7210","Dow Chemical Pacific",,,,,,,,,,,,"Manufacturer"
+"res_partner_7220","DSM Nutritional P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7230","DSM Nutritional Prod",,,,,,,,,,,,"Manufacturer"
+"res_partner_7240","DSM Sinochem Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7250","Duta Sugar I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7260","Ecogreen Oleochem",,,,,,,,,,,,"Manufacturer"
+"res_partner_7270","Europe",,,,,,,,,,,,"Manufacturer"
+"res_partner_7280","Faci Asia Pacific",,,,,,,,,,,,"Manufacturer"
+"res_partner_7290","Feltindo",,,,,,,,,,,,"Manufacturer"
+"res_partner_7300","Ferrer Equim S.A",,,,,,,,,,,,"Manufacturer"
+"res_partner_7310","Firmenich Indonesia",,,,,,,,,,,,"Manufacturer"
+"res_partner_7320","Foshan J. G. CLtd",,,,,,,,,,,,"Manufacturer"
+"res_partner_7330","Fuyang B.F.P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7340","Gelita",,,,,,,,,,,,"Manufacturer"
+"res_partner_7350","Geltech Co. Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_7360","Gerresheimer P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7370","Ghani Glass LTD",,,,,,,,,,,,"Manufacturer"
+"res_partner_7380","Grande",,,,,,,,,,,,"Manufacturer"
+"res_partner_7390","Guanxi Longguang TD",,,,,,,,,,,,"Manufacturer"
+"res_partner_7400","Gujarat Glass",,,,,,,,,,,,"Manufacturer"
+"res_partner_7410","Gujarat Microwax Private Ltd.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7420","Gujarat Overseas Inc",,,,,,,,,,,,"Manufacturer"
+"res_partner_7430","Haichen Haiyan M. F.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7440","Halcyon Labs pvt.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7450","Hanwha Chemical Corp",,,,,,,,,,,,"Manufacturer"
+"res_partner_7460","Happy Salad",,,,,,,,,,,,"Manufacturer"
+"res_partner_7470","Hebei Jiheng Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7480","Hemmo Phar Private",,,,,,,,,,,,"Manufacturer"
+"res_partner_7490","Hengshui Jiheng Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7500","Ichimaru Co.,Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_7510","Iglas Glass",,,,,,,,,,,,"Manufacturer"
+"res_partner_7520","iL-Yang Pharma",,,,,,,,,,,,"Manufacturer"
+"res_partner_7530","Incap Antin Utama",,,,,,,,,,,,"Manufacturer"
+"res_partner_7540","Indogravure",,,,,,,,,,,,"Manufacturer"
+"res_partner_7550","Indopack Nusantara",,,,,,,,,,,,"Manufacturer"
+"res_partner_7560","Industrie Chinichie",,,,,,,,,,,,"Manufacturer"
+"res_partner_7570","Ipca Laboratories",,,,,,,,,,,,"Manufacturer"
+"res_partner_7580","ISP Sales (UK) Ltd.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7590","Jawa Manis Rafinasi",,,,,,,,,,,,"Manufacturer"
+"res_partner_7600","Jayatama Selaras",,,,,,,,,,,,"Manufacturer"
+"res_partner_7610","Jiali Bio(Qingdao)",,,,,,,,,,,,"Manufacturer"
+"res_partner_7620","Jiangsu Brother Vit.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7630","Jiangxi S Chemical",,,,,,,,,,,,"Manufacturer"
+"res_partner_7640","Jiangxi Tianxin Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7650","Jilin Shulan Syth P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7660","Jizhoucity Huayang C",,,,,,,,,,,,"Manufacturer"
+"res_partner_7670","JT Baker",,,,,,,,,,,,"Manufacturer"
+"res_partner_7680","JT. Baker",,,,,,,,,,,,"Manufacturer"
+"res_partner_7690","Kangar C. I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7700","Kanto Chemical Co.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7710","Kao Corporation",,,,,,,,,,,,"Manufacturer"
+"res_partner_7720","Kapsulindo Nusantara",,,,,,,,,,,,"Manufacturer"
+"res_partner_7730","Karsavicta Satya",,,,,,,,,,,,"Manufacturer"
+"res_partner_7740","Karyana K. Plastik",,,,,,,,,,,,"Manufacturer"
+"res_partner_7750","Katwijk Chemie bv",,,,,,,,,,,,"Manufacturer"
+"res_partner_7760","KH Roberts",,,,,,,,,,,,"Manufacturer"
+"res_partner_7770","KH Roberts PTE Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_7780","KH Roberts PTE LTD",,,,,,,,,,,,"Manufacturer"
+"res_partner_7790","Konoshima",,,,,,,,,,,,"Manufacturer"
+"res_partner_7800","Kyowa Hakko Kogyo",,,,,,,,,,,,"Manufacturer"
+"res_partner_7810","Lecapseal Indonesia",,,,,,,,,,,,"Manufacturer"
+"res_partner_7820","Liaoyuan Silver E.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7830","Linaria Chemicals",,,,,,,,,,,,"Manufacturer"
+"res_partner_7840","Lipoid",,,,,,,,,,,,"Manufacturer"
+"res_partner_7850","Lucas",,,,,,,,,,,,"Manufacturer"
+"res_partner_7860","Lucas Djaja",,,,,,,,,,,,"Manufacturer"
+"res_partner_7870","Lyhock Plast",,,,,,,,,,,,"Manufacturer"
+"res_partner_7880","Lyondell south Asia",,,,,,,,,,,,"Manufacturer"
+"res_partner_7890","LYSI",,,,,,,,,,,,"Manufacturer"
+"res_partner_7900","Maestro Print",,,,,,,,,,,,"Manufacturer"
+"res_partner_7910","Mafco Worldwide Corp",,,,,,,,,,,,"Manufacturer"
+"res_partner_7920","Malladi Drug & Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_7930","Marin Liza Farmasi",,,,,,,,,,,,"Manufacturer"
+"res_partner_7940","Mega Fine Pharma (p)",,,,,,,,,,,,"Manufacturer"
+"res_partner_7950","Mehta Api Pvt.Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_7960","Mehta Phar Ind.",,,,,,,,,,,,"Manufacturer"
+"res_partner_7970","Merck kgaA",,,,,,,,,,,,"Manufacturer"
+"res_partner_7980","Mitra Herbal",,,,,,,,,,,,"Manufacturer"
+"res_partner_7990","Mitra Selaras Abadi",,,,,,,,,,,,"Manufacturer"
+"res_partner_8000","Mulia Glass",,,,,,,,,,,,"Manufacturer"
+"res_partner_8010","Multi Hasta Mas",,,,,,,,,,,,"Manufacturer"
+"res_partner_8020","Mutiara Offset P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8030","Nachi Tape",,,,,,,,,,,,"Manufacturer"
+"res_partner_8040","Nanjing Baijingyu P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8050","Narmada Gelatine Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_8060","Ningxia Qiyuan Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_8070","Norbrook s.r.o.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8080","North China Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_8090","North China Phar G.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8100","North China Phar V.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8110","Novastell",,,,,,,,,,,,"Manufacturer"
+"res_partner_8120","Oil Seed Extractions",,,,,,,,,,,,"Manufacturer"
+"res_partner_8130","Panfix",,,,,,,,,,,,"Manufacturer"
+"res_partner_8140","Penyou",,,,,,,,,,,,"Manufacturer"
+"res_partner_8150","Permata Dunia Sukses",,,,,,,,,,,,"Manufacturer"
+"res_partner_8160","PG. Rajawali II P",,,,,,,,,,,,"Manufacturer"
+"res_partner_8170","Pharmacia & Up John",,,,,,,,,,,,"Manufacturer"
+"res_partner_8180","Phytochemindo Reksa",,,,,,,,,,,,"Manufacturer"
+"res_partner_8190","Prima Figur Pertama",,,,,,,,,,,,"Manufacturer"
+"res_partner_8200","PT. Packindo",,,,,,,,,,,,"Manufacturer"
+"res_partner_8210","Purac Biochem bv",,,,,,,,,,,,"Manufacturer"
+"res_partner_8220","Qianjiang Yongan P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8230","Qingdao",,,,,,,,,,,,"Manufacturer"
+"res_partner_8240","R.T. Vanderbilt Co.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8250","Raja Tawon",,,,,,,,,,,,"Manufacturer"
+"res_partner_8260","Rak Ghani",,,,,,,,,,,,"Manufacturer"
+"res_partner_8270","Recordati",,,,,,,,,,,,"Manufacturer"
+"res_partner_8280","Rhodia Silicones SAS",,,,,,,,,,,,"Manufacturer"
+"res_partner_8290","Rousselot (Da'an)",,,,,,,,,,,,"Manufacturer"
+"res_partner_8300","Rousselot(Guangdong)",,,,,,,,,,,,"Manufacturer"
+"res_partner_8310","RZBC IMP & EXP",,,,,,,,,,,,"Manufacturer"
+"res_partner_8320","RZBC IMP & EXP Co.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8330","Sachtleben Pigment G",,,,,,,,,,,,"Manufacturer"
+"res_partner_8340","Samator Inti P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8350","Sanlit Inti Plastik",,,,,,,,,,,,"Manufacturer"
+"res_partner_8360","Sanofi Aventis",,,,,,,,,,,,"Manufacturer"
+"res_partner_8370","Santo Plastik",,,,,,,,,,,,"Manufacturer"
+"res_partner_8380","Sarakamandiri S.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8390","Satelit plastik",,,,,,,,,,,,"Manufacturer"
+"res_partner_8400","Schott Igar Glass",,,,,,,,,,,,"Manufacturer"
+"res_partner_8410","Sensient Colors UK",,,,,,,,,,,,"Manufacturer"
+"res_partner_8420","Sentra Husada",,,,,,,,,,,,"Manufacturer"
+"res_partner_8430","Sentra Usahatama J.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8440","Seppic",,,,,,,,,,,,"Manufacturer"
+"res_partner_8450","Shandong Dingxin",,,,,,,,,,,,"Manufacturer"
+"res_partner_8460","Shandong G. G. C Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_8470","Shandong Phar.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8480","Shandong Xinhua Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_8490","Shanghai Passiono I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8500","Shell Chemical",,,,,,,,,,,,"Manufacturer"
+"res_partner_8510","Shouguang Fukang P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8520","Sichuan Xieli Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_8530","Sinar Goldsindo",,,,,,,,,,,,"Manufacturer"
+"res_partner_8540","Sinarmas Oleochem",,,,,,,,,,,,"Manufacturer"
+"res_partner_8550","Sinochem",,,,,,,,,,,,"Manufacturer"
+"res_partner_8560","Sinochem T. C Ltd.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8570","SM Biomed",,,,,,,,,,,,"Manufacturer"
+"res_partner_8580","Smart Labs Indonesia",,,,,,,,,,,,"Manufacturer"
+"res_partner_8590","Sonnerborn Inc.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8600","Soon Soon Oilmills",,,,,,,,,,,,"Manufacturer"
+"res_partner_8610","Sozhou Fine Chemical",,,,,,,,,,,,"Manufacturer"
+"res_partner_8620","Stearinerie Dubois",,,,,,,,,,,,"Manufacturer"
+"res_partner_8630","Stellar Chem Lab Pvt",,,,,,,,,,,,"Manufacturer"
+"res_partner_8640","Sun Plan Development",,,,,,,,,,,,"Manufacturer"
+"res_partner_8650","Sunda jaya",,,,,,,,,,,,"Manufacturer"
+"res_partner_8660","Sunripe",,,,,,,,,,,,"Manufacturer"
+"res_partner_8670","Supriya Lifescience",,,,,,,,,,,,"Manufacturer"
+"res_partner_8680","Symrise",,,,,,,,,,,,"Manufacturer"
+"res_partner_8690","Takehara Kagayu K.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8700","Taurus Chemical (p)",,,,,,,,,,,,"Manufacturer"
+"res_partner_8710","Teva Czech Industrie",,,,,,,,,,,,"Manufacturer"
+"res_partner_8720","The United Lab.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8730","Tianjin Changjie C.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8740","Tomita Pharm",,,,,,,,,,,,"Manufacturer"
+"res_partner_8750","Tomita Pharmaceutic",,,,,,,,,,,,"Manufacturer"
+"res_partner_8760","Tronox Pigment GmbH",,,,,,,,,,,,"Manufacturer"
+"res_partner_8770","Truchemic",,,,,,,,,,,,"Manufacturer"
+"res_partner_8780","Tunggal Jaya P. I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8790","Ueno Fine Chemicals",,,,,,,,,,,,"Manufacturer"
+"res_partner_8800","Ultra prima plastik",,,,,,,,,,,,"Manufacturer"
+"res_partner_8810","Unilabs Chemicals",,,,,,,,,,,,"Manufacturer"
+"res_partner_8820","Univar Colour England",,,,,,,,,,,,"Manufacturer"
+"res_partner_8830","Van Houthen",,,,,,,,,,,,"Manufacturer"
+"res_partner_8840","Venkatarama Chemical",,,,,,,,,,,,"Manufacturer"
+"res_partner_8850","Verben S.A.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8860","Virchow Laboratories",,,,,,,,,,,,"Manufacturer"
+"res_partner_8870","Wacker Chemicals",,,,,,,,,,,,"Manufacturer"
+"res_partner_8880","Warner",,,,,,,,,,,,"Manufacturer"
+"res_partner_8890","Warung Islami Bogor",,,,,,,,,,,,"Manufacturer"
+"res_partner_8900","Wenling Tongda Fine",,,,,,,,,,,,"Manufacturer"
+"res_partner_8910","West Pharmaceutical",,,,,,,,,,,,"Manufacturer"
+"res_partner_8920","Western Drugs LTD",,,,,,,,,,,,"Manufacturer"
+"res_partner_8930","Wilmar Nabati INA",,,,,,,,,,,,"Manufacturer"
+"res_partner_8940","Wockhardt Limited",,,,,,,,,,,,"Manufacturer"
+"res_partner_8950","Woodland Food I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_8960","Wuhan Sanjiang S.G.B",,,,,,,,,,,,"Manufacturer"
+"res_partner_8970","Wuhan Wuyao Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_8980","Wuhan Youji",,,,,,,,,,,,"Manufacturer"
+"res_partner_8990","Xinfa Pharmaceutical",,,,,,,,,,,,"Manufacturer"
+"res_partner_9000","Yangzhong B. C. F.",,,,,,,,,,,,"Manufacturer"
+"res_partner_9010","Yung Zip Chemical I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_9020","Zhangjiagang S. B.",,,,,,,,,,,,"Manufacturer"
+"res_partner_9030","Zhaoxian Yalong I.",,,,,,,,,,,,"Manufacturer"
+"res_partner_9040","Zhejiang Hisoar Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_9050","Zhejiang Jiangfeng H",,,,,,,,,,,,"Manufacturer"
+"res_partner_9060","Zhejiang Medecine",,,,,,,,,,,,"Manufacturer"
+"res_partner_9070","Zhejiang Qiming Phar",,,,,,,,,,,,"Manufacturer"
+"res_partner_9080","Zhejiang Wanbang",,,,,,,,,,,,"Manufacturer"
+"res_partner_9090","Zhejiang Xianju",,,,,,,,,,,,"Manufacturer"
+"res_partner_9100","Zhucheng Haotian P.",,,,,,,,,,,,"Manufacturer"
+"res_partner_9110","Zhuhai United Lab.",,,,,,,,,,,,"Manufacturer"
+"res_partner_9120","Shandong P. G. C Ltd",,,,,,,,,,,,"Manufacturer"
+"res_partner_9130","Artha Kharisma",,,,,,,,,,,,"Manufacturer"
+"res_partner_9140","Adeka Corporation",,,,,,,,,,,,"Manufacturer"
+"res_partner_9150","Local Manufacturer",,,,,,,,,,,,"Manufacturer"
+"res_partner_9160","Lucas Djaya",,,,,,,,,,,,"Manufacturer"

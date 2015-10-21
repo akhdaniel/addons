@@ -1,0 +1,36 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DEC0010100,Camicetine 250 mg Blister,Kapsul Kaplet Tablet,"Dus, 10 blister @ 10 kapsul  ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0020100,Camicetine 250 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Box 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0030100,Camicetine 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0040100,Camicetine 500 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul  ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0050100,Camicyclin 250 mg Blister,Kapsul Kaplet Tablet,Blister 10 kapsul Dus 100 kapsul ,Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0060100,Camicyclin 250 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0070100,Camicyclin 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0080100,Camicyclin 500 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Box 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0090100,Camicyclin 500 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0100100,Camitrosin 250 mg Blister,Kapsul Kaplet Tablet,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0110100,Camitrosin 250 mg Pot 1000,Kapsul Kaplet Tablet,Kaleng 1000 kapsul ,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0120100,Camitrosin 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0130100,Chlorampenicol 250 mg Pot 1000,Kapsul Kaplet Tablet,Pot plastik 1000 kapsul,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0140100,Chlorampenicol 250 mg Pot 250,Kapsul Kaplet Tablet,pot plastik @ 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0150100,Chlorampenicol 250 mg Strip 10,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0160100,Chlorampenicol 250 mg Strip 12,Kapsul Kaplet Tablet,"Dus, 12 strip @ 10 kapsul",Box 120 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEC0170200,Camistan 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DED0010100,Doxycycline 100 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEE0010100,Erythromycin 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEG0010100,Glomasin 150 mg Strip,Kapsul Kaplet Tablet,"Dus, 3 strip @ 10 kapsul",Box 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEG0020100,Glomasin 300 mg Strip,Kapsul Kaplet Tablet,"Dus, 3 strip @ 10 kapsul",Box 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEH0010100,Heparsan Pot 30,Kapsul Kaplet Tablet,Botol @ 30 kapsul ,Pot 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEI0010100,Indometacin 25 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEK0010100,Kosaka Strip,Kapsul Kaplet Tablet,"Dus, 25 catch cover @ 1 strip @ 4 kapsul ",Box 100 Kpsul,Kplet,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEO0010100,Oximak Pot 30,Kapsul Kaplet Tablet,Botol @ 30 kapsul,Pot 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEP0010100,Phenytoin 100 mg Pot 100,Kapsul Kaplet Tablet,Botol plastik @ 100 kapsul,Pot 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEP0020100,Phenytoin 100 mg Pot 250,Kapsul Kaplet Tablet,Botol plastik 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEP0030100,Phenytoin 30 mg Pot 100,Kapsul Kaplet Tablet,Botol plastik @ 100 kapsul,Pot 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEP0040100,Phenytoin 30 mg Pot 250,Kapsul Kaplet Tablet,Botol plastik 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DER0010100,Rosan Pot 30,Kapsul Kaplet Tablet,Botol @ 30 kapsul,Pot 30 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DET0010100,Tetracycline 250 mg Pot 1000,Kapsul Kaplet Tablet,Pot plastik 1000 kapsul,Pot 1000 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DET0020100,Tetracycline 250 mg Strip,Kapsul Kaplet Tablet,"Dus, 10 strip @ 10 kapsul",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEZ0010100,Zentropil 100 mg Blister,Kapsul Kaplet Tablet,"Dus, 10 blister @ 10 kapsul ",Box 100 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEZ0020100,Zentropil 100 mg Pot 250,Kapsul Kaplet Tablet,Pot plastik @ 250 kapsul,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DEZ0030100,Zentropil 30 mg Pot 250,Kapsul Kaplet Tablet,Botol 250 kapsul ,Pot 250 Kpsul,Kpsul,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

@@ -1,0 +1,226 @@
+bom_id,workcenter_operation_id,mesin,no_mesin,is_paralel,work_center_id,waktu
+Biocelle,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Geriatrie,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Habbatussauda 600 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Habbatzaitun 500 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Habbatzaitun 600 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Isotretinoin,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Lamata,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,300
+,Packing/Timbang,,,,,300
+,Packing/Lipat Brosur,,,,,15
+Mamavita,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Natura Nigela Sativa 700 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Natura Omega Squa 650 mg,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+Olive Oil,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+PDO 500,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,
+,,Mesin Seal,,,,
+,,Timbangan,,,,
+,Packing/Coding,Alpha Jet C,,,,
+,,Image,,,,60
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,
+"Vitamin A 200,000 IU",Pengeringan,Oven Tumbler Machine,,,,20
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,1080
+,,Tangki Penampung,,,,1080
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Labelling,Shanghai Suny,,,,300
+,Packing/Timbang,,,,,300
+,Packing/Lipat Brosur,,,,,15
+"Vitamin E 400,000 IU",Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Labelling,Shanghai Suny,,,,300
+,Packing/Timbang,,,,,300
+,Packing/Lipat Brosur,,,,,15
+Vomil,Pengeringan,Oven Tumbler Machine,,,,15
+,Penimbangan,Mettler Toledo,AL122,,,30
+,Melting,Tangki Gelatin w/ pressure,,,,360
+,Mixing,Colloid Mill Rimek,Karnavasi,,,10
+,,Hand Mixer,Makita,,,20
+,Filling,Chang Sung Phonetlan,,,,840
+,,Tangki Penampung,,,,840
+,"Counting,sealing,capping",Tamaru Mitra Sejati,,,,420
+,,Mesin Seal,,,,420
+,,Timbangan,,,,420
+,Packing/Coding,Alpha Jet C,,,,60
+,,Image,,,,
+,Packing/Labelling,Shanghai Suny,,,,
+,Packing/Timbang,,,,,
+,Packing/Lipat Brosur,,,,,

@@ -1,0 +1,5 @@
+Internal Reference,Name,categ_id,description_sale,unit of measure,uom_po_id,route_ids,Costing Method,Inventory Valuation,Product Type,standard_price,income coa,expense coa,list_price,sale_ok,purchase_ok
+DFC0010100,Camitrosin DS 60 ml,Dry Syrup,Botol 60 ml ,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DFD0010100,Doxycycline DS 20 ml,Dry Syrup,Botol @ 20 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DFE0010100,Erythromycin DS 60 ml,Dry Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE
+DFT0010100,Tetracycline DS 125 60 ml,Dry Syrup,Botol 60 ml,Botol,Botol,Manufacture,Average Price,Real Time (automated),Stockable Product,,,,0,TRUE,FALSE

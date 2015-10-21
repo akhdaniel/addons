@@ -1,0 +1,236 @@
+name,location_id,usage
+Gudang Bahan Awal,Physical Locations / WH / Stock,Internal Location
+Gudang Bahan Awal 1 (Pusat),Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Blok A 5 Rak,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Blok B 5 Rak,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Bok C Palet 10,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak A3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak A4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak A5,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak B1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak B2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak B3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak B4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Rak B5,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C5,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C6,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C7,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C8,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C9,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Palet C10,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 1 (Pusat),Internal Location
+Area Terkondisikan,Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Rak A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Rak A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Rak A3,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Rak B1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Rak B2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Rak B3,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Palet C1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Palet C2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Terkondisikan,Internal Location
+Area Karantina,Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Rak A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Karantina,Internal Location
+Rak A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Karantina,Internal Location
+Palet B1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Karantina,Internal Location
+Palet B2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Karantina,Internal Location
+Area Penyimpanan Bahan Baku Liquid,Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet A3,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet A4,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet B1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet B2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet B3,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet B4,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet C1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet C2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet C3,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet C4,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet D1,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet D2,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet D3,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet D4,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Palet D5,Physical Locations / WH / Stock / Gudang Bahan Awal / Area Penyimpanan Bahan Baku Liquid,Internal Location
+Gudang Betalaktam,Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Betalaktam,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Betalaktam,Internal Location
+Palet A3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Betalaktam,Internal Location
+Palet A4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Betalaktam,Internal Location
+Palet A5,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Betalaktam,Internal Location
+Gudang Bahan Awal 2,Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet A3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet A4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet B1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet B2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet B3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet B4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet C1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet C2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet C3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet C4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet D1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet D2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet D3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet D4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Palet D5,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 2,Internal Location
+Gudang Bahan Awal 3,Physical Locations / WH / Stock / Gudang Bahan Awal,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 3,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 3,Internal Location
+Palet A3,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 3,Internal Location
+Palet A4,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 3,Internal Location
+Palet A5,Physical Locations / WH / Stock / Gudang Bahan Awal / Gudang Bahan Awal 3,Internal Location
+Gudang Bahan Kemas,Physical Locations / WH / Stock,Internal Location
+Gudang Bahan Kemas Primer 1,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A3,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A4,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A5,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A6,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A7,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A8,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A9,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A10,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A11,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A12,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A13,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A14,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A15,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A16,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A17,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A18,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A19,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A20,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A21,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A22,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A23,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A24,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A25,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A26,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A27,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A28,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A29,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A30,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A31,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet A32,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B3,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B4,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B5,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B6,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B7,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B8,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B9,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B10,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B11,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B12,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B13,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B14,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B15,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B16,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B17,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B18,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B19,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B20,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B21,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B22,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B23,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B24,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B25,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B26,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B27,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B28,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B29,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B30,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B31,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Palet B32,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 1,Internal Location
+Area Terkondisikan,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Rak A1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Terkondisikan,Internal Location
+Rak A2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Terkondisikan,Internal Location
+Rab B1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Terkondisikan,Internal Location
+Rab B2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Terkondisikan,Internal Location
+Area Karantina,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Gudang Bahan Kemas Primer 2,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Blok A 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 2,Internal Location
+Blok B 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 2,Internal Location
+Blok C 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 2,Internal Location
+Blok D 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 2,Internal Location
+Area Karantina,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Blok A 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Blok B 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Blok C 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Blok D 7 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Gudang Bahan Kemas Primer 3 Ampul,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Blok A 12 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 3 Ampul,Internal Location
+Blok B 6 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 3 Ampul,Internal Location
+Blok C 6 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Primer 3 Ampul,Internal Location
+Gudang Bahan Kemas Sekunder 1 Brosur dan Leflet,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Blok A 5 Lemari,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Sekunder 1 Brosur dan Leflet,Internal Location
+Blok B 3 Lemari,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Sekunder 1 Brosur dan Leflet,Internal Location
+Blok C 3 Lemari ,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Sekunder 1 Brosur dan Leflet,Internal Location
+Blok 4 Lemari ,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Sekunder 1 Brosur dan Leflet,Internal Location
+Blok E 1 Rak,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Bahan Kemas Sekunder 1 Brosur dan Leflet,Internal Location
+Area Karantina,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Blok A 1 Palet,Physical Locations / WH / Stock / Gudang Bahan Kemas / Area Karantina,Internal Location
+Gudang Corbox,Physical Locations / WH / Stock / Gudang Bahan Kemas,Internal Location
+Palet A1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A3,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A4,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A5,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A6,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A7,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A8,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A9,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet A10,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B3,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B4,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B5,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B6,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet B7,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet C1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet C2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet C3,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet C4,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet C5,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D1,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D2,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D3,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D4,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D5,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D6,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Palet D7,Physical Locations / WH / Stock / Gudang Bahan Kemas / Gudang Corbox,Internal Location
+Area Penimbangan,Physical Locations / WH / Stock,Internal Location
+Rak A1,Physical Locations / WH / Stock / Area Penimbangan,Internal Location
+Rak B1,Physical Locations / WH / Stock / Area Penimbangan,Internal Location
+Rak B2,Physical Locations / WH / Stock / Area Penimbangan,Internal Location
+Rak C1,Physical Locations / WH / Stock / Area Penimbangan,Internal Location
+Gudang Obat Jadi Pusat,Physical Locations / WH / Stock,Internal Location
+Blok A 45 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat,Internal Location
+Blok B 32 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat,Internal Location
+Area Terkondisikan 1,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat,Internal Location
+Blok A 3 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 1,Internal Location
+Blok B 3 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 1,Internal Location
+Blok C 3 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 1,Internal Location
+Blok D 3 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 1,Internal Location
+Blok E 3 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 1,Internal Location
+Blok F 5 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 1,Internal Location
+Area Terkondisikan 2,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat,Internal Location
+Blok A 4 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 2,Internal Location
+Blok B 4 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 2,Internal Location
+ Blok C 4 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 2,Internal Location
+Blok D 4 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 2,Internal Location
+Blok E 2 Palet,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 2,Internal Location
+Blok F 2 Blok,Physical Locations / WH / Stock / Gudang Obat Jadi Pusat / Area Terkondisikan 2,Internal Location

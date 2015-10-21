@@ -1,0 +1,3 @@
+"default_code","Name","seller_ids/product_name","seller_ids/name","uom_id","uom_po_id","categ_id","list_price","route_ids","cost_method","valuation","type","purchase_ok","active","sale_ok"
+"ADI0010101 ","Dimethicone (30%)","Dextromethorphan HBr",,"kg","kg","Bahan Baku Aktif",0,"Buy","Average Price","Real Time (automated)","Stockable Product","TRUE","TRUE","FALSE"
+"AYE0010101 ","Yeast Extraction","Brewe's Yeast","Sichuan Xieli Phar","kg","kg","Bahan Baku Aktif",0,"Buy","Average Price","Real Time (automated)","Stockable Product","TRUE","TRUE","FALSE"
