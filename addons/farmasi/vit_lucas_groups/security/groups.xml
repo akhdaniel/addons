@@ -1,0 +1,171 @@
+<openerp>
+	<data noupdate="0">
+<!--         <record model="ir.module.category" id="module_category_accounting_and_finance">
+            <field name="name">Accounting &amp; Finance</field>
+            <field name="sequence">8</field>
+        </record>
+ 
+	    <record id="group_account_manager" model="res.groups">
+	        <field name="name">Financial Manager</field>
+	        <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+	        <field name="implied_ids" eval="[(4, ref('group_account_user'))]"/>
+	    </record>
+-->
+
+
+	    <record id="group_owner" model="res.groups">
+	        <field name="name">Owner</field>
+	    </record>
+
+	    <record id="group_qa_manager" model="res.groups">
+	        <field name="name">QA Manager</field>
+	    </record>
+	    <record id="group_qa_supervisor" model="res.groups">
+	        <field name="name">QA Supervisor</field>
+	    </record>
+	    <record id="group_qa_user" model="res.groups">
+	        <field name="name">QA User</field>
+	    </record>
+
+	    <record id="group_rnd_manager" model="res.groups">
+	        <field name="name">RND Manager</field>
+	    </record>
+	    <record id="group_rnd_supervisor" model="res.groups">
+	        <field name="name">RND Supervisor</field>
+	    </record>
+	    <record id="group_rnd_user" model="res.groups">
+	        <field name="name">RND User</field>
+	    </record>
+
+	    <record id="group_qc_manager" model="res.groups">
+	        <field name="name">QC Manager</field>
+	    </record>
+	    <record id="group_qc_supervisor" model="res.groups">
+	        <field name="name">QC Supervisor</field>
+	    </record>
+	    <record id="group_qc_user" model="res.groups">
+	        <field name="name">QC User</field>
+	    </record>
+
+	    <record id="group_ppic_manager" model="res.groups">
+	        <field name="name">PPIC Manager</field>
+	    </record>
+	    <record id="group_ppic_supervisor" model="res.groups">
+	        <field name="name">PPIC Supervisor</field>
+	    </record>
+	    <record id="group_ppic_user" model="res.groups">
+	        <field name="name">PPIC User</field>
+	    </record>
+
+	    <record id="group_engineering_manager" model="res.groups">
+	        <field name="name">Engineering Manager</field>
+	    </record>
+	    <record id="group_engineering_supervisor" model="res.groups">
+	        <field name="name">Engineering Supervisor</field>
+	    </record>
+	    <record id="group_engineering_user" model="res.groups">
+	        <field name="name">Engineering User</field>
+	    </record>
+
+	    <record id="group_warehouse_b_baku_manager" model="res.groups">
+	        <field name="name">Warehouse B. Baku Manager</field>
+	    </record>
+	    <record id="group_warehouse_b_baku_supervisor" model="res.groups">
+	        <field name="name">Warehouse B. Baku Supervisor</field>
+	    </record>
+	    <record id="group_warehouse_b_baku_user" model="res.groups">
+	        <field name="name">Warehouse B. Baku User</field>
+	    </record>
+	    <record id="group_warehouse_b_kemas_manager" model="res.groups">
+	        <field name="name">Warehouse B. Kemas Manager</field>
+	    </record>
+	    <record id="group_warehouse_b_kemas_supervisor" model="res.groups">
+	        <field name="name">Warehouse B. Kemas Supervisor</field>
+	    </record>
+	    <record id="group_warehouse_b_kemas_user" model="res.groups">
+	        <field name="name">Warehouse B. Kemas User</field>
+	    </record>
+	    <record id="group_warehouse_b_jadi_manager" model="res.groups">
+	        <field name="name">Warehouse B. Jadi Manager</field>
+	    </record>
+	    <record id="group_warehouse_b_jadi_supervisor" model="res.groups">
+	        <field name="name">Warehouse B. Jadi Supervisor</field>
+	    </record>
+	    <record id="group_warehouse_b_jadi_user" model="res.groups">
+	        <field name="name">Warehouse B. Jadi User</field>
+	    </record>
+
+	    <record id="group_purchasing_supervisor" model="res.groups">
+	        <field name="name">Purchasing Supervisor</field>
+	    </record>
+	    <record id="group_sales_supervisor" model="res.groups">
+	        <field name="name">Sales Supervisor</field>
+	    </record>
+	    <record id="group_production_supervisor" model="res.groups">
+	        <field name="name">Production Supervisor</field>
+	    </record>
+
+	    <record id="group_accounting_supervisor" model="res.groups">
+	        <field name="name">Accounting Supervisor</field>
+	        <!-- <field name="category_id" ref="base.module_category_accounting_and_finance"/> -->
+	    </record>
+
+	    <record id="group_treasury_manager" model="res.groups">
+	        <field name="name">Treasury Manager</field>
+	    </record>
+	    <record id="group_treasury_supervisor" model="res.groups">
+	        <field name="name">Treasury Supervisor</field>
+	    </record>
+	    <record id="group_treasury_user" model="res.groups">
+	        <field name="name">Treasury User</field>
+	    </record>
+
+	    <record id="group_ga_manager" model="res.groups">
+	        <field name="name">GA Manager</field>
+	    </record>
+	    <record id="group_ga_supervisor" model="res.groups">
+	        <field name="name">GA Supervisor</field>
+	    </record>
+	    <record id="group_ga_user" model="res.groups">
+	        <field name="name">GA User</field>
+	    </record>
+
+	    <record id="group_it_manager" model="res.groups">
+	        <field name="name">IT Manager</field>
+	    </record>
+	    <record id="group_it_supervisor" model="res.groups">
+	        <field name="name">IT Supervisor</field>
+	    </record>
+	    <record id="group_it_user" model="res.groups">
+	        <field name="name">IT User</field>
+	    </record>
+
+	    <record id="group_hrd_supervisor" model="res.groups">
+	        <field name="name">HRD Supervisor</field>
+	    </record>
+
+	    <record id="group_mr_manager" model="res.groups">
+	        <field name="name">MR Manager</field>
+	    </record>
+	    <record id="group_mr_supervisor" model="res.groups">
+	        <field name="name">MR Supervisor</field>
+	    </record>
+	    <record id="group_mr_user" model="res.groups">
+	        <field name="name">MR User</field>
+	    </record>
+
+
+
+
+		<!-- <record id="only_responsible_can_modify" model="ir.rule">
+			<field name="name">Cuman penanggung jawab yang bisa edit Course</field>
+			<field name="model_id" ref="model_academic_course"/>
+			<field name="groups" eval="[(4, ref('academic.group_manager'))]"/> 
+			<field name="perm_read" eval="0"/>
+			<field name="perm_write" eval="1"/>
+			<field name="perm_create" eval="0"/>
+			<field name="perm_unlink" eval="1"/>
+			<field name="domain_force">['|', ('responsible_id','=',False), ('responsible_id','=',user.id)]</field>
+		</record>   -->      
+    </data>
+</openerp>
