@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--
+          Bill of Materials Lines
+        -->
+
+        <record id="action_bom_lines_list" model="ir.actions.act_window">
+            <field name="name">List BOM Lines</field>
+            <field name="res_model">mrp.bom.line</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <!--  menu -->
+        <menuitem id="menu_bom_lines2"
+             name="BOM Lines"
+             sequence="10"
+             action="action_bom_lines_list"
+             parent="mrp.menu_mrp_bom"/>
+
+        <!-- show BOM fields -->
+        <record id="view_bom_tree" model="ir.ui.view">
+            <field name="name">view_bom_tree2</field>
+            <field name="model">mrp.bom</field>
+            <field name="arch" type="xml">
+                <tree string="bom">
+                    <field name="name"/>
+                    <field name="product_qty"/>
+                    <field name="product_uom"/>
+                    <field name="lead_time_product"/>
+                    <field name="routing_id"/>
+                    <field name="yield"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>
