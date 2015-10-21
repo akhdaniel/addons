@@ -8,8 +8,7 @@
                 <tree string="Forecast Product">
                     <field name="name"/>
                     <field name="year"/>     
-                    <field name="create_uid"/> 
-                    <field name="created_date"/>          
+                    <field name="state"/> 
                 </tree>
             </field>
         </record>
@@ -20,8 +19,8 @@
                  <form string="Forecast Product" version="7.0">
                     <header>
                         <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
-                        <button name="action_create_mps"  type="object" states="done" string="Create MPS" class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                        <button name="action_create_mps"  type="object" states="open" string="Create MPS" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
                     </header>
                         <group>
                             <group>
@@ -38,7 +37,7 @@
                                 <field name="forecast_detail_ids"  view_mode="tree"  widget="one2many_list">
                                     <tree string="Details" editable="bottom">
                                         <!-- <field name="forecast_product_id" /> -->
-                                        <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                        <field name="product_id" on_change="on_change_product_id(product_id, context)" domain="[('sale_ok','=','1')]"/> 
                                         <field name="product_uom" />
                                         <!-- <field name="year" on_change="0"/> -->
                                         <field name="m1" />
