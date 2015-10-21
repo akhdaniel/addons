@@ -8,7 +8,10 @@
        """,
     'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
     'depends': ['mrp','mrp_operations'],
-    'data': ['mrp_operations_view.xml'],
+    'data': [
+        'mrp_operations_view.xml',
+        'security/ir.model.access.csv'
+    ],
     'test': [],    
     'installable': True,
     'active': False,
