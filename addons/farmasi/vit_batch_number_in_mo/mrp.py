@@ -542,7 +542,7 @@ class mrp_production(osv.osv):
         # otomatis ternyata, yg penting Warehouse Gudang Obat jadi incoming set 2 steps
 
         # print "create QA release move"
-        # self.create_qa_release(cr, uid, production, context=context)
+        self.create_qa_release(cr, uid, production, context=context)
 
         return True
 
