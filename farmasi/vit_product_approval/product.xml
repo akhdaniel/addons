@@ -1,0 +1,36 @@
+<openerp>
+<data>      
+
+    <!-- Product -->
+    <record id="view_product_approval" model="ir.ui.view">
+        <field name="name">product.template</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <button string="Confirm" type="object" name="action_confirm" class="oe_highlight" 
+                        states="draft" />
+                    
+                    <button string="QA Approved" type="object" name="action_approval1" class="oe_highlight" 
+                        states="open" />
+                    
+                    <button string="Accounting Approved" type="object" name="action_approval2" class="oe_highlight" 
+                        states="approval1" />
+                    
+                    <button string="Cancel" type="object" name="action_draft" 
+                        states="open,approval1,approval2" />
+                    
+                    <button string="Activate" type="object" name="action_active" class="oe_highlight" 
+                        states="approval2" />
+                    
+                    <button string="Reject" type="object" name="action_reject" 
+                        states="open,approval1,approval2" />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,approval1,approval2,sellable" readonly="1"/>
+                </header>
+            </sheet>   
+        </field>
+    </record>
+</data>
+</openerp>
