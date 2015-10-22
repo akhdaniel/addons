@@ -77,8 +77,6 @@ class netpro_product_plan_benefit(osv.osv):
     _columns = {
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
         'benefit_id': fields.many2one('netpro.benefit', 'Benefit'),
-        'default_limit_id': fields.many2one('netpro.default_limit', 'Default Limit'),
-        'value_limit' : fields.float('Value Limit'),
         'benefit_limit_start': fields.float('Benefit Limit Start'),
         'benefit_limit_end': fields.float('Benefit Limit End'),
         'parent_benefit_id': fields.many2one('netpro.benefit', 'Parent Benefit'),

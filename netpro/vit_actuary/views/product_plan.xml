@@ -63,8 +63,6 @@
 	                    <field name="benefit_ids">
                             <tree editable="top">
                                 <field name="benefit_id" />
-                                <field name="default_limit_id" widget="selection" />
-                                <field name="value_limit" />
                             </tree>
                         </field>
                 	</page>
