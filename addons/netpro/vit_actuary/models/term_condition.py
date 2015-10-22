@@ -12,6 +12,8 @@ class netpro_term_condition(osv.osv):
     _columns = {
         'tc_id': fields.char('TC ID'),
         'name': fields.text('TC Name'),
+        'description' : fields.text('Description'),
+        'type' : fields.selection([('standard','Standard'),('nonstandard','Non Standard')],'Type'),
         'created_by_id' : fields.many2one('res.users', 'Creator'),
         'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
     }

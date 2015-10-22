@@ -43,8 +43,11 @@
         <field name="arch" type="xml">
             <form string="netpro.policy">
                 <header>                                             
+                    <button string="Calculate" type="object" 
+                        states="open" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_calculate" class="oe_highlight"/>
+
                     <button string="Approve" type="object" 
-                        states="open" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_approve" class="oe_highlight"/>                 
+                        states="calculated" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_approve" class="oe_highlight"/>
                                              
                     <button string="Cancel" type="object" 
                         states="approved" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_cancel"/>
@@ -53,7 +56,7 @@
                         name="action_close" groups="vit_actuary.manager_system_owner" states="approved"/>
 
                     <button string="Endorse" type="object" 
-                        name="action_endorse" groups="vit_actuary.manager_system_owner" states="closed"/>
+                        name="action_endorse" groups="vit_actuary.manager_system_owner" states="realeased"/>
 
                     <field name="state" widget="statusbar"/>
                 </header>
@@ -61,6 +64,8 @@
                 <group col="2">
                     <group col="1">
                         <group string="General Policy Information">
+                            <field name="pno" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <field name="ppno" select="0" attrs="{'invisible': [('state','!=','endorsed')]}"/>
                             <field name="policy_no" select="1" readonly="1" />
                             <field name="reference_no" select="2" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="quotation_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
@@ -76,18 +81,20 @@
                             <field name="insurance_period_start" on_change="onchange_start(insurance_period_start)" />
                             <field name="insurance_period_end" select="0"/>
                             <field name="exclusive_period" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <field name="exclusive_period_value" select="0" attrs="{'invisible': [('exclusive_period','=',False)]}"/>
                             <field name="toc_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="ujroh" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="currency_id" select="0"/>
-                            <field name="policy_payor_id" attrs="{'invisible': [('policy_category_id','!=',1)]}" domain="[('policy_holder_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext', 'default_policy_holder_flag':1}"/>
+                            <!-- <field name="policy_payor_id" attrs="{'invisible': [('policy_category_id','!=',1)]}" domain="[('policy_holder_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext', 'default_policy_holder_flag':1}"/> -->
+                            <field name="policy_payor_id" attrs="{'invisible': [('policy_category_id','!=',1)]}" domain="[('policy_holder_flag','=',1)]" context="{'default_policy_holder_flag':1}"/>
                             <field name="insurance_source_id" attrs="{'invisible': [('policy_category_id','!=',1)]}" domain="[('policy_holder_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext', 'default_policy_holder_flag':1}" />
                             <field name="segment_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="pic_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="policy_date" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="business_source_id" attrs="{'invisible': [('policy_category_id','!=',1)]}" domain="[('policy_holder_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext', 'default_policy_holder_flag':1}" />
                             <field name="lob_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="occupation_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="existing_policy_no_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <!-- <field name="occupation_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/> -->
+                            <field name="existing_policy_no_id" select="0" attrs="{'invisible': [('state','!=','endorsed')]}"/>
 
                             <field name="province1_id" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="province2_id" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
@@ -110,27 +117,27 @@
                             <field name="refund_type_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="no_refund_changing_premium_difference" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                         </group>
-                        <group string="Print Card Option" attrs="{'invisible': [('policy_category_id','!=',1)]}">
+                        <!-- <group string="Print Card Option" attrs="{'invisible': [('policy_category_id','!=',1)]}">
                             <field name="print_card_name" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="print_card_order_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="print_card_birthdate" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="print_card_sex" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="print_card_plan" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                        </group>
+                        </group> -->
                     </group>
 
                     <group col="1">
                         <group string="Policy Settings" attrs="{'invisible': [('policy_category_id','!=',1)]}">
-                            <field name="tpa_id" readonly="1"  attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <!-- <field name="tpa_id" readonly="1"  attrs="{'invisible': [('policy_category_id','!=',1)]}"/> -->
                             <field name="calculation_method_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="prorate_calc_method_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="expired_claim_receipt_jabodetabek_id" class='oe_inline' attrs="{'invisible': [('policy_category_id','!=',1)]}" />
-                            <field name="expired_claim_receipt_non_jabodetabek_id" class='oe_inline' attrs="{'invisible': [('policy_category_id','!=',1)]}" />
+                            <!-- <field name="expired_claim_receipt_jabodetabek_id" class='oe_inline' attrs="{'invisible': [('policy_category_id','!=',1)]}" />
+                            <field name="expired_claim_receipt_non_jabodetabek_id" class='oe_inline' attrs="{'invisible': [('policy_category_id','!=',1)]}" /> -->
                             <field name="payment_due_days" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="payment_due_interval_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="max_age_children" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="max_children_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="max_children_maternity_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <!-- <field name="max_children_maternity_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/> -->
                             <field name="card_type_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="pre_existing_condition_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                         </group>
@@ -154,22 +161,20 @@
                             <field name="allow_excesson_reimbursement" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="aso_deposit" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                         </group>
-                        <group string="Virtual Account" attrs="{'invisible': [('policy_category_id','!=',1)]}">
+                        <!-- <group string="Virtual Account" attrs="{'invisible': [('policy_category_id','!=',1)]}">
                             <field name="bank_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="vaccount_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="bank_optional_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="vaccount_no_optional" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                        </group>
+                        </group> -->
                         <group string="Policy Status" attrs="{'invisible': [('policy_category_id','!=',1)]}">
                             <!-- <field name="policy_status" select="0"/> -->
-                            <field name="endorsement_date" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <field name="endorsement_date" select="0" attrs="{'invisible': [('state','!=','endorsed')]}"/>
                             <field name="email_date" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="int_endorsement_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="ext_endorsement_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="pno" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="ppno" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="cancel_policy" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="profit_sharing_endorsement" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <field name="int_endorsement_no" select="0" attrs="{'invisible': [('state','!=','endorsed')]}"/>
+                            <field name="ext_endorsement_no" select="0" attrs="{'invisible': [('state','!=','endorsed')]}"/>
+                            <!-- <field name="cancel_policy" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <field name="profit_sharing_endorsement" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/> -->
                         </group>
                         <group string="Transaction History" attrs="{'invisible': [('policy_category_id','!=',1)]}">
                             <field name="created_by_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
@@ -1711,21 +1716,10 @@
                 <group>
                     <!-- <field name="class_id" select="1"/> -->
                     <field name="product_plan_id" select="0" on_change="onchange_pplan(product_plan_id)"/>
-                    <field name="overall_limit" select="0"/>
+                   <!--  <field name="overall_limit" select="0"/> -->
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
-                <notebook>
-                    <page string="Benefit Enroll">
-                        <field name="benefit_ids" readonly="True">
-                            <tree editable="top">
-                                <field name="benefit_id" />
-                                <field name="default_limit_id" />
-                                <field name="value_limit" />
-                            </tree>
-                        </field>
-                    </page>
-                </notebook>
             </form>
         </field>
     </record>
@@ -1758,11 +1752,11 @@
                 <group>
                     <!-- <field name="class_id" select="1"/> -->
                     <field name="product_plan_id" select="0" on_change="onchange_pplan(product_plan_id)"/>
-                    <field name="overall_limit" select="0"/>
+                    <!-- <field name="overall_limit" select="0"/> -->
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
-                <notebook>
+                <!-- <notebook>
                     <page string="Benefit Enroll">
                         <field name="benefit_ids" readonly="True">
                             <tree editable="top">
@@ -1772,7 +1766,7 @@
                             </tree>
                         </field>
                     </page>
-                </notebook>
+                </notebook> -->
             </form>
         </field>
     </record>
@@ -1805,11 +1799,11 @@
                 <group>
                     <!-- <field name="class_id" select="1"/> -->
                     <field name="product_plan_id" select="0" on_change="onchange_pplan(product_plan_id)"/>
-                    <field name="overall_limit" select="0"/>
+                    <!-- <field name="overall_limit" select="0"/> -->
                     <field name="male_female_bamount" select="0"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
-                <notebook>
+               <!--  <notebook>
                     <page string="Benefit Enroll">
                         <field name="benefit_ids" readonly="True">
                             <tree editable="top">
@@ -1819,7 +1813,7 @@
                             </tree>
                         </field>
                     </page>
-                </notebook>
+                </notebook> -->
             </form>
         </field>
     </record>

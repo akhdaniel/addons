@@ -37,7 +37,7 @@
                 </header>
                 <sheet>
                 <group string="Member Info">
-                    <field name="policy_id" attrs="{'required':True}" on_change="onchange_policy_member(policy_id)"/>
+                    <field name="policy_id" domain="[('policy_category_id','=',policy_category)]" attrs="{'required':True}" on_change="onchange_policy_member(policy_id)"/>
                     <field name="policy_holder" readonly="True"/>
                     <field name="policy_category" readonly="True"/>
                     <field name="insurance_period_start" attrs="{'required':True}" select="2"/>
@@ -307,7 +307,7 @@
         <field name="res_model">netpro.member</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name='context'>{'group_by': 'policy_holder'}</field>
+        <field name='context'>{'group_by': 'policy_holder','default_policy_category':1}</field>
         <field name="domain">[('policy_category', '=', 1)]</field>
     </record>
 
@@ -316,7 +316,7 @@
         <field name="res_model">netpro.member</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name='context'>{'group_by': 'policy_holder'}</field>
+        <field name='context'>{'group_by': 'policy_holder','default_policy_category':2}</field>
         <field name="domain">[('policy_category', '=', 2)]</field>
     </record>
     
