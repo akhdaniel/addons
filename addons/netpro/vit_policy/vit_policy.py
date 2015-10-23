@@ -383,7 +383,7 @@ class netpro_policy(osv.osv):
         date_start = date(startnya[0], startnya[1], startnya[2])
         next_bulan = False
         next_day = False
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         if startnya[2] == 1 :
             next_bulan = startnya[1]-1
             last_day = calendar.monthrange(startnya[0]+1,next_bulan)
