@@ -21,7 +21,7 @@
 		<menuitem name="Product" id="menu_netpro_actuary_product" parent="menu_netpro_actuary" sequence="10"/>
 			<menuitem name="Product Setting" action="action_netpro_product" id="menu_netpro_actuary_product_setting" parent="menu_netpro_actuary_product" sequence="10"/>
 			<menuitem name="Product Plan" action="action_netpro_product_plan" id="menu_netpro_actuary_product_plan" parent="menu_netpro_actuary_product" sequence="20"/>
-		    <menuitem name="Product Plan Base" id="menu_netpro_product_plan_base" action="action_netpro_product_plan_base" parent="menu_netpro_actuary_product"  sequence="300"/>
+		    <!-- <menuitem name="Product Plan Base" id="menu_netpro_product_plan_base" action="action_netpro_product_plan_base" parent="menu_netpro_actuary_product"  sequence="300"/> -->
 
 		<menuitem name="Loading" id="menu_netpro_actuary_loading" parent="menu_netpro_actuary" sequence="20"/>
 		<menuitem name="Process" id="menu_netpro_actuary_process" parent="menu_netpro_actuary" sequence="30"/>
