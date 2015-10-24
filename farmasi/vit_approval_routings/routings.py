@@ -38,7 +38,7 @@ class mrp_routing_workcenter(osv.osv):
             help="Centang jika WO ini hanya bisa start ketika WO sebelumnya finish"),
         'sampling' : fields.boolean('Sampling',help="Centang jika untuk pengambilan sample"),
         'waiting_approval_to_start_next_wo' : fields.boolean('Waiting Approval to Start Next WO',
-            help="Centang jika WO selanjutnya bisa lanjut ketika sudah di approve"),
+            help="Centang jika WO selanjutnya bisa lanjut ketika WO in sudah di approve"),
     }
 
     _defaults = {
