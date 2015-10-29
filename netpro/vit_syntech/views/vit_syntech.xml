@@ -21,12 +21,12 @@
 			        		<field name="CITY" />
 			        		<field name="ZIP_CODE" />
 			        		<field name="PAT_TELP" />
-	        			</group>
-	        			<group>
-	        				<field name="START_DATE" />
+			        		<field name="START_DATE" />
 			        		<field name="XPIRY_DATE" />
 			        		<field name="COMP_NAME" />
 			        		<field name="COMP_TEL1" />
+	        			</group>
+	        			<group>
 			        		<field name="COMP_FAX1" />
 			        		<field name="CARD_NO" />
 			        		<field name="UPD_CODE" />
@@ -34,6 +34,16 @@
 			        		<field name="SEQ_NO" />
 			        		<field name="UPD_DATE" />
 			        		<field name="R_AND_B" />
+			        		<field name="MAX_LIMIT" />
+			        		<field name="LAST_BAL" />
+			        		<field name="INDICATOR" />
+			        		<field name="CLINIC1" />
+			        		<field name="CLINIC2" />
+			        		<field name="PLAN_X" />
+			        		<field name="CLASS" />
+			        		<field name="RMKS1" />
+			        		<field name="RMKS2" />
+			        		<field name="RMKS3" />
 	        			</group>
 	        		</group>
 	        		</sheet>
@@ -48,28 +58,13 @@
 	        <field name="arch" type="xml">
 	            <tree string="netpro.syntech">
 	            	<field name="CARD_NUMB" />
-	        		<field name="BIRTH_DATE" />
 	        		<field name="PAT_NAME" />
-	        		<field name="PAT_NAME1" />
 	        		<field name="PAT_SEX" />
 	        		<field name="PAT_ADD1" />
-	        		<field name="PAT_ADD2" />
-	        		<field name="PAT_ADD3" />
-	        		<field name="PAT_ADD4" />
 	        		<field name="CITY" />
-	        		<field name="ZIP_CODE" />
 	        		<field name="PAT_TELP" />
 	        		<field name="START_DATE" />
 	        		<field name="XPIRY_DATE" />
-	        		<field name="COMP_NAME" />
-	        		<field name="COMP_TEL1" />
-	        		<field name="COMP_FAX1" />
-	        		<field name="CARD_NO" />
-	        		<field name="UPD_CODE" />
-	        		<field name="SERV_CODE" />
-	        		<field name="SEQ_NO" />
-	        		<field name="UPD_DATE" />
-	        		<field name="R_AND_B" />
 	            </tree>
 	        </field>
 	    </record>
