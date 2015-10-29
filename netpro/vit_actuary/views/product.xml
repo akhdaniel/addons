@@ -88,6 +88,8 @@
                 <group>
                     <field name="tc_id" />
                     <field name="name" />
+                    <field name="type" />
+                    <field name="description" />
                 </group>
             </form>
         </field>
@@ -100,7 +102,7 @@
             <tree string="netpro.term_condition">
                 <field name="tc_id"/>
                 <field name="name"/>
-
+                <field name="type" />
             </tree>
         </field>
     </record>

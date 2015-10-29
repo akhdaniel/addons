@@ -27,6 +27,20 @@ import calendar
 class netpro_policy(osv.osv):
     _name = 'netpro.policy'
     _rec_name = 'policy_no'
+
+    def _get_total_card_fee(self, cr, uid, ids, field, arg, context=None):
+        res = {}
+
+        policy_data = self.browse(cr, uid, ids, context=context)
+
+        for policy in policy_data:
+            if policy.other_settings_card_fee:
+                res[policy.id] = policy.other_settings_card_fee * policy.other_settings_card_count
+            else :
+                res[policy.id] = 0
+
+        return res
+
     _columns = {
         'policy_no': fields.char('Policy No'),
         'reference_no': fields.char('Reference No'),
@@ -137,7 +151,8 @@ class netpro_policy(osv.osv):
         'claim_reimbursement_transfer_fee': fields.float('Fee (per employee)'),
         'other_settings_admin_cost': fields.float('Admin Cost'),
         'other_settings_card_fee': fields.float('@Card Fee'),
-        'other_settings_total_card_fee': fields.float('Total Card Fee'),
+        'other_settings_card_count': fields.float('@Card Count'),
+        'other_settings_total_card_fee': fields.function(_get_total_card_fee, type="float", string="Total Card Fee"),
         'other_settings_total_cdmin_cost': fields.float('Total Admin Cost'),
         'other_settings_stamp_duty': fields.float('Stamp Duty'),
         'other_settings_interest': fields.float('Interest'),
@@ -181,6 +196,7 @@ class netpro_policy(osv.osv):
         'currency_id' : 13, # default idr
         #'policy_no' : lambda self, cr, uid, context: self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/',
     }
+
     def create(self, cr, uid, vals, context=None):
         #import pdb;pdb.set_trace()
         nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
@@ -389,6 +405,7 @@ class netpro_policy(osv.osv):
             last_day = calendar.monthrange(startnya[0]+1,next_bulan)
             next_day = last_day[1]
         else :
+            next_bulan = startnya[1]
             next_day = startnya[2]-1
 
         date_end = date(startnya[0]+1, next_bulan, next_day)
@@ -778,12 +795,10 @@ class netpro_membership_plan_employee(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
-        'policy_state' : fields.related('class_id', 'policy_id', 'state' , type="char", relation="netpro.policy", string="Policy State", store=True),
+        'member_fee': fields.float('Fee @Member'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
-        #'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
-        #'benefit_ids': fields.one2many('netpro.membership_benefit','membership_plan_employee_id','Class Benefit', ondelete="cascade"),
     }
 
     def onchange_pplan(self, cr, uid, ids, plan_id, context=None):
@@ -810,11 +825,10 @@ class netpro_membership_plan_spouse(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
+        'member_fee': fields.float('Fee @Member'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
-        #'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
-        #'benefit_ids': fields.one2many('netpro.membership_benefit','membership_plan_spouse_id','Class Benefit', ondelete="cascade"),
     }
 
     def onchange_pplan(self, cr, uid, ids, plan_id, context=None):
@@ -840,11 +854,10 @@ class netpro_membership_plan_child(osv.osv):
     _rec_name = 'class_id'
     _columns = {
         'class_id': fields.many2one('netpro.class', 'Class'),
+        'member_fee': fields.float('Fee @Member'),
         'product_plan_id': fields.many2one('netpro.product_plan', 'Product Plan'),
-        #'overall_limit': fields.float('Overall Limit'),
         'male_female_bamount': fields.float('Male / Female BAmount'),
         'occur_in_other_membership': fields.boolean('Occur in Other Membership'),
-        #'benefit_ids': fields.one2many('netpro.membership_benefit','membership_plan_child_id','Class Benefit', ondelete="cascade"),
     }
 
     def onchange_pplan(self, cr, uid, ids, plan_id, context=None):
