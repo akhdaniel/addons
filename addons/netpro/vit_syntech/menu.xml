@@ -1,0 +1,7 @@
+<openerp>
+	<data>
+		<menuitem name="Syntech" id="menu_netpro_syntech" sequence="10" />
+		<menuitem name="Transaction" id="menu_netpro_syntech_transaction" parent="menu_netpro_syntech"/>
+		<menuitem name="Policy Individu" id="menu_netpro_syntech_individu" parent="menu_netpro_syntech_transaction" action="action_netpro_syntech" sequence="30"/>
+	</data>
+</openerp>

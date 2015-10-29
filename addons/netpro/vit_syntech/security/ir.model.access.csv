@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_syntech_vit_syntech,vit_syntech.vit_syntech,model_vit_syntech_vit_syntech,,1,0,0,0

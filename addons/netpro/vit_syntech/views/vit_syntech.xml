@@ -1,0 +1,84 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_syntech_form">
+	        <field name="name">netpro.syntech.form</field>
+	        <field name="model">netpro.syntech</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	        	<form string="netpro.syntech" version="7.0">
+	        		<sheet>
+	        		<group>
+	        			<group>
+	        				<field name="CARD_NUMB" />
+			        		<field name="BIRTH_DATE" />
+			        		<field name="PAT_NAME" />
+			        		<field name="PAT_NAME1" />
+			        		<field name="PAT_SEX" />
+			        		<field name="PAT_ADD1" />
+			        		<field name="PAT_ADD2" />
+			        		<field name="PAT_ADD3" />
+			        		<field name="PAT_ADD4" />
+			        		<field name="CITY" />
+			        		<field name="ZIP_CODE" />
+			        		<field name="PAT_TELP" />
+	        			</group>
+	        			<group>
+	        				<field name="START_DATE" />
+			        		<field name="XPIRY_DATE" />
+			        		<field name="COMP_NAME" />
+			        		<field name="COMP_TEL1" />
+			        		<field name="COMP_FAX1" />
+			        		<field name="CARD_NO" />
+			        		<field name="UPD_CODE" />
+			        		<field name="SERV_CODE" />
+			        		<field name="SEQ_NO" />
+			        		<field name="UPD_DATE" />
+			        		<field name="R_AND_B" />
+	        			</group>
+	        		</group>
+	        		</sheet>
+	        	</form>
+	        </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="view_syntech_tree">
+	        <field name="name">netpro.syntech.tree</field>
+	        <field name="model">netpro.syntech</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="netpro.syntech">
+	            	<field name="CARD_NUMB" />
+	        		<field name="BIRTH_DATE" />
+	        		<field name="PAT_NAME" />
+	        		<field name="PAT_NAME1" />
+	        		<field name="PAT_SEX" />
+	        		<field name="PAT_ADD1" />
+	        		<field name="PAT_ADD2" />
+	        		<field name="PAT_ADD3" />
+	        		<field name="PAT_ADD4" />
+	        		<field name="CITY" />
+	        		<field name="ZIP_CODE" />
+	        		<field name="PAT_TELP" />
+	        		<field name="START_DATE" />
+	        		<field name="XPIRY_DATE" />
+	        		<field name="COMP_NAME" />
+	        		<field name="COMP_TEL1" />
+	        		<field name="COMP_FAX1" />
+	        		<field name="CARD_NO" />
+	        		<field name="UPD_CODE" />
+	        		<field name="SERV_CODE" />
+	        		<field name="SEQ_NO" />
+	        		<field name="UPD_DATE" />
+	        		<field name="R_AND_B" />
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record model="ir.actions.act_window" id="action_netpro_syntech">
+	        <field name="name">Syntech</field>
+	        <field name="res_model">netpro.syntech</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+	</data>
+</openerp>
