@@ -140,10 +140,10 @@ class netpro_member(osv.osv):
 
     def action_confirm(self,cr,uid,ids,context=None):
         # create schedule plan
-        self.create_plan_schedule(cr,uid,ids,context=context)        
+        self.create_plan_schedule(cr,uid,ids,context=context)
         #set to "actived" state
         self.write(cr,uid,ids,{'status':'actived'},context=context)
-        return 
+        return
     
     def action_cancel(self,cr,uid,ids,context=None):
         #set to "draft" state
