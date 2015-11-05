@@ -9,7 +9,7 @@
 * Proses pengulangan produksi pada work orders dengan mengambil bahan baku baru (internal move)
 """,
     'version': '0.1',
-    'depends': ['base','mrp','mrp_operations','web_m2x_options'],
+    'depends': ['base','mrp','mrp_operations','web_m2x_options','stock'],
     'author': 'vitraining.com',
     'category': 'mrp',
     'url': 'http://www.vitraining.com/',

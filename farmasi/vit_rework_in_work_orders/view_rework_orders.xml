@@ -18,13 +18,13 @@
             <field name="arch" type="xml">            
             	<page string="Information" position="after">
                     <field name="is_origin" invisible="1"/>
-                    <page string="Rework">
+                    <page string="Reprocess">
                         <button
                            name="%(input_rework)d"
-                           string="Create Rework"
+                           string="Create Reprocess"
                            type="action" icon="gtk-justify-fill"
-                           attrs="{'invisible':[('state','not in',('pause','startworking'))]}"/>
-                        <field name="picking_ids" nolabel="1"/>                             
+                           attrs="{'invisible':[('state','not in',('done','cancel'))]}" groups="vit_lucas_groups.group_qa_manager"/>
+                        <field name="move_ids" nolabel="1"/>                             
                         <field name="notes" nolabel="1" placeholder="Notes..."/>   
                     </page>                                                               
                 </page>

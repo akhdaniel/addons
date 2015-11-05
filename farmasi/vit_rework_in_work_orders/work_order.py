@@ -51,9 +51,10 @@ class mrp_production_workcenter_line(osv.osv):
     _columns = {
         'picking_ids'   : fields.one2many('stock.picking','workorder_id',string='Internal Move',readonly=True, states={'draft':[('readonly',False)]}),
         'notes'         : fields.text('Notes'),
-        # 'is_origin'     : fields.function(_write_origin_internal_move,type='boolean',string='Origin'),
+        'move_ids'      : fields.one2many('stock.move','workorder_id',string='Internal Moves',readonly=True, states={'draft':[('readonly',False)]}),
         'is_origin'     : fields.boolean('Origin'),
     } 
+
 
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
@@ -62,4 +63,9 @@ class stock_picking(osv.osv):
         'workorder_id'  : fields.many2one('mrp.production.workcenter.line',string='Internal Move'),
     } 
 
+class stock_move(osv.osv):
+    _inherit = 'stock.move'
 
+    _columns = {
+        'workorder_id'  : fields.many2one('mrp.production.workcenter.line',string='Work Orders'),
+    }     
