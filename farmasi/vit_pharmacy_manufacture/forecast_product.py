@@ -51,6 +51,10 @@ class forecast_product(osv.osv):
     def action_confirm(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'open'}, context=context)
 
+    def action_cancel(self, cr, uid, ids, context=None):
+        # delete mps/wps
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
     def find_bom(self, cr, uid, product_id, context=None):
         mrp_bom = self.pool.get('mrp.bom')
         bom_ids = mrp_bom.search(cr, uid, [('product_tmpl_id','=', product_id.product_tmpl_id.id)], context=context)
