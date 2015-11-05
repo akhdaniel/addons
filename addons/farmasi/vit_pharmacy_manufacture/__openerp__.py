@@ -5,6 +5,7 @@
     'description': """
         1. Modul Forecast Product Di input secara manual oleh user  
         2. Modul Master Production Schedule
+        
        """,
     'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
     'depends': ['mrp'],

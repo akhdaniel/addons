@@ -236,7 +236,7 @@ class mrp_production(osv.osv):
                                 move_ids.append(move_id)
                                 
                                 # delete produk asli yg is_header
-                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s"  % (production.id, product.id)
+                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
                                 _logger.error(sql)
                                 cr.execute(sql)
                                 total_lot_qty = total_lot_qty + hasil 
@@ -251,7 +251,7 @@ class mrp_production(osv.osv):
                                 move_ids.append(move_id)
 
                                 # delete produk asli yg is_header
-                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s"  % (production.id, product.id)
+                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
                                 _logger.error(sql)
                                 cr.execute(sql)
                         else: # tidak ada stock lot 
@@ -542,30 +542,34 @@ class mrp_production(osv.osv):
         # otomatis ternyata, yg penting Warehouse Gudang Obat jadi incoming set 2 steps
 
         # print "create QA release move"
+        # if production_mode in [ 'consume_produce']:        
         self.create_qa_release(cr, uid, production, context=context)
 
         return True
 
     def create_qa_release(self, cr, uid, production, context=None):
-        warehouse_obj    = self.pool.get('stock.warehouse')
-        location_obj    = self.pool.get('stock.location')
-        picking_obj     = self.pool.get('stock.picking')
-        picking_type_obj     = self.pool.get('stock.picking.type')
+        warehouse_obj           = self.pool.get('stock.warehouse')
+        location_obj            = self.pool.get('stock.location')
+        picking_obj             = self.pool.get('stock.picking')
+        picking_type_obj        = self.pool.get('stock.picking.type')
+        move_obj                = self.pool.get('stock.move')
 
-        warehouse_dest_id = warehouse_obj.search(cr, uid, [('name','=','Gudang Obat Jadi Pusat')], context=context)
+        warehouse_dest_id = warehouse_obj.search(cr, uid, [('name','=','Gudang Obat Jadi Pusat')], 
+            context=context)
+
         if not warehouse_dest_id:
             raise osv.except_osv(_('error'),_("No Warehouse name Gudang Obat Jadi Pusat") ) 
 
-        warehouse_dest = warehouse_obj.browse(cr, uid, warehouse_dest_id, context=context)
-        picking_type_id = warehouse_dest[0].int_type_id
-        location_dest_id =  warehouse_dest[0].wh_output_stock_loc_id # destination
-        location_id = production.location_dest_id                    # source
+        warehouse_dest      = warehouse_obj.browse(cr, uid, warehouse_dest_id, context=context)
+        picking_type_id     = warehouse_dest[0].int_type_id
+        location_dest_id    = warehouse_dest[0].lot_stock_id # destination GOJ / Stock
+        location_id         = production.location_dest_id    # source GOJ / Quality Control 
 
         picking_id = picking_obj.create(cr,uid,{
-            'origin':production.name ,
+            'origin': "%s:%s" % (production.name , production.batch_number) ,
             'picking_type_id'   : picking_type_id.id,}) 
 
-        for move in production.move_created_ids:
+        for move in production.move_created_ids2:
             move_obj.create(cr,uid,{'picking_id'        : picking_id,
                                     'product_id'        : move.product_id.id,
                                     'product_uom_qty'   : move.product_uom_qty,
@@ -574,6 +578,8 @@ class mrp_production(osv.osv):
                                     'location_id'       : location_id.id,
                                     'location_dest_id'  : location_dest_id.id,
             })
+        picking_obj.action_confirm(cr, uid, picking_id, context=context)
+        picking_obj.action_assign(cr, uid, picking_id, context=context)
         return 0
 
     def action_cancel(self, cr, uid, ids, context=None):

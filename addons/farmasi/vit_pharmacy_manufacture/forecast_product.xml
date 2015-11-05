@@ -22,41 +22,46 @@
                         <button name="action_create_mps"  type="object" states="open" string="Create MPS" class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
                     </header>
+                    <group>
                         <group>
-                            <group>
-                                <field name="name" />
-                                <field name="year"/> 
-                            </group>
-                            <group> 
-                                <field name="create_uid"/> 
-                                <field name="created_date"/> 
-                            </group>
+                            <field name="name" />
+                            <field name="year"/> 
                         </group>
-                        <notebook>
-                            <page string="Details">
-                                <field name="forecast_detail_ids"  view_mode="tree"  widget="one2many_list">
-                                    <tree string="Details" editable="bottom">
-                                        <!-- <field name="forecast_product_id" /> -->
-                                        <field name="product_id" on_change="on_change_product_id(product_id, context)" domain="[('sale_ok','=','1')]"/> 
-                                        <field name="product_uom" />
-                                        <!-- <field name="year" on_change="0"/> -->
-                                        <field name="m1" />
-                                        <field name="m2" />
-                                        <field name="m3" />
-                                        <field name="m4" />
-                                        <field name="m5" />
-                                        <field name="m6" />
-                                        <field name="m7" />
-                                        <field name="m8" />
-                                        <field name="m9" />
-                                        <field name="m10" />
-                                        <field name="m11" />
-                                        <field name="m12" />
-                                        <field name="mTotal" on_change="0"/>
-                                    </tree>
-                                </field>
-                            </page>
-                        </notebook>
+                        <group> 
+                            <field name="create_uid"/> 
+                            <field name="created_date"/> 
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="forecast_detail_ids"  view_mode="tree"  widget="one2many_list">
+                                <tree string="Details" editable="bottom">
+                                    <!-- <field name="forecast_product_id" /> -->
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)" domain="[('sale_ok','=','1')]"/> 
+                                    <field name="product_uom" />
+                                    <!-- <field name="year" on_change="0"/> -->
+                                    <field name="m1" />
+                                    <field name="m2" />
+                                    <field name="m3" />
+                                    <field name="m4" />
+                                    <field name="m5" />
+                                    <field name="m6" />
+                                    <field name="m7" />
+                                    <field name="m8" />
+                                    <field name="m9" />
+                                    <field name="m10" />
+                                    <field name="m11" />
+                                    <field name="m12" />
+                                    <field name="mTotal" on_change="0"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <!-- <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" 
+                            groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div> -->
                 </form>                         
             </field>
         </record>

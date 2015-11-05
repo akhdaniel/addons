@@ -16,20 +16,31 @@ _logger = logging.getLogger(__name__)
 class forecast_product(osv.osv):
     _name = 'vit_pharmacy_manufacture.forecast_product'
     _description = 'Forecast Product'
+    # _inherit = ['mail.thread', 'ir.needaction_mixin']
 
     _columns = {
-        'name': fields.char('Name',required=True),
-        'year': fields.integer('Year'),
-        'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
-        'created_date': fields.datetime('Created Date', required=True, readonly=True, select=True),
-        'forecast_detail_ids':fields.one2many('vit_pharmacy_manufacture.forecast_product_detail','forecast_product_id','Forecast Details'),
+        'name': fields.char('Name',required=True, 
+            readonly=True,
+            states={'draft':[('readonly',False)]} ),
+        'year': fields.integer('Year',
+            readonly=True,
+            states={'draft':[('readonly',False)]} ),
+        'create_uid': fields.many2one('res.users', 'Created by',  
+            readonly=True,
+            states={'draft':[('readonly',False)]} ),
+        'created_date': fields.datetime('Created Date', required=True, 
+            readonly=True,
+            states={'draft':[('readonly',False)]} ,
+            select=True),
+        'forecast_detail_ids':fields.one2many('vit_pharmacy_manufacture.forecast_product_detail','forecast_product_id','Forecast Details',
+            readonly=True,
+            states={'draft':[('readonly',False)]} ),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('open', 'Open'),
             ('done', 'Done'),
             ], 'Status', readonly=True, track_visibility='onchange',
             help="", select=True),
-
     }
 
     _defaults = {
@@ -69,56 +80,89 @@ class forecast_product(osv.osv):
                 'forecast_id': forecast.id
                 })
 
-            """ Update Details Di MRP, dengan mengambil item di Detail Forecast """  
-            for detail in self.browse(cr,uid,ids[0],).forecast_detail_ids:
-                # import pdb;pdb.set_trace()
-                if m == "Dec":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m1, detail.product_id, detail.product_uom )                
-                if m == "Jan":   
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m2, detail.product_id, detail.product_uom )
-                if m == "Feb":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m3, detail.product_id, detail.product_uom )
-                if m == "Mar":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m4, detail.product_id, detail.product_uom )
-                if m == "Apr":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m5, detail.product_id, detail.product_uom )
-                if m == "May":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m6, detail.product_id, detail.product_uom )
-                if m == "Jun":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m7, detail.product_id, detail.product_uom )
-                if m == "Jul":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m8, detail.product_id, detail.product_uom )
-                if m == "Aug":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m9, detail.product_id, detail.product_uom )
-                if m == "Sep":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m10, detail.product_id, detail.product_uom )
-                if m == "Oct":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m11, detail.product_id, detail.product_uom )
-                if m == "Nov":
-                    self.update_line_mps(cr,uid,ids,mps_obj, detail.m12, detail.product_id, detail.product_uom )
-        
-        self.write(cr, uid, ids, {'state':'done'}, context=context)                
+            """ 
+            isi / Update Details Di MRP, dengan mengambil item di Detail Forecast 
+            isi ke detail MPS per sediaan 
+            sediaan 1 ke mps_detail_ids1
+            sediaan 2 ke mps_detail_ids2
+            dst 
+            """  
+            
+            sediaan_ids = self.pool.get('vit.sediaan').search(cr, uid, [], context=context)
 
-    def update_line_mps(self,cr,uid,ids,mps_obj, detail_m, detail_product_id, detail_product_uom, context=None):
+            for detail in forecast.forecast_detail_ids:
+                product_sediaan_id = detail.product_id.categ_id.sediaan_id.id
+                i = 0
+                for sediaan_id in sediaan_ids:
+                    i = i + 1
+                    if product_sediaan_id == sediaan_id:
+                        print m, i, detail.product_id.name, detail.product_id.categ_id.sediaan_id.name 
+                        self.fill_mps_line(cr, uid, ids, i, m, sediaan_id, mps_obj, detail )
+                        break
+
+        # self.write(cr, uid, ids, {'state':'done'}, context=context)                
+
+    def fill_mps_line(self, cr, uid,ids, i, m, sediaan_id, mps_obj, detail):
+
+        if m == "Dec":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m1, detail.product_id, detail.product_uom )                
+        if m == "Jan":   
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m2, detail.product_id, detail.product_uom )
+        if m == "Feb":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m3, detail.product_id, detail.product_uom )
+        if m == "Mar":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m4, detail.product_id, detail.product_uom )
+        if m == "Apr":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m5, detail.product_id, detail.product_uom )
+        if m == "May":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m6, detail.product_id, detail.product_uom )
+        if m == "Jun":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m7, detail.product_id, detail.product_uom )
+        if m == "Jul":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m8, detail.product_id, detail.product_uom )
+        if m == "Aug":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m9, detail.product_id, detail.product_uom )
+        if m == "Sep":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m10, detail.product_id, detail.product_uom )
+        if m == "Oct":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m11, detail.product_id, detail.product_uom )
+        if m == "Nov":
+            self.update_line_mps(cr,uid,ids,i,mps_obj, detail.m12, detail.product_id, detail.product_uom )
+
+
+    def update_line_mps(self,cr,uid,ids,i,mps_obj, detail_m, detail_product_id, detail_product_uom, context=None):
         
         product_id = detail_product_id.id
         product_uom = detail_product_uom.id
-        
+
         bom = self.find_bom(cr, uid, detail_product_id, context)
         if bom.product_qty == 0:
             raise osv.except_osv(_('error'),_("BOM qty cannot zero: %s" % (bom.product_tmpl_id.name)) ) 
         prod_order = math.ceil(detail_m / bom.product_qty)
 
         if prod_order > 0:
+            w1 = 0
+            w2 = 0
+            w3 = 0
+            w4 = 0
+            w5 = 0
             data_line = {
                 'product_id' : product_id,
                 'production_order' : prod_order,
                 'product_uom' : product_uom,
+                'w1': w1,
+                'w2': w2,
+                'w3': w3,
+                'w4': w4,
+                'w5': w5
             }
 
             mps_detail_line = [(0,0,data_line)]
-            datas = {'mps_detail_ids' : mps_detail_line,}
+            datas = {'mps_detail_ids%s' % (i) : mps_detail_line,}
+            print "mps_obj, datas" , mps_obj, datas
+            # import pdb;pdb.set_trace()
             self.pool.get('vit_pharmacy_manufacture.mps').write(cr,uid,mps_obj,datas)
+
 
 class forecast_product_detail(osv.osv):
     _name = 'vit_pharmacy_manufacture.forecast_product_detail'

@@ -52,6 +52,13 @@
                         <field name="result_qty"/>
                         <field name="yield" widget="progressbar"/>
                     </group>
+                    <group string="Process Yield">
+                        <field name="input_qty"/>
+                        <field name="output_qty"/>
+                        <field name="process_uom_id" />
+                        <field name="process_yield" widget="progressbar"/>
+                    </group>
+
                 </group>
             </field>
         </record>   
@@ -65,6 +72,10 @@
                 <field name="cycle" position="replace">
                     <!-- <field name="man_hour" widget="float_time"/> -->
                     <field name="delay" widget="float_time"/>
+                    <field name="input_qty" />
+                    <field name="output_qty" />
+                    <field name="process_uom_id" />
+                    <field name="process_yield" widget="progressbar"/>
                 </field>
                 <field name="hour" position="replace"/>
             </field>

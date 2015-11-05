@@ -1,0 +1,14 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_purchase_requisition_form_multi">
+		    <field name="name">view.purchase.requisition.form.multi</field>
+		    <field name="model">purchase.order</field>
+		    <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+		    <field name="arch" type="xml">
+		    	<field name="origin" position="after">
+		    		<field name="product_names"/>
+		    	</field>
+		   	</field>
+		</record>		
+	</data>
+</openerp>
