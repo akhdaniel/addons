@@ -78,6 +78,9 @@ class mps(osv.osv):
 	def action_confirm(self, cr, uid, ids, context=None):
 		return self.write(cr, uid, ids, {'state':'open'}, context=context)
 
+	def action_cancel(self, cr, uid, ids, context=None):
+		return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
 	def action_create_wps(self, cr, uid, ids, context=None):
 		""" Create Sejumlah WPS dari Urutan Week Paling Pertama """
 
