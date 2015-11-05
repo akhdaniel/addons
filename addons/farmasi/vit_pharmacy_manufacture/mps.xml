@@ -27,6 +27,7 @@
                         <button name="action_recalculate" type="object" states="draft" string="Recalculate" class="oe_highlight"/>
                         <button name="action_cancel" type="object" states="open" string="Cancel"/>
                         <button name="action_create_wps"  type="object" states="open" string="Create WPS" class="oe_highlight"/>
+                        <button name="action_create_pr"  type="object" states="open" string="Create PR" class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
                     </header>
                     <group>
