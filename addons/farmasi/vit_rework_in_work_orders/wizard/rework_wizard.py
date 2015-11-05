@@ -68,7 +68,7 @@ class vit_rework_wizard(osv.osv_memory):
         move_obj        = self.pool.get('stock.move')
 
         partner_id      = False
-        
+        #import pdb;pdb.set_trace()
         for data in self.browse(cr, uid, ids, context=context):
             if not data.rework_detail_ids:
                 raise osv.except_osv(_('Error'),
@@ -76,12 +76,17 @@ class vit_rework_wizard(osv.osv_memory):
             if data.partner_id :
                 partner_id = data.partner_id.id 
             # create picking
-            picking_id = picking_obj.create(cr,uid,{'partner_id': partner_id,
-                                                    'origin': data.workorder_id.production_id.name+' ['+data.workorder_id.name+']',
-                                                    'workorder_id':context['active_id'],
-                                                    'picking_type_id':3,#internal transfer
-                                                    'min_date': data.date,
-                                                    })                
+            # picking_id = picking_obj.create(cr,uid,{'partner_id': partner_id,
+            #                                         'origin': data.workorder_id.production_id.name+' ['+data.workorder_id.name+']',
+            #                                         'workorder_id':context['active_id'],
+            #                                         'picking_type_id':3,#internal transfer
+            #                                         'min_date': data.date,
+            #                                         'invoice_state':'none',
+            #                                         'move_type':'direct'},context=context)   
+
+            # diganti langsung ke stock.move karena jadi ada error:
+            # MissingError: ('MissingError', u'One of the documents you are trying to access has been deleted, please try again after refreshing.')
+
             moves           = []          
             for move in data.rework_detail_ids:
                 product_id      = move.product_id.id
@@ -91,7 +96,9 @@ class vit_rework_wizard(osv.osv_memory):
 
                 # Create stock.move
                 move_id      = move_obj.create(cr,uid,{'product_id':product_id,
-                                                        'picking_id':picking_id,
+                                                        #'picking_id':picking_id,
+                                                        'workorder_id':context['active_id'],
+                                                        'origin': data.workorder_id.production_id.name+' ['+data.workorder_id.name+']',
                                                         'name':product_name,
                                                         'product_uom_qty':move_qty,
                                                         'product_uom':move_uom,
@@ -101,8 +108,10 @@ class vit_rework_wizard(osv.osv_memory):
   
                 moves.append(move_id)
 
+                
 
-        return picking_id
+
+        return moves
 	
 
 class vit_rework_detail_wizard(osv.osv_memory):
