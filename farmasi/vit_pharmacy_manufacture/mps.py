@@ -86,8 +86,40 @@ class mps(osv.osv):
 
 		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids1:
 			self.create_wps(cr,uid, ids, details_product, context=context)
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids2:
+			self.create_wps(cr,uid, ids, details_product, context=context)
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids3:
+			self.create_wps(cr,uid, ids, details_product, context=context)
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids4:
+			self.create_wps(cr,uid, ids, details_product, context=context)
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids5:
+			self.create_wps(cr,uid, ids, details_product, context=context)
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids6:
+			self.create_wps(cr,uid, ids, details_product, context=context)
 		
-		self.write(cr, uid, ids, {'state':'done'}, context=context)
+		# self.write(cr, uid, ids, {'state':'done'}, context=context)
+
+	def action_create_pr(self, cr, uid, ids, context=None):
+		"""
+		create product request jika stok bahan baku kurang di gudang
+		"""
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids1:
+			self.create_pr(cr,uid, ids, details_product, context=context)
+
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids2:
+			self.create_pr(cr,uid, ids, details_product, context=context)
+
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids3:
+			self.create_pr(cr,uid, ids, details_product, context=context)
+
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids4:
+			self.create_pr(cr,uid, ids, details_product, context=context)
+
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids5:
+			self.create_pr(cr,uid, ids, details_product, context=context)
+
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids6:
+			self.create_pr(cr,uid, ids, details_product, context=context)
 
 	def create_wps(self, cr, uid, ids, details_product, context=None):
 
@@ -119,6 +151,9 @@ class mps(osv.osv):
 				""" Create MO Berdasarkan batch (b) """
 				product_id = details_product.product_id.id
 				self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date)
+
+	def create_pr(self, cr, uid, ids, details_product, context=None):
+		return 
 
 	def get_start_date(self, cr, uid, ids, wy, context=None):
 		""" Ambil Start Date Tiap Minggu nya"""
