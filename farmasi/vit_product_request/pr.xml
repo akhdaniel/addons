@@ -1,0 +1,25 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_purchase_requisition_form_product_names">
+        <field name="name">purchase.requisition.form</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="/form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_id']" position="after">
+        		<field name="description"/>
+        	</xpath>
+		</field>
+	</record>
+
+    <record model="ir.ui.view" id="view_purchase_requisition_tree_product_names">
+        <field name="name">purchase.requisition.tree.product</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_tree"/>
+        <field name="arch" type="xml">
+        	<field name="name" position="after">
+        		<field name="product_names"/>
+        	</field>
+		</field>
+	</record>	
+</data>
+</openerp>

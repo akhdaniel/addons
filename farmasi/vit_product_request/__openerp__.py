@@ -19,6 +19,7 @@ Purchase Request
         'menu.xml',
         'product_request.xml',
         'sequence.xml',
+        'pr.xml',
         'security/ir.model.access.csv'
     ],
     'test': [

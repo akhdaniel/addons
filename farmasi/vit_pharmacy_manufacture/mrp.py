@@ -19,4 +19,3 @@ class mrp_production(osv.osv):
 		'wps_id':fields.many2one('vit_pharmacy_manufacture.wps','WPS'),
 		}
 
-	

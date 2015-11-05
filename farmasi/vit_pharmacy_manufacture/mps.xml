@@ -16,6 +16,7 @@
                 </tree>
             </field>
         </record>
+        
         <record id="view_mps_form" model="ir.ui.view">
             <field name="name">mps_form</field>
             <field name="model">vit_pharmacy_manufacture.mps</field>
@@ -23,49 +24,209 @@
                  <form string="MPS" version="7.0">
                     <header>
                         <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                        <button name="action_recalculate" type="object" states="draft" string="Recalculate" class="oe_highlight"/>
                         <button name="action_create_wps"  type="object" states="open" string="Create WPS" class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,done"/>
                     </header>
+                    <group>
                         <group>
-                            <group>
-                                <field name="name"/>
-                                <field name="month" />
-                                <field name="year"/> 
-                            </group>
-                            <group> 
-                                <field name="create_uid"/> 
-                                <field name="created_date"/> 
-                                <field name="forecast_id"/> 
-                            </group>
+                            <field name="name"/>
+                            <field name="month" />
+                            <field name="year"/> 
                         </group>
-                        <notebook>
-                            <page string="Details">
-                                <field name="mps_detail_ids"  view_mode="tree"  widget="one2many_list">
-                                    <tree string="Details" editable="bottom">
-                                        <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                        <field name="product_uom" />
-                                        <field name="production_order" />
-                                        
-                                        <field name="w1" />
-                                        <field name="w1a" />
+                        <group> 
+                            <field name="create_uid"/> 
+                            <field name="created_date"/> 
+                            <field name="forecast_id"/> 
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Betalaktam">
+                            <field name="mps_detail_ids1"  view_mode="tree" widget="one2many_list">
+                                <tree string="Details" editable="bottom" >
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="production_order" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
 
-                                        <field name="w2" />
-                                        <field name="w2a" />
+                                    <field name="w2" />
+                                    <field name="w2a" />
 
-                                        <field name="w3" />
-                                        <field name="w3a" />
+                                    <field name="w3" />
+                                    <field name="w3a" />
 
-                                        <field name="w4" />
-                                        <field name="w4a" />
+                                    <field name="w4" />
+                                    <field name="w4a" />
 
-                                        <field name="w5" />
-                                        <field name="w5a" />
-                                        
-                                        <field name="note"/>
-                                    </tree>
-                                </field>
-                            </page>
-                        </notebook>
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <notebook>
+                        <page string="Syrup">
+                            <field name="mps_detail_ids2"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" >
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="production_order" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <notebook>
+                        <page string="Kapsul">
+                            <field name="mps_detail_ids3"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" >
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="production_order" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+                    <notebook>
+                        <page string="Soft Capsule">
+                            <field name="mps_detail_ids4"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" >
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="production_order" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+
+                    <notebook>
+                        <page string="Larutan">
+                            <field name="mps_detail_ids5"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" >
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="production_order" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <notebook>
+                        <page string="Injeksi">
+                            <field name="mps_detail_ids6"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" >
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="production_order" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="note"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" 
+                            groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>                         
             </field>
         </record>

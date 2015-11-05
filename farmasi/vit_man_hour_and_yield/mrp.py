@@ -72,12 +72,30 @@ class mrp_production_workcenter_line(osv.osv):
             result[obj.id] = y
         return result
 
+    def _get_process_yield(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result      = {}
+        y           = 0.00
+        for obj in self.browse(cr,uid,ids,context=context):
+            if obj.input_qty != 0.0:
+                y = (obj.output_qty/obj.input_qty) *100
+
+            result[obj.id] = y
+        return result
+
     _columns = {
         # 'man_hour': fields.function(_get_man_hour, type="float",string='Planned Man of Hour', digits=(16, 4)),
         'man_hour': fields.float('Planned Man of Hour', digits=(16, 4)),
         'actual_man_hour': fields.float('Actual Man of Hours', digits=(16, 4)),
         'result_qty' : fields.float('Result Qty', digits=(16, 2)),
         'yield': fields.function(_get_yield, type="float",string='Yield', digits=(16, 4)),
+
+        'input_qty' : fields.float('Input Qty', digits=(16, 2)),
+        'output_qty' : fields.float('Output Qty', digits=(16, 2)),
+        'process_uom_id': fields.many2one('product.uom', 'Process UOM'),
+        'process_yield': fields.function(_get_process_yield, type="float",string='Process Yield', digits=(16, 4)),
 
     }
 

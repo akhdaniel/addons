@@ -20,6 +20,24 @@ PR_LINE_STATES =[('draft','Draft'),
 
 class product_request(osv.osv):
 	_name 		= "vit.product.request"
+
+	def _product_request_lines(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		# return harus berupa dictionary dengan key id session
+		# contoh kalau 3 records:
+		# {
+		#      1 : 50.8,
+		#      2 : 25.5,
+		#      3 : 10.0
+		# }
+
+		for pr in self.browse(cr, uid, ids, context=context):
+			product_names = []
+			for line in pr.product_request_line_ids:
+				product_names.append(line.product_id.name)
+			results[pr.id] = ",".join(product_names)
+		return results	
+
 	_columns 	= {
 		'name'	: fields.char("Number" , readonly=True),
 		'date'	: fields.date("Request Date", 
@@ -37,6 +55,9 @@ class product_request(osv.osv):
 			readonly=True,
 			states={'draft':[('readonly',False)]},
 			),
+
+		'product_request_lines': fields.function(_product_request_lines, type='char', string="Product Request Lines"),
+
 		'department_id' : fields.many2one('hr.department', 'Department',
 			required=True, 
 			readonly=True,
@@ -173,7 +194,7 @@ class product_request_line(osv.osv):
 					'schedule_date'  : line_id.date_required ,
 					'origins'		 : origins,
 					'line_ids'		 : line_ids,
-					'description'	 : line_id.description,
+					'description'	 : line_id.name,
 				}
 
 		##########################################################

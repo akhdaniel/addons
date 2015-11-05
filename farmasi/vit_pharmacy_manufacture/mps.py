@@ -14,15 +14,53 @@ import re
 class mps(osv.osv):
 	_name = 'vit_pharmacy_manufacture.mps'
 	_description = 'Master Production Schedule'
+	_inherit = ['mail.thread', 'ir.needaction_mixin']
 
 	_columns = {
-		'name': fields.char('Name'),
-		'year': fields.integer('Year'),
+		'name': fields.char('Name',
+			readonly=True,
+            states={'draft':[('readonly',False)]} ),
+		'year': fields.integer('Year',
+			readonly=True,
+            states={'draft':[('readonly',False)]} ),
 		'month' : fields.char('Month'),
 		'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
 		'created_date': fields.datetime('Created Date', required=True, readonly=True, select=True),
-		'mps_detail_ids':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_detail_id','Forecast Details'),
-		'forecast_id': fields.many2one('vit_pharmacy_manufacture.forecast_product', 'Forecast'),
+
+		'mps_detail_ids1':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Betalaktam',
+			readonly=True,
+			domain=[('sediaan_id','=','Betalaktam')],
+            states={'draft':[('readonly',False)]} ),
+		
+		'mps_detail_ids2':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Syrup',
+			readonly=True,
+			domain=[('sediaan_id','=','Syrup')],
+            states={'draft':[('readonly',False)]} ),
+		
+		'mps_detail_ids3':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Kapsul',
+			readonly=True,
+			domain=[('sediaan_id','=','Kapsul')],
+            states={'draft':[('readonly',False)]} ),
+		
+		'mps_detail_ids4':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Soft Capsule',
+			readonly=True,
+			domain=[('sediaan_id','=','Soft Capsule')],
+            states={'draft':[('readonly',False)]} ),
+		
+		'mps_detail_ids5':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Larutan',
+			readonly=True,
+			domain=[('sediaan_id','=','Larutan')],
+            states={'draft':[('readonly',False)]} ),
+		
+		'mps_detail_ids6':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Injeksi',
+			readonly=True,
+			domain=[('sediaan_id','=','Injeksi')],
+            states={'draft':[('readonly',False)]} ),
+		
+		'forecast_id': fields.many2one('vit_pharmacy_manufacture.forecast_product', 'Forecast',
+			readonly=True,
+            states={'draft':[('readonly',False)]} ),
+		
 		'state': fields.selection([
 			('draft', 'Draft'),
 			('open', 'Open'),
@@ -42,39 +80,48 @@ class mps(osv.osv):
 
 	def action_create_wps(self, cr, uid, ids, context=None):
 		""" Create Sejumlah WPS dari Urutan Week Paling Pertama """
-		m = self.browse(cr,uid,ids[0],).month
-		year = self.browse(cr,uid,ids[0],).year
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids:
-			week_on_month = [1,2,3,4,5]
-			week_on_year = self.get_no_week(cr,uid,ids,m)
-			batch = [details_product.w1,details_product.w2,details_product.w3,details_product.w4]
-			for wm,wy,b in zip(week_on_month,week_on_year,batch):
-				if b > 0.00:
-					start_date  = self.get_start_date(cr, uid, ids, wy)
-					end_date  = self.get_end_date(cr, uid, ids, wy)
-					wps_obj = self.pool.get('vit_pharmacy_manufacture.wps').create(cr,uid,{
-						'name' : 'WPS'+'/'+str(wm)+'/'+self.browse(cr,uid,ids[0],).month+'/'+self.browse(cr,uid,ids[0],).year,
-						'mps_id' : self.browse(cr,uid,ids[0],).id,
-						'week_on_month' : wm,
-						'week_on_year' : wy,
-						'product_id' : details_product.product_id.id,
-						'categ_id': details_product.product_id.categ_id.id,
-						'batch' : b,
-						'start_date' : start_date,
-						'end_date' : end_date,
-						'year'  : year,
-						})
 
-					""" Create MO Berdasarkan batch (b) """
-					product_id = details_product.product_id.id
-					self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date)
+		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids1:
+			self.create_wps(cr,uid, ids, details_product, context=context)
+		
 		self.write(cr, uid, ids, {'state':'done'}, context=context)
 
+	def create_wps(self, cr, uid, ids, details_product, context=None):
+
+		mps = self.browse(cr,uid,ids[0],)
+		m = mps.month
+		year = mps.year
+
+		week_on_month = [1,2,3,4,5]
+		week_on_year = self.get_no_week(cr,uid,ids,m)
+
+		batch = [details_product.w1,details_product.w2,details_product.w3,details_product.w4]
+		for wm,wy,b in zip(week_on_month,week_on_year,batch):
+			if b > 0.00:
+				start_date  = self.get_start_date(cr, uid, ids, wy)
+				end_date  = self.get_end_date(cr, uid, ids, wy)
+				wps_obj = self.pool.get('vit_pharmacy_manufacture.wps').create(cr,uid,{
+					'name' : 'WPS'+'/'+str(wm)+'/'+ m +'/'+ str(year),
+					'mps_id' : mps.id,
+					'week_on_month' : wm,
+					'week_on_year' : wy,
+					'product_id' : details_product.product_id.id,
+					'categ_id': details_product.product_id.categ_id.id,
+					'batch' : b,
+					'start_date' : start_date,
+					'end_date' : end_date,
+					'year'  : year,
+					})
+
+				""" Create MO Berdasarkan batch (b) """
+				product_id = details_product.product_id.id
+				self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date)
 
 	def get_start_date(self, cr, uid, ids, wy, context=None):
 		""" Ambil Start Date Tiap Minggu nya"""
-		year = self.browse(cr,uid,ids[0],).year
-		y_w = year+"-W"+str(wy)
+		mps = self.browse(cr,uid,ids[0],)
+		year = mps.year
+		y_w = str(year) +"-W"+str(wy)
 		start_date_on_week = datetime.datetime.strptime(y_w + '-0',"%Y-W%W-%w")
 		""" start_date_on_week di mulai dari hari minggu, bila ingin hari senin di mulai lakukan
 			penambahan satu hari """
@@ -84,14 +131,14 @@ class mps(osv.osv):
 
 	def get_end_date(self, cr, uid, ids, wy, context=None):
 		""" Ambil end Date Tiap Minggu nya"""
-		year = self.browse(cr,uid,ids[0],).year
-		y_w = year+"-W"+str(wy)
+		mps = self.browse(cr,uid,ids[0],)
+		year = mps.year
+		y_w = str(year)+"-W"+str(wy)
 		end_date_on_week = datetime.datetime.strptime(y_w + '-0',"%Y-W%W-%w") 
 		""" end_date_on_week di mulai dari hari minggu, bila ingin hari 6 end di mulai lakukan
 			penambahan 6 hari """
 		end_date_on_week += datetime.timedelta(days=6)
 		return end_date_on_week
-
 
 	def get_no_week(self, cr, uid, ids, m, context=None):
 		""" Ambil No Urutan Week Berdasarkan Bulannya """
@@ -122,8 +169,6 @@ class mps(osv.osv):
 
 		return w
 
-
-	
 	def create_mo(self,cr,uid,ids,wm,b,wps_obj,product_id,start_date,context=None):
 		for mo_w in range(0,int(b)):
 			index_n = range(0,int(b)).index(mo_w)
@@ -150,8 +195,6 @@ class mps(osv.osv):
 			""" Update lagi wps id dan isi mrp_detail_id nya """
 			# self.update_line_wps(cr,uid,ids,wps_obj,mo_obj)
 
-
-
 	def update_line_wps(self,cr,uid,ids,wps_obj,mo_obj,context=None):
 		data_line = {
 			'mrp_id' : mo_obj,
@@ -160,6 +203,37 @@ class mps(osv.osv):
 		datas = {'mrp_detail_ids' : mrp_detail_ids,}
 		self.pool.get('vit_pharmacy_manufacture.wps').write(cr,uid,wps_obj,datas)
 
+	def action_recalculate(self, cr, uid, ids, context=None):
+
+		for mps in self.browse(cr, uid, ids, context=context):
+			for detail in mps.mps_detail_ids1:
+				self.update_detail(cr, uid, detail, context=context)
+			for detail in mps.mps_detail_ids2:
+				self.update_detail(cr, uid, detail, context=context)
+			for detail in mps.mps_detail_ids3:
+				self.update_detail(cr, uid, detail, context=context)
+			for detail in mps.mps_detail_ids4:
+				self.update_detail(cr, uid, detail, context=context)
+			for detail in mps.mps_detail_ids5:
+				self.update_detail(cr, uid, detail, context=context)
+			for detail in mps.mps_detail_ids6:
+				self.update_detail(cr, uid, detail, context=context)
+
+	def update_detail(self, cr, uid, detail, context=None):
+		detail_obj = self.pool.get('vit_pharmacy_manufacture.mps_detail')
+		production_order = detail.production_order
+		w1 = production_order / 4
+		w2 = production_order / 4
+		w3 = production_order / 4
+		w4 = production_order / 4
+		w5 = 0
+		data= {'w1': w1,
+			'w2': w2,
+			'w3': w3,
+			'w4': w4,
+			'w5': w5,
+		}
+		detail_obj.write(cr, uid, [detail.id], data, context=context)		
 
 """ Details MPS (Master Production Schedule) """
 class mps_detail(osv.osv):
@@ -167,8 +241,12 @@ class mps_detail(osv.osv):
 	_description = 'Master Production Schedule Details'
 
 	_columns = {
-		'mps_detail_id' : fields.many2one('vit_pharmacy_manufacture.mps', 'MPS Reference',required=True, ondelete='cascade', select=True),
+		'mps_id' : fields.many2one('vit_pharmacy_manufacture.mps', 'MPS Reference',required=True, ondelete='cascade', select=True),
 		'product_id': fields.many2one('product.product', 'Substance', required=True),
+
+		'sediaan_id' : fields.related('product_id', 'categ_id' , 'sediaan_id', type="many2one", 
+			relation="vit.sediaan", string="Sediaan", store=True),
+
 		'production_order' : fields.integer('Production Order (Batch)'), 
 		'product_uom': fields.many2one('product.uom', 'Uom'),
 		'w1': fields.integer('W1p'),

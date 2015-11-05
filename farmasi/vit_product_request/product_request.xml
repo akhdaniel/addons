@@ -79,6 +79,7 @@
                     <field name="department_id"/>
                     <field name="date"/>
                     <field name="user_id"/>
+                    <field name="product_request_lines"/>
                     <field name="state"/>
                 </tree>    
             </field>
