@@ -37,6 +37,7 @@
                 'menu.xml',
                 'data/sequence.xml',
                 'data/master_data_policy.xml',
+                'data/netpro.branch.csv',
         ],
         "installable": True
 }
