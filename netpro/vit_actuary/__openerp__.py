@@ -80,6 +80,9 @@
                 'data/netpro.region.csv',
                 'data/res.country.state.csv',
                 'data/sequence.xml',
+                'data/netpro.lob.csv',
+                'data/netpro.holiday.csv',
+                'data/netpro.membership_factor.csv',
 
                 'menu.xml',
                 # 'data/sequence.xml',
