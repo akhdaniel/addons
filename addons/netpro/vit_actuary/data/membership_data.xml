@@ -1,8 +1,8 @@
 <openerp>
 <data>
 	<record model="netpro.membership" id="membership1">
-        <field name="membership_id">EMP</field>
-        <field name="name">Primary Member</field>
+        <field name="name">EMP</field>
+        <field name="membership_id">Primary Member</field>
         <field name="name_i">Employee</field>
         <field name="category">A</field>
         <field name="age_between_start">18</field>
@@ -12,8 +12,8 @@
     </record>
 
     <record model="netpro.membership" id="membership2">
-        <field name="membership_id">SPO</field>
-        <field name="name">Secondary Member</field>
+        <field name="name">SPO</field>
+        <field name="membership_id">Secondary Member</field>
         <field name="name_i">Spouse</field>
         <field name="category">A</field>
         <field name="age_between_start">18</field>
@@ -23,8 +23,8 @@
     </record>
 
     <record model="netpro.membership" id="membership3">
-        <field name="membership_id">CHI</field>
-        <field name="name">Tertiary Member</field>
+        <field name="name">CHI</field>
+        <field name="membership_id">Tertiary Member</field>
         <field name="name_i">Child</field>
         <field name="category">C</field>
         <field name="age_between_start">0</field>
