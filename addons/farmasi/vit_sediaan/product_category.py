@@ -19,4 +19,5 @@ class sediaan(osv.osv):
 	_columns 	= {
 		'name' 	: fields.char("Sediaan"),
 		'code' 	: fields.char("Code"),
+		'max_batch_per_week': fields.integer("Max Batch per Week")
 	}

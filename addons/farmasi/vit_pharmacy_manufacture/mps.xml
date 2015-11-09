@@ -49,6 +49,8 @@
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+
+                                    <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     
                                     <field name="w1" />
@@ -66,6 +68,7 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="reminder"/>
                                     <field name="note"/>
                                 </tree>
                             </field>
@@ -79,6 +82,7 @@
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+                                    <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     
                                     <field name="w1" />
@@ -96,6 +100,7 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="reminder"/>
                                     <field name="note"/>
                                 </tree>
                             </field>
@@ -109,6 +114,7 @@
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+                                    <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     
                                     <field name="w1" />
@@ -126,6 +132,7 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="reminder"/>
                                     <field name="note"/>
                                 </tree>
                             </field>
@@ -140,6 +147,7 @@
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+                                    <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     
                                     <field name="w1" />
@@ -157,6 +165,7 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="reminder"/>
                                     <field name="note"/>
                                 </tree>
                             </field>
@@ -172,6 +181,7 @@
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+                                    <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     
                                     <field name="w1" />
@@ -189,6 +199,7 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="reminder"/>
                                     <field name="note"/>
                                 </tree>
                             </field>
@@ -202,6 +213,7 @@
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+                                    <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     
                                     <field name="w1" />
@@ -219,6 +231,7 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="reminder"/>
                                     <field name="note"/>
                                 </tree>
                             </field>
