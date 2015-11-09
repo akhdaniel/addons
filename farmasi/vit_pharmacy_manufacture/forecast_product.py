@@ -81,6 +81,7 @@ class forecast_product(osv.osv):
                 'name' : "MPS/%s/%s" % (year, m),
                 'year' : "%s" % (year),
                 'month': m,
+                'month_id': r,
                 'forecast_id': forecast.id
                 })
 

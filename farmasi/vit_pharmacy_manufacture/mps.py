@@ -24,6 +24,7 @@ class mps(osv.osv):
 			readonly=True,
             states={'draft':[('readonly',False)]} ),
 		'month' : fields.char('Month'),
+		'month_id' : fields.integer('Month'),
 		'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
 		'created_date': fields.datetime('Created Date', required=True, readonly=True, select=True),
 
@@ -245,33 +246,111 @@ class mps(osv.osv):
 
 		for mps in self.browse(cr, uid, ids, context=context):
 			for detail in mps.mps_detail_ids1:
-				self.update_detail(cr, uid, detail, context=context)
+				self.update_detail(cr, uid, detail, 1, context=context)
 			for detail in mps.mps_detail_ids2:
-				self.update_detail(cr, uid, detail, context=context)
+				self.update_detail(cr, uid, detail, 2, context=context)
 			for detail in mps.mps_detail_ids3:
-				self.update_detail(cr, uid, detail, context=context)
+				self.update_detail(cr, uid, detail, 3, context=context)
 			for detail in mps.mps_detail_ids4:
-				self.update_detail(cr, uid, detail, context=context)
+				self.update_detail(cr, uid, detail, 4, context=context)
 			for detail in mps.mps_detail_ids5:
-				self.update_detail(cr, uid, detail, context=context)
+				self.update_detail(cr, uid, detail, 5, context=context)
 			for detail in mps.mps_detail_ids6:
-				self.update_detail(cr, uid, detail, context=context)
+				self.update_detail(cr, uid, detail, 6, context=context)
 
-	def update_detail(self, cr, uid, detail, context=None):
+	"""
+	recalculate the w1..w5 details 
+	"""
+	def update_detail(self, cr, uid, detail, sediaan_index, context=None):
 		detail_obj = self.pool.get('vit_pharmacy_manufacture.mps_detail')
+		mps_obj = self.pool.get('vit_pharmacy_manufacture.mps')
+
 		production_order = detail.production_order
-		w1 = production_order / 4
-		w2 = production_order / 4
-		w3 = production_order / 4
-		w4 = production_order / 4
-		w5 = 0
-		data= {'w1': w1,
+		sediaan = detail.sediaan_id 
+		max_batch_per_week = sediaan.max_batch_per_week
+		w1=0;w2=0;w3=0;w4=0;w5=0
+
+
+		mps = detail.mps_id 
+		number_of_weeks = self.count_number_of_weeks(cr, uid, mps.year, mps.month_id)
+
+		# reminder this month
+		reminder_prev = detail.reminder_prev
+		reminder = production_order  + reminder_prev 
+		for i in range(1,6):
+			if reminder > max_batch_per_week:
+
+				reminder = reminder - max_batch_per_week
+
+				if i==1:
+					w1 = max_batch_per_week
+				elif i==2:
+					w2 = max_batch_per_week
+				elif i==3:
+					w3 = max_batch_per_week
+				elif i==4:
+					w4 = max_batch_per_week
+					if number_of_weeks == 4:
+						if reminder>0:
+							self.create_new_line(cr, uid, detail, reminder, context=context)
+					
+				elif i==5:
+					w5 = max_batch_per_week
+					if number_of_weeks == 5:
+						if reminder>0:
+							self.create_new_line(cr, uid, detail, reminder, context=context)
+
+			else:
+				w1 = reminder
+				reminder = 0
+
+		data= {
+			'w1': w1,
 			'w2': w2,
 			'w3': w3,
 			'w4': w4,
 			'w5': w5,
+			'reminder' : reminder,
 		}
-		detail_obj.write(cr, uid, [detail.id], data, context=context)		
+
+		if detail_obj.search(cr, uid, [('id','=',detail.id)], context=context):
+			detail_obj.write(cr, uid, [detail.id], data, context=context)		
+
+	def create_new_line(self, cr, uid, detail, reminder, context=None):
+		"""
+		simpan sisa bulan ini utk bulan depan 
+		utk detail line yang sama dng ini dan sediaan_index ini
+		jika tidak ada, create line MPS baru
+		"""
+		detail_obj = self.pool.get('vit_pharmacy_manufacture.mps_detail')
+		mps_obj = self.pool.get('vit_pharmacy_manufacture.mps')
+
+		#reminder next month
+		reminder_next = 0 
+		next_mps_id = detail.mps_id.id + 1
+		next_mps_ids = mps_obj.search(cr, uid, [('id','=',next_mps_id)], context=context)
+		if next_mps_ids:
+
+			next_detail_id = detail_obj.search(cr, uid, [('mps_id','=',next_mps_id),('product_id','=',detail.product_id.id)], context=context)
+			if not next_detail_id:
+				next_data = {
+					'mps_id' : next_mps_id,
+					'reminder_prev': reminder,
+					'product_id': detail.product_id.id,
+					'product_uom': detail.product_uom.id
+				}
+				detail_obj.create(cr, uid, next_data, context=context)	
+			else:
+				next_data = {
+					'reminder_prev': reminder,
+				}
+				detail_obj.write(cr, uid, next_detail_id,next_data, context=context)	
+
+
+	def count_number_of_weeks(self, cr, uid, year, month, context=None):
+		c = calendar.monthcalendar(2015, 9)
+		return len(c)
+
 
 """ Details MPS (Master Production Schedule) """
 class mps_detail(osv.osv):
@@ -297,6 +376,8 @@ class mps_detail(osv.osv):
 		'w3a': fields.integer('W3a'),
 		'w4a': fields.integer('W4a'),
 		'w5a': fields.integer('W5a'),
+		'reminder' : fields.integer('Reminder'),
+		'reminder_prev' : fields.integer('Reminder Prev'),
 
 		'note'  : fields.char("Note"),
 	}

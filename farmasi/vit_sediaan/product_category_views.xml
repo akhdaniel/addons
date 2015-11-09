@@ -10,5 +10,29 @@
 		    	</field>
 		   	</field>
 		</record>		
+
+
+		<record id="view_sediaan_tree" model="ir.ui.view">
+		    <field name="name">vit_sediaan_tree</field>
+		    <field name="model">vit.sediaan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list sediaan" >
+		            <field name="name"/>
+		            <field name="code"/>
+		            <field name="max_batch_per_week"/>
+		        </tree>    
+		    </field>
+		</record>
+
+        <record model="ir.actions.act_window" id="menu_mrp_sediaan">
+            <field name="name">Sediaan</field>
+            <field name="res_model">vit.sediaan</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="menu_mrp_sediaan"
+                id="menu_sediaan" name="Sediaan"
+                parent="vit_pharmacy_machine_hour.menu_pharmacy_bom" sequence="1"/>
+
 	</data>
 </openerp>
