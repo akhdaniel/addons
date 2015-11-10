@@ -216,16 +216,30 @@ class mps(osv.osv):
 	def actual_create_pr(self, cr, uid, products, category, origin, context=None):
 		product_obj = self.pool.get('product.product')
 		pr_lines = []
+
+		#req date mundur 1 bulan dari tgl MPS (origin)
 		req_date = datetime.datetime(origin.year, origin.month_id, 1) - datetime.timedelta(days=30)
 
 		for product_id in products.keys():
+			
+			# production order
 			qty = products[product_id]
+			
+			# sedang di PR, in progress status
+			qty_in_request = self.calculate_in_request(cr, uid, product_id, context=context)
+
 			product = product_obj.browse(cr, uid, product_id, context=context)
-			if qty > product.virtual_available:
+
+			print product.name, qty, qty_in_request
+
+			# qty yang sebenarnya diperlukan
+			qty = qty - qty_in_request
+
+			if qty > 0 and qty > product.virtual_available :
 				pr_lines.append( (0,0,{
-					'product_id'  : product_id,
-					'description' : product.name,
-					'product_qty' : qty,
+					'product_id'    : product_id,
+					'description'   : product.name,
+					'product_qty'   : qty - product.virtual_available,
 					'product_uom_id': product.uom_id.id,
 					'date_required' : req_date.strftime("%Y-%m-%d")
 				}) )
@@ -252,6 +266,15 @@ class mps(osv.osv):
 			}
 			pr_obj.create(cr, uid, data, context=context)
 
+
+	def calculate_in_request(self, cr, uid, product_id, context=None):
+		r = 0
+		sql = "select sum(product_qty) from vit_product_request_line where product_id=%s and state='onprogress'" % product_id
+		cr.execute(sql)
+		hasil = cr.fetchone()
+		if hasil and hasil[0]:
+			r=hasil[0]
+		return r 
 
 	def get_start_date(self, cr, uid, ids, wy, context=None):
 		""" Ambil Start Date Tiap Minggu nya"""
