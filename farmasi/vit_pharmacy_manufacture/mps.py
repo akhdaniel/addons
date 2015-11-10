@@ -104,23 +104,7 @@ class mps(osv.osv):
 		"""
 		create product request jika stok bahan baku kurang di gudang
 		"""
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids1:
-			self.create_pr(cr,uid, ids, details_product, context=context)
-
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids2:
-			self.create_pr(cr,uid, ids, details_product, context=context)
-
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids3:
-			self.create_pr(cr,uid, ids, details_product, context=context)
-
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids4:
-			self.create_pr(cr,uid, ids, details_product, context=context)
-
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids5:
-			self.create_pr(cr,uid, ids, details_product, context=context)
-
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids6:
-			self.create_pr(cr,uid, ids, details_product, context=context)
+		self.create_pr(cr,uid, ids, context=context)
 
 	def create_wps(self, cr, uid, ids, details_product, context=None):
 
@@ -153,8 +137,121 @@ class mps(osv.osv):
 				product_id = details_product.product_id.id
 				self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date)
 
-	def create_pr(self, cr, uid, ids, details_product, context=None):
+	def create_pr(self, cr, uid, ids, context=None):
+		"""
+		loop mps details ini
+		breakdown semua BOM produkc dan qty nya
+		gabungkan per bahan baku plus total qty 
+		for each bahan baku:
+			cek stok current 
+			jika kurang:
+				create detail pr utk bahan baku tsb 
+
+		create pr dengan line detail tadi
+		date request = mundur 1 bulan dari tgl MPS 
+
+
+		products = { 
+			1: 100,
+			2: 200,
+			3: 300
+		}
+
+		"""
+
+		# cari total produk yang harus diproduksi
+		products = {}
+		actives = {} # bahan awal aktif
+		helpers = {} # bahn awal pembantu
+		packages = {} # bahan pengemas
+		origin  = False
+
+		for mps in self.browse(cr, uid, ids, context=context):
+			origin = mps 
+			for i in range (1,6):
+				fieldname = "mps.mps_detail_ids%s" % i
+				for detail in eval(fieldname):
+					product_id = detail.product_id.id 
+					qty = products.get(product_id, 0 )
+					products.update({product_id : qty + detail.production_order + detail.reminder_prev})
+
+
+		# cari bahan baku produk2 tersebut
+		bom_obj = self.pool.get('mrp.bom')
+		product_obj = self.pool.get('product.product')
+		for product_id in products.keys():
+
+			product 	= product_obj.browse(cr, uid, product_id, context=context)
+			bom_id 		= bom_obj._bom_find(cr, uid, product_id, [], context=context)
+			bom 		= bom_obj.browse(cr, uid, bom_id, context=context)
+			
+			factor = products[product_id] 
+
+			bom_lines, work_centers = bom_obj._bom_explode(cr, uid, bom, product, factor, [], context=context)
+
+			print product_id, factor
+
+			for line in bom_lines:
+				product_id = line.get('product_id',0)
+				product    = product_obj.browse(cr, uid, product_id, context=context)
+
+				if product.categ_id.name == 'Bahan Awal Aktif' :
+					qty = actives.get( product_id ,0)
+					actives.update( { product_id : qty + line.get('product_qty',0) })
+
+				elif product.categ_id.name == 'Bahan Awal Pembantu' :
+					qty = helpers.get( product_id ,0)
+					helpers.update( { product_id : qty + line.get('product_qty',0) })
+
+				elif product.categ_id.name == 'Bahan Pengemas' :
+					qty = packages.get( product_id ,0)
+					packages.update( { product_id : qty + line.get('product_qty',0) })
+
+		self.actual_create_pr(cr, uid, actives, "Bahan Awal Aktif", origin, context=context)
+		self.actual_create_pr(cr, uid, helpers, "Bahan Awal Pembantu", origin, context=context)
+		self.actual_create_pr(cr, uid, packages, "Bahan Pengemas", origin, context=context)
+
 		return 
+
+	def actual_create_pr(self, cr, uid, products, category, origin, context=None):
+		product_obj = self.pool.get('product.product')
+		pr_lines = []
+		req_date = datetime.datetime(origin.year, origin.month_id, 1) - datetime.timedelta(days=30)
+
+		for product_id in products.keys():
+			qty = products[product_id]
+			product = product_obj.browse(cr, uid, product_id, context=context)
+			if qty > product.virtual_available:
+				pr_lines.append( (0,0,{
+					'product_id'  : product_id,
+					'description' : product.name,
+					'product_qty' : qty,
+					'product_uom_id': product.uom_id.id,
+					'date_required' : req_date.strftime("%Y-%m-%d")
+				}) )
+
+		categ_id = self.pool.get('product.category').search(cr, uid, [('name','=', category)])
+		if not categ_id:
+			raise osv.except_osv(_('error'),_("no categ found") ) 
+
+		# create purchase request 
+		if pr_lines:
+			
+			department_id = self.pool.get('hr.department').search(cr, uid, [('name','=','Production')] , context=context)
+			if not department_id:
+				raise osv.except_osv(_('error'),_("no department Production") ) 
+
+			pr_obj = self.pool.get('vit.product.request')
+			data = {
+				'date'          : req_date.strftime("%Y-%m-%d"),
+				'user_id'       : uid, 
+				'department_id' : department_id[0],
+				'category_id'   : categ_id[0],
+				'product_request_line_ids': pr_lines,
+				'notes'			: 'Product request for %s' % origin.name 
+			}
+			pr_obj.create(cr, uid, data, context=context)
+
 
 	def get_start_date(self, cr, uid, ids, wy, context=None):
 		""" Ambil Start Date Tiap Minggu nya"""
@@ -247,14 +344,19 @@ class mps(osv.osv):
 		for mps in self.browse(cr, uid, ids, context=context):
 			for detail in mps.mps_detail_ids1:
 				self.update_detail(cr, uid, detail, 1, context=context)
+
 			for detail in mps.mps_detail_ids2:
 				self.update_detail(cr, uid, detail, 2, context=context)
+
 			for detail in mps.mps_detail_ids3:
 				self.update_detail(cr, uid, detail, 3, context=context)
+
 			for detail in mps.mps_detail_ids4:
 				self.update_detail(cr, uid, detail, 4, context=context)
+
 			for detail in mps.mps_detail_ids5:
 				self.update_detail(cr, uid, detail, 5, context=context)
+
 			for detail in mps.mps_detail_ids6:
 				self.update_detail(cr, uid, detail, 6, context=context)
 
@@ -265,22 +367,31 @@ class mps(osv.osv):
 		detail_obj = self.pool.get('vit_pharmacy_manufacture.mps_detail')
 		mps_obj = self.pool.get('vit_pharmacy_manufacture.mps')
 
-		production_order = detail.production_order
-		sediaan = detail.sediaan_id 
-		max_batch_per_week = sediaan.max_batch_per_week
-		w1=0;w2=0;w3=0;w4=0;w5=0
+		# production_order = detail.production_order
+		production_order = self.get_total_production_order(cr, uid, detail, sediaan_index, context=context)
+		reminder_prev = self.get_total_reminder_prev(cr, uid, detail, sediaan_index, context=context)
+		total_products = self.get_total_product(cr, uid, detail, sediaan_index, context=context)
+		reminder_per_product = detail.production_order + detail.reminder_prev
 
+		sediaan = detail.sediaan_id 
+		max_batch_per_week = math.ceil( sediaan.max_batch_per_week / total_products )
+
+		w1=0;w2=0;w3=0;w4=0;w5=0
 
 		mps = detail.mps_id 
 		number_of_weeks = self.count_number_of_weeks(cr, uid, mps.year, mps.month_id)
 
 		# reminder this month
-		reminder_prev = detail.reminder_prev
+		# reminder_prev = detail.reminder_prev
 		reminder = production_order  + reminder_prev 
+
+		# import pdb; pdb.set_trace()
+
 		for i in range(1,6):
-			if reminder > max_batch_per_week:
+			if reminder_per_product > max_batch_per_week:
 
 				reminder = reminder - max_batch_per_week
+				reminder_per_product = reminder_per_product - max_batch_per_week
 
 				if i==1:
 					w1 = max_batch_per_week
@@ -290,27 +401,25 @@ class mps(osv.osv):
 					w3 = max_batch_per_week
 				elif i==4:
 					w4 = max_batch_per_week
-					if number_of_weeks == 4:
-						if reminder>0:
-							self.create_new_line(cr, uid, detail, reminder, context=context)
-					
+					if number_of_weeks == 4 and reminder_per_product>0:
+						self.create_new_line(cr, uid, detail, reminder_per_product, context=context)
 				elif i==5:
 					w5 = max_batch_per_week
-					if number_of_weeks == 5:
-						if reminder>0:
-							self.create_new_line(cr, uid, detail, reminder, context=context)
-
+					# import pdb; pdb.set_trace()
+					if number_of_weeks == 5 and reminder_per_product>0:
+						self.create_new_line(cr, uid, detail, reminder_per_product, context=context)
 			else:
-				w1 = reminder
-				reminder = 0
+				w1 = reminder_per_product
+				reminder_per_product = 0
+				break 
 
-		data= {
+		data = {
 			'w1': w1,
 			'w2': w2,
 			'w3': w3,
 			'w4': w4,
 			'w5': w5,
-			'reminder' : reminder,
+			'reminder' : reminder_per_product,
 		}
 
 		if detail_obj.search(cr, uid, [('id','=',detail.id)], context=context):
@@ -346,6 +455,33 @@ class mps(osv.osv):
 				}
 				detail_obj.write(cr, uid, next_detail_id,next_data, context=context)	
 
+	def get_total_production_order(self, cr, uid, detail, sediaan_index, context=None):
+		r = 0
+		sql = "select sum(production_order) from vit_pharmacy_manufacture_mps_detail where mps_id = %s and sediaan_id=%s" % (detail.mps_id.id, sediaan_index)
+		cr.execute(sql)
+		hasil	= cr.fetchone()
+		if hasil and hasil[0]:
+			r= hasil[0]
+		return r
+
+	def get_total_reminder_prev(self, cr, uid, detail, sediaan_index, context=None):
+		r = 0
+		sql = "select sum(reminder_prev) from vit_pharmacy_manufacture_mps_detail where mps_id = %s and sediaan_id=%s" % (detail.mps_id.id, sediaan_index)
+		cr.execute(sql)
+		hasil	= cr.fetchone()
+
+		if hasil and hasil[0]:
+			r= hasil[0]
+		return r
+
+	def get_total_product(self, cr, uid, detail, sediaan_index, context=None):
+		r = 0
+		sql = "select count(*) from vit_pharmacy_manufacture_mps_detail where mps_id = %s and sediaan_id=%s" % (detail.mps_id.id, sediaan_index)
+		cr.execute(sql)
+		hasil	= cr.fetchone()
+		if hasil and hasil[0]:
+			r= hasil[0]
+		return r
 
 	def count_number_of_weeks(self, cr, uid, year, month, context=None):
 		c = calendar.monthcalendar(2015, 9)
