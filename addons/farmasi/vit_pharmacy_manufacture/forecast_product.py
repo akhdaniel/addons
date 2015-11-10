@@ -65,9 +65,15 @@ class forecast_product(osv.osv):
         return bom
 
     def action_create_mps(self, cr, uid, ids, context=None):
-        """ Buat MPS Sebanyak 12 Bulan, kelompokan dalam tiap MPS (perbulan) 
+        """ 
+        Buat MPS Sebanyak 12 Bulan, kelompokan dalam tiap MPS (perbulan) 
         dimundurkan 1 bulan karena forecast januari 2016 artinya produksi harus 
         sudah dimulai dec 2015
+
+
+        TODO: harus mengecek MPS tahun sebelumnya yang bulan Dec 
+        kalau masih ada reminder maka buatkan juga MPS nya di tahun ini.
+
         """
         forecast = self.browse(cr,uid,ids[0],context=context)
 
