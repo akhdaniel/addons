@@ -77,9 +77,9 @@ public class EligibilityActivity extends AppCompatActivity {
         txtInsurancePeriodEnd.setText(member.getInsurancePeriodEnd());
 
 
-//        Object[] coverages = member.getCoverages();
-//        ViewGroup linearLayout = (ViewGroup) findViewById(R.id.linearLayout);
-//        for (int i=0 ; i< coverages.length; i++)
+        //        Object[] coverages = member.getCoverages();
+        //        ViewGroup linearLayout = (ViewGroup) findViewById(R.id.linearLayout);
+        //        for (int i=0 ; i< coverages.length; i++)
         Object[] memberPlanIds = member.getMemberPlanIds();
         ViewGroup linearLayout = (ViewGroup) findViewById(R.id.linearLayout);
         for (int i=0 ; i< memberPlanIds.length; i++)
@@ -108,10 +108,13 @@ public class EligibilityActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             memberPlanId =  (Integer) view.getTag();
+            Button b = (Button)view;
+            String memberPlan =  (String) b.getText().toString();
 
             Intent myIntent = new Intent(EligibilityActivity.this, RegistrationActivity.class);
             myIntent.putExtra("member", member);
             myIntent.putExtra("memberPlanId", memberPlanId);
+            myIntent.putExtra("memberPlan", memberPlan);
 
             EligibilityActivity.this.startActivity(myIntent);
 

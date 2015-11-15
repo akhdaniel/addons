@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText txtPassword;
     EditText txtDatabase;
     EditText txtServerAddress;
+    EditText txtTID;
 
 
     AlertDialog.Builder alertDialogBuilder;
@@ -38,11 +39,15 @@ public class LoginActivity extends AppCompatActivity {
 
         String database = SharedData.getKey(LoginActivity.this, "database");
         String serverAddress = SharedData.getKey(LoginActivity.this, "serverAddress");
+        String tid = SharedData.getKey(LoginActivity.this, "tid");
 
         txtDatabase = (EditText) findViewById(R.id.txtDatabase);
         txtServerAddress = (EditText) findViewById(R.id.txtServerAddress);
+        txtTID = (EditText) findViewById(R.id.txtTID);
+
         txtDatabase.setText(database);
         txtServerAddress.setText(serverAddress);
+        txtTID.setText(tid);
 
         alertDialogBuilder = new AlertDialog.Builder(this  );
 
@@ -60,11 +65,13 @@ public class LoginActivity extends AppCompatActivity {
                 txtPassword = (EditText) findViewById(R.id.txtPassword);
                 txtDatabase = (EditText) findViewById(R.id.txtDatabase);
                 txtServerAddress = (EditText) findViewById(R.id.txtServerAddress);
+                txtTID = (EditText) findViewById(R.id.txtTID);
 
                 String password = txtPassword.getText().toString();
                 String username = txtUsername.getText().toString();
                 String database = txtDatabase.getText().toString();
                 String serverAddress = txtServerAddress.getText().toString();
+                String tid = txtTID.getText().toString();
 
                 OdooUtility odoo = new OdooUtility(serverAddress, "common");
                 loginTaskId = odoo.login(listener, database, username, password);
@@ -73,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 SharedData.setKey(LoginActivity.this, "username", username);
                 SharedData.setKey(LoginActivity.this, "database", database);
                 SharedData.setKey(LoginActivity.this, "serverAddress", serverAddress);
+                SharedData.setKey(LoginActivity.this, "tid", tid);
 
                 break;
         }
@@ -88,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
              */
             Looper.prepare();
             if (id == loginTaskId){
-                if ( result instanceof Boolean && result == false){
+                if ( result instanceof Boolean && (Boolean)result == false){
                     alertDialogBuilder.setMessage("Login Error. Please try again");
                     alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
@@ -140,5 +148,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
+
+    public void onTestMagnetid(View view){
+        Intent intent = new Intent(LoginActivity.this, PrinterActivity.class);
+//        Intent intent = new Intent(LoginActivity.this, MegneticActivity.class);
+        startActivity(intent);
+    }
 
 }

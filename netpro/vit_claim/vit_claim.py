@@ -20,6 +20,7 @@
 ##############################################################################
 CLAIM_STATES = [('draft','Draft'),
     ('open','Open'),
+    ('close','Close'),
     ('approved','Approved'),
     ('revised','Revised'),
     ('released','Released'),
@@ -191,34 +192,40 @@ class netpro_claim(osv.osv):
         claim_status_open = CLAIM_STATES[1][0]
         return self.write(cr,uid,ids,{'state':claim_status_open},context=context)
 
+    def action_close(self,cr,uid,ids,context=None):
+        #set to "close" state
+        # claim_status_open = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'O', context=context)
+        claim_status_open = CLAIM_STATES[2][0]
+        return self.write(cr,uid,ids,{'state':claim_status_open},context=context)
+
     def action_approve(self,cr,uid,ids,context=None):
         #set to "approved" state
         # claim_status_approved = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'A', context=context)
-        claim_status_approved = CLAIM_STATES[2][0]
+        claim_status_approved = CLAIM_STATES[3][0]
         return self.write(cr,uid,ids,{'state':claim_status_approved},context=context)
 
     def action_revise(self,cr,uid,ids,context=None):
         #set to "revised" state
         # claim_status_revised = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'R', context=context)
-        claim_status_revised = CLAIM_STATES[3][0]
+        claim_status_revised = CLAIM_STATES[4][0]
         return self.write(cr,uid,ids,{'state':claim_status_revised},context=context)
 
     def action_release(self,cr,uid,ids,context=None):
         #set to "revised" state
         # claim_status_revised = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'R', context=context)
-        claim_status_release = CLAIM_STATES[4][0]
+        claim_status_release = CLAIM_STATES[5][0]
         return self.write(cr,uid,ids,{'state':claim_status_release},context=context)
 
     def action_cancel(self,cr,uid,ids,context=None):
         #set to "cancel" state
         # claim_status_cancelled = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'X', context=context)
-        claim_status_cancelled = CLAIM_STATES[5][0]
+        claim_status_cancelled = CLAIM_STATES[6][0]
         return self.write(cr,uid,ids,{'state':claim_status_cancelled},context=context)
 
     def action_hold(self,cr,uid,ids,context=None):
         #set to "cancel" state
         # claim_status_hold = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'H', context=context)
-        claim_status_hold = CLAIM_STATES[6][0]
+        claim_status_hold = CLAIM_STATES[7][0]
         return self.write(cr,uid,ids,{'state':claim_status_hold},context=context)
 
         

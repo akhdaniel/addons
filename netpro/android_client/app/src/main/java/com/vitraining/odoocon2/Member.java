@@ -1,5 +1,6 @@
 package com.vitraining.odoocon2;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -35,11 +36,15 @@ public class Member implements Parcelable {
     private Object[] memberPlanIds;
     private Object[] benefits;
 
+    private Context context;
+
     /**
      * Standard basic constructor for non-parcel
      * object creation
      */
-    public Member() { ; };
+    public Member(Context context) {
+        this.context= context;
+    };
     /**
      *
      * Constructor to use when re-constructing object
@@ -130,6 +135,9 @@ public class Member implements Parcelable {
             return new Member[size];
         }
     };
+
+
+
     public Integer getId() {
         return id;
     }
@@ -311,8 +319,8 @@ public class Member implements Parcelable {
         setMembershipId(membership.id);
         setMembershipName(membership.value);
 
-        setCardNo((String) classObj.get("card_no"));
-        setDateOfBirth((String) classObj.get("dob"));
+        setCardNo( OdooUtility.getString(classObj, "card_no"));
+        setDateOfBirth(OdooUtility.getString(classObj,"date_of_birth"));
 
         M2OField gender_id = OdooUtility.getMany2One(classObj, "gender_id");
         setGenderId(gender_id.id);
@@ -359,6 +367,8 @@ public class Member implements Parcelable {
     public void fillBenefits(Object[] classObjs ){
         ArrayList benefits = new ArrayList();
         int length=classObjs.length;
+        Benefit benefit = new Benefit(context);
+        benefit.deleteAll();
 
         /*
         add the new benefits
@@ -401,6 +411,10 @@ public class Member implements Parcelable {
             m.put("remaining", remaining);
 
             benefits.add(i, m);
+
+            benefit.setData(classObj);
+            benefit.addToDb();
+
         }
 
         setBenefits(benefits.toArray());
