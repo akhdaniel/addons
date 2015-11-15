@@ -1,21 +1,32 @@
 package com.vitraining.odoocon2;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.telpo.tps550.api.printer.ThermalPrinter;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,8 +50,10 @@ public class DischargeActivity extends AppCompatActivity {
     private TextView txtClaimNo;
     private TextView txtClaimDate;
     private TextView txtMemberPlan;
+    private Button buttonPrint;
 
     Member member;
+    String state ;
     Claim claim;
     long updateClaimTaskId;
     long confirmClaimTaskId;
@@ -52,6 +65,13 @@ public class DischargeActivity extends AppCompatActivity {
     private String database;
 
     List billedAmounts;
+
+
+    PrinterHandler handler;
+    private ProgressDialog progressDialog;
+    ProgressDialog dialog;
+    private Boolean nopaper = false;
+    private boolean LowBattery = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +87,17 @@ public class DischargeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         member = (Member) intent.getParcelableExtra("member");
         claim = (Claim) intent.getParcelableExtra("claim");
+        state = intent.getStringExtra("state");
 
         billedAmounts = new ArrayList();
 
         setValues();
+        handler = new PrinterHandler(DischargeActivity.this);
+        IntentFilter pIntentFilter = new IntentFilter();
+        pIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+//        pIntentFilter.addAction(PRINT_VERSION_CHANGE);
+        registerReceiver(printReceive, pIntentFilter);
+
     }
 
     private void setValues() {
@@ -92,6 +119,7 @@ public class DischargeActivity extends AppCompatActivity {
         txtClaimNo = (TextView) findViewById(R.id.txtClaimNo);
         txtClaimDate = (TextView) findViewById(R.id.txtClaimDate);
         txtMemberPlan = (TextView) findViewById(R.id.txtMemberPlan);
+        buttonPrint = (Button) findViewById(R.id.buttonPrint);
 
         /**
          * isi text view values
@@ -111,6 +139,13 @@ public class DischargeActivity extends AppCompatActivity {
         txtClaimDate.setText(claim.getClaimDate());
         txtMemberPlan.setText(claim.getMemberPlanName());
 
+
+        buttonPrint.setEnabled(false);
+        if(state != null){
+            if (state.equals("open")){
+                buttonPrint.setEnabled(true);
+            }
+        }
 
         /**
          * show form isian benefit amount
@@ -184,11 +219,12 @@ public class DischargeActivity extends AppCompatActivity {
 
         }
     }
+
     private  void showDiagnosisForm(){
 
     }
 
-    public void onClick(View view){
+    public void onClickConfirm(View view){
         confirmUpdateClaim();
     }
 
@@ -207,11 +243,11 @@ public class DischargeActivity extends AppCompatActivity {
                         final HashMap  bm = (HashMap ) billedAmounts.get(i);
                         final Integer benefitId = (Integer)bm.get("benefitId");
                         final EditText billed = (EditText)bm.get("billed");
+
                         details.add(Arrays.asList(0, 0, new HashMap() {{
                             put("benefit_id", benefitId);
                             put("billed", billed.getText().toString());
                             put("quantity", "1");
-//                            put("billed", bm.get("billed").getText());
                         }}));
                     }
 
@@ -253,16 +289,22 @@ public class DischargeActivity extends AppCompatActivity {
                     Log.v("CLAIM CONFIRMED", "successfully");
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DischargeActivity.this);
-                    alertDialogBuilder.setMessage("Successfully created and confirmed new Claim" )
+                    alertDialogBuilder.setMessage("Successfully discharged Claim" )
                             .setCancelable(false)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+
                                     // Do stuff if user accepts
-                                    Intent myIntent = new Intent(DischargeActivity.this, MenuActivity.class);
+                                    finish();
+                                    Intent myIntent = new Intent(DischargeActivity.this, DischargeActivity.class);
+                                    myIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    myIntent.putExtra("state", "open");
                                     myIntent.putExtra("member", member);
+                                    myIntent.putExtra("claim", claim);
                                     DischargeActivity.this.startActivity(myIntent);
+
                                 }
                             }).create().show();
 
@@ -285,5 +327,137 @@ public class DischargeActivity extends AppCompatActivity {
             odoo.MessageDialog(DischargeActivity.this, error.getMessage());
         }
     };
+
+    public void onClickPrint(View view){
+
+        String printContent = "";
+        printContent += "DISCHARGE\n";
+        printContent += "Claim No      : " + claim.getClaimNo() + "\n";
+        printContent += "Name          : " + member.getName() + "\n";
+        printContent += "Class         : " + member.getClassName() + "\n";
+        printContent += "Membership    : " + member.getMembershipName() + "\n";
+        printContent += "Card No       : " + member.getCardNo() + "\n";
+        printContent += "Date of Birth : " + member.getDateOfBirth() + "\n";
+        printContent += "Gender        : " + member.getGenderName() + "\n";
+        printContent += "Policy No     : " + member.getPolicyName() + "\n";
+        printContent += "Policy Group  : " + member.getPolicyCategoryId() + "\n";
+        printContent += "Policy Start  : " + member.getInsurancePeriodStart() + " to " + member.getInsurancePeriodEnd() + "\n";
+        printContent += "Company       : " + member.getPolicyHolderName() + "\n";
+        printContent += " \n";
+
+
+        String col1 = "%-20s";
+        String col2 = "%-5s";
+        String col3 = "%-10s";
+        String col4 = "%-10s";
+        printContent += String.format(col1, "Benefit");
+        //printContent += String.format(col2, "Unit");
+        //printContent += String.format(col3, "Usage");
+        printContent += String.format(col4, "Billed");
+        printContent += " \n";
+
+        Double total = 0.0;
+        Double limit = 0.0;
+        Double excess = 0.0;
+
+        Object[] benefits = member.getBenefits();
+        //for(int i=0; i< billedAmounts.size(); i++)
+        for (int i=0 ; i< benefits.length; i++)
+        {
+            HashMap benefit = (HashMap)benefits[i];
+            String benefitName= (String)benefit.get("benefitName");
+            Double remaining = (Double)benefit.get("remaining");
+
+            //final HashMap  bm = (HashMap ) billedAmounts.get(i);
+            //final Integer benefitId = (Integer)bm.get("benefitId");
+            //final EditText billed = (EditText)bm.get("billed");
+
+            printContent += String.format(col1, benefitName);
+            printContent += String.format(col4, "" );
+            printContent +=  " \n";
+
+            //total += Double.parseDouble(billed.getText().toString());
+            //limit += remaining;
+        }
+        printContent += "-----------------------------\n";
+        printContent += String.format(col1, "TOTAL");
+        printContent += String.format(col4, total );
+        printContent +=  " \n";
+
+        printContent += String.format(col1, "EXCESS");
+        printContent += String.format(col4, limit - total );
+        printContent +=  " \n";
+
+
+        printContent += "Print Date:" + new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += "(..........................)\n";
+        printContent += "         Signature\n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+        printContent += " \n";
+
+        handler.leftDistance = 0;
+        handler.lineDistance = 0;
+        handler.printContent = printContent;
+        handler.wordFont = 2;
+        handler.printGray = 20;
+
+        if (LowBattery == true) {
+            handler.sendMessage(handler.obtainMessage(handler.LOWBATTERY, 1, 0, null));
+        } else {
+            if(!nopaper) {
+                //setTitle("print character");
+                progressDialog = ProgressDialog.show(DischargeActivity.this, getString(R.string.bl_dy), getString(R.string.printing_wait));
+                handler.progressDialog = progressDialog;
+                handler.sendMessage(handler.obtainMessage(handler.PRINTCONTENT, 1, 0, null));
+            }
+            else {
+                Toast.makeText(DischargeActivity.this, getString(R.string.ptintInit), Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    protected void onDestroy() {
+        if(progressDialog != null && !DischargeActivity.this.isFinishing() ){
+            progressDialog.dismiss();
+            progressDialog = null;
+        }
+        //        stop = true;
+        unregisterReceiver(printReceive);
+        ThermalPrinter.stop();
+        super.onDestroy();
+    }
+
+    private BroadcastReceiver printReceive = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_BATTERY_CHANGED)) {
+                int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_NOT_CHARGING);
+                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
+                if (status != BatteryManager.BATTERY_STATUS_CHARGING) {
+                    if (level * 5 <= scale) {
+                        LowBattery = true;
+                    } else {
+                        LowBattery = false;
+                    }
+                } else {
+                    LowBattery = false;
+                }
+            }
+        }
+    };
+
 
 }

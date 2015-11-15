@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.vitraining.odoocon2.RegistrationActivity"
+    tools:context=".DischargeActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -88,6 +88,27 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="0001"
                 android:id="@+id/txtCardNo"
+                android:layout_column="5" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/claimno"
+                android:id="@+id/text200"
+                android:autoText="false"
+                android:layout_span="5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Claim No"
+                android:id="@+id/txtClaimNo"
                 android:layout_column="5" />
         </TableRow>
 
@@ -293,6 +314,7 @@
                 android:id="@+id/txtMemberPlan"
                 android:layout_column="5" />
         </TableRow>
+
     </TableLayout>
 
     <TextView
@@ -339,7 +361,14 @@
             android:layout_height="wrap_content"
             android:text="@string/confirm"
             android:id="@+id/button2"
-            android:onClick="onClick" />
+            android:onClick="onClickConfirm" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Print"
+            android:id="@+id/buttonPrint"
+            android:onClick="onClickPrint" />
     </LinearLayout>
 
 </LinearLayout>

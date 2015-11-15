@@ -260,6 +260,14 @@
             android:text="Confirm"
             android:id="@+id/btnConfirm"
             android:onClick="onClick" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Print"
+            android:id="@+id/buttonPrint"
+            android:enabled="false"
+            android:onClick="onClickPrint" />
     </LinearLayout>
 </LinearLayout>
 </ScrollView>

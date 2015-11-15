@@ -70,4 +70,18 @@
         android:text="Login"
         android:id="@+id/btnLogin"
         android:onClick="onClick" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TID"
+        android:id="@+id/textView39" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/txtTID"
+        android:text="TID" />
+
 </LinearLayout>

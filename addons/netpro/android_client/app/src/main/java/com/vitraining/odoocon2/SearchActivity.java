@@ -3,12 +3,14 @@ package com.vitraining.odoocon2;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Looper;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,9 @@ import de.timroes.axmlrpc.XMLRPCException;
 import de.timroes.axmlrpc.XMLRPCServerException;
 import java.util.Arrays;
 import java.util.List;
+import com.telpo.tps550.api.TelpoException;
+import com.telpo.tps550.api.TimeoutException;
+import com.telpo.tps550.api.magnetic.MagneticCard;
 
 public class SearchActivity extends AppCompatActivity {
     private TextView txtOperation;
@@ -45,6 +50,8 @@ public class SearchActivity extends AppCompatActivity {
     Claim claim;
     EditText txtCardNo;
 
+    Button buttonSwipeCard;
+
     private  OdooUtility odoo;
 
     @Override
@@ -57,9 +64,118 @@ public class SearchActivity extends AppCompatActivity {
         serverAddress = SharedData.getKey(SearchActivity.this, "serverAddress");
         database = SharedData.getKey(SearchActivity.this, "database");
         odoo = new OdooUtility(serverAddress, "object");
-        member = new Member();
-
+        member = new Member(SearchActivity.this);
         operation = SharedData.getKey( SearchActivity.this, "operation");
+
+        buttonSwipeCard = (Button) findViewById(R.id.buttonSwipeCard);
+        txtCardNo = (EditText) findViewById(R.id.txtCardNo);
+
+        try {
+            MagneticCard.open();
+            new ReadTask().execute();
+
+        } catch (Exception e) {
+            buttonSwipeCard.setEnabled(false);
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+            alertDialog.setTitle(R.string.error);
+            alertDialog.setMessage(R.string.error_open_magnetic_card);
+            alertDialog.setPositiveButton(R.string.dialog_comfirm,new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SearchActivity.this.finish();
+                }
+            });
+            alertDialog.show();
+        }
+
+
+        buttonSwipeCard.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setTitle(getText(R.string.please));
+                new ReadTask().execute();
+            }
+        });
+    }
+
+    private class ReadTask extends AsyncTask<Void, Integer, String[]>
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
+        AlertDialog dialog;
+        int exit = 0;
+        String[] TracData = null;
+
+        @Override
+        protected String[] doInBackground(Void... params)
+        {
+            long strat = System.currentTimeMillis();
+            while ((exit != 1) &&
+                    (System.currentTimeMillis() - strat < 60000))
+            {
+                try
+                {
+                    TracData = MagneticCard.check(200);
+                    return TracData;
+                } catch (TimeoutException e)
+                {
+                    e.printStackTrace();
+                } catch (TelpoException e)
+                {
+                    e.printStackTrace();
+                    break;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute()
+        {
+            builder.setTitle(getString(R.string.magnetic_card_test));
+            builder.setMessage("Swipe card now...");
+            builder.setNegativeButton("Enter Manually", new DialogInterface.OnClickListener()
+            {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which)
+                {
+                    exit = 1;
+                }
+            });
+            dialog = builder.create();
+            dialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String[] result)
+        {
+            dialog.dismiss();
+            if (result != null)
+            {
+                for(int i=0; i<3; i++){
+                    if(result[i] != null){
+                        switch (i)
+                        {
+                            case 0:
+                                String tmp = result[i];
+                                txtCardNo.setText(tmp.substring(2,18));
+                                break;
+//                            case 1:
+//                                txtCardNo.setText(result[i]);
+//                                break;
+//                            case 2:
+//                                txtCardNo.setText(result[i]);
+//                                break;
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+                Toast.makeText(SearchActivity.this, "Read Card Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 
     @Override
@@ -70,8 +186,14 @@ public class SearchActivity extends AppCompatActivity {
 
         txtOperation = (TextView) findViewById(R.id.txtOperation);
         txtOperation.setText(operation);
-
     }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        MagneticCard.close();
+    }
+
     public void onClick(View view){
         /*
         cari member ke odoo berdasarkan cardNo
@@ -93,7 +215,7 @@ public class SearchActivity extends AppCompatActivity {
                     "name",
                     "membership",
                     "card_no",
-                    "dob",
+                    "date_of_birth",
                     "gender_id",
                     "policy_id",
                     "policy_category",
@@ -156,7 +278,7 @@ public class SearchActivity extends AppCompatActivity {
         //when done, set benefits variable, and call setValues to set the activity values
         List conditions = Arrays.asList(Arrays.asList(
                         Arrays.asList("member_id", "=", member.getId()),
-                        Arrays.asList("state", "=", "draft")
+                        Arrays.asList("state", "=", "open")
                 )
         );
         Map fields = new HashMap() {{
@@ -194,8 +316,6 @@ public class SearchActivity extends AppCompatActivity {
 
         coverageTaskId = odoo.search_read(listener,  database, uid, password, "netpro.coverage", conditions, fields);
     }
-
-
 
     XMLRPCCallback listener = new XMLRPCCallback() {
         public void onResponse(long id, Object result) {
@@ -246,6 +366,7 @@ public class SearchActivity extends AppCompatActivity {
             {
                 String operation =  SharedData.getKey(SearchActivity.this, "operation");
                 member.fillBenefits(classObjs);
+
 
                 if (operation.equals("registration")){
                     openEligibility();
