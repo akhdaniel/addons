@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_physical_serial_number_user,stock.physical.serial.number,model_stock_physical_serial_number,stock.group_stock_user,1,1,1,1
+access_stock_physical_serial_number_insert_user,stock.physical.serial.number.insert,model_stock_physical_serial_number_insert,stock.group_stock_user,1,1,1,1
+access_stock_physical_serial_number_toremove_user,stock.physical.serial.number.toremove,model_stock_physical_serial_number_toremove,stock.group_stock_user,1,1,1,1
