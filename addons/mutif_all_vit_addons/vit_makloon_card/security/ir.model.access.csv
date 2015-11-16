@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_makloon_card_user,makloon.card,model_makloon_card,account.group_account_invoice,1,1,1,1
+access_vit_makloon_card_detail_user,makloon.card.detail,model_makloon_card_detail,account.group_account_invoice,1,1,1,1
+access_vit_makloon_card_manu,makloon.card,model_makloon_card,mrp.group_mrp_manager,1,1,1,1
+access_vit_makloon_card_detail_manu,makloon.card.detail,model_makloon_card_detail,mrp.group_mrp_manager,1,1,1,1

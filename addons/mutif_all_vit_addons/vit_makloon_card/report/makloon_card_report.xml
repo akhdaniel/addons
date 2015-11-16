@@ -1,0 +1,24 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="makloon_card" 
+        string="Makloon Card +" 
+        model="makloon.card" 
+        name="makloon.card" 
+        rml="vit_makloon_card/report/makloon_card.rml" 
+        auto="False" 
+        header="False"
+        groups="account.group_account_invoice"/>   
+
+        <report 
+        id="makloon_card_manu" 
+        string="Makloon Card" 
+        model="makloon.card" 
+        name="makloon.card.manu" 
+        rml="vit_makloon_card/report/makloon_card_manu.rml" 
+        auto="False" 
+        header="False"/>
+
+    </data> 
+</openerp>
