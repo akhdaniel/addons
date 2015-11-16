@@ -643,8 +643,7 @@
         <field name="arch" type="xml">
             <form string="netpro.claim_diagnosis">
                 <group>
-                    <field name="diagnosis" select="2"/>
-                    <field name="diagnosis_name" />
+                    <field name="diagnosis_id" select="2"/>
                     <field name="remarks" />
                     <field name="standard_fee" />
                 </group>
@@ -658,8 +657,7 @@
         <field name="arch" type="xml">
             <tree string="netpro.claim_diagnosis">
                 <field name="claim_id"/>
-                <field name="diagnosis"/>
-                <field name="diagnosis_name"/>
+                <field name="diagnosis_id"/>
                 <field name="remarks"/>
                 <field name="standard_fee"/>
 

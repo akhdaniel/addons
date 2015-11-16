@@ -228,7 +228,16 @@ class netpro_claim(osv.osv):
         claim_status_hold = CLAIM_STATES[7][0]
         return self.write(cr,uid,ids,{'state':claim_status_hold},context=context)
 
-        
+    # def onchange_member_claim(self, cr, uid, member_id, context=None):
+    #     res = {}
+
+    #     if not member_id:
+    #         return res
+
+    #     mem_obj = self.pool.get('netpro.member').browse(cr, uid, member_id, context=None)
+
+    #     if mem_obj:
+            
 
 netpro_claim()
 
@@ -437,8 +446,7 @@ class netpro_claim_diagnosis(osv.osv):
     _name = 'netpro.claim_diagnosis'
     _columns = {
         'claim_id': fields.many2one('netpro.claim', 'Claim'),
-        'diagnosis': fields.char('Diagnosis ID'),
-        'diagnosis_name': fields.char('Diagnosis Name'),
+        'diagnosis_id': fields.many2one('netpro.diagnosis', 'Diagnosis'),
         'remarks': fields.char('Remarks'),
         'standard_fee': fields.float('Standard Fee'),
     }
