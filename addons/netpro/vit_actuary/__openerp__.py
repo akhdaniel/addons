@@ -83,6 +83,7 @@
                 'data/netpro.lob.csv',
                 'data/netpro.holiday.csv',
                 'data/netpro.membership_factor.csv',
+                'data/netpro.gender.csv',
 
                 'menu.xml',
                 # 'data/sequence.xml',

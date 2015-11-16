@@ -1,7 +1,7 @@
 id,membership_id,sex,factor,is_allowed
-membfac_0001,EMP,F,1.25,0
-membfac_0002,EMP,M,1,0
-membfac_0003,SPO,F,1.25,0
-membfac_0004,SPO,M,1,0
-membfac_0005,CHI,F,0.7,0
-membfac_0006,CHI,M,0.7,0
+membfac_0001,1. EMP,F,1.25,0
+membfac_0002,1. EMP,M,1,0
+membfac_0003,2. SPO,F,1.25,0
+membfac_0004,2. SPO,M,1,0
+membfac_0005,3. CHI,F,0.7,0
+membfac_0006,3. CHI,M,0.7,0
