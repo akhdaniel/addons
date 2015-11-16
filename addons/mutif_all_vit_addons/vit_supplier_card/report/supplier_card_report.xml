@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="supplier_card" 
+        string="Supplier Card" 
+        model="vit.supplier" 
+        name="vit.supplier" 
+        rml="vit_supplier_card/report/supplier_card.rml" 
+        auto="False" 
+        header="False"/>          
+    </data> 
+</openerp>
