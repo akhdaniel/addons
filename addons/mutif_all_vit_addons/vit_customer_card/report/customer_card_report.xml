@@ -1,0 +1,16 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data>
+        
+        <report 
+        id="customer_card" 
+        string="Customer Card" 
+        model="vit.customer" 
+        name="vit.customer" 
+        rml="vit_customer_card/report/customer_card.rml" 
+        menu="False"
+        auto="False" 
+        header="False"/>
+                     
+    </data> 
+</openerp>

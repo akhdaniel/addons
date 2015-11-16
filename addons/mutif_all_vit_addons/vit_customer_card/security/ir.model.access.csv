@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_customer_user,vit.customer.user,model_vit_customer,account.group_account_user,1,1,1,0
+access_vit_customer_card_user,vit.customer.card.user,model_vit_customer_card,account.group_account_user,1,1,1,0

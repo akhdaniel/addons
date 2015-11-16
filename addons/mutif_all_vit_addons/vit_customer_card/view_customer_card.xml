@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+        <record id="vit_customer_card_form" model="ir.ui.view">
+            <field name="name">Costumer Card</field>
+            <field name="model">vit.customer</field>
+            <field name="arch" type="xml">
+                <form string="Costumer Card" version="7.0" create="false">
+                    <sheet>                 
+                        <group>
+                            <group string="Customer Card">
+                                <field name="partner_id" domain="[('customer','=',True)]" readonly="1"/> 
+                                <field name="partner_code" readonly="1"/>
+                                <field name="street" readonly="1"/>
+                                <field name="phone" readonly="1"/>
+                                            
+                            </group>                            
+                            <group string="Periode">
+                                <field name="date_start" readonly="1"/>       
+                                <field name="date_end" readonly="1"/>     
+                                <field name="user_id" invisible="0"/>  
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <field name="customer_card_ids" view_mode="tree,form" nolabel="1" readonly="1">
+                                    <tree string="Customer Card" editable="bottom">
+                                        <field name="id" invisible="1"/>
+                                        <field name="date" invisible="0"/>
+                                        <field name="description" invisible="0"/>
+                                        <field name="narration" invisible="0"/>
+                                        <field name="ref" invisible="1"/>
+                                        <field name="quantity" sum="# of Products Qty "/>
+                                        <!-- <field name="quantity" sum="# of Products Qty " invisible="not context.get('quantity_visible', False)"/> -->
+                                        <field name="debit" sum="Total Amount"/>
+                                        <field name="credit" sum="Total Amount"/>
+                                        <field name="balance"/>
+                                        <field name="note"/>
+                                    </tree> 
+                                </field> 
+                                <field name="insert_ending_balance" invisible="1"/>
+                                <field name="total_qty" invisible="1"/>
+                                <field name="total_debit" invisible="1"/>
+                                <field name="total_credit" invisible="1"/>
+                                <field name="total_balance" invisible="1"/> 
+                                <field name="bayar" invisible="1"/>                                                                
+                            </page>    
+                        </notebook>
+                        <group>
+                            <group>
+                                <field name="note0" nolabel="1"/>
+                                <field name="note2" nolabel="1"/>
+                                <field name="note1" nolabel="1"/>
+                                <field name="note3" nolabel="1"/>                            
+                            </group>    
+                        </group>    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="vit_customer_card_report" model="ir.actions.act_window">
+        <field name="name">Costumer Card</field>
+        <field name="res_model">vit.customer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="help"> Kartu Piutang Tidak Ada !</field>
+    </record>
+
+    <!-- Customer Invoice Form-->
+    <record id="invoice_form_piutang" model="ir.ui.view">
+        <field name="name">account.invoice_form_piutang</field>
+        <field name="model">account.invoice</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="fiscal_position" position="before">
+                    <field name="credit"/>
+                    <field name="keterangan"/>   
+            </field>
+           
+        </field>
+    </record>
+
+
+</data>
+</openerp>
