@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+        <record id="vit_supplier_card_form" model="ir.ui.view">
+            <field name="name">Supplier Card</field>
+            <field name="model">vit.supplier</field>
+            <field name="arch" type="xml">
+                <form string="Supplier Card" version="7.0" create="false">
+                    <sheet>                 
+                        <group>
+                            <group string="Supplier Card">
+                                <field name="partner_id" domain="[('supplier','=',True)]" readonly="1"/> 
+                                <field name="partner_code" readonly="1"/>
+                                <field name="street" readonly="1"/>
+                                <field name="phone" readonly="1"/>
+                                            
+                            </group>                            
+                            <group string="Periode">
+                                <field name="date_start" readonly="1"/>       
+                                <field name="date_end" readonly="1"/>     
+                                <field name="user_id" invisible="0"/>  
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details">
+                                <field name="supplier_card_ids" view_mode="tree,form" nolabel="1" readonly="1">
+                                    <tree string="Supplier Card" editable="bottom">
+                                        <field name="id" invisible="1"/>
+                                        <field name="date" invisible="0"/>
+                                        <field name="description" invisible="0"/>
+                                        <field name="narration" invisible="0"/>
+                                        <field name="ref" invisible="1"/>
+                                        <field name="quantity" sum="# of Products Qty "/>
+                                        <!-- <field name="quantity" sum="# of Products Qty " invisible="not context.get('quantity_visible', False)"/> -->
+                                        <field name="debit" sum="Total Amount"/>
+                                        <field name="credit" sum="Total Amount"/>
+                                        <field name="balance"/>
+                                        <field name="note"/>
+                                    </tree> 
+                                </field> 
+                                <field name="insert_ending_balance" invisible="1"/>
+<!--                                 <field name="total_qty" invisible="1"/>
+                                <field name="total_debit" invisible="1"/>
+                                <field name="total_credit" invisible="1"/>
+                                <field name="total_balance" invisible="1"/> 
+                                <field name="bayar" invisible="1"/>  -->                                                               
+                            </page>    
+                        </notebook>   
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="vit_supplier_card_report" model="ir.actions.act_window">
+        <field name="name">Supplier Card</field>
+        <field name="res_model">vit.supplier</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="help"> Kartu Hutang Tidak Ada !</field>
+    </record>
+
+
+</data>
+</openerp>

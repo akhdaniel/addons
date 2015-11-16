@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_supplier_card_user,vit.supplier,model_vit_supplier,account.group_account_invoice,1,1,1,1
+access_vit_supplier_card_detail_user,vit.supplier.card,model_vit_supplier_card,account.group_account_invoice,1,1,1,1

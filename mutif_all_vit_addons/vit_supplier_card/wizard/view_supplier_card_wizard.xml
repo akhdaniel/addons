@@ -1,0 +1,53 @@
+ <openerp>
+    <data>>
+
+        <!-- wizard form-->
+        <record id="view_report_supplier_card_wizard_form" model="ir.ui.view">
+            <field name="name">Run Report Supplier Card</field>
+            <field name="model">vit_sc.report_wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Supplier Card" version="7.0">
+                    <sheet>
+                        <group>
+                            <group string="Select Partner">
+                                <field name="partner_id" domain="[('supplier','=',True)]"/>            
+                            </group>                            
+                            <group string="Select Date">
+                                <field name="date_start"/>       
+                                <field name="date_end"/>       
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="special" 
+                             special="cancel" 
+                             string="Cancel" 
+                             icon="gtk-cancel"/>
+                        
+                        <button type="object" 
+                             name="fill_table"
+                             string="Ok" 
+                             icon="gtk-ok"
+                             />             
+                    </footer>
+                </form>
+            </field>
+        </record>
+    
+        <act_window name="Supplier Card"            
+            res_model="vit_sc.report_wizard"
+            view_mode="form"
+            target="new"
+            context="{}"
+            id="action_vit_supplier_card_report"/>
+    
+        <menuitem
+            id="menu_supplier_card"
+            name="Supplier Card"
+            parent="account.menu_finance_payables"
+            action="action_vit_supplier_card_report"
+            sequence="45"/>
+
+
+    </data>
+</openerp>        
