@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+        <record id="vit_makloon_card_form" model="ir.ui.view">
+            <field name="name">Makloon Card</field>
+            <field name="model">makloon.card</field>
+            <field name="arch" type="xml">
+                <form string="Makloon Card" version="7.0" create="false">
+                                   
+                        <group>
+                            <group string="Makloon Card">
+                                <field name="partner_id" domain="[('supplier','=',True)]" readonly="1"/> 
+                                <field name="partner_code" readonly="1"/>
+                                <field name="street" readonly="1"/>
+                                <field name="phone" readonly="1"/>
+                                            
+                            </group>                            
+                            <group string="Periode">
+                                <field name="date_start" readonly="1"/>       
+                                <field name="date_end" readonly="1"/>     
+                                <field name="user_id" invisible="0"/>  
+                            </group>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Details">
+                                <field name="makloon_card_ids" nolabel="1" widget="many2many" readonly="1">
+                                    <tree string="Makloon Card">
+
+                                        <field name="date_end" string="Date"/>
+                                        <field name="makloon_id"/>  
+                                        <field name="cutting_id"/>
+                                        <field name="model_type_id"/>
+
+                                        <field name="size"/>
+                                        <field name="total_mkl"/>  
+                                        <field name="total_finish"/>  
+                                        <field name="total_hold"/>
+                                        <field name="qty_balance"/>    
+                                        <field name="price_balance" groups="account.group_account_invoice"/>
+
+                                    </tree> 
+                                </field>
+                                        <group col='5'>
+                                            <group col='1'>
+                                                <label for="total_order" />
+                                                <field name="total_order" nolabel="1" /> 
+                                            </group>
+                                            <group col='1'>
+                                                <label for="total_finish" />
+                                                <field name="total_finish" nolabel="1" /> 
+                                            </group>
+                                             <group col='1'>
+                                                 <label for="total_hold" />
+                                                 <field name="total_hold"  nolabel="1" /> 
+                                            </group>
+                                            <group col='1'>
+                                                <label for="total_qty" />
+                                                <field name="total_qty"  nolabel="1" /> 
+                                            </group>
+                                            <group col='1'>
+                                                <label for="total_balance" groups="account.group_account_invoice"/>
+                                                <field name="total_balance" nolabel="1" groups="account.group_account_invoice"/>
+                                            </group>
+                                        </group>                                                                                           
+                            </page>    
+                        </notebook> 
+                   
+                </form>
+            </field>
+        </record>
+
+
+    <record id="vit_makloon_card_report" model="ir.actions.act_window">
+        <field name="name">Makloon Card</field>
+        <field name="res_model">makloon.card</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="help"> Kartu Makloon Tidak Ada !</field>
+    </record>
+
+
+</data>
+</openerp>

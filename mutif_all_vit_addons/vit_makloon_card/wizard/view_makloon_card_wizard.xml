@@ -1,0 +1,59 @@
+ <openerp>
+    <data>>
+
+        <!-- wizard form-->
+        <record id="view_report_makloon_card_wizard_form" model="ir.ui.view">
+            <field name="name">Run Report Makloon Card</field>
+            <field name="model">makloon.card.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Makloon Card" version="7.0">
+                    <sheet>
+                        <group>
+                            <group string="Select Partner">
+                                <field name="partner_id" domain="[('supplier','=',True)]"/>            
+                            </group>                            
+                            <group string="Select Date">
+                                <field name="date_start"/>       
+                                <field name="date_end"/>       
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="special" 
+                             special="cancel" 
+                             string="Cancel" 
+                             icon="gtk-cancel"/>
+                        
+                        <button type="object" 
+                             name="fill_table"
+                             string="Ok" 
+                             icon="gtk-ok"
+                             />             
+                    </footer>
+                </form>
+            </field>
+        </record>
+    
+        <act_window name="Makloon Card"            
+            res_model="makloon.card.wizard"
+            view_mode="form"
+            target="new"
+            context="{}"
+            id="action_vit_makloon_card_report"/>
+    
+        <menuitem
+            id="menu_makloon_card"
+            name="Makloon Card"
+            parent="account.menu_finance_payables"
+            action="action_vit_makloon_card_report"
+            sequence="50"/>
+
+        <menuitem
+            id="menu_makloon_card_manu"
+            name="Makloon Card"
+            parent="vit_n_cutting_order.menu_vit4"
+            action="action_vit_makloon_card_report"
+            sequence="99"/>
+
+    </data>
+</openerp>        
