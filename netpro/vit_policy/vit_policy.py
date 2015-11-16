@@ -198,8 +198,10 @@ class netpro_policy(osv.osv):
     }
 
     def create(self, cr, uid, vals, context=None):
-        #import pdb;pdb.set_trace()
-        nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
+        # import pdb;pdb.set_trace()
+        if not vals.get('policy_no') :
+            nomor = self.pool.get('ir.sequence').get(cr, uid, 'policy_seq') or '/'
+            vals.update({'policy_no':nomor,})
         cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
         tpa_val = False
         pno_val = vals['pno']
@@ -211,7 +213,6 @@ class netpro_policy(osv.osv):
             tpa_val = cur_user.tpa_id.id
 
         vals.update({
-            'policy_no':nomor,
             'pno':pno_val,
             'created_by_id':uid,
             'tpa_id':tpa_val,
