@@ -68,8 +68,8 @@
             <label class="control-label" for="contact_name">Policy Date</label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <t t-esc="member.insurance_period_start"/> to 
-            <t t-esc="member.insurance_period_end"/>
+            <span t-field="member.insurance_period_start" t-field-options='{"format": "d MMMM y"}'/> to 
+            <span t-field="member.insurance_period_end" t-field-options='{"format": "d MMMM y"}'/>
         </div>
     </div>      
 </template>
