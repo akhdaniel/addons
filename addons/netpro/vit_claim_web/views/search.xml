@@ -106,8 +106,8 @@
 								<div class="col-md-7 col-sm-8">
 			            			<input name="card_no" id="card_no" type="text" class="form-control" />
 			            		</div>
-                                <div>
-                                    <input type="submit" value="Submit" class="form-control" />
+                                <div class="col-md-2">
+                                    <input type="submit" value="Submit" class="form-control btn btn-primary" />
                                 </div>
 			            	</div>
 		            	</form>
