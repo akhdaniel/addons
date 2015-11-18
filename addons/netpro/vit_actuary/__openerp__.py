@@ -84,6 +84,7 @@
                 'data/netpro.holiday.csv',
                 'data/netpro.membership_factor.csv',
                 'data/netpro.gender.csv',
+                'data/netpro.premium_type.csv',
 
                 'menu.xml',
                 # 'data/sequence.xml',
