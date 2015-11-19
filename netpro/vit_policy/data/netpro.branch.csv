@@ -1,15 +1,8 @@
-id,id_branch,name,street,start_date,end_date,production_locked_date,finance_locked_date,backdated_date,operating_branch,last_close_month,last_close_year,active,city,zip,phone,fax,syariah_branch
-branch_00001,0,CONSOLIDATION,Jl. CONSOLIDATION,2002-01-01,2011-06-30,2001-12-31,2001-12-31,2010-03-31,0,12,2001,1,,,021-83787355,021-83787356,0
-branch_00002,1,Branch Office Jakarta,Jl. Branch Office Jakarta,2002-01-01,2011-06-30,2001-12-31,2001-12-31,2010-03-31,1,6,2011,1,Jakarta,-,021-83787355,021-83787356,0
-branch_00003,2,Branch Office Bandung,Jl. Branch Office Bandung,2003-05-01,2011-06-30,2003-04-30,2003-04-30,2010-03-31,1,6,2011,1,Bandung,40263,021-83787355,021-83787356,0
-branch_00004,3,Branch Office Surabaya,Jl. Branch Office Surabaya,2003-05-01,2011-06-30,2003-04-30,2003-04-30,2010-03-31,1,6,2011,1,Surabaya,60241,021-83787355,021-83787356,0
-branch_00005,5,Branch Office Pekan Baru,Jl. Branch Office Pekan Baru,2003-09-01,2011-06-30,2003-08-31,2003-08-31,2010-03-31,1,6,2011,1,Pekanbaru,28125,021-83787355,021-83787356,0
-branch_00006,6,Branch Office Semarang,Jl. Branch Office Semarang,2003-09-01,2011-06-30,2003-08-31,2003-08-31,2010-03-31,1,6,2011,1,Semarang,50132,021-83787355,021-83787356,0
-branch_00007,99,Head Office,Jl. Head Office,2003-01-01,2011-06-30,2002-12-31,2002-12-31,2010-03-31,1,6,2011,1,Jakarta,-,021-83787355,021-83787356,0
-
-
-
-
-
-
-
+id,id_branch,name,street,start_date,end_date,production_locked_date,finance_locked_date,backdated_date,operating_branch,last_close_month,last_close_year,active,city,zip,phone,fax,syariah_branch,customer,supplier
+branch_001,0,CONSOLIDATION,Jl. CONSOLIDATION,2002-01-01,2011-06-30,2001-12-31,2001-12-31,2010-03-31,0,12,2001,1,,,021-83787355,021-83787356,0,,
+branch_002,1,Branch Office Jakarta,Jl. Branch Office Jakarta,2002-01-01,2011-06-30,2001-12-31,2001-12-31,2010-03-31,1,6,2011,1,Jakarta,-,021-83787355,021-83787356,0,,
+branch_003,2,Branch Office Bandung,Jl. Branch Office Bandung,2003-05-01,2011-06-30,2003-04-30,2003-04-30,2010-03-31,1,6,2011,1,Bandung,40263,021-83787355,021-83787356,0,,
+branch_004,3,Branch Office Surabaya,Jl. Branch Office Surabaya,2003-05-01,2011-06-30,2003-04-30,2003-04-30,2010-03-31,1,6,2011,1,Surabaya,60241,021-83787355,021-83787356,0,,
+branch_005,5,Branch Office Pekan Baru,Jl. Branch Office Pekan Baru,2003-09-01,2011-06-30,2003-08-31,2003-08-31,2010-03-31,1,6,2011,1,Pekanbaru,28125,021-83787355,021-83787356,0,,
+branch_006,6,Branch Office Semarang,Jl. Branch Office Semarang,2003-09-01,2011-06-30,2003-08-31,2003-08-31,2010-03-31,1,6,2011,1,Semarang,50132,021-83787355,021-83787356,0,,
+branch_007,99,Head Office,Jl. Head Office,2003-01-01,2011-06-30,2002-12-31,2002-12-31,2010-03-31,1,6,2011,1,Jakarta,-,021-83787355,021-83787356,0,,
