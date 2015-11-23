@@ -9,6 +9,7 @@ _logger = logging.getLogger(__name__)
 
 class benefit(osv.osv):
 	_name 		= "netpro.benefit"
+	_rec_name = 'code'
 	_columns 	= {
 		'code'						: fields.char("Benefit ID"),
 		'name'						: fields.char("Name"),
