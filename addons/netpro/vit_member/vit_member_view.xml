@@ -1135,8 +1135,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.member_plan_detail">
-                <field name="member_plan_id"/>
-<!--                 <field name="detail_id"/>
+                <!--<field name="member_plan_id"/>
+                 <field name="detail_id"/>
                 <field name="name"/> -->
                 <field name="benefit_id"/>
                 <field name="reim"/>
