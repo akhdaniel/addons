@@ -27,6 +27,7 @@
                         <group>
                             <field name="name" />
                             <field name="year"/> 
+                            <field name="revision"/> 
                         </group>
                         <group> 
                             <field name="create_uid"/> 
@@ -58,6 +59,9 @@
                             </field>
                         </page>
                     </notebook>
+
+                    <separator string="Notes"/>
+                    <field name="notes"/>
                     <!-- <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" 
                             groups="base.group_user"/>

@@ -19,7 +19,7 @@
 		    	<tree string="list sediaan" >
 		            <field name="name"/>
 		            <field name="code"/>
-		            <field name="max_batch_per_week"/>
+		            <field name="max_batch_per_shift"/>
 		        </tree>    
 		    </field>
 		</record>

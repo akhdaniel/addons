@@ -218,7 +218,7 @@ class mps(osv.osv):
 		pr_lines = []
 
 		#req date mundur 1 bulan dari tgl MPS (origin)
-		req_date = datetime.datetime(origin.year, origin.month_id, 1) - datetime.timedelta(days=30)
+		req_date = datetime.datetime(origin.year, origin.month_id, 1) - datetime.timedelta(days=60)
 
 		for product_id in products.keys():
 			
@@ -269,7 +269,7 @@ class mps(osv.osv):
 
 	def calculate_in_request(self, cr, uid, product_id, context=None):
 		r = 0
-		sql = "select sum(product_qty) from vit_product_request_line where product_id=%s and state='onprogress'" % product_id
+		sql = "select sum(product_qty) from vit_product_request_line where product_id=%s and state in ('open', 'onprogress')" % product_id
 		cr.execute(sql)
 		hasil = cr.fetchone()
 		if hasil and hasil[0]:
@@ -362,6 +362,64 @@ class mps(osv.osv):
 		datas = {'mrp_detail_ids' : mrp_detail_ids,}
 		self.pool.get('vit_pharmacy_manufacture.wps').write(cr,uid,wps_obj,datas)
 
+
+	def check_material_available(self, cr, uid, detail, context=None):
+
+		# cari info bahan mentah tersedia?
+		products = {}
+		actives_avail = False # bahan awal aktif
+		helpers_avail = False # bahn awal pembantu
+		packages_avail = False  # bahan pengemas
+
+		product_id = detail.product_id.id 
+		qty = products.get(product_id, 0 )
+
+
+		# cari bahan baku produk2 tersebut
+		bom_obj     = self.pool.get('mrp.bom')
+		product_obj = self.pool.get('product.product')
+
+		product 	= product_obj.browse(cr, uid, product_id, context=context)
+		bom_id 		= bom_obj._bom_find(cr, uid, product_id, [], context=context)
+		bom 		= bom_obj.browse(cr, uid, bom_id, context=context)
+		
+		factor      = qty
+
+		bom_lines, work_centers = bom_obj._bom_explode(cr, uid, bom, product, factor, [], context=context)
+
+
+		for line in bom_lines:
+			component_product_id = line.get('product_id',0)
+			component_product    = product_obj.browse(cr, uid, component_product_id, context=context)
+			if component_product.categ_id.name == 'Bahan Awal Aktif' :
+				if qty > 0 and component_product.virtual_available > qty:
+					actives_avail = True 
+				else:
+					actives_avail = False 
+					break
+
+		for line in bom_lines:
+			component_product_id = line.get('product_id',0)
+			component_product    = product_obj.browse(cr, uid, component_product_id, context=context)
+			if component_product.categ_id.name == 'Bahan Awal Pembantu' :
+				if qty > 0 and component_product.virtual_available > qty:
+					helpers_avail = True 
+				else:
+					helpers_avail = False 
+					break
+
+		for line in bom_lines:
+			component_product_id = line.get('product_id',0)
+			component_product    = product_obj.browse(cr, uid, component_product_id, context=context)
+			if component_product.categ_id.name == 'Bahan Pengemas' :
+				if qty > 0 and component_product.virtual_available > qty:
+					packages_avail = True 
+				else:
+					packages_avail = False 
+					break
+
+		return actives_avail, helpers_avail, packages_avail
+
 	def action_recalculate(self, cr, uid, ids, context=None):
 
 		for mps in self.browse(cr, uid, ids, context=context):
@@ -386,7 +444,7 @@ class mps(osv.osv):
 	"""
 	recalculate the w1..w5 details 
 	"""
-	def update_detail(self, cr, uid, detail, sediaan_index, context=None):
+	def update_detail_old(self, cr, uid, detail, sediaan_index, context=None):
 		detail_obj = self.pool.get('vit_pharmacy_manufacture.mps_detail')
 		mps_obj = self.pool.get('vit_pharmacy_manufacture.mps')
 
@@ -437,6 +495,101 @@ class mps(osv.osv):
 				break 
 
 		data = {
+			'w1': w1,
+			'w2': w2,
+			'w3': w3,
+			'w4': w4,
+			'w5': w5,
+			'reminder' : reminder_per_product,
+		}
+
+		if detail_obj.search(cr, uid, [('id','=',detail.id)], context=context):
+			detail_obj.write(cr, uid, [detail.id], data, context=context)		
+
+
+	"""
+	recalculate the w1..w5 details 
+	"""
+	def update_detail(self, cr, uid, detail, sediaan_index, context=None):
+		detail_obj = self.pool.get('vit_pharmacy_manufacture.mps_detail')
+		mps_obj    = self.pool.get('vit_pharmacy_manufacture.mps')
+
+		# production_order = detail.production_order
+		production_order = self.get_total_production_order(cr, uid, detail, sediaan_index, context=context)
+		reminder_prev = self.get_total_reminder_prev(cr, uid, detail, sediaan_index, context=context)
+		total_products = self.get_total_product(cr, uid, detail, sediaan_index, context=context)
+		reminder_per_product = detail.production_order + detail.reminder_prev
+
+		sediaan = detail.sediaan_id 
+		max_batch_per_shift= sediaan.max_batch_per_shift  
+		max_batch_per_week = 0
+		shift = 0
+
+
+		w1=0;w2=0;w3=0;w4=0;w5=0
+
+		mps = detail.mps_id 
+		number_of_weeks = self.count_number_of_weeks(cr, uid, mps.year, mps.month_id)
+
+		# import pdb; pdb.set_trace()
+
+		for i in range(1,4): # shift 
+			max_batch_per_week = math.ceil(max_batch_per_shift) * i * 7 
+			shift = i
+			if max_batch_per_week * number_of_weeks > reminder_per_product:
+				break
+
+
+		# reminder this month
+		# reminder_prev = detail.reminder_prev
+		reminder = production_order  + reminder_prev 
+
+
+		for i in range(1,6):
+			if reminder_per_product > max_batch_per_week:
+
+				reminder = reminder - max_batch_per_week
+				reminder_per_product = reminder_per_product - max_batch_per_week
+
+				if i==1:
+					w1 = max_batch_per_week
+				elif i==2:
+					w2 = max_batch_per_week
+				elif i==3:
+					w3 = max_batch_per_week
+				elif i==4:
+					w4 = max_batch_per_week
+					if number_of_weeks == 4 and reminder_per_product>0:
+						self.create_new_line(cr, uid, detail, reminder_per_product, context=context)
+				elif i==5:
+					w5 = max_batch_per_week
+					# import pdb; pdb.set_trace()
+					if number_of_weeks == 5 and reminder_per_product>0:
+						self.create_new_line(cr, uid, detail, reminder_per_product, context=context)
+			else:
+				if i==1:
+					w1 = reminder_per_product
+				elif i==2:
+					w2 = reminder_per_product
+				elif i==3:
+					w3 = reminder_per_product
+				elif i==4:
+					w4 = reminder_per_product
+				elif i==5:
+					w5 = reminder_per_product
+
+				reminder_per_product = 0
+				break 
+
+
+		active_material_status,helper_material_status,packaging_material_status = self.check_material_available(cr, uid, detail, context=context)
+
+		data = {
+			'active_material_status'    : active_material_status,
+			'helper_material_status'    : helper_material_status,
+			'packaging_material_status' : packaging_material_status,
+			'max_batch_per_shift'       : max_batch_per_shift,
+			'shift': shift,
 			'w1': w1,
 			'w2': w2,
 			'w3': w3,
@@ -516,6 +669,30 @@ class mps_detail(osv.osv):
 	_name = 'vit_pharmacy_manufacture.mps_detail'
 	_description = 'Master Production Schedule Details'
 
+	# if these fields are changed, call method
+	@api.onchange('w1', 'w2','w3','w4','w5') 
+	def on_change_plan(self):
+		self.total_plan = self.w1 + self.w2 + self.w3 + self.w4 + self.w5
+
+	# if these fields are changed, call method
+	@api.onchange('w1a', 'w2a','w3a','w4a','w5a') 
+	def on_change_actual(self):
+		self.total_actual = self.w1a + self.w2a + self.w3a + self.w4a + self.w5a
+
+
+
+	def _total_plan(self, cr, uid, ids, field, arg, context=None):
+		res = {}
+		for det in self.browse(cr, uid, ids, context=context):
+			res[det.id] = det.w1 + det.w2 + det.w3 + det.w4 + det.w5 
+		return res	
+
+	def _total_actual(self, cr, uid, ids, field, arg, context=None):
+		res  = {}
+		for det in self.browse(cr, uid, ids, context=context):
+			res[det.id] = det.w1a + det.w2a + det.w3a + det.w4a + det.w5a  
+		return res 	
+ 
 	_columns = {
 		'mps_id' : fields.many2one('vit_pharmacy_manufacture.mps', 'MPS Reference',required=True, ondelete='cascade', select=True),
 		'product_id': fields.many2one('product.product', 'Substance', required=True),
@@ -523,8 +700,11 @@ class mps_detail(osv.osv):
 		'sediaan_id' : fields.related('product_id', 'categ_id' , 'sediaan_id', type="many2one", 
 			relation="vit.sediaan", string="Sediaan", store=True),
 
-		'production_order' : fields.integer('Production Order (Batch)'), 
+		'production_order' : fields.integer('Order(s)' , help="Number of production order (batches)"), 
+		'max_order' : fields.integer('Max Order(s)' , help="Number of maximum production order (batches) ready to produce according to the available materials"), 
 		'product_uom': fields.many2one('product.uom', 'Uom'),
+		'max_batch_per_shift' : fields.float('Batch/Shift' , help='Max Number of batch per shift'),
+		'shift' : fields.integer('Shift(s)' , help='Number of shift(s) required'),
 		'w1': fields.integer('W1p'),
 		'w2': fields.integer('W2p'),
 		'w3': fields.integer('W3p'),
@@ -535,8 +715,14 @@ class mps_detail(osv.osv):
 		'w3a': fields.integer('W3a'),
 		'w4a': fields.integer('W4a'),
 		'w5a': fields.integer('W5a'),
+		'total_plan': fields.function(_total_plan, type='integer', string='Tp', store=True ),
+		'total_actual': fields.function(_total_actual, type='integer', string='Ta', store=True ),
 		'reminder' : fields.integer('Reminder'),
 		'reminder_prev' : fields.integer('Reminder Prev'),
+
+		'active_material_status': fields.boolean('Active Material Available?'),
+		'helper_material_status': fields.boolean('Helper Material Available?'),
+		'packaging_material_status': fields.boolean('Packaging Material Available?'),
 
 		'note'  : fields.char("Note"),
 	}

@@ -42,16 +42,21 @@
                             <field name="forecast_id"/> 
                         </group>
                     </group>
+
                     <notebook>
-                        <page string="Betalaktam">
-                            <field name="mps_detail_ids1"  view_mode="tree" widget="one2many_list">
-                                <tree string="Details" editable="bottom" >
+                        <page string="Syrup">
+                            <field name="mps_detail_ids2"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" 
+                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
-
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
+                                    <field name="max_order" />
+                                    
+                                    <field name="max_batch_per_shift" />
+                                    <field name="shift" />
                                     
                                     <field name="w1" />
                                     <field name="w1a" />
@@ -67,23 +72,36 @@
 
                                     <field name="w5" />
                                     <field name="w5a" />
+
+                                    <field name="total_plan"/>
+                                    <field name="total_actual"/>
+
                                     
                                     <field name="reminder"/>
                                     <field name="note"/>
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
+
                                 </tree>
                             </field>
                         </page>
                     </notebook>
 
                     <notebook>
-                        <page string="Syrup">
-                            <field name="mps_detail_ids2"  view_mode="tree"   widget="one2many_list">
-                                <tree string="Details" editable="bottom" >
+                        <page string="Soft Capsule">
+                            <field name="mps_detail_ids4"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" 
+                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
+                                    <field name="max_order" />
+
+                                    <field name="max_batch_per_shift" />
+                                    <field name="shift" />
                                     
                                     <field name="w1" />
                                     <field name="w1a" />
@@ -100,8 +118,101 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="total_plan"/>
+                                    <field name="total_actual"/>
+
                                     <field name="reminder"/>
                                     <field name="note"/>
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+
+                    <notebook>
+                        <page string="Injeksi">
+                            <field name="mps_detail_ids6"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" 
+                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="reminder_prev"/>
+                                    <field name="production_order" />
+                                    <field name="max_order" />
+
+                                    <field name="max_batch_per_shift" />
+                                    <field name="shift" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="total_plan"/>
+                                    <field name="total_actual"/>
+
+                                    <field name="reminder"/>
+                                    <field name="note"/>
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <notebook>
+                        <page string="Larutan">
+                            <field name="mps_detail_ids5"  view_mode="tree"   widget="one2many_list">
+                                <tree string="Details" editable="bottom" 
+                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
+                                    <field name="sediaan_id" />
+                                    <field name="product_uom" />
+                                    <field name="reminder_prev"/>
+                                    <field name="production_order" />
+                                    <field name="max_order" />
+
+                                    <field name="max_batch_per_shift" />
+                                    <field name="shift" />
+                                    
+                                    <field name="w1" />
+                                    <field name="w1a" />
+
+                                    <field name="w2" />
+                                    <field name="w2a" />
+
+                                    <field name="w3" />
+                                    <field name="w3a" />
+
+                                    <field name="w4" />
+                                    <field name="w4a" />
+
+                                    <field name="w5" />
+                                    <field name="w5a" />
+                                    
+                                    <field name="total_plan"/>
+                                    <field name="total_actual"/>
+
+                                    <field name="reminder"/>
+                                    <field name="note"/>
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -110,12 +221,17 @@
                     <notebook>
                         <page string="Kapsul">
                             <field name="mps_detail_ids3"  view_mode="tree"   widget="one2many_list">
-                                <tree string="Details" editable="bottom" >
+                                <tree string="Details" editable="bottom" 
+                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
+                                    <field name="max_order" />
+                                    
+                                    <field name="max_batch_per_shift" />
+                                    <field name="shift" />
                                     
                                     <field name="w1" />
                                     <field name="w1a" />
@@ -132,89 +248,34 @@
                                     <field name="w5" />
                                     <field name="w5a" />
                                     
+                                    <field name="total_plan"/>
+                                    <field name="total_actual"/>
+
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-
-
-                    <notebook>
-                        <page string="Soft Capsule">
-                            <field name="mps_detail_ids4"  view_mode="tree"   widget="one2many_list">
-                                <tree string="Details" editable="bottom" >
-                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
-                                    <field name="product_uom" />
-                                    <field name="reminder_prev"/>
-                                    <field name="production_order" />
-                                    
-                                    <field name="w1" />
-                                    <field name="w1a" />
-
-                                    <field name="w2" />
-                                    <field name="w2a" />
-
-                                    <field name="w3" />
-                                    <field name="w3a" />
-
-                                    <field name="w4" />
-                                    <field name="w4a" />
-
-                                    <field name="w5" />
-                                    <field name="w5a" />
-                                    
-                                    <field name="reminder"/>
-                                    <field name="note"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
-
-
-
-                    <notebook>
-                        <page string="Larutan">
-                            <field name="mps_detail_ids5"  view_mode="tree"   widget="one2many_list">
-                                <tree string="Details" editable="bottom" >
-                                    <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
-                                    <field name="product_uom" />
-                                    <field name="reminder_prev"/>
-                                    <field name="production_order" />
-                                    
-                                    <field name="w1" />
-                                    <field name="w1a" />
-
-                                    <field name="w2" />
-                                    <field name="w2a" />
-
-                                    <field name="w3" />
-                                    <field name="w3a" />
-
-                                    <field name="w4" />
-                                    <field name="w4a" />
-
-                                    <field name="w5" />
-                                    <field name="w5a" />
-                                    
-                                    <field name="reminder"/>
-                                    <field name="note"/>
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
                     </notebook>
 
                     <notebook>
-                        <page string="Injeksi">
-                            <field name="mps_detail_ids6"  view_mode="tree"   widget="one2many_list">
-                                <tree string="Details" editable="bottom" >
+                        <page string="Betalaktam">
+                            <field name="mps_detail_ids1"  view_mode="tree" widget="one2many_list">
+                                <tree string="Details" editable="bottom" 
+                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
+
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
+                                    <field name="max_order" />
+                                    
+                                    <field name="max_batch_per_shift" />
+                                    <field name="shift" />
                                     
                                     <field name="w1" />
                                     <field name="w1a" />
@@ -230,13 +291,23 @@
 
                                     <field name="w5" />
                                     <field name="w5a" />
-                                    
+
+
+                                    <field name="total_plan"/>
+                                    <field name="total_actual"/>
+
                                     <field name="reminder"/>
                                     <field name="note"/>
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
                     </notebook>
+
+
+
                     <div class="oe_chatter">
                         <field name="message_follower_ids" widget="mail_followers" 
                             groups="base.group_user"/>

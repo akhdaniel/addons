@@ -41,12 +41,25 @@ class forecast_product(osv.osv):
             ('done', 'Done'),
             ], 'Status', readonly=True, track_visibility='onchange',
             help="", select=True),
+        'notes': fields.text("Notes"),
+        'revision': fields.integer("Revision Number", readonly=True)
     }
 
     _defaults = {
                  'created_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                  'state': 'draft',
+                 'revision': 1
     }
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = dict(context or {})
+        old = self.browse(cr, uid, id, context=context)
+        forecast_detail_ids = [(0,0,{ 
+            'product_id' : fd.product_id.id,
+            'product_uom' : fd.product_uom.id
+        }) for fd in old.forecast_detail_ids]
+        default.update({'forecast_detail_ids' : forecast_detail_ids , 'revision': old.revision+1})
+        return super(forecast_product, self).copy(cr, uid, id, default, context=context)
 
     def action_confirm(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'open'}, context=context)
