@@ -1,0 +1,32 @@
+<openerp>
+	<data>
+		<record id="view_program_tree" model="ir.ui.view">
+		    <field name="name">anggaran_program_tree</field>
+		    <field name="model">anggaran.program</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list program">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="kebijakan_id" invisible="True"/>
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- ini definisi search program -->
+		<record id="view_program_filter" model="ir.ui.view">
+		    <field name="name">program.filter</field>
+		    <field name="model">anggaran.program</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Kebijakan">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <group expand="1" string="Group By...">
+		                <filter string="Induk" icon="terp-personal" name="group_kebijakan"
+		                    domain="[]" context="{'group_by':'kebijakan_id'}"/>
+		            </group>
+		        </search>
+		    </field>
+		</record>
+
+	</data>
+</openerp>
