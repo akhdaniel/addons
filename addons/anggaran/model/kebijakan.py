@@ -12,5 +12,6 @@ class kebijakan(osv.osv):
 	_columns 	= {
 		'name'      : fields.text('Nama'),
 		'code'      : fields.char('Kode'),
+		'tridharma' : fields.char('Tridharma'),
 	}
 
