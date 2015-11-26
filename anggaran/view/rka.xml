@@ -1,7 +1,7 @@
 <openerp>
 	<data>
 		<!-- RKA master tree -->
-		
+	
 		<record id="view_rka_tree" model="ir.ui.view">
 		    <field name="name">anggaran_rka_tree</field>
 		    <field name="model">anggaran.rka</field>
@@ -37,6 +37,8 @@
 			            <group>
 			            	<group>
 				                <field name="unit_id"/>       
+				                <field name="note"/>
+				                <field name="alokasi"/>
 				            </group>
 				        </group>
 
@@ -88,12 +90,13 @@
 
 			            <notebook>
 			            	<page string="Rincian COA">
-					            <field name="rka_coa_ids">
+					            <field name="rka_coa_ids" on_change="onchange_rka_coa(rka_coa_ids)">
 					            	<tree string="Rincian COA">
-										<field name="coa_id" />        
-										<field name="total" />         
+										<field name="nama" />
+										<field name="total" />        
 										<field name="sumber_dana_id" />
 										<field name="bulan" />
+										<field name="coa_id" />
 						            </tree>
 						        </field>
 						    </page>
@@ -110,18 +113,14 @@
             <field name="arch" type="xml">
             	<form string="rka_coa form" version="7.0">
             		<sheet>
-						<div class="oe_title">
-							<label for="coa_id" class="oe_edit_only" 
-								 string="COA" />
-							<h1>
-								<field name="coa_id" />
-							</h1>
-						</div>
+					
 			            <group>
 			            	<group>
-								<field name="total" />         
+			            		<field name="nama" />
+								<field name="total" on_change="onchange_total(parent.anggaran, total)"/>         
 								<field name="sumber_dana_id" />
-								<field name="bulan" />	            	
+								<field name="bulan" />
+								<field name="coa_id" />
 				            </group>
 				        </group>
 

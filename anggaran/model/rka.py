@@ -15,8 +15,10 @@ class rka(osv.osv):
 	_columns 	= {
 		'unit_id'	        : fields.many2one('anggaran.unit', 'Unit Kerja'),
 		'tahun'		        : fields.many2one('account.fiscalyear', 'Tahun'),
+		'alokasi'			: fields.float('Alokasi'),
 		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id','Rincian Kegiatan', ondelete="cascade"),
 		'state'             : fields.selection(RKA_STATES,'Status',readonly=True,required=True),
+		'note'         		: fields.text('Note'),		
 	}
 	_defaults = {
 		'state'       : RKA_STATES[0][0],
@@ -35,6 +37,15 @@ class rka(osv.osv):
 
 
 class rka_kegiatan(osv.osv):
+	
+	def _total_anggaran(self, cursor, user, ids, name, arg, context=None):
+		res = {}
+
+		for rka_keg in self.browse(cursor, user, ids, context=context):
+			res[rka_keg.id] = sum([item.total for item in rka_keg.rka_coa_ids]) or 0.0
+
+		return res
+
 	_name 		= "anggaran.rka_kegiatan"
 	_rec_name   = "kegiatan_id"
 	_columns 	= {
@@ -54,21 +65,78 @@ class rka_kegiatan(osv.osv):
 		'indikator'         : fields.text('Indikator'),
 		'target_capaian'    : fields.float('Target Capaian'),
 		'target_capaian_uom': fields.many2one('product.uom', 'Satuan Target'),
-		'anggaran'          : fields.float('Anggaran'),
-		'rka_coa_ids'       : fields.one2many('anggaran.rka_coa','rka_kegiatan_id','Rincian COA', ondelete="cascade")
+		'anggaran'          : fields.function(_total_anggaran, string='Anggran',type='float', help="total Anggran kegiatan"),
+		'rka_coa_ids'       : fields.one2many('anggaran.rka_coa','rka_kegiatan_id','Rincian ', ondelete="cascade")
 	}
+
+	def onchange_rka_coa(self,cr, uid, ids, rka_coa_ids, context=None):
+		context = context or {}
+		if not rka_coa_ids:
+		    rka_coa_ids = []
+		
+		res = {
+			'anggaran': 0.0,
+		}
+		anggaran_total = 0.0
+		rka_coa_ids =rka_coa_ids
+		rka_coa_ids = self.resolve_2many_commands(cr, uid, 'rka_coa_ids', rka_coa_ids, ['total'], context)
+
+		for rka_coa in rka_coa_ids:
+			jumlah = rka_coa.get('total',0.0)
+			anggaran_total += jumlah
+
+		total = anggaran_total		
+		res.update({'anggaran': total})
+		
+		
+		return {
+			'value': res
+		}
+
+
+	
 
 class rka_coa(osv.osv):
 	_rec_name   = "coa_id"
 	_name 		= "anggaran.rka_coa"
 	_columns 	= {
 		'rka_kegiatan_id' 	: fields.many2one('anggaran.rka_kegiatan', 'RKA Kegiatan'),
+		'nama' 				: fields.text('Nama Rincian'),
 		'coa_id'        	: fields.many2one('account.account', 'Nama Account'),
 		'total'         	: fields.float('Jumlah Total'),
 		'sumber_dana_id'	: fields.many2one('anggaran.sumber_dana', 'Sumber Dana'),
 		'bulan'				: fields.many2one('account.period', 'Bulan'),
 		'rka_detail_ids'    : fields.one2many('anggaran.rka_detail','rka_coa_id','Detail', ondelete="cascade")
 	}
+
+	def onchange_total(self,cr, uid, ids, total, context=None,):
+		context = context or {}
+		res = {}
+		## ---> Set BreakPoint
+		total = total or 0.00
+		
+		mod_obj = self.pool.get('ir.model.data')
+		act_obj = self.pool.get('ir.actions.act_window')
+		view_obj = self.pool.get('ir.ui.view')
+		
+		result = mod_obj.get_object_reference(cr, uid, 'anggaran', 'action_kas_keluar_list')
+
+		if(ids):
+			ang = self.browse(cr,uid,ids[0],).rka_kegiatan_id
+			ang.write({'anggaran':total})
+
+		# import pdb;
+		# pdb.set_trace()
+		res = {
+			
+			'anggaran': 0.0,
+			
+		}
+		#return super(class_name, self).onchange_total(cr, uid, vals, context=context)
+		return {
+			'value': res
+		}
+
 
 class rka_detail(osv.osv):
 	_rec_name   = "keterangan"
@@ -89,3 +157,8 @@ class rka_volume(osv.osv):
 		'volume' 		: fields.float('Volume'),
 		'volume_uom'	: fields.many2one('product.uom', 'Satuan Volume'),
 	}
+
+
+	    	
+
+	

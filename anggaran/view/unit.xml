@@ -7,7 +7,6 @@
 		    	<tree string="list unit" >
 		            <field name="code"/>
 		            <field name="name"/>
-		            <field name="name"/>
 		            <field name="fakultas_id"/>
 		            <field name="jurusan_id"/>
 		            <field name="company_id"/>

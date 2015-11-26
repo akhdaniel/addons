@@ -41,6 +41,37 @@
 				<p>Klik tombol create untuk membuat Kegiatan</p>
 			</field>
 		</record>
+
+		<!-- action list Cost Type -->
+		<record id="action_cost_type_list" model="ir.actions.act_window">
+			<field name="name">List Cost Type</field>
+			<field name="res_model">anggaran.cost_type</field>
+			<field name="view_mode">tree,form</field>
+			
+
+			<field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Manage master Cost Type kegiatan
+		      </p>				
+				<p>Klik tombol create untuk membuat Cost Type Kegiatan</p>
+			</field>
+		</record>
+
+		<!-- action list Mata Anggran Kegiatan -->
+		<record id="action_mata_kegiatan_list" model="ir.actions.act_window">
+			<field name="name">List Mata Anggaran Kegiatan</field>
+			<field name="res_model">anggaran.mata_anggaran_kegiatan</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_group_kegiatan': 1}</field>
+
+			<field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Manage master Mata Anggaran kegiatan
+		      </p>				
+				<p>Klik tombol create untuk membuat Mata Anggaran Kegiatan</p>
+			</field>
+		</record>
+
 		<!-- action list Fakultas -->
 		<record id="action_fakultas_list" model="ir.actions.act_window">
 			<field name="name">List Fakultas</field>
@@ -133,6 +164,20 @@
 			 name="Kegiatan"
 			 sequence="20"
 			 parent="menu_anggaran_master"/>			 
+
+		<!-- menu_kegiatan -->
+		<menuitem id="menu_mata_kegiatan"
+			 action="action_mata_kegiatan_list"
+			 name="Mata Anggaran Kegiatan"
+			 sequence="20"
+			 parent="menu_anggaran_master"/>			 	 
+
+		<!-- menu_cost_type -->
+		<menuitem id="menu_cost_type"
+			 action="action_cost_type_list"
+			 name="Cost Type"
+			 sequence="20"
+			 parent="menu_anggaran_master"/>			 	 
 
 		<!-- menu_fakultas-->
 		<menuitem id="menu_fakultas"
