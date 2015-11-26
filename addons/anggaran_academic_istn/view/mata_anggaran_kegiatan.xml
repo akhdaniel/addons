@@ -1,0 +1,41 @@
+<openerp>
+	<data>
+		<record id="view_mata_kegiatan_tree" model="ir.ui.view">
+		    <field name="name">mata_anggaran_kegiatan_tree</field>
+		    <field name="model">anggaran.mata_anggaran_kegiatan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list mata_anggaran_kegiatan" >
+		            <tree string="list kegiatan" >
+		            <field name="rka_kegiatan_id" invisible="True"/>
+		            <field name="unit_id"  invisible="True"/>
+		            <field name="cost_type_id" invisible="True"/>
+		           	<field name="name"/>
+		            <field name="code"/>
+		        </tree>
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- ini definisi search kegiatan -->
+		<record id="view_kegiatan_filter" model="ir.ui.view">
+		    <field name="name">kegiatan.filter</field>
+		    <field name="model">anggaran.mata_anggaran_kegiatan</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Kegiatan">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="rka_kegiatan_id"/>
+		            <group expand="1" string="Group By...">
+		                <filter string="Kegiatan" icon="terp-personal" name="group_kegiatan"
+		                    domain="[]" context="{'group_by':'kegiatan_id'}"/>
+		                <filter string="Unit" icon="terp-personal" name="group_unit"
+		                    domain="[]" context="{'group_by':'unit_id'}"/>
+		                <filter string="Cost Type" icon="terp-personal" name="group_cost_type"
+		                    domain="[]" context="{'group_by':'cost_type_id'}"/>
+		            </group>
+		        </search>
+		    </field>
+		</record>
+
+	</data>
+</openerp>

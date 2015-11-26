@@ -1,0 +1,29 @@
+<openerp>
+	<data>
+		<record id="view_kebijakan_tree" model="ir.ui.view">
+		    <field name="name">anggaran_kebijakan_tree</field>
+		    <field name="model">anggaran.kebijakan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list kebijakan" colors="blue:type=='kebijakan'">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="tridharma"/>
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- ini definisi search kebijakan -->
+		<record id="view_kebijakan_filter" model="ir.ui.view">
+		    <field name="name">kebijakan.filter</field>
+		    <field name="model">anggaran.kebijakan</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Kebijakan">
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="tridharma"/>
+		        </search>
+		    </field>
+		</record>
+
+	</data>
+</openerp>

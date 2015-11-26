@@ -1,0 +1,185 @@
+<openerp>
+	<data>
+		<!-- RKA master tree -->
+	
+		<record id="view_rka_tree" model="ir.ui.view">
+		    <field name="name">anggaran_rka_tree</field>
+		    <field name="model">anggaran.rka</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list rka">
+		            <field name="tahun"/>
+		            <field name="unit_id"/>
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- RKA master form -->
+        <record id="view_rka_form" model="ir.ui.view">
+            <field name="name">anggaran_rka_form</field>
+            <field name="model">anggaran.rka</field>
+            <field name="arch" type="xml">
+            	<form string="rka form" version="7.0">
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+						 	 states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	 states="open" />
+            			<field name="state" widget="statusbar" />
+            		</header>
+            		<sheet>
+						<div class="oe_title">
+							<label for="tahun" class="oe_edit_only" 
+								 string="Tahun" />
+							<h1>
+								<field name="tahun" />
+							</h1>
+						</div>
+			            <group>
+			            	<group>
+				                <field name="unit_id"/>       
+				                <field name="note"/>
+				                <field name="alokasi"/>
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<page string="Rincian Kegiatan">
+					            <field name="rka_kegiatan_ids">
+					            	<tree string="Rincian Kegiatan">
+										<field name="kebijakan_id" />  
+										<field name="kegiatan_id" />   
+										<field name="indikator" />     
+										<field name="target_capaian" />
+										<field name="target_capaian_uom" />
+										<field name="anggaran" />      
+										<field name="rka_coa_ids" />
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+        <!-- RKA kegiatan form -->
+        <record id="view_rka_kegiatan_form" model="ir.ui.view">
+            <field name="name">anggaran_rka_kegiatan_form</field>
+            <field name="model">anggaran.rka_kegiatan</field>
+            <field name="arch" type="xml">
+            	<form string="rka_kegiatan form" version="7.0">
+            		<sheet>
+						<div class="oe_title">
+							<label for="kegiatan_id" class="oe_edit_only" 
+								 string="Kegiatan" />
+							<h1>
+								<field name="kegiatan_id" />
+							</h1>
+						</div>
+			            <group>
+			            	<group>
+				                <field name="kebijakan_id"/>       
+				                <field name="indikator"/>       
+			            	</group>
+			            	<group>
+				                <field name="target_capaian"/>       
+				                <field name="target_capaian_uom"/>       
+				                <field name="anggaran"/>       
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<page string="Rincian COA">
+					            <field name="rka_coa_ids" on_change="onchange_rka_coa(rka_coa_ids)">
+					            	<tree string="Rincian COA">
+										<field name="nama" />
+										<field name="total" />        
+										<field name="sumber_dana_id" />
+										<field name="bulan" />
+										<field name="coa_id" />
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>      
+
+        <!-- RKA COA form -->
+        <record id="view_rka_coa_form" model="ir.ui.view">
+            <field name="name">anggaran_rka_coa_form</field>
+            <field name="model">anggaran.rka_coa</field>
+            <field name="arch" type="xml">
+            	<form string="rka_coa form" version="7.0">
+            		<sheet>
+					
+			            <group>
+			            	<group>
+			            		<field name="nama" />
+								<field name="total" on_change="onchange_total(parent.anggaran, total)"/>         
+								<field name="sumber_dana_id" />
+								<field name="bulan" />
+								<field name="coa_id" />
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<page string="Rincian">
+					            <field name="rka_detail_ids">
+					            	<tree string="Rincian">		
+										<field name="keterangan" />	
+										<field name="tarif" />         
+										<field name="volume_total" />         
+										<field name="jumlah" />  
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>    
+
+
+        <!-- RKA detail form -->
+        <record id="view_rka_detail_form" model="ir.ui.view">
+            <field name="name">anggaran_rka_detail_form</field>
+            <field name="model">anggaran.rka_detail</field>
+            <field name="arch" type="xml">
+            	<form string="rka_detail form" version="7.0">
+            		<sheet>
+						<div class="oe_title">
+							<label for="keterangan" class="oe_edit_only" 
+								 string="Keterangan" />
+							<h1>
+								<field name="keterangan" />
+							</h1>
+						</div>
+			            <group>
+			            	<group>
+								<field name="tarif" />         
+								<field name="jumlah" />
+				            </group>
+			            	<group>
+								<field name="volume_total" />
+				            </group>
+				        </group>
+
+			            <notebook>
+			            	<page string="Volume">
+					            <field name="rka_volume_ids">
+					            	<tree string="Volume" editable="bottom">		
+										<field name="volume" /> 		
+										<field name="volume_uom" />	
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>    
+
+	</data>
+</openerp>
