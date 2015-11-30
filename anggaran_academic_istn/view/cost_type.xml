@@ -7,9 +7,6 @@
 		    	<tree string="list cost_type" >
 		            <field name="code"/>
 		            <field name="name"/>
-		            <field name="alamat"/>
-		            <field name="nama_bank"/>
-		            <field name="nomor_rek"/>
 		        </tree>    
 		    </field>
 		</record>
@@ -20,8 +17,7 @@
 		    <field name="arch" type="xml">
 		        <search string="Search cost_type">
 		            <field name="code"/>
-		            <field name="name"/>
-		            
+		            <field name="name"/>		            
 		        </search>
 		    </field>
 		</record>

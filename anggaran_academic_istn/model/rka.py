@@ -1,5 +1,6 @@
 from openerp import tools
 from openerp.osv import fields,osv
+from openerp import api
 import openerp.addons.decimal_precision as dp
 import time
 import logging
@@ -7,28 +8,106 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 RKA_STATES =[('draft','Draft'),('open','Disahkan'),
-                 ('done','Selesai')]
+				 ('done','Selesai')]
 
+###########################################################################
+#Level 1 : RKA
+###########################################################################
 class rka(osv.osv):
 	_name 		= "anggaran.rka"
-	_rec_name   = "tahun"
+	_inherit = ['mail.thread', 'ir.needaction_mixin']
+	_rec_name   = "period_id"
+
+	@api.onchange('rka_kegiatan_ids') 
+	def on_change_rka_kegiatan_ids(self):
+		total = 0.0
+		for keg in self.rka_kegiatan_ids:
+			total = total + keg.anggaran
+		print total 
+		self.anggaran = total 	
+	
+	def hitung_realisasi(self, array_coas):
+		realisasi = 0 
+		for ar in array_coas:
+			realisasi = realisasi + ar['realisasi']
+		return realisasi 	
+
+	def hitung_anggaran(self, array_coas):
+		realisasi = 0 
+		for ar in array_coas:
+			realisasi = realisasi + ar['anggaran']
+		return realisasi 
+
+	def _frealisasi(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rkas = self.browse(cr, uid, ids, context=context) 
+		for rka in rkas:
+			rka_kegiatan_ids = rka.rka_kegiatan_ids
+			results[rka.id] = self.hitung_realisasi(rka_kegiatan_ids)
+		return results
+
+	def _fanggaran(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rkas = self.browse(cr, uid, ids, context=context) 
+		for rka in rkas:
+			rka_kegiatan_ids = rka.rka_kegiatan_ids
+			results[rka.id] = self.hitung_anggaran(rka_kegiatan_ids)
+		return results
+
+	def _fsisa(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rkas = self.browse(cr, uid, ids, context=context) 
+		for rka in rkas:
+			results[rka.id] = rka.anggaran - rka.realisasi
+		return results
+
+
 	_columns 	= {
-		'unit_id'	        : fields.many2one('anggaran.unit', 'Unit Kerja'),
-		'tahun'		        : fields.many2one('account.fiscalyear', 'Tahun'),
-		'alokasi'			: fields.float('Alokasi'),
-		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id','Rincian Kegiatan', ondelete="cascade"),
-		'state'             : fields.selection(RKA_STATES,'Status',readonly=True,required=True),
-		'note'         		: fields.text('Note'),		
+		'unit_id'			: fields.many2one('anggaran.unit', _('Unit Kerja'), required=True),
+		'fakultas_id'		: fields.related('unit_id', 'fakultas_id' , type="many2one", relation="anggaran.fakultas", string="Fakultas", store=True),
+		'tahun'				: fields.many2one('account.fiscalyear', _('Tahun'), required=True),
+		'period_id'			: fields.many2one('account.period', _('Periode') , required=True),
+		
+		'alokasi'			: fields.float(_('Alokasi')),
+		# 'anggaran'			: fields.function(_fanggaran, type='float', string="Total Anggaran"),
+		'anggaran'			: fields.float('Total Anggaran'),
+		'realisasi'			: fields.function(_frealisasi, type='float', string="Realisasi"),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
+		'definitif'			: fields.float("Definitif"),
+
+		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id',
+								_('Rincian Kegiatan'), ondelete="cascade"),
+		'state'			 	: fields.selection(RKA_STATES,'Status',readonly=True,required=True),
+		'note'		 		: fields.text(_('Note')),	
+		'mak_terisi'		: fields.boolean('MAK Terisi')	
 	}
+	
 	_defaults = {
-		'state'       : RKA_STATES[0][0],
+		'state'	   : RKA_STATES[0][0],
+		'mak_terisi': False 
 	}
+
 	def action_draft(self,cr,uid,ids,context=None):
 		#set to "draft" state
 		return self.write(cr,uid,ids,{'state':RKA_STATES[0][0]},context=context)
 	
 	def action_confirm(self,cr,uid,ids,context=None):
 		#set to "confirmed" state
+		rka = self.browse(cr, uid, ids[0], context=context)
+
+		#apakah ada rka dengna perioda yang sama utk tahun ini
+		rkas = self.search(cr, uid, [('tahun','=',rka.tahun.id ),
+			('period_id','=', rka.period_id.id),
+			('unit_id','=',rka.unit_id.id)], context=context)
+		if len(rkas) > 1:
+			raise osv.except_osv(_('Error'),_("Ada lebih dari satu RKA pada perioda yang sama") ) 
+
+		if rka.alokasi < rka.anggaran:
+			raise osv.except_osv(_('Error'),_("Total Anggaran Melebihi Alokasi") ) 
+
+		if rka.alokasi == 0.0 or rka.anggaran == 0.0:
+			raise osv.except_osv(_('Error'),_("Mohon dilengkapi data Alokasi dan Total Anggaran") ) 
+
 		return self.write(cr,uid,ids,{'state':RKA_STATES[1][0]},context=context)
 	
 	def action_done(self,cr,uid,ids,context=None):
@@ -36,120 +115,354 @@ class rka(osv.osv):
 		return self.write(cr,uid,ids,{'state':RKA_STATES[2][0]},context=context)
 
 
+	######################################################################
+	# looping Kebijakan, Program, Kegiatan, MAK
+	# isi ke RKA, RKA Kegiatan, dst, sd rka_coa
+	######################################################################
+	def action_fill_mak(self,cr,uid,ids,context=None):
+
+		rka = self.browse(cr, uid, ids[0], context=context)
+
+		kbj_obj	= self.pool.get('anggaran.kebijakan')
+		prg_obj	= self.pool.get('anggaran.program')
+		keg_obj	= self.pool.get('anggaran.kegiatan')
+		mak_obj	= self.pool.get('anggaran.mata_anggaran_kegiatan')
+
+		rka_kegiatan_ids	= []
+
+		# kbj_ids = kbj_obj.search(cr, uid, [], context=context):
+		# for kbj in kbj_obj.browse(cr, uid, kbj_ids, context=context):
+		# 	prg_ids = kbj.program_ids
+		# 	for prg in prg_obj.browse(cr, uid, prg_ids, context=context):
+		# 		keg_ids = prg.kebijakan_ids
+		
+		keg_ids = keg_obj.search(cr, uid, [], context=context)
+		for keg in keg_obj.browse(cr, uid, keg_ids, context=context):
+
+			rka_coa_ids = []
+
+			mak_ids = mak_obj.search(cr, uid, [('kegiatan_id','=', keg.id),('unit_id','=', rka.unit_id.id)], context=context)
+			for mak in mak_obj.browse(cr, uid, mak_ids, context=context):
+				rka_coa_ids.append( (0,0, {
+					'mak_id'			: mak.id,
+				}) )
+
+			rka_kegiatan_ids.append( (0,0,{ 
+				'kebijakan_id' 		: keg.kebijakan_id.id,
+				'program_id' 		: keg.program_id.id,
+				'kegiatan_id' 		: keg.id,
+				'indikator' 		: '',
+				'target_capaian' 	: 0.0,
+				'target_capaian_uom': False,
+				'anggaran' 			: 0.0,
+				'rka_coa_ids'		: rka_coa_ids
+			}) )
+		
+		data = {
+			'alokasi'			: 0.0,
+			'anggaran'			: 0.0,
+			'realisasi'			: 0.0,
+			'sisa'		 		: 0.0, 
+			'definitif'			: 0.0,
+			'rka_kegiatan_ids'  : rka_kegiatan_ids,
+			'state'			 	: RKA_STATES[0][0],
+			'note'		 		: '',
+			'mak_terisi' 		: True 
+		}
+		self.write(cr, uid, ids[0], data, context=context)	
+		return 
+
+	def copy(self, cr, uid, id, default=None, context=None):
+		default = dict(context or {})
+		old = self.browse(cr, uid, id, context=context)
+
+		rka_kegiatan_ids = []
+
+		for fd in old.rka_kegiatan_ids:
+
+			rka_coa_ids = []
+			for rc in fd.rka_coa_ids:
+
+				rka_detail_ids = []
+				for rd in rc.rka_detail_ids:
+					rka_volume_ids = []
+					for rv in rd.rka_volume_ids:
+						rka_volume_ids.append((0,0,{
+							# 'rka_detail_id'  : rv.rka_detail_id,
+							'volume' 		 : rv.volume,
+							'volume_uom'	 : rv.volume_uom.id
+						}))
+					rka_detail_ids.append( (0,0,{
+						# 'rka_coa_id' 	: rd.rka_coa_id,
+						'keterangan'	: rd.keterangan,
+						'tarif'		 	: rd.tarif,
+						'jumlah'		: rd.jumlah,
+						'volume_total' 	: rd.volume_total,
+						'rka_volume_ids': rka_volume_ids
+					}))
+
+				rka_coa_ids.append( (0,0, {
+					# 'rka_kegiatan_id' 	: rc.rka_kegiatan_id.id,
+					'mak_id'			: rc.mak_id.id,
+					'total'		 		: rc.total,
+					'sumber_dana_id'	: rc.sumber_dana_id.id,
+					'bulan'				: rc.bulan,
+					'rka_detail_ids'	: rka_detail_ids
+
+				}) )
+
+			rka_kegiatan_ids.append( (0,0,{ 
+				'kebijakan_id' 		: fd.kebijakan_id.id,
+				'program_id' 		: fd.program_id.id,
+				'kegiatan_id' 		: fd.kegiatan_id.id,
+				'indikator' 		: fd.indikator,
+				'target_capaian' 	: fd.target_capaian,
+				'target_capaian_uom': fd.target_capaian_uom.id or False,
+				'anggaran' 			: fd.anggaran,
+				'rka_coa_ids'		: rka_coa_ids
+			}) )
+		
+		default.update({'rka_kegiatan_ids' : rka_kegiatan_ids })
+		return super(rka, self).copy(cr, uid, id, default, context=context)
+
+###########################################################################
+#Level 2 : RKA Kegiatan
+###########################################################################
 class rka_kegiatan(osv.osv):
+	@api.onchange('rka_coa_ids') 
+	def on_change_rka_coa_ids(self):
+		total = 0.0
+		for coa in self.rka_coa_ids:
+			total = total + coa.total
+		print total 
+		self.anggaran = total 
+
 	
-	def _total_anggaran(self, cursor, user, ids, name, arg, context=None):
-		res = {}
+	# def hitung_total(self, array_coas):
+	# 	total = 0.0 
+	# 	for ar in array_coas:
+	# 		total = total + ar['total']
+	# 	return total 
+	
+	def hitung_realisasi(self, array_coas):
+		realisasi = 0 
+		for ar in array_coas:
+			realisasi = realisasi + ar['realisasi']
+		return realisasi 
 
-		for rka_keg in self.browse(cursor, user, ids, context=context):
-			res[rka_keg.id] = sum([item.total for item in rka_keg.rka_coa_ids]) or 0.0
+	# def onchange_rka_coa(self, cr, uid, ids, rka_coa_ids ):
+	# 	array_coas = self.resolve_o2m_commands_to_record_dicts(
+	# 		cr, uid, 'rka_coa_ids', rka_coa_ids, ['total', '']
+	# 	) 
 
-		return res
+	# 	print rka_coa_ids
+	# 	print array_coas
+
+	# 	results = {
+	# 		'value' : {
+	# 			'anggaran' : self.hitung_total(array_coas),
+	# 		}
+	# 	}
+
+	# 	return results
+
+	# def _ftotal(self, cr, uid, ids, field, arg, context=None):
+	# 	results = {}
+	# 	rka_kegiatans = self.browse(cr, uid, ids, context=context) 
+	# 	for rka_kegiatan in rka_kegiatans:
+	# 		array_coas = rka_kegiatan.rka_coa_ids
+	# 		results[rka_kegiatan.id] = self.hitung_total(array_coas)
+	# 	return results
+
+
+	def _frealisasi(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rka_kegiatans = self.browse(cr, uid, ids, context=context) 
+
+		# ambil satu-per-satu sesion object 
+		for rka_kegiatan in rka_kegiatans:
+			array_coas = rka_kegiatan.rka_coa_ids
+			results[rka_kegiatan.id] = self.hitung_realisasi(array_coas)
+		return results
+
+
+	def _fsisa(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rka_kegiatans = self.browse(cr, uid, ids, context=context) 
+
+		# ambil satu-per-satu sesion object 
+		for rka_kegiatan in rka_kegiatans:
+			results[rka_kegiatan.id] = rka_kegiatan.anggaran - rka_kegiatan.realisasi
+		return results
+
 
 	_name 		= "anggaran.rka_kegiatan"
 	_rec_name   = "kegiatan_id"
 	_columns 	= {
-		'rka_id'	        : fields.many2one('anggaran.rka', 'RKA'),
-		'kegiatan_id'       : fields.many2one('anggaran.kegiatan', 'Kegiatan'),
+		'rka_id'			: fields.many2one('anggaran.rka', 'RKA'),
+		'kebijakan_id'	  : fields.many2one('anggaran.kebijakan', _('Kebijakan')),
+		'program_id'		: fields.many2one('anggaran.program', _('Program')),
+		'kegiatan_id'	   : fields.many2one('anggaran.kegiatan', _('Kegiatan')),
 
-		'program_id'      : fields.related('kegiatan_id', 
-			'program_id' , type="many2one", 
-			relation="anggaran.program", 
-			string="Program", store=True, readonly=True ),
+		'unit_id'		  : fields.related('rka_id', 
+			'unit_id',  type="many2one", 
+			relation="anggaran.unit", 
+			string="Unit", readonly=True ),
 
-		'kebijakan_id'      : fields.related('kegiatan_id', 
-			'program_id', 'kebijakan_id' , type="many2one", 
-			relation="anggaran.kebijakan", 
-			string="Kebijakan", store=True, readonly=True ),
+		'indikator'		 : fields.text(_('Indikator')),
+		'target_capaian'	: fields.float(_('Target Capaian')),
+		'target_capaian_uom': fields.many2one('product.uom', _('Satuan Target')),
 
-		'indikator'         : fields.text('Indikator'),
-		'target_capaian'    : fields.float('Target Capaian'),
-		'target_capaian_uom': fields.many2one('product.uom', 'Satuan Target'),
-		'anggaran'          : fields.function(_total_anggaran, string='Anggran',type='float', help="total Anggran kegiatan"),
-		'rka_coa_ids'       : fields.one2many('anggaran.rka_coa','rka_kegiatan_id','Rincian ', ondelete="cascade")
+		# 'anggaran'			: fields.function(_ftotal, type='float', string="Total Anggaran", store=True),
+		'anggaran'			: fields.float("Total Anggaran"),
+		'realisasi'			: fields.function(_frealisasi, type='float', string="Realisasi"),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
+		'definitif'			: fields.float("Definitif"),
+
+		'rka_coa_ids'	   : fields.one2many('anggaran.rka_coa','rka_kegiatan_id',
+			_('Rincian'), ondelete="cascade")
 	}
 
-	def onchange_rka_coa(self,cr, uid, ids, rka_coa_ids, context=None):
-		context = context or {}
-		if not rka_coa_ids:
-		    rka_coa_ids = []
-		
-		res = {
-			'anggaran': 0.0,
-		}
-		anggaran_total = 0.0
-		rka_coa_ids =rka_coa_ids
-		rka_coa_ids = self.resolve_2many_commands(cr, uid, 'rka_coa_ids', rka_coa_ids, ['total'], context)
 
-		for rka_coa in rka_coa_ids:
-			jumlah = rka_coa.get('total',0.0)
-			anggaran_total += jumlah
-
-		total = anggaran_total		
-		res.update({'anggaran': total})
-		
-		
-		return {
-			'value': res
-		}
-
-
-	
-
+###########################################################################
+#Level 3 : RKA Rincian MAK
+###########################################################################
 class rka_coa(osv.osv):
-	_rec_name   = "coa_id"
+	_rec_name   = "mak_id"
 	_name 		= "anggaran.rka_coa"
+
+	@api.onchange('rka_detail_ids') 
+	def on_change_rka_detail_ids(self):
+		total = 0.0
+		for det in self.rka_detail_ids:
+			total = total + det.volume_total
+		print total 
+		self.total = total 
+
+	def actual_hitung_jumlah(self, array_detail):
+		total = 0 
+		for ar in array_detail:
+			total = total + ar['volume_total']
+		return total 
+
+
+	def _fsisa(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rka_coas = self.browse(cr, uid, ids, context=context) 
+
+		# ambil satu-per-satu sesion object 
+		for rka_coa in rka_coas:
+			if rka_coa.total > 0:
+				results[rka_coa.id] = rka_coa.total - rka_coa.realisasi
+			else:
+				results[rka_coa.id] = 0.0
+
+		return results
+
+	def hitung_total(self, array_detail ):
+		total = self.actual_hitung_jumlah(array_detail) 
+		return total  
+
+	def calculate_total(self, cr, uid, ids, rka_detail_ids):
+		array_detail = self.resolve_o2m_commands_to_record_dicts(
+			cr, uid, 'rka_detail_ids', rka_detail_ids, ['volume_total']
+		)
+		results = {
+			'value' : {
+				'total' : self.hitung_total(array_detail),
+				# 'sisa' : self.hitung_sisa(array_detail),
+			}
+		}
+		return results
+
 	_columns 	= {
-		'rka_kegiatan_id' 	: fields.many2one('anggaran.rka_kegiatan', 'RKA Kegiatan'),
-		'nama' 				: fields.text('Nama Rincian'),
-		'coa_id'        	: fields.many2one('account.account', 'Nama Account'),
-		'total'         	: fields.float('Jumlah Total'),
+		'rka_kegiatan_id' 	: fields.many2one('anggaran.rka_kegiatan', 'Kegiatan'),
+		'mak_id'			: fields.many2one('anggaran.mata_anggaran_kegiatan', 'MAK'),
+		'total'		 		: fields.float('Total'),
+		'realisasi'		 	: fields.float('Realisasi'),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
+		'definitif'		 	: fields.float('Definitif Biaya'),
 		'sumber_dana_id'	: fields.many2one('anggaran.sumber_dana', 'Sumber Dana'),
 		'bulan'				: fields.many2one('account.period', 'Bulan'),
-		'rka_detail_ids'    : fields.one2many('anggaran.rka_detail','rka_coa_id','Detail', ondelete="cascade")
+		'rka_detail_ids'	: fields.one2many('anggaran.rka_detail','rka_coa_id','Detail', ondelete="cascade")
+
 	}
 
-	def onchange_total(self,cr, uid, ids, total, context=None,):
-		context = context or {}
-		res = {}
-		## ---> Set BreakPoint
-		total = total or 0.00
-		
-		mod_obj = self.pool.get('ir.model.data')
-		act_obj = self.pool.get('ir.actions.act_window')
-		view_obj = self.pool.get('ir.ui.view')
-		
-		result = mod_obj.get_object_reference(cr, uid, 'anggaran', 'action_kas_keluar_list')
 
-		if(ids):
-			ang = self.browse(cr,uid,ids[0],).rka_kegiatan_id
-			ang.write({'anggaran':total})
-
-		# import pdb;
-		# pdb.set_trace()
-		res = {
-			
-			'anggaran': 0.0,
-			
-		}
-		#return super(class_name, self).onchange_total(cr, uid, vals, context=context)
-		return {
-			'value': res
-		}
-
-
+###########################################################################
+#Level 4: detail MAK
+###########################################################################
 class rka_detail(osv.osv):
 	_rec_name   = "keterangan"
 	_name 		= "anggaran.rka_detail"
+
+	@api.onchange('rka_volume_ids','tarif') 
+	def on_change_rka_volume_ids(self):
+		total = 1
+		for vol in self.rka_volume_ids:
+			total = total * vol.volume
+		self.jumlah = total 	
+		self.volume_total = total * self.tarif	
+
 	_columns 	= {
-		'rka_coa_id' 	: fields.many2one('anggaran.rka_coa', 'RKA Kegiatan'),
-		'keterangan'	: fields.text('Keterangan'),
-		'tarif'         : fields.float('Tarif'),
-		'jumlah'        : fields.float('Jumlah'),
-		'volume_total' 	: fields.float('Volume Total'),		
-		'rka_volume_ids'    : fields.one2many('anggaran.rka_volume','rka_detail_id','Volumes', ondelete="cascade")
+		'kebijakan_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 'program_id', 'kebijakan_id',
+			type="many2one", relation="anggaran.kebijakan", string="Kebijakan", store=True),
+		'program_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 'program_id',
+			type="many2one", relation="anggaran.program", string="Program", store=True),
+		'kegiatan_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 
+			type="many2one", relation="anggaran.kegiatan", string="Kegiatan", store=True),
+		'unit_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'unit_id' , 
+			type="many2one", relation="anggaran.unit", string="Unit", store=True),
+
+		'tahun'   : fields.related('rka_coa_id','rka_kegiatan_id', 'rka_id' , 'tahun',
+			type="many2one", relation="account.fiscalyear", string="Tahun", store=True),
+
+		'period_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'rka_id' , 'period_id',
+			type="many2one", relation="account.period", string="Period", store=True),
+
+		'rka_coa_id' 	: fields.many2one('anggaran.rka_coa', _('MAK')),
+		'keterangan'	: fields.text(_('Keterangan'), required=True),
+		'tarif'		 	: fields.float(_('Tarif'), required=True),
+		'jumlah'		: fields.float(_('Jumlah'), required=True),
+		'volume_total' 	: fields.float(_('Volume Total') , required=True),		
+		'rka_volume_ids'	: fields.one2many('anggaran.rka_volume','rka_detail_id',
+			_('Volumes'), ondelete="cascade")
 	}
 
+	def hitung_jumlah(self, array_volumes):
+		jumlah = 1.0 
+		for ar in array_volumes:
+			jumlah = jumlah * ar['volume']
+		return jumlah 
+
+	def hitung_volume_total(self, array_volumes, tarif):
+		jumlah = self.hitung_jumlah(array_volumes) 
+		return jumlah * tarif
+
+	def onchange_volumes(self, cr, uid, ids, rka_volume_ids, tarif):
+		array_volumes = self.resolve_o2m_commands_to_record_dicts(
+			cr, uid, 'rka_volume_ids', rka_volume_ids, ['volume']
+		)
+
+		print array_volumes
+
+		# return harus berupa dict yang berisi key = 'value'
+		# setiap value berupa dict yang berisi nilai dari field lain
+		#   yang mau diupdate 
+
+		results = {
+			'value' : {
+				'jumlah' : self.hitung_jumlah(array_volumes),
+				'volume_total' : self.hitung_volume_total(array_volumes, tarif)
+			}
+		}
+
+		return results
+
+
+###########################################################################
+#Level 5: detail volumes
+###########################################################################
 class rka_volume(osv.osv):
 	_name 		= "anggaran.rka_volume"
 	_columns 	= {
@@ -159,6 +472,6 @@ class rka_volume(osv.osv):
 	}
 
 
-	    	
+			
 
 	

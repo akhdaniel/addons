@@ -7,7 +7,7 @@
 		    	<tree string="list kebijakan" colors="blue:type=='kebijakan'">
 		            <field name="code"/>
 		            <field name="name"/>
-		            <field name="tridharma"/>
+		            <field name="tridharma_id"/>
 		        </tree>    
 		    </field>
 		</record>
@@ -20,10 +20,47 @@
 		        <search string="Search Kebijakan">
 		            <field name="code"/>
 		            <field name="name"/>
-		            <field name="tridharma"/>
+		            <field name="tridharma_id"/>
 		        </search>
 		    </field>
 		</record>
 
+
+		<!-- ini definisi form kebijakan -->
+        <record id="view_kebijakan_form" model="ir.ui.view">
+            <field name="name">anggaran_kebijakan_form</field>
+            <field name="model">anggaran.kebijakan</field>
+            <field name="arch" type="xml">
+            	<form string="kebijakan form" version="7.0">
+            		<header>
+						<!--button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+						 	 states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	 states="open" />
+            			<field name="state" widget="statusbar" /-->
+            		</header>
+            		<sheet>
+						<!--div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Class Name" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div-->
+			            <group>
+			            	<group>
+				                <field name="code"/>       
+				                <field name="name"/>       
+				            </group>
+				            <group>
+				                <field name="tridharma_id"/>         
+				            </group>
+				        </group>
+
+
+					</sheet>
+			    </form>
+            </field>
+        </record>
 	</data>
 </openerp>
