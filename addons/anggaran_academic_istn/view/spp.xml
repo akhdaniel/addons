@@ -40,6 +40,7 @@
 		            		<group>
 				            	<group>
 					                <field name="tanggal"/>       
+					                <field name="period_id"/>       
 					                <field name="kepada"/>
 					                <field name="cara_bayar"/>       
 					                <field name="jumlah"/>       
@@ -49,7 +50,7 @@
 					                <field name="unit_id"/>       
 					                <field name="nomor_rek"/>       
 					                <field name="nama_bank"/>  
-					                <field name="dasar_rkat"/>       
+					                <field name="rka_id" domain="[('unit_id','=',unit_id),('period_id','=',period_id)]"/>       
 				                </group>     
 			                </group>    				            
 				        </group>
@@ -58,13 +59,13 @@
 
 			            	<page string="Rincian Penjelasan">
 					            <field name="spp_line_ids">
-					            	<tree string="Rincian Penjelasan" editable="bottom">
+					            	<tree string="Rincian Penjelasan">
 										<field name="rka_kegiatan_id" />  
-										<field name="pagu"  readonly="1"/>   
-										<field name="spp_lalu" readonly="1"/>     
+										<field name="pagu" editable="0" />   
+										<field name="spp_lalu" />     
 										<field name="spp_ini" />
-										<field name="jumlah_spp" readonly="1"/>
-										<field name="sisa_dana"  readonly="1"/>      
+										<field name="jumlah_spp" />
+										<field name="sisa_dana" />      
 						            </tree>
 						        </field>
 						    </page>
@@ -111,5 +112,46 @@
                 </tree>    
             </field>
         </record>
+
+
+		<!-- SPP Line from -->
+        <record id="view_spp_line_form" model="ir.ui.view">
+            <field name="name">anggaran_spp_line_form</field>
+            <field name="model">anggaran.spp_line</field>
+            <field name="arch" type="xml">
+            	<form string="spp_line form" version="7.0">
+					<div class="oe_title">
+						<label for="name" class="oe_edit_only" 
+							 string="Kegiatan" />
+						<h1>
+							<field name='rka_kegiatan_id' domain="[('rka_id','=', parent.rka_id)]"/>
+						</h1>
+					</div>
+		            <group>
+						<field name='pagu' colspan="2"/>	
+						<field name='spp_lalu' />
+						<field name='spp_ini'/>
+						<field name='jumlah_spp'/>
+						<field name='sisa_dana'/>
+			        </group>
+		            <notebook>
+		            	<page string="Rincian MAK">
+				            <field name="spp_line_mak_ids">
+				            	<tree string="Rincian MAK" editable="bottom">
+									<field name='rka_coa_id' 
+										domain="[('rka_kegiatan_id','=',parent.rka_kegiatan_id)]"/>
+									<field name='pagu'/>
+									<field name='spp_lalu'/>
+									<field name='spp_ini'/>
+									<field name='jumlah_spp'/>
+									<field name='sisa_dana'/>		            	
+				            	</tree>
+			            	</field>
+			            </page>
+			        </notebook>
+			    </form>
+            </field>
+        </record>
+
 	</data>
 </openerp>

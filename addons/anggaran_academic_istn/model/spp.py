@@ -4,11 +4,12 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
+from openerp import api
+
 
 _logger = logging.getLogger(__name__)
 SPP_STATES =[('draft','Draft'),('open','Verifikasi'), ('reject','Ditolak'),
                  ('done','Disetujui')]
-
 
 class spp(osv.osv):
 	_name 		= 'anggaran.spp'
@@ -25,14 +26,16 @@ class spp(osv.osv):
 	_columns 	= {
 		'name' 				: fields.char('Nomor', required=True, readonly=True),
 		'tanggal' 			: fields.date('Tanggal', required=True),
+		'period_id'			: fields.many2one('account.period', _('Perioda')),
 		'tahun_id'		   	: fields.many2one('account.fiscalyear', 'Tahun', readonly=True),
 		'kepada'  			: fields.char('Kepada', required=True),
-		'dasar_rkat' 		: fields.char('Dasar RKAT Nomor/Tanggal', required=True),
+		'unit_id'  			: fields.many2one('anggaran.unit', 'Atas Nama', required=True),
+		'rka_id'	 		: fields.many2one('anggaran.rka', 'Dasar RKAT Nomor/Tanggal', required=True),
+		# 'dasar_rkat' 		: fields.char('Dasar RKAT Nomor/Tanggal', required=True),
 		'jumlah'  			: fields.float('Jumlah Pembayaran', required=True),
 		'keperluan' 		: fields.char('Untuk Keperluan', required=True),
 		'cara_bayar'        : fields.selection([('tup','TUP'),('gup','GUP'),('ls','Pembayaran LS')],
 								'Cara Bayar',required=True),
-		'unit_id'  			: fields.many2one('anggaran.unit', 'Atas Nama', required=True),
 		'alamat'   			: fields.text('Alamat'),
 		'nomor_rek' 		: fields.char('Nomor Rekening'),
 		'nama_bank' 		: fields.char('Nama Bank'),
@@ -51,7 +54,7 @@ class spp(osv.osv):
 		'spm_ids'			: fields.one2many('anggaran.spm','spp_id','SPM'),
 		'spm_exists'		: fields.function(_spm_exists, 
 			string='SPM Sudah Tercatat',  
-		    type='boolean', help="Apakah SPP ni sudah dicatatkan SPM-nya."),		
+		    type='boolean', help="Apakah SPP ini sudah dicatatkan SPM-nya."),		
 	}
 	_defaults = {
 		'state'       	: SPP_STATES[0][0],
@@ -146,14 +149,46 @@ class spp(osv.osv):
 class spp_line(osv.osv):
 	_name 		= "anggaran.spp_line"
 	_columns 	= {
-		'spp_id' 		: fields.many2one('anggaran.spp', 'SPP'),
-		'rka_kegiatan_id' : fields.many2one('anggaran.rka_kegiatan', 'Kegiatan Bersangkutan'),
-		'pagu' : fields.related('rka_kegiatan_id', 
-				'anggaran',
-				type="float", relation="anggaran.rka_kegiatan", 
-				string="PAGU", store=True),
-		'spp_lalu' : fields.float("SPP sd yg Lalu"),
-		'spp_ini'  : fields.float("SPP ini"),
-		'jumlah_spp' : fields.float("Jumlah SPP"),
-		'sisa_dana'  : fields.float("Sisa Dana"),
+		'spp_id' 				: fields.many2one('anggaran.spp', 'SPP'),
+		'rka_kegiatan_id'		: fields.many2one('anggaran.rka_kegiatan', 'Kegiatan Bersangkutan'),
+		'pagu'					: fields.float('PAGU'),
+		'spp_lalu' 				: fields.float("SPP sd yg Lalu"),
+		'spp_ini'  				: fields.float("SPP ini"),
+		'jumlah_spp' 			: fields.float("Jumlah SPP"),
+		'sisa_dana'  			: fields.float("Sisa Dana"),
+		'spp_line_mak_ids'		: fields.one2many('anggaran.spp_line_mak','spp_line_id','MAKs', ondelete="cascade")
 	}
+
+	@api.onchange('rka_kegiatan_id','spp_ini') 
+	def on_change_rka_kegiatan_id(self):
+		self.pagu = self.rka_kegiatan_id.anggaran
+		self.jumlah_spp = self.spp_lalu + self.spp_ini 
+		self.sisa_dana = self.pagu - self.jumlah_spp
+
+	@api.onchange('spp_line_mak_ids') 
+	def on_change_spp_line_mak_ids(self):
+		total_spp_ini = 0.0
+		for line in self.spp_line_mak_ids:
+			total_spp_ini = total_spp_ini + line.spp_ini
+
+		self.spp_ini = total_spp_ini
+
+
+class spp_line_mak(osv.osv):
+	_name 		= "anggaran.spp_line_mak"
+	_columns 	= {
+		'spp_line_id' 		: fields.many2one('anggaran.spp_line', 'SPP Line'),
+		'rka_coa_id'		: fields.many2one('anggaran.rka_coa', 'MAK'),
+		'pagu'				: fields.float('PAGU'),
+		'spp_lalu' 			: fields.float("SPP sd yg Lalu"),
+		'spp_ini'  			: fields.float("SPP ini"),
+		'jumlah_spp' 		: fields.float("Jumlah SPP"),
+		'sisa_dana'  		: fields.float("Sisa Dana"),
+	}
+
+	@api.onchange('rka_coa_id','spp_ini') 
+	def on_change_rka_coa_id(self):
+		self.pagu = self.rka_coa_id.total
+		self.jumlah_spp = self.spp_lalu + self.spp_ini 
+		self.sisa_dana = self.pagu - self.jumlah_spp
+
