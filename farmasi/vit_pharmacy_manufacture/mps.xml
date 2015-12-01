@@ -59,24 +59,20 @@
                                     <field name="shift" />
                                     
                                     <field name="w1" />
-                                    <field name="w1a" />
-
                                     <field name="w2" />
-                                    <field name="w2a" />
-
                                     <field name="w3" />
-                                    <field name="w3a" />
-
                                     <field name="w4" />
-                                    <field name="w4a" />
-
                                     <field name="w5" />
-                                    <field name="w5a" />
-
                                     <field name="total_plan"/>
+
+
+                                    <field name="w1a" />
+                                    <field name="w2a" />
+                                    <field name="w3a" />
+                                    <field name="w4a" />
+                                    <field name="w5a" />
                                     <field name="total_actual"/>
 
-                                    
                                     <field name="reminder"/>
                                     <field name="note"/>
                                     <field name="active_material_status" invisible="1"/>
@@ -104,22 +100,20 @@
                                     <field name="shift" />
                                     
                                     <field name="w1" />
-                                    <field name="w1a" />
-
                                     <field name="w2" />
-                                    <field name="w2a" />
-
                                     <field name="w3" />
-                                    <field name="w3a" />
-
                                     <field name="w4" />
-                                    <field name="w4a" />
-
                                     <field name="w5" />
-                                    <field name="w5a" />
-                                    
                                     <field name="total_plan"/>
+
+
+                                    <field name="w1a" />
+                                    <field name="w2a" />
+                                    <field name="w3a" />
+                                    <field name="w4a" />
+                                    <field name="w5a" />
                                     <field name="total_actual"/>
+
 
                                     <field name="reminder"/>
                                     <field name="note"/>
@@ -148,22 +142,20 @@
                                     <field name="shift" />
                                     
                                     <field name="w1" />
-                                    <field name="w1a" />
-
                                     <field name="w2" />
-                                    <field name="w2a" />
-
                                     <field name="w3" />
-                                    <field name="w3a" />
-
                                     <field name="w4" />
-                                    <field name="w4a" />
-
                                     <field name="w5" />
-                                    <field name="w5a" />
-                                    
                                     <field name="total_plan"/>
+
+
+                                    <field name="w1a" />
+                                    <field name="w2a" />
+                                    <field name="w3a" />
+                                    <field name="w4a" />
+                                    <field name="w5a" />
                                     <field name="total_actual"/>
+
 
                                     <field name="reminder"/>
                                     <field name="note"/>
@@ -191,22 +183,20 @@
                                     <field name="shift" />
                                     
                                     <field name="w1" />
-                                    <field name="w1a" />
-
                                     <field name="w2" />
-                                    <field name="w2a" />
-
                                     <field name="w3" />
-                                    <field name="w3a" />
-
                                     <field name="w4" />
-                                    <field name="w4a" />
-
                                     <field name="w5" />
-                                    <field name="w5a" />
-                                    
                                     <field name="total_plan"/>
+
+
+                                    <field name="w1a" />
+                                    <field name="w2a" />
+                                    <field name="w3a" />
+                                    <field name="w4a" />
+                                    <field name="w5a" />
                                     <field name="total_actual"/>
+
 
                                     <field name="reminder"/>
                                     <field name="note"/>
@@ -234,22 +224,20 @@
                                     <field name="shift" />
                                     
                                     <field name="w1" />
-                                    <field name="w1a" />
-
                                     <field name="w2" />
-                                    <field name="w2a" />
-
                                     <field name="w3" />
-                                    <field name="w3a" />
-
                                     <field name="w4" />
-                                    <field name="w4a" />
-
                                     <field name="w5" />
-                                    <field name="w5a" />
-                                    
                                     <field name="total_plan"/>
+
+
+                                    <field name="w1a" />
+                                    <field name="w2a" />
+                                    <field name="w3a" />
+                                    <field name="w4a" />
+                                    <field name="w5a" />
                                     <field name="total_actual"/>
+
 
                                     <field name="reminder"/>
                                     <field name="note"/>
@@ -278,23 +266,20 @@
                                     <field name="shift" />
                                     
                                     <field name="w1" />
-                                    <field name="w1a" />
-
                                     <field name="w2" />
-                                    <field name="w2a" />
-
                                     <field name="w3" />
-                                    <field name="w3a" />
-
                                     <field name="w4" />
-                                    <field name="w4a" />
-
                                     <field name="w5" />
-                                    <field name="w5a" />
-
-
                                     <field name="total_plan"/>
+
+
+                                    <field name="w1a" />
+                                    <field name="w2a" />
+                                    <field name="w3a" />
+                                    <field name="w4a" />
+                                    <field name="w5a" />
                                     <field name="total_actual"/>
+
 
                                     <field name="reminder"/>
                                     <field name="note"/>
