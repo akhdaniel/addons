@@ -56,6 +56,7 @@ class mrp_production_workcenter_line(osv.osv):
     } 
 
 
+
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
 

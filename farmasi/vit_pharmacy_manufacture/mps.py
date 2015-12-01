@@ -238,6 +238,7 @@ class mps(osv.osv):
 			if qty > 0 and qty > product.virtual_available :
 				pr_lines.append( (0,0,{
 					'product_id'    : product_id,
+					'name'		    : product.name,
 					'description'   : product.name,
 					'product_qty'   : qty - product.virtual_available,
 					'product_uom_id': product.uom_id.id,
