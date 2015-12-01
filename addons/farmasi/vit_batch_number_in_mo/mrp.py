@@ -41,17 +41,25 @@ class mrp_production(osv.osv):
 
     ########################### pembuatan char batch number ##############################
     def create_batch_number(self,cr,uid,production,context=None):
-        #Tahun
+
+        #Tahun 2015 => 15
         tahun_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[2]
         tahun_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[3]
         tahun_2_digit = tahun_digit1+tahun_digit2
+
         #Sediaan
         sediaan_code = '-'
         if production.product_id.categ_id.sediaan_id:                   
             sediaan_code =  production.product_id.categ_id.sediaan_id.code
-        #Bulan
-        bulan_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[5]
-        bulan_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[6]
+
+        #Bulan dec 12, jan 01
+        # bulan_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[5]
+        # bulan_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[6]
+
+
+        bulan_digit1 = production.date_planned [5]
+        bulan_digit2 = production.date_planned [6]
+
         bulan_2_digit = bulan_digit1+bulan_digit2  
         if bulan_2_digit == '01':
             bulan_huruf = 'A'              
