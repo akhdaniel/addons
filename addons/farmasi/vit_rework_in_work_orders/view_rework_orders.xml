@@ -15,7 +15,10 @@
             <field name="name">mrp.production.workcenter.line</field>
             <field name="model">mrp.production.workcenter.line</field>
             <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
-            <field name="arch" type="xml">            
+            <field name="arch" type="xml">
+                <button name="button_cancel" position="after">
+                    <button name="action_reprocess" string="Reprocess" states="done" />
+                </button>            
             	<page string="Information" position="after">
                     <field name="is_origin" invisible="1"/>
                     <page string="Reprocess">

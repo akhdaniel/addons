@@ -131,7 +131,11 @@ class product_request_line(osv.osv):
 		'product_id' 		: fields.many2one('product.product', 'Product'),
 		'name'				: fields.char("Description"),
 		'product_qty' 		: fields.float('Quantity'),
-		'product_qty_avail' : fields.float('Quantity Available' ),
+		'product_qty_avail' : fields.related('product_id', 'virtual_available' , 
+			type="float", relation="product.product", string="Quantity Available", 
+			store=False),
+
+		# 'product_qty_avail' : fields.float('Quantity Available' ),
 		# 'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM', readonly=True),
 		'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM' ),
 		'date_required'  	: fields.date('Required Date'),
@@ -148,8 +152,9 @@ class product_request_line(osv.osv):
 		product = product_product.browse(cr, uid, product_id, context=context)
 		product_uom_po_id = product.uom_po_id.id
 		res['value'].update({'product_uom_id': product_uom_po_id, 
-			'name': product.name, 
-			'product_qty_avail': product.virtual_available})
+			'name': product.name ,
+			'product_qty_avail': product.virtual_available
+			})
 		return res 
 
 	
