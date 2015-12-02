@@ -27,45 +27,47 @@
                         <button name="action_confirm" type="object" states="draft" string="Confirm" class="oe_highlight"/>
                         <!-- <button name="action_create_wps"  type="object" states="done" string="Create WPS" class="oe_highlight"/> -->
                     </header>
-                        <group col='3'>
-                            <group>
-                                <field name="name"/>
-                                <field name="mps_id"/>
-                                <field name="product_id"/>
-                                <field name="categ_id"/> 
-                            </group>
-                            <group> 
-                                <field name="week_on_month"/>
-                                <field name="week_on_year"/>
-                                <field name="batch"/> 
-                                <field name="start_date"/>
-                                <field name="end_date"/>      
-                            </group>
-                            <group>
-                                <field name="year"/>
-                                <field name="create_uid"/>
-                                <field name="created_date"/> 
-                            </group>
+                    <group col='3'>
+                        <group>
+                            <field name="name"/>
+                            <field name="mps_id"/>
+                            <field name="product_id"/>
+                            <field name="categ_id"/> 
                         </group>
-                        <notebook>
-                            <page string="Details">
-                                <field name="mrp_detail_ids" nolabel="1" options="{'reload_on_button': true}">
-                                        <tree string="MO">
-                                            <field name="name"/>
-                                            <field name="bom_id"/>
-                                            <field name="routing_id"/>
-                                            <field name="state"/>
-                                        </tree>
-                                    </field>
+                        <group> 
+                            <field name="week_on_month"/>
+                            <field name="week_on_year"/>
+                            <field name="batch"/> 
+                            <field name="start_date"/>
+                            <field name="end_date"/>      
+                        </group>
+                        <group>
+                            <field name="year"/>
+                            <field name="create_uid"/>
+                            <field name="created_date"/> 
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="mrp_detail_ids" nolabel="1" 
+                                options="{'reload_on_button': true}">
+                                <tree string="MO">
+                                    <field name="batch_number"/>
+                                    <field name="bom_id"/>
+                                    <field name="routing_id"/>
+                                    <field name="state"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
 
 
-                                <!-- <field name="mrp_detail_ids" options="{'reload_on_button': true}" view_mode="tree"  widget="one2many_list">
-                                    <tree string="Details" editable="bottom">
-                                        <field name="mrp_id"/> 
-                                    </tree>
-                                </field> -->
-                            </page>
-                        </notebook>
+                            <!-- <field name="mrp_detail_ids" options="{'reload_on_button': true}" view_mode="tree"  widget="one2many_list">
+                                <tree string="Details" editable="bottom">
+                                    <field name="mrp_id"/> 
+                                </tree>
+                            </field> -->
+                        </page>
+                    </notebook>
                 </form>                         
             </field>
         </record>

@@ -68,13 +68,7 @@ class mrp_detail(osv.osv):
     _columns = {
         'mrp_detail_id' : fields.many2one('vit_pharmacy_manufacture.mrp', 'MRP Reference',required=True, ondelete='cascade', select=True),
         'mrp_id': fields.many2one('mrp.production', 'Manufacture Order', required=True),
-        # 'production_order' : fields.float('Production Order'), 
-        # 'product_uom': fields.many2one('product.uom', 'Uom'),
-        # 'w1': fields.float('W1'),
-        # 'w2': fields.float('W2'),
-        # 'w3': fields.float('W3'),
-        # 'w4': fields.float('W4'),
-        # 'note'  : fields.char("Note"),
+
     }
 
 

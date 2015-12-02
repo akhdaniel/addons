@@ -47,7 +47,7 @@
                         <page string="Syrup">
                             <field name="mps_detail_ids2"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;yellow:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -324,6 +324,7 @@
         </record>
 
         <menuitem id="menu_conf4" parent="menu_conf" name="Master Production Schedule" sequence="32" action="field_mps" />
+
     </data>
 </openerp>
 

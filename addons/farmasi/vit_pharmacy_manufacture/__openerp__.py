@@ -8,7 +8,7 @@
         
        """,
     'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
-    'depends': ['mrp'],
+    'depends': ['mrp','vit_batch_number_in_mo'],
     'data': [
         'forecast_product.xml',
         'mps.xml',
