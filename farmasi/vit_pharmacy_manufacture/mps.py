@@ -121,7 +121,7 @@ class mps(osv.osv):
 				start_date  = self.get_start_date(cr, uid, ids, wy)
 				end_date  = self.get_end_date(cr, uid, ids, wy)
 				wps_obj = self.pool.get('vit_pharmacy_manufacture.wps').create(cr,uid,{
-					'name' : 'WPS'+'/'+str(wm)+'/'+ m +'/'+ str(year),
+					'name' : 'WPS'+'/'+str(wm)+'/'+ m +'/'+ str(year) + '/' + details_product.product_id.name,
 					'mps_id' : mps.id,
 					'week_on_month' : wm,
 					'week_on_year' : wy,
@@ -364,62 +364,81 @@ class mps(osv.osv):
 		self.pool.get('vit_pharmacy_manufacture.wps').write(cr,uid,wps_obj,datas)
 
 
+	def check_available(self,cr,uid, qty,header_component_product_id, bom, component_type ,context=None):
+		product_obj = self.pool.get('product.product')
+		bom_line_obj = self.pool.get('mrp.bom.line')
+
+		header_component_product    = product_obj.browse(cr, uid, header_component_product_id, context=context)
+
+		bom_line_id = bom_line_obj.search(cr, uid, [('bom_id','=',bom.id),('product_id','=',header_component_product_id)], context=context)
+		bom_line 	= bom_line_obj.browse(cr, uid, bom_line_id[0], context=context)
+
+		component_product_ids = product_obj.search(cr, uid, 
+			[('default_code','ilike',header_component_product.default_code),
+			('is_header','=',False)], 
+			context=context)
+
+		total_available = 0.0
+		for component_product in product_obj.browse(cr, uid, component_product_ids, context=context):
+			if bom_line.component_type == component_type:
+				print "********* %s total_available " % (component_type)
+				print "[%s]%s" % (header_component_product.code, header_component_product.name)
+				print "      [%s]%s %s %s" % (component_product.code,component_product.name , component_product.virtual_available,qty)
+				total_available = total_available + component_product.qty_available #onhand
+
+		print total_available
+
+		if qty > 0 and total_available > qty:
+			actives_avail = True 
+		else:
+			actives_avail = False 
+
+		return actives_avail
+
 	def check_material_available(self, cr, uid, detail, context=None):
 
 		# cari info bahan mentah tersedia?
 		products = {}
 		actives_avail = False # bahan awal aktif
-		helpers_avail = False # bahn awal pembantu
-		packages_avail = False  # bahan pengemas
+		kemas_primer_avail = False # bahn awal pembantu
+		kemas_sekunder_avail = False  # bahan pengemas
 
 		product_id = detail.product_id.id 
-		qty = products.get(product_id, 0 )
+		# qty = products.get(product_id, 0 )
 
 
 		# cari bahan baku produk2 tersebut
 		bom_obj     = self.pool.get('mrp.bom')
+		bom_line_obj     = self.pool.get('mrp.bom.line')
 		product_obj = self.pool.get('product.product')
 
 		product 	= product_obj.browse(cr, uid, product_id, context=context)
 		bom_id 		= bom_obj._bom_find(cr, uid, product_id, [], context=context)
 		bom 		= bom_obj.browse(cr, uid, bom_id, context=context)
-		
-		factor      = qty
+		factor 		= detail.production_order
 
+		# bom breakdown sesuai order qty finish good
+		# return daftar komponen berikut qty 
 		bom_lines, work_centers = bom_obj._bom_explode(cr, uid, bom, product, factor, [], context=context)
 
+		print bom_lines
 
 		for line in bom_lines:
-			component_product_id = line.get('product_id',0)
-			component_product    = product_obj.browse(cr, uid, component_product_id, context=context)
-			if component_product.categ_id.name == 'Bahan Awal Aktif' :
-				if qty > 0 and component_product.virtual_available > qty:
-					actives_avail = True 
-				else:
-					actives_avail = False 
-					break
 
-		for line in bom_lines:
-			component_product_id = line.get('product_id',0)
-			component_product    = product_obj.browse(cr, uid, component_product_id, context=context)
-			if component_product.categ_id.name == 'Bahan Awal Pembantu' :
-				if qty > 0 and component_product.virtual_available > qty:
-					helpers_avail = True 
-				else:
-					helpers_avail = False 
-					break
+			qty = line.get('product_qty',0.0)
 
-		for line in bom_lines:
-			component_product_id = line.get('product_id',0)
-			component_product    = product_obj.browse(cr, uid, component_product_id, context=context)
-			if component_product.categ_id.name == 'Bahan Pengemas' :
-				if qty > 0 and component_product.virtual_available > qty:
-					packages_avail = True 
-				else:
-					packages_avail = False 
-					break
+			header_component_product_id = line.get('product_id',0)
 
-		return actives_avail, helpers_avail, packages_avail
+			actives_avail = self.check_available(cr,uid, qty, header_component_product_id,bom, 'raw_material' ,context=context)
+			print ">>> actives_avail=%s" % (actives_avail)
+
+			kemas_primer_avail = self.check_available(cr,uid, qty, header_component_product_id, bom,'kemas_primer' ,context=context)
+			print ">>> kemas_primer=%s" % (kemas_primer_avail)
+
+			kemas_sekunder_avail = self.check_available(cr,uid, qty, header_component_product_id, bom,'kemas_sekunder' ,context=context)
+			print ">>> kemas_sekunder=%s" % (kemas_sekunder_avail)
+
+		return actives_avail, kemas_primer_avail, kemas_sekunder_avail
 
 	def action_recalculate(self, cr, uid, ids, context=None):
 
@@ -583,12 +602,12 @@ class mps(osv.osv):
 				break 
 
 
-		active_material_status,helper_material_status,packaging_material_status = self.check_material_available(cr, uid, detail, context=context)
+		active_material_status,kemas_primer,kemas_sekunder = self.check_material_available(cr, uid, detail, context=context)
 
 		data = {
 			'active_material_status'    : active_material_status,
-			'helper_material_status'    : helper_material_status,
-			'packaging_material_status' : packaging_material_status,
+			'helper_material_status'    : kemas_primer,
+			'packaging_material_status' : kemas_sekunder,
 			'max_batch_per_shift'       : max_batch_per_shift,
 			'shift': shift,
 			'w1': w1,
