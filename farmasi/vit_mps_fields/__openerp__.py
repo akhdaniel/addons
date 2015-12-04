@@ -13,6 +13,8 @@
     'depends': ['base','mrp'],
     'data': [
         'bom.xml',
+        'product.xml',
+        'quant.xml',
     ],
     'demo': [
     ],

@@ -47,7 +47,7 @@
                         <page string="Syrup">
                             <field name="mps_detail_ids2"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;blue:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -75,9 +75,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status" invisible="1"/>
-                                    <field name="helper_material_status" invisible="1"/>
-                                    <field name="packaging_material_status" invisible="1"/>
+                                    <field name="active_material_status"/>
+                                    <field name="helper_material_status"/>
+                                    <field name="packaging_material_status" />
 
                                 </tree>
                             </field>
@@ -88,7 +88,7 @@
                         <page string="Soft Capsule">
                             <field name="mps_detail_ids4"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -117,9 +117,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status" invisible="1"/>
-                                    <field name="helper_material_status" invisible="1"/>
-                                    <field name="packaging_material_status" invisible="1"/>
+                                    <field name="active_material_status"/>
+                                    <field name="helper_material_status"/>
+                                    <field name="packaging_material_status" />
                                 </tree>
                             </field>
                         </page>
@@ -130,7 +130,7 @@
                         <page string="Injeksi">
                             <field name="mps_detail_ids6"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -159,9 +159,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status" invisible="1"/>
-                                    <field name="helper_material_status" invisible="1"/>
-                                    <field name="packaging_material_status" invisible="1"/>
+                                    <field name="active_material_status"/>
+                                    <field name="helper_material_status"/>
+                                    <field name="packaging_material_status" />
                                 </tree>
                             </field>
                         </page>
@@ -171,7 +171,7 @@
                         <page string="Larutan">
                             <field name="mps_detail_ids5"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -200,9 +200,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status" invisible="1"/>
-                                    <field name="helper_material_status" invisible="1"/>
-                                    <field name="packaging_material_status" invisible="1"/>
+                                    <field name="active_material_status"/>
+                                    <field name="helper_material_status"/>
+                                    <field name="packaging_material_status" />
                                 </tree>
                             </field>
                         </page>
@@ -212,7 +212,7 @@
                         <page string="Kapsul">
                             <field name="mps_detail_ids3"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -241,9 +241,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status" invisible="1"/>
-                                    <field name="helper_material_status" invisible="1"/>
-                                    <field name="packaging_material_status" invisible="1"/>
+                                    <field name="active_material_status"/>
+                                    <field name="helper_material_status"/>
+                                    <field name="packaging_material_status" />
                                 </tree>
                             </field>
                         </page>
@@ -253,7 +253,7 @@
                         <page string="Betalaktam">
                             <field name="mps_detail_ids1"  view_mode="tree" widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
-                                    colors="red:active_material_status==False;orange:helper_material_status==False;yellow:packaging_material_status==False)">
+                                    colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
                                     <field name="sediaan_id" />
                                     <field name="product_uom" />
@@ -283,9 +283,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status" invisible="1"/>
-                                    <field name="helper_material_status" invisible="1"/>
-                                    <field name="packaging_material_status" invisible="1"/>
+                                    <field name="active_material_status"/>
+                                    <field name="helper_material_status"/>
+                                    <field name="packaging_material_status" />
                                 </tree>
                             </field>
                         </page>
