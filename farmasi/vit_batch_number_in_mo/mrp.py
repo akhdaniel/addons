@@ -208,6 +208,7 @@ class mrp_production(osv.osv):
             # kalau bahan kemas , tdk punya lot ids, tapi per ex ada stocknya
             # jadi stok per ex dianggap sebagai lots 
             if not lot_ids:
+                print "   no lot, cek bahan kemas, asume lot"
 
             
             # jika di temukan   ada lot   
