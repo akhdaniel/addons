@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="report_product_request_menu"
+            string="Product Request"
+            model="vit.product.request" 
+            report_type="qweb-pdf"
+            file="vit_product_request.product_request" 
+            name="vit_product_request.product_request_report" 
+        />
+
+        <template id="report_product_request_document">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    
+                    <h2>
+                        SPP
+                        <br/>Nomor: <span t-field="o.name"/>
+                    </h2>
+
+                    <table>
+                        <tr>
+                            <td>Request Date</td><td><span t-field="o.date"/></td>
+                            <td>Product Category</td><td><span t-field="o.category_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>Requester</td><td><span t-field="o.user_id.name"/></td>
+                            <td>Departmebt</td><td><span t-field="o.department_id.name"/></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th class="text-right">Quantity</th>
+                                <th class="text-right">UoM</th>
+                                <th class="text-right">Date Required</th>
+                                <th class="text-right">Call for Bids</th>
+                                <th class="text-right">Status</th>
+                            </tr>
+                       </thead>
+
+                       <tbody class="vit_product_request_tbody">
+                            <tr t-foreach="o.product_request_line_ids" t-as="l">
+                                <td>
+                                   <span t-field="l.product_id.name"/>
+                                </td>
+         
+                                <td>
+                                   <span t-field="l.name"/>
+                                </td>
+         
+                                <td class="text-right">
+                                    <span t-field="l.product_qty" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.product_uom_id.name" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.date_required" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.purchase_requisition_id.name" />
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.state" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+        <template id="product_request_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'user_id.lang', 'vit_product_request.report_product_request_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

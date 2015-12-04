@@ -18,6 +18,9 @@
 						<button string="Reject" type="object" name="action_reject"
 						 	states="open" />
 
+						<button string="Create Bid" type="object" name="action_create_pr"
+						 	states="open" groups="purchase.group_purchase_manager"/>
+
             			<field name="state" widget="statusbar" />
 
             		</header>
