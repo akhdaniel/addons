@@ -34,7 +34,8 @@ class product_request(osv.osv):
 		for pr in self.browse(cr, uid, ids, context=context):
 			product_names = []
 			for line in pr.product_request_line_ids:
-				product_names.append(line.product_id.name)
+				if line.product_id.name:
+					product_names.append(line.product_id.name)
 			results[pr.id] = ",".join(product_names)
 		return results	
 
@@ -128,16 +129,16 @@ class product_request_line(osv.osv):
 	_name 		= "vit.product.request.line"
 	_columns 	= {
 		'product_request_id': fields.many2one('vit.product.request', 'Product Request'),
-		'product_id' 		: fields.many2one('product.product', 'Product'),
-		'name'				: fields.char("Description"),
-		'product_qty' 		: fields.float('Quantity'),
+		'product_id' 		: fields.many2one('product.product', 'Product', required=True),
+		'name'				: fields.char("Description", required=True),
+		'product_qty' 		: fields.float('Quantity', required=True),
 		'product_qty_avail' : fields.related('product_id', 'virtual_available' , 
 			type="float", relation="product.product", string="Quantity Available", 
 			store=False),
 
 		# 'product_qty_avail' : fields.float('Quantity Available' ),
 		# 'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM', readonly=True),
-		'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM' ),
+		'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM' , required=True),
 		'date_required'  	: fields.date('Required Date'),
 		'state' 			: fields.selection(PR_LINE_STATES,'Status',readonly=True,required=True),
 		'purchase_requisition_id' : fields.many2one('purchase.requisition', 'Call for Bid',readonly=True),

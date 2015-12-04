@@ -32,7 +32,7 @@ class purchase_requisition(osv.osv):
 		for pr in self.browse(cr, uid, ids, context=context):
 			product_names = []
 			for line in pr.line_ids:
-				product_names.append( "%s/%s" % (line.product_id.name , line.description))
+				product_names.append( "%s/%s" % (line.product_id.name , line.description) )
 			results[pr.id] = ",".join(product_names)
 		return results	
 
