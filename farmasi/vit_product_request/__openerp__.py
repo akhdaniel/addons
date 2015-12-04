@@ -3,7 +3,7 @@
     'version' : '0.1',
     'category': 'Purchase Management',
     'images' : [],
-    'depends' : ['stock', 'purchase_requisition','hr'],
+    'depends' : ['stock', 'purchase_requisition','hr', 'purchase'],
     'author' : 'vitraining.com',
     'description': """
 Purchase Request
@@ -20,7 +20,8 @@ Purchase Request
         'product_request.xml',
         'sequence.xml',
         'pr.xml',
-        'security/ir.model.access.csv'
+        'security/ir.model.access.csv',
+        'reports/product_request.xml',
     ],
     'test': [
     ],

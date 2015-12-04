@@ -21,6 +21,9 @@
             <field name="context">{"search_default_open":1, "search_default_group_by_product":1}</field>
 	    </record>
 
+
+	    <!-- yang di bawah menu product request -->
+
 		<menuitem 
 		    id="menu_request_root"
 		    sequence="10"
@@ -46,19 +49,31 @@
 	        parent="menu_request_sub"
 	        action="action_product_request_line"/>		
 
-<!-- 	    <menuitem
-	        id="menu_pr_line_mgt"
-	        sequence="20"
-		    name="Requisition Lines"
-            groups="purchase_requisition.group_purchase_requisition_manager"
-	        parent="menu_pr_sub"
-	        action="action_pr_line"/>	
+
+
+	    <!-- yang di bawah menu root purchase -->
+
+		<menuitem 
+		    id="menu_request_sub"
+		    sequence="2"
+		    parent="base.menu_purchase_root"
+		    name="Product Request"
+			/>
 
 	    <menuitem
-	        id="menu_po_line_mgt"
+	        id="menu_product_request"
+	        sequence="10"
+		    name="Product Request"
+	        parent="menu_request_sub"
+	        action="action_product_request"/>		
+	    <menuitem
+	        id="menu_product_request_line"
 	        sequence="20"
-		    name="Order Lines"
-	        parent="menu_pr_sub"
-	        action="action_po_line"/> -->
+		    name="Product Request Line"
+	        parent="menu_request_sub"
+	        action="action_product_request_line"/>		
+
+
+
 	</data>
 </openerp>

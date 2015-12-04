@@ -58,7 +58,8 @@ class product_request(osv.osv):
 			states={'draft':[('readonly',False)]},
 			),
 
-		'product_request_lines': fields.function(_product_request_lines, type='char', string="Product Request Lines"),
+		'product_request_lines': fields.function(_product_request_lines, type='char', 
+			string="Product Request Lines"),
 
 		'department_id' : fields.many2one('hr.department', 'Department',
 			required=True, 
@@ -125,20 +126,51 @@ class product_request(osv.osv):
 				line_obj.write(cr, uid, line.id, {'state':state}, context=context)
 
 
+	# create pr sekaligus dari product request
+	def action_create_pr(self, cr, uid, ids, context=None):
+		purchase_requisition  		= self.pool.get('purchase.requisition')
+		purchase_requisition_line  	= self.pool.get('purchase.requisition.line')
+
+		for prd_req in self.browse(cr, uid, ids, context=context):
+			pr_line_ids = []
+			for lines in prd_req.product_request_line_ids:
+				pr_line_ids.append( (0,0,{
+					'product_id'	: lines.product_id.id,
+					'description'	: lines.name,
+					'product_qty'	: lines.product_qty,
+					'product_uom_id': lines.product_uom_id.id,
+					'schedule_date'	: lines.date_required,
+				}) )
+
+			pr_id = purchase_requisition.create(cr, uid, {
+				'name'			: self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.requisition'),
+				'exclusive'		: 'exclusive',
+				'warehouse_id'  : 2 ,
+				'line_ids' 		: pr_line_ids,
+				'origin'  		: prd_req.name
+			})
+			#update state dan pr_id di line product request asli
+			cr.execute("update vit_product_request_line set state=%s, purchase_requisition_id=%s where product_request_id = %s",
+			 ( 'onprogress', pr_id,  prd_req.id  ))
+
+			self.write(cr, uid, prd_req.id, {'state':'onprogress'}, context=context)
+
+			return pr_id			
+
 class product_request_line(osv.osv):
 	_name 		= "vit.product.request.line"
 	_columns 	= {
 		'product_request_id': fields.many2one('vit.product.request', 'Product Request'),
-		'product_id' 		: fields.many2one('product.product', 'Product', required=True),
-		'name'				: fields.char("Description", required=True),
-		'product_qty' 		: fields.float('Quantity', required=True),
+		'product_id' 		: fields.many2one('product.product', 'Product'),
+		'name'				: fields.char("Description"),
+		'product_qty' 		: fields.float('Quantity'),
 		'product_qty_avail' : fields.related('product_id', 'virtual_available' , 
 			type="float", relation="product.product", string="Quantity Available", 
 			store=False),
 
 		# 'product_qty_avail' : fields.float('Quantity Available' ),
 		# 'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM', readonly=True),
-		'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM' , required=True),
+		'product_uom_id' 	: fields.many2one('product.uom', 'Product UOM' ),
 		'date_required'  	: fields.date('Required Date'),
 		'state' 			: fields.selection(PR_LINE_STATES,'Status',readonly=True,required=True),
 		'purchase_requisition_id' : fields.many2one('purchase.requisition', 'Call for Bid',readonly=True),
