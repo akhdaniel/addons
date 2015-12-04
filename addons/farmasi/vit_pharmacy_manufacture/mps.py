@@ -370,8 +370,8 @@ class mps(osv.osv):
 
 		header_component_product    = product_obj.browse(cr, uid, header_component_product_id, context=context)
 
-		bom_line_id = bom_line_obj.search(cr, uid, [('bom_id','=',bom.id),('product_id','=',header_component_product_id)], context=context)
-		bom_line 	= bom_line_obj.browse(cr, uid, bom_line_id[0], context=context)
+		print "    Header name " + header_component_product.name 
+
 
 		component_product_ids = product_obj.search(cr, uid, 
 			[('default_code','ilike',header_component_product.default_code),
@@ -380,13 +380,11 @@ class mps(osv.osv):
 
 		total_available = 0.0
 		for component_product in product_obj.browse(cr, uid, component_product_ids, context=context):
-			if bom_line.component_type == component_type:
-				print "********* %s total_available " % (component_type)
-				print "[%s]%s" % (header_component_product.code, header_component_product.name)
-				print "      [%s]%s %s %s" % (component_product.code,component_product.name , component_product.virtual_available,qty)
-				total_available = total_available + component_product.qty_available #onhand
+			print "    [%s]%s" % (header_component_product.code, header_component_product.name)
+			print "        [%s]%s avail=%s qty=%s" % (component_product.code,component_product.name , component_product.virtual_available,qty)
+			total_available = total_available + component_product.qty_available #onhand
 
-		print total_available
+		print "    total available %s = %s" % (component_type, total_available)
 
 		if qty > 0 and total_available > qty:
 			actives_avail = True 
@@ -409,7 +407,7 @@ class mps(osv.osv):
 
 		# cari bahan baku produk2 tersebut
 		bom_obj     = self.pool.get('mrp.bom')
-		bom_line_obj     = self.pool.get('mrp.bom.line')
+		bom_line_obj  = self.pool.get('mrp.bom.line')
 		product_obj = self.pool.get('product.product')
 
 		product 	= product_obj.browse(cr, uid, product_id, context=context)
@@ -417,10 +415,14 @@ class mps(osv.osv):
 		bom 		= bom_obj.browse(cr, uid, bom_id, context=context)
 		factor 		= detail.production_order
 
+
+		print "\nProduct Jadi ----------------- [" + product.name + "] -----------------------"
+
 		# bom breakdown sesuai order qty finish good
 		# return daftar komponen berikut qty 
 		bom_lines, work_centers = bom_obj._bom_explode(cr, uid, bom, product, factor, [], context=context)
 
+		print "    BOM Lines"
 		print bom_lines
 
 		for line in bom_lines:
@@ -428,15 +430,20 @@ class mps(osv.osv):
 			qty = line.get('product_qty',0.0)
 
 			header_component_product_id = line.get('product_id',0)
+			bom_line_id = bom_line_obj.search(cr, uid, [('bom_id','=',bom.id),('product_id','=',header_component_product_id)], context=context)
+			bom_line 	= bom_line_obj.browse(cr, uid, bom_line_id[0], context=context)
 
-			actives_avail = self.check_available(cr,uid, qty, header_component_product_id,bom, 'raw_material' ,context=context)
-			print ">>> actives_avail=%s" % (actives_avail)
+			if bom_line.component_type == 'raw_material':
+				actives_avail = self.check_available(cr,uid, qty, header_component_product_id, bom, 'raw_material' ,context=context)
+				print "        >>> actives_avail=%s" % (actives_avail)
 
-			kemas_primer_avail = self.check_available(cr,uid, qty, header_component_product_id, bom,'kemas_primer' ,context=context)
-			print ">>> kemas_primer=%s" % (kemas_primer_avail)
+			if bom_line.component_type == 'kemas_primer':
+				kemas_primer_avail = self.check_available(cr,uid, qty, header_component_product_id, bom,'kemas_primer' ,context=context)
+				print "        >>> kemas_primer=%s" % (kemas_primer_avail)
 
-			kemas_sekunder_avail = self.check_available(cr,uid, qty, header_component_product_id, bom,'kemas_sekunder' ,context=context)
-			print ">>> kemas_sekunder=%s" % (kemas_sekunder_avail)
+			if bom_line.component_type == 'kemas_sekunder':
+				kemas_sekunder_avail = self.check_available(cr,uid, qty, header_component_product_id, bom,'kemas_sekunder' ,context=context)
+				print "        >>> kemas_sekunder=%s" % (kemas_sekunder_avail)
 
 		return actives_avail, kemas_primer_avail, kemas_sekunder_avail
 

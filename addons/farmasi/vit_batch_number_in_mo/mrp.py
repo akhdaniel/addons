@@ -164,6 +164,9 @@ class mrp_production(osv.osv):
         stock_move = self.pool.get('stock.move')
         loc_obj = self.pool.get('stock.location')
         product_obj = self.pool.get('product.product')
+        uom_obj = self.pool.get('product.uom')
+
+        uom = uom_obj.browse(cr, uid, uom_id, context=context)
 
         # Internal shipment is created for Stockable and Consumer Products
         if product.type not in ('product', 'consu'):
@@ -191,23 +194,25 @@ class mrp_production(osv.osv):
             [('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
         print("product_ref",product_ref, "same_product",same_product)
 
-        if same_product :
-            
+        if same_product:
             #- cek satu per satu di serial number yang produk_id nya sama, 
             #   ambil yang ED nya paling dekat expired           
             # produk aslinya yg is_header dihapus dari daftar
 
-            # cr.execute("SELECT id,product_id FROM stock_production_lot \
-            #             WHERE product_id IN %s AND alert_date IS NOT NULL \
-            #             ORDER BY alert_date ASC" , (tuple(same_product),))  
             cr.execute("SELECT id,product_id FROM stock_production_lot \
                         WHERE product_id IN %s AND life_date IS NOT NULL \
                         ORDER BY life_date ASC" , (tuple(same_product),))  
             lot_ids    = cr.fetchall()
+
+
+            # kalau bahan kemas , tdk punya lot ids, tapi per ex ada stocknya
+            # jadi stok per ex dianggap sebagai lots 
+            if not lot_ids:
+
             
             # jika di temukan   ada lot   
             print "lot_ids",lot_ids
-            # import pdb; pdb.set_trace()     
+            print "bom line uom_id",uom.name 
             
             total_lot_qty = 0.00
 
@@ -216,17 +221,21 @@ class mrp_production(osv.osv):
                 for lot in lot_ids:
 
                     # cari dulu apa sudah ada stock move dengan lot_id yang ini
-                    cr.execute('SELECT id FROM stock_move WHERE restrict_lot_id = %s AND product_id = %s and raw_material_production_id = %s',(lot[0], lot[1], production.id))
+                    sql = 'SELECT id FROM stock_move WHERE restrict_lot_id = %s AND product_id = %s and raw_material_production_id = %s' % (lot[0], lot[1], production.id)
+                    print sql 
+                    cr.execute(sql)
                     ada = cr.fetchone()
                     if ada:
-                        print "lot sudah ada di move line MO", ada
+                        print "lot sudah ada di move line MO " , ada
                         continue
 
-                    #cari apakah ada stock barang dengan lot tsb
+                    #cari apakah ada stock barang dengan lot tsb pada suatu location
                     #cari di quant qty product sesuai dengan id lot
-                    cr.execute ('SELECT sum(qty) FROM stock_quant WHERE location_id = %s AND lot_id = %s',(source_location_id,lot[0]))
+                    sql  = 'SELECT sum(qty) FROM stock_quant WHERE location_id = %s AND lot_id = %s' % (source_location_id,lot[0])
+                    cr.execute (sql)
+                    print sql 
                     hasil   = cr.fetchone()
-                    print "hasil",hasil
+                    print "hasil, yang ada di gudang: ",hasil
                     if hasil:
                         if hasil[0] != None : # ada stock lot 
                             create_is_header_move = False 
@@ -234,6 +243,16 @@ class mrp_production(osv.osv):
                             hasil = hasil[0]
                             actual_product = product_obj.browse(cr, uid, lot[1], context=context)
                             print("actual_product", actual_product.code)
+                            print "actual_product wh uom ", actual_product.uom_id.name 
+
+
+
+                            #konversi uom supaya sama dengan uom bom
+                            # misal : actual_produk Kg, bom g 
+                            if actual_product.uom_id.id != uom.id:
+                                hasil *= uom.factor / actual_product.uom_id.factor 
+                                print("converted hasil ", hasil)
+
 
                             # stock lebih banyak daripada yang diperlukan di BOM
                             if hasil >= qty_bom :           
@@ -274,29 +293,26 @@ class mrp_production(osv.osv):
                 if qty_bom != 0.00 and total_lot_qty != 0.00:
                     lot_id = False
                     move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
-                            production, product, uom_id, qty_bom, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
+                            production, product, 
+                            uom_id, qty_bom, 
+                            uos_id, uos_qty, 
+                            lot_id, 
+                            qty_available, 
+                            source_location_id, destination_location_id, prev_move, context=context)  
                     move_ids.append(move_id)
 
                 if qty_bom == 0.00:
                     cr.execute("update mrp_production_product_line set state='%s' where id=%s" % ("done", line_id))
 
 
-            # jika tidak lot_ids, maka create move seadanya(tanpa lot, dan qty available=0)      
-            # ==> tdk perlu lagi krn bukan di action_confirm 
-            # else: 
-            #     lot_id = False 
-                # move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, production, product, uom_id, 
-                #     qty, uos_id, uos_qty, lot_id, qty_available, source_location_id, destination_location_id, prev_move, context=context)  
-                # move_ids.append(move_id)
-
-
-        # import pdb; pdb.set_trace()     
         self.pool.get('stock.move').action_confirm(cr, uid, move_ids, context=context)
 
         if prev_move:
             # karena array, maka harus di looping
             for mv in move_ids:
-                prev_move = self._create_previous_move(cr, uid, mv, product, prod_location_id, source_location_id, context=context)
+                prev_move = self._create_previous_move(cr, uid, mv, product, 
+                    prod_location_id, source_location_id, 
+                    context=context)
                 stock_move.action_confirm(cr, uid, [prev_move], context=context)
         return move_ids
 
