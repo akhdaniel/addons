@@ -20,7 +20,7 @@
                         <br/>Nomor: <span t-field="o.name"/>
                     </h2>
 
-                    <table>
+                    <table width="100%">
                         <tr>
                             <td>Request Date</td><td><span t-field="o.date"/></td>
                             <td>Product Category</td><td><span t-field="o.category_id.name"/></td>
