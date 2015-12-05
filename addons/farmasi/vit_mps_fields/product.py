@@ -26,24 +26,23 @@ class product_template(osv.osv):
             context=context)[0]
 
         for product in self.browse(cr, uid, ids, context=context):
+            total_qty = 0.00
 
             results[product.id] = 0.0
 
             #ambil 6 digit pertama, search dulu product yang sama
             product_ref = product.default_code[:6]
-            lot_id = False
-            qty_available = 0
 
             # cari detail produk yang is_header = false dan kode produknya 6 digit pertama sama
             same_product = self.pool.get('product.product').search(cr,uid,
                 [('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
 
-            print("product_ref",product_ref, "same_product",same_product)
-
-            total_qty = 0.00
+            # print("product_ref",product_ref, "same_product",same_product)
 
             for prod in self.browse(cr, uid, same_product, context=context):
+                print "   produk ", prod.id, " ", prod.default_code, " ", prod.virtual_available
                 total_qty = total_qty  + prod.virtual_available
+            # print "total ", total_qty
             results[product.id] = total_qty
 
         return results    
