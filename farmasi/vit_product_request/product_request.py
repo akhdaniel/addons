@@ -164,7 +164,7 @@ class product_request_line(osv.osv):
 		'product_id' 		: fields.many2one('product.product', 'Product'),
 		'name'				: fields.char("Description"),
 		'product_qty' 		: fields.float('Quantity'),
-		'product_qty_avail' : fields.related('product_id', 'virtual_available' , 
+		'product_qty_avail' : fields.related('product_id', 'detail_available' , 
 			type="float", relation="product.product", string="Quantity Available", 
 			store=False),
 
