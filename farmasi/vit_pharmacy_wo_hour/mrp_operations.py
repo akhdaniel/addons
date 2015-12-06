@@ -47,11 +47,12 @@ class mrp_production(osv.osv):
             work_order_name_self = workcenter_line_obj.browse(cr,uid,wcl).name
             for wcl_on_bom in wcl_on_boms:
                 work_order_name = wcl_on_bom.workcenter_operation_id.name
-                if work_order_name_self == (work_order_name+" - "+product_name_tmpl):
-                    workcenter_line_obj.write(cr, uid, [workcenter_line_obj.browse(cr,uid,wcl).id], {
-                        'man_hour_standard': wcl_on_bom.man_hour,
-                        'man_number_standard': wcl_on_bom.man_number
-                        })
+                if work_order_name:
+                    if work_order_name_self == (work_order_name+" - "+product_name_tmpl):
+                        workcenter_line_obj.write(cr, uid, [workcenter_line_obj.browse(cr,uid,wcl).id], {
+                            'man_hour_standard': wcl_on_bom.man_hour,
+                            'man_number_standard': wcl_on_bom.man_number
+                            })
 
         """ Update Machine Hour diambil dari machine_hour_lines di bom """
         self.update_machine_hour(cr,uid,ids,context)

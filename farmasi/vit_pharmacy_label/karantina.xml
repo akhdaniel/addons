@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="report_stock_picking_menu"
+            string="Label Karantina"
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="vit_pharmacy_label.karantina" 
+            name="vit_pharmacy_label.karantina_report" 
+        />
+
+        <template id="report_stock_picking_document">
+            <div class="page" t-foreach="o.move_lines" t-as="l">
+
+                <table class="table table-condensed">
+
+                    <tr>
+                        <th colspan="3" rowspan="4">
+                            <span t-field="o.company_id.name"/>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                           No Dok
+                        </td>
+                        <td colspan="2">
+                           <span t-field="o.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                           Tgl Berlaku
+                        </td>
+                        <td colspan="2">
+                           <span t-field="o.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                           Tgl Review
+                        </td>
+                        <td colspan="2">
+                           <span t-field="o.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="6">KARANTINA</th>
+                    </tr>
+
+                    <tr>
+                        <th style="width:16.67%">BA</th>
+                        <th style="width:16.67%">BT</th>
+                        <th style="width:16.67%">BK</th>
+                        <th style="width:16.67%">PA</th>
+                        <th style="width:16.67%">PR</th>
+                        <th style="width:16.67%">PJ</th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Nama Produk/Bahan
+                        </td>
+                        <td colspan="4">
+                           <span t-field="l.product_id.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            No Bets
+                        </td>
+                        <td colspan="4">
+                            <span t-field="l.restrict_lot_id.name" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Tgl Kedaluarsa
+                        </td>
+                        <td colspan="4">
+                            <span t-field="l.product_uom_qty" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Pembuat/Pemasok
+                        </td>
+                        <td colspan="4">
+                            <span t-field="o.partner_id.name" />
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2">
+                            Jumlah
+                        </td>
+                        <td colspan="4">
+                            <span t-field="l.product_uom_qty" />
+                            <span t-field="l.product_uom.name" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Tgl Penerimaan
+                        </td>
+                        <td colspan="4">
+                            <span t-field="o.date_done" />
+                        </td>
+                    </tr>                    
+
+                    <tr>
+                        <td colspan="2">
+                            Kondisi Penyimpanan
+                        </td>
+                        <td colspan="4">
+                            SUHU RUANG
+                        </td>
+                    </tr>  
+
+                    <tr>
+                        <td colspan="2">
+                            Nama dan Paraf Petugas
+                        </td>
+                        <td colspan="4">
+                            ...
+                        </td>
+                    </tr>                    
+                </table>
+
+            </div>
+        </template>
+
+        <template id="karantina_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'vit_pharmacy_label.report_stock_picking_document')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>

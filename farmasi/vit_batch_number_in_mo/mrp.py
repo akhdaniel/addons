@@ -42,6 +42,8 @@ class mrp_production(osv.osv):
     ########################### pembuatan char batch number ##############################
     def create_batch_number(self,cr,uid,production,context=None):
 
+        # import pdb; pdb.set_trace()
+
         #Tahun 2015 => 15
         tahun_digit1 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[2]
         tahun_digit2 = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[3]
@@ -86,19 +88,24 @@ class mrp_production(osv.osv):
         elif bulan_2_digit == '12':
             bulan_huruf = 'M'
         
-        batch_rule = str(tahun_2_digit+sediaan_code+'%')
+        batch_rule = str(tahun_2_digit+sediaan_code+bulan_huruf+'%')
 
-        # SUBSTRING ( expression ,start , length )
+        # 15SM001 SUBSTRING ( expression ,start , length )
         cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
                         "WHERE state NOT IN ('draft','cancel') " \
                         "AND batch_number like %s ORDER BY Initial DESC" \
                         , (batch_rule,))         
         batch_ids      = cr.fetchall()
+        
         # jika belum punya batch number buat dari 001
-        new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
+        if production.batch_numbering_start == 'besar':
+            new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'500')
+        else:
+            new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
+
         if batch_ids :
             seq_batch = int(batch_ids[0][1])+1
-            
+
             #mengakali angka 0 di depan angka positif
             if len(str(seq_batch)) == 1:
                 new_seq_batch = '00'+ str(seq_batch)
@@ -205,11 +212,6 @@ class mrp_production(osv.osv):
             lot_ids    = cr.fetchall()
 
 
-            # kalau bahan kemas , tdk punya lot ids, tapi per ex ada stocknya
-            # jadi stok per ex dianggap sebagai lots 
-            if not lot_ids:
-                print "   no lot, cek bahan kemas, asume lot"
-
             
             # jika di temukan   ada lot   
             print "lot_ids",lot_ids
@@ -246,14 +248,11 @@ class mrp_production(osv.osv):
                             print("actual_product", actual_product.code)
                             print "actual_product wh uom ", actual_product.uom_id.name 
 
-
-
                             #konversi uom supaya sama dengan uom bom
                             # misal : actual_produk Kg, bom g 
                             if actual_product.uom_id.id != uom.id:
                                 hasil *= uom.factor / actual_product.uom_id.factor 
                                 print("converted hasil ", hasil)
-
 
                             # stock lebih banyak daripada yang diperlukan di BOM
                             if hasil >= qty_bom :           
@@ -290,6 +289,67 @@ class mrp_production(osv.osv):
                 # move sisanya tanpa Lot (produk is_header)
                 # qty_bom = sisa qty 
                 # total_lot_qty = qty yang diambil dari lot
+
+                if qty_bom != 0.00 and total_lot_qty != 0.00:
+                    lot_id = False
+                    move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
+                            production, product, 
+                            uom_id, qty_bom, 
+                            uos_id, uos_qty, 
+                            lot_id, 
+                            qty_available, 
+                            source_location_id, destination_location_id, prev_move, context=context)  
+                    move_ids.append(move_id)
+
+                if qty_bom == 0.00:
+                    cr.execute("update mrp_production_product_line set state='%s' where id=%s" % ("done", line_id))
+            else:
+                qty_bom = qty #yang diminta
+                lot_id = False
+                print "   no lot, cek bahan kemas?", qty_bom
+
+                for actual_product in product_obj.browse(cr, uid, same_product, context=context):
+
+                    hasil = actual_product.virtual_available
+                    print "hasil, yang ada di gudang: ",actual_product.default_code, actual_product.name,hasil
+                    # import pdb; pdb.set_trace()
+
+                    # konversi uom supaya sama dengan uom bom
+                    # misal : actual_produk Kg, bom g 
+                    if actual_product.uom_id.id != uom.id:
+                        hasil *= uom.factor / actual_product.uom_id.factor 
+                        print("converted hasil ", hasil)
+
+                    if hasil >= qty_bom:
+                        move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
+                            production, actual_product, uom_id, qty_bom, uos_id, uos_qty, lot_id, 
+                            hasil, 
+                            source_location_id, destination_location_id, prev_move, context=context)
+                        move_ids.append(move_id)  
+                        qty_bom -= qty_bom
+                        total_lot_qty = total_lot_qty + hasil 
+
+                        sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
+                        _logger.error(sql)
+                        cr.execute(sql)                        
+                        break;     
+
+                    elif hasil > 0 and  hasil < qty_bom:
+                        move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
+                            production, actual_product, uom_id, qty, uos_id, uos_qty, lot_id, 
+                            hasil, 
+                            source_location_id, destination_location_id, prev_move, context=context)
+                        move_ids.append(move_id)  
+
+                        qty_bom -= hasil
+
+                        sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
+                        _logger.error(sql)
+                        cr.execute(sql)                        
+
+
+                    total_lot_qty = total_lot_qty + hasil 
+
 
                 if qty_bom != 0.00 and total_lot_qty != 0.00:
                     lot_id = False
