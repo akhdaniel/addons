@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="origin" position="after">
                     <field name="wps_id"/>
+                    <field name="batch_numbering_start"/>
                 </field>
                 
             </field>

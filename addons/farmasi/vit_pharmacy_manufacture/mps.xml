@@ -49,8 +49,11 @@
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
+                                    <field name="sediaan_id" invisible="1"/>
                                     <field name="product_uom" />
+                                    <field name="batch_numbering_start" />
+
+
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     <field name="max_order" />
@@ -75,9 +78,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status"/>
-                                    <field name="helper_material_status"/>
-                                    <field name="packaging_material_status" />
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
 
                                 </tree>
                             </field>
@@ -90,8 +93,11 @@
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
+                                    <field name="sediaan_id" invisible="1"/>
                                     <field name="product_uom" />
+                                    <field name="batch_numbering_start" />
+
+
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     <field name="max_order" />
@@ -117,9 +123,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status"/>
-                                    <field name="helper_material_status"/>
-                                    <field name="packaging_material_status" />
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -132,8 +138,11 @@
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
+                                    <field name="sediaan_id" invisible="1"/>
                                     <field name="product_uom" />
+                                    <field name="batch_numbering_start" />
+
+
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     <field name="max_order" />
@@ -159,9 +168,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status"/>
-                                    <field name="helper_material_status"/>
-                                    <field name="packaging_material_status" />
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -173,8 +182,11 @@
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
+                                    <field name="sediaan_id" invisible="1"/>
                                     <field name="product_uom" />
+                                    <field name="batch_numbering_start" />
+
+
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     <field name="max_order" />
@@ -200,9 +212,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status"/>
-                                    <field name="helper_material_status"/>
-                                    <field name="packaging_material_status" />
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -214,8 +226,11 @@
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
+                                    <field name="sediaan_id" invisible="1"/>
                                     <field name="product_uom" />
+                                    <field name="batch_numbering_start" />
+
+
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
                                     <field name="max_order" />
@@ -241,9 +256,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status"/>
-                                    <field name="helper_material_status"/>
-                                    <field name="packaging_material_status" />
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -255,8 +270,9 @@
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
                                     <field name="product_id" on_change="on_change_product_id(product_id, context)"/> 
-                                    <field name="sediaan_id" />
+                                    <field name="sediaan_id" invisible="1"/>
                                     <field name="product_uom" />
+                                    <field name="batch_numbering_start" />
 
                                     <field name="reminder_prev"/>
                                     <field name="production_order" />
@@ -283,9 +299,9 @@
 
                                     <field name="reminder"/>
                                     <field name="note"/>
-                                    <field name="active_material_status"/>
-                                    <field name="helper_material_status"/>
-                                    <field name="packaging_material_status" />
+                                    <field name="active_material_status" invisible="1"/>
+                                    <field name="helper_material_status" invisible="1"/>
+                                    <field name="packaging_material_status" invisible="1"/>
                                 </tree>
                             </field>
                         </page>

@@ -56,7 +56,20 @@ class forecast_product(osv.osv):
         old = self.browse(cr, uid, id, context=context)
         forecast_detail_ids = [(0,0,{ 
             'product_id' : fd.product_id.id,
-            'product_uom' : fd.product_uom.id
+            'product_uom' : fd.product_uom.id,
+            'm1' : fd.m1, 
+            'm2' : fd.m2, 
+            'm3' : fd.m3, 
+            'm4' : fd.m4, 
+            'm5' : fd.m5, 
+            'm6' : fd.m6, 
+            'm7' : fd.m7, 
+            'm8' : fd.m8, 
+            'm9' : fd.m9, 
+            'm10' : fd.m10,
+            'm11' : fd.m11,
+            'm12' : fd.m12,
+            'mTotal' : fd.mTotal
         }) for fd in old.forecast_detail_ids]
         default.update({'forecast_detail_ids' : forecast_detail_ids , 'revision': old.revision+1})
         return super(forecast_product, self).copy(cr, uid, id, default, context=context)

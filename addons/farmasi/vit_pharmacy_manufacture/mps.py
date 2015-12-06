@@ -84,19 +84,10 @@ class mps(osv.osv):
 
 	def action_create_wps(self, cr, uid, ids, context=None):
 		""" Create Sejumlah WPS dari Urutan Week Paling Pertama """
-
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids1:
-			self.create_wps(cr,uid, ids, details_product, context=context)
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids2:
-			self.create_wps(cr,uid, ids, details_product, context=context)
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids3:
-			self.create_wps(cr,uid, ids, details_product, context=context)
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids4:
-			self.create_wps(cr,uid, ids, details_product, context=context)
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids5:
-			self.create_wps(cr,uid, ids, details_product, context=context)
-		for details_product in self.browse(cr,uid,ids[0],).mps_detail_ids6:
-			self.create_wps(cr,uid, ids, details_product, context=context)
+		for i in range (1,6):
+			fieldname = "self.browse(cr,uid,ids[0],).mps_detail_ids%s" % i
+			for details_product in eval(fieldname):
+				self.create_wps(cr,uid, ids, details_product, context=context)
 		
 		# self.write(cr, uid, ids, {'state':'done'}, context=context)
 
@@ -135,7 +126,8 @@ class mps(osv.osv):
 
 				""" Create MO Berdasarkan batch (b) """
 				product_id = details_product.product_id.id
-				self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date)
+				batch_numbering_start = details_product.batch_numbering_start
+				self.create_mo(cr,uid,ids,wm,b,wps_obj,product_id,start_date, batch_numbering_start)
 
 	def create_pr(self, cr, uid, ids, context=None):
 		"""
@@ -329,7 +321,7 @@ class mps(osv.osv):
 
 		return w
 
-	def create_mo(self,cr,uid,ids,wm,b,wps_obj,product_id,start_date,context=None):
+	def create_mo(self,cr,uid,ids,wm,b,wps_obj,product_id,start_date,batch_numbering_start,context=None):
 		for mo_w in range(0,int(b)):
 			index_n = range(0,int(b)).index(mo_w)
 			start_date2 = start_date + datetime.timedelta(days=index_n)
@@ -348,6 +340,7 @@ class mps(osv.osv):
 					'bom_id' : mrp_bom.id,
 					'routing_id' : mrp_bom.routing_id.id,
 					'date_planned' : start_date2,
+					'batch_numbering_start': batch_numbering_start,
 
 
 			})
@@ -728,10 +721,10 @@ class mps_detail(osv.osv):
 			relation="vit.sediaan", string="Sediaan", store=True),
 
 		'production_order' : fields.integer('Order(s)' , help="Number of production order (batches)"), 
-		'max_order' : fields.integer('Max Order(s)' , help="Number of maximum production order (batches) ready to produce according to the available materials"), 
+		'max_order' : fields.integer('Max' , help="Number of maximum production order (batches) ready to produce according to the available materials"), 
 		'product_uom': fields.many2one('product.uom', 'Uom'),
-		'max_batch_per_shift' : fields.float('Batch/Shift' , help='Max Number of batch per shift'),
-		'shift' : fields.integer('Shift(s)' , help='Number of shift(s) required'),
+		'max_batch_per_shift' : fields.float('Bat/Shf' , help='Max Number of batch per shift'),
+		'shift' : fields.integer('Shf' , help='Number of shift(s) required'),
 		'w1': fields.integer('W1p'),
 		'w2': fields.integer('W2p'),
 		'w3': fields.integer('W3p'),
@@ -744,16 +737,21 @@ class mps_detail(osv.osv):
 		'w5a': fields.integer('W5a'),
 		'total_plan': fields.function(_total_plan, type='integer', string='Tp', store=True ),
 		'total_actual': fields.function(_total_actual, type='integer', string='Ta', store=True ),
-		'reminder' : fields.integer('Reminder'),
-		'reminder_prev' : fields.integer('Reminder Prev'),
+		'reminder' : fields.integer('Next'),
+		'reminder_prev' : fields.integer('Prev'),
 
 		'active_material_status': fields.boolean('Active Material Available?'),
 		'helper_material_status': fields.boolean('Helper Material Available?'),
 		'packaging_material_status': fields.boolean('Packaging Material Available?'),
 
+		'batch_numbering_start' : fields.selection([('kecil','K'),('besar','B')],'B/K'),
+
 		'note'  : fields.char("Note"),
 	}
 
+	_defaults = {
+		'batch_numbering_start' : 'kecil'
+	}
 
 	def on_change_product_id(self, cr, uid, ids, product_id, name, context=None):
 		uom = self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id

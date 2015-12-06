@@ -28,7 +28,8 @@ from dateutil import parser
 
 class mrp_production(osv.osv):
     _inherit = 'mrp.production'
- 
+
+
     def _compute_planned_workcenter(self, cr, uid, ids, context=None, mini=False):
         res = super(mrp_production, self)._compute_planned_workcenter(cr, uid, ids, context={}, mini={})
         """ Update Scedule Date (date_planned)

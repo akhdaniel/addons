@@ -17,5 +17,7 @@ class mrp_production(osv.osv):
 
 	_columns = {
 		'wps_id':fields.many2one('vit_pharmacy_manufacture.wps','WPS'),
-		}
+        'batch_numbering_start' : fields.selection([('kecil','K'),('besar','B')],'B/K'),
+	}
 
+ 

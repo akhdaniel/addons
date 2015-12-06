@@ -3,7 +3,7 @@
     'version' : '0.1',
     'category': 'Purchase Management',
     'images' : [],
-    'depends' : ['stock', 'purchase_requisition','hr', 'purchase', 'vit_mps_fields'],
+    'depends' : ['stock','purchase', 'purchase_requisition','hr', 'vit_mps_fields'],
     'author' : 'vitraining.com',
     'description': """
 Purchase Request
