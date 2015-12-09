@@ -13,7 +13,7 @@
 
 		<!-- action list action_transfer_bonus_pasangan -->
 		<record id="action_transfer_bonus_pasangan" model="ir.actions.act_window">
-			<field name="name">List Transfer Bonus Pasangan</field>
+			<field name="name">List Transfer Bonus Pairing</field>
 			<field name="res_model">mlm.transfer_bonus</field>
 			<field name="view_mode">tree,form</field>
 			<field name="context">{'search_default_pasangan': 1,'search_default_not_transfered':1, 
@@ -66,7 +66,7 @@
 		<!-- transfer_transfer_bonus pasangan weekly -->
 		<menuitem id="menu_transfer_bonus_pasangan"
 			 action="action_transfer_bonus_pasangan"
-			 name="Transfer Bonus Pasangan"
+			 name="Transfer Bonus Pairing"
 			 sequence="40"
 			 parent="menu_transfer_bonus"/>
 

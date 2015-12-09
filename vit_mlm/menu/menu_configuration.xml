@@ -15,14 +15,14 @@
 		</record>
 		<!-- action list paket -->
 		<record id="action_paket_type_list" model="ir.actions.act_window">
-			<field name="name">List Paket Join</field>
+			<field name="name">List Joining Package</field>
 			<field name="res_model">mlm.paket</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 		
 		<!-- action list paket_produk -->
 		<record id="action_paket_produk_list" model="ir.actions.act_window">
-			<field name="name">List Paket Produk</field>
+			<field name="name">List Product Package</field>
 			<field name="res_model">mlm.paket_produk</field>
 			<field name="view_mode">tree,form</field>
 		</record>
@@ -56,14 +56,14 @@
 		<!-- menu_paket -->
 		<menuitem id="menu_paket"
 			 action="action_paket_type_list"
-			 name="Paket Join"
+			 name="Joining Package"
 			 sequence="30"
 			 parent="menu_mlm_master"/>
 
 		<!-- menu_paket_produk -->
 		<menuitem id="menu_paket_produk"
 			 action="action_paket_produk_list"
-			 name="Paket Produk"
+			 name="Product Package"
 			 sequence="40"
 			 parent="menu_mlm_master"/>
 

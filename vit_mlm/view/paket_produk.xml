@@ -27,7 +27,7 @@
             		<sheet>
 						<div class="oe_title">
 							<label for="name" class="oe_edit_only" 
-								 string="Paket Produk Name" />
+								 string="Product Package Name" />
 							<h1>
 								<field name="name" />
 							</h1>
@@ -60,7 +60,7 @@
 		    <field name="name">mlm_member_paket_produk_tree</field>
 		    <field name="model">mlm.member_paket_produk</field>
 		    <field name="arch" type="xml">
-		    	<tree string="Paket Produk Pendaftaran" editable='bottom'>
+		    	<tree string="Product Package Pendaftaran" editable='bottom'>
                     <field name='paket_produk_id'/>
                     <field name='qty'/>
                     <field name='member_id' invisible='1' />      

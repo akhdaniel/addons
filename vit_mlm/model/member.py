@@ -163,20 +163,20 @@ class member(osv.osv):
 		'paket_cashback'		: fields.float("Cashback Join",readonly=True,store=True),
 
 		## paket barang
-		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Paket Produk',),# states={'aktif':[('readonly',True)]}),
-		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Paket Produk', 
+		'paket_produk_ids'	: fields.one2many('mlm.member_paket_produk','member_id', 'Product Package',),# states={'aktif':[('readonly',True)]}),
+		# 'paket_produk_id'	: fields.many2one('mlm.paket_produk', 'Product Package', 
 		# 	required=True),
 
 		# untransfered
 		'total_bonus' 				: fields.function(_total_bonus, string="Total Bonus"),
 		'total_bonus_sponsor' 		: fields.function(_total_bonus_sponsor, string="Total Bonus Sponsor"),
-		'total_bonus_pasangan' 		: fields.function(_total_bonus_pasangan, string="Total Bonus Pasangan"),
+		'total_bonus_pasangan' 		: fields.function(_total_bonus_pasangan, string="Total Bonus Pairing"),
 		'total_bonus_level' 		: fields.function(_total_bonus_level, string="Total Bonus Level"),
 		'total_bonus_belanja' 		: fields.function(_total_bonus_belanja, string="Total Bonus Belanja"),
 		# trasfered
 		'total_bonus_transfered' 				: fields.function(_total_bonus_transfered, string="Total Bonus"),
 		'total_bonus_sponsor_transfered' 		: fields.function(_total_bonus_sponsor_transfered, string="Total Bonus Sponsor"),
-		'total_bonus_pasangan_transfered' 		: fields.function(_total_bonus_pasangan_transfered, string="Total Bonus Pasangan"),
+		'total_bonus_pasangan_transfered' 		: fields.function(_total_bonus_pasangan_transfered, string="Total Bonus Pairing"),
 		'total_bonus_level_transfered' 			: fields.function(_total_bonus_level_transfered, string="Total Bonus Level"),
 		'total_bonus_belanja_transfered' 		: fields.function(_total_bonus_belanja_transfered, string="Total Bonus Belanja"),
 
@@ -186,20 +186,22 @@ class member(osv.osv):
 		'bank_account_name'	: fields.char("Bank Account Name"),
 		'bank_name'			: fields.char("Bank Name"),
 		'bank_branch'		: fields.char("Bank Branch"),
-		'id_number'			: fields.char("Nomor KTP/SIM"),
+		'id_number'			: fields.char("ID Card No"),
 
 		'tree_url'	  		: fields.function(_get_tree_url, type="char", string="Tree URL"),
 
 		'sale_order_ids'		: fields.one2many('sale.order','partner_id','Sale Orders'),
 		'sale_order_exists'		: fields.function(_sale_order_exists, 
 			string='Sales Order Ada',  
-			type='boolean', help="Apakah Partner ini sudah punya Sales Order."),	
+			type='boolean', 
+			# help="Apakah Partner ini sudah punya Sales Order."),	
+		help="Is the Partner has Sales Order?"),	
 		'start_join'		: fields.char("Start Join",readonly=True),
 		'cek_state'		    : fields.function(_cek_state, type="char", method=True,
 			string="Show/hide buttons", store=False, help="Show/hide buttons."),
 
 		'history_join_ids'	: fields.one2many('mlm.history.join','member_id',string='History Join',readonly=True),
-		'jumlah_bayar'		: fields.float('Yang harus dibayar',readonly=True),
+		'jumlah_bayar'		: fields.float('Amount Due',readonly=True),
 		'invoice_join_paid'	: fields.function(_get_inv_join_paid, type="boolean",readonly=True,string="Invoice Join Paid")
 
 	}
@@ -209,7 +211,9 @@ class member(osv.osv):
 		'paket_produk_ids'	: _get_default_paket_produk,
 		'cek_state'			: 'draft',
 	}
-	_sql_constraints = [('id_number_uniq', 'unique(id_number)','No KTP / SIM sudah ada !')]
+	_sql_constraints = [('id_number_uniq', 'unique(id_number)',
+		# 'No KTP / SIM sudah ada !')]
+		'ID Card already used !')]
 
 
 	#########################################################################
@@ -488,7 +492,9 @@ class member(osv.osv):
 		bonus  = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_LEVEL_CODE)], context=context)
 		if not bonus:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Level, code = 3") ) 
+			raise osv.except_osv(_('Error'),
+				_("No Bonus Level defined, code = 3") ) 
+				#_("Belum ada definisi Bonus Level, code = 3") ) 
 		bonus_level = bonus[0]
 
 		####################################################################
@@ -585,7 +591,9 @@ class member(osv.osv):
 		bonus = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_PASANGAN_CODE)], context=context)
 		if not bonus:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Pasangan, code = 2") ) 
+			raise osv.except_osv(_('Error'),
+				_("No Bonus Pairing defined, code = 2") ) 
+				#_("Belum ada definisi Bonus Pairing, code = 2") ) 
 		bonus_pasangan=bonus[0]
 
 		####################################################################
@@ -650,8 +658,8 @@ class member(osv.osv):
 							cr.execute(sql)
 							exist = cr.fetchall()		 					
 							if not exist:
-								desc = '%sPasangan' % (cashback)
-								member_bonus.addBonusPasangan(cr, uid, kiri, kanan, 
+								desc = '%sPairing' % (cashback)
+								member_bonus.addBonusPairing(cr, uid, kiri, kanan, 
 									upline_id, lev, amount, desc, context=context)
 								cr.commit()
 								break
@@ -1102,7 +1110,7 @@ class member(osv.osv):
 			'date_order'			: time.strftime("%Y-%m-%d %H:%M:%S") ,
 			'order_line' 			: lines,
 			'order_policy'			: 'prepaid', # agar invoice di buat otomatis sebelum barang di transfer
-			'origin'				: 'Paket Produk Member: %s' % (partner.name),
+			'origin'				: 'Product Package Member: %s' % (partner.name),
 			'paket_id'				:  paket_so #insert paket id di SO
 		}
 

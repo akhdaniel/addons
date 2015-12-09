@@ -13,7 +13,7 @@
 
 		<!-- action list action_bonus_pasangan -->
 		<record id="action_bonus_pasangan" model="ir.actions.act_window">
-			<field name="name">List Bonus Pasangan</field>
+			<field name="name">List Bonus Pairing</field>
 			<field name="res_model">mlm.member_bonus</field>
 			<field name="view_mode">tree</field>
 			<field name="domain">[('amount','&lt;&gt;',0)]</field>
@@ -68,7 +68,7 @@
 		<!-- bonus pasangan weekly -->
 		<menuitem id="menu_bonus_pasangan"
 			 action="action_bonus_pasangan"
-			 name="Bonus Pasangan"
+			 name="Bonus Pairing"
 			 sequence="40"
 			 parent="menu_bonus"/>
 

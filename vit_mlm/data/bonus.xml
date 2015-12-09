@@ -10,7 +10,7 @@
 		</record>
 		<record id="bonus2" model="mlm.bonus">
 			<field name="code">2</field>
-			<field name="name">Pasangan</field>
+			<field name="name">Pairing</field>
 		</record>
 		<record id="bonus3" model="mlm.bonus">
 			<field name="code">3</field>
