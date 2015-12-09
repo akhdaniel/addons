@@ -60,7 +60,7 @@
                             string="Activate"
                             attrs="{'invisible': ['|',('invoice_join_paid', '!=', True),('cek_state', '!=', '2baktif')]}" />
                         
-                        <button string="Sale Order Paket Join" type="object" 
+                        <button string="Sale Order Joining Package" type="object" 
                              name="action_create_sale_order"
                              class="oe_highlight"
                              attrs="{'invisible': [('cek_state','!=','sale')]}" />
@@ -98,7 +98,7 @@
                 </xpath>
 
                 <page string="Downlines" position="before">
-                    <page string="Paket Produk">
+                    <page string="Product Package">
                         <field name="paket_produk_ids" />
                         <div><field name="cek_state" invisible="1"/></div>
                     </page>

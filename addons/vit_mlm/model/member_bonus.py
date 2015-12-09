@@ -29,8 +29,12 @@ class member_bonus(osv.osv):
 	_name 		= "mlm.member_bonus"
 	_columns 	= {
 		'member_id' 		: fields.many2one('res.partner', 'Member'),
-		'new_member_id' 	: fields.many2one('res.partner', 'Activated New Member', help="Member yang diaktivasi yang menyebabkan terjadinya bonus"),
-		'match_member_id'	: fields.many2one('res.partner', 'Matched Member', help="Member pasangan"),
+		'new_member_id' 	: fields.many2one('res.partner', 'Activated New Member', 
+			help="Activated Member that trigger the bonus"),
+			# help="Member yang diaktivasi yang menyebabkan terjadinya bonus"),
+		'match_member_id'	: fields.many2one('res.partner', 'Matched Member', 
+			help="Paired Member"),
+			# help="Member pasangan"),
 		'level' 			: fields.integer('At Level'),
 		'amount'			: fields.float('Bonus Amount'),
 		'trans_date'		: fields.datetime('Transaction Date'),
@@ -44,7 +48,7 @@ class member_bonus(osv.osv):
 		bonus_sponsor = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_SPONSOR_CODE)], context=context)
 		if not bonus_sponsor:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus sponsor, code = 1") ) 
+			raise osv.except_osv(_('Error'),_("Bonus sponsor not defined, code = 1") ) 
 
 		data = {
 			'member_id' 		: sponsor_id ,   # yang dapat bonus
@@ -64,7 +68,7 @@ class member_bonus(osv.osv):
 		bonus_sponsor = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_LEVEL_CODE)], context=context)
 		if not bonus_sponsor:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Level, code = 3") ) 
+			raise osv.except_osv(_('Error'),_("Bonus Level not defined, code = 3") ) 
 
 		data = {
 			'member_id' 		: member_id ,   # yang dapat bonus
@@ -79,12 +83,12 @@ class member_bonus(osv.osv):
 		self.pool.get('mlm.member_bonus').create(cr, uid, data, context=context)
 
 
-	def addBonusPasangan(self, cr, uid, new_member_id, match_member_id, member_id, level, amount, description, context=None):
+	def addBonusPairing(self, cr, uid, new_member_id, match_member_id, member_id, level, amount, description, context=None):
 		#import pdb;pdb.set_trace()
 		bonus_pasangan = self.pool.get('mlm.bonus').search(cr, uid, 
 			[('code','=',BONUS_PASANGAN_CODE)], context=context)
 		if not bonus_pasangan:
-			raise osv.except_osv(_('Error'),_("Belum ada definisi Bonus Pasangan, code = 2") ) 
+			raise osv.except_osv(_('Error'),_("Bonus Pairing not defined, code = 2") ) 
 
 		data = {
 			'member_id' 		: member_id ,   # yang dapat bonus

@@ -24,15 +24,21 @@ class mlm_paket(osv.osv):
 	_columns 	= {
 		'code'		: fields.char('Code',required=True),
 		'name'		: fields.char('Name',required=True),
-		'paket_product_id': fields.many2one('mlm.paket_produk', 'Paket Product Ref'),
+		'paket_product_id': fields.many2one('mlm.paket_produk', 'Package Product Ref'),
 		'harga'		: fields.float('Harga',required=True),
-		'price'		: fields.function(_get_price,type="float",string="Total Harga", readonly=True),
+		'price'		: fields.function(_get_price,type="float",string="Total Price", readonly=True),
 		'cashback'		: fields.float('Cashback'),
-		'hak_usaha'		: fields.integer('Hak Usaha',required=True),
+		'hak_usaha'		: fields.integer('Business Package',required=True),
 		'description'	: fields.text('Description'),
-		'is_affiliate'  : fields.boolean('Affiliate Member ?', help="Hanya mendapat bonus sponsor saja"),
-		'is_upgradable' : fields.boolean('Upgrade-able ?', help="Apakah bisa diupgrade, misalkan dari 1 hak usaha menjadi 3 hak usaha"),
-		'is_submember'  : fields.boolean('Sub-member ?', help="Jika diupgrade, status ini dipakai pada member baru hasil proses upgrade"),
+		'is_affiliate'  : fields.boolean('Affiliate Member ?', 
+			help="Only get the sponsor bonus"),
+			# help="Hanya mendapat bonus sponsor saja"),
+		'is_upgradable' : fields.boolean('Upgrade-able ?', 
+			help="Is upgradeable, for example from 1 to 3 business packages"),
+			# help="Apakah bisa diupgrade, misalkan dari 1 hak usaha menjadi 3 hak usaha"),
+		'is_submember'  : fields.boolean('Sub-member ?', 
+			help="When upgraded, this status is used at the new member from the upgrade process"),
+			# help="Jika diupgrade, status ini dipakai pada member baru hasil proses upgrade"),
 	}
 
 	def onchange_paket_product_id(self, cr, uid, ids, paket_product_id):
