@@ -29,7 +29,8 @@ class sup(osv.osv):
 		'lampiran'			: fields.integer('Lampiran'),
 		'perihal' 			: fields.char('Perihal', required=True),
 		'kepada'  			: fields.text('Kepada', required=True),
-		'dasar_rkat' 		: fields.char('Dasar RKAT Nomor/Tanggal', required=True),
+		# 'dasar_rkat' 		: fields.char('Dasar RKAT Nomor/Tanggal', required=True),
+		'dasar_rkat' 		: fields.many2one('anggaran.rka', 'Dasar ROA', required=True),
 		'jumlah'  			: fields.float('Jumlah', required=True),
 		'unit_id' 			: fields.many2one('anggaran.unit', 'Atas Nama', required=True),
 		'nomor_rek' 		: fields.char('Nomor Rekening'),
@@ -52,6 +53,8 @@ class sup(osv.osv):
 		'tanggal'     	: lambda *a : time.strftime("%Y-%m-%d") ,
 		'user_id'		: lambda obj, cr, uid, context: uid,
 		'name'			: lambda obj, cr, uid, context: '/',
+		'perihal'		: 'Permohonan Uang Persediaan',
+		'kepada'		: 'Bendahara Pusat',
 	}
 
 	def create(self, cr, uid, vals, context=None):

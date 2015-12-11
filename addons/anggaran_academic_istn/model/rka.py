@@ -71,8 +71,8 @@ class rka(osv.osv):
 		'alokasi'			: fields.float(_('Alokasi')),
 		# 'anggaran'			: fields.function(_fanggaran, type='float', string="Total Anggaran"),
 		'anggaran'			: fields.float('Total Anggaran'),
-		'realisasi'			: fields.function(_frealisasi, type='float', string="Realisasi"),
-		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
+		'realisasi'			: fields.function(_frealisasi, type='float', string="Realisasi", store=True),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
 		'definitif'			: fields.float("Definitif"),
 
 		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id',
@@ -380,7 +380,7 @@ class rka_coa(osv.osv):
 		'mak_id'			: fields.many2one('anggaran.mata_anggaran_kegiatan', 'MAK'),
 		'total'		 		: fields.float('Total'),
 		'realisasi'		 	: fields.float('Realisasi'),
-		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
 		'definitif'		 	: fields.float('Definitif Biaya'),
 		'sumber_dana_id'	: fields.many2one('anggaran.sumber_dana', 'Sumber Dana'),
 		'bulan'				: fields.many2one('account.period', 'Bulan'),
@@ -404,6 +404,39 @@ class rka_detail(osv.osv):
 		self.jumlah = total 	
 		self.volume_total = total * self.tarif	
 
+
+
+	def _fsisa(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rka_details = self.browse(cr, uid, ids, context=context) 
+
+		# ambil satu-per-satu sesion object 
+		for rka_detail in rka_details:
+			if rka_detail.volume_total > 0:
+				results[rka_detail.id] = rka_detail.volume_total - rka_detail.realisasi
+			else:
+				results[rka_detail.id] = 0.0
+
+		return results
+
+	# cari total spp detail MAK ini...
+	def hitung_realisasi(self, cr, uid, rka_detail ):
+		return 99.0
+
+	def _frealisasi(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rka_details = self.browse(cr, uid, ids, context=context) 
+
+		# ambil satu-per-satu rka_detail object 
+		for rka_detail in rka_details:
+			if rka_detail.volume_total > 0:
+				results[rka_detail.id] = self.hitung_realisasi(cr, uid, rka_detail )
+			else:
+				results[rka_detail.id] = 0.0
+
+		return results
+
+
 	_columns 	= {
 		'kebijakan_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 'program_id', 'kebijakan_id',
 			type="many2one", relation="anggaran.kebijakan", string="Kebijakan", store=True),
@@ -424,6 +457,11 @@ class rka_detail(osv.osv):
 		'keterangan'	: fields.text(_('Keterangan'), required=True),
 		'tarif'		 	: fields.float(_('Tarif'), required=True),
 		'jumlah'		: fields.float(_('Jumlah'), required=True),
+		# 'realisasi'		 	: fields.float('Realisasi'),
+		'realisasi'		 	: fields.function(_frealisasi, type='float', string='Realisasi', store=True),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
+		'definitif'		 	: fields.float('Definitif Biaya'),
+
 		'volume_total' 	: fields.float(_('Volume Total') , required=True),		
 		'rka_volume_ids'	: fields.one2many('anggaran.rka_volume','rka_detail_id',
 			_('Volumes'), ondelete="cascade")

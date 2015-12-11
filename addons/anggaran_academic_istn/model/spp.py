@@ -34,8 +34,10 @@ class spp(osv.osv):
 		# 'dasar_rkat' 		: fields.char('Dasar RKAT Nomor/Tanggal', required=True),
 		'jumlah'  			: fields.float('Jumlah Pembayaran', required=True),
 		'keperluan' 		: fields.char('Untuk Keperluan', required=True),
-		'cara_bayar'        : fields.selection([('tup','TUP'),('gup','GUP'),('ls','Pembayaran LS')],
+		'cara_bayar'        : fields.selection([('tup','UUDP'),('ls','Pembayaran LS')],
 								'Cara Bayar',required=True),
+		# 'cara_bayar'        : fields.selection([('tup','TUP'),('gup','GUP'),('ls','Pembayaran LS')],
+		# 						'Cara Bayar',required=True),
 		'alamat'   			: fields.text('Alamat'),
 		'nomor_rek' 		: fields.char('Nomor Rekening'),
 		'nama_bank' 		: fields.char('Nama Bank'),
@@ -145,6 +147,13 @@ class spp(osv.osv):
 			result['views'] = [(res and res[1] or False, 'form')]
 			result['res_id'] = spm_ids and spm_ids[0] or False
 		return result
+
+	@api.onchange('spp_line_ids') 
+	def on_change_spp_line_ids(self):
+		jumlah = 0.0
+		for line in self.spp_line_ids:
+			jumlah += line.spp_ini 
+		self.jumlah = jumlah 
 
 class spp_line(osv.osv):
 	_name 		= "anggaran.spp_line"
