@@ -25,5 +25,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'pembayaran.xml',
             'product.xml',
             'reports/report.xml',
-            'data/data_view.xml'],
+            'data/data_view.xml',
+            'security/ir.model.access.csv',
+        ],
 }
