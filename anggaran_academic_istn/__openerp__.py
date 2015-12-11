@@ -24,7 +24,8 @@
     	'view/fakultas.xml',
     	'view/jurusan.xml',
     	'view/unit.xml',
-    	'view/rka.xml',
+      'view/rka.xml',
+    	'view/rka_detail.xml',
       'view/sup.xml',
     	'view/tup.xml',
       'view/spp.xml',
@@ -35,6 +36,7 @@
       'view/cost_type.xml',
       'view/tridharma.xml',
       'view/mata_anggaran_kegiatan.xml',
+      'view/cashflow.xml',
 
       'view/lap_pdana.xml',
     	'view/lap_pkk.xml',

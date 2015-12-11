@@ -51,9 +51,9 @@
 			            <notebook>
 			            	<page string="Isi Surat">
 					            <group >
-					                <field name="dasar_rkat"/>       
-					                <field name="jumlah"/>    
 					                <field name="unit_id"/>       
+					                <field name="dasar_rkat" domain="[('unit_id','=',unit_id)]"/>       
+					                <field name="jumlah"/>    
 					                <field name="nomor_rek"/>       
 					                <field name="nama_bank"/>       
 					            </group>

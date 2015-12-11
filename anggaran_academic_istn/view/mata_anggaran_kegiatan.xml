@@ -28,9 +28,6 @@
 		            <field name="kegiatan_id"/>
 		            <group expand="1" string="Group By...">
 
-		                <filter string="Unit Kerja" icon="terp-personal" name="group_unit"
-		                    domain="[]" context="{'group_by':'unit_id'}"/>
-
 		                <filter string="Kebijakan" icon="terp-personal" name="group_kebijakan"
 		                    domain="[]" context="{'group_by':'kebijakan_id'}"/>
 
@@ -39,6 +36,9 @@
 
 		                <filter string="Kegiatan" icon="terp-personal" name="group_kegiatan"
 		                    domain="[]" context="{'group_by':'kegiatan_id'}"/>
+
+		                <filter string="Unit Kerja" icon="terp-personal" name="group_unit"
+		                    domain="[]" context="{'group_by':'unit_id'}"/>
 
 		                <filter string="Cost Type" icon="terp-personal" name="group_cost_type"
 		                    domain="[]" context="{'group_by':'cost_type_id'}"/>
