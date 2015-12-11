@@ -111,46 +111,60 @@
 	    	<field name="kode">03</field>
 	    	<field name="name">Fakultas Hukum</field>
 	    </record>
-	    <record model="master.fakultas" id="fakultas4" >
-	    	<field name="kode">04</field>
-	    	<field name="name">Fakultas Farmasi</field>
-	    </record>
-
 <!-- Master Jurusan -->
-<!-- 	    <record model="master.jurusan" id="jurusan1" >
+ 	    <record model="master.jurusan" id="jurusan1" >
 	    	<field name="kode">01</field>
 	    	<field name="name">Pendidikan Dokter</field>
-	    	<field name="fakultas_id">1</field>
+	    	<field name="fakultas_id" search="[('kode','=','01')]" model="master.fakultas"/>
 	    </record>
 	    <record model="master.jurusan" id="jurusan2" >
 	    	<field name="kode">02</field>
 	    	<field name="name">Ilmu Keperawatan</field>
-	    	<field name="fakultas_id">1</field>
+	    	<field name="fakultas_id"  search="[('kode','=','01')]" model="master.fakultas"/>
 	    </record>
 	    <record model="master.jurusan" id="jurusan3" >
 	    	<field name="kode">03</field>
 	    	<field name="name">Teknik Industri</field>
-	    	<field name="fakultas_id">2</field>
+	    	<field name="fakultas_id" search="[('kode','=','02')]" model="master.fakultas"/>
 	    </record>
+	    <record model="master.jurusan" id="jurusan7" >
+	    	<field name="kode">07</field>
+	    	<field name="name">Teknik Informatika</field>
+	    	<field name="fakultas_id" search="[('kode','=','02')]" model="master.fakultas"/>
+	    </record>	    	        
+
 	    <record model="master.jurusan" id="jurusan4" >
 	    	<field name="kode">04</field>
 	    	<field name="name">Teknik Elektro</field>
-	    	<field name="fakultas_id">2</field>
+	    	<field name="fakultas_id" search="[('kode','=','02')]" model="master.fakultas"/>
 	    </record>
 	    <record model="master.jurusan" id="jurusan5" >
 	    	<field name="kode">05</field>
 	    	<field name="name">Hukum Administrasi Negara</field>
-	    	<field name="fakultas_id">3</field>
+	    	<field name="fakultas_id" search="[('kode','=','03')]" model="master.fakultas"/>
 	    </record>
 	    <record model="master.jurusan" id="jurusan6" >
 	    	<field name="kode">06</field>
 	    	<field name="name">Hukum Pidana</field>
-	    	<field name="fakultas_id">3</field>
+	    	<field name="fakultas_id" search="[('kode','=','03')]" model="master.fakultas"/>
 	    </record>		
-	    <record model="master.jurusan" id="jurusan7" >
-	    	<field name="kode">07</field>
-	    	<field name="name">Farmasi</field>
-	    	<field name="fakultas_id">4</field>
-	    </record> -->	    	        
+
+	    <!-- program studi -->
+	    <!-- <record model="master.prodi" id="prodi1" >
+	    	<field name="kode">01</field>
+	    	<field name="name">Prodi Teknik Komputer</field>
+	    	<field name="jurusan_id" search="[('kode','=','04')]" model="master.jurusan"/>
+	    	<field name="gelar_id" search="[('name','=','Sarjana Teknik')]" model="res.partner.title"/>
+	    	<field name="semester_id" search="[('name','=','6')]" model="master.semester"/>
+	    	<field name="jenjang">sarjana</field>
+	    </record>
+ -->
+	    <!-- <record model="master.prodi" id="prodi2" > -->
+	    	<!-- <field name="kode">03</field> -->
+	    	<!-- <field name="name">Prodi Teknik Arus Kuat</field> -->
+	    	<!-- <field name="jurusan_id" search="[('kode','=','04')]" model="master.jurusan"/> -->
+	    <!-- </record> -->
+
+
 	</data>
 </openerp>
