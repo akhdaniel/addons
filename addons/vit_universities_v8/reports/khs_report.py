@@ -6,4 +6,4 @@ class khs_report(report_sxw.rml_parse):
         super(khs_report, self).__init__(cr, uid, name, context) 
         self.localcontext.update({ 'time': time, }) 
         
-report_sxw.report_sxw('report.khs_report', 'operasional.krs', 'addons/vit_universities/reports/vit_khs.rml', parser=khs_report) 
+report_sxw.report_sxw('report.khs_report', 'operasional.krs', 'addons/vit_universities_v8/reports/vit_khs.rml', parser=khs_report) 

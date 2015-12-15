@@ -5,7 +5,7 @@
 			 string="Kartu Tanda Mahasiswa" 
 			 model="res.partner" 
 			 name="ktm_report" 
-			 rml="vit_universities/reports/vit_ktm.rml" 
+			 rml="vit_universities_v8/reports/vit_ktm.rml" 
 			 header="False"
 		/>
 
@@ -13,7 +13,7 @@
 			 string="Kartu Rencana Studi" 
 			 model="operasional.krs" 
 			 name="krs_report" 
-			 rml="vit_universities/reports/vit_krs.rml" 
+			 rml="vit_universities_v8/reports/vit_krs.rml" 
 			 header="False"
 		/>
 
@@ -21,7 +21,7 @@
 			 string="Kartu Hasil Studi" 
 			 model="operasional.krs" 
 			 name="khs_report" 
-			 rml="vit_universities/reports/vit_khs.rml" 
+			 rml="vit_universities_v8/reports/vit_khs.rml" 
 			 header="False"
 		/>		
 
@@ -29,7 +29,7 @@
 			 string="Transkrip Nilai" 
 			 model="operasional.transkrip" 
 			 name="transkrip_report" 
-			 rml="vit_universities/reports/vit_transkrip.rml" 
+			 rml="vit_universities_v8/reports/vit_transkrip.rml" 
 			 header="False"
 		/>	
 
@@ -37,7 +37,7 @@
 			 string="Daftar Lolos Seleksi" 
 			 model="spmb.mahasiswa" 
 			 name="spmb_report" 
-			 rml="vit_universities/reports/vit_spmb.rml" 
+			 rml="vit_universities_v8/reports/vit_spmb.rml" 
 			 header="False"
 		/>
 
@@ -45,7 +45,7 @@
 			 string="Absensi" 
 			 model="master.kelas" 
 			 name="kelas_report" 
-			 rml="vit_universities/reports/vit_kelas.rml" 
+			 rml="vit_universities_v8/reports/vit_kelas.rml" 
 			 header="False"
 		/>
 

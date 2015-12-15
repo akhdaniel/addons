@@ -10,7 +10,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 class spmb_mahasiswa(osv.Model):
 	_name = 'spmb.mahasiswa'    
 
-	def onchange_prodi(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kuota,context=None):
+	def onchange_prodi(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kuota, nilai,context=None):
 		
 		results = {}
 		if not prodi_id:
@@ -22,7 +22,8 @@ class spmb_mahasiswa(osv.Model):
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('fakultas_id','=',fakultas_id),
 			('jurusan_id','=',jurusan_id),
-			('prodi_id','=',prodi_id)], context=context)
+			('prodi_id','=',prodi_id),
+			('nilai_ujian','>=',nilai)], context=context)
 
 		if par_ids == []:
 			return results
@@ -72,6 +73,7 @@ class spmb_mahasiswa(osv.Model):
 		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]",required=True),
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),		
 		'kuota':fields.integer('Kuota',required=True),
+		'nilai':fields.integer('Nilai Minimal',required=True),
 		'partner_ids':fields.many2many(
 			'res.partner',   	# 'other.object.name' dengan siapa dia many2many
 			'filter_mahasiswa_rel',          # 'relation object'
@@ -84,7 +86,7 @@ class spmb_mahasiswa(osv.Model):
 			('jurusan_id','=',jurusan_id),\
 			('prodi_id','=',prodi_id),]",
 			readonly=False),	
-		'nilai_min':fields.float('Nilai Minimal',readonly=True),
+		'nilai_min':fields.float('Nilai Minimal Calon Mahasiswa Saat Ini',readonly=True),
 		'state':fields.selection([('draft','Draft'),('done','Lulus')],'Status'),
 	}
 	_defaults = {  
@@ -100,6 +102,7 @@ class spmb_mahasiswa(osv.Model):
 		jurusan = my_form.jurusan_id.id
 		prodi = my_form.prodi_id.id
 		kuota = my_form.kuota
+		nilai = my_form.nilai
 
 		par_obj = self.pool.get('res.partner')
 
@@ -108,8 +111,9 @@ class spmb_mahasiswa(osv.Model):
 			('tahun_ajaran_id','=',angkatan),
 			('fakultas_id','=',fakultas),
 			('jurusan_id','=',jurusan),
-			('prodi_id','=',prodi)], context=context)
-
+			('prodi_id','=',prodi),
+			('nilai_ujian','>=',nilai)], context=context)
+		#import pdb;pdb.set_trace()
 		if par_ids == []:
 			return results
 		if len(par_ids) == 1:
@@ -127,7 +131,7 @@ class spmb_mahasiswa(osv.Model):
 		nlai_sort = sorted(nlai)
 		#urutkan dari yang terbesar dulu
 		nlai_sort.reverse()
-		#import pdb;pdb.set_trace()
+		
 		x = 0
 		res = []
 		na = 0		
@@ -147,7 +151,11 @@ class spmb_mahasiswa(osv.Model):
 		return True
 
 	def confirm(self,cr,uid,ids,context=None):
+
+		bea_obj = self.pool.get('beasiswa.mahasiswa')
+		calon_obj = self.pool.get('res.partner.calon.mhs')
 		my_form = self.browse(cr,uid,ids[0])
+
 		nilai = my_form.nilai_min
 		#import pdb;pdb.set_trace()
 		t_id = my_form.tahun_ajaran_id.date_start
@@ -156,15 +164,55 @@ class spmb_mahasiswa(osv.Model):
 		f_id = my_form.fakultas_id.kode
 		j_id = my_form.jurusan_id.kode
 		p_id = my_form.prodi_id.kode
+
+		#batas nilai penerima beasiswa
+		
+		limit_bea = 0
+		data_bea = bea_obj.search(cr,uid,[('is_active','=',True),('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id)],context=context)
+		if data_bea:
+			limit_bea = bea_obj.browse(cr,uid,data_bea[0]).limit_nilai_sma
+
 		for p in my_form.partner_ids:
+			is_bea = False
+			if p.nilai_beasiswa >= limit_bea:
+				is_bea = True
 			st = p.status_mahasiswa
+			nilai_sma = p.nilai_beasiswa
 			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 			self.pool.get('res.partner').write(cr,uid,p.id,{
 				'status_mahasiswa':'Mahasiswa',
 				'batas_nilai':nilai,
 				'npm':t_id_final+f_id+j_id+p_id+se,
-				'user_id':uid},
-				context=context)	
+				'user_id':uid,
+				'is_beasiswa':is_bea},
+				context=context)
+			#create data calon yang lulus tersebut ke tabel res.partner.calon.mhs agar ada history terpisah
+			calon_obj.create(cr,uid,{'reg'				:p.reg,
+									'name'				:p.name,
+									'jenis_kelamin'		:p.jenis_kelamin or False,
+									'tempat_lahir'		:p.tempat_lahir or False,
+									'tanggal_lahir'		:p.tanggal_lahir or False,                  
+									'fakultas_id'		:p.fakultas_id.id,
+									'jurusan_id'		:p.jurusan_id.id,
+									'prodi_id'			:p.prodi_id.id,
+									'tahun_ajaran_id'	:p.tahun_ajaran_id.id,                
+									'tgl_lulus'			:p.tgl_lulus or False,
+									'no_formulir'		:p.no_formulir or False,
+									'tgl_ujian'			:p.tgl_ujian or False,
+									'nilai_ujian'		:p.nilai_ujian or False,
+									'batas_nilai'		:nilai,
+									'status_pernikahan'	:p.status_pernikahan or False,
+									'agama'				:p.agama or False,
+									'tgl_daftar'		:p.tgl_daftar or False,
+									'nilai_beasiswa'	:nilai_sma or False,
+									'is_beasiswa' 		:is_bea,
+									'date_move'			:time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+									'user_id'			:uid},									
+									context=context)
+
+			#####################################################################################
+			# fitur untuk pembuatan draft invoice full sampai semester terakhir di hilangkan dulu
+			#####################################################################################
 			# if my_form.tahun_ajaran_id.type == 'flat':
 			# 	byr_obj = self.pool.get('master.pembayaran')
 			# 	byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id),

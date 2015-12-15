@@ -6,4 +6,4 @@ class ktm_report(report_sxw.rml_parse):
         super(ktm_report, self).__init__(cr, uid, name, context) 
         self.localcontext.update({ 'time': time, }) 
         
-report_sxw.report_sxw('report.ktm_report', 'res.partner', 'addons/vit_universities/reports/vit_ktm.rml', parser=ktm_report) 
+report_sxw.report_sxw('report.ktm_report', 'res.partner', 'addons/vit_universities_v8/reports/vit_ktm.rml', parser=ktm_report) 
