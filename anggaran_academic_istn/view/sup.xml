@@ -40,6 +40,7 @@
 				            <group>
 				                <field name="tanggal"/>       
 				                <field name="tahun_id"/>    
+				                <field name="period_id"/>    
 				            </group>
 				            <group>   
 				                <field name="lampiran"/>       

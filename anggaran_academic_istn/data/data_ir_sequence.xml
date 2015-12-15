@@ -128,5 +128,20 @@
 			<field name="implementation">standard</field>
 		</record>
 		
+		<!-- Investasi -->
+		<record id="seq_type_investasi" model="ir.sequence.type">
+			<field name="name">Investasi Type</field>
+			<field name="code">anggaran.investasi</field>
+		</record>	
+		
+		<record id="seq_investasi" model="ir.sequence">
+			<field name="name">Investasi</field>
+			<field name="code">anggaran.investasi</field>
+			<field name="prefix">INV/%(year)s/%(month)s/</field>
+			<field name="padding">3</field>
+			<field name="next_number_actual">1</field>
+			<field name="number_increment">1</field>
+			<field name="implementation">standard</field>
+		</record>		
 	</data>
 </openerp>

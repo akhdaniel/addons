@@ -47,7 +47,7 @@
 		<!-- menu_cashflow -->
 		<menuitem id="menu_cashflow"
 			 action="action_cashflow_list"
-			 name="Cashflow"
+			 name="Cashflow Jurusan"
 			 sequence="10"
 			 parent="menu_anggaran_laporan"/>
 
