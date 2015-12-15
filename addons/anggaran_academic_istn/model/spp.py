@@ -26,7 +26,7 @@ class spp(osv.osv):
 	_columns 	= {
 		'name' 				: fields.char('Nomor', required=True, readonly=True),
 		'tanggal' 			: fields.date('Tanggal', required=True),
-		'period_id'			: fields.many2one('account.period', _('Perioda')),
+		'period_id'			: fields.many2one('account.period', _('Perioda'),  required=True),
 		'tahun_id'		   	: fields.many2one('account.fiscalyear', 'Tahun', readonly=True),
 		'kepada'  			: fields.char('Kepada', required=True),
 		'unit_id'  			: fields.many2one('anggaran.unit', 'Atas Nama', required=True),

@@ -7,8 +7,8 @@ import logging
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
-RKA_STATES =[('draft','Draft'),('open','Disahkan'),
-				 ('done','Selesai')]
+RKA_STATES =[('draft','Draft'),('open','Verifikasi'),
+				 ('done','Disahkan')]
 
 ###########################################################################
 #Level 1 : RKA

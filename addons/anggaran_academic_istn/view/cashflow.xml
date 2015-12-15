@@ -43,6 +43,8 @@
 			            <group>
 			                <field name="show_actual"/>
 			                <field name="show_deviasi"/>
+			                <field name="revision"/>
+			                <field name="write_date"/>
 		            	</group>
 			        </group>
 

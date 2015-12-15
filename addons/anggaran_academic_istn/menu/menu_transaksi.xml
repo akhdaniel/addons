@@ -63,6 +63,19 @@
 				<p>Klik tombol create untuk membuat Surat Perintah Membayar</p>
 			</field>
 		</record>
+		
+		<!-- action list investasi -->
+		<record id="action_investasi_list" model="ir.actions.act_window">
+			<field name="name">List Investasi</field>
+			<field name="res_model">anggaran.investasi</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+		      <p class="oe_view_nocontent_create">
+		        Manage Dokumen Investasi
+		      </p>				
+				<p>Klik tombol create untuk membuat Dokumen Investasi</p>
+			</field>
+		</record>
 
 		<!-- action list kas masuk -->
 		<record id="action_kas_masuk_list" model="ir.actions.act_window">
@@ -143,6 +156,14 @@
 			 action="action_spm_list"
 			 name="SPB"
 			 sequence="50"
+			 parent="menu_anggaran_transaksi"/>
+
+			 
+		<!-- menu_investasi -->
+		<menuitem id="menu_investasi"
+			 action="action_investasi_list"
+			 name="Investasi"
+			 sequence="60"
 			 parent="menu_anggaran_transaksi"/>
 
 

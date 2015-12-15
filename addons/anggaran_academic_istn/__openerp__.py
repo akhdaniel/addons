@@ -37,6 +37,7 @@
       'view/tridharma.xml',
       'view/mata_anggaran_kegiatan.xml',
       'view/cashflow.xml',
+      'view/investasi.xml',
 
       'view/lap_pdana.xml',
     	'view/lap_pkk.xml',

@@ -26,6 +26,7 @@ class sup(osv.osv):
 		'name' 				: fields.char('Nomor' , readonly=True, required=True ),
 		'tanggal' 			: fields.date('Tanggal', required=True),
 		'tahun_id'		    : fields.many2one('account.fiscalyear', 'Tahun'),
+		'period_id'		    : fields.many2one('account.period', 'Period'),
 		'lampiran'			: fields.integer('Lampiran'),
 		'perihal' 			: fields.char('Perihal', required=True),
 		'kepada'  			: fields.text('Kepada', required=True),
