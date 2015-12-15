@@ -6,4 +6,4 @@ class transkrip_report(report_sxw.rml_parse):
         super(transkrip_report, self).__init__(cr, uid, name, context) 
         self.localcontext.update({ 'time': time, }) 
         
-report_sxw.report_sxw('report.transkrip_report', 'operasional.transkrip', 'addons/vit_universities/reports/vit_transkrip.rml', parser=transkrip_report) 
+report_sxw.report_sxw('report.transkrip_report', 'operasional.transkrip', 'addons/vit_universities_v8/reports/vit_transkrip.rml', parser=transkrip_report) 

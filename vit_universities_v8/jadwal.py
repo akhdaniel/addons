@@ -63,6 +63,8 @@ class master_jadwal (osv.Model):
 		
 		'partner_id':fields.many2one('res.partner'),
 		'kurikulum_id':fields.many2one('master.kurikulum'),
+		'hours_from' : fields.float('Jam Mulai'),
+		'hours_to' : fields.float('Jam Selesai'),
 
 			}
 			

@@ -276,6 +276,16 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field> -->
         </record>
 
+        <record model="ir.actions.act_window" id="beasiswa_mahasiswa_list_action">
+            <field name="name">Beasiswa</field>
+            <field name="res_model">beasiswa.mahasiswa</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>              
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data beasiswa mahasiswa.</p><p>disini belum ada data beasiswa mahasiswa !</p></field>
+        </record>
+
+
           <record model="ir.ui.view" id="partner_tree_view">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
@@ -334,7 +344,7 @@
             <field name="name">Mahasiswa</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
             <field name="view_id" ref="partner_tree_view2"/>  
             <field name="domain">[('status_mahasiswa','=','Mahasiswa')]</field> 
             <field name="context">{'default_status_mahasiswa':'Mahasiswa','default_is_mahasiswa':True}</field>                    
@@ -347,7 +357,7 @@
             <field name="name">Calon Mahasiswa</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
             <field name="view_id" ref="partner_tree_view"/> 
             <field name="domain">[('status_mahasiswa','=','calon')]</field>
             <field name="context">{'default_status_mahasiswa':'calon','default_is_mahasiswa':True}</field>
@@ -359,7 +369,7 @@
             <field name="name">Alumni</field>
             <field name="res_model">res.partner</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,graph</field>
             <field name="view_id" ref="partner_tree_view3"/> 
             <field name="domain">[('status_mahasiswa','=','alumni')]</field>
             <field name="context">{'default_status_mahasiswa':'alumni','default_is_mahasiswa':True}</field>
@@ -491,42 +501,43 @@
 
         <!--menu tree view-->
         <menuitem id="si_akademik_menu" name="Akademik"/>
-            <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="1"/>
-                <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action"/>
-                <menuitem id="spmb" name="Saringan Masuk" parent="master_data_reg" action="spmb_list_action"/>
-            <menuitem id="master_data_kelas" name="Kelas" parent="si_akademik_menu" sequence="2"/>
+            <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10"/>
+                <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
+                <menuitem id="spmb" name="Saringan Masuk" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
+            <menuitem id="master_data_kelas" name="Kelas" parent="si_akademik_menu" sequence="20"/>
                 <menuitem id="master_kelas" name="Kelas" parent="master_data_kelas" action="kelas_list_action"/>
-            <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="3"/> 
+            <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> 
                 <menuitem id="master_jadwal" name="Jadwal Perkuliahan" parent="master_data_jadwal" action="jadwal_list_action"/>   
-            <menuitem id="master_civitas" name="Mahasiswa" parent="si_akademik_menu" sequence="4"/>
-                <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" sequence="12"/> 
-                <menuitem id="master_wisuda" name="Wisuda" parent="master_civitas" action="wisuda_list_action" sequence="13"/>  
-                <menuitem id="master_alumni" name="Alumni" parent="master_civitas" action="alumni_list_action" sequence="14"/>
-            <menuitem id="master_data_pembayaran" name="Pembayaran" parent="si_akademik_menu" sequence="5"/>
+            <menuitem id="master_civitas" name="Mahasiswa" parent="si_akademik_menu" sequence="40"/>
+                <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" sequence="11"/> 
+                <menuitem id="master_wisuda" name="Wisuda" parent="master_civitas" action="wisuda_list_action" sequence="20"/>  
+                <menuitem id="master_alumni" name="Alumni" parent="master_civitas" action="alumni_list_action" sequence="30"/>
+            <menuitem id="master_data_pembayaran" name="Pembayaran" parent="si_akademik_menu" sequence="50"/>
                 <menuitem id="master_pembayaran" name="Pembayaran" parent="master_data_pembayaran" action="pembayaran_list_action"/>            
-            <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="6"/>              
+            <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="60"/>              
                 <menuitem id="master_krs" name="Kartu Rencana Studi" parent="operasional" action="krs_list_action" sequence="13"/>
                 <menuitem id="master_khs" name="Kartu Hasil Studi" parent="operasional" action="khs_list_action" sequence="14"/>
                 <menuitem id="preview_transkrip" name="Transkrip" parent="operasional" action="preview_list_action" sequence="15"/>    
-            <menuitem id="master_data_dosen" name="Dosen" parent="si_akademik_menu" sequence="7"/>
+            <menuitem id="master_data_dosen" name="Dosen" parent="si_akademik_menu" sequence="70"/>
                  <menuitem id="master_dosen" name="Dosen" parent="master_data_dosen" action="dosen_list_action"/>    
-            <menuitem id="master_data_kurikulum" name="Kurikulum" parent="si_akademik_menu" sequence="8"/>
+            <menuitem id="master_data_kurikulum" name="Kurikulum" parent="si_akademik_menu" sequence="80"/>
                  <menuitem id="master_kurikulum" name="Kurikulum" parent="master_data_kurikulum" action="kurikulum_list_action"/>
                  <menuitem id="master_mk" name="Mata Kuliah" parent="master_data_kurikulum" action="mk_list_action"/>
-            <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="10"/>
-                <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action"/>
-                <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action"/>
-                <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action"/>
-                <menuitem id="master_prodi" name="Program Studi" parent="master_data" action="prodi_list_action"/>
-                <menuitem id="master_tahun_akademik" name="Tahun Akademik" parent="master_data" action="thn_akademik_list_action"/>
+            <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90"/>
+                <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action" sequence="10"/>
+                <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
+                <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/>
+                <menuitem id="master_prodi" name="Program Studi" parent="master_data" action="prodi_list_action" sequence="40"/>
+                <menuitem id="master_tahun_akademik" name="Tahun Akademik" parent="master_data" action="thn_akademik_list_action" sequence="50"/>
 <!--                 <menuitem id="master_bulan_akademik" name="Bulan Akademik" parent="master_data" action="bln_akademik_list_action"/> -->
-                <menuitem id="master_semester" name="Semester" parent="master_data" action="semester_list_action"/>
-                <menuitem id="master_nilai" name="Nilai" parent="master_data" action="nilai_list_action"/>
-                <menuitem id="master_yudisium" name="Yudisium" parent="master_data" action="yudisium_list_action"/>
-                <menuitem id="master_jenis_pelangaran" name="Jenis Pelanggaran" parent="master_data" action="jenis_pelanggaran_list_action"/>
-                <menuitem id="pembayaran" name="Pembayaran" parent="master_data" />            
+                <menuitem id="master_semester" name="Semester" parent="master_data" action="semester_list_action" sequence="60"/>
+                <menuitem id="master_nilai" name="Nilai" parent="master_data" action="nilai_list_action" sequence="70"/>
+                <menuitem id="master_yudisium" name="Yudisium" parent="master_data" action="yudisium_list_action" sequence="80"/>
+                <menuitem id="master_jenis_pelangaran" name="Jenis Pelanggaran" parent="master_data" action="jenis_pelanggaran_list_action" sequence="90"/>
+                <menuitem id="pembayaran" name="Pembayaran" parent="master_data" sequence="100"/>            
                     <menuitem id="master_product" name="Jenis Pembayaran" parent="pembayaran" action="jenis_pembayaran_list_action"/>
-                    <menuitem id="master_pembayaran" name="Template Pembayaran" parent="pembayaran" action="template_pembayaran_list_action"/>                             
+                    <menuitem id="master_pembayaran" name="Template Pembayaran" parent="pembayaran" action="template_pembayaran_list_action"/>
+                <menuitem id="maste_beasiswa" name="Beasiswa" parent="master_data" action="beasiswa_mahasiswa_list_action" sequence="110"/>                                 
 
         <!-- Mata Kuliah-->
         <record model="ir.ui.view" id="mk_tree_view">
@@ -793,6 +804,45 @@
                             <field name="year_id" colspan="4"/>
                             <field name="description" colspan="4"/>
                         </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Beasiswa Mahasiswa -->
+        <record model="ir.ui.view" id="beasiswa_tree_view">
+            <field name="name">beasiswa.tree</field>
+            <field name="model">beasiswa.mahasiswa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Master Beasiswa" colors="gray:is_active == False">
+                    <field name="name"/>
+                    <field name="tahun_ajaran_id"/>
+                    <field name="limit_nilai_sma"/>
+                    <field name="is_active"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="beasiswa_form_view">
+            <field name="name">beasiswa.form</field>
+            <field name="model">beasiswa.mahasiswa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Master Beasiswa" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="tahun_ajaran_id"/>
+                                <field name="limit_nilai_sma"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="is_active"/>
+                            </group>
+                        </group>    
                     </sheet>
                 </form>
             </field>

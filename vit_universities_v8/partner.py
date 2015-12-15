@@ -7,7 +7,7 @@ from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 
 
-SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua')]
+SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
 class res_partner (osv.osv):
 	_name = 'res.partner'
 	_inherit= 'res.partner'
@@ -77,72 +77,72 @@ class res_partner (osv.osv):
 		#jika penggambilan MK di KRS berdasarkan yang terbaru
 	def get_ttl_mk_by_newest(self, cr, uid, ids, context=None):
 		
-		# ops_obj = self.pool.get('operasional.krs')
-		# det_obj = self.pool.get('operasional.krs_detail')
+		ops_obj = self.pool.get('operasional.krs')
+		det_obj = self.pool.get('operasional.krs_detail')
 	
-		# cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk, okd.nilai_angka AS nilai
-		# 				FROM operasional_krs ok
-		# 				LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
-		# 				LEFT JOIN master_semester s ON s.id = ok.semester_id
-		# 				WHERE ok.state = 'done' AND ok.partner_id ="""+ str(ids[0]) +"""
-		# 				GROUP BY okd.id,s.name
-		# 				ORDER BY okd.mata_kuliah_id, s.name DESC""")		   
-		# mk = cr.fetchall()			
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk, okd.nilai_angka AS nilai
+						FROM operasional_krs ok
+						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(ids[0]) +"""
+						GROUP BY okd.id,s.name
+						ORDER BY okd.mata_kuliah_id, s.name DESC""")		   
+		mk = cr.fetchall()			
 
-		# if mk == []:
-		# 	mk=0
-		# 	return mk
-		# id_mk = []	#id khsdetail
-		# mk_ids = [] #Matakuliah khsdetail
+		if mk == []:
+			mk=0
+			return mk
+		id_mk = []	#id khsdetail
+		mk_ids = [] #Matakuliah khsdetail
 
-		# for m in mk:
-		# 	##################################
-		# 	# m[0] = operasional_krs_detail id
-		# 	# m[1] = matakuliah_id
-		# 	# m[2] = nilai angka
-		# 	##################################
-		# 	if m[1] not in mk_ids:
-		# 		if m[2] > 0 :
-		# 			id_mk.append(m[0])
-		# 			mk_ids.append(m[1])
+		for m in mk:
+			##################################
+			# m[0] = operasional_krs_detail id
+			# m[1] = matakuliah_id
+			# m[2] = nilai angka
+			##################################
+			if m[1] not in mk_ids:
+				if m[2] > 0 :
+					id_mk.append(m[0])
+					mk_ids.append(m[1])
 
-		# jml_id_mk = len(mk_ids)
+		jml_id_mk = len(mk_ids)
 
 		return {}#jml_id_mk
 
 		#jika penggambilan MK di KRS berdasarkan yang terbaik
 	def get_ttl_mk_by_better(self, cr, uid, ids, context=None):
 		
-		# ops_obj = self.pool.get('operasional.krs')
-		# det_obj = self.pool.get('operasional.krs_detail')
+		ops_obj = self.pool.get('operasional.krs')
+		det_obj = self.pool.get('operasional.krs_detail')
 	
-		# cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,okd.nilai_angka AS nilai
-		# 				FROM operasional_krs ok
-		# 				LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
-		# 				LEFT JOIN master_semester s ON s.id = ok.semester_id
-		# 				WHERE ok.state = 'done' AND ok.partner_id ="""+ str(ids[0]) +"""
-		# 				GROUP BY okd.id,s.name
-		# 				ORDER BY okd.mata_kuliah_id, okd.nilai_angka DESC""")		   
-		# mk = cr.fetchall()			
+		cr.execute("""SELECT okd.id AS id, okd.mata_kuliah_id AS mk,okd.nilai_angka AS nilai
+						FROM operasional_krs ok
+						LEFT JOIN operasional_krs_detail okd ON ok.id = okd.krs_id
+						LEFT JOIN master_semester s ON s.id = ok.semester_id
+						WHERE ok.state = 'done' AND ok.partner_id ="""+ str(ids[0]) +"""
+						GROUP BY okd.id,s.name
+						ORDER BY okd.mata_kuliah_id, okd.nilai_angka DESC""")		   
+		mk = cr.fetchall()			
 
-		# if mk == []:
-		# 	mk = 0
-		# 	return mk
-		# id_mk = []	#id khsdetail
-		# mk_ids = [] #Matakuliah khsdetail
+		if mk == []:
+			mk = 0
+			return mk
+		id_mk = []	#id khsdetail
+		mk_ids = [] #Matakuliah khsdetail
 
-		# for m in mk:
-		# 	##################################
-		# 	# m[0] = operasional_krs_detail id
-		# 	# m[1] = matakuliah_id
-		# 	# m[2] = nilai angka
-		# 	##################################
-		# 	if m[1] not in mk_ids:
-		# 		if m[2] > 0 :
-		# 			id_mk.append(m[0])
-		# 			mk_ids.append(m[1])
+		for m in mk:
+			##################################
+			# m[0] = operasional_krs_detail id
+			# m[1] = matakuliah_id
+			# m[2] = nilai angka
+			##################################
+			if m[1] not in mk_ids:
+				if m[2] > 0 :
+					id_mk.append(m[0])
+					mk_ids.append(m[1])
 
-		# jml_id_mk = len(mk_ids)
+		jml_id_mk = len(mk_ids)
 
 		return {}#jml_id_mk
 
@@ -236,6 +236,8 @@ class res_partner (osv.osv):
 		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
 		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True),
 		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
+		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
+		'is_beasiswa' : fields.boolean('Penerima Beasiswa',readonly=True),
 				}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]

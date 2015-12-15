@@ -46,7 +46,12 @@
                             <group>   
                                 <field name="ruangan_id"/>     
                                 <field name="hari" placeholder="-- pilih hari --"/>
-                                <field name="sesi"/>                                                                
+                                <field name="sesi"/> 
+                                <label for="hours_from" string="Waktu"/> 
+                                <div>  
+                                    <field name="hours_from" widget="float_time" nolabel="1" class="oe_inline" /><label string="-" class="oe_inline"/>
+                                    <field name="hours_to" widget="float_time" nolabel="1" class="oe_inline" />
+                                </div>                                                                                           
                             </group>
                             <group>
                                 <field name="prodi_id"/>  
@@ -61,6 +66,7 @@
                 </form>
             </field>
         </record>
+
 
         <!--sequance-->
         <record forcecreate="1" id="seq_type_jadwal" model="ir.sequence.type">
