@@ -87,7 +87,7 @@ class spp(osv.osv):
 			for spp_line in spp.spp_line_ids:
 				for spp_line_mak in spp_line.spp_line_mak_ids:
 					sql = "update anggaran_rka_coa "
-					sql += "set realisasi = realisasi+%f " % (spp_line_mak.spp_ini)
+					sql += "set realisasi = coalesce(realisasi,0) + %f " % (spp_line_mak.spp_ini)
 					sql += "where mak_id = %s " % (spp_line_mak.rka_coa_id.mak_id.id)
 					print sql 
 					cr.execute(sql)
