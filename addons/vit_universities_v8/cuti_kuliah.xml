@@ -1,0 +1,140 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="jadwal_tree_view">
+            <field name="name">cuti.kuliah</field>
+            <field name="model">cuti.kuliah</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Cuti Kuliah" version="7.0">
+                    <field name="name"/>
+                    <field name="partner_id"/> 
+                    <field name="kelas_id"/>                   
+                    <field name="tahun_ajaran_id" invisible="1"/>
+                    <field name="fakultas_id" invisible="1"/>
+                    <field name="jurusan_id" invisible="1"/>
+                    <field name="prodi_id"/>
+                    <field name="from_semester_id"/>
+                    <field name="to_semester_id"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="cuti_kuliah_form_view">
+            <field name="name">cuti.kuliah</field>
+            <field name="model">cuti.kuliah</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Form Cuti Kuliah" version="7.0">
+                    <header>
+                        <button name='confirm' string='Confirm' states='draft' type='object'/>
+                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='waiting' type='object'/>
+                        <button name='approve' string='Approve' states='waiting' type='object'/>
+                        <button name='refuse' string='Refuse' states='waiting' type='object'/> 
+                        <button name='set_draft' string='Set to Draft' states='cancel' type='object'/>   
+                        <button name='done' string='Active' states='confirm' type='object'/>                                         
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>                     
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="name"/>
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id)"/> 
+			                    <field name="kelas_id" />
+                                <label for="from_semester_id" string="Semester"/> 
+                                <div>  
+                                    <field name="from_semester_id" widget="selection" nolabel="1" class="oe_inline" /><label string=" s/d " class="oe_inline"/>
+                                    <field name="to_semester_id" widget="selection" nolabel="1" class="oe_inline" />
+                                </div>                                 
+                            </group>
+                			<group>
+                				<field name="tahun_ajaran_id"/>
+			                    <field name="fakultas_id"/>
+			                    <field name="jurusan_id"/>
+                                <field name="prodi_id"/>           				
+                			</group>
+                        </group>
+                         <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
+                        <group>    
+                            <group>  
+                                <field name="date" attrs="{'required':[('automatic_done','=',True)]}"/>                                                        
+                            </group>
+                            <group> 
+                                <field name="automatic_done"/>
+                                <field name="user_id"/>                                                          
+                            </group>
+                        </group>                         
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <!-- cuti kuliah Search View -->
+        <record model="ir.ui.view" id="cuti_kul_search">
+            <field name="name">cuti.kuliah</field>
+            <field name="model">cuti.kuliah</field>
+            <field name="arch" type="xml">
+                <search string="Cuti Kuliah">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="partner_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Mahasiswa" help="By Mahasiswa" context="{'group_by':'partner_id'}"/>
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Kelas" help="By Kelas" context="{'group_by':'kelas_id'}"/>
+                        <filter icon="terp-project" string="Tanggal Aktif" help="By Tanggal Aktif" context="{'group_by':'date'}"/>
+                        <filter icon="terp-project" string="Automatic Done" help="By Automatic Done" context="{'group_by':'automatic_done'}"/>
+                        <filter icon="terp-project" string="Status" help="By Status" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cuti_kuliah_list_action">
+            <field name="name">Cuti Kuliah</field>
+            <field name="res_model">cuti.kuliah</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="cuti_kul_search"/>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Cuti Mahasiswa.</p><p>disini belum ada data tentang Cuti Mahasiswa !</p></field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="mhs_cuti_list_action">
+            <field name="name">Mahasiswa Cuti</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="view_id" ref="vit_universities_v8.partner_tree_view2"/> 
+            <field name="domain">[('status_mahasiswa','=','cuti'),('active','=',False)]</field>
+            <field name="context">{'default_status_mahasiswa':'cuti','default_is_mahasiswa':True}</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Mahasiswa Cuti.</p><p>disini belum ada data tentang Mahasiswa Cuti!</p></field>
+        </record>
+
+        <menuitem id="cuti_kuliah_menu" name="Cuti Kuliah" parent="vit_universities_v8.si_akademik_menu" sequence="65"/>              
+            <menuitem id="cuti_kuliah_menu_sub_menu" name="Permohonan Cuti Kuliah" parent="cuti_kuliah_menu" action="cuti_kuliah_list_action" sequence="10"/>
+            <menuitem id="list_cuti_kuliah_menu_sub_menu" name="Mahasiswa Cuti" parent="cuti_kuliah_menu" action="mhs_cuti_list_action" sequence="20"/>
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_cuti_kul" model="ir.sequence.type">
+            <field name="name">cuti.kuliah</field>
+            <field name="code">cuti.kuliah</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_cuti_kul" model="ir.sequence">
+            <field name="name">cuti.kuliah</field>
+            <field name="code">cuti.kuliah</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+        </record> 
+
+	</data>
+</openerp>	
