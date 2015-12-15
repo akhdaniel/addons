@@ -70,6 +70,8 @@ class spp(osv.osv):
 	
 	def action_confirm(self,cr,uid,ids,context=None):
 		#set to "confirmed" state
+
+
 		return self.write(cr,uid,ids,{'state':SPP_STATES[1][0]},context=context)
 	
 	def action_reject(self,cr,uid,ids,context=None):
@@ -78,6 +80,18 @@ class spp(osv.osv):
 	
 	def action_done(self,cr,uid,ids,context=None):
 		#set to "done" state
+
+		#update realisasi di rka_detail.realisasi
+		#dari spp -> spp_line -> spp_line_mak.rka_coa_id dengan nilai spp_ini
+		for spp in self.browse(cr, uid, ids, context=context):
+			for spp_line in spp.spp_line_ids:
+				for spp_line_mak in spp_line.spp_line_mak_ids:
+					sql = "update anggaran_rka_coa "
+					sql += "set realisasi = realisasi+%f " % (spp_line_mak.spp_ini)
+					sql += "where mak_id = %s " % (spp_line_mak.rka_coa_id.mak_id.id)
+					print sql 
+					cr.execute(sql)
+
 		return self.write(cr,uid,ids,{'state':SPP_STATES[3][0]},context=context)
 
 	def create(self, cr, uid, vals, context=None):

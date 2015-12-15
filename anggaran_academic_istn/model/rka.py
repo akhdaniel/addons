@@ -346,6 +346,19 @@ class rka_coa(osv.osv):
 		return total 
 
 
+	def _frealisasi(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+		rka_coas = self.browse(cr, uid, ids, context=context) 
+
+		for rka_coa in rka_coas:
+			results[rka_coa.id] = 0.0
+
+			for rka_detail in rka_coa.rka_detail_ids:
+				if rka_detail.realisasi > 0:
+					results[rka_coa.id] += rka_detail.realisasi
+
+		return results
+
 	def _fsisa(self, cr, uid, ids, field, arg, context=None):
 		results = {}
 		rka_coas = self.browse(cr, uid, ids, context=context) 
@@ -379,8 +392,14 @@ class rka_coa(osv.osv):
 		'rka_kegiatan_id' 	: fields.many2one('anggaran.rka_kegiatan', 'Kegiatan'),
 		'mak_id'			: fields.many2one('anggaran.mata_anggaran_kegiatan', 'MAK'),
 		'total'		 		: fields.float('Total'),
+
+		#diupdate waktu SPP confirm
 		'realisasi'		 	: fields.float('Realisasi'),
-		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
+		# 'sisa'		 		: fields.float('Sisa'),
+		
+		# 'realisasi'		 		: fields.function(_frealisasi, type='float', string="Realisasi", ),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
+
 		'definitif'		 	: fields.float('Definitif Biaya'),
 		'sumber_dana_id'	: fields.many2one('anggaran.sumber_dana', 'Sumber Dana'),
 		'bulan'				: fields.many2one('account.period', 'Bulan'),
@@ -457,12 +476,14 @@ class rka_detail(osv.osv):
 		'keterangan'	: fields.text(_('Keterangan'), required=True),
 		'tarif'		 	: fields.float(_('Tarif'), required=True),
 		'jumlah'		: fields.float(_('Jumlah'), required=True),
-		# 'realisasi'		 	: fields.float('Realisasi'),
-		'realisasi'		 	: fields.function(_frealisasi, type='float', string='Realisasi', store=True),
-		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
-		'definitif'		 	: fields.float('Definitif Biaya'),
 
 		'volume_total' 	: fields.float(_('Volume Total') , required=True),		
+		'realisasi'		 	: fields.float('Realisasi'),
+		'sisa'		 	: fields.float('Sisa'),
+		# 'realisasi'		 	: fields.function(_frealisasi, type='float', string='Realisasi', store=True),
+		# 'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
+		'definitif'		 	: fields.float('Definitif Biaya'),
+
 		'rka_volume_ids'	: fields.one2many('anggaran.rka_volume','rka_detail_id',
 			_('Volumes'), ondelete="cascade")
 	}

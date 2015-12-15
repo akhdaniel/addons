@@ -228,6 +228,8 @@
 										<field name="tarif" />         
 										<field name="jumlah" />  
 										<field name="volume_total" />         
+										<!-- <field name="realisasi" />         
+										<field name="sisa" />          -->
 						            </tree>
 						        </field>
 						    </page>
@@ -265,6 +267,8 @@
 			            	<group>
 								<field name="jumlah" />
 								<field name="volume_total" />
+								<!-- <field name="realisasi" readonly="1"/>
+								<field name="sisa" readonly="1"/> -->
 				            </group>
 				        </group>
 
