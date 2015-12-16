@@ -106,7 +106,7 @@ class mrp_production(osv.osv):
             , (batch_rule,))         
         batch_ids      = cr.fetchall()
         
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
 
         if batch_ids :
             seq_batch = int(batch_ids[0][1])+1
