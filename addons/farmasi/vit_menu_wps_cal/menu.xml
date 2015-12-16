@@ -1,0 +1,43 @@
+<openerp>
+	<data>
+        <record id="view_production_calendar2" model="ir.ui.view">
+            <field name="name">mrp.production.calendar</field>
+            <field name="model">mrp.production</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <calendar color="routing_id" date_start="date_planned" string="Manufacturing Orders">
+                    <field name="product_id"/>
+                    <field name="batch_number"/>
+                    <!-- <field name="product_qty"/> -->
+                </calendar>
+            </field>
+        </record>
+
+        <record id="mrp_production_action_cal" model="ir.actions.act_window">
+            <field name="name">Manufacturing Orders Cal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,graph,gantt,tree,form</field>
+            <field name="view_id" eval="False"/>
+            <field name="calendar_view_id" ref="view_production_calendar2"/>
+            <!-- <field name="search_view_id" ref="view_mrp_production_filter"/> -->
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem action="mrp_production_action_cal" id="menu_mrp_production_action_cal"
+            parent="vit_pharmacy_manufacture.menu_conf" sequence="100"/>
+
+        <record id="mrp_production_action_planning_cal" model="ir.actions.act_window">
+            <field name="name">Manufacturing Orders Cal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.production</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form,graph</field>
+            <field name="domain">[('state','in',('draft', 'ready','confirmed','in_production'))]</field>
+        </record>
+
+
+
+	</data>
+</openerp>
