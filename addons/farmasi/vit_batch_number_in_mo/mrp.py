@@ -88,20 +88,25 @@ class mrp_production(osv.osv):
         elif bulan_2_digit == '12':
             bulan_huruf = 'M'
         
-        batch_rule = str(tahun_2_digit+sediaan_code+bulan_huruf+'%')
-
-        # 15SM001 SUBSTRING ( expression ,start , length )
-        cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial FROM mrp_production " \
-                        "WHERE state NOT IN ('draft','cancel') " \
-                        "AND batch_number like %s ORDER BY Initial DESC" \
-                        , (batch_rule,))         
-        batch_ids      = cr.fetchall()
-        
         # jika belum punya batch number buat dari 001
         if production.batch_numbering_start == 'besar':
             new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'500')
+            batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'5%')
         else:
             new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
+            batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'0%')
+
+
+        # 15SM001 SUBSTRING ( expression ,start , length )
+        # 123456
+        cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial " \
+            "FROM mrp_production " \
+            "WHERE state NOT IN ('draft','cancel') " \
+            "AND batch_number like %s ORDER BY Initial DESC" \
+            , (batch_rule,))         
+        batch_ids      = cr.fetchall()
+        
+        import pdb; pdb.set_trace()
 
         if batch_ids :
             seq_batch = int(batch_ids[0][1])+1
