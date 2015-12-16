@@ -31,6 +31,9 @@ class product_template(osv.osv):
             results[product.id] = 0.0
 
             #ambil 6 digit pertama, search dulu product yang sama
+            if not product.default_code:
+                raise osv.except_osv("Error", "No Internal Code: %s" % (product.name))
+            
             product_ref = product.default_code[:6]
 
             # cari detail produk yang is_header = false dan kode produknya 6 digit pertama sama
