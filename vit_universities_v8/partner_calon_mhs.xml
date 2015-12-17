@@ -1,0 +1,130 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="calon_mhs_list_tree_view">
+            <field name="name">List Total Calon Mahasiswa</field>
+            <field name="model">res.partner.calon.mhs</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Calon Mahasiswa" version="7.0" create="false" delete="false">
+                    <field name="reg"/>
+                    <field name="name" string="Nama"/>
+                    <field name="fakultas_id"/>
+                    <field name="jurusan_id"/>
+                    <field name="prodi_id"/>
+                    <field name="tahun_ajaran_id"/>                  
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="calon_mhs_list_form_view">
+            <field name="name">List Total Calon Mahasiswa</field>
+            <field name="model">res.partner.calon.mhs</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Form Calon Mahasiswa" version="7.0" create="false" delete="false">                    
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="reg"/>
+                                <field name="name" string="Nama"/>
+                                <field name="tempat_lahir"/>
+                                <field name="tanggal_lahir"/>
+                                <field name="jenis_kelamin"/>
+                                <field name="status_pernikahan"/>
+                                <field name="agama"/>                                  
+                            </group>
+                			<group>
+                				<field name="tahun_ajaran_id"/>
+			                    <field name="fakultas_id"/>
+			                    <field name="jurusan_id"/>
+                                <field name="prodi_id"/>   
+                                <field name="tgl_ujian"/>
+                                <field name="nilai_ujian"/>
+                                                                        				
+                			</group>
+                            <group>
+                                <field name="tgl_daftar"/>
+                                <field name="tgl_lulus"/>
+                                <field name="batas_nilai"/> 
+                                <field name="nilai_beasiswa"/>
+                                <field name="is_beasiswa"/>                                                                 
+                            </group>   
+                            <group>
+                                <field name="user_id"/>
+                                <field name="date_move"/>
+                            </group>                                                      
+                        </group>                      
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <!-- graph -->
+        <record id="view_res_partner_calon_mhs_graph" model="ir.ui.view">
+            <field name="name">partner.graph</field>
+            <field name="model">res.partner.calon.mhs</field>
+            <field name="arch" type="xml">
+                <graph string="Partner" type="bar">
+                    <field name="tahun_ajaran_id"/>
+                    <field name="fakultas_id" />
+                    <field name="jurusan_id"/>
+                    <field name="prodi_id"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- res.partner.calon.mhs Search View -->
+        <record model="ir.ui.view" id="calon_mhs_search">
+            <field name="name">res.partner.calon.mhs</field>
+            <field name="model">res.partner.calon.mhs</field>
+            <field name="arch" type="xml">
+                <search string="Calon Mahasiswa">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="reg"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Jenis Kelamin" help="By Jenis Kelamin" context="{'group_by':'jenis_kelamin'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="calon_mhs_list_action">
+            <field name="name">List Total Calon Mahasiswa</field>
+            <field name="res_model">res.partner.calon.mhs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="search_view_id" ref="calon_mhs_search"/>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">.....</p><p>disini belum ada data tentang calon mahasiswa !</p></field>
+        </record>
+
+        <menuitem id="calon_mhs_gagal" name="List Total Calon Mahasiswa" parent="vit_universities_v8.master_data_reg" action="calon_mhs_list_action" sequence="15"/>
+
+
+
+        <record id="action_move_tabel" model="ir.actions.server">
+            <field name="name">Move Calon</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('res.partner').action_move_calon(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_partial_move_wizard_calon" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'res.partner'" name="model"/>
+            <field name="name">Move Calon</field>
+            <field eval="'ir.actions.server,%d'%action_move_tabel" name="value"/>
+        </record>
+
+
+	</data>
+</openerp>	
