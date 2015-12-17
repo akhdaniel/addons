@@ -1,0 +1,17 @@
+<openerp>
+	<data>
+		<!-- <record model="ir.ui.view" id="wizard_show_fee_details">
+	        <field name="name">policy_fee_details</field>
+	        <field name="model">policy_fee_details</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	        	<tree>
+	            	<field name="membership" />
+	            	<field name="fee" />
+	            	<field name="total_member" />
+	            	<field name="total_fee" sum="Total Fee" />
+	            </tree>
+	        </field>
+	    </record> -->
+	</data>
+</openerp>

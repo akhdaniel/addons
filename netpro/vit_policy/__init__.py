@@ -22,3 +22,4 @@
 #
 
 import vit_policy
+#import wizard

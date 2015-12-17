@@ -30,15 +30,14 @@ class netpro_member(osv.osv):
     _rec_name = 'name'
 
     _columns = {
-        'partner_id': fields.many2one('res.partner', 'Partner', 
-            required=True, select=True, ondelete='cascade'),
-        'policy_id': fields.many2one('netpro.policy', 'Policy', required=True, domain='[("state","=","approved"),]'),
+        'partner_id': fields.many2one('res.partner', 'Partner', select=True, ondelete='cascade'),
+        'policy_id': fields.many2one('netpro.policy', 'Policy', domain='[("state","=","approved"),]'),
         'policy_holder': fields.related('policy_id', 'policy_holder_id', 
             relation='res.partner', type='many2one', store=True, string='Policy Holder'),
         'policy_category': fields.related('policy_id', 'policy_category_id', 
             relation='netpro.policy_category', type='many2one', store=False, string='Policy Category'),
-        'insurance_period_start': fields.date('Insurance Period Start', required=True),
-        'insurance_period_end': fields.date('Insurance Period End', required=True),
+        'insurance_period_start': fields.date('Insurance Period Start'),
+        'insurance_period_end': fields.date('Insurance Period End'),
         'member_no': fields.char('Member No.',help="Kosongkan untuk diisi oleh sistem"),
         'employee_id': fields.many2one('hr.employee', 'Employee'),
         'census_no': fields.selection([('0','0 = Employee'),('1','1 = Spouse'),('2','2 = 1st Child')],'Census No.'),
@@ -53,8 +52,8 @@ class netpro_member(osv.osv):
         'black_listed': fields.boolean('Black Listed '),
         'hold_car_swipe_claim': fields.boolean('Hold Card Swipe And Claim'),
         'remarks': fields.text('Remarks'),
-        'class_id': fields.many2one('netpro.class', 'Class', required=True),
-        'membership': fields.many2one('netpro.membership', 'Membership', required=True),
+        'class_id': fields.many2one('netpro.class', 'Class'),
+        'membership_id': fields.many2one('netpro.membership', 'Membership'),
         'card_no': fields.char('Card No'),
         'register_no': fields.char('Register No.'),
         'period_start': fields.date('Period Start'),
@@ -69,8 +68,8 @@ class netpro_member(osv.osv):
         'dummy_member': fields.boolean('Dummy Member'),
         'mno': fields.float('MNO', readonly=True),
         'pmno': fields.integer('PMNO', readonly=True),
-        'state': fields.selection([('draft','Draft'), ('actived','Actived'), ('nonactive', 'Non Active')],'Policy Status'),
-        'status': fields.selection([('draft','Draft'), ('actived','Actived'), ('nonactive', 'Non Active')],'Policy Status'),
+        'state': fields.selection([('draft','Draft'), ('actived','Actived'), ('nonactive', 'Non Active')],'Status'),
+        #'status': fields.selection([('draft','Draft'), ('actived','Actived'), ('nonactive', 'Non Active')],'Policy Status'),
         'trans_type': fields.char('Trans. Type', readonly=True),
         'suspend_tpa': fields.boolean('Suspend TPA', readonly=True),
         'account_no': fields.char('Account No'),
@@ -92,7 +91,7 @@ class netpro_member(osv.osv):
         'claim_history_ids': fields.one2many('netpro.member_claim_history', 'member_id', 'Claim Histories', ondelete='cascade'),
         'parent_id': fields.many2one('netpro.member', 'Parent'),
         'created_by_id': fields.many2one('res.users', 'Created By', readonly=True),
-        'upd_code' : fields.selection([('d','D'),('n','N'),('r','R'),('l','L'),('u','U')], 'Update Code'),
+        'upd_code' : fields.selection([('C','C'),('N','N'),('M','M'),('R','R')], 'Update Code'),
         'upd_date' : fields.date('Update Date'),
         'masa_tunggu': fields.boolean('Masa Tunggu'),
         'masa_tunggu_value': fields.integer('Lama Masa Tunggu'),
@@ -104,7 +103,7 @@ class netpro_member(osv.osv):
     }
 
     _defaults = {
-        'status'                    : 'draft',
+        'state'                     : 'draft',
         'insurance_period_start'    : lambda *a : time.strftime("%Y-%m-%d"),
         'insurance_period_end'      : lambda *a : time.strftime("%Y-%m-%d"),
         'created_by_id'             : lambda obj, cr, uid, context: uid,
@@ -142,16 +141,16 @@ class netpro_member(osv.osv):
         # create schedule plan
         self.create_plan_schedule(cr,uid,ids,context=context)
         #set to "actived" state
-        self.write(cr,uid,ids,{'status':'actived'},context=context)
+        self.write(cr,uid,ids,{'state':'actived'},context=context)
         return
     
     def action_cancel(self,cr,uid,ids,context=None):
         #set to "draft" state
-        return self.write(cr,uid,ids,{'status':'draft'},context=context)
+        return self.write(cr,uid,ids,{'state':'draft'},context=context)
     
     def action_nonactive(self,cr,uid,ids,context=None):
         #set to "nonactive" state
-        return self.write(cr,uid,ids,{'status':'nonactive'},context=context) 
+        return self.write(cr,uid,ids,{'state':'nonactive'},context=context) 
 
     def create_plan_schedule(self, cr, uid, ids, context=None):
         #import pdb;pdb.set_trace()
@@ -163,23 +162,90 @@ class netpro_member(osv.osv):
         if not self_obj.member_plan_ids:
             if self_obj.policy_id:
                 #jika policy ny sdh aproved
-                if self_obj.policy_id.state == 'approved':
+                if self_obj.policy_id.state in ['approved','endorsed']:
+                    import pdb;pdb.set_trace()
                     plan_schedule_ids = self_obj.policy_id.plan_schedule_ids
                     if plan_schedule_ids:
                         for schedule in plan_schedule_ids:
                             #jika plan for sama dan classnya sama
-                            if schedule.plan_for == self_obj.membership.name and schedule.class_id.id == self_obj.class_id.id :
+                            if schedule.class_id.id == self_obj.class_id.id :
                                 #create schedule
                                 plan_schedule_id = member_plan_obj.create(cr,uid,{'member_id': ids[0],
-                                                                                'plan_schedule_id': schedule.id,
+                                                                                'product_plan_id': schedule.product_plan_id.id,
                                                                                 'bamount' : schedule.bamount,
-                                                                                'plan_for':self_obj.membership.name})  
+                                                                                'plan_limit' : schedule.overall_limit,
+                                                                                'family_limit' : schedule.family_overall_limit_amount_point,
+                                                                                'plan_for':self_obj.membership_id.name})  
                                 # jika ada detail benefitnya maka di create juga benefit yang sama
                                 if schedule.plan_schedule_detail_benefit_schedule_ids :
                                     for benefit in schedule.plan_schedule_detail_benefit_schedule_ids:
+                                        prov_limit = 999999999
+                                        non_prov_limit = 999999999
+                                        unit = False
+                                        pembeda = benefit.difference_provider_non_provider                                            
+
+                                        # PER TAHUN
+                                        if benefit.annual_inner_limit:
+                                            unit = 'Annual'
+                                            if benefit.annual_inner_limit_max != 0:
+                                                unit = str(benefit.annual_inner_limit_max) + ', ' + unit
+
+                                            if benefit.annual_inner_limit_limit != 0:
+                                                prov_limit = benefit.annual_inner_limit_limit
+                                                if pembeda:
+                                                    non_prov_limit = benefit.non_provider_annual_inner_limit_limit
+                                                else :
+                                                    non_prov_limit = benefit.annual_inner_limit_limit
+
+                                        # PER HARI
+                                        if benefit.occurance_inner_limit:
+
+                                            if benefit.occurance_inner_limit_max != 0:
+                                                if not unit:
+                                                    unit = str(benefit.occurance_inner_limit_max) + ', ' + 'Occurance'
+                                                else :
+                                                    unit += ', ' + str(benefit.occurance_inner_limit_max) + ', ' + 'Occurance'
+                                            else :
+                                                if not unit:
+                                                    unit = '0, Occurance'
+                                                else :
+                                                    unit += '0, Occurance'
+
+                                            if benefit.occurance_inner_limit_limit != 0:
+                                                prov_limit = benefit.occurance_inner_limit_limit
+                                                if pembeda:
+                                                    non_prov_limit = benefit.non_provider_occurance_inner_limit_limit
+                                                else :
+                                                    non_prov_limit = benefit.occurance_inner_limit_limit
+
+                                        # PER KEJADIAN
+                                        if benefit.confinement_inner_limit:
+
+                                            if benefit.confinement_inner_limit_max != 0:
+                                                if not unit:
+                                                    unit = str(benefit.confinement_inner_limit_max) + ', ' + 'Confinement'
+                                                else :
+                                                    unit += ', ' + str(benefit.confinement_inner_limit_max) + ', ' + 'Confinement'
+                                            else :
+                                                if not unit:
+                                                    unit = '0, Confinement'
+                                                else :
+                                                    unit += '0, Confinement'
+
+                                            if benefit.confinement_inner_limit_limit != 0:
+                                                prov_limit = benefit.confinement_inner_limit_limit
+                                                if pembeda:
+                                                    non_prov_limit = benefit.non_provider_confinement_inner_limit_limit
+                                                else :
+                                                    non_prov_limit = benefit.confinement_inner_limit_limit
+
+
                                         member_plan_det_obj.create(cr,uid,{'member_plan_id':plan_schedule_id,
-                                                                            'benefit_id': benefit.benefit_id.id,
-                                                                            'bamount':benefit.bamount})                                    
+                                                                           'benefit_id': benefit.benefit_id.id,
+                                                                           'unit':unit,
+                                                                           'provider_limit':prov_limit,
+                                                                           'non_provider_limit':non_prov_limit,
+                                                                           })                                    
 
         return  True
 
@@ -225,26 +291,6 @@ class netpro_member(osv.osv):
             result = int(usia)
         return {'value':{'age':result}}
 
-    # def onchange_family(self, cr, uid, ids, fam_ids, policy_id,context=None):
-    #     results = {}
-
-    #     if not policy_id:
-    #         raise osv.except_osv(('Warning!'),("Please choose Policy for this member"))
-    #         return results
-
-    #     policy_obj = self.pool.get('netpro.policy').browse(cr, uid, policy_id, context=None)
-
-    #     if policy_obj.policy_category_id.name == 'Individual':
-    #         if policy_obj.individual_member_limit > 0:
-    #             if len(fam_ids) > policy_obj.individual_member_limit:
-    #                 results = {
-    #                     'value' : {
-    #                         'limit_member_excessed'    : True,
-    #                     }
-    #                 }
-
-    #     return results
-
 netpro_member()
 
 class netpro_member_policy_exception(osv.osv):
@@ -258,14 +304,14 @@ netpro_member_policy_exception()
 
 class netpro_member_plan(osv.osv):
     _name = 'netpro.member_plan'
-    _rec_name = 'product_plan'
+    _rec_name = 'product_plan_id'
     _columns = {
         'member_id': fields.many2one('netpro.member', 'Member'),
-        'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
-        'product_plan': fields.related('plan_schedule_id','product_plan_id', 'product_plan_base_id', 
-            relation="netpro.product_plan_base",
-            type='many2one', string='Product Plan', store=True, readonly=True),
-
+        # 'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
+        # 'product_plan': fields.related('plan_schedule_id','product_plan_id', 'product_plan_base_id', 
+        #     relation="netpro.product_plan_base",
+        #     type='many2one', string='Product Plan', store=True, readonly=True),
+        'product_plan_id':  fields.many2one('netpro.product_plan', 'Product Plan'),
         'bamount': fields.float('BAmount'),
         'plan_limit': fields.float('Plan Limit'),
         'remaining_limit': fields.float('Remaining Limit'),
@@ -321,3 +367,348 @@ class netpro_area(osv.osv):
     'code':fields.char("Code"),
     }
 netpro_area()
+
+class netpro_import_member_new(osv.osv):
+    _name = 'netpro.import_member_new'
+
+    def _dict_search(self,datalist, keyword):
+        ret = False
+        for k,v in datalist:
+            if k == keyword:
+                ret = v
+                break
+        return ret
+
+    def create(self,cr,uid,vals,context=None):
+        if vals['NOPOL']:                    
+
+            policy = self.pool.get('netpro.policy').search(cr,uid,[('policy_no','=',vals['NOPOL'])])
+            class_data = self.pool.get('netpro.class').search(cr,uid,[('class_no','=',vals['CLASSNO']),('policy_id','=',policy[0])])
+
+            # buat class di policy jika data class blm ada
+            if not class_data:
+                class_obj = self.pool.get('netpro.class').create(cr,uid,{'policy_id':policy[0],
+                                                                         'class_no':vals['CLASSNO'],
+                                                                         'short_desc':'Kelas '+vals['CLASSNO'],
+                                                                         })
+
+                class_data = class_obj
+
+            if isinstance(class_data, int) :
+                class_data = class_data
+            else :
+                class_data = class_data[0]
+
+            gender = self.pool.get('netpro.gender').search(cr,uid,[('name','=',vals['SEX'])])
+            membership = self.pool.get('netpro.membership').search(cr,uid,[('membership_id','=',vals['MEMBERSHIP'])])
+            marital = self.pool.get('netpro.marital_status').search(cr,uid,[('short_desc','=',vals['MARITALSTATUS'])])
+            premium_type = self.pool.get('netpro.premium_type').search(cr,uid,[('name','=',vals['PREMIUMTYPE'])])
+            member = self.pool.get('netpro.member')
+            member_plan = self.pool.get('netpro.member_plan')
+            policy_data = self.pool.get('netpro.policy').browse(cr,uid,policy)
+            
+            mememp = self.pool.get('netpro.membership_plan_employee')
+            memspo = self.pool.get('netpro.membership_plan_spouse')
+            memchi = self.pool.get('netpro.membership_plan_child')
+            member_id = member.create(cr, uid, {'name':vals['NAME'],
+                                                'policy_id':policy[0],
+                                                'class_id':class_data,
+                                                'membership_id':membership[0],
+                                                'marital_status':marital[0],
+                                                'premium_type_id':premium_type[0],
+                                                'census_no':vals['CENSUSNO'],
+                                                'gender_id':gender[0],
+                                                'date_of_birth':vals['BIRTHDATE'],
+                                                'birth_place':vals['BIRTHPLACE'],
+                                                'member_no':vals['MEMBERNO'],
+                                                'age':vals['AGE'],
+                                                'account_name':vals['ACCOUNTNAME'],
+                                                'account_no':vals['ACCOUNTNO'],
+                                                'bank_name':vals['BANKNAME'],
+                                                'upd_code':'N',
+                                                'parent_id':'',
+                                                'insurance_period_start':policy_data.insurance_period_start,
+                                                'insurance_period_end':policy_data.insurance_period_end,
+                                                })
+            
+            for k,v in vals.items():
+                if v and k.startswith('PLAN'):
+                    plan_obj = self.pool.get('netpro.product_plan').search(cr,uid,[('code','=',v)])
+                    mfbamount = self._dict_search(vals.items(), 'MFBAMOUNT'+k[-1:])
+                    ffbamount = self._dict_search(vals.items(), 'FFBAMOUNT'+k[-1:])
+
+                    # insert ke class -> membership
+                    if vals['MEMBERSHIP'] == '1. EMP':
+                        check = mememp.search(cr,uid,[('product_plan_id','=',plan_obj[0]),('male_female_bamount','=',mfbamount)])
+                        if not check:
+                            mememp.create(cr,uid,{'class_id': class_data,
+                                                  'product_plan_id': plan_obj[0],
+                                                  'male_female_bamount': mfbamount,
+                                                  })
+
+                    if vals['MEMBERSHIP'] == '2. SPO':
+                        check = memspo.search(cr,uid,[('product_plan_id','=',plan_obj[0]),('male_female_bamount','=',mfbamount)])
+                        if not check:
+                            memspo.create(cr,uid,{'class_id': class_data,
+                                                  'product_plan_id': plan_obj[0],
+                                                  'male_female_bamount': mfbamount,
+                                                  })
+
+                    if vals['MEMBERSHIP'] == '3. CHI':
+                        check = memchi.search(cr,uid,[('product_plan_id','=',plan_obj[0]),('male_female_bamount','=',mfbamount)])
+                        if not check:
+                            memchi.create(cr,uid,{'class_id': class_data,
+                                              'product_plan_id': plan_obj[0],
+                                              'male_female_bamount': mfbamount,
+                                              })
+
+                    check = member_plan.search(cr,uid,[('member_id','=',member_id),('product_plan_id','=',plan_obj[0]),('bamount','=',mfbamount)])
+                    if not check:
+                        member_plan.create(cr,uid, {'member_id':member_id,
+                                                    'product_plan_id':plan_obj[0],
+                                                    'bamount':mfbamount,
+                                                    })
+
+        return True
+
+    _columns = {
+        'CLASSNO' : fields.char('Class No'),
+        'MEMBERSHIP' : fields.char('Membership'),
+        'EMPID' : fields.char('Employee ID'),
+        'CENSUSNO' : fields.char('Census No'),
+        'AREA' : fields.char('Area'),
+        'NAME' : fields.char('Name'),
+        'SEX' : fields.char('Sex'),
+        'BIRTHDATE' : fields.date('Birthdate'),
+        'BIRTHPLACE' : fields.char('Birthplace'),
+        'MEMBERNO' : fields.char('Member No'),
+        'PAYORID' : fields.char('Payor ID'),
+        'MARITALSTATUS' : fields.char('Marital Status'),
+        'ENTRYDATE' : fields.date('Entry Date'),
+        'AGE' : fields.char('Age'),
+        'NOP' : fields.char('NOP'),
+        'PREMIUMTYPE' : fields.char('Preimun Type'),
+        'PLAN1' : fields.char('Plan 1'),
+        'MFBAMOUNT1' : fields.float('MF BAmount1'),
+        'FFBAMOUNT1' : fields.float('FF BAmount1'),
+        'PLAN2' : fields.char('Plan 2'),
+        'MFBAMOUNT2' : fields.float('MF BAmount2'),
+        'FFBAMOUNT2' : fields.float('FF BAmount2'),
+        'PLAN3' : fields.char('Plan 3'),
+        'MFBAMOUNT3' : fields.float('MF BAmount3'),
+        'FFBAMOUNT3' : fields.float('FF BAmount3'),
+        'PLAN3' : fields.char('Plan 3'),
+        'MFBAMOUNT3' : fields.float('MF BAmount3'),
+        'FFBAMOUNT3' : fields.float('FF BAmount3'),
+        'PLAN4' : fields.char('Plan 4'),
+        'MFBAMOUNT4' : fields.float('MF BAmount4'),
+        'FFBAMOUNT4' : fields.float('FF BAmount4'),
+        'PLAN5' : fields.char('Plan 5'),
+        'MFBAMOUNT5' : fields.float('MF BAmount5'),
+        'FFBAMOUNT5' : fields.float('FF BAmount5'),
+        'PLAN6' : fields.char('Plan 6'),
+        'MFBAMOUNT6' : fields.float('MF BAmount6'),
+        'FFBAMOUNT6' : fields.float('FF BAmount6'),
+        'PLAN7' : fields.char('Plan 7'),
+        'MFBAMOUNT7' : fields.float('MF BAmount7'),
+        'FFBAMOUNT7' : fields.float('FF BAmount7'),
+        'PLAN8' : fields.char('Plan 8'),
+        'MFBAMOUNT8' : fields.float('MF BAmount8'),
+        'FFBAMOUNT8' : fields.float('FF BAmount8'),
+        'PLAN9' : fields.char('Plan 9'),
+        'MFBAMOUNT9' : fields.float('MF BAmount9'),
+        'FFBAMOUNT9' : fields.float('FF BAmount9'),
+        'PLAN10' : fields.char('Plan 10'),
+        'MFBAMOUNT10' : fields.float('MF BAmount10'),
+        'FFBAMOUNT10' : fields.float('FF BAmount10'),
+        'ACCOUNTNAME' : fields.char('Account Name'),
+        'ACCOUNTNO' : fields.char('Account No'),
+        'BANKNAME' : fields.char('Bank Name'),
+        'BANKADDRESS' : fields.char('Bank Address'),
+        'CARDNO' : fields.char('Card No'),
+        'COUNTRY' : fields.char('Country'),
+        'BRANCHVC' : fields.char('Branchvc'),
+        'NOPOL' : fields.char('No Pol'),
+        'POLICY_HOLDER' : fields.char('Policy Holder'),
+        'NIK' : fields.char('NIK'),
+    }
+
+class netpro_import_member_endorse(osv.osv):
+    _name = 'netpro.import_member_endorse'
+
+    def create(self,cr,uid,vals,context=None):
+        if vals['MEMBERNO'] and vals['TTYPE']:
+            # member baru
+            if vals['TTYPE'] == 'N':
+                policy = self.pool.get('netpro.policy').search(cr,uid,[('policy_no','=',vals['POL'])])
+                class_data = self.pool.get('netpro.class').search(cr,uid,[('class_no','=',vals['NEWCLASSNO']),('policy_id','=',policy[0])])
+
+                # buat class di policy jika data class blm ada
+                if not class_data:
+                    class_obj = self.pool.get('netpro.class').create(cr,uid,{'policy_id':policy[0],
+                                                                             'class_no':vals['NEWCLASSNO'],
+                                                                             'short_desc':'Kelas '+vals['NEWCLASSNO'],
+                                                                             })
+
+                    class_data = class_obj
+
+                if isinstance(class_data, int) :
+                    class_data = class_data
+                else :
+                    class_data = class_data[0]
+
+                gender = self.pool.get('netpro.gender').search(cr,uid,[('name','=',vals['SEX'])])
+                membership = self.pool.get('netpro.membership').search(cr,uid,[('membership_id','=',vals['MEMBERSHIP'])])
+                marital = self.pool.get('netpro.marital_status').search(cr,uid,[('short_desc','=',vals['MARITALSTATUS'])])
+                premium_type = self.pool.get('netpro.premium_type').search(cr,uid,[('name','=',vals['PREMIUMTYPE'])])
+                member = self.pool.get('netpro.member')
+                member_plan = self.pool.get('netpro.member_plan')
+                policy_data = self.pool.get('netpro.policy').browse(cr,uid,policy)
+                
+                mememp = self.pool.get('netpro.membership_plan_employee')
+                memspo = self.pool.get('netpro.membership_plan_spouse')
+                memchi = self.pool.get('netpro.membership_plan_child')
+                member_id = member.create(cr, uid, {'name':vals['NAME'],
+                                                    'policy_id':policy[0],
+                                                    'class_id':class_data,
+                                                    'membership_id':membership[0],
+                                                    'marital_status':marital[0],
+                                                    'premium_type_id':premium_type[0],
+                                                    'census_no':vals['CENSUSNO'],
+                                                    'gender_id':gender[0],
+                                                    'date_of_birth':vals['BIRTHDATE'],
+                                                    'birth_place':vals['BIRTHPLACE'],
+                                                    'member_no':vals['MEMBERNO'],
+                                                    'age':vals['AGE'],
+                                                    'account_name':vals['ACCOUNTNAME'],
+                                                    'account_no':vals['ACCOUNTNO'],
+                                                    'bank_name':vals['BANKNAME'],
+                                                    'upd_code':'N',
+                                                    'insurance_period_start':policy_data.insurance_period_start,
+                                                    'insurance_period_end':policy_data.insurance_period_end,
+                                                    'parent_id':'',
+                                                    })
+                
+                for k,v in vals.items():
+                    if v and k.startswith('PLAN'):
+                        plan_obj = self.pool.get('netpro.product_plan').search(cr,uid,[('code','=',v)])
+                        mfbamount = self._dict_search(vals.items(), 'MFBAMOUNT'+k[-1:])
+                        ffbamount = self._dict_search(vals.items(), 'FFBAMOUNT'+k[-1:])
+
+                        # insert ke class -> membership
+                        if vals['MEMBERSHIP'] == '1. EMP':
+                            check = mememp.search(cr,uid,[('product_plan_id','=',plan_obj[0]),('male_female_bamount','=',mfbamount)])
+                            if not check:
+                                mememp.create(cr,uid,{'class_id': class_data,
+                                                      'product_plan_id': plan_obj[0],
+                                                      'male_female_bamount': mfbamount,
+                                                      })
+
+                        if vals['MEMBERSHIP'] == '2. SPO':
+                            check = memspo.search(cr,uid,[('product_plan_id','=',plan_obj[0]),('male_female_bamount','=',mfbamount)])
+                            if not check:
+                                memspo.create(cr,uid,{'class_id': class_data,
+                                                      'product_plan_id': plan_obj[0],
+                                                      'male_female_bamount': mfbamount,
+                                                      })
+
+                        if vals['MEMBERSHIP'] == '3. CHI':
+                            check = memchi.search(cr,uid,[('product_plan_id','=',plan_obj[0]),('male_female_bamount','=',mfbamount)])
+                            if not check:
+                                memchi.create(cr,uid,{'class_id': class_data,
+                                                  'product_plan_id': plan_obj[0],
+                                                  'male_female_bamount': mfbamount,
+                                                  })
+
+                        check = member_plan.search(cr,uid,[('member_id','=',member_id),('product_plan_id','=',plan_obj[0]),('bamount','=',mfbamount)])
+                        if not check:
+                            member_plan.create(cr,uid, {'member_id':member_id,
+                                                        'product_plan_id':plan_obj[0],
+                                                        'bamount':mfbamount,
+                                                        })
+
+            # member resign
+            if vals['TTYPE'] == 'R':
+                member_obj = self.pool.get('netpro.member').search(cr,uid,[('member_no','=',vals['MEMBERNO'])])
+                return self.pool.get('netpro.member').write(cr,uid,member_obj,{'upd_code':'R'},context=context)
+
+            # member ubah class
+            if vals['TTYPE'] == 'C':
+                member_obj = self.pool.get('netpro.member').search(cr,uid,[('member_no','=',vals['MEMBERNO'])])
+                member_data = self.pool.get('netpro.member').browse(cr,uid,member_obj)
+                if member_data.class_id != vals['CLASSNO']:
+                    self.pool.get('netpro.member').write(cr,uid,{'class_id':int(vals['CLASSNO']),'upd_code':'C'}, context=context)
+                return True
+
+            # member ubah data selain class
+            # if vals['TTYPE'] == 'M':
+            #     member_obj = self.pool.get('netpro.member').search(cr,uid,[('member_no','=',vals['MEMBERNO']))
+            #     member_data = self.pool.get('netpro.member').browse(cr,uid,member_obj)
+            #     data = []
+                
+
+        return True
+    _columns = {
+        'OLDCLASSNO' : fields.char('Old Class No'),
+        'NEWCLASSNO' : fields.char('New Class No'),
+        'TTYPE' : fields.char('Transaction Type'),
+        'MEMBERNO' : fields.char('Member No'),
+        'MEMBERSHIP' : fields.char('Membership'),
+        'EMPID' : fields.char('Employee ID'),
+        'CENSUSNO' : fields.char('Census No'),
+        'AREA' : fields.char('Area'),
+        'NAME' : fields.char('Name'),
+        'SEX' : fields.char('Sex'),
+        'BIRTHDATE' : fields.date('Birthdate'),
+        'BIRTHPLACE' : fields.char('Birthplace'),
+        'PAYORID' : fields.char('Payor ID'),
+        'MARITALSTATUS' : fields.char('Marital Status'),
+        'ENTRYDATE' : fields.date('Entry Date'),
+        'ENTRYDATE' : fields.date('Entry Date'),
+        'AGE' : fields.integer('Age'),
+        'NOP' : fields.integer('NOP'),
+        'PREMIUMTYPE' : fields.char('Preimun Type'),
+        'PLAN1' : fields.char('Plan 1'),
+        'MFBAMOUNT1' : fields.float('MF BAmount1'),
+        'FFBAMOUNT1' : fields.float('FF BAmount1'),
+        'PLAN2' : fields.char('Plan 2'),
+        'MFBAMOUNT2' : fields.float('MF BAmount2'),
+        'FFBAMOUNT2' : fields.float('FF BAmount2'),
+        'PLAN3' : fields.char('Plan 3'),
+        'MFBAMOUNT3' : fields.float('MF BAmount3'),
+        'FFBAMOUNT3' : fields.float('FF BAmount3'),
+        'PLAN3' : fields.char('Plan 3'),
+        'MFBAMOUNT3' : fields.float('MF BAmount3'),
+        'FFBAMOUNT3' : fields.float('FF BAmount3'),
+        'PLAN4' : fields.char('Plan 4'),
+        'MFBAMOUNT4' : fields.float('MF BAmount4'),
+        'FFBAMOUNT4' : fields.float('FF BAmount4'),
+        'PLAN5' : fields.char('Plan 5'),
+        'MFBAMOUNT5' : fields.float('MF BAmount5'),
+        'FFBAMOUNT5' : fields.float('FF BAmount5'),
+        'PLAN6' : fields.char('Plan 6'),
+        'MFBAMOUNT6' : fields.float('MF BAmount6'),
+        'FFBAMOUNT6' : fields.float('FF BAmount6'),
+        'PLAN7' : fields.char('Plan 7'),
+        'MFBAMOUNT7' : fields.float('MF BAmount7'),
+        'FFBAMOUNT7' : fields.float('FF BAmount7'),
+        'PLAN8' : fields.char('Plan 8'),
+        'MFBAMOUNT8' : fields.float('MF BAmount8'),
+        'FFBAMOUNT8' : fields.float('FF BAmount8'),
+        'PLAN9' : fields.char('Plan 9'),
+        'MFBAMOUNT9' : fields.float('MF BAmount9'),
+        'FFBAMOUNT9' : fields.float('FF BAmount9'),
+        'PLAN10' : fields.char('Plan 10'),
+        'MFBAMOUNT10' : fields.float('MF BAmount10'),
+        'FFBAMOUNT10' : fields.float('FF BAmount10'),
+        'ACCOUNTNAME' : fields.char('Account Name'),
+        'ACCOUNTNO' : fields.char('Account No'),
+        'BANKNAME' : fields.char('Bank Name'),
+        'BANKADDRESS' : fields.char('Bank Address'),
+        'CARDNO' : fields.char('Card No'),
+        'EFFECTIVEDATE' : fields.date('Effective Date'),
+        'BRANCHVC' : fields.char('Branchvc'),
+        'POL' : fields.char('Pol'),
+        'POLICY_HOLDER' : fields.char('Policy Holder'),
+        'ENDOR' : fields.char('Endor'),
+    }

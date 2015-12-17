@@ -11,6 +11,7 @@ class netpro_marital_status(osv.osv):
     _name = 'netpro.marital_status'
     _columns = {
         'name': fields.char('Name'),
+        'short_desc': fields.char('Short Description'),
         'description': fields.text('Description'),
         'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
     }

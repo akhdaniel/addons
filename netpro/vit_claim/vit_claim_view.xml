@@ -660,7 +660,6 @@
                 <field name="diagnosis_id"/>
                 <field name="remarks"/>
                 <field name="standard_fee"/>
-
             </tree>
         </field>
     </record>

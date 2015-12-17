@@ -8,6 +8,7 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.provider">
+                <sheet>
                 <group>
                     <field name="ext_id" select="1"/>
                     <field name="partner" select="2"/>
@@ -32,15 +33,12 @@
                     <field name="billing_due" select="0"/>
                     <field name="payment_due" select="0"/>
                     <field name="penalty_amount" select="0"/>
-                    <separator string="Remarks Discount" colspan="4"/>
-                    <field name="remarks_discount" colspan="4" nolabel="1" select="0"/>
-                    <separator string="Remarks" colspan="4"/>
-                    <field name="remarks" colspan="4" nolabel="1" select="0"/>
+                    <field name="remarks_discount" colspan="4" select="0"/>
+                    <field name="remarks" colspan="4" select="0"/>
                     <field name="edc_merchant_id" select="0"/>
                     <field name="online_date" select="0"/>
                     <field name="offline_date" select="0"/>
-                    <separator string="Offline Remarks" colspan="4"/>
-                    <field name="offline_remarks" colspan="4" nolabel="1" select="0"/>
+                    <field name="offline_remarks" colspan="4" select="0"/>
                     <field name="price_effective_date" select="0"/>
                     <field name="general_practitioner" select="0"/>
                     <field name="specialist_doctor" select="0"/>
@@ -82,6 +80,7 @@
                         <field name="network_ids" colspan="4" nolabel="1" select="0"/>
                     </page>
                 </notebook>
+                </sheet>
             </form>
         </field>
     </record>
@@ -130,6 +129,7 @@
     <record model="ir.actions.act_window" id="action_netpro_provider">
         <field name="name">Provider</field>
         <field name="res_model">netpro.provider</field>
+        <field name="context">{'group_by':'profile_id'}</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>

@@ -8,8 +8,8 @@
             <form string="netpro.marital_status">
                 <group>
                     <field name="name" select="1"/>
-                    <separator string="Description" colspan="4"/>
-                    <field name="description" colspan="4" nolabel="1" select="2"/>
+                    <field name="short_desc" select="1"/>
+                    <field name="description" colspan="4" select="2"/>
                 </group>
             </form>
         </field>
@@ -21,6 +21,7 @@
         <field name="arch" type="xml">
             <tree string="netpro.marital_status">
                 <field name="name"/>
+                <field name="short_desc"/>
                 <field name="description"/>
 
             </tree>

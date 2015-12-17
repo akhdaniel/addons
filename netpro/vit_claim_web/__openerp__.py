@@ -20,12 +20,13 @@ Homepage untuk aplikasi insurance
 
     # any module necessary for this one to work correctly
     'depends': ['website','website_blog','website_instantclick',
-         'vit_actuary', 'vit_policy', 'vit_member', 'vit_claim'
+         'vit_actuary', 'vit_policy', 'vit_member', 'vit_claim', 'vit_syntech'
     ],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'views/claim_web_asset.xml',
         'views/pages.xml',
         'views/search.xml',
         'views/registration.xml',
@@ -34,6 +35,6 @@ Homepage untuk aplikasi insurance
 
     ],
     'css':['static/src/css/*.css'],
-    'js':['static/src/js/*.js'],
+    'js':['static/src/js/*.js','static/src/js/jquery-ui/jquery.ui.autocomplete.html.js'],
     'installable':True,
 }

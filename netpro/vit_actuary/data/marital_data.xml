@@ -1,0 +1,19 @@
+<openerp>
+	<data>
+		<record model="netpro.marital_status" id="marital_status1">
+			<field name="name">Married</field>
+			<field name="short_desc">M</field>
+			<field name="description">Married</field>
+		</record>
+		<record model="netpro.gender" id="marital_status2">
+			<field name="name">Single</field>
+			<field name="short_desc">S</field>
+			<field name="description">Single</field>
+		</record>
+		<record model="netpro.gender" id="marital_status3">
+			<field name="name">Divorced</field>
+			<field name="short_desc">D</field>
+			<field name="description">Divorced</field>
+		</record>
+	</data>
+</openerp>

@@ -15,6 +15,7 @@
                     <field name="age_between_end" select="0"/>
                     <field name="policy_owner" select="0"/>
                     <field name="allowed" select="0"/>
+                    <field name="tpa_fee" select="0"/>
                 </group>
             </form>
         </field>
@@ -33,7 +34,7 @@
                 <field name="age_between_end"/>
                 <field name="policy_owner"/>
                 <field name="allowed"/>
-
+                <field name="tpa_fee"/>
             </tree>
         </field>
     </record>

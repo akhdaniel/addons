@@ -37,7 +37,11 @@
 	                    <field name="benefit_ids"  />
                 	</page>
                 	<page string="Term and Condition">
-	                    <field name="term_condition_ids"   />
+	                    <field name="term_condition_ids">
+                            <tree>
+                                <field name="term_condition_id" />
+                            </tree>   
+                        </field>
                 	</page>
                 </notebook>
 
