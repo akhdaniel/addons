@@ -22,7 +22,8 @@ $.extend( proto, {
 	_initSource: function() {
 		if ( this.options.html && $.isArray(this.options.source) ) {
 			this.source = function( request, response ) {
-				response( filter( this.options.source, request.term ) );
+				//response( filter( this.options.source, request.term ) );
+				response( this.options.source, request.term );
 			};
 		} else {
 			initSource.call( this );

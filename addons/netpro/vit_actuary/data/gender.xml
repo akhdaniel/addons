@@ -1,0 +1,12 @@
+<openerp>
+	<data>
+		<record model="netpro.gender" id="gender1">
+			<field name="name">M</field>
+			<field name="description">Male</field>
+		</record>
+		<record model="netpro.gender" id="gender2">
+			<field name="name">F</field>
+			<field name="description">Female</field>
+		</record>
+	</data>
+</openerp>

@@ -2,6 +2,32 @@
 <openerp>
 <data>
 
+    <!-- <record model="ir.actions.act_window" id="show_fee_details">
+        <field name="name">View Fee Details</field>
+        <field name="res_model">policy_fee_details</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="target">new</field>
+    </record> -->
+
+    <record id="action_renew" model="ir.actions.server">
+        <field name="name">Renew Policy</field>
+        <field name="condition">True</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_netpro_policy" />
+        <field name="state">code</field>
+        <field name="code">self.action_renew(cr, uid, context.get('active_ids', []), context=context)</field>
+    </record>
+
+    <record model="ir.values" id="action_renew_button">
+        <field name="name">Renew Policy</field>
+        <field name="action_id" ref="action_renew" />
+        <field name="value" eval="'ir.actions.server,' + str(ref('action_renew'))" />
+        <field name="key">action</field>
+        <field name="model">netpro.policy</field>
+        <field name="key2">client_action_multi</field>
+    </record>
+
     <record id="view_res_partner_ext" model="ir.ui.view">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
@@ -45,7 +71,7 @@
             <form string="netpro.policy">
                 <header>                                             
                     <button string="Calculate" type="object" 
-                        states="open" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_calculate" class="oe_highlight"/>
+                        states="open,endorsed" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_calculate" class="oe_highlight"/>
 
                     <button string="Approve" type="object" 
                         states="calculated" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_approve" class="oe_highlight"/>
@@ -53,8 +79,11 @@
                     <button string="Cancel" type="object" 
                         states="approved" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_cancel"/>
 
+                    <button string="Realease" type="object" 
+                        states="approved" groups="vit_actuary.manager_client,vit_actuary.user_system_owner,vit_actuary.manager_system_owner" name="action_realease"/>
+
                     <button string="Close" type="object" 
-                        name="action_close" groups="vit_actuary.manager_system_owner" states="approved"/>
+                        name="action_close" groups="vit_actuary.manager_system_owner" states="realeased"/>
 
                     <button string="Endorse" type="object" 
                         name="action_endorse" groups="vit_actuary.manager_system_owner" states="realeased"/>
@@ -65,9 +94,9 @@
                 <group col="2">
                     <group col="1">
                         <group string="General Policy Information">
-                            <field name="pno" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
+                            <field name="pno" select="0" readonly="1"/>
                             <field name="ppno" select="0" attrs="{'invisible': [('state','!=','endorsed')]}"/>
-                            <field name="policy_no" select="1" readonly="1" />
+                            <field name="policy_no" select="1" />
                             <field name="reference_no" select="2" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="quotation_no" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <!-- <field name="ci" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/> -->
@@ -267,6 +296,7 @@
                                             <field name="bamount" select="2"/>
                                             <field name="reimbursement" select="0"/>
                                             <field name="reimbursement_affect_to_benefit" select="0"/>
+                                            <field name="overall_limit" select="0"/>
                                             <field name="individual_overall_limit_amount_point" select="0"/>
                                             <field name="individual_overall_limit_amount_interval" select="0"/>
                                             <field name="family_overall_limit_amount_point" select="0"/>
@@ -336,7 +366,7 @@
                                                 <group>
                                                     <field name="min_allowed" select="0"/>
                                                     <field name="max_allowed" select="0"/>
-                                                    <field name="difference _provider_non_provider" select="0"/>
+                                                    <field name="difference_provider_non_provider" select="0"/>
                                                     <field name="not_affect_to_overall_limit" select="0"/>
                                                 </group>
                                             </group>
@@ -456,9 +486,13 @@
                         </field>
                     </page>
 
-                    <!-- <page string="Enroll Plan" attrs="{'invisible': [('state','in',['open','closed'])]}">
-                        <field name="policy_enroll_plan_ids" nolabel="1" />
-                    </page> -->
+                    <page string="TOC">
+                        <field name="term_condition_ids" nolabel="1">
+                            <tree>
+                                <field name="term_condition_id" />
+                            </tree>
+                        </field>
+                    </page>
 
                     <!-- Policy Rule tab -->
                     <page string="Rule" attrs="{'invisible': [('policy_category_id','!=',1)]}">
@@ -501,13 +535,17 @@
                             </group>
                             <group>
                                 <h2 colspan="2"> Other Settings </h2>
-                                <field name="other_settings_admin_cost" select="0"/>
+                                <b>@TPA Fee</b>
+                                <div>
+                                    <field name="other_settings_tpa_fee" readonly="1" />
+                                </div>
                                 <b>@Card Fee</b>
                                 <div>
                                     <field name="other_settings_card_fee" select="0" class="oe_inline"/> * 
                                     <field name="other_settings_card_count" select="0" class="oe_inline"/>
                                 </div>
                                 <field name="other_settings_total_card_fee" select="0"/>
+                                <field name="other_settings_admin_cost" select="0"/>
                                 <field name="other_settings_total_cdmin_cost" select="0"/>
                                 <field name="other_settings_stamp_duty" select="0"/>
                                 <field name="other_settings_interest" select="0"/><br />
@@ -1394,9 +1432,7 @@
                 <group>
                     <field name="class_no" select="1"/>
                     <field name="short_desc" select="2"/>
-                    <separator string="Description" colspan="4"/>
-                    <field name="description" colspan="4" nolabel="1" select="0"/>
-                    <!-- <field name="policy_id" select="0"/> -->
+                    <field name="description" select="0"/>
                 </group>
 
                 <notebook>
@@ -1719,9 +1755,8 @@
         <field name="arch" type="xml">
             <form string="netpro.membership_plan_employee">
                 <group>
-                    <field name="member_fee" select="1"/>
                     <field name="product_plan_id" select="0" on_change="onchange_pplan(product_plan_id)"/>
-                    <field name="male_female_bamount" select="0"/>
+                    <field name="male_female_bamount" select="0" required="1"/>
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
             </form>
@@ -1754,9 +1789,8 @@
         <field name="arch" type="xml">
             <form string="netpro.membership_plan_spouse">
                 <group>
-                    <field name="member_fee" select="1"/>
                     <field name="product_plan_id" select="0" on_change="onchange_pplan(product_plan_id)"/>
-                    <field name="male_female_bamount" select="0"/>
+                    <field name="male_female_bamount" select="0" required="1" />
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
             </form>
@@ -1789,9 +1823,8 @@
         <field name="arch" type="xml">
             <form string="netpro.membership_plan_child">
                 <group>
-                    <field name="member_fee" select="1"/>
                     <field name="product_plan_id" select="0" on_change="onchange_pplan(product_plan_id)"/>
-                    <field name="male_female_bamount" select="0"/>
+                    <field name="male_female_bamount" select="0" required="1" />
                     <field name="occur_in_other_membership" select="0"/>
                 </group>
             </form>
@@ -1833,7 +1866,7 @@
                     <field name="post" select="0"/>
                     <field name="min_allowed" select="0"/>
                     <field name="max_allowed" select="0"/>
-                    <field name="difference _provider_non_provider" select="0"/>
+                    <field name="difference_provider_non_provider" select="0"/>
                     <field name="not_affect_to_overall_limit" select="0"/>
                     <field name="occurance_inner_limit" select="0"/>
                     <field name="occurance_inner_limit_limit" select="0"/>
@@ -1894,7 +1927,7 @@
                 <field name="post"/>
                 <field name="min_allowed"/>
                 <field name="max_allowed"/>
-                <field name="difference _provider_non_provider"/>
+                <field name="difference_provider_non_provider"/>
                 <field name="not_affect_to_overall_limit"/>
                 <field name="occurance_inner_limit"/>
                 <field name="occurance_inner_limit_limit"/>

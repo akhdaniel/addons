@@ -19,7 +19,7 @@
             <label class="control-label" for="member_no">Membership</label>
         </div>
         <div class="col-md-4 col-sm-4">
-            <t t-esc="member.membership.name"/>
+            <t t-esc="member.membership_id.name"/>
         </div>
     </div>   
     <div class="row">
@@ -87,6 +87,7 @@
 	            	<div class="col-md-8">
                         
                         <t t-if="message_error">
+                            <br />
                             <div class="alert alert-danger">
                                 <t t-esc="message_error"/>
                                 <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
@@ -94,6 +95,7 @@
                         </t>
 
 	            		<t t-if="message_success">
+                            <br />
 							<div class="alert alert-success">
 		                        <t t-esc="message_success"/>
 		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>

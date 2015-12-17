@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+        <template id="claim_web_backend" name="claim web assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/vit_claim_web/static/src/js/my.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

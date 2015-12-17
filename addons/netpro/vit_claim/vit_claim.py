@@ -444,6 +444,7 @@ netpro_claim_detail_status()
 
 class netpro_claim_diagnosis(osv.osv):
     _name = 'netpro.claim_diagnosis'
+    _rec_name = 'diagnosis_id'
     _columns = {
         'claim_id': fields.many2one('netpro.claim', 'Claim'),
         'diagnosis_id': fields.many2one('netpro.diagnosis', 'Diagnosis'),

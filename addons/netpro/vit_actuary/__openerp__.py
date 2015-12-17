@@ -66,6 +66,8 @@
                 'views/room_view.xml',
                 'views/default_limit.xml',
 
+                'data/marital_data.xml',
+                'data/gender.xml',
                 'data/provider_level_data.xml',
                 'data/provider_type_data.xml',
                 'data/product_type.xml', 
