@@ -2,7 +2,7 @@
 <data>
 	<record model="netpro.membership" id="membership1">
         <field name="membership_id">1. EMP</field>
-        <field name="name">Primary Member</field>
+        <field name="name">1. EMP</field>
         <field name="name_i">Employee</field>
         <field name="category">A</field>
         <field name="age_between_start">18</field>
@@ -13,7 +13,7 @@
 
     <record model="netpro.membership" id="membership2">
         <field name="membership_id">2. SPO</field>
-        <field name="name">Secondary Member</field>
+        <field name="name">2. SPO</field>
         <field name="name_i">Spouse</field>
         <field name="category">A</field>
         <field name="age_between_start">18</field>
@@ -24,7 +24,7 @@
 
     <record model="netpro.membership" id="membership3">
         <field name="membership_id">3. CHI</field>
-        <field name="name">Tertiary Member</field>
+        <field name="name">3. CHI</field>
         <field name="name_i">Child</field>
         <field name="category">C</field>
         <field name="age_between_start">0</field>
