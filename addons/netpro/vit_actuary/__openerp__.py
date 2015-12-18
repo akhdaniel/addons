@@ -33,6 +33,7 @@
                 'security/group.xml',
                 'security/ir.model.access.csv',
                 
+                'views/membership.xml',
                 'views/age_band.xml', 
                 'views/benefit.xml', 
                 'views/benefit_unit.xml', 
@@ -44,7 +45,6 @@
                 'views/holiday.xml', 
                 'views/lob.xml', 
                 'views/marital_status.xml', 
-                'views/membership.xml', 
                 'views/membership_factor.xml', 
                 'views/modal_factor.xml', 
                 'views/product.xml', 
