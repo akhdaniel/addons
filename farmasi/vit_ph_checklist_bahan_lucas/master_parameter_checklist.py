@@ -17,6 +17,7 @@ class master_checklist(osv.osv):
 	_columns = {
 		'name'       : fields.char('Name', required=True),
 		'appeareance': fields.many2one('ir.model', string="Appearance"), #appearance
+		'product_id' : fields.many2one('product.product', 'Product', select=True),
 	}
 
 	def _get_default_appeareance(self, cr, uid, context=None):
@@ -39,6 +40,7 @@ class master_advance_checklist(osv.osv):
 	_columns = {
 		'name'       : fields.char('Name', required=True),
 		'appeareance': fields.many2one('ir.model', string="Appearance"), #appearance
+		'product_id' : fields.many2one('product.product', 'Product', select=True),
 	}
 
 	def _get_default_appeareance(self, cr, uid, context=None):
