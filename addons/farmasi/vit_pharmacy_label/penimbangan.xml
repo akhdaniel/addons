@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="report_stock_picking_menu2"
+            string="Label Penimbangan"
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            file="vit_pharmacy_label.penimbangan" 
+            name="vit_pharmacy_label.penimbangan_report" 
+        />
+
+        <template id="report_stock_picking_document2">
+            <div class="page" t-foreach="o.move_lines" t-as="l">
+
+                <table class="table table-condensed">
+
+                    <tr>
+                        <th colspan="3" rowspan="4">
+                            <span t-field="o.company_id.name"/>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                           No Dok
+                        </td>
+                        <td colspan="2">
+                           <span t-field="o.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                           Tgl Berlaku
+                        </td>
+                        <td colspan="2">
+                           <span t-field="o.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1">
+                           Tgl Review
+                        </td>
+                        <td colspan="2">
+                           <span t-field="o.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="6"><div align="center">Penimbangan</div></th>
+                    </tr>
+
+                    <tr>
+                        <th style="width:16.67%">BA</th>
+                        <th style="width:16.67%">BT</th>
+                        <th style="width:16.67%">BK</th>
+                        <th style="width:16.67%"></th>
+                        <th style="width:16.67%"></th>
+                        <th style="width:16.67%"></th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Tanggal Penimbangan
+                        </td>
+                        <td colspan="4">
+                           <span t-field="l.product_id.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Nama Produk/Bahan
+                        </td>
+                        <td colspan="4">
+                           <span t-field="l.product_id.name"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            No Bets
+                        </td>
+                        <td colspan="4">
+                            <span t-field="l.restrict_lot_id.name" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            Nama Bahan Awal
+                        </td>
+                        <td colspan="4">
+                            <span t-field="l.restrict_lot_id.name" />
+                    
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            No. LA
+                        </td>
+                        <td colspan="4">
+                            <span t-field="l.product_uom_qty" />
+                            
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            Jumlah Ditimbang
+                        </td>
+                        <td colspan="4">
+                            <span t-field="o.partner_id.name" />
+
+                        </td>
+                    </tr>
+            
+                   
+                    <tr>
+                        <td colspan="2">
+                            Nama dan Paraf Petugas
+                        </td>
+                        <td colspan="4">
+                            ...
+                        </td>
+                    </tr>   
+                     <tr>
+                        <td colspan="2">
+                            Nama dan Paraf Pemeriksa
+                        </td>
+                        <td colspan="4">
+                           
+                        </td>
+                    </tr>  
+                 
+                </table>
+
+            </div>
+        </template>
+
+        <template id="penimbangan_report">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'vit_pharmacy_label.report_stock_picking_document2')"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</openerp>
