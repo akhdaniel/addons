@@ -7,7 +7,8 @@
             <field name="arch" type="xml">
                 <tree string="List Master Checklist">
                     <field name="name" />
-                    <field name="appeareance"/>                   
+                    <field name="appeareance"/>  
+                    <field name="product_id"/>                   
                 </tree>
             </field>
         </record>
@@ -20,6 +21,7 @@
                         <group>
                             <field name="name" />
                             <field name="appeareance"/>       
+                            <field name="product_id"/>   
                         </group>
                     </sheet>
                 </form>
@@ -35,6 +37,7 @@
                 <search string="Search Master Checklist">
                    <field name="name" />
                    <field name="appeareance"/>    
+                   <field name="product_id"/>
                 </search>
             </field>
         </record>
@@ -58,7 +61,8 @@
             <field name="arch" type="xml">
                 <tree string="List Master Advance Checklist">
                     <field name="name" />
-                    <field name="appeareance"/>                   
+                    <field name="appeareance"/>           
+                    <field name="product_id"/>          
                 </tree>
             </field>
         </record>
@@ -70,7 +74,8 @@
                     <sheet>
                         <group>
                             <field name="name" />
-                            <field name="appeareance"/>       
+                            <field name="appeareance"/>
+                            <field name="product_id"/>         
                         </group>
                     </sheet>
                 </form>
@@ -86,7 +91,9 @@
                 <search string="Search Master Advance Checklist">
                    <field name="name" />
                    <field name="appeareance"/>    
+                   <field name="product_id"/>  
                 </search>
+
             </field>
         </record>
 

@@ -11,7 +11,7 @@
                             <page string="Checklist" > 
                                 <field name="stock_checklist_ids" widget="one2many_list" view_mode="tree" nolabel="1">
                                     <tree editable="bottom">
-                                        <field name="master_checklist_id"/>
+                                        <field name="master_checklist_id" domain="['|',('product_id','=',parent.product_id),('product_id','=',False)]"/>
                                         <field name="sesuai_ada"/>
                                         <field name="tidak_sesuai"/>
                                         <field name="note"/>
