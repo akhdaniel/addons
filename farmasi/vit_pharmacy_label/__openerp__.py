@@ -2,9 +2,9 @@
 {
     'name': "Print Label Receiving",
     'summary': """
-        Print Label Receiving : Karantina dan """,
+        Print Label Receiving : Karantina dan Penimbangan """,
     'description': """
-        Print Label Receiving : Karantina dan 
+        Print Label Receiving : Karantina dan Penimbangan
     """,
     'author': "akhmad.daniel@gmail.com",
     'website': "http://www.vitraining.com",
@@ -12,7 +12,8 @@
     'version': '0.1',
     'depends': ['base','stock'],
     'data': [
-        'karantina.xml'
+        'karantina.xml',
+        'penimbangan.xml'
     ],
     'demo': [
     ],
