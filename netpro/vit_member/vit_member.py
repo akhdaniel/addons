@@ -163,7 +163,7 @@ class netpro_member(osv.osv):
             if self_obj.policy_id:
                 #jika policy ny sdh aproved
                 if self_obj.policy_id.state in ['approved','endorsed']:
-                    import pdb;pdb.set_trace()
+                    #import pdb;pdb.set_trace()
                     plan_schedule_ids = self_obj.policy_id.plan_schedule_ids
                     if plan_schedule_ids:
                         for schedule in plan_schedule_ids:

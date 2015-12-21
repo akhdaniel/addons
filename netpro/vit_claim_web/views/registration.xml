@@ -47,10 +47,10 @@
 
                  	<div class="row">
                     	<div class="col-md-4 col-sm-4">
-                            <label class="control-label"><t t-esc="plan.benefit_id.name"/></label>
+                            <label class="control-label"><t t-esc="plan.benefit_id.code"/> - <t t-esc="plan.benefit_id.name"/></label>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                           	<t t-esc="plan.reim"/>
+                           	<t t-esc="plan.remaining"/>
                         </div>
                     </div> 	
                 </t>

@@ -241,7 +241,7 @@ class Member(http.Controller):
 
 			claim_details = self.string2array('claim_details', kw)
 
-			import pdb;pdb.set_trace()
+			#import pdb;pdb.set_trace()
 			diagnosis_list = self.collectDiagnosis('diagnosis_', kw)
 
 			##############################################################################
@@ -257,10 +257,12 @@ class Member(http.Controller):
 			]
 
 			claim.write({
-				'state'				: 'open',
 				'claim_detail_ids' 	: claim_detail_ids ,
 				'diagnosis_ids'		: diagnosis_datas,
 			})
+
+			claim.action_open() # cara memanggil action di object
+			claim.action_approve() # cara memanggil action di object
 
 			Diagnosis  = http.request.env['netpro.diagnosis']
 			diagnosis = Diagnosis.search([])
