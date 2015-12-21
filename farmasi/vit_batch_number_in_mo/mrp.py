@@ -199,7 +199,7 @@ class mrp_production(osv.osv):
         product_ref = product.default_code[:6]
         lot_id = False
         qty_available = 0
-        move_ids = []
+        move_ids = [] # untuk semua actual products yang terambil
 
         # cari produk yang is_header = false dan kode produknya 6 digit pertama sama
         same_product = self.pool.get('product.product').search(cr,uid,
@@ -317,10 +317,11 @@ class mrp_production(osv.osv):
 
                     hasil = actual_product.virtual_available
                     print "hasil, yang ada di gudang: ",actual_product.default_code, actual_product.name,hasil
-                    # import pdb; pdb.set_trace()
+                    import pdb; pdb.set_trace()
 
                     # konversi uom supaya sama dengan uom bom
-                    # misal : actual_produk Kg, bom g 
+                    # misal : actual_produk Kg, bom g
+
                     if actual_product.uom_id.id != uom.id:
                         hasil *= uom.factor / actual_product.uom_id.factor 
                         print("converted hasil ", hasil)
@@ -340,23 +341,26 @@ class mrp_production(osv.osv):
                         break;     
 
                     elif hasil > 0 and  hasil < qty_bom:
-                        move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
-                            production, actual_product, uom_id, qty, uos_id, uos_qty, lot_id, 
-                            hasil, 
-                            source_location_id, destination_location_id, prev_move, context=context)
-                        move_ids.append(move_id)  
+                        #cr, uid, production, product, uom_id, qty, uos_id, uos_qty, lot, qty_available, source_location_id, destination_location_id, prev_move, context
+                        move_id = self._vit_create_stock_move_make_consume_line_from_data(
+                            cr, uid, production, actual_product, uom_id, hasil, uos_id, uos_qty, lot_id, hasil, source_location_id, destination_location_id, prev_move, context=context)
+                                                
+                        move_ids.append(move_id) 
 
                         qty_bom -= hasil
 
                         sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
                         _logger.error(sql)
-                        cr.execute(sql)                        
+                        cr.execute(sql)
+
+                    elif hasil < 0.0:
+                        hasil = 0.0                  
 
 
                     total_lot_qty = total_lot_qty + hasil 
 
 
-                if qty_bom != 0.00 and total_lot_qty != 0.00:
+                if qty_bom != 0.00 and total_lot_qty > 0.00:
                     lot_id = False
                     move_id = self._vit_create_stock_move_make_consume_line_from_data(cr, uid, 
                             production, product, 
@@ -369,7 +373,6 @@ class mrp_production(osv.osv):
 
                 if qty_bom == 0.00:
                     cr.execute("update mrp_production_product_line set state='%s' where id=%s" % ("done", line_id))
-
 
         self.pool.get('stock.move').action_confirm(cr, uid, move_ids, context=context)
 

@@ -26,14 +26,15 @@ class product_template(osv.osv):
             context=context)[0]
 
         for product in self.browse(cr, uid, ids, context=context):
+
             total_qty = 0.00
 
             results[product.id] = 0.0
-            return 
+            # return 
 
             #ambil 6 digit pertama, search dulu product yang sama
             if not product.default_code:
-                raise osv.except_osv("Error", "No Internal Code: %d:%s:%s" % (product.id, product.name, product.default_code))
+                raise osv.except_osv("Error", "No Internal Code: [id=%d, name=%s, default_code=%s, is_header=%s]" % (product.id, product.name, product.default_code, product.is_header))
             
             product_ref = product.default_code[:6]
 
@@ -45,6 +46,8 @@ class product_template(osv.osv):
 
             for prod in self.browse(cr, uid, same_product, context=context):
                 print "   produk ", prod.id, " ", prod.default_code, " ", prod.virtual_available
+                if not prod:
+                    raise osv.except_osv(_('Erro'),_("no product %s") % (prod.name) ) 
                 total_qty = total_qty  + prod.virtual_available
             # print "total ", total_qty
             results[product.id] = total_qty
