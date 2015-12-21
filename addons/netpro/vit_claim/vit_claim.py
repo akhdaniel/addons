@@ -110,7 +110,6 @@ class netpro_claim(osv.osv):
         'refund_bank_name': fields.char('Bank Name'),
         'edc_trc_authorization': fields.char('TRC Authorization'),
         'edc_trc_claim_payable': fields.char('TRC Claim Payable'),
-        # 'state': fields.many2one('netpro.claim_status', 'Status'),
         'state' : fields.selection(CLAIM_STATES,'Status',readonly=True,required=True),
         'acceptation_status': fields.char('Acceptation Status'),
         'cno': fields.integer('CNO'),
@@ -187,6 +186,20 @@ class netpro_claim(osv.osv):
         return self.write(cr,uid,ids,{'state':claim_status_draft},context=context)
 
     def action_open(self,cr,uid,ids,context=None):
+        
+        #import pdb;pdb.set_trace()
+        this = self.browse(cr, uid, ids[0], context=None)
+        member_plans = self.pool.get('netpro.member_plan_detail').search(cr, uid, [('member_plan_id','=',this.member_plan_id.id)], context=context)
+        claim_details = this.claim_detail_ids
+        
+        for plan_detil_id in member_plans:
+            plan_detil = self.pool.get('netpro.member_plan_detail').browse(cr, uid, plan_detil_id, context=None)
+            for claim_detailnya in claim_details:
+                if claim_detailnya.benefit_id.id == plan_detil.benefit_id.id:
+                    accumusage = float(plan_detil.usage) + float(claim_detailnya.billed)
+                    curremain = float(plan_detil.provider_limit) - accumusage
+                    plan_detil.write({'usage':accumusage,'remaining':curremain})
+
         #set to "open" state
         # claim_status_open = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'O', context=context)
         claim_status_open = CLAIM_STATES[1][0]

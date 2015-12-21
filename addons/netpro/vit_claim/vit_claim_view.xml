@@ -105,7 +105,8 @@
                             <field name="claim_loss_date_start" required="True" />
                             <field name="claim_loss_date_end" required="True" />
                             <field name="policy_id" required="True" />
-                            <field name="member_id" domain="[('policy_id','=', policy_id)]" required="True" on_change="onchange_member_claim(member_id)" />
+                            <!-- <field name="member_id" domain="[('policy_id','=', policy_id)]" required="True" on_change="onchange_member_claim(member_id)" /> -->
+                            <field name="member_id" domain="[('policy_id','=', policy_id)]" required="True" />
                             <field name="claim_category_id" />
                             <!-- <field name="claim_type_id" /> -->
                             <field name="member_plan_id" domain="[('member_id','=', member_id)]" required="True" />
