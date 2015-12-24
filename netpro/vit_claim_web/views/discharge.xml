@@ -22,10 +22,10 @@
                     <label class="control-label"><t t-esc="detail.benefit_id.name"/></label>
                 </div>
                 <div class="col-md-4 col-sm-4">
-                   	<input type="text" t-attf-name="claim_details.{{detail.id}}" 
-                        t-attf-value="{{detail.billed}}"/>
+                   	<input type="text" t-attf-mplan="{{member_plan.id}}" t-attf-detailid="{{detail.id}}" t-attf-benefitid="{{detail.benefit_id.id}}" t-attf-class="form-control harga_benefit" t-attf-name="claim_details.{{detail.id}}" t-attf-value="{{detail.billed}}"/>
+                    <span t-attf-id="{{detail.benefit_id.id}}"></span>
                 </div>
-            </div>
+            </div><br />
         </t>
 
         <!-- Loop for diagnosis -->

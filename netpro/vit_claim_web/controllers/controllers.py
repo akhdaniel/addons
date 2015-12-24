@@ -241,14 +241,13 @@ class Member(http.Controller):
 
 			claim_details = self.string2array('claim_details', kw)
 
-			#import pdb;pdb.set_trace()
 			diagnosis_list = self.collectDiagnosis('diagnosis_', kw)
 
 			##############################################################################
 			# update detail claim
 			##############################################################################
 			claim_detail_ids = [
-				(1, x , { 'billed': float(claim_details[x]) }) for x in claim_details.keys()
+				(1, x , { 'billed': float(claim_details[x]), 'excess': float( kw.get('excess.'+str(x), 0) ), 'accepted': float( kw.get('accept.'+str(x), 'claim_details'+str(x)) ) }) for x in claim_details.keys()
 			]
 
 			# prepare data diagnosis
@@ -256,9 +255,18 @@ class Member(http.Controller):
 				(0, 0, {'diagnosis_id': xx, 'standard_fee': diagnosis_list[xx]}) for xx in diagnosis_list.keys()
 			]
 
+			# loop to get summary accepted, excess
+			total_accepted = 0
+			total_excess = 0
+			for x in claim_details.keys():
+				total_accepted += float( kw.get('accept.'+str(x), 'claim_details'+str(x)) )
+				total_excess += float( kw.get('excess.'+str(x), 0) )
+
 			claim.write({
-				'claim_detail_ids' 	: claim_detail_ids ,
-				'diagnosis_ids'		: diagnosis_datas,
+				'summary_accepted' 	 : total_accepted,
+				'sumary_total_excess': total_excess,
+				'claim_detail_ids' 	 : claim_detail_ids,
+				'diagnosis_ids'		 : diagnosis_datas,
 			})
 
 			claim.action_open() # cara memanggil action di object
@@ -328,3 +336,20 @@ class Member(http.Controller):
 				'claims' 			: claim_ids,
 				'member'			: member 
 			} )	
+
+	@http.route('/claim/check_excess', type='json', auth="public", website=True)
+	def check_excess(self,**kw):
+		benefit = kw.get('benefit')
+		mplan = kw.get('mplanid')
+		nilai = kw.get('nilai')
+		isexcess = False
+		excess = 0
+		mplan_data = http.request.env['netpro.member_plan_detail'].search([('member_plan_id','=',int(mplan)), ('benefit_id','=',int(benefit))])
+		if float(nilai) > float(mplan_data.remaining):
+			isexcess = True
+			excess = float(nilai) - float(mplan_data.remaining)
+		res = {}
+		res['success'] = isexcess
+		res['excess'] = excess
+		res['accepted'] = mplan_data.remaining
+		return simplejson.dumps(res)

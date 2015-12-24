@@ -9,7 +9,6 @@ _logger = logging.getLogger(__name__)
 
 class benefit(osv.osv):
 	_name 		= "netpro.benefit"
-	_rec_name = 'code'
 	_columns 	= {
 		'code'						: fields.char("Benefit ID"),
 		'name'						: fields.char("Name"),
@@ -67,6 +66,19 @@ class benefit(osv.osv):
 
 		new_record = super(benefit, self).create(cr, uid, vals, context=context)
 		return new_record
+
+	def name_get(self, cr, uid, ids, context=None):
+		if not ids:
+			return []
+		res = []
+		for r in self.browse(cr, uid, ids, context=context):
+			if r.code and r.name:
+				name = "%s (%s)" % (r.code, r.name)
+				res.append((r.id,name))
+			else :
+				res.append((r.id,r.code))
+
+		return res
 
 class benefit_diagnosis(osv.osv):
 	_name 		= "netpro.benefit_diagnosis"
