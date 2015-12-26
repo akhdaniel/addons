@@ -198,6 +198,8 @@ class netpro_claim(osv.osv):
                 if claim_detailnya.benefit_id.id == plan_detil.benefit_id.id:
                     accumusage = float(plan_detil.usage) + float(claim_detailnya.billed)
                     curremain = float(plan_detil.provider_limit) - accumusage
+                    if curremain < 0:
+                        curremain = 0
                     plan_detil.write({'usage':accumusage,'remaining':curremain})
 
         #set to "open" state

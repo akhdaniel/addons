@@ -35,8 +35,8 @@ $(".harga_benefit").on('change', function(){
         success: function(data){
             var obj = JSON.parse(data.result);
             if(obj.success){
-                var exc_el = "Accepted  : <input class='form-control' name='accept."+det_id+"' readonly value='"+obj.accepted+"' />";
-                    exc_el = "Excess    : <input class='form-control' name='excess."+det_id+"' readonly value='"+obj.excess+"' />";
+                var exc_el = "<label>Accepted  : </label><input class='form-control' name='accept."+det_id+"' readonly='readonly' value='"+obj.accepted+"' />";
+                    exc_el+= "<label>Excess    : </label><input class='form-control' name='excess."+det_id+"' readonly='readonly' value='"+obj.excess+"' />";
                 var anakbuah = $("span[id='"+bef_id+"']");
                 $(exc_el).insertBefore(anakbuah);
             }

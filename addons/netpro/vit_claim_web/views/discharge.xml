@@ -24,8 +24,8 @@
                 <div class="col-md-4 col-sm-4">
                    	<input type="text" t-attf-mplan="{{member_plan.id}}" t-attf-detailid="{{detail.id}}" t-attf-benefitid="{{detail.benefit_id.id}}" t-attf-class="form-control harga_benefit" t-attf-name="claim_details.{{detail.id}}" t-attf-value="{{detail.billed}}"/>
                     <t t-if="claim.state == 'approved' and detail.excess &gt; 0">
-                        Accepted  : <input class='form-control' name='accept.{{detail.id}}' readonly value='{{detail.accepted}}' />
-                        Excess    : <input class='form-control' name='excess.{{detail.id}}' readonly value='{{detail.excess}}' />
+                        <label>Accepted  : </label><input class='form-control' name='accept.{{detail.id}}' readonly='readonly' value='{{detail.accepted}}' />
+                        <label>Excess    : </label><input class='form-control' name='excess.{{detail.id}}' readonly='readonly' value='{{detail.excess}}' />
                     </t>
                     <span t-attf-id="{{detail.benefit_id.id}}"></span>
                 </div>
