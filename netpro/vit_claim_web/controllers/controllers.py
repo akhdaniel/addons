@@ -247,7 +247,7 @@ class Member(http.Controller):
 			# update detail claim
 			##############################################################################
 			claim_detail_ids = [
-				(1, x , { 'billed': float(claim_details[x]), 'excess': float( kw.get('excess.'+str(x), 0) ), 'accepted': float( kw.get('accept.'+str(x), 'claim_details'+str(x)) ) }) for x in claim_details.keys()
+				(1, x , { 'billed': float(claim_details[x]), 'excess': float( kw.get('excess.'+str(x), 0) ), 'accepted': float(kw.get('accept.'+str(x), 0)) }) for x in claim_details.keys()
 			]
 
 			# prepare data diagnosis
@@ -259,7 +259,7 @@ class Member(http.Controller):
 			total_accepted = 0
 			total_excess = 0
 			for x in claim_details.keys():
-				total_accepted += float( kw.get('accept.'+str(x), 'claim_details'+str(x)) )
+				total_accepted += float( kw.get('accept.'+str(x), 0) )
 				total_excess += float( kw.get('excess.'+str(x), 0) )
 
 			claim.write({
@@ -344,12 +344,14 @@ class Member(http.Controller):
 		nilai = kw.get('nilai')
 		isexcess = False
 		excess = 0
+		accept = float(nilai)
 		mplan_data = http.request.env['netpro.member_plan_detail'].search([('member_plan_id','=',int(mplan)), ('benefit_id','=',int(benefit))])
 		if float(nilai) > float(mplan_data.remaining):
 			isexcess = True
 			excess = float(nilai) - float(mplan_data.remaining)
+			accept = mplan_data.remaining
 		res = {}
 		res['success'] = isexcess
 		res['excess'] = excess
-		res['accepted'] = mplan_data.remaining
+		res['accepted'] = accept
 		return simplejson.dumps(res)
