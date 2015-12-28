@@ -317,7 +317,7 @@ class mrp_production(osv.osv):
 
                     hasil = actual_product.virtual_available
                     print "hasil, yang ada di gudang: ",actual_product.default_code, actual_product.name,hasil
-                    import pdb; pdb.set_trace()
+                    # import pdb; pdb.set_trace()
 
                     # konversi uom supaya sama dengan uom bom
                     # misal : actual_produk Kg, bom g
