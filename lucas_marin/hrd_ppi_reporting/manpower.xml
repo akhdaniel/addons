@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<!-- Tree & graph views -->
+        <record id="view_hr_manpower_report_tree" model="ir.ui.view">
+            <field name="name">hr.manpower.report.tree</field>
+            <field name="model">hr.manpower.report</field>
+            <field name="arch" type="xml">
+            <tree string="Manpower Analysis" create="false">
+                <field name="work_location2" invisible="1"/>
+                <field name="usia" invisible="1"/>
+                <field name="kelamin" invisible="1"/>
+                <field name="department_id" invisible="1"/>
+                <field name="nbr" sum="# Employee"/>
+             </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_manpower_report_graph_g" model="ir.ui.view">
+            <field name="name">hr.manpower.report.graph</field>
+            <field name="model">hr.manpower.report</field>
+            <field name="arch" type="xml">
+                <graph orientation="vertical" string="Manpower Analysis" type="bar">
+                    <field group="True" name="kelamin"/>
+                    <field name="nbr" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_hr_manpower_report_graph_a" model="ir.ui.view">
+            <field name="name">hr.manpower.report.graph</field>
+            <field name="model">hr.manpower.report</field>
+            <field name="arch" type="xml">
+                <graph orientation="vertical" string="Manpower Analysis" type="bar">
+                    <field name="usia" group="True"/>
+                    <field name="nbr" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        <record id="view_hr_manpower_report_graph_d" model="ir.ui.view">
+            <field name="name">hr.manpower.report.graph</field>
+            <field name="model">hr.manpower.report</field>
+            <field name="arch" type="xml">
+                <graph orientation="vertical" string="Manpower Analysis" type="bar">
+                    <field group="True" name="department_id"/>
+                    <field name="nbr" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+<!-- Manpower Profile by user and section Search View -->        
+        <record id="view_hr_manpower_report_filter" model="ir.ui.view">
+            <field name="name">hr.manpower.report.select</field>
+            <field name="model">hr.manpower.report</field>
+            <field name="arch" type="xml">
+                <search string="Manpower Analysis">
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Work Location" name="work_location2" icon="terp-personal+" domain="[]" context="{'group_by':'work_location2'}" />
+                        <filter string="Department" name="department_id" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}" />
+                        <filter string="Kelamin" name="kelamin" icon="terp-personal+" domain="[]" context="{'group_by':'kelamin'}" />
+                        <filter string="Usia" name="usia" icon="terp-personal+" domain="[]" context="{'group_by':'usia'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!-- Manpower Actions -->
+        <record id="manpower_report_act_g" model="ir.actions.act_window">
+           <field name="name">Manpower Analysis by Gender</field>
+           <field name="res_model">hr.manpower.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,graph</field>
+           <field name="context">{'search_default_work_location2': 1,'search_default_department_id': 1,'search_default_kelamin': 1, 'search_default_usia': 0, 'group_by_no_leaf':1, 'group_by':[]}</field>
+           <field name="domain">[]</field>
+       </record>
+       <record model="ir.actions.act_window.view" id="manpower_report_tree_g">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_manpower_report_tree"/>
+            <field name="act_window_id" ref="manpower_report_act_g"/>
+       </record>
+       <record model="ir.actions.act_window.view" id="manpower_report_graph">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_hr_manpower_report_graph_g"/>
+            <field name="act_window_id" ref="manpower_report_act_g"/>
+       </record>
+
+        <record id="manpower_report_act_a" model="ir.actions.act_window">
+           <field name="name">Manpower Analysis by Age</field>
+           <field name="res_model">hr.manpower.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,graph</field>
+           <field name="context">{'search_default_work_location2': 1,'search_default_usia': 1,'search_default_kelamin': 0,'search_default_department_id': 0, 'group_by_no_leaf':1, 'group_by':[]}</field>
+           <field name="domain">[]</field>
+       </record>
+       <record model="ir.actions.act_window.view" id="manpower_report_tree_a">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_manpower_report_tree"/>
+            <field name="act_window_id" ref="manpower_report_act_a"/>
+       </record>
+       <record model="ir.actions.act_window.view" id="manpower_report_graph_a">
+            <field name="sequence" eval="4"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_hr_manpower_report_graph_a"/>
+            <field name="act_window_id" ref="manpower_report_act_a"/>
+       </record>
+
+        <record id="manpower_report_act_d" model="ir.actions.act_window">
+           <field name="name">Manpower Analysis by Department</field>
+           <field name="res_model">hr.manpower.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,graph</field>
+           <field name="context">{'search_default_department_id': 1,'search_default_work_location2': 0,'search_default_kelamin': 0, 'search_default_usia': 0, 'group_by_no_leaf':1, 'group_by':[]}</field>
+           <field name="domain">[]</field>
+       </record>
+       <record model="ir.actions.act_window.view" id="manpower_report_tree_d">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_manpower_report_tree"/>
+            <field name="act_window_id" ref="manpower_report_act_d"/>
+       </record>
+       <record model="ir.actions.act_window.view" id="manpower_report_graph_d">
+            <field name="sequence" eval="4"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_hr_manpower_report_graph_d"/>
+            <field name="act_window_id" ref="manpower_report_act_d"/>
+       </record>
+
+
+<!-- Menu Items -->
+        <menuitem name="Human Resources Report" id="menu_hr_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting" groups="base.group_hr_manager,base.group_hr_user"/>
+        <menuitem name="Manpower Profile (Gender)" id="menu_manpower_profile_g" action="manpower_report_act_g" parent="menu_hr_report_ppi"/>
+        <menuitem name="Manpower Profile (Age)" id="menu_manpower_profile_a" action="manpower_report_act_a" parent="menu_hr_report_ppi"/>
+        <menuitem name="Manpower Profile (Department)" id="menu_manpower_profile_d" action="manpower_report_act_d" parent="menu_hr_report_ppi"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<record id="group_hr_manager" model="res.groups">
+		<field name="name">hr / Manager</field>
+	</record>
+
+	<record id="group_hr_user" model="res.groups">
+		<field name="name">hr / User</field>
+	</record>
+	
+	<record id="group_hr_department" model="res.groups">
+		<field name="name">hr / Department</field>
+	</record>	
+
+	<record id="group_hr_employee" model="res.groups">
+		<field name="name">hr / Employee</field>
+	</record>
+
+	<record id="group_hr_training_head" model="res.groups">
+		<field name="name">hr / Training Head</field>
+	</record>	
+
+	<record id="group_hr_director" model="res.groups">
+		<field name="name">hr / Director</field>
+	</record>		
+
+	<record id="group_hr_aprove_dep1" model="res.groups">
+        <field name="name">Aprove Department 1</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> 
+        <field name="comment">Aproval Department</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>   
+
+    <record id="group_hr_aprove_dep2" model="res.groups">
+        <field name="name">Aprove Department 2</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> 
+        <field name="comment">Aproval Department</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>   
+
+    <record id="group_hr_aprove_presdir" model="res.groups">
+        <field name="name">Aprove presdir</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/> 
+        <field name="comment">Aproval Department</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>   
+    <!-- Grooup Untuk Send ke manager department dari admin department-->
+    <record id="group_hr_admins" model="res.groups">
+        <field name="name">Send For Aproval Admin</field>
+        <field name="comment">Untuk Send Aproval Ke Manager</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+<!--     <record id="group_hr_aprove_hrmanager" model="res.group">
+    	<field name='name'>Aprove Manager HRD </field>
+    	<field name='coment'>Approval Manager HRD</field>
+    	<field name='category_id' ref="base.module_category_human_resources"/>
+    </record> -->
+
+</data>
+</openerp>

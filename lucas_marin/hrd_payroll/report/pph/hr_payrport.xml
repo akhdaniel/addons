@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <report
+            id="pph"
+            model="hr.payslip"
+            name="pph"
+            rml="hrd_ppi_payroll/report/pph/pph.rml"
+            string="test print PPH21"
+            auto="False" 
+            header="False" />
+    </data>
+</openerp>

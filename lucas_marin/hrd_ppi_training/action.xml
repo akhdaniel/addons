@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record id="action_hr_training1" model="ir.actions.act_window">
+        <field name="name">Pelatihan Internal</field>
+        <field name="res_model">hr_training.analisa</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_tes': 'Internal'}</field>
+        <field name="domain">[('tes','=','Internal')]</field>
+        <field name="view_id" ref="hr_training_view_tree1"/>        
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_hr_training2" model="ir.actions.act_window">
+        <field name="name">Pelatihan Eksternal</field>
+        <field name="res_model">hr_training.analisa</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_tes': 'Eksternal'}</field>
+        <field name="domain">[('tes','=','Eksternal')]</field>
+        <field name="view_id" ref="hr_training_view_tree2"/>
+        <field name="view_mode">tree,form</field>
+    </record>    
+
+    <record id="action_hr_training3" model="ir.actions.act_window">
+        <field name="name">Pelatihan Khusus SIO</field>
+        <field name="res_model">hr_training.analisa</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_tes': 'SIO'}</field>
+        <field name="domain">[('tes','=','SIO')]</field>
+        <field name="view_id" ref="hr_training_view_tree2"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_hr_nontraining" model="ir.actions.act_window">
+        <field name="name">Pelatihan Non Training</field>
+        <field name="res_model">hr.non_training</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="hr_nontraining"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_hr_detail_training" model="ir.actions.act_window">
+        <field name="name">Detail Peserta Pelatihan</field>
+        <field name="res_model">hr_training.train</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('state','=','evaluation')]</field>
+    </record>
+    
+    <record id="action_hr_detail_nontraining" model="ir.actions.act_window">
+        <field name="name">Detail Peserta Non Pelatihan</field>
+        <field name="res_model">hr_non.emp</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="hr_non_training"/>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem name="Pelatihan" parent="hr.menu_hr_root" id="menu_open_training" sequence="4"/>
+    <menuitem id="hr_menu_training" parent="menu_open_training" name="Analisa Kebutuhan Pelatihan" groups="base.group_hr_manager,base.group_hr_user,hrd_ppi.group_hr_department,hrd_ppi.group_hr_training_head,base.group_user"/> 
+    <menuitem action="action_hr_training1" id="hr_menu_training1" parent="hr_menu_training" name="Pelatihan Internal" groups="base.group_hr_manager,base.group_hr_user,hrd_ppi.group_hr_department,hrd_ppi.group_hr_training_head,base.group_user"/> 
+    <menuitem action="action_hr_training2" id="hr_menu_training2" parent="hr_menu_training" name="Pelatihan Eksternal" groups="base.group_hr_manager,base.group_hr_user,hrd_ppi.group_hr_department,hrd_ppi.group_hr_training_head,base.group_user"/> 
+    <menuitem action="action_hr_training3" id="hr_menu_training3" parent="hr_menu_training" name="Pelatihan Khusus SIO" groups="base.group_hr_manager,base.group_hr_user,hrd_ppi.group_hr_department,hrd_ppi.group_hr_training_head,base.group_user"/>
+    <menuitem action="action_hr_nontraining" id="hr_menu_training4" parent="hr_menu_training" name="Pelatihan Non Training" groups="base.group_hr_manager,base.group_hr_user,hrd_ppi.group_hr_department,hrd_ppi.group_hr_training_head,base.group_user"/>
+    <!-- <menuitem action="action_hr_rencana_training" id="hr_menu_rencana_training" parent="menu_open_training" name="Daftar Peserta Pelatihan" /> -->
+    <menuitem action="action_hr_detail_training" id="hr_menu_detail_training" parent="menu_open_training" name="Detail Peserta Pelatihan" />
+    <menuitem action="action_hr_detail_nontraining" id="hr_menu_detail_nontraining" parent="menu_open_training" name="Detail Peserta Non Pelatihan" />
+    <menuitem parent="hr.menu_hr_configuration" name="Tools" id="base.menu_tools" sequence="120" groups="base.group_tool_user"/>  
+</data>
+</openerp>

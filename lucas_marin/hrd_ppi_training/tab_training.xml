@@ -1,0 +1,141 @@
+<openerp>
+    <data>
+      <record model="ir.ui.view" id="tab_training_view">
+            <field name="name">employee.training</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml"> 
+                <!--field name="name" position="after">
+                    <field name="nik" placeholder="Nomor Induk Karyawan"/>
+                </field-->
+                <page string="HR Settings" position="after">                      
+                    <page string="Training" name="training">
+                        <page string='Non Training' name='nontraining'>
+                            <group colspan="2" string='NON TRAINING'>
+                                <field view_mode="tree,form" name="non_train" nolabel="1" >
+                                    <tree>
+                                        <field name='subject_id'/>
+                                        <field name='penyelenggara'/>
+                                        <field name='tanggal'/>
+                                        <field name='bukti'/>
+                                        <field name='ket'/>
+                                    </tree>
+                                    <form>
+                                        <field name='non_train'/>
+                                        <field name='bukti'/>
+                                        <field name='ket'/>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>
+                        <page string='Training External/Internal' name='train'>
+                            <group colspan="2" string='TRAINING EXTERNAL/INTERNAL'>
+                                <field view_mode="tree,form" name="train_ids" nolabel="1" >
+                                    <tree>      
+                                        <field name="subject_id"/>                        
+                                        <field name="date_from"/>
+                                        <field name="date_to"/>
+                                        <field name="durasi"/>
+                                        <field name="penyelenggara"/>
+                                        <field name='bukti_id'/> 
+                                        <field name='jenis_train'/>                                   
+                                    </tree>
+                                    <form> 
+                                        <field name='tanggal1'/>
+                                        <field name='nama_penilai'/>
+                                        <field name='jabatan_penilai'/>
+                                        <field name="employee_id"/>  
+                                        <field name='persentase_penguasaan'/>
+                                        <field name='kesimpulan'/> 
+                                        <!-- <field name="rekomendasi_id"/> --> 
+                                        <field name="memo"/>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>	
+                        <page string="Training Lainnya" name='trains_lainya'>
+                            <group colspan='2' string='TRAINING LAINNYA'>
+                                <field view_mode='tree,form' name='training_lainya' nolabel='1'>
+                                    <tree>
+                                        <field name='train'/>
+                                        <field name='penyelenggara'/>
+                                        <field name='tgl_mulai'/>
+                                        <field name='tgl_berakhir'/>
+                                        <field name='lembaga'/>
+                                        <field name='bukti'/>
+                                    </tree>
+                                    <form>
+                                        <field name='train'/>
+                                        <field name='penyelenggara'/>
+                                        <field name='tgl_mulai'/>
+                                        <field name='tgl_berakhir'/>
+                                        <field name='lembaga'/>
+                                        <field name='bukti'/>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Sertifikat SIO" name='sio'>
+                            <group colspan='2' string='SERTIFIKAT SIO'>
+                                <field view_mode="tree,form" name="sio_ids" nolabel="1" >
+                                    <tree>
+                                        <field name='employee_id'/>
+                                        <field name='nik'/>
+                                        <field name='department_id'/>
+                                        <field name='nama_sertifikat'/>
+                                        <field name='iso'/>
+                                        <field name='bukti'/>
+                                        <field name='berlaku'/>
+                                        <field name='warning_hari'/>
+                                        <field name='status'/>
+                                    </tree>
+                                    <form>
+                                        <field name='analisa_id'/>
+                                        <field name='bukti'/>
+                                        <field name='berlaku'/>
+                                        <field name="memo"/>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="KEAHLIAN KHUSUS YANG HARUS DIMILIKI" name='keahlian'>
+                            <group colspan='2' string="KEAHLIAN KHUSUS YANG HARUS DIMILIKI">
+                                <field view_mode="tree,form" name="sio_id" nolabel="1" >
+                                    <tree>
+                                        <field name='name'/>
+                                    </tree>
+                                    <form>
+                                        <field name='name'/>
+                                    </form>
+                                </field>
+                            </group>
+                        </page>
+                    </page>
+                </page>	        		                 	                                                                 
+            </field>       
+        </record>
+
+<!--         <record model="ir.ui.view" id="tabwarning_schedule_view">
+            <field name="name">warning.schedule</field>
+            <field name="model">warning.schedule</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hrd_ppi.warning_schedule_form"/>
+            <field name="arch" type="xml">
+                <field name='warning_kontrak' position='after'>
+                    <field name='warning_sio' attrs="{'invisible': [('name','!=','sio')]}">
+                        <tree>
+                            <field name='employee_id'/>
+                            <field name='nik'/>
+                            <field name='department_id'/>
+                            <field name='berlaku'/>
+                            <field name='nama_sertifikat'/>
+                            <field name='iso'/>
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record> -->
+
+    </data>
+</openerp>

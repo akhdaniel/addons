@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_chain_result_tree">
+            <field name="name">ea_import.chain.result.tree</field>
+            <field name="model">ea_import.chain.result</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Import Result">
+                    <button string="Show Result" type="object" name="show_result" icon="gtk-jump-to"/>
+                    <field name="name"/>
+                    <field name="chain_id" invisible="1"/>
+                    <field name="result_ids_file"/>
+                    <field name="import_time"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_chain_result_form">
+            <field name="name">ea_import.chain.result.form</field>
+            <field name="model">ea_import.chain.result</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Import Result" col="2">
+                    <field name="name"/>
+                    <field name="chain_id" invisible="1"/>
+                    <field name="result_ids_file"/>
+                    <button string="Show Result" type="object" name="show_result" icon="gtk-jump-to" colspan="8"/>
+                    <field name="import_time"/>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

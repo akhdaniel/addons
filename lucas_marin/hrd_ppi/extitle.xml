@@ -1,0 +1,480 @@
+<openerp>
+    <data>
+        <record id="hr_extitle1" model="hr.extitle">
+	            <field name="name">(None)</field>
+	            <field name="digit">5</field>
+	            <field name="code"></field>
+	    </record>
+	    <record id="hr_extitle3" model="hr.extitle">
+	            <field name="name">VICE PRESIDENT ACCOUNTING</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC01</field>
+	    </record>
+		<record id="hr_extitle4" model="hr.extitle">
+	            <field name="name">SENIOR ACCOUNTING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC02</field>
+	    </record>
+	    <record id="hr_extitle5" model="hr.extitle">
+	            <field name="name">ACCOUNTING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC03</field>
+	    </record>
+	    <record id="hr_extitle6" model="hr.extitle">
+	            <field name="name">CHIEF ACCOUNTANT</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC04</field>
+	    </record>
+        <record id="hr_extitle7" model="hr.extitle">
+	            <field name="name">ACCOUNTING STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC05</field>
+	    </record>
+	    <record id="hr_extitle8" model="hr.extitle">
+	            <field name="name">ACCOUNTING SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC06</field>
+	    </record>
+	    <record id="hr_extitle10" model="hr.extitle">
+	            <field name="name">ACCOUNTING STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC08</field>
+	    </record>
+	    <record id="hr_extitle9" model="hr.extitle">
+	            <field name="name">ACCOUNTING ANALYST</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC07</field>
+	    </record>	    
+	    <record id="hr_extitle11" model="hr.extitle">
+	            <field name="name">INTERNAL AUDIT STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC09</field>
+	    </record>
+	    <record id="hr_extitle12" model="hr.extitle">
+	            <field name="name">BOOKKEEPER</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC10</field>
+	    </record>
+	    <record id="hr_extitle13" model="hr.extitle">
+	            <field name="name">ACCOUNTING ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC11</field>
+	    </record>
+	    <record id="hr_extitle14" model="hr.extitle">
+	            <field name="name">ACCOUNTING CLERK</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC12</field>
+	    </record>
+	    <record id="hr_extitle15" model="hr.extitle">
+	            <field name="name">SUPERVISOR OPERATION CREDIT MICROBANKING</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC13</field>
+	    </record>
+	    <record id="hr_extitle16" model="hr.extitle">
+	            <field name="name">SUPERVISOR REMITTAN</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC14</field>
+	    </record>
+	    <record id="hr_extitle18" model="hr.extitle">
+	            <field name="name">MANAGER AR</field>
+	            <field name="digit">5</field>
+	            <field name="code">ACC16</field>
+	    </record>
+	    <record id="hr_extitle19" model="hr.extitle">
+	            <field name="name">ADMINISTRASI</field>
+	            <field name="digit">5</field>
+	            <field name="code">ADM01</field>
+	    </record>
+		<record id="hr_extitle20" model="hr.extitle">
+	            <field name="name">SENIOR EXECUTIVE ADVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">ADV01</field>
+	    </record>
+	    <record id="hr_extitle21" model="hr.extitle">
+	            <field name="name">EXECUTIVE ADVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">ADV02</field>
+	    </record>
+	    <record id="hr_extitle22" model="hr.extitle">
+	            <field name="name">SENIOR ADVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">ADV03</field>
+	    </record>
+	    <record id="hr_extitle23" model="hr.extitle">
+	            <field name="name">ADVISOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">ADV04</field>
+	    </record>
+	    <record id="hr_extitle24" model="hr.extitle">
+	            <field name="name">DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">DIR01</field>
+	    </record>
+		<record id="hr_extitle25" model="hr.extitle">
+	            <field name="name">VICE PRESIDENT FINANCE</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN01</field>
+	    </record>
+	    <record id="hr_extitle26" model="hr.extitle">
+	            <field name="name">SENIOR FINANCE MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN02</field>
+	    </record>
+	    <record id="hr_extitle27" model="hr.extitle">
+	            <field name="name">FINANCE MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN03</field>
+	    </record>
+        <record id="hr_extitle28" model="hr.extitle">
+	            <field name="name">TREASURY MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN04</field>
+	    </record>
+	    <record id="hr_extitle29" model="hr.extitle">
+	            <field name="name">FINANCE SPESIALIST</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN05</field>
+	    </record>
+	    <record id="hr_extitle30" model="hr.extitle">
+	            <field name="name">FINANCE SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN06</field>
+	    </record>
+	    <record id="hr_extitle31" model="hr.extitle">
+	            <field name="name">FINANCE STAFF/FINANCE ANALYST</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN07</field>
+	    </record>	    
+	    <record id="hr_extitle32" model="hr.extitle">
+	            <field name="name">BUDGET STAFF/BUDGED ANALYST</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN08</field>
+	    </record>
+	    <record id="hr_extitle33" model="hr.extitle">
+	            <field name="name">CASHIER</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN09</field>
+	    </record>
+	    <record id="hr_extitle34" model="hr.extitle">
+	            <field name="name">FINANCE ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN10</field>
+	    </record>
+	    <record id="hr_extitle36" model="hr.extitle">
+	            <field name="name">TREASURY ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN11</field>
+	    </record>
+	    <record id="hr_extitle37" model="hr.extitle">
+	            <field name="name">BUDGED ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN12</field>
+	    </record>
+	    <record id="hr_extitle38" model="hr.extitle">
+	            <field name="name">FINANCE, TREASURY, BUDGED CLERK</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN13</field>
+	    </record>
+	    <record id="hr_extitle39" model="hr.extitle">
+	            <field name="name">COLLECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN14</field>
+	    </record>
+	    <record id="hr_extitle40" model="hr.extitle">
+	            <field name="name">SUPERVISOR COLLECTION</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN15</field>
+	    </record>
+	    <record id="hr_extitle41" model="hr.extitle">
+	            <field name="name">SENIOR PLANNER</field>
+	            <field name="digit">5</field>
+	            <field name="code">FIN16</field>
+	    </record>
+	    <record id="hr_extitle42" model="hr.extitle">
+	            <field name="name">VICE PRESIDENT GENERAL AFFAIRS</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA01</field>
+	    </record>
+	    <record id="hr_extitle43" model="hr.extitle">
+	            <field name="name">SENIOR GENERAL AFFAIRS MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA02</field>
+	    </record>
+	    <record id="hr_extitle44" model="hr.extitle">
+	            <field name="name">GENERAL AFFAIRS MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA03</field>
+	    </record>
+	    <record id="hr_extitle45" model="hr.extitle">
+	            <field name="name">OFFICE MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA04</field>
+	    </record>
+	    <record id="hr_extitle46" model="hr.extitle">
+	            <field name="name">GENERAL AFFAIRS SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA05</field>
+	    </record>
+	    <record id="hr_extitle47" model="hr.extitle">
+	            <field name="name">GENERAL AFFAIRS STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA06</field>
+	    </record>
+	    <record id="hr_extitle48" model="hr.extitle">
+	            <field name="name">EXECUTIVE SECRETARY</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA07</field>
+	    </record>
+	    <record id="hr_extitle49" model="hr.extitle">
+	            <field name="name">SECRETARY</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA08</field>
+	    </record>
+	    <record id="hr_extitle50" model="hr.extitle">
+	            <field name="name">GENERAL AFFAIRS ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA09</field>
+	    </record>
+	    <record id="hr_extitle51" model="hr.extitle">
+	            <field name="name">CAR POOL OFFICER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA10</field>
+	    </record>
+	    <record id="hr_extitle52" model="hr.extitle">
+	            <field name="name">PURCHASING ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA11</field>
+	    </record>
+	    <record id="hr_extitle53" model="hr.extitle">
+	            <field name="name">RECEPTIONIST</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA12</field>
+	    </record>
+	    <record id="hr_extitle54" model="hr.extitle">
+	            <field name="name">TELEPHONE OPERATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA13</field>
+	    </record>
+	    <record id="hr_extitle55" model="hr.extitle">
+	            <field name="name">TYPIST/CLERK</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA14</field>
+	    </record>
+	    <record id="hr_extitle56" model="hr.extitle">
+	            <field name="name">FOTOCOPY OPERATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA15</field>
+	    </record>
+	    <record id="hr_extitle57" model="hr.extitle">
+	            <field name="name">MESSENGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA16</field>
+	    </record>
+	    <record id="hr_extitle58" model="hr.extitle">
+	            <field name="name">DRIVER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA17</field>
+	    </record>
+	    <record id="hr_extitle59" model="hr.extitle">
+	            <field name="name">OFFICE BOY</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA18</field>
+	    </record>
+	    <record id="hr_extitle60" model="hr.extitle">
+	            <field name="name">GARDENER</field>
+	            <field name="digit">5</field>
+	            <field name="code">GA19</field>
+	    </record>
+	    <record id="hr_extitle61" model="hr.extitle">
+	            <field name="name">VICE PRESIDENT HUMAN RESOURCES</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD01</field>
+	    </record>	
+	    <record id="hr_extitle62" model="hr.extitle">
+	            <field name="name">SENIOR HR MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD02</field>
+	    </record>
+	    <record id="hr_extitle63" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD03</field>
+	    </record>
+	    <record id="hr_extitle64" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD04</field>
+	    </record>
+	    <record id="hr_extitle65" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES ANALYST</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD05</field>
+	    </record>
+	    <record id="hr_extitle66" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD06</field>
+	    </record>
+	    <record id="hr_extitle67" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD07</field>
+	    </record>
+	    <record id="hr_extitle68" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES OFFICER</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD08</field>
+	    </record>
+	    <record id="hr_extitle69" model="hr.extitle">
+	            <field name="name">HUMAN RESOURCES CLERK</field>
+	            <field name="digit">5</field>
+	            <field name="code">HRD09</field>
+	    </record>
+        <record id="hr_extitle70" model="hr.extitle">
+	            <field name="name">VICE PRESIDENT MARKETING</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK01</field>
+	    </record>
+	    <record id="hr_extitle71" model="hr.extitle">
+	            <field name="name">SENIOR MARKETING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK02</field>
+	    </record>
+	    <record id="hr_extitle72" model="hr.extitle">
+	            <field name="name">MARKETING MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK03</field>
+	    </record>
+	    <record id="hr_extitle73" model="hr.extitle">
+	            <field name="name">SALES MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK04</field>
+	    </record>
+	    <record id="hr_extitle74" model="hr.extitle">
+	            <field name="name">PROMOTION MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK05</field>
+	    </record>
+	    <record id="hr_extitle75" model="hr.extitle">
+	            <field name="name">MARKETING SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK06</field>
+	    </record>
+	    <record id="hr_extitle76" model="hr.extitle">
+	            <field name="name">SALES SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">TMRK07</field>
+	    </record>
+	    <record id="hr_extitle77" model="hr.extitle">
+	            <field name="name">PROMOTION SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK08</field>
+	    </record>
+	    <record id="hr_extitle78" model="hr.extitle">
+	            <field name="name">MARKETING / SALES / PROMOTION STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK09</field>
+	    </record>
+	    <record id="hr_extitle79" model="hr.extitle">
+	            <field name="name">SALES ENGINER</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK10</field>
+	    </record>
+	    <record id="hr_extitle80" model="hr.extitle">
+	            <field name="name">MARKETING/SALES/PROMOTION ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK11</field>
+	    </record>
+	    <record id="hr_extitle81" model="hr.extitle">
+	            <field name="name">SALES COUNTER</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK12</field>
+	    </record>
+	    <record id="hr_extitle82" model="hr.extitle">
+	            <field name="name">SALES/PROMOTION CLERK</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK13</field>
+	    </record>
+	    <record id="hr_extitle83" model="hr.extitle">
+	            <field name="name">CAR CALL</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK14</field>
+	    </record>
+	    <record id="hr_extitle84" model="hr.extitle">
+	            <field name="name">TYPIST</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK15</field>
+	    </record>
+	    <record id="hr_extitle85" model="hr.extitle">
+	            <field name="name">SALES ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">MRK16</field>
+	    </record>
+	    <record id="hr_extitle86" model="hr.extitle">
+	            <field name="name">PRESIDENT DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">PD01</field>
+	    </record>
+	    <record id="hr_extitle87" model="hr.extitle">
+	            <field name="name">SAFETY MANAGER/SAFETY COORDINATOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">SAF01</field>
+	    </record>
+	    <record id="hr_extitle88" model="hr.extitle">
+	            <field name="name">SAFETY ANALYST</field>
+	            <field name="digit">5</field>
+	            <field name="code">SAF02</field>
+	    </record>
+	    <record id="hr_extitle89" model="hr.extitle">
+	            <field name="name">SAFETY ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">SAF03</field>
+	    </record>
+	    <record id="hr_extitle90" model="hr.extitle">
+	            <field name="name">SECURITY MANAGER</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC01</field>
+	    </record>
+	    <record id="hr_extitle91" model="hr.extitle">
+	            <field name="name">SECURITY SECTION HEAD</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC02</field>
+	    </record>
+	    <record id="hr_extitle92" model="hr.extitle">
+	            <field name="name">SECURITY STAFF</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC03</field>
+	    </record>
+	    <record id="hr_extitle93" model="hr.extitle">
+	            <field name="name">SECURITY ADMINISTRATION</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC04</field>
+	    </record>
+	    <record id="hr_extitle94" model="hr.extitle">
+	            <field name="name">KOMANDAN REGU SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC05</field>
+	    </record>
+	    <record id="hr_extitle95" model="hr.extitle">
+	            <field name="name">KEPALA UNIT SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC06</field>
+	    </record>
+	    <record id="hr_extitle96" model="hr.extitle">
+	            <field name="name">KEPALA REGU SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC07</field>
+	    </record>
+	    <record id="hr_extitle97" model="hr.extitle">
+	            <field name="name">ANGGOTA REGU SECURITY</field>
+	            <field name="digit">5</field>
+	            <field name="code">SEC08</field>
+	    </record>
+	    <record id="hr_extitle98" model="hr.extitle">
+	            <field name="name">VICE PRESIDENT DIRECTOR</field>
+	            <field name="digit">5</field>
+	            <field name="code">VP01</field>
+	    </record>
+    </data>
+</openerp>
+

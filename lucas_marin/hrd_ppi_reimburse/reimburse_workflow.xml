@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="workflow" id="wkf_hr_ppi_reimburse">
+            <field name="name">reimburse</field>
+            <field name="osv">reimburse</field>
+            <field name="on_create">True</field>
+        </record>
+              
+       <!--nodes reimburse--> 
+        <record model="workflow.activity" id="act_draft_reimburse">
+            <field name="wkf_id" ref="wkf_hr_ppi_reimburse"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_verify_reimburse">
+            <field name="wkf_id" ref="wkf_hr_ppi_reimburse"/>
+            <field name="name">verify</field>
+            <field name="kind">function</field>
+            <field name="action">action_verify()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_reject_reimburse">
+            <field name="wkf_id" ref="wkf_hr_ppi_reimburse"/>
+            <field name="name">reject</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_reject()</field>
+        </record>
+                                
+        <record model="workflow.activity" id="act_approve_reimburse">
+            <field name="wkf_id" ref="wkf_hr_ppi_reimburse"/>
+            <field name="name">approve</field>
+            <field name="kind">function</field>
+            <field name="action">action_approve()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act2_approve_reimburse">
+            <field name="wkf_id" ref="wkf_hr_ppi_reimburse"/>
+            <field name="name">approve2</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_approve2()</field>
+        </record>
+
+        <!--Transition reimburse-->
+        <record model="workflow.transition" id="t_draft_reimburse">
+            <field name="act_from" ref="act_draft_reimburse"/>
+            <field name="act_to" ref="act_verify_reimburse"/>
+            <field name="signal">signal_verify</field>
+        </record>
+        
+        <record model="workflow.transition" id="t1_verify_reimburse">
+            <field name="act_from" ref="act_verify_reimburse"/>
+            <field name="act_to" ref="act_draft_reimburse"/>
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition" id="t_reject_reimburse">
+            <field name="act_from" ref="act_verify_reimburse"/>
+            <field name="act_to" ref="act_reject_reimburse"/>
+            <field name="signal">signal_reject</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_approve_reimburse">
+            <field name="act_from" ref="act_verify_reimburse"/>
+            <field name="act_to" ref="act_approve_reimburse"/>
+            <field name="signal">signal_approve</field>
+        </record>
+               
+        <record model="workflow.transition" id="t2_approve_reimburse">
+            <field name="act_from" ref="act_approve_reimburse"/>
+            <field name="act_to" ref="act2_approve_reimburse"/>
+            <field name="signal">signal_approve2</field>
+        </record>
+        
+        <record model="workflow.transition" id="t2_reject_reimburse">
+            <field name="act_from" ref="act_approve_reimburse"/>
+            <field name="act_to" ref="act_reject_reimburse"/>
+            <field name="signal">signal_reject</field>
+        </record>
+
+        <record model="workflow.transition" id="t3_reject_reimburse">
+            <field name="act_from" ref="act_approve_reimburse"/>
+            <field name="act_to" ref="act_reject_reimburse"/>
+            <field name="signal">signal_reject</field>
+        </record>
+
+    </data> 
+</openerp>
+       

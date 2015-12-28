@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_wizard_recruitment">
+            <field name="name">Print Report Recruitment</field>
+            <field name="model">hr_report.recruitment</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form col="4" string="Report" version="7.0">
+                    <group>
+                        <field name="report"/>         
+                    </group>
+                    <group>
+                         <field name="year_id" attrs="{'required':[('report','in',['data_seleksi','sumary_kebutuhan_harian','sumary_kebutuhan_bulanan','permintaan_recruitment','detail_monitoring_progres','sumary_monitoring_progres'])],'invisible': [('report','not in',['sumary_monitoring_sarmut','detail_monitoring_sarmut','data_seleksi','sumary_kebutuhan_harian','sumary_kebutuhan_bulanan','permintaan_recruitment','detail_monitoring_progres','sumary_monitoring_progres'])]}"/>
+                        <field name="department" attrs="{'invisible': [('report','not in',['laporan_pemenuhan','sumary_kebutuhan_harian','sumary_kebutuhan_bulanan','permintaan_recruitment','detail_monitoring_progres','sumary_monitoring_progres'])]}"/>
+                        <field name="divisi" attrs="{'invisible': [('report','not in',['list_pemenuhan_harian','list_pemenuhan_bulanan'])]}"/>
+                        <field name='status' attrs="{'invisible': [('report','!=','laporan_pemenuhan')]}"/>
+                    </group>
+                    <group>
+                        <field name='star_date' attrs="{'invisible': [('report','not in',['laporan_pemenuhan','list_pemenuhan_harian','list_pemenuhan_bulanan'])]}"/>
+                        <field name='end_date' attrs="{'invisible': [('report','not in',['laporan_pemenuhan','list_pemenuhan_harian','list_pemenuhan_bulanan'])]}"/> 
+                        <field name='semua_pelamar' attrs="{'invisible': [('report','!=','daftar_pelamar')]}"/> 
+                        <field name='status_id' attrs="{'invisible': [('semua_pelamar','=',True)]}"/>
+                        <field name='job_pelamar' attrs="{'invisible': [('semua_pelamar','=',True)]}"/> 
+                    </group> 
+                    <footer>
+                <button string='Excel' type='object' name='eksport_report'/>
+                <!--button string='PDF' type='object' name='eksport_report_pdf'/-->
+                or
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="reports_recruitment">
+            <field name="name">Print Report Recruitment</field>
+            <field name="res_model">hr_report.recruitment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,</field>
+            <field name="target">new</field>
+        </record> 
+        
+        <menuitem name="Print Report Recruitment" action="reports_recruitment" id="menu_report_recruitment" parent="base.menu_crm_case_job_req_main" sequence="28"/>
+
+    </data>
+</openerp>

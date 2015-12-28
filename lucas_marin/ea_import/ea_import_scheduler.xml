@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_scheduler_tree">
+            <field name="name">ea_import.scheduler.tree</field>
+            <field name="model">ea_import.scheduler</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Scheduler Tree">
+                    <field name="name"/>
+                    <field name="input_directory"/>
+                    <field name="log_ids"/>              
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_scheduler_form">
+            <field name="name">ea_import.scheduler.form</field>
+            <field name="model">ea_import.scheduler</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Scheduler Form">
+                    <group colspan="4">
+                        <field name="name"/>
+                        <field name="input_directory"/>
+                        <field name="import_chain_id"  widget="selection"/>
+                        <newline/>                       
+                    </group>
+                    <button name="run_import" string="Run Import" type="object" icon="gtk-execute"/>
+                    <newline/>                
+                    <field name="log_ids" nolabel="1" readonly="0">
+                        <tree string="Logs">
+                            <field name="name"/>
+                            <field name="date_time"/>
+                            <field name="state"/>
+                            <field name="result_ids"/>                                
+                        </tree>
+                    </field>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_scheduler_log_form">
+            <field name="name">ea_import.scheduler.log.form</field>
+            <field name="model">ea_import.scheduler.log</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Scheduler Form">
+                    <field name="name" readonly="1"/>
+                    <field name="date_time" readonly="1"/>
+                    <field name="state" readonly="1"/>
+                    <newline/>
+                    <field name="log_notes" colspan="4" readonly="1"/>
+                    <newline/>                       
+                    <field name="result_ids" colspan="4" readonly="1"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="ea_import_scheduler_action">
+            <field name="name">Import Scheduler</field>
+            <field name="res_model">ea_import.scheduler</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ea_import_scheduler_tree"/>
+            <field name="target">current</field>
+        </record>        
+
+        <menuitem name="Import Scheduler" id="ea_import_scheduler_menu" parent="ea_import_menu" action="ea_import_scheduler_action"/>
+        
+    </data>
+</openerp>
