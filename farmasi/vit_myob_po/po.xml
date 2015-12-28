@@ -1,0 +1,117 @@
+<openerp>
+	<data>
+
+		<record id="view_myob_export_tree" model="ir.ui.view">
+		    <field name="name">purchase_myob_export_tree</field>
+		    <field name="model">purchase.myob_export</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list myob_export">
+					<field name="nama_perusahaan" /> 	
+					<field name="statis1" /> 			
+					<field name="statis2" /> 			
+					<field name="statis3" /> 			
+					<field name="statis4" /> 			
+					<field name="statis5" /> 			
+					<field name="statis6" /> 			
+					<field name="statis7" /> 			
+					<field name="no_po" /> 			
+					<field name="tgl" /> 				
+					<field name="no_pr" /> 			
+					<field name="statis8" /> 			
+					<field name="statis9" /> 			
+					<field name="kode_barang" /> 		
+					<field name="qty" /> 				
+					<field name="nama_barang" /> 		
+					<field name="harga_unit" /> 		
+					<field name="statis10" /> 			
+					<field name="statis11" /> 			
+					<field name="harga_x_qty" /> 		
+					<field name="statis12" /> 			
+					<field name="statis13" /> 			
+					<field name="statis14" /> 			
+					<field name="statis15" /> 			
+					<field name="statis16" /> 			
+					<field name="kode_pajak" /> 		
+					<field name="statis17" /> 			
+					<field name="nilai_ppn" /> 		
+					<field name="statis18" /> 			
+					<field name="statis19" /> 			
+					<field name="statis20" /> 			
+					<field name="statis21" /> 			
+					<field name="statis22" /> 			
+					<field name="statis23" /> 			
+					<field name="statis24" /> 			
+					<field name="statis25" /> 			
+					<field name="kode_currency" /> 	
+					<field name="nilai_kurs" /> 		
+					<field name="statis26" /> 			
+					<field name="statis27" /> 			
+					<field name="statis28" /> 			
+					<field name="statis29" /> 			
+					<field name="statis30" /> 			
+					<field name="statis31" /> 			
+					<field name="order" /> 			
+					<field name="statis32" /> 			
+					<field name="statis33" /> 			
+					<field name="location_id" /> 		
+					<field name="statis34" /> 			
+					<field name="statis35" /> 			
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- action list myob_export -->
+		<record id="action_myob_export_list" model="ir.actions.act_window">
+			<field name="name">List myob export</field>
+			<field name="res_model">purchase.myob_export</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<!-- menu myob_export -->
+		<menuitem id="myob_export"
+			 action="action_myob_export_list"
+			 name="MYOB Export PO"
+			 sequence="200"
+			 parent="purchase.menu_procurement_management"/>
+
+
+	    <!-- context menu More.. di tree PO -->
+	    <record id="action_export_myob" model="ir.actions.server">
+	        <field name="name">Export to MYOB</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_purchase_order"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('purchase.order').action_export_myob(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_export_myob_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'purchase.order'" name="model"/>
+	        <field name="name">Export to MYOB</field>
+	        <field eval="'ir.actions.server,%d'%action_export_myob" name="value"/>
+	    </record>
+
+		<record model="ir.ui.view" id="view_purchase_requisition_form_multi">
+		    <field name="name">view.purchase.requisition.form.multi</field>
+		    <field name="model">purchase.order</field>
+		    <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+		    <field name="arch" type="xml">
+		    	<field name="state" position="after">
+		    		<field name="is_myob_export"/>
+		    	</field>
+		   	</field>
+		</record>		
+
+	     <record model="ir.ui.view" id="vit_purchase_order_form_export">
+	        <field name="name">purchase.order</field>
+	        <field name="model">purchase.order</field>
+	        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+	        <field name="arch" type="xml">
+	            <field name="partner_ref" position="after">
+	                <field name="is_myob_export" />
+	            </field>              
+	        </field>
+	    </record>
+
+	</data>
+</openerp>
