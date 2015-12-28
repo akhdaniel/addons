@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_template_line_boolean_field_tree">
+            <field name="name">ea_import.template.line.boolean_field.tree</field>
+            <field name="model">ea_import.template.line.boolean_field</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Template Line Boolean Field" editable="bottom">
+                    <field name="regexp"/>
+                    <field name="boolean_value"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_template_line_boolean_field_form">
+            <field name="name">ea_import.template.line.boolean_field.form</field>
+            <field name="model">ea_import.template.line.boolean_field</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Template Line Boolean Field" col="2">
+                    <field name="regexp"/>
+                    <field name="boolean_value"/>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

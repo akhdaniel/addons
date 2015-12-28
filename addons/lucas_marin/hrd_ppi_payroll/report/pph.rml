@@ -1,0 +1,1099 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="24.0" y1="3.0" width="562" height="766"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,2" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,3" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,3" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,4" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,4" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,5" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,5" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,6" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,6" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,7" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,7" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="6,0" stop="6,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,2" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,3" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,3" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,4" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,4" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,5" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,5" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,6" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,6" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,7" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,7" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,8" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,8" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,9" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,9" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,10" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,10" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,11" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,11" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,12" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,12" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,13" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,13" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,14" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,14" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,15" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,15" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,16" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,16" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,17" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,17" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,18" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,18" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,19" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,19" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,20" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,20" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,21" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,21" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,22" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,22" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,23" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,23" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,24" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,24" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,25" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,25" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,25" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,25" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,1" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,1" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,1" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,1" stop="5,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table8">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,1" stop="4,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="4,1" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table9">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table10">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table11">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table12">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Helvetica" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P11" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="214.0,10.0,339.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+          <para style="P2">NOMOR URUT</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">NPWP PEMOTONGAN PAJAK</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">NAMA PEMOTONG PAJAK</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">NAMA PEGAWAI ATAU PENERIMA PENSIUN/THT/JHT</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">NPWP PEGAWAI ATAU PENERIMA PENSIUN/THT/JHT</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">ALAMAT PEGAWAI ATAU PENERIMA PENSIUN/THT/JHT</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">STATUS,JENIS KELAMIN, DAN KARYAWAN ASING</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P2">JUMLAH TANGGUNGAN KELUARGA UNTUK PTKP</para>
+        </td>
+        <td>
+          <para style="Table Contents">:</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="214.0,10.0,103.0,154.0,28.0,28.0,27.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P2">JABATAN</para>
+        </td>
+        <td>
+          <para style="P1">:</para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">MASA PEROLEHAN PENGHASILAN</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">s.d</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="396.0,24.0,143.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P2">A. RINCIAN PENGHASILAN DAN PENGHITUNGN pph PASAL 21 SEBAGAI BERIKUT :</para>
+        </td>
+        <td>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">RUPIAH</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L1"/>.</bullet>PENGHASILAN BRUTO :</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>GAJI/PENSIUN ATAU THT/JHT</para>
+        </td>
+        <td>
+          <para style="P4">1</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>TUNJANGAN pph</para>
+        </td>
+        <td>
+          <para style="P4">2</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>TUNJANGAN LAINYA, UANG LEMBUR DAN SEBAGAINYA</para>
+        </td>
+        <td>
+          <para style="P4">3</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>HONORARIUM DAN IMBALAN LAIN SEJENISNYA</para>
+        </td>
+        <td>
+          <para style="P4">4</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>PREMI ASURANSI YANG DI BAYAR PEMBERI KERJA</para>
+        </td>
+        <td>
+          <para style="P4">5</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>PENERIMA DALAM BENTUK NATURAL DAN KENIKMATAN LAINYA YANG DIKENAKAN PEMOTONGAN PPH PASAL 21</para>
+        </td>
+        <td>
+          <para style="P4">6</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>JUMLAH (1 S.D 6)</para>
+        </td>
+        <td>
+          <para style="P4">7</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>TANTIEM,BONUS,GRATIFIKASI,JASA PRODUKSI DAN THR</para>
+        </td>
+        <td>
+          <para style="P4">8</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>JUMLAH PENGHASILAN BRUTO (7-8)</para>
+        </td>
+        <td>
+          <para style="P4">9</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L3"/>.</bullet>PENGURANGAN :</para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>BIAYA JABATAN/BIAYA PENSIUN ATAS PENGHASILAN PADA ANGKA 7</para>
+        </td>
+        <td>
+          <para style="P4">10</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>BIAYA JABATAN / BIAYA PENSIUN ATAS PENGHASILAN PADA ANGKA 8 </para>
+        </td>
+        <td>
+          <para style="P4">11</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>IURAN PENSIUN ATAU IURAN THT/JHT</para>
+        </td>
+        <td>
+          <para style="P4">12</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>JUMLAH PENGURANGAN (10 + 11 + 12)</para>
+        </td>
+        <td>
+          <para style="P4">13</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P9" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L4"/>.</bullet>PENGHITUNGAN PPH PASAL 21</para>
+        </td>
+        <td>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>JUMLAH PENGHASILAN NETO (9-13)</para>
+        </td>
+        <td>
+          <para style="P4">14</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>PENGHASILAN NETO MASA SEBELUMNYA</para>
+        </td>
+        <td>
+          <para style="P4">15</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>JUMLAH PENGHASILAN NETO UNTUK PENGHITUNGAN pph PASAL 21 (SETAHUN/DISETAHUNKAN)</para>
+        </td>
+        <td>
+          <para style="P4">16</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>PENGHASILAN TIDAK KENA PAJAK (PTKP)</para>
+        </td>
+        <td>
+          <para style="P4">17</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>PENGHASILAN KENA PAJAK SETAHUN/DISETAHUNKAN (16-17)</para>
+        </td>
+        <td>
+          <para style="P4">18</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>Pph PASAL 21 ATAS PENGHASILAN KENA PAJAK SETAHUN/DISETAHUNKAN</para>
+        </td>
+        <td>
+          <para style="P4">19</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>Pph PASAL 21 YANG TELAH DI POTONG MASA BERLAKUNYA</para>
+        </td>
+        <td>
+          <para style="P4">20</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>Pph PASAL 21 TERUTANG</para>
+        </td>
+        <td>
+          <para style="P4">21</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7" leftIndent="15" bulletIndent="0"><bullet size="8.0"><seq id="L2"/>.</bullet>Pph PASAL 21 DAN pph PASAL 26 YANG TELAH DIPOTONG DAN DILUNASI</para>
+        </td>
+        <td>
+          <para style="P4">22</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Text body">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="56.0,19.0,240.0,20.0,99.0,128.0" style="Table4">
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">22a</para>
+        </td>
+        <td>
+          <para style="P1">Dipotong dan dilunasi dengan SSP Pph pasal 21 ditanggung pemerintah</para>
+        </td>
+        <td>
+          <para style="P1">22a</para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">22b</para>
+        </td>
+        <td>
+          <para style="P1">Dipotong dan dilunasi dengan SSP</para>
+        </td>
+        <td>
+          <para style="P1">22b</para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="563.0" style="Table5">
+      <tr>
+        <td>
+          <para style="Table Contents">
+            <font face="Helvetica" size="9.0">23. JUMLAH Pph PASAL 21</font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="84.0,175.0,72.0,102.0,21.0,108.0" style="Table6">
+      <tr>
+        <td>
+          <para style="Table Contents">[ ]</para>
+        </td>
+        <td>
+          <para style="P1">a. YANG KURANG DIPOTONG(21-22)</para>
+        </td>
+        <td>
+          <para style="P1">Bulan [ ][ ]</para>
+        </td>
+        <td>
+          <para style="P1">Tahun [ ][ ][ ][ ]</para>
+        </td>
+        <td>
+          <para style="Table Contents">23</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="Table Contents">[ ]</para>
+        </td>
+        <td>
+          <para style="P1">b. YANG LEBIH DI POTONG (21-22)</para>
+        </td>
+        <td>
+          <para style="P1">Bulan [ ][ ]</para>
+        </td>
+        <td>
+          <para style="P1">Tahun[ ][ ][ ][ ]</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="563.0" style="Table7">
+      <tr>
+        <td>
+          <para style="Table Contents">
+            <font face="Helvetica" size="9.0">24. JUMLAH TEBUSAN PADA ANGKA 23 TELAH</font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="84.0,174.0,79.0,96.0,129.0" style="Table8">
+      <tr>
+        <td>
+          <para style="P1">[ ]</para>
+        </td>
+        <td>
+          <para style="P1">a. DIPOTONG DARI PEMBAYARAN GAJI</para>
+        </td>
+        <td>
+          <para style="P1">Bulan [ ][ ]</para>
+        </td>
+        <td>
+          <para style="P1">Tahun [ ][ ][ ][ ]</para>
+        </td>
+        <td>
+          <para style="Table Contents">24 |</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">[ ]</para>
+        </td>
+        <td>
+          <para style="P1">b.DIPERHITUNGKAN DENGAN PPH PASAL 21</para>
+        </td>
+        <td>
+          <para style="P1">Bulan [ ][ ]</para>
+        </td>
+        <td>
+          <para style="P1">Tahun[ ][ ][ ][ ]</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Table Contents">
+      <font color="white"> </font>
+    </para>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="205.0,170.0,188.0" style="Table9">
+      <tr>
+        <td>
+          <para style="P1">B. TANDATANGAN DAN CAP PERUSAHAAN</para>
+        </td>
+        <td>
+          <para style="P11">JAKARTA UTARA</para>
+        </td>
+        <td>
+          <para style="Table Contents">[ ][ ] [ ][ ] [ ][ ][ ][ ]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="115.0,89.0,171.0,60.0,51.0,76.0" style="Table10">
+      <tr>
+        <td>
+          <para style="P1">[ ] PEMOTONG PAJAK</para>
+        </td>
+        <td>
+          <para style="P1">[ ] KUASA</para>
+        </td>
+        <td>
+          <para style="P11">(Tempat)</para>
+        </td>
+        <td>
+          <para style="P11">TGL</para>
+        </td>
+        <td>
+          <para style="P11">BLN</para>
+        </td>
+        <td>
+          <para style="P11">THN</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="376.0,187.0" style="Table11">
+      <tr>
+        <td>
+          <para style="P11">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P11">TANDA TANGAN DAN CAP PERUSAHAAN</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="47.0,327.0,188.0" style="Table12">
+      <tr>
+        <td>
+          <para style="Table Contents">Nama :</para>
+          <para style="Table Contents">Npwp : </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+          <para style="Table Contents">[ ] [ ][ ][ ] [ ][ ][ ] [ ] [ ][ ][ ] [ ][ ][ ]</para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Table Contents">
+      <font color="white"> </font>
+    </para>
+    <para style="Table Contents">
+      <font color="white"> </font>
+    </para>
+    <para style="Table Contents">
+      <font color="white"> </font>
+    </para>
+    <para>
+      <seqReset id="L1"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L3"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L4"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+    <para>
+      <seqReset id="L2"/>
+    </para>
+  </story>
+</document>

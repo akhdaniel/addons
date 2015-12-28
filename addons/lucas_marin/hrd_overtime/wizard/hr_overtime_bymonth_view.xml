@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="view_hr_overtime_report_odt_month" model="ir.ui.view">
+            <field name="name">Employee Overtimes Monthly odt</field>
+            <field name="model">hr.overtime.wizard_odt.month</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Print Overtime Report Monthly">
+                <field name="month"/>
+                <field name="year"/>
+                <newline />
+                <separator colspan="4"/>
+                <button special="cancel"  string="Cancel" icon='gtk-cancel'/>
+                <button name="print_report" string="Print" type="object"  icon="gtk-print"/>
+            </form>
+            </field>
+        </record>
+        
+        <record id="action_hr_overtime_odt_month" model="ir.actions.act_window">
+            <field name="name">Employee Overtimes Monthly odt</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.overtime.wizard_odt.month</field>
+            <field name="src_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="hr_overtime_report_odt_month_values">
+            <field name="model_id" ref="hr.model_hr_employee" />
+            <field name="object" eval="1" />
+            <field name="name">Employee Overtimes Monthly odt</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_hr_overtime_odt_month'))" />
+            <field name="key">action</field>
+            <field name="model">hr.employee</field>
+        </record>
+    </data>
+</openerp>

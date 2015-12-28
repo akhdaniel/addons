@@ -1,0 +1,177 @@
+<openerp>
+    <data>
+                 
+        <record id="hr_training_view_tree" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.tree</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="department_id"/>
+                    <field name="no"/>
+                    <field name="subject_id"/>
+                    <field name="tanggal"/> 
+                    <field name="lama"/>  
+                    <field name="is_internal"/>   
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>
+        
+        <record id="hr_training2_view_tree" model="ir.ui.view">
+            <field name="name">hr_training.train.view.tree</field>
+            <field name="model">hr_training.train</field>
+            <field name="type">tree</field>
+            <field name="domain">[('state','=',approve)]</field>
+            <field name="arch" type="xml">
+                <tree string="Rencana Training">
+                    <field name="employee_id"/>
+                    <field name="subject_id"/>
+                    <field name="department_id"/>                                                            
+                    <field name="job_id"/> 
+                    <field name="penyelenggara"/> 
+                    <!--field name="state"/> 
+                    <field name="is_internal"/-->   
+                </tree>
+            </field>
+        </record>
+        
+         <record id="hr_training_view_form" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.form</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="hr_training.analisa" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        groups="hrd_ppi.group_hr_user" 
+                        class="oe_highlight" /> 
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_approve"
+                        groups="hrd_ppi.group_hr_manager"
+                        class="oe_highlight"  />  
+
+                    <button string="Cancel" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_cancel"/>
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_reject"/>     
+                                                                                     
+
+                    <button string="Start Evaluation" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="approve" name="signal_evaluation" 
+                        class="oe_highlight" /> 
+ 
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group>
+                <group >
+                    <field name="is_internal" attrs="{'invisible': [('state','!=', 'draft')]}"/>
+                     <field name="paket_id"/>
+                     <field name="bulan"/>
+                </group>
+                <group >
+                    <field name="department_id"/>                    
+                </group>    
+                </group>
+                    <group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)]}">
+                    </group>
+                    <group string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}">
+                    </group>
+                <group>      
+                    <group>                  
+                    <field name="no"/>
+                    <field name="subject_id"/>
+                    <field name="mgt_id"/>                   
+                    <field name="penyelenggara" attrs="{'invisible': [('is_internal','=', True)]}"/>
+                    <field name="presentasi" attrs="{'invisible': [('is_internal','=', True)]}"/>
+                    <field name="nama" attrs="{'invisible': [('is_internal','=', False)]}"/>                   
+                    </group>
+                    <group>
+                    <field name="tanggal"/>                   
+                    <field name="realisasi" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/> 
+                    <field name="lama" attrs="{'invisible': ['|',('state','=', 'draft'),('state','=', 'verify')]}"/>
+                    <field name="catatan"/>
+                    </group>    
+                </group>                   
+                    <notebook colspan="4">
+                          <page string="Karyawan" name="karyawan">
+                            <field view_mode="tree,form" name="employee_ids" nolabel="1">
+                                <tree>
+                                    <field name="employee_id" />
+                                    <field name="job_id"/>
+                                    <field name="department_id"/>                                     
+                                    <field name="evaluasi_id"/>
+                                    <field name="rekomendasi_id"/> 
+                                    <field name="bukti_ids"/>
+                                    <!--field name="paket_id"/-->                          
+                                </tree>
+                                <form>
+                                <group>
+                                    <field name="employee_id"/>
+                                    <field name="evaluasi_id"/>
+                                    <field name="rekomendasi_id"/> 
+                                </group>
+                                <group>    
+                                    <field view_mode="form" name="bukti_ids" >>
+                                        <form>     
+                                            <field name="name"/>                                                           
+                                        </form>
+                                    </field>
+                                </group>     
+                                    
+                                </form>
+                            </field>
+                        </page>	
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_training_filter2" model="ir.ui.view">
+            <field name="name">Training</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">search</field>
+            <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
+            <field name="arch" type="xml">
+                <search string="Pelatihan">
+                    <group expand="0" string="Group By...">
+                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Internal/Eksternal" icon="terp-personal+" domain="[]" context="{'group_by':'is_internal'}"/>
+                        <filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/>
+                        <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
+                    </group>
+                </search>
+             </field>
+         </record>
+         
+         <record id="view_training_filter3" model="ir.ui.view">
+            <field name="name">Rencana Training</field>
+            <field name="model">hr_training.train</field>
+            <field name="type">search</field>
+            <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
+            <field name="arch" type="xml">
+                <search string="Rencana Pelatihan">
+                    <group expand="0" string="Group By...">
+                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <!--filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/-->
+                        <!--filter string="Internal/Eksternal" icon="terp-personal+" domain="[]" context="{'group_by':'is_internal'}"/-->
+                        <filter string="Karyawan" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
+                    </group>
+                </search>
+             </field>
+         </record>
+        
+        
+    </data>
+</openerp>
+    

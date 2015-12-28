@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_users_form_for_accs" model="ir.ui.view">
+            <field name="name">res.users.accs.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id"  position="after">
+                    <field name="dept_related"/>
+                    <field name="acc_level"/>
+                    <field name='approve_presdir'/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_users_tree_for_accs" model="ir.ui.view">
+            <field name="name">res.users.accs.tree</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+                <field name="login" position="after">
+                    <field name="dept_related"/>
+                    <field name="acc_level"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

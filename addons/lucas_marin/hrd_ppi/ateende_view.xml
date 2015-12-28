@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<openerp>
+	<data>
+		<record model='ir.ui.view' id='attendee_inherit'>
+			<field name='name'>Ateendee</field>
+			<field name='model'>hr.attendance</field>
+			<field name='type'>form</field>
+			<field name='inherit_id' ref='hr'

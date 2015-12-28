@@ -1,0 +1,54 @@
+<openerp>
+    <data>
+        <!--record id="view_hr_payslip_form" model="ir.ui.view">
+                <field name="name">hr.payslip.form</field>
+                <field name="model">hr.payslip</field>
+                <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+                <field name="arch" type="xml">
+                    <field name="contract_id" position="before">
+                        <field name="gol_id"/>
+                        <field name="department_id"/>
+                    </field>
+                </field>
+        </record>
+        <record id="view_hr_payslip_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                    <field name="number" position="after">                    
+                        <field name="department_id"/>
+                    </field>
+            </field>
+        </record>
+         <record id="view_hr_payslip_filter" model="ir.ui.view">
+            <field name="name">hr.payslip.select</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+            <field name="arch" type="xml">
+                <search string="Search Payslips">
+                    <field name="name" string="Payslips" filter_domain="['|',('name','ilike',self),('number','ilike',self)]"/>
+                    <field name="date_from"/>
+                    <field name="employee_id"/>
+                    <field name="payslip_run_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Departmen" icon="terp-personal" name='department_id' context="{'group_by':'department_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record-->
+    <record model="ir.actions.act_window" id="master_title">
+        <field name="name">Master Title</field>
+        <field name="res_model">hr.title</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="master_extitle">
+        <field name="name">Master ExTitle</field>
+        <field name="res_model">hr.extitle</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+        <!--menuitem id="jenis_tunjangan" parent="menu_hr_root_payroll" name="Jenis Tunjangan" groups="base.group_hr_manager" sequence="45"/-->
+    </data>
+</openerp>

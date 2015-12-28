@@ -1,0 +1,39 @@
+<openerp>
+    <data>
+        <record id="view_hr_job_form3" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hrd_ppi.view_hr_job_form2"/>
+            <field name="arch" type="xml">
+                <!-- <field name='jenis_permohonan' position='replace'/> -->
+                <field name='department_id' position='after'>
+                    <field name='kelas'/>
+                </field>                                                                                       
+            </field>      
+        </record> 
+
+        <record model="ir.ui.view" id="crm_case_form_view_job3">
+            <field name="name">Jobs-Recruitment Form</field>
+            <field name="model">hr.applicant</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hrd_ppi.crm_case_form_view_job2"/>
+            <field name="arch" type="xml">
+                <label for="lokasi_id" string="Lokasi Kerja" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" position='replace'/>
+                <field name='lokasi_id' position='replace'/>
+                <!-- <field name='respon_div' position='replace'/> -->
+                <field name='app_id' position='replace'/>
+                <field name='dep_app' position='replace'/>
+            </field>
+        </record>
+
+<!--         <record model="ir.ui.view" id="crm_case_form_view_job4">
+            <field name="name">Job-recruitment Form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+            <field name="arch" type="xml">
+                <field name='job_id' position='replcae'/>
+            </field>
+        </record>  -->
+
+    </data>
+</openerp>

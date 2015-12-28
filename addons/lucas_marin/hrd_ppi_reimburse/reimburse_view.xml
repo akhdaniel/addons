@@ -1,0 +1,308 @@
+<openerp>
+    <data>    
+    
+         <record id="hr_reimburse_view_form" model="ir.ui.view">
+            <field name="name">Permintaan Tunjangan</field>
+            <field name="model">reimburse</field>
+            <field name="priority">1</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="Permohonan Reimburse" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        groups="hrd_ppi.group_hr_aprove_dep1" 
+                        class="oe_highlight" /> 
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_approve"
+                        groups="base.group_hr_manager"
+                        class="oe_highlight"  />  
+                        
+                    <button string="Second Approve" type="workflow"  
+                        states="approve" name="signal_approve2"
+                        groups="hrd_ppi.group_hr_manager,base.group_hr_manager"
+                        class="oe_highlight"  />                          
+
+                    <button string="Cancel" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_cancel"/>
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="verify" name="signal_reject"/>    
+                        
+                    <button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="approve" name="signal_reject"/>                          
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                <group>
+                <group>
+                    <field name='type' invisible="1"/>
+                     <field name="tahun" invisible="1"/>
+                     <field name="jenis" attrs="{'readonly': [('state','!=','draft')]}"/>
+                     <field name="tanggal" attrs="{'readonly': [('state','!=','draft')]}"/>
+                     <field name="nomin" attrs="{'readonly': [('state','!=','draft')]}"/>
+                </group>
+                <group>
+                    <field name="employee_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                    <field name="department_id"/>
+                    <field name="bukti" attrs="{'readonly': [('state','!=','draft')]}"/>  
+                     <field name="keterangan"/>                                      
+                </group>    
+                 </group>
+                 </sheet>
+                </form>
+            </field>
+        </record>  
+                        
+    <record id="hr_reimburse_view_form2" model="ir.ui.view">
+            <field name="name">Alokasi Tunjangan Kesehatan</field>
+            <field name="model">reimburse</field>
+            
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="Alokasi Reimburse" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        class="oe_highlight" groups="base.group_hr_user,hrd_ppi.group_hr_department"/> 
+
+                    <!--button string="Send" type="object" 
+                         name="reimburse_alloc"/--> 
+
+                    <button string="Approve" type="workflow"  
+                        states="verify" name="signal_approve"
+                        class="oe_highlight" groups="base.group_hr_manager,hrd_ppi.group_hr_aprove_dep1" />  
+                        
+                    <button string="Second Approve" type="workflow"  
+                        states="approve" name="signal_approve2"
+                        class="oe_highlight" groups="base.group_hr_manager" />                          
+
+                    <!--button string="Cancel" type="workflow"  
+                        states="verify" name="signal_cancel"/-->
+                        
+                    <button string="Reject" type="workflow"  
+                        states="verify" name="signal_reject"/>    
+                        
+                    <button string="Reject" type="workflow"  
+                        states="approve" name="signal_reject"/>                          
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                <group>
+                <group >
+                    <field name='type' invisible="1"/>
+                     <field name="jenis" invisible="1" /> <!-- attrs="{'readonly':[('state','=','draft')]}"/-->
+                     <label for="nominal" string="Alokasi Reimburse"/><field name="nominal" nolabel="1" readonly='1'/>
+                     <field name="tahun" invisible="1"/>
+                     <field name="employee_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                </group>
+                <group >
+                    
+                    <field name="department_id"/>
+                    <field name="keterangan"  attrs="{'readonly': [('state','!=','draft')]}"/>                                    
+                </group>    
+                 </group>
+                 </sheet>
+                </form>
+            </field>
+        </record> 
+              
+                
+        <record id="hr_reimburse_view_tree" model="ir.ui.view">
+            <field name="name">Reimburse tree</field>
+            <field name="model">reimburse</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state == 'reject';blue:state == 'draft';black:state in ('verify','approve','approve2')" string="Permohonan Reimburse">
+                    <field name="jenis"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="tanggal"/> 
+                    <field name="nominal"/> 
+                    <!--field name="sisa_reimburse"/--> 
+                    <field name="keterangan"/>   
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>
+        
+        <record id="hr_reimburse_view_tree2" model="ir.ui.view">
+            <field name="name">Reimburse tree2</field>
+            <field name="model">reimburse</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state == 'reject';blue:state == 'draft';black:state in ('verify','approve','approve2')" string="Alokasi Reimburse">
+                    <field name="jenis"/>
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <!--field name="tanggal" invisible="1"/--> 
+                    <field name="nominal" string="Alokasi Reimburse" />  
+                    <field name="keterangan"/>   
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>                  
+                
+        <record id="view_reimburse_filter2" model="ir.ui.view">
+            <field name="name">Filter Reimburse</field>
+            <field name="model">reimburse</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Reimburse">
+                    <group expand="0" string="Group By...">
+                        <filter string="Karyawan" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Jenis Reimburse" icon="terp-personal+" domain="[]" context="{'group_by':'jenis'}"/>
+                        <filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+             </field>
+         </record>
+         
+        <!--Hr employee inherit reimburse-->
+         <!--Hr employee inherit reimburse>
+        <record id="view_employee_form_reimburse" model="ir.ui.view">
+            <field name="name">hr.employee.reimburse</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml"-->
+                <!--page string="HR Settings" position="replace"> 
+                    <page string="HR Settings" groups="base.group_hr_user,base.group_user">
+                        <group>
+                            <group string="Active" name="active_group">
+                                <field name="active"/>
+                            </group>
+                            <group string="Tunjangan Kesehatan" -->
+                                <!--field name="sisa_reimburse_rs" class="oe_inline"/-->
+                                <!--field name='total_tunjangan_pengobatan'/>
+                                <field name='total_pemakaian_pengobatan'/>
+                                <field name="sisa_reimburse_pengobatan" class="oe_inline"/>
+                                <field name='total_reimburse_rs'/>
+                            </group>
+                        </group>
+                        <group string="Informasi Kontrak">
+                        <field name='tgl_msk'/>
+                        <label for="status_contract"/>
+                        <div>
+                            <field name="status_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="no_contract"/>
+                        <div>
+                            <field name="no_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="tanggal"/>
+                        <div>                          
+                            <field name="tanggal" class="oe_inline"/>
+                        </div>                     
+                        <label for="warning_hari"/>
+                        <div>                          
+                            <field name="warning_hari" class="oe_inline">Hari</field>
+                        </div> 
+                    </group>  
+                    <group string="Cuti Tahunan">
+                        <label for="sisa"/>
+                        <div>
+                            <field name="sisa"/>
+                        </div>
+                        <label for="alokasi"/>
+                        <div>
+                            <field name="alokasi" class="oe_inline"/> days
+                        </div>
+                        <label for="cuti_tahunan"/>
+                        <div>                          
+                            <field name="cuti_tahunan" class="oe_inline"/> days
+                        </div>                     
+                    </group>            
+                    </page>
+                </page>    
+            </field>
+        </record-->   
+        
+        <!-- contract -->
+        
+        <record id="hr_contract_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+               <field name="type_id" position="after">
+               <field name="jatah_reimburse_pengobatan"/>
+               <!--field name="jatah_reimburse_perawatan"/-->
+               </field>
+            </field>            
+        </record>   
+    <record id="action_hr_alokasi_reimburse" model="ir.actions.act_window">
+        <field name="name">Alokasi Tunjangan Kesehatan</field>
+        <field name="res_model">reimburse</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_type':'remove'}</field>
+        <field name="domain">[('type','=','remove')]</field>        
+        <field name="view_id" ref="hr_reimburse_view_form2"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+        <record model="ir.actions.act_window.view" id="action_alokasi_tree">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_reimburse_view_tree2"/>
+            <field name="act_window_id" ref="action_hr_alokasi_reimburse"/>
+        </record>
+
+        <!--record model="ir.actions.act_window.view" id="action_alokasi_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_reimburse_view_form2"/>
+            <field name="act_window_id" ref="action_hr_alokasi_reimburse"/>
+        </record-->     
+    
+    <record id="action_hr_permohonan_reimburse" model="ir.actions.act_window">
+        <field name="name">Permohonan Reimburse</field>
+        <field name="res_model">reimburse</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_type':'add'}</field>
+        <field name="domain">[('type','=','add')]</field> 
+        <field name="view_id" ref="hr_reimburse_view_form"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record forcecreate="1" id="ppi_annual_reimburse" model="ir.cron">
+        <field name="name">Create PPI Annual Reimburse Allocation</field>
+        <field eval="1" name="active" />
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">12</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall" />
+        <field eval="'reimburse'" name="model" />
+        <field eval="'reimburse_alloc'" name="function" />
+        <field eval="'()'" name="args" />
+        <!--field eval="import time;strftime("%m/%d/%Y %H:%M:%S")" name="nextcall" /-->
+    </record>
+
+     <record model="ir.actions.act_window.view" id="action_permohonan_tree">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_reimburse_view_tree"/>
+            <field name="act_window_id" ref="action_hr_permohonan_reimburse"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_permohonan_form">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_reimburse_view_form"/>
+            <field name="act_window_id" ref="action_hr_permohonan_reimburse"/>
+        </record> 
+
+    <menuitem name="Tunjangan Kesehatan" parent="hr.menu_hr_root" id="menu_reimburse" sequence="15" /> 
+    <menuitem action="action_hr_permohonan_reimburse" id="hr_menu_permohonan_reimburse" parent="menu_reimburse" name="Permohonan Tunjangan Kesehatan" /> 
+    <menuitem action="action_hr_alokasi_reimburse" id="hr_menu_alokasi_reimburse" parent="menu_reimburse" name="Alokasi Tunjangan Kesehatan" groups="base.group_hr_manager,base.group_hr_user"/> 
+
+    </data>
+</openerp>
+    

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<!-- TRANSFER BANK LIST -->
+<!-- Tree & graph views -->
+        <record id="view_trsfr_bnk_lst_report_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.transfer.bank.list.report.tree</field>
+            <field name="model">hr.payslip.transfer.bank.list.report</field>
+            <field name="arch" type="xml">
+            <tree string="Transfer Bank List" create="false">
+                <field name="nik"/>
+                <field name="employee"/>
+                <field name="name"/>
+                <field name="acc_number"/>
+                <field name="bank_name"/>
+                <field name="city"/>
+                <field name="net"/>
+                <field name="bulan" invisible='1'/>
+                <field name="tahun" invisible='1'/>
+             </tree>
+            </field>
+        </record>
+
+<!-- Manpower Profile by user and section Search View -->        
+        <record id="view_trsfr_bnk_lst_report_filter" model="ir.ui.view">
+            <field name="name">hr.payslip.transfer.bank.list.report.select</field>
+            <field name="model">hr.payslip.transfer.bank.list.report</field>
+            <field name="arch" type="xml">
+                <search string="Transfer Bank List">
+                  <field name="nik"/>
+                  <field name="employee"/>
+                  <field name="bulan"/>
+                  <field name="tahun"/>
+                  <field name="name"/>
+                  <field name="acc_number"/>
+                  <!-- <filter string="Tahun Berjalan" icon="terp-go-today" name="th_skr" domain="[('tahun', '=', time.strftime('%%Y'))]"/>
+                  <filter string="Bulan Berjalan" icon="terp-go-today" name="bln_skr" domain="[('bulan', '=', time.strftime('%%m'))]"/> -->
+                  <separator/>
+                  <group expand="0" string="Group By...">
+                        <!-- <filter string="Tahun" name="itahun" icon="terp-go-today" domain="[]" context="{'group_by':'tahun'}" />
+                        <filter string="Bulan" name="ibulan" icon="terp-go-today" domain="[]" context="{'group_by':'bulan'}" /> -->
+                        <filter string="Employee" name="iemployee" icon="terp-personal+" domain="[]" context="{'group_by':'employee'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!-- Transfer Actions -->
+        <record id="trsfr_bnk_lst_report_act" model="ir.actions.act_window">
+           <field name="name">Transfer Bank List</field>
+           <field name="res_model">hr.payslip.transfer.bank.list.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree</field>
+           <field name="context">{'search_default_iemployee': 1, 'group_by_no_leaf':0, 'group_by':[]}</field>
+           <!-- <field name="domain">[]</field> -->
+       </record>
+       <record model="ir.actions.act_window.view" id="trsfr_bnk_lst_report_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_trsfr_bnk_lst_report_tree"/>
+            <field name="act_window_id" ref="trsfr_bnk_lst_report_act"/>
+       </record>
+
+<!-- Menu Items -->
+        <menuitem name="Payroll" id="menu_payslip_report_ppi" parent="hrd_ppi.hrd_ppi_main_reporting" groups="base.group_hr_manager,base.group_hr_user"/>
+        <menuitem name="Transfer Bank List" id="menu_payslip_trsfr_bnk_lst" action="trsfr_bnk_lst_report_act" parent="menu_payslip_report_ppi"/>
+
+
+
+
+<!-- MONTHLY PAYSLIP LIST -->
+<!-- Tree & graph views -->
+        <record id="view_monthly_list_report_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.monthly.list.report.tree</field>
+            <field name="model">hr.payslip.monthly.list.report</field>
+            <field name="arch" type="xml">
+            <tree string="Monthly Payslip List Analisis" create="false">
+                <field name="nik" invisible="1"/>
+                <field name="name_related" invisible="1"/>
+                <field name="name"/>
+                <field name="amount"/>
+                <field name="pajak"/>
+                <field name="bulan" invisible="1"/>
+                <field name="tahun" invisible="1"/>
+                <field name="ref_num" invisible="1"/>
+             </tree>
+            </field>
+        </record>
+
+<!-- Monthly Payslip List Search View -->        
+        <record id="view_mnth_payslip_lst_report_filter" model="ir.ui.view">
+            <field name="name">hr.payslip.monthly.list.report.select</field>
+            <field name="model">hr.payslip.monthly.list.report</field>
+            <field name="arch" type="xml">
+                <search string="Monthly Payslip List">
+                  <field name="nik"/>
+                  <field name="name_related"/>
+                  <field name="tahun"/>
+                  <field name="bulan"/>
+                  <separator/>
+                  <group expand="0" string="Group By...">
+                    <!-- <filter string="Tahun" name="ith" icon="terp-personal+" domain="[]" context="{'group_by':'tahun'}" />
+                    <filter string="Bulan" name="ibln" icon="terp-personal+" domain="[]" context="{'group_by':'bulan'}" /> -->
+                    <filter string="Employee" name="iemployee" icon="terp-personal+" domain="[]" context="{'group_by':'name_related'}" />
+                    <filter string="Reference" name="iref" icon="terp-personal+" domain="[]" context="{'group_by':'ref_num'}" />
+                  </group>
+                </search>
+            </field>
+        </record>
+
+<!-- Monthly Payslip Actions -->
+        <record id="payslip_mnth_lst_report_act" model="ir.actions.act_window">
+           <field name="name">Monthly Payslip List</field>
+           <field name="res_model">hr.payslip.monthly.list.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree</field>
+           <field name="context">{'search_default_iemployee': 1,'search_default_iref': 1,'group_by_no_leaf':0,'group_by':[]}</field>
+           <!--<field name="domain">[]</field> -->
+       </record>
+       <record model="ir.actions.act_window.view" id="mnth_lst_report_view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_monthly_list_report_tree"/>
+            <field name="act_window_id" ref="payslip_mnth_lst_report_act"/>
+       </record>
+
+<!-- Menu Items -->
+        <menuitem name="Monthly Payslip List" id="menu_payslip_mnth_lst" action="payslip_mnth_lst_report_act" parent="menu_payslip_report_ppi"/>
+
+    </data>
+</openerp>

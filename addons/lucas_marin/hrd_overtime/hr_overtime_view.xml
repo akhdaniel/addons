@@ -1,0 +1,268 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+    
+       <record id="view_hr_overtime_filter" model="ir.ui.view">
+            <field name="name">hr.overtime.filter</field>
+            <field name="model">hr.overtime</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Overtime">
+                    <group col='8' colspan='4'>
+                        <filter icon="terp-camera_test" domain="[('state','=','validate')]" string="Validated"/>
+                        <separator orientation="vertical"/>
+                        <filter icon="terp-check" domain="[('state','=','draft')]" string="To Confirm"/>
+                        <filter icon="terp-camera_test" domain="[('state','=','confirm')]" string="To Approve"/>
+                        <separator orientation="vertical"/>
+                        <filter string="This Month" icon="terp-go-month" name="This Month"
+                                domain="[('date_from','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date_from','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"/>
+                        <separator orientation="vertical"/>
+                        <field name="employee_id">
+                            <filter icon="terp-personal"
+                                name="my_overtime"
+                                domain="[('employee_id.user_id','=', uid)]"
+                                help="My overtime" />
+                        </field>
+                        <field name="department_id" widget="selection">
+                            <filter icon="terp-personal+" help="My Department Overtime"
+                                domain="[('department_id.manager_id','=',uid)]" />
+                        </field>
+                        <field name="overtime_type_id" widget="selection"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Extended Filters...">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <newline />
+                    <group expand="0" string="Group By...">
+                        <filter name="group_employee" string="Employee" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
+                        <filter string="Manager" icon="terp-personal" domain="[]" context="{'group_by':'manager_id'}"/>
+                        <filter string="Department" icon="terp-personal+" domain="[]" context="{'group_by':'department_id','set_visible':True}"/>
+                        <separator orientation="vertical"/>
+                        <filter name="group_type" string="Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'overtime_type_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="State" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="edit_overtime_new">
+            <field name="name">Oveertime Request</field>
+            <field name="model">hr.overtime</field>
+            <field name="type">form</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Overtime Request">   
+                        <!--group>      
+                        <field name="lembur_dari" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" />
+                        <field name="lembur_sampai" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" />
+                        </group>
+                        <field name='tanggal'/-->
+                        <group>
+                        <field name="name" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')]}" /> 
+                        </group>
+                        <notebook colspan="4">
+                            <page string="General">
+                                <field name="overtime_type_id"/>
+                                <field name='overtime_type'/>
+                                <!-- <field name='tanggal'/> -->
+                                <field name="employee_id" on_change="onchange_dep1(employee_id)" required="1"/>
+                                <field name="department_id"/>
+                                <field name="istirahat"/> 
+                                <field name="nominal"/>
+                                <newline/>
+                                <field name="date_from" on_change="onchange_date_from1(date_to, date_from,istirahat)" required="1"/>
+                                <field name="date_to" on_change="onchange_date_to1(date_to, date_from,istirahat)" required="1"/>
+                                <field name="number_of_hours_temp" widget="float_time"/>
+                                <field name="jam_lembur" widget="float_time"/>
+                                <field name='total_jam' widget="float_time"/>
+                                <field name='users_id'/>
+                                <newline/>
+                                <field name="manager_id"/>
+                                <field name="manager_id2"/>
+                                <separator string="Status" colspan="4"/>
+                                <field name="notes" nolabel="1" colspan="4"/>
+                                <newline/>
+                                <field name="state" colspan="2"/>
+                                <group colspan="2" col="6">
+                                    <button string="Refuse" name="refuse" states="confirm,validate,validate1" type="workflow" icon="gtk-no" groups="base.group_hr_user,base.group_hr_manager"/>
+                                    <button string="Confirm" name="confirm" states="draft" type="workflow" icon="gtk-yes"/>
+                                    <button string="Approve" name="validate" states="confirm" type="workflow" icon="gtk-apply" groups="base.group_hr_user,hrd_ppi.group_hr_aprove_dep1"/>
+                                    <button string="Approved" name="second_validate" states="validate1" type="workflow" icon="gtk-apply" groups="base.group_hr_manager"/>
+                                    <button string="Set to Draft" name="set_to_draft" states="refuse" type="object" icon="gtk-convert" groups="base.group_hr_user"/>
+                                </group>
+                            </page>
+                        </notebook>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_overtime_simple">
+            <field name="name">hr.overtime.report_tree</field>
+            <field name="model">hr.overtime</field>
+            <field name="type">tree</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state in ('refuse');blue:state in (' draft');black:state in ('confirm','validate','validate1')" string="Overtime Summary">
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="name"/>
+                    <field name="overtime_type_id"/>
+                    <field name="number_of_hours" string="Number of hours" sum='Number of hours'/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="manager_id" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="state"/>
+                    <button string="Confirm" name="confirm" states="draft" type="workflow" icon="gtk-yes"/>
+                    <button string="Approve" name="validate" states="confirm" type="workflow" icon="gtk-apply" groups="base.group_hr_user"/>
+                    <button string="Refuse" name="refuse" states="confirm" type="workflow" icon="gtk-no" groups="base.group_hr_user"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_overtime">
+            <field name="name">hr.overtime.tree</field>
+            <field name="model">hr.overtime</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree colors="red:state in ('refuse');blue:state in (' draft');black:state in ('confirm','validate','validate1')" string="Overtimes">
+                    <field name="employee_id"/>
+                    <field name="department_id" invisible="not context.get('set_visible',False)"/>
+                    <field name="name"/>
+                    <field name="overtime_type_id"/>
+                    <field name="overtime_type"/>
+                    <field name="number_of_hours" string="Number of Hours" sum='Number of Hours'/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="manager_id" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="state"/>
+                    <button string="Approve" name="validate" states="confirm" type="workflow" icon="gtk-apply" groups="base.group_hr_user,base.group_hr_manager"/>
+                    <button string="Approved" name="second_validate" states="validate1" type="workflow" icon="gtk-apply" groups="base.group_hr_user,base.group_hr_manager"/>
+                </tree>
+                <tree string='overtime'>
+                    <field name="employee_id"/>
+                    <field name="department_id" />
+                    <field name="name"/>
+                    <field name="overtime_type_id"/>
+                    <field name="overtime_type"/>
+                    <field name="number_of_hours" />
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="manager_id" />
+                    <field name="user_id" />
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <menuitem
+            name="Overtime"
+            parent="hr.menu_hr_root"
+            id="menu_open_ask_overtime" groups="base.group_hr_manager,base.group_hr_user"
+            sequence="5"/>
+            
+        <record model="ir.actions.act_window" id="open_ask_overtime">
+            <field name="name">Overtime Requests</field>
+            <field name="res_model">hr.overtime</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="edit_overtime_new"/>
+            <field name="help">Overtime requests can be recorded by employees and validated by their managers. Once a leave request is validated, it appears automatically in the agenda of the employee.</field>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="action_open_ask_overtime_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_overtime_simple"/>
+            <field name="act_window_id" ref="open_ask_overtime"/>
+        </record>
+        
+        <record model="ir.actions.act_window.view" id="action_open_ask_overtime_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="edit_overtime_new"/>
+            <field name="act_window_id" ref="open_ask_overtime"/>
+        </record>
+        
+        <menuitem name="Permohonan Lembur" parent="menu_open_ask_overtime" id="menu_open_ask_overtime_new"
+             action="open_ask_overtime" groups="base.group_hr_manager,base.group_hr_user"/>    
+
+        <record model="ir.ui.view" id="lembur_tree">
+        <field name="name">hr.overtime.jam.tree</field>
+        <field name="model">hr.overtime.jam</field>
+        <field name="arch" type="xml">
+            <tree string="Perhitungan Jam Lembur">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--lembur Form-->
+    <record model="ir.ui.view" id="lembur_form">
+        <field name="name">hr.overtime.jam.form</field>
+        <field name="model">hr.overtime.jam</field>
+        <field name="arch" type="xml">
+            <form string="Sift Kerja" version="7.0">
+                <group string="Perhitungan Jam Lembur">
+                        <field name="name"/>
+                        <field name="jam_ids">
+                            <tree>
+                                <field name='name'/>
+                                <field name='sampai'/>
+                                <field name='pengali'/>
+                            </tree>    
+                            <form>
+                                <field name='name'/>
+                                <field name='sampai'/>
+                                <field name='pengali'/>
+                            </form>    
+                        </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!--lembur action-->
+    <record id="lembur_act" model="ir.actions.act_window">
+        <field name="name">Lembur</field>
+        <field name="res_model">hr.overtime.jam</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="lembur_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new stage in the recruitment process.
+          </p><p>
+            Don't forget to specify the department if your recruitment process
+            is different according to the job position.
+          </p>
+        </field>
+    </record>
+
+        <menuitem name="Lembur"
+        id="lemburs"
+        parent="hr.menu_hr_configuration"
+        sequence="42"/>
+
+        <menuitem
+            id="lembur1"
+            name="Perhitungan Jam Lembur"
+            parent="lemburs"
+            action="lembur_act"
+            sequence="1"/>
+    
+    <record id='lembur' model='hr.overtime.type'>
+        <field name='name'>Lembur</field>
+        <field name='active'>True</field>
+        <field name='double_validation'>True</field>
+    </record>
+    
+    <record id='lembur_proyek' model='hr.overtime.type'>
+        <field name='name'>Lembur Proyek</field>
+        <field name='active'>True</field>
+        <field name='double_validation'>True</field>
+    </record>        
+    </data>
+</openerp>
