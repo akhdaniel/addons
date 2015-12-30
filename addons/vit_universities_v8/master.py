@@ -14,6 +14,7 @@ class res_company(osv.osv):
 		'kode_dikti': fields.char("Kode Dikti"),
 		'jenis_pt'	: fields.selection([('internal','Internal'),('external','External')],'Jenis PT'),
 	}
+
 class master_jenjang(osv.Model):
 	_name = "master.jenjang"
 	_columns  = {
@@ -21,6 +22,7 @@ class master_jenjang(osv.Model):
 		'kode_dikti' : fields.char("Kode Dikti"),
 		'name' : fields.char("Nama Jenjang"),
 	}
+master_jenjang()
 
 class academic_year(osv.Model):
 	''' Defining an academic year '''
