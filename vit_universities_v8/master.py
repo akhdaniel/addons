@@ -260,7 +260,7 @@ class master_prodi (osv.Model):
 		'gelar_id' : fields.many2one('res.partner.title',string='Gelar',required=True),
 		'semester_id' : fields.many2one('master.semester','Max Semester',required = True),
 		# 'jenjang': fields.selection([('diploma','Diploma'),('sarjana','Sarjana'),('magister','Magister'),('doctor','Doctoral')],'Jenjang',required = True),
-		'jenjang': fields.many2one('master.jejang','Jenjang',required = True),
+		'jenjang': fields.many2one('master.jenjang','Jenjang',required = True),
 	}
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
