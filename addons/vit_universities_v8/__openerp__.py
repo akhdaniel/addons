@@ -30,6 +30,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'jadwal_usm.xml',
             'jenis_pendaftaran.xml',
             'reports/report.xml',
-            'data/data_view.xml'
-            ],
+            'data/data_view.xml',
+            'company.xml',
+    ],
 }

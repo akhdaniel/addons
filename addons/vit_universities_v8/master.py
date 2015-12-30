@@ -6,6 +6,15 @@ from datetime import datetime
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 
+class res_company(osv.osv):
+	_name 		= "res.company"
+	_inherit 	= "res.company"
+
+	_columns 	= {
+		'kode_dikti': fields.char("Kode Dikti"),
+		'jenis_pt'	: fields.selection([('internal','Internal'),('external','External')],'Jenis PT'),
+	}
+
 class academic_year(osv.Model):
 	''' Defining an academic year '''
 	_name = "academic.year"
@@ -207,10 +216,11 @@ class master_fakultas (osv.Model):
 	_name='master.fakultas'
 	   
 	_columns = {
-		'kode':fields.char('Kode', size=28, required = True),
-		'kode_dikti' :fields.char('Kode DIKTI', size=28,required = True),
-		'name' : fields.char('Nama Fakultas', size=128, required = True),
-			}
+		'kode'		:fields.char('Kode', size=28, required = True),
+		'kode_dikti':fields.char('Kode DIKTI', size=28,required = True),
+		'pt_id'		: fields.many2one('res.company', 'Perguruan Tinggi'),
+		'name' 		: fields.char('Nama Fakultas', size=128, required = True),
+	}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode fakultas tidak boleh sama')]
 master_fakultas()
