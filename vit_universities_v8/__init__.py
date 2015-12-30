@@ -14,3 +14,6 @@ import product
 import beasiswa
 import cuti_kuliah
 import partner_calon_mhs
+import konversi
+import jadwal_usm
+import jenis_pendaftaran

@@ -277,7 +277,8 @@ class operasional_krs (osv.Model):
 		return super(operasional_krs, self).unlink(cr, uid, ids, context=context)
 
 
-	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id, npm, context=None):
+	# def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id, npm, context=None):
+	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, kelas_id, partner_id, npm, context=None):
 
 		results = {}
 		if not partner_id:
@@ -294,7 +295,8 @@ class operasional_krs (osv.Model):
 		fakultas_id = par_id.fakultas_id.id
 		jurusan_id = par_id.jurusan_id.id
 		prodi_id = par_id.prodi_id.id
-		max_smt = par_id.prodi_id.semester_id.name
+		# max_smt = par_id.prodi_id.semester_id.name
+		max_smt = par_id.jurusan_id.semester_id.name
 
 		results = {
 			'value' : {
@@ -309,7 +311,8 @@ class operasional_krs (osv.Model):
 		}
 		return results 
 
-	def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, prodi_id, semester_id, partner_id, context=None):
+	def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, jurusan_id, semester_id, partner_id, context=None):
+	# def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, prodi_id, semester_id, partner_id, context=None):
 
 		results = {}
 		if not semester_id:
@@ -318,6 +321,7 @@ class operasional_krs (osv.Model):
 		kur_obj = self.pool.get('master.kurikulum')
 		kur_ids = kur_obj.search(cr, uid, [
 			('tahun_ajaran_id','=',tahun_ajaran_id),
+			('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
 			('state','=','confirm'),
 			('semester_id','=',semester_id)], context=context)
@@ -424,6 +428,8 @@ class operasional_transkrip(osv.Model):
 		if 'partner_id' in vals:
 			mhs = vals['partner_id']
 			partner_brw = self.pool.get('res.partner').browse(cr,uid,mhs)
+			# jurusan = partner_brw.jurusan_id.id
+			# cek_mhs = self.search(cr,uid,[('partner_id','=',mhs),('jurusan_id','=',jurusan)])
 			prodi = partner_brw.prodi_id.id
 			cek_mhs = self.search(cr,uid,[('partner_id','=',mhs),('prodi_id','=',prodi)])
 			if cek_mhs != []:

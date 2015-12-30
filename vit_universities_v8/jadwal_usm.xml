@@ -1,0 +1,75 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="jadwal_tree_view">
+            <field name="name">jadwal.usm.tree</field>
+            <field name="model">jadwal.usm</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Jadwal USM" version="7.0">
+                    <field name="name" />          
+                    <field name="tahun_ajaran_id" />
+                    <field name="date_start" />    
+                    <field name="date_end" />      
+                    <field name="date" />      
+                    <field name="limit" />         
+                    <field name="user_id" /> 
+                    <field name="calon_mhs_ids" /> 
+                    <field name="is_active" invisible="1"/>
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="jadwal_form_view">
+            <field name="name">jadwal.usm.form</field>
+            <field name="model">jadwal.usm</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Jadwal USM" version="7.0">
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="name"/>
+                                <field name="tahun_ajaran_id"/>
+                                <field name="limit" />         
+                            </group>
+                			<group>
+                                <field name="date" />      
+                                <field name="date_start" />    
+                                <field name="date_end" />      
+                                <field name="state" />      
+                			</group>
+                        </group>
+
+                        <notebook colspan="4">
+                            <page string="Daftar Calon Mahasiswa">
+                                <field view_mode="tree" name="calon_mhs_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree version="7.0">
+                                        <field name="reg"/>
+                                        <field name="npm"/>
+                                        <field name="name"/>                    
+                                    </tree>
+                                </field>
+                            </page>  
+                        </notebook>                      
+
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="jadwal_usm_list_action">
+            <field name="name">Jadwal USM</field>
+            <field name="res_model">jadwal.usm</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field> 
+        </record>
+
+
+        <menuitem id="jadwal_usm" name="Jadwal USM" parent="master_data_reg" action="jadwal_usm_list_action" sequence="20"/>
+
+	</data>
+</openerp>	

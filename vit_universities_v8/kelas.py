@@ -70,6 +70,7 @@ class master_kelas (osv.Model):
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode kelas tidak boleh sama')]
 
 	def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id,kuota,context=None):
+	# def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id,kuota,context=None):
 
 		results = {}
 		if not prodi_id:

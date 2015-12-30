@@ -97,7 +97,6 @@ class academic_year(osv.Model):
 		(_check_duration, _('Error! The duration of the academic year is invalid.'), ['date_stop']),
 		(_check_academic_year, _('Error! You cannot define overlapping academic years'), ['date_start', 'date_stop'])
 	]
-
 academic_year()
 
 class academic_month(osv.Model):
@@ -133,7 +132,6 @@ class academic_month(osv.Model):
 		(_check_duration, _('Error ! The duration of the Month(s) is/are invalid.'), ['date_stop']),
 		(_check_year_limit, _('Invalid Months ! Some months overlap or the date period is not in the scope of the academic year.'), ['date_stop'])
 	]
-
 academic_month()
 
 
@@ -160,6 +158,7 @@ class master_matakuliah (osv.Model):
 		'nama' :fields.char('Nama',required = True),
 		'sks':fields.char('SKS',required = True),
 		'jenis':fields.selection([('mk_umum','Mata Kuliah Umum'),('mk_khusus','Mata Kuliah Khusus')],'Jenis',required = True),
+		# 'jurusan_id': fields.many2one('master.jurusan','Program Studi'),
 		'prodi_id': fields.many2one('master.prodi','Program Studi')
 		#'jadwal_ids':fields.one2many('master.jadwal','mata_kuliah_id', string='Jadwal'),
 			}
@@ -170,7 +169,6 @@ class master_matakuliah (osv.Model):
 	}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode mata kuliah tidak boleh sama')]
-			
 master_matakuliah()
 
 #class peserta_kelas (osv.osv):
@@ -203,20 +201,18 @@ class master_ruangan (osv.Model):
 		'kapasitas':5,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.ruangan'), 
 	}
-			
 master_ruangan()
-
 
 class master_fakultas (osv.Model):
 	_name='master.fakultas'
 	   
 	_columns = {
 		'kode':fields.char('Kode', size=28, required = True),
+		'kode_dikti' :fields.char('Kode DIKTI', size=28,required = True),
 		'name' : fields.char('Nama Fakultas', size=128, required = True),
 			}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode fakultas tidak boleh sama')]
-			
 master_fakultas()
 
 class master_jurusan (osv.Model):
@@ -226,10 +222,10 @@ class master_jurusan (osv.Model):
 		'kode' :fields.char('Kode', size=28, required = True),
 		'name' :fields.char('Nama Jurusan',size=128, required = True),
 		'fakultas_id' :fields.many2one('master.fakultas',string='Fakultas',required = True),
+		'kapasitas'  : fields.integer('Kapasitas Max'),
 			}
-			
+		
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode jurusan tidak boleh sama')]
-			
 master_jurusan()
 
 class master_prodi (osv.Model):
@@ -237,15 +233,42 @@ class master_prodi (osv.Model):
 
 	_columns = {
 		'kode' :fields.char('Kode', size=28,required = True),
+		'kode_dikti' :fields.char('Kode DIKTI', size=28,required = True),
+		'kode_internal' :fields.char('Kode Internal', size=28),
 		'name' :fields.char('Nama Program Studi',size=128, required = True),
-		'jurusan_id' :fields.many2one('master.jurusan',string='Jurusan',required = True),
+		# 'jurusan_id' :fields.many2one('master.jurusan',string='Jurusan',required = True),
+		'fakultas_id' :fields.many2one('master.fakultas',string='Fakultas',required = True),
 		'gelar_id' : fields.many2one('res.partner.title',string='Gelar',required=True),
 		'semester_id' : fields.many2one('master.semester','Max Semester',required = True),
-		'jenjang': fields.selection([('diploma','Diploma'),('sarjana','Sarjana'),('magister','Magister'),('doctor','Doctoral')],'Jenjang',required = True),
-			}
-			
+		# 'jenjang': fields.selection([('diploma','Diploma'),('sarjana','Sarjana'),('magister','Magister'),('doctor','Doctoral')],'Jenjang',required = True),
+		'jenjang': fields.many2one('master.jejang','Jenjang',required = True),
+	}
+
+	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+		if not args:
+			args = []
+		ids = []
+		if name:
+			ids = self.search(cr, user, ['|','|',('name', operator, name),('kode', operator, name),('kode_dikti', operator, name)] + args, limit=limit)
+		else:
+			ids = self.search(cr, user, args, context=context, limit=limit)
+		return self.name_get(cr, user, ids, context=context)
+
+
+	def name_get(self, cr, uid, ids, context=None):
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+					ids = [ids]
+		reads = self.read(cr, uid, ids, ['name', 'kode'], context=context)
+		res = []
+		for record in reads:
+			name = record['name']
+			if record['kode']:
+				name = record['kode'] + ' ' + name
+			res.append((record['id'], name))
+		return res				
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode program Studi tidak boleh sama')]         
-		   
 master_prodi()
 
 class jenis_pelanggaran (osv.Model):
@@ -257,7 +280,6 @@ class jenis_pelanggaran (osv.Model):
 				}
   
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode jenis pelanggaran tidak boleh sama')]  
-	
 jenis_pelanggaran()
 
 class master_pelanggaran (osv.Model):
@@ -283,7 +305,6 @@ class riwayat_pendidikan (osv.Model):
 		'no_ijazah':fields.char('Nomor Ijazah'),
 		'nilai_akhir':fields.float('Nilai Akhir / UN',digits=(2,2)),
 			}
-			
 riwayat_pendidikan()
 
 class biodata_keluarga (osv.Model):
@@ -332,4 +353,13 @@ class master_yudisium(osv.Model):
 		'name': fields.char('Yudisium', size=128, required=True),
 		'min': fields.float("IPK Min",required=True,help="nilai angka minimal Indeks Prestasi Komulatif"),
 		'max': fields.float("IPK Max",required=True,help="nilai angka maximal Indeks Prestasi Komulatif"),
+	}
+
+
+class master_jenjang(osv.Model):
+	_name = "master.jenjang"
+	_columns  = {
+		'kode' : fields.char("Kode"),
+		'kode_dikti' : fields.char("Kode Dikti"),
+		'name' : fields.char("Nama Jenjang"),
 	}

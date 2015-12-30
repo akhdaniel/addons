@@ -1,0 +1,140 @@
+<openerp>
+	<data>
+
+        <!-- akademik.konversi Tree View -->
+        <record model="ir.ui.view" id="konversi_tree_view">
+            <field name="name">akademik.konversi</field>
+            <field name="model">akademik.konversi</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Mahasiswa Konversi" version="7.0">
+                    <field name="name"/>
+                    <field name="partner_id"/> 
+
+                    <field name="tahun_ajaran_id" />
+                    <field name="fakultas_id" />
+                    <field name="jurusan_id" />
+                    <field name="prodi_id"/>
+
+                    <field name="asal_fakultas_id" />
+                    <field name="asal_jurusan_id" />
+                    <field name="asal_prodi_id"/>
+                    <field name="asal_univ_id"/>
+
+                    <field name="semester_id"/>
+                    <!-- <field name="to_semester_id"/> -->
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <!-- akademik.konversi Form View -->
+        <record model="ir.ui.view" id="konversi_form_view">
+            <field name="name">akademik.konversi</field>
+            <field name="model">akademik.konversi</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Form Konversi" version="7.0">
+                    <header>
+                        <button name='confirm' string='Confirm' states='draft' type='object'/>
+                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='waiting' type='object'/>
+                        <button name='approve' string='Approve' states='waiting' type='object'/>
+                        <button name='refuse' string='Refuse' states='waiting' type='object'/> 
+                        <button name='set_draft' string='Set to Draft' states='cancel' type='object'/>   
+                        <button name='done' string='Active' states='confirm' type='object'/>                                         
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>                     
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="name"/>
+			                    <field name="partner_id" /> 
+			                    <field name="semester_id" />
+                            </group>
+                            <group>
+                                <field name="tahun_ajaran_id"/>
+                                <field name="fakultas_id"/>
+                                <field name="jurusan_id"/>
+                                <field name="prodi_id"/>                        
+                            </group>
+                			<group>
+			                    <field name="asal_fakultas_id"/>
+			                    <field name="asal_jurusan_id"/>
+                                <field name="asal_prodi_id"/>                           
+                                <field name="asal_univ_id"/>           				
+                			</group>
+                        </group>
+                         <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
+                        <group>    
+                            <group>  
+                                <field name="date" />                                   
+                                <field name="krs_done" />                                   
+                            </group>
+                            <group> 
+                                <field name="user_id"/>                                                          
+                            </group>
+                        </group>                         
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <!-- akademik.konversi Search View -->
+        <record model="ir.ui.view" id="konversi_search">
+            <field name="name">akademik.konversi</field>
+            <field name="model">akademik.konversi</field>
+            <field name="arch" type="xml">
+                <search string="Konversi">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="partner_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Mahasiswa" help="By Mahasiswa" context="{'group_by':'partner_id'}"/>
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Tanggal Aktif" help="By Tanggal Aktif" context="{'group_by':'date'}"/>
+                        <filter icon="terp-project" string="KRS Done" help="By Automatic Done" context="{'group_by':'krs_done'}"/>
+                        <filter icon="terp-project" string="Status" help="By Status" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- akademik.konversi action window -->
+        <record model="ir.actions.act_window" id="konversi_list_action">
+            <field name="name">Mahasiswa Konversi</field>
+            <field name="res_model">akademik.konversi</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="konversi_search"/>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Cuti Mahasiswa.</p><p>disini belum ada data tentang Cuti Mahasiswa !</p></field>
+        </record>
+
+
+        <!-- akademik.konversi Menu Item -->
+        <menuitem id="konversi_menu" name="Konversi" parent="vit_universities_v8.si_akademik_menu" sequence="65"/>      
+            <menuitem id="konversi_menu_sub_menu" name="Permohonan Konversi" parent="konversi_menu" action="konversi_list_action" sequence="10"/>
+
+            <!-- <menuitem id="konversi_master_asal_mk" name="MK Asal" parent="konversi_menu" action="mhs_cuti_list_action" sequence="20"/> -->
+
+
+        <!-- akademik.konversi sequance -->
+        <record forcecreate="1" id="seq_type_konversi" model="ir.sequence.type">
+            <field name="name">akademik.konversi</field>
+            <field name="code">akademik.konversi</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_konversi" model="ir.sequence">
+            <field name="name">akademik.konversi</field>
+            <field name="code">akademik.konversi</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+        </record> 
+
+	</data>
+</openerp>	

@@ -199,19 +199,23 @@ class res_partner (osv.osv):
 
 	_columns = {
 		#Mahasiswa
-		'npm' :fields.char(string='NPM',readonly=True,size=34),
+		'npm' :fields.char(string='NPM',size=34),
 		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
 		# 'nama_tengah':fields.char('Nama Tengah',size=60),
 		# 'nama_belakang':fields.char('Nama Tengah',size=60),
 		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
 		'tempat_lahir':fields.char('Tempat Lahir'),
 		'tanggal_lahir':fields.date('Tanggal Lahir'),
+
 		'status_mahasiswa':fields.selection(SESSION_STATES,'Status Mhs'),                  
+
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',),
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]"),
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]"),
+		# 'jurusan_id':fields.many2one('master.jurusan',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]"),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]"),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik'),
+		'semester_id':fields.many2one('master.semester',string='Semester Awal Masuk'),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',readonly=True),                
+
 		#'peserta_kelas_id':fields.many2one('master.peserta_kelas',string='Mahasiswa',),
 		'ipk':fields.float('IPK',digits=(2,2),readonly=True),
 		'judul':fields.text('Judul Tugas Akhir'),
@@ -220,6 +224,7 @@ class res_partner (osv.osv):
 		'no_formulir':fields.char('No Formulir Ujian'),
 		'tgl_ujian':fields.date('Tanggal Ujian'),
 		'nilai_ujian':fields.float('Nilai Ujian'),
+		'nilai_ujian_asli':fields.float('Nilai Ujian Asli'),
 		'batas_nilai':fields.float('Batas Nilai Kelulusan',readonly=True),
 		'is_dosen':fields.boolean(''),
 		'biodata_keluarga_ids':fields.one2many('master.biodata_keluarga','partner_id','Biodata Keluarga',),
@@ -238,7 +243,18 @@ class res_partner (osv.osv):
 		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
 		'is_beasiswa' : fields.boolean('Penerima Beasiswa',readonly=True),
-				}
+		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM', required=True),
+
+		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
+
+		'status_aktivitas': fields.selection([('A','A'),('N','N'),('K','K'),('L','L'),('C','C'),('D','D')],'Status Aktivitas',required=True),
+		#untuk mhs pindahan
+		'asal_pt_id' : fields.many2one('res.company', 'Asal PT'),
+		'asal_prodi_id' : fields.many2one('akademik.asal_prodi', 'Asal Prodi', domain=[('pt_id','=','asal_pt_id')]),
+		'asal_npn'	: fields.char('Asal NIM'),
+		'asal_sks_diakui' : fields.integer('SKS Diakui'),
+		'asal_jenjang_id' : fields.many2one('master.jenjang', 'Asal Jenjang'),
+	}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]
 	_sql_constraints = [('npm_uniq', 'unique(npm)','NPM tidak boleh sama')]
