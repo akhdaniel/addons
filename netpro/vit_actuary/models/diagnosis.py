@@ -34,6 +34,19 @@ class netpro_diagnosis(osv.osv):
         new_record = super(netpro_diagnosis, self).create(cr, uid, vals, context=context)
         return new_record
 
+    def name_get(self, cr, uid, ids, context=None):
+        if not ids:
+            return []
+        res = []
+        for r in self.browse(cr, uid, ids, context=context):
+            if r.diagnosis and r.name:
+                name = "%s (%s)" % (r.diagnosis, r.name)
+                res.append((r.id,name))
+            else :
+                res.append((r.id,r.diagnosis))
+
+        return res
+
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
         if not args:
             args = []

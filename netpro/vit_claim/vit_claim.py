@@ -219,6 +219,11 @@ class netpro_claim(osv.osv):
         claim_status_approved = CLAIM_STATES[3][0]
         return self.write(cr,uid,ids,{'state':claim_status_approved},context=context)
 
+    def action_open_approve(self,cr,uid,ids,context=None):
+        self.action_open(cr,uid,ids,context=context)
+        self.action_approve(cr,uid,ids,context=context)
+        return True
+
     def action_revise(self,cr,uid,ids,context=None):
         #set to "revised" state
         # claim_status_revised = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'R', context=context)
