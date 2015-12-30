@@ -50,7 +50,7 @@
 					                    <field name="tgl_lulus"/>   
 					                    <field name="ipk"/>
                                         <field name="fakultas_id"/>
-                                        <field name="jurusan_id"/>
+                                        <!-- <field name="jurusan_id"/> -->
                                         <field name="prodi_id"/>
 					                    <field name="status_mahasiswa" string="Status"/>                
 					                </tree>

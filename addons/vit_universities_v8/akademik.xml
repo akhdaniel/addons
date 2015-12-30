@@ -1,7 +1,7 @@
 <openerp>
     <data>
         
-        <!--master data-->
+        <!--master data kurikulum-->
         <record model="ir.ui.view" id="kurikulum_search">
             <field name="name">Cari kurikulum</field>
             <field name="model">master.kurikulum</field>
@@ -14,7 +14,7 @@
                     <group expand="0" string="Group By..." colspan="12" col="10">
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
                         <filter icon="terp-project" string="Status" help="By Status" context="{'group_by':'state'}"/>
@@ -42,7 +42,10 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data mata kuliah.</p><p>disini belum ada data tentang mata kuliah !</p></field>
         </record>
 
-        <!-- kelas Search View -->
+
+
+
+        <!-- master data kelas -->
         <record model="ir.ui.view" id="kelas_search">
             <field name="name">Cari Kelas</field>
             <field name="model">master.kelas</field>
@@ -82,7 +85,9 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data ruangan.</p><p>disini belum ada data tentang ruangan !</p></field>
         </record>
 
-        <!-- jadwal Search View -->
+
+
+        <!--  master data jadwal  -->
         <record model="ir.ui.view" id="jadwal_search">
             <field name="name">Cari Jadwal</field>
             <field name="model">master.jadwal</field>
@@ -96,7 +101,7 @@
                         <filter icon="terp-project" string="Dosen" help="By Pengajar" context="{'group_by':'employee_id'}"/>
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Kelas" help="By Kelas" context="{'group_by':'kelas_id'}"/>
                         <filter icon="terp-project" string="Ruangan" help="By Ruangan" context="{'group_by':'ruangan_id'}"/>
@@ -120,6 +125,11 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jadwal.</p><p>disini belum ada data tentang jadwal !</p></field>
         </record>
         
+
+
+
+
+        <!--  action window master fakultas -->
         <record model="ir.actions.act_window" id="fakultas_list_action">
             <field name="name">Fakultas</field>
             <field name="res_model">master.fakultas</field>
@@ -129,6 +139,25 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data fakultas.</p><p>disini belum ada data tentang fakultas !</p></field>
         </record>
         
+        <!--  tree fakultas -->
+        <record model="ir.ui.view" id="fakultas_tree_view">
+            <field name="name">fakultas.tree</field>
+            <field name="model">master.fakultas</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Fakultas" version="7.0" editable="bottom">
+                    <field name="kode"/>
+                    <field name="kode_dikti"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+        <!--  action window master data jurusan  -->
         <record model="ir.actions.act_window" id="jurusan_list_action">
             <field name="name">Jurusan</field>
             <field name="res_model">master.jurusan</field>
@@ -137,7 +166,80 @@
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jurusan.</p><p>disini belum ada data tentang jurusan !</p></field>
         </record>
+
+
+
+
+
         
+        <!-- Prodi tree -->
+        <record model="ir.ui.view" id="prodi_tree_view">
+            <field name="name">prodi.tree</field>
+            <field name="model">master.prodi</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Program Studi" version="7.0">
+                    <field name="kode"/>
+                    <field name="kode_dikti"/>
+                    <field name="kode_internal"/>
+                    <field name="name"/>                    
+                    <!-- <field name="jurusan_id"/> -->
+                    <field name="fakultas_id"/>
+                    <field name="semester_id" widget="selection"/>
+                    <field name="jenjang"/>
+                    <field name="gelar_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Prodi form -->
+        <record model="ir.ui.view" id="prodi_form_view">
+            <field name="name">prodi.form</field>
+            <field name="model">master.prodi</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Program Studi" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="kode"/>
+                                <field name="kode_dikti"/>
+                                <field name="kode_internal"/>
+                                <field name="name"/>                    
+                                <!-- <field name="jurusan_id"/> -->
+                                <field name="fakultas_id"/>
+                            </group>
+
+                            <group >
+                                <field name="gelar_id"/>
+                                <field name="semester_id" widget="selection"/>
+                                <field name="jenjang"/> 
+                            </group>                          
+                        </group>
+                    </sheet>                     
+                </form>               
+            </field>
+        </record>
+
+        <!-- Prodi search -->
+        <record model="ir.ui.view" id="prodi_search">
+            <field name="name">Cari Prodi</field>
+            <field name="model">master.prodi</field>
+            <field name="arch" type="xml">
+                <search string="Cari Prodi">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <filter icon="terp-project" string="Jenjang" help="By Jenjang" context="{'group_by':'jenjang'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>   
+             
+        <!--  action window master data prodi  -->
         <record model="ir.actions.act_window" id="prodi_list_action">
             <field name="name">Program Studi</field>
             <field name="res_model">master.prodi</field>
@@ -147,7 +249,12 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data program studi.</p><p>disini belum ada data tentang program studi !</p></field>
         </record>
 
-        <!-- Academic Years Information Tree View -->
+
+
+
+
+
+        <!-- master data Academic Years Information Tree View -->
         <record model="ir.ui.view" id="view_academic_year_tree">
             <field name="name">academic.year.tree</field>
             <field name="model">academic.year</field>
@@ -171,7 +278,10 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data tahun akademik.</p><p>disini belum ada data tentang tahun akademik !</p></field>
         </record>
 
-        <!-- Academic Months Information Tree View -->
+
+
+
+        <!-- master data Academic Months Information Tree View -->
         <record model="ir.ui.view" id="view_academic_month_tree">
             <field name="name">academic.month.tree</field>
             <field name="model">academic.month</field>
@@ -196,6 +306,10 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data bulan akademik.</p><p>disini belum ada data tentang bulan akademik !</p></field>
         </record>
 
+
+
+
+        <!--  master data semester  -->
         <record model="ir.actions.act_window" id="semester_list_action">
             <field name="name">Semester</field>
             <field name="res_model">master.semester</field>
@@ -205,6 +319,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data semester.</p><p>disini belum ada data semester !</p></field>
         </record>
 
+        <!--  master data nilai  -->        
         <record model="ir.actions.act_window" id="nilai_list_action">
             <field name="name">Nilai</field>
             <field name="res_model">master.nilai</field>
@@ -214,6 +329,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data nilai.</p><p>disini belum ada data nilai !</p></field>
         </record>
 
+        <!--  master data yudisium  -->
         <record model="ir.ui.view" id="view_yudisium_tree">
             <field name="name">Yudisium</field>
             <field name="model">master.yudisium</field>
@@ -235,6 +351,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data yudisium.</p><p>disini belum ada data yudisium !</p></field>
         </record>
 
+        <!--  master data jenis pelanggaran  -->
         <record model="ir.actions.act_window" id="jenis_pelanggaran_list_action">
             <field name="name">Jenis Pelanggaran</field>
             <field name="res_model">master.jenis_pelanggaran</field>
@@ -244,6 +361,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jenis-jenis pelanggaran.</p><p>disini belum ada data tentang jenis-jenis pelanggaran !</p></field>
         </record>
  
+        <!--  master data jenis pembayaran  -->
         <record model="ir.actions.act_window" id="jenis_pembayaran_list_action">
             <field name="name">Jenis Pembayaran</field>
             <field name="res_model">product.product</field>
@@ -252,7 +370,7 @@
             <field name="domain">[('type','=','service')]</field>
         </record>
 
-
+        <!--  master data template pembayaran  -->
         <record model="ir.actions.act_window" id="template_pembayaran_list_action">
             <field name="name">Master Pembayaran</field>
             <field name="res_model">master.pembayaran</field>
@@ -264,6 +382,7 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
 
+        <!--  master data dosen -->
         <record model="ir.actions.act_window" id="dosen_list_action">
             <field name="name">Dosen</field>
             <field name="res_model">hr.employee</field>
@@ -272,10 +391,11 @@
             <!-- <field name="view_id" ref="partner_tree_view3"/>  -->
             <field name="domain">[('is_dosen','=',True)]</field>
             <field name="context">{'default_is_dosen':True}</field>
-<!--             <field name="help" type="html">
+        <!--             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field> -->
         </record>
 
+        <!--  master data beasiswa-->
         <record model="ir.actions.act_window" id="beasiswa_mahasiswa_list_action">
             <field name="name">Beasiswa</field>
             <field name="res_model">beasiswa.mahasiswa</field>
@@ -286,7 +406,7 @@
         </record>
 
 
-          <record model="ir.ui.view" id="partner_tree_view">
+        <record model="ir.ui.view" id="partner_tree_view">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
             <field name="type">tree</field>
@@ -295,7 +415,6 @@
                     <field name="reg"/>
                     <field name="name" string="Nama"/>
                      <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/>                    
@@ -311,8 +430,7 @@
                 <tree string="Daftar Calon Mahasiswa">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
-                     <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
+                    <field name="fakultas_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/>                    
@@ -329,7 +447,6 @@
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                      <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/>  
@@ -339,7 +456,7 @@
             </field>
         </record>   
 
-        <!--master civitas-->
+        <!--  personal -->
         <record model="ir.actions.act_window" id="personal_list_action">
             <field name="name">Mahasiswa</field>
             <field name="res_model">res.partner</field>
@@ -353,6 +470,7 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
         
+        <!--  calon mahasiswa  -->
         <record model="ir.actions.act_window" id="calon_list_action">
             <field name="name">Calon Mahasiswa</field>
             <field name="res_model">res.partner</field>
@@ -365,6 +483,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  calon mahasiswa.</p><p>disini belum ada data tentang calon mahasiswa !</p></field>
         </record>
         
+        <!--  alumni  -->
         <record model="ir.actions.act_window" id="alumni_list_action">
             <field name="name">Alumni</field>
             <field name="res_model">res.partner</field>
@@ -377,6 +496,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field>
         </record>
 
+        <!--  SPMB  -->
         <record model="ir.ui.view" id="spmb_tree_view">
             <field name="name">kurikulum.tree</field>
             <field name="model">spmb.mahasiswa</field>
@@ -406,6 +526,7 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
 
+        <!--  Wisuda  -->
         <record model="ir.ui.view" id="wisuda_tree_view">
             <field name="name">wisuda.tree</field>
             <field name="model">wisuda.mahasiswa</field>
@@ -433,7 +554,7 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
  
-        <!-- studi Search View -->
+        <!-- KRS -->
         <record model="ir.ui.view" id="kartu_studi_search">
             <field name="name">Studi Jadwal</field>
             <field name="model">operasional.krs</field>
@@ -470,6 +591,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data KRS.</p><p>disini belum ada data tentang KRS !</p></field>
         </record>
 
+        <!-- KHS  -->
         <record model="ir.actions.act_window" id="khs_list_action">
             <field name="name">Kartu Hasil Studi</field>
             <field name="res_model">operasional.krs</field>
@@ -489,6 +611,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <!--  Pembayaran   -->
         <record model="ir.actions.act_window" id="pembayaran_list_action">
             <field name="name">Pembayaran</field>
             <field name="res_model">account.invoice</field>
@@ -499,7 +622,7 @@
             <field name="context">{'default_type':'out_invoice', 'type':'out_invoice', 'journal_type': 'sale'}</field>
         </record>
 
-        <!--menu tree view-->
+        <!--menu Akadmik -->
         <menuitem id="si_akademik_menu" name="Akademik"/>
             <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10"/>
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
@@ -526,10 +649,10 @@
             <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90"/>
                 <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action" sequence="10"/>
                 <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
-                <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/>
+                <!-- <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/> -->
                 <menuitem id="master_prodi" name="Program Studi" parent="master_data" action="prodi_list_action" sequence="40"/>
                 <menuitem id="master_tahun_akademik" name="Tahun Akademik" parent="master_data" action="thn_akademik_list_action" sequence="50"/>
-<!--                 <menuitem id="master_bulan_akademik" name="Bulan Akademik" parent="master_data" action="bln_akademik_list_action"/> -->
+                <!--                 <menuitem id="master_bulan_akademik" name="Bulan Akademik" parent="master_data" action="bln_akademik_list_action"/> -->
                 <menuitem id="master_semester" name="Semester" parent="master_data" action="semester_list_action" sequence="60"/>
                 <menuitem id="master_nilai" name="Nilai" parent="master_data" action="nilai_list_action" sequence="70"/>
                 <menuitem id="master_yudisium" name="Yudisium" parent="master_data" action="yudisium_list_action" sequence="80"/>
@@ -646,17 +769,7 @@
          </record>
 
          <!-- Fakultas  -->       
-        <record model="ir.ui.view" id="fakultas_tree_view">
-            <field name="name">fakultas.tree</field>
-            <field name="model">master.fakultas</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Daftar Fakultas" version="7.0" editable="bottom">
-                    <field name="kode"/>
-                    <field name="name"/>
-                </tree>
-            </field>
-        </record>
+
         
         <!-- Jurusan  -->       
         <record model="ir.ui.view" id="jurusan_tree_view">
@@ -667,53 +780,14 @@
                 <tree string="Daftar Jurusan" version="7.0" editable="bottom">
                     <field name="kode"/>
                     <field name="name"/>
+                    <field name="kapasitas"/>
                     <field name="fakultas_id"/>
                 </tree>
             </field>
         </record>
 
-        <!-- Prodi  -->
-        <record model="ir.ui.view" id="prodi_tree_view">
-            <field name="name">prodi.tree</field>
-            <field name="model">master.prodi</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Daftar Program Studi" version="7.0">
-                    <field name="kode"/>
-                    <field name="name"/>                    
-                    <field name="jurusan_id"/>
-                    <field name="semester_id" widget="selection"/>
-                    <field name="jenjang"/>
-                    <field name="gelar_id"/>
-                </tree>
-            </field>
-        </record>
 
-        <record model="ir.ui.view" id="prodi_form_view">
-            <field name="name">prodi.form</field>
-            <field name="model">master.prodi</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Program Studi" version="7.0">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="kode"/>
-                                <field name="name"/>                    
-                                <field name="jurusan_id"/>
-                            </group>
-
-                            <group >
-                                <field name="gelar_id"/>
-                                <field name="semester_id" widget="selection"/>
-                                <field name="jenjang"/> 
-                            </group>                          
-                        </group>
-                    </sheet>                     
-                </form>               
-            </field>
-        </record>
-
+        
         <!-- Nilai  -->
         <record model="ir.ui.view" id="nilai_tree_view">
             <field name="name">nilai.tree</field>
@@ -729,6 +803,7 @@
             </field>
         </record>
         
+        <!-- Jenis pelanggaran  -->
         <record model="ir.ui.view" id="jenis_pelanggaran_tree_view">
             <field name="name">jenis_pelanggaran.tree</field>
             <field name="model">master.jenis_pelanggaran</field>
@@ -787,7 +862,6 @@
                 </form>
             </field>
         </record>
-
 
         <!-- Academic Months Information From View -->
         <record model="ir.ui.view" id="view_academic_month_form">

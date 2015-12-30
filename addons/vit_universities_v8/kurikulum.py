@@ -12,12 +12,14 @@ class master_kurikulum (osv.Model):
 	_order = 'name'
 
 
-	def create(self, cr, uid, vals, context=None):
+	def create6(self, cr, uid, vals, context=None):
 		#import pdb;pdb.set_trace()
+		print vals['max_sks']
 		if vals['max_sks'] == 0:
 			raise osv.except_osv(_('Error!'), _('Maximal total SKS tidak boleh nol !'))		
 		if not vals['kurikulum_detail_ids']:
 			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))
+		
 		mk = vals['kurikulum_detail_ids'][0][2]
 		tot_mk = 0
 		for m in mk:
@@ -92,7 +94,7 @@ class master_kurikulum (osv.Model):
 	_columns = {
 		'name' :fields.char('Kode Kurikulum', size=28,required = True,ondelete="cascade"),
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),         
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required = True),           
+		'jurusan_id':fields.many2one('master.jurusan',string='Program Studi',required = True),           
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
 		'semester_id':fields.many2one('master.semester','Semester',required = True),
 		'max_sks':fields.integer('Max Total SKS',required = True,help="Maksimal SKS dalam satu KRS"),
@@ -105,7 +107,8 @@ class master_kurikulum (osv.Model):
 			'kurikulum_id',               # 'actual.object.id' in relation table
 			'matakuliah_id',           # 'other.object.id' in relation table
 			'Daftar Mata Kuliah',		# 'Field Name'  
-			domain="['|',('prodi_id','=',prodi_id),\
+			required = False,
+			domain="['|',('jurusan_id','=',jurusan_id),\
 			('jenis','=','mk_umum')]",),	   
 		'total_sks':fields.function(_get_total_sks,type="integer",string="Total SKS"),         			
 		'total_mk_ids' : fields.function(_get_total_mk_kurikulum, type='many2many', relation="master.matakuliah", string="Total Mata Kuliah",readonly=True),

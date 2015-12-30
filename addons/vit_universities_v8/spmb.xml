@@ -57,7 +57,8 @@
 					                    <field name="name" string="Nama"/> 
 					                    <field name="tgl_ujian"/>   
 					                    <field name="nilai_ujian"/> 
-					                    <field name="status_mahasiswa" string="Status"/>                
+					                    <field name="status_mahasiswa" string="Status"/>
+                                        <field name="npm"/> 
 					                </tree>
                                 </field>
                             </page>

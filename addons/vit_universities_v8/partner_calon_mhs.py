@@ -66,7 +66,7 @@ class res_partner(osv.osv):
 									'tempat_lahir'		:res.tempat_lahir or False,
 									'tanggal_lahir'		:res.tanggal_lahir or False,                  
 									'fakultas_id'		:res.fakultas_id.id,
-									'jurusan_id'		:res.jurusan_id.id,
+									# 'jurusan_id'		:res.jurusan_id.id,
 									'prodi_id'			:res.prodi_id.id,
 									'tahun_ajaran_id'	:res.tahun_ajaran_id.id,                
 									'tgl_lulus'			:res.tgl_lulus or False,

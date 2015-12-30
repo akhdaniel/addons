@@ -1,0 +1,75 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="jenis_pendaftaran_tree_view">
+            <field name="name">jenis_pendaftaran.tree</field>
+            <field name="model">akademik.jenis_pendaftaran</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Jadwal USM" version="7.0">
+                    <field name="name" />          
+                    <field name="code" />
+                    <field name="code_dikti" />         
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="jenis_pendaftaran_form_view">
+            <field name="name">jenis_pendaftaran.form</field>
+            <field name="model">akademik.jenis_pendaftaran</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Jadwal USM" version="7.0">
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="name"/>
+                                <field name="code"/>
+                                <field name="code_dikti" />         
+                            </group>
+                        </group>
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="jenis_pendaftaran_list_action">
+            <field name="name">Jenis Pendaftaran</field>
+            <field name="res_model">akademik.jenis_pendaftaran</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field> 
+        </record>
+
+
+        <menuitem id="jenis_pendaftaran" name="Jenis Pendaftaran" parent="master_data" action="jenis_pendaftaran_list_action" sequence="100"/>
+
+
+
+
+
+        <record model="akademik.jenis_pendaftaran" id="jenis_pendaftaran_baru">
+            <field name="name">Baru</field>
+            <field name="code">0</field>
+            <field name="code_dikti">B</field>
+        </record>
+        <record model="akademik.jenis_pendaftaran" id="jenis_pendaftaran_pindahan">
+            <field name="name">Pindahan</field>
+            <field name="code">1</field>
+            <field name="code_dikti">P</field>
+        </record>
+        <record model="akademik.jenis_pendaftaran" id="jenis_pendaftaran_lanjutan">
+            <field name="name">Lanjutan</field>
+            <field name="code">2</field>
+            <field name="code_dikti">P</field>
+        </record>
+        <record model="akademik.jenis_pendaftaran" id="jenis_pendaftaran_daurulang">
+            <field name="name">Daur Ulang</field>
+            <field name="code">3</field>
+            <field name="code_dikti">P</field>
+        </record>
+
+
+	</data>
+</openerp>	

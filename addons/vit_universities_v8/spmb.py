@@ -162,7 +162,13 @@ class spmb_mahasiswa(osv.Model):
 		t_tuple =  tuple(t_id)
 		t_id_final = t_tuple[2]+t_tuple[3]#ambil 2 digit paling belakang dari tahun saja
 		f_id = my_form.fakultas_id.kode
+		
 		j_id = my_form.jurusan_id.kode
+
+		if j_id.find(".") != -1:
+			j = j_id.split(".")
+			j_id = j[1]
+
 		p_id = my_form.prodi_id.kode
 
 		#batas nilai penerima beasiswa
@@ -178,11 +184,27 @@ class spmb_mahasiswa(osv.Model):
 				is_bea = True
 			st = p.status_mahasiswa
 			nilai_sma = p.nilai_beasiswa
+			jp_id = p.jenis_pendaftaran_id.code
+
 			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
+
+			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and jurusan_id=%s and tahun_ajaran_id=%s" % (
+				p.jenis_pendaftaran_id.id, 
+				my_form.jurusan_id.id, 
+				my_form.tahun_ajaran_id.id)
+			cr.execute(sql)
+			# import pdb; pdb.set_trace()
+			hasil = cr.fetchone()
+			if hasil and hasil[0] != None:
+				se = "%03d" % hasil[0]
+			else:
+				se = "001"
+
 			self.pool.get('res.partner').write(cr,uid,p.id,{
 				'status_mahasiswa':'Mahasiswa',
 				'batas_nilai':nilai,
-				'npm':t_id_final+f_id+j_id+p_id+se,
+				# 'npm':t_id_final+f_id+j_id+p_id+se,
+				'npm':t_id_final + j_id + jp_id + se,
 				'user_id':uid,
 				'is_beasiswa':is_bea},
 				context=context)

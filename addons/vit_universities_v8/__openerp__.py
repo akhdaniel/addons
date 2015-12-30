@@ -26,6 +26,10 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'pembayaran.xml',
             'product.xml',
             'partner_calon_mhs.xml',
+            'konversi.xml',
+            'jadwal_usm.xml',
+            'jenis_pendaftaran.xml',
             'reports/report.xml',
-            'data/data_view.xml'],
+            'data/data_view.xml'
+            ],
 }

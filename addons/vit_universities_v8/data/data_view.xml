@@ -99,7 +99,7 @@
 	    </record>
 
 <!-- Master Fakultas -->
-	    <record model="master.fakultas" id="fakultas1" >
+	    <!-- <record model="master.fakultas" id="fakultas1" >
 	    	<field name="kode">01</field>
 	    	<field name="name">Fakultas Kedokteran</field>
 	    </record>
@@ -110,9 +110,9 @@
 	    <record model="master.fakultas" id="fakultas3" >
 	    	<field name="kode">03</field>
 	    	<field name="name">Fakultas Hukum</field>
-	    </record>
+	    </record> -->
 <!-- Master Jurusan -->
- 	    <record model="master.jurusan" id="jurusan1" >
+ 	   <!--  <record model="master.jurusan" id="jurusan1" >
 	    	<field name="kode">01</field>
 	    	<field name="name">Pendidikan Dokter</field>
 	    	<field name="fakultas_id" search="[('kode','=','01')]" model="master.fakultas"/>
@@ -147,7 +147,7 @@
 	    	<field name="kode">06</field>
 	    	<field name="name">Hukum Pidana</field>
 	    	<field name="fakultas_id" search="[('kode','=','03')]" model="master.fakultas"/>
-	    </record>		
+	    </record>	 -->	
 
 	    <!-- program studi -->
 	    <!-- <record model="master.prodi" id="prodi1" >
