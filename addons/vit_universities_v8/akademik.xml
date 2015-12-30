@@ -673,6 +673,9 @@
                     <field name="nama"/>
                     <field name="sks"/>
                     <field name="jenis"/>
+                    <field name="prodi_id"/>
+                    <field name="dosen_id"/>
+                    <field name="jenjang_id"/>
                 </tree>
             </field>
         </record>
@@ -688,10 +691,12 @@
                             <group>
                                 <field name="kode"/>
                                 <field name="nama"/>
+                                <field name="dosen_id"/>
                             </group>
                             <group>
                                 <field name="sks"/>
                                 <field name="jenis"/>
+                                <field name="jenjang_id"/>
                                 <field name="prodi_id" attrs="{'invisible': [('jenis','!=','mk_khusus')],'required': [('jenis','=','mk_khusus')]}"/>
                             </group>
                         </group>    
