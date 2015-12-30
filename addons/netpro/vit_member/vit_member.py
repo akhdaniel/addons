@@ -245,6 +245,7 @@ class netpro_member(osv.osv):
                                                                            'unit':unit,
                                                                            'provider_limit':prov_limit,
                                                                            'non_provider_limit':non_prov_limit,
+                                                                           'remaining':prov_limit,
                                                                            })                                    
 
         return  True

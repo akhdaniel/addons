@@ -39,7 +39,8 @@ $(".harga_benefit").on('change', function(){
             if(obj.success){
                 exc_el+= "<label>Excess    : </label><input class='form-control' name='excess."+det_id+"' readonly='readonly' value='"+obj.excess+"' />";
             }
-            $(exc_el).insertBefore(anakbuah);
+            $(anakbuah).empty();
+            $(anakbuah).append(exc_el);
         },
     });
 });

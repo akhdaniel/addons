@@ -43,6 +43,10 @@ class Member(http.Controller):
 				# return http.request.render('vit_claim_web.registration', {'message':message} )	
 				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
+			if member.upd_code == 'R' or member.state == 'nonactive':
+				message = "Member is Inactive! Transaction cannot be processed."
+				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
+
 			##############################################################################
 			# cari data claim member tsb yang masih draft
 			##############################################################################
@@ -257,13 +261,16 @@ class Member(http.Controller):
 
 			# loop to get summary accepted, excess
 			total_accepted = 0
+			total_billed = 0
 			total_excess = 0
 			for x in claim_details.keys():
 				total_accepted += float( kw.get('accept.'+str(x), 0) )
+				total_billed += float( kw.get('claim_details.'+str(x), 0) )
 				total_excess += float( kw.get('excess.'+str(x), 0) )
 
 			claim.write({
 				'summary_accepted' 	 : total_accepted,
+				'summary_billed' 	 : total_billed,
 				'sumary_total_excess': total_excess,
 				'claim_detail_ids' 	 : claim_detail_ids,
 				'diagnosis_ids'		 : diagnosis_datas,
