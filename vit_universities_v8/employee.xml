@@ -19,9 +19,12 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
-            	<field name="coach_id" position="after">
-            		<newline/>
+                <field name="coach_id" position="after">
+                    <newline/>
                     <field name="is_dosen"/>
+                    <field name="nidn"/>
+                    <field name="otherid"/>
+                    <field name="nip"/>
                 </field>
             
                 <page string="HR Settings" position="before">
@@ -36,6 +39,20 @@
             </field>
         </record>
 
+        <!-- Dosen Information Form View -->
+        <record model="ir.ui.view" id="view_dosen_tree">
+            <field name="name">hr.employee.tree.dosen</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+            	<field name="name" position="after">
+                    <field name="is_dosen"/>
+                    <field name="nidn"/>
+                    <field name="otherid"/>
+                    <field name="nip"/>
+                </field>            
+            </field>
+        </record>
 
 	</data>
 </openerp>	

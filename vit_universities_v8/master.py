@@ -177,9 +177,11 @@ class master_matakuliah (osv.Model):
 		'sks':fields.char('SKS',required = True),
 		'jenis':fields.selection([('mk_umum','Mata Kuliah Umum'),('mk_khusus','Mata Kuliah Khusus')],'Jenis',required = True),
 		# 'jurusan_id': fields.many2one('master.jurusan','Program Studi'),
-		'prodi_id': fields.many2one('master.prodi','Program Studi')
+		'prodi_id': fields.many2one('master.prodi','Program Studi Pengampu'),
+		'dosen_id': fields.many2one('hr.employee','Dosen Pengampu', domain=[('is_dosen','=',True)]),
 		#'jadwal_ids':fields.one2many('master.jadwal','mata_kuliah_id', string='Jadwal'),
-			}
+		'jenjang_id': fields.many2one('master.jenjang','Jejang'),
+	}
 
 	_defaults = {
 		'jenis':'mk_umum',
