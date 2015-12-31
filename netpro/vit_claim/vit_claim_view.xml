@@ -165,7 +165,6 @@
                             <field name="edc_trc_claim_payable" />
                         </group>
                         <group string="Claim Status">
-                            <field name="state" widget="selection" readonly="1"/>
                             <field name="acceptation_status" />
                             <field name="cno" />
                             <field name="pcno" />

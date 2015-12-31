@@ -60,12 +60,12 @@ class Member(http.Controller):
 				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
 			##############################################################################
-			# cari data claim member tsb yang masih draft
+			# cari data claim member tsb yang masih open
 			##############################################################################
 			Claim  = http.request.env['netpro.claim']
-			claim = Claim.search([('member_id','=',member.id), ('state','=', 'draft')])
+			claim = Claim.search([('member_id','=',member.id), ('state','=', 'open')])
 			if claim:
-				message = "Found existing draft Claim No %s, please discharge first. " % (claim.claim_no) 
+				message = "Found existing Open Claim No %s, please discharge first. " % (claim.claim_no) 
 				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
 		return http.request.render('vit_claim_web.eligibility', 
@@ -130,6 +130,7 @@ class Member(http.Controller):
 			'policy_id'			: int(policy_id.id),
 			'member_plan_id'	: member_plan.id ,
 			'claim_detail_ids'  : claim_details,
+			'state'  			: "open",
 		}
 		claim_data = Claim.create(data)
 
@@ -182,7 +183,7 @@ class Member(http.Controller):
 			# cari data claim member tsb yang masih open
 			##############################################################################
 			Claim  = http.request.env['netpro.claim']
-			claim = Claim.search([('member_id','=',member.id), ('state','=', 'draft')])
+			claim = Claim.search([('member_id','=',member.id), ('state','=', 'open')])
 			if not claim:
 				message = "Claim Registration not found!"
 				return request.redirect('/claim/discharge?message_error=%s'% (message), code=301)
@@ -289,8 +290,7 @@ class Member(http.Controller):
 				'diagnosis_ids'		 : diagnosis_datas,
 			})
 
-			claim.action_open() # cara memanggil action di object
-			claim.action_approve() # cara memanggil action di object
+			claim.action_close() # cara memanggil action di object
 
 			Diagnosis  = http.request.env['netpro.diagnosis']
 			diagnosis = Diagnosis.search([])

@@ -44,7 +44,7 @@
             </div>
         </t>
 
-        <t t-if="claim.state == 'draft'">
+        <t t-if="claim.state == 'open'">
             <a href="#button_add_diagnosis" onclick="addField();" id="button_add_diagnosis" class="btn btn-info">Add Diagnosis</a>
             <br /> <br />
         </t>
@@ -79,12 +79,12 @@
         <!-- buttons -->
         <div class="row">
             <div class="col-sm-8 col-md-7">
-                <t t-if="claim.state == 'draft'">
+                <t t-if="claim.state == 'open'">
                     <button type="submit" name="confirm" class="btn btn-primary">
                         Confirm
                     </button>
                 </t>
-                <t t-if="claim.state == 'approved'">
+                <t t-if="claim.state == 'close'">
                     <button type="submit" name="email"  class="btn btn-warning">
                         Email
                     </button>
