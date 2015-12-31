@@ -73,7 +73,7 @@ class benefit(osv.osv):
 		res = []
 		for r in self.browse(cr, uid, ids, context=context):
 			if r.code and r.name:
-				name = "%s (%s)" % (r.code, r.name)
+				name = "[%s] %s" % (r.code, r.name)
 				res.append((r.id,name))
 			else :
 				res.append((r.id,r.code))

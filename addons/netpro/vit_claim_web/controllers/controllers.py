@@ -6,6 +6,7 @@ import simplejson
 import logging
 _logger = logging.getLogger(__name__)
 import time
+from datetime import datetime
 
 
 class Member(http.Controller):
@@ -43,8 +44,19 @@ class Member(http.Controller):
 				# return http.request.render('vit_claim_web.registration', {'message':message} )	
 				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
-			if member.upd_code == 'R' or member.state == 'nonactive':
-				message = "Member is Inactive! Transaction cannot be processed."
+			passed = True
+			now = datetime.now()
+			member_period = time.strptime(member.insurance_period_end,"%Y-%m-%d")
+			end_period = datetime(member_period[0], member_period[1], member_period[2])
+			if now > end_period:
+				passed = False
+
+			if not passed or member.state == 'nonactive' or member.upd_code == 'R':
+				message = "Member is Inactive! Transaction cannot be processed.<br />"
+				message += "Insurance Date End : "+member.insurance_period_end+"<br />"
+				message += "Member State : "+member.state+"<br />"
+				if member.upd_code:
+					message += "Member Code : "+member.upd_code
 				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
 			##############################################################################
@@ -77,6 +89,7 @@ class Member(http.Controller):
 
 		# cari benefit member sesuai member_plan (RI, RJ, dll)
 
+		currency = http.request.env['netpro.claim']
 
 		return http.request.render('vit_claim_web.loa', {
 			'member'		: member, 
