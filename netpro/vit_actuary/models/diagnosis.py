@@ -40,7 +40,7 @@ class netpro_diagnosis(osv.osv):
         res = []
         for r in self.browse(cr, uid, ids, context=context):
             if r.diagnosis and r.name:
-                name = "%s (%s)" % (r.diagnosis, r.name)
+                name = "[%s] %s" % (r.diagnosis, r.name)
                 res.append((r.id,name))
             else :
                 res.append((r.id,r.diagnosis))

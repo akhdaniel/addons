@@ -89,7 +89,7 @@
                         <t t-if="message_error">
                             <br />
                             <div class="alert alert-danger">
-                                <t t-esc="message_error"/>
+                                <t t-raw="message_error"/>
                                 <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
                             </div>
                         </t>
@@ -97,7 +97,7 @@
 	            		<t t-if="message_success">
                             <br />
 							<div class="alert alert-success">
-		                        <t t-esc="message_success"/>
+		                        <t t-raw="message_success"/>
 		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
 			                </div>
 			            </t>
