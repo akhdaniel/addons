@@ -186,8 +186,12 @@ class netpro_claim(osv.osv):
         return self.write(cr,uid,ids,{'state':claim_status_draft},context=context)
 
     def action_open(self,cr,uid,ids,context=None):
-        
-        #import pdb;pdb.set_trace()
+        #set to "open" state
+        # claim_status_open = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'O', context=context)
+        claim_status_open = CLAIM_STATES[1][0]
+        return self.write(cr,uid,ids,{'state':claim_status_open},context=context)
+
+    def action_close(self,cr,uid,ids,context=None):
         this = self.browse(cr, uid, ids[0], context=None)
         member_plans = self.pool.get('netpro.member_plan_detail').search(cr, uid, [('member_plan_id','=',this.member_plan_id.id)], context=context)
         claim_details = this.claim_detail_ids
@@ -201,13 +205,6 @@ class netpro_claim(osv.osv):
                     if curremain < 0:
                         curremain = 0
                     plan_detil.write({'usage':accumusage,'remaining':curremain})
-
-        #set to "open" state
-        # claim_status_open = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'O', context=context)
-        claim_status_open = CLAIM_STATES[1][0]
-        return self.write(cr,uid,ids,{'state':claim_status_open},context=context)
-
-    def action_close(self,cr,uid,ids,context=None):
         #set to "close" state
         # claim_status_open = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'O', context=context)
         claim_status_open = CLAIM_STATES[2][0]
@@ -218,11 +215,6 @@ class netpro_claim(osv.osv):
         # claim_status_approved = self.pool.get('netpro.claim_status').get_by_code(cr, uid, 'A', context=context)
         claim_status_approved = CLAIM_STATES[3][0]
         return self.write(cr,uid,ids,{'state':claim_status_approved},context=context)
-
-    def action_open_approve(self,cr,uid,ids,context=None):
-        self.action_open(cr,uid,ids,context=context)
-        self.action_approve(cr,uid,ids,context=context)
-        return True
 
     def action_revise(self,cr,uid,ids,context=None):
         #set to "revised" state

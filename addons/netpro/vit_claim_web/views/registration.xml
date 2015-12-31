@@ -63,7 +63,7 @@
                             </button>
                         </t>
                         <t t-if="claim">
-                            <t t-if="claim.state == 'draft'">
+                            <t t-if="claim.state == 'open'">
                                 <button type="submit" name="email" class="btn btn-warning">
                                     Email
                                 </button>
