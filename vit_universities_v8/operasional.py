@@ -205,7 +205,7 @@ class operasional_krs (osv.Model):
 		#'npm':fields.related('partner_id', 'npm', type='char', relation='res.partner',size=128, string='NPM',readonly=True),
 		'npm' : fields.char('NPM',size=28,),
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),         
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required = True),           
+		# 'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required = True),           
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
 		'max_smt': fields.integer("Max Semester",),
 		'semester_id':fields.many2one('master.semester','Semester',domain="[('name','<=',max_smt)]",required = True),
@@ -218,7 +218,7 @@ class operasional_krs (osv.Model):
 		'user_id':fields.many2one('res.users','User',readonly=True),
 		'sks_tot' : fields.integer('Total SKS',readonly=True),
 		'invoice_id' : fields.many2one('account.invoice','Invoice',domain=[('type', '=','out_invoice')],readonly=True),
-			}    
+	}    
 				 
 	_defaults={
 		'state' : 'draft', 
@@ -278,7 +278,7 @@ class operasional_krs (osv.Model):
 
 
 	# def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id, npm, context=None):
-	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, kelas_id, partner_id, npm, context=None):
+	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id, npm, context=None):
 
 		results = {}
 		if not partner_id:
@@ -293,10 +293,10 @@ class operasional_krs (osv.Model):
 		kelas_id = par_id.kelas_id.id
 		tahun_ajaran_id = par_id.tahun_ajaran_id.id
 		fakultas_id = par_id.fakultas_id.id
-		jurusan_id = par_id.jurusan_id.id
+		# jurusan_id = par_id.jurusan_id.id
 		prodi_id = par_id.prodi_id.id
-		# max_smt = par_id.prodi_id.semester_id.name
-		max_smt = par_id.jurusan_id.semester_id.name
+		max_smt = par_id.prodi_id.semester_id.name
+		# max_smt = par_id.jurusan_id.semester_id.name
 
 		results = {
 			'value' : {
@@ -304,14 +304,14 @@ class operasional_krs (osv.Model):
 				'kelas_id': kelas_id,
 				'tahun_ajaran_id' : tahun_ajaran_id,
 				'fakultas_id' : fakultas_id,
-				'jurusan_id' : jurusan_id,
+				# 'jurusan_id' : jurusan_id,
 				'prodi_id' : prodi_id,
 				'max_smt': max_smt,
 			}
 		}
 		return results 
 
-	def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, jurusan_id, semester_id, partner_id, context=None):
+	def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, prodi_id, semester_id, partner_id, context=None):
 	# def onchange_semester(self, cr, uid, ids, npm, tahun_ajaran_id, prodi_id, semester_id, partner_id, context=None):
 
 		results = {}
@@ -321,7 +321,7 @@ class operasional_krs (osv.Model):
 		kur_obj = self.pool.get('master.kurikulum')
 		kur_ids = kur_obj.search(cr, uid, [
 			('tahun_ajaran_id','=',tahun_ajaran_id),
-			('jurusan_id','=',jurusan_id),
+			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
 			('state','=','confirm'),
 			('semester_id','=',semester_id)], context=context)

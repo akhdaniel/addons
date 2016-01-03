@@ -41,7 +41,7 @@
 	                    	<group>                          
 			                    <field name="kode"/>
                                 <!-- <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id,jurusan_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/> -->
-			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id,jurusan_id, prodi_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/>
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id, prodi_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/>
 			                    <field name="npm" invisible="1"/> 
 			                    <field name="kelas_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>
 			                    <!-- <field name="employee_id"/> -->
@@ -51,7 +51,7 @@
 		                    <group>
 			                    <field name="tahun_ajaran_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>			                    
                                 <field name='fakultas_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                <field name='jurusan_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/> 
+                                <!-- <field name='jurusan_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>  -->
                                 <field name="prodi_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/> 
                                 <field name="max_smt" invisible="1"/>                                                     
 			                    <!--button string="View Ipk" type="object" name="button_ipk" states="draft" /-->
@@ -112,7 +112,7 @@
                     <field name="tanggal_lahir"/> 
                     <field name="tahun_ajaran_id"/>
                     <field name="prodi_id"/> 
-                    <field name="jurusan_id"/> 
+                    <!-- <field name="jurusan_id"/>  -->
                     <!-- <field name="transkrip_detail_ids"/> -->
                 </tree>
             </field>
@@ -137,7 +137,7 @@
                             <group>
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id"/>
-                                <field name="jurusan_id"/>
+                                <!-- <field name="jurusan_id"/> -->
                                 <field name="prodi_id"/> 
                                 <newline/>
                                 <field name="ipk"/>

@@ -40,7 +40,7 @@ class master_kelas (osv.Model):
 		'nama' :fields.char('Nama',size=128),
 		#'semester_id':fields.many2one('master.semester','Semester'),
 		'prodi_id':fields.many2one('master.prodi','Program Studi',required = True),
-		'jurusan_id':fields.many2one('master.jurusan','Jurusan',required = True),
+		# 'jurusan_id':fields.many2one('master.jurusan','Jurusan',required = True),
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
 		'kuota':fields.integer('Kuota',required = True),
@@ -54,7 +54,6 @@ class master_kelas (osv.Model):
 			domain="[('status_mahasiswa','=','Mahasiswa'), \
 			('tahun_ajaran_id','=',tahun_ajaran_id),\
 			('fakultas_id','=',fakultas_id),\
-			('jurusan_id','=',jurusan_id),\
 			('prodi_id','=',prodi_id),\
 			('kelas_id','=',False)]",
 			readonly=False),    			
@@ -69,7 +68,7 @@ class master_kelas (osv.Model):
 			
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode kelas tidak boleh sama')]
 
-	def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id,kuota,context=None):
+	def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, prodi_id,kuota,context=None):
 	# def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id,kuota,context=None):
 
 		results = {}
@@ -81,7 +80,7 @@ class master_kelas (osv.Model):
 			('status_mahasiswa','=','Mahasiswa'),
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('fakultas_id','=',fakultas_id),
-			('jurusan_id','=',jurusan_id),
+			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
 			('kelas_id','=',False)], context=context)
 
@@ -107,7 +106,7 @@ class master_kelas (osv.Model):
 		my_form = self.browse(cr,uid,ids[0])
 		tahun_ajaran_id = my_form.tahun_ajaran_id.id
 		fakultas_id = my_form.fakultas_id.id
-		jurusan_id = my_form.jurusan_id.id
+		# jurusan_id = my_form.jurusan_id.id
 		prodi_id = my_form.prodi_id.id
 		kuota = my_form.kuota
 
@@ -117,7 +116,7 @@ class master_kelas (osv.Model):
 			('status_mahasiswa','=','Mahasiswa'),
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('fakultas_id','=',fakultas_id),
-			('jurusan_id','=',jurusan_id),
+			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
 			('kelas_id','=',False)], context=context)
 		res = []

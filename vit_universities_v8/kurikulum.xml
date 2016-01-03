@@ -12,7 +12,7 @@
                     <field name="name"/>
                     <field name="tahun_ajaran_id"/> 
                     <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
+                    <!-- <field name="jurusan_id"/> -->
                     <field name="prodi_id"/>
                     <field name="semester_id"/>                    
                     <field name="state" invisible="1"/>                  
@@ -36,11 +36,11 @@
                             <group>
                                 <field name="name" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
-                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                             </group>
                             <group>
-                                <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/>
-                                <field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <!-- <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/> -->
+                                <field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id)]"/>
                                 <field name="semester_id" attrs="{'readonly': [('state','=','confirm')]}" widget="selection"/>
 
                             </group>
@@ -96,7 +96,7 @@
         <record  forcecreate="1" id="seq_kurikulum" model="ir.sequence">
             <field name="name">Kurikulum</field>
             <field name="code">master.kurikulum</field>
-            <field name="prefix">KR%(y)s-</field>
+            <field name="prefix">KUR/%(y)s-</field>
             <field name="padding">4</field>
         </record> 
 

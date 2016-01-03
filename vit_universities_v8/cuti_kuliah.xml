@@ -12,8 +12,8 @@
                     <field name="kelas_id"/>                   
                     <field name="tahun_ajaran_id" invisible="1"/>
                     <field name="fakultas_id" invisible="1"/>
-                    <field name="jurusan_id" invisible="1"/>
-                    <!-- <field name="prodi_id"/> -->
+                    <!-- <field name="jurusan_id" invisible="1"/> -->
+                    <field name="prodi_id"/>
                     <field name="from_semester_id"/>
                     <field name="to_semester_id"/>
                     <field name="state" invisible="1"/>
@@ -40,8 +40,8 @@
                 		<group>
                 			<group>
                                 <field name="name"/>
-                                <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, jurusan_id, kelas_id, partner_id)"/> 
-			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id)"/> 
+                                <!-- <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, jurusan_id, kelas_id, partner_id)"/>  -->
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id)"/> 
 			                    <field name="kelas_id" />
                                 <label for="from_semester_id" string="Semester"/> 
                                 <div>  
@@ -52,7 +52,7 @@
                 			<group>
                 				<field name="tahun_ajaran_id"/>
 			                    <field name="fakultas_id"/>
-			                    <field name="jurusan_id"/>
+			                    <!-- <field name="jurusan_id"/> -->
                                 <field name="prodi_id"/>           				
                 			</group>
                         </group>
@@ -86,7 +86,7 @@
                         <filter icon="terp-project" string="Mahasiswa" help="By Mahasiswa" context="{'group_by':'partner_id'}"/>
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Kelas" help="By Kelas" context="{'group_by':'kelas_id'}"/>
                         <filter icon="terp-project" string="Tanggal Aktif" help="By Tanggal Aktif" context="{'group_by':'date'}"/>

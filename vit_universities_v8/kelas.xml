@@ -12,7 +12,7 @@
                     <field name="nama"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
+                    <!-- <field name="jurusan_id"/> -->
                     <field name="prodi_id"/> 
                     <field name="employee_id" invisible="1"/> 
                 </tree>                    
@@ -42,8 +42,8 @@
                 			<group>
                                 <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
-			                    <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/>
-                                <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}"/>                               
+			                    <!-- <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/> -->
+                                <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}"/>                               
 			                    <!-- <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, jurusan_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}"/>                				 -->
                 			</group>
                 		</group>	
