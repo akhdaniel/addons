@@ -92,15 +92,15 @@ class master_kurikulum (osv.Model):
 		return result
 
 	_columns = {
-		'name' :fields.char('Kode Kurikulum', size=28,required = True,ondelete="cascade"),
-		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required = True),         
-		'jurusan_id':fields.many2one('master.jurusan',string='Program Studi',required = True),           
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
-		'semester_id':fields.many2one('master.semester','Semester',required = True),
-		'max_sks':fields.integer('Max Total SKS',required = True,help="Maksimal SKS dalam satu KRS"),
-		'min_ip':fields.float('Min Indeks Prestasi',required = True,help="Minimal indeks prestasi untuk bisa ambil matakuliah tambahan dalam KRS"),
-		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
-		'state':fields.selection([('draft','Draft'),('confirm','Confirm')],string="Status",required = True),
+		'name' 				:fields.char('Kode Kurikulum', size=28,required = True,ondelete="cascade"),
+		'fakultas_id'		:fields.many2one('master.fakultas','Fakultas',required = True),         
+		# 'jurusan_id'		:fields.many2one('master.jurusan',string='Program Studi',required = True),           
+		'prodi_id'			:fields.many2one('master.prodi',string='Program Studi',required = True),
+		'semester_id'		:fields.many2one('master.semester','Semester',required = True),
+		'max_sks'			:fields.integer('Max Total SKS',required = True,help="Maksimal SKS dalam satu KRS"),
+		'min_ip'			:fields.float('Min Indeks Prestasi',required = True,help="Minimal indeks prestasi untuk bisa ambil matakuliah tambahan dalam KRS"),
+		'tahun_ajaran_id'	: fields.many2one('academic.year','Tahun Ajaran',required = True),
+		'state'				:fields.selection([('draft','Draft'),('confirm','Confirm')],string="Status",required = True),
 		'kurikulum_detail_ids':fields.many2many(
 			'master.matakuliah',   	# 'other.object.name' dengan siapa dia many2many
 			'kurikulum_mahasiswa_rel',       # 'relation object'
@@ -108,12 +108,12 @@ class master_kurikulum (osv.Model):
 			'matakuliah_id',           # 'other.object.id' in relation table
 			'Daftar Mata Kuliah',		# 'Field Name'  
 			required = False,
-			domain="['|',('jurusan_id','=',jurusan_id),\
+			domain="['|',('prodi_id','=',prodi_id),\
 			('jenis','=','mk_umum')]",),	   
-		'total_sks':fields.function(_get_total_sks,type="integer",string="Total SKS"),         			
-		'total_mk_ids' : fields.function(_get_total_mk_kurikulum, type='many2many', relation="master.matakuliah", string="Total Mata Kuliah",readonly=True),
-		'total_sks2':fields.function(_get_total_sks2,type="integer",string="Total SKS"), 
-			}
+		'total_sks'			:fields.function(_get_total_sks,type="integer",string="Total SKS"),         			
+		'total_mk_ids' 		: fields.function(_get_total_mk_kurikulum, type='many2many', relation="master.matakuliah", string="Total Mata Kuliah",readonly=True),
+		'total_sks2'		:fields.function(_get_total_sks2,type="integer",string="Total SKS"), 
+	}
 			
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode kurikulum tidak boleh sama')]
 

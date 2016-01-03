@@ -16,7 +16,7 @@ class cuti_kuliah(osv.Model):
 		'to_semester_id':fields.many2one('master.semester','Sampai Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'prodi_id':fields.many2one('master.prodi','Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'jurusan_id':fields.many2one('master.jurusan','Jurusan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		# 'jurusan_id':fields.many2one('master.jurusan','Jurusan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'tahun_ajaran_id': fields.many2one('academic.year','Angkatan', required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'state':fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status', states={'draft': [('readonly', False)]}),
@@ -35,7 +35,7 @@ class cuti_kuliah(osv.Model):
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode cuti kuliah tidak boleh sama')]
 
 	# def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id, context=None):
-	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id, context=None):
+	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id, context=None):
 		results = {}
 		if not partner_id:
 			return results
@@ -48,7 +48,7 @@ class cuti_kuliah(osv.Model):
 		kelas_id = par_id.kelas_id.id
 		tahun_ajaran_id = par_id.tahun_ajaran_id.id
 		fakultas_id = par_id.fakultas_id.id
-		jurusan_id = par_id.jurusan_id.id
+		# jurusan_id = par_id.jurusan_id.id
 		prodi_id = par_id.prodi_id.id
 
 		results = {
@@ -56,7 +56,7 @@ class cuti_kuliah(osv.Model):
 				'kelas_id': kelas_id,
 				'tahun_ajaran_id' : tahun_ajaran_id,
 				'fakultas_id' : fakultas_id,
-				'jurusan_id' : jurusan_id,
+				# 'jurusan_id' : jurusan_id,
 				'prodi_id' : prodi_id,
 			}
 		}

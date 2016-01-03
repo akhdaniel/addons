@@ -13,11 +13,11 @@
 
                     <field name="tahun_ajaran_id" />
                     <field name="fakultas_id" />
-                    <field name="jurusan_id" />
+                    <!-- <field name="jurusan_id" /> -->
                     <field name="prodi_id"/>
 
                     <field name="asal_fakultas_id" />
-                    <field name="asal_jurusan_id" />
+                    <!-- <field name="asal_jurusan_id" /> -->
                     <field name="asal_prodi_id"/>
                     <field name="asal_univ_id"/>
 
@@ -54,12 +54,12 @@
                             <group>
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id"/>
-                                <field name="jurusan_id"/>
+                                <!-- <field name="jurusan_id"/> -->
                                 <field name="prodi_id"/>                        
                             </group>
                 			<group>
 			                    <field name="asal_fakultas_id"/>
-			                    <field name="asal_jurusan_id"/>
+			                    <!-- <field name="asal_jurusan_id"/> -->
                                 <field name="asal_prodi_id"/>                           
                                 <field name="asal_univ_id"/>           				
                 			</group>
@@ -94,7 +94,7 @@
                         <filter icon="terp-project" string="Mahasiswa" help="By Mahasiswa" context="{'group_by':'partner_id'}"/>
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Tanggal Aktif" help="By Tanggal Aktif" context="{'group_by':'date'}"/>
                         <filter icon="terp-project" string="KRS Done" help="By Automatic Done" context="{'group_by':'krs_done'}"/>
@@ -112,7 +112,7 @@
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="konversi_search"/>
             <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Cuti Mahasiswa.</p><p>disini belum ada data tentang Cuti Mahasiswa !</p></field>
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Konversi Mahasiswa.</p><p>disini belum ada data tentang Konversi Mahasiswa !</p></field>
         </record>
 
 
@@ -132,7 +132,7 @@
         <record  forcecreate="1" id="seq_konversi" model="ir.sequence">
             <field name="name">akademik.konversi</field>
             <field name="code">akademik.konversi</field>
-            <field name="prefix">%(y)s/</field>
+            <field name="prefix">CONV/%(y)s/</field>
             <field name="padding">5</field>
         </record> 
 

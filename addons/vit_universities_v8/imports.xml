@@ -1,0 +1,191 @@
+<openerp>
+	<data>
+		<!-- tree list import_mk -->
+		<record id="view_import_mk_tree" model="ir.ui.view">
+		    <field name="name">akademik_import_mk_tree</field>
+		    <field name="model">akademik.import_mk</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import mk">
+					<field name="thsmstbkmk" />	
+					<field name="kdptitbkmk" />	
+					<field name="kdjentbkmk" />	
+					<field name="kdpsttbkmk" />	
+					<field name="kdkmktbkmk" />	
+					<field name="nakmktbkmk" />	
+					<field name="sksmktbkmk" />	
+					<field name="skstmtbkmk" />	
+					<field name="sksprtbkmk" />	
+					<field name="skslptbkmk" />	
+					<field name="semestbkmk" />	
+					<field name="kdkeltbkmk" />	
+					<field name="kdkurtbkmk" />	
+					<field name="kdwpltbkmk" />	
+					<field name="nodostbkmk" />	
+					<field name="jenjatbkmk" />	
+					<field name="proditbkmk" />	
+					<field name="stkmktbkmk" />	
+					<field name="slbustbkmk" />	
+					<field name="sappptbkmk" />	
+					<field name="bhnajtbkmk" />	
+					<field name="diktttbkmk" />	
+					<field name="is_processed" />	
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- tree list import_mk -->
+		<record id="view_prodi_map_tree" model="ir.ui.view">
+		    <field name="name">akademik_prodi_map_tree</field>
+		    <field name="model">akademik.prodi.map</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list prodi map">
+					<field name="prodi_prima_id"/> 	
+					<field name="prodi_kode"/>		
+					<field name="name"/>				
+				</tree>		
+			</field>
+		</record>
+
+
+		<!-- action list import_mk -->
+		<record id="action_import_mk_list" model="ir.actions.act_window">
+			<field name="name">List import MK</field>
+			<field name="res_model">akademik.import_mk</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- action list prodi_map -->
+		<record id="action_prodi_map_list" model="ir.actions.act_window">
+			<field name="name">List Prodi Map</field>
+			<field name="res_model">akademik.prodi.map</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<!-- menu imports -->
+		<menuitem id="imports_menu"
+			 name="Import"
+			 sequence="200"
+			 parent="si_akademik_menu"/>
+		<menuitem id="imports_mk"
+			 action="action_import_mk_list"
+			 name="Matakuliah"
+			 sequence="10"
+			 parent="imports_menu"/>
+		<menuitem id="prodi_map"
+			 action="action_prodi_map_list"
+			 name="Prodi ID Mapping"
+			 sequence="20"
+			 parent="imports_menu"/>
+
+
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_import_mk" model="ir.actions.server">
+	        <field name="name">Process Import MK</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_akademik_import_mk"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('akademik.import_mk').action_import_mk(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_mk" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'akademik.import_mk'" name="model"/>
+	        <field name="name">Process Import MK</field>
+	        <field eval="'ir.actions.server,%d'%action_import_mk" name="value"/>
+	    </record>
+
+	    <!-- prodi map data -->
+	    <record id="prodi_map_10203" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10203</field>
+	        <field name="prodi_kode">11</field>
+	        <field name="name">Teknik Sipil S1</field>
+	    </record>
+	    <record id="prodi_map_10204" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10204</field>
+	        <field name="prodi_kode">12</field>
+	        <field name="name">Arsitektur S1</field>
+	    </record>
+	    <record id="prodi_map_10202" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10202</field>
+	        <field name="prodi_kode">21</field>
+	        <field name="name">Teknik Mesin S1</field>
+	    </record>
+	    <record id="prodi_map_10201" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10201</field>
+	        <field name="prodi_kode">22</field>
+	        <field name="name">Teknik Elektro S1</field>
+	    </record>
+	    <record id="prodi_map_10301" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10301</field>
+	        <field name="prodi_kode">31</field>
+	        <field name="name">Matematika S1</field>
+	    </record>
+	    <record id="prodi_map_10302" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10302</field>
+	        <field name="prodi_kode">32</field>
+	        <field name="name">Fisika S1</field>
+	    </record>
+	    <record id="prodi_map_10305" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10305</field>
+	        <field name="prodi_kode">33</field>
+	        <field name="name">Farmasi S1</field>
+	    </record>
+	    <record id="prodi_map_10305" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10305</field>
+	        <field name="prodi_kode">34</field>
+	        <field name="name">Profesi Apoteker Profesi</field>
+	    </record>
+	    <record id="prodi_map_10203" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10203</field>
+	        <field name="prodi_kode">41</field>
+	        <field name="name">Teknik Sipil D3</field>
+	    </record>
+	    <record id="prodi_map_10202" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10202</field>
+	        <field name="prodi_kode">42</field>
+	        <field name="name">Teknik Mesin D3</field>
+	    </record>
+	    <record id="prodi_map_10201" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">10201</field>
+	        <field name="prodi_kode">43</field>
+	        <field name="name">Teknik Elektronika D3</field>
+	    </record>
+	    <record id="prodi_map_21101" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">21101</field>
+	        <field name="prodi_kode">51</field>
+	        <field name="name">Teknik Mesin S2</field>
+	    </record>
+	    <record id="prodi_map_20101" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">20101</field>
+	        <field name="prodi_kode">52</field>
+	        <field name="name">Teknik Elektro S2</field>
+	    </record>
+	    <record id="prodi_map_26101" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">26101</field>
+	        <field name="prodi_kode">53</field>
+	        <field name="name">Teknik Industri S2</field>
+	    </record>
+	    <record id="prodi_map_26101" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">26101</field>
+	        <field name="prodi_kode">23</field>
+	        <field name="name">Teknik Industri S1</field>
+	    </record>
+	    <record id="prodi_map_1" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">1</field>
+	        <field name="prodi_kode">13</field>
+	        <field name="name">Arsitektur Lansekap S1</field>
+	    </record>
+	    <record id="prodi_map_2" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">2</field>
+	        <field name="prodi_kode">35</field>
+	        <field name="name">Sistem Informasi S1</field>
+	    </record>
+	    <record id="prodi_map_3" model="akademik.prodi.map">
+	        <field name="prodi_prima_id">3</field>
+	        <field name="prodi_kode">36</field>
+	        <field name="name">Teknik Informatika S1</field>
+	    </record>
+
+
+	</data>
+</openerp>

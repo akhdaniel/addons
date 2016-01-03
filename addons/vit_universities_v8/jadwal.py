@@ -12,7 +12,7 @@ class master_jadwal (osv.Model):
 	def create(self, cr, uid, vals, context=None):
 		ajaran = vals['tahun_ajaran_id']
 		fakultas = vals['fakultas_id']
-		jurusan = vals['jurusan_id']
+		# jurusan = vals['jurusan_id']
 		prodi = vals['prodi_id']
 		semester = vals['semester_id']
 		ruangan = vals['ruangan_id']
@@ -21,7 +21,7 @@ class master_jadwal (osv.Model):
 		jad_obj = self.pool.get('master.jadwal')
 		jad_id = jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
-			('jurusan_id','=',jurusan),
+			# ('jurusan_id','=',jurusan),
 			('prodi_id','=',prodi),
 			('semester_id','=',semester),
 			('ruangan_id','=',ruangan),	
@@ -50,7 +50,7 @@ class master_jadwal (osv.Model):
 		'name'  : fields.char('Kode',size=30,required=True),
 		'mata_kuliah_id' :fields.many2one('master.matakuliah',string='Mata Kuliah',required=True),
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required=True),
+		# 'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',required=True),
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True),
 		'semester_id':fields.many2one('master.semester',string='Semester',required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
@@ -61,8 +61,8 @@ class master_jadwal (osv.Model):
 		'hari':fields.selection([('senin','Senin'),('selasa','Selasa'),('rabu','Rabu'),('kamis','Kamis'),('jumat','Jum\'at'),('sabtu','Sabtu'),('minggu','Minggu')],'Hari',required=True),
 		'is_active':fields.boolean('Aktif'),
 		
-		'partner_id':fields.many2one('res.partner'),
-		'kurikulum_id':fields.many2one('master.kurikulum'),
+		'partner_id':fields.many2one('res.partner',"Partner"),
+		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum"),
 		'hours_from' : fields.float('Jam Mulai'),
 		'hours_to' : fields.float('Jam Selesai'),
 
