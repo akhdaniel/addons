@@ -4,7 +4,7 @@
 		<record id="action_rka_list" model="ir.actions.act_window">
 			<field name="name">Rencana Operasional dan Anggaran</field>
 			<field name="res_model">anggaran.rka</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree,form,graph</field>
 			<field name="context">{'search_default_group_by_unit': 1}</field>
 			<field name="help" type="html">
 		      <p class="oe_view_nocontent_create">

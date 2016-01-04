@@ -125,35 +125,35 @@ class cashflow(osv.osv):
 
 
 				if coa.code == '3.1':
-					hasil = self.cari_bahan_habis_pakai(cr, uid, cf)
+					hasil = self.cari_bahan_habis_pakai(cr, uid, cf, m)
 					p_mfield = hasil[0]
 					a_mfield = hasil[1]
 					v_mfield = hasil[2]
 					p_total_biaya_unit += p_mfield
 
 				if coa.code == '3.2':
-					hasil = self.cari_gaji(cr, uid, cf)
+					hasil = self.cari_gaji(cr, uid, cf, m)
 					p_mfield = hasil[0]
 					a_mfield = hasil[1]
 					v_mfield = hasil[2]
 					p_total_biaya_unit += p_mfield
 
 				if coa.code == '3.3':
-					hasil = self.cari_sewa(cr, uid, cf)
+					hasil = self.cari_sewa(cr, uid, cf, m)
 					p_mfield = hasil[0]
 					a_mfield = hasil[1]
 					v_mfield = hasil[2]
 					p_total_biaya_unit += p_mfield
 
 				if coa.code == '3.4':
-					hasil = self.cari_outsourcing(cr, uid, cf)
+					hasil = self.cari_outsourcing(cr, uid, cf, m)
 					p_mfield = hasil[0]
 					a_mfield = hasil[1]
 					v_mfield = hasil[2]
 					p_total_biaya_unit += p_mfield
 
 				if coa.code == '3.5':
-					hasil = self.cari_overhead(cr, uid, cf)
+					hasil = self.cari_overhead(cr, uid, cf, m)
 					p_mfield = hasil[0]
 					a_mfield = hasil[1]
 					v_mfield = hasil[2]
@@ -164,7 +164,7 @@ class cashflow(osv.osv):
 
 
 				if coa.code == '3.6':
-					p_mfield = self.cari_biaya_adm(cr, uid, cf)
+					p_mfield = self.cari_biaya_adm(cr, uid, cf, m)
 					p_total_pengeluaran += p_mfield
 
 				if coa.code == '3.7':
@@ -285,13 +285,17 @@ class cashflow(osv.osv):
 		total = 0.0
 		return total 
 
-	def query_rka_coa(self, cr, uid, cf, cost_type_code ):
+	def query_rka_coa(self, cr, uid, cf, cost_type_code , m):
 		total_p = 0.0
 		total_a = 0.0
 		total_v = 0.0
 
-		sql = "SELECT sum(rka_coa.total), sum(rka_coa.realisasi), sum(rka_coa.sisa) "
+		tahun = int(cf.tahun_id.code)
+		tahun,m = self.map_month_to_period(cr, uid, m, tahun )
+
+		sql = "SELECT sum(rka_coa.total), sum(rka_coa.realisasi), sum(rka_coa.total)-sum(coalesce(rka_coa.realisasi,0)) "
 		sql += "FROM anggaran_rka rka "
+		sql += "LEFT JOIN account_period per ON rka.period_id = per.id "
 		sql += "LEFT JOIN anggaran_rka_kegiatan rka_keg ON rka.id = rka_keg.rka_id "
 		sql += "LEFT JOIN anggaran_rka_coa rka_coa ON rka_keg.id = rka_coa.rka_kegiatan_id "
 		sql += "LEFT JOIN anggaran_mata_anggaran_kegiatan mak ON rka_coa.mak_id = mak.id "
@@ -299,7 +303,8 @@ class cashflow(osv.osv):
 		sql += "WHERE rka.unit_id = %s " % (cf.unit_id.id)
 		sql += "AND rka.tahun = %s " % (cf.tahun_id.id)
 		sql += "AND ct.code = '%s' " % (cost_type_code)
-		sql += "AND rka.state = 'done'"
+		sql += "AND rka.state = 'done' "
+		sql += "AND per.code = '%02d/%s' " % ( m, tahun) 
 		
 		cr.execute(sql)
 		hasil = cr.fetchone()
@@ -319,27 +324,27 @@ class cashflow(osv.osv):
 		return (total_p, total_a, total_v)
 
 
-	def cari_bahan_habis_pakai(self, cr, uid, cf):
-		total = self.query_rka_coa(cr, uid, cf, "1")
+	def cari_bahan_habis_pakai(self, cr, uid, cf, m):
+		total = self.query_rka_coa(cr, uid, cf, "1",m)
 		return total 
 
-	def cari_gaji(self, cr, uid, cf):
-		total = self.query_rka_coa(cr, uid, cf, "2")
+	def cari_gaji(self, cr, uid, cf,m):
+		total = self.query_rka_coa(cr, uid, cf, "2",m)
 		return total 
 
-	def cari_sewa(self, cr, uid, cf):
-		total = self.query_rka_coa(cr, uid, cf, "3")
+	def cari_sewa(self, cr, uid, cf,m):
+		total = self.query_rka_coa(cr, uid, cf, "3",m)
 		return total 
 
-	def cari_outsourcing(self, cr, uid, cf):
-		total = self.query_rka_coa(cr, uid, cf, "4")
+	def cari_outsourcing(self, cr, uid, cf,m):
+		total = self.query_rka_coa(cr, uid, cf, "4",m)
 		return total 
 
-	def cari_overhead(self, cr, uid, cf):
-		total = self.query_rka_coa(cr, uid, cf, "5")
+	def cari_overhead(self, cr, uid, cf,m):
+		total = self.query_rka_coa(cr, uid, cf, "5",m)
 		return total 
 
-	def cari_biaya_adm(self, cr, uid, cf):
+	def cari_biaya_adm(self, cr, uid, cf, m):
 		total = 0.0
 		return total 
 
@@ -384,7 +389,6 @@ class cashflow(osv.osv):
 			v_total = hasil[2]
 		return (p_total, a_total, v_total)
 
-
 	def cari_biaya_prepaid(self, cr, uid, cf, m):
 		total = 0.0
 		return total 
@@ -392,7 +396,6 @@ class cashflow(osv.osv):
 	def cari_pajak(self, cr, uid, cf,m):
 		total = 0.0
 		return total 
-
 
 	def cari_uudp(self, cr, uid, cf, m):
 		# m : 1=Sep, 2=Oct, dst..
@@ -431,12 +434,15 @@ class cashflow(osv.osv):
 	def cari_saving(self, cr, uid, cf,m):
 		total = 0.0
 		return total 
+
 	def cari_pinjaman(self, cr, uid, cf,m):
 		total = 0.0
 		return total 
+
 	def cari_pembayaran_pinjaman(self, cr, uid, cf,m):
 		total = 0.0
 		return total 
+
 	def cari_bunga_pinjaman(self, cr, uid, cf,m):
 		total = 0.0
 		return total 

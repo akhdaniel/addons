@@ -43,6 +43,8 @@
     	'view/lap_pkk.xml',
       
       'report/spm.xml',
+      'report/paper.xml',
+      'report/rka.xml',
 
       'security/ir.model.access.csv'
     ],    

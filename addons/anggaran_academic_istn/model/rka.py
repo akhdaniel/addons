@@ -71,8 +71,8 @@ class rka(osv.osv):
 		'alokasi'			: fields.float(_('Alokasi')),
 		# 'anggaran'			: fields.function(_fanggaran, type='float', string="Total Anggaran"),
 		'anggaran'			: fields.float('Total Anggaran'),
-		'realisasi'			: fields.function(_frealisasi, type='float', string="Realisasi", store=True),
-		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
+		'realisasi'			: fields.function(_frealisasi, type='float', string="Realisasi"),
+		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
 		'definitif'			: fields.float("Definitif"),
 
 		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id',
@@ -396,7 +396,7 @@ class rka_coa(osv.osv):
 		#diupdate waktu SPP confirm
 		'realisasi'		 	: fields.float('Realisasi'),
 		# 'sisa'		 		: fields.float('Sisa'),
-		
+
 		# 'realisasi'		 		: fields.function(_frealisasi, type='float', string="Realisasi", ),
 		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
 
@@ -459,17 +459,17 @@ class rka_detail(osv.osv):
 	_columns 	= {
 		'kebijakan_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 'program_id', 'kebijakan_id',
 			type="many2one", relation="anggaran.kebijakan", string="Kebijakan", store=True),
-		'program_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 'program_id',
+		'program_id'     : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 'program_id',
 			type="many2one", relation="anggaran.program", string="Program", store=True),
-		'kegiatan_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 
+		'kegiatan_id'    : fields.related('rka_coa_id','rka_kegiatan_id', 'kegiatan_id' , 
 			type="many2one", relation="anggaran.kegiatan", string="Kegiatan", store=True),
-		'unit_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'unit_id' , 
+		'unit_id'        : fields.related('rka_coa_id','rka_kegiatan_id', 'unit_id' , 
 			type="many2one", relation="anggaran.unit", string="Unit", store=True),
 
-		'tahun'   : fields.related('rka_coa_id','rka_kegiatan_id', 'rka_id' , 'tahun',
+		'tahun'          : fields.related('rka_coa_id','rka_kegiatan_id', 'rka_id' , 'tahun',
 			type="many2one", relation="account.fiscalyear", string="Tahun", store=True),
 
-		'period_id'   : fields.related('rka_coa_id','rka_kegiatan_id', 'rka_id' , 'period_id',
+		'period_id'      : fields.related('rka_coa_id','rka_kegiatan_id', 'rka_id' , 'period_id',
 			type="many2one", relation="account.period", string="Period", store=True),
 
 		'rka_coa_id' 	: fields.many2one('anggaran.rka_coa', _('MAK')),
@@ -478,7 +478,7 @@ class rka_detail(osv.osv):
 		'jumlah'		: fields.float(_('Jumlah'), required=True),
 
 		'volume_total' 	: fields.float(_('Volume Total') , required=True),		
-		'realisasi'		 	: fields.float('Realisasi'),
+		'realisasi'		: fields.float('Realisasi'),
 		'sisa'		 	: fields.float('Sisa'),
 		# 'realisasi'		 	: fields.function(_frealisasi, type='float', string='Realisasi', store=True),
 		# 'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa", store=True),
