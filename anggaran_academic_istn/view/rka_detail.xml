@@ -74,5 +74,20 @@
 		    </field>
 		</record>
 
+        <!-- graph -->
+        <record id="view_anggaran_rka_per_unit_graph" model="ir.ui.view">
+            <field name="name">anggaran_rka_detail_per_unit_graph</field>
+            <field name="model">anggaran.rka_detail</field>
+            <field name="arch" type="xml">
+                <graph string="rka_detail graph" type="bar">
+                    <field name="period_id"/>
+                    <field name="unit_id"/>
+                    <field name="volume_total" operator="+"/>
+                    <field name="realisasi" operator="+"/>
+                    <field name="sisa" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
 	</data>
 </openerp>
