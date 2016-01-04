@@ -27,7 +27,7 @@ class stock_move(osv.osv):
         master_checklist_obj   = self.pool.get('vit_ph_checklist_bahan_lucas.master_checklist')
         master_ids   = master_checklist_obj.search(cr, uid,[('appeareance','=',ir_model_id[0])])
    
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         for master_id in master_ids:
             checklist_value_ids.append((0,0,{'master_checklist_id':master_id}))
         return checklist_value_ids
