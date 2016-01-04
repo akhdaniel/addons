@@ -40,17 +40,20 @@
 		            		<group>
 				            	<group>
 					                <field name="tanggal"/>       
-					                <field name="period_id"/>       
-					                <field name="kepada"/>
-					                <field name="cara_bayar"/>       
-					                <field name="jumlah"/>       
-					                <field name="keperluan"/>       
-				                </group>
-				                <group>  
+
 					                <field name="unit_id"/>       
 					                <field name="nomor_rek"/>       
 					                <field name="nama_bank"/>  
+
+					                <field name="tahun_id"/>       
+					                <field name="period_id"/>       
 					                <field name="rka_id" domain="[('unit_id','=',unit_id),('period_id','=',period_id)]"/>       
+
+				                </group>
+				                <group>  
+					                <field name="kepada"/>
+					                <field name="cara_bayar"/>       
+					                <field name="keperluan"/>       
 				                </group>     
 			                </group>    				            
 				        </group>
@@ -61,13 +64,17 @@
 					            <field name="spp_line_ids">
 					            	<tree string="Rincian Penjelasan">
 										<field name="rka_kegiatan_id" />  
-										<field name="pagu" editable="0" />   
+										<field name="pagu" />   
 										<field name="spp_lalu" />     
 										<field name="spp_ini" />
 										<field name="jumlah_spp" />
 										<field name="sisa_dana" />      
 						            </tree>
 						        </field>
+						        <group colspan="4">
+					                <field name="jumlah"/>       
+					            </group>
+
 						    </page>
 				            
 				            <page string="Persetujuan">
@@ -128,11 +135,15 @@
 						</h1>
 					</div>
 		            <group>
-						<field name='pagu' colspan="2"/>	
-						<field name='spp_lalu' />
-						<field name='spp_ini'/>
-						<field name='jumlah_spp'/>
-						<field name='sisa_dana'/>
+		            	<group>
+							<field name='pagu'/>	
+							<field name='spp_lalu' />
+							<field name='spp_ini'/>
+						</group>
+						<group>
+							<field name='jumlah_spp'/>
+							<field name='sisa_dana'/>
+				        </group>
 			        </group>
 		            <notebook>
 		            	<page string="Rincian MAK">

@@ -278,5 +278,22 @@
             </field>
         </record>    
 
+
+        <!-- graph -->
+        <record id="view_anggaran_rka_per_unit_graph" model="ir.ui.view">
+            <field name="name">anggaran_rka_per_unit_graph</field>
+            <field name="model">anggaran.rka</field>
+            <field name="arch" type="xml">
+                <graph string="rka graph" type="bar">
+                    <field name="period_id"/>
+                    <field name="unit_id"/>
+                    <field name="alokasi" operator="+"/>
+                    <field name="anggaran" operator="+"/>
+                    <field name="realisasi" operator="+"/>
+                    <field name="sisa" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
 	</data>
 </openerp>

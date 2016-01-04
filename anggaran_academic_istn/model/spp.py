@@ -27,10 +27,10 @@ class spp(osv.osv):
 		'name' 				: fields.char('Nomor', required=True, readonly=True),
 		'tanggal' 			: fields.date('Tanggal', required=True),
 		'period_id'			: fields.many2one('account.period', _('Perioda'),  required=True),
-		'tahun_id'		   	: fields.many2one('account.fiscalyear', 'Tahun', readonly=True),
+		'tahun_id'		   	: fields.many2one('account.fiscalyear', 'Tahun'),
 		'kepada'  			: fields.char('Kepada', required=True),
-		'unit_id'  			: fields.many2one('anggaran.unit', 'Atas Nama', required=True),
-		'rka_id'	 		: fields.many2one('anggaran.rka', 'Dasar RKAT Nomor/Tanggal', required=True),
+		'unit_id'  			: fields.many2one('anggaran.unit', _('Unit'), required=True),
+		'rka_id'	 		: fields.many2one('anggaran.rka', _('Dasar ROA'), required=True),
 		# 'dasar_rkat' 		: fields.char('Dasar RKAT Nomor/Tanggal', required=True),
 		'jumlah'  			: fields.float('Jumlah Pembayaran', required=True),
 		'keperluan' 		: fields.char('Untuk Keperluan', required=True),
@@ -184,9 +184,10 @@ class spp_line(osv.osv):
 
 	@api.onchange('rka_kegiatan_id','spp_ini') 
 	def on_change_rka_kegiatan_id(self):
-		self.pagu = self.rka_kegiatan_id.anggaran
+		self.pagu 		= self.rka_kegiatan_id.anggaran
+		self.spp_lalu 	= self.rka_kegiatan_id.realisasi
 		self.jumlah_spp = self.spp_lalu + self.spp_ini 
-		self.sisa_dana = self.pagu - self.jumlah_spp
+		self.sisa_dana 	= self.pagu - self.jumlah_spp
 
 	@api.onchange('spp_line_mak_ids') 
 	def on_change_spp_line_mak_ids(self):
@@ -204,14 +205,15 @@ class spp_line_mak(osv.osv):
 		'rka_coa_id'		: fields.many2one('anggaran.rka_coa', 'MAK'),
 		'pagu'				: fields.float('PAGU'),
 		'spp_lalu' 			: fields.float("SPP sd yg Lalu"),
-		'spp_ini'  			: fields.float("SPP ini"),
+		'spp_ini'  			: fields.float("SPP ini", required=True),
 		'jumlah_spp' 		: fields.float("Jumlah SPP"),
 		'sisa_dana'  		: fields.float("Sisa Dana"),
 	}
 
 	@api.onchange('rka_coa_id','spp_ini') 
 	def on_change_rka_coa_id(self):
-		self.pagu = self.rka_coa_id.total
+		self.pagu 		= self.rka_coa_id.total
+		self.spp_lalu 	= self.rka_coa_id.realisasi
 		self.jumlah_spp = self.spp_lalu + self.spp_ini 
-		self.sisa_dana = self.pagu - self.jumlah_spp
+		self.sisa_dana 	= self.pagu - self.jumlah_spp
 
