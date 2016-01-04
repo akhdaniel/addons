@@ -25,7 +25,7 @@
 
                     <table style="width:100%">
                         <tr>
-                            <td>Tahun Anggaran</td><td><span t-field="o.tahun.name"/></td>
+                            <td>Tahun Anggaran</td><td style="width:50%"><span t-field="o.tahun.name"/></td>
                             <td>Alokasi</td><td class="text-right"><span t-field="o.alokasi"/></td>
                         </tr>
                         <tr>
