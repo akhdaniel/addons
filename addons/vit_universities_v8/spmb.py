@@ -196,7 +196,7 @@ class spmb_mahasiswa(osv.Model):
 			# import pdb; pdb.set_trace()
 			hasil = cr.fetchone()
 			if hasil and hasil[0] != None:
-				se = "%03d" % hasil[0]
+				se = "%03d" % hasil[0]+1
 			else:
 				se = "001"
 
@@ -215,7 +215,7 @@ class spmb_mahasiswa(osv.Model):
 									'tempat_lahir'		:p.tempat_lahir or False,
 									'tanggal_lahir'		:p.tanggal_lahir or False,                  
 									'fakultas_id'		:p.fakultas_id.id,
-									'jurusan_id'		:p.jurusan_id.id,
+									# 'jurusan_id'		:p.jurusan_id.id,
 									'prodi_id'			:p.prodi_id.id,
 									'tahun_ajaran_id'	:p.tahun_ajaran_id.id,                
 									'tgl_lulus'			:p.tgl_lulus or False,
