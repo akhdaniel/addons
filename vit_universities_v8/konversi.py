@@ -11,7 +11,7 @@ class konversi(osv.Model):
 
 	_columns = {
 		'name' :fields.char('Kode Konversi',size=36,required = True,readonly=True, states={'draft': [('readonly', False)]}),
-		'partner_id' : fields.many2one('res.partner','Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]", states={'draft': [('readonly', False)]}),
+		'partner_id' : fields.many2one('res.partner','Calon Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]", states={'draft': [('readonly', False)]}),
 		'semester_id':fields.many2one('master.semester','Sampai Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		# 'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
@@ -121,6 +121,7 @@ class konversi_asal_mk(osv.osv):
 	_columns 	= {
 		'konversi_id' : fields.many2one('akademik.konversi', 'Konversi'),
 		'matakuliah_id' : fields.many2one('akademik.konversi.master_asal_mk', 'Nama Matakuliah'),
+		'semester_id'	: fields.many2one('master.semester', 'Semester'),
 		'nilai'			: fields.float('Nilai'),
 		'nilai_a'		: fields.char('Nilai 2'),
 	}
@@ -130,6 +131,7 @@ class konversi_mk(osv.osv):
 	_columns 	= {
 		'konversi_id' : fields.many2one('akademik.konversi', 'Konversi'),
 		'matakuliah_id' : fields.many2one('master.matakuliah', 'Nama Matakuliah'),
+		'semester_id'	: fields.many2one('master.semester', 'Semester'),
 		'nilai'			: fields.float('Nilai'),
 		'nilai_a'		: fields.char('Nilai 2'),
 	}

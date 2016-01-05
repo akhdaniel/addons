@@ -16,10 +16,10 @@
                     <!-- <field name="jurusan_id" /> -->
                     <field name="prodi_id"/>
 
+                    <field name="asal_univ_id"/>
                     <field name="asal_fakultas_id" />
                     <!-- <field name="asal_jurusan_id" /> -->
                     <field name="asal_prodi_id"/>
-                    <field name="asal_univ_id"/>
 
                     <field name="semester_id"/>
                     <!-- <field name="to_semester_id"/> -->
@@ -46,11 +46,11 @@
                     </header>                     
                 	<sheet>
                 		<group>
-                			<group>
-                                <field name="name"/>
-			                    <field name="partner_id" /> 
-			                    <field name="semester_id" />
-                            </group>
+                            <field name="name"/>
+		                    <field name="partner_id" /> 
+		                    <field name="semester_id" />
+                        </group>
+                        <group>
                             <group>
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id"/>
@@ -58,10 +58,10 @@
                                 <field name="prodi_id"/>                        
                             </group>
                 			<group>
+                                <field name="asal_univ_id"/>                        
 			                    <field name="asal_fakultas_id"/>
 			                    <!-- <field name="asal_jurusan_id"/> -->
                                 <field name="asal_prodi_id"/>                           
-                                <field name="asal_univ_id"/>           				
                 			</group>
                         </group>
                          <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
@@ -73,7 +73,28 @@
                             <group> 
                                 <field name="user_id"/>                                                          
                             </group>
-                        </group>                         
+                        </group>    
+
+                        <notebook>
+                            <page string="Konversi Mata Kuliah">
+                                <group>
+                                    <field name="asal_matakuliah_ids">
+                                        <tree string="MK Asal" editable="bottom">
+                                            <field name="matakuliah_id"/>
+                                            <field name="nilai"/>
+                                            <field name="nilai_a"/>
+                                        </tree>
+                                    </field>
+                                    <field name="matakuliah_ids">
+                                        <tree string="MK Internal" editable="bottom">
+                                            <field name="matakuliah_id"/>
+                                            <field name="nilai"/>
+                                            <field name="nilai_a"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>                     
 	                </sheet>    
                 </form>
             </field>
@@ -117,10 +138,14 @@
 
 
         <!-- akademik.konversi Menu Item -->
-        <menuitem id="konversi_menu" name="Konversi" parent="vit_universities_v8.si_akademik_menu" sequence="65"/>      
+        <menuitem id="konversi_menu" name="Konversi" parent="vit_universities_v8.si_akademik_menu" sequence="15"/>      
             <menuitem id="konversi_menu_sub_menu" name="Permohonan Konversi" parent="konversi_menu" action="konversi_list_action" sequence="10"/>
 
-            <!-- <menuitem id="konversi_master_asal_mk" name="MK Asal" parent="konversi_menu" action="mhs_cuti_list_action" sequence="20"/> -->
+            <!-- <menuitem id="konversi_master_asal_mk" name="MK Asal" parent="konversi_menu" action="" sequence="20"/> -->
+
+            <!-- <menuitem id="konversi_master_asal_pt" name="PT Asal" parent="konversi_menu" action="" sequence="30"/> -->
+
+            <!-- <menuitem id="konversi_master_mapping" name="Master Mapping Konversi" parent="konversi_menu" action="" sequence="40"/> -->
 
 
         <!-- akademik.konversi sequance -->
