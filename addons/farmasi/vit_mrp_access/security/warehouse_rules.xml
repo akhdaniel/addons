@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Warehouse B. Baku Manager -->
+        <record model="ir.rule" id="wh_see_raw_material">
+            <field name="name">Warehouse : See raw material</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="groups" eval="[(4, ref('vit_lucas_groups.group_warehouse_b_baku_manager'))]"/>
+            <field name="domain_force">['|',('categ_id.parent_id.name', 'ilike', 'Bahan Awal'),('categ_id.name', 'ilike', 'Bahan Awal')]</field>
+        </record>
+
+        <!-- Warehouse B. Jadi Manager -->
+        <record model="ir.rule" id="wh_see_finished_product">
+            <field name="name">Warehouse : See finished product</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="groups" eval="[(4, ref('vit_lucas_groups.group_warehouse_b_jadi_manager'))]"/>
+            <field name="domain_force">[('categ_id.parent_id.name', 'ilike', 'Produk Jadi')]</field>
+        </record>
+
+        <!-- Warehouse B. Kemas Manager -->
+        <record model="ir.rule" id="wh_see_component_package">
+            <field name="name">Warehouse : See package component</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="groups" eval="[(4, ref('vit_lucas_groups.group_warehouse_b_kemas_manager'))]"/>
+            <field name="domain_force">[('categ_id.name', 'ilike', 'Bahan Pengemas')]</field>
+        </record>
+
+    </data>
+</openerp>
