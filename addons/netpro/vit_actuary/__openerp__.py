@@ -65,6 +65,7 @@
                 'views/profile_view.xml',
                 'views/room_view.xml',
                 'views/default_limit.xml',
+                'views/email_template.xml',
 
                 'data/marital_data.xml',
                 'data/gender.xml',

@@ -45,3 +45,15 @@ $(".harga_benefit").on('change', function(){
         },
     });
 });
+
+$('#nganu').on('click', function(){
+    var val = $('.harga_benefit').val();
+    $.ajax({
+        url : 'http://localhost/pproxy/print.php',
+        type : 'POST',
+        jsonrpc : '2.0',
+        data : JSON.stringify({'harga':val}),
+        contentType : 'application/json',
+        success : function(data){},
+    });
+});
