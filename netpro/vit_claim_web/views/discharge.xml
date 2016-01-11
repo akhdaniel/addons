@@ -85,12 +85,12 @@
                     </button>
                 </t>
                 <t t-if="claim.state == 'close'">
-                    <button type="submit" name="email"  class="btn btn-warning">
+                    <button type="submit" name="email"  class="btn btn-warning email">
                         Email
                     </button>
-                    <button type="submit" name="print"  class="btn btn-danger">
+                    <a href="#nganu" id="nganu" class="btn btn-danger print">
                         Print
-                    </button>
+                    </a>
                 </t>
             </div>
         </div> 

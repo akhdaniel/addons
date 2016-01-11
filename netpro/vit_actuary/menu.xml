@@ -35,7 +35,8 @@
 		<menuitem name="Claim Document" id="menu_netpro_actuary_claim_document" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Default Limit" id="menu_netpro_default_limit" action="action_netpro_default_limit" parent="menu_netpro_actuary_configuration"  sequence="10"/>
 		<menuitem name="Diagnosis" action="action_netpro_diagnosis" id="menu_netpro_actuary_diagnosis" parent="menu_netpro_actuary_configuration" sequence="10"/>
-		<menuitem name="EMail Rule" id="menu_netpro_actuary_email_rule" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Email Rule" id="menu_netpro_actuary_email_rule" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Email Template" action="action_netpro_email_template" id="menu_netpro_actuary_email_template" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Existing Insurance" action="action_netpro_existing_insurance" id="menu_netpro_actuary_existing_insurance" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="GL Notes" action="action_netpro_gl_notes" id="menu_netpro_actuary_gl_notes" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Group Size" action="action_netpro_group_size" id="menu_netpro_actuary_group_size" parent="menu_netpro_actuary_configuration" sequence="10"/>

@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 import time
 from datetime import datetime
 
-
 class Member(http.Controller):
 
 	#@http.route('autocomplete', )
@@ -65,7 +64,7 @@ class Member(http.Controller):
 			Claim  = http.request.env['netpro.claim']
 			claim = Claim.search([('member_id','=',member.id), ('state','=', 'open')])
 			if claim:
-				message = "Found existing Open Claim No %s, please discharge first. " % (claim.claim_no) 
+				message = "Found existing Open Claim No %s, please discharge first. " % (claim[0].claim_no) 
 				return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
 		return http.request.render('vit_claim_web.eligibility', 
@@ -97,13 +96,30 @@ class Member(http.Controller):
 			'message'		: message
 		})
 
+	# # # # # # # # # # # # # # # # # # # # # 
+	# 		REPLACE EMAIL GLOSSARY 			#
+	# # # # # # # # # # # # # # # # # # # # # 
+	def replaceString(self,content,claim,plan):
+		ret = ''
+		benefits = ''
+		for pl in plan.member_plan_detail_ids:
+			benefits += pl.benefit_id.name + '			: '+ '{0:,.2f}'.format(int(pl.remaining)) + '\n'
+
+		if content.find('[claim_no]'):
+			ret += content.replace('[claim_no]', claim.claim_no)
+		if content.find('[benefit]'):
+			ret += content.replace('[benefit]', str(benefits))
+		if content.find('[member_name]'):
+			ret += content.replace('[member_name]', claim.member_id.name)
+		return content
+
 	######################################################################################
 	# proses registration patient: 
 	# print, email, save: insert transaksi claim
 	######################################################################################
 	@http.route('/claim/registration_process', auth='user', website=True)
 	def registration_process(self, **kw):
-		#import pdb;pdb.set_trace()
+		# import pdb;pdb.set_trace()
 		message = kw.get('message','')
 		member_id = kw.get('member_id', '')
 		member_data = http.request.env['netpro.member'].browse(int(member_id))
@@ -112,29 +128,58 @@ class Member(http.Controller):
 		MemberPlan = http.request.env['netpro.member_plan']
 		member_plan = MemberPlan.browse(int(member_plan_id))
 
+		email_template_obj = http.request.env['netpro.email_template']
+		email_template = email_template_obj.search([('name','=','claim_email')])
+
 		if not member_plan:
 			message = "Member Plan not found! Please try again."
 			return request.redirect('/claim/registration?message_error=%s'% (message), code=301)
 
-
-		##############################################################################
-		# insert into netpro_claim
-		##############################################################################
 		Claim  = http.request.env['netpro.claim']
+		claim_data = {}
 
-		claim_details = [(0,0,{'benefit_id' : x.benefit_id.id}) for x in member_plan.member_plan_detail_ids]
+		if kw.get('confirm') == '':
+			##############################################################################
+			# insert into netpro_claim
+			##############################################################################
 
-		data = {
-			'claim_date'		: time.strftime("%Y-%m-%d"),
-			'member_id'			: int(member_id),
-			'policy_id'			: int(policy_id.id),
-			'member_plan_id'	: member_plan.id ,
-			'claim_detail_ids'  : claim_details,
-			'state'  			: "open",
-		}
-		claim_data = Claim.create(data)
+			claim_details = [(0,0,{'benefit_id' : x.benefit_id.id}) for x in member_plan.member_plan_detail_ids]
 
-		message = "Claim Registration Success!"
+			data = {
+				'claim_date'		: time.strftime("%Y-%m-%d"),
+				'member_id'			: int(member_id),
+				'policy_id'			: int(policy_id.id),
+				'member_plan_id'	: member_plan.id ,
+				'claim_detail_ids'  : claim_details,
+				'state'  			: "open",
+			}
+			claim_data = Claim.create(data)
+			message = "Claim Registration Success!"
+		
+		if kw.get('email') == '':
+			if member_data.email:
+				claim_data = Claim.browse(int(kw.get('claim_id')))
+				
+				subject_email = ''
+				body_email = ''
+
+				if email_template:
+					subject_email = self.replaceString(email_template.subject, claim_data, member_plan)
+					body_email = self.replaceString(email_template.body, claim_data, member_plan)
+					
+				values = {
+					'subject' : subject_email,
+					'email_to' : member_data.email,
+					'body_html' : body_email,
+					'res_id' : False,
+				}
+				mail_mail_obj = http.request.env['mail.mail']
+				msg_id = mail_mail_obj.create(values)
+				#mail_mail_obj.send(msg_id.id)
+				message = "Message Sent"
+	        else :
+	        	message = "Member's email cannot be found, please filling email on member form to sending email."
+
 		#return request.redirect('/claim/registration?message_success=%s'% (message), code=301)
 		return http.request.render('vit_claim_web.loa', {
 			'member'		: member_data, 

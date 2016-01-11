@@ -1,0 +1,36 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_email_template_form">
+        <field name="name">netpro.email_template.form</field>
+        <field name="model">netpro.email_template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.email_template">
+                <group>
+                    <field name="name" />
+                    <field name="subject" />
+                    <field name="body" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_email_template_tree">
+        <field name="name">netpro.email_template.tree</field>
+        <field name="model">netpro.email_template</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.email_template">
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="body"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_email_template">
+        <field name="name">Email Template</field>
+        <field name="res_model">netpro.email_template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>

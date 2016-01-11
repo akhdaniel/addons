@@ -63,11 +63,12 @@
                             </button>
                         </t>
                         <t t-if="claim">
+                            <input type="hidden" name="claim_id" t-attf-value="{{ claim.id }}" />
                             <t t-if="claim.state == 'open'">
-                                <button type="submit" name="email" class="btn btn-warning">
+                                <button type="submit" name="email" class="btn btn-warning email">
                                     Email
                                 </button>
-                                <button type="submit" name="print" class="btn btn-danger">
+                                <button type="submit" name="print" class="btn btn-danger print">
                                     Print
                                 </button>
                             </t>
