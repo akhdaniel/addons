@@ -18,13 +18,14 @@ class master_pembayaran(osv.Model):
 		fak = vals['fakultas_id']
 		fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
 
-		jur = vals['jurusan_id']
-		jur_id = self.pool.get('master.jurusan').browse(cr,uid,jur,context=context).kode
+		# jur = vals['jurusan_id']
+		# jur_id = self.pool.get('master.jurusan').browse(cr,uid,jur,context=context).kode
 
 		pro = vals['prodi_id']
 		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
-		no = fak_id+jur_id+pro_id+ta_id
+		# no = fak_id+jur_id+pro_id+ta_id
+		no = fak_id+pro_id+ta_id
 		vals['name'] = no
 		
 		return super(master_pembayaran, self).create(cr, uid, vals, context=context)
@@ -53,8 +54,8 @@ class master_pembayaran(osv.Model):
 		'name': fields.char('Kode',size=64,readonly=True), 
 		'date': fields.datetime('Tanggal',readonly=True),
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]",required=True),
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),
+		# 'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]",required=True),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]",required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True), 
 		'state':fields.selection([('draft','Non Aktif'),('confirm','Aktif')],'Status'),
 		'detail_product_ids':fields.one2many('master.pembayaran.detail','pembayaran_id',string='Pembayaran'),		

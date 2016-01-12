@@ -33,5 +33,6 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'data/data_view.xml',
             'company.xml',
             'imports.xml',
+            'beasiswa_prodi.xml',
     ],
 }

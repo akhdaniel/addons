@@ -59,7 +59,7 @@
                         <filter icon="terp-project" string="Dosen" help="By Pengajar" context="{'group_by':'employee_id'}"/>
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                     </group>
                 </search>
@@ -134,7 +134,7 @@
             <field name="name">Fakultas</field>
             <field name="res_model">master.fakultas</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data fakultas.</p><p>disini belum ada data tentang fakultas !</p></field>
         </record>
@@ -145,14 +145,42 @@
             <field name="model">master.fakultas</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Fakultas" version="7.0" editable="bottom">
+                <tree string="Daftar Fakultas" version="7.0" >
                     <field name="kode"/>
                     <field name="kode_dikti"/>
                     <field name="name"/>
+                    <field name="pt_id"/>
                 </tree>
             </field>
         </record>
 
+        <!-- ini definisi search fakultas -->
+        <record id="view_fakultas_filter" model="ir.ui.view">
+            <field name="name">fakultas.filter</field>
+            <field name="model">master.fakultas</field>
+            <field name="arch" type="xml">
+                <search string="Search Fakultas">
+
+                    <filter icon="terp-mail-message-new" 
+                        string="Internal" 
+                         name="internal" domain="[('is_internal','=',True)]"/>
+                    <filter icon="terp-mail-message-new" 
+                        string="External" 
+                         name="internal" domain="[('is_internal','=',False)]"/>
+                    <separator/>
+
+                    <field name="pt_id"/>
+                    <field name="name"/>
+                    
+                    <group expand="1" string="Group By...">
+                        <filter string="PT" icon="terp-personal" 
+                            domain="[]" 
+                             context="{'group_by':'pt_id'}"/>        
+                    </group>                                        
+        
+                </search>
+            </field>
+        </record>
 
 
 
@@ -206,7 +234,6 @@
                                 <field name="kode_dikti"/>
                                 <field name="kode_internal"/>
                                 <field name="name"/>                    
-                                <!-- <field name="jurusan_id"/> -->
                                 <field name="fakultas_id"/>
                             </group>
 
@@ -214,6 +241,7 @@
                                 <field name="gelar_id"/>
                                 <field name="semester_id" widget="selection"/>
                                 <field name="jenjang"/> 
+                                <field name="is_internal"/>
                             </group>                          
                         </group>
                     </sheet>                     
@@ -230,6 +258,14 @@
                     <group col="10" colspan="4">
                          <field name="name"/>
                     </group>
+                    <filter icon="terp-mail-message-new" 
+                        string="Internal" 
+                         name="internal" domain="[('is_internal','=',True)]"/>
+
+                    <filter icon="terp-mail-message-new" 
+                        string="External" 
+                         name="internal" domain="[('is_internal','=',False)]"/>
+
                     <newline/>
                     <group expand="0" string="Group By..." colspan="12" col="10">
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
@@ -397,12 +433,12 @@
 
         <!--  master data beasiswa-->
         <record model="ir.actions.act_window" id="beasiswa_mahasiswa_list_action">
-            <field name="name">Beasiswa</field>
+            <field name="name">Beasiswa USM</field>
             <field name="res_model">beasiswa.mahasiswa</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>              
             <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data beasiswa mahasiswa.</p><p>disini belum ada data beasiswa mahasiswa !</p></field>
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data beasiswa USM mahasiswa.</p><p>disini belum ada data beasiswa mahasiswa !</p></field>
         </record>
 
 
@@ -506,7 +542,7 @@
                     <field name="name"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
+                    <!-- <field name="jurusan_id"/> -->
                     <field name="prodi_id"/>
                     <field name="kuota"/>
                     <field name="nilai_min"/>  
@@ -660,7 +696,7 @@
                 <menuitem id="pembayaran" name="Pembayaran" parent="master_data" sequence="100"/>            
                     <menuitem id="master_product" name="Jenis Pembayaran" parent="pembayaran" action="jenis_pembayaran_list_action"/>
                     <menuitem id="master_pembayaran" name="Template Pembayaran" parent="pembayaran" action="template_pembayaran_list_action"/>
-                <menuitem id="maste_beasiswa" name="Beasiswa" parent="master_data" action="beasiswa_mahasiswa_list_action" sequence="110"/>                                 
+                <menuitem id="maste_beasiswa" name="Beasiswa USM" parent="master_data" action="beasiswa_mahasiswa_list_action" sequence="110"/>                                 
 
         <!-- Mata Kuliah-->
         <record model="ir.ui.view" id="mk_tree_view">

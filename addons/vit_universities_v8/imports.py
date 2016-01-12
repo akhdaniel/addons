@@ -10,10 +10,11 @@ _logger = logging.getLogger(__name__)
 class import_mk(osv.osv):
 	_name 		= "akademik.import_mk"
 	_columns 	= {
-
 		"thsmstbkmk"	: fields.char("THSMSTBKMK,C,5"),
 		"kdptitbkmk"	: fields.char("KDPTITBKMK,C,6"),
 		"kdjentbkmk"	: fields.char("KDJENTBKMK,C,1"),
+		"kode_prodi"	: fields.char("KODE PRODI"),
+		"tahun_ajaran"	: fields.char("TAHUN AJARAN"),
 		"kdpsttbkmk"	: fields.char("KDPSTTBKMK,C,5"),
 		"kdkmktbkmk"	: fields.char("KDKMKTBKMK,C,10"),
 		"nakmktbkmk"	: fields.char("NAKMKTBKMK,C,40"),
@@ -45,6 +46,16 @@ class import_mk(osv.osv):
 			m = mapping.browse(cr, uid, ids[0] , context=context)
 			prodi_id = prodi.search(cr, uid, [('kode','=', m.prodi_kode )], context=context)
 			prodi_data = prodi.browse(cr, uid, prodi_id[0], context=context)
+			return prodi_data
+		else:
+			return None
+
+	def get_prodi(self, cr, uid, kode_prodi, context=None):
+		# import pdb; pdb.set_trace()
+		prodi_obj		= self.pool.get('master.prodi')
+		ids = prodi_obj.search(cr, uid, [('kode','=', kode_prodi )], context=context)
+		if ids :
+			prodi_data = prodi_obj.browse(cr, uid, ids[0], context=context)
 			return prodi_data
 		else:
 			return None
@@ -101,18 +112,22 @@ class import_mk(osv.osv):
 
 		for rec in self.browse(cr, uid, ids, context=context):
 
-			tahun 		= rec.thsmstbkmk[:4]
+			# tahun 		= rec.thsmstbkmk[:4]
+			# tahun 		= 2000 + int(rec.kdkmktbkmk[1:2])
+			tahun 			= rec.tahun_ajaran
 			tahun_ajaran = self.get_tahun_ajaran_id(cr, uid, tahun, context=context)
 			if not tahun_ajaran:
 				raise osv.except_osv(_('Error'),_("no tahun_ajaran %s") % (tahun) ) 
 
-			prodi_prima_id = rec.kdpsttbkmk
-			prodi_id 	= self.get_prodi_id(cr, uid, prodi_prima_id, context=context)
+			# prodi_prima_id = rec.kdpsttbkmk
+			# prodi_id 	= self.get_prodi_id(cr, uid, prodi_prima_id, context=context)
+			kode_prodi = rec.kode_prodi
+			prodi_id 	= self.get_prodi(cr, uid, kode_prodi, context=context)
 			if prodi_id:
 				fakultas_id = prodi_id.fakultas_id
 			else:
 				fakultas_id = None
-				print _("no prodi with ID prima %s") % (prodi_prima_id)
+				print _("no prodi kode %s") % (kode_prodi)
 				continue
 				# raise osv.except_osv(_('Error'),_("no prodi with ID prima %s") % (prodi_prima_id) ) 
 

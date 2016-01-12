@@ -11,7 +11,7 @@
                     <field name="name"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="fakultas_id"/>
-                    <field name="jurusan_id"/>
+                    <!-- <field name="jurusan_id"/> -->
                     <field name="prodi_id"/>
                     <field name="kuota"/>
                     <field name="nilai"/>  
@@ -37,15 +37,17 @@
 			                    <field name="name" attrs="{'readonly': [('state','=','done')]}"/>
 			                    <field name="kuota" attrs="{'readonly': [('state','=','done')]}"/>
 			                    <field name="nilai"/>		                    
-<!-- 			                    <button name="button_reload" states="draft" string="RELOAD" class="oe_link oe_edit_only" type="object" help="reload data mahasiswa yang masuk list"/> -->
+                                <!--<button name="button_reload" states="draft" string="RELOAD" class="oe_link oe_edit_only" type="object" help="reload data mahasiswa yang masuk list"/> -->
 			                 </group>
 			                 <group>  
 			                 	<field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','done')]}"/>
-			                    <field name="fakultas_id" attrs="{'readonly': [('state','=','done')]}"/>
-			                    <field name="jurusan_id" attrs="{'readonly': [('state','=','done')]}"/>			                  
-			                    <field name="prodi_id" on_change="onchange_prodi(tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kuota, nilai)" attrs="{'readonly': [('state','=','done')]}"/>
+			                    <field name="fakultas_id" attrs="{'readonly': [('state','=','done')]}" 
+                                    domain="[('is_internal','=', 'True')]"/>
+                                <!-- <field name="prodi_id" on_change="onchange_prodi(tahun_ajaran_id, fakultas_id, prodi_id, kuota, nilai)" attrs="{'readonly': [('state','=','done')]}"/> -->
+			                    <field name="prodi_id" on_change="onchange_prodi(tahun_ajaran_id, fakultas_id, prodi_id, kuota, nilai)"  domain="[('fakultas_id','=',fakultas_id)]" attrs="{'readonly': [('state','=','done')]}"/>
 			                </group>    
                     	</group> 
+
                         <notebook colspan="4">
                             <page string="Daftar Calon Mahasiswa">
                                 <group>

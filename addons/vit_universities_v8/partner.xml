@@ -24,22 +24,34 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml"> 
+                <sheet position="before">
+                    <header>
+                        <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible': [('jenis_pendaftaran_id','=','Baru')]}" />
+                    </header>                    
+                </sheet>
+
              	<field name="function" position="replace">
                     <field name="function" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
-                </field>    
+                </field>   
+
              	<field name="fax" position="replace">
                     <field name="fax" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
                 </field>
              	<page string="Internal Notes" position="replace">
                     <page string="Internal Notes" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
                 </page>
+
             	<field name="parent_id" position="after">
                     <group>
-                        <field name="jenis_pendaftaran_id" widget="selection"/>
-                        <field name="status_mahasiswa" />
+                        <field name="jenis_pendaftaran_id" widget="selection"
+                            attrs="{'invisible': [('is_mahasiswa','=',False)], 
+                            'required': [('is_mahasiswa','=',True)]}"/>
+                        <field name="status_mahasiswa" 
+                            attrs="{'invisible': [('is_mahasiswa','=',False)]}"/>
                         <field name="is_mahasiswa" invisible="1"/>
                     </group>
             	</field>
+
                 <div class="oe_edit_only" position="replace">
                 	<div class="oe_edit_only" attrs="{'invisible': [('is_mahasiswa','=',True)]}">
                         <label for="name"/> (
@@ -71,7 +83,7 @@
                                   <field name="nilai_ujian" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
                                   <field name="nilai_ujian_asli" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
                                   <field name="tgl_ujian"/>                                   
-                                  <field name="jadwal_usm_id"/>                                   
+                                  <field name="jadwal_usm_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>                                   
                                   <field name="batas_nilai"/>
                                    </group>                                
                                 <separator string="Informasi Pribadi"/>
@@ -147,6 +159,19 @@
                             </tree>
                         </field>
                     </page>
+
+                    <page string="Pindahan" name="pindahan" 
+                        attrs="{'invisible': [('jenis_pendaftaran_id','in',('Baru'))]}">
+                        <group>
+                            <field name="asal_univ_id" />     
+                            <field name="asal_fakultas_id" /> 
+                            <field name="asal_prodi_id" />     
+                            <field name="asal_npn" />          
+                            <field name="asal_sks_diakui" /> 
+                            <field name="asal_jenjang_id" /> 
+                        </group>
+                    </page>
+                    
                     <page string="Informasi Kelulusan" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni')),('is_mahasiswa','=',False)]}">
                         <form string="Informasi Kelulusan" version="7.0">
                             <sheet>

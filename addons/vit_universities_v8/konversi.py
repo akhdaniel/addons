@@ -10,25 +10,24 @@ class konversi(osv.Model):
 	_name = 'akademik.konversi'
 
 	_columns = {
-		'name' :fields.char('Kode Konversi',size=36,required = True,readonly=True, states={'draft': [('readonly', False)]}),
-		'partner_id' : fields.many2one('res.partner','Calon Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]", states={'draft': [('readonly', False)]}),
-		'semester_id':fields.many2one('master.semester','Sampai Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'name' 				: fields.char('Kode Konversi',size=36,required = True,readonly=True, states={'draft': [('readonly', False)]}),
+		'partner_id' 		: fields.many2one('res.partner','Calon Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]", states={'draft': [('readonly', False)]}),
+		'semester_id'		: fields.many2one('master.semester','Semester Mulai',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		# 'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
-		'asal_prodi_id':fields.many2one('master.prodi','Asal Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		# 'asal_jurusan_id':fields.many2one('master.jurusan','Asal Jurusan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'asal_fakultas_id':fields.many2one('master.fakultas','Asal Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'asal_univ_id':fields.many2one('res.partner','Asal Universitas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'asal_univ_id'		: fields.many2one('res.partner','Asal Universitas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'asal_fakultas_id'	: fields.many2one('master.fakultas','Asal Fakultas', required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'asal_prodi_id'		: fields.many2one('master.prodi','Asal Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
-		'prodi_id':fields.many2one('master.prodi','Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		# 'jurusan_id':fields.many2one('master.jurusan','Jurusan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'tahun_ajaran_id': fields.many2one('academic.year','Angkatan', required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'state':fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status', states={'draft': [('readonly', False)]}),
-  		'notes' : fields.text('Alasan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'user_id':fields.many2one('res.users', 'User',readonly=True),
-		'date': fields.date('Tanggal Registrasi',readonly=True,states={'draft': [('readonly', False)]}),
-		'krs_done':fields.boolean('KRS Done',readonly=True,states={'draft': [('readonly', False)]}),
+		'fakultas_id'		: fields.many2one('master.fakultas','Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'prodi_id'			: fields.many2one('master.prodi','Program Studi', required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'tahun_ajaran_id'	: fields.many2one('academic.year','Angkatan', required=True,readonly=True, states={'draft': [('readonly', False)]}),
+
+		'state'				: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status', states={'draft': [('readonly', False)]}),
+  		'notes' 			: fields.text('Alasan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'user_id'			: fields.many2one('res.users', 'User',readonly=True),
+		'date'				: fields.date('Tanggal Registrasi',readonly=True,states={'draft': [('readonly', False)]}),
+		'krs_done'			: fields.boolean('KRS Done',readonly=True,states={'draft': [('readonly', False)]}),
 
 		'asal_matakuliah_ids' 	: fields.one2many('akademik.konversi.asal_mk','konversi_id','Asal Mata Kuliah', ondelete="cascade"),
 		'matakuliah_ids' 		: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ),
@@ -135,4 +134,61 @@ class konversi_mk(osv.osv):
 		'nilai'			: fields.float('Nilai'),
 		'nilai_a'		: fields.char('Nilai 2'),
 	}
+
+
+
+class master_asal_mk(osv.Model):
+	_name = 'akademik.konversi.master_asal_mk'
+	_rec_name= 'nama'
+
+
+	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+		if not args:
+			args = []
+		ids = []
+		if name:
+			ids = self.search(cr, user, ['|','|',('nama', operator, name),('kode', operator, name),('kode_dikti', operator, name)] + args, limit=limit)
+		else:
+			ids = self.search(cr, user, args, context=context, limit=limit)
+		return self.name_get(cr, user, ids, context=context)
+
+
+	def name_get(self, cr, uid, ids, context=None):
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+					ids = [ids]
+		reads = self.read(cr, uid, ids, ['nama', 'kode'], context=context)
+		res = []
+		for record in reads:
+			name = record['nama']
+			if record['kode']:
+				name = '['+record['kode'] +']'+ ' ' + name
+			res.append((record['id'], name))
+		return res
+
+	_columns = {
+		'kode' 			: fields.char('Kode', 128,required = True),
+		'nama' 			: fields.char('Nama',required = True),
+		'kode_dikti' 	: fields.char('Kode DIKTI', size=28,required = True),
+		'sks'			: fields.char('SKS',required = True),
+		'prodi_id'		: fields.many2one('master.prodi','Program Studi'),
+		'jenjang_id'	: fields.many2one('master.jenjang','Jejang'),
+	}
+
+master_asal_mk()
+
+
+
+class master_mapping(osv.Model):
+	_name = 'akademik.konversi.mapping'
+
+	_columns = {
+		'kode' 				:fields.char('Kode', 128,required = True),
+		'prodi_id' 			: fields.many2one('master.prodi','Program Studi'),
+		'matakuliah_id'  	: fields.many2one('master.matakuliah', 'MK Tujuan'),
+		'asal_matakuliah_id' : fields.many2one('akademik.konversi.master_asal_mk', 'MK Asal'),
+	}
+
+master_asal_mk()
 
