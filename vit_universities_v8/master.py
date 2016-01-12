@@ -152,10 +152,21 @@ class academic_month(osv.Model):
 	]
 academic_month()
 
-
 class master_matakuliah (osv.Model):
 	_name = 'master.matakuliah'
 	_rec_name= 'kode'
+
+
+	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+		if not args:
+			args = []
+		ids = []
+		if name:
+			ids = self.search(cr, user, ['|','|',('nama', operator, name),('kode', operator, name),('kode_dikti', operator, name)] + args, limit=limit)
+		else:
+			ids = self.search(cr, user, args, context=context, limit=limit)
+		return self.name_get(cr, user, ids, context=context)
+
 
 	def name_get(self, cr, uid, ids, context=None):
 		if not ids:
@@ -173,13 +184,12 @@ class master_matakuliah (osv.Model):
 	
 	_columns = {
 		'kode' :fields.char('Kode', 128,required = True),
+		'kode_dikti' :fields.char('Kode DIKTI', size=28,required = True),
 		'nama' :fields.char('Nama',required = True),
 		'sks':fields.char('SKS',required = True),
 		'jenis':fields.selection([('mk_umum','Mata Kuliah Umum'),('mk_khusus','Mata Kuliah Khusus')],'Jenis',required = True),
-		# 'jurusan_id': fields.many2one('master.jurusan','Program Studi'),
 		'prodi_id': fields.many2one('master.prodi','Program Studi Pengampu'),
 		'dosen_id': fields.many2one('hr.employee','Dosen Pengampu', domain=[('is_dosen','=',True)]),
-		#'jadwal_ids':fields.one2many('master.jadwal','mata_kuliah_id', string='Jadwal'),
 		'jenjang_id': fields.many2one('master.jenjang','Jejang'),
 	}
 
@@ -229,11 +239,17 @@ class master_fakultas (osv.Model):
 	_columns = {
 		'kode'		:fields.char('Kode', size=28, required = True),
 		'kode_dikti':fields.char('Kode DIKTI', size=28,required = True),
-		'pt_id'		: fields.many2one('res.company', 'Perguruan Tinggi'),
+		'pt_id'		: fields.many2one('res.partner', 'Perguruan Tinggi', domain="[('category_id','ilike','perguruan tinggi')]", help="Tag Perguruan Tinggi"),
 		'name' 		: fields.char('Nama Fakultas', size=128, required = True),
+		'is_internal': fields.boolean('Internal Fakultas?')
 	}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode fakultas tidak boleh sama')]
+
+	_defaults = {
+		'is_internal' : True,
+	}
+
 master_fakultas()
 
 class master_jurusan (osv.Model):
@@ -263,6 +279,8 @@ class master_prodi (osv.Model):
 		'semester_id' : fields.many2one('master.semester','Max Semester',required = True),
 		# 'jenjang': fields.selection([('diploma','Diploma'),('sarjana','Sarjana'),('magister','Magister'),('doctor','Doctoral')],'Jenjang',required = True),
 		'jenjang': fields.many2one('master.jenjang','Jenjang',required = True),
+		'is_internal': fields.related('fakultas_id', 'is_internal' , type="boolean", relation="master.fakultas", 
+			string="Internal?", store=True),
 	}
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):

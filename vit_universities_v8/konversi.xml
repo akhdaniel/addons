@@ -53,15 +53,13 @@
                         <group>
                             <group>
                                 <field name="tahun_ajaran_id"/>
-                                <field name="fakultas_id"/>
-                                <!-- <field name="jurusan_id"/> -->
-                                <field name="prodi_id"/>                        
+                                <field name="fakultas_id" domain="[('is_internal','=','True')]"/>
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id)]"/>                        
                             </group>
                 			<group>
-                                <field name="asal_univ_id"/>                        
-			                    <field name="asal_fakultas_id"/>
-			                    <!-- <field name="asal_jurusan_id"/> -->
-                                <field name="asal_prodi_id"/>                           
+                                <field name="asal_univ_id" domain="[('category_id','ilike','external')]"/>
+			                    <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id)]"/>
+                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id)]"/>
                 			</group>
                         </group>
                          <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
@@ -78,20 +76,24 @@
                         <notebook>
                             <page string="Konversi Mata Kuliah">
                                 <group>
-                                    <field name="asal_matakuliah_ids">
-                                        <tree string="MK Asal" editable="bottom">
-                                            <field name="matakuliah_id"/>
-                                            <field name="nilai"/>
-                                            <field name="nilai_a"/>
-                                        </tree>
-                                    </field>
-                                    <field name="matakuliah_ids">
-                                        <tree string="MK Internal" editable="bottom">
-                                            <field name="matakuliah_id"/>
-                                            <field name="nilai"/>
-                                            <field name="nilai_a"/>
-                                        </tree>
-                                    </field>
+                                    <group string="Mata Kuliah Asal">
+                                        <field name="asal_matakuliah_ids"  nolabel="1" >
+                                            <tree string="MK Asal" editable="bottom">
+                                                <field name="matakuliah_id"/>
+                                                <field name="nilai"/>
+                                                <field name="nilai_a"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                    <group string="Mata Kuliah Tujuan">
+                                        <field name="matakuliah_ids"  nolabel="1" >
+                                            <tree string="MK Internal" editable="bottom">
+                                                <field name="matakuliah_id"/>
+                                                <field name="nilai"/>
+                                                <field name="nilai_a"/>
+                                            </tree>
+                                        </field>
+                                    </group>
                                 </group>
                             </page>
                         </notebook>                     
@@ -125,6 +127,44 @@
             </field>
         </record>
 
+
+
+
+        <!-- akademik.konversi.master_asal_mk Tree View -->
+        <record model="ir.ui.view" id="konversi_master_asal_mk_tree_view">
+            <field name="name">akademik.konversi.master_asal_mk</field>
+            <field name="model">akademik.konversi.master_asal_mk</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar MK Asal Konversi" version="7.0">
+                    <field name="kode"/>      
+                    <field name="nama"/>      
+                    <field name="sks"/>       
+                    <field name="prodi_id"/>  
+                    <field name="jenjang_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- akademik.konversi.mapping Tree View -->
+        <record model="ir.ui.view" id="konversi_mapping_tree_view">
+            <field name="name">akademik.konversi.mapping</field>
+            <field name="model">akademik.konversi.mapping</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Mapping MK Asal Konversi" version="7.0">
+                    <field name="kode"/>              
+                    <field name="prodi_id"/>          
+                    <field name="matakuliah_id"/>     
+                    <field name="asal_matakuliah_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
         <!-- akademik.konversi action window -->
         <record model="ir.actions.act_window" id="konversi_list_action">
             <field name="name">Mahasiswa Konversi</field>
@@ -137,15 +177,36 @@
         </record>
 
 
+        <!-- akademik.konversi.asal_mk action window -->
+        <record model="ir.actions.act_window" id="action_master_asal_mk">
+            <field name="name">Asal MK</field>
+            <field name="res_model">akademik.konversi.master_asal_mk</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_master_asal_pt">
+            <field name="name">Asal PT</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('category_id', '=', 'External')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_master_mapping">
+            <field name="name">Mapping MK</field>
+            <field name="res_model">akademik.konversi.mapping</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
         <!-- akademik.konversi Menu Item -->
         <menuitem id="konversi_menu" name="Konversi" parent="vit_universities_v8.si_akademik_menu" sequence="15"/>      
             <menuitem id="konversi_menu_sub_menu" name="Permohonan Konversi" parent="konversi_menu" action="konversi_list_action" sequence="10"/>
-
-            <!-- <menuitem id="konversi_master_asal_mk" name="MK Asal" parent="konversi_menu" action="" sequence="20"/> -->
-
-            <!-- <menuitem id="konversi_master_asal_pt" name="PT Asal" parent="konversi_menu" action="" sequence="30"/> -->
-
-            <!-- <menuitem id="konversi_master_mapping" name="Master Mapping Konversi" parent="konversi_menu" action="" sequence="40"/> -->
+            <menuitem id="konversi_master_asal_mk" name="MK Asal" parent="konversi_menu" action="action_master_asal_mk" sequence="20"/>
+            <menuitem id="konversi_master_asal_pt" name="PT Asal" parent="konversi_menu" action="action_master_asal_pt" sequence="30"/>
+            <menuitem id="konversi_master_mapping" name="Master Mapping Konversi" parent="konversi_menu" action="action_master_mapping" sequence="40"/>
 
 
         <!-- akademik.konversi sequance -->

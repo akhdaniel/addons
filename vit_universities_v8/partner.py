@@ -248,12 +248,15 @@ class res_partner (osv.osv):
 		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
 
 		'status_aktivitas': fields.selection([('A','A'),('N','N'),('K','K'),('L','L'),('C','C'),('D','D')],'Status Aktivitas',required=True),
+
 		#untuk mhs pindahan
-		'asal_pt_id' : fields.many2one('res.company', 'Asal PT'),
-		'asal_prodi_id' : fields.many2one('akademik.asal_prodi', 'Asal Prodi', domain=[('pt_id','=','asal_pt_id')]),
-		'asal_npn'	: fields.char('Asal NIM'),
-		'asal_sks_diakui' : fields.integer('SKS Diakui'),
-		'asal_jenjang_id' : fields.many2one('master.jenjang', 'Asal Jenjang'),
+		'asal_univ_id' 		: fields.many2one('res.partner', 'Asal PT', domain=[('category_id','ilike','external')]),
+		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain=[('pt_id','=','asal_univ_id')]),
+		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain=[('fakultas_id','=','asal_fakultas_id')]),
+		'asal_npn'			: fields.char('Asal NIM'),
+		'asal_sks_diakui' 	: fields.integer('SKS Diakui'),
+		'asal_jenjang_id' 	: fields.many2one('master.jenjang', 'Asal Jenjang'),
+
 	}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]
@@ -285,6 +288,28 @@ class res_partner (osv.osv):
 		'npm' : '/',  
 		'reg': '/',
 		'is_mahasiswa': False,
-				}
+	}
+
+	def action_konversi(self,cr,uid,ids,context=None):
+		konv_obj = self.pool.get('akademik.konversi')
+
+		for mhs in self.browse(cr, uid, ids, context=context):
+			data = {
+				'partner_id' 		: mhs.id,
+				'semester_id'		: mhs.semester_id,
+				'asal_prodi_id'		: mhs.asal_prodi_id.id,
+				'asal_fakultas_id'	: mhs.asal_fakultas_id.id,
+				'asal_univ_id'		: mhs.asal_univ_id.id,
+				'prodi_id'			: mhs.prodi_id.id,
+				'fakultas_id'		: mhs.fakultas_id.id,
+				'tahun_ajaran_id'	: mhs.tahun_ajaran_id.id,
+				'state'				: 'draft',
+				'notes' 			: '',
+				'user_id'			: uid,
+				'date'				: mhs.tgl_daftar,
+				'krs_done'			: False,
+			}
+			konv_id = konv_obj.create(cr, uid, data, context=context)
+		return 
 
 res_partner()

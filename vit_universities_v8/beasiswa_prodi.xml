@@ -1,0 +1,67 @@
+<openerp>
+	<data>
+
+        <!-- Beasiswa Mahasiswa -->
+        <record model="ir.ui.view" id="beasiswa_tree_view">
+            <field name="name">beasiswa.prodi.tree</field>
+            <field name="model">beasiswa.prodi</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Master Beasiswa Prodi" colors="gray:is_active == False">
+					<field name="name" />				
+					<field name="date" />				
+					<field name="tahun_ajaran_id" />	
+					<field name="fakultas_id" />		
+					<field name="prodi_id" />			
+					<field name="product_id" />		
+					<field name="limit_ipk" />			
+					<field name="amount" />			
+					<field name="is_active" />			
+					<field name="user_id" />			
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="beasiswa_form_view">
+            <field name="name">beasiswa.prodi.form</field>
+            <field name="model">beasiswa.prodi</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Master Beasiswa Prodi" version="7.0">
+                    <sheet>
+                        <group>
+                            <group>
+								<field name="name" />				
+								<field name="date" />				
+								<field name="tahun_ajaran_id" />	
+								<field name="fakultas_id" />		
+								<field name="prodi_id" domain="[('fakultas_id','=',fakultas_id)]"/>			
+		
+                            </group>
+                            <group>
+								<field name="product_id" />	
+								<field name="limit_ipk" />			
+								<field name="amount" />			
+								<field name="is_active" />			
+								<field name="user_id" />	
+                            </group>
+                        </group>    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--  master data beasiswa-->
+        <record model="ir.actions.act_window" id="beasiswa_prodi_list_action">
+            <field name="name">Beasiswa Prodi</field>
+            <field name="res_model">beasiswa.prodi</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>              
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data beasiswa Prodi mahasiswa.</p><p>disini belum ada data beasiswa prodi !</p></field>
+        </record>
+
+        <menuitem id="master_beasiswa_prodi" name="Beasiswa Prodi" parent="master_data" action="beasiswa_prodi_list_action" sequence="110"/>                                 
+
+	</data>
+</openerp>

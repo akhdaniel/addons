@@ -115,7 +115,7 @@ class operasional_krs (osv.Model):
 			byr_obj = self.pool.get('master.pembayaran')
 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
 				('fakultas_id','=',vals['fakultas_id']),
-				('jurusan_id','=',vals['jurusan_id']),
+				# ('jurusan_id','=',vals['jurusan_id']),
 				('prodi_id','=',vals['prodi_id']),
 				('state','=','confirm'),
 				])		
@@ -129,7 +129,7 @@ class operasional_krs (osv.Model):
 						list_product = bayar.product_ids
 						prod_id = []					
 						for lp in list_product:
-							prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price}))
+							prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price,'account_id': lp.property_account_income.id}))
 
 						prod_obj = self.pool.get('product.product')
 						beban_sks_id = prod_obj.search(cr,uid,[('is_sks','=',True),('fakultas_id','=',vals['fakultas_id'])])
@@ -137,13 +137,13 @@ class operasional_krs (osv.Model):
 						if byr_brw.type == 'paket':
 							if beban_sks_id != [] :
 								prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
-								prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price}))
+								prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price,'account_id': lp.property_account_income.id}))
 
 						elif byr_brw.type == 'flat':
 							if beban_sks_id != [] and byr_brw.sks_plus == True:
 								if tambahan_mk != 0:
 									prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
-									prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tambahan_mk ,'price_unit':prod_brw.list_price}))							
+									prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tambahan_mk ,'price_unit':prod_brw.list_price,'account_id': lp.property_account_income.id}))							
 
 						inv_id = self.pool.get('account.invoice').create(cr,uid,{
 								'partner_id':vals['partner_id'],

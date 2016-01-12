@@ -9,8 +9,10 @@
 					<field name="thsmstbkmk" />	
 					<field name="kdptitbkmk" />	
 					<field name="kdjentbkmk" />	
-					<field name="kdpsttbkmk" />	
-					<field name="kdkmktbkmk" />	
+					<field name="kode_prodi" />
+					<field name="tahun_ajaran" />
+					<field name="kdpsttbkmk" />
+					<field name="kdkmktbkmk" />
 					<field name="nakmktbkmk" />	
 					<field name="sksmktbkmk" />	
 					<field name="skstmtbkmk" />	
@@ -67,14 +69,14 @@
 			 parent="si_akademik_menu"/>
 		<menuitem id="imports_mk"
 			 action="action_import_mk_list"
-			 name="Matakuliah"
+			 name="Matakuliah, Kurikulum"
 			 sequence="10"
 			 parent="imports_menu"/>
-		<menuitem id="prodi_map"
-			 action="action_prodi_map_list"
-			 name="Prodi ID Mapping"
-			 sequence="20"
-			 parent="imports_menu"/>
+		<!--<menuitem id="prodi_map"-->
+			 <!--action="action_prodi_map_list"-->
+			 <!--name="Prodi ID Mapping"-->
+			 <!--sequence="20"-->
+			 <!--parent="imports_menu"/>-->
 
 
 

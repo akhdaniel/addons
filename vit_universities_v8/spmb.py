@@ -10,7 +10,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 class spmb_mahasiswa(osv.Model):
 	_name = 'spmb.mahasiswa'    
 
-	def onchange_prodi(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kuota, nilai,context=None):
+	def onchange_prodi(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, prodi_id, kuota, nilai,context=None):
 		
 		results = {}
 		if not prodi_id:
@@ -21,7 +21,7 @@ class spmb_mahasiswa(osv.Model):
 			('status_mahasiswa','=','calon'),
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('fakultas_id','=',fakultas_id),
-			('jurusan_id','=',jurusan_id),
+			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
 			('nilai_ujian','>=',nilai)], context=context)
 
@@ -70,7 +70,6 @@ class spmb_mahasiswa(osv.Model):
 		'name': fields.char('Kode',required=True,size=32),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
-		'jurusan_id':fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]",required=True),
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),		
 		'kuota':fields.integer('Kuota',required=True),
 		'nilai':fields.integer('Nilai Minimal',required=True),
@@ -83,7 +82,6 @@ class spmb_mahasiswa(osv.Model):
 			domain="[('status_mahasiswa','=','calon'), \
 			('tahun_ajaran_id','=',tahun_ajaran_id),\
 			('fakultas_id','=',fakultas_id),\
-			('jurusan_id','=',jurusan_id),\
 			('prodi_id','=',prodi_id),]",
 			readonly=False),	
 		'nilai_min':fields.float('Nilai Minimal Calon Mahasiswa Saat Ini',readonly=True),
@@ -99,7 +97,6 @@ class spmb_mahasiswa(osv.Model):
 		my_form = self.browse(cr,uid,ids[0])
 		angkatan = my_form.tahun_ajaran_id.id
 		fakultas = my_form.fakultas_id.id
-		jurusan = my_form.jurusan_id.id
 		prodi = my_form.prodi_id.id
 		kuota = my_form.kuota
 		nilai = my_form.nilai
@@ -110,7 +107,7 @@ class spmb_mahasiswa(osv.Model):
 			('status_mahasiswa','=','calon'),
 			('tahun_ajaran_id','=',angkatan),
 			('fakultas_id','=',fakultas),
-			('jurusan_id','=',jurusan),
+			# ('jurusan_id','=',jurusan),
 			('prodi_id','=',prodi),
 			('nilai_ujian','>=',nilai)], context=context)
 		#import pdb;pdb.set_trace()
@@ -163,13 +160,18 @@ class spmb_mahasiswa(osv.Model):
 		t_id_final = t_tuple[2]+t_tuple[3]#ambil 2 digit paling belakang dari tahun saja
 		f_id = my_form.fakultas_id.kode
 		
-		j_id = my_form.jurusan_id.kode
+		# j_id = my_form.jurusan_id.kode
+		# j_id = my_form.prodi_id.kode
 
-		if j_id.find(".") != -1:
-			j = j_id.split(".")
-			j_id = j[1]
+		# if j_id.find(".") != -1:
+		# 	j = j_id.split(".")
+		# 	j_id = j[1]
 
 		p_id = my_form.prodi_id.kode
+
+		if p_id.find(".") != -1:
+			j = p_id.split(".")
+			p_id = j[1]
 
 		#batas nilai penerima beasiswa
 		
@@ -188,15 +190,17 @@ class spmb_mahasiswa(osv.Model):
 
 			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 
-			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and jurusan_id=%s and tahun_ajaran_id=%s" % (
+			# sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and jurusan_id=%s and tahun_ajaran_id=%s" % (
+			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and prodi_id=%s and tahun_ajaran_id=%s" % (
 				p.jenis_pendaftaran_id.id, 
-				my_form.jurusan_id.id, 
+				my_form.prodi_id.id, 
+				# my_form.jurusan_id.id, 
 				my_form.tahun_ajaran_id.id)
 			cr.execute(sql)
 			# import pdb; pdb.set_trace()
 			hasil = cr.fetchone()
 			if hasil and hasil[0] != None:
-				se = "%03d" % hasil[0]+1
+				se = "%03d" % (hasil[0] + 1)
 			else:
 				se = "001"
 
@@ -204,7 +208,7 @@ class spmb_mahasiswa(osv.Model):
 				'status_mahasiswa':'Mahasiswa',
 				'batas_nilai':nilai,
 				# 'npm':t_id_final+f_id+j_id+p_id+se,
-				'npm':t_id_final + j_id + jp_id + se,
+				'npm':t_id_final + p_id + jp_id + se,
 				'user_id':uid,
 				'is_beasiswa':is_bea},
 				context=context)
