@@ -1,0 +1,55 @@
+<openerp>
+	<data>
+		<!-- tree list import_nlm -->
+		<record id="view_import_nlm_tree" model="ir.ui.view">
+		    <field name="name">akademik_import_nlm_tree</field>
+		    <field name="model">akademik.import_nlm</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import nlm">
+					<field name="thsmstrnlm" />	
+					<field name="kdptitrnlm" />	
+					<field name="kdjentrnlm" />	
+					<field name="kdpsttrnlm" />	
+					<field name="nimhstrnlm" />	
+					<field name="kdkmktrnlm" />	
+					<field name="nlakhtrnlm" />	
+					<field name="bobottrnlm" />	
+					<field name="is_processed" />						
+		        </tree>    
+		    </field>
+		</record>
+
+
+		<!-- action list import_nlm -->
+		<record id="action_import_nlm_list" model="ir.actions.act_window">
+			<field name="name">List import Nilai</field>
+			<field name="res_model">akademik.import_nlm</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="imports_nlm"
+			 action="action_import_nlm_list"
+			 name="Nilai Mahasiswa"
+			 sequence="10"
+			 parent="imports_menu"/>
+
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_import_nlm" model="ir.actions.server">
+	        <field name="name">Process Import Nilai</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_akademik_import_nlm"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('akademik.import_nlm').action_import_nlm(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_nlm" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'akademik.import_nlm'" name="model"/>
+	        <field name="name">Process Import Nilai</field>
+	        <field eval="'ir.actions.server,%d'%action_import_nlm" name="value"/>
+	    </record>
+
+
+	</data>
+</openerp>

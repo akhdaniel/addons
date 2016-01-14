@@ -1,0 +1,90 @@
+<openerp>
+	<data>
+		<!-- tree list import_mk -->
+		<record id="view_import_mk_tree" model="ir.ui.view">
+		    <field name="name">akademik_import_mk_tree</field>
+		    <field name="model">akademik.import_mk</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import mk">
+					<field name="thsmstbkmk" />	
+					<field name="kdptitbkmk" />	
+					<field name="kdjentbkmk" />	
+					<field name="kode_prodi" />
+					<field name="tahun_ajaran" />
+					<field name="kdpsttbkmk" />
+					<field name="kdkmktbkmk" />
+					<field name="nakmktbkmk" />	
+					<field name="sksmktbkmk" />	
+					<field name="skstmtbkmk" />	
+					<field name="sksprtbkmk" />	
+					<field name="skslptbkmk" />	
+					<field name="semestbkmk" />	
+					<field name="kdkeltbkmk" />	
+					<field name="kdkurtbkmk" />	
+					<field name="kdwpltbkmk" />	
+					<field name="nodostbkmk" />	
+					<field name="jenjatbkmk" />	
+					<field name="proditbkmk" />	
+					<field name="stkmktbkmk" />	
+					<field name="slbustbkmk" />	
+					<field name="sappptbkmk" />	
+					<field name="bhnajtbkmk" />	
+					<field name="diktttbkmk" />	
+					<field name="is_processed" />	
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- tree list import_mk -->
+		<record id="view_prodi_map_tree" model="ir.ui.view">
+		    <field name="name">akademik_prodi_map_tree</field>
+		    <field name="model">akademik.prodi.map</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list prodi map">
+					<field name="prodi_prima_id"/> 	
+					<field name="prodi_kode"/>		
+					<field name="name"/>				
+				</tree>		
+			</field>
+		</record>
+
+
+		<!-- action list import_mk -->
+		<record id="action_import_mk_list" model="ir.actions.act_window">
+			<field name="name">List import MK</field>
+			<field name="res_model">akademik.import_mk</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- menu imports -->
+		<menuitem id="imports_menu"
+			 name="Import"
+			 sequence="200"
+			 parent="si_akademik_menu"/>
+
+		<menuitem id="imports_mk"
+			 action="action_import_mk_list"
+			 name="Matakuliah, Kurikulum"
+			 sequence="10"
+			 parent="imports_menu"/>
+
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_import_mk" model="ir.actions.server">
+	        <field name="name">Process Import MK</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_akademik_import_mk"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('akademik.import_mk').action_import_mk(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_mk" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'akademik.import_mk'" name="model"/>
+	        <field name="name">Process Import MK</field>
+	        <field eval="'ir.actions.server,%d'%action_import_mk" name="value"/>
+	    </record>
+
+
+	</data>
+</openerp>

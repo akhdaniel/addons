@@ -279,3 +279,46 @@ class import_nlm(osv.osv):
 
 
 		return
+
+
+class import_lsm(osv.osv):
+	_name 		= "akademik.import_lsm"
+	_columns 	= {
+		"thsmstrlsm"				: fields.char("THSMSTRLSM,C,5"),
+		"kdptitrlsm"				: fields.char("KDPTITRLSM,C,6"),
+		"kdjentrlsm"				: fields.char("KDJENTRLSM,C,1"),
+		"kdpsttrlsm"				: fields.char("KDPSTTRLSM,C,5"),
+		"nimhstrlsm"				: fields.char("NIMHSTRLSM,C,15"),
+		"stmhstrlsm"				: fields.char("STMHSTRLSM,C,1"),
+		"tgllstrlsm"				: fields.char("TGLLSTRLSM,D"),
+		"skstttrlsm"				: fields.char("SKSTTTRLSM,N,3,0"),
+		"nlipktrlsm"				: fields.char("NLIPKTRLSM,N,4,2"),
+		"noskrtrlsm"				: fields.char("NOSKRTRLSM,C,30"),
+		"tglretrlsm"				: fields.char("TGLRETRLSM,D"),
+		"noijatrlsm"				: fields.char("NOIJATRLSM,C,40"),
+		"stllstrlsm"				: fields.char("STLLSTRLSM,C,1"),
+		"jnllstrlsm"				: fields.char("JNLLSTRLSM,C,1"),
+		"blawltrlsm"				: fields.char("BLAWLTRLSM,C,6"),
+		"blakhtrlsm"				: fields.char("BLAKHTRLSM,C,6"),
+		"nods1trlsm"				: fields.char("NODS1TRLSM,C,10"),
+		"nods2trlsm"				: fields.char("NODS2TRLSM,C,10"),
+		"nods3trlsm"				: fields.char("NODS3TRLSM,C,10"),
+		"nods4trlsm"				: fields.char("NODS4TRLSM,C,10"),
+		"nods5trlsm"				: fields.char("NODS5TRLSM,C,10"),
+		"is_processed"			: fields.boolean("Is Processed"),
+	}
+
+	def action_import_lsm(self, cr, uid, context=None):
+		##########################################################
+		# id line import_lsm yang diselect
+		##########################################################
+		active_ids = context and context.get("active_ids", False)
+		if not context:
+			context = {}
+
+		ids = self.search(cr, uid, [('is_processed','=',False)], context=context)
+		# for rec in self.browse(cr, uid, ids, context=context):
+		# 	return
+
+
+		return
