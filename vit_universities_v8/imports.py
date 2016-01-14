@@ -250,3 +250,32 @@ class import_mhs(osv.osv):
 
 		return
 
+
+class import_nlm(osv.osv):
+	_name 		= "akademik.import_nlm"
+	_columns 	= {
+		"thsmstrnlm"			: fields.char("THSMSTRNLM,C,5"),
+		"kdptitrnlm"			: fields.char("KDPTITRNLM,C,6"),
+		"kdjentrnlm"			: fields.char("KDJENTRNLM,C,1"),
+		"kdpsttrnlm"			: fields.char("KDPSTTRNLM,C,5"),
+		"nimhstrnlm"			: fields.char("NIMHSTRNLM,C,15"),
+		"kdkmktrnlm"			: fields.char("KDKMKTRNLM,C,10"),
+		"nlakhtrnlm"			: fields.char("NLAKHTRNLM,C,2"),
+		"bobottrnlm"			: fields.char("BOBOTTRNLM,N,4,2"),
+		"is_processed"			: fields.boolean("Is Processed"),
+	}
+
+	def action_import_nlm(self, cr, uid, context=None):
+		##########################################################
+		# id line import_nlm yang diselect
+		##########################################################
+		active_ids = context and context.get("active_ids", False)
+		if not context:
+			context = {}
+
+		ids = self.search(cr, uid, [('is_processed','=',False)], context=context)
+		# for rec in self.browse(cr, uid, ids, context=context):
+		# 	return
+
+
+		return
