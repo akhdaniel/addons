@@ -8,8 +8,7 @@ class operasional_krs (osv.Model):
 
 	def create(self, cr, uid, vals, context=None):
 
-		if not vals['krs_detail_ids']:
-			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))		
+
 		if vals.get('kode','/')=='/':
 			npm = vals['npm']
 			if not npm :
@@ -17,15 +16,16 @@ class operasional_krs (osv.Model):
 			smt = vals['semester_id']
 			smt_name = self.pool.get('master.semester').browse(cr,uid,smt,context=context).name
 			vals['kode'] = npm +'-'+str(smt_name) or '/'
-		if vals['kurikulum_id']:
-			kurikulum = vals['kurikulum_id']
-			klm_brw = self.pool.get('master.kurikulum').browse(cr,uid,kurikulum)
-			t_sks = klm_brw.max_sks
-			sks_kurikulum = 0
-			mk_ids_kurikulum = []
-			for klm in klm_brw.kurikulum_detail_ids:
-				mk_ids_kurikulum.append(klm.id)
-				sks_kurikulum += int(klm.sks)
+		if 'kurikulum_id' in vals :
+			if vals['kurikulum_id']:
+				kurikulum = vals['kurikulum_id']
+				klm_brw = self.pool.get('master.kurikulum').browse(cr,uid,kurikulum)
+				t_sks = klm_brw.max_sks
+				sks_kurikulum = 0
+				mk_ids_kurikulum = []
+				for klm in klm_brw.kurikulum_detail_ids:
+					mk_ids_kurikulum.append(klm.id)
+					sks_kurikulum += int(klm.sks)
 
 		#cek partner dan semester yang sama
 		krs_uniq = self.search(cr,uid,[('partner_id','=',vals['partner_id']),('semester_id','=',vals['semester_id'])])
@@ -33,81 +33,78 @@ class operasional_krs (osv.Model):
 			raise osv.except_osv(_('Error!'),
 								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))	
 
-		#cek krs_detail tdk boleh kosong
-		if not vals['krs_detail_ids']:
-			raise osv.except_osv(_('Error!'),
-								_('Matakuliah harus di isi !'))	
-
-		mk = vals['krs_detail_ids']
-		mk_ids = []
-		tot_mk = 0
-		for m in mk:
-			mk_id = m[2]['mata_kuliah_id']
-			mk_ids.append(mk_id)
-			sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
-			tot_mk += int(sks)
-
-		if tot_mk > t_sks :
-			raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
-		#import pdb;pdb.set_trace()
-		#cek jika mengambil matakuliah lebih
-		tambahan_mk = 0
-		ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
-		for tambahan in mk:
-			if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
-				mk_id = tambahan[2]['mata_kuliah_id']
+		if 'krs_detail_ids' in vals:
+			mk = vals['krs_detail_ids']
+			mk_ids = []
+			tot_mk = 0
+			for m in mk:
+				mk_id = m[2]['mata_kuliah_id']
+				mk_ids.append(mk_id)
 				sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
-				tambahan_mk += int(sks)
-				ids_tambahan_mk.append(mk_id)
-		selisih_tambahan_mk = t_sks - sks_kurikulum
-		
-		#pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
-		if tambahan_mk > selisih_tambahan_mk:			
-			raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
+				tot_mk += int(sks)
+
+			if tot_mk > t_sks :
+				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
+			#import pdb;pdb.set_trace()
+			#cek jika mengambil matakuliah lebih
+			tambahan_mk = 0
+			ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
+			for tambahan in mk:
+				if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
+					mk_id = tambahan[2]['mata_kuliah_id']
+					sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+					tambahan_mk += int(sks)
+					ids_tambahan_mk.append(mk_id)
+			selisih_tambahan_mk = t_sks - sks_kurikulum
+			
+			#pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
+			if tambahan_mk > selisih_tambahan_mk:			
+				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
 
 		#cek juga apa di setingan kurikulum mengijinkan tambah MK sesuai dengan minimal IP sementara
-		if klm_brw.min_ip > 0 : #settingan IP di kurikulum harus di isi angka positif
-			if len(mk_ids) > len(mk_ids_kurikulum) :
-				#hitung IP sementara partner ini
-				cr.execute("""SELECT okd.id, okd.mata_kuliah_id
-								FROM operasional_krs_detail okd
-								LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
-								WHERE ok.partner_id = %s
-								AND ok.state <> 'draft'"""%(vals['partner_id']))
-				dpt = cr.fetchall()
+		if 'kurikulum_id' in vals :
+			if klm_brw.min_ip > 0 : #settingan IP di kurikulum harus di isi angka positif
+				if len(mk_ids) > len(mk_ids_kurikulum) :
+					#hitung IP sementara partner ini
+					cr.execute("""SELECT okd.id, okd.mata_kuliah_id
+									FROM operasional_krs_detail okd
+									LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
+									WHERE ok.partner_id = %s
+									AND ok.state <> 'draft'"""%(vals['partner_id']))
+					dpt = cr.fetchall()
+					
+					det_id = []
+					total_mk_ids = []
+					for x in dpt:
+						x_id = x[0]
+						det_id.append(x_id)
+						total_mk_ids.append(x[1])
+
+					#cek mk yang dinput lebih harus yang belum di tempuh pada semester sebelumnya
+					mk_baru_ids = []
+					if ids_tambahan_mk != []:
+						for mk_krs in ids_tambahan_mk:	#mk yang baru di tambah
+							if mk_krs not in total_mk_ids:#mk-mk yg telah ditempuh pd semester sebelumnya
+								mk_baru_ids.append(mk_krs)
+
+					det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
+					sks = 0
+					bobot_total = 0.00
+					total_mk_ids = []	
+					for det in det_sch:
+						sks += det.sks
+						bobot_total += (det.nilai_angka*det.sks)			
+
+					### ips = (total nilai angka*total sks) / total sks
+					if sks == 0:
+						ips = 0
+					else :
+						ips = round(bobot_total/sks,2)
 				
-				det_id = []
-				total_mk_ids = []
-				for x in dpt:
-					x_id = x[0]
-					det_id.append(x_id)
-					total_mk_ids.append(x[1])
-
-				#cek mk yang dinput lebih harus yang belum di tempuh pada semester sebelumnya
-				mk_baru_ids = []
-				if ids_tambahan_mk != []:
-					for mk_krs in ids_tambahan_mk:	#mk yang baru di tambah
-						if mk_krs not in total_mk_ids:#mk-mk yg telah ditempuh pd semester sebelumnya
-							mk_baru_ids.append(mk_krs)
-
-				det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
-				sks = 0
-				bobot_total = 0.00
-				total_mk_ids = []	
-				for det in det_sch:
-					sks += det.sks
-					bobot_total += (det.nilai_angka*det.sks)			
-
-				### ips = (total nilai angka*total sks) / total sks
-				if sks == 0:
-					ips = 0
-				else :
-					ips = round(bobot_total/sks,2)
-			
-				#jika ada mk bru yg di inputkan dan ip tidak memenuhi syarat
-				if ips <= klm_brw.min_ip :
-					if mk_baru_ids != []:
-				 		raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
+					#jika ada mk bru yg di inputkan dan ip tidak memenuhi syarat
+					if ips <= klm_brw.min_ip :
+						if mk_baru_ids != []:
+					 		raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
 
 		#langsung create invoice nya
 		#kecuali yg dpt beasiswa bisa tanpa invoice
@@ -210,10 +207,10 @@ class operasional_krs (osv.Model):
 		'max_smt': fields.integer("Max Semester",),
 		'semester_id':fields.many2one('master.semester','Semester',domain="[('name','<=',max_smt)]",required = True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True), 
+		'kelas_id':fields.many2one('master.kelas',string='Kelas'), 
 		'krs_detail_ids' : fields.one2many('operasional.krs_detail','krs_id','Mata Kuliah'),
 		#'view_ipk_ids' : fields.one2many('operasional.view_ipk','krs_id','Mata Kuliah'),
-		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum',required = True),
+		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum'),
 		'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi',),
 		'user_id':fields.many2one('res.users','User',readonly=True),
 		'sks_tot' : fields.integer('Total SKS',readonly=True),
@@ -229,6 +226,8 @@ class operasional_krs (osv.Model):
 	def confirm(self, cr, uid, ids, context=None):
 		#import pdb;pdb.set_trace()
 		form_id = self.browse(cr,uid,ids[0],context=context) 
+		if not form_id.krs_detail_ids:
+			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))			
 		for x in form_id.krs_detail_ids:
 			self.pool.get('operasional.krs_detail').write(cr,uid,x.id,{'state':'confirm'},context=context)
 		#cek dahulu pembayaran atas KRS ini,
@@ -400,17 +399,20 @@ class krs_detail (osv.Model):
 		return result
 		
 	_columns = {
-		'krs_id':fields.many2one('operasional.krs','Kode KRS',),
+		'krs_id'		:fields.many2one('operasional.krs','Kode KRS',),
 		'mata_kuliah_id':fields.many2one('master.matakuliah','Mata Kuliah',required=True,ondelete="cascade"),
-		'sks':fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
-		'tugas' : fields.float('Tugas'),
-		'ulangan' : fields.float('Ulangan'),
-		'uts':fields.float('UTS'),
-		'uas':fields.float('UAS'),
-		'nilai_huruf':fields.function(_get_nilai_akhir,type='char',string='Nilai Akhir'),
-		'nilai_angka':fields.float('Nilai Angka'),
-		'transkrip_id':fields.many2one('operasional.transkrip','Transkrip'),
-		'state':fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
+		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
+		'tugas' 		:fields.float('Tugas'),
+		'ulangan' 		:fields.float('Ulangan'),
+		'uts'			:fields.float('UTS'),
+		'uas'			:fields.float('UAS'),
+		'nilai_huruf'	:fields.function(_get_nilai_akhir,type='char',string='Nilai Akhir'),
+		'nilai_angka'	:fields.float('Nilai Angka'),
+		'transkrip_id'	:fields.many2one('operasional.transkrip','Transkrip'),
+		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
+		'hadir'			:fields.integer('Hadir'),
+		'izin'			:fields.integer('Izin'),
+		'alpha'			:fields.integer('Alpha'),
 			}
 
 	_defaults={

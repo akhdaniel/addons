@@ -52,14 +52,14 @@
                         </group>
                         <group>
                             <group>
+                                <field name="asal_univ_id" domain="[('category_id','ilike','external')]"/>
+                                <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id)]"/>
+                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id)]"/>                      
+                            </group>
+                			<group>                              
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id" domain="[('is_internal','=','True')]"/>
-                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id)]"/>                        
-                            </group>
-                			<group>
-                                <field name="asal_univ_id" domain="[('category_id','ilike','external')]"/>
-			                    <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id)]"/>
-                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id)]"/>
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id)]"/>  
                 			</group>
                         </group>
                          <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
@@ -74,27 +74,35 @@
                         </group>    
 
                         <notebook>
-                            <page string="Konversi Mata Kuliah">
+                            <page string="Konversi Mata Kuliah"> 
                                 <group>
-                                    <group string="Mata Kuliah Asal">
-                                        <field name="asal_matakuliah_ids"  nolabel="1" >
-                                            <tree string="MK Asal" editable="bottom">
+                                    <group>
+                                        <field name="total_mk_asal"/>
+                                        <field name="total_sks_asal"/>
+                                    </group>
+                                    <group>
+                                        <field name="total_mk_tujuan" />
+                                        <field name="total_sks_tujuan"/>
+                                    </group>
+                                </group>                                                           
+                                <group>
+                                    <group string="Mata Kuliah Konversi">
+                                        <field name="matakuliah_ids"  nolabel="1" on_change="onchange_konversi(matakuliah_ids,total_mk_asal,total_mk_tujuan,total_sks_asal,total_sks_tujuan)">
+                                            <tree string="MK Internal" editable="top">
+                                                <field name="asal_matakuliah_id" />
+                                                <field name="asal_semester_id" string="Smt"/>
+                                                <field name="asal_sks"/>
+                                                <field name="asal_nilai"/>
+                                                <field name="asal_nilai_a" on_change="onchange_asal_matakuliah(konversi_id,asal_matakuliah_id,asal_semester_id,asal_sks,asal_nilai,asal_nilai_a)"/>     
                                                 <field name="matakuliah_id"/>
+                                                <field name="semester_id" string="Smt"/>
+                                                <field name="sks"/>
                                                 <field name="nilai"/>
                                                 <field name="nilai_a"/>
                                             </tree>
                                         </field>
                                     </group>
-                                    <group string="Mata Kuliah Tujuan">
-                                        <field name="matakuliah_ids"  nolabel="1" >
-                                            <tree string="MK Internal" editable="bottom">
-                                                <field name="matakuliah_id"/>
-                                                <field name="nilai"/>
-                                                <field name="nilai_a"/>
-                                            </tree>
-                                        </field>
-                                    </group>
-                                </group>
+                                </group>                                
                             </page>
                         </notebook>                     
 	                </sheet>    
@@ -161,7 +169,31 @@
             </field>
         </record>
 
-
+        <!-- akademik.konversi.mapping Form View -->
+        <record model="ir.ui.view" id="konversi_mapping_form_view">
+            <field name="name">akademik.konversi.mapping</field>
+            <field name="model">akademik.konversi.mapping</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Mapping MK Asal Konversi" version="7.0">
+                    <sheet>
+                        <field name="kode" placeholder="Kode Mapping.."/> 
+                        <group>
+                            <group string="Parameter Asal">
+                                <field name="asal_prodi_id"/>
+                                <field name="asal_semester_id"/>          
+                                <field name="asal_matakuliah_id"/> 
+                            </group>
+                            <group string="Parameter Tujuan">
+                                <field name="prodi_id"/> 
+                                <field name="semester_id"/>         
+                                <field name="matakuliah_id"/> 
+                            </group>                                
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
 
 

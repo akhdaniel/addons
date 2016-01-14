@@ -726,6 +726,7 @@
                         <group>
                             <group>
                                 <field name="kode"/>
+                                <field name="kode_dikti"/>
                                 <field name="nama"/>
                                 <field name="dosen_id"/>
                             </group>

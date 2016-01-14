@@ -226,10 +226,11 @@ class res_partner (osv.osv):
 		'nilai_ujian':fields.float('Nilai Ujian'),
 		'nilai_ujian_asli':fields.float('Nilai Ujian Asli'),
 		'batas_nilai':fields.float('Batas Nilai Kelulusan',readonly=True),
-		'is_dosen':fields.boolean(''),
+		'is_dosen':fields.boolean('Dosen ?'),
 		'biodata_keluarga_ids':fields.one2many('master.biodata_keluarga','partner_id','Biodata Keluarga',),
 		'riwayat_pendidikan_ids':fields.one2many('master.riwayat_pendidikan','partner_id','Riwayat Pendidikan',ondelete='cascade',),
 		'pelanggaran_ids':fields.one2many('master.pelanggaran','partner_id','Pelanggaran',),
+		'pekerjaan_ids':fields.one2many('master.history.pekerjaan','partner_id','History Pekerjaan',),
 		'jadwal_ids':fields.one2many('master.jadwal','partner_id','Jadwal Mengajar',),
 		'nidn':fields.char('NIDN'),
 		'status_dosen':fields.selection([('tetap','Tetap'),('tidak_tetap','Tidak Tetap')],'Status Dosen'),
@@ -244,6 +245,7 @@ class res_partner (osv.osv):
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
 		'is_beasiswa' : fields.boolean('Penerima Beasiswa',readonly=True),
 		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM', required=True),
+		'keluarga_alumni_id': fields.many2one('res.partner','Keluarga Alumni',domain=[('status_mahasiswa','=','alumni')]),
 
 		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
 
@@ -253,9 +255,10 @@ class res_partner (osv.osv):
 		'asal_univ_id' 		: fields.many2one('res.partner', 'Asal PT', domain=[('category_id','ilike','external')]),
 		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain=[('pt_id','=','asal_univ_id')]),
 		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain=[('fakultas_id','=','asal_fakultas_id')]),
-		'asal_npn'			: fields.char('Asal NIM'),
+		'asal_npm'			: fields.char('Asal NIM'),
 		'asal_sks_diakui' 	: fields.integer('SKS Diakui'),
 		'asal_jenjang_id' 	: fields.many2one('master.jenjang', 'Asal Jenjang'),
+		'semester_id'		:fields.many2one('master.semester','Semester'),
 
 	}
 
