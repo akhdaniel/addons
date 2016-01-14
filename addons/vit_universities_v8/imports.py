@@ -195,3 +195,58 @@ class prodi_map(osv.osv):
 		'prodi_kode'		: fields.char('Kode Prodi'),
 		'name'				: fields.char('Nama Prodi'),
 	}
+
+
+class import_mhs(osv.osv):
+	_name 		= "akademik.import_mhs"
+	_columns 	= {
+		"kdptimsmhs"			: fields.char("KDPTIMSMHS,C,6"),
+		"kdjenmsmhs"			: fields.char("KDJENMSMHS,C,1"),
+		"kdpstmsmhs"			: fields.char("KDPSTMSMHS,C,5"),
+		"nimhsmsmhs"			: fields.char("NIMHSMSMHS,C,15"),
+		"nmmhsmsmhs"			: fields.char("NMMHSMSMHS,C,30"),
+		"shiftmsmhs"			: fields.char("SHIFTMSMHS,C,1"),
+		"tplhrmsmhs"			: fields.char("TPLHRMSMHS,C,20"),
+		"tglhrmsmhs"			: fields.char("TGLHRMSMHS,D"),
+		"kdjekmsmhs"			: fields.char("KDJEKMSMHS,C,1"),
+		"tahunmsmhs"			: fields.char("TAHUNMSMHS,C,4"),
+		"smawlmsmhs"			: fields.char("SMAWLMSMHS,C,5"),
+		"btstumsmhs"			: fields.char("BTSTUMSMHS,C,5"),
+		"assmamsmhs"			: fields.char("ASSMAMSMHS,C,2"),
+		"tgmskmsmhs"			: fields.char("TGMSKMSMHS,D"),
+		"tgllsmsmhs"			: fields.char("TGLLSMSMHS,D"),
+		"stmhsmsmhs"			: fields.char("STMHSMSMHS,C,1"),
+		"stpidmsmhs"			: fields.char("STPIDMSMHS,C,1"),
+		"sksdimsmhs"			: fields.char("SKSDIMSMHS,N,3,0"),
+		"asnimmsmhs"			: fields.char("ASNIMMSMHS,C,15"),
+		"asptimsmhs"			: fields.char("ASPTIMSMHS,C,6"),
+		"asjenmsmhs"			: fields.char("ASJENMSMHS,C,1"),
+		"aspstmsmhs"			: fields.char("ASPSTMSMHS,C,5"),
+		"bistumsmhs"			: fields.char("BISTUMSMHS,C,1"),
+		"peksbmsmhs"			: fields.char("PEKSBMSMHS,C,1"),
+		"nmpekmsmhs"			: fields.char("NMPEKMSMHS,C,40"),
+		"ptpekmsmhs"			: fields.char("PTPEKMSMHS,C,6"),
+		"pspekmsmhs"			: fields.char("PSPEKMSMHS,C,5"),
+		"noprmmsmhs"			: fields.char("NOPRMMSMHS,C,10"),
+		"nokp1msmhs"			: fields.char("NOKP1MSMHS,C,10"),
+		"nokp2msmhs"			: fields.char("NOKP2MSMHS,C,10"),
+		"nokp3msmhs"			: fields.char("NOKP3MSMHS,C,10"),
+		"nokp4msmhs"			: fields.char("NOKP4MSMHS,C,10"),
+		"is_processed"			: fields.boolean("Is Processed"),
+	}
+
+	def action_import_mhs(self, cr, uid, context=None):
+		##########################################################
+		# id line import_mk yang diselect
+		##########################################################
+		active_ids = context and context.get("active_ids", False)
+		if not context:
+			context = {}
+
+		ids = self.search(cr, uid, [('is_processed','=',False)], context=context)
+		# for rec in self.browse(cr, uid, ids, context=context):
+		# 	return
+
+
+		return
+
