@@ -31,7 +31,7 @@ class hr_attendance(osv.osv):
 
 	def _fill_attendance(self, cr, uid, vals, context=None):
 		em = self.pool.get('hr.employee')
-		ff = em.search(cr, uid, [('fingerprint_code','=',int(vals['fingerprint_code'])),], context=context)
+		ff = em.search(cr, uid, [('fingerprint_code','=',int(vals['fingerprint_code'])),('no_mesin','=',int(vals['no_mesin'])),('work_location2','=',vals['lokasi_kerja'])], context=context)
 		if ff == []:
 			raise osv.except_osv(_('Fingerprint Error!'), _(("Fingerprint ID : %s tidak ada!") % (vals['fingerprint_code']) ))
 		vals['employee_id']=ff[0]
@@ -52,19 +52,34 @@ class hr_attendance(osv.osv):
 		vals['name'] = str(datetime.strptime(vals["name"],'%Y-%m-%d %H:%M:%S')+timedelta(hours=7))
 		return vals
 
+	def isoweekday(self, cr, uid, vals, context=None):
+		datas = datetime.strptime(vals["name"],'%Y-%m-%d %H:%M:%S')
+		weekday = date.isoweekday(datas)
+		return weekday
+
 	def create(self, cr, uid, vals, context=None):
 		# menghitung keterlambatan
 		#if vals['binary_action'] == False :
 		###########################################################################################
 					##import tanpa ada tindakan login atau logout##
-		fing_id =vals['fingerprint_code']
+		fing_id = vals['fingerprint_code']
+		no_mesin = int(vals['no_mesin'])
+		#import pdb;pdb.set_trace()
 		pal = vals['name']
 		vals = self._date(cr, uid, vals, context=None)
-		search_emps = self.pool.get('hr.employee').search(cr,uid,[('fingerprint_code','=',fing_id)])[0]
+		search_emps = self.pool.get('hr.employee').search(cr,uid,[('fingerprint_code','=',fing_id),('no_mesin','=',no_mesin),('work_location2','=',vals['lokasi_kerja'])])
+		if search_emps:
+			search_emps = self.pool.get('hr.employee').search(cr,uid,[('fingerprint_code','=',fing_id),('no_mesin','=',no_mesin),('work_location2','=',vals['lokasi_kerja'])])[0]
+		else :
+			return False	
 		search_binary = self.pool.get('hr.contract').search(cr,uid,[('employee_id','=',search_emps)])
-		for emps in self.pool.get('hr.contract').browse(cr,uid,search_binary):
+		if self.pool.get('hr.contract').browse(cr,uid,search_binary) == [] :
+			return False
+		for emps in self.pool.get('hr.contract').browse(cr,uid,search_binary): 
 			if emps.date_end == False or emps.date_end >= vals['name'][:10]:
 				kon_id = emps.id
+			else:
+				return False
 		shift_binary = 1
 		if emps.shift_true == True :	
 			shift_binary = self.pool.get('hr.shift_karyawan').search(cr,uid,[('contract_id','=',kon_id),('date_from','<=',vals['name'][:10]),('date_to','>=',vals['name'][:10])])
@@ -77,7 +92,7 @@ class hr_attendance(osv.osv):
 				}
 			
 			emp_id = self.pool.get('tes.attendance').create(cr,uid,values)
-			return True
+			return False
 		else :
 		###############################################################################
 			if emps.shift_true == True :
@@ -85,18 +100,39 @@ class hr_attendance(osv.osv):
 					schedules = shf.schedule_id.id
 			else :
 				schedules = emps.working_hours.id
+			if schedules == False :
+				return False	
 			src_cal = self.pool.get('resource.calendar.attendance').search(cr,uid,[('calendar_id','=',schedules)])
-			brw_cal = self.pool.get('resource.calendar.attendance').browse(cr,uid,src_cal)[0]
-			hour_from = brw_cal.hour_from
-			hour_to = brw_cal.hour_to	
-			#import pdb;pdb.set_trace()
+			day = self.isoweekday(cr, uid, vals, context=None)
+			x = 1
+			daysto2 = 0
+			for shfatt in self.pool.get('resource.calendar.attendance').browse(cr,uid,src_cal) :
+				if int(shfatt.dayofweek)+1 == day :
+					daysto1 = shfatt 
+					if x == 1 :
+						daysto = shfatt
+					elif x == 2 :
+						if emps.shift_true == True : 
+							if shf.schedule_id.shift_gt_hr == False :
+								daysto2 = shfatt
+					x = x+1
+			if emps.shift_true == True :
+				if shf.schedule_id.shift_gt_hr == True :
+					hour_from = daysto1.hour_from
+			else :
+				hour_from = daysto.hour_from
+			if daysto2 == 0 :				
+				hour_to = daysto.hour_to
+			else :
+				hour_to = daysto2.hour_to
 			ddd = float(vals['name'][11]+vals['name'][12])
-			if hour_from-4 <= ddd and  hour_from+3 >= ddd :
+			#import pdb;pdb.set_trace()
+			if hour_from-4 <= ddd and  hour_from+2 >= ddd :
 				vals['binary_action'] = '1'
 			elif hour_to-1  <= ddd :
 				vals['binary_action'] = '0'
 			else :
-				return True
+				return False
 			############################################################################################		 
 			vals = self._fill_attendance(cr, uid, vals, context=None)
 			# cari login lebih awal dan logout lebih akhir
@@ -177,8 +213,7 @@ class hr_attendance(osv.osv):
 						#day = datetime_day.strftime("%Y-%m-%d")
 						#day_now = (date + timedelta(days=day))
 						#day = date.isoweekday()
-			vals['name'] = pal
-			#import pdb;pdb.set_trace()
+			vals['name'] = pal	
 			if any('no_mesin' in att for att in vals) and vals['no_mesin'] <> '0':
 				new_id = super(hr_attendance,self).create(cr,uid,vals,context=context)
 				return new_id
@@ -187,6 +222,6 @@ class hr_attendance(osv.osv):
 
 	_columns = {
 		'keterlambatan'	: fields.char("keterlambatan"),
-		'employee_id': fields.many2one('hr.employee', "Employee"),
-		"binary_action": fields.selection([('1','Sign In'),('0','Sign Out'),('2','Other')],'Kehadiran'),
+		'employee_id'	: fields.many2one('hr.employee', "Employee"),
+		"binary_action"	: fields.selection([('1','Sign In'),('0','Sign Out'),('2','Other')],'Kehadiran'),		
 	}

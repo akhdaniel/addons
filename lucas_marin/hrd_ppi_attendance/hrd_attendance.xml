@@ -20,15 +20,16 @@
             <field name='model'>hr.attendance</field>
             <field name='inherit_id' ref='hr_attendance.view_attendance_form'/>
             <field name='arch' type='xml'>
-                <field name="employee_id" position='after'>
+                <field name="employee_id" position='replace'>
                     <field name='fingerprint_code' placeholder='This ID will overide Employee' />
                     <field name='no_mesin'/>
+                    <field name='lokasi_kerja'/>
                 </field>
                 <field name="action" position='replace'>
-                    <field name='binary_action' />
+                    <!-- <field name='binary_action'/> -->
                 </field>
                 <field name="action_desc" position='replace'>
-                    <field name="action_desc"  attrs="{'invisible': [('binary_action','!=','2')]}"/>
+                    <!-- <field name="action_desc"  attrs="{'invisible': [('binary_action','!=','2')]}"/> -->
                 </field>
             </field>
         </record>

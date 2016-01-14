@@ -578,6 +578,7 @@ class employee_objects_proxy(object_proxy):
 
     def execute_cr(self, cr, uid, model, method, *args, **kw):
         fct_src = super(employee_objects_proxy, self).execute_cr
+        import pdb;pdb.set_trace()
         if model == 'hr.employee' and method == 'write' :
             return self.log_fct(cr, uid, model, method, fct_src, *args, **kw)
         if model == 'hr.contract':

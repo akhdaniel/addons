@@ -28,3 +28,21 @@ class hr_contract_type(osv.osv):
         "jams4":fields.float('Potongan BPJS kesehatan (%)'),
     }
 hr_contract_type()
+
+class hr_contract(osv.osv):
+    _name = 'hr.contract'
+    _inherit = 'hr.contract'
+
+    _columns = {
+        'hari_kerja' : fields.float('Jumlah Hari Kerja')
+    }
+hr_contract()
+
+class resource_calendar(osv.osv):
+    _name = 'resource.calendar'
+    _inherit = 'resource.calendar'
+
+    _columns = {
+        'shift_gt_hr' : fields.boolean('Shift Ganti Hari')
+    }
+resource_calendar()
