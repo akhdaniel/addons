@@ -75,10 +75,13 @@
                             <page string="Kartu Studi">
                                 <separator string="Kartu Rencana Studi" attrs="{'invisible': [('state','in',('confirm','done'))]}"/>
                                 <separator string="Kartu Hasil Studi" attrs="{'invisible': [('state','=','draft')]}"/>
-                                <field view_mode="tree,form" name="krs_detail_ids" nolabel="1" >
-                                    <tree editable="bottom">
+                                <field view_mode="tree,form" name="krs_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}">
+                                    <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                         <field name="sks" sum="Total SKS"/>
+                                        <field name="hadir"/>
+                                        <field name="izin" />
+                                        <field name="alpha" />
                                         <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="ulangan" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}"/>
@@ -163,6 +166,38 @@
                 </form>
             </field>
         </record>
+
+    <record id="act_res_partner_kartu_studi" model="ir.actions.act_window">
+            <field name="name">Kartu Studi</field>
+            <field name="res_model">operasional.krs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="krs_tree_view"/>
+            <field name="search_id" ref="vit_universities_v8.kartu_studi_search"/>
+            <field name="domain">[('partner_id','=',active_id)]</field>
+            <field name="context">{'default_partner_id':active_id,'search_default_group_by_state':True}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    ...
+                </p><p>
+                    Belum ada kartu Studi...
+                </p>
+            </field>
+        </record> 
+
+        <record id="res_partner_view_fees_buttons" model="ir.ui.view">
+            <field name="name">Pembayaran</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="25"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button name="%(act_res_partner_kartu_studi)d"  type="action"
+                        class="oe_stat_button" icon="fa-certificate" string="Kartu Studi"/>
+                </xpath>
+            </field>
+        </record>
+
 
     </data>   
 </openerp>

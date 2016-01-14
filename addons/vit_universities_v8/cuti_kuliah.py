@@ -10,20 +10,20 @@ class cuti_kuliah(osv.Model):
 	_name = 'cuti.kuliah'
 
 	_columns = {
-		'name' :fields.char('Kode Cuti',size=36,required = True,readonly=True, states={'draft': [('readonly', False)]}),
-		'partner_id' : fields.many2one('res.partner','Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]", states={'draft': [('readonly', False)]}),
-		'from_semester_id':fields.many2one('master.semester','Dari Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'to_semester_id':fields.many2one('master.semester','Sampai Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'prodi_id':fields.many2one('master.prodi','Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'name' :fields.char('Kode Cuti',size=36,required = True),
+		'partner_id' : fields.many2one('res.partner','Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]"),
+		'from_semester_id':fields.many2one('master.semester','Dari Semester',required=True),
+		'to_semester_id':fields.many2one('master.semester','Sampai Semester',required=True),
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True),
+		'prodi_id':fields.many2one('master.prodi','Program Studi',required=True,readonly=True),
 		# 'jurusan_id':fields.many2one('master.jurusan','Jurusan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'tahun_ajaran_id': fields.many2one('academic.year','Angkatan', required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'state':fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status', states={'draft': [('readonly', False)]}),
-  		'notes' : fields.text('Alasan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required=True,readonly=True),
+		'tahun_ajaran_id': fields.many2one('academic.year','Angkatan', required=True,readonly=True),
+		'state':fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status'),
+  		'notes' : fields.text('Alasan',required=True),
 		'user_id':fields.many2one('res.users', 'User',readonly=True),
-		'date': fields.date('Tanggal Aktif Kembali',readonly=True,states={'draft': [('readonly', False)]}),
-		'automatic_done':fields.boolean('Automatic Done',readonly=True,states={'draft': [('readonly', False)]}),
+		'date': fields.date('Tanggal Aktif Kembali'),
+		'automatic_done':fields.boolean('Automatic Done'),
 			}
 
 	_defaults = {  
@@ -71,7 +71,7 @@ class cuti_kuliah(osv.Model):
 	def approve(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
 			mhs_id = ct.partner_id.id
-			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'cuti','active':False},context=context)
+			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'cuti'},context=context)
 			self.write(cr,uid,ct.id,{'state':'confirm'},context=context)
 		return True	
 
@@ -94,7 +94,7 @@ class cuti_kuliah(osv.Model):
 	def done(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
 			mhs_id = ct.partner_id.id
-			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'Mahasiswa','active':True},context=context)
+			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'Mahasiswa'},context=context)
 			self.write(cr,uid,ct.id,{'state':'done'},context=context)
 		return True	
 

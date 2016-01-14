@@ -263,6 +263,7 @@ class master_jurusan (osv.Model):
 			}
 		
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode jurusan tidak boleh sama')]
+
 master_jurusan()
 
 class master_prodi (osv.Model):
@@ -351,12 +352,13 @@ class biodata_keluarga (osv.Model):
 	
 	_columns = {
 		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa', required = True,),
-		'nama':fields.char('Nama'),
+		'nama':fields.char('Nama',required = True),
 		'tempat_lahir':fields.char('Tempat Lahir'),
 		'tanggal_lahir':fields.date('Tanggal Lahir'),
-		'hubungan_keluarga':fields.char('Hubungan Keluarga'),
+		'hubungan_keluarga_id':fields.many2one('master.hubungan_keluarga','Hubungan Keluarga'),
 		'pekerjaan':fields.char('Pekerjaan'),
 		'alamat':fields.text('Alamat'),
+		'telepon':fields.char('Telepon'),
 		'jenis_kelamin':fields.selection([('laki_laki','Laki-Laki'),('perempuan','Perempuan')],'Jenis Kelamin'),
 			}
 biodata_keluarga()
@@ -394,4 +396,23 @@ class master_yudisium(osv.Model):
 		'max': fields.float("IPK Max",required=True,help="nilai angka maximal Indeks Prestasi Komulatif"),
 	}
 
+class master_hubungan_keluarga(osv.Model):
+	_name = "master.hubungan_keluarga"
+	_description = "Master Hubungan Keluarga"
+	_columns = {
+		'name': fields.char('Nama', size=128, required=True),
+	}
 
+class master_history_pekerjaan(osv.Model):
+	_name='master.history.pekerjaan'
+	   
+	_columns = {
+		'partner_id' 	: fields.many2one('res.partner','Partner'),
+		'name'			: fields.char('Nama Perusahaan',size=128,required=True),
+		'alamat'		: fields.char('Alamat'),
+		'jabatan'		: fields.char('Jabatan'),
+		'periode_awal'	: fields.date('Periode Awal'),
+		'periode_akhir'	: fields.date('Periode Akhir'),
+
+	}
+			

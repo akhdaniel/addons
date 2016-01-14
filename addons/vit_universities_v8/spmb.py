@@ -23,6 +23,7 @@ class spmb_mahasiswa(osv.Model):
 			('fakultas_id','=',fakultas_id),
 			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
+			('jenis_pendaftaran_id','=',1),
 			('nilai_ujian','>=',nilai)], context=context)
 
 		if par_ids == []:
@@ -93,7 +94,7 @@ class spmb_mahasiswa(osv.Model):
 				}
 
 	def button_reload(self,cr,uid,ids,context=None):
-
+		results = {}
 		my_form = self.browse(cr,uid,ids[0])
 		angkatan = my_form.tahun_ajaran_id.id
 		fakultas = my_form.fakultas_id.id
@@ -109,6 +110,7 @@ class spmb_mahasiswa(osv.Model):
 			('fakultas_id','=',fakultas),
 			# ('jurusan_id','=',jurusan),
 			('prodi_id','=',prodi),
+			('jenis_pendaftaran_id','=',1),
 			('nilai_ujian','>=',nilai)], context=context)
 		#import pdb;pdb.set_trace()
 		if par_ids == []:

@@ -9,8 +9,7 @@
     "website" : "http://www.vitraining.com",
     'category': 'Tools',
     'description': """
-Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standar perguruan 
-tinggi yang ada di Indonesia (Odoo v8)
+Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standar perguruan tinggi yang ada di Indonesia (Odoo v8)
 """,
     'installable':True,
     'data': ['akademik.xml',
@@ -33,9 +32,7 @@ tinggi yang ada di Indonesia (Odoo v8)
             'reports/report.xml',
             'data/data_view.xml',
             'company.xml',
-            'imports_mk.xml',
-            'imports_mhs.xml',
-            'imports_nlm.xml',
+            'imports.xml',
             'beasiswa_prodi.xml',
     ],
 }

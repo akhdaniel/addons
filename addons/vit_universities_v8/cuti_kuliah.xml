@@ -1,7 +1,7 @@
 <openerp>
 	<data>
 
-        <record model="ir.ui.view" id="jadwal_tree_view">
+        <record model="ir.ui.view" id="cuti_tree_view">
             <field name="name">cuti.kuliah</field>
             <field name="model">cuti.kuliah</field>
             <field name="type">tree</field>
@@ -39,14 +39,14 @@
                 	<sheet>
                 		<group>
                 			<group>
-                                <field name="name"/>
+                                <field name="name" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <!-- <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, jurusan_id, kelas_id, partner_id)"/>  -->
-			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id)"/> 
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id)" attrs="{'readonly': [('state','!=','draft')]}"/> 
 			                    <field name="kelas_id" />
-                                <label for="from_semester_id" string="Semester"/> 
+                                <label for="from_semester_id" string="Semester" /> 
                                 <div>  
-                                    <field name="from_semester_id" widget="selection" nolabel="1" class="oe_inline" /><label string=" s/d " class="oe_inline"/>
-                                    <field name="to_semester_id" widget="selection" nolabel="1" class="oe_inline" />
+                                    <field name="from_semester_id" widget="selection" nolabel="1" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/><label string=" s/d " class="oe_inline"/>
+                                    <field name="to_semester_id" widget="selection" nolabel="1" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 </div>                                 
                             </group>
                 			<group>
@@ -56,13 +56,13 @@
                                 <field name="prodi_id"/>           				
                 			</group>
                         </group>
-                         <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
+                         <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..." attrs="{'readonly': [('state','!=','draft')]}"/>
                         <group>    
                             <group>  
-                                <field name="date" attrs="{'required':[('automatic_done','=',True)]}"/>                                                        
+                                <field name="date" attrs="{'required':[('automatic_done','=',True)],'readonly': [('state','!=','draft')]}"/>                                                        
                             </group>
                             <group> 
-                                <field name="automatic_done"/>
+                                <field name="automatic_done" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <field name="user_id"/>                                                          
                             </group>
                         </group>                         
@@ -114,7 +114,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,graph</field>
             <field name="view_id" ref="vit_universities_v8.partner_tree_view2"/> 
-            <field name="domain">[('status_mahasiswa','=','cuti'),('active','=',False)]</field>
+            <field name="domain">[('status_mahasiswa','=','cuti')]</field>
             <field name="context">{'default_status_mahasiswa':'cuti','default_is_mahasiswa':True}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Mahasiswa Cuti.</p><p>disini belum ada data tentang Mahasiswa Cuti!</p></field>

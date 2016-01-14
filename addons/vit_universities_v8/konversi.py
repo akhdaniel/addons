@@ -24,13 +24,17 @@ class konversi(osv.Model):
 		'tahun_ajaran_id'	: fields.many2one('academic.year','Angkatan', required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
 		'state'				: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status', states={'draft': [('readonly', False)]}),
-  		'notes' 			: fields.text('Alasan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'notes' 			: fields.text('Alasan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'user_id'			: fields.many2one('res.users', 'User',readonly=True),
 		'date'				: fields.date('Tanggal Registrasi',readonly=True,states={'draft': [('readonly', False)]}),
 		'krs_done'			: fields.boolean('KRS Done',readonly=True,states={'draft': [('readonly', False)]}),
 
-		'asal_matakuliah_ids' 	: fields.one2many('akademik.konversi.asal_mk','konversi_id','Asal Mata Kuliah', ondelete="cascade"),
-		'matakuliah_ids' 		: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ),
+		'matakuliah_ids' 		: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ,readonly=True, states={'draft': [('readonly', False)]}),
+
+		'total_mk_asal'		: fields.integer('Total Matakuliah Asal',readonly=True, states={'draft': [('readonly', False)]}),
+		'total_mk_tujuan'	: fields.integer('Total Matakuliah Tujuan',readonly=True, states={'draft': [('readonly', False)]}),
+		'total_sks_asal'	: fields.integer('Total SKS Asal',readonly=True, states={'draft': [('readonly', False)]}),
+		'total_sks_tujuan'	: fields.integer('Total SKS Tujuan',readonly=True, states={'draft': [('readonly', False)]}),		
 	}
 
 	_defaults = {  
@@ -68,15 +72,162 @@ class konversi(osv.Model):
 		}
 		return results 
 
+	def onchange_konversi(self,cr, uid, ids, matakuliah_ids,total_mk_asal,total_mk_tujuan,total_sks_asal,total_sks_tujuan, context=None):
+		#
+		context = context or {}
+		if not matakuliah_ids:
+			matakuliah_ids = []
+		
+		res = {
+			'matakuliah_ids': [],
+		}
+		
+		matakuliah_ids = matakuliah_ids
+		matakuliah_ids = self.resolve_2many_commands(cr, uid, 'matakuliah_ids', matakuliah_ids, ['asal_matakuliah_id','matakuliah_id','asal_sks','sks'], context)
+
+		total_asal_sks = 0
+		total_asal_mk = 0
+		total_sks = 0
+		total_mk = 0		
+		for mk in matakuliah_ids:
+			asal_mkul 	= mk.get('asal_matakuliah_id',False)
+			asal_sks  	= mk.get('asal_sks',0)
+			mkul 		= mk.get('matakuliah_id',False)
+			sks  		= mk.get('sks',0)
+			total_asal_sks  += asal_sks
+			total_sks  += sks
+			if mkul :
+				total_mk += 1
+			if asal_mkul :
+				total_asal_mk += 1
+
+		res.update({'total_mk_asal': total_asal_mk,
+					'total_mk_tujuan': total_mk,
+					'total_sks_asal': total_asal_sks,
+					'total_sks_tujuan':total_sks})
+		
+		return {
+			'value': res
+		}
+
 	def confirm(self,cr,uid,ids,context=None):
+		konv_obj = self.pool.get('akademik.konversi.mapping')
 		for ct in self.browse(cr,uid,ids):
+			asal_prodi = ct.asal_prodi_id.id
+			prodi = ct.prodi_id.id		
+			for mk in ct.matakuliah_ids:
+				mk_asal = mk.asal_matakuliah_id.id
+				mk_tujuan = mk.matakuliah_id.id
+				asal_smt = mk.asal_semester_id.id
+				smt = mk.semester_id.id				
+				# cari a pasang MK ini di master mapping
+				exist = konv_obj.search(cr,uid,[('asal_prodi_id','=',asal_prodi),
+												('asal_matakuliah_id','=',mk_asal),
+												('prodi_id','=',prodi),
+												('matakuliah_id','=',mk_tujuan)])
+				if not exist and mk_tujuan and smt:
+					#create master mapping
+
+					konv_obj.create(cr,uid,{'kode':str(mk.asal_matakuliah_id.kode)+str(mk.matakuliah_id.kode),
+											'asal_prodi_id':asal_prodi,
+											'asal_semester_id':asal_smt,
+											'asal_matakuliah_id':mk_asal,
+											'prodi_id':prodi,
+											'semester_id':smt,
+											'matakuliah_id':mk_tujuan},context=context)
 			self.write(cr,uid,ct.id,{'state':'waiting'},context=context)
 		return True	
 
 	def approve(self,cr,uid,ids,context=None):
+		#import pdb;pdb.set_trace()
+		kur_obj = self.pool.get('master.kurikulum')
+		studi_obj = self.pool.get('operasional.krs')
+		studi_detail_obj = self.pool.get('operasional.krs_detail')
 		for ct in self.browse(cr,uid,ids):
-			mhs_id = ct.partner_id.id
-			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'cuti','active':False},context=context)
+			smt_daftar = ct.semester_id.id
+			#cari matakuliah yg akan di masukan pada master kurikulum		
+			kur_ids = kur_obj.search(cr, uid, [
+				('tahun_ajaran_id','=',ct.tahun_ajaran_id.id),
+				('prodi_id','=',ct.prodi_id.id),
+				('state','=','confirm'),
+				('semester_id','=',smt_daftar)], context=context)
+			if not kur_ids:
+				raise osv.except_osv(_('Error!'),
+								_('Tidak ada kurikulum yang cocok untuk konversi ini!'))	
+
+			
+			smes = 1
+			for xr in range(1,smt_daftar):
+				cr.execute('''select
+							matakuliah_id,sks,nilai,nilai_a
+						from
+							akademik_konversi_mk
+						where
+							konversi_id = %s and semester_id = %s''',(ct.id,xr))
+				res = cr.fetchall()
+				mk_ids = map(lambda x: x[0], res) # atau  [i for (i,) in res]
+
+				#create KHS
+				
+				khs_id = studi_obj.create(cr,uid,{'kode'		: str(ct.partner_id.npm)+'-'+str(xr),
+											'partner_id'		: ct.partner_id.id,
+											'npm'				: ct.partner_id.npm,
+											'semester_id'		: xr,
+											'tahun_ajaran_id'	: ct.tahun_ajaran_id.id,
+											'fakultas_id'		: ct.fakultas_id.id,
+											'prodi_id'			: ct.prodi_id.id,
+											'user_id'			: uid,
+											'state'				: 'done'},context=context)
+				#create KHS Detail
+				for det in res:	
+					studi_detail_obj.create(cr,uid,{'krs_id'	: khs_id,
+											'mata_kuliah_id'	: det[0],
+											'sks'				: det[1],
+											'tugas'				: det[2],
+											'ulangan'			: det[2],
+											'uts'				: det[2],
+											'uas'				: det[2],
+											'state'				: 'done'},context=context)
+			cr.commit()
+			#create KRS berjalan
+			krs_id = studi_obj.create(cr,uid,{'kode'		: str(ct.partner_id.npm)+'-'+str(smt_daftar),
+										'partner_id'		: ct.partner_id.id,
+										'npm'				: ct.partner_id.npm,
+										'semester_id'		: smt_daftar,
+										'tahun_ajaran_id'	: ct.tahun_ajaran_id.id,
+										'fakultas_id'		: ct.fakultas_id.id,
+										'prodi_id'			: ct.prodi_id.id,
+										'user_id'			: uid,
+										'kurikulum_id'		: kur_ids[0],
+										'state'				: 'draft'},context=context)	
+			#create KRS detailnya
+			kur_id = kur_obj.browse(cr,uid,kur_ids,context=context)[0].kurikulum_detail_ids
+			mk_kurikulum = []
+			for kur in kur_id:
+				mk_kurikulum.append(kur.id)
+		
+			#cari matakuliah apa saja yg sdh di tempuh di smt sebelumnya
+			cr.execute("""SELECT okd.id, okd.mata_kuliah_id
+							FROM operasional_krs_detail okd
+							LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
+							WHERE ok.partner_id = %s
+							AND ok.state <> 'draft'"""%(ct.partner_id.id))
+			dpt = cr.fetchall()
+			
+			total_mk_ids = []
+			for x in dpt:
+				total_mk_ids.append(x[1])
+			#import pdb;pdb.set_trace()
+			#filter matakuliah yg benar-benar belum di tempuh
+			mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
+
+			res = []
+			for kur in mk_baru_ids:
+				studi_detail_obj.create(cr,uid,{'krs_id'	: krs_id,
+										'mata_kuliah_id'	: kur,
+										#'sks'				: ,
+										'state'				: 'draft'},context=context)							
+
 			self.write(cr,uid,ct.id,{'state':'confirm'},context=context)
 		return True	
 
@@ -115,26 +266,45 @@ konversi()
 
 
 
-class konversi_asal_mk(osv.osv):
-	_name 		= "akademik.konversi.asal_mk"
-	_columns 	= {
-		'konversi_id' : fields.many2one('akademik.konversi', 'Konversi'),
-		'matakuliah_id' : fields.many2one('akademik.konversi.master_asal_mk', 'Nama Matakuliah'),
-		'semester_id'	: fields.many2one('master.semester', 'Semester'),
-		'nilai'			: fields.float('Nilai'),
-		'nilai_a'		: fields.char('Nilai 2'),
-	}
-
-class konversi_mk(osv.osv):
+class akademik_konversi_mk(osv.osv):
 	_name 		= "akademik.konversi.mk"
 	_columns 	= {
-		'konversi_id' : fields.many2one('akademik.konversi', 'Konversi'),
-		'matakuliah_id' : fields.many2one('master.matakuliah', 'Nama Matakuliah'),
-		'semester_id'	: fields.many2one('master.semester', 'Semester'),
-		'nilai'			: fields.float('Nilai'),
-		'nilai_a'		: fields.char('Nilai 2'),
+		'konversi_id' 			: fields.many2one('akademik.konversi', 'Konversi'),
+		'asal_matakuliah_id' 	: fields.many2one('akademik.konversi.master_asal_mk', 'Nama Matakuliah',required=True),
+		'asal_semester_id'		: fields.many2one('master.semester', 'Semester',required=True),
+		'asal_sks'				: fields.integer('SKS',required=True),
+		'asal_nilai'			: fields.float('Nilai',required=True),
+		'asal_nilai_a'			: fields.char('Nilai 2',required=True),		
+		'matakuliah_id' 		: fields.many2one('master.matakuliah', 'Nama Matakuliah'),
+		'semester_id'			: fields.many2one('master.semester', 'Semester'),
+		'sks'					: fields.integer('SKS'),
+		'nilai'					: fields.float('Nilai'),
+		'nilai_a'				: fields.char('Nilai 2'),
 	}
 
+
+	def onchange_asal_matakuliah(self, cr, uid, ids, konversi_id,asal_matakuliah_id,asal_semester_id,asal_sks,asal_nilai,asal_nilai_a, context=None):
+		#import pdb;pdb.set_trace()
+		konv_obj = self.pool.get('akademik.konversi.mapping')
+		map_id = konv_obj.search(cr,uid,[('asal_matakuliah_id','=',asal_matakuliah_id)])
+		sks = 0
+		mk = False
+		smt = False
+		if map_id:
+			mapping = konv_obj.browse(cr,uid,map_id[0])
+			mk = mapping.matakuliah_id.id
+			sks = mapping.matakuliah_id.sks
+			smt = mapping.semester_id.id
+
+		val = {
+			'matakuliah_id': mk,
+			'sks': sks,
+			'semester_id' : smt,
+			'nilai' : asal_nilai or 0,
+			'nilai_a': asal_nilai_a or False,
+			}
+
+		return {'value': val}
 
 
 class master_asal_mk(osv.Model):
@@ -182,12 +352,16 @@ master_asal_mk()
 
 class master_mapping(osv.Model):
 	_name = 'akademik.konversi.mapping'
+	_rec_name = 'kode'
 
 	_columns = {
 		'kode' 				:fields.char('Kode', 128,required = True),
-		'prodi_id' 			: fields.many2one('master.prodi','Program Studi'),
+		'prodi_id' 			: fields.many2one('master.prodi','Program Studi Tujuan'),
 		'matakuliah_id'  	: fields.many2one('master.matakuliah', 'MK Tujuan'),
-		'asal_matakuliah_id' : fields.many2one('akademik.konversi.master_asal_mk', 'MK Asal'),
+		'asal_matakuliah_id': fields.many2one('akademik.konversi.master_asal_mk', 'MK Asal'),
+		'asal_prodi_id' 	: fields.many2one('master.prodi','Program Studi Asal'),
+		'asal_semester_id'	: fields.many2one('master.semester','Semester Asal'),
+		'semester_id'		: fields.many2one('master.semester','Semester Tujuan'),		
 	}
 
 master_asal_mk()

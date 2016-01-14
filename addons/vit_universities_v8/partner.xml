@@ -120,7 +120,7 @@
                             </sheet>
                         </form>
                     </page>
-                    <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan" attrs="{'invisible': [('is_mahasiswa','=',False)]}">
+                    <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan">
                         <sheet>
                             <separator string="Riwayat Pendidikan"/>
                                 <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
@@ -132,8 +132,6 @@
                                         <field name="nilai_akhir"/>
         			                </tree>
         		                </field>
-                                <!-- <separator string="Riwayat Keluarga" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"/> -->
-                                <!-- <field view_mode="tree" name="biodata_keluarga_ids" nolabel="1" attrs="{'invisible': [('status_mahasiswa','not in',('Mahasiswa','alumni'))]}"> -->
 
                         		<separator string="Riwayat Keluarga"/>
                                 <field view_mode="tree" name="biodata_keluarga_ids" nolabel="1">
@@ -142,14 +140,21 @@
         			                    <field name="jenis_kelamin"/>
         			                    <field name="tempat_lahir"/>
         			                    <field name="tanggal_lahir"/>
-        			                    <field name="hubungan_keluarga"/>
+        			                    <field name="hubungan_keluarga_id"/>
         			                    <field name="pekerjaan"/>
         			                    <field name="alamat"/>
+                                        <field name="telepon"/>
         			                </tree>
         			            </field>  
+
+                                <separator/>
+                                <group>
+                                    <field name="keluarga_alumni_id"/>
+                                </group>
                             </sheet>
 
 		            </page> 
+
                     <page string="Pelanggaran" name="pelanggaran" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni')),('is_mahasiswa','=',False)]}">
                         <field view_mode="tree" name="pelanggaran_ids" nolabel="1">
                             <tree editable="bottom">
@@ -165,11 +170,24 @@
                         <group>
                             <field name="asal_univ_id" />     
                             <field name="asal_fakultas_id" /> 
-                            <field name="asal_prodi_id" />     
-                            <field name="asal_npn" />          
+                            <field name="asal_prodi_id" />    
+                            <field name="semester_id" widget="selection"/> 
+                            <field name="asal_npm" />          
                             <field name="asal_sks_diakui" /> 
                             <field name="asal_jenjang_id" /> 
                         </group>
+                    </page>
+
+                    <page string="History Pekerjaan" name="pekerjaan" >
+                        <field view_mode="tree" name="pekerjaan_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="alamat"/>
+                                <field name="jabatan"/>
+                                <field name="periode_awal"/>
+                                <field name="periode_akhir"/>
+                            </tree>
+                        </field>
                     </page>
                     
                     <page string="Informasi Kelulusan" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni')),('is_mahasiswa','=',False)]}">
