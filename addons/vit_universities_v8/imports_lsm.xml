@@ -1,0 +1,68 @@
+<openerp>
+	<data>
+		<!-- tree list import_lsm -->
+		<record id="view_import_lsm_tree" model="ir.ui.view">
+		    <field name="name">akademik_import_lsm_tree</field>
+		    <field name="model">akademik.import_lsm</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import lsm">
+					<field name="thsmstrlsm" />	
+					<field name="kdptitrlsm" />	
+					<field name="kdjentrlsm" />	
+					<field name="kdpsttrlsm" />	
+					<field name="nimhstrlsm" />	
+					<field name="stmhstrlsm" />	
+					<field name="tgllstrlsm" />	
+					<field name="skstttrlsm" />	
+					<field name="nlipktrlsm" />	
+					<field name="noskrtrlsm" />	
+					<field name="tglretrlsm" />	
+					<field name="noijatrlsm" />	
+					<field name="stllstrlsm" />	
+					<field name="jnllstrlsm" />	
+					<field name="blawltrlsm" />	
+					<field name="blakhtrlsm" />	
+					<field name="nods1trlsm" />	
+					<field name="nods2trlsm" />	
+					<field name="nods3trlsm" />	
+					<field name="nods4trlsm" />	
+					<field name="nods5trlsm" />	
+					<field name="is_processed" />						
+		        </tree>    
+		    </field>
+		</record>
+
+
+		<!-- action list import_lsm -->
+		<record id="action_import_lsm_list" model="ir.actions.act_window">
+			<field name="name">List import Lulus/Cuti/DO</field>
+			<field name="res_model">akademik.import_lsm</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="imports_lsm"
+			 action="action_import_lsm_list"
+			 name="Lulus/Cuti/DO Mahasiswa"
+			 sequence="10"
+			 parent="imports_menu"/>
+
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_import_lsm" model="ir.actions.server">
+	        <field name="name">Process Import Lulus/Cuti/DO</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_akademik_import_lsm"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('akademik.import_lsm').action_import_lsm(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_lsm" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'akademik.import_lsm'" name="model"/>
+	        <field name="name">Process Import Lulus/Cuti/DO</field>
+	        <field eval="'ir.actions.server,%d'%action_import_lsm" name="value"/>
+	    </record>
+
+
+	</data>
+</openerp>

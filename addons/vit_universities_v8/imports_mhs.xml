@@ -1,0 +1,79 @@
+<openerp>
+	<data>
+		<!-- tree list import_mhs -->
+		<record id="view_import_mhs_tree" model="ir.ui.view">
+		    <field name="name">akademik_import_mhs_tree</field>
+		    <field name="model">akademik.import_mhs</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import mhs">
+					<field name="kdptimsmhs" />	
+					<field name="kdjenmsmhs" />	
+					<field name="kdpstmsmhs" />	
+					<field name="nimhsmsmhs" />	
+					<field name="nmmhsmsmhs" />	
+					<field name="shiftmsmhs" />	
+					<field name="tplhrmsmhs" />	
+					<field name="tglhrmsmhs" />	
+					<field name="kdjekmsmhs" />	
+					<field name="tahunmsmhs" />	
+					<field name="smawlmsmhs" />	
+					<field name="btstumsmhs" />	
+					<field name="assmamsmhs" />	
+					<field name="tgmskmsmhs" />	
+					<field name="tgllsmsmhs" />	
+					<field name="stmhsmsmhs" />	
+					<field name="stpidmsmhs" />	
+					<field name="sksdimsmhs" />	
+					<field name="asnimmsmhs" />	
+					<field name="asptimsmhs" />	
+					<field name="asjenmsmhs" />	
+					<field name="aspstmsmhs" />	
+					<field name="bistumsmhs" />	
+					<field name="peksbmsmhs" />	
+					<field name="nmpekmsmhs" />	
+					<field name="ptpekmsmhs" />	
+					<field name="pspekmsmhs" />	
+					<field name="noprmmsmhs" />	
+					<field name="nokp1msmhs" />	
+					<field name="nokp2msmhs" />	
+					<field name="nokp3msmhs" />	
+					<field name="nokp4msmhs" />	
+					<field name="is_processed" />	
+		        </tree>    
+		    </field>
+		</record>
+
+
+		<!-- action list import_mhs -->
+		<record id="action_import_mhs_list" model="ir.actions.act_window">
+			<field name="name">List import MHS</field>
+			<field name="res_model">akademik.import_mhs</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="imports_mhs"
+			 action="action_import_mhs_list"
+			 name="Mahasiswa, KRS"
+			 sequence="10"
+			 parent="imports_menu"/>
+
+
+	    <!-- context menu More.. di tree pr line -->
+	    <record id="action_import_mhs" model="ir.actions.server">
+	        <field name="name">Process Import MHS</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_akademik_import_mhs"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('akademik.import_mhs').action_import_mhs(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_mhs" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'akademik.import_mhs'" name="model"/>
+	        <field name="name">Process Import MHS</field>
+	        <field eval="'ir.actions.server,%d'%action_import_mhs" name="value"/>
+	    </record>
+
+
+	</data>
+</openerp>
