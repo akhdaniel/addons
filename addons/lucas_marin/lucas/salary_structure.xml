@@ -156,7 +156,18 @@
             <field name="sequence">33</field>
             <field name="amount_python_compute">result = payslip.tunj_pajak </field>
             <field name="bonus">bonus_tetap</field>
-        </record>   
+        </record>
+
+        <record id="hr_payroll_rules_nilai_penambah" model="hr.salary.rule">
+            <field name="name">NILAI PENAMBAH</field>
+            <field name="code">NP</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">34</field>
+            <field name="amount_python_compute">result = inputs.nilai_penambah.amount</field>
+            <field name="bonus">bonus_tetap</field>
+        </record>
 
         <!--Deduction-->
         <record id="hr_payroll_rules_denda_keterlambatan" model="hr.salary.rule">
@@ -166,7 +177,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="sequence">112</field>
-            <field name="amount_python_compute">result = -(worked_days.DENDA_KETERLAMBATAN.number_of_days*25000)</field>
+            <field name="amount_python_compute">result = -(worked_days.DENDA_KETERLAMBATAN.number_of_days*25000) if contract.employee_id.manager == False else 0</field>
             <field name="bonus">bonus_tetap</field>
         </record>
 
@@ -177,7 +188,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="sequence">113</field>
-            <field name="amount_python_compute">result = -(worked_days.DENDA_KETIDAKHADIRAN.number_of_days*(contract.wage/22))</field>
+            <field name="amount_python_compute">result = -(worked_days.DENDA_KETIDAKHADIRAN.number_of_days*((contract.wage+contract.jenis_tunjangan.tunj_makan+contract.jenis_tunjangan.tunj_jabatan)/contract.hari_kerja)) if contract.employee_id.manager == False else 0</field>
             <field name="bonus">bonus_tetap</field>
         </record>
 
@@ -199,7 +210,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="sequence">115</field>
-            <field name="amount_python_compute">result = -(contract.jenis_tunjangan.tunj_komunikasi/22)*worked_days.POT_TUNJANGAN.number_of_days</field>
+            <field name="amount_python_compute">result = -(contract.jenis_tunjangan.tunj_komunikasi/contract.hari_kerja)*worked_days.POT_TUNJANGAN.number_of_days</field>
             <field name="bonus">bonus_tetap</field>
         </record>
 
@@ -210,7 +221,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="sequence">116</field>
-            <field name="amount_python_compute">result = -(contract.jenis_tunjangan.tunj_fungsional/22)*worked_days.POT_TUNJANGAN.number_of_days</field>
+            <field name="amount_python_compute">result = -(contract.jenis_tunjangan.tunj_fungsional/contract.hari_kerja)*worked_days.POT_TUNJANGAN.number_of_days</field>
             <field name="bonus">bonus_tetap</field>
         </record>
 
@@ -221,7 +232,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="sequence">117</field>
-            <field name="amount_python_compute">result = -(contract.jenis_tunjangan.tunj_transportasi/22)*worked_days.POT_TUNJANGAN.number_of_days</field>
+            <field name="amount_python_compute">result = -(contract.jenis_tunjangan.tunj_transportasi/contract.hari_kerja)*worked_days.POT_TUNJANGAN.number_of_days</field>
             <field name="bonus">bonus_tetap</field>
         </record>
 
@@ -232,7 +243,7 @@
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="sequence">118</field>
-            <field name="amount_python_compute">result = -(payslip.tunjangan_kinerja/22)*worked_days.POT_TUNJANGAN.number_of_days</field>
+            <field name="amount_python_compute">result = -(payslip.tunjangan_kinerja/contract.hari_kerja)*worked_days.POT_TUNJANGAN.number_of_days</field>
             <field name="bonus">bonus_tetap</field>
         </record>
 
@@ -298,6 +309,17 @@
             <field name="amount_python_compute">result = -payslip.pkp  </field>
         </record>
 
+        <record id="hr_payroll_rules_potongan_lain" model="hr.salary.rule">
+            <field name="name">Potongan Lain Lain</field>
+            <field name="code">PLL</field> 
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">150</field>
+            <field name="amount_python_compute">result = -inputs.pot_Lainlain.amount</field>
+            <field name="bonus">bonus_tetap</field>
+        </record>
+
         <!-- SALARY RULE INPUT -->  
         <record id="hr_payroll_rules_input_Adj_tunj_luar_kota" model="hr.rule.input">
             <field name="name">Tunjangan Luar Kota</field>
@@ -310,6 +332,20 @@
             <field name="name">Tunjangan Lain Lain </field>
             <field name="code">tunj_Lainlain</field>    
             <field name="sequence">102</field>  
+            <field name="input_id" ref="hr_payroll_rules_potongan_lain"/>           
+        </record>
+
+        <record id="hr_payroll_rules_input__pot_lain" model="hr.rule.input">
+            <field name="name">Potongan Lain Lain </field>
+            <field name="code">pot_Lainlain</field>    
+            <field name="sequence">103</field>  
+            <field name="input_id" ref="hr_payroll_rules_tunj_lain"/>           
+        </record>
+
+        <record id="hr_payroll_rules_input__niai_penambah" model="hr.rule.input">
+            <field name="name">Nilai Penambah</field>
+            <field name="code">nilai_penambah</field>    
+            <field name="sequence">103</field>  
             <field name="input_id" ref="hr_payroll_rules_tunj_lain"/>           
         </record>
 
@@ -345,6 +381,8 @@
                 ref('hr_payroll_rules_denda_keterlambatan'),
                 ref('hr_payroll_rules_denda_ketidakhadiran'),
                 ref('hr_payroll_rules_denda_kelalaian'),
+                ref('hr_payroll_rules_potongan_lain'),
+                ref('hr_payroll_rules_nilai_penambah'),
              ])]" name="rule_ids"/>
         </record>
     </data>

@@ -1,6 +1,18 @@
  <openerp>
     <data> 
 
+        <record id="view_hr_payslip_filter2" model="ir.ui.view">
+            <field name="name">hr.payslip.select2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_filter"/>
+            <field name="arch" type="xml"> 
+                <group expand="0" string="Group By...">
+                    <filter string="Lokasi Kerja" icon="terp-personal" name="lokasi_kerja" context="{'group_by':'lokasi_kerja'}"/>
+                    
+                </group>
+            </field>
+        </record>
+
         <record id="view_hr_payslip_form999" model="ir.ui.view">
             <field name="name">hr.payslip.form2</field>
             <field name="model">hr.payslip</field>
@@ -11,8 +23,56 @@
                 </button>
                <field name='credit_note' position='after'>
                     <field name='thr'/>
-                </field> -->
+                    <field name='lokasi_kerja' invisible="1"/>
+                    <field name='job_id' invisible="1"/>
+                    <field name='department_id' invisible="1"/>
+                    <field name='class_id' invisible="1"/>
+                    <field name='gol_id' invisible="1"/>
+                </field>
             </field>
+        </record>
+
+        <record id="view_hr_payslip_tree2" model="ir.ui.view">
+            <field name="name">hr.payslip.tree2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                <field name="number" position="replace"/>
+                <field name="name" position="replace"/>
+                <field name='employee_id' position='after'>
+                    <field name='lokasi_kerja'/>
+                    <field name='job_id'/>
+                    <field name='department_id'/>
+                    <field name='class_id'/>
+                    <field name='gol_id'/>
+                </field>  
+                <field name="date_to"  position="replace"/>
+                <field name="date_from" position="after">
+                    <field name='gapok'/>                     
+                    <field name='tunj_makan'/>                
+                    <field name='tunj_jab'/>                  
+                    <field name='tunj_kom'/>                  
+                    <field name='tunj_fungsional'/>           
+                    <field name='tunj_trans'/>                
+                    <field name='tunjangan_kinerja'/>         
+                    <field name='tunj_shift3'/>               
+                    <field name='tunj_luarkt'/> 
+                    <field name='lembur'/>
+                    <field name='tunjangan_hariraya'/>
+                    <field name='bpjs_ket'/>
+                    <field name='bpjs_kes'/>
+                    <field name='denda_keterlambatan'/>
+                    <field name='denda_ketidakhadiran'/>
+                    <field name='bpjs_ket_pot'/>
+                    <field name='bpjs_kes_pot'/>
+                    <field name='pkp'/>
+                    <field name='pinjaman_koperasi'/>
+                    <field name='pinjaman_perusahaan'/>
+                </field>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                <field name="payslip_run_id" invisible="1"/> -->
+            </field> 
         </record>
 
         <record id="hr_contract_view_form2" model="ir.ui.view">
