@@ -1,0 +1,20 @@
+<openerp>
+
+    <data>
+        
+        <record id="view_mps_form_lukas" model="ir.ui.view">
+            <field name="name">mps_form_lukas</field>
+            <field name="model">vit_pharmacy_manufacture.mps</field>
+            <field name="inherit_id" ref="vit_pharmacy_manufacture.view_mps_form"/>
+            <field name="arch" type="xml">
+                <page string="Solid" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </page>
+                <page string="Non Solid" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </page>
+            </field>
+        </record>
+    </data>
+</openerp>
+
