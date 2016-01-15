@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            string="Purchase Order Sign" 
+            id="action_report_purchase_order2" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="vit_pharmacy_po_sign.report_purchaseorder2" 
+            file="vit_pharmacy_po_sign.report_purchaseorder2" 
+        />
+
+        <report 
+            string="Request for Quotation Sign" 
+            id="report_purchase_quotation2" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="vit_pharmacy_po_sign.report_purchasequotation2" 
+            file="vit_pharmacy_po_sign.report_purchasequotation2"
+        />
+    </data>
+</openerp>
