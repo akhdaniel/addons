@@ -7,6 +7,17 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+def format_tanggal(min2000, max2000, input_date):
+	#09/24/87
+	#01234567
+	t = int(input_date[6:8])
+	if t>min2000 and t<max2000: 
+		t = 2000 + t
+	else: # 
+		t = 1900 + t 
+	tgl = "%s-%s-%s" % ( t , input_date[:2], input_date[3:5])
+	return tgl 
+
 class import_mk(osv.osv):
 	_name 		= "akademik.import_mk"
 	_columns 	= {
@@ -195,3 +206,197 @@ class prodi_map(osv.osv):
 		'prodi_kode'		: fields.char('Kode Prodi'),
 		'name'				: fields.char('Nama Prodi'),
 	}
+
+
+class import_mhs(osv.osv):
+	_name 		= "akademik.import_mhs"
+	_columns 	= {
+		"kdptimsmhs"			: fields.char("KDPTIMSMHS,C,6"),
+		"kdjenmsmhs"			: fields.char("KDJENMSMHS,C,1"),
+		"kdpstmsmhs"			: fields.char("KDPSTMSMHS,C,5"),
+		"nimhsmsmhs"			: fields.char("NIMHSMSMHS,C,15"),
+		"nmmhsmsmhs"			: fields.char("NMMHSMSMHS,C,30"),
+		"shiftmsmhs"			: fields.char("SHIFTMSMHS,C,1"),
+		"tplhrmsmhs"			: fields.char("TPLHRMSMHS,C,20"),
+		"tglhrmsmhs"			: fields.char("TGLHRMSMHS,D"),
+		"kdjekmsmhs"			: fields.char("KDJEKMSMHS,C,1"),
+		"tahunmsmhs"			: fields.char("TAHUNMSMHS,C,4"),
+		"smawlmsmhs"			: fields.char("SMAWLMSMHS,C,5"),
+		"btstumsmhs"			: fields.char("BTSTUMSMHS,C,5"),
+		"assmamsmhs"			: fields.char("ASSMAMSMHS,C,2"),
+		"tgmskmsmhs"			: fields.char("TGMSKMSMHS,D"),
+		"tgllsmsmhs"			: fields.char("TGLLSMSMHS,D"),
+		"stmhsmsmhs"			: fields.char("STMHSMSMHS,C,1"),
+		"stpidmsmhs"			: fields.char("STPIDMSMHS,C,1"),
+		"sksdimsmhs"			: fields.char("SKSDIMSMHS,N,3,0"),
+		"asnimmsmhs"			: fields.char("ASNIMMSMHS,C,15"),
+		"asptimsmhs"			: fields.char("ASPTIMSMHS,C,6"),
+		"asjenmsmhs"			: fields.char("ASJENMSMHS,C,1"),
+		"aspstmsmhs"			: fields.char("ASPSTMSMHS,C,5"),
+		"bistumsmhs"			: fields.char("BISTUMSMHS,C,1"),
+		"peksbmsmhs"			: fields.char("PEKSBMSMHS,C,1"),
+		"nmpekmsmhs"			: fields.char("NMPEKMSMHS,C,40"),
+		"ptpekmsmhs"			: fields.char("PTPEKMSMHS,C,6"),
+		"pspekmsmhs"			: fields.char("PSPEKMSMHS,C,5"),
+		"noprmmsmhs"			: fields.char("NOPRMMSMHS,C,10"),
+		"nokp1msmhs"			: fields.char("NOKP1MSMHS,C,10"),
+		"nokp2msmhs"			: fields.char("NOKP2MSMHS,C,10"),
+		"nokp3msmhs"			: fields.char("NOKP3MSMHS,C,10"),
+		"nokp4msmhs"			: fields.char("NOKP4MSMHS,C,10"),
+		"is_processed"			: fields.boolean("Is Processed"),
+	}
+
+	##########################################################
+	# import ke tabel mahasiswa
+	##########################################################
+	def action_import_mhs(self, cr, uid, context=None):
+		active_ids = context and context.get("active_ids", False)
+		if not context:
+			context = {}
+
+		mhs_obj = self.pool.get('res.partner')
+		prodi_obj = self.pool.get('master.prodi')
+		tahun_obj = self.pool.get('academic.year')
+		semester_obj = self.pool.get('master.semester')
+		jp_obj = self.pool.get('akademik.jenis_pendaftaran')
+
+		jp_baru = jp_obj.find_by_name(cr, uid, "Baru", context=context)
+
+		ids = self.search(cr, uid, [('id','in', active_ids),('is_processed','=',False)], context=context)
+		for rec in self.browse(cr, uid, ids, context=context):
+			
+			#50110339
+			#01234
+			kode_prodi = rec.nimhsmsmhs[2:4]
+			prodi = prodi_obj.find_by_kode(cr, uid, kode_prodi, context=context)
+
+			t = int(rec.nimhsmsmhs[:2])
+			if t > 0 and t < 15:
+				thn = t + 2000
+			else:
+				thn = t + 1900
+			tahun = tahun_obj.find_by_code(cr, uid, thn, context=context)
+
+			semester = semester_obj.find_by_name(cr, uid, "1", context=context)
+
+
+			if rec.tglhrmsmhs:
+				tgl_lahir = format_tanggal(0,2,rec.tglhrmsmhs)
+			else:
+				tgl_lahir = False
+
+			if rec.tgllsmsmhs:
+				tgl_lulus = format_tanggal(0,15,rec.tgllsmsmhs)
+			else:
+				tgl_lulus = False
+
+
+			data = {
+				'name'				: rec.nmmhsmsmhs,
+				'npm' 				: rec.nimhsmsmhs,
+				'reg'				: '',
+				'jenis_kelamin'		: rec.kdjekmsmhs,
+				'tempat_lahir'		: rec.tplhrmsmhs,
+				'tanggal_lahir'		: tgl_lahir,
+				'status_mahasiswa'	: 'Mahasiswa',
+				'is_mahasiswa' 		: True,
+				'status_aktivitas'	: 'A',
+				'jenis_pendaftaran_id': jp_baru.id,
+				'prodi_id'			: prodi.id,
+				'fakultas_id'		: prodi.fakultas_id.id,
+				'tahun_ajaran_id'	: tahun.id,
+				'semester_id'		: semester.id,
+				'tgl_lulus'			: tgl_lulus
+			}
+
+			mhs_id = mhs_obj.create(cr, uid, data, context=context)
+
+		self.write(cr, uid, ids, {'is_processed': True} , context=context)
+
+		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities_v8', 'partner_tree_view2')
+		view_id = view_ref and view_ref[1] or False,		
+		return {
+			'name' : _('Mahasiswa View'),
+			'view_type': 'form',
+			'view_mode': 'tree',			
+			'res_model': 'res.partner',
+			'res_id': ids[0],
+			'type': 'ir.actions.act_window',
+			'view_id': view_id,
+			'target': 'current',
+			# 'domain' : "[('state','=','draft')]",
+			#'context': "{'default_state':'open'}",#
+			'nodestroy': False,
+		}
+
+class import_nlm(osv.osv):
+	_name 		= "akademik.import_nlm"
+	_columns 	= {
+		"thsmstrnlm"			: fields.char("THSMSTRNLM,C,5"),
+		"kdptitrnlm"			: fields.char("KDPTITRNLM,C,6"),
+		"kdjentrnlm"			: fields.char("KDJENTRNLM,C,1"),
+		"kdpsttrnlm"			: fields.char("KDPSTTRNLM,C,5"),
+		"nimhstrnlm"			: fields.char("NIMHSTRNLM,C,15"),
+		"kdkmktrnlm"			: fields.char("KDKMKTRNLM,C,10"),
+		"nlakhtrnlm"			: fields.char("NLAKHTRNLM,C,2"),
+		"bobottrnlm"			: fields.char("BOBOTTRNLM,N,4,2"),
+		"is_processed"			: fields.boolean("Is Processed"),
+	}
+
+	def action_import_nlm(self, cr, uid, context=None):
+		##########################################################
+		# id line import_nlm yang diselect
+		##########################################################
+		active_ids = context and context.get("active_ids", False)
+		if not context:
+			context = {}
+
+		ids = self.search(cr, uid, [('is_processed','=',False)], context=context)
+		# for rec in self.browse(cr, uid, ids, context=context):
+		# 	return
+
+
+		return
+
+
+class import_lsm(osv.osv):
+	_name 		= "akademik.import_lsm"
+	_columns 	= {
+		"thsmstrlsm"				: fields.char("THSMSTRLSM,C,5"),
+		"kdptitrlsm"				: fields.char("KDPTITRLSM,C,6"),
+		"kdjentrlsm"				: fields.char("KDJENTRLSM,C,1"),
+		"kdpsttrlsm"				: fields.char("KDPSTTRLSM,C,5"),
+		"nimhstrlsm"				: fields.char("NIMHSTRLSM,C,15"),
+		"stmhstrlsm"				: fields.char("STMHSTRLSM,C,1"),
+		"tgllstrlsm"				: fields.char("TGLLSTRLSM,D"),
+		"skstttrlsm"				: fields.char("SKSTTTRLSM,N,3,0"),
+		"nlipktrlsm"				: fields.char("NLIPKTRLSM,N,4,2"),
+		"noskrtrlsm"				: fields.char("NOSKRTRLSM,C,30"),
+		"tglretrlsm"				: fields.char("TGLRETRLSM,D"),
+		"noijatrlsm"				: fields.char("NOIJATRLSM,C,40"),
+		"stllstrlsm"				: fields.char("STLLSTRLSM,C,1"),
+		"jnllstrlsm"				: fields.char("JNLLSTRLSM,C,1"),
+		"blawltrlsm"				: fields.char("BLAWLTRLSM,C,6"),
+		"blakhtrlsm"				: fields.char("BLAKHTRLSM,C,6"),
+		"nods1trlsm"				: fields.char("NODS1TRLSM,C,10"),
+		"nods2trlsm"				: fields.char("NODS2TRLSM,C,10"),
+		"nods3trlsm"				: fields.char("NODS3TRLSM,C,10"),
+		"nods4trlsm"				: fields.char("NODS4TRLSM,C,10"),
+		"nods5trlsm"				: fields.char("NODS5TRLSM,C,10"),
+		"is_processed"			: fields.boolean("Is Processed"),
+	}
+
+	def action_import_lsm(self, cr, uid, context=None):
+		##########################################################
+		# id line import_lsm yang diselect
+		##########################################################
+		active_ids = context and context.get("active_ids", False)
+		if not context:
+			context = {}
+
+		ids = self.search(cr, uid, [('is_processed','=',False)], context=context)
+		# for rec in self.browse(cr, uid, ids, context=context):
+		# 	return
+
+
+		return
