@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    
+    
+    <!-- Customer Order Ranking tree -->
+    <record model="ir.ui.view" id="view_customer_order_ranking_tree">
+      <field name="name">vit.customer.order.ranking</field>
+      <field name="model">vit.customer.order.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Customer Order Ranking">
+		  <field name="partner_id" string="Customer" />
+		  <field name="total_qty"/>
+		  <field name="date_start"/>
+		  <field name="date_end"/>			  
+		</tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_customer_order_ranking_tree_temporary">
+      <field name="name">vit.customer.order.ranking</field>
+      <field name="model">vit.customer.order.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Customer Order Ranking">
+		  <field name="partner_id" string="Customer" />
+		  <field name="total_qty"/>	  
+		</tree>
+      </field>
+    </record>
+
+    <!-- Customer Seller Ranking tree -->
+    <record model="ir.ui.view" id="view_customer_seller_ranking_tree">
+      <field name="name">vit.customer.seller.ranking</field>
+      <field name="model">vit.customer.seller.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Customer Seller Ranking">
+		  <field name="partner_id" string="Customer" />
+		  <field name="total_qty"/>
+		  <field name="total_price"/>
+		  <field name="date_start"/>
+		  <field name="date_end"/>			  
+		</tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_customer_seller_ranking_tree_temporary">
+      <field name="name">vit.customer.seller.ranking</field>
+      <field name="model">vit.customer.seller.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Customer Seller Ranking">
+		  <field name="partner_id" string="Customer" />
+		  <field name="total_qty"/>
+		  <field name="total_price"/>
+		</tree>
+      </field>
+    </record>
+
+    <!-- Supplier Ranking tree -->
+    <record model="ir.ui.view" id="view_supplier_ranking_tree">
+      <field name="name">vit.supplier.ranking</field>
+      <field name="model">vit.supplier1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Supplier Ranking">
+		  <field name="partner_id" string="Supplier" />
+		  <field name="total_qty" />
+		  <field name="total_price" />
+		  <field name="date_start"/>
+		  <field name="date_end"/>			  
+		</tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_supplier_ranking_tree_temporary">
+      <field name="name">vit.supplier.ranking</field>
+      <field name="model">vit.supplier1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Supplier Ranking">
+		  <field name="partner_id" string="Supplier" />
+		  <field name="total_qty" />
+		  <field name="total_price" />
+		</tree>
+      </field>
+    </record>
+
+    <!-- Makloon Ranking tree -->
+    <record model="ir.ui.view" id="view_makloon_ranking_tree">
+      <field name="name">vit.makloon.ranking</field>
+      <field name="model">vit.makloon1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Makloon Ranking">
+		  <field name="partner_id" string="Makloon" />
+		  <field name="total_qty" />
+		  <field name="total_price" />
+		  <field name="date_start"/>
+		  <field name="date_end"/>		  
+		</tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_makloon_ranking_tree_temporary">
+      <field name="name">vit.makloon.ranking</field>
+      <field name="model">vit.makloon1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Makloon Ranking">
+		  <field name="partner_id" string="Makloon" />
+		  <field name="total_qty" />
+		  <field name="total_price" />
+		</tree>
+      </field>
+    </record>
+
+    <!-- Product Order Ranking tree -->
+    <record model="ir.ui.view" id="view_product_order_ranking_tree">
+      <field name="name">vit.product.order.ranking</field>
+      <field name="model">vit.product.order1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Product Order Ranking">
+		  <field name="product_id" string="Product" />
+		  <field name="total_qty_order" />
+		  <field name="date_start"/>
+		  <field name="date_end"/>			  
+		</tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_product_order_ranking_tree_temporary">
+      <field name="name">vit.product.order.ranking</field>
+      <field name="model">vit.product.order1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Product Order Ranking">
+		  <field name="product_id" string="Product" />
+		  <field name="total_qty_order" />
+		</tree>
+      </field>
+    </record>
+
+    <!-- Product Seller Ranking tree -->
+    <record model="ir.ui.view" id="view_product_seller_ranking_tree">
+      <field name="name">vit.product.seller.ranking</field>
+      <field name="model">vit.product.seller1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Product Seller Ranking">
+		  <field name="product_id" string="Product" />
+		  <field name="total_qty_seller" />
+		  <field name="date_start"/>
+		  <field name="date_end"/>			  
+		</tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_product_seller_ranking_tree_temporary">
+      <field name="name">vit.product.seller.ranking</field>
+      <field name="model">vit.product.seller1.ranking</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+		<tree create="false" delete="false" string="Product Seller Ranking">
+		  <field name="product_id" string="Product" />
+		  <field name="total_qty_seller" />
+		</tree>
+      </field>
+    </record>
+
+    <!-- Customer order Ranking graph -->
+    <record id="view_customer_order_ranking_graph" model="ir.ui.view">
+         <field name="name">vit.customer.order.ranking</field>
+         <field name="model">vit.customer.order.ranking</field>
+         <field name="arch" type="xml">
+             <graph string="Customer Order Ranking" type="bar">
+                 <field name="partner_id"/>
+                 <field name="total_qty" string="Total Qty"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Customer seller Ranking graph -->
+    <record id="view_customer_seller_ranking_graph" model="ir.ui.view">
+         <field name="name">vit.customer.seller.ranking</field>
+         <field name="model">vit.customer.seller.ranking</field>
+         <field name="arch" type="xml">
+             <graph string="Customer Seller Ranking" type="bar">
+                 <field name="partner_id"/>
+                 <field name="total_price" string="Total Price"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Supplier Ranking graph -->
+    <record id="view_supplier_ranking_graph" model="ir.ui.view">
+         <field name="name">vit.supplier.ranking</field>
+         <field name="model">vit.supplier1.ranking</field>
+         <field name="arch" type="xml">
+             <graph string="Supplier Ranking" type="bar">
+                 <field name="partner_id"/>
+                 <field name="total_price" string="Total Price"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Makloon Ranking graph -->
+    <record id="view_makloon_ranking_graph" model="ir.ui.view">
+         <field name="name">vit.makloon.ranking</field>
+         <field name="model">vit.makloon1.ranking</field>
+         <field name="arch" type="xml">
+             <graph string="Makloon Ranking" type="bar">
+                 <field name="partner_id"/>
+                 <field name="total_qty" string="Total Qty"/>
+             </graph>
+         </field>
+    </record>
+    
+    <!-- Product Order Ranking graph -->
+    <record id="view_product_order_ranking_graph" model="ir.ui.view">
+         <field name="name">vit.product.order.ranking</field>
+         <field name="model">vit.product.order1.ranking</field>
+         <field name="arch" type="xml">
+             <graph string="Product Order Ranking" type="bar">
+                 <field name="product_id"/>
+                 <field name="total_qty_order" string="Total Qty"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Product Seller Ranking graph -->
+    <record id="view_product_seller_ranking_graph" model="ir.ui.view">
+         <field name="name">vit.product.seller.ranking</field>
+         <field name="model">vit.product.seller1.ranking</field>
+         <field name="arch" type="xml">
+             <graph string="Product Seller Ranking" type="bar">
+                 <field name="product_id"/>
+                 <field name="total_qty_seller" string="Total Qty"/>
+             </graph>
+         </field>
+    </record>
+
+    <!-- Customer Order Ranking Action -->
+    <record id="action_customer_order_ranking" model="ir.actions.act_window">
+      <field name="name">Top 20 Customer Order</field>
+      <field name="res_model">vit.customer.order.ranking</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_customer_order_ranking_tree" />
+      <field name="view_mode">tree,graph</field>
+      <field name="limit">20</field>
+      <field name="help"></field>
+    </record>
+
+    <!-- Customer Seller Ranking Action -->
+    <record id="action_customer_seller_ranking" model="ir.actions.act_window">
+      <field name="name">Top 20 Customer Seller</field>
+      <field name="res_model">vit.customer.seller.ranking</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_customer_seller_ranking_tree" />
+      <field name="view_mode">tree,graph</field>
+      <field name="limit">20</field>
+      <field name="help"></field>
+    </record>
+
+    <!-- Supplier Ranking Action -->
+    <record id="action_supplier_ranking" model="ir.actions.act_window">
+      <field name="name">Top 20 Supplier</field>
+      <field name="res_model">vit.supplier1.ranking</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_supplier_ranking_tree" />
+      <field name="view_mode">tree,graph</field>
+      <field name="limit">20</field>
+      <field name="help"></field>
+    </record>
+
+    <!-- Makloon Ranking Action -->
+    <record id="action_makloon_ranking" model="ir.actions.act_window">
+      <field name="name">Top 20 Makloon</field>
+      <field name="res_model">vit.makloon1.ranking</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_makloon_ranking_tree" />
+      <field name="view_mode">tree,graph</field>
+      <field name="limit">20</field>
+      <field name="help"></field>
+    </record>
+
+    <!-- Product Order Ranking Action -->
+    <record id="action_product_order_ranking" model="ir.actions.act_window">
+      <field name="name">Top 20 Product Order</field>
+      <field name="res_model">vit.product.order1.ranking</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_product_order_ranking_tree" />
+      <field name="view_mode">tree,graph</field>
+      <field name="limit">20</field>
+      <field name="help"></field>
+    </record>
+
+    <!-- Product seller Ranking Action -->
+    <record id="action_product_seller_ranking" model="ir.actions.act_window">
+      <field name="name">Top 20 Product Seller</field>
+      <field name="res_model">vit.product.seller1.ranking</field>
+      <field name="view_type">form</field>
+      <field name="view_id" ref="view_product_seller_ranking_tree" />
+      <field name="view_mode">tree,graph</field>
+      <field name="limit">20</field>
+      <field name="help"></field>
+    </record>
+
+        <!-- menu -->
+		<menuitem id="vit_ranking_menu"
+			 name="Top 20 Ranking"
+			 sequence="14"
+			 parent="base.menu_reporting"
+			/>
+
+        <!-- sub menu -->
+		<menuitem id="vit_ranking_menu_result"
+			 name="View Top 20 Ranking"
+			 sequence="15"
+			 parent="vit_ranking_menu"
+			/>
+
+    <!-- Customer Order Ranking Menuitem -->
+    <menuitem action="action_customer_order_ranking" id="menu_customer_order_ranking" parent="vit_ranking_menu_result" sequence="16"/>  
+    <!-- Customer Seller Ranking Menuitem -->
+    <menuitem action="action_customer_seller_ranking" id="menu_customer_seller_ranking" parent="vit_ranking_menu_result" sequence="17"/>     
+    <!-- Supplier Ranking Menuitem -->
+    <menuitem action="action_supplier_ranking" id="menu_supplier_ranking" parent="vit_ranking_menu_result" sequence="18"/>
+    <!-- Makloon Ranking Menuitem -->
+    <menuitem action="action_makloon_ranking" id="menu_makloon_ranking" parent="vit_ranking_menu_result" sequence="19"/>
+    <!-- Order Product Ranking Menuitem -->
+    <menuitem action="action_product_order_ranking" id="menu_product_order_ranking" parent="vit_ranking_menu_result" sequence="20"/>
+    <!-- Seller Product Ranking Menuitem -->
+    <menuitem action="action_product_seller_ranking" id="menu_product_seller_ranking" parent="vit_ranking_menu_result" sequence="21"/>
+
+</data>
+</openerp>    
