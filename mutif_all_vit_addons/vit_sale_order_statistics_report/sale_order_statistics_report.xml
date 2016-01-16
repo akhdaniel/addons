@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="view_order_product_tree2" model="ir.ui.view">
+        <field eval="1" name="priority"/>
+        <field name="name">sale.report.tree</field>
+        <field name="model">sale.report.garment</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Analysis" create="false">
+                <field name="date" invisible="1"/>
+                <field name="year" invisible="1"/>
+                <field name="day" invisible="1"/>
+                <field name="month" invisible="1"/>
+                <field name="partner_id" invisible="1"/>
+                <field name="product_id" invisible="1"/>
+                <field name="categ_id" invisible="1"/>
+                <field name="master_model_id" invisible="1"/>
+                <field name="size" invisible="1"/>
+                <field name="total_order" sum="#Total"/>
+                <field name="product_uom_qty" sum="#Total"/>
+                <field name="gap_order" sum="#Total"/>
+                <field name="percentage"/>
+                <field name="product_uom" invisible="1"/>
+                <field name="price_total" sum="Total Price"/>
+                <field name="state" invisible="1"/>
+                <field name="sale_order_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_order_product_graph2" model="ir.ui.view">
+         <field name="name">sale.report.graph</field>
+         <field name="model">sale.report.garment</field>
+         <field name="arch" type="xml">
+             <graph string="Sales Analysis" type="bar">
+                 <field name="product_id"/>
+                 <field name="price_total"/>
+                 <field name="state" group="True"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="view_order_product_search2" model="ir.ui.view">
+        <field name="name">sale.report.search</field>
+        <field name="model">sale.report.garment</field>
+        <field name="arch" type="xml">
+            <search string="Sales Analysis">
+                <field name="date"/>
+                <field name="date_confirm"/>
+                <field name="sale_order_id"/>
+                <filter icon="terp-document-new" string="Quotations" domain="[('state','=','draft')]"/>
+                <filter icon="terp-check" string="Sales" domain="[('state','not in',('draft','done','cancel'))]"/>
+                <filter icon="terp-check" string="Sales or Done" domain="[('state','not in',('draft','cancel'))]"/>
+                <separator/>
+                <filter icon="terp-accessories-archiver" string="Picked" domain="[('shipped','=',True)]"/>
+                <separator/>
+                <filter icon="terp-personal" string="My Sales" help="My Sales" domain="[('user_id','=',uid)]"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <group expand="0" string="Extended Filters...">
+                    <field name="categ_id"/>
+                </group>
+                <group expand="1" string="Group By...">
+                    <filter string="Partner" icon="terp-partner"  name="Customer" context="{'group_by':'partner_id'}"/>
+                    <filter string="Product" icon="terp-accessories-archiver" context="{'group_by':'product_id','set_visible':True}"/>
+                    <filter string="Reference Unit of Measure" icon="terp-mrp" context="{'group_by':'product_uom'}"/>
+                    <filter string="Category of Product" icon="terp-stock_symbol-selection" name="Category" context="{'group_by':'categ_id'}"/>
+                    <filter string="Model" icon="terp-stock_symbol-selection" name="master_model_id" context="{'group_by':'master_model_id'}"/>
+                    <filter string="Size" icon="terp-stock_symbol-selection" name="size" context="{'group_by':'size'}"/>
+                    <filter string="Sales Order Number" icon="terp-stock_symbol-selection" name="sale_order_id" context="{'group_by':'sale_order_id'}"/>
+                    <filter string="Analytic Account" icon="terp-folder-green" context="{'group_by':'analytic_account_id'}" groups="analytic.group_analytic_accounting"/>
+                    <filter string="Status" icon="terp-stock_effects-object-colorize" context="{'group_by':'state'}"/>
+                    <filter string="Day" icon="terp-go-today" context="{'group_by':'day'}" help="Ordered date of the sales order"/>
+                    <filter string="Month" name="order_month" icon="terp-go-month" context="{'group_by':'month'}" help="Ordered month of the sales order"/>
+                    <filter string="Year" icon="terp-go-year" context="{'group_by':'year'}" help="Ordered Year of the sales order"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_order_report_all2" model="ir.actions.act_window">
+        <field name="name">Sales Analysis</field>
+        <field name="res_model">sale.report.garment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="search_view_id" ref="view_order_product_search2"/>
+        <field name="view_id" ref="view_order_product_tree2"/>
+        <field name="context">{'search_default_year':1,'search_default_month':1,'search_default_User':1,'group_by_no_leaf':1,'group_by':[]}</field>
+        <field name="help">This report performs analysis on your quotations and sales orders. Analysis check your sales revenues and sort it by different group criteria (salesman, partner, product, etc.) Use this report to perform analysis on sales not having invoiced yet. If you want to analyse your turnover, you should use the Invoice Analysis report in the Accounting application.</field>
+    </record>
+
+    <menuitem id="base.next_id_64" name="Sales" parent="base.menu_reporting" sequence="1" groups="base.group_sale_manager"/>
+    <menuitem action="action_order_report_all2" id="sale.menu_report_product_all" parent="base.next_id_64" sequence="10"/>
+
+</data>
+</openerp>
