@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<openerp>
+	<data> 
+
+        <record id="action_cancel_journal_entries" model="ir.actions.server">
+            <field name="name">Cancel Entry(s)</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('account.move').execute_cancel_journal_entries(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_cancel_entries" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'account.move'" name="model"/>
+            <field name="name">Cancel Entry(s)</field>
+            <field eval="'ir.actions.server,%d'%action_cancel_journal_entries" name="value"/>
+        </record>
+
+        <record id="action_post_journal_entries" model="ir.actions.server">
+            <field name="name">Post Entry(s)</field>
+            <field name="condition">True</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">action = pool.get('account.move').execute_post_journal_entries(cr, uid, context)</field>
+        </record>
+
+        <record id="ir_open_post_entries" model="ir.values">
+            <field eval="'client_action_multi'" name="key2"/>
+            <field eval="'account.move'" name="model"/>
+            <field name="name">Post Entry(s)</field>
+            <field eval="'ir.actions.server,%d'%action_post_journal_entries" name="value"/>
+        </record>
+
+    </data>
+</openerp>
