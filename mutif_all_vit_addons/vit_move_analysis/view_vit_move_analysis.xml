@@ -1,0 +1,118 @@
+<openerp>
+	<data>
+
+		<!-- tree -->
+		<record id="view_vit_move_analysis_tree" model="ir.ui.view">
+		    <field name="name">Move Analysis Per Day</field>
+		    <field name="model">vit.move.analysis</field>
+		    <field name="arch" type="xml">
+		    	<tree string="List Move Analysis Per Day" create="false" delete="false">
+					<field name="categ_id" invisible="1"/>
+					<field name="model_id" invisible="1"/> 		
+					<field name="product_id"/> 	
+					<field name="onhand_qty" sum="Total"/>
+					<field name="in_qty" sum="Total"/>
+					<field name="out_qty" sum="Total"/>
+					<field name="in_qty_qc" sum="Total"/>	
+					<field name="out_qty_cust" sum="Total"/>	
+					<field name="soh_qty" sum="Total"/>
+					<field name="year" invisible="1"/> 	
+					<field name="month" invisible="1"/>
+					<field name="day" invisible="1"/> 
+					<field name="location_id" invisible="1"/>	
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- tree -->
+		<record id="view_vit_move_analysis_onhand_tree" model="ir.ui.view">
+		    <field name="name">Inventory Analysis Per Day</field>
+		    <field name="model">vit.move.analysis.onhand</field>
+		    <field name="arch" type="xml">
+		    	<tree string="List Inventory Analysis Per Day" create="false" delete="false">
+					<field name="categ_id"/>
+					<field name="model_id"/> 		
+					<field name="product_id"/> 	
+					<field name="onhand_qty" sum="Total"/>
+					<field name="date" invisible="1"/> 
+					<field name="location_id" invisible="1"/>	
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- filter -->
+
+		<record id="view_vit_move_analysis_filter" model="ir.ui.view">
+		    <field name="name">vit.move.analysis</field>
+		    <field name="model">vit.move.analysis</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Orders">
+		            <group expand="1" string="Group By...">
+		            	<field name="product_id"/>
+		            	<field name="categ_id"/>
+		            	<field name="model_id"/>
+
+
+			            <filter string="Location" name="location_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'location_id'}"/>	
+
+			            <filter string="Category" name="categ_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'categ_id'}"/>	
+		                	                 	 
+			            <filter string="Model" name="model"
+			                     icon="terp-personal" domain="[]"
+			                	 context="{'group_by':'model_id'}"/>
+
+		                <filter string="Product" name="product_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>			                	 
+
+		                <filter string="Day" name="day"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'day'}"/>	
+ 	 
+			        </group>                                     
+		        </search>
+		    </field>
+		</record>
+
+		<record id="view_vit_move_analysis_onhand_filter" model="ir.ui.view">
+		    <field name="name">vit.move.analysis.onhand</field>
+		    <field name="model">vit.move.analysis.onhand</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Orders">
+		            <group expand="1" string="Group By...">
+		            	<field name="product_id"/>
+		            	<field name="categ_id"/>
+		            	<field name="model_id"/>
+
+
+			            <filter string="Location" name="location_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'location_id'}"/>	
+
+			            <filter string="Category" name="categ_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'categ_id'}"/>	
+		                	                 	 
+			            <filter string="Model" name="model_id"
+			                     icon="terp-personal" domain="[]"
+			                	 context="{'group_by':'model_id'}"/>
+
+		                <filter string="Product" name="product_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>			                	 
+
+		                <filter string="Day" name="day"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'date'}"/>	
+ 	 
+			        </group>                                     
+		        </search>
+		    </field>
+		</record>
+
+	</data>
+</openerp>
