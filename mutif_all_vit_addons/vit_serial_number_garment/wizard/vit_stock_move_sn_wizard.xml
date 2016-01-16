@@ -7,34 +7,44 @@
             <field name="arch" type="xml">
                 <form string="Input Serial Number" version="7.0">
                     <sheet>
-                        <group>
-                            <group>                              
+                      <group>
+                                <field name="date_input"/>
                                 <field name="product_id" readonly="1" attrs="{'invisible':[('product_id','=',False)]}"/>
                                 <field name="qty" readonly="1" attrs="{'invisible':[('product_id','=',False)]}"/>
                                 <field name="product_uom" readonly="1" attrs="{'invisible':[('product_id','=',False)]}"/> 
                                 <field name="type" invisible="1"/>
                                 <!-- picking in -->
-			                    <group colspan='4' attrs="{'invisible':[('type','!=','in')]}">
-			                        <field name="line_in_ids" nolabel='1' view_mode="tree,form">
-			                            <tree string="Add Serial Number" editable='bottom'>
-			                                <!-- <field name="serial_number_id" domain="[('product_id','=',False)]"/> -->
-                                      <field name="serial_number" />
-			                                <field name="qty" readonly="1"/>
-			                            </tree>    
-			                        </field> 
-			                    </group>
-			                    <!-- picking out/internal --> 
-			                    <group colspan='4' attrs="{'invisible':[('type','=','in')]}">   
-			                        <field name="line_out_ids" nolabel='1' view_mode="tree,form">
-			                            <tree string="Add Serial Number" editable='bottom'>
-			                                <!-- <field name="serial_number_id" domain="[('product_id','!=',False),('is_used','=',False)]"/> -->
-                                      <field name="serial_number" />
-			                                <field name="qty" readonly="1"/>
-			                            </tree>    
-			                        </field>			                           
-			                    </group>
-                            </group>
-                        </group>
+                      </group>          
+                                <notebook>
+                                  <page string="Serial Number">
+          			                    <group colspan='4' attrs="{'invisible':[('type','!=','in')]}">
+          			                        <field name="line_in_ids" nolabel='1' view_mode="tree,form">
+          			                            <tree string="Add Serial Number" editable='bottom'>
+          			                                <!-- <field name="serial_number_id" domain="[('product_id','=',False)]"/> -->
+                                                <field name="serial_number" />
+          			                                <field name="qty" readonly="1"/>
+          			                            </tree>    
+          			                        </field> 
+          			                    </group>
+          			                    <!-- picking out/internal --> 
+          			                    <group colspan='4' attrs="{'invisible':[('type','=','in')]}">   
+          			                        <field name="line_out_ids" nolabel='1' view_mode="tree,form">
+          			                            <tree string="Add Serial Number" editable='bottom'>
+                                              <field name="wizard_id" invisible="1"/>
+          			                                <!-- <field name="serial_number_id" domain="[('product_id','!=',False),('is_used','=',False)]"/> -->
+                                                <field name="serial_number"/>
+          			                                <field name="qty" readonly="1"/>
+          			                            </tree>    
+          			                        </field>			                           
+      			                         </group>
+                                  </page>
+                                  <page string="Other Setting">
+                                    <group>
+                                      <field name="different_total_sn"/>
+                                    </group>
+                                  </page>  
+                                </notebook> 
+
 	                    <footer>
 	                        <button name="update_serial_number" string="OK" type="object" class="oe_highlight" groups="base.group_user"/>
 	                        or
@@ -67,14 +77,13 @@
                        groups="stock.group_production_lot"
                        type="action" icon="gtk-justify-fill"
                        states="draft,waiting,confirmed,assigned" position="replace">
-                    <button
+<!--                     <button
                        name="%(track_sn_stock_move)d"
                        string="Split Serial Number"
                        groups="stock.group_production_lot"
                        type="action" icon="gtk-justify-fill"
-                       attrs="{'invisible':['|',('is_serial_number','=',True),('picking_id','=','out')]}"/>
-                       <field name="is_serial_number" invisible="1"/>                      
-                       <field name="stock_move_serial_number_ids"/>
+                       attrs="{'invisible':['|',('is_serial_number','=',True),('picking_id','=','out')]}"/> -->
+                       <field name="is_serial_number" invisible="0"/>                      
                     </button>  
                     <field name="prodlot_id" position="replace"/> 
             </field>
@@ -87,12 +96,23 @@
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
                 <group string="Traceability" position="replace">
-                        <field name="stock_move_serial_number_ids" nolabel="1" mode="tree"> 
-                            <tree string="Serial Number">
-                              <field name="serial_number_id"/>
+                    <group colspan="2" string="Serial Number" attrs="{'invisible':[('type','=','out')]}">
+                      <field name="date_input_sn"/>
+                      <group colspan="2">
+                        <button name="update_serial_number" string="Confirm Serial Number" type="object" class="oe_highlight" groups="base.group_user" icon="terp-check" attrs="{'invisible':[('is_serial_number','=',True)]}"/>
+                      </group>
+                      <field name="is_serial_number" invisible="1"/>
+                      <field name="total_qty_sn"/>
+                      <group colspan="2">  
+                        <field name="serial_number_ids" nolabel="1" mode="tree" attrs="{'readonly':[('is_serial_number','=',True)]}"> 
+                            <tree string="Serial Number Incoming" editable="top">
+                              <field name="serial_number" required="1"/>
+                              <field name="qty" readonly="1"/>
                             </tree>
                         </field> 
-                </group>     
+                      </group>
+                    </group>  
+              </group>       
             </field>
         </record>
 
@@ -102,17 +122,91 @@
             <field name="model">stock.picking.out</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <button name="button_cancel" position="after">
+<!--                 <button name="button_cancel" position="after">
                     <button
                        name="%(track_sn_stock_move)d"
                        string="Split Serial Number"
                        groups="stock.group_production_lot"
                        type="action" icon="gtk-justify-fill"
                        attrs="{'invisible':['|',('type','!=','out'),('used_sn','=',True)]}"/>                 
-                </button> 
+                    </button>  -->
                 <field name="date_done" position="after">
                         <field name="used_sn" invisible="1"/>
+                </field> 
+                <field name="stock_journal_id" position="after">
+                        <field name="ekspeditor_id"/>
                 </field>                 
+                <field name="date_done" position="after">
+                        <field name="different_total_sn" groups="stock.group_stock_manager"/>
+                </field>                 
+                <page string="Additional Info" position="after">  
+                  <page string="Serial Number">
+                    <group>
+                      <group>
+                        <field name="total_qty_move" readonly="1"/>
+                        <field name="total_qty_sn" readonly="1"/>
+                      </group>
+                      <group>  
+                        <field name="sn_date" string="Confirm SN Date"/>
+                        <saparator/>
+                        <group colspan="2">
+                          <button name="execute_serial_number_picking_out" string=" -------- Confirm Serial Number -------- " type="object" class="oe_highlight" groups="base.group_user" icon="terp-check" attrs="{'invisible':[('used_sn','=',True)]}"/> 
+                        </group>                       
+                      </group>
+                    </group>
+                    <group>
+                    <group>
+                        <div class="oe_edit_only" colspan="4">
+                            <p>
+                            ( Max Print 60 Serial Number per Box ! )
+                            </p>
+                        </div>                         
+                      <field name="box" string="Box Print Number" class="oe_inline"/>                    
+                    </group>
+                    <group>
+                    </group>
+                  </group>
+                    <field name="serial_number_ids" attrs="{'readonly':[('used_sn','=',True)]}">
+                        <tree string="Add Serial Number" editable='bottom'>
+                          <field name="picking_id" invisible="1"/>
+                            <field name="serial_number" on_change="onchange_serial_number(serial_number,description)"/>
+                            <field name="description"/>
+                            <field name="qty" readonly="1"/>
+                            <field name="box"/>
+                        </tree> 
+                    </field> 
+                    <group> 
+                    <field name="duplicate_sn" readonly="1" string="Serial Number Duplicate" attrs="{'invisible':[('duplicate_sn','=',False)]}"/>       
+                    </group>              
+                  </page> 
+
+                  <page string="Box Priview">
+                    <group>
+                      <field name="sn_qty" invisible="1"/>
+                    </group>
+                    <field name="serial_number_print_ids" view_mode="tree,form" readonly="1">
+                        <tree string="Add Serial Number">
+                          <field name="picking_id" invisible="1"/>
+                            <field name="no_1"/>
+                            <field name="sn_1"/>
+                            <field name="desc_1"/>
+                            <field name="no_2"/>
+                            <field name="sn_2"/> 
+                            <field name="desc_2"/>                           
+                        </tree> 
+                    </field>                   
+                    <field name="serial_number_priview_ids" view_mode="tree,form" invisible="1">
+                        <tree string="Add Serial Number">
+                          <field name="picking_id" invisible="1"/>
+                            <field name="serial_number"/>
+                            <field name="description"/>
+                            <field name="qty" invisible="1"/>
+                            <field name="box" invisible="1"/>
+                        </tree> 
+                    </field> 
+                                     
+                  </page> 
+                </page>              
             </field>
         </record>
 
@@ -123,9 +217,10 @@
             <field name="arch" type="xml">
                 <field name="date_expected" position="after">
                     <field name="picking_id2" attrs="{'invisible':[('picking_id2','=',False)]}"/>
-                    <field name="sn_retur_id" attrs="{'invisible':[('picking_id2','=',False)]}"/>   
+                    <field name="sn_retur_id" attrs="{'invisible':[('picking_id2','=',False)]}"/> 
+                    <field name="date_do_sn" readonly="1"/> 
                 </field>              
-                <field name="location_dest_id" position="after">
+<!--                 <field name="location_dest_id" position="after">
                     <group colspan="2" string="Serial Number" attrs="{'invisible':[('picking_id2','!=',False)]}">
                         <field name="stock_move_serial_number_ids" nolabel="1" mode="tree"> 
                             <tree string="Serial Number">
@@ -133,11 +228,10 @@
                             </tree>
                         </field> 
                     </group>     
-                </field>
+                </field> -->
 
             </field>
         </record>
-
 
 </data>
 </openerp>

@@ -15,8 +15,15 @@
                             <group string="Select Date">
                                 <field name="date_start"/>       
                                 <field name="date_end"/>       
-                            </group>
+                            </group>                          
                         </group>
+                        <group>
+                            <group>         
+                            </group>                            
+                            <group string="Fill Starting Balance (Optional)">
+                                <field name="starting_balance"/>             
+                            </group>                            
+                        </group>                        
                     </sheet>
                     <footer>
                         <button type="special" 

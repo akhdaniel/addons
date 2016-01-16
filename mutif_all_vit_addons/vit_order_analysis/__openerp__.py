@@ -59,7 +59,7 @@ tapi keliatannya ada DO yang dibuat manual tanpa SO sehingga sementara harus dip
 Tampilkan data order_analysis ke list view
 
 """,
-    'version': '0.1',
+    'version': '0.2',
     'depends': ['base','sale'],
     'author': 'vitraining.com',
     'category': 'Sale', # i.e a technical module, not shown in Application install menu

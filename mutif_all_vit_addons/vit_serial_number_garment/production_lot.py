@@ -92,6 +92,8 @@ class stock_production_lot(osv.osv):
         'history_sn_ids'	: fields.function(_get_history_sn,type='many2many',relation='stock.move.serial.number',string='History'),#in
         'history2_sn_ids'   : fields.function(_get_history_sn2,type='many2many',relation='stock.move.serial.number',string='History'),#out
         'is_used'			: fields.boolean('Is Used'),
+        'date_sn_input'     : fields.date('Tanggal DO',readonly=True),
+        'date_sn_input_in'  : fields.date('Tanggal Incoming',readonly=True),
     }
 
     _sql_constraints = [('name_uniq', 'unique(name)','Serial Number tidak boleh sama !')]

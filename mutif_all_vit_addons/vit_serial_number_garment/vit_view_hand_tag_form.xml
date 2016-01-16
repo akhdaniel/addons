@@ -38,11 +38,14 @@
                         <group>
                             <group>                                
                                 <field name="name"/>
-                                <field name="tanggal"/>   
+                                <field name="tanggal"/> 
+                                <field name="total_qty_sn"/>  
                             </group>
                             <group>
-                                <field name="spk_cutting_id" domain="[('is_used_handtag','=',False)]"/>
-                                <field name="spk_makloon_id" domain="[('is_used_handtag','=',False)]"/> 
+                                <field name="spk_cutting_id"/>
+                                <field name="spk_makloon_id"/> 
+<!--                                 <field name="spk_cutting_id" domain="[('is_used_handtag','=',False)]"/>
+                                <field name="spk_makloon_id" domain="[('is_used_handtag','=',False)]"/>   -->                               
                                 <field name="makloon"/> 
                             </group>
                         </group>
@@ -50,7 +53,7 @@
                              <page string="Barcode">
                                  <field name="vit_hand_tag_barcode_ids" view_mode="tree" nolabel="1">
                                     <tree editable="bottom">
-                                         <field name="name" />                             
+                                         <field name="name"/>                             
                                     </tree>                 
                                  </field>        
                             </page>                           
@@ -67,6 +70,8 @@
             <field name="arch" type="xml">
                 <search string="Hand Tag">
                     <field name="name" filter_domain="[('name','ilike',self)]" string="Nomor"/>
+                    <field name="spk_cutting_id" />
+                    <field name="spk_makloon_id" />
                     <group expand="0" string="Group By...">
                         <filter string="SPK Cutting" icon="terp-folder-orange" domain="" context="{'group_by':'spk_cutting_id'}"/>
                         <filter string="SPK Makloon" icon="terp-folder-orange" domain="" context="{'group_by':'spk_makloon_id'}"/>

@@ -131,22 +131,21 @@ class retur_serial_number(osv.osv):
 		if not vals['serial_number_ids']:
 			raise osv.except_osv(_('Error!'), _('Data Barcode tidak boleh kosong !'))
 		for sn in vals['serial_number_ids'] :
+			#	import pdb;pdb.set_trace()	
 			patner_name = partner_obj.browse(cr,uid,vals['partner_id']).name
-			serial_number = int(sn[2].get('serial_number'))
-			sn_match = prodlot_obj.search(cr,uid,[('name','=',serial_number),
-													('makloon','=',vals['partner_id'])])
+			serial_number = str(sn[2].get('serial_number'))
+			sn_match = prodlot_obj.search(cr,uid,[('name','=',serial_number)])
 			if not sn_match :
 				patner_name = partner_obj.browse(cr,uid,vals['partner_id']).name
 				raise osv.except_osv(_('Error!'), _('Serial Number %s untuk customer %s tidak ditemukan !') % (serial_number,patner_name))
 			sn_match_do = prodlot_obj.search(cr,uid,[('name','=',serial_number),
-													('makloon','=',vals['partner_id']),
 													('is_used','=',False)])
-			if not sn_match_do :
+			if sn_match_do :
 				raise osv.except_osv(_('Error!'), _('Serial Number %s untuk customer %s belum pernah di Delivery Order !') % (serial_number,patner_name))
 		return super(retur_serial_number, self).create(cr, uid, vals, context=context)
 
 	def write(self, cr, uid, ids, vals, context=None):
-		#import pdb;pdb.set_trace()	
+		
 		prodlot_obj     = self.pool.get('stock.production.lot')
 		partner_obj     = self.pool.get('res.partner')		
 		if 'serial_number_ids' in vals:
@@ -160,14 +159,12 @@ class retur_serial_number(osv.osv):
 					patner_name = partner.partner_id.name
 					partner_id 	= partner.partner_id.id
 				if sn[2]:
-					serial_number = int(sn[2].get('serial_number'))
-					sn_match = prodlot_obj.search(cr,uid,[('name','=',serial_number),
-															('makloon','=',partner_id)])
+					serial_number = str(sn[2].get('serial_number'))
+					sn_match = prodlot_obj.search(cr,uid,[('name','=',serial_number)])
 					if not sn_match :
 						raise osv.except_osv(_('Error!'), _('Serial Number %s untuk customer %s tidak ditemukan !') % (serial_number,patner_name))
 					sn_match_do = prodlot_obj.search(cr,uid,[('name','=',serial_number),
-															('makloon','=',partner_id),
-															('is_used','=',False)])
+															('is_used','=',True)])
 					if not sn_match_do :
 						raise osv.except_osv(_('Error!'), _('Serial Number %s untuk customer %s belum pernah di Delivery Order !') % (serial_number,patner_name))
 		return super(retur_serial_number, self).write(cr, uid, ids, vals, context=context)
@@ -214,7 +211,7 @@ class retur_serial_number(osv.osv):
 															'origin'		: name})
 				for bcd in my_form.serial_number_ids:
 					barcode = bcd.serial_number
-					sn_id = prodlot_obj.search(cr,uid,[('name','=',barcode),('makloon','=',partner_id),('is_used','=',False)])
+					sn_id = prodlot_obj.search(cr,uid,[('name','=',barcode),('is_used','=',True)])
 					if not sn_id:
 						raise osv.except_osv(_('Error!'), _('Serial Number %s untuk customer %s tidak ditemukan ! !') % (barcode,my_form.partner_id.name))
 					sn_move = move_analisys.search(cr,uid,[('serial_number_id','=',sn_id[0]),('type','=','out')])

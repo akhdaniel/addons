@@ -21,5 +21,10 @@ class sale_order_analysis(osv.osv):
 		'qty_order' 	: fields.float("Qty Order"),
 		'delivered' 	: fields.float("Delivered"),
 		'back_order' 	: fields.float("Back Order"),
-		'unfilled'      : fields.float("Un-Filled")
+		'unfilled'      : fields.float("Un-Filled"),
+		'partner_id' 	: fields.many2one('res.partner','Partner',readonly=True),
+		'age'			: fields.integer('Age (Days)'),	
+		'status' 		: fields.related('order_id', 'state' , 
+						type="char", string="Status", store=True),
+		'qty_invoice' 	: fields.float("Qty in Invoice"),
 	}
