@@ -16,9 +16,9 @@
             <field name="arch" type="xml">
             	<form string="report_wizard form" version="7.0">
             		<sheet>
-		            	<group string="Select report date">
-			                <field name="date_start"/>       
-			                <field name="date_end"/>       
+		            	<group string="Select report month">
+			                <field name="month"/>       
+			                <field name="year_id"/>       
 				        </group>
 					</sheet>
 					<footer>

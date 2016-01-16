@@ -7,15 +7,17 @@
             <field name="context">{"search_default_date_filter":1}</field>
 		</record>
 
-		<!-- tree -->
 		<record id="view_classname_tree2" model="ir.ui.view">
 		    <field name="name">cutting_analysis_tree</field>
 		    <field name="model">vit_n_cutting_analysis.cutting_analysis</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list sale_order_analysis">
 					<!-- <field name="model_forecast_type_id"/> 		 -->
-					<field name="date_start"/>
-					<field name="date_end"/>	
+					<!-- <field name="forecast_name"/> -->
+					<!-- <field name="forecast_id"/> -->
+					<field name="model_type_id"/>
+					<field name="month"/>
+					<field name="year_id"/>	
 					<field name="s_forcest"/> 	
 					<field name="m_forcest"/>	
 					<field name="l_forcest"/>	
@@ -25,8 +27,8 @@
 					<field name="qty_forecast"/>
 					<field name="sisa"/>
 						
-					<field name="spk_id"/> 	
-					<field name="model_type_id"/> 	
+					<field name="cutting_spk_id"/> 	
+					<field name="month_spk"/> 	
 					<field name="s_cutting"/>
 					<field name="m_cutting"/>	
 					<field name="l_cutting"/>	
@@ -51,6 +53,7 @@
 					<field name="xxxl_qc_prod"/>
 					<field name="qty_qc_prod"/>
 
+					<field name="cutting_makloon_id"/>
 					<field name="s_mkl"/>
 					<field name="m_mkl"/>	
 					<field name="l_mkl"/>	
@@ -91,6 +94,10 @@
 		    			<group>
 			    			<group>
 					    		<!-- <field name="model_forecast_type_id"/> 		 -->
+					    		<field name="forecast_name"/>
+					    		<field name="forecast_id"/>
+								<field name="model_type_id"/> 	
+								<field name="month"/> 	
 								<field name="s_forcest"/> 	
 								<field name="m_forcest"/>	
 								<field name="l_forcest"/>	
@@ -101,8 +108,8 @@
 								<field name="sisa"/>
 							</group> 
 							<group>
-								<field name="model_type_id"/> 	
-								<field name="spk_id"/> 	
+								<field name="cutting_spk_id"/> 	
+								<field name="month_spk"/> 	
 								<field name="s_cutting"/>
 								<field name="m_cutting"/>	
 								<field name="l_cutting"/>	
@@ -133,6 +140,7 @@
 							</group>
 
 							<group>
+								<field name="cutting_makloon_id"/>
 								<field name="s_mkl"/>
 								<field name="m_mkl"/>	
 								<field name="l_mkl"/>	
@@ -189,28 +197,28 @@
 		    <field name="arch" type="xml">
 		        <search string="Search">
 		            
-		            <field name="spk_id"/>
+		            <field name="cutting_spk_id"/>
 
 		            <group expand="1" string="Group By...">
 		                <filter string="SPK" name="spk"
 		                     icon="terp-personal" domain="[]" 
-		                	 context="{'group_by':'spk_id'}"/>
+		                	 context="{'group_by':'cutting_spk_id'}"/>
 
-		               <!--  <filter string="Product" name="product"
-		                     icon="terp-personal" domain="[]" 
-		                	 context="{'group_by':'product_id'}"/>
-
-			            <filter string="SO" 
-		                     icon="terp-personal" domain="[]" 
-		                	 context="{'group_by':'order_id'}"/>
- -->
-		                <filter string="Date Filter" name="date_filter"
-		                     icon="terp-personal" domain="[]" 
-		                	 context="{'group_by':'date_start'}"/>
-
-		                <filter string="Model Type" name="model_type_id"
+		                <filter string="Model" name="model"
 		                     icon="terp-personal" domain="[]" 
 		                	 context="{'group_by':'model_type_id'}"/>
+
+			            <filter string="Month SPK Cutting" 
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'month_spk'}"/>
+
+		                <filter string="Month Forecast" name="month_filter"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'month'}"/>
+
+		                <filter string="Year" name="year_id"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'year_id'}"/>
 
 		                	 
 		            </group>                                        
