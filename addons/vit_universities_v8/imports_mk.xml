@@ -34,6 +34,26 @@
 		        </tree>    
 		    </field>
 		</record>
+		
+		<!-- ini definisi search import_mk -->
+		<record id="view_import_mk_filter" model="ir.ui.view">
+		    <field name="name">import_mk.filter</field>
+		    <field name="model">akademik.import_mk</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Processed" 
+		            	 name="processed" domain="[('is_processed','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Processed" 
+		            	 name="processed" domain="[('is_processed','=',False)]"/>
+		            <separator/>
+		                                  
+
+		        </search>
+		    </field>
+		</record>
 
 		<!-- tree list import_mk -->
 		<record id="view_prodi_map_tree" model="ir.ui.view">
