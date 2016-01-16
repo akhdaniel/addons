@@ -117,7 +117,8 @@
                                     <group class="oe_subtotal_footer oe_right" colspan="2">
                                         <button name="qty_acc_reload2" string="Load..Qty" type="object"/>
                                     </group>
-                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft'),('state','!=','open')]}">
+                                    <!-- <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1" attrs="{'readonly':[('state','!=','draft'),('state','!=','open')]}"> -->
+                                    <field name="accessories_req_line_ids" view_mode="tree,form" nolabel="1">
                                     <tree  editable="bottom">
                                         <field name="material"/>
                                         <field name="type"/>
@@ -256,6 +257,10 @@
         
                        
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -280,7 +285,7 @@
             <field name="name">SPK</field>
             <field name="code">vit.makloon.order.seq</field>
             <field name="prefix"></field>
-            <field name="suffix">/SPK-MKL/VI/%(year)s</field>
+            <field name="suffix">/SPK-MKL/%(month)s/%(year)s</field>
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
         </record>

@@ -34,12 +34,12 @@ class vit_accessories_req_line(osv.osv):
 		'total_harga' : fields.float('Total Harga'),
 
 		#### fiel bayangan untuk mempermudah perhitungan di form makloon ####     
-		'size_s' : fields.float('Size S', readonly=True),
-		'size_m' : fields.float('Size M', readonly=True),
-		'size_l' : fields.float('Size L', readonly=True),
-		'size_xl' : fields.float('Size XL', readonly=True),
-		'size_xxl' : fields.float('Size XXL', readonly=True),
-		'size_xxxl' : fields.float('Size XXXL', readonly=True),
+		'size_s' : fields.float('Size S', readonly=False),
+		'size_m' : fields.float('Size M', readonly=False),
+		'size_l' : fields.float('Size L', readonly=False),
+		'size_xl' : fields.float('Size XL', readonly=False),
+		'size_xxl' : fields.float('Size XXL', readonly=False),
+		'size_xxxl' : fields.float('Size XXXL', readonly=False),
 		######################################################################
 	}
 
@@ -128,6 +128,7 @@ class vit_grade(osv.Model):
 
 		sp_data1 = {
 				'origin'			: record_vit_grade.makloon_order_id.name,
+				'spk_mkl_id'		: record_vit_grade.makloon_order_id.id,
 			}
 
 		sp_id_create = sp_obj.create(cr, uid, sp_data1, context=context)
@@ -135,14 +136,16 @@ class vit_grade(osv.Model):
 		### Pencarian Id untuk field model
 		model_product = record_vit_grade.makloon_order_id.model
 		master_type_obj = self.pool.get('vit.master.type')
-		master_type_obj_ids = master_type_obj.search(cr,uid,[('model_product','=',model_product)])
+		master_type_obj_ids = record_vit_grade.makloon_order_id.type_product_id.id
+		# master_type_obj_ids = master_type_obj.search(cr,uid,[('model_product','=',model_product)])
 
 		## Cari Product Id Di BOM dengan search dari master_model_id == master_type_obj_ids[0]
 		mrp_bom_obj = self.pool.get('mrp.bom')
-		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_ids[0])])
+		# mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_ids[0])])
+		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_ids)])
 		
 		## Kategori Type Mutif/Little Mutif ###
-		master_type_obj.browse(cr,uid,master_type_obj_ids,)[0].categ_id
+		master_type_obj.browse(cr,uid,[master_type_obj_ids],)[0].categ_id
 		
 		loop_size = ['S','M','L','XL','XXL','XXXL']
 
@@ -174,6 +177,7 @@ class vit_grade(osv.Model):
 							'product_uom'		: obj_mrp.product_id.uom_id.id,
 							'location_id'       : master_lokasi_out_obj.source_loc_id.id,
 							'location_dest_id'  : master_lokasi_out_obj.dest_loc_id.id,
+							'spk_mkl_id'		: record_vit_grade.makloon_order_id.id,
 							}
 							
 					move_lines = [(0,0,data_line)]
@@ -198,6 +202,7 @@ class vit_grade(osv.Model):
 							'product_uom'		: product_id.uom_id.id,
 							'location_id'       : master_lokasi_in_obj.source_loc_id.id,
 							'location_dest_id'  : master_lokasi_in_obj.dest_loc_id.id,
+							'spk_mkl_id'		: record_vit_grade.makloon_order_id.id,
 							}
 							
 					move_lines2 = [(0,0,data_line_b)]
@@ -215,6 +220,7 @@ class vit_makloon_order(osv.osv):
 	_description = 'Makloon Order'
 	_rec_name = 'name'
 	_order = 'name desc'
+	_inherit = ['mail.thread']
 
 	def button_dummy(self, cr, uid, ids, context=None):
 		return True
@@ -288,7 +294,6 @@ class vit_makloon_order(osv.osv):
 		for int_move_id in int_move_ids:
 			if int_move_id.type == 'in' and int_move_id.state == 'done' and int_move_id.is_updated ==False:
 				reward_steam = int_move_id.reward_steam
-				# import pdb;pdb.set_trace()
 				""" wip_total_baku_acc_per_pcs =  Total WIP Bahan Baku/Pcs + Total WIP Accesories/Pcs """
 				wip_total_baku_acc_per_pcs= self.browse(cr,uid,ids,context=context)[0].avg_qty_total_wip_spk_cut + self.browse(cr,uid,ids,context=context)[0].avg_qty_acc_total
 				
@@ -313,13 +318,14 @@ class vit_makloon_order(osv.osv):
 				name = int_move_id.name
 				stock_picking_id = int_move_id.id
 				total_line_overhead =self.browse(cr,uid,ids,context=context)[0].qty_total_harga_journal_value
+				# import pdb;pdb.set_trace()
 							
 				self.update_acc_move(cr,uid,ids,name,stock_picking_id,wip_total_baku_acc_per_pcs,total_line_overhead,qty,reward_steam,hpp_reward,total_hpp,context)
 				
 				""" Update Status internal move menjadi True update costprice """
 				self.is_updated(cr,uid,ids,id_int_move,context)
 
-				# import pdb;pdb.set_trace()
+				
 
 				"""Update Nilai Cost price dari Last Total WIP/Pcs
 				     t_qty_all_total_wip_pcs : Harga WIP/Pcs Dari SPK Cutting + Harga WIP/Pcs Accessories + Total Overheads 
@@ -358,6 +364,7 @@ class vit_makloon_order(osv.osv):
 					account_move_obj.button_cancel(cr, uid, [account_move.id],context)
 
 				for line in account_move.line_id:
+
 					if line.name == stock_move.name:
 						if (line.debit or line.credit)!=0:
 							if line.debit !=0:
@@ -385,12 +392,12 @@ class vit_makloon_order(osv.osv):
 								account_move_line_obj.write(cr,uid,aml_id,{'debit': stock_move.product_qty * wip_total_baku_acc_per_pcs},context=context)
 			
 		""" Update kan value wip makloon (total overhead + reward) """
-		self.update_acc_move_wip_makloon(cr,uid,account_move,account_move_ids,total_line_overhead,qty,reward_steam,stock_move_ids,context)
+		self.update_acc_move_wip_makloon(cr,uid,account_move_ids,total_line_overhead,qty,reward_steam,stock_move_ids,context)
 		return True
 
 
 
-	def update_acc_move_wip_makloon(self,cr,uid,account_move,account_move_ids,total_line_overhead,move_all_qty,reward_steam,stock_move_ids,context):
+	def update_acc_move_wip_makloon(self,cr,uid,account_move_ids,total_line_overhead,move_all_qty,reward_steam,stock_move_ids,context):
 		"""
 		Fungsi Untuk Mengupdate account_move dengan nilai dari total overhead + reward
 		move_all_qty = Nilai total Quantity yang terima 
@@ -463,6 +470,8 @@ class vit_makloon_order(osv.osv):
 			# account_move_obj.button_validate(cr,uid, [acc_move.id],context)
 			
 			"""Jika destinasi lokasi nya adalah QC Barang Jadi maka dapat dilakukan update account move untuk menambahkan coa Overheads dan steam """
+			# import pdb;pdb.set_trace()
+			
 			if stock_move.location_dest_id.name != "Lokasi Gudang Reject":
 				am_id = am_obj.write(cr, uid,[acc_move.id], am_data, context=context)
 			self.update_account_reject(cr,uid,acc_move,stock_move_ids,context)
@@ -668,7 +677,7 @@ class vit_makloon_order(osv.osv):
 				self.write(cr,uid,ids,{'accessories_req_line_ids':[(0,0,{'material':jk_item['material'],
 					'qty':jk_item['qty']})]})
 
-		if len_size == 6:
+		if len_size == 6 or self_obj[0].xxxl_order > 0:
 			loop_size = ['S','M','L','XL','XXL','XXXL']
 			ls_id_list = []
 			for id_ls in loop_size:
@@ -1223,12 +1232,12 @@ class vit_makloon_order(osv.osv):
 		'material_req_line_ids': fields.one2many('vit.material.req.line', 'makloon_order_id', 'Material Requirements Lines'),
 		'accessories_req_line_ids': fields.one2many('vit.accessories.req.line', 'makloon_order_id', 'Accessories Requirements Lines'),
 		'jurnal_value_ids':fields.one2many('vit.jurnal.value.makloon','makloon_order_id','Jurnal Value'),
-		's_order' : fields.float('S/2',readonly=True,states={'draft': [('readonly', False)]}),
-		'm_order' : fields.float('M/4',readonly=True,states={'draft': [('readonly', False)]}),
-		'l_order' : fields.float('L/6',readonly=True,states={'draft': [('readonly', False)]}),
-		'xl_order' : fields.float('XL/8',readonly=True,states={'draft': [('readonly', False)]}),
-		'xxl_order' : fields.float('XXL/10',readonly=True,states={'draft': [('readonly', False)]}),
-		'xxxl_order' : fields.float('LM 12',readonly=True,states={'draft': [('readonly', False)]}),
+		's_order' : fields.float('S/2',readonly=False,states={'draft': [('readonly', False)]}),
+		'm_order' : fields.float('M/4',readonly=False,states={'draft': [('readonly', False)]}),
+		'l_order' : fields.float('L/6',readonly=False,states={'draft': [('readonly', False)]}),
+		'xl_order' : fields.float('XL/8',readonly=False,states={'draft': [('readonly', False)]}),
+		'xxl_order' : fields.float('XXL/10',readonly=False,states={'draft': [('readonly', False)]}),
+		'xxxl_order' : fields.float('XXXL/12',readonly=False,states={'draft': [('readonly', False)]}),
 		'qty_order' :fields.function(_calculate_order, string='Total',type="integer"),
 		'user_id'	:fields.many2one('res.users', 'Approved', select=True, track_visibility='onchange'),
 		'patner_checker_id'	:fields.many2one('res.users', 'Checked By', select=True, track_visibility='onchange'),
@@ -1255,8 +1264,8 @@ class vit_makloon_order(osv.osv):
 		'qty_total_harga_acc_line': fields.function(_qty_total_harga_acc_line, string='Total WIP Accessories', type='float',store=True),
 		'avg_qty_acc_total' : fields.function(_avg_qty_total, string='Harga WIP/Pcs Accessories', type='float'),
 		'avg_qty_material_total' : fields.float('Harga Rata-rata Material Dari SPK'),
-		'qty_total_wip_spk_cut' : fields.float('Total WIP Dari SPK Cutting', readonly=True),
-		'avg_qty_total_wip_spk_cut': fields.float('Harga WIP/Pcs Dari SPK Cutting', readonly=True),
+		'qty_total_wip_spk_cut' : fields.float('Total WIP Dari SPK Cutting', readonly=False),
+		'avg_qty_total_wip_spk_cut': fields.float('Harga WIP/Pcs Dari SPK Cutting', readonly=False),
 		'qty_all_total_wip': fields.function(_total_all_wip, string='Total WIP', type='float'),
 		'qty_all_total_wip_pcs': fields.function(_total_all_wip_pcs, string='Total WIP/Pcs', type='float'),
 		'last_qty_all_total_wip': fields.function(_last_total_all_wip, string='Last Total WIP', type='float'),
@@ -1468,16 +1477,17 @@ class vit_makloon_order(osv.osv):
 													'origin' : self.browse(cr,uid,ids[0],).name,'type':'in'})
 		### Pencarian Id untuk field model
 		master_type_obj = self.pool.get('vit.master.type')
-		master_type_obj_ids = master_type_obj.search(cr,uid,[('model_product','=',self.browse(cr,uid,ids[0],).model)])
-
+		## master_type_obj_ids = master_type_obj.search(cr,uid,[('model_product','=',self.browse(cr,uid,ids[0],).model)])
+		master_type_obj_id = self.browse(cr,uid,ids[0],).type_product_id.id
 		## Cari Product Id Di BOM dengan search dari master_model_id == master_type_obj_ids[0]
 		mrp_bom_obj = self.pool.get('mrp.bom')
-		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_ids[0])])
+		# mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_ids[0])])
+		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',master_type_obj_id)])
 
 		# loop_size = ['S','M','L','XL','XXL']
 		ls_id_list = []
-
-		if self.browse(cr,uid,ids[0],).type_product_id.categ_id =="Little Mutif" :
+		check_xxxl_order=self.browse(cr,uid,ids[0],).xxxl_order
+		if self.browse(cr,uid,ids[0],).type_product_id.categ_id =="Little Mutif" or check_xxxl_order > 0 :
 			loop_size = ['S','M','L','XL','XXL','XXXL']
 		else:
 			loop_size = ['S','M','L','XL','XXL']

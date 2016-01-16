@@ -22,8 +22,8 @@
         'report/aksesoris_webkit_1.xml',
         'conf_cutting.xml',
         'stock_move.xml',
-        'data.xml'
-
+        'data.xml',
+        'security/ir.model.access.csv',
     ],
 }
 

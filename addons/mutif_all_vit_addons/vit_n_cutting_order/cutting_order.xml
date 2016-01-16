@@ -1,5 +1,5 @@
 <openerp>
-	<data>
+    <data>
         <record id="view_vit_cutting_order_tree" model="ir.ui.view">
             <field name="name">vit.cutting.order.tree</field>
             <field name="model">vit.cutting.order</field>
@@ -56,6 +56,7 @@
                                 <field name="category" />
                                 <field name="component_main_qty"  readonly="0"/>
                                 <field name="component_variation_qty"  readonly="0"/>
+                                <field name="keterangan"/>
                                 <field name="count_list_mo" invisible="1"/>
                                 <field name="count_list_internal_move" invisible="1"/>
                                 
@@ -102,7 +103,7 @@
                                             </group>
                                             <group col='1'>
                                                 <label for="xxxl_order" />
-                                                <field name="xxxl_order"  nolabel="1" placeholder="LM 12"/>
+                                                <field name="xxxl_order"  nolabel="1" placeholder="XXXL/12"/>
                                             </group>
                                         </group>
                                         <group>
@@ -110,7 +111,8 @@
                                         </group>
                                     </page>
                                     <page string="Usage Material">
-                                        <field name="usage_line_ids" widget="one2many_list" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','not in',('draft','open','inprogres'))]}">
+                                        <!-- <field name="usage_line_ids" widget="one2many_list" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','not in',('draft','open','inprogres'))}"> -->
+                                        <field name="usage_line_ids" widget="one2many_list" view_mode="tree" nolabel="1">
                                             <tree  editable="bottom">
                                                  <field name="product_id" on_change="on_change_product_id(product_id, context)"/>
                                                  <field name="type"/>
@@ -132,27 +134,27 @@
                                         <group col='5'>
                                             <group col='1'>
                                                 <label for="s_cut" />
-                                                <field name="s_cut" nolabel="1" placeholder="S" attrs="{'readonly':[('state','!=','inprogres')]}"/> 
+                                                <field name="s_cut" nolabel="1" placeholder="S" /> 
                                             </group>
                                             <group col='1'>
                                                 <label for="m_cut" />
-                                                <field name="m_cut" nolabel="1" placeholder="L" attrs="{'readonly':[('state','!=','inprogres')]}"/> 
+                                                <field name="m_cut" nolabel="1" placeholder="L" /> 
                                             </group>
                                              <group col='1'>
                                                  <label for="l_cut" />
-                                                 <field name="l_cut"  nolabel="1" placeholder="M" attrs="{'readonly':[('state','!=','inprogres')]}"/> 
+                                                 <field name="l_cut"  nolabel="1" placeholder="M" /> 
                                             </group>
                                             <group col='1'>
                                                 <label for="xl_cut" />
-                                                <field name="xl_cut"  nolabel="1" placeholder="XL" attrs="{'readonly':[('state','!=','inprogres')]}"/> 
+                                                <field name="xl_cut"  nolabel="1" placeholder="XL" /> 
                                             </group>
                                             <group col='1'>
                                                 <label for="xxl_cut" />
-                                                <field name="xxl_cut"  nolabel="1" placeholder="XXL" attrs="{'readonly':[('state','!=','inprogres')]}"/>
+                                                <field name="xxl_cut"  nolabel="1" placeholder="XXL" />
                                             </group>
                                                   <group col='1'>
                                                 <label for="xxxl_cut" />
-                                                <field name="xxxl_cut"  nolabel="1" placeholder="LM 12" attrs="{'readonly':[('state','!=','inprogres')]}"/>
+                                                <field name="xxxl_cut"  nolabel="1" placeholder="XXXL/12" />
                                             </group>       
                                         </group>
                                         <group>
@@ -188,7 +190,7 @@
                                             </group>
                                              <group col='1'>
                                                 <label for="xxxl_cut_rej" />
-                                                <field name="xxxl_cut_rej"  nolabel="1" placeholder="LM 12" readonly="1"/>
+                                                <field name="xxxl_cut_rej"  nolabel="1" placeholder="XXXL/12" readonly="1"/>
                                             </group>
                                             
                                         </group>
@@ -198,34 +200,34 @@
                                     </page>
                                    
 
-                                    <page string="QC Cutting" >
+                                    <page string="QC Produksi" >
                                         <group row='0'>
                                             <label string="QC Pass"/>
                                         </group>
                                         <group col='5'>
                                             <group col='1'>
                                                 <label for="s_qc" />
-                                                <field name="s_qc" nolabel="1" placeholder="S" attrs="{'readonly':[('state','!=','finish_cut')]}"/> 
+                                                <field name="s_qc" nolabel="1" placeholder="S" /> 
                                             </group>
                                             <group col='1'>
                                                 <label for="m_qc" />
-                                                <field name="m_qc" nolabel="1" placeholder="L" attrs="{'readonly':[('state','!=','finish_cut')]}"/> 
+                                                <field name="m_qc" nolabel="1" placeholder="L" /> 
                                             </group>
                                              <group col='1'>
                                                  <label for="l_qc" />
-                                                 <field name="l_qc"  nolabel="1" placeholder="M" attrs="{'readonly':[('state','!=','finish_cut')]}"/> 
+                                                 <field name="l_qc"  nolabel="1" placeholder="M" /> 
                                             </group>
                                             <group col='1'>
                                                 <label for="xl_qc" />
-                                                <field name="xl_qc"  nolabel="1" placeholder="XL" attrs="{'readonly':[('state','!=','finish_cut')]}"/> 
+                                                <field name="xl_qc"  nolabel="1" placeholder="XL" /> 
                                             </group>
                                             <group col='1'>
                                                 <label for="xxl_qc" />
-                                                <field name="xxl_qc"  nolabel="1" placeholder="XXL" attrs="{'readonly':[('state','!=','finish_cut')]}"/>
+                                                <field name="xxl_qc"  nolabel="1" placeholder="XXL" />
                                             </group> 
                                             <group col='1'>
                                                 <label for="xxxl_qc" />
-                                                <field name="xxxl_qc"  nolabel="1" placeholder="LM 12" attrs="{'readonly':[('state','!=','finish_cut')]}"/>
+                                                <field name="xxxl_qc"  nolabel="1" placeholder="XXL/12" />
                                             </group>     
                                         </group>
                                         <group>
@@ -261,7 +263,7 @@
                                             </group>
                                             <group col='1'>
                                                 <label for="xxxl_qc_rej" />
-                                                <field name="xxxl_qc_rej"  nolabel="1" placeholder="LM 12" readonly="1"/>
+                                                <field name="xxxl_qc_rej"  nolabel="1" placeholder="XXXL/12" readonly="1"/>
                                             </group>
                                             
                                         </group>
@@ -276,7 +278,7 @@
                                                 <div>
                                                 <!-- <field name="product_id" class="oe_inline"/> -->
                                                     <field name="product_id" domain="[('name','=','Majun')]" class="oe_inline"/>                                          
-                                                    <field name="qty" class="oe_inline"  attrs="{'readonly':[('state','!=','finish_cut')]}"/>
+                                                    <field name="qty" class="oe_inline"  />
                                                     <field name="uom_id" class="oe_inline"/>
                                                 </div>                                                            
                                             </group>                                        
@@ -284,7 +286,7 @@
                                                 <field name="picking_id"/>
                                             </group>  
                                         </group>                                 
-                                         <field name="sisa_ids" widget="one2many_list" view_mode="tree" nolabel="1" attrs="{'readonly':[('state','!=','finish_cut')]}" >
+                                         <field name="sisa_ids" widget="one2many_list" view_mode="tree" nolabel="1"  >
                                             <tree  editable="bottom">
                                                  <field name="product_id" on_change="on_change_product_id2(product_id, context)"/>
                                                  <field name="qty" on_change="on_change_qty_total(product_id,qty, context)" />
@@ -357,9 +359,12 @@
                         </notebook>
  
                             
-        
                        
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -374,7 +379,7 @@
             <field name="name">SPK</field>
             <field name="code">vit.cutting.order.seq</field>
             <field name="prefix"></field>
-            <field name="suffix">/SPK-PRD/VI/%(year)s</field>
+            <field name="suffix">/SPK-PRD/%(month)s/%(year)s</field>
             <field name="padding">4</field>
             <field name="company_id" eval="False"/>
         </record>
@@ -385,7 +390,8 @@
             <field name="model">vit.cutting.order</field>
             <field name="arch" type="xml">
                 <search string="Search Cutting">
-                    <field name="type_product_id" />          
+                    <!-- <field name="type_product_id" />           -->
+                    <field name="name" />          
                 </search>
             </field>
         </record>

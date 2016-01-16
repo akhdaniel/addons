@@ -30,6 +30,7 @@
                                  <field name="categ_id" />
                                 <field name="main_qty"/>
                                 <field name="variation_qty"/>
+                                <field name="keterangan"/>
                                 <field name="cost_makl" invisible="1"/>
                                 <field name="cost_cut" invisible="1"/>
                                 <field name="kancing_price" invisible="1"/>
