@@ -39,15 +39,26 @@ _logger = logging.getLogger(__name__)
 class vit_hand_tag(osv.osv):
     _name = 'vit.hand.tag'
 
+    def _get_total_sn(self, cr, uid, ids, field_name, arg, context=None):
+
+        if context is None:
+            context = {}
+        result = {}
+        for obj in self.browse(cr,uid,ids,context=context):          
+            total_qty_sn = obj.vit_hand_tag_barcode_ids
+            result[obj.id] = len(total_qty_sn)
+        return result
+
     _columns = {
-        'name'          : fields.char('Nomor Penyerahan',required=True,readonly=True),
-        'spk_cutting_id'   : fields.many2one('vit.cutting.order',string='SPK Cutting'),#readonly=True,states={'draft':[('readonly',False)]}),
-        'spk_makloon_id'   : fields.many2one('vit.makloon.order',string='SPK Makloon'),#readonly=True,states={'draft':[('readonly',False)]}),
-        'makloon'       : fields.related('spk_makloon_id','partner_id',type='many2one',relation='res.partner',string='Makloon',readonly=True,store=True),  
-        'tanggal'       : fields.date('Tanggal Penyerahan',required=True,readonly=True,states={'draft':[('readonly',False)]}),
-        'notes'         : fields.text('Notes'),
+        'name'              : fields.char('Nomor Penyerahan',required=True,readonly=True),
+        'spk_cutting_id'    : fields.many2one('vit.cutting.order',string='SPK Cutting'),#readonly=True,states={'draft':[('readonly',False)]}),
+        'spk_makloon_id'    : fields.many2one('vit.makloon.order',string='SPK Makloon'),#readonly=True,states={'draft':[('readonly',False)]}),
+        'makloon'           : fields.related('spk_makloon_id','partner_id',type='many2one',relation='res.partner',string='Makloon',readonly=True,store=True),  
+        'tanggal'           : fields.date('Tanggal Penyerahan',required=True,readonly=True,states={'draft':[('readonly',False)]}),
+        'notes'             : fields.text('Notes'),
         'vit_hand_tag_barcode_ids' : fields.one2many('vit.hand.tag.barcode','vit_hand_tag_id',string='Barcode',readonly=True,states={'draft':[('readonly',False)]}),
-        'state'         : fields.selection([('draft','Draft'),('confirm','Confirm')],string='State'),
+        'state'             : fields.selection([('draft','Draft'),('confirm','Confirm')],string='State'),
+        'total_qty_sn'      : fields.function(_get_total_sn,type='integer',string="Total Serial Number Input"),
     }
 
     _defaults = {
@@ -68,9 +79,12 @@ class vit_hand_tag(osv.osv):
         sn_obj         = self.pool.get('stock.production.lot')
         spk_makloon_id = False
         spk_cutting_id = False
+        makloon_code   = False
         for my_form in self.browse(cr,uid,ids):
             if my_form.spk_makloon_id:
-                spk_makloon_id = my_form.spk_makloon_id.id
+                makloon_code     = my_form.spk_makloon_id.partner_id.code
+                makloon_name     = my_form.spk_makloon_id.partner_id.name
+                spk_makloon_id   = my_form.spk_makloon_id.id
                 # True kan agar hanya bisa di pakai satu kali per handtag
                 makloon_obj.write(cr,uid,spk_makloon_id,{'is_used_handtag':True},context=context)
             if my_form.spk_cutting_id:
@@ -79,6 +93,7 @@ class vit_hand_tag(osv.osv):
                 cutting_obj.write(cr,uid,spk_cutting_id,{'is_used_handtag':True},context=context)
             tanggal        = my_form.tanggal
             number         = my_form.name
+
             if not my_form.vit_hand_tag_barcode_ids:
                 raise osv.except_osv(_('Error!'), _('Daftar barcode tidak boleh kosong !'))
             for tag in my_form.vit_hand_tag_barcode_ids:
@@ -87,6 +102,10 @@ class vit_hand_tag(osv.osv):
                 sn_exist = sn_obj.search(cr,uid,[('name','=',name)],context=context)
                 if sn_exist :
                     raise osv.except_osv(_('Duplicate Serial Number!'), _(' Serial Number %s sudah ada !') % (name))
+                if makloon_code:
+                    #cek 2 digit awal barcode harus sama dengan 2 digit awal
+                    if name[:2] != makloon_code[:2] :
+                        raise osv.except_osv(_('Galat !'), _(' Serial Number %s tidak sesuai dengan kode makloon %s ( %s)!') % (name,makloon_name,makloon_code[:2]))
                 sn_obj.create(cr,uid,{'name'            : name,
                                     'spk_makloon_id'    : spk_makloon_id,
                                     'spk_cutting_id'    : spk_cutting_id,
@@ -113,7 +132,7 @@ class vit_hand_tag(osv.osv):
                 # True kan agar hanya bisa di pakai satu kali per handtag
                 cutting_obj.write(cr,uid,spk_cutting_id,{'is_used_handtag':True},context=context)                
             for tag in my_form.vit_hand_tag_barcode_ids:
-                #import pdb;pdb.set_trace()
+                
                 name = tag.name
                 sn_id = sn_obj.search(cr,uid,[('name','=',name)],context=context)
                 if sn_id :
@@ -136,6 +155,7 @@ vit_hand_tag()
 
 class vit_hand_tag_barcode(osv.osv):
     _name = 'vit.hand.tag.barcode'
+
 
     _columns ={
         'name'  : fields.char('Barcode',required=True,size=64),

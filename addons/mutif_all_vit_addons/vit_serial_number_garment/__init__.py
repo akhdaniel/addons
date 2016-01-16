@@ -5,3 +5,4 @@ import wizard
 import vit_cutting_order
 import stock_picking
 import vit_retur_serial_number
+import report

@@ -5,7 +5,7 @@
 			<field name="name">Sale Order Analysis</field>
 			<field name="res_model">vit_order_analysis.sale_order_analysis</field>
 			<field name="view_mode">tree,form,graph</field>
-            <field name="context">{"search_default_category":1,"search_default_product":1}</field>
+            <field name="context">{"search_default_category":1,"search_default_product":1,"search_default_partner":1}</field>
 		</record>
 
 		<!-- tree -->
@@ -14,16 +14,20 @@
 		    <field name="model">vit_order_analysis.sale_order_analysis</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list sale_order_analysis">
-					<field name="order_id"/> 		
+					<field name="order_id"/>
+					<field name="partner_id"/> 		
 					<field name="order_date"/> 	
+					<field name="age"/>
 					<field name="categ_id" invisible="1"/>	
 					<field name="product_id"/>	
 					<field name="name_template"/>
 					<field name="real_order"/> 	
 					<field name="qty_order"/> 	
 					<field name="delivered"/> 	
-					<field name="back_order"/> 	
-					<field name="unfilled"/> 	
+					<field name="back_order"/>
+					<field name="qty_invoice"/>
+					<field name="unfilled"/> 
+					<field name="status" invisible="1"/>	
 		        </tree>    
 		    </field>
 		</record>
@@ -47,25 +51,45 @@
 		    <field name="model">vit_order_analysis.sale_order_analysis</field>
 		    <field name="arch" type="xml">
 		        <search string="Search Orders">
-		            
-		            <field name="product_id"/>
-
+		            <group expand="0" string="Group By...">
+		            	<field name="product_id"/>
+		                <filter string="Product_" name="product_"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}" invisible="1"/>
+			            <filter string="Category_" name="category_"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'categ_id'}" invisible="1"/>	
+		                	                 	 
+			            <filter string="Partner" name="partner"
+			                     icon="terp-personal" domain="[]"
+			                	 context="{'group_by':'partner_id'}"/>
+			            <separator/>
+		                <filter string="Product" name="product"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>
+		                <separator/>	 
+			            <filter string="Age of Document" 
+			                     icon="terp-personal" domain="[]" name="age"
+			                	 context="{'group_by':'age'}"/>
+  	 
+			        </group>
 		            <group expand="1" string="Group By...">
 		                <filter string="Category" name="category"
 		                     icon="terp-personal" domain="[]" 
 		                	 context="{'group_by':'categ_id'}"/>
 
-		                <filter string="Product" name="product"
-		                     icon="terp-personal" domain="[]" 
-		                	 context="{'group_by':'product_id'}"/>
+			            <filter string="Status" 
+			                     icon="terp-personal" domain="[]" name="status"
+			                	 context="{'group_by':'status'}"/>
 
-			            <filter string="SO" 
+			            <filter string="SO" name="order"
 		                     icon="terp-personal" domain="[]" 
 		                	 context="{'group_by':'order_id'}"/>
 
-		                <filter string="Date" 
+		                <filter string="Date" name="date"
 		                     icon="terp-personal" domain="[]" 
 		                	 context="{'group_by':'order_date'}"/>
+
 		            </group>                                        
 		        </search>
 		    </field>

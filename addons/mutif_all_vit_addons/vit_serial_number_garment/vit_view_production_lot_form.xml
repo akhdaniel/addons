@@ -8,6 +8,8 @@
             <field name="arch" type="xml">
                 <field name="ref" position="after">
                         <field name="is_used" readonly="1"/>
+                        <field name="date_sn_input_in" readonly="1"/>
+                        <field name="date_sn_input" readonly="1"/>
                 </field>                
                 <field name="stock_available" position="after">
                     <newline/>
@@ -70,6 +72,8 @@
                         <field name="spk_cutting_id"/>
                         <field name="spk_makloon_id"/>                            
                         <field name="makloon" readonly="1"/>
+                        <field name="date_sn_input_in" readonly="1"/>
+                        <field name="date_sn_input" readonly="1"/>
                 </field>
      
             </field>
@@ -84,6 +88,8 @@
                         <filter string="SPK Cutting" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'spk_cutting_id'}"/>
                         <filter string="SPK Makloon" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'spk_makloon_id'}"/>
                         <filter string="Reference" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'ref'}"/>
+                        <filter string="Tanggal DO" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'date_sn_input'}"/>
+                        <filter string="Tanggal Incoming" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'date_sn_input_in'}"/>
                 </filter>                       
             </field>
         </record> 

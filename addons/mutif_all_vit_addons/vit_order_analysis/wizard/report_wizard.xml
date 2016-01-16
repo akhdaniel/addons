@@ -6,6 +6,8 @@
 			<field name="res_model">vit_order_analysis.report_wizard</field> 
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_classname_tree"/>
+			<field name="context">{"search_default_category":1,"search_default_product":1,"search_default_partner":1}</field>		
 			<field name="target">new</field> 
 		</record>
 

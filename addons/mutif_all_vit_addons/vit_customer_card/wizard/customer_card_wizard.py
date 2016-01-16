@@ -10,6 +10,7 @@ class report_wizard(osv.TransientModel):
 		'date_start' : fields.date('Date Start',required=True),
 		'date_end'   : fields.date('Date End',required=True),
 		'partner_id' : fields.many2one('res.partner',string='Customer',required=True),
+		'starting_balance' : fields.float('Starting Balance'),
 	}
 
 	_defaults = {
@@ -243,9 +244,12 @@ class report_wizard(osv.TransientModel):
 																		'date_end': wizard.date_end,
 																		'user_id':uid})
 
-		#cari opening balance_get_total_balance
-		opening = self._get_total_debit_credit(cr, 1, ids, l_state, am_state, wizard.date_start, wizard.partner_id.id, a_type, context=context)
-		opening_balance = opening[1]-opening[0]
+		#cari opening balance_get_total_balance dari hitungan atau input manual
+		if wizard.starting_balance == 0 :
+			opening = self._get_total_debit_credit(cr, 1, ids, l_state, am_state, wizard.date_start, wizard.partner_id.id, a_type, context=context)
+			opening_balance = opening[1]-opening[0]
+		else :
+			opening_balance = wizard.starting_balance
 
 		cr.execute('SELECT '\
                 'am.date as date, '\
@@ -460,7 +464,8 @@ class report_wizard(osv.TransientModel):
 							if journal_entries_cb.ref != False:
 								ref_journal = journal_entries_cb.ref
 
-							if execute[1] != cb[0]:								
+							#if execute[1] != cb[0]:
+							if execute[1] != 0:									
 								balance += cb[1]
 
 							if balance < 0:
@@ -488,8 +493,8 @@ class report_wizard(osv.TransientModel):
 						for selisih in cek_selisih_journal_manual: 
 							journal_entries_selisih_brg = acc_mv_obj.browse(cr,1,selisih[0])
 							ref_journal = ''
-							if journal_entries_cb.ref != False:
-								ref_journal = journal_entries_cb.ref
+							if journal_entries_selisih_brg.ref != False:
+								ref_journal = journal_entries_selisih_brg.ref
 								
 							if balance < 0:
 								note = 'Kurang Bayar'
@@ -500,12 +505,12 @@ class report_wizard(osv.TransientModel):
 							if selisih[1] != 0 :
 
 								text_selisih = 'Selisih Lebih Bayar '
-								if execute[1] != selisih[0]:															
-									balance += selisih[1]
+								#if execute[1] != selisih[0]:															
+								balance += selisih[1]
 							if selisih[2] != 0 :
 								text_selisih = 'Selisih Kurang Bayar '	
-								if execute[1] != selisih[0]:
-									balance -= selisih[2]								
+								#if execute[1] != selisih[0]:
+								balance -= selisih[2]								
 							self.pool.get('vit.customer.card').create(cr,1,{'customer_card_id' : customer_card_id,
 																				'date': execute[0] or False,
 																				'description' : selisih[0],

@@ -18,8 +18,9 @@
                     <field name="total" groups="account.group_account_manager"/>                    
                     <field name="picking_id"/>                    
                     <field name="date_picking"/> 
-                    <field name="product_id"/>                  
-                    <field name="serial_number_id" />                                   
+                    <field name="product_id2"/>                  
+                    <field name="serial_number_id" />
+                    <field name="date_sn_input" invisible="0" string="SN Date"/>                                   
                 </tree>
             </field>
         </record> 
@@ -35,9 +36,10 @@
                                 <field name="stock_move_id" readonly="1"/>
                                 <field name="type" readonly="1" />
                                 <field name="serial_number_id" readonly="1" />
+                                <field name="date_sn_input" />
                                 <field name="picking_id" readonly="0"/> 
                                 <field name="date_picking" readonly="0"/> 
-                                <field name="product_id" readonly="1"/>                  
+                                <field name="product_id2" readonly="1"/>                  
                                 <field name="qty" readonly="1"/>
                             </group>
                             <group>
@@ -66,11 +68,12 @@
                     <filter icon="terp-sale" string="Out" name='out' domain="[('type','=','out')]"/>
                     <filter icon="terp-sale" string="Internal" name='internal' domain="[('type','=','internal')]"/>
                     <group expand="0" string="Group By...">
-                        <filter string="Product" icon="terp-folder-orange" name="product_id" domain="" context="{'group_by':'product_id'}"/>
+                        <filter string="Product" icon="terp-folder-orange" name="product_id2" domain="" context="{'group_by':'product_id2'}"/>
                         <filter string="Type" icon="terp-folder-orange" name="type" domain="" context="{'group_by':'type'}"/>
                         <filter string="Picking" icon="terp-folder-orange" name="picking_id" domain="" context="{'group_by':'picking_id'}"/>
                         <filter string="Sales Order" icon="terp-folder-orange" name="sale_order_id" domain="" context="{'group_by':'sale_order_id'}"/> 
-                        <filter string="Invoice" icon="terp-folder-orange" name="invoice_id" domain="" context="{'group_by':'invoice_id'}"/>                                               
+                        <filter string="Invoice" icon="terp-folder-orange" name="invoice_id" domain="" context="{'group_by':'invoice_id'}"/>
+                        <filter string="Tanggal Input SN di DO" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'date_sn_input'}"/>                                              
                     </group>
                 </search>
             </field>
