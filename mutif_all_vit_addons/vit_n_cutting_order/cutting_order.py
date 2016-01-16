@@ -84,12 +84,14 @@ class vit_usage_line(osv.osv):
 	def on_change_product_id(self, cr, uid, ids, product_id, name, context=None):
 		uom = self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id
 		list_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).list_price	
+		# import pdb;pdb.set_trace()
 		qty = 0				
 		if product_id!=False:
 			return {
 				'value' : {
 					'product_uom' : uom,
-					# 'total_harga' : list_price * qty_total_material
+					'total_harga' : list_price * qty,
+					'qty_total_material'		  : 0
 				}
 			}
 		else:
@@ -105,7 +107,6 @@ class vit_usage_line(osv.osv):
 	def on_change_qty_total(self, cr, uid, ids, product_id, qty, name, context=None):
 		list_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).list_price
 		standard_price = self.pool.get('product.product').browse(cr, uid, product_id, context=context).standard_price
-		# import pdb;pdb.set_trace()
 		
 
 		if product_id!=False:
@@ -145,6 +146,7 @@ class vit_cutting_order(osv.osv):
 	_description = 'Cutting Order'
 	_rec_name = 'name'
 	_order = 'name desc'
+	_inherit = ['mail.thread']
 		
 	def _calculate_order(self, cr, uid, ids, name, arg, context=None):
 		res = {}
@@ -155,25 +157,25 @@ class vit_cutting_order(osv.osv):
 	def _calculate_cut(self, cr, uid, ids, name, arg, context=None):
 		res = {}
 		qty = self.browse(cr,uid,ids,context=context)
-		res[qty[0].id] = qty[0].s_cut +  qty[0].m_cut +  qty[0].l_cut +  qty[0].xl_cut +  qty[0].xxl_cut 
+		res[qty[0].id] = qty[0].s_cut +  qty[0].m_cut +  qty[0].l_cut +  qty[0].xl_cut +  qty[0].xxl_cut + qty[0].xxxl_cut 
 		return res
 
 	def _calculate_cut_rej(self, cr, uid, ids, name, arg, context=None):
 		res = {}
 		qty = self.browse(cr,uid,ids,context=context)
-		res[qty[0].id] = qty[0].s_cut_rej +  qty[0].m_cut_rej +  qty[0].l_cut_rej +  qty[0].xl_cut_rej +  qty[0].xxl_cut_rej 
+		res[qty[0].id] = qty[0].s_cut_rej +  qty[0].m_cut_rej +  qty[0].l_cut_rej +  qty[0].xl_cut_rej +  qty[0].xxl_cut_rej + qty[0].xxxl_cut_rej 
 		return res
 
 	def _calculate_qc(self, cr, uid, ids, name, arg, context=None):
 		res = {}
 		qty = self.browse(cr,uid,ids,context=context)
-		res[qty[0].id] = qty[0].s_qc +  qty[0].m_qc +  qty[0].l_qc +  qty[0].xl_qc +  qty[0].xxl_qc
+		res[qty[0].id] = qty[0].s_qc +  qty[0].m_qc +  qty[0].l_qc +  qty[0].xl_qc +  qty[0].xxl_qc + qty[0].xxxl_qc
 		return res
 
 	def _calculate_qc_rej(self, cr, uid, ids, name, arg, context=None):
 		res = {}
 		qty = self.browse(cr,uid,ids,context=context)
-		res[qty[0].id] = qty[0].s_qc_rej +  qty[0].m_qc_rej +  qty[0].l_qc_rej +  qty[0].xl_qc_rej +  qty[0].xxl_qc_rej 
+		res[qty[0].id] = qty[0].s_qc_rej +  qty[0].m_qc_rej +  qty[0].l_qc_rej +  qty[0].xl_qc_rej +  qty[0].xxl_qc_rej + qty[0].xxxl_qc_rej 
 		return res
 
 	def _get_default_majun(self, cr, uid, context=None):
@@ -237,7 +239,7 @@ class vit_cutting_order(osv.osv):
 	def _qty_total_harga_journal_value_all_pcs(self, cr, uid, ids, field_name, arg, context):
 	 	res = {}
 		x = self.browse(cr,uid,ids,context=context)
-	 	res[x[0].id] = x[0].qty_order * x[0].qty_total_harga_journal_value
+	 	res[x[0].id] = x[0].qty_qc * x[0].qty_total_harga_journal_value
 		return res
 	
 	def _avg_qty_total(self, cr, uid, ids, name, arg, context=None):
@@ -259,8 +261,8 @@ class vit_cutting_order(osv.osv):
 	 	res = {}
 	 	x = self.browse(cr,uid,ids,context=context)
 	 	# res[x[0].id] = x[0].qty_total_harga_consumed_line + (x[0].direct_labour * x[0].qty_order)+(x[0].electricity_cost * x[0].qty_order) + (x[0].factory_rent_cost* x[0].qty_order) + (x[0].cutting_cost * x[0].qty_order) + (x[0].sewing_cost* x[0].qty_order)
-	 	if  x[0].qty_total_harga_consumed_line !=0 and x[0].qty_order !=0:
-	 		res[x[0].id] = x[0].qty_total_harga_consumed_line + (x[0].qty_total_harga_journal_value*x[0].qty_order) -  x[0].qty_total_harga_sisa_line
+	 	if  x[0].qty_total_harga_consumed_line !=0 and x[0].qty_qc !=0:
+	 		res[x[0].id] = x[0].qty_total_harga_consumed_line + (x[0].qty_total_harga_journal_value*x[0].qty_qc) -  x[0].qty_total_harga_sisa_line
 	 	else:
 	 		res[x[0].id]=0
 		return res
@@ -268,8 +270,8 @@ class vit_cutting_order(osv.osv):
 	def _avg_qty_total_wip(self, cr, uid, ids, name, arg, context=None):
 	 	res = {}
 	 	x = self.browse(cr,uid,ids,context=context)
-	 	if x[0].qty_total_harga_consumed_line!=0 and x[0].qty_order!=0:
-	 		res[x[0].id] = x[0].qty_total_wip / x[0].qty_order
+	 	if x[0].qty_total_harga_consumed_line!=0 and x[0].qty_qc!=0:
+	 		res[x[0].id] = x[0].qty_total_wip / x[0].qty_qc
 	 	else:
 	 		res[x[0].id] = 0
 		return res
@@ -290,53 +292,57 @@ class vit_cutting_order(osv.osv):
 		'date_start_cutting': fields.date('Start Date', select=True, readonly=True,states={'draft': [('readonly', False)]}),
 		'date_end_cutting'	: fields.date('End Date',  select=True, readonly=True,states={'draft': [('readonly', False)]}),
 		'component_main_qty'		: fields.integer('Body',readonly=True,states={'draft': [('readonly', False)]}),
-		'component_variation_qty'	: fields.integer('Variation',readonly=True,states={'draft': [('readonly', False)]}),
+		# 'component_variation_qty'	: fields.integer('Variation',readonly=True,states={'draft': [('readonly', False)]}),
+		'component_variation_qty'	: fields.char('Variation',readonly=True,states={'draft': [('readonly', False)]}),
+		'keterangan': fields.char('Keterangan Lain'),
 		'category' : fields.char('Category', readonly=True,states={'draft': [('readonly', False)]}),
 		'material' : fields.char('Material'),
 		'variation' : fields.char('Variation'),
 		'qty_total_material' : fields.float('Quantity Total'),
 		'qty_total_variation' : fields.float('Quantity Total'),
 		'consumed_line_ids': fields.one2many('vit.consumed.line', 'cutting_order_id', 'Cutting Lines'),
-		'usage_line_ids': fields.one2many('vit.usage.line', 'cutting_order_id', 'Usage Lines'),
+		'usage_line_ids': fields.one2many('vit.usage.line', 'cutting_order_id', 'Usage Lines'	),
 		'accessories_line_ids': fields.one2many('vit.accessories.line', 'cutting_order_id', 'Accessories Lines'),
-		's_order' : fields.float('S/2',readonly=True,states={'draft': [('readonly', False)]}),
-		'm_order' : fields.float('M/4',readonly=True,states={'draft': [('readonly', False)]}),
-		'l_order' : fields.float('L/6',readonly=True,states={'draft': [('readonly', False)]}),
-		'xl_order' : fields.float('XL/8',readonly=True,states={'draft': [('readonly', False)]}),
-		'xxl_order' : fields.float('XXL/10',readonly=True,states={'draft': [('readonly', False)]}),
-		'xxxl_order' : fields.float('LM 12',readonly=True,states={'draft': [('readonly', False)]}),
+		's_order' : fields.float('S/2',readonly=False,states={'draft': [('readonly', False)]}),
+		'm_order' : fields.float('M/4',readonly=False,states={'draft': [('readonly', False)]}),
+		'l_order' : fields.float('L/6',readonly=False,states={'draft': [('readonly', False)]}),
+		'xl_order' : fields.float('XL/8',readonly=False,states={'draft': [('readonly', False)]}),
+		'xxl_order' : fields.float('XXL/10',readonly=False,states={'draft': [('readonly', False)]}),
+		'xxxl_order' : fields.float('XXXL/12',readonly=False,states={'draft': [('readonly', False)]}),
 		'qty_order' :fields.function(_calculate_order, string='Total',type="integer"),
-		's_cut' : fields.float('S/2',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'm_cut' : fields.float('M/4',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'l_cut' : fields.float('L/6',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'xl_cut' : fields.float('XL/8',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'xxl_cut' : fields.float('XXL/10',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'xxxl_cut' : fields.float('LM 12',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
+		# 's_cut' : fields.float('S/2',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
+		's_cut' : fields.float('S/2',readonly=False),
+		'm_cut' : fields.float('M/4',readonly=False),
+		'l_cut' : fields.float('L/6',readonly=False),
+		'xl_cut' : fields.float('XL/8',readonly=False),
+		'xxl_cut' : fields.float('XXL/10',readonly=False),
+		'xxxl_cut' : fields.float('XXXL/12',readonly=False),
 		'qty_cut' :fields.function(_calculate_cut, string='Total',type="integer"),
-		's_cut_rej' : fields.float('S/2',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'm_cut_rej' : fields.float('M/4',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'l_cut_rej' : fields.float('L/6',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'xl_cut_rej' : fields.float('XL/8',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'xxl_cut_rej' : fields.float('XXL/10',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
-		'xxxl_cut_rej' : fields.float('LM 12',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)]}),
+		's_cut_rej' : fields.float('S/2',readonly=False),
+		'm_cut_rej' : fields.float('M/4',readonly=False),
+		'l_cut_rej' : fields.float('L/6',readonly=False),
+		'xl_cut_rej' : fields.float('XL/8',readonly=False),
+		'xxl_cut_rej' : fields.float('XXL/10',readonly=False),
+		'xxxl_cut_rej' : fields.float('XXXL/12',readonly=False),
 		'qty_cut_rej' :fields.function(_calculate_cut_rej, string='Total',type="integer"),
-		's_qc' : fields.float('S/2',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'm_qc' : fields.float('M/4',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'l_qc' : fields.float('L/6',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'xl_qc' : fields.float('XL/8',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'xxl_qc' : fields.float('XXL/10',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'xxxl_qc' : fields.float('LM 12',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		# 's_qc' : fields.float('S/2',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		's_qc' : fields.float('S/2',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'm_qc' : fields.float('M/4',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'l_qc' : fields.float('L/6',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'xl_qc' : fields.float('XL/8',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'xxl_qc' : fields.float('XXL/10',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'xxxl_qc' : fields.float('XXXL/12',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
 		'qty_qc' :fields.function(_calculate_qc, string='Total',type="integer"),
-		's_qc_rej' : fields.float('S/2',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'm_qc_rej' : fields.float('M/4',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'l_qc_rej' : fields.float('L/6',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'xl_qc_rej' : fields.float('XL/8',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'xxl_qc_rej' : fields.float('XXL/10',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
-		'xxxl_qc_rej' : fields.float('LM 12',readonly=True,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		's_qc_rej' : fields.float('S/2',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'm_qc_rej' : fields.float('M/4',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'l_qc_rej' : fields.float('L/6',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'xl_qc_rej' : fields.float('XL/8',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'xxl_qc_rej' : fields.float('XXL/10',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
+		'xxxl_qc_rej' : fields.float('XXXL/12',readonly=False,states={'draft': [('readonly', False)],'open': [('readonly', False)],'inprogres': [('readonly', False)],'finish_cut': [('readonly', False)]}),
 		'qty_qc_rej' :fields.function(_calculate_qc_rej, string='Total',type="integer"),
 		'count_list_mo' : fields.integer('Jumlah Makloon Order'),
 		'count_list_internal_move' : fields.integer('Jumlah Internal Move'),
-		'picking_id' : fields.many2one('stock.picking','Internal Move Sisa Cutting',readonly=True),
+		'picking_id' : fields.many2one('stock.picking','Internal Move Sisa Cutting',readonly=False),
 		'product_id' : fields.many2one('product.product','Majun',readonly=True),
 		'uom_id' : fields.many2one('product.uom','Satuan',readonly=True),
 		'qty': fields.float('Qty'),
@@ -389,6 +395,7 @@ class vit_cutting_order(osv.osv):
 		for x in self.browse(cr, uid, ids, context=context):
 
 			#perhitungan reject cutting
+			'''
 			if 's_cut' in vals :
 				s_order = x.s_order
 				#presentase max kelebihan yang di input 10%
@@ -467,7 +474,7 @@ class vit_cutting_order(osv.osv):
 					raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXXL yang di input cutting tidak boleh minus')									
 				xxxl_cut_rej = {'xxxl_cut_rej':xxxl_cut_reject}
 				vals = dict(vals.items()+xxxl_cut_rej.items())		
-
+			'''	
 			#perhitungan reject QC cutting
 			if 's_qc' in vals :
 				sqc_order = x.s_cut
@@ -535,6 +542,14 @@ class vit_cutting_order(osv.osv):
 		conf_size = conf_cutting_pool.browse(cr,uid,conf_ids[0],context=context).loop_size
 		return conf_size
 
+	
+	def check_jumlah_bom_per_model(self, cr, uid, ids, context=None):
+		self_obj = self.browse(cr,uid,ids,context=context)
+		mrp_bom_obj = self.pool.get('mrp.bom')
+		mrp_bom_obj_ids = mrp_bom_obj.search(cr,uid,[('master_model_id','=',self_obj[0].type_product_id.id)])
+		return len(mrp_bom_obj_ids)
+
+
 	def calculate(self, cr, uid, ids, context=None):
 		
 		self_obj = self.browse(cr,uid,ids,context=context)
@@ -548,11 +563,12 @@ class vit_cutting_order(osv.osv):
 		except Exception, e:
 			raise osv.except_osv( 'Warning!' , 'Lakukan Pengaturan dulu di Configuration Cutting, Loop size : 5 dengan Category  : Mutif, dan Loop size : 6 dengan Category : Little Mutif')	
 		else:
-			len_size = self.conf_categ_id(cr,uid, self_obj[0].category,context)
+			# len_size = self.conf_categ_id(cr,uid, self_obj[0].category,context)
+			len_size = self.check_jumlah_bom_per_model(cr,uid, ids,context)
 			
 		if self.conf_categ_id(cr,uid, self_obj[0].category,context) == []:
 			raise osv.except_osv( 'Warning!' , 'Jumlah qty ukuran XXXL yang di input QC cutting tidak boleh minus')	
-
+		# import pdb;pdb.set_trace()
 		if len_size == 5:
 			loop_size = ['S','M','L','XL','XXL']
 			ls_id_list = []
@@ -634,7 +650,11 @@ class vit_cutting_order(osv.osv):
 				# mat = bom_s_list[x]['material']+bom_m_list[x]['material']+bom_l_list[x]['material']+bom_xl_list[x]['material']+bom_xxl_list[x]['material']
 				mat = sort_s[x]['material']
 				tipe = sort_s[x]['type']
-				qty = sort_s[x]['qty_total_material']+sort_m[x]['qty_total_material']+sort_l[x]['qty_total_material']+sort_xl[x]['qty_total_material']+sort_xxl[x]['qty_total_material']
+				# import pdb;pdb.set_trace()
+				try:
+					qty = sort_s[x]['qty_total_material']+sort_m[x]['qty_total_material']+sort_l[x]['qty_total_material']+sort_xl[x]['qty_total_material']+sort_xxl[x]['qty_total_material']
+				except IndexError:
+					raise osv.except_osv( 'Periksa Kembali BOM anda' , 'Cek Component Type : Aksesoris tidak balance di salah satu Bom Anda')
 				uom = sort_s[x]['product_uom']
 				x_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
 			print x_list
@@ -645,7 +665,10 @@ class vit_cutting_order(osv.osv):
 				if acc_s[x]['material'] == acc_m[x]['material']:
 					mat = acc_s[x]['material']
 					tipe = acc_s[x]['type']
-					qty = acc_s[x]['qty_total_material']+acc_m[x]['qty_total_material']+acc_l[x]['qty_total_material']+acc_xl[x]['qty_total_material']+acc_xxl[x]['qty_total_material']
+					try:
+						qty = acc_s[x]['qty_total_material']+acc_m[x]['qty_total_material']+acc_l[x]['qty_total_material']+acc_xl[x]['qty_total_material']+acc_xxl[x]['qty_total_material']
+					except IndexError:
+						raise osv.except_osv( 'Periksa Kembali BOM anda' , 'Cek Component Type ')
 					uom = acc_s[x]['product_uom']
 					acc_list.append({'material' : mat,'type' : tipe,'qty_total_material':qty, 'product_uom' : uom})
 				
@@ -670,7 +693,6 @@ class vit_cutting_order(osv.osv):
 			##  Jika acc_list2 ada maka tambahkan ke acc_list
 			if acc_list2 != []:
 				acc_list+=acc_list2
-			# import pdb;pdb.set_trace()
 			## ** ##
 
 		
@@ -685,7 +707,6 @@ class vit_cutting_order(osv.osv):
 				self.write(cr,uid,ids,{'consumed_line_ids':[(0,0,{'material':jk_item['material'],'type':jk_item['type'],
 					'qty_total_material':jk_item['qty_total_material'],'product_uom':jk_item['product_uom']})]})		
 			for jk_item in acc_list:
-				# import pdb;pdb.set_trace()
 
 				self.write(cr,uid,ids,{'accessories_line_ids':[(0,0,{'material':jk_item['material'],'type':jk_item['type'],
 					'qty_total_material':jk_item['qty_total_material'],'product_uom':jk_item['product_uom']})]})
@@ -710,9 +731,10 @@ class vit_cutting_order(osv.osv):
 			ls_id_list = []
 			for id_ls in loop_size:
 				mrp_bom_obj_by_id_ls = mrp_bom_obj.search(cr,uid,[('master_model_id','=',self_obj[0].type_product_id.model_product),('size','=',id_ls)])
+				# import pdb;pdb.set_trace()
 				
 				if mrp_bom_obj_by_id_ls ==[]:
-					raise osv.except_osv( 'Lengkapi BOM untuk produk ini, satu product memiliki 6 Ukuran [2,4,6,8,10,12]' , 'Tidak Bisa Dikalkulasi/Proses')
+					raise osv.except_osv( 'Lengkapi BOM untuk produk ini, satu product memiliki 6 Ukuran [S,M,L,XL,XXL,XXXL] atau [2,4,6,8,10,12]' , 'Tidak Bisa Dikalkulasi/Proses')
 				ls_id_list.append(mrp_bom_obj_by_id_ls[0])
 			print ls_id_list
 			
@@ -851,7 +873,8 @@ class vit_cutting_order(osv.osv):
 				self.write(cr,uid,ids,{'accessories_line_ids':[(0,0,{'material':jk_item['material'],'type':jk_item['type'],
 					'qty_total_material':jk_item['qty_total_material'],'product_uom':jk_item['product_uom']})]})
 		else:
-			raise osv.except_osv(self_obj[0].category +' '+'Harus Dalam Develop' , 'Tidak Bisa Dikalkulasi/Proses')	
+			raise osv.except_osv(self_obj[0].category +' '+'Harus Dalam Develop' ,
+					 'Tidak Bisa Dikalkulasi/Proses [Periksa Kembali Master Type] ')	
 		return True
 
 
@@ -974,10 +997,14 @@ class vit_cutting_order(osv.osv):
 		if self.browse(cr,uid,ids,context)[0].s_qc  == 0 and self.browse(cr,uid,ids,context)[0].m_qc == 0 \
 			and self.browse(cr,uid,ids,context)[0].l_qc  == 0  and self.browse(cr,uid,ids,context)[0].xl_qc== 0  \
 			and self.browse(cr,uid,ids,context)[0].xxl_qc == 0:
-			raise osv.except_osv('Lengkapi dan isi Qc Cutting','Tap QC Cutting')
+			raise osv.except_osv('Lengkapi dan isi Qc Cutting','Tab QC Cutting')
 
+		# Check Overhead
 		if self.browse(cr,uid,ids,context)[0].qty_total_harga_journal_value  == 0 :
-			raise osv.except_osv('Lengkapi dan isi Nilai Overheads','Tap Accounting')
+			raise osv.except_osv('Lengkapi dan isi Nilai Overheads','Tab Accounting')
+		# Check Sisa Cutting
+			# if self.browse(cr,uid,ids,context)[0].sisa_ids  == [] :
+			# 	raise osv.except_osv('Lengkapi dan isi Sisa Cutting','Tab Sisa Cutting')
 
 		self.journal_overheads(cr,uid,ids,context)
 		lokasi_bahan_jadi = 'Lokasi Barang Jadi'
@@ -1103,24 +1130,31 @@ class vit_cutting_order(osv.osv):
 					context={}
 				context['account_period_prefer_normal']= True
 				period_id 	= self.pool.get('account.period').find(cr,uid, self.browse(cr,uid,ids[0],).date_start_cutting, context)[0]
+				
+				# import pdb;pdb.set_trace()
+
 				debit = {
 					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
 					'name'       : self.browse(cr,uid,ids[0],).name,
-					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
-					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					# 'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'ref'        : self.browse(cr,uid,ids[0],).name,
+					# 'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.company_id.id,
 					'account_id' : master.debit_account_id.id,
-					'debit'      : jurnal_value_id.value * self.browse(cr,uid,ids[0],).qty_order,
+					'debit'      : jurnal_value_id.value * self.browse(cr,uid,ids[0],).qty_qc,
 					'credit'     : 0.0 
 				}
 				
 				credit = {
 					'date'       : self.browse(cr,uid,ids[0],).date_start_cutting,
 					'name'       : self.browse(cr,uid,ids[0],).name,
-					'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
-					'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					# 'ref'        : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'ref'        : self.browse(cr,uid,ids[0],).name,
+					# 'partner_id' : self.browse(cr,uid,ids[0],).user_id.id,
+					'partner_id' : self.browse(cr,uid,ids[0],).user_id.company_id.id,
 					'account_id' : master.credit_account_id.id,
 					'debit'      : 0.0 ,
-					'credit'     : jurnal_value_id.value * self.browse(cr,uid,ids[0],).qty_order ,
+					'credit'     : jurnal_value_id.value * self.browse(cr,uid,ids[0],).qty_qc ,
 					}
 
 				lines = [(0,0,debit), (0,0,credit)]
@@ -1128,7 +1162,8 @@ class vit_cutting_order(osv.osv):
 				am_data = {
 					'journal_id'   : master.journal_id.id,
 					'date'         :  self.browse(cr,uid,ids[0],).date_start_cutting,
-					'ref'          : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					# 'ref'          : master.name +' '+self.browse(cr,uid,ids[0],).name,
+					'ref'          : self.browse(cr,uid,ids[0],).name,
 					'period_id'    : period_id,
 					'line_id'      : lines ,
 					}
@@ -1473,16 +1508,26 @@ class vit_cutting_order(osv.osv):
 
 		vit_master_type_obj = self.pool.get('vit.master.type',)
 		master_type = vit_master_type_obj.browse(cr, uid, type_product_id, context=context)
-
-		# prod_categ_obj = self.pool.get('product.category')
-		# name_prod_categ_obj = prod_categ_obj.browse(cr,uid,master_type.categ_id.id,context=context)
-		return {
-			'value' : {
-				'category' : master_type.categ_id,
-				'component_main_qty' 		: master_type.main_qty,
-				'component_variation_qty' 	: master_type.variation_qty,
+		# import pdb;pdb.set_trace()
+		if master_type.id!=False:
+			return {
+				'value' : {
+					'category' : master_type.categ_id,
+					'component_main_qty' 		: master_type.main_qty,
+					'component_variation_qty' 	: master_type.variation_qty,
+					'keterangan'				: master_type.keterangan
+				}
 			}
-		}
+		else :
+			return {
+				'value' : {
+					'category' :'',
+					'component_main_qty' 		:'',
+					'component_variation_qty' 	: '',
+					'keterangan'				: ''
+				}
+			}
+
 
 	def onchange_nominal(self, cr, uid, ids, nominal, context=None):
 		# if nominal:
@@ -1534,7 +1579,7 @@ class product_sisa(osv.Model):
 		return res
 
 	def on_change_product_id2(self, cr, uid, ids, product_id, name, context=None):
-		# import pdb;pdb.set_trace()
+		
 
 		# uom_id = self.pool.get('vit.usage.line').browse(cr, uid, product_id, context=context).product_id.uom_id.id
 		uom_id = self.pool.get('product.product').browse(cr, uid, product_id, context=context).uom_id.id

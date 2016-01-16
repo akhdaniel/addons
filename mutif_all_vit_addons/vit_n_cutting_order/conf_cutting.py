@@ -48,6 +48,19 @@ class vit_master_journal(osv.osv):
 		'is_active'  : fields.boolean('Active?'),	
 }
 
+	def _get_default_appeareance(self, cr, uid, context=None):
+		if context is None:
+			context = {}
+		overhead_value_ids = []
+
+		ir_model_id   = self.pool.get('ir.model').search(cr,uid,[('model','=','vit.cutting.order')])
+		return ir_model_id[0]
+
+	_defaults = {
+		'appeareance' : _get_default_appeareance,
+		'is_active'	  : True,
+	}
+
 
 
 class vit_master_location(osv.osv):

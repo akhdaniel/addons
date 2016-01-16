@@ -1,654 +1,360 @@
-<!DOCTYPE html>
-<html>
 
-<head data-gwd-animation-mode="quickMode">
-  <title>latihan</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Google Web Designer 1.3.0.0410">
-  <style type="text/css">
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-    }
-    body {
-      -webkit-transform: perspective(1400px) matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-      -webkit-transform-style: preserve-3d;
-      background-color: transparent;
-    }
-    .gwd-div-v652 {
-      position: absolute;
-      left: 51px;
-      top: 32px;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      background-image: none;
-    }
-    .gwd-div-e0pf {
-      position: absolute;
-      left: 143px;
-      top: 32px;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-    }
-    .gwd-div-f802 {
-      position: absolute;
-      left: 52px;
-      top: 88px;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-    }
-    .gwd-div-prs8 {
-      position: absolute;
-      width: 126px;
-      height: 44px;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 53px;
-      top: 86px;
-    }
-    .gwd-div-01nz {
-      -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-div-iyrc {
-      position: absolute;
-      left: 195px;
-      top: 88px;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-    }
-    .gwd-img-q9wt {
-      position: absolute;
-      width: 170.95px;
-      height: 225px;
-      left: 52.05px;
-      top: 181px;
-    }
-    .gwd-div-3z9t {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      left: 231px;
-      top: 169.5px;
-    }
-    .gwd-div-00h6 {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      left: 231px;
-      top: 191.5px;
-    }
-    .gwd-div-lfux {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      left: 231px;
-      top: 216.5px;
-    }
-    .gwd-div-x39k {
-      width: 126px;
-    }
-    .gwd-div-rwf2 {
-      height: 18px;
-      width: 126px;
-    }
-    .gwd-div-3ew1 {
-      height: 18px;
-      width: 126px;
-    }
-    .gwd-div-iwp5 {
-      width: 0px;
-    }
-    .gwd-div-7e1i {
-      height: 54px;
-      width: 162.4375px;
-    }
-    .gwd-div-x6o9 {
-      height: 18px;
-      width: 162.4375px;
-    }
-    .gwd-div-a727 {
-      height: 18px;
-      width: 162.4375px;
-    }
-    .gwd-div-28ip {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 644px;
-      top: 97px;
-    }
-    .gwd-div-q450 {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 645px;
-      top: 115px;
-    }
-    .gwd-div-b9p7 {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 645px;
-      top: 133px;
-    }
-    .gwd-div-yvki {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      width: 600px;
-      left: 569.031948985611px;
-      top: 151.5px;
-    }
-    .gwd-ul-uddt {
-      white-space: nowrap;
-      widows: 1;
-    }
-    .gwd-span-r3hh {
-      white-space: nowrap;
-      widows: 1;
-    }
-    .gwd-div-lhhp {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 1110px;
-      top: 195.5px;
-    }
-    .gwd-ul-j7io {
-      white-space: nowrap;
-      widows: 1;
-      -webkit-transform: translate3d(-55px, 19px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-div-jhol {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 946.925px;
-      top: 171px;
-    }
-    .gwd-h3-lix1 {
-      left: -4px;
-      top: 19px;
-      -webkit-transform: translate3d(-71px, 19px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-div-h28e {
-      left: -4px;
-      top: 59px;
-      -webkit-transform: translate3d(-71px, 1px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-div-h0k2 {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      width: 150px;
-      left: 932px;
-      top: 191px;
-    }
-    .gwd-span-0xl1 {
-      font-family: Arial;
-      font-weight: bold;
-    }
-    .gwd-img-j2rx {
-      width: 170.9375px;
-      left: 931.576315789474px;
-      top: 214px;
-      height: 190px;
-    }
-    .gwd-img-lelz {
-      width: 120px;
-      left: 1055.57631578947px;
-      top: 214px;
-    }
-    .gwd-img-8d3y {
-      width: 120px;
-      left: 931.576315789474px;
-      top: 214px;
-    }
-    .gwd-div-5bch {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      left: 973px;
-      top: 214px;
-    }
-    .gwd-div-41mm {
-      position: absolute;
-      font-family: 'Times New Roman';
-      text-align: left;
-      color: rgb(0, 0, 0);
-      width: 41px;
-      height: 18px;
-      left: 1092.0928853755px;
-      top: 214px;
-    }
-    .gwd-table-4z59 {
-      left: 10px;
-      top: 42px;
-      -webkit-transform: translate3d(50.5px, 411px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-img-bouj {
-      left: 51.05px;
-      top: 183px;
-    }
-  </style>
-  <style type="text/css" id="" title="Temp" media="screen"></style>
-  <style type="text/css" id="" title="Temp" media="screen">
-    .gwd-table-171d {
-      -webkit-transform: translate3d(50.5px, 411px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-table-wfh3 {
-      height: 86px;
-      left: 0px;
-      top: 267px;
-      -webkit-transform: translate3d(500.5px, 253px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-tr-umt1 {
-      -webkit-transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-      -webkit-transform-style: preserve-3d;
-      height: 60px;
-    }
-    .gwd-table-flm2 {
-      left: 8px;
-      top: 42px;
-      -webkit-transform: translate3d(50.5px, 271px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-table-irmq {
-      -webkit-transform: translate3d(500.5px, 117px, 0px);
-      -webkit-transform-style: preserve-3d;
-      height: 90px;
-    }
-    .gwd-table-12i2 {
-      left: 0px;
-      top: 265px;
-      -webkit-transform: translate3d(499.5px, 257px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-table-gt4r {
-      -webkit-transform: translate3d(50.5px, 123px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-table-84r4 {
-      -webkit-transform: translate3d(500.5px, -31px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-table-c91v {
-      -webkit-transform: translate3d(501px, 101px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-table-92pr {
-      -webkit-transform: translate3d(50.5px, -23px, 0px);
-      -webkit-transform-style: preserve-3d;
-      height: 200px;
-    }
-    .gwd-table-a73t {
-      -webkit-transform: translate3d(50.5px, 269px, 0px);
-      -webkit-transform-style: preserve-3d;
-    }
-    .gwd-td-w6z7 {
-      border-style: solid;
-      border-width: 1px;
-    }
-    .gwd-span-qpl3 {
-      font-family: Calibri, sans-serif;
-      font-size: 8pt;
-      text-align: center;
-      widows: 1;
-      color: rgb(0, 32, 96);
-    }
-    .gwd-span-mz8s {
-      font-family: Calibri, sans-serif;
-      text-align: center;
-      widows: 1;
-      font-size: 8pt;
-      color: rgb(0, 32, 96);
-    }
-    .gwd-td-ja98 {
-      border-style: solid;
-      border-width: 1px;
-    }
-    .gwd-td-a207 {
-      border-style: solid;
-      border-width: 1px;
-    }
-    .gwd-td-dea1 {
-      border-style: solid;
-      border-width: 1px;
-    }
-    .gwd-span-826d {
-      color: rgb(0, 32, 96);
-      font-family: Calibri, sans-serif;
-      font-size: 10.6666669845581px;
-      text-align: center;
-      widows: 1;
-    }
-    .gwd-span-8f33 {
-      color: rgb(0, 32, 96);
-      font-family: Calibri, sans-serif;
-      font-size: 10.6666669845581px;
-      text-align: center;
-      widows: 1;
-    }
-  </style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<style type="text/css">
+<!--
+.style1 {font-size: 9px}
+-->
+</style>
 </head>
 
-<body style="" id="kebutuhan">
-  %for o in objects :
-  <div class="gwd-div-v652">Surat Perintah Kerja Cutting :
-    <div>No : ${o.name}</div>
-  </div>
-  %endfor
-  <div class="gwd-div-e0pf"></div>
-  <div class="gwd-div-f802"></div>
-  <div class="gwd-div-iyrc">:&nbsp;
-    <div>: &nbsp;${o.date_start_cutting}</div>
-    <div>: &nbsp;${o.date_end_cutting}&nbsp;</div>
-  </div>
-  <img class="gwd-img-q9wt gwd-img-bouj">
-  <img class="gwd-img-q9wt gwd-img-j2rx gwd-img-8d3y" id="sample_bahan">
-  <img class="gwd-img-q9wt gwd-img-j2rx gwd-img-lelz" id="sample_variasi">
-  <div class="gwd-div-3z9t">
-    <h3>Model : ${ o.type_product_id.model_product }</h3>
-  </div>
-  <div class="gwd-div-00h6">
-    <h3>Kategori : ${ o.category }</h3>
-  </div>
-  <div class="gwd-div-lfux">
-    <h3>Jumlah Komponen&nbsp;
-    </h3>
-    <ul>
-      <li>Badan : ${ o.component_main_qty}
-        <br>
-      </li>
-      <li>Variasi : ${o.component_variation_qty}
-        <br>
-      </li>
-    </ul>
-  </div>
-  <div class="gwd-div-prs8 gwd-div-x39k">Status &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    <div class="gwd-div-01nz gwd-div-rwf2">Tanggal Cutting&nbsp;</div>
-    <div class="gwd-div-3ew1">Tanggal Selesai&nbsp;</div>
-  </div>
-  <div class="gwd-div-f802 gwd-div-iwp5"></div>
-  <div class="gwd-div-iyrc gwd-div-7e1i">:&nbsp;
-    <div class="gwd-div-x6o9">: &nbsp;${o.date_start_cutting}</div>
-    <div class="gwd-div-a727">: &nbsp;${o.date_end_cutting}&nbsp;</div>
-  </div>
-  <div class="gwd-div-28ip">Kode Cutter :</div>
-  <div class="gwd-div-q450">Nama Cutter :</div>
-  <div class="gwd-div-b9p7">No Meja :</div>
-  <div class="gwd-div-yvki">
-    <h3 class="gwd-h3-lix1">Kebutuhan Bahan (Kg)</h3>
-    <div class="gwd-div-h28e">
-      %for line in o.consumed_line_ids:
-      <li>${ line.material.name } &nbsp;(${ line.qty_total_material} &nbsp; ${ line.product_uom.name})
-      %endfor
-      </li>
-    </div>
-  </div>
-  <div class="gwd-div-h0k2"><span class="gwd-span-0xl1">Sample Warna</span>
-  </div>
-  <div class="gwd-div-5bch">Bahan</div>
-  <div class="gwd-div-41mm">Variasi</div>
-  <br>
-  <table style="width: 350px;" class="gwd-table-4z59" id="jml_order" frame="box">
-    <tbody class="">
-      <tr>
-        <th colspan="7" bgcolor="#949470">Jumlah Order</th>
-      </tr>
-    </tbody>
-    <tbody>
-      <tr>
-        <td style="width:50px; text-align:center;">S</td>
-        <td style="width:50px;">M</td>
-        <td style="width:50px;">L</td>
-        <td style="width:50px;">XL</td>
-        <td style="width:50px;">XXL</td>
-        <td style="width:50px;">LM 12</td>
-        <td style="width:50px;background-color:#949470;">Jumlah</td>
-      </tr>
-      <tr>
-        %for o in objects :
-        <td>${o.s_order}</td>
-        <td>${o.m_order}</td>
-        <td>${o.l_order}</td>
-        <td>${o.xl_order}</td>
-        <td>${o.xxl_order}</td>
-        <td>${o.xxxl_order}</td>
-        <td>${o.qty_order}</td>
-         %endfor
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table style="width: 450px;" class="gwd-table-4z59 gwd-table-171d" id="jml_order" frame="box">
-    <tbody class="">
-      <tr>
-        <th colspan="7" bgcolor="#949470">Pemakaian Bahan</th>
-        <th style="width:50px;" bgcolor="#949470">Jumlah</th>
-        <th style="width:50px;" bgcolor="#949470">Sisa</th>
-      </tr>
-    </tbody>
-    <tbody>
-      <tr>
-        <td style="width:50px;background-color:#949470;border-width:1px;">Bahan</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-      <tr>
-        <td style="width:50px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-      <tr>
-        <td style="width:50px;background-color:#949470;border-width:1px;">Variasi</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-      <tr>
-        <td style="width:50px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table style="width: 300px;" id="pjwb1" frame="box" class="gwd-table-wfh3 gwd-table-12i2">
-    <tbody>
-      <tr>
-        <th colspan="7" bgcolor="#949470">Penanggung Jawab</th>
-      </tr>
-      <tr>
-        <th style="width:150px;" colspan="2" bgcolor="#949470">Gudang</th>
-        <th style="width:150px;" colspan="2" bgcolor="#949470">Cutting</th>
-      </tr>
-      <tr class="gwd-tr-umt1">
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="4">&nbsp;</td>
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="4">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table style="width: 450px;" class="gwd-table-4z59 gwd-table-171d gwd-table-flm2 gwd-table-a73t" id="jml_order" frame="box">
-    <tbody class="">
-      <tr>
-        <th colspan="7" bgcolor="#949470">Cutting</th>
-        <th style="width:50px;" bgcolor="#949470">Waktu Mulai</th>
-        <th style="width:50px;" bgcolor="#949470">Waktu Selesai</th>
-      </tr>
-    </tbody>
-    <tbody>
-      <tr>
-        <td style="width:50px;background-color:#949470;border-width:1px;">Hasil</td>
-        <td style="width:50px;border-width:1px;">S</td>
-        <td style="width:50px;text-align:center;">M</td>
-        <td style="width:50px;text-align:center;">L</td>
-        <td style="width:50px;text-align:center;">XL</td>
-        <td style="width:50px;text-align:center;">XXL</td>
-        <td style="width:50px;text-align:center;">LM 12</td>
-      </tr>
-      <tr>
-        <td style="width:50px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-      <tr>
-        <td style="width:50px;background-color:#949470;border-width:1px;">Sisa</td>
-        <td style="width:50px;border-width:1px;">S</td>
-        <td style="width:50px;text-align:center;">M</td>
-        <td style="width:50px;text-align:center;">L</td>
-        <td style="width:50px;text-align:center;">XL</td>
-        <td style="width:50px;text-align:center;">XXL</td>
-        <td style="width:50px;text-align:center;">LM 12</td>
-      </tr>
-      <tr>
-        <td style="width:50px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table style="width: 300px;" id="pjwb2" frame="box" class="gwd-table-wfh3 gwd-table-irmq gwd-table-c91v">
-    <tbody>
-      <tr>
-        <th colspan="7" bgcolor="#949470">Penanggung Jawab</th>
-      </tr>
-      <tr>
-        <th style="width:150px;" colspan="2" bgcolor="#949470">Cutting</th>
-        <th style="width:150px;" colspan="2" bgcolor="#949470">QC Cutting</th>
-      </tr>
-      <tr class="gwd-tr-umt1">
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="8">&nbsp;</td>
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="8">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table style="width: 450px;" class="gwd-table-4z59 gwd-table-171d gwd-table-flm2 gwd-table-gt4r" id="jml_order" frame="box">
-    <tbody class="">
-      <tr>
-        <th colspan="7" bgcolor="#949470">QC Cutting</th>
-        <th style="width:50px;" bgcolor="#949470">Waktu Mulai</th>
-        <th style="width:50px;" bgcolor="#949470">Waktu Selesai</th>
-      </tr>
-    </tbody>
-    <tbody>
-      <tr>
-        <td style="width:50px;background-color:#949470;border-width:1px;">Hasil</td>
-        <td style="width:50px;border-width:1px;">S</td>
-        <td style="width:50px;text-align:center;">M</td>
-        <td style="width:50px;text-align:center;">L</td>
-        <td style="width:50px;text-align:center;">XL</td>
-        <td style="width:50px;text-align:center;">XXL</td>
-        <td style="width:50px;text-align:center;">LM 12</td>
-      </tr>
-      <tr>
-        <td style="width:50px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-      <tr>
-        <td style="width:50px;background-color:#949470;border-width:1px;">Sisa</td>
-        <td style="width:50px;border-width:1px;">S</td>
-        <td style="width:50px;text-align:center;">M</td>
-        <td style="width:50px;text-align:center;">L</td>
-        <td style="width:50px;text-align:center;">XL</td>
-        <td style="width:50px;text-align:center;">XXL</td>
-        <td style="width:50px;text-align:center;">LM 12</td>
-      </tr>
-      <tr>
-        <td style="width:50px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-        <td style="width:50px;border-style:solid;border-width:1px;">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  <br>
-  <table style="width: 300px;" id="pjwb2" frame="box" class="gwd-table-wfh3 gwd-table-irmq gwd-table-84r4">
-    <tbody>
-      <tr>
-        <th colspan="7" bgcolor="#949470">Penanggung Jawab</th>
-      </tr>
-      <tr>
-        <th style="width:150px;" colspan="2" bgcolor="#949470">QC Cutting</th>
-        <th style="width:150px;" colspan="2" bgcolor="#949470">Supervisor</th>
-      </tr>
-      <tr class="gwd-tr-umt1">
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="8">&nbsp;</td>
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="8">&nbsp;</td>
-      </tr>
-    </tbody>
-  </table>
-  &nbsp;&nbsp;
-  <table style="width: 300px;" id="pjwb3" frame="box" class="gwd-table-92pr">
-    <tbody>
-      <tr>
-        <th bgcolor="#949470">Prepared By</th>
-        <th bgcolor="#949470">Approved By</th>
-      </tr>
-      <tr>
-        <td style="border-style:solid;border-width:1px;" colspan="2" rowspan="8">&nbsp;
-          <br><span class="SpellE gwd-span-qpl3"><br><br><br><br><br><br><br><br><br><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Lusi</span><span class="gwd-span-mz8s">&nbsp;<span class="SpellE">Tresnawati &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></span>
-          <span
-          class="gwd-span-826d">Sri&nbsp;</span><span class="SpellE gwd-span-8f33">Sulastri<br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Perencanaan &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Manager Produksi</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<body>
+<h1>&nbsp;</h1>
+<h1>
+  <label title="">Surat Perintah Kerja Cutting</label>
+</h1>
+% for o in objects :
+<table width="951" border="1">
+  <tr>
+    <th scope="col">No</th>
+    <th scope="col">Tanggal Cutting </th>
+    <th scope="col">Tanggal Selesai </th>
+    <th scope="col">Kode Cutter </th>
+    <th scope="col">Nama Cutter </th>
+    <th scope="col">No Meja </th>
+  </tr>
+  <tr>
+    <td>${ o.name }</td>
+    <td>${ o.date_start_cutting }</td>
+    <td>${ o.date_end_cutting }</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<table width="951" border="1">
+  <caption align="top">
+   <strong> Model   </strong>
+  </caption>
+  
+  <tr>
+    <th width="243" scope="col">Model Image </th>
+    <th scope="col">Sample Warna Bahan </th>
+    <th width="183" scope="col">Sample Warna Kain </th>
+    <th width="230" scope="col">Keterangan</th>
+  </tr>
+  <tr>
+    <td><div align="center" class="style1">${ helper.embed_image('png',o.type_product_id.image,200,200)|n }</div></td>
+    <td width="180">&nbsp;</td>
+    <td width="183">&nbsp;</td>
+    <td width="230"><p>Model : ${ o.type_product_id.model_product }</p>
+      <p>Kategori : ${ o.category }</p>
+      <p>Jumlah Komponen :</p>
+      <ul>
+        <li>Badan : ${ o.component_main_qty}</li>
+        <li>Variasi :${o.component_variation_qty}</li>
+        <li>Keterangan Lain : ${o.keterangan}</li>
+      </ul>
+    <p>&nbsp;</p></td>
+  </tr>
+</table>
+<table width="951" border="1">
+  <caption align="top">
+  <strong>KEBUTUHAN  BAHAN </strong>
+  </caption>
+  
+  <tr>
+    <th width="161" scope="col">Kategori Bahan </th>
+    <th width="433" scope="col">Nama Bahan </th>
+    <th width="275" scope="col">Jumlah</th>
+  </tr>
+  <tr>
+    <td>
+		% for line in o.consumed_line_ids:
+			<li>	
+		  		${ line.type }
+			</li>
+		 % endfor
+	</td>
+    <td>
+		% for line in o.consumed_line_ids:
+			<li>	
+		  		${ line.material.name }
+			</li>
+		 % endfor
+	</td>
+    <td>
+		% for line in o.consumed_line_ids:
+			<li>	
+		  		${ line.qty_total_material }   ${ line.product_uom.name}
+			</li>
+		 % endfor
+	</td>
+  </tr>
+</table>
+<table width="951" border="1">
+  <tr>
+    <th colspan="7" scope="col">JUMLAH ORDER </th>
+  </tr>
+  <tr>
+    <td width="106"><strong>S/2</strong></td>
+    <td width="111"><strong>M/4</strong></td>
+    <td width="107"><strong>L/6</strong></td>
+    <td width="119"><strong>XL/8</strong></td>
+    <td width="120"><strong>XXL/10</strong></td>
+    <td width="109"><strong>XXXL/12</strong></td>
+    <td width="99"><strong>Jumlah</strong></td>
+  </tr>
+  <tr>
+    <td>${ o.s_order }</td>
+    <td>${ o.m_order }</td>
+    <td>${ o.l_order }</td>
+    <td>${ o.xl_order }</td>
+    <td>${o. xxl_order }</td>
+    <td>${o. xxxl_order }</td>
+    <td>${ o.qty_order }</td>
+  </tr>
+</table>
+<table width="951" border="1">
+  <tr>
+    <th colspan="10" scope="col">PEMAKAIAN BAHAN </th>
+  </tr>
+  <tr>
+    <td colspan="6"><div align="center"><strong>Pengambilan</strong></div></td>
+    <td width="48"><div align="center"><strong>Jumlah</strong></div></td>
+    <td width="47"><div align="center"><strong>Sisa</strong></div></td>
+    <td colspan="2"><div align="center"><strong>Penanggung Jawab </strong></div></td>
+  </tr>
+  <tr>
+    <td width="60" rowspan="2"><strong>Badan : </strong></td>
+    <td width="17">&nbsp;</td>
+    <td width="17">&nbsp;</td>
+    <td width="17">&nbsp;</td>
+    <td width="17">&nbsp;</td>
+    <td width="17">&nbsp;</td>
+    <td width="48">&nbsp;</td>
+    <td width="47">&nbsp;</td>
+    <td width="177"><div align="center">Gudang</div></td>
+    <td width="179"><div align="center">Cutting</div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td rowspan="3">&nbsp;</td>
+    <td rowspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><strong>Variasi : </strong></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="6"><div align="center"><strong>Kekurangan</strong></div></td>
+    <td><strong>Jumlah</strong></td>
+    <td><strong>Sisa</strong></td>
+    <td rowspan="3">&nbsp;</td>
+    <td rowspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><strong>Badan : </strong></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td><strong>Variasi :</strong></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<table width="951" border="1">
+  <tr>
+    <th colspan="11" scope="col"><strong>CUTTING</strong></th>
+  </tr>
+  <tr>
+    <td colspan="7"><div align="center"><strong>Hasil Cutting </strong></div></td>
+    <td colspan="2"><div align="center"><strong>Waktu </strong></div></td>
+    <td colspan="2"><div align="center"><strong>Penanggung Jawab </strong></div></td>
+  </tr>
+  <tr>
+    <td width="21">S/2</td>
+    <td width="26">M/4</td>
+    <td width="21"><div align="center">L/6</div></td>
+    <td width="32"><div align="center">XL/8</div></td>
+    <td width="51"><div align="center">XXL/10</div></td>
+    <td width="62"><div align="center">XXXL/12</div></td>
+    <td width="41"><div align="center">Jumlah</div></td>
+    <td width="72"><div align="center">Cut Mulai </div></td>
+    <td width="80"><div align="center">Cut Selesai </div></td>
+    <td width="77"><div align="center">Cutting</div></td>
+    <td width="89"><div align="center">QC Cutting </div></td>
+  </tr>
+  <tr>
+    <td width="21">&nbsp;</td>
+    <td width="26">&nbsp;</td>
+    <td width="21">&nbsp;</td>
+    <td width="32">&nbsp;</td>
+    <td width="51">&nbsp;</td>
+    <td width="62">&nbsp;</td>
+    <td width="41">&nbsp;</td>
+    <td rowspan="4">&nbsp;</td>
+    <td rowspan="4">&nbsp;</td>
+    <td rowspan="4">&nbsp;</td>
+    <td rowspan="4">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="7"><div align="center"><strong>Reject</strong> <strong>Cutting</strong> </div></td>
+  </tr>
+  <tr>
+    <td>S/2</td>
+    <td>M/4</td>
+    <td><div align="center">L/6</div></td>
+    <td><div align="center">XL/8</div></td>
+    <td><div align="center">XXL/10</div></td>
+    <td><div align="center">XXXL/12</div></td>
+    <td><div align="center">Jumlah</div></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="7"><div align="center"><strong>Hasil QC Pass </strong></div></td>
+    <td><div align="center">QC Mulai </div></td>
+    <td><div align="center">QC Selesai </div></td>
+    <td><div align="center">QC Cutting</div></td>
+    <td><div align="center">Supervisor</div></td>
+  </tr>
+  <tr>
+    <td>S/2</td>
+    <td>M/4</td>
+    <td><div align="center">L/6</div></td>
+    <td><div align="left">XL/8</div></td>
+    <td><div align="center">XXL/10</div></td>
+    <td><div align="center">XXXL/12</div></td>
+    <td><div align="center">Jumlah</div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="7"><div align="center"><strong>Reject QC </strong></div></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>S/2</td>
+    <td>M/4</td>
+    <td>L/6</td>
+    <td>XL/8</td>
+    <td>XXL/10</td>
+    <td>XXXL/12</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<table width="951" border="1">
+  <tr>
+    <th width="154" scope="col"><div align="center">Prepared By </div></th>
+    <th width="157" scope="col"><div align="center">Approved By </div></th>
+    <th width="138" scope="col">&nbsp;</th>
+    <th width="133" scope="col">&nbsp;</th>
+    <th width="134" scope="col">&nbsp;</th>
+  </tr>
+  <tr>
+    <td height="110">&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 </body>
-
+% endfor
 </html>

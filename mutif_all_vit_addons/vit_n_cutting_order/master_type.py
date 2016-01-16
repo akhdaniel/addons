@@ -22,13 +22,15 @@ class vit_master_type(osv.osv):
 		'model_product' : fields.char('Model/Type', required=True,),
 		# 'product_id' : fields.many2one('product.product','Sample Product', domain="['|',('categ_id.name','=','Mutif'),('categ_id.name','=','Little Mutif')]"),
 		'main_qty'		: fields.integer('Body'),
-		'variation_qty'	: fields.integer('Variation'),
+		# 'variation_qty'	: fields.integer('Variation'),
+		'variation_qty'	: fields.char('Variation'),
 		'categ_id' : fields.char('Category'),
 		'cost_makl': fields.float('Makloon Price'),
 		'cost_cut' :fields.float('Cutting Price'),
 		'kancing_price' :fields.float('Kancing Price'),
 		'image': fields.binary('image',type="binary"),
 		'biaya_lain_ids':fields.one2many('vit.biaya.lain.type','master_type_id','Biaya Lain'),
+		'keterangan':fields.char('Keterangan Lain'),
 	}
 
 	_sql_constraints = [

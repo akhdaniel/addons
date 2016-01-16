@@ -1,12 +1,12 @@
 <openerp>
-    <data>   
+    <data noupdate="1">   
         <record id="product_uom_categ_kgm" model="product.uom.categ">
             <field name="name">Weight</field>
         </record>
 
         <record id="product_uom_kgm" model="product.uom">
             <field name="category_id" ref="product_uom_categ_kgm"/>
-            <field name="name">kg</field>
+            <field name="name">Kg</field>
             <field name="factor" eval="1"/>
         </record>
 
