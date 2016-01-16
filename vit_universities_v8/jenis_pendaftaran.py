@@ -10,6 +10,13 @@ _logger = logging.getLogger(__name__)
 class jenis_pendaftaran(osv.osv):
 	_name 		= "akademik.jenis_pendaftaran"
 
+	def find_by_name(self, cr, uid, name, context=None):
+		ids = self.search(cr, uid, [('name','=', name )], context=context)
+		if not ids:
+			raise osv.except_osv(_('Error'),_("jenis pendaftaran name not found %s") % (name) ) 
+		data = self.browse(cr, uid, ids[0], context=context)
+		return data
+
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
 		if not args:
 			args = []

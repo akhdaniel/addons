@@ -442,6 +442,8 @@
         </record>
 
 
+
+        <!-- mahasiswa tree view -->
         <record model="ir.ui.view" id="partner_tree_view">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
@@ -458,12 +460,13 @@
             </field>
         </record>          
    
-          <record model="ir.ui.view" id="partner_tree_view2">
+        <!-- mahasiswa tree view2 -->
+        <record model="ir.ui.view" id="partner_tree_view2">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Calon Mahasiswa">
+                <tree string="Daftar Mahasiswa">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                     <field name="fakultas_id"/>
@@ -474,7 +477,9 @@
             </field>
         </record>  
         
-          <record model="ir.ui.view" id="partner_tree_view3">
+
+        <!-- mahasiswa tree view 3 -->
+        <record model="ir.ui.view" id="partner_tree_view3">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
             <field name="type">tree</field>

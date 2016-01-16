@@ -31,6 +31,23 @@ class academic_year(osv.Model):
 	_rec_name = "code"
 	_order = "code"
 
+	def find_by_code(self, cr, uid, code, context=None):
+		ids = self.search(cr, uid, [('code','=', code )], context=context)
+		if not ids:
+			# raise osv.except_osv(_('Error'),_("Kode Academic Year not found %s") % (code) ) 
+			data = {
+				'name' : code,
+				'code' : code,
+				'date_start' : '%s-01-01' % (code),
+				'date_stop' : '%s-12-31' % (code),
+				'mekanisme_nilai': 'terbaru',
+				'max_mk': 30
+			}
+			ids = [self.create(cr, uid, data, context=context)]
+
+		data = self.browse(cr, uid, ids[0], context=context)
+		return data
+
 	_columns = {
 		#'sequence': fields.integer('Urutan', required=True, help="Urutan yang akan di tampilkan."),
 		'name': fields.char('Nama', size=64, select=1, required=True),
@@ -284,6 +301,13 @@ class master_prodi (osv.Model):
 			string="Internal?", store=True),
 	}
 
+	def find_by_kode(self, cr, uid, kode, context=None):
+		ids = self.search(cr, uid, [('kode','=', kode )], context=context)
+		if not ids:
+			raise osv.except_osv(_('Error'),_("Kode prodi not found %s") % (kode) ) 
+		prodi_data = self.browse(cr, uid, ids[0], context=context)
+		return prodi_data
+
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
 		if not args:
 			args = []
@@ -366,6 +390,14 @@ biodata_keluarga()
 class master_semester(osv.Model):
 	_name = 'master.semester'
 	_order ="name"
+
+
+	def find_by_name(self, cr, uid, name, context=None):
+		ids = self.search(cr, uid, [('name','=', name )], context=context)
+		if not ids:
+			raise osv.except_osv(_('Error'),_("semester name not found %s") % (name) ) 
+		data = self.browse(cr, uid, ids[0], context=context)
+		return data
 
 	_columns={
 		'name': fields.integer('Semester',required=True),
