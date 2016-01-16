@@ -1,0 +1,21 @@
+<openerp>
+	<data>
+
+        <record id="vit_view_inventory_form_update" model="ir.ui.view">
+            <field name="name">stock.inventory</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+   				<field name="date" position="after">
+                    <group colspan="2">
+                        <group>
+                            <field name="history" nolabel="1"/>
+                        </group>
+                    </group>
+   				</field>	
+            </field>        
+        </record>
+
+
+	</data>
+</openerp>	
