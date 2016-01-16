@@ -1,0 +1,10 @@
+<openerp>
+	<data noupdate="0">
+
+	    <record id="group_update_physical_inventory2" model="res.groups">
+	        <field name="name">Manage Update Physical Inventory</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+           <record id="vit_view_update_inventory" model="ir.ui.view">
+            <field name="name">Update Inventory</field>
+            <field name="model">stock.update.inventory</field>
+            <field name="arch" type="xml">
+              <form string="Update Inventory" version="7.0">
+                  <separator string="Update Current Inventory"/>
+                  <group>
+                    <group string="Stock Moves">
+                        <field name="date_move"/>
+                    </group>
+                    <group string="Journal Entries">
+                        <field name="date_journal"/>
+                        <field name="period_journal_id" domain="[('state', '=', 'draft')]" />
+                    </group>
+                  </group>                  
+                  <footer>
+                      <button name="update_inventory" string="Update Inventory" type="object" class="oe_highlight"/>
+                      or
+                      <button string="Cancel" class="oe_link" special="cancel" />
+                  </footer>
+              </form>
+            </field>
+        </record>
+
+        <record id="vit_action_view_stock_upate_inventory" model="ir.actions.act_window">
+            <field name="name">Update Inventory</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.update.inventory</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="vit_view_update_inventory"/>
+            <field name="target">new</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="vit_view_inventory_form2" model="ir.ui.view">
+            <field name="name">stock.inventory</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <button name="325" position="after">
+                  <button name="%(vit_action_view_stock_upate_inventory)d" string="Update Inventory" states="done" type="action" class="oe_link" groups="account.group_account_manager"/>
+                </button>
+            </field>
+        </record>      
+            
+    </data>
+</openerp>
