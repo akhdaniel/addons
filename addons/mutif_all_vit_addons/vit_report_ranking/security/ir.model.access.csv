@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_customer_order_ranking_user,vit.customer.order.ranking,model_vit_customer_order_ranking,vit_report_ranking.group_top_ranking,1,1,1,1
+access_vit_customer_seller_ranking_user,vit.customer.seller.ranking,model_vit_customer_seller_ranking,vit_report_ranking.group_top_ranking,1,1,1,1
+access_vit_supplier1_ranking_user,vit.supplier1.ranking,model_vit_supplier1_ranking,vit_report_ranking.group_top_ranking,1,1,1,1
+access_vit_makloon1_ranking_user,vit.makloon1.ranking,model_vit_makloon1_ranking,vit_report_ranking.group_top_ranking,1,1,1,1
+access_vit_product_order1_ranking_user,vit.product.order1.ranking,model_vit_product_order1_ranking,vit_report_ranking.group_top_ranking,1,1,1,1
+access_vit_product_seller1_ranking_user,vit.product.seller1.ranking,model_vit_product_seller1_ranking,vit_report_ranking.group_top_ranking,1,1,1,1

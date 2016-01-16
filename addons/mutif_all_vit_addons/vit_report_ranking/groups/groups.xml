@@ -1,0 +1,11 @@
+<openerp>
+	<data noupdate="0">
+
+	    <record id="group_top_ranking" model="res.groups">
+	        <field name="name">Manage Top Ranking</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+
+    
+    </data>
+</openerp>

@@ -1,0 +1,52 @@
+ <openerp>
+    <data>>
+
+        <!-- wizard form-->
+        <record id="view_report_ranking_wizard_form" model="ir.ui.view">
+            <field name="name">Run Report Ranking</field>
+            <field name="model">report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Top 20 Ranking" version="7.0">
+                    <sheet>
+                        <field name="type"/>
+                        <group>
+                            <group string="Select Date Start">
+                                <field name="date_start"/>           
+                            </group>                            
+                            <group string="Select Date End">      
+                                <field name="date_end"/>       
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button type="special" 
+                             special="cancel" 
+                             string="Cancel" 
+                             icon="gtk-cancel"/>
+                        
+                        <button type="object" 
+                             name="fill_table"
+                             string="Ok" 
+                             icon="gtk-ok"
+                             />             
+                    </footer>
+                </form>
+            </field>
+        </record>
+    
+        <act_window name="Run Top 20 Ranking"            
+            res_model="report.wizard"
+            view_mode="form"
+            target="new"
+            context="{}"
+            id="action_vit_top_ranking_report"/>
+    
+        <menuitem
+            id="menu_top20_run"
+            name="Run Top 20 Ranking"
+            parent="vit_report_ranking.vit_ranking_menu"
+            action="action_vit_top_ranking_report"
+            sequence="14"/>
+
+    </data>
+</openerp>        
