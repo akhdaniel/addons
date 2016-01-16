@@ -1,0 +1,11 @@
+<openerp>
+	<data noupdate="0">
+
+	    <record id="group_stock_perday" model="res.groups">
+	        <field name="name">Manage Report Stock Per Day</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+
+    
+    </data>
+</openerp>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_move_analysis_user,vit.move.analysis,model_vit_move_analysis,vit_move_analysis.group_stock_perday,1,1,1,1
+access_vit_inventory_analysis_user,vit.move.analysis.onhand,model_vit_move_analysis_onhand,vit_move_analysis.group_stock_perday,1,1,1,1

@@ -1,0 +1,55 @@
+<openerp>
+	<data>
+		<!-- wizard action -->
+		<record model="ir.actions.act_window" id="run_move_analysis_report_wizard"> 
+			<field name="name">Run Move/Inventory Analysis</field>
+			<field name="res_model">vit_move_analysis.report_wizard</field> 
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_vit_move_analysis_tree"/>
+			<field name="context">{}</field>		
+			<field name="target">new</field> 
+		</record>
+
+		<!-- wizard form-->
+        <record id="view_move_analysis_report_wizard_form" model="ir.ui.view">
+            <field name="name">vit_move_analysis.report_wizard</field>
+            <field name="model">vit_move_analysis.report_wizard</field>
+            <field name="arch" type="xml">
+            	<form string="Move Analysis" version="7.0">
+            		<sheet>
+            			<group string="Select Parameters">
+            				<field name="location_id"/>
+            			</group>
+            			<group>
+			            	<group>
+				               <field name="type"/>             
+					        </group>            			
+			            	<group>
+				                <field name="date_from"/> 
+				                <field name="date_to"/>            
+					        </group>
+				    	</group>
+					</sheet>
+					<footer>
+						<button type="special" 
+							 special="cancel" 
+							 string="Cancel" 
+							 icon="gtk-cancel"/>
+						
+						<button type="object" 
+							 name="fill_table"
+							 string="Run Report Per Day" 
+							 icon="gtk-ok"
+							 />				
+					</footer>
+			    </form>
+            </field>
+        </record>
+
+
+    <menuitem id="report_move_perday" name="Report Move" parent="stock.menu_stock_root" sequence="100" groups="stock.group_stock_user,stock.group_stock_manager"/>
+    <menuitem action="run_move_analysis_report_wizard" id="stock.menu_action_stock_move_report" parent="stock.next_id_61" sequence="0" groups="stock.group_stock_user,stock.group_stock_manager"/>
+
+	</data>
+</openerp>
