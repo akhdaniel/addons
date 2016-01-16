@@ -1,0 +1,84 @@
+<openerp>
+	<data>
+
+		<!-- tree -->
+		<record id="view_sales_analysis_name_tree" model="ir.ui.view">
+		    <field name="name">Sales Analysis</field>
+		    <field name="model">vit_sales_analysis.sale_order_analysis</field>
+		    <field name="arch" type="xml">
+		    	<tree string="List Sales Analysis">
+		    		<field name="sub1" invisible="1"/>
+		    		<field name="sub2" invisible="1"/>
+					<field name="sub3" invisible="1"/>
+					<field name="categ_id"/>
+					<field name="report_type" invisible="1"/>	
+					<field name="product_id"/> 	
+					<field name="quantity"/>
+					<field name="amount"/>	
+					<field name="partner_id"/>
+		        </tree>    
+		    </field>
+		</record>
+
+        <!-- graph -->
+        <record id="view_sale_order_analysis_graph" model="ir.ui.view">
+            <field name="name">sales_analysis.graph</field>
+            <field name="model">vit_sales_analysis.sale_order_analysis</field>
+            <field name="arch" type="xml">
+                <graph string="sales analysis" type="bar">
+                    <field name="categ_id"/>
+                    <field name="quantity" operator="+"/>
+                    <field name="amount" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+		<!-- filter -->
+		<record id="view_sales_analysis_filter" model="ir.ui.view">
+		    <field name="name">sales_analysis.filter</field>
+		    <field name="model">vit_sales_analysis.sale_order_analysis</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Sales">
+		            <group expand="0" string="Group By...">
+
+		            	<field name="product_id"/>
+
+			            <filter string="Laba Kotor" name="sub1"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'sub1'}"/>
+
+			            <filter string="Penjualan Bersih" name="sub2_all"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'sub2'}"/>
+
+			            <filter string="Total Harga Pokok Produksi" name="sub2_prod"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'sub2'}"/>
+
+			            <filter string="Total Harga Pokok Pembelian" name="sub2_beli"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'sub2'}"/>
+
+			            <filter string="Type Penjualan" name="sub3"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'sub3'}"/>
+
+			            <filter string="Category" name="category"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'categ_id'}"/>	
+		                	                 	 
+		                <filter string="Product" name="product"
+		                     icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>
+ 
+			            <filter string="Partner" name="partner"
+			                     icon="terp-personal" domain="[]"
+			                	 context="{'group_by':'partner_id'}"/>
+  	 
+			        </group>                                      
+		        </search>
+		    </field>
+		</record>
+	
+	</data>
+</openerp>

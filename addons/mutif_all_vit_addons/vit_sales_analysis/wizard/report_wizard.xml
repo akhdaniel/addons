@@ -1,0 +1,58 @@
+<openerp>
+	<data>
+		<!-- wizard action -->
+		<record model="ir.actions.act_window" id="run_sales_report_wizard"> 
+			<field name="name">Run Report</field>
+			<field name="res_model">vit_sales_analysis.report_wizard</field> 
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field> 
+		</record>
+
+		<!-- wizard form-->
+        <record id="view_report_sales_wizard_form" model="ir.ui.view">
+            <field name="name">vit_sales_analysis_report_wizard_form</field>
+            <field name="model">vit_sales_analysis.report_wizard</field>
+            <field name="arch" type="xml">
+            	<form string="report sales wizard form" version="7.0">
+            		<sheet>
+            			<group>
+			            	<group string="Select report date">
+				                <field name="date_start"/>       
+				                <field name="date_end"/>       
+					        </group>
+					        <group string="Select report type">
+				                <field name="type"/>            
+					        </group>
+				    	</group>
+					</sheet>
+					<footer>
+						<button type="special" 
+							 special="cancel" 
+							 string="Cancel" 
+							 icon="gtk-cancel"/>
+						
+						<button type="object" 
+							 name="fill_table"
+							 string="Run Report" 
+							 icon="gtk-ok"
+							 />				
+					</footer>
+			    </form>
+            </field>
+        </record>
+
+        <!-- wizrd menu -->
+		<menuitem id="vit_sales_menu"
+			 name="Laporan Penjualan"
+			 sequence="1"
+			 parent="base.menu_reporting"
+			/>
+
+	    <menuitem id="run_report_l/r" 
+    	 parent="vit_sales_menu" name="Run Laba / Rugi" sequence="10" 
+    	 action="run_sales_report_wizard" />
+
+
+	</data>
+</openerp>
