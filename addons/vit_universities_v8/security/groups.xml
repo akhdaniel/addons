@@ -9,16 +9,9 @@
         </record>
 
 <!-- Bagian Internal Akademik -->
-		<record id="group_univ_ka_baak" model="res.groups">
+		<record id="group_univ_external_baak" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
-			<field name="implied_ids" eval="[(4, ref('group_univ_manager_baak'))]"/>			
-			<field name="name">Kepala BAAK</field>			
-        </record>
-
-		<record id="group_univ_manager_baak" model="res.groups">
-			<field name="category_id" ref="module_category_academic"/>
-			<field name="implied_ids" eval="[(4, ref('group_univ_staff_baak'))]"/>
-			<field name="name">Manager BAAK</field>
+			<field name="name">External BAAK</field>
         </record>
 
 		<record id="group_univ_staff_baak" model="res.groups">
@@ -28,11 +21,18 @@
 			<field name="name">Staff BAAK</field>
         </record>
 
-
-		<record id="group_univ_external_baak" model="res.groups">
+		<record id="group_univ_manager_baak" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
-			<field name="name">External BAAK</field>
+			<field name="implied_ids" eval="[(4, ref('group_univ_staff_baak'))]"/>
+			<field name="name">Manager BAAK</field>
         </record>
+
+		<record id="group_univ_ka_baak" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_manager_baak'))]"/>			
+			<field name="name">Kepala BAAK</field>			
+        </record>
+
 
 <!-- Bagian External Akademik -->		
 		<record id="group_univ_rektor" model="res.groups">
