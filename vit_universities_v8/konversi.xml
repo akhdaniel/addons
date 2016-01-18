@@ -36,12 +36,12 @@
             <field name="arch" type="xml">
                 <form string="Form Konversi" version="7.0">
                     <header>
-                        <button name='confirm' string='Confirm' states='draft' type='object'/>
-                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='waiting' type='object'/>
-                        <button name='approve' string='Approve' states='waiting' type='object'/>
-                        <button name='refuse' string='Refuse' states='waiting' type='object'/> 
-                        <button name='set_draft' string='Set to Draft' states='cancel' type='object'/>   
-                        <button name='done' string='Active' states='confirm' type='object'/>                                         
+                        <button name='confirm' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
+                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='waiting' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
+                        <button name='approve' string='Approve' states='waiting' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
+                        <button name='refuse' string='Refuse' states='waiting' type='object' groups="vit_universities_v8.group_univ_ka_baak"/> 
+                        <button name='set_draft' string='Set to Draft' states='cancel' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>   
+                        <button name='done' string='Active' states='confirm' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                     
                 	<sheet>
@@ -53,8 +53,8 @@
                         <group>
                             <group>
                                 <field name="asal_univ_id" domain="[('category_id','ilike','external')]"/>
-                                <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id)]"/>
-                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id)]"/>                      
+                                <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id),('is_internal','=',False)]"/>
+                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id),(is_internal','=',False)]"/>                      
                             </group>
                 			<group>                              
                                 <field name="tahun_ajaran_id"/>

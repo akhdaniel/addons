@@ -61,7 +61,7 @@ class master_pembayaran(osv.Model):
 		'detail_product_ids':fields.one2many('master.pembayaran.detail','pembayaran_id',string='Pembayaran'),		
 		'type': fields.selection([('flat','Flat'),('paket','Paket SKS')],'Type Pembayaran',required=True),
 		'sks_plus' : fields.boolean('Bayar jika tambah SKS'),
-		'total': fields.function(_total,type='char',string='Total'),
+		'total': fields.function(_total,type='char',string='Total', digits_compute=dp.get_precision('Account')),
 	}
 	_defaults = {
 		'type':'flat',
@@ -105,5 +105,5 @@ class master_pembayaran_detail(osv.Model):
 			'product_id',           # 'other.object.id' in relation table
 			'Pembayaran',              # 'Field Name'
 			domain="[('type','=','service')]"),
-		'total': fields.function(_sub_total,type='char',string='Sub Total'),
+		'total': fields.function(_sub_total,type='char',string='Sub Total', digits_compute=dp.get_precision('Account')),
 	}

@@ -442,8 +442,6 @@
         </record>
 
 
-
-        <!-- mahasiswa tree view -->
         <record model="ir.ui.view" id="partner_tree_view">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
@@ -460,13 +458,12 @@
             </field>
         </record>          
    
-        <!-- mahasiswa tree view2 -->
-        <record model="ir.ui.view" id="partner_tree_view2">
+          <record model="ir.ui.view" id="partner_tree_view2">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Mahasiswa">
+                <tree string="Daftar Calon Mahasiswa">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                     <field name="fakultas_id"/>
@@ -477,9 +474,7 @@
             </field>
         </record>  
         
-
-        <!-- mahasiswa tree view 3 -->
-        <record model="ir.ui.view" id="partner_tree_view3">
+          <record model="ir.ui.view" id="partner_tree_view3">
             <field name="name">Partner</field>
             <field name="model">res.partner</field>
             <field name="type">tree</field>
@@ -664,7 +659,7 @@
         </record>
 
         <!--menu Akadmik -->
-        <menuitem id="si_akademik_menu" name="Akademik"/>
+        <menuitem id="si_akademik_menu" name="Akademik" groups="vit_universities_v8.group_univ_external_baak"/>
             <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10"/>
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
                 <menuitem id="spmb" name="Saringan Masuk" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
@@ -687,7 +682,7 @@
             <menuitem id="master_data_kurikulum" name="Kurikulum" parent="si_akademik_menu" sequence="80"/>
                  <menuitem id="master_kurikulum" name="Kurikulum" parent="master_data_kurikulum" action="kurikulum_list_action"/>
                  <menuitem id="master_mk" name="Mata Kuliah" parent="master_data_kurikulum" action="mk_list_action"/>
-            <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90"/>
+            <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90" groups="vit_universities_v8.group_univ_staff_baak"/>
                 <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action" sequence="10"/>
                 <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
                 <!-- <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/> -->
@@ -701,7 +696,7 @@
                 <menuitem id="pembayaran" name="Pembayaran" parent="master_data" sequence="100"/>            
                     <menuitem id="master_product" name="Jenis Pembayaran" parent="pembayaran" action="jenis_pembayaran_list_action"/>
                     <menuitem id="master_pembayaran" name="Template Pembayaran" parent="pembayaran" action="template_pembayaran_list_action"/>
-                <menuitem id="maste_beasiswa" name="Beasiswa USM" parent="master_data" action="beasiswa_mahasiswa_list_action" sequence="110"/>                                 
+                                
 
         <!-- Mata Kuliah-->
         <record model="ir.ui.view" id="mk_tree_view">
@@ -871,7 +866,7 @@
             <field name="arch" type="xml">
                 <form string="Academic Years" version="7.0">
                     <header>
-                        <button name="create_period" string="Create Months" type="object"/>
+                        <button name="create_period" string="Create Months" type="object" groups="vit_universities_v8.group_univ_ka_baak"/>
                     </header>
                     <sheet>
                         <group col="4" colspan="4">

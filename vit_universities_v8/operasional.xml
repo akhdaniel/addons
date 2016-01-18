@@ -19,6 +19,25 @@
                 </tree>
             </field>
         </record>
+
+    <record id="act_invoice_kartu_studi" model="ir.actions.act_window">
+            <field name="name">Invoice</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="vit_universities_v8.invoice_tree_mhs"/>
+            <field name="search_id" ref="account.view_account_invoice_filter"/>
+            <field name="domain">[('krs_id','=',active_id),('type','=','out_invoice')]</field>
+            <field name="context">{'default_type':'out_invoice','search_default_group_by_state':True}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    ...
+                </p><p>
+                    Belum ada Invoice...
+                </p>
+            </field>
+        </record> 
+
         
         <record id="krs_form_view" model="ir.ui.view">
             <field name="name">krs.form</field>
@@ -27,15 +46,17 @@
             <field name="arch" type="xml">
                 <form string="Kartu Studi" version="7.0">
                     <header>
-                        <button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
-                        <button name='done' string='Done' states='confirm' type='object'/>
-                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
+                        <button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>
+                        <button name='done' string='Done' states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>
+                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>
                 	<sheet>
                         <div class="oe_right oe_button_box">
-                            <label for="invoice_id" string="Pembayaran:" class="oe_inline"/>
-                            <field name="invoice_id" class="oe_inline" context="{'default_type':'out_invoice','type': 'out_invoice'}"/>
+                            <button name="%(act_invoice_kartu_studi)d"  type="action"
+                            class="oe_stat_button" icon="fa-money" string="Pembayaran" groups="vit_universities_v8.group_univ_staff_baak"/>
+                           <!--  <label for="invoice_id" string="Pembayaran:" class="oe_inline"/>
+                            <field name="invoice_id" class="oe_inline" context="{'default_type':'out_invoice','type': 'out_invoice'}"/> -->
                         </div>                        
 	                    <group>
 	                    	<group>                          
@@ -50,9 +71,9 @@
 		                    </group>
 		                    <group>
 			                    <field name="tahun_ajaran_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>			                    
-                                <field name='fakultas_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name='fakultas_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}" domain="[('is_internal','=',True)]"/>
                                 <!-- <field name='jurusan_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>  -->
-                                <field name="prodi_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/> 
+                                <field name="prodi_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/> 
                                 <field name="max_smt" invisible="1"/>                                                     
 			                    <!--button string="View Ipk" type="object" name="button_ipk" states="draft" /-->
 			                </group>    
@@ -174,7 +195,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="krs_tree_view"/>
             <field name="search_id" ref="vit_universities_v8.kartu_studi_search"/>
-            <field name="domain">[('partner_id','=',active_id)]</field>
+            <field name="domain">[('partner_id','=',active_id),('type','=','out_invoice')]</field>
             <field name="context">{'default_partner_id':active_id,'search_default_group_by_state':True}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -186,17 +207,19 @@
         </record> 
 
         <record id="res_partner_view_fees_buttons" model="ir.ui.view">
-            <field name="name">Pembayaran</field>
+            <field name="name">Kartu Studi</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="priority" eval="25"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[@name='buttons']" position="inside">
                     <button name="%(act_res_partner_kartu_studi)d"  type="action"
-                        class="oe_stat_button" icon="fa-certificate" string="Kartu Studi"/>
+                        class="oe_stat_button" icon="fa-certificate" string="Kartu Studi" groups="vit_universities_v8.group_univ_staff_baak"/>
                 </xpath>
             </field>
         </record>
+
+
 
 
     </data>   

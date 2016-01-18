@@ -24,10 +24,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml"> 
-                <sheet position="before">
-                    <header>
-                        <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible': [('jenis_pendaftaran_id','=','Baru')]}" />
-                    </header>                    
+                <sheet position="before">                 
                 </sheet>
 
              	<field name="function" position="replace">
@@ -166,15 +163,20 @@
                     </page>
 
                     <page string="Pindahan" name="pindahan" 
-                        attrs="{'invisible': [('jenis_pendaftaran_id','in',('Baru'))]}">
+                        attrs="{'invisible': [('jenis_pendaftaran_id','=',1)]}">
+                        <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible':[('status_mahasiswa','!=','calon')]}" groups="vit_universities_v8.group_univ_staff_baak"/>
                         <group>
-                            <field name="asal_univ_id" />     
-                            <field name="asal_fakultas_id" /> 
-                            <field name="asal_prodi_id" />    
-                            <field name="semester_id" widget="selection"/> 
-                            <field name="asal_npm" />          
-                            <field name="asal_sks_diakui" /> 
-                            <field name="asal_jenjang_id" /> 
+                            <group>
+                                <field name="asal_univ_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/>     
+                                <field name="asal_fakultas_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/> 
+                                <field name="asal_prodi_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/>    
+                                <field name="semester_id" string="Semester Mulai" widget="required" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/> 
+                            </group>
+                            <group>
+                                <field name="asal_npm" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/>          
+                                <field name="asal_sks_diakui" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" readonly="1"/> 
+                                <field name="asal_jenjang_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/> 
+                            </group>
                         </group>
                     </page>
 
@@ -205,7 +207,7 @@
                                         <div>
                                             <field name="tgl_lulus" class="oe_inline" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
                                             <label for="%(act_res_partner_view_transkrip)d" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
-                                            <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find"/> 
+                                            <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find" groups="vit_universities_v8.group_univ_staff_baak"/> 
                                         </div>  
                                             <field name="siap_sidang" invisible="1"/>
                                             <field name="wisuda" attrs="{'invisible': [('siap_sidang','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 

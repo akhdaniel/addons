@@ -26,9 +26,9 @@
             <field name="arch" type="xml">
                 <form string="Peserta Kelas" version="7.0">
                 	<header>
-                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
-                		<button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object'/>
-			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list kelas"/>                		                		
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
+                		<button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='confirm' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
+			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list kelas" groups="vit_universities_v8.group_univ_staff_baak"/>                		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>
                 	</header>                	
                 	<sheet>
@@ -41,9 +41,9 @@
                 			</group>
                 			<group>
                                 <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
-                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('is_internal','=',True)]"/>
 			                    <!-- <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/> -->
-                                <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}"/>                               
+                                <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>                               
 			                    <!-- <field name="prodi_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, jurusan_id,kuota)" attrs="{'readonly': [('state','=','confirm')]}"/>                				 -->
                 			</group>
                 		</group>	
