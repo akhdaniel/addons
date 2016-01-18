@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+
+        <record model="ir.module.category" id="module_category_academic">
+            <field name="name">Akademik</field>
+            <field name="description">Helps you handle your academic needs</field>
+            <field name="sequence">50</field>
+        </record>
+
+<!-- Bagian Internal Akademik -->
+		<record id="group_univ_ka_baak" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_manager_baak'))]"/>			
+			<field name="name">Kepala BAAK</field>			
+        </record>
+
+		<record id="group_univ_manager_baak" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_staff_baak'))]"/>
+			<field name="name">Manager BAAK</field>
+        </record>
+
+		<record id="group_univ_staff_baak" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak')),(4, ref('base.group_user')),(4, ref('account.group_account_invoice'))]"/>
+			<field name="users" eval="[(4, ref('base.user_root'))]"/>		
+			<field name="name">Staff BAAK</field>
+        </record>
+
+
+		<record id="group_univ_external_baak" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="name">External BAAK</field>
+        </record>
+
+<!-- Bagian External Akademik -->		
+		<record id="group_univ_rektor" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Rektor</field>
+        </record>
+
+		<record id="group_wakil_rektor" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Wakil Rektor</field>
+        </record>        
+
+		<record id="group_univ_dekan" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Dekan</field>
+        </record>
+
+		<record id="group_univ_staff_dekan" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Staff Dekan</field>
+        </record>    
+
+		<record id="group_univ_ka_lppm" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Kepala LPPM</field>
+        </record>
+
+		<record id="group_univ_ka_penjaminan_mutu" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Kepala Penjaminan Mutu</field>
+        </record>
+
+		<record id="group_univ_ka_perpustakaan" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Kepala Perpustakaan</field>
+        </record>
+
+		<record id="group_univ_ka_prodi" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Kepala Prodi</field>
+        </record>
+
+		<record id="group_univstaff_prodi" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Staff Prodi</field>
+        </record>
+
+		<record id="group_univ_ka_laboratorium" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Kepala Laboratorium</field>
+        </record>
+                                 
+    </data>
+</openerp>
