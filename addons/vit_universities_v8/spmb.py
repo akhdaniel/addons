@@ -151,7 +151,7 @@ class spmb_mahasiswa(osv.Model):
 
 	def confirm(self,cr,uid,ids,context=None):
 
-		bea_obj = self.pool.get('beasiswa.mahasiswa')
+		bea_obj = self.pool.get('beasiswa.prodi')
 		calon_obj = self.pool.get('res.partner.calon.mhs')
 		my_form = self.browse(cr,uid,ids[0])
 
@@ -176,11 +176,15 @@ class spmb_mahasiswa(osv.Model):
 			p_id = j[1]
 
 		#batas nilai penerima beasiswa
-		
-		limit_bea = 0
-		data_bea = bea_obj.search(cr,uid,[('is_active','=',True),('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id)],context=context)
+		limit_bea = 1000 # default nilai besar supaya tidak ada yg lolos
+		data_bea = bea_obj.search(cr,uid,[('is_active','=',True),
+											('tahun_ajaran_id','=',my_form.tahun_ajaran_id.id),
+											('fakultas_id','=',my_form.fakultas_id.id),
+											('prodi_id','=',my_form.prodi_id.id),],context=context)
 		if data_bea:
-			limit_bea = bea_obj.browse(cr,uid,data_bea[0]).limit_nilai_sma
+			bea_browse.browse(cr,uid,data_bea[0])
+			if bea_browse.product_id1:
+				limit_bea = bea_browse.limit_nilai_sma
 
 		for p in my_form.partner_ids:
 			is_bea = False

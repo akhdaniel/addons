@@ -7,8 +7,8 @@ class operasional_krs (osv.Model):
 	_rec_name='kode'
 
 	def create(self, cr, uid, vals, context=None):
-
-
+		#import pdb;pdb.set_trace()
+		inv_obj = self.pool.get('account.invoice')
 		if vals.get('kode','/')=='/':
 			npm = vals['npm']
 			if not npm :
@@ -32,10 +32,9 @@ class operasional_krs (osv.Model):
 		if krs_uniq != []:
 			raise osv.except_osv(_('Error!'),
 								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))	
-
+		mk_ids = []
 		if 'krs_detail_ids' in vals:
 			mk = vals['krs_detail_ids']
-			mk_ids = []
 			tot_mk = 0
 			for m in mk:
 				mk_id = m[2]['mata_kuliah_id']
@@ -43,23 +42,23 @@ class operasional_krs (osv.Model):
 				sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
 				tot_mk += int(sks)
 
-			if tot_mk > t_sks :
-				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
+			if tot_mk > t_sks  :
+				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(tot_mk,t_sks))	
 			#import pdb;pdb.set_trace()
-			#cek jika mengambil matakuliah lebih
-			tambahan_mk = 0
-			ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
-			for tambahan in mk:
-				if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
-					mk_id = tambahan[2]['mata_kuliah_id']
-					sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
-					tambahan_mk += int(sks)
-					ids_tambahan_mk.append(mk_id)
-			selisih_tambahan_mk = t_sks - sks_kurikulum
+			# #cek jika mengambil matakuliah lebih
+			# tambahan_mk = 0
+			# ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
+			# for tambahan in mk:
+			# 	if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
+			# 		mk_id = tambahan[2]['mata_kuliah_id']
+			# 		sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+			# 		tambahan_mk += int(sks)
+			# 		ids_tambahan_mk.append(mk_id)
+			# selisih_tambahan_mk = t_sks - sks_kurikulum
 			
-			#pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
-			if tambahan_mk > selisih_tambahan_mk:			
-				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(tot_mk,t_sks))	
+			# #pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
+			# if selisih_tambahan_mk > tambahan_mk :			
+			# 	raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(selisih_tambahan_mk,tambahan_mk))
 
 		#cek juga apa di setingan kurikulum mengijinkan tambah MK sesuai dengan minimal IP sementara
 		if 'kurikulum_id' in vals :
@@ -107,8 +106,9 @@ class operasional_krs (osv.Model):
 					 		raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
 
 		#langsung create invoice nya
-		#kecuali yg dpt beasiswa bisa tanpa invoice
-		if not self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).is_beasiswa:
+		#import pdb;pdb.set_trace()
+		my_krs_id = super(operasional_krs, self).create(cr, uid, vals, context=context)												
+ 		if 'state' not in vals:			
 			byr_obj = self.pool.get('master.pembayaran')
 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
 				('fakultas_id','=',vals['fakultas_id']),
@@ -124,37 +124,101 @@ class operasional_krs (osv.Model):
 					#jika menemukan semester yang sama
 					if vals['semester_id'] == bayar.semester_id.id:
 						list_product = bayar.product_ids
-						prod_id = []					
+						prod_id = []			
+								
 						for lp in list_product:
-							prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price,'account_id': lp.property_account_income.id}))
-
+							coa_line = lp.property_account_income.id
+							if not coa_line:
+								coa_line = lp.categ_id.property_account_income_categ.id
+							if lp.split_invoice <= 0 :
+								prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price,'account_id': coa_line}))
+							elif lp.split_invoice > 0:
+								prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price/lp.split_invoice,'account_id': coa_line}))
+								#loop product yg bisa di spilt tersebut utk di buat inv line nya
+								for split in range(1,lp.split_invoice):
+									prod_id_split = []
+									prod_id_split.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price/lp.split_invoice,'account_id': coa_line}))
+									inv_obj.create(cr,uid,{
+										'partner_id':vals['partner_id'],
+										'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
+										'type':'out_invoice',
+										'krs_id': my_krs_id,
+										'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
+										'invoice_line': prod_id_split,
+										},context=context)
 						prod_obj = self.pool.get('product.product')
 						beban_sks_id = prod_obj.search(cr,uid,[('is_sks','=',True),('fakultas_id','=',vals['fakultas_id'])])
+						if beban_sks_id :
+							prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
+							coa_line_tambah = prod_brw.property_account_income.id
+							if not coa_line_tambah:
+								coa_line_tambah = prod_brw.categ_id.property_account_income_categ.id
+							if byr_brw.type == 'paket':
+								prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price,'account_id': coa_line_tambah}))
 
-						if byr_brw.type == 'paket':
-							if beban_sks_id != [] :
-								prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
-								prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price,'account_id': lp.property_account_income.id}))
-
-						elif byr_brw.type == 'flat':
-							if beban_sks_id != [] and byr_brw.sks_plus == True:
+							elif byr_brw.type == 'flat' and byr_brw.sks_plus == True:
 								if tambahan_mk != 0:
-									prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
-									prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tambahan_mk ,'price_unit':prod_brw.list_price,'account_id': lp.property_account_income.id}))							
+									prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tambahan_mk ,'price_unit':prod_brw.list_price,'account_id': coa_line_tambah}))							
 
-						inv_id = self.pool.get('account.invoice').create(cr,uid,{
+						inv_obj.create(cr,uid,{
 								'partner_id':vals['partner_id'],
 								'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
 								'type':'out_invoice',
+								'krs_id': my_krs_id,
 								'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
 								'invoice_line': prod_id,
 								},context=context)
-						if inv_id :
-							inv = {'invoice_id':inv_id}
-							vals = dict(vals.items()+inv.items())						
-					
-							
-		return super(operasional_krs, self).create(cr, uid, vals, context=context)	    
+						# if inv_id :
+						# 	inv = {'invoice_id':inv_id}
+						# 	vals = dict(vals.items()+inv.items())	
+			cr.commit()
+			#cek jika ada Discount
+			# search inv atas KRS ini
+			inv_ids = inv_obj.search(cr,uid,[('krs_id','=',my_krs_id)])
+			jml_inv = len(inv_ids)
+			bea_obj = self.pool.get('beasiswa.prodi')
+			data_bea = bea_obj.search(cr,uid,[('is_active','=',True),
+												('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
+												('fakultas_id','=',vals['fakultas_id']),
+												('prodi_id','=',vals['prodi_id']),],context=context)
+			if data_bea :
+				inv_line = self.pool.get('account.invoice.line')
+				bea_browse = data_bea.browse(cr,uid,data_bea[0])								
+				if vals['semester_id'] == 1: # jika Semester satu
+					if bea_browse.product_id1 : # jika product utk disc USM diisi
+						disc_usm_id 	= bea_browse.product_id1.id
+						disc_usm_name 	= bea_browse.product_id1.name
+						disc_usm_amount	= bea_browse.amount1/int(jml_inv)
+						disc_usm_coa  	= bea_browse.product_id1.property_account_income.id
+						if not disc_usm_coa:
+							disc_usm_coa = bea_browse.product_id1.categ_id.property_account_income_categ.id
+						for inv in nil_jml:	
+							inv_line.create(cr,uid,{'invoice_id': inv,
+													'product_id': disc_usm_id,
+													'name'		: disc_usm_name,
+													'quantity'	: 1 ,
+													'price_unit': disc_usm_amount,
+													'account_id': disc_usm_coa},context=context)	
+				elif vals['semester_id'] > 1: # jika Semester dua ke atas
+					if bea_browse.product_id2 : # jika product utk disc prodi diisi
+						if bea_browse.product_id3: # jika product utk disc alumni diisi
+							alumni_seq 		= bea_browse.alumni_sequence
+						prodi_seq			= bea_browse.prodi_sequence
+						disc_prodi_id 		= bea_browse.product_id2.id
+						disc_prodi_name 	= bea_browse.product_id2.name
+						disc_prodi_amount	= bea_browse.amount2/int(jml_inv)
+						disc_prodi_coa  	= bea_browse.product_id2.property_account_income.id
+						if not disc_usm_coa:
+							disc_usm_coa = bea_browse.product_id2.categ_id.property_account_income_categ.id	
+						for inv in nil_jml:	
+							inv_line.create(cr,uid,{'invoice_id': inv,
+													'product_id': disc_prodi_id,
+													'name'		: disc_prodi_name,
+													'quantity'	: 1 ,
+													'price_unit': disc_prodi_amount,
+													'account_id': disc_prodi_coa},context=context)						
+
+		return True	    
 	
 	def _get_ips(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
@@ -227,14 +291,25 @@ class operasional_krs (osv.Model):
 		#import pdb;pdb.set_trace()
 		form_id = self.browse(cr,uid,ids[0],context=context) 
 		if not form_id.krs_detail_ids:
-			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))			
+			raise osv.except_osv(_('Error!'), _('Matakuliah tidak boleh kosong !'))
+		#cek dahulu pembayaran atas KRS ini, minimal ada 1 yg sudah d bayar lunas
+		inv_obj = self.pool.get('account.invoice')
+		inv_exist = inv_obj.search(cr,uid,[('krs_id','=',form_id.id)])
+		if not inv_exist :		
+			raise osv.except_osv(_('Error!'), _('Invoice atas KRS ini belum dibuat !'))	
+		inv_krs = len(inv_exist)	
+		not_paid = 0
+		for paid in inv_exist:
+			inv_state = inv_obj.browse(cr,uid,paid).state
+			if inv_state != 'paid':
+				not_paid += 1
+		#cek mimimal harus ada 1 invoice yg harus dibayar
+		if inv_krs == not_paid:
+			raise osv.except_osv(_('Error!'), _('%s invoice atas KRS ini belum dibayar !')%(inv_krs))		
 		for x in form_id.krs_detail_ids:
 			self.pool.get('operasional.krs_detail').write(cr,uid,x.id,{'state':'confirm'},context=context)
-		#cek dahulu pembayaran atas KRS ini,
-		#jika tidak dpt beasiswa
-		if not form_id.partner_id.is_beasiswa:
-			if form_id.invoice_id.state != 'paid':
-				raise osv.except_osv(_('Error!'), _('Pembayaran atas KRS ini harus dibayar lunas dahulu !'))	
+		
+	
 		self.write(cr, uid, ids, {'state' : 'confirm'}, context=context)
 		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities_v8', 'krs_tree_view')
 		view_id = view_ref and view_ref[1] or False,		

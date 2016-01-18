@@ -15,6 +15,11 @@
                 <field name="default_code" position="after"> 
                     <field name="fakultas_id" attrs="{'invisible': [('is_sks','=',False)],'required': [('is_sks','=',True)]}"/>   
                 </field>                                       
+                <field name="categ_id" position="after"> 
+                    <group>
+                        <field name="split_invoice"/>   
+                    </group>
+                </field>  
             </field>
         </record>    
 

@@ -27,8 +27,8 @@
             <field name="arch" type="xml">
                 <form string="SPMB" version="7.0">
                 	<header>
-                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
-			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list"/>                		                		
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="vit_universities_v8.group_univ_ka_baak" confirm="Eksekusi filtering calon mahasiswa menjadi mahasiswa akan dijalankan, anda yakin?"/>
+			            <button name="button_reload" states="draft" string="Reload" type="object" icon="gtk-refresh" help="reload data mahasiswa yang masuk list" groups="vit_universities_v8.group_univ_staff_baak"/>                		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>
                 	</header>
                 	<sheet>

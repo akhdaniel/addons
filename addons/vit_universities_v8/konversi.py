@@ -16,7 +16,7 @@ class konversi(osv.Model):
 		# 'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
 		'asal_univ_id'		: fields.many2one('res.partner','Asal Universitas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'asal_fakultas_id'	: fields.many2one('master.fakultas','Asal Fakultas', required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'asal_fakultas_id'	: fields.many2one('master.fakultas','Asal Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'asal_prodi_id'		: fields.many2one('master.prodi','Asal Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
 		'fakultas_id'		: fields.many2one('master.fakultas','Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
@@ -112,18 +112,25 @@ class konversi(osv.Model):
 
 	def confirm(self,cr,uid,ids,context=None):
 		konv_obj = self.pool.get('akademik.konversi.mapping')
+		partner_obj = self.pool.get('res.partner')
 		for ct in self.browse(cr,uid,ids):
+			if not ct.asal_univ_id or not ct.asal_fakultas_id or not ct.asal_prodi_id:	
+				raise osv.except_osv(_('Error!'),
+								_('Universitas/Fakultas/Prodi asal harus diisi!'))		
+			if not ct.matakuliah_ids:
+				raise osv.except_osv(_('Error!'),
+								_('Data Matakuliah harus diisi!'))
 			asal_prodi = ct.asal_prodi_id.id
-			prodi = ct.prodi_id.id		
+			prodi = ct.prodi_id.id																			
 			for mk in ct.matakuliah_ids:
 				mk_asal = mk.asal_matakuliah_id.id
 				mk_tujuan = mk.matakuliah_id.id
 				asal_smt = mk.asal_semester_id.id
 				smt = mk.semester_id.id				
 				# cari a pasang MK ini di master mapping
-				exist = konv_obj.search(cr,uid,[('asal_prodi_id','=',asal_prodi),
+				exist = konv_obj.search(cr,uid,[#('asal_prodi_id','=',asal_prodi),
 												('asal_matakuliah_id','=',mk_asal),
-												('prodi_id','=',prodi),
+												#('prodi_id','=',prodi),
 												('matakuliah_id','=',mk_tujuan)])
 				if not exist and mk_tujuan and smt:
 					#create master mapping
@@ -136,6 +143,9 @@ class konversi(osv.Model):
 											'semester_id':smt,
 											'matakuliah_id':mk_tujuan},context=context)
 			self.write(cr,uid,ct.id,{'state':'waiting'},context=context)
+			partner_id = partner_obj.search(cr,uid,[('id','=',ct.partner_id.id)])
+			if partner_id:
+				partner_obj.write(cr,uid,partner_id[0],{'asal_sks_diakui':ct.total_sks_tujuan})
 		return True	
 
 	def approve(self,cr,uid,ids,context=None):
@@ -144,7 +154,37 @@ class konversi(osv.Model):
 		studi_obj = self.pool.get('operasional.krs')
 		studi_detail_obj = self.pool.get('operasional.krs_detail')
 		for ct in self.browse(cr,uid,ids):
+
+			t_id = ct.tahun_ajaran_id.date_start
+			t_tuple =  tuple(t_id)
+			t_id_final = t_tuple[2]+t_tuple[3]#ambil 2 digit paling belakang dari tahun saja	
+
+			p_id = ct.prodi_id.kode
+			if p_id.find(".") != -1:
+				j = p_id.split(".")
+				p_id = j[1]	
+
 			smt_daftar = ct.semester_id.id
+			st = ct.partner_id.status_mahasiswa
+			jp_id = ct.partner_id.jenis_pendaftaran_id.code
+
+			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
+
+			# sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and jurusan_id=%s and tahun_ajaran_id=%s" % (
+			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and prodi_id=%s and tahun_ajaran_id=%s" % (
+				ct.partner_id.jenis_pendaftaran_id.id, 
+				ct.prodi_id.id, 
+				ct.tahun_ajaran_id.id)
+			cr.execute(sql)
+			# import pdb; pdb.set_trace()
+			hasil = cr.fetchone()
+			if hasil and hasil[0] != None:
+				se = "%03d" % (hasil[0] + 1)
+			else:
+				se = "001"	
+			npm = t_id_final + p_id + jp_id + se			
+			self.pool.get('res.partner').write(cr,uid,ct.partner_id.id,{'npm':npm,'status_mahasiswa':'Mahasiswa'},context=context)
+
 			#cari matakuliah yg akan di masukan pada master kurikulum		
 			kur_ids = kur_obj.search(cr, uid, [
 				('tahun_ajaran_id','=',ct.tahun_ajaran_id.id),
@@ -167,39 +207,33 @@ class konversi(osv.Model):
 				res = cr.fetchall()
 				mk_ids = map(lambda x: x[0], res) # atau  [i for (i,) in res]
 
+				#create KHS Detail
+				khs_ids = []
+				for det in res:	
+
+					khs_ids.append((0,0,{
+										'mata_kuliah_id'	: det[0],
+										'sks'				: det[1],
+										'tugas'				: det[2],
+										'ulangan'			: det[2],
+										'uts'				: det[2],
+										'uas'				: det[2],
+										'state'				: 'done'
+										}))	
 				#create KHS
-				
-				khs_id = studi_obj.create(cr,uid,{'kode'		: str(ct.partner_id.npm)+'-'+str(xr),
+				#import pdb;pdb.set_trace()
+				khs_id = studi_obj.create(cr,uid,{'kode'		: str(npm)+'-'+str(xr),
 											'partner_id'		: ct.partner_id.id,
-											'npm'				: ct.partner_id.npm,
+											'npm'				: npm,
 											'semester_id'		: xr,
 											'tahun_ajaran_id'	: ct.tahun_ajaran_id.id,
 											'fakultas_id'		: ct.fakultas_id.id,
 											'prodi_id'			: ct.prodi_id.id,
 											'user_id'			: uid,
-											'state'				: 'done'},context=context)
-				#create KHS Detail
-				for det in res:	
-					studi_detail_obj.create(cr,uid,{'krs_id'	: khs_id,
-											'mata_kuliah_id'	: det[0],
-											'sks'				: det[1],
-											'tugas'				: det[2],
-											'ulangan'			: det[2],
-											'uts'				: det[2],
-											'uas'				: det[2],
-											'state'				: 'done'},context=context)
-			cr.commit()
-			#create KRS berjalan
-			krs_id = studi_obj.create(cr,uid,{'kode'		: str(ct.partner_id.npm)+'-'+str(smt_daftar),
-										'partner_id'		: ct.partner_id.id,
-										'npm'				: ct.partner_id.npm,
-										'semester_id'		: smt_daftar,
-										'tahun_ajaran_id'	: ct.tahun_ajaran_id.id,
-										'fakultas_id'		: ct.fakultas_id.id,
-										'prodi_id'			: ct.prodi_id.id,
-										'user_id'			: uid,
-										'kurikulum_id'		: kur_ids[0],
-										'state'				: 'draft'},context=context)	
+											'kurikulum_id'		: kur_ids[0],
+											'krs_detail_ids'	: khs_ids,
+											'state'				: 'done'})
+
 			#create KRS detailnya
 			kur_id = kur_obj.browse(cr,uid,kur_ids,context=context)[0].kurikulum_detail_ids
 			mk_kurikulum = []
@@ -221,14 +255,26 @@ class konversi(osv.Model):
 			#filter matakuliah yg benar-benar belum di tempuh
 			mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
 
-			res = []
+			krs_ids = []
 			for kur in mk_baru_ids:
-				studi_detail_obj.create(cr,uid,{'krs_id'	: krs_id,
-										'mata_kuliah_id'	: kur,
-										#'sks'				: ,
-										'state'				: 'draft'},context=context)							
-
-			self.write(cr,uid,ct.id,{'state':'confirm'},context=context)
+				krs_ids.append((0,0,{
+									'mata_kuliah_id'	: kur,
+									'sks'				: det[1],
+									'state'				: 'draft'
+									}))																	
+			#create KRS berjalan
+			studi_obj.create(cr,uid,{'kode'				: str(npm)+'-'+str(smt_daftar),
+									'partner_id'		: ct.partner_id.id,
+									'npm'				: npm,
+									'semester_id'		: smt_daftar,
+									'tahun_ajaran_id'	: ct.tahun_ajaran_id.id,
+									'fakultas_id'		: ct.fakultas_id.id,
+									'prodi_id'			: ct.prodi_id.id,
+									'user_id'			: uid,
+									'kurikulum_id'		: kur_ids[0],
+									'krs_detail_ids'	: krs_ids,
+									},context=context)	
+			self.write(cr,uid,ct.id,{'state':'confirm','krs_done':True},context=context)
 		return True	
 
 	def cancel(self,cr,uid,ids,context=None):

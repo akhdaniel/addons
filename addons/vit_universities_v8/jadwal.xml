@@ -1,7 +1,7 @@
 <openerp>
 	<data>
 
-        <record model="ir.ui.view" id="jadwal_tree_view">
+        <record model="ir.ui.view" id="jadwal_kuliah_tree_view">
             <field name="name">jadwal.tree</field>
             <field name="model">master.jadwal</field>
             <field name="type">tree</field>
@@ -23,7 +23,7 @@
             </field>
         </record>
         
-        <record model="ir.ui.view" id="jadwal_form_view">
+        <record model="ir.ui.view" id="jadwal_kuliah_form_view">
             <field name="name">jadwal.form</field>
             <field name="model">master.jadwal</field>
             <field name="type">form</field>
@@ -38,7 +38,7 @@
                             </group>
                 			<group>
                 				<field name="tahun_ajaran_id"/>
-			                    <field name="fakultas_id"/>
+			                    <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
 			                    <!-- <field name="jurusan_id"/>             				 -->
                 			</group>
                         </group>
@@ -54,7 +54,7 @@
                                 </div>                                                                                           
                             </group>
                             <group>
-                                <field name="prodi_id"/>  
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>  
                                 <field name="mata_kuliah_id"/>  
                                 <field name="semester_id"/>                                                          
                             </group>

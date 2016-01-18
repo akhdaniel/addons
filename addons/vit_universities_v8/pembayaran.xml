@@ -23,8 +23,8 @@
             <field name="arch" type="xml">
                 <form string="Wisuda" version="7.0">
                 	<header>
-                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object'/>
-                        <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object'/>               		                		
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
+                        <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>               		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>
                 	</header>
                 	<sheet>
@@ -33,12 +33,13 @@
 			                    <field name="name"/>
 			                    <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="type" attrs="{'readonly': [('state','=','confirm')]}"/>
-                                <field name="sks_plus" attrs="{'readonly': [('state','=','confirm')],'invisible': [('type','!=','flat')]}"/>
+                                
 			                 </group>
 			                 <group>  
-                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}"/>
+                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('is_internal','=',True)]"/>
                                 <!-- <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/> -->
-			                 	<field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id)]"/>
+			                 	<field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                                <field name="sks_plus" attrs="{'readonly': [('state','=','confirm')],'invisible': [('type','!=','flat')]}"/>
 			                </group>    
                     	</group> 
                         <notebook colspan="4">

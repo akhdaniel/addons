@@ -48,17 +48,14 @@ class res_partner (osv.osv):
 					fak = vals['fakultas_id']
 					fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
 
-					jur = vals['jurusan_id']
-					jur_id = self.pool.get('master.jurusan').browse(cr,uid,jur,context=context).kode
-
 					pro = vals['prodi_id']
 					pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
 					sequence = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 
-					vals['npm'] = ta_id+fak_id+jur_id+pro_id+sequence
+					vals['npm'] = ta_id+fak_id+pro_id+sequence
 			if vals['status_mahasiswa'] == 'alumni':
-					raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))			
+				raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))			
 		return super(res_partner, self).create(cr, uid, vals, context=context)
 
 	def _calc_age(self, cr, uid, ids, name, arg, context=None):
@@ -199,57 +196,66 @@ class res_partner (osv.osv):
 
 	_columns = {
 		#Mahasiswa
-		'npm' 				:fields.char(string='NPM',size=34),
-		'reg'				: fields.char('No. Pendaftaran',readonly=True,size=34),
-		'jenis_kelamin'		:fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
-		'tempat_lahir'		:fields.char('Tempat Lahir'),
-		'tanggal_lahir'		:fields.date('Tanggal Lahir'),
-		'agama'				:fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
+		'npm' :fields.char(string='NPM',size=34),
+		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
+		# 'nama_tengah':fields.char('Nama Tengah',size=60),
+		# 'nama_belakang':fields.char('Nama Tengah',size=60),
+		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
+		'tempat_lahir':fields.char('Tempat Lahir'),
+		'tanggal_lahir':fields.date('Tanggal Lahir'),
 
-		'status_mahasiswa'	:fields.selection(SESSION_STATES,'Status Mhs'),                  
-		'is_mahasiswa' 		: fields.boolean('Is Mahasiswa/Calon ?'),
-		'status_aktivitas'	: fields.selection([('A','A'),('N','N'),('K','K'),('L','L'),('C','C'),('D','D')],'Status Aktivitas',required=True),
-		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
+		'status_mahasiswa':fields.selection(SESSION_STATES,'Status Mhs'),                  
 
-		'fakultas_id'		:fields.many2one('master.fakultas',string='Fakultas',),
-		'prodi_id'			:fields.many2one('master.prodi',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]"),
-		'tahun_ajaran_id'	:fields.many2one('academic.year',string='Tahun Akademik'),
-		'semester_id'		:fields.many2one('master.semester',string='Semester Awal Masuk'),
-		'kelas_id'			:fields.many2one('master.kelas',string='Kelas',readonly=True),                
+		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas', domain=[('is_internal','=',True)]),
+		# 'jurusan_id':fields.many2one('master.jurusan',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]"),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"),
+		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik'),
+		'semester_id':fields.many2one('master.semester',string='Semester Awal Masuk'),
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',readonly=True),                
 
 		#'peserta_kelas_id':fields.many2one('master.peserta_kelas',string='Mahasiswa',),
-		'ipk'				:fields.float('IPK',digits=(2,2),readonly=True),
-		'judul'				:fields.text('Judul Tugas Akhir'),
-		'wisuda'			:fields.date('Tanggal Wisuda'),
-		'tgl_lulus'			:fields.date('Tanggal Lulus'),
-		'no_formulir'		:fields.char('No Formulir Ujian'),
-		'tgl_ujian'			:fields.date('Tanggal Ujian'),
-		'nilai_ujian'		:fields.float('Nilai Ujian'),
-		'nilai_ujian_asli'	:fields.float('Nilai Ujian Asli'),
-		'batas_nilai'		:fields.float('Batas Nilai Kelulusan',readonly=True),
-		'is_dosen'			:fields.boolean('Is Doses'),
-		'biodata_keluarga_ids'	:fields.one2many('master.biodata_keluarga','partner_id','Biodata Keluarga',),
+		'ipk':fields.float('IPK',digits=(2,2),readonly=True),
+		'judul':fields.text('Judul Tugas Akhir'),
+		'wisuda':fields.date('Tanggal Wisuda'),
+		'tgl_lulus':fields.date('Tanggal Lulus'),
+		'no_formulir':fields.char('No Formulir Ujian'),
+		'tgl_ujian':fields.date('Tanggal Ujian'),
+		'nilai_ujian':fields.float('Nilai Ujian'),
+		'nilai_ujian_asli':fields.float('Nilai Ujian Asli'),
+		'batas_nilai':fields.float('Batas Nilai Kelulusan',readonly=True),
+		'is_dosen':fields.boolean('Dosen ?'),
+		'biodata_keluarga_ids':fields.one2many('master.biodata_keluarga','partner_id','Biodata Keluarga',),
 		'riwayat_pendidikan_ids':fields.one2many('master.riwayat_pendidikan','partner_id','Riwayat Pendidikan',ondelete='cascade',),
-		'pelanggaran_ids'		:fields.one2many('master.pelanggaran','partner_id','Pelanggaran',),
-		'jadwal_ids'			:fields.one2many('master.jadwal','partner_id','Jadwal Mengajar',),
-		'nidn'					:fields.char('NIDN'),
-		'status_dosen'			:fields.selection([('tetap','Tetap'),('tidak_tetap','Tidak Tetap')],'Status Dosen'),
-		'age'					:fields.function(_calc_age, method=True, required=True, string='Usia (Tahun)', readonly=True, type="integer"),
-		'status_pernikahan'		:fields.selection([('belum','Belum Menikah'),('menikah','Menikah'),('janda','Janda'),('duda','Duda')],'Status Pernikahan'),
-		'lokasi_wisuda'			:fields.char('Tempat Wisuda',size=128,readonly=True),
-		'tgl_daftar'			:fields.date('Tanggal Daftar',readonly=True),
-		'siap_sidang' 			: fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True),
+		'pelanggaran_ids':fields.one2many('master.pelanggaran','partner_id','Pelanggaran',),
+		'pekerjaan_ids':fields.one2many('master.history.pekerjaan','partner_id','History Pekerjaan',),
+		'jadwal_ids':fields.one2many('master.jadwal','partner_id','Jadwal Mengajar',),
+		'nidn':fields.char('NIDN'),
+		'status_dosen':fields.selection([('tetap','Tetap'),('tidak_tetap','Tidak Tetap')],'Status Dosen'),
+		#'state': fields.selection([('draft','Calon Mahasiswa'),('on_progress','Mahasiswa'),('done','Alumni')],'Status Mahasiswa'),
+		'age':fields.function(_calc_age, method=True, required=True, string='Usia (Tahun)', readonly=True, type="integer"),
+		'status_pernikahan':fields.selection([('belum','Belum Menikah'),('menikah','Menikah'),('janda','Janda'),('duda','Duda')],'Status Pernikahan'),
+		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
+		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,readonly=True),
+		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
+		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True),
+		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
-		'is_beasiswa' : fields.boolean('Penerima Beasiswa',readonly=True),
+		'is_beasiswa' : fields.boolean('Penerima Beasiswa USM',readonly=True),
 		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM', required=True),
+		'keluarga_alumni_id': fields.many2one('res.partner','Keluarga Alumni',domain=[('status_mahasiswa','=','alumni')]),
+
+		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
+
+		'status_aktivitas': fields.selection([('A','A'),('N','N'),('K','K'),('L','L'),('C','C'),('D','D')],'Status Aktivitas',required=True),
 
 		#untuk mhs pindahan
 		'asal_univ_id' 		: fields.many2one('res.partner', 'Asal PT', domain=[('category_id','ilike','external')]),
-		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain=[('pt_id','=','asal_univ_id')]),
-		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain=[('fakultas_id','=','asal_fakultas_id')]),
-		'asal_npn'			: fields.char('Asal NIM'),
+		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain=[('pt_id','=','asal_univ_id'),('is_internal','=',False)]),
+		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain=[('fakultas_id','=','asal_fakultas_id'),('is_internal','=',False)]),
+		'asal_npm'			: fields.char('Asal NIM'),
 		'asal_sks_diakui' 	: fields.integer('SKS Diakui'),
 		'asal_jenjang_id' 	: fields.many2one('master.jenjang', 'Asal Jenjang'),
+		'semester_id'		:fields.many2one('master.semester','Semester'),
 
 	}
 
@@ -284,13 +290,18 @@ class res_partner (osv.osv):
 		'is_mahasiswa': False,
 	}
 
+
+
 	def action_konversi(self,cr,uid,ids,context=None):
 		konv_obj = self.pool.get('akademik.konversi')
 
 		for mhs in self.browse(cr, uid, ids, context=context):
+			exist = konv_obj.search(cr,uid,[('partner_id','=',mhs.id)],context=context)
+			if exist:
+				raise osv.except_osv(_('Error!'), _('Data konversi sudah pernah dibuat!'))
 			data = {
 				'partner_id' 		: mhs.id,
-				'semester_id'		: mhs.semester_id,
+				'semester_id'		: mhs.semester_id.id,
 				'asal_prodi_id'		: mhs.asal_prodi_id.id,
 				'asal_fakultas_id'	: mhs.asal_fakultas_id.id,
 				'asal_univ_id'		: mhs.asal_univ_id.id,
@@ -304,6 +315,6 @@ class res_partner (osv.osv):
 				'krs_done'			: False,
 			}
 			konv_id = konv_obj.create(cr, uid, data, context=context)
-		return 
+		return konv_id
 
 res_partner()
