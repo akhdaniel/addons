@@ -482,10 +482,20 @@ class mrp_production(osv.osv):
 
     def action_confirm(self, cr, uid, ids, context=None):
         super(mrp_production, self).action_confirm(cr, uid, ids, context=context)
+
         for production in self.browse(cr, uid, ids, context=context):
             new_batch_number = self.create_batch_number(cr,uid,production,context=context)                   
             production.write({'state': 'confirmed','batch_number':new_batch_number})
+       
+        ## Update Batch Number Di WO nya ##
+        self.update_batch_wo(cr,uid, ids, new_batch_number,context=context)
         return 0
+
+    def update_batch_wo(self,cr,uid,ids,new_batch_number,context=None):
+        for wo in self.browse(cr,uid,ids,context=context)[0].workcenter_lines:
+            if new_batch_number:
+                workcenter_line_obj = self.pool.get('mrp.production.workcenter.line')
+                workcenter_line_obj.write(cr, uid, [wo.id],{'batch_number':new_batch_number})
 
     _columns = {
         'batch_number_id': fields.many2one('batch.number', string='Batch Number',
@@ -720,9 +730,26 @@ class mrp_production(osv.osv):
 class mrp_production_workcenter_line(osv.osv):
     _inherit = 'mrp.production.workcenter.line'
 
+
+
+    def _get_batch(self, cr, uid, ids, field_name, arg, context=None):
+
+        # if context is None:
+        #     context = {}
+        # result      = {}
+        # y           = 0.00
+        # for obj in self.browse(cr,uid,ids,context=context):
+        #     y = (obj.result_qty/obj.qty) *100
+        #     result[obj.id] = y
+        # return result
+        return
+
     _columns={
-        'batch_number'   : fields.related('production_id','batch_number',type='char',readonly=True,store=True,string="Batch Number"),
+        # 'batch_number'   : fields.related('production_id','batch_number',type='char',readonly=False,store=True,string="Batch Number"),
+        'batch_number': fields.char('Batch Number',readonly=True,),
     } 
+
+
 
 class mrp_routing_workcenter(osv.osv):
 
