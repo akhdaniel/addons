@@ -5,6 +5,6 @@ HOST = 'localhost'
 PORT = 8069
 DB_NAME = 'openerp'
 
-client = Client('http://%s:%s/soap/netpro?wsdl' % (HOST, PORT))
-response = client.service.cek_member_in_claim(dbUser='', dbPassword='', ClaimType='', CardNo='9988', sDate=datetime.now(), PayTo='', errMessage='', ResponseCode='')
+client = Client('http://%s:%s/soap/netpro_dev?wsdl' % (HOST, PORT))
+response = client.service.cek_member_in_claim(dbUser='', dbPassword='', ClaimType='', CardNo='9999999999990845', sDate=datetime.now(), PayTo='', errMessage='', ResponseCode='')
 print response
