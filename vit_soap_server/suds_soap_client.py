@@ -2,7 +2,7 @@ from suds.client import Client
 from datetime import datetime
 
 HOST = 'localhost'
-PORT = 8069
+PORT = 80
 DB_NAME = 'openerp'
 
 client = Client('http://%s:%s/soap/netpro_dev?wsdl' % (HOST, PORT))
