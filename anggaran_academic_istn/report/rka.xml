@@ -17,6 +17,8 @@
             <t t-call="report.external_layout">
                 <div class="page">
                     <div class="oe_structure"/>
+                    <br/>
+                    <br/>
                     
                     <h2>
                         RENCANA KEGIATAN ANGGARAN

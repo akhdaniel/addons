@@ -25,7 +25,7 @@ class cashflow(osv.osv):
 		'tanggal'			: fields.date('Tanggal'),
 		'fakultas_id'		: fields.many2one('anggaran.fakultas', 'Fakultas'),
 		'jurusan_id'		: fields.many2one('anggaran.jurusan', 'Jurusan'),
-		'unit_id'			: fields.many2one('anggaran.unit', 'Unit', required=True),
+		'unit_id'			: fields.many2one('anggaran.unit', _('Unit Kerja'), required=True),
 		'tahun_id'			: fields.many2one('account.fiscalyear', 'Tahun', required=True),
 		'cashflow_line_ids'	: fields.one2many('anggaran.cashflow.line','cashflow_id','Lines', ondelete="cascade"),
 		'state'             : fields.selection(CASHFLOW_STATES,'Status',readonly=True,required=True),
