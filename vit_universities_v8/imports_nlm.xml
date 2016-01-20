@@ -6,6 +6,7 @@
 		    <field name="model">akademik.import_nlm</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import nlm">
+					<field name="is_processed" />	
 					<field name="thsmstrnlm" />	
 					<field name="kdptitrnlm" />	
 					<field name="kdjentrnlm" />	
@@ -14,7 +15,6 @@
 					<field name="kdkmktrnlm" />	
 					<field name="nlakhtrnlm" />	
 					<field name="bobottrnlm" />	
-					<field name="is_processed" />						
 		        </tree>    
 		    </field>
 		</record>

@@ -36,7 +36,7 @@
 		</record>
 
 		<!-- tree list import_mk -->
-		<record id="view_prodi_map_tree" model="ir.ui.view">
+		<!-- <record id="view_prodi_map_tree" model="ir.ui.view">
 		    <field name="name">akademik_prodi_map_tree</field>
 		    <field name="model">akademik.prodi.map</field>
 		    <field name="arch" type="xml">
@@ -46,7 +46,7 @@
 					<field name="name"/>				
 				</tree>		
 			</field>
-		</record>
+		</record> -->
 
 
 		<!-- action list import_mk -->
@@ -56,12 +56,12 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		<!-- action list prodi_map -->
-		<record id="action_prodi_map_list" model="ir.actions.act_window">
+		<!-- <record id="action_prodi_map_list" model="ir.actions.act_window">
 			<field name="name">List Prodi Map</field>
 			<field name="res_model">akademik.prodi.map</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		
+		 -->
 		<!-- menu imports -->
 		<menuitem id="imports_menu"
 			 name="Import"
@@ -97,7 +97,7 @@
 	    </record>
 
 	    <!-- prodi map data -->
-	    <record id="prodi_map_10203" model="akademik.prodi.map">
+	    <!-- <record id="prodi_map_10203" model="akademik.prodi.map">
 	        <field name="prodi_prima_id">10203</field>
 	        <field name="prodi_kode">11</field>
 	        <field name="name">Teknik Sipil S1</field>
@@ -186,7 +186,7 @@
 	        <field name="prodi_prima_id">3</field>
 	        <field name="prodi_kode">36</field>
 	        <field name="name">Teknik Informatika S1</field>
-	    </record>
+	    </record> -->
 
 
 	</data>

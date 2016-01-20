@@ -6,6 +6,7 @@
 		    <field name="model">akademik.import_mhs</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import mhs">
+					<field name="is_processed" />	
 					<field name="kdptimsmhs" />	
 					<field name="kdjenmsmhs" />	
 					<field name="kdpstmsmhs" />	
@@ -38,7 +39,6 @@
 					<field name="nokp2msmhs" />	
 					<field name="nokp3msmhs" />	
 					<field name="nokp4msmhs" />	
-					<field name="is_processed" />	
 		        </tree>    
 		    </field>
 		</record>

@@ -7,6 +7,17 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+
+################################################################
+# konversi tanggal dari mm/dd/yy ke yyyy-mm-dd
+# jika yy > min2000 dan yy < max2000 
+#	tambah 2000
+# else
+#	tambah 1900 
+#
+# misal 02/10/89 ===> 1989-02-10
+#       02/10/02 ===> 2002-02-10
+################################################################
 def format_tanggal(min2000, max2000, input_date):
 	#09/24/87
 	#01234567
@@ -18,6 +29,11 @@ def format_tanggal(min2000, max2000, input_date):
 	tgl = "%s-%s-%s" % ( t , input_date[:2], input_date[3:5])
 	return tgl 
 
+################################################################
+# class import table matakuliah TBKMK.csv
+# masuk ke master_matakuliah
+#          master_kurikulum
+################################################################
 class import_mk(osv.osv):
 	_name 		= "akademik.import_mk"
 	_columns 	= {
@@ -199,15 +215,12 @@ class import_mk(osv.osv):
 
 		return
 
-class prodi_map(osv.osv):
-	_name = "akademik.prodi.map"
-	_columns = {
-		'prodi_prima_id' 	: fields.char("ID Prodi Prima"),
-		'prodi_kode'		: fields.char('Kode Prodi'),
-		'name'				: fields.char('Nama Prodi'),
-	}
 
-
+################################################################
+# class import table mahasiswa MSMHS.csv
+# masuk ke res_partner
+#          operasional_krs
+################################################################
 class import_mhs(osv.osv):
 	_name 		= "akademik.import_mhs"
 	_columns 	= {
@@ -329,6 +342,12 @@ class import_mhs(osv.osv):
 			'nodestroy': False,
 		}
 
+
+################################################################
+# class import table nilai mahasiswa  TRNLP.csv
+# masuk ke res_partner
+#          operasional_krs
+################################################################
 class import_nlm(osv.osv):
 	_name 		= "akademik.import_nlm"
 	_columns 	= {
@@ -359,6 +378,10 @@ class import_nlm(osv.osv):
 		return
 
 
+################################################################
+# class import table lulusan mahasiswa TRLSM.csv 
+# update ke res_partner status : Lulus / DO / Cuti
+################################################################
 class import_lsm(osv.osv):
 	_name 		= "akademik.import_lsm"
 	_columns 	= {
