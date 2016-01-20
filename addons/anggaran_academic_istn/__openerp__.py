@@ -45,6 +45,7 @@
       'report/spm.xml',
       'report/paper.xml',
       'report/rka.xml',
+      'report/cashflow.xml',
 
       'security/ir.model.access.csv'
     ],    
