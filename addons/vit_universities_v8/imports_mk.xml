@@ -6,6 +6,7 @@
 		    <field name="model">akademik.import_mk</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import mk">
+					<field name="is_processed" />	
 					<field name="thsmstbkmk" />	
 					<field name="kdptitbkmk" />	
 					<field name="kdjentbkmk" />	
@@ -30,7 +31,6 @@
 					<field name="sappptbkmk" />	
 					<field name="bhnajtbkmk" />	
 					<field name="diktttbkmk" />	
-					<field name="is_processed" />	
 		        </tree>    
 		    </field>
 		</record>
