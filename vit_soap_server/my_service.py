@@ -472,6 +472,7 @@ class SOAPWsgiApplication(WsgiApplication):
 
     def __call__(self, req_env, start_response, wsgi_url=None):
         """Only match URL requests starting with '/soap/'."""
+        print req_env
         if req_env['PATH_INFO'].startswith('/soap/'):
             return super(SOAPWsgiApplication, self).__call__(
                 req_env, start_response, wsgi_url)
