@@ -23,7 +23,7 @@ class absensi(osv.osv):
 		if jad_id != [] :
 			raise osv.except_osv(_('Error!'), _('Absensi tersebut sudah ada!'))
 
-		return super(master_jadwal, self).create(cr, uid, vals, context=context)   
+		return super(absensi, self).create(cr, uid, vals, context=context)   
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
 		if not args:
