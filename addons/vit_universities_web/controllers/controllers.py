@@ -8,13 +8,13 @@ _logger = logging.getLogger(__name__)
 import time
 from datetime import datetime
 
-class Spmb(http.Controller):
+class Partner(http.Controller):
 
 	######################################################################################
 	# halaman registration
 	# muncul form registrasi, action ke registraion_process
 	######################################################################################
-	@http.route('/spmb/registration', auth='public', website=True)
+	@http.route('/registration', auth='user', website=True)
 	def registration(self, **kw):
 		message_error = kw.get('message_error','')
 		message_success = kw.get('message_success','')
@@ -29,7 +29,7 @@ class Spmb(http.Controller):
 		semester_ids = Semester.search([])
 
 		pekerjaans = [('psn','Pengawai Negeri Sipil'),('tni','TNI'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
-		jenis_kelamins = [('laki_laki','Laki-Laki'),('perempuan','Perempuan')]
+		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
 
 		return http.request.render('vit_universities_web.registration',
@@ -39,86 +39,97 @@ class Spmb(http.Controller):
 			'tahun_ids'		: tahun_ids,
 			'semester_ids'	: semester_ids,
 			'pekerjaans'	: pekerjaans,
-			'jenis_kelamins'	: jenis_kelamins,
+			'jenis_kelamins': jenis_kelamins,
 			'agamas'		: agamas,
 			'message_error'	: message_error,
 			'message_success': message_success
 		} )	
 
 
-
 	######################################################################################
 	# proses registration patient: 
-	# print, email, save: insert transaksi spmb
+	# print, email, save: insert transaksi Partner
 	######################################################################################
-	@http.route('/spmb/registration_process', auth='public', website=True)
+	@http.route('/registration_process', auth='user', website=True)
 	def registration_process(self, **kw):
-		# import pdb;pdb.set_trace()
-		message = kw.get('message','')
-		member_id = kw.get('member_id', '')
-		member_data = http.request.env['netpro.member'].browse(int(member_id))
-		policy_id = http.request.env['netpro.policy'].browse(int(member_data.policy_id.id))
-		member_plan_id = kw.get('member_plan_id', False)
-		MemberPlan = http.request.env['netpro.member_plan']
-		member_plan = MemberPlan.browse(int(member_plan_id))
+		cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
 
-		email_template_obj = http.request.env['netpro.email_template']
-		email_template = email_template_obj.search([('name','=','spmb_email')])
+		message 		= kw.get('message','')
 
-		if not member_plan:
-			message = "Member Plan not found! Please try again."
-			return request.redirect('/spmb/registration?message_error=%s'% (message), code=301)
+		#akademik
+		tahun_id 		= kw.get('tahun_id', '')		
+		semester_id 	= kw.get('semester_id', '')	
+		name 			= kw.get('name', '')		
+		prodi_id 		= kw.get('prodi_id', '')		
+		pekerjaan 		= kw.get('pekerjaan', '')	
 
-		Claim  = http.request.env['netpro.spmb']
-		spmb_data = {}
+		#pribadi
+		jenis_kelamin 	= kw.get('jenis_kelamin', '')
+		tempat_lahir	= kw.get('tempat_lahir', '')		
+		tanggal_lahir	= kw.get('tanggal_lahir', '')		
+		jenis_kelamin	= kw.get('jenis_kelamin', '')		
+		agama 			= kw.get('agama', '')		
+		street 			= kw.get('street', '')		
+		street2			= kw.get('street2', '')		
+		city			= kw.get('city', '')		
+
+		#orang tua
+		nama_ayah		= kw.get('nama_ayah', '')		
+		nama_ibu		= kw.get('nama_ibu', '')		
+		telpon_ayah		= kw.get('telpon_ayah', '')		
+		telpon_ibu		= kw.get('telpon_ibu', '')		
+
+		#pendidiksn
+		asal_sma		= kw.get('asal_sma', '')		
+		asal_universitas= kw.get('asal_universitas', '')		
+		nim_asal 		= kw.get('nim_asal', '')		
+		
+		#pekerjaan
+		nama_instansi 	= kw.get('nama_instansi', '')		
+		jabatan 		= kw.get('jabatan', '')		
+
+		# email_template_obj = http.request.env['netpro.email_template']
+		# email_template = email_template_obj.search([('name','=','Partner_email')])
+
+		Partner  = http.request.env['res.partner']
+		partner_data = {}
+
+		jenis_pendaftaran_id 	= http.request.env['akademik.jenis_pendaftaran'].search([('name','=','Baru')])
+		prodi 					= http.request.env['master.prodi'].browse( int(prodi_id) )
+		jadwal_id 				= http.request.env['jadwal.usm'].search([('name','=','Gelombang 1')])
+		tahun 					= http.request.env['academic.year'].browse( int(tahun_id) )
+
+		# import pdb; pdb.set_trace()
+
 
 		if kw.get('confirm') == '':
 			##############################################################################
-			# insert into netpro_spmb
+			# insert into netpro_Partner
 			##############################################################################
 
-			spmb_details = [(0,0,{'benefit_id' : x.benefit_id.id}) for x in member_plan.member_plan_detail_ids]
-
 			data = {
-				'spmb_date'		: time.strftime("%Y-%m-%d"),
-				'member_id'			: int(member_id),
-				'policy_id'			: int(policy_id.id),
-				'member_plan_id'	: member_plan.id ,
-				'spmb_detail_ids'  : spmb_details,
-				'state'  			: "open",
+				'name'			: name,
+				'jenis_pendaftaran_id' : jenis_pendaftaran_id.id,
+				'street'		: street,
+				'street2'		: street2,
+				'city'			: city,
+				'fakultas_id'	: prodi.fakultas_id.id,
+				'prodi_id'		: prodi.id,
+				'tahun_ajaran_id': tahun.id,
+				'jadwal_usm_id'	: jadwal_id.id,
+				'jenis_kelamin' : jenis_kelamin,
+				'agama'			: agama,
+				'tempat_lahir'	: tempat_lahir,
+				'tanggal_lahir'	: tanggal_lahir,
+				'is_company'	: False,
+				'status_mahasiswa': 'calon',
+
 			}
-			spmb_data = Claim.create(data)
-			message = "Claim Registration Success!"
-		
-		if kw.get('email') == '':
-			if member_data.email:
-				spmb_data = Claim.browse(int(kw.get('spmb_id')))
-				
-				subject_email = ''
-				body_email = ''
+			partner_data = Partner.create( data )
+			message = "Registration Success!"
 
-				if email_template:
-					subject_email = self.replaceString(email_template.subject, spmb_data, member_plan)
-					body_email = self.replaceString(email_template.body, spmb_data, member_plan)
-					
-				values = {
-					'subject' : subject_email,
-					'email_to' : member_data.email,
-					'body_html' : body_email,
-					'res_id' : False,
-				}
-				mail_mail_obj = http.request.env['mail.mail']
-				msg_id = mail_mail_obj.create(values)
-				#mail_mail_obj.send(msg_id.id)
-				message = "Message Sent"
-	        else :
-	        	message = "Member's email cannot be found, please filling email on member form to sending email."
-
-		#return request.redirect('/spmb/registration?message_success=%s'% (message), code=301)
-		return http.request.render('vit_universities_web.loa', {
-			'member'		: member_data, 
-			'member_plan'	: member_plan,
-			'spmb'			: spmb_data,
+		return http.request.render('vit_universities_web.registration_process', {
+			'partner'		: partner_data,
 			'message'		: message
 		})
 
@@ -126,18 +137,18 @@ class Spmb(http.Controller):
 	# # # # # # # # # # # # # # # # # # # # # 
 	# 		REPLACE EMAIL GLOSSARY 			#
 	# # # # # # # # # # # # # # # # # # # # # 
-	def replaceString(self,content,spmb,plan):
+	def replaceString(self,content,Partner,plan):
 		ret = ''
 		benefits = ''
 		for pl in plan.member_plan_detail_ids:
 			benefits += pl.benefit_id.name + '			: '+ '{0:,.2f}'.format(int(pl.remaining)) + '\n'
 
-		if content.find('[spmb_no]'):
-			ret += content.replace('[spmb_no]', spmb.spmb_no)
+		if content.find('[Partner_no]'):
+			ret += content.replace('[Partner_no]', Partner.Partner_no)
 		if content.find('[benefit]'):
 			ret += content.replace('[benefit]', str(benefits))
 		if content.find('[member_name]'):
-			ret += content.replace('[member_name]', spmb.member_id.name)
+			ret += content.replace('[member_name]', Partner.member_id.name)
 		return content
 
 
@@ -166,10 +177,10 @@ class Spmb(http.Controller):
 
 
 	######################################################################################
-	# action ke spmb list
+	# action ke Partner list
 	######################################################################################
-	@http.route('/spmb/spmb_list', auth='user', website=True)
-	def spmb_list(self, **kw):
+	@http.route('/partner/partner_list', auth='user', website=True)
+	def partner_list(self, **kw):
 		message_error = kw.get('message_error','')
 		message_success = kw.get('message_success','')
 
@@ -181,24 +192,24 @@ class Spmb(http.Controller):
 			member = Member.search([('card_no','=',kw.get('card_no','') )])
 			if not member:
 				message = "Member not found! Please try again."
-				return request.redirect('/spmb/search?message_error=%s'% (message), code=301)
+				return request.redirect('/Partner/search?message_error=%s'% (message), code=301)
 
 			##############################################################################
-			# cari data spmb member tsb yang masih open
+			# cari data Partner member tsb yang masih open
 			##############################################################################
-			Claim  = http.request.env['netpro.spmb']
-			spmb_ids = Claim.search([('member_id','=',member.id) ])
-			if not spmb_ids:
-				message = "Claim Registration not found!"
-				return request.redirect('/spmb/search?message_error=%s'% (message), code=301)
+			Partner  = http.request.env['netpro.Partner']
+			Partner_ids = Partner.search([('member_id','=',member.id) ])
+			if not Partner_ids:
+				message = "Partner Registration not found!"
+				return request.redirect('/Partner/search?message_error=%s'% (message), code=301)
 
 			# import pdb; pdb.set_trace()
-			# spmbs = Claim.browse(spmb_ids)
+			# Partners = Partner.browse(Partner_ids)
 
-			return http.request.render('vit_universities_web.spmb_list',
+			return http.request.render('vit_universities_web.Partner_list',
 				{'message_error'	: message_error,
 				'message_success'	: message_success,
-				'spmbs' 			: spmb_ids,
+				'Partners' 			: Partner_ids,
 				'member'			: member 
 			} )	
 
