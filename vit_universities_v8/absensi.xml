@@ -1,0 +1,157 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="absensi_mhs_search">
+            <field name="name">Cari Absensi</field>
+            <field name="model">absensi</field>
+            <field name="arch" type="xml">
+                <search string="Cari jadwal">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="employee_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Dosen" help="By Pengajar" context="{'group_by':'employee_id'}"/>
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Kelas" help="By Kelas" context="{'group_by':'kelas_id'}"/>
+                        <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
+                        <filter icon="terp-project" string="Mata Kuliah" help="By Mata Kuliah" context="{'group_by':'mata_kuliah_id'}"/>
+                        <filter icon="terp-project" string="State" help="By State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+    
+
+        <record model="ir.ui.view" id="absensi_mhs_tree_view">
+            <field name="name">absensi.tree</field>
+            <field name="model">absensi</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Absensi" version="7.0">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="kelas_id"/>                   
+                    <field name="tahun_ajaran_id"/>
+                    <field name="fakultas_id"/>
+                    <field name="prodi_id"/>
+                    <field name="mata_kuliah_id"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="absensi_mhs_form_view">
+            <field name="name">absensi.form</field>
+            <field name="model">absensi</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Absensi Kuliah" version="7.0">
+                    <header>
+                        <button name='close_absensi' string='Close' states='open' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>
+                        <button name='open_absensi' string='Open' states='waiting' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
+                                        
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>                      
+                    
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="employee_id"/> 
+                                <field name="kelas_id"/>
+                            </group>
+                            <group>
+                                <field name="tahun_ajaran_id"/>
+                                <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                            </group>
+                        </group>
+                        <group>    
+                            <group>
+                                <field name="mata_kuliah_id"/>                                                     
+                            </group>
+                            <group>
+                               <field name="semester_id"/>  
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Absensi">
+                                <field name="absensi_ids" view_mode="tree" nolabel="1">
+                                    <tree string="Absensi" editable="bottom">
+                                        <field name="partner_id"/>
+                                        <field name="absensi_1"/>
+                                        <field name="absensi_2"/>
+                                        <field name="absensi_3"/>
+                                        <field name="absensi_4"/>
+                                        <field name="absensi_5"/>
+                                        <field name="absensi_6"/>
+                                        <field name="absensi_7"/>
+                                        <field name="absensi_8"/>
+                                        <field name="absensi_9"/>
+                                        <field name="absensi_10"/>
+                                        <field name="absensi_11"/>
+                                        <field name="absensi_12"/>
+                                        <field name="absensi_13"/>
+                                        <field name="absensi_14"/>
+                                        <field name="absensi_15"/>
+                                        <field name="absensi_16"/>
+                                        <field name="absensi_17"/>
+                                        <field name="absensi_18"/>
+                                        <field name="absensi_19"/>
+                                        <field name="absensi_20"/>
+                                        <field name="absensi_21"/>
+                                        <field name="absensi_22"/>
+                                        <field name="absensi_23"/>
+                                        <field name="absensi_24"/>
+                                        <field name="absensi_25"/>
+                                        <field name="absensi_26"/>
+                                        <field name="absensi_27"/>
+                                        <field name="absensi_28"/>
+                                        <field name="absensi_29"/>
+                                        <field name="absensi_30"/>                                    
+                                        <field name="note"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                </field>        
+                            </page>    
+                        </notebook>
+                        
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record model="ir.actions.act_window" id="absensi_mhs_list_action">
+            <field name="name">Absensi</field>
+            <field name="res_model">absensi</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="absensi_mhs_search"/>
+            <field name="view_id" ref="absensi_mhs_tree_view"/>                      
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data absensi.</p><p>disini belum ada data tentang absensi !</p></field>
+        </record>
+
+
+            <menuitem id="master_absensi" name="Absensi" parent="vit_universities_v8.master_data_kbm" action="absensi_mhs_list_action" sequence="30"/>
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_absensi_mhs" model="ir.sequence.type">
+            <field name="name">Absensi</field>
+            <field name="code">absensi</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_absensi_mhs" model="ir.sequence">
+            <field name="name">Absensi</field>
+            <field name="code">absensi</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+        </record> 
+
+	</data>
+</openerp>	
