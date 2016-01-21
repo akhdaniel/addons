@@ -5,7 +5,7 @@
     'name': 'Sistem Informasi Akademik Perguruan Tinggi',
     'depends': ['base','hr','account','account_voucher'],
     'author'  :'vitraining.com',
-    'version': '0.2',
+    'version': '0.3',
     "website" : "http://www.vitraining.com",
     'category': 'Tools',
     'description': """
@@ -21,6 +21,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
     		'operasional.xml',
     		'kelas.xml',
     		'employee.xml',
+            'absensi.xml',
             'jadwal.xml',
             'kurikulum.xml',
             'cuti_kuliah.xml',
@@ -36,5 +37,5 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'company.xml',
             'imports.xml',
             'beasiswa_prodi.xml',
-    ],
+                ],
 }

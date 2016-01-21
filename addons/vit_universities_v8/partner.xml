@@ -45,10 +45,15 @@
                             'required': [('is_mahasiswa','=',True)]}"/>
                         <field name="status_mahasiswa" 
                             attrs="{'invisible': [('is_mahasiswa','=',False)]}"/>
+
                         <field name="is_mahasiswa" invisible="1"/>
                     </group>
             	</field>
 
+                <field name="parent_id" position="replace">
+                    <field name="parent_id" invisible="1"/>
+                    <field name="marketing_id" placeholder="Marketing..."/>
+                </field>
                 <div class="oe_edit_only" position="replace">
                 	<div class="oe_edit_only" attrs="{'invisible': [('is_mahasiswa','=',True)]}">
                         <label for="name"/> (

@@ -95,10 +95,13 @@
                 <search string="Cari jadwal">
                     <group col="10" colspan="4">
                          <field name="name"/>
+                         <field name="employee_id"/>
+                         <field name="wali_id"/>
                     </group>
                     <newline/>
                     <group expand="0" string="Group By..." colspan="12" col="10">
                         <filter icon="terp-project" string="Dosen" help="By Pengajar" context="{'group_by':'employee_id'}"/>
+                        <filter icon="terp-project" string="Dosen Wali" help="By Wali" context="{'group_by':'wali_id'}"/>
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
                         <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
@@ -110,6 +113,7 @@
                         <filter icon="terp-project" string="Sesi/Jam ke-" help="By Sesi/Jam ke-" context="{'group_by':'sesi'}"/>
                         <filter icon="terp-project" string="Hari" help="By Hari" context="{'group_by':'hari'}"/>
                         <filter icon="terp-project" string="Aktif" help="By Aktif" context="{'group_by':'is_active'}"/>
+                        <filter icon="terp-project" string="State" help="By State" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>
@@ -121,12 +125,11 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="jadwal_search"/>
+            <field name="view_id" ref="vit_universities_v8.jadwal_kuliah_tree_view"/>
+            <field name="form_view_id" ref="vit_universities_v8.jadwal_kuliah_form_view"/>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jadwal.</p><p>disini belum ada data tentang jadwal !</p></field>
         </record>
-        
-
-
 
 
         <!--  action window master fakultas -->
@@ -182,9 +185,6 @@
             </field>
         </record>
 
-
-
-
         <!--  action window master data jurusan  -->
         <record model="ir.actions.act_window" id="jurusan_list_action">
             <field name="name">Jurusan</field>
@@ -194,10 +194,6 @@
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jurusan.</p><p>disini belum ada data tentang jurusan !</p></field>
         </record>
-
-
-
-
 
         
         <!-- Prodi tree -->
@@ -284,10 +280,6 @@
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data program studi.</p><p>disini belum ada data tentang program studi !</p></field>
         </record>
-
-
-
-
 
 
         <!-- master data Academic Years Information Tree View -->
@@ -453,7 +445,9 @@
                      <field name="fakultas_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
-                    <field name="kelas_id"/>                    
+                    <field name="kelas_id"/> 
+                    <field name="keluarga_alumni_id"/> 
+                    <field name="marketing_id" invisible="1"/>                  
                 </tree>
             </field>
         </record>          
@@ -463,13 +457,14 @@
             <field name="model">res.partner</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Calon Mahasiswa">
+                <tree string="Daftar Mahasiswa">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                     <field name="fakultas_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
-                    <field name="kelas_id"/>                    
+                    <field name="kelas_id"/> 
+                    <field name="marketing_id" invisible="1"/>                    
                 </tree>
             </field>
         </record>  
@@ -479,7 +474,7 @@
             <field name="model">res.partner</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Calon Mahasiswa">
+                <tree string="Daftar Alumni">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                      <field name="fakultas_id"/>
@@ -487,7 +482,8 @@
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/>  
                     <field name="tgl_lulus"/> 
-                    <field name="nilai_ujian"/>                  
+                    <field name="nilai_ujian"/>
+                    <field name="marketing_id" invisible="1"/>                  
                 </tree>
             </field>
         </record>   
@@ -592,7 +588,7 @@
  
         <!-- KRS -->
         <record model="ir.ui.view" id="kartu_studi_search">
-            <field name="name">Studi Jadwal</field>
+            <field name="name">Studi</field>
             <field name="model">operasional.krs</field>
             <field name="arch" type="xml">
                 <search string="Cari Kartu Studi">
@@ -663,25 +659,25 @@
             <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10"/>
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
                 <menuitem id="spmb" name="PMB" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
-            <menuitem id="master_data_kelas" name="Kelas" parent="si_akademik_menu" sequence="20"/>
-                <menuitem id="master_kelas" name="Kelas" parent="master_data_kelas" action="kelas_list_action"/>
-            <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> 
-                <menuitem id="master_jadwal" name="Jadwal Perkuliahan" parent="master_data_jadwal" action="jadwal_list_action"/>   
-            <menuitem id="master_civitas" name="Mahasiswa" parent="si_akademik_menu" sequence="40"/>
+            <menuitem id="master_data_kbm" name="KBM" parent="si_akademik_menu" sequence="20"/>
+                <menuitem id="master_kelas" name="Kelas" parent="master_data_kbm" action="kelas_list_action" sequence="10"/>
+            <!-- <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> --> 
+                <menuitem id="master_jadwal" name="Jadwal" parent="master_data_kbm" action="jadwal_list_action" sequence="20"/>
+   
+            <menuitem id="master_civitas" name="Civitas" parent="si_akademik_menu" sequence="40"/>
                 <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" sequence="11"/> 
                 <menuitem id="master_wisuda" name="Wisuda" parent="master_civitas" action="wisuda_list_action" sequence="20"/>  
                 <menuitem id="master_alumni" name="Alumni" parent="master_civitas" action="alumni_list_action" sequence="30"/>
-            <menuitem id="master_data_pembayaran" name="Pembayaran" parent="si_akademik_menu" sequence="50"/>
+                <menuitem id="master_dosen" name="Dosen" parent="master_civitas" action="dosen_list_action" sequence="40"/> <menuitem id="master_data_pembayaran" name="Pembayaran" parent="si_akademik_menu" sequence="50"/>
                 <menuitem id="master_pembayaran" name="Pembayaran" parent="master_data_pembayaran" action="pembayaran_list_action"/>            
             <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="60"/>              
                 <menuitem id="master_krs" name="Kartu Rencana Studi" parent="operasional" action="krs_list_action" sequence="13"/>
                 <menuitem id="master_khs" name="Kartu Hasil Studi" parent="operasional" action="khs_list_action" sequence="14"/>
                 <menuitem id="preview_transkrip" name="Transkrip" parent="operasional" action="preview_list_action" sequence="15"/>    
-            <menuitem id="master_data_dosen" name="Dosen" parent="si_akademik_menu" sequence="70"/>
-                 <menuitem id="master_dosen" name="Dosen" parent="master_data_dosen" action="dosen_list_action"/>    
+                     
             <menuitem id="master_data_kurikulum" name="Kurikulum" parent="si_akademik_menu" sequence="80"/>
                  <menuitem id="master_kurikulum" name="Kurikulum" parent="master_data_kurikulum" action="kurikulum_list_action"/>
-                 <menuitem id="master_mk" name="Mata Kuliah" parent="master_data_kurikulum" action="mk_list_action"/>
+                 <menuitem id="master_mk" name="Matakuliah" parent="master_data_kurikulum" action="mk_list_action"/>
             <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90" groups="vit_universities_v8.group_univ_staff_baak"/>
                 <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action" sequence="10"/>
                 <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
