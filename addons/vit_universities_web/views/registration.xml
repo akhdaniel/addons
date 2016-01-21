@@ -33,12 +33,33 @@
                 </div>
             </t>
 
-        	<h2>Registration Form No: xxxxx</h2>
+        	<h2>Registration Form</h2>
 
 
             <form t-attf-action="/universities/registration_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
                 <h3>DATA AKADEMIK</h3>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="tahun_id">
+                          <t t-foreach="tahun_ids" t-as="tahun">
+                            <option t-att-value="'%s' % (tahun.id)" t-esc="tahun.name" />
+                          </t>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="semester_id">
+                          <t t-foreach="semester_ids" t-as="semester">
+                            <option t-att-value="'%s' % (semester.id)" t-esc="semester.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div>  
+
+
                 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
@@ -48,10 +69,10 @@
                 </div>    
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="jurusan">Jurusan / Prodi</label>
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
                     <div class="col-md-7 col-sm-8">
-                        <select class="form-control" name="attrib">
-                          <t t-foreach="prodis" t-as="prodi">
+                        <select class="form-control" name="prodi_id">
+                          <t t-foreach="prodi_ids" t-as="prodi">
                             <option t-att-value="'%s' % (prodi.id)" t-esc="prodi.name" />
                           </t>
                         </select>
@@ -61,27 +82,128 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="perkerjaan">Perkerjaan</label>
                     <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="perkerjaan">
+                          <t t-foreach="perkerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" />
+                          </t>
+                        </select>
                     </div>
                 </div>    
-
-                <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="address">Alamat</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="address" required="True" />
-                    </div>
-                </div>   
-
 
 
                 <h3>DATA PRIBADI</h3>
 
  
 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="tempat_lahir" required="True" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="tgl_lahir" required="True" />
+                    </div>
+                </div>  
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jenis_kelamin">
+                          <t t-foreach="jenis_kelamins" t-as="jk">
+                            <option t-att-value="'%s' % (jk[0])" t-esc="jk[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="agama">
+                          <t t-foreach="agamas" t-as="ag">
+                            <option t-att-value="'%s' % (ag[0])" t-esc="ag[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="address">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="address" required="True" />
+                    </div>
+                </div>  
+
+
+
 
                 <h3>DATA ORANG TUA</h3>
 
-                <h3>DATA PEKERJAAN</h3>
 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_ayah">Nama Ayah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="nama_ayah" />
+                    </div>
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_ibu">Nama Ibu</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="nama_ibu" />
+                    </div>
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="telpon_ayah">Telepon Ayah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="telpon_ayah" />
+                    </div>
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="telpon_ibu">Telepon Ibu</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="telpon_ibu" />
+                    </div>
+                </div>  
+
+
+
+
+
+                <h3>DATA PENDIDIKAN</h3>
+
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_sma">Asal SMA</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="asal_sma" />
+                    </div>
+                </div>  
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal Universitas (Pindahan) dan NIM</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_universitas" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nim_asal" />
+                    </div>
+                </div>  
+
+                <h3>DATA PEKERJAAN</h3>
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_instansi">Nama Instansi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="nama_instansi" />
+                    </div>
+                </div>  
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jabatan">Jabatan</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="jabatan" />
+                    </div>
+                </div>  
 
                 <div class="form-group">
                     <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">

@@ -14,18 +14,33 @@ class Spmb(http.Controller):
 	# halaman registration
 	# muncul form registrasi, action ke registraion_process
 	######################################################################################
-	@http.route('/spmb/registration', auth='user', website=True)
+	@http.route('/spmb/registration', auth='public', website=True)
 	def registration(self, **kw):
 		message_error = kw.get('message_error','')
 		message_success = kw.get('message_success','')
 
 		Prodi  = http.request.env['master.prodi']
-		prodis = Prodi.search([])
+		prodi_ids = Prodi.search([])
+
+		Tahun  = http.request.env['academic.year']
+		tahun_ids = Tahun.search([])
+
+		Semester  = http.request.env['master.semester']
+		semester_ids = Semester.search([])
+
+		pekerjaans = [('psn','Pengawai Negeri Sipil'),('tni','TNI'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
+		jenis_kelamins = [('laki_laki','Laki-Laki'),('perempuan','Perempuan')]
+		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
 
 		return http.request.render('vit_universities_web.registration',
 			{
 			'target_title'	: 'Registration', 
-			'prodis'		: prodis,
+			'prodi_ids'		: prodi_ids,
+			'tahun_ids'		: tahun_ids,
+			'semester_ids'	: semester_ids,
+			'pekerjaans'	: pekerjaans,
+			'jenis_kelamins'	: jenis_kelamins,
+			'agamas'		: agamas,
 			'message_error'	: message_error,
 			'message_success': message_success
 		} )	
@@ -36,7 +51,7 @@ class Spmb(http.Controller):
 	# proses registration patient: 
 	# print, email, save: insert transaksi spmb
 	######################################################################################
-	@http.route('/spmb/registration_process', auth='user', website=True)
+	@http.route('/spmb/registration_process', auth='public', website=True)
 	def registration_process(self, **kw):
 		# import pdb;pdb.set_trace()
 		message = kw.get('message','')
