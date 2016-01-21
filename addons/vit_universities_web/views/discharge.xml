@@ -1,0 +1,151 @@
+<openerp>
+<data>
+<!-- LO Confirmation -->
+
+<template id="assets_common" name="claim web assets" inherit_id="web.assets_common">
+    <xpath expr="." position="inside">
+        <script type="text/javascript" src="/vit_claim_web/static/src/js/my.js"></script>
+    </xpath>
+</template>
+
+<template id="vit_claim_web.loc">
+	<h2>Letter of Confirmation</h2>  
+
+	<h3>Benefit <t t-esc="member_plan.product_plan_id.product_plan_base_id.name"/> - <t t-esc="member_plan.product_plan_id.product_plan_base_id.pplan"/> </h3>
+
+	<form t-attf-action="/claim/discharge_process" id="form_input" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+
+        <!-- loo for each claim details -->
+        <t t-foreach="claim.claim_detail_ids" t-as="detail">
+         	<div class="row">
+            	<div class="col-md-4 col-sm-4">
+                    <label class="control-label"><t t-esc="detail.benefit_id.name"/></label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                   	<input type="text" t-attf-mplan="{{member_plan.id}}" t-attf-detailid="{{detail.id}}" t-attf-benefitid="{{detail.benefit_id.id}}" t-attf-class="form-control harga_benefit" t-attf-name="claim_details.{{detail.id}}" t-attf-value="{{'{0:,.2f}'.format(int(detail.billed))}}"/>
+                    <t t-if="claim.state == 'approved' and detail.excess &gt; 0">
+                        <label>Accepted  : </label><input class='form-control' t-attf-name="accept.{{detail.id}}" readonly='readonly' t-attf-value="{{'{0:,.2f}'.format(int(detail.accepted))}}" />
+                        <label>Excess    : </label><input class='form-control' t-attf-name="excess.{{detail.id}}" readonly='readonly' t-attf-value="{{'{0:,.2f}'.format(int(detail.excess))}}" />
+                    </t>
+                    <span t-attf-id="{{detail.benefit_id.id}}"></span>
+                </div>
+            </div><br />
+        </t>
+
+        <!-- Loop for diagnosis -->
+        <t t-foreach="claim.diagnosis_ids" t-as="diag">
+            <div class="row">
+                <div class="col-md-4 col-sm-4">
+                    <label class="control-label"><t t-esc="diag.diagnosis_id.name"/></label>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <input type="text" disabled="disabled" t-attf-value="{{diag.diagnosis_id.standard_fee}}"/>
+                </div>
+            </div>
+        </t>
+
+        <t t-if="claim.state == 'open'">
+            <a href="#button_add_diagnosis" onclick="addField();" id="button_add_diagnosis" class="btn btn-info">Add Diagnosis</a>
+            <br /> <br />
+        </t>
+
+        <script src="/vit_claim_web/static/src/js/jquery-ui/jquery.js"></script>
+        <script src="/vit_claim_web/static/src/js/jquery-ui/jquery-ui.js"></script>
+        <script src="/vit_claim_web/static/src/js/jquery-ui/jquery.ui.autocomplete.html.js"></script>
+        <script type='text/javascript'>
+            var Diagnoses = []
+            <t t-foreach="diagnosis or []" t-as="diag">
+                Diagnoses.push({"id":"<t t-esc="diag.id"/>",
+                                "label":"<t t-esc="diag.diagnosis"/> <t t-esc="diag.name"/>",
+                                "value":"<t t-esc="diag.diagnosis"/> <t t-esc="diag.name"/>"});
+            </t>
+            Diagnoses = Diagnoses.sort();
+
+            $(document).on('keydown.autocomplete', "input[id^='diagnosis_']", function(){
+                var idnya = $(this).attr("id");
+                var id_spl = idnya.split("_");
+                $(this).autocomplete({
+                    source: Diagnoses,
+                    minLength: 2,
+                    select: function(event, ui){
+                        $("input[id^='diagnosisval_"+id_spl[1]+"']").val(ui.item.id);
+                    },
+                    html:true,
+                });
+            });
+
+        </script>
+    
+        <!-- buttons -->
+        <div class="row">
+            <div class="col-sm-8 col-md-7">
+                <t t-if="claim.state == 'open'">
+                    <button type="submit" name="confirm" class="btn btn-primary">
+                        Confirm
+                    </button>
+                </t>
+                <t t-if="claim.state == 'close'">
+                    <button type="submit" name="email"  class="btn btn-warning email">
+                        Email
+                    </button>
+                    <a href="#nganu" id="nganu" class="btn btn-danger print">
+                        Print
+                    </a>
+                </t>
+            </div>
+        </div> 
+
+	    <input type="hidden" name="claim_id" t-attf-value="{{ claim.id }}" />
+	    <input type="hidden" name="member_id" t-attf-value="{{ member.id }}" />
+        <input type="hidden" name="member_plan_id" t-attf-value="{{ member_plan.id }}" />
+
+	</form>
+</template>
+
+<!-- discharge -->
+
+<template id="vit_claim_web.discharge_confirmation" name="Discharge Confirmation" page="True">
+    <t t-call="website.layout">
+        <!-- <t t-set="head">
+            <t t-call-assets="web.assets_backend"/>
+        </t> -->
+        <t t-set="title">Discharge Confirmation</t>
+        <div class="container">
+
+            <t t-if="message_error">
+                <br />
+                <div class="alert alert-danger">
+                    <t t-esc="message_error"/>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <t t-if="message_success">
+                <br />
+                <div class="alert alert-success">
+                    <t t-esc="message_success"/>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <t t-if="message">
+                <br />
+                <div class="alert alert-info">
+                    <t t-esc="message"/>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <h3>Claim No: <t t-esc="claim.claim_no" /> </h3>
+            <t t-call="vit_claim_web.patient_data" />
+            <t t-call="vit_claim_web.loc" />
+
+        </div>
+        <br/>
+    </t>	
+</template>
+
+
+
+</data>
+</openerp>
