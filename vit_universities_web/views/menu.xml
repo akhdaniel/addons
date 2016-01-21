@@ -2,9 +2,9 @@
 <openerp>
     <data noupdate="1">
 
-        <record id="menu_spmb" model="website.menu">
-            <field name="name">SPMB</field>
-            <field name="url">/spmb/registration</field>
+        <record id="menu_pmb" model="website.menu">
+            <field name="name">PMB</field>
+            <field name="url">/registration</field>
             <field name="parent_id" ref="website.main_menu"/>
             <field name="sequence" type="int">30</field>
         </record>

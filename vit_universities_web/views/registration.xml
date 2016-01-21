@@ -36,7 +36,7 @@
         	<h2>Registration Form</h2>
 
 
-            <form t-attf-action="/universities/registration_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <form t-attf-action="/registration_process" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
                 <h3>DATA AKADEMIK</h3>
 
@@ -80,10 +80,10 @@
                 </div>    
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="perkerjaan">Perkerjaan</label>
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan</label>
                     <div class="col-md-7 col-sm-8">
-                        <select class="form-control" name="perkerjaan">
-                          <t t-foreach="perkerjaans" t-as="p">
+                        <select class="form-control" name="pekerjaan">
+                          <t t-foreach="pekerjaans" t-as="p">
                             <option t-att-value="'%s' % (p[0])" t-esc="p[1]" />
                           </t>
                         </select>
@@ -101,7 +101,7 @@
                         <input type="text" class="form-control" name="tempat_lahir" required="True" />
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <input type="text" class="form-control" name="tgl_lahir" required="True" />
+                        <input type="text" class="form-control" name="tanggal_lahir" required="True" />
                     </div>
                 </div>  
 
@@ -128,9 +128,15 @@
                 </div> 
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="address">Alamat Rumah</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="address" required="True" />
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="street" required="True" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="street2" required="True" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="city" required="True" />
                     </div>
                 </div>  
 
@@ -138,8 +144,6 @@
 
 
                 <h3>DATA ORANG TUA</h3>
-
-
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="nama_ayah">Nama Ayah</label>
