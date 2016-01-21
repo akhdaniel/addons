@@ -243,7 +243,7 @@ class res_partner (osv.osv):
 		'is_beasiswa' : fields.boolean('Penerima Beasiswa USM',readonly=True),
 		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM', required=True),
 		'keluarga_alumni_id': fields.many2one('res.partner','Keluarga Alumni',domain=[('status_mahasiswa','=','alumni')]),
-
+		'marketing_id': fields.many2one('master.marketing','Marketing'),
 		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
 
 		'status_aktivitas': fields.selection([('A','A'),('N','N'),('K','K'),('L','L'),('C','C'),('D','D')],'Status Aktivitas',required=True),

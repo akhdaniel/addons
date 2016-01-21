@@ -705,7 +705,7 @@ class operasional_transkrip(osv.Model):
 	_columns={
 		'name' : fields.char('Kode',size=28,required=True),
 		'partner_id' : fields.many2one('res.partner','Nama Mahasiswa', required=True, domain="[('status_mahasiswa','=','Mahasiswa')]"),
-		'npm':fields.related('partner_id','npm',type='char',relation='res.partner',string='NPM'),
+		'npm':fields.related('partner_id','npm',type='char',relation='res.partner',string='NIM'),
 		'tempat_lahir':fields.related('partner_id','tempat_lahir',type='char',relation='res.partner',string='Tempat Lahir',readonly=True),
 		'tanggal_lahir':fields.related('partner_id','tanggal_lahir',type='date',relation='res.partner',string='Tanggal Lahir',readonly=True),
 		'tahun_ajaran_id':fields.related('partner_id', 'tahun_ajaran_id', type='many2one', relation='academic.year',string='Angkatan',readonly=True),

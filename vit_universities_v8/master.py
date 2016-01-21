@@ -415,4 +415,11 @@ class master_history_pekerjaan(osv.Model):
 		'periode_akhir'	: fields.date('Periode Akhir'),
 
 	}
-			
+
+class master_marketing(osv.Model):
+	_name = "master.marketing"
+	_columns  = {
+		'name' : fields.char("Name",required=True),
+		'partner' : fields.many2one("res.partner",'Partner'),
+	}
+master_marketing()			

@@ -1,6 +1,7 @@
 <openerp>
 	<data>
 
+    
         <record model="ir.ui.view" id="jadwal_kuliah_tree_view">
             <field name="name">jadwal.tree</field>
             <field name="model">master.jadwal</field>
@@ -8,11 +9,11 @@
             <field name="arch" type="xml">
                 <tree string="Daftar Jadwal Kuliah" version="7.0">
                     <field name="name"/>
-                    <field name="employee_id"/> 
+                    <field name="employee_id"/>
+                    <field name="wali_id"/> 
                     <field name="kelas_id"/>                   
                     <field name="tahun_ajaran_id" invisible="1"/>
                     <field name="fakultas_id" invisible="1"/>
-                    <!-- <field name="jurusan_id" invisible="1"/> -->
                     <field name="prodi_id" invisible="1"/>
                     <field name="ruangan_id"/>
                     <field name="hari"/>
@@ -22,13 +23,14 @@
                 </tree>
             </field>
         </record>
+
         
         <record model="ir.ui.view" id="jadwal_kuliah_form_view">
             <field name="name">jadwal.form</field>
             <field name="model">master.jadwal</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Daftar Jadwal Kuliah" version="7.0">
+                <form string="Daftar Jadwal Kuliah" version="7.0">                   
                 	<sheet>
                 		<group>
                 			<group>
@@ -39,7 +41,7 @@
                 			<group>
                 				<field name="tahun_ajaran_id"/>
 			                    <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
-			                    <!-- <field name="jurusan_id"/>             				 -->
+			                    <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
                 			</group>
                         </group>
                         <group>    
@@ -53,14 +55,16 @@
                                     <field name="hours_to" widget="float_time" nolabel="1" class="oe_inline" />
                                 </div>                                                                                           
                             </group>
-                            <group>
-                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>  
+                            <group>                                  
                                 <field name="mata_kuliah_id"/>  
                                 <field name="semester_id"/>                                                          
                             </group>
                             <group>
-                                <field name="is_active"/> 
+                                <field name="is_active"/>
                             </group>
+                            <group>
+                                <field name="wali_id"/> 
+                            </group>                            
                 		</group>
 	                </sheet>    
                 </form>
