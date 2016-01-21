@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_master_prodi_public,access_master_prodi_public,vit_universities_v8.model_master_prodi,base.group_public,1,0,0,0
+access_academic_year_public,access_academic_year_public,vit_universities_v8.model_academic_year,base.group_public,1,0,0,0
+access_master_semester_public,access_master_semester_public,vit_universities_v8.model_master_semester,base.group_public,1,0,0,0
