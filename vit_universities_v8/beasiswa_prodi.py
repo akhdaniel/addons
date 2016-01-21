@@ -21,15 +21,15 @@ class beasiswa_prodi(osv.Model):
 		'product_id1'		: fields.many2one('product.product', 'Discount Product USM', domain=[('categ_id','=','Discount Beasiswa')], help="Produk services yang memiliki tag Discount Beasiswa"),
 		'limit_nilai_sma'	:fields.float('Batas Nilai SMA/Sederajat',help='Batas Lolos penerimaan untuk mendapatkan beasiswa'),
 		'amount1'			: fields.float('Besarnya Beasiswa',help='Nilai potongan beasiswa'),
+		'usm_sequence'		: fields.integer('Sequence',required=True,help='Urutan proses dengan disc alumni, lebih kecil itu yg diproses'),
 
 		'product_id2'		: fields.many2one('product.product', 'Discount Product Prodi', domain=[('categ_id','=','Discount Beasiswa')], help="Produk services yang memiliki tag Discount Beasiswa"),
 		'limit_ipk'			: fields.float('Batas Minimal IPK',help='Batas Lolos IPK semester sebelumnya untuk mendapatkan beasiswa'),
 		'amount2'			: fields.float('Besarnya Beasiswa',help='Nilai potongan beasiswa prestasi'),
-		'prodi_sequence'	: fields.integer('sequence',required=True,help='Urutan proses dengan disc alumni, lebih kecil itu yg diproses'),
 
 		'product_id3'		: fields.many2one('product.product', 'Discount Product Alumni', domain=[('categ_id','=','Discount Beasiswa')], help="Produk services yang memiliki tag Discount Beasiswa"),
 		'amount3'			: fields.float('Besarnya Beasiswa',help='Nilai potongan beasiswa jika punya kerabat alumni'),		
-		'alumni_sequence'	: fields.integer('sequence',required=True,help='Urutan proses dengan disc prodi, lebih kecil itu yg diproses'),
+		'alumni_sequence'	: fields.integer('Sequence',required=True,help='Urutan proses dengan disc usm, lebih kecil itu yg diproses'),
 
 		'is_active'			: fields.boolean('Aktif?',size=128),
 		'user_id'			: fields.many2one('res.users','User',readonly=True),

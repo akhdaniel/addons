@@ -89,7 +89,8 @@
                             <group>   
                                 <field name="user_id"/>     
                                 <field name="sks_tot" invisible="1"/>          
-                                <field name="ips"/>                                
+                                <field name="ips"/>     
+                                <field name="ips_field" invisible="1"/>                           
                             </group>    
                         </group>                        
                         <notebook colspan="4">
@@ -195,7 +196,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="krs_tree_view"/>
             <field name="search_id" ref="vit_universities_v8.kartu_studi_search"/>
-            <field name="domain">[('partner_id','=',active_id),('type','=','out_invoice')]</field>
+            <field name="domain">[('partner_id','=',active_id)]</field>
             <field name="context">{'default_partner_id':active_id,'search_default_group_by_state':True}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">

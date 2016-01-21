@@ -54,7 +54,7 @@
                             <group>
                                 <field name="asal_univ_id" domain="[('category_id','ilike','external')]"/>
                                 <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id),('is_internal','=',False)]"/>
-                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id),(is_internal','=',False)]"/>                      
+                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id),('is_internal','=',False)]"/>                      
                             </group>
                 			<group>                              
                                 <field name="tahun_ajaran_id"/>
@@ -89,12 +89,12 @@
                                     <group string="Mata Kuliah Konversi">
                                         <field name="matakuliah_ids"  nolabel="1" on_change="onchange_konversi(matakuliah_ids,total_mk_asal,total_mk_tujuan,total_sks_asal,total_sks_tujuan)">
                                             <tree string="MK Internal" editable="top">
-                                                <field name="asal_matakuliah_id" />
+                                                <field name="asal_matakuliah_id" domain="[('prodi_id','=',parent.asal_prodi_id)]"/>
                                                 <field name="asal_semester_id" string="Smt"/>
                                                 <field name="asal_sks"/>
                                                 <field name="asal_nilai"/>
                                                 <field name="asal_nilai_a" on_change="onchange_asal_matakuliah(konversi_id,asal_matakuliah_id,asal_semester_id,asal_sks,asal_nilai,asal_nilai_a)"/>     
-                                                <field name="matakuliah_id"/>
+                                                <field name="matakuliah_id" domain="['|',('jenis','=','mk_umum'),('prodi_id','=',parent.prodi_id)]"/>
                                                 <field name="semester_id" string="Smt"/>
                                                 <field name="sks"/>
                                                 <field name="nilai"/>
