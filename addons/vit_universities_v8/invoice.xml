@@ -37,7 +37,7 @@
             	<field name="partner_id" position="after">
             		<newline/>
                     <field name="npm" invisible="1"/>
-                    <field name="krs_id" invisible="0"/>
+                    <field name="krs_id" readonly="1" attrs="{'invisible': [('krs_id','=',False)]}"/>
                 </field>
             </field>
         </record>
@@ -53,6 +53,8 @@
                     on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)"
                     context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"
                     domain="[('supplier', '=', True)]"/>
+                    <!-- <field name="krs_id" readonly="1" attrs="{'invisible': [('krs_id','=',False)]}"/> -->
+                    
                     
                 </field>
                 <field name="fiscal_position" position="replace"/>

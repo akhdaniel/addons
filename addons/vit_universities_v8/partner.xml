@@ -52,7 +52,7 @@
                 <div class="oe_edit_only" position="replace">
                 	<div class="oe_edit_only" attrs="{'invisible': [('is_mahasiswa','=',True)]}">
                         <label for="name"/> (
-                        <field name="is_company" on_change="onchange_type(is_company)" class="oe_inline"/> <label for="is_company" string="Is a Company?"/>)
+                        <field name="is_company" on_change="onchange_type(is_company)" class="oe_inline"/> <label for="is_company" string="Is a University?"/>)
                     </div>    
                 </div>
             	<field name='name' position="replace">
@@ -146,7 +146,7 @@
 
                                 <separator/>
                                 <group>
-                                    <field name="keluarga_alumni_id"/>
+                                    <field name="keluarga_alumni_id" groups="vit_universities_v8.group_univ_ka_baak"/>
                                 </group>
                             </sheet>
 

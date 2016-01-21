@@ -182,7 +182,7 @@ class spmb_mahasiswa(osv.Model):
 											('fakultas_id','=',my_form.fakultas_id.id),
 											('prodi_id','=',my_form.prodi_id.id),],context=context)
 		if data_bea:
-			bea_browse.browse(cr,uid,data_bea[0])
+			bea_browse=bea_obj.browse(cr,uid,data_bea[0])
 			if bea_browse.product_id1:
 				limit_bea = bea_browse.limit_nilai_sma
 

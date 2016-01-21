@@ -5,7 +5,7 @@
     'name': 'Sistem Informasi Akademik Perguruan Tinggi',
     'depends': ['base','hr','account','account_voucher'],
     'author'  :'vitraining.com',
-    'version': '0.3',
+    'version': '0.2',
     "website" : "http://www.vitraining.com",
     'category': 'Tools',
     'description': """
@@ -14,7 +14,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
     'installable':True,
     'data': ['security/groups.xml',
             'security/ir.model.access.csv',
-		'akademik.xml',
+            'akademik.xml',
     		'partner.xml',
             'wisuda.xml',
     		'spmb.xml',	

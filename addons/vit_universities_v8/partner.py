@@ -196,7 +196,7 @@ class res_partner (osv.osv):
 
 	_columns = {
 		#Mahasiswa
-		'npm' :fields.char(string='NPM',size=34),
+		'npm' :fields.char(string='NIM',size=34),
 		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
 		# 'nama_tengah':fields.char('Nama Tengah',size=60),
 		# 'nama_belakang':fields.char('Nama Tengah',size=60),

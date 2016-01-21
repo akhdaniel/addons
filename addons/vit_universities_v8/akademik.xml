@@ -34,7 +34,7 @@
         </record>
         
         <record model="ir.actions.act_window" id="mk_list_action">
-            <field name="name">Mata Kuliah</field>
+            <field name="name">Matakuliah</field>
             <field name="res_model">master.matakuliah</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -662,7 +662,7 @@
         <menuitem id="si_akademik_menu" name="Akademik" groups="vit_universities_v8.group_univ_external_baak"/>
             <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10"/>
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
-                <menuitem id="spmb" name="Saringan Masuk" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
+                <menuitem id="spmb" name="PMB" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
             <menuitem id="master_data_kelas" name="Kelas" parent="si_akademik_menu" sequence="20"/>
                 <menuitem id="master_kelas" name="Kelas" parent="master_data_kelas" action="kelas_list_action"/>
             <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> 

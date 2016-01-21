@@ -6,7 +6,7 @@ from datetime import datetime
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 
-class res_company(osv.Model):
+class res_company(osv.osv):
 	_name 		= "res.company"
 	_inherit 	= "res.company"
 
@@ -194,7 +194,7 @@ class master_matakuliah (osv.Model):
 	}
 
 	_defaults = {
-		'jenis':'mk_umum',
+		'jenis':'mk_khusus',
 		'kode':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.matakuliah'), 
 	}
 			

@@ -6,6 +6,99 @@ class operasional_krs (osv.Model):
 	_name= 'operasional.krs'
 	_rec_name='kode'
 
+	def _add_discount(self, cr, uid, ids ,inv_obj, context=None):
+		# search inv atas KRS ini
+		inv_ids = inv_obj.search(cr,uid,[('krs_id','=',ids)])
+		if inv_ids:
+			inv_browse 		= inv_obj.browse(cr,uid,inv_ids[0])
+			partner 		= inv_browse.krs_id.partner_id
+			tahun_ajaran 	= inv_browse.krs_id.tahun_ajaran_id
+			fakultas 		= inv_browse.krs_id.fakultas_id
+			prodi 			= inv_browse.krs_id.prodi_id 
+			semester 		= inv_browse.krs_id.semester_id
+			jml_inv 		= len(inv_ids)
+			bea_obj 		= self.pool.get('beasiswa.prodi')
+			data_bea 		= bea_obj.search(cr,uid,[('is_active','=',True),
+												('tahun_ajaran_id','=',tahun_ajaran.id),
+												('fakultas_id','=',fakultas.id),
+												('prodi_id','=',prodi.id),],context=context)
+			if data_bea :
+				inv_line = self.pool.get('account.invoice.line')
+				bea_browse = bea_obj.browse(cr,uid,data_bea[0])	
+
+
+				if semester.id == 1: # jika Semester satu
+					usm_seq = 99999999999999999
+					if bea_browse.product_id1 : # jika product utk disc usm diisi
+						usm_seq = bea_browse.usm_sequence
+					alumni_seq = 99999999999999999
+					if bea_browse.product_id3: # jika product utk disc alumni diisi
+						alumni_seq = bea_browse.alumni_sequence				
+					if usm_seq < alumni_seq :
+						if bea_browse.product_id1 : # jika product utk disc USM diisi
+							disc_usm_id 	= bea_browse.product_id1.id
+							disc_usm_name 	= bea_browse.product_id1.name
+							disc_usm_amount	= bea_browse.amount1/int(jml_inv)
+							disc_usm_coa  	= bea_browse.product_id1.property_account_income.id
+							if not disc_usm_coa:
+								disc_usm_coa = bea_browse.product_id1.categ_id.property_account_income_categ.id
+							# jika nilai sma lebih besar dari limit discount usm	
+							if partner.nilai_beasiswa >= bea_browse.limit_nilai_sma: 
+								for inv in inv_ids:	
+									inv_line.create(cr,uid,{'invoice_id': inv,
+															'product_id': disc_usm_id,
+															'name'		: str(disc_usm_name)+' USM',
+															'quantity'	: 1 ,
+															'price_unit': disc_usm_amount,
+															'account_id': disc_usm_coa},context=context)
+								return True	
+					if usm_seq > alumni_seq :
+						alumni_partner = partner.keluarga_alumni_id
+						if alumni_partner:
+							disc_alumni_id 		= bea_browse.product_id3.id
+							disc_alumni_name 	= bea_browse.product_id3.name
+							disc_alumni_amount	= bea_browse.amount3/int(jml_inv)
+							disc_alumni_coa  	= bea_browse.product_id3.property_account_income.id													
+							if not disc_alumni_coa:
+								disc_alumni_coa = bea_browse.product_id3.categ_id.property_account_income_categ.id										
+							#create diskon alumni
+							for inv in inv_ids:	
+								inv_line.create(cr,uid,{'invoice_id': inv,
+														'product_id': disc_alumni_id,
+														'name'		: str(disc_alumni_name)+' Kerabat Alumni',
+														'quantity'	: 1 ,
+														'price_unit': disc_alumni_amount,
+														'account_id': disc_alumni_coa},context=context)	
+							return True															
+
+
+
+				elif semester.id > 1: # jika Semester dua ke atas						
+					disc_prodi_id 		= bea_browse.product_id2.id
+					disc_prodi_name 	= bea_browse.product_id2.name
+					disc_prodi_amount	= bea_browse.amount2/int(jml_inv)
+					disc_prodi_syarat 	= bea_browse.limit_ipk
+					disc_prodi_coa  	= bea_browse.product_id2.property_account_income.id													
+					if not disc_prodi_coa:
+						disc_prodi_coa = bea_browse.product_id2.categ_id.property_account_income_categ.id		
+					smt_sebelumnya = semester.id - 1
+					khs_id_sbelumnya = self.search(cr,uid,[('partner_id','=',partner.id),('semester_id','=',smt_sebelumnya)])
+					khs_sebelumnya = self.browse(cr,uid,khs_id_sbelumnya[0])
+					#import pdb;pdb.set_trace()
+					ips_khs_sebelumnya = khs_sebelumnya.ips_field
+
+				 	if ips_khs_sebelumnya >= disc_prodi_syarat:
+						#create diskon prodi
+						for inv in inv_ids:	
+							inv_line.create(cr,uid,{'invoice_id': inv,
+													'product_id': disc_prodi_id,
+													'name'		: str(disc_prodi_name)+' Prodi',
+													'quantity'	: 1 ,
+													'price_unit': disc_prodi_amount,
+													'account_id': disc_prodi_coa},context=context)
+
+		return True
+
 	def create(self, cr, uid, vals, context=None):
 		#import pdb;pdb.set_trace()
 		inv_obj = self.pool.get('account.invoice')
@@ -173,52 +266,9 @@ class operasional_krs (osv.Model):
 						# 	vals = dict(vals.items()+inv.items())	
 			cr.commit()
 			#cek jika ada Discount
-			# search inv atas KRS ini
-			inv_ids = inv_obj.search(cr,uid,[('krs_id','=',my_krs_id)])
-			jml_inv = len(inv_ids)
-			bea_obj = self.pool.get('beasiswa.prodi')
-			data_bea = bea_obj.search(cr,uid,[('is_active','=',True),
-												('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
-												('fakultas_id','=',vals['fakultas_id']),
-												('prodi_id','=',vals['prodi_id']),],context=context)
-			if data_bea :
-				inv_line = self.pool.get('account.invoice.line')
-				bea_browse = data_bea.browse(cr,uid,data_bea[0])								
-				if vals['semester_id'] == 1: # jika Semester satu
-					if bea_browse.product_id1 : # jika product utk disc USM diisi
-						disc_usm_id 	= bea_browse.product_id1.id
-						disc_usm_name 	= bea_browse.product_id1.name
-						disc_usm_amount	= bea_browse.amount1/int(jml_inv)
-						disc_usm_coa  	= bea_browse.product_id1.property_account_income.id
-						if not disc_usm_coa:
-							disc_usm_coa = bea_browse.product_id1.categ_id.property_account_income_categ.id
-						for inv in nil_jml:	
-							inv_line.create(cr,uid,{'invoice_id': inv,
-													'product_id': disc_usm_id,
-													'name'		: disc_usm_name,
-													'quantity'	: 1 ,
-													'price_unit': disc_usm_amount,
-													'account_id': disc_usm_coa},context=context)	
-				elif vals['semester_id'] > 1: # jika Semester dua ke atas
-					if bea_browse.product_id2 : # jika product utk disc prodi diisi
-						if bea_browse.product_id3: # jika product utk disc alumni diisi
-							alumni_seq 		= bea_browse.alumni_sequence
-						prodi_seq			= bea_browse.prodi_sequence
-						disc_prodi_id 		= bea_browse.product_id2.id
-						disc_prodi_name 	= bea_browse.product_id2.name
-						disc_prodi_amount	= bea_browse.amount2/int(jml_inv)
-						disc_prodi_coa  	= bea_browse.product_id2.property_account_income.id
-						if not disc_usm_coa:
-							disc_usm_coa = bea_browse.product_id2.categ_id.property_account_income_categ.id	
-						for inv in nil_jml:	
-							inv_line.create(cr,uid,{'invoice_id': inv,
-													'product_id': disc_prodi_id,
-													'name'		: disc_prodi_name,
-													'quantity'	: 1 ,
-													'price_unit': disc_prodi_amount,
-													'account_id': disc_prodi_coa},context=context)						
+			self._add_discount(cr, uid, my_krs_id, inv_obj, context=context)
 
-		return True	    
+		return my_krs_id	    
 	
 	def _get_ips(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
@@ -248,13 +298,14 @@ class operasional_krs (osv.Model):
 			sks += det.sks
 			bobot_total += (det.nilai_angka*det.sks)
 
-		self.write(cr,uid,ids[0],{'sks_tot':sks},context=context)
 		#import pdb;pdb.set_trace()	
 		### ips = (total nilai angka*total sks) / total sks
 		if sks == 0:
 			ips = 0
 		else :
 			ips = round(bobot_total/sks,2)
+		self.write(cr,uid,ids[0],{'sks_tot':sks,'ips_field':ips},context=context)	
+
 		res[ids[0]] = ips
 		return res
 	
@@ -276,6 +327,7 @@ class operasional_krs (osv.Model):
 		#'view_ipk_ids' : fields.one2many('operasional.view_ipk','krs_id','Mata Kuliah'),
 		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum'),
 		'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi',),
+		'ips_field':fields.float(string='Indeks Prestasi (field)',),
 		'user_id':fields.many2one('res.users','User',readonly=True),
 		'sks_tot' : fields.integer('Total SKS',readonly=True),
 		'invoice_id' : fields.many2one('account.invoice','Invoice',domain=[('type', '=','out_invoice')],readonly=True),
@@ -334,10 +386,20 @@ class operasional_krs (osv.Model):
 		self.write(cr, uid, ids, {'state' : 'draft'}, context=context)
 		return True
 
-	def done(self,cr,uid,ids,context=None):   
-
-		for x in self.browse(cr,uid,ids[0],context=context).krs_detail_ids:
+	def done(self,cr,uid,ids,context=None): 
+		#import pdb;pdb.set_trace()	  
+		inv_obj = self.pool.get('account.invoice')
+		my_obj = self.browse(cr,uid,ids[0],context=context)
+		inv = inv_obj.search(cr,uid,[('krs_id','=',ids[0])])
+		if not inv:
+			raise osv.except_osv(_('Error!'), _('Data tidak bisa di "done" kan, karena tidak ada invoice untuk KHS ini!'))
+		for id_inv in inv :
+			state = inv_obj.browse(cr,uid,id_inv).state
+			if state != 'paid':
+				raise osv.except_osv(_('Error!'), _('Data tidak bisa di "done" kan, karena ada invoice yang belum lunas untuk KHS ini!'))	
+		for x in my_obj.krs_detail_ids:
 			self.pool.get('operasional.krs_detail').write(cr,uid,x.id,{'state':'done'},context=context)
+
 		self.write(cr, uid, ids, {'state' : 'done'}, context=context)
 		return True
 
@@ -361,7 +423,6 @@ class operasional_krs (osv.Model):
 		par_obj = self.pool.get('res.partner')
 		par_ids = par_obj.search(cr, uid, [('id','=',partner_id)], context=context)
 
-		#import pdb;pdb.set_trace()
 		par_id = par_obj.browse(cr,uid,par_ids,context=context)[0]
 		npm =par_id.npm
 		kelas_id = par_id.kelas_id.id
