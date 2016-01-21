@@ -1,0 +1,128 @@
+<openerp>
+<data>
+
+
+    <!-- patient data -->
+    <template id="vit_claim_web.patient_data">
+        <h1>Patient Name: <t t-esc="member.name"/></h1>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="member_no">Class</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <t t-esc="member.class_id.short_desc"/>
+            </div>
+        </div>
+         <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="member_no">Membership</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <t t-esc="member.membership_id.name"/>
+            </div>
+        </div>   
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="member_no">Card No</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <t t-esc="member.card_no"/>
+            </div>
+        </div>      
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="date_of_birth">Date of Birth</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <!-- <t t-esc="member.date_of_birth"/> -->
+                <span t-field="member.date_of_birth" t-field-options='{"format": "d MMMM y"}'/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label">Sex</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <t t-esc="member.gender_id.name"/>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="policy_no">Policy No.</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <t t-esc="member.policy_id.policy_no"/>
+            </div>
+        </div>      
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="company_name">Company</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <t t-esc="member.policy_id.policy_holder_id.name"/>
+            </div>
+        </div>      
+        <div class="row">
+            <div class="col-md-4 col-sm-4">
+                <label class="control-label" for="contact_name">Policy Date</label>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <span t-field="member.insurance_period_start" t-field-options='{"format": "d MMMM y"}'/> to 
+                <span t-field="member.insurance_period_end" t-field-options='{"format": "d MMMM y"}'/>
+            </div>
+        </div>      
+    </template>
+
+
+    <!-- search patient -->
+    <template id="vit_claim_web.search" name="Search Patient" page="True">
+        <t t-call="website.layout">
+            <t t-set="title"><t t-esc="target_title"/>: Search Patient</t>
+            <div class="oe_structure">
+                <div class="container">
+                	<h2><t t-esc="target_title"/>: Enter your Card Number</h2>
+    	            <div class="row">
+    	            	<div class="col-md-8">
+                            
+                            <t t-if="message_error">
+                                <br />
+                                <div class="alert alert-danger">
+                                    <t t-raw="message_error"/>
+                                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                                </div>
+                            </t>
+
+    	            		<t t-if="message_success">
+                                <br />
+    							<div class="alert alert-success">
+    		                        <t t-raw="message_success"/>
+    		                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+    			                </div>
+    			            </t>
+    		            	
+    		            	<form t-attf-action="{{target}}" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+    				            <div t-attf-class="form-group">
+    				                <label class="col-md-3 col-sm-4 control-label" for="card_no">Card Number</label>
+    								<div class="col-md-7 col-sm-8">
+    			            			<input name="card_no" id="card_no" type="text" class="form-control" />
+    			            		</div>
+                                    <div class="col-md-2">
+                                        <input type="submit" value="Submit" class="form-control btn btn-primary" />
+                                    </div>
+    			            	</div>
+    		            	</form>
+    		            </div>
+    		        </div>
+                </div>
+                <script>
+                    window.onload = function() {
+                        document.getElementById("card_no").focus();
+                    };
+                </script>
+            </div>
+        </t>			
+    </template>
+
+</data>
+</openerp>

@@ -1,0 +1,72 @@
+<openerp>
+<data>
+
+<!-- Inherit homepage dan insert 5 kolom -->
+<template id="claim_homepage" name="Claim Homepage" inherit_id="website.homepage">
+    <xpath expr="//div[@id='wrap']" position="replace">
+    	<!-- sediakan kontainer untuk dicustom (admin:set di setting) -->
+        <div id="claim_custum_wrap_before" class="oe_structure oe_editable"/>
+        <div class="oe_structure">
+            <section class="mt16 mb16">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-user fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/claim/registration">Registration</a>
+                            </h4>
+                          <p>Pendaftaran</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-users fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/claim/discharge">Discharge</a>
+                            </h4>
+                          <p>Penagihan</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <span class="fa fa-suitcase fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/claim/void">Void</a>
+                            </h4>
+                          <p>Pembatalan Transaksi</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-search fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/claim/search">Search</a>
+                            </h4>
+                          <p>Pencarian Transaksi</p>
+                        </div>
+                        <!--div class="col-md-4 text-center">
+                        	<span class="fa fa-shopping-cart fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/shop">Shop</a>
+                            </h4>
+                          <p>Products and sales.</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                        	<span class="fa fa-pencil-square fa-5x"/>
+                            <h4 class="mt16">
+                                <a t-attf-href="/blog">News</a>
+                            </h4>
+                          <p>See latest posts.</p>
+                        </div-->
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div id="claim_custum_wrap_after" class="oe_structure oe_editable"/>
+    </xpath>
+</template>
+
+
+<template id="dummy_theme_asset" name="website assete for Dummy theme" 
+	 inherit_id="website.theme">
+	<xpath expr="." position="inside">
+			<link rel="stylesheet" href="/vit_claim_web/static/src/css/my.css"/>
+	</xpath>
+</template>	
+
+</data>
+</openerp>

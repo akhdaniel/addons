@@ -1,0 +1,40 @@
+<openerp>
+<data>
+<!-- Claim list -->
+
+<template id="vit_claim_web.claim_list">
+<t t-call="website.layout">
+    <t t-set="title">Claim List</t>
+        <div class="container">
+
+    	<h2>Claim List for Member: <t t-esc="member.name"/> </h2>  
+
+        <table class="table">
+            <tr>
+                <th>No</th>
+                <th>Claim Date</th>
+                <th>Claim Type</th>
+                <th>Diagnosis</th>
+                <th>Summary Billed</th>
+                <th>Summary Unpaid</th>
+                <th>Summary Total Paid</th>
+            </tr>
+            <t t-foreach="claims" t-as="claim">
+                <tr>
+                    <td><t t-esc="claim.claim_no"/></td>
+                    <td><t t-esc="claim.claim_date"/></td>
+                    <!-- <td><t t-esc="claim.member_plan_id.plan_schedule_id.product_plan_id.product_plan_base_id.name"/></td> -->
+                    <td><span t-field="claim.member_plan_id.plan_schedule_id"/></td>
+                    <td><t t-esc="claim.diagnosis_id.name"/></td>
+                    <td><t t-esc="claim.summary_billed"/></td>
+                    <td><t t-esc="claim.sumary_unpaid"/></td>
+                    <td><t t-esc="claim.summary_total_paid"/></td>
+                </tr>
+            </t>
+        </table>
+    </div>
+</t>
+</template>
+
+</data>
+</openerp>
