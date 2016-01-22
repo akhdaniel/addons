@@ -1,6 +1,21 @@
 <openerp>
 	<data>
 
+       <record id="view_invoice_filter_mahasiswa" model="ir.ui.view">
+            <field name="name">account.invoice.select</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Due Month" context="{'group_by':'date_due'}" position="after">
+                    <separator/>
+                    <filter string="Fakultas" context="{'group_by':'fakultas_id'}"/>
+                    <filter string="Prodi" context="{'group_by':'prodi_id'}"/>
+                    <filter string="Kartu Studi" context="{'group_by':'krs_id'}"/>
+                </filter>   
+            </field>
+        </record>
+
+
         <record id="invoice_tree_mhs" model="ir.ui.view">
             <field name="name">account.invoice.tree.mhs</field>
             <field name="model">account.invoice</field>
@@ -37,6 +52,8 @@
             	<field name="partner_id" position="after">
             		<newline/>
                     <field name="npm" invisible="1"/>
+                    <field name="fakultas_id" readonly="1" attrs="{'invisible': [('fakultas_id','=',False)]}"/>
+                    <field name="prodi_id" readonly="1" attrs="{'invisible': [('prodi_id','=',False)]}"/>
                     <field name="krs_id" readonly="1" attrs="{'invisible': [('krs_id','=',False)]}"/>
                 </field>
             </field>
@@ -54,7 +71,8 @@
                     context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}"
                     domain="[('supplier', '=', True)]"/>
                     <!-- <field name="krs_id" readonly="1" attrs="{'invisible': [('krs_id','=',False)]}"/> -->
-                    
+                    <field name="fakultas_id" readonly="1" attrs="{'invisible': [('fakultas_id','=',False)]}"/>
+                    <field name="prodi_id" readonly="1" attrs="{'invisible': [('prodi_id','=',False)]}"/>                   
                     
                 </field>
                 <field name="fiscal_position" position="replace"/>

@@ -68,12 +68,12 @@ class spmb_mahasiswa(osv.Model):
 		return results
 
 	_columns = {
-		'name'				: fields.char('Kode',required=True,size=32),
-		'tahun_ajaran_id'	: fields.many2one('academic.year',string='Tahun Akademik',required=True),
-		'fakultas_id'		: fields.many2one('master.fakultas',string='Fakultas',required=True),
-		'prodi_id' 			: fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),		
-		'kuota' 			: fields.integer('Kuota',required=True),
-		'nilai' 			: fields.integer('Nilai Minimal',required=True),
+		'name': fields.char('Kode',required=True,size=32),
+		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
+		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]",required=True),		
+		'kuota':fields.integer('Kuota',required=True),
+		'nilai':fields.integer('Nilai Minimal',required=True),
 		'partner_ids':fields.many2many(
 			'res.partner',   	# 'other.object.name' dengan siapa dia many2many
 			'filter_mahasiswa_rel',          # 'relation object'
