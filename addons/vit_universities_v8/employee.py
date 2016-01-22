@@ -35,7 +35,7 @@ class hr_employee (osv.Model):
 		result = {}
 		emp_id = self.browse(cr,uid,ids[0],context=context).id
 		#import pdb;pdb.set_trace()
-		jad_obj = self.pool.get('master.jadwal')
+		jad_obj = self.pool.get('master.jadwal.kuliah')
 		jad_ids = jad_obj.search(cr, uid, [
 			('employee_id','=',emp_id),
 			('is_active','=',True)], context=context)
@@ -48,7 +48,7 @@ class hr_employee (osv.Model):
 		'is_dosen':fields.boolean('Dosen'),
 		'nip': fields.char('NIP'),
 		'nidn': fields.char('NIDN'),
-		'master_jadwal_ids': fields.function(_get_master_jadwal, type='many2many', relation="master.jadwal", string="Jadwal Mengajar"),    		
+		'master_jadwal_ids': fields.function(_get_master_jadwal, type='many2many', relation="master.jadwal.kuliah", string="Jadwal Mengajar"),    		
 	}
 
 hr_employee()	

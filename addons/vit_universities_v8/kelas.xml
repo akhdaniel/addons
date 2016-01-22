@@ -15,6 +15,7 @@
                     <!-- <field name="jurusan_id"/> -->
                     <field name="prodi_id"/> 
                     <field name="employee_id" invisible="1"/> 
+                    <field name="state"/>
                 </tree>                    
             </field>
         </record>

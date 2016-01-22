@@ -6,7 +6,7 @@ from datetime import datetime
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 
-class master_jadwal (osv.Model):
+class master_jadwal (osv.osv):
 	_name = 'master.jadwal'
 
 	def create(self, cr, uid, vals, context=None):
@@ -47,24 +47,24 @@ class master_jadwal (osv.Model):
 		return self.name_get(cr, user, ids, context)
 
 	_columns = {
-		'name'  : fields.char('Kode',size=30,required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'mata_kuliah_id' :fields.many2one('master.matakuliah',string='Mata Kuliah',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'semester_id':fields.many2one('master.semester',string='Semester',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'open': [('readonly', False)]}), 
-		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True,readonly=True, states={'open': [('readonly', False)]}),                
-		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'wali_id' :fields.many2one('hr.employee','Dosen Wali', domain="[('is_dosen','=',True)]",readonly=True, states={'open': [('readonly', False)]}),
-		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'hari':fields.selection([('senin','Senin'),('selasa','Selasa'),('rabu','Rabu'),('kamis','Kamis'),('jumat','Jum\'at'),('sabtu','Sabtu'),('minggu','Minggu')],'Hari',required=True,readonly=True, states={'open': [('readonly', False)]}),
+		'name'  : fields.char('Kode',size=30,required=True),
+		'mata_kuliah_id' :fields.many2one('master.matakuliah',string='Mata Kuliah',required=True),
+		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,),
+		'semester_id':fields.many2one('master.semester',string='Semester',required=True),
+		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,), 
+		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True),                
+		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]"),
+		'wali_id' :fields.many2one('hr.employee','Dosen Wali', domain="[('is_dosen','=',True)]",),
+		'sesi':fields.integer('Total Sesi',required=True),
+		'hari':fields.selection([('senin','Senin'),('selasa','Selasa'),('rabu','Rabu'),('kamis','Kamis'),('jumat','Jum\'at'),('sabtu','Sabtu'),('minggu','Minggu')],'Hari',required=True),
 		'is_active':fields.boolean('Aktif'),
 		
-		'partner_id':fields.many2one('res.partner',"Partner",readonly=True, states={'open': [('readonly', False)]}),
-		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'open': [('readonly', False)]}),
-		'hours_from' : fields.float('Jam Mulai',readonly=True, states={'open': [('readonly', False)]}),
-		'hours_to' : fields.float('Jam Selesai',readonly=True, states={'open': [('readonly', False)]}),
+		'partner_id':fields.many2one('res.partner',"Partner"),
+		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum"),
+		'hours_from' : fields.float('Jam Mulai'),
+		'hours_to' : fields.float('Jam Selesai'),
 
 			}
 			

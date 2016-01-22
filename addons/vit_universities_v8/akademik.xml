@@ -88,7 +88,7 @@
 
 
         <!--  master data jadwal  -->
-        <record model="ir.ui.view" id="jadwal_search">
+        <record model="ir.ui.view" id="jadwal_kuliah_mhs_search">
             <field name="name">Cari Jadwal</field>
             <field name="model">master.jadwal</field>
             <field name="arch" type="xml">
@@ -110,23 +110,21 @@
                         <filter icon="terp-project" string="Ruangan" help="By Ruangan" context="{'group_by':'ruangan_id'}"/>
                         <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
                         <filter icon="terp-project" string="Mata Kuliah" help="By Mata Kuliah" context="{'group_by':'mata_kuliah_id'}"/>
-                        <filter icon="terp-project" string="Sesi/Jam ke-" help="By Sesi/Jam ke-" context="{'group_by':'sesi'}"/>
+                        <filter icon="terp-project" string="Total Sesi" help="By Total Sesi" context="{'group_by':'sesi'}"/>
                         <filter icon="terp-project" string="Hari" help="By Hari" context="{'group_by':'hari'}"/>
                         <filter icon="terp-project" string="Aktif" help="By Aktif" context="{'group_by':'is_active'}"/>
-                        <filter icon="terp-project" string="State" help="By State" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="jadwal_list_action">
+        <record model="ir.actions.act_window" id="jadwal_kuliah_mhs_list_action">
             <field name="name">Jadwal</field>
             <field name="res_model">master.jadwal</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="jadwal_search"/>
-            <field name="view_id" ref="vit_universities_v8.jadwal_kuliah_tree_view"/>
-            <field name="form_view_id" ref="vit_universities_v8.jadwal_kuliah_form_view"/>
+            <field name="search_view_id" ref="jadwal_kuliah_mhs_search"/>
+            <field name="view_id" ref="vit_universities_v8.jadwal_kuliah_mhs_tree_view"/>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jadwal.</p><p>disini belum ada data tentang jadwal !</p></field>
         </record>
@@ -662,7 +660,7 @@
             <menuitem id="master_data_kbm" name="KBM" parent="si_akademik_menu" sequence="20"/>
                 <menuitem id="master_kelas" name="Kelas" parent="master_data_kbm" action="kelas_list_action" sequence="10"/>
             <!-- <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> --> 
-                <menuitem id="master_jadwal" name="Jadwal" parent="master_data_kbm" action="jadwal_list_action" sequence="20"/>
+                <menuitem id="master_jadwal" name="Jadwal" parent="master_data_kbm" action="jadwal_kuliah_mhs_list_action" sequence="20"/>
    
             <menuitem id="master_civitas" name="Civitas" parent="si_akademik_menu" sequence="40"/>
                 <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" sequence="11"/> 
