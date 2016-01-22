@@ -415,7 +415,7 @@ class ws_netpro(ServiceBase):
 
     # CANCEL REVERSAL CEK IN
     @rpc(String, String, s, String, _returns=Resp_CancelReversalCekIN)
-    def cancel_reversal_cek_in(self, dbUser, dbPassword, s, errMessage):
+    def CancelReversalCekIN(self, dbUser, dbPassword, s, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         # import pdb; pdb.set_trace()
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
@@ -476,7 +476,7 @@ class SOAPWsgiApplication(WsgiApplication):
 # Spyne application
 application = Application(
     [ws_netpro],
-    'http://example.com/soap/',
+    'http://tempuri.org/',
     in_protocol=Soap11(validator='lxml'),
     out_protocol=Soap11())
 
