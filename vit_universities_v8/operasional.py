@@ -236,6 +236,8 @@ class operasional_krs (osv.Model):
 										'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
 										'type':'out_invoice',
 										'krs_id': my_krs_id,
+										'fakultas_id': vals['fakultas_id'],
+										'prod_id': vals['prodi_id'],
 										'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
 										'invoice_line': prod_id_split,
 										},context=context)
@@ -258,6 +260,8 @@ class operasional_krs (osv.Model):
 								'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
 								'type':'out_invoice',
 								'krs_id': my_krs_id,
+								'fakultas_id': vals['fakultas_id'],
+								'prod_id': vals['prodi_id'],								
 								'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
 								'invoice_line': prod_id,
 								},context=context)
