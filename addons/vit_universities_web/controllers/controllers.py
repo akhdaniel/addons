@@ -16,8 +16,14 @@ class Partner(http.Controller):
 	######################################################################################
 	@http.route('/registration', auth='user', website=True)
 	def registration(self, **kw):
+		cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
+
 		message_error = kw.get('message_error','')
 		message_success = kw.get('message_success','')
+
+		User = http.request.env['res.users']
+		user = User.browse( uid )
+		partner = user.partner_id
 
 		Prodi  = http.request.env['master.prodi']
 		prodi_ids = Prodi.search([])
@@ -33,7 +39,8 @@ class Partner(http.Controller):
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
 
 		return http.request.render('vit_universities_web.registration',
-			{
+		{
+			'partner'		: partner,
 			'target_title'	: 'Registration', 
 			'prodi_ids'		: prodi_ids,
 			'tahun_ids'		: tahun_ids,
@@ -41,6 +48,7 @@ class Partner(http.Controller):
 			'pekerjaans'	: pekerjaans,
 			'jenis_kelamins': jenis_kelamins,
 			'agamas'		: agamas,
+			'partner'		: partner,
 			'message_error'	: message_error,
 			'message_success': message_success
 		} )	
@@ -50,8 +58,8 @@ class Partner(http.Controller):
 	# proses registration patient: 
 	# print, email, save: insert transaksi Partner
 	######################################################################################
-	@http.route('/registration_process', auth='user', website=True)
-	def registration_process(self, **kw):
+	@http.route('/registration_process/<model("res.partner"):partner>', auth='user', website=True)
+	def registration_process(self, partner, **kw):
 		cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
 
 		message 		= kw.get('message','')
@@ -91,7 +99,8 @@ class Partner(http.Controller):
 		# email_template_obj = http.request.env['netpro.email_template']
 		# email_template = email_template_obj.search([('name','=','Partner_email')])
 
-		Partner  = http.request.env['res.partner']
+		# Partner  = http.request.env['res.partner']
+		Partner  = request.registry['res.partner']
 		partner_data = {}
 
 		jenis_pendaftaran_id 	= http.request.env['akademik.jenis_pendaftaran'].search([('name','=','Baru')])
@@ -100,6 +109,11 @@ class Partner(http.Controller):
 		tahun 					= http.request.env['academic.year'].browse( int(tahun_id) )
 
 		# import pdb; pdb.set_trace()
+		if partner.reg == "/" or partner.reg == False:
+			reg = request.registry['ir.sequence'].get(cr, SUPERUSER_ID, 'res.partner') 
+		else:
+			reg = partner.reg 
+
 
 
 		if kw.get('confirm') == '':
@@ -108,6 +122,7 @@ class Partner(http.Controller):
 			##############################################################################
 
 			data = {
+				'reg'			: reg,
 				'name'			: name,
 				'jenis_pendaftaran_id' : jenis_pendaftaran_id.id,
 				'street'		: street,
@@ -122,10 +137,12 @@ class Partner(http.Controller):
 				'tempat_lahir'	: tempat_lahir,
 				'tanggal_lahir'	: tanggal_lahir,
 				'is_company'	: False,
+				'is_mahasiswa'	: True,
 				'status_mahasiswa': 'calon',
 
 			}
-			partner_data = Partner.create( data )
+			# partner_data = Partner.create( data )
+			partner_data = Partner.write ( cr, SUPERUSER_ID, [partner.id],  data )
 			message = "Registration Success!"
 
 		return http.request.render('vit_universities_web.registration_process', {

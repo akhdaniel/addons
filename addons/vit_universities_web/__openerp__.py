@@ -6,11 +6,21 @@
         Homepage untuk aplikasi akademik""",
 
     'description': """
+
 Homepage untuk aplikasi akademik:
-* pendaftaran
-* alumni portal
-* dosen portal
-* mahasiswa portal
+=================================================================
+* pendaftaran mahasiswa baru
+* test potensi akademik 
+* dosen portal: isi absen dan nilai 
+* alumni portal: daftar alumni/ search 
+* mahasiswa portal: cek nilai , jadwal kuliah dan ujian, info news 
+
+Persiapan:
+=================================================================
+* Buat Jadwal USM: Gelombang 1
+* Buat "Portal User" sebagai template utk user yang sign up via website
+* Kasi Akses right "Portal User" = Portal 
+* General Settings : allow user sign up via website 
 
     """,
 
