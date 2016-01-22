@@ -57,12 +57,13 @@
                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                      
-                    
+                    <!-- <sheet> -->
                         <group>
                             <group>
                                 <field name="name"/>
                                 <field name="employee_id"/> 
-                                <field name="kelas_id"/>
+                                <field name="semester_id"/>
+                                
                             </group>
                             <group>
                                 <field name="tahun_ajaran_id"/>
@@ -72,15 +73,16 @@
                         </group>
                         <group>    
                             <group>
-                                <field name="mata_kuliah_id"/>                                                     
+                                <field name="mata_kuliah_id"/> 
+                                <field name="sesi"/>                                                     
                             </group>
                             <group>
-                               <field name="semester_id"/>  
+                               <field name="kelas_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kelas_id)"/> 
                             </group>
                         </group>
-                        <notebook>
+                        <notebook colspan="4">
                             <page string="Absensi">
-                                <field name="absensi_ids" view_mode="tree" nolabel="1">
+                                <field name="absensi_ids" nolabel="1" widget="one2many_list">
                                     <tree string="Absensi" editable="bottom">
                                         <field name="partner_id"/>
                                         <field name="absensi_1"/>
@@ -119,7 +121,7 @@
                                 </field>        
                             </page>    
                         </notebook>
-                        
+                    <!-- </sheet>  -->  
                 </form>
             </field>
         </record>

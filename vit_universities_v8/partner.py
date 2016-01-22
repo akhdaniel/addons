@@ -149,17 +149,21 @@ class res_partner (osv.osv):
 		for siap_sidang in  self.browse(cr, uid, ids, context=context):
 			if siap_sidang.tahun_ajaran_id.id != False:
 				tahun_ajaran = siap_sidang.tahun_ajaran_id.id
-
+				fakultas 	= siap_sidang.fakultas_id.id
+				prodi  		= siap_sidang.prodi_id.id
 				# cari jumlah kurikulum untuk thn akademik ini sesuai dengan settingan master kurikulum
 				kurikulum_obj = self.pool.get('master.kurikulum')
-				th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),('state','=','confirm')])
+				th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+															('fakultas_id','=',fakultas),
+															('prodi_id','=',prodi),
+															('state','=','confirm')])
 				total_kurikulum = len(th_kurikulum)
 
 				# hitung jumlah kurikulum untuk thn akademik dan mahasiswa yg bersangkutan, harus sama dg jumlah yg ada di kurikulum
 				khs_obj = self.pool.get('operasional.krs')
 				th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_sidang.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
 				total_khs = len(th_khs)
-
+				#import pdb;pdb.set_trace()
 				results[siap_sidang.id] = False
 				if total_khs >= total_kurikulum :
 					#cek juga total mk di kurikulum harus sama dengan mk yg sudah ditempuh
@@ -186,7 +190,7 @@ class res_partner (osv.osv):
 								if m[0] not in mk_ids:
 									mk_ids.append(m[0])		
 							tot_kurikulum = len(mk_ids)
-							#import pdb;pdb.set_trace()
+							
 							toleransi_mk = self.browse(cr,uid,ids[0]).tahun_ajaran_id.max_mk
 							#jika total mk yg telah ditempuh sama dengan / lebih dari yg ada di kurikulum
 							if mk >= (tot_kurikulum-toleransi_mk):
@@ -228,7 +232,7 @@ class res_partner (osv.osv):
 		'riwayat_pendidikan_ids':fields.one2many('master.riwayat_pendidikan','partner_id','Riwayat Pendidikan',ondelete='cascade',),
 		'pelanggaran_ids':fields.one2many('master.pelanggaran','partner_id','Pelanggaran',),
 		'pekerjaan_ids':fields.one2many('master.history.pekerjaan','partner_id','History Pekerjaan',),
-		'jadwal_ids':fields.one2many('master.jadwal','partner_id','Jadwal Mengajar',),
+		#'jadwal_ids':fields.one2many('master.jadwal.kuliah','partner_id','Jadwal Mengajar',),
 		'nidn':fields.char('NIDN'),
 		'status_dosen':fields.selection([('tetap','Tetap'),('tidak_tetap','Tidak Tetap')],'Status Dosen'),
 		#'state': fields.selection([('draft','Calon Mahasiswa'),('on_progress','Mahasiswa'),('done','Alumni')],'Status Mahasiswa'),
@@ -250,8 +254,8 @@ class res_partner (osv.osv):
 
 		#untuk mhs pindahan
 		'asal_univ_id' 		: fields.many2one('res.partner', 'Asal PT', domain=[('category_id','ilike','external')]),
-		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain=[('pt_id','=','asal_univ_id'),('is_internal','=',False)]),
-		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain=[('fakultas_id','=','asal_fakultas_id'),('is_internal','=',False)]),
+		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain="[('pt_id','=',asal_univ_id),('is_internal','=',False)]"),
+		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain="[('fakultas_id','=',asal_fakultas_id),('is_internal','=',False)]"),
 		'asal_npm'			: fields.char('Asal NIM'),
 		'asal_sks_diakui' 	: fields.integer('SKS Diakui'),
 		'asal_jenjang_id' 	: fields.many2one('master.jenjang', 'Asal Jenjang'),

@@ -2,7 +2,7 @@
 	<data>
 
     
-        <record model="ir.ui.view" id="jadwal_kuliah_tree_view">
+        <record model="ir.ui.view" id="jadwal_kuliah_mhs_tree_view">
             <field name="name">jadwal.tree</field>
             <field name="model">master.jadwal</field>
             <field name="type">tree</field>
@@ -25,7 +25,7 @@
         </record>
 
         
-        <record model="ir.ui.view" id="jadwal_kuliah_form_view">
+        <record model="ir.ui.view" id="jadwal_kuliah_mhs_form_view">
             <field name="name">jadwal.form</field>
             <field name="model">master.jadwal</field>
             <field name="type">form</field>
