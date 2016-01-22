@@ -418,14 +418,12 @@ class ws_netpro(ServiceBase):
     def cancel_reversal_cek_in(self, dbUser, dbPassword, s, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         # import pdb; pdb.set_trace()
-        print 'PATH : '+path
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
         res = Resp_CancelReversalCekIN()
         res.CancelReversalCekINResult = True
         res.errMessage = ''
-        print 'RESULT CANCEL REVERSAL CEK IN : '+res
         return res
 
     # CEK DATA CHECK IN
@@ -442,7 +440,6 @@ class ws_netpro(ServiceBase):
         res.CekMemberInClaimResult = True
         res.errMessage = ''
         res.ResponseCode = ''
-        print 'RESULT CEK MEMBER CHECK IN : '+res
         return res
 
     # CHECK OUT PATIENT BY EDC
@@ -453,7 +450,6 @@ class ws_netpro(ServiceBase):
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
         res = Resp_CheckOutPatientByEDCResult()
-        print 'RESULT CHECK OUT PATIENT BY EDC : '+res
         return res
 
     # SAVE CLAIM BY EDC
@@ -464,7 +460,6 @@ class ws_netpro(ServiceBase):
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
         res = Resp_SaveClaimByEDC()
-        print 'SAVE CLAIM BY EDC : '+res
         return res
 
 
@@ -472,7 +467,8 @@ class SOAPWsgiApplication(WsgiApplication):
 
     def __call__(self, req_env, start_response, wsgi_url=None):
         """Only match URL requests starting with '/soap/'."""
-        print req_env
+        if 'HTTP_SOAPACTION' in req_env.keys():
+            print 'ANUNYA '+ req_env['HTTP_SOAPACTION']
         if req_env['PATH_INFO'].startswith('/soap/'):
             return super(SOAPWsgiApplication, self).__call__(
                 req_env, start_response, wsgi_url)
