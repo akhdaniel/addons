@@ -101,11 +101,11 @@
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="hadir"/>
-                                        <field name="izin" />
-                                        <field name="alpha" />
+                                        <field name="hadir" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                        <field name="izin" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                        <field name="alpha" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <field name="ulangan" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                        <!-- <field name="ulangan" attrs="{'readonly': [('state','!=','confirm')]}"/> -->
                                         <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="nilai_huruf" attrs="{'invisible': [('state','=','draft')]}"/>

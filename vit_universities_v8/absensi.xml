@@ -57,7 +57,7 @@
                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                      
-                    <!-- <sheet> -->
+                    <sheet>
                         <group>
                             <group>
                                 <field name="name"/>
@@ -97,7 +97,7 @@
                                         <field name="absensi_10"/>
                                         <field name="absensi_11"/>
                                         <field name="absensi_12"/>
-                                        <field name="absensi_13"/>
+<!--                                         <field name="absensi_13"/>
                                         <field name="absensi_14"/>
                                         <field name="absensi_15"/>
                                         <field name="absensi_16"/>
@@ -114,14 +114,14 @@
                                         <field name="absensi_27"/>
                                         <field name="absensi_28"/>
                                         <field name="absensi_29"/>
-                                        <field name="absensi_30"/>                                    
+                                        <field name="absensi_30"/>  -->                                   
                                         <field name="note"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                 </field>        
                             </page>    
                         </notebook>
-                    <!-- </sheet>  -->  
+                    </sheet>   
                 </form>
             </field>
         </record>

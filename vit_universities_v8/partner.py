@@ -262,8 +262,8 @@ class res_partner (osv.osv):
 		'semester_id'		:fields.many2one('master.semester','Semester'),
 
 		#split invoice
-		'split_invoice' : fields.integer('Otomatis Split',required=True,help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi")
-
+		'split_invoice' : fields.integer('Otomatis Split',required=True,help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi"),
+		'alamat_ids'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 	}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]

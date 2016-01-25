@@ -423,9 +423,15 @@ class absensi(osv.osv):
 				else:
 					s30_a = 1
 
-				total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h + s13_h + s14_h + s15_h + s16_h + s17_h + s18_h + s19_h + s20_h + s21_h + s22_h + s23_h + s24_h + s25_h + s26_h + s27_h + s28_h + s29_h + s30_h	
-				total_izin = s1_s + s2_s + s3_s + s4_s + s5_s + s6_s + s7_s + s8_s + s9_s + s10_s +	s11_s + s12_s + s13_s + s14_s + s15_s + s16_s + s17_s + s18_s + s19_s + s20_s + s21_s + s22_s + s23_s + s24_s + s25_s + s26_s + s27_s + s28_s + s29_s + s20_s
-				total_alpha = s1_a + s2_a + s3_a + s4_a + s5_a + s6_a + s7_a + s8_a + s9_a + s10_a + s11_a + s12_a + s13_a + s14_a + s15_a + s16_a + s17_a + s18_a + s19_a + s20_a + s21_a + s22_a + s23_a + s24_a + s25_a + s26_a + s27_a + s28_a + s29_a + s30_a			 		  																																																																
+				# total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h + s13_h + s14_h + s15_h + s16_h + s17_h + s18_h + s19_h + s20_h + s21_h + s22_h + s23_h + s24_h + s25_h + s26_h + s27_h + s28_h + s29_h + s30_h	
+				# total_izin = s1_s + s2_s + s3_s + s4_s + s5_s + s6_s + s7_s + s8_s + s9_s + s10_s +	s11_s + s12_s + s13_s + s14_s + s15_s + s16_s + s17_s + s18_s + s19_s + s20_s + s21_s + s22_s + s23_s + s24_s + s25_s + s26_s + s27_s + s28_s + s29_s + s20_s
+				# total_alpha = s1_a + s2_a + s3_a + s4_a + s5_a + s6_a + s7_a + s8_a + s9_a + s10_a + s11_a + s12_a + s13_a + s14_a + s15_a + s16_a + s17_a + s18_a + s19_a + s20_a + s21_a + s22_a + s23_a + s24_a + s25_a + s26_a + s27_a + s28_a + s29_a + s30_a			 		  																																																																
+				
+				total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h	
+				total_izin = s1_s + s2_s + s3_s + s4_s + s5_s + s6_s + s7_s + s8_s + s9_s + s10_s +	s11_s + s12_s
+				total_alpha = s1_a + s2_a + s3_a + s4_a + s5_a + s6_a + s7_a + s8_a + s9_a + s10_a + s11_a + s12_a			 		  																																																																
+
+
 				krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
 													('fakultas_id','=',fakultas),
 													('prodi_id','=',prodi),

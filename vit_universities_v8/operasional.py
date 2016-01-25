@@ -521,11 +521,14 @@ class krs_detail (osv.Model):
 		
 		result = {}
 		for nil in self.browse(cr,uid,ids,context=context):
-			tugas = nil.tugas
-			ulangan = nil.ulangan
-			uts = nil.uts
-			uas = nil.uas
-			tot = (tugas+ulangan+uts+uas)/4
+			hadir 			= nil.hadir # 10%
+			nilai_kahadiran = (hadir/12)*100
+			tugas 			= nil.tugas # 20%
+			Ulangan 		= nil.ulangan # belum dihitung
+			uts 			= nil.uts # 30%
+			uas 			= nil.uas # 40%	
+			tot 			= (nilai_kahadiran*0.1)+(tugas*0.2)+(uts*0.3)+(uas*0.4)
+			#tot = (tugas+ulangan+uts+uas)/4
 			nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
 			if nil_src == []:
 				return result

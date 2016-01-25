@@ -422,4 +422,12 @@ class master_marketing(osv.Model):
 		'name' : fields.char("Name",required=True),
 		'partner' : fields.many2one("res.partner",'Partner'),
 	}
-master_marketing()			
+master_marketing()		
+
+class master_alamat_kampus(osv.Model):
+	_name = "master.alamat.kampus"
+	_columns  = {
+		'name' : fields.char("Nama",required=True),
+		'Alamat' : fields.text('Alamat'),
+	}
+master_alamat_kampus()	
