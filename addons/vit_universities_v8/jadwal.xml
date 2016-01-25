@@ -34,14 +34,19 @@
                 	<sheet>
                 		<group>
                 			<group>
-                                <field name="name"/>
-			                    <field name="employee_id"/> 
-			                    <field name="kelas_id"/>
+                                <field name="name"/> 
+                                <field name="employee_id"/>
+                                <field name="sks" attrs="{'invisible':[('employee_id','=',False)]}"/>
+                                <field name="employee_id2"/>
+                                <field name="sks2" attrs="{'invisible':[('employee_id2','=',False)]}"/>
+                                <field name="employee_id3"/>
+                                <field name="sks3" attrs="{'invisible':[('employee_id3','=',False)]}"/>
                             </group>
                 			<group>
                 				<field name="tahun_ajaran_id"/>
 			                    <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
 			                    <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                                <field name="kelas_id"/>
                 			</group>
                         </group>
                         <group>    
