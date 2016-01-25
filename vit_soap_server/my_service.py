@@ -397,6 +397,7 @@ class Resp_SaveClaimByEDC(complex.ComplexModel):
 
 class ws_netpro(ServiceBase):
     __tns__ = 'http://tempuri.org/'
+    __namespace__ = 'http://tempuri.org/'
 	# @rpc(M(String), _returns=M(ResponseDataMember))
 	# def get_member(self, member_no):
 	# 	path=self.transport.get_path()
@@ -469,8 +470,10 @@ class SOAPWsgiApplication(WsgiApplication):
     def __call__(self, req_env, start_response, wsgi_url=None):
         """Only match URL requests starting with '/soap/'."""
         print req_env
-        print start_response
-        print wsgi_url
+        if 'HTTP_SOAPACTION' in req_env.keys():
+            splited = req_env['HTTP_SOAPACTION'].split('/')
+            print 'ANUNYA ' + splited
+            #req_env['HTTP_SOAPACTION'] = splited[3]
         if req_env['PATH_INFO'].startswith('/soap/'):
             return super(SOAPWsgiApplication, self).__call__(
                 req_env, start_response, wsgi_url)
