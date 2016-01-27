@@ -114,7 +114,7 @@ class cuti_kuliah(osv.Model):
 	def cron_aktivasi_cuti_mahasiswa(self, cr, uid, ids=None,context=None):
 		partner_obj 	= self.pool.get('res.partner')
 		#import pdb;pdb.set_trace()
-		mahasiswa_cuti = self.search(cr,uid,[('date','=',time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[:10]),('state','=','confirm')],context=context)
+		mahasiswa_cuti = self.search(cr,uid,[('date','=',time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[:10]),('state','=','confirm'),('automatic_done','=',True)],context=context)
 		if mahasiswa_cuti :
 			for mhs in self.browse(cr,uid,mahasiswa_cuti):
 				self.write(cr,uid,mhs.id,{'state':'done'})
