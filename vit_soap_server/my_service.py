@@ -255,10 +255,6 @@ class Resp_CancelReversalCekOut(complex.ComplexModel):
     CancelReversalCekOutResult = Boolean
     errMessage = String
 
-class Resp_CekDataCheckINResult(complex.ComplexModel):
-    CekDataCheckINResult = Boolean
-    EDCDataOut()
-
 class EDCDataOut(complex.ComplexModel):
     BenefitTotalAmount = String
     Quantity01 = Double
@@ -370,6 +366,10 @@ class EDCDataOut(complex.ComplexModel):
     ReconcileTotalCheckInAmount = Integer64
     ReconcileNumOfCheckOutTrx = Integer16
     ReconcileTotalCheckOutAmount = Integer64
+
+class Resp_CekDataCheckINResult(complex.ComplexModel):
+    CekDataCheckINResult = Boolean
+    EDCDataOut()
 
 class Params_CekMemberInClaim(complex.ComplexModel):
     dbUser = String
