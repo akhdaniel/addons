@@ -446,6 +446,7 @@ class ws_netpro(ServiceBase):
         # res.CancelReversalCekINResult = True
         # res.errMessage = ''
         # return res
+        print 'KAPANGGIL DA'
         yield True
 
     @rpc(String, String, s, String, _returns=Boolean)
@@ -478,7 +479,7 @@ class ws_netpro(ServiceBase):
         return res
 
     #@rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult)
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=[Boolean, EDCDataOut, String])
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Boolean)
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
@@ -487,8 +488,6 @@ class ws_netpro(ServiceBase):
         # res = Resp_CekDataCheckINResult()
         # return res
         yield True
-        yield EDCDataOut()
-        yield ''
 
     # CHECK OUT PATIENT BY EDC
     @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CheckOutPatientByEDCResult)
