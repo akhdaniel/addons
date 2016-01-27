@@ -20,7 +20,7 @@ class cuti_kuliah(osv.Model):
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required=True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Angkatan', required=True),
 		'state':fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status'),
-  		'notes' : fields.text('Alasan',required=True),
+		'notes' : fields.text('Alasan',required=True),
 		'user_id':fields.many2one('res.users', 'User',readonly=True),
 		'date': fields.date('Tanggal Aktif Kembali'),
 		'automatic_done':fields.boolean('Automatic Done'),
@@ -106,5 +106,20 @@ class cuti_kuliah(osv.Model):
 			if rec.state != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
 		return super(cuti_kuliah, self).unlink(cr, uid, ids, context=context)
+
+
+	####################################################################################################
+	# Cron Job untuk activate otomatis mahasiswa yang habis masa cutinya
+	####################################################################################################
+	def cron_aktivasi_cuti_mahasiswa(self, cr, uid, ids=None,context=None):
+		partner_obj 	= self.pool.get('res.partner')
+		#import pdb;pdb.set_trace()
+		mahasiswa_cuti = self.search(cr,uid,[('date','=',time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)[:10]),('state','=','confirm')],context=context)
+		if mahasiswa_cuti :
+			for mhs in self.browse(cr,uid,mahasiswa_cuti):
+				self.write(cr,uid,mhs.id,{'state':'done'})
+				partner_obj.write(cr,uid,mhs.partner_id.id,{'status_mahasiswa':'Mahasiswa'})
+
+		return True
 			
 cuti_kuliah()

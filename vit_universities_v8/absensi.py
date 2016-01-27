@@ -82,6 +82,9 @@ class absensi(osv.osv):
 			self.write(cr,uid,ct.id,{'state':'close'},context=context)
 			for det in ct.absensi_ids:
 				mahasiswa = det.partner_id.id
+				tugas = det.tugas
+				uts   = det.uts
+				uas   = det.uas
 				#import pdb;pdb.set_trace()
 				s1_h = 0 #H
 				s1_s = 0 #sakit
@@ -427,9 +430,9 @@ class absensi(osv.osv):
 				# total_izin = s1_s + s2_s + s3_s + s4_s + s5_s + s6_s + s7_s + s8_s + s9_s + s10_s +	s11_s + s12_s + s13_s + s14_s + s15_s + s16_s + s17_s + s18_s + s19_s + s20_s + s21_s + s22_s + s23_s + s24_s + s25_s + s26_s + s27_s + s28_s + s29_s + s20_s
 				# total_alpha = s1_a + s2_a + s3_a + s4_a + s5_a + s6_a + s7_a + s8_a + s9_a + s10_a + s11_a + s12_a + s13_a + s14_a + s15_a + s16_a + s17_a + s18_a + s19_a + s20_a + s21_a + s22_a + s23_a + s24_a + s25_a + s26_a + s27_a + s28_a + s29_a + s30_a			 		  																																																																
 				
-				total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h	
-				total_izin = s1_s + s2_s + s3_s + s4_s + s5_s + s6_s + s7_s + s8_s + s9_s + s10_s +	s11_s + s12_s
-				total_alpha = s1_a + s2_a + s3_a + s4_a + s5_a + s6_a + s7_a + s8_a + s9_a + s10_a + s11_a + s12_a			 		  																																																																
+				total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h + s13_h + s14_h
+				total_izin = s1_s + s2_s + s3_s + s4_s + s5_s + s6_s + s7_s + s8_s + s9_s + s10_s +	s11_s + s12_s + s13_s + s14_s 
+				total_alpha = s1_a + s2_a + s3_a + s4_a + s5_a + s6_a + s7_a + s8_a + s9_a + s10_a + s11_a + s12_a + s13_a + s14_a		 		  																																																																
 
 
 				krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
@@ -441,9 +444,12 @@ class absensi(osv.osv):
 					browse_krs = krs_obj.browse(cr,uid,krs_exist[0])
 					for dtl in browse_krs.krs_detail_ids:
 						if dtl.mata_kuliah_id.id == matakuliah :
-							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'hadir':total_hadir,
-																						 'izin':total_izin,
-																						 'alpha':total_alpha,})
+							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'hadir'	:total_hadir,
+																						 'izin'		:total_izin,
+																						 'alpha'	:total_alpha,
+																						 'tugas'	:tugas,
+																						 'uts'		:uts,
+																						 'uas'		:uas,})
 							break
 
 				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'close'},context=context)			
@@ -522,7 +528,10 @@ class absensi_detail(osv.osv):
 		'absensi_27'	:fields.selection([('H','Hadir'),('S','Izin'),('A','Alpha')],'27'),
 		'absensi_28'	:fields.selection([('H','Hadir'),('S','Izin'),('A','Alpha')],'28'),
 		'absensi_29'	:fields.selection([('H','Hadir'),('S','Izin'),('A','Alpha')],'29'),
-		'absensi_30'	:fields.selection([('H','Hadir'),('S','Izin'),('A','Alpha')],'30'),		
+		'absensi_30'	:fields.selection([('H','Hadir'),('S','Izin'),('A','Alpha')],'30'),
+		'tugas'			:fields.float('Tugas'),
+		'uts'			:fields.float('UTS'),
+		'uas'			:fields.float('UAS'),		
 		'note'			:fields.char('Ket.'),
 		'state':fields.selection([('open','Open'),('close','Close')],'State'),
 	}
