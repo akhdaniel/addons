@@ -385,7 +385,7 @@ class Resp_CekMemberInClaim(complex.ComplexModel):
     CekMemberInClaimResult = Boolean
     errMessage = String
     ResponseCode = String
-    EDCDataOut
+    EDCDataOut()
 
 class Resp_CheckOutPatientByEDCResult(complex.ComplexModel):
     CheckOutPatientByEDCResult = Boolean
