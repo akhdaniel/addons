@@ -72,8 +72,8 @@
             		</h3>
                 </field>   
 
-                <field name="property_account_position" position="replace">
-                    <field name="split_invoice" placeholder="split invoice.." groups="account.group_account_manager"/>
+                <field name="property_account_position" position="before">
+                    <field name="split_invoice" placeholder="split invoice.." groups="account.group_account_manager" attrs="{'required': [('is_mahasiswa','=',True)],'invisible': [('is_mahasiswa','=',False)]}"/>
                 </field>    
 
                 <label for="street" string="Address" position="before">
@@ -113,6 +113,7 @@
                                 <separator string="Informasi Mahasiswa" attrs="{'invisible': [('status_mahasiswa','=','calon')]}"/>
                                 <group col="4" colspan="4">
                                 	<group>
+                                        <field name="type_pendaftaran" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                 		<field name="fakultas_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                 		<!-- <field name="jurusan_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/> -->
                                 		<field name="prodi_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>	

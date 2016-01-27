@@ -57,7 +57,7 @@
                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                      
-                    <sheet>
+<!--                     <sheet> -->
                         <group>
                             <group>
                                 <field name="name"/>
@@ -92,14 +92,17 @@
                                         <field name="absensi_5"/>
                                         <field name="absensi_6"/>
                                         <field name="absensi_7"/>
+                                        <field name="uts"/>
                                         <field name="absensi_8"/>
                                         <field name="absensi_9"/>
                                         <field name="absensi_10"/>
                                         <field name="absensi_11"/>
                                         <field name="absensi_12"/>
-<!--                                         <field name="absensi_13"/>
+                                        <field name="absensi_13"/>
                                         <field name="absensi_14"/>
-                                        <field name="absensi_15"/>
+                                        <field name="tugas"/>
+                                        <field name="uas"/>
+<!--                                         <field name="absensi_15"/>
                                         <field name="absensi_16"/>
                                         <field name="absensi_17"/>
                                         <field name="absensi_18"/>
@@ -114,14 +117,14 @@
                                         <field name="absensi_27"/>
                                         <field name="absensi_28"/>
                                         <field name="absensi_29"/>
-                                        <field name="absensi_30"/>  -->                                   
+                                        <field name="absensi_30"/>     -->                                
                                         <field name="note"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                 </field>        
                             </page>    
                         </notebook>
-                    </sheet>   
+<!--                     </sheet>    -->
                 </form>
             </field>
         </record>
@@ -129,7 +132,7 @@
 
 
         <record model="ir.actions.act_window" id="absensi_mhs_list_action">
-            <field name="name">Absensi</field>
+            <field name="name">Absensi dan Nilai</field>
             <field name="res_model">absensi</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -140,7 +143,7 @@
         </record>
 
 
-            <menuitem id="master_absensi" name="Absensi" parent="vit_universities_v8.master_data_kbm" action="absensi_mhs_list_action" sequence="30"/>
+            <menuitem id="master_absensi" name="Absensi dan Nilai" parent="vit_universities_v8.master_data_kbm" action="absensi_mhs_list_action" sequence="30"/>
 
         <!--sequance-->
         <record forcecreate="1" id="seq_type_absensi_mhs" model="ir.sequence.type">

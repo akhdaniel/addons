@@ -87,7 +87,7 @@ class operasional_krs (osv.Model):
 					#import pdb;pdb.set_trace()
 					ips_khs_sebelumnya = khs_sebelumnya.ips_field
 
-				 	if ips_khs_sebelumnya >= disc_prodi_syarat:
+					if ips_khs_sebelumnya >= disc_prodi_syarat:
 						#create diskon prodi
 						for inv in inv_ids:	
 							inv_line.create(cr,uid,{'invoice_id': inv,
@@ -101,7 +101,9 @@ class operasional_krs (osv.Model):
 
 	def create(self, cr, uid, vals, context=None):
 		#import pdb;pdb.set_trace()
-		inv_obj = self.pool.get('account.invoice')
+		prod_obj 		= self.pool.get('product.product')
+		inv_obj 		= self.pool.get('account.invoice')
+		inv_line_obj 	= self.pool.get('account.invoice.line')
 		if vals.get('kode','/')=='/':
 			npm = vals['npm']
 			if not npm :
@@ -196,12 +198,12 @@ class operasional_krs (osv.Model):
 					#jika ada mk bru yg di inputkan dan ip tidak memenuhi syarat
 					if ips <= klm_brw.min_ip :
 						if mk_baru_ids != []:
-					 		raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
+							raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
 
 		#langsung create invoice nya
 		#import pdb;pdb.set_trace()
 		my_krs_id = super(operasional_krs, self).create(cr, uid, vals, context=context)												
- 		if 'state' not in vals:			
+		if 'state' not in vals:			
 			byr_obj = self.pool.get('master.pembayaran')
 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
 				('fakultas_id','=',vals['fakultas_id']),
@@ -216,21 +218,70 @@ class operasional_krs (osv.Model):
 					
 					#jika menemukan semester yang sama
 					if vals['semester_id'] == bayar.semester_id.id:
-						list_product = bayar.product_ids
-						prod_id = []			
-								
-						for lp in list_product:
-							coa_line = lp.property_account_income.id
-							if not coa_line:
-								coa_line = lp.categ_id.property_account_income_categ.id
-							if lp.split_invoice <= 0 :
-								prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price,'account_id': coa_line}))
-							elif lp.split_invoice > 0:
-								prod_id.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price/lp.split_invoice,'account_id': coa_line}))
-								#loop product yg bisa di spilt tersebut utk di buat inv line nya
-								for split in range(1,lp.split_invoice):
-									prod_id_split = []
-									prod_id_split.append((0,0,{'product_id': lp.id,'name':lp.name,'price_unit':lp.list_price/lp.split_invoice,'account_id': coa_line}))
+						partner_obj = self.pool.get('res.partner')
+						partner = partner_obj.browse(cr,uid,vals['partner_id'])
+						split_invoice = partner.split_invoice
+						if split_invoice < 1:
+							plit_invoice = 1
+						elif split_invoice > 10: # proteksi jika salah input / input terlalu besar, set maks 10 x split
+							split_invoice = 10
+						if split_invoice == 1:														
+							cr.execute("""SELECT pp.id,pt.name,pt.list_price
+											FROM product_pembayaran_detail_rel pb_rel 
+											LEFT JOIN product_product pp on pb_rel.product_id = pp.id
+											LEFT JOIN product_template pt on pt.id=pp.product_tmpl_id  
+											WHERE pb_rel.pembayaran_detail_id ="""+ str(bayar.id) +""" 
+											""")		   
+							no_split = cr.fetchall()
+
+							if no_split :
+								# product_id 		= map(lambda x: x[0], split_true) # atau  [i for (i,) in res] 							
+								# product_name 	= map(lambda x: x[1], split_true)
+								# product_price 	= map(lambda x: x[2], split_true)
+								prod_id = []
+								for det in no_split :
+									product = prod_obj.browse(cr,uid,det[0])
+									coa_line = product.property_account_income.id
+									if not coa_line:
+										coa_line = product.categ_id.property_account_income_categ.id
+									prod_id.append((0,0,{'product_id'	: det[0],
+														 'name'			: det[1],
+														 'price_unit'	: det[2],
+														 'account_id'	: coa_line}))
+								inv_obj.create(cr,uid,{
+									'partner_id':vals['partner_id'],
+									'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
+									'type':'out_invoice',
+									'krs_id': my_krs_id,
+									'fakultas_id': vals['fakultas_id'],
+									'prod_id': vals['prodi_id'],
+									'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
+									'invoice_line': prod_id,
+									},context=context)
+								break
+
+						elif split_invoice > 1:	
+							#import pdb;pdb.set_trace()
+							# cari product yang bisa split juga
+							cr.execute("""SELECT pp.id,pt.name,pt.list_price
+											FROM product_pembayaran_detail_rel pb_rel 
+											LEFT JOIN product_product pp on pb_rel.product_id = pp.id
+											LEFT JOIN product_template pt on pt.id=pp.product_tmpl_id  
+											WHERE pb_rel.pembayaran_detail_id ="""+ str(bayar.id) +""" 
+											AND pp.split_invoice = True """)		   
+							split_true = cr.fetchall()
+							if split_true:
+								for rg in range(0,split_invoice) :
+									prod_split_id = []
+									for det in split_true :
+										product = prod_obj.browse(cr,uid,det[0])
+										coa_line = product.property_account_income.id
+										if not coa_line:
+											coa_line = product.categ_id.property_account_income_categ.id
+										prod_split_id.append((0,0,{'product_id'	: det[0],
+																		'name'  		: det[1],
+																		'price_unit'	: det[2]/split_invoice,
+																		'account_id'	: coa_line}))											
 									inv_obj.create(cr,uid,{
 										'partner_id':vals['partner_id'],
 										'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
@@ -239,32 +290,48 @@ class operasional_krs (osv.Model):
 										'fakultas_id': vals['fakultas_id'],
 										'prod_id': vals['prodi_id'],
 										'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
-										'invoice_line': prod_id_split,
+										'invoice_line': prod_split_id,
 										},context=context)
-						prod_obj = self.pool.get('product.product')
-						beban_sks_id = prod_obj.search(cr,uid,[('is_sks','=',True),('fakultas_id','=',vals['fakultas_id'])])
-						if beban_sks_id :
-							prod_brw = prod_obj.browse(cr,uid,beban_sks_id[0],context=context)
-							coa_line_tambah = prod_brw.property_account_income.id
-							if not coa_line_tambah:
-								coa_line_tambah = prod_brw.categ_id.property_account_income_categ.id
-							if byr_brw.type == 'paket':
-								prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tot_mk ,'price_unit':prod_brw.list_price,'account_id': coa_line_tambah}))
+								cr.commit()	
 
-							elif byr_brw.type == 'flat' and byr_brw.sks_plus == True:
-								if tambahan_mk != 0:
-									prod_id.append((0,0,{'product_id': beban_sks_id[0],'name':prod_brw.name,'quantity':tambahan_mk ,'price_unit':prod_brw.list_price,'account_id': coa_line_tambah}))							
+							# cari product yang tidak bisa split			
+							cr.execute("""SELECT pp.id,pt.name,pt.list_price
+											FROM product_pembayaran_detail_rel pb_rel 
+											LEFT JOIN product_product pp on pb_rel.product_id = pp.id
+											LEFT JOIN product_template pt on pt.id=pp.product_tmpl_id  
+											WHERE pb_rel.pembayaran_detail_id ="""+ str(bayar.id) +""" 
+											AND pp.split_invoice = False """)		   
+							split_false = cr.fetchall()	
+							if split_false:
+								inv_exist = inv_obj.search(cr,uid,[('krs_id','=',my_krs_id)])
+								prod_split_false_id = []
+								for det in split_false:
+									product = prod_obj.browse(cr,uid,det[0])
+									coa_line = product.property_account_income.id
+									if not coa_line:
+										coa_line = product.categ_id.property_account_income_categ.id
+									prod_split_false_id.append((0,0,{'product_id'	: det[0],
+																	'name'  		: det[1],
+																	'price_unit'	: det[2],
+																	'account_id'	: coa_line}))
 
-						inv_obj.create(cr,uid,{
-								'partner_id':vals['partner_id'],
-								'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
-								'type':'out_invoice',
-								'krs_id': my_krs_id,
-								'fakultas_id': vals['fakultas_id'],
-								'prod_id': vals['prodi_id'],								
-								'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
-								'invoice_line': prod_id,
-								},context=context)
+									# jika sudah ada invoice lain dg product yg bisa displit, insertkan di inv tsb
+									if inv_exist :
+										inv_obj.write(cr,uid,inv_exist[0],{'invoice_line' : prod_split_false_id})
+
+								# jika belum ada invoice lain dg product yg bisa displit, create inv baru	
+								if not inv_exist :
+									inv_obj.create(cr,uid,{
+										'partner_id':vals['partner_id'],
+										'origin': str(self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).npm) +'-'+ str(self.pool.get('master.semester').browse(cr,uid,vals['semester_id']).name),
+										'type':'out_invoice',
+										'krs_id': my_krs_id,
+										'fakultas_id': vals['fakultas_id'],
+										'prod_id': vals['prodi_id'],
+										'account_id':self.pool.get('res.partner').browse(cr,uid,vals['partner_id']).property_account_receivable.id,
+										'invoice_line': prod_split_false_id,
+										},context=context)
+
 						# if inv_id :
 						# 	inv = {'invoice_id':inv_id}
 						# 	vals = dict(vals.items()+inv.items())	
@@ -288,11 +355,8 @@ class operasional_krs (osv.Model):
 						WHERE ok.partner_id = %s
 						AND ok.state <> 'draft'"""%(partner))
 		dpt = cr.fetchall()
-		
-		det_id = []
-		for x in dpt:
-			x_id = x[0]
-			det_id.append(x_id)
+
+		det_id = map(lambda x: x[0], dpt)
 		#import pdb;pdb.set_trace()
 		det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
 		sks = 0
@@ -488,9 +552,7 @@ class operasional_krs (osv.Model):
 						AND ok.state <> 'draft'"""%(partner_id))
 		dpt = cr.fetchall()
 		
-		total_mk_ids = []
-		for x in dpt:
-			total_mk_ids.append(x[1])
+		total_mk_ids = map(lambda x: x[1], dpt)
 		#import pdb;pdb.set_trace()
 		#filter matakuliah yg benar-benar belum di tempuh
 		mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
@@ -604,14 +666,8 @@ class operasional_transkrip(osv.Model):
 
 		if mk == []:
 			return mk
-		id_mk = []	#id khsdetail
-		mk_ids = [] #Matakuliah khsdetail
-
-		for m in mk:
-			#matakuliah
-			if m[1] not in mk_ids:
-				id_mk.append(m[0])
-				mk_ids.append(m[1])
+		id_mk = map(lambda x: x[0], mk)	#id khsdetail
+		mk_ids = map(lambda x: x[1], mk) #Matakuliah khsdetail
 
 		return id_mk
 
@@ -636,14 +692,8 @@ class operasional_transkrip(osv.Model):
 
 		if mk == []:
 			return mk
-		id_mk = []	#id khsdetail
-		mk_ids = [] #Matakuliah khsdetail
-
-		for m in mk:
-			#matakuliah
-			if m[1] not in mk_ids:
-				id_mk.append(m[0])
-				mk_ids.append(m[1])
+		id_mk = map(lambda x: x[0], mk)	#id khsdetail
+		mk_ids = map(lambda x: x[1], mk) #Matakuliah khsdetail
 
 		return id_mk
 

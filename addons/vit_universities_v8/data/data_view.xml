@@ -166,5 +166,21 @@
 	    <!-- </record> -->
 
 
+<!-- Cron Job Cuti Mahasiswa -->
+        <record model="ir.cron" id="cuti_mahasiswa_cron">
+            <field name="name">Activasi Cuti Mahasiswa</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="active" eval="False"/>
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'cuti.kuliah'"/>
+            <field name="function" eval="'cron_aktivasi_cuti_mahasiswa'"/>
+            <field name="args" eval="'()'" />
+        </record>
+
+
+
 	</data>
 </openerp>
