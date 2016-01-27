@@ -479,7 +479,7 @@ class ws_netpro(ServiceBase):
         return res
 
     #@rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult)
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Boolean)
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=[Boolean, String])
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
@@ -488,6 +488,7 @@ class ws_netpro(ServiceBase):
         # res = Resp_CekDataCheckINResult()
         # return res
         yield True
+        yield ''
 
     # CHECK OUT PATIENT BY EDC
     @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CheckOutPatientByEDCResult)
