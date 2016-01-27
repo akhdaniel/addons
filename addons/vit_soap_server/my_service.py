@@ -1,5 +1,5 @@
 from spyne import Application, ServiceBase, rpc
-from spyne import String, Integer, Integer16, Integer64, Double, Boolean, DateTime, ByteArray
+from spyne import String, Integer, Integer16, Integer64, Double, Boolean, DateTime, ByteArray, AnyXml
 
 from spyne import Mandatory as M
 from spyne.protocol.soap import Soap11
@@ -257,6 +257,7 @@ class Resp_CancelReversalCekOut(complex.ComplexModel):
 
 class Resp_CekDataCheckINResult(complex.ComplexModel):
     CekDataCheckINResult = Boolean
+    EDCDataOut()
 
 class EDCDataOut(complex.ComplexModel):
     BenefitTotalAmount = String
@@ -395,42 +396,70 @@ class Resp_SaveClaimByEDC(complex.ComplexModel):
     cno = Integer
     errMessage = String
 
-class ws_netpro(ServiceBase):
-    __tns__ = 'http://tempuri.org/'
-    __namespace__ = 'http://tempuri.org/'
-	# @rpc(M(String), _returns=M(ResponseDataMember))
-	# def get_member(self, member_no):
-	# 	path=self.transport.get_path()
-	# 	db_name = path.split('/')[2]
-	# 	registry, cr, uid, context = get_registry_cr_uid_context(db_name)
-	# 	member_model = registry['netpro.member']
-	# 	member_id = member_model.search(cr, uid, [('member_no', '=', member_no)], context=context)
+class DataSet(complex.ComplexModel):
+    schema = AnyXml
 
-	# 	if member_id:
-	# 		member = member_model.browse(cr, uid, member_id, context=context)
-	# 		response= ResponseDataMember()
-	# 		response.member_no = member.member_no
-	# 		if member.employee_id.name:
-	# 			response.employee_name = member.employee_id.name
-	# 		response.policy_no = member.policy_id.policy_no
-	# 		return response
+class Resp_GetDataSet(complex.ComplexModel):
+    GetDataSetResult = Boolean
+    DataSet()
+    ErrMsg = String
+
+class Resp_reversalvoidCekDataCheckIN(complex.ComplexModel):
+    reversalvoidCekDataCheckINResult = Boolean
+    EDCDataOut()
+    errMsg = String
+
+class Resp_reversalvoidCheckOutPatientByEDC(complex.ComplexModel):
+    reversalvoidCheckOutPatientByEDCResult = Boolean
+    EDCDataOut()
+    errmsg = String
+
+class Resp_UpdateSQL(complex.ComplexModel):
+    UpdateSQLResult = Boolean
+    ErrMsg = String
+
+class Resp_CancelCekIN(complex.ComplexModel):
+    CancelCekINResult = Boolean
+    s()
+    errMessage = String
+
+class Resp_CancelCekOut(complex.ComplexModel):
+    CancelCekOutResult = Boolean
+    s()
+    errMessage = String
+
+class ws_netpro(ServiceBase):
 
     # CANCEL REVERSAL CEK IN
-    @rpc(String, String, s, String, _returns=Resp_CancelReversalCekIN)
+    @rpc(String, String, s, String, _returns=Boolean)
     def CancelReversalCekIN(self, dbUser, dbPassword, s, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         # import pdb; pdb.set_trace()
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
-        res = Resp_CancelReversalCekIN()
-        res.CancelReversalCekINResult = True
-        res.errMessage = ''
-        return res
+        # res = Resp_CancelReversalCekIN()
+        # res.CancelReversalCekINResult = True
+        # res.errMessage = ''
+        # return res
+        yield True
+
+    @rpc(String, String, s, String, _returns=Boolean)
+    def CancelReversalCekOut(self, dbUser, dbPassword, s, errMessage):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        # import pdb; pdb.set_trace()
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        # res = Resp_CancelReversalCekIN()
+        # res.CancelReversalCekINResult = True
+        # res.errMessage = ''
+        # return res
+        yield True
 
     # CEK DATA CHECK IN
     @rpc(String, String, String, M(String), DateTime, String, String, String, _returns=Resp_CekMemberInClaim)
-    def cek_member_in_claim(self, dbUser, dbPassword, ClaimType, CardNo, sDate, PayTo, errMessage, ResponseCode):
+    def CekMemberInClaim(self, dbUser, dbPassword, ClaimType, CardNo, sDate, PayTo, errMessage, ResponseCode):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
@@ -444,9 +473,18 @@ class ws_netpro(ServiceBase):
         res.ResponseCode = ''
         return res
 
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult)
+    def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_CekDataCheckINResult()
+        return res
+
     # CHECK OUT PATIENT BY EDC
     @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CheckOutPatientByEDCResult)
-    def check_out_patient_by_edc(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
+    def CheckOutPatientByEDC(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
@@ -456,7 +494,7 @@ class ws_netpro(ServiceBase):
 
     # SAVE CLAIM BY EDC
     @rpc(String, String, EDCData, Integer, String, _returns=Resp_SaveClaimByEDC)
-    def save_claim_by_edc(self, dbUser, dbPassword, EDCData, cno, errMessage):
+    def SaveClaimByEDC(self, dbUser, dbPassword, EDCData, cno, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
@@ -464,16 +502,76 @@ class ws_netpro(ServiceBase):
         res = Resp_SaveClaimByEDC()
         return res
 
+    # GET DATA SET
+    @rpc(String, String, DataSet, String, String, _returns=Resp_GetDataSet)
+    def GetDataSet(self, dbUser, dbPassword, DataSet, SQL, ErrMsg):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_GetDataSet()
+        return res
+
+    # REVERSAL VOID CEK DATA CHECK IN
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_reversalvoidCekDataCheckIN)
+    def reversalvoidCekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMsg):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_reversalvoidCekDataCheckIN()
+        return res
+
+    # REVERSAL VOID CHECK OUT PATIENT BY EDC
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_reversalvoidCheckOutPatientByEDC)
+    def reversalvoidCheckOutPatientByEDC(self, dbUser, dbPassword, EDCData, EDCDataOut, errmsg):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_reversalvoidCheckOutPatientByEDC()
+        return res
+
+    # UPDATE SQL
+    @rpc(String, String, String, String, _returns=Resp_UpdateSQL)
+    def UpdateSQL(self, dbUser, dbPassword, SQL, ErrMsg):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_UpdateSQL()
+        return res
+
+    # CANCEL CEK IN
+    @rpc(String, String, s, String, String, _returns=Resp_CancelCekIN)
+    def UpdateSQL(self, dbUser, dbPassword, s, Tracenumber, errMessage):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_CancelCekIN()
+        return res
+
+    # CANCEL CEK OUT
+    @rpc(String, String, s, String, String, _returns=Resp_CancelCekOut)
+    def UpdateSQL(self, dbUser, dbPassword, s, Tracenumber, errMessage):
+        path=self.transport.get_path() # get path sepertinya dari URL
+        db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
+        registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
+
+        res = Resp_CancelCekOut()
+        return res
+
 
 class SOAPWsgiApplication(WsgiApplication):
 
     def __call__(self, req_env, start_response, wsgi_url=None):
         """Only match URL requests starting with '/soap/'."""
-        print req_env
-        if 'HTTP_SOAPACTION' in req_env.keys():
-            splited = req_env['HTTP_SOAPACTION'].split('/')
-            print 'ANUNYA ' + splited
-            #req_env['HTTP_SOAPACTION'] = splited[3]
+        # print req_env
+        # if 'HTTP_SOAPACTION' in req_env.keys():
+        #     splited = req_env['HTTP_SOAPACTION'].split('/')
+        #     print 'ANUNYA ' + splited
+        #     #req_env['HTTP_SOAPACTION'] = splited[3]
         if req_env['PATH_INFO'].startswith('/soap/'):
             return super(SOAPWsgiApplication, self).__call__(
                 req_env, start_response, wsgi_url)
@@ -482,7 +580,7 @@ class SOAPWsgiApplication(WsgiApplication):
 application = Application(
     [ws_netpro],
     'http://tempuri.org/',
-    in_protocol=Soap11(validator='lxml'),
+    in_protocol=Soap11(),
     out_protocol=Soap11())
 
 # WSGI application
