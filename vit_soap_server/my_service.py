@@ -374,6 +374,7 @@ class EDCDataOut(complex.ComplexModel):
 class Resp_CekDataCheckINResult(complex.ComplexModel):
     CekDataCheckINResult = Boolean
     EDCDataOut()
+    errMsg = String
 
 class Params_CekMemberInClaim(complex.ComplexModel):
     dbUser = String
@@ -479,14 +480,15 @@ class ws_netpro(ServiceBase):
         return res
 
     @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult, _soap_body_style='rpc')
-    def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
+    def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMsg):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
         res = Resp_CekDataCheckINResult()
         res.CekDataCheckINResult = True
-        res.EDCDataOut = EDCDataOut()
+        res.EDCDataOut = EDCDataOut
+        res.errMsg = ''
         return res
 
     # CHECK OUT PATIENT BY EDC
