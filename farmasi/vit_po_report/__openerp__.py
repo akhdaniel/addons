@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "vit_po_report",
+    'name': "Print for PO",
 
     'summary': """
         Print PO""",
 
     'description': """
-        Long description of module's purpose
+        Print PO in A5 Paper size
     """,
 
     'author': "aiksuwandra@gmail.com",
