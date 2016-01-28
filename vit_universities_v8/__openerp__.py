@@ -3,7 +3,7 @@
 #
 {
     'name': 'Sistem Informasi Akademik Perguruan Tinggi',
-    'depends': ['base','hr','account','account_voucher', 'sale', 'purchase'],
+    'depends': ['base','hr','account','account_voucher'],
     'author'  :'vitraining.com',
     'version': '0.3',
     "website" : "http://www.vitraining.com",
@@ -40,6 +40,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'imports_mk.xml',
             'imports_nlm.xml',
             'beasiswa_prodi.xml',
-            'users.xml'
+            'users.xml',
+            'data/product.product.csv',
        ],
 }
