@@ -478,17 +478,14 @@ class ws_netpro(ServiceBase):
         res.ResponseCode = ''
         return res
 
-    #@rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult)
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=[Boolean, String])
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult)
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMessage):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
         # res = Resp_CekDataCheckINResult()
-        # return res
-        yield True
-        yield ''
+        return [True, EDCDataOut, '']
 
     # CHECK OUT PATIENT BY EDC
     @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CheckOutPatientByEDCResult)
