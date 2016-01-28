@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+  <template id="report_po_a5">
+        <t t-foreach="docs" t-as="o">
+          <div class="page"><!-- Header -->
+            <div class="oe_structure"/>
+            <div  class="text-center"  style="float : left; width:1000px;font-size:18px;" >
+              <table cellpadding="1">
+                <tr>
+                  <th class="text-left" style="border: none;">
+                          <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 40px;"/>
+                  </th>
+                  <th class="text-left" style="border: none;"><h3><b><t t-esc="o.company_id.name"/></b></h3><div  class="left"  style="font-size:12px;" >
+                        <t t-esc="o.company_id.street"/>  <t t-esc="o.company_id.street2"/>  <t t-esc="o.company_id.city"/> <t t-if="o.company_id.state_id"> <t t-esc="o.company_id.state_id.name"/></t>  <t t-esc="o.company_id.zip"/>  <t t-if="o.company_id.country_id"> <t t-esc="o.company_id.country_id.name"/></t></div></th>
+                </tr>
+              </table>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-6"><b>
+                    <h4 t-if="o.state != 'draft'">Purchase Order<!-- N° <span t-field="o.name"/> --></h4>
+                    <h4 t-if="o.state == 'draft'">Request for Quotation<!--  N° <span t-field="o.name"/> --></h4></b>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1">
+                    <div t-field="o.partner_id"
+                        t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                        <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
+                </div>
+            </div>
+
+
+            <div class="row mt32 mb32">
+                <div t-if="o.name" class="col-xs-3">
+                    <strong>No. Order</strong>
+                    <p t-field="o.name"/>
+                </div>
+                <div t-if="o.partner_ref" class="col-xs-3">
+                    <strong>Your Order Reference</strong>
+                    <p t-field="o.partner_ref"/>
+                </div>
+                <div t-if="o.date_order" class="col-xs-3">
+                    <strong>Order Date:</strong>
+                    <p t-field="o.date_order"/>
+                </div>
+                <div t-if="o.validator" class="col-xs-3">
+                    <strong>Validated By:</strong>
+                    <p t-field="o.validator"/>
+                </div>
+                <div t-if="o.validator == '' " class="col-xs-3">
+                    <strong>Validated By:</strong>
+                    <p><t t-esc="user.name"/></p>
+                </div>
+            </div>
+
+            <!-- Lines -->
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th><strong>Description</strong></th>
+                        <th><strong>Taxes</strong></th>
+                        <th class="text-center"><strong>Date Req.</strong></th>
+                        <th class="text-right"><strong>Qty</strong></th>
+                        <th class="text-right"><strong>Unit Price</strong></th>
+                        <th class="text-right"><strong>Net Price</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="o.order_line" t-as="line">
+                        <td>
+                            <span t-field="line.name"/>
+                        </td>
+                        <td>
+                            <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-field="line.date_planned"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.product_qty"/>
+                            <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_unit"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="line.price_subtotal"
+                                t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Total -->
+            <div class="row">
+                <div class="col-xs-6">
+                    <strong>Catatan:</strong>
+                </div>
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Total Without Taxes</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed"
+                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Taxes</td>
+                            <td class="text-right">
+                                <span t-field="o.amount_tax"
+                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                        <tr class="border-black">
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_total"
+                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ACC -->
+            <div class="row">
+                <table width="800" border="3" align="center" bordercolor="#000000">
+                  <tr>
+                    <th class="text-center" height="100" scope="col">
+                        <p>Supplier, </p>
+                    </th>
+                    
+                    <th class="text-center" scope="col"><p>Hormat Kami,</p>
+                    </th>
+                  </tr>
+                  <tr><td class="text-center">.....</td><td class="text-center">.....</td></tr>
+                </table>
+            </div>
+
+          </div>
+        </t>
+    </template>
+
+    <report 
+        id="a5_report_po"
+        string="Simple Purchase Order"
+        model="purchase.order" 
+        report_type="qweb-pdf"
+        name="vit_po_report.report_po_a5" 
+        file="vit_po_report.report_po_a5" 
+    />
+
+    <record id="paperformat_a5_po" model="report.paperformat">
+        <field name="default" eval="True"/>
+        <field name="name">PO A5</field>
+        <field name="format">A5</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">3</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">1</field>
+        <field name="dpi">96</field>
+    </record>
+
+
+    <!-- Connect report with paper format. Record action id must same with report id -->
+    <record id="vit_po_report.a5_report_po" model="ir.actions.report.xml">
+      <!-- ref : which paper format should used in current action -->
+      <field name="paperformat_id" ref="vit_po_report.paperformat_a5_po"/>
+    </record>
+    
+  </data>
+</openerp>
