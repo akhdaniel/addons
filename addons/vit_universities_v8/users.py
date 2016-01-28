@@ -8,7 +8,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 
 
 class res_users(osv.osv):
-	_inhetit = "res.users"
+	_inherit = "res.users"
 
 	_columns = {
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas', domain=[('is_internal','=',True)]),
