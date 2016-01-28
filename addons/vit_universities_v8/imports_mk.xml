@@ -55,19 +55,6 @@
 		    </field>
 		</record>
 
-		<!-- tree list import_mk -->
-		<record id="view_prodi_map_tree" model="ir.ui.view">
-		    <field name="name">akademik_prodi_map_tree</field>
-		    <field name="model">akademik.prodi.map</field>
-		    <field name="arch" type="xml">
-		    	<tree string="list prodi map">
-					<field name="prodi_prima_id"/> 	
-					<field name="prodi_kode"/>		
-					<field name="name"/>				
-				</tree>		
-			</field>
-		</record>
-
 
 		<!-- action list import_mk -->
 		<record id="action_import_mk_list" model="ir.actions.act_window">
