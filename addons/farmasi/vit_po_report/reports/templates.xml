@@ -96,7 +96,7 @@
             <!-- Total -->
             <div class="row">
                 <div class="col-xs-6">
-                    <strong>Catatan:</strong>
+                    <strong>Terms &amp; Condition:</strong>
                     <span t-field="o.notes2"/>
                 </div>
                 <div class="col-xs-4 pull-right">
