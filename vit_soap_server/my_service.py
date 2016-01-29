@@ -502,9 +502,9 @@ class ws_netpro(ServiceBase):
         b = etree.tostring(res_edc_data_out, pretty_print=True)
         c = etree.tostring(res_err_msg, pretty_print=True)
 
-        yield a
-        yield b
-        yield c
+        print a b c
+
+        yield a b c
 
         # res = Resp_CekDataCheckINResult()
         # res.CekDataCheckINResult = True
