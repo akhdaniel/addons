@@ -15,6 +15,8 @@ from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
 from lxml import etree
 
+_logger = logging.getLogger(__name__)
+
 def get_registry_cr_uid_context(db_name):
     if db.exp_list():
         registry = RegistryManager.get(db_name)
@@ -513,7 +515,7 @@ class ws_netpro(ServiceBase):
         res.CekDataCheckINResult = True
         res.EDCDataOut = EDCDataOut
         res.errMsg = ''
-        import pdb; pdb.set_trace()
+        _logger.info("COBA")
         return res
 
     # CHECK OUT PATIENT BY EDC
