@@ -513,6 +513,7 @@ class ws_netpro(ServiceBase):
         res.CekDataCheckINResult = True
         res.EDCDataOut = EDCDataOut
         res.errMsg = ''
+        import pdb; pdb.set_trace()
         return res
 
     # CHECK OUT PATIENT BY EDC
