@@ -3,7 +3,7 @@ logging.basicConfig(level=logging.DEBUG)
 logging.getLogger('spyne.protocol.xml').setLevel(logging.DEBUG)
 
 from spyne import Application, ServiceBase, rpc
-from spyne import String, Integer, Integer16, Integer64, Double, Boolean, DateTime, ByteArray, AnyXml
+from spyne import String, Integer, Integer16, Integer64, Double, Boolean, DateTime, ByteArray, AnyXml, Unicode
 
 from spyne import Mandatory as M
 from spyne.protocol.soap import Soap11
