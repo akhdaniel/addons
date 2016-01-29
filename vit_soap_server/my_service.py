@@ -479,30 +479,30 @@ class ws_netpro(ServiceBase):
         res.ResponseCode = ''
         return res
 
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Unicode)
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Boolean)
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMsg):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
-        # create XML 
-        res_bool = etree.Element('CekDataCheckINResult')
-        res_bool.text = True
+        # # create XML 
+        # res_bool = etree.Element('CekDataCheckINResult')
+        # res_bool.text = True
 
-        res_edc_data_out = etree.Element('EDCDataOut')
-        BenefitTotalAmount = etree.Element('BenefitTotalAmount')
-        BenefitTotalAmount.text = ''
-        res_edc_data_out.append(BenefitTotalAmount)
+        # res_edc_data_out = etree.Element('EDCDataOut')
+        # BenefitTotalAmount = etree.Element('BenefitTotalAmount')
+        # BenefitTotalAmount.text = ''
+        # res_edc_data_out.append(BenefitTotalAmount)
 
-        res_err_msg = etree.Element('errMsg')
-        res_err_msg.text = ''
+        # res_err_msg = etree.Element('errMsg')
+        # res_err_msg.text = ''
 
-        # pretty string
-        a = etree.tostring(res_bool, pretty_print=True)
-        b = etree.tostring(res_edc_data_out, pretty_print=True)
-        c = etree.tostring(res_err_msg, pretty_print=True)
+        # # pretty string
+        # a = etree.tostring(res_bool, pretty_print=True)
+        # b = etree.tostring(res_edc_data_out, pretty_print=True)
+        # c = etree.tostring(res_err_msg, pretty_print=True)
 
-        yield a, b, c
+        yield True
 
         # res = Resp_CekDataCheckINResult()
         # res.CekDataCheckINResult = True
