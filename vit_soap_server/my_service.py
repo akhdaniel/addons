@@ -13,7 +13,7 @@ from spyne.model import complex
 from openerp.service import db
 from openerp.modules.registry import RegistryManager
 from openerp import SUPERUSER_ID
-
+from lxml import etree
 
 def get_registry_cr_uid_context(db_name):
     if db.exp_list():
@@ -479,17 +479,38 @@ class ws_netpro(ServiceBase):
         res.ResponseCode = ''
         return res
 
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult, _soap_body_style='rpc')
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=AnyXml)
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMsg):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
         registry, cr, uid, context = get_registry_cr_uid_context(db_name) # pengambilan registry odoo berdasarkan db name
 
-        res = Resp_CekDataCheckINResult()
-        res.CekDataCheckINResult = True
-        res.EDCDataOut = EDCDataOut
-        res.errMsg = ''
-        return res
+        # create XML 
+        res_bool = etree.Element('CekDataCheckINResult')
+        res_bool.text = True
+
+        res_edc_data_out = etree.Element('EDCDataOut')
+        BenefitTotalAmount = etree.Element('BenefitTotalAmount')
+        BenefitTotalAmount.text = ''
+        res_edc_data_out.append(BenefitTotalAmount)
+
+        res_err_msg = etree.Element('errMsg')
+        res_err_msg.text = ''
+
+        # pretty string
+        a = etree.tostring(res_bool, pretty_print=True)
+        b = etree.tostring(res_edc_data_out, pretty_print=True)
+        c = etree.tostring(res_err_msg, pretty_print=True)
+
+        yield a
+        yield b
+        yield c
+
+        # res = Resp_CekDataCheckINResult()
+        # res.CekDataCheckINResult = True
+        # res.EDCDataOut = EDCDataOut
+        # res.errMsg = ''
+        # return res
 
     # CHECK OUT PATIENT BY EDC
     @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CheckOutPatientByEDCResult)
