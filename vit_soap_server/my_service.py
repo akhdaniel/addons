@@ -481,7 +481,7 @@ class ws_netpro(ServiceBase):
         res.ResponseCode = ''
         return res
 
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult, _body_style='bare')
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Resp_CekDataCheckINResult)
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMsg):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
@@ -618,6 +618,10 @@ application = Application(
     'http://tempuri.org/',
     in_protocol=Soap11(),
     out_protocol=Soap11())
+
+application.interface.nsmap[None] = application.interface.nsmap['tns']
+application.interface.prefmap[application.interface.nsmap['tns']] = None
+del application.interface.nsmap['tns']
 
 # WSGI application
 wsgi_application = SOAPWsgiApplication(application)
