@@ -479,7 +479,7 @@ class ws_netpro(ServiceBase):
         res.ResponseCode = ''
         return res
 
-    @rpc(String, String, EDCData, EDCDataOut, String, _returns=AnyXml)
+    @rpc(String, String, EDCData, EDCDataOut, String, _returns=Unicode)
     def CekDataCheckIN(self, dbUser, dbPassword, EDCData, EDCDataOut, errMsg):
         path=self.transport.get_path() # get path sepertinya dari URL
         db_name = path.split('/')[2] # pisahkan berdasarkan / dan ambil array ke 3
