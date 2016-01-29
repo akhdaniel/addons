@@ -148,5 +148,13 @@ class spc(object):
             results = cursor.fetchall()
         return results
 
+    def set_ca_pembayaran_processed(self, id_record_pembayaran ):
+        # import pdb; pdb.set_trace()
+        with self.connection.cursor() as cursor:
+            sql = "UPDATE ca_pembayaran SET key_val_1='1' where id_record_pembayaran = %s"
+            cursor.execute(sql, ( id_record_pembayaran ))
+        self.connection.commit()
+        return True        
+
     def close(self):
         self.connection.close()

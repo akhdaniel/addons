@@ -6,6 +6,8 @@ from dateutil.relativedelta import relativedelta
 import logging
 from openerp.tools.translate import _
 import bni 
+from openerp import netsvc
+
 
 _logger = logging.getLogger(__name__)
 
@@ -26,10 +28,10 @@ class account_invoice(osv.osv):
 	# get parameters for spc connections
 	####################################################################################
 	def get_params(self, cr, uid, context=None):
-		self.spc_hostname   = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.hostname')
-		self.sespc_username = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.username')
-		self.sespc_password = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.password')
-		self.sespc_dbname   = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.dbname')
+		self.spc_hostname = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.hostname')
+		self.spc_username = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.username')
+		self.spc_password = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.password')
+		self.spc_dbname   = self.pool.get('ir.config_parameter').get_param(cr, uid, 'spc.dbname')
 
 	####################################################################################
 	# on validate invoice, create biller_tagihan di MySQL SPC
@@ -181,6 +183,7 @@ class account_voucher(osv.osv):
 	# mulai process import, bisa dari menu atau dari cron job
 	####################################################################################
 	def actual_process_import(self, cr, uid, context=None):
+
 		################################################################################
 		# prepare common variable
 		################################################################################
@@ -189,22 +192,44 @@ class account_voucher(osv.osv):
 		company_id 		= u1.company_id.id
 		date_voucher 	= date.today().strftime('%Y-%m-%d')
 
+		journal_bni = self.find_journal_by_code(cr, uid, 'BNI')
+		if not journal_bni:
+			raise osv.except_osv(_('Error'),_("no journal with code BNI, please create one") ) 
+
+		##################################################################################
+		# connection parameters
+		##################################################################################
+		self.get_params(cr, uid, context=context)
+		spc = bni.spc()
+		spc.connect(host=self.spc_hostname, user=self.spc_username, passwd=self.spc_password, db=self.spc_dbname)
+
 		##################################################################################
 		# loop setiap record import ca_pembayaran
 		##################################################################################
 		i = 0
-		# date_start	= date.now()
 
-		self.get_params(cr, uid, context=context)
-		spc = bni.spc()
-		spc.connect(host=self.spc_hostname, user=self.spc_username, passwd=self.spc_password, db=self.spc_dbname)
 		for temp in spc.read_ca_pembayaran():
+			
 			_logger.warning('   temp ' )
 			_logger.warning(temp)
+
+
+			invoice_id = self.find_invoice_by_number(cr, uid, temp['id_record_tagihan'] )
+			if not invoice_id:
+				raise osv.except_osv(_('Error'),_("no invoice with number %s") % (temp['id_record_tagihan'] ) ) 
+
+			partner_id = invoice_id.partner_id.id 
+			amount     = invoice_id.amount_total
+
+			vid=self.create_payment(cr, uid, invoice_id, partner_id, amount, journal_bni, company_id, context=context)
+			self.payment_confirm(cr, uid, vid, context=context)
+
+			spc.set_ca_pembayaran_processed( temp['id_record_pembayaran'] )
+
+			cr.commit()
+
 			i = i + 1
 
-		# date_end 	= date.now()
-		# delta 		= date_end - date_start 
 		delta = 0
 		spc.close()
 
@@ -217,11 +242,11 @@ class account_voucher(osv.osv):
 	#invoice_id: yang mau dibayar
 	#journal_id: payment method
 	####################################################################################
-	def create_payment(self, cr, uid, invoice_id, partner_id, amount, journal, company_id, context=None):
+	def create_payment(self, cr, uid, inv, partner_id, amount, journal, company_id, context=None):
 		voucher_lines = []
 
 		#cari invoice
-		inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id)
+		# inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id)
 		
 		#cari move_line yang move_id nya = invoice.move_id
 		move_line_id = self.pool.get('account.move.line').search( cr, uid, [('move_id.id','=', inv.move_id.id)] );
@@ -261,6 +286,25 @@ class account_voucher(osv.osv):
 	def payment_confirm(self, cr, uid, vid, context=None):
 		wf_service = netsvc.LocalService('workflow')
 		wf_service.trg_validate(uid, 'account.voucher', vid, 'proforma_voucher', cr)
-		_logger.info("   confirmed payment id:%d" % (id) )
+		_logger.info("   confirmed payment id:%d" % (vid) ) 
 		return True
 
+
+	####################################################################################
+	# find invoice by number
+	####################################################################################
+	def find_invoice_by_number(self, cr, uid, number, context=None):
+		invoice_obj = self.pool.get('account.invoice')
+		invoice_id = invoice_obj.search(cr, uid, [('number','=', number)], context=context)
+		invoice = invoice_obj.browse(cr, uid, invoice_id, context=context)
+		return invoice
+
+
+	####################################################################################
+	# find journal by code
+	####################################################################################
+	def find_journal_by_code(self, cr, uid, code, context=None):
+		journal_obj = self.pool.get('account.journal')
+		journal_id = journal_obj.search(cr, uid, [('code','=', code)], context=context)
+		journal = journal_obj.browse(cr, uid, journal_id, context=context)
+		return journal
