@@ -105,7 +105,7 @@ class import_mk(osv.osv):
 		else:
 			return None
 
-	def get_mk_id(self, cr, uid, kode_mk, context=None):
+	def get_mk_id(self, cr, uid, kode_mk, prodi_id, rec, context=None):
 		mk_obj = self.pool.get('master.matakuliah')
 		mk_ids = mk_obj.search(cr, uid, [('kode','=',kode_mk)], context=context)
 
@@ -113,7 +113,17 @@ class import_mk(osv.osv):
 			m = mk_obj.browse(cr, uid, mk_ids[0] , context=context)
 			return m
 		else:
-			return None
+			data = {
+				'kode' 			: kode_mk,
+				'kode_dikti'	: rec.kdkmktbkmk,
+				'nama'			: rec.nakmktbkmk,
+				'sks' 			: rec.sksmktbkmk,
+				'jenis' 		: 'mk_umum',
+				'prodi_id'		: prodi_id.id
+			}
+			new_mk = mk_obj.create(cr, uid, data, context=context)
+			m = mk_obj.browse(cr, uid, new_mk , context=context)
+			return m
 
 
 	def action_import_mk(self, cr, uid, context=None):
@@ -127,6 +137,7 @@ class import_mk(osv.osv):
 		kur_obj = self.pool.get('master.kurikulum')
 
 		ids = self.search(cr, uid, [('is_processed','=',False)], context=context)
+		# ids = active_ids
 
 		semester_lama 	= ""
 		kd_prodi_lama   = ""
@@ -194,7 +205,7 @@ class import_mk(osv.osv):
 				}
 				kur_id = kur_obj.create(cr, uid, data, context=context)
 
-				mk_data = self.get_mk_id(cr, uid, kode_mk, context=context)
+				mk_data = self.get_mk_id(cr, uid, kode_mk, prodi_id, rec, context=context)
 				if mk_data:
 					mk_ids.append( mk_data.id ) 
 				else:
@@ -203,7 +214,7 @@ class import_mk(osv.osv):
 
 			else:
 
-				mk_data = self.get_mk_id(cr, uid, kode_mk, context=context)
+				mk_data = self.get_mk_id(cr, uid, kode_mk, prodi_id, rec, context=context)
 				if mk_data:
 					mk_ids.append( mk_data.id ) 
 				else:
@@ -212,6 +223,8 @@ class import_mk(osv.osv):
 
 			semester_lama 	= semester.id
 			kd_prodi_lama   = prodi_id.kode
+
+			self.write(cr, uid, rec.id, {'is_processed':True}, context=context)
 
 		return
 
