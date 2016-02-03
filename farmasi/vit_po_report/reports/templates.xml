@@ -19,12 +19,12 @@
                     </tr>
                   </table>
                 </div>
-                <div style="position: absolute;top: 60px;right:100px">
+                <!-- <div style="position: absolute;top: 60px;right:100px">
                     <div t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'/>
                     <span><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.street2"/> <t t-esc="o.partner_id.city"/></span>
                     <p t-if="o.partner_id.phone">phone <span><t t-esc="o.partner_id.phone"/>   fax <t t-esc="o.partner_id.fax"/></span></p>
                     <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
-                </div>
+                </div> -->
 
                 
 
@@ -45,9 +45,15 @@
                         <strong>Order Date:</strong>
                         <p t-field="o.date_order"/>
                     </div>
-                    <div t-if="o.validator" class="col-xs-2">
+                    <div t-if="o.validator" class="col-xs-3">
                         <strong>Validated By:</strong>
                         <p t-field="o.validator"/>
+                    </div>
+                    <div class="col-xs-5">
+                        <div t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'/>
+                        <span><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.street2"/> <t t-esc="o.partner_id.city"/></span>
+                        <p t-if="o.partner_id.phone">phone <span><t t-esc="o.partner_id.phone"/>   fax <t t-esc="o.partner_id.fax"/></span></p>
+                        <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
                     </div>
                 </div>
                 <p/>
