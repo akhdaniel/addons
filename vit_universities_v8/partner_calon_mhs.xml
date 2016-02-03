@@ -6,13 +6,14 @@
             <field name="model">res.partner.calon.mhs</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Calon Mahasiswa" version="7.0" create="false" delete="false">
+                <tree string="Daftar Calon Mahasiswa Gagal/Lulus" version="7.0" create="false" delete="false">
                     <field name="reg"/>
                     <field name="name" string="Nama"/>
                     <field name="fakultas_id"/>
                     <field name="jurusan_id"/>
                     <field name="prodi_id"/>
-                    <field name="tahun_ajaran_id"/>                  
+                    <field name="tahun_ajaran_id"/>  
+                    <field name="state" invisible="1"/>                
                 </tree>
             </field>
         </record>
@@ -53,6 +54,7 @@
                             <group>
                                 <field name="user_id"/>
                                 <field name="date_move"/>
+                                <field name="state"/>
                             </group>                                                      
                         </group>                      
 	                </sheet>    
@@ -87,10 +89,10 @@
                     <newline/>
                     <group expand="0" string="Group By..." colspan="12" col="10">
                         <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
-                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>   
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Jenis Kelamin" help="By Jenis Kelamin" context="{'group_by':'jenis_kelamin'}"/>
+                        <filter icon="terp-project" string="Status" help="By Status" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>

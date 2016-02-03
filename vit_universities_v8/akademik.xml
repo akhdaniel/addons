@@ -12,13 +12,12 @@
                     </group>
                     <newline/>
                     <group expand="0" string="Group By..." colspan="12" col="10">
-                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}" name="group_tahun_ajaran_id"/>
-                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}" name="group_fakultas_id"/>
-                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}" name="group_prodi_id"/>
-                        <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}" name="group_semester_id"/>
-                        <filter icon="terp-project" string="Status" help="By Status" 
-                            name="group_state"
-                            context="{'group_by':'state'}"/>
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
+                        <filter icon="terp-project" string="Status" help="By Status" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>
@@ -30,7 +29,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="search_view_id" ref="kurikulum_search"/>
-            <field name="context">{'default_group_tahun_ajaran_id':True}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data kurikulum.</p><p>disini belum ada data tentang kurikulum !</p></field>
         </record>
@@ -410,6 +408,17 @@
             <!--field name="view_id" ref="personal_tree_view"/-->
         </record>
 
+        <!--  master data template pembayaran pendaftaran  -->
+        <record model="ir.actions.act_window" id="template_pembayaran_pendaftaran_list_action">
+            <field name="name">Master Pembayaran Pendaftaran</field>
+            <field name="res_model">master.pembayaran.pendaftaran</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>               
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Master Pembayaran.</p><p>disini belum ada data tentang master pembayaran pendaftaran !</p></field>
+
+        </record>
+
         <!--  master data dosen -->
         <record model="ir.actions.act_window" id="dosen_list_action">
             <field name="name">Dosen</field>
@@ -447,7 +456,9 @@
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/> 
                     <field name="keluarga_alumni_id"/> 
-                    <field name="marketing_id" invisible="1"/>                  
+                    <field name="marketing_id" invisible="1"/>   
+                    <field name="invoice_state" invisible="1"/>
+                    <field name="invoice_bangunan_state" invisible="1"/>                
                 </tree>
             </field>
         </record>          
@@ -464,7 +475,9 @@
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/> 
-                    <field name="marketing_id" invisible="1"/>                    
+                    <field name="marketing_id" invisible="1"/>  
+                    <field name="invoice_state" invisible="1"/>
+                    <field name="invoice_bangunan_state" invisible="1"/>                                       
                 </tree>
             </field>
         </record>  
@@ -668,8 +681,7 @@
                 <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" sequence="11"/> 
                 <menuitem id="master_wisuda" name="Wisuda" parent="master_civitas" action="wisuda_list_action" sequence="20"/>  
                 <menuitem id="master_alumni" name="Alumni" parent="master_civitas" action="alumni_list_action" sequence="30"/>
-                <menuitem id="master_dosen" name="Dosen" parent="master_civitas" action="dosen_list_action" sequence="40"/> <menuitem id="master_data_pembayaran" name="Pembayaran" parent="si_akademik_menu" sequence="50"/>
-                <menuitem id="master_pembayaran" name="Pembayaran" parent="master_data_pembayaran" action="pembayaran_list_action"/>            
+                <menuitem id="master_dosen" name="Dosen" parent="master_civitas" action="dosen_list_action" sequence="40"/>           
             <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="60"/>              
                 <menuitem id="master_krs" name="Kartu Rencana Studi" parent="operasional" action="krs_list_action" sequence="13"/>
                 <menuitem id="master_khs" name="Kartu Hasil Studi" parent="operasional" action="khs_list_action" sequence="14"/>
@@ -689,9 +701,8 @@
                 <menuitem id="master_nilai" name="Nilai" parent="master_data" action="nilai_list_action" sequence="70"/>
                 <menuitem id="master_yudisium" name="Yudisium" parent="master_data" action="yudisium_list_action" sequence="80"/>
                 <menuitem id="master_jenis_pelangaran" name="Jenis Pelanggaran" parent="master_data" action="jenis_pelanggaran_list_action" sequence="90"/>
-                <menuitem id="pembayaran" name="Pembayaran" parent="master_data" sequence="100"/>            
-                    <menuitem id="master_product" name="Jenis Pembayaran" parent="pembayaran" action="jenis_pembayaran_list_action"/>
-                    <menuitem id="master_pembayaran" name="Template Pembayaran" parent="pembayaran" action="template_pembayaran_list_action"/>
+
+                    
                                 
 
         <!-- Mata Kuliah-->

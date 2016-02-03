@@ -101,28 +101,35 @@
                                         <field name="absensi_13"/>
                                         <field name="absensi_14"/>
                                         <field name="tugas"/>
-                                        <field name="uas"/>
-<!--                                         <field name="absensi_15"/>
-                                        <field name="absensi_16"/>
-                                        <field name="absensi_17"/>
-                                        <field name="absensi_18"/>
-                                        <field name="absensi_19"/>
-                                        <field name="absensi_20"/>
-                                        <field name="absensi_21"/>
-                                        <field name="absensi_22"/>
-                                        <field name="absensi_23"/>
-                                        <field name="absensi_24"/>
-                                        <field name="absensi_25"/>
-                                        <field name="absensi_26"/>
-                                        <field name="absensi_27"/>
-                                        <field name="absensi_28"/>
-                                        <field name="absensi_29"/>
-                                        <field name="absensi_30"/>     -->                                
+                                        <field name="uas"/>                               
                                         <field name="note"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                 </field>        
-                            </page>    
+                            </page>
+                            <page string="Setting" groups="vit_universities_v8.group_univ_dosen">
+                                <sheet>
+                                    <p class="oe_grey">Setting presentase nilai ini berlaku jika jumlah (Absensi+Tugas+UTS+UAS) = 100 (%)</p>
+                                    <group col='4'>
+                                        <group col='1'>
+                                            <label for="absensi" />
+                                            <field name="absensi" nolabel="1" /> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="tugas" />
+                                            <field name="tugas" nolabel="1"/> 
+                                        </group>
+                                         <group col='1'>
+                                             <label for="uts" />
+                                             <field name="uts"  nolabel="1"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="uas" />
+                                            <field name="uas" nolabel="1"/> 
+                                        </group>
+                                    </group>
+                                </sheet>                                
+                            </page>        
                         </notebook>
 <!--                     </sheet>    -->
                 </form>

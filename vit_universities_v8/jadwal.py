@@ -10,28 +10,39 @@ class master_jadwal (osv.osv):
 	_name = 'master.jadwal'
 
 	def create(self, cr, uid, vals, context=None):
-		ajaran = vals['tahun_ajaran_id']
-		fakultas = vals['fakultas_id']
-		# jurusan = vals['jurusan_id']
-		prodi = vals['prodi_id']
-		semester = vals['semester_id']
-		ruangan = vals['ruangan_id']
-		hari = vals['hari']
-		sesi = vals['sesi']		
-		jad_obj = self.pool.get('master.jadwal')
-		jad_id = jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
+		ajaran 		= vals['tahun_ajaran_id']
+		fakultas 	= vals['fakultas_id']
+		prodi 		= vals['prodi_id']
+		semester 	= vals['semester_id']
+		ruangan 	= vals['ruangan_id']
+		hari 		= vals['hari']
+		kelas 		= vals['kelas_id']
+		hours_from 	= vals['hours_from']	
+		hours_to 	= vals['hours_to']	
+		kls_obj 	= self.pool.get('master.kelas')
+		rg_obj 		= self.pool.get('master.ruangan')	
+		jad_obj 	= self.pool.get('master.jadwal')
+		jad_id 		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
-			# ('jurusan_id','=',jurusan),
 			('prodi_id','=',prodi),
 			('semester_id','=',semester),
 			('ruangan_id','=',ruangan),	
 			('hari','=',hari),
-			#('sesi','=',sesi),
+			('hours_from','>=',hours_from),
+			('hours_to','<=',hours_to),
 			('is_active','=',True),])
 
 		if jad_id != [] :
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
-
+		kapasitas_ruangan 	= rg_obj.browse(cr,uid,ruangan).kapasitas	
+		hasil = 0 
+		sql = "select count(partner_id) from kelas_mahasiswa_rel where kelas_id = %s" % (kelas)
+		cr.execute(sql)
+		hasil = cr.fetchone()		
+		if hasil and hasil[0] != None:
+			hasil = hasil[0]
+			if hasil > kapasitas_ruangan :
+				raise osv.except_osv(_('Error!'), _('Peserta kelas (%s) melebihi kapasitas ruangan (%s) !')%(hasil,kapasitas_ruangan))
 		return super(master_jadwal, self).create(cr, uid, vals, context=context)   
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
@@ -55,7 +66,7 @@ class master_jadwal (osv.osv):
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,), 
 		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True),                
-		'employee_id' :fields.many2one('hr.employee','Dosen Utama', domain="[('is_dosen','=',True)]"),
+		'employee_id' :fields.many2one('hr.employee','Dosen Utama', domain="[('is_dosen','=',True)]",required=True),
 		'sks' : fields.float('SKS'),
 		'employee_id2' :fields.many2one('hr.employee','Dosen Pengganti 1', domain="[('is_dosen','=',True)]"),
 		'sks2' : fields.float('SKS'),
@@ -74,7 +85,7 @@ class master_jadwal (osv.osv):
 			}
 			
 	_defaults= {
-		'sesi':1,
+		'sesi':14,
 		'is_active':True,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.jadwal'), 
 	}

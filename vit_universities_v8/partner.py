@@ -5,7 +5,7 @@ import openerp
 from datetime import datetime
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
-
+from openerp import netsvc
 
 SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
 class res_partner (osv.osv):
@@ -38,7 +38,42 @@ class res_partner (osv.osv):
 			if vals['status_mahasiswa'] == 'calon':
 				if vals.get('reg','/')=='/':
 					vals['reg'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner') or '/'
-			if vals['status_mahasiswa'] == 'Mahasiswa':
+				partner = super(res_partner, self).create(cr, uid, vals, context=context)
+				byr_obj = self.pool.get('master.pembayaran.pendaftaran')
+				byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
+					('fakultas_id','=',vals['fakultas_id']),
+					('prodi_id','=',vals['prodi_id']),
+					('state','=','confirm'),
+					])		
+				if byr_sch != []:
+					byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+					list_pembayaran = byr_brw.detail_product_ids
+					prod_id = []
+					for bayar in list_pembayaran:
+					
+						product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+						coa_line = product.property_account_income.id
+						if not coa_line:
+							coa_line = product.categ_id.property_account_income_categ.id
+						prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+											 'name'			: bayar.product_id.name,
+											 'price_unit'	: bayar.public_price,
+											 'account_id'	: coa_line}))
+					inv = self.pool.get('account.invoice').create(cr,uid,{
+						'partner_id':partner,
+						'origin': 'Pendaftaran '+str(self.pool.get('res.partner').browse(cr,uid,partner).reg),
+						'type':'out_invoice',
+						'fakultas_id': vals['fakultas_id'],
+						'prod_id': vals['prodi_id'],
+						'account_id':self.pool.get('res.partner').browse(cr,uid,partner).property_account_receivable.id,
+						'invoice_line': prod_id,
+						},context=context)
+					wf_service = netsvc.LocalService('workflow')
+					wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
+					self.write(cr,uid,partner,{'invoice_id':inv})
+
+
+			elif vals['status_mahasiswa'] == 'Mahasiswa':
 				if vals.get('npm','/')=='/':
 					ta = vals['tahun_ajaran_id']
 					t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
@@ -54,9 +89,14 @@ class res_partner (osv.osv):
 					sequence = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 
 					vals['npm'] = ta_id+fak_id+pro_id+sequence
-			if vals['status_mahasiswa'] == 'alumni':
-				raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))			
-		return super(res_partner, self).create(cr, uid, vals, context=context)
+					partner = super(res_partner, self).create(cr, uid, vals, context=context)
+			elif vals['status_mahasiswa'] == 'alumni':
+				raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))	
+			else:
+				partner = super(res_partner, self).create(cr, uid, vals, context=context)
+		else:
+			partner = super(res_partner, self).create(cr, uid, vals, context=context)		
+		return partner
 
 	def _calc_age(self, cr, uid, ids, name, arg, context=None):
 		''' Fungsi otomatis utk menghitung usia'''
@@ -163,7 +203,7 @@ class res_partner (osv.osv):
 				khs_obj = self.pool.get('operasional.krs')
 				th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_sidang.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
 				total_khs = len(th_khs)
-				#import pdb;pdb.set_trace()
+				
 				results[siap_sidang.id] = False
 				if total_khs >= total_kurikulum :
 					#cek juga total mk di kurikulum harus sama dengan mk yg sudah ditempuh
@@ -263,12 +303,58 @@ class res_partner (osv.osv):
 
 		#split invoice
 		'split_invoice' : fields.integer('Angsuran',help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi"),
-		'alamat_ids'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
+		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap')],'Type Pendaftaran'),
-	}
+
+		'invoice_id' : fields.many2one('account.invoice','Invoice Pendaftaran',readonly=True),
+		'invoice_state' : fields.related('invoice_id','state',type='char',relation='account.invoice',string='Pembayaran Pendaftaran',readonly=True,store=True),
+		'invoice_bangunan_id' : fields.many2one('account.invoice','Invoice Bangunan',readonly=True),
+		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran Bangunan',readonly=True,store=True),
+
+		'karyawan_id'	: fields.many2one('hr.employee','Karyawan'),
+
+		}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]
 	_sql_constraints = [('npm_uniq', 'unique(npm)','NPM tidak boleh sama')]
+
+
+	def create_inv_pendaftaran(self,cr,uid,ids,context=None):
+		byr_obj = self.pool.get('master.pembayaran.pendaftaran')
+		for partner in self.browse(cr,uid,ids):
+			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+				('fakultas_id','=',partner.fakultas_id.id),
+				('prodi_id','=',partner.prodi_id.id),
+				('state','=','confirm'),
+				])		
+			if byr_sch :
+				byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+				list_pembayaran = byr_brw.detail_product_ids
+				prod_id = []
+				for bayar in list_pembayaran:
+					#import pdb;pdb.set_trace()
+					product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+					coa_line = product.property_account_income.id
+					if not coa_line:
+						coa_line = product.categ_id.property_account_income_categ.id
+					prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+										 'name'			: bayar.product_id.name,
+										 'price_unit'	: bayar.public_price,
+										 'account_id'	: coa_line}))
+				inv = self.pool.get('account.invoice').create(cr,uid,{
+					'partner_id':partner.id,
+					'origin': 'Pendaftaran '+str(partner.reg),
+					'type':'out_invoice',
+					'fakultas_id': partner.fakultas_id.id,
+					'prod_id': partner.prodi_id.id,
+					'account_id':partner.property_account_receivable.id,
+					'invoice_line': prod_id,
+					},context=context)
+				wf_service = netsvc.LocalService('workflow')
+				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
+				self.write(cr,uid,partner.id,{'invoice_id':inv})
+
+		return True		
 
 	def action_draft(self,cr,uid,ids,context=None):
 			#set to "draft" state

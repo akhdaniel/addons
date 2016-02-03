@@ -35,34 +35,34 @@
                 		<group>
                 			<group>
                                 <field name="name"/> 
+                                <field name="tahun_ajaran_id"/>
+                                <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                                <field name="kelas_id" domain="[('prodi_id','=',prodi_id)]"/>
+                                <field name="mata_kuliah_id"/>                                
+                            </group>
+                			<group>
                                 <field name="employee_id"/>
                                 <field name="sks" attrs="{'invisible':[('employee_id','=',False)]}"/>
                                 <field name="employee_id2"/>
                                 <field name="sks2" attrs="{'invisible':[('employee_id2','=',False)]}"/>
                                 <field name="employee_id3"/>
                                 <field name="sks3" attrs="{'invisible':[('employee_id3','=',False)]}"/>
-                            </group>
-                			<group>
-                				<field name="tahun_ajaran_id"/>
-			                    <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
-			                    <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
-                                <field name="kelas_id"/>
                 			</group>
                         </group>
                         <group>    
-                            <group>   
+                            <group> 
+                                <field name="semester_id"/>  
                                 <field name="ruangan_id"/>     
-                                <field name="hari" placeholder="-- pilih hari --"/>
+                            </group>
+                            <group>  
+                                <field name="hari" placeholder="-- pilih hari --"/>                                
                                 <field name="sesi"/> 
                                 <label for="hours_from" string="Waktu"/> 
                                 <div>  
                                     <field name="hours_from" widget="float_time" nolabel="1" class="oe_inline" /><label string="-" class="oe_inline"/>
                                     <field name="hours_to" widget="float_time" nolabel="1" class="oe_inline" />
-                                </div>                                                                                           
-                            </group>
-                            <group>                                  
-                                <field name="mata_kuliah_id"/>  
-                                <field name="semester_id"/>                                                          
+                                </div>                                                                                            
                             </group>
                             <group>
                                 <field name="is_active"/>

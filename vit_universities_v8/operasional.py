@@ -553,7 +553,6 @@ class operasional_krs (osv.Model):
 		dpt = cr.fetchall()
 		
 		total_mk_ids = map(lambda x: x[1], dpt)
-		#import pdb;pdb.set_trace()
 		#filter matakuliah yg benar-benar belum di tempuh
 		mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
 
@@ -578,18 +577,42 @@ class krs_detail (osv.Model):
 	def _get_nilai_akhir(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
 			context = {}
-		
+		#import pdb;pdb.set_trace()
 		nil_obj = self.pool.get('master.nilai')
-		
+		absen_obj = self.pool.get('absensi')
+		presentase_absen 	= 0.1
+		presentase_tugas 	= 0.2
+		presentase_uts 		= 0.3
+		presentase_uas 		= 0.4
 		result = {}
 		for nil in self.browse(cr,uid,ids,context=context):
+			tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
+			fakultas 		= nil.krs_id.fakultas_id.id
+			prodi 	 		= nil.krs_id.prodi_id.id
+			semester 		= nil.krs_id.semester_id.id
+			matakuliah 		= nil.mata_kuliah_id.id
+			kelas 			= nil.krs_id.kelas_id.id 
+			setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+														('fakultas_id','=',fakultas),
+														('prodi_id','=',prodi),
+														('semester_id','=',semester),
+														('mata_kuliah_id','=',matakuliah),
+														('kelas_id','=',kelas)])
+			if setting_dosen:
+				sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
+				if (sett.absensi + sett.tugas + sett.uts + sett.uas) == 100 :
+					presentase_absen 	= sett.absensi/100
+					presentase_tugas 	= sett.tugas/100
+					presentase_uts 		= sett.uts/100
+					presentase_uas 		= sett.uas/100			
+
 			hadir 			= nil.hadir # 10%
 			nilai_kahadiran = (hadir/12)*100
 			tugas 			= nil.tugas # 20%
 			Ulangan 		= nil.ulangan # belum dihitung
 			uts 			= nil.uts # 30%
 			uas 			= nil.uas # 40%	
-			tot 			= (nilai_kahadiran*0.1)+(tugas*0.2)+(uts*0.3)+(uas*0.4)
+			tot 			= (nilai_kahadiran*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)
 			#tot = (tugas+ulangan+uts+uas)/4
 			nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
 			if nil_src == []:

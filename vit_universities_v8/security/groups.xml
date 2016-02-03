@@ -14,6 +14,11 @@
 			<field name="name">External BAAK</field>
         </record>
 
+		<record id="group_univ_pmb_baak" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="name">PMB BAAK</field>
+        </record>
+
 		<record id="group_univ_staff_baak" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
 			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak')),(4, ref('base.group_user'))]"/>
@@ -93,6 +98,12 @@
 			<field name="category_id" ref="module_category_academic"/>
 			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
 			<field name="name">Kepala Laboratorium</field>
+        </record>
+
+		<record id="group_univ_dosen" model="res.groups">
+			<field name="category_id" ref="module_category_academic"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="name">Dosen</field>
         </record>
 
     <record id="jadwal_dosen_rule" model="ir.rule">

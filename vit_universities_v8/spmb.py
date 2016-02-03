@@ -197,13 +197,12 @@ class spmb_mahasiswa(osv.Model):
 			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 
 			# sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and jurusan_id=%s and tahun_ajaran_id=%s" % (
-			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and prodi_id=%s and tahun_ajaran_id=%s" % (
+			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and prodi_id=%s and tahun_ajaran_id=%s and status_mahasiswa='Mahasiswa' " % (
 				p.jenis_pendaftaran_id.id, 
 				my_form.prodi_id.id, 
-				# my_form.jurusan_id.id, 
 				my_form.tahun_ajaran_id.id)
 			cr.execute(sql)
-			# import pdb; pdb.set_trace()
+			#import pdb; pdb.set_trace()
 			hasil = cr.fetchone()
 			if hasil and hasil[0] != None:
 				se = "%03d" % (hasil[0] + 1)
@@ -218,6 +217,7 @@ class spmb_mahasiswa(osv.Model):
 				'user_id':uid,
 				'is_beasiswa':is_bea},
 				context=context)
+			cr.commit()
 			#create data calon yang lulus tersebut ke tabel res.partner.calon.mhs agar ada history terpisah
 			calon_obj.create(cr,uid,{'reg'				:p.reg,
 									'name'				:p.name,

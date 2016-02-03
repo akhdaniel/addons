@@ -87,8 +87,6 @@
             </field>
         </record>
 
-
-
         <!--sequance-->
         <record forcecreate="1" id="seq_type_kurikulum" model="ir.sequence.type">
             <field name="name">Kurikulum</field>
