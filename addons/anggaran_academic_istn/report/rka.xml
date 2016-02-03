@@ -140,6 +140,7 @@
                     </table>
 
                     <div class="oe_structure"/>
+                    <p style="page-break-after:always;">   </p>
                     <h2>Pemasaran</h2>
 
                     <table class="table table-condensed">
@@ -232,8 +233,8 @@
 
 
                     <div class="oe_structure"/>
+                    <p style="page-break-after:always;">   </p>
                     <h2>Investasi</h2>
-
                     <table class="table table-condensed">
                         <thead>
                             <tr>
@@ -325,8 +326,8 @@
 
 
                     <div class="oe_structure"/>
+                    <p style="page-break-after:always;">   </p>                    
                     <h2>Overhead</h2>
-
                     <table class="table table-condensed">
                         <thead>
                             <tr>
