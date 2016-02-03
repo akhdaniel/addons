@@ -5,6 +5,7 @@
 		    <field name="model">anggaran.kebijakan</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list kebijakan" colors="blue:type=='kebijakan'">
+		            <field name="category_id" invisible="True"/>
 		            <field name="code"/>
 		            <field name="name"/>
 		            <field name="tridharma_id"/>
@@ -18,12 +19,21 @@
 		    <field name="model">anggaran.kebijakan</field>
 		    <field name="arch" type="xml">
 		        <search string="Search Kebijakan">
+		            <field name="category_id"/>
 		            <field name="code"/>
 		            <field name="name"/>
 		            <field name="tridharma_id"/>
+
+		            <group expand="1" string="Group By...">
+		                <filter string="Category" icon="terp-personal" 
+		                    domain="[]" 
+		                	 context="{'group_by':'category_id'}"/>
+		            </group>
 		        </search>
 		    </field>
 		</record>
+
+
 
 
 		<!-- ini definisi form kebijakan -->
@@ -54,6 +64,7 @@
 				            </group>
 				            <group>
 				                <field name="tridharma_id"/>         
+				                <field name="category_id"/>         
 				            </group>
 				        </group>
 

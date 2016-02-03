@@ -1,5 +1,12 @@
 <openerp>
 	<data>
+		<!-- action list kategori kebijakan -->
+		<record id="action_kategori_kebijakan_list" model="ir.actions.act_window">
+			<field name="name">List Kategori Kebijakan</field>
+			<field name="res_model">anggaran.category</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
 		<!-- action list kebijakan -->
 		<record id="action_kebijakan_list" model="ir.actions.act_window">
 			<field name="name">List Kebijakan dan Program</field>
@@ -78,6 +85,7 @@
 			<field name="res_model">anggaran.mata_anggaran_kegiatan</field>
 			<field name="view_mode">tree,form</field>
 			<field name="context">{
+				'search_default_group_category': 1,
 				'search_default_group_kebijakan': 1,
 				'search_default_group_program': 1,
 				'search_default_group_kegiatan': 1,
@@ -180,6 +188,13 @@
 			 action="action_kebijakan_list"
 			 name="Kebijakan"
 			 sequence="10"
+			 parent="menu_anggaran_master"/>
+
+		<!-- menu_kategory_kebijakan -->
+		<menuitem id="menu_kategori_kebijakan"
+			 action="action_kategori_kebijakan_list"
+			 name="Kategori Kebijakan"
+			 sequence="5"
 			 parent="menu_anggaran_master"/>
 
 		<!-- menu_program -->

@@ -12,13 +12,16 @@ class mata_anggaran_kegiatan(osv.osv):
 	_name = "anggaran.mata_anggaran_kegiatan"
 	_description = 'mata anggaran kegiatan'
 	_columns = {
-		'name'				:fields.char(_('Nama'), size=64, required=False, readonly=False),
-		'code'				:fields.char(_('Kode'), size=64, required=False, readonly=False),
-		'kebijakan_id'	   :fields.many2one('anggaran.kebijakan', _('Kebijakan'),  required=True,),
-		'program_id'	   :fields.many2one('anggaran.program', _('Program'),  required=True,),
-		'kegiatan_id' 		:fields.many2one('anggaran.kegiatan', _('Kegiatan'),  required=True,),
-		'unit_id' 			:fields.many2one('anggaran.unit', _('Unit Kerja'),  required=True,),
-		'cost_type_id'		:fields.many2one('anggaran.cost_type', _('Cost type') ,  required=True,),
+		'name'				: fields.char(_('Nama'), size=64, required=False, readonly=False),
+		'code'				: fields.char(_('Kode'), size=64, required=False, readonly=False),
+		'kebijakan_id'	   	: fields.many2one('anggaran.kebijakan', _('Kebijakan'),  required=True,),
+		'category_id'  		: fields.related('kebijakan_id' , 'category_id', type="many2one", 
+			relation="anggaran.category", string=_("Kategori Kebijakan"), store=True),
+
+		'program_id'	   	: fields.many2one('anggaran.program', _('Program'),  required=True,),
+		'kegiatan_id' 		: fields.many2one('anggaran.kegiatan', _('Kegiatan'),  required=True,),
+		'unit_id' 			: fields.many2one('anggaran.unit', _('Unit Kerja'),  required=True,),
+		'cost_type_id'		: fields.many2one('anggaran.cost_type', _('Cost type') ,  required=True,),
 		'coa_id'   			: fields.many2one('account.account', _('COA') )
 	}
 
