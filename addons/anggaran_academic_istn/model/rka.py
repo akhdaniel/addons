@@ -75,8 +75,18 @@ class rka(osv.osv):
 		'sisa'		 		: fields.function(_fsisa, type='float', string="Sisa"),
 		'definitif'			: fields.float("Definitif"),
 
-		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id',
-								_('Rincian Kegiatan'), ondelete="cascade"),
+		'rka_kegiatan_ids'  : fields.one2many('anggaran.rka_kegiatan','rka_id', 
+								_('Pendidikan'), ondelete="cascade", domain=[('category_id','ilike','PENDIDIKAN')]),
+
+		'rka_kegiatan_ids2'  : fields.one2many('anggaran.rka_kegiatan','rka_id', 
+								_('Pemasaran'), ondelete="cascade", domain=[('category_id','ilike','PEMASARAN')]),
+
+		'rka_kegiatan_ids3'  : fields.one2many('anggaran.rka_kegiatan','rka_id', 
+								_('Investasi'), ondelete="cascade", domain=[('category_id','ilike','INVESTASI')]),
+
+		'rka_kegiatan_ids4'  : fields.one2many('anggaran.rka_kegiatan','rka_id', 
+								_('Overhead'), ondelete="cascade", domain=[('category_id','ilike','OVERHEAD')]),
+
 		'state'			 	: fields.selection(RKA_STATES,'Status',readonly=True,required=True),
 		'note'		 		: fields.text(_('Note')),	
 		'mak_terisi'		: fields.boolean('MAK Terisi')	
@@ -301,6 +311,8 @@ class rka_kegiatan(osv.osv):
 	_columns 	= {
 		'rka_id'			: fields.many2one('anggaran.rka', 'RKA'),
 		'kebijakan_id'	  : fields.many2one('anggaran.kebijakan', _('Kebijakan')),
+		'category_id'  : fields.related('kebijakan_id' , 'category_id', type="many2one", 
+			relation="anggaran.category", string=_("Kategori Kebijakan"), store=True),
 		'program_id'		: fields.many2one('anggaran.program', _('Program')),
 		'kegiatan_id'	   : fields.many2one('anggaran.kegiatan', _('Kegiatan')),
 
