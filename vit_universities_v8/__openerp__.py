@@ -12,7 +12,7 @@
 Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standar perguruan tinggi yang ada di Indonesia (Odoo v8)
 """,
     'installable':True,
-    'data': ['users.xml',
+    'data': [#'users.xml',
 		'security/groups.xml',
             'security/ir.model.access.csv',
             'jadwal.xml',
