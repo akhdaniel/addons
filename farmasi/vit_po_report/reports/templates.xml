@@ -62,12 +62,12 @@
                 <table class="table table-bordered" style="border: 1px solid #bbb;font-family: Tahoma;font-size: 14px;">
                     <thead>
                         <tr>
-                            <th><strong>Description</strong></th>
-                            <th><strong>Taxes</strong></th>
-                            <th class="text-center"><strong>Date Req.</strong></th>
-                            <th class="text-right"><strong>Qty</strong></th>
-                            <th class="text-right"><strong>Unit Price</strong></th>
-                            <th class="text-right"><strong>Net Price</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Description</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Taxes</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-center"><strong>Date Req.</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Qty</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Unit Price</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Net Price</strong></th>
                         </tr>
                     </thead>
                     <tbody>
