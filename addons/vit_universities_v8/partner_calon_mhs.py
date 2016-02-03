@@ -36,6 +36,7 @@ class res_partner_calon_mhs (osv.osv):
 		'is_beasiswa' 		:fields.boolean('Penerima Beasiswa',readonly=True),
 		'user_id'			:fields.many2one('res.users','User',readonly=True),
 		'date_move'			:fields.date('Date Move',readonly=True),
+		'state'				:fields.selection([('lulus','Lulus'),('gagal','gagal')],'Status',readonly=True),
 				}
 
 res_partner_calon_mhs()
@@ -56,6 +57,9 @@ class res_partner(osv.osv):
 
 	def actual_action_move_calon(self, cr, uid, ids, context=None):
 		calon_obj = self.pool.get('res.partner.calon.mhs')
+		konv_obj = self.pool.get('akademik.konversi')
+		inv_obj = self.pool.get('account.invoice')
+		usr_obj = self.pool.get('res.users')
 		i = len(ids)
 		for res in self.browse(cr,uid, ids, context):
 			if res.status_mahasiswa != 'calon':
@@ -66,7 +70,6 @@ class res_partner(osv.osv):
 									'tempat_lahir'		:res.tempat_lahir or False,
 									'tanggal_lahir'		:res.tanggal_lahir or False,                  
 									'fakultas_id'		:res.fakultas_id.id,
-									# 'jurusan_id'		:res.jurusan_id.id,
 									'prodi_id'			:res.prodi_id.id,
 									'tahun_ajaran_id'	:res.tahun_ajaran_id.id,                
 									'tgl_lulus'			:res.tgl_lulus or False,
@@ -80,10 +83,20 @@ class res_partner(osv.osv):
 									'nilai_beasiswa'	:res.nilai_beasiswa or False,
 									'is_beasiswa' 		:res.is_beasiswa,
 									'date_move'			:time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
-									'user_id'			:uid},
+									'user_id'			:uid,
+									'state'				:'gagal'},
 									context=context)
-			self.unlink(cr,uid,[res.id],context=context)									
-
+			# karena terlalu banyak relasi jadi ga bisa sembarangan di hapus (relasi ke konversi, keuangan, user, dll)
+			mhs_konv_exist = konv_obj.search(cr,uid,[('partner_id','=',res.id)],context=context)
+			if mhs_konv_exist :
+				raise osv.except_osv(_('Error !'),_("Data dengan nama %s , tidak bisa di move karena ada proses di konversi!")%(res.name) )
+			mhs_inv_exist = inv_obj.search(cr,uid,[('partner_id','=',res.id)],context=context)
+			if mhs_inv_exist :
+				raise osv.except_osv(_('Error !'),_("Data dengan nama %s , tidak bisa di move karena ada proses di Keuangan/Invoice!")%(res.name) )
+			# karena terlalu banyak relasi jadi ga bisa sembarangan di hapus (relasi ke konversi, keuangan, user, dll)
+			# self.unlink(cr,uid,[res.id],context=context)		
+			self.write(cr,uid,res.id,{'active':False},context=context)							
+			cr.commit()
 		view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_universities_v8', 'partner_tree_view3')
 		view_id = view_ref and view_ref[1] or False,	
 		return {

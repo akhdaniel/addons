@@ -1,5 +1,5 @@
 <openerp>
-    <data>
+	<data>
 
         <record model="ir.ui.view" id="cuti_tree_view">
             <field name="name">cuti.kuliah</field>
@@ -36,25 +36,25 @@
                         <button name='done' string='Active' states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                     
-                    <sheet>
-                        <group>
-                            <group>
+                	<sheet>
+                		<group>
+                			<group>
                                 <field name="name" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <!-- <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, jurusan_id, kelas_id, partner_id)"/>  -->
-                                <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id)" attrs="{'readonly': [('state','!=','draft')]}"/> 
-                                <field name="kelas_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id, kelas_id, partner_id)" attrs="{'readonly': [('state','!=','draft')]}"/> 
+			                    <field name="kelas_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 <label for="from_semester_id" string="Semester" /> 
                                 <div>  
                                     <field name="from_semester_id" widget="selection" nolabel="1" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/><label string=" s/d " class="oe_inline"/>
                                     <field name="to_semester_id" widget="selection" nolabel="1" class="oe_inline" attrs="{'readonly': [('state','!=','draft')]}"/>
                                 </div>                                 
                             </group>
-                            <group>
-                                <field name="tahun_ajaran_id" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                <field name="fakultas_id" domain="[('is_internal','=',True)]" attrs="{'readonly': [('state','!=','draft')]}"/>
-                                <!-- <field name="jurusan_id"/> -->
-                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]" attrs="{'readonly': [('state','!=','draft')]}"/>                         
-                            </group>
+                			<group>
+                				<field name="tahun_ajaran_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+			                    <field name="fakultas_id" domain="[('is_internal','=',True)]" attrs="{'readonly': [('state','!=','draft')]}"/>
+			                    <!-- <field name="jurusan_id"/> -->
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]" attrs="{'readonly': [('state','!=','draft')]}"/>           				
+                			</group>
                         </group>
                          <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..." attrs="{'readonly': [('state','!=','draft')]}"/>
                         <group>    
@@ -66,7 +66,7 @@
                                 <field name="user_id"/>                                                          
                             </group>
                         </group>                         
-                    </sheet>    
+	                </sheet>    
                 </form>
             </field>
         </record>
@@ -137,5 +137,5 @@
             <field name="padding">5</field>
         </record> 
 
-    </data>
-</openerp>  
+	</data>
+</openerp>	

@@ -77,7 +77,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data beasiswa Prodi mahasiswa.</p><p>disini belum ada data beasiswa prodi !</p></field>
         </record>
 
-        <menuitem id="master_beasiswa_prodi" name="Beasiswa" parent="master_data" action="beasiswa_prodi_list_action" sequence="110"/>                                 
+        <menuitem id="master_beasiswa_prodi" name="Beasiswa" parent="vit_universities_v8.akademik_accounting" sequence="20" action="beasiswa_prodi_list_action"/>                                 
 
 	</data>
 </openerp>

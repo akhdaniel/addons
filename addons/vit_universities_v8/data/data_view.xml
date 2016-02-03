@@ -2,41 +2,60 @@
     <data>
 
 
-	<!-- Master Nilai -->
-<!-- 	    <record model="master.nilai" id="master_nilai" >
-	    	<field name="name">Master Nilai</field>
-	    </record> -->
-
     <!-- Master Nilai -->
 	    <record model="master.nilai" id="nilai_a" >
 	    	<field name="name">A</field>
 	    	<field name="bobot">4</field>
-	    	<field name="min">86</field>
+	    	<field name="min">80</field>
 	    	<field name="max">100</field>
+	    </record>
+	    <record model="master.nilai" id="nilai_a-" >
+	    	<field name="name">A-</field>
+	    	<field name="bobot">3.7</field>
+	    	<field name="min">75</field>
+	    	<field name="max">79.99</field>
+	    </record>
+	    <record model="master.nilai" id="nilai_b+" >
+	    	<field name="name">B+</field>
+	    	<field name="bobot">3.3</field>
+	    	<field name="min">72</field>
+	    	<field name="max">74.99</field>
 	    </record>
 	    <record model="master.nilai" id="nilai_b" >
 	    	<field name="name">B</field>
 	    	<field name="bobot">3</field>
-	    	<field name="min">70</field>
-	    	<field name="max">85</field>
+	    	<field name="min">68</field>
+	    	<field name="max">71.99</field>
+	    </record>	
+	    <record model="master.nilai" id="nilai_b-" >
+	    	<field name="name">B-</field>
+	    	<field name="bobot">2.7</field>
+	    	<field name="min">65</field>
+	    	<field name="max">67.99</field>
+	    </record>
+	    <record model="master.nilai" id="nilai_c+" >
+	    	<field name="name">C+</field>
+	    	<field name="bobot">2.3</field>
+	    	<field name="min">62</field>
+	    	<field name="max">64.99</field>
 	    </record>
 	    <record model="master.nilai" id="nilai_c" >
 	    	<field name="name">C</field>
 	    	<field name="bobot">2</field>
 	    	<field name="min">55</field>
-	    	<field name="max">69</field>
-	    </record>
+	    	<field name="max">61.99</field>
+	    </record>	
 	    <record model="master.nilai" id="nilai_d" >
 	    	<field name="name">D</field>
 	    	<field name="bobot">1</field>
-	    	<field name="min">40</field>
-	    	<field name="max">54</field>
-	    </record>	
+	    	<field name="min">41</field>
+	    	<field name="max">54.99</field>
+	    </record>
 	    <record model="master.nilai" id="nilai_e" >
 	    	<field name="name">E</field>
 	    	<field name="bobot">0</field>
 	    	<field name="min">0</field>
-	    	<field name="max">39</field>
+	    	<field name="max">40.99</field>
 	    </record>
 
 <!-- Master Yudisium -->

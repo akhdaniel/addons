@@ -82,7 +82,7 @@ class master_kelas (osv.Model):
 			('fakultas_id','=',fakultas_id),
 			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
-			('kelas_id','=',False)], context=context)
+			('kelas_id','=',False)], order="npm asc")
 
 		#import pdb;pdb.set_trace()
 		res = []
@@ -118,7 +118,7 @@ class master_kelas (osv.Model):
 			('fakultas_id','=',fakultas_id),
 			# ('jurusan_id','=',jurusan_id),
 			('prodi_id','=',prodi_id),
-			('kelas_id','=',False)], context=context)
+			('kelas_id','=',False)], order="npm asc")
 		res = []
 		x=0
 		for peserta in par_ids:

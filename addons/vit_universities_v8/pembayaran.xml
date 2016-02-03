@@ -16,15 +16,15 @@
             </field>
         </record>
         
-        <record id="wisuda_pembayaran_view" model="ir.ui.view">
+        <record id="master_pembayaran_view" model="ir.ui.view">
             <field name="name">master.pembayaran</field>
             <field name="model">master.pembayaran</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Wisuda" version="7.0">
+                <form string="Pembayaran" version="7.0">
                 	<header>
-                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
-                        <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>               		                		
+                		<button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="account.group_account_manager"/>
+                        <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object' groups="account.group_account_manager"/>               		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>
                 	</header>
                 	<sheet>
@@ -60,6 +60,67 @@
                 </form>
             </field>
         </record>
+
+
+        <record model="ir.ui.view" id="master_pembayaran_pendaftaran_tree_view">
+            <field name="name">master.pembayaran.pendaftaran</field>
+            <field name="model">master.pembayaran.pendaftaran</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Master Pembayaran Pendaftaran" colors="blue:state == 'confirm';grey:state == 'draft'">
+                    <field name="name"/>
+                    <field name="tahun_ajaran_id"/>
+                    <field name="fakultas_id"/>
+                    <field name="prodi_id"/>
+                    <field name="state"/>                    
+                </tree>
+            </field>
+        </record>
+        
+        <record id="master_pembayaran_pendaftaran_view" model="ir.ui.view">
+            <field name="name">master.pembayaran.pendaftaran</field>
+            <field name="model">master.pembayaran.pendaftaran</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Pembayaran Pendaftaran" version="7.0">
+                    <header>
+                        <button name='confirm' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="account.group_account_manager"/>
+                        <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object' groups="account.group_account_manager"/>                                               
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>          
+                             </group>
+                             <group>  
+                                <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('is_internal','=',True)]"/>
+                                <field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                            </group>    
+                        </group> 
+                        <notebook colspan="4">
+                            <page string="Daftar Pembayaran">
+                                <field view_mode="tree,form" name="detail_product_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree string="Daftar Pembayaran" editable="bottom">
+                                        <field name="pembayaran_id" invisible="1"/>     
+                                        <field name="product_id"/> 
+                                        <field name="public_price"/>
+                                    </tree>
+                                </field>                                
+                            </page>
+                        </notebook>
+                    </sheet>    
+                </form>
+            </field>
+        </record>
+
+
+        <menuitem id="akademik_accounting" name="Akademik" parent="account.menu_finance_configuration" sequence="99"/>
+            <menuitem id="pembayaran" name="Pembayaran" parent="akademik_accounting" sequence="10"/>            
+                <menuitem id="master_pembayaran" name="Template Pembayaran Kuliah" parent="pembayaran" action="template_pembayaran_list_action" sequence="10"/>
+                <menuitem id="master_pembayaran_pendaftaran" name="Template Pembayaran Pendaftaran" parent="pembayaran" action="template_pembayaran_pendaftaran_list_action" sequence="20"/>
+                <menuitem id="master_product" name="Jenis Pembayaran" parent="pembayaran" action="jenis_pembayaran_list_action" sequence="30"/>
 
 	</data>
 </openerp>			
