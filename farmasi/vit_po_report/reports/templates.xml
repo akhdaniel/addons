@@ -109,7 +109,7 @@
                     <div class="col-xs-7">
                         <table class='table'  style="border: 0;font-family: Tahoma;font-size: 14px;">
                           <tr>
-                            <th class="text-center" height="60" scope="col" style="border-top: 0;">
+                            <th class="text-center" height="55" scope="col" style="border-top: 0;">
                                 <p>Supplier, </p>
                             </th>
                             
@@ -172,7 +172,7 @@
         <field name="margin_left">0</field>
         <field name="margin_right">0</field>
         <field name="header_line" eval="False" />
-        <field name="header_spacing">1</field>
+        <field name="header_spacing">0</field>
         <field name="dpi">300</field>
     </record>
 
