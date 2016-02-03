@@ -137,6 +137,7 @@ class rka(osv.osv):
 		prg_obj	= self.pool.get('anggaran.program')
 		keg_obj	= self.pool.get('anggaran.kegiatan')
 		mak_obj	= self.pool.get('anggaran.mata_anggaran_kegiatan')
+		rka_keg_obj	= self.pool.get('anggaran.rka_kegiatan')
 
 		rka_kegiatan_ids	= []
 
@@ -157,16 +158,20 @@ class rka(osv.osv):
 					'mak_id'			: mak.id,
 				}) )
 
-			rka_kegiatan_ids.append( (0,0,{ 
-				'kebijakan_id' 		: keg.kebijakan_id.id,
-				'program_id' 		: keg.program_id.id,
-				'kegiatan_id' 		: keg.id,
-				'indikator' 		: '',
-				'target_capaian' 	: 0.0,
-				'target_capaian_uom': False,
-				'anggaran' 			: 0.0,
-				'rka_coa_ids'		: rka_coa_ids
-			}) )
+			#kalau sudah ada record rka_kegiatan_ids utk kegiatan ini, tidak usah diinsert
+
+			exist = rka_keg_obj.search(cr, uid, [('rka_id','=', rka.id),('kegiatan_id','=',keg.id)], context=context)
+			if not exist:
+				rka_kegiatan_ids.append( (0,0,{ 
+					'kebijakan_id' 		: keg.kebijakan_id.id,
+					'program_id' 		: keg.program_id.id,
+					'kegiatan_id' 		: keg.id,
+					'indikator' 		: '',
+					'target_capaian' 	: 0.0,
+					'target_capaian_uom': False,
+					'anggaran' 			: 0.0,
+					'rka_coa_ids'		: rka_coa_ids
+				}) )
 		
 		data = {
 			'alokasi'			: 0.0,
