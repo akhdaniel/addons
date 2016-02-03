@@ -12,7 +12,8 @@
 Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standar perguruan tinggi yang ada di Indonesia (Odoo v8)
 """,
     'installable':True,
-    'data': ['security/groups.xml',
+    'data': ['users.xml',
+		'security/groups.xml',
             'security/ir.model.access.csv',
             'jadwal.xml',
             'akademik.xml',
@@ -36,7 +37,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'company.xml',
             'imports.xml',
             'beasiswa_prodi.xml',
-            'users.xml',
+            
             # 'data/product.product.csv',
                 ],
 }
