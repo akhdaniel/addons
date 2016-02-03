@@ -7,12 +7,21 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+
+class anggaran_category(osv.osv):
+	_name 		= "anggaran.category"
+	_columns 	= {
+		'code'	: fields.char('Kode'),
+		'name'	: fields.char('Nama'),
+	}
+
 class kebijakan(osv.osv):
 	_name 		= "anggaran.kebijakan"
 	_columns 	= {
 		'name'	  : fields.text(_('Nama'), required=True),
 		'code'	  : fields.char(_('Kode'), required=True),
 		'tridharma_id' : fields.many2one('anggaran.tridharma', _('Tri Dharma PT')),
+		'category_id' : fields.many2one('anggaran.category', _('Kategori')),
 		'program_ids'	: fields.one2many('anggaran.program','kebijakan_id','Programs', ondelete="cascade")
 	}
 	

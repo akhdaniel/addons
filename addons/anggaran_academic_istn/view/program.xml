@@ -8,6 +8,7 @@
 		            <field name="code"/>
 		            <field name="name"/>
 		            <field name="kebijakan_id" invisible="True"/>
+		            <field name="category_id" invisible="True"/>
 		        </tree>    
 		    </field>
 		</record>
@@ -21,7 +22,10 @@
 		            <field name="code"/>
 		            <field name="name"/>
 		            <group expand="1" string="Group By...">
-		                <filter string="Induk" icon="terp-personal" name="group_kebijakan"
+		                <filter string="Kategori" icon="terp-personal" name="group_category"
+		                    domain="[]" context="{'group_by':'category_id'}"/>
+
+		                <filter string="Kebijakan" icon="terp-personal" name="group_kebijakan"
 		                    domain="[]" context="{'group_by':'kebijakan_id'}"/>
 		            </group>
 		        </search>

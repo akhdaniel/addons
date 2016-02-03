@@ -11,6 +11,8 @@ class kegiatan(osv.osv):
 	_name 		= "anggaran.kegiatan"
 	_columns 	= {
 		'program_id' 	: fields.many2one('anggaran.program', _('Program') ),
+		'category_id'  : fields.related('program_id', 'kebijakan_id' , 'category_id', type="many2one", 
+			relation="anggaran.category", string=_("Kategori Kebijakan"), store=True),
 		'kebijakan_id'  : fields.related('program_id', 'kebijakan_id' , type="many2one", 
 			relation="anggaran.kebijakan", string=_("Kebijakan"), store=True),
 		'code'  		: fields.char(_('Kode'),required=True),

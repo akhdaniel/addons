@@ -5,6 +5,7 @@
 		    <field name="model">anggaran.kegiatan</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list kegiatan" >
+		            <field name="category_id" invisible="True"/>
 		            <field name="kebijakan_id" invisible="True"/>
 		            <field name="program_id"  invisible="True"/>
 		            <field name="code"/>
@@ -24,6 +25,8 @@
 		            <field name="program_id"/>
 		            <field name="kebijakan_id"/>
 		            <group expand="1" string="Group By...">
+		                <filter string="Kategori Kebijakan" icon="terp-personal" name="group_category"
+		                    domain="[]" context="{'group_by':'category_id'}"/>
 		                <filter string="Kebijakan" icon="terp-personal" name="group_kebijakan"
 		                    domain="[]" context="{'group_by':'kebijakan_id'}"/>
 		                <filter string="Program" icon="terp-personal" name="group_program"

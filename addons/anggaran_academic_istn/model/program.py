@@ -13,6 +13,8 @@ class program(osv.osv):
 		'name'      : fields.text('Nama'),
 		'code'      : fields.char('Kode'),
 		'kebijakan_id' : fields.many2one('anggaran.kebijakan', 'Kebijakan', required=True),
+		'category_id'  : fields.related('kebijakan_id' , 'category_id', type="many2one", 
+			relation="anggaran.category", string=_("Kategori Kebijakan"), store=True),
 		'kegiatan_ids' : fields.one2many('anggaran.kegiatan','program_id','Kegiatans', ondelete="cascade")
 	}
 
