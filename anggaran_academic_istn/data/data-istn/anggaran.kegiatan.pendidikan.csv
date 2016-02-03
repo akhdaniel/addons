@@ -1,100 +1,99 @@
-"Kode Program","Program","Kode",,"Nama","COA"
-1.01,"PERSIAPAN PERKULIAHAN","1.01.01",1,"Rapat koordinasi dgn dosen",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.02",2,"Ketersediaan rancangan pembelajaran",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.03",3,"Ketersediaan dosen",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.04",4,"Kualifikasi dosen",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.05",5,"Ketersediaan fasilitas kuliah",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.06",6,"Mata kuliah yg ditawarkan dan jumlah kelas",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.07",7,"Jadual kuliah",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.08",8,"Pengisian KRS oleh mhs",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.09",9,"Daftar peserta kelas & presensi/mhs/kuliah",
-1.01,"PERSIAPAN PERKULIAHAN","1.01.10",10,"Daftar hadir dosen/mata kuliah",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.01",1,"Lembar penyetaraan",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.02",2,"Mahasiswa pindahan sudah mengisi KRS pada minggu ke satu",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.03",3,"Ketersediaan rancangan praktikum",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.04",4,"Jadwal praktikum",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.05",5,"Modul / alat praktikum",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.06",6,"Bahan habis pakai",
-1.02,"MAHASISWA PINDAHAN / MELANJUTKAN","1.02.07",7,"Dana praktikum",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.01",1,"Ketersediaan rancangan praktikum",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.02",2,"Jadual praktikum",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.03",3,"Modul/alat praktikum",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.04",4,"Bahan habis pakai",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.05",5,"Dana praktikum",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.06",6,"Daftar peserta praktikum",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.07",7,"Asisten/instruktur",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.08",8,"Penugasan asisten/instruktur",
-1.03,"PERSIAPAN PRAKTIKUM","1.03.09",9,"Nilai akhir praktikum",
-1.04,"PELAKSANAAN PERKULIAHAN","1.04.01",1,"Jumlah kehadiran dosen",
-1.04,"PELAKSANAAN PERKULIAHAN","1.04.02",2,"Presensi mhs",
-1.04,"PELAKSANAAN PERKULIAHAN","1.04.03",3,"Mahasiswa pindahan/melanjutkan",
-1.05,"PELAKSANAAN PRAKTIKUM","1.05.01",1,"Jumlah kehadiran asisten/instruktur",
-1.05,"PELAKSANAAN PRAKTIKUM","1.05.02",2,"Presensi mhs peserta praktikum",
-1.06,"UJIAN TENGAH SEMESTER","1.06.01",1,"Tersediaan sarana & prasarana ujian",
-1.06,"UJIAN TENGAH SEMESTER","1.06.02",2,"Jadual ujian",
-1.06,"UJIAN TENGAH SEMESTER","1.06.03",3,"KPU",
-1.06,"UJIAN TENGAH SEMESTER","1.06.04",4,"Naskah ujian & lembar jawab",
-1.06,"UJIAN TENGAH SEMESTER","1.06.05",5,"Daftar hadir & daftar nilai peserta ujian",
-1.06,"UJIAN TENGAH SEMESTER","1.06.06",6,"Nilai akhir",
-1.06,"UJIAN TENGAH SEMESTER","1.06.07",7,"Vakasi ujian",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.01",1,"Tersediaan sarana & prasarana ujian",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.02",2,"Jadual ujian",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.03",3,"KPU",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.04",4,"Naskah ujian & lembar jawab",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.05",5,"Daftar hadir & daftar nilai peserta ujian",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.06",6,"Nilai akhir",
-1.07,"UJIAN & NILAI AKHIR SEMESTER","1.07.07",7,"Vakasi ujian",
-1.08,"PRAKTEK KERJA","1.08.01",1,"Tersedia perush tempat mhs praktek",
-1.09,"EVALUASI PRESTASI AKADEMIK","1.09.01",1,"Jumlah IPK/IPS <2",
-1.09,"EVALUASI PRESTASI AKADEMIK","1.09.02",2,"Jumlah IPK/IPS 2,02,5",
-1.09,"EVALUASI PRESTASI AKADEMIK","1.09.03",3,"Jumlah IPK/IPS 2,53,0",
-1.09,"EVALUASI PRESTASI AKADEMIK","1.09.04",4,"Jumlah IPK/IPS 3,04,0",
-1.09,"EVALUASI PRESTASI AKADEMIK","1.09.05",5,"Segmentasi status akademik mhs berdasar perolehan SKS",
-1.1,"PENYELESAIAN SKRIPSI","1.10.01",1,"Ketepatan waktu mulai",
-1.1,"PENYELESAIAN SKRIPSI","1.10.02",2,"Ketepatan waktu selesai",
-1.11,"UJIAN SKRIPSI","1.11.01",1,"Jadual ujian skripsi",
-1.11,"UJIAN SKRIPSI","1.11.02",2,"Kehadiran pembimbing & penguji",
-1.11,"UJIAN SKRIPSI","1.11.03",3,"Jumlah mhs yg lulus",
-2.01,"MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.01",1,"Persiapan draft RIP & study banding",
-2.01,"MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.02",2,"Pengumpulan data dari unit terkait",
-2.01,"MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.03",3,"Rapat pendahuluan SC & OC",
-2.01,"MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.04",4,"Raker penyususnan RIP, Panduan dan SOP",
-2.02,"MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.01",1,"Penyusunan panduan penelitian sesuai panduan Dikti",
-2.02,"MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.02",2,"Rapat koordinasi",
-2.02,"MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.03",3,"Sosialisasi program PP",
-2.02,"MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.04",4,"Penyusunan Company Profile",
-2.03,"MELAKSANAKAN PELATIHAN PEMBUATAN PROPOSAL","2.03.01",1,"Pelatihan pembuatan proposal Penelitian",
-2.03,"MELAKSANAKAN PELATIHAN PEMBUATAN PROPOSAL","2.03.10",10,"Pelatihan jurnal ilmiah sesuai saintech bagi dosen",
-2.04,"MELAKSANAKAN SEMINAR ILMIAH","2.04.01",1,"Seminar IPTEK regulair",
-2.05,"MELAKSANAKAN SEMINAR ILMIAH","2.05.02",2,"Presentasi seminar ilmiah dosen",
-2.04,"MELAKSANAKAN SEMINAR ILMIAH","2.04.03",3,"Seminar dan workshop nasional",
-2.05,"MELAKSANAKAN PENELITIAN INTERNAL","2.05.01",1,"Stimulan penelitian bagi dosen",
-3.01,"MENYUSUN PANDUAN PELAKSANAAN SOSIALISASI PANDUAN DAN PROGRAM","3.01.01",1,"Penyusunan panduan penelitian, pengabdian & kewirausahaan",
-3.01,"MENYUSUN PANDUAN PELAKSANAAN SOSIALISASI PANDUAN DAN PROGRAM","3.01.02",2,"Penyusunan peraturan & silabi pelatihan bagi masyarakat",
-3.02,"MELAKSANAKAN PELATIHAN PEMBUATAN PROPOSAL PENGMAS","3.02.01",1,"Pelatihan pemuatan proposal pengabdian masyarakat",
-3.03,"MELAKSANAKAN PELATIHAN PENULISAN DAN KEWIRAUSAHAAN MAHASISWA","3.03.01",1,"Pelatihan penulisan karya ilmiah bagi mhs",
-3.03,"MELAKSANAKAN PELATIHAN PENULISAN DAN KEWIRAUSAHAAN MAHASISWA","3.03.02",2,"Pelatiahan kewirausahaan mhs",
-3.04,"MELAKSANAKAN PELATIHAN KEWIRAUSAHAAN","3.04.01",1,"Pelatiahan kewirausahaan pemuda karang taruna",
-3.04,"MELAKSANAKAN PELATIHAN KEWIRAUSAHAAN","3.04.02",2,"Pelatiahan kewirausahaan remaja putus sekolah",
-3.05,"MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.01",1,"Kegiatan pengabdian sesuai prodi",
-3.05,"MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.02",2,"Mengadakan seminar dan lokakarya kewirausahaan",
-3.05,"MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.03",3,"Stimulan kewirausahaan",
-3.05,"MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.04",4,"Pengabdian institut/fakultas/prodi",
-4.01,"MELAKSANAKAN USAHA KERJASAMA DENGAN PIHAK LUAR ISTN","4.01.01",1,"Membangun & mengembangkan jejaring via kunjungan ke mitra instritusi, pemerintah, swasta dll",
-4.01,"MELAKSANAKAN USAHA KERJASAMA DENGAN PIHAK LUAR ISTN","4.01.02",2,"Pelaksanaan MOU",
-4.01,"MELAKSANAKAN USAHA KERJASAMA DENGAN PIHAK LUAR ISTN","4.01.03",3,"Carrier Center",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.01",1,"Penerbitan jurnal scientech",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.02",2,"Penerbitan karya pengabdian",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.03",3,"Penerbitan proceeding/ karya unggulan",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.04",4,"Proses akreditasi jurnal scientech",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.05",5,"Proses portal & web karya ilmih",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.06",6,"Pencetakan company profile",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.07",7,"Pameran Iptek open campus",
-5.01,"MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.08",8,"Membangun pusat penerbitan ISTN Press",
-6.01,"MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.01",1,"Penyusunan revisi format monevin kegiatan penelitian, pengmas, dan kewirausahaan",
-6.01,"MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.02",2,"Memantau & pembinaan wirausaha hasil pelatihan",
-6.01,"MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.03",3,"Monevin penelitian & pengab. Masyarakat",
-6.01,"MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.04",4,"Pelaporan-pelaporan",
-7.01,"MELAKSANAKAN PENJAMINAN MUTU PENGELOLAAN MANAJEMEN DAN ADMINISTRASI KEGIATAN LP2M","7.01.01",1,"Pengiriman proposal",
-7.01,"MELAKSANAKAN PENJAMINAN MUTU PENGELOLAAN MANAJEMEN DAN ADMINISTRASI KEGIATAN LP2M","7.01.02",2,"Pembayaran iuran forum",
-7.01,"MELAKSANAKAN PENJAMINAN MUTU PENGELOLAAN MANAJEMEN DAN ADMINISTRASI KEGIATAN LP2M","7.01.03",3,"Representasi ",
+"External ID","Kategori Kebijakan/Nama","Kebijakan/Nama","Program/Nama","Kode","Nama"
+"__export__.anggaran_kegiatan_673","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.02","Ketersediaan rancangan pembelajaran"
+"__export__.anggaran_kegiatan_674","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.03","Ketersediaan dosen"
+"__export__.anggaran_kegiatan_675","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.04","Kualifikasi dosen"
+"__export__.anggaran_kegiatan_676","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.05","Ketersediaan fasilitas kuliah"
+"__export__.anggaran_kegiatan_677","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.06","Mata kuliah yg ditawarkan dan jumlah kelas"
+"__export__.anggaran_kegiatan_678","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.07","Jadual kuliah"
+"__export__.anggaran_kegiatan_679","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.08","Pengisian KRS oleh mhs"
+"__export__.anggaran_kegiatan_680","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.09","Daftar peserta kelas & presensi/mhs/kuliah"
+"__export__.anggaran_kegiatan_681","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PERKULIAHAN","1.01.10","Daftar hadir dosen/mata kuliah"
+"__export__.anggaran_kegiatan_682","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.01","Lembar penyetaraan"
+"__export__.anggaran_kegiatan_683","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.02","Mahasiswa pindahan sudah mengisi KRS pada minggu ke satu"
+"__export__.anggaran_kegiatan_684","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.03","Ketersediaan rancangan praktikum"
+"__export__.anggaran_kegiatan_685","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.04","Jadwal praktikum"
+"__export__.anggaran_kegiatan_686","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.05","Modul / alat praktikum"
+"__export__.anggaran_kegiatan_687","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.06","Bahan habis pakai"
+"__export__.anggaran_kegiatan_688","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","MAHASISWA PINDAHAN / MELANJUTKAN","1.02.07","Dana praktikum"
+"__export__.anggaran_kegiatan_689","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.01","Ketersediaan rancangan praktikum"
+"__export__.anggaran_kegiatan_690","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.02","Jadual praktikum"
+"__export__.anggaran_kegiatan_691","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.03","Modul/alat praktikum"
+"__export__.anggaran_kegiatan_692","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.04","Bahan habis pakai"
+"__export__.anggaran_kegiatan_693","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.05","Dana praktikum"
+"__export__.anggaran_kegiatan_694","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.06","Daftar peserta praktikum"
+"__export__.anggaran_kegiatan_695","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.07","Asisten/instruktur"
+"__export__.anggaran_kegiatan_696","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.08","Penugasan asisten/instruktur"
+"__export__.anggaran_kegiatan_697","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PERSIAPAN PRAKTIKUM","1.03.09","Nilai akhir praktikum"
+"__export__.anggaran_kegiatan_698","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PELAKSANAAN PERKULIAHAN","1.04.01","Jumlah kehadiran dosen"
+"__export__.anggaran_kegiatan_699","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PELAKSANAAN PERKULIAHAN","1.04.02","Presensi mhs"
+"__export__.anggaran_kegiatan_700","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PELAKSANAAN PERKULIAHAN","1.04.03","Mahasiswa pindahan/melanjutkan"
+"__export__.anggaran_kegiatan_701","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PELAKSANAAN PRAKTIKUM","1.05.01","Jumlah kehadiran asisten/instruktur"
+"__export__.anggaran_kegiatan_702","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PELAKSANAAN PRAKTIKUM","1.05.02","Presensi mhs peserta praktikum"
+"__export__.anggaran_kegiatan_703","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.01","Tersediaan sarana & prasarana ujian"
+"__export__.anggaran_kegiatan_704","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.02","Jadual ujian"
+"__export__.anggaran_kegiatan_705","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.03","KPU"
+"__export__.anggaran_kegiatan_706","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.04","Naskah ujian & lembar jawab"
+"__export__.anggaran_kegiatan_707","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.05","Daftar hadir & daftar nilai peserta ujian"
+"__export__.anggaran_kegiatan_708","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.06","Nilai akhir"
+"__export__.anggaran_kegiatan_709","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN TENGAH SEMESTER","1.06.07","Vakasi ujian"
+"__export__.anggaran_kegiatan_710","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.01","Tersediaan sarana & prasarana ujian"
+"__export__.anggaran_kegiatan_711","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.02","Jadual ujian"
+"__export__.anggaran_kegiatan_712","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.03","KPU"
+"__export__.anggaran_kegiatan_713","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.04","Naskah ujian & lembar jawab"
+"__export__.anggaran_kegiatan_714","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.05","Daftar hadir & daftar nilai peserta ujian"
+"__export__.anggaran_kegiatan_715","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.06","Nilai akhir"
+"__export__.anggaran_kegiatan_716","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN & NILAI AKHIR SEMESTER","1.07.07","Vakasi ujian"
+"__export__.anggaran_kegiatan_717","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PRAKTEK KERJA","1.08.01","Tersedia perush tempat mhs praktek"
+"__export__.anggaran_kegiatan_718","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","EVALUASI PRESTASI AKADEMIK","1.09.01","Jumlah IPK/IPS <2"
+"__export__.anggaran_kegiatan_719","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","EVALUASI PRESTASI AKADEMIK","1.09.02","Jumlah IPK/IPS 2,02,5"
+"__export__.anggaran_kegiatan_720","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","EVALUASI PRESTASI AKADEMIK","1.09.03","Jumlah IPK/IPS 2,53,0"
+"__export__.anggaran_kegiatan_721","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","EVALUASI PRESTASI AKADEMIK","1.09.04","Jumlah IPK/IPS 3,04,0"
+"__export__.anggaran_kegiatan_722","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","EVALUASI PRESTASI AKADEMIK","1.09.05","Segmentasi status akademik mhs berdasar perolehan SKS"
+"__export__.anggaran_kegiatan_723","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PENYELESAIAN SKRIPSI","1.10.01","Ketepatan waktu mulai"
+"__export__.anggaran_kegiatan_724","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","PENYELESAIAN SKRIPSI","1.10.02","Ketepatan waktu selesai"
+"__export__.anggaran_kegiatan_725","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN SKRIPSI","1.11.01","Jadual ujian skripsi"
+"__export__.anggaran_kegiatan_726","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN SKRIPSI","1.11.02","Kehadiran pembimbing & penguji"
+"__export__.anggaran_kegiatan_727","PENDIDIKAN","Meningkatkan Kualitas Layanan Proses Pembelajaran ( Pendidikan / Pengajaran )","UJIAN SKRIPSI","1.11.03","Jumlah mhs yg lulus"
+"__export__.anggaran_kegiatan_728","PENDIDIKAN","Penelitian","MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.01","Persiapan draft RIP & study banding"
+"__export__.anggaran_kegiatan_729","PENDIDIKAN","Penelitian","MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.02","Pengumpulan data dari unit terkait"
+"__export__.anggaran_kegiatan_730","PENDIDIKAN","Penelitian","MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.03","Rapat pendahuluan SC & OC"
+"__export__.anggaran_kegiatan_731","PENDIDIKAN","Penelitian","MENYUSUN PENELITIAN, PANDUAN DAN SOP","2.01.04","Raker penyususnan RIP, Panduan dan SOP"
+"__export__.anggaran_kegiatan_732","PENDIDIKAN","Penelitian","MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.01","Penyusunan panduan penelitian sesuai panduan Dikti"
+"__export__.anggaran_kegiatan_733","PENDIDIKAN","Penelitian","MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.02","Rapat koordinasi"
+"__export__.anggaran_kegiatan_734","PENDIDIKAN","Penelitian","MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.03","Sosialisasi program PP"
+"__export__.anggaran_kegiatan_735","PENDIDIKAN","Penelitian","MENYUSUN PANDUAN PELAKSANAAN PENELITIAN, SOSIALISASI, PROGRAM KERJA PELAKSANAAN PENELITIAN","2.02.04","Penyusunan Company Profile"
+"__export__.anggaran_kegiatan_736","PENDIDIKAN","Penelitian","MELAKSANAKAN PELATIHAN PEMBUATAN PROPOSAL","2.03.01","Pelatihan pembuatan proposal Penelitian"
+"__export__.anggaran_kegiatan_737","PENDIDIKAN","Penelitian","MELAKSANAKAN PELATIHAN PEMBUATAN PROPOSAL","2.03.10","Pelatihan jurnal ilmiah sesuai saintech bagi dosen"
+"__export__.anggaran_kegiatan_738","PENDIDIKAN","Penelitian","MELAKSANAKAN SEMINAR ILMIAH","2.04.01","Seminar IPTEK regulair"
+"__export__.anggaran_kegiatan_739","PENDIDIKAN","Penelitian","MELAKSANAKAN SEMINAR ILMIAH","2.05.02","Presentasi seminar ilmiah dosen"
+"__export__.anggaran_kegiatan_740","PENDIDIKAN","Penelitian","MELAKSANAKAN SEMINAR ILMIAH","2.04.03","Seminar dan workshop nasional"
+"__export__.anggaran_kegiatan_741","PENDIDIKAN","Penelitian","MELAKSANAKAN PENELITIAN INTERNAL","2.05.01","Stimulan penelitian bagi dosen"
+"__export__.anggaran_kegiatan_742","PENDIDIKAN","Pengabdian Masyarakat","MENYUSUN PANDUAN PELAKSANAAN SOSIALISASI PANDUAN DAN PROGRAM","3.01.01","Penyusunan panduan penelitian, pengabdian & kewirausahaan"
+"__export__.anggaran_kegiatan_743","PENDIDIKAN","Pengabdian Masyarakat","MENYUSUN PANDUAN PELAKSANAAN SOSIALISASI PANDUAN DAN PROGRAM","3.01.02","Penyusunan peraturan & silabi pelatihan bagi masyarakat"
+"__export__.anggaran_kegiatan_744","PENDIDIKAN","Pengabdian Masyarakat","MELAKSANAKAN PELATIHAN PEMBUATAN PROPOSAL PENGMAS","3.02.01","Pelatihan pemuatan proposal pengabdian masyarakat"
+"__export__.anggaran_kegiatan_745","PENDIDIKAN","Pengabdian Masyarakat","MELAKSANAKAN PELATIHAN PENULISAN DAN KEWIRAUSAHAAN MAHASISWA","3.03.01","Pelatihan penulisan karya ilmiah bagi mhs"
+"__export__.anggaran_kegiatan_746","PENDIDIKAN","Pengabdian Masyarakat","MELAKSANAKAN PELATIHAN PENULISAN DAN KEWIRAUSAHAAN MAHASISWA","3.03.02","Pelatiahan kewirausahaan mhs"
+"__export__.anggaran_kegiatan_747","PENDIDIKAN","Pengabdian Masyarakat","MELAKSANAKAN PELATIHAN KEWIRAUSAHAAN","3.04.01","Pelatiahan kewirausahaan pemuda karang taruna"
+"__export__.anggaran_kegiatan_748","PENDIDIKAN","Pengabdian Masyarakat","MELAKSANAKAN PELATIHAN KEWIRAUSAHAAN","3.04.02","Pelatiahan kewirausahaan remaja putus sekolah"
+"__export__.anggaran_kegiatan_749","PENDIDIKAN","Pengabdian Masyarakat","MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.01","Kegiatan pengabdian masyarakat"
+"__export__.anggaran_kegiatan_750","PENDIDIKAN","Pengabdian Masyarakat","MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.02","Mengadakan seminar dan lokakarya kewirausahaan"
+"__export__.anggaran_kegiatan_751","PENDIDIKAN","Pengabdian Masyarakat","MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.03","Stimulan kewirausahaan"
+"__export__.anggaran_kegiatan_752","PENDIDIKAN","Pengabdian Masyarakat","MELAKSAKAN PENYULUHAN DAN PELATIHAN PADA MASYARAKAT PER PRODI","3.05.04","Pengabdian institut/fakultas/prodi"
+"__export__.anggaran_kegiatan_753","PENDIDIKAN","Kerjasama ","MELAKSANAKAN USAHA KERJASAMA DENGAN PIHAK LUAR ISTN","4.01.01","Membangun & mengembangkan jejaring ke pemerintah, swasta dll"
+"__export__.anggaran_kegiatan_754","PENDIDIKAN","Kerjasama ","MELAKSANAKAN USAHA KERJASAMA DENGAN PIHAK LUAR ISTN","4.01.02","Pelaksanaan MOU"
+"__export__.anggaran_kegiatan_755","PENDIDIKAN","Kerjasama ","MELAKSANAKAN USAHA KERJASAMA DENGAN PIHAK LUAR ISTN","4.01.03","Carrier Center"
+"__export__.anggaran_kegiatan_756","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.01","Penerbitan jurnal scientech"
+"__export__.anggaran_kegiatan_757","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.02","Penerbitan karya pengabdian"
+"__export__.anggaran_kegiatan_758","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.03","Penerbitan proceeding/ karya unggulan"
+"__export__.anggaran_kegiatan_759","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.04","Proses akreditasi jurnal scientech"
+"__export__.anggaran_kegiatan_760","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.05","Proses portal & web karya ilmih"
+"__export__.anggaran_kegiatan_761","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.06","Pencetakan company profile"
+"__export__.anggaran_kegiatan_762","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.07","Pameran Iptek open campus"
+"__export__.anggaran_kegiatan_763","PENDIDIKAN","Publikasi dan Penertbitan","MELAKSANAKAN PUBLIKASI ILMIAH, PENERBITAN DAN HAKI","5.01.08","Membangun pusat penerbitan ISTN Press"
+"__export__.anggaran_kegiatan_764","PENDIDIKAN","Monitoring dan Evaluasi Internal","MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.01","Penyusunan revisi format monevin penelitian & peng.mas"
+"__export__.anggaran_kegiatan_765","PENDIDIKAN","Monitoring dan Evaluasi Internal","MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.02","Memantau & pembinaan wirausaha hasil pelatihan"
+"__export__.anggaran_kegiatan_766","PENDIDIKAN","Monitoring dan Evaluasi Internal","MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.03","Monevin penelitian & pengab. Masyarakat"
+"__export__.anggaran_kegiatan_767","PENDIDIKAN","Monitoring dan Evaluasi Internal","MELAKSANAKAN PENJAMINAN MUTU KEGIATAN BIDANG PENELITIAN, PENGMAS DAN KEWIRAUSAHAAN","6.01.04","Pelaporan-pelaporan"
+"__export__.anggaran_kegiatan_768","PENDIDIKAN","Manajemen Dan Administrasi","MELAKSANAKAN PENJAMINAN MUTU PENGELOLAAN MANAJEMEN DAN ADMINISTRASI KEGIATAN LP2M","7.01.01","Pengiriman proposal"
+"__export__.anggaran_kegiatan_769","PENDIDIKAN","Manajemen Dan Administrasi","MELAKSANAKAN PENJAMINAN MUTU PENGELOLAAN MANAJEMEN DAN ADMINISTRASI KEGIATAN LP2M","7.01.02","Pembayaran iuran forum"
+"__export__.anggaran_kegiatan_770","PENDIDIKAN","Manajemen Dan Administrasi","MELAKSANAKAN PENJAMINAN MUTU PENGELOLAAN MANAJEMEN DAN ADMINISTRASI KEGIATAN LP2M","7.01.03","Representasi"
