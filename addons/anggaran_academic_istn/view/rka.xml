@@ -71,8 +71,7 @@
 						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
 						 	 states="draft" />
 
-						<button string="Isi MAK Otomatis" type="object" name="action_fill_mak"  
-							confirm="Data MAK akan di-create ulang dan isinya akan terhapus. Anda Yakin?"
+						<button string="Isi MAK Otomatis" type="object" name="action_fill_mak" 
 						 />
 						 	   <!-- attrs="{'invisible': [('mak_terisi', '=', True)]}" -->
 						
