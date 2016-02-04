@@ -1,0 +1,47 @@
+<openerp>
+    <data>
+
+        <record id="view_purchase_mrg_filter" model="ir.ui.view">
+            <field name="name">purchase.order.mrg.select</field>
+            <field name="model">purchase.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Order">
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_supplier" string="Supplier" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="act_for_purchase_merge" model="ir.actions.act_window">
+            <field name="name">Purchase Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_groupby_supplier': 1}</field>
+            <field name="domain">[('state','=','draft')]</field>
+            <field name="view_id" ref="purchase.purchase_order_tree"/>
+            <field name="search_view_id" ref="view_purchase_mrg_filter"/>
+        </record>
+
+        <menuitem name="Merge RfQ"
+            parent="purchase.menu_procurement_management"
+            action="act_for_purchase_merge" 
+            id="menu_for_purchase_lines_merge"
+            sequence="20"/>
+
+
+        <record model="ir.ui.view" id="view_po_tree_product_names">
+            <field name="name">purchase.order.tree.product</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="product_names"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
