@@ -19,5 +19,6 @@
 
     'data': [
         'reports/templates.xml',
+        'purchase.xml',
     ],
 }
