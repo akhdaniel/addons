@@ -109,7 +109,7 @@
                     <div class="col-xs-7">
                         <table class='table'  style="border: 0;font-family: Tahoma;font-size: 14px;">
                           <tr>
-                            <th class="text-center" height="55" scope="col" style="border-top: 0;">
+                            <th class="text-center" height="60" scope="col" style="border-top: 0;">
                                 <p>Supplier, </p>
                             </th>
                             
@@ -166,7 +166,7 @@
         <field name="format">custom</field>
         <field name="Page_height">216</field>
         <field name="Page_width">138</field>
-        <field name="orientation">Landscape</field>
+        <field name="orientation">Portrait</field>
         <field name="margin_top">0</field>
         <field name="margin_bottom">0</field>
         <field name="margin_left">0</field>
