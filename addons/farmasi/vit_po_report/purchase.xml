@@ -10,11 +10,7 @@
                 </button>
                 <page string="Deliveries &amp; Invoices" position='after'>
                     <page string="Barcode">
-                        <group>
-                            <group>
-                                <field name="barcode_data" readonly='True'/>
-                            </group>
-                        </group>
+                        <field name="barcode_data" readonly='False'/>
                     </page>
                 </page>
             </field>

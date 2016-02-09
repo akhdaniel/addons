@@ -15,10 +15,15 @@
     'category': 'purchase',
     'version': '0.1',
 
-    'depends': ['purchase'],
+    'depends': ['purchase','web'],
 
     'data': [
-        'reports/templates.xml',
         'purchase.xml',
+        'reports/templates.xml',
+        'view/web_print_button_assets.xml',
+    ],
+
+    'qweb': [
+        'static/src/xml/web_print_button.xml',
     ],
 }
