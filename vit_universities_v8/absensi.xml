@@ -77,7 +77,8 @@
                                 <field name="sesi"/>                                                     
                             </group>
                             <group>
-                               <field name="kelas_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kelas_id)"/> 
+                                <field name="konsentrasi_id"/>
+                               <field name="kelas_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kelas_id,konsentrasi_id)"/> 
                             </group>
                         </group>
                         <notebook colspan="4">
@@ -92,24 +93,37 @@
                                         <field name="absensi_5"/>
                                         <field name="absensi_6"/>
                                         <field name="absensi_7"/>
-                                        <field name="uts"/>
                                         <field name="absensi_8"/>
                                         <field name="absensi_9"/>
                                         <field name="absensi_10"/>
                                         <field name="absensi_11"/>
                                         <field name="absensi_12"/>
                                         <field name="absensi_13"/>
-                                        <field name="absensi_14"/>
-                                        <field name="tugas"/>
-                                        <field name="uas"/>                               
-                                        <field name="note"/>
+                                        <field name="absensi_14"/>                              
+                                        <field name="percentage"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                 </field>        
                             </page>
+                            <page string="Nilai">
+                                <field name="absensi_nilai_ids" nolabel="1" widget="one2many_list">
+                                    <tree string="Absensi" editable="bottom">
+                                        <field name="partner_id"/>
+                                        <field name="ulangan"/>
+                                        <field name="presentasi"/>
+                                        <field name="makalah"/>
+                                        <field name="tugas"/>
+                                        <field name="uts"/>
+                                        <field name="uas"/>
+                                        <field name="lainnya"/>                               
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                </field>        
+                            </page>                            
                             <page string="Setting" groups="vit_universities_v8.group_univ_dosen">
                                 <sheet>
-                                    <p class="oe_grey">Setting presentase nilai ini berlaku jika jumlah (Absensi+Tugas+UTS+UAS) = 100 (%)</p>
+                                    <p class="oe_grey">Setting presentase nilai ini berlaku jika jumlah (Absensi+Tugas+UTS+UAS+Ulangan+Presentasi+Makalah+Lainnya = 100 (%)</p>
+                                    <p class="oe_grey">Default penilaian: Absensi(10%), Tugas(20%), UTS(30%), UAS(40%)</p>
                                     <group col='4'>
                                         <group col='1'>
                                             <label for="absensi" />
@@ -126,6 +140,24 @@
                                         <group col='1'>
                                             <label for="uas" />
                                             <field name="uas" nolabel="1"/> 
+                                        </group>
+                                    </group>
+                                    <group col='4'>
+                                        <group col='1'>
+                                            <label for="ulangan" />
+                                            <field name="ulangan" nolabel="1" /> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="presentasi" />
+                                            <field name="presentasi" nolabel="1"/> 
+                                        </group>
+                                         <group col='1'>
+                                             <label for="makalah" />
+                                             <field name="makalah"  nolabel="1"/> 
+                                        </group>
+                                        <group col='1'>
+                                            <label for="lainnya" />
+                                            <field name="lainnya" nolabel="1"/> 
                                         </group>
                                     </group>
                                 </sheet>                                

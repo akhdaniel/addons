@@ -47,7 +47,7 @@
                 	<sheet>
                 		<group>
                             <field name="name"/>
-		                    <field name="partner_id" /> 
+		                    <field name="partner_id" domain="[('status_mahasiswa','=','calon')]" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id,partner_id)"/> 
 		                    <field name="semester_id" />
                         </group>
                         <group>

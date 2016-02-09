@@ -13,12 +13,14 @@ class absensi(osv.osv):
 		ajaran = vals['tahun_ajaran_id']
 		fakultas = vals['fakultas_id']
 		prodi = vals['prodi_id']
+		konsentrasi = vals['konsentrasi_id']
 		semester = vals['semester_id']	
 		matakuliah = vals['mata_kuliah_id']	
 		jad_obj = self.pool.get('absensi')
 		jad_id = jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
 			('prodi_id','=',prodi),
+			('konsentrasi_id','=',konsentrasi),
 			('semester_id','=',semester),
 			('mata_kuliah_id','=',matakuliah)])
 
@@ -50,11 +52,16 @@ class absensi(osv.osv):
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'open': [('readonly', False)]}), 
 		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'open': [('readonly', False)]}),
 		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		
+		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'open': [('readonly', False)]}),
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'open': [('readonly', False)]}),
 		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa',readonly=True, states={'open': [('readonly', False)]}),
-
+		'absensi_nilai_ids' : fields.one2many('absensi.detail.nilai','absensi_id','Mahasiswa',readonly=True, states={'open': [('readonly', False)]}),
 		#param persentase nilai
+		'ulangan' 		: fields.float('Ulangan (%)'),
+		'quiz' 		    : fields.float('Quiz (%)'),
+		'presentasi' 	: fields.float('Presentasi (%)'),
+		'makalah' 		: fields.float('Makalah (%)'),
+		'lainnya'		: fields.float('Lainnya (%)'),		
 		'absensi' : fields.float('Absensi (%)'),
 		'tugas' : fields.float('Tugas (%)'),
 		'uts' : fields.float('UTS (%)'),
@@ -64,7 +71,7 @@ class absensi(osv.osv):
 			
 	_defaults= {
 		'state':'open',
-
+		'sesi':14,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'absensi'), 
 	}
 
@@ -83,6 +90,7 @@ class absensi(osv.osv):
 			tahun_ajaran = ct.tahun_ajaran_id.id
 			fakultas = ct.fakultas_id.id
 			prodi = ct.prodi_id.id
+			konsentrasi = ct.konsentrasi_id.id
 			semester = ct.semester_id.id
 			matakuliah = ct.mata_kuliah_id.id
 			self.write(cr,uid,ct.id,{'state':'close'},context=context)
@@ -91,82 +99,13 @@ class absensi(osv.osv):
 				tugas = det.tugas
 				uts   = det.uts
 				uas   = det.uas
-				#import pdb;pdb.set_trace()
-				s1_h = 0 #H
-				if det.absensi_1:
-					s1_h = 1
+				total_hadir = det.percentage
 
-				s2_h = 0 #H
-				if det.absensi_2:
-					s2_h = 1
-
-				s3_h = 0 #H
-				if det.absensi_3:
-					s3_h = 1
-
-				s4_h = 0 #H
-				if det.absensi_4:
-					s4_h = 1
-
-				s5_h = 0 #H
-				if det.absensi_5:
-					s5_h = 1
-
-				s6_h = 0 #H
-				if det.absensi_6:
-					s6_h = 1
-
-				s6_h = 0 #H
-				if det.absensi_6:
-					s6_h = 1
-
-				s6_h = 0 #H
-				if det.absensi_6:
-					s6_h = 1
-
-				s7_h = 0 #H
-				if det.absensi_7:
-					s7_h = 1
-
-				s8_h = 0 #H
-				if det.absensi_8:
-					s8_h = 1
-
-				s9_h = 0 #H
-				if det.absensi_9:
-					s9_h = 1
-
-				s10_h = 0 #H
-				if det.absensi_10:
-					s10_h = 1
-
-				s11_h = 0 #H
-				if det.absensi_11:
-					s11_h = 1
-
-				s12_h = 0 #H
-				if det.absensi_12:
-					s12_h = 1
-
-				s13_h = 0 #H
-				if det.absensi_13:
-					s13_h = 1
-
-
-				s13_h = 0 #H
-				if det.absensi_13:
-					s13_h = 1
-
-				s14_h = 0
-				if det.absensi_14:
-					s14_h = 1
-
-				
-				total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h + s13_h + s14_h
 
 				krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
 													('fakultas_id','=',fakultas),
 													('prodi_id','=',prodi),
+													('konsentrasi_id','=',konsentrasi),
 													('semester_id','=',semester),
 													('partner_id','=',mahasiswa)],context=context)
 				if krs_exist :
@@ -174,8 +113,6 @@ class absensi(osv.osv):
 					for dtl in browse_krs.krs_detail_ids:
 						if dtl.mata_kuliah_id.id == matakuliah :
 							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'hadir'	:total_hadir,
-																						 'izin'		:total_izin,
-																						 'alpha'	:total_alpha,
 																						 'tugas'	:tugas,
 																						 'uts'		:uts,
 																						 'uas'		:uas,})
@@ -193,7 +130,7 @@ class absensi(osv.osv):
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus open'))
 		return super(absensi, self).unlink(cr, uid, ids, context=context)
 
-	def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, prodi_id,kelas_id,context=None):
+	def onchange_kelas(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, prodi_id,kelas_id,konsentrasi_id, context=None):
 
 		results = {}
 		if not kelas_id:
@@ -204,10 +141,11 @@ class absensi(osv.osv):
 			('status_mahasiswa','=','Mahasiswa'),
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('fakultas_id','=',fakultas_id),
+			('konsentrasi_id','=',konsentrasi_id),
 			('prodi_id','=',prodi_id),
 			('kelas_id','=',kelas_id)], context=context)
 
-		#import pdb;pdb.set_trace()
+		
 		if par_ids :
 			res = []
 			for mhs in par_ids:
@@ -215,6 +153,7 @@ class absensi(osv.osv):
 			results = {
 				'value' : {
 					'absensi_ids' : res,
+					'absensi_nilai_ids':res,
 				}
 			}
 		return results
@@ -224,6 +163,87 @@ absensi()
 
 class absensi_detail(osv.osv):
 	_name = "absensi.detail"
+
+	def get_percentage_absen(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result = {}
+		#import pdb;pdb.set_trace()
+		for det in self.browse(cr,uid,ids):
+			s1_h = 0
+			if det.absensi_1:
+				s1_h = 1
+
+			s2_h = 0 #H
+			if det.absensi_2:
+				s2_h = 1
+
+			s3_h = 0 #H
+			if det.absensi_3:
+				s3_h = 1
+
+			s4_h = 0 #H
+			if det.absensi_4:
+				s4_h = 1
+
+			s5_h = 0 #H
+			if det.absensi_5:
+				s5_h = 1
+
+			s6_h = 0 #H
+			if det.absensi_6:
+				s6_h = 1
+
+			s6_h = 0 #H
+			if det.absensi_6:
+				s6_h = 1
+
+			s6_h = 0 #H
+			if det.absensi_6:
+				s6_h = 1
+
+			s7_h = 0 #H
+			if det.absensi_7:
+				s7_h = 1
+
+			s8_h = 0 #H
+			if det.absensi_8:
+				s8_h = 1
+
+			s9_h = 0 #H
+			if det.absensi_9:
+				s9_h = 1
+
+			s10_h = 0 #H
+			if det.absensi_10:
+				s10_h = 1
+
+			s11_h = 0 #H
+			if det.absensi_11:
+				s11_h = 1
+
+			s12_h = 0 #H
+			if det.absensi_12:
+				s12_h = 1
+
+			s13_h = 0 #H
+			if det.absensi_13:
+				s13_h = 1
+
+
+			s13_h = 0 #H
+			if det.absensi_13:
+				s13_h = 1
+
+			s14_h = 0
+			if det.absensi_14:
+				s14_h = 1
+
+			
+			total_hadir = s1_h + s2_h + s3_h + s4_h + s5_h + s6_h + s7_h + s8_h + s9_h + s10_h + s11_h + s12_h + s13_h + s14_h
+			percent = (float(total_hadir)/14)*100
+			result[det.id] = percent
+		return result	
 
 	_columns = {
 		'absensi_id' 	: fields.many2one('absensi','Jadwal'),
@@ -241,10 +261,23 @@ class absensi_detail(osv.osv):
 		'absensi_11'	:fields.boolean('11'),
 		'absensi_12'	:fields.boolean('12'),
 		'absensi_13'	:fields.boolean('13'),
-		'absensi_14'	:fields.boolean('14'),		
-		'tugas'			:fields.float('Tugas'),
-		'uts'			:fields.float('UTS'),
-		'uas'			:fields.float('UAS'),		
-		'note'			:fields.char('Ket.'),
+		'absensi_14'	:fields.boolean('14'),				
+		'percentage'	:fields.function(get_percentage_absen,type='float',string='(%)',store=True),
 		'state':fields.selection([('open','Open'),('close','Close')],'State'),
 	}
+
+class absensi_detai_nilai(osv.osv):
+	_name = "absensi.detail.nilai"
+
+	_columns = {
+		'absensi_id' 	: fields.many2one('absensi','Jadwal'),
+		'partner_id' 	: fields.many2one('res.partner','Mahasiswa',domain="[('status_mahasiswa','=','Mahasiswa')]",required=True),	
+		'tugas'			: fields.float('Tugas'),
+		'ulangan' 		: fields.float('Ulangan'),
+		'presentasi' 	: fields.float('Presentasi'),
+		'makalah' 		: fields.float('Makalah'),
+		'uts'			: fields.float('UTS'),
+		'uas'			: fields.float('UAS'),
+		'lainnya'		: fields.float('Lainnya'),		
+		'state':fields.selection([('open','Open'),('close','Close')],'State'),
+	}	

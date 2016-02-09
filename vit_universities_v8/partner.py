@@ -19,21 +19,27 @@ class res_partner (osv.osv):
 		#return super(partner, self).create(cr, uid, vals, context=None)
 
 	def name_get(self, cr, uid, ids, context=None):
+		###import pdb;pdb.set_trace()
 		if not ids:
 			return []
 		if isinstance(ids, (int, long)):
 					ids = [ids]
-		reads = self.read(cr, uid, ids, ['name', 'npm'], context=context)
+		reads = self.read(cr, uid, ids, ['name', 'npm','reg','is_mahasiswa'], context=context)
 		res = []
 		for record in reads:
 			name = record['name']
-			if record['npm']:
-				name = '['+record['npm'] +']'+ ' ' + name
-			res.append((record['id'], name))
+			if record['is_mahasiswa'] :
+				if record['npm'] != '/':
+					name = '['+record['npm'] +']'+ ' ' + name
+				elif record ['npm'] == '/' :
+					name = '['+record['reg'] +']'+ ' ' + name
+				res.append((record['id'], name))
+			else:
+				res.append((record['id'], name))
 		return res
 
 	def create(self, cr, uid, vals, context=None):
-		#import pdb;pdb.set_trace()
+		
 		if 'status_mahasiswa' in vals :
 			if vals['status_mahasiswa'] == 'calon':
 				if vals.get('reg','/')=='/':
@@ -242,6 +248,7 @@ class res_partner (osv.osv):
 		#Mahasiswa
 		'npm' :fields.char(string='NIM',size=34),
 		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
+		'street':fields.text('Alamat Rumah'),
 		# 'nama_tengah':fields.char('Nama Tengah',size=60),
 		# 'nama_belakang':fields.char('Nama Tengah',size=60),
 		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
@@ -285,11 +292,11 @@ class res_partner (osv.osv):
 		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
 		'is_beasiswa' : fields.boolean('Penerima Beasiswa USM',readonly=True),
-		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM', required=True),
+		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM'),
 		'keluarga_alumni_id': fields.many2one('res.partner','Keluarga Alumni',domain=[('status_mahasiswa','=','alumni')]),
 		'marketing_id': fields.many2one('master.marketing','Marketing'),
-		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran', required=True),
-
+		'jenis_pendaftaran_id': fields.many2one('akademik.jenis_pendaftaran', 'Jenis Pendaftaran'),
+		'no_ijazah_sma'		: fields.char('No. Ijazah SMA/Sederajat'),
 		'status_aktivitas': fields.selection([('A','A'),('N','N'),('K','K'),('L','L'),('C','C'),('D','D')],'Status Aktivitas',required=True),
 
 		#untuk mhs pindahan
@@ -312,6 +319,13 @@ class res_partner (osv.osv):
 		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran Bangunan',readonly=True,store=True),
 
 		'karyawan_id'	: fields.many2one('hr.employee','Karyawan'),
+		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
+		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi'),
+		'no_ijazah'		: fields.char('No. Ijazah'),
+		'tgl_sk_dekan' 	: fields.date('Tgl. SK Dekan'),
+		'no_sk_dekan'	: fields.char('No. SK Dekan'),
+		'no_transkrip'	: fields.char('No. Transkrip'),
+		'yudisium_id' 	: fields.many2one('master.yudisium','Yudisium'),
 
 		}
 
@@ -326,7 +340,14 @@ class res_partner (osv.osv):
 				('fakultas_id','=',partner.fakultas_id.id),
 				('prodi_id','=',partner.prodi_id.id),
 				('state','=','confirm'),
-				])		
+				('type_mhs_id','=',partner.type_mhs_id.id),
+				])	
+			if not byr_sch:
+				byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+					('fakultas_id','=',partner.fakultas_id.id),
+					('prodi_id','=',partner.prodi_id.id),
+					('state','=','confirm'),
+					])						
 			if byr_sch :
 				byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
 				list_pembayaran = byr_brw.detail_product_ids
@@ -355,6 +376,181 @@ class res_partner (osv.osv):
 				self.write(cr,uid,partner.id,{'invoice_id':inv})
 
 		return True		
+
+	def create_inv_bangunan(self,cr,uid,ids,context=None):
+		byr_obj = self.pool.get('master.pembayaran.bangunan')
+		for partner in self.browse(cr,uid,ids):
+			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+				('fakultas_id','=',partner.fakultas_id.id),
+				('prodi_id','=',partner.prodi_id.id),
+				('state','=','confirm'),
+				('type_mhs_id','=',partner.type_mhs_id.id),
+				])
+			if not byr_sch :
+				byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+					('fakultas_id','=',partner.fakultas_id.id),
+					('prodi_id','=',partner.prodi_id.id),
+					('state','=','confirm'),
+					])						
+			if byr_sch :
+				byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+				list_pembayaran = byr_brw.detail_product_ids
+				prod_id = []
+				for bayar in list_pembayaran:
+					#import pdb;pdb.set_trace()
+					product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+					coa_line = product.property_account_income.id
+					if not coa_line:
+						coa_line = product.categ_id.property_account_income_categ.id
+					prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+										 'name'			: bayar.product_id.name,
+										 'price_unit'	: bayar.public_price,
+										 'account_id'	: coa_line}))
+				inv = self.pool.get('account.invoice').create(cr,uid,{
+					'partner_id':partner.id,
+					'origin': 'SPP '+str(partner.reg),
+					'type':'out_invoice',
+					'fakultas_id': partner.fakultas_id.id,
+					'prod_id': partner.prodi_id.id,
+					'account_id':partner.property_account_receivable.id,
+					'invoice_line': prod_id,
+					},context=context)
+				wf_service = netsvc.LocalService('workflow')
+				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
+				self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
+
+		return True	
+
+	def create_krs_smt_1_dan_2(self,cr,uid,ids,context=None):
+		calon_obj = self.pool.get('res.partner.calon.mhs')
+		bea_obj = self.pool.get('beasiswa.prodi')
+		kurikulum_obj = self.pool.get('master.kurikulum')
+		krs_obj = self.pool.get('operasional.krs')
+		for partner in self.browse(cr,uid,ids):
+			t_id = partner.tahun_ajaran_id.date_start
+			t_tuple =  tuple(t_id)
+			t_id_final = t_tuple[2]+t_tuple[3]#ambil 2 digit paling belakang dari tahun saja
+			f_id = partner.fakultas_id.kode	
+			p_id = partner.prodi_id.kode
+
+			if p_id.find(".") != -1:
+				j = p_id.split(".")
+				p_id = j[1]					
+			#batas nilai penerima beasiswa
+			limit_bea = 1000 # default nilai besar supaya tidak ada yg lolos
+			data_bea = bea_obj.search(cr,uid,[('is_active','=',True),
+												('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+												('fakultas_id','=',partner.fakultas_id.id),
+												('prodi_id','=',partner.prodi_id.id),],context=context)			
+			if data_bea:
+				bea_browse=bea_obj.browse(cr,uid,data_bea[0])
+				if bea_browse.product_id1:
+					limit_bea = bea_browse.limit_nilai_sma
+
+			is_bea = False
+			if partner.nilai_beasiswa >= limit_bea:
+				is_bea = True
+			st = partner.status_mahasiswa
+			nilai_sma = partner.nilai_beasiswa
+			jp_id = partner.jenis_pendaftaran_id.code
+
+			se = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
+
+			# sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and jurusan_id=%s and tahun_ajaran_id=%s" % (
+			sql = "select count(*) from res_partner where jenis_pendaftaran_id=%s and prodi_id=%s and tahun_ajaran_id=%s and status_mahasiswa='Mahasiswa' " % (
+				partner.jenis_pendaftaran_id.id, 
+				partner.prodi_id.id, 
+				partner.tahun_ajaran_id.id)
+			cr.execute(sql)
+			#import pdb; pdb.set_trace()
+			hasil = cr.fetchone()
+			if hasil and hasil[0] != None:
+				se = "%03d" % (hasil[0] + 1)
+			else:
+				se = "001"
+
+			nim = t_id_final + p_id + jp_id + se
+			self.write(cr,uid,partner.id,{
+										'status_mahasiswa':'Mahasiswa',
+										'npm':nim,
+										'user_id':uid,
+										'is_beasiswa':is_bea},
+										context=context)
+
+			#create data calon yang lulus tersebut ke tabel res.partner.calon.mhs agar ada history terpisah
+			calon_obj.create(cr,uid,{'reg'				:partner.reg,
+									'name'				:partner.name,
+									'jenis_kelamin'		:partner.jenis_kelamin or False,
+									'tempat_lahir'		:partner.tempat_lahir or False,
+									'tanggal_lahir'		:partner.tanggal_lahir or False,                  
+									'fakultas_id'		:partner.fakultas_id.id,
+									'prodi_id'			:partner.prodi_id.id,
+									'tahun_ajaran_id'	:partner.tahun_ajaran_id.id,                
+									'tgl_lulus'			:partner.tgl_lulus or False,
+									'no_formulir'		:partner.no_formulir or False,
+									'tgl_ujian'			:partner.tgl_ujian or False,
+									'nilai_ujian'		:partner.nilai_ujian or False,
+									'batas_nilai'		:0,
+									'status_pernikahan'	:partner.status_pernikahan or False,
+									'agama'				:partner.agama or False,
+									'tgl_daftar'		:partner.tgl_daftar or False,
+									'nilai_beasiswa'	:nilai_sma or False,
+									'is_beasiswa' 		:is_bea,
+									'state'				:'Lulus',
+									'date_move'			:time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+									'user_id'			:uid},									
+									context=context)
+			kur_sch_smt_1 = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+				('fakultas_id','=',partner.fakultas_id.id),
+				('prodi_id','=',partner.prodi_id.id),
+				('state','=','confirm'),
+				('semester_id','=',1),
+				])
+			if kur_sch_smt_1 :
+				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_1,context=context)[0].kurikulum_detail_ids
+				mk_kurikulum = []
+				for kur in kur_id:
+					#mk_kurikulum.append(kur.id)
+					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.id, 'state': 'draft'}))	
+				krs_obj.create(cr,uid,{'kode'					: nim+'-1',
+											'partner_id'		: partner.id,
+											'tahun_ajaran_id'	: partner.tahun_ajaran_id.id,
+											'fakultas_id'		: partner.fakultas_id.id,
+											'prodi_id'			: partner.prodi_id.id,
+											'kurikulum_id'		: kur_sch_smt_1[0],
+											'semester_id'		: 1,
+											'kelas_id'			: partner.kelas_id.id or False,
+											'user_id'			: uid,
+											'konsentrasi_id'	: partner.konsentrasi_id.id,
+											#'state'				: 'draft',
+											'krs_detail_ids'	: mk_kurikulum
+											})	
+
+			kur_sch_smt_2 = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+				('fakultas_id','=',partner.fakultas_id.id),
+				('prodi_id','=',partner.prodi_id.id),
+				('state','=','confirm'),
+				('semester_id','=',2),
+				])			
+			if kur_sch_smt_2 :
+				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_2,context=context)[0].kurikulum_detail_ids
+				mk_kurikulum = []
+				for kur in kur_id:
+					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.id, 'state': 'draft'}))
+				krs_obj.create(cr,uid,{'kode'					: nim+'-2',
+											'partner_id'		: partner.id,
+											'tahun_ajaran_id'	: partner.tahun_ajaran_id.id,
+											'fakultas_id'		: partner.fakultas_id.id,
+											'prodi_id'			: partner.prodi_id.id,
+											'kurikulum_id'		: kur_sch_smt_2[0],
+											'semester_id'		: 2,
+											'kelas_id'			: partner.kelas_id.id or False,
+											'user_id'			: uid,
+											'konsentrasi_id'	: partner.konsentrasi_id.id,
+											#'state'				: 'draft',
+											'krs_detail_ids'	: mk_kurikulum
+											})	
+
 
 	def action_draft(self,cr,uid,ids,context=None):
 			#set to "draft" state
@@ -403,6 +599,7 @@ class res_partner (osv.osv):
 				'prodi_id'			: mhs.prodi_id.id,
 				'fakultas_id'		: mhs.fakultas_id.id,
 				'tahun_ajaran_id'	: mhs.tahun_ajaran_id.id,
+				'konsentrasi_id'	: mhs.konsentrasi_id.id,
 				'state'				: 'draft',
 				'notes' 			: '',
 				'user_id'			: uid,

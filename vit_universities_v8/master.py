@@ -430,4 +430,26 @@ class master_alamat_kampus(osv.Model):
 		'name' : fields.char("Nama",required=True),
 		'Alamat' : fields.text('Alamat'),
 	}
-master_alamat_kampus()	
+master_alamat_kampus()
+
+
+class master_type_mahasiswa(osv.Model):
+	_name = "master.type.mahasiswa"
+	_columns  = {
+		'name' : fields.char("Nama",required=True),
+	}
+
+
+class master_type_mahasiswa(osv.Model):
+	_name = "master.type.mahasiswa"
+	_columns  = {
+		'name' : fields.char("Nama",required=True),
+	}
+
+class master_konsentrasi(osv.Model):
+	_name = "master.konsentrasi"
+	_columns  = {
+		'name' : fields.char("Nama",required=True),
+	}
+
+master_type_mahasiswa()

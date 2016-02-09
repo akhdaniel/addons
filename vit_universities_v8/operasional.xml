@@ -62,7 +62,7 @@
 	                    	<group>                          
 			                    <field name="kode"/>
                                 <!-- <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id,jurusan_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/> -->
-			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id, prodi_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/>
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id, prodi_id,kelas_id, partner_id,npm,konsentrasi_id)" attrs="{'readonly': [('state','!=','draft')]}"/>
 			                    <field name="npm" invisible="1"/> 
 			                    <field name="kelas_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>
 			                    <!-- <field name="employee_id"/> -->
@@ -72,8 +72,9 @@
 		                    <group>
 			                    <field name="tahun_ajaran_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>			                    
                                 <field name='fakultas_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}" domain="[('is_internal','=',True)]"/>
-                                <!-- <field name='jurusan_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>  -->
+                                
                                 <field name="prodi_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/> 
+                                <field name='konsentrasi_id' widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/> 
                                 <field name="max_smt" invisible="1"/>                                                     
 			                    <!--button string="View Ipk" type="object" name="button_ipk" states="draft" /-->
 			                </group>    
@@ -81,7 +82,9 @@
                         <group>
                             <group>
                                 <!-- <field name="semester_id" on_change="onchange_semester(npm,tahun_ajaran_id,jurusan_id, semester_id, partner_id)" attrs="{'readonly': [('state','!=','draft')]}" options="{'limit': 8, 'create': false, 'create_edit': false}" /> -->
-                                <field name="semester_id" on_change="onchange_semester(npm,tahun_ajaran_id, prodi_id, semester_id, partner_id)" attrs="{'readonly': [('state','!=','draft')]}" options="{'limit': 8, 'create': false, 'create_edit': false}" />
+                                <field name="is_tambahan" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="reason" attrs="{'required':[('is_tambahan','=',True)],'readonly': [('state','!=','draft')],'invisible': [('is_tambahan','=',False)]}"/>
+                                <field name="semester_id" on_change="onchange_semester(npm,tahun_ajaran_id, prodi_id, semester_id, partner_id,konsentrasi_id)" attrs="{'readonly': [('state','!=','draft')]}" options="{'limit': 8, 'create': false, 'create_edit': false}" />
                                 <!-- widget="selection" domain="[('name','&lt;=',max_smt)]"/> -->
                                 <!-- <field name="semester_id" widget="selection"/> -->
                                 <field name="kurikulum_id" widget="selection" invisible="1"/>
@@ -89,7 +92,8 @@
                             <group>   
                                 <field name="user_id"/>     
                                 <field name="sks_tot" invisible="1"/>          
-                                <field name="ips"/>     
+                                <field name="ips" string="IPK"/>  
+                                <field name="ips_field_persemester" readonly="1" string="IPS"/>  
                                 <field name="ips_field" invisible="1"/>                           
                             </group>    
                         </group>                        
@@ -101,9 +105,7 @@
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="hadir" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <field name="izin" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <field name="alpha" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                        <field name="hadir" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi"/>
                                         <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <!-- <field name="ulangan" attrs="{'readonly': [('state','!=','confirm')]}"/> -->
                                         <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}"/>
@@ -157,18 +159,19 @@
                                 <field name="npm" invisible="1"/> 
                                 <field name="tempat_lahir"/>
                                 <field name="tanggal_lahir"/> 
+                                <field name="ipk"/>
                                 <!-- <field name='total_sks'/> -->
                             </group>
                             <group>
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id"/>
-                                <!-- <field name="jurusan_id"/> -->
                                 <field name="prodi_id"/> 
-                                <newline/>
-                                <field name="ipk"/>
+                                <field name="konsentrasi_id"/>
+                                <newline/> 
+                                <field name="yudisium_id"/>
                                 <field name="t_sks" invisible="1"/>
                                 <field name="t_nilai" invisible="1"/>
-                                <field name="yudisium" invisible="1"/>                  
+                                                  
                             </group>                          
                         </group>
                         <notebook colspan="4">
