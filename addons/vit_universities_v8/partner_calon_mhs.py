@@ -23,6 +23,7 @@ class res_partner_calon_mhs (osv.osv):
 		'fakultas_id'		:fields.many2one('master.fakultas',string='Fakultas',),
 		'jurusan_id'		:fields.many2one('master.jurusan',string='Jurusan',domain="[('fakultas_id','=',fakultas_id)]"),
 		'prodi_id'			:fields.many2one('master.prodi',string='Program Studi',domain="[('jurusan_id','=',jurusan_id)]"),
+		'konsentrasi_id' 	:fields.many2one('master.konsentrasi','Konsentrasi'),
 		'tahun_ajaran_id'	:fields.many2one('academic.year',string='Tahun Akademik'),               
 		'tgl_lulus'			:fields.date('Tanggal Lulus'),
 		'no_formulir'		:fields.char('No Formulir Ujian'),
@@ -82,9 +83,10 @@ class res_partner(osv.osv):
 									'tgl_daftar'		:res.tgl_daftar or False,
 									'nilai_beasiswa'	:res.nilai_beasiswa or False,
 									'is_beasiswa' 		:res.is_beasiswa,
+									'konsentrasi_id'	:res.konsentrasi_id.id,
 									'date_move'			:time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
 									'user_id'			:uid,
-									'state'				:'gagal'},
+									'state'				:'Gagal'},
 									context=context)
 			# karena terlalu banyak relasi jadi ga bisa sembarangan di hapus (relasi ke konversi, keuangan, user, dll)
 			mhs_konv_exist = konv_obj.search(cr,uid,[('partner_id','=',res.id)],context=context)

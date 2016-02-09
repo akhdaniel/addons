@@ -387,37 +387,6 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data jenis-jenis pelanggaran.</p><p>disini belum ada data tentang jenis-jenis pelanggaran !</p></field>
         </record>
  
-        <!--  master data jenis pembayaran  -->
-        <record model="ir.actions.act_window" id="jenis_pembayaran_list_action">
-            <field name="name">Jenis Pembayaran</field>
-            <field name="res_model">product.product</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('type','=','service')]</field>
-        </record>
-
-        <!--  master data template pembayaran  -->
-        <record model="ir.actions.act_window" id="template_pembayaran_list_action">
-            <field name="name">Master Pembayaran</field>
-            <field name="res_model">master.pembayaran</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <!-- <field name="view_id" ref="spmb_tree_view"/>  -->                
-            <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Master Pembayaran.</p><p>disini belum ada data tentang master pembayaran !</p></field>
-            <!--field name="view_id" ref="personal_tree_view"/-->
-        </record>
-
-        <!--  master data template pembayaran pendaftaran  -->
-        <record model="ir.actions.act_window" id="template_pembayaran_pendaftaran_list_action">
-            <field name="name">Master Pembayaran Pendaftaran</field>
-            <field name="res_model">master.pembayaran.pendaftaran</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>               
-            <field name="help" type="html">
-            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Master Pembayaran.</p><p>disini belum ada data tentang master pembayaran pendaftaran !</p></field>
-
-        </record>
 
         <!--  master data dosen -->
         <record model="ir.actions.act_window" id="dosen_list_action">
@@ -561,7 +530,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="spmb_list_action">
-            <field name="name">SPMB</field>
+            <field name="name">PMB</field>
             <field name="res_model">spmb.mahasiswa</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -618,7 +587,8 @@
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
                         <filter icon="terp-project" string="Kurikulum" help="By Kurikulum" context="{'group_by':'kurikulum_id'}"/>
-                        <filter icon="terp-project" string="state" name="state" help="By Status" context="{'group_by':'state'}"/>
+                        <filter icon="terp-project" string="State" name="state" help="By Status" context="{'group_by':'state'}"/>
+                        <filter icon="terp-project" string="Kartu Studi Tambahan" name="is_tambahan" help="By Kartu Studi Tambahan" context="{'group_by':'is_tambahan'}"/>
                     </group>
                 </search>
             </field>

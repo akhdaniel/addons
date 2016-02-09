@@ -16,6 +16,8 @@
                     <field name="prodi_id"/>
                     <field name="from_semester_id"/>
                     <field name="to_semester_id"/>
+                    <field name="date"/>
+                    <field name="automatic_done" invisible="1"/>
                     <field name="state" invisible="1"/>
                 </tree>
             </field>

@@ -45,7 +45,7 @@ class konversi(osv.Model):
 			
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode akademik.konversi tidak boleh sama')]
 
-	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id, jurusan_id, prodi_id, kelas_id, partner_id, context=None):
+	def onchange_partner(self, cr, uid, ids, tahun_ajaran_id, fakultas_id,prodi_id,partner_id, context=None):
 		results = {}
 		if not partner_id:
 			return results
@@ -55,7 +55,6 @@ class konversi(osv.Model):
 
 		#import pdb;pdb.set_trace()
 		par_id = par_obj.browse(cr,uid,par_ids,context=context)[0]
-		kelas_id = par_id.kelas_id.id
 		tahun_ajaran_id = par_id.tahun_ajaran_id.id
 		fakultas_id = par_id.fakultas_id.id
 		# jurusan_id = par_id.jurusan_id.id
@@ -63,10 +62,8 @@ class konversi(osv.Model):
 
 		results = {
 			'value' : {
-				'kelas_id': kelas_id,
 				'tahun_ajaran_id' : tahun_ajaran_id,
 				'fakultas_id' : fakultas_id,
-				# 'jurusan_id' : jurusan_id,
 				'prodi_id' : prodi_id,
 			}
 		}
@@ -150,6 +147,7 @@ class konversi(osv.Model):
 
 	def approve(self,cr,uid,ids,context=None):
 		#import pdb;pdb.set_trace()
+		calon_obj = self.pool.get('res.partner.calon.mhs')
 		kur_obj = self.pool.get('master.kurikulum')
 		studi_obj = self.pool.get('operasional.krs')
 		studi_detail_obj = self.pool.get('operasional.krs_detail')
@@ -182,7 +180,32 @@ class konversi(osv.Model):
 				se = "%03d" % (hasil[0] + 1)
 			else:
 				se = "001"	
-			npm = t_id_final + p_id + jp_id + se			
+			npm = t_id_final + p_id + jp_id + se
+
+			#create data calon yang lulus tersebut ke tabel res.partner.calon.mhs agar ada history terpisah
+			calon_obj.create(cr,uid,{'reg'				:ct.partner_id.reg,
+									'name'				:ct.partner_id.name,
+									'jenis_kelamin'		:ct.partner_id.jenis_kelamin or False,
+									'tempat_lahir'		:ct.partner_id.tempat_lahir or False,
+									'tanggal_lahir'		:ct.partner_id.tanggal_lahir or False,                  
+									'fakultas_id'		:ct.partner_id.fakultas_id.id,
+									'prodi_id'			:ct.partner_id.prodi_id.id,
+									'tahun_ajaran_id'	:ct.partner_id.tahun_ajaran_id.id,                
+									'tgl_lulus'			:ct.partner_id.tgl_lulus or False,
+									'no_formulir'		:ct.partner_id.no_formulir or False,
+									'tgl_ujian'			:ct.partner_id.tgl_ujian or False,
+									'nilai_ujian'		:ct.partner_id.nilai_ujian or False,
+									'batas_nilai'		:0,
+									'status_pernikahan'	:ct.partner_id.status_pernikahan or False,
+									'agama'				:ct.partner_id.agama or False,
+									'tgl_daftar'		:ct.partner_id.tgl_daftar or False,
+									'nilai_beasiswa'	:ct.partner_id.nilai_beasiswa or False,
+									'is_beasiswa' 		:False,
+									'state'				:'Lulus',
+									'date_move'			:time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+									'user_id'			:uid},									
+									context=context)
+
 			self.pool.get('res.partner').write(cr,uid,ct.partner_id.id,{'npm':npm,'status_mahasiswa':'Mahasiswa'},context=context)
 
 			#cari matakuliah yg akan di masukan pada master kurikulum		

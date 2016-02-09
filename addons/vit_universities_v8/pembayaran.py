@@ -62,6 +62,7 @@ class master_pembayaran(osv.Model):
 		'type': fields.selection([('flat','Flat'),('paket','Paket SKS')],'Type Pembayaran',required=True),
 		'sks_plus' : fields.boolean('Bayar jika tambah SKS'),
 		'total': fields.function(_total,type='char',string='Total', digits_compute=dp.get_precision('Account')),
+		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
 	}
 	_defaults = {
 		'type':'flat',
@@ -149,7 +150,8 @@ class master_pembayaran_pendaftaran(osv.Model):
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]",required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True), 
 		'state':fields.selection([('draft','Non Aktif'),('confirm','Aktif')],'Status'),
-		'detail_product_ids':fields.one2many('master.pembayaran.pendaftaran.detail','pembayaran_id',string='Pembayaran'),		
+		'detail_product_ids':fields.one2many('master.pembayaran.pendaftaran.detail','pembayaran_id2',string='Pembayaran'),	
+		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),	
 	}
 	_defaults = {
 		'name': '/',
@@ -173,6 +175,76 @@ class master_pembayaran_pendaftaran_detail(osv.Model):
 
 	_columns ={
 		'pembayaran_id' : fields.many2one('master.pembayaran','Pembayaran ID'),
+		'pembayaran_id2' : fields.many2one('master.pembayaran.pendaftaran','Pembayaran ID'),
 		'product_id':fields.many2one('product.product','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
 		'public_price': fields.float('Harga', digits_compute=dp.get_precision('Account')),
 	}
+
+
+class master_pembayaran_bangunan(osv.Model):
+	_name = "master.pembayaran.bangunan"
+
+	def create(self, cr, uid, vals, context=None):
+		
+		ta = vals['tahun_ajaran_id']
+		t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
+		ta_tuple =  tuple(t_idd)
+		ta_id = ta_tuple[2]+ta_tuple[3]#ambil 2 digit paling belakang dari tahun saja		
+
+		fak = vals['fakultas_id']
+		fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
+
+		pro = vals['prodi_id']
+		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
+
+		# no = fak_id+jur_id+pro_id+ta_id
+		no = fak_id+pro_id+ta_id
+		vals['name'] = no
+		
+		return super(master_pembayaran_bangunan, self).create(cr, uid, vals, context=context)
+
+	def unlink(self, cr, uid, ids, context=None):
+		if context is None:
+			context = {}
+		"""Allows to delete in draft state"""
+		for rec in self.browse(cr, uid, ids, context=context):
+			if rec.state != 'draft':
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus non aktif'))
+		return super(master_pembayaran_bangunan, self).unlink(cr, uid, ids, context=context)
+
+
+	_columns = {
+		'name': fields.char('Kode',size=64,readonly=True), 
+		'date': fields.datetime('Tanggal',readonly=True),
+		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',domain="[('fakultas_id','=',fakultas_id)]",required=True),
+		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True), 
+		'state':fields.selection([('draft','Non Aktif'),('confirm','Aktif')],'Status'),
+		'detail_product_ids':fields.one2many('master.pembayaran.bangunan.detail','pembayaran_id',string='Pembayaran'),		
+		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
+	}
+	_defaults = {
+		'name': '/',
+		'state':'draft',
+		'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+	}
+
+	_sql_constraints = [('name_uniq', 'unique(name)','Kode template pembayaran tidak boleh sama')]
+
+	def confirm(self,cr,uid,ids,context=None):
+		return self.write(cr,uid,ids,{'state':'confirm'},context=context)
+
+	def draft(self,cr,uid,ids,context=None):
+		return self.write(cr,uid,ids,{'state':'draft'},context=context)
+
+master_pembayaran_bangunan()  	
+
+class master_pembayaran_bangunan_detail(osv.Model):
+	_name = "master.pembayaran.bangunan.detail"
+
+
+	_columns ={
+		'pembayaran_id' : fields.many2one('master.pembayaran.bangunan','Pembayaran ID'),
+		'product_id':fields.many2one('product.product','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
+		'public_price': fields.float('Harga', digits_compute=dp.get_precision('Account')),
+	}	

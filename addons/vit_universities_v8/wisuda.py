@@ -94,10 +94,18 @@ class wisuda_mahasiswa(osv.Model):
 
 	def confirm(self,cr,uid,ids,context=None):
 		my_form = self.browse(cr,uid,ids[0])
+		transkrip_obj = self.pool.get('operasional.transkrip')
 		for alumni in my_form.partner_ids:
 			gelar = alumni.prodi_id.gelar_id.id
+			transkrip = transkrip_obj.search(cr,uid,[('partner_id','=',alumni.id)])
+			yudisium = False
+			if transkrip :
+				yudisium = transkrip_obj.browse(cr,uid,transkrip[0]).yudisium_id.id
 			#import pdb;pdb.set_trace()
-			self.pool.get('res.partner').write(cr,uid,alumni.id,{'status_mahasiswa':'alumni','lokasi_wisuda':my_form.lokasi_wisuda,'title':gelar},context=context)
+			self.pool.get('res.partner').write(cr,uid,alumni.id,{'status_mahasiswa':'alumni',
+																'lokasi_wisuda':my_form.lokasi_wisuda,
+																'title':gelar,
+																'yudisium_id':yudisium},context=context)
 		self.write(cr,uid,ids,{'state':'done'},context=context)
 		return True	
 

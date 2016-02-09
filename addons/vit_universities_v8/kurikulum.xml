@@ -39,8 +39,8 @@
                             </group>
                             <group>
                                 <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('is_internal','=',True)]"/>
-                                <!-- <field name="jurusan_id" attrs="{'readonly': [('state','=','confirm')]}"/> -->
                                 <field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                                <field name="konsentrasi_id" attrs="{'readonly': [('state','=','confirm')]}" required="1"/>
                                 <field name="semester_id" attrs="{'readonly': [('state','=','confirm')]}" widget="selection"/>
 
                             </group>

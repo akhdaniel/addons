@@ -96,6 +96,7 @@ class master_kurikulum (osv.Model):
 		'fakultas_id'		:fields.many2one('master.fakultas','Fakultas',required = True),         
 		# 'jurusan_id'		:fields.many2one('master.jurusan',string='Program Studi',required = True),           
 		'prodi_id'			:fields.many2one('master.prodi',string='Program Studi',required = True),
+		'konsentrasi_id'	:fields.many2one('master.konsentrasi',string='Konsentrasi'),
 		'semester_id'		:fields.many2one('master.semester','Semester',required = True),
 		'max_sks'			:fields.integer('Max Total SKS',required = True,help="Maksimal SKS dalam satu KRS"),
 		'min_ip'			:fields.float('Min Indeks Prestasi',required = True,help="Minimal indeks prestasi untuk bisa ambil matakuliah tambahan dalam KRS"),

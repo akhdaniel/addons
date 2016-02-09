@@ -1,4 +1,3 @@
-#import users
 import partner
 import master
 import operasional
@@ -21,3 +20,6 @@ import jenis_pendaftaran
 import imports
 import beasiswa_prodi
 import absensi
+import users
+import ujian
+import jadwal_ujian
