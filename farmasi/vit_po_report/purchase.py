@@ -56,7 +56,7 @@ class purchase_order(osv.osv):
         
         lines=[]
         rp = data.currency_id.symbol
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         for line in data.order_line:
             taxes = ",".join([tax.name for tax in line.taxes_id]) or " "
             lines.append(' '.join([
