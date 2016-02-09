@@ -1,0 +1,126 @@
+<openerp>
+	<data>
+
+        <record model="ir.ui.view" id="jadwal_ujian_mhs_search_view">
+            <field name="name">Jadwal Ujian</field>
+            <field name="model">master.jadwal.ujian</field>
+            <field name="arch" type="xml">
+                <search string="Cari Peserta Ujian">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="mata_kuliah_id"/>
+                         <field name="employee_id"/>
+                         <field name="prodi_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Kelas" help="By Kelas" context="{'group_by':'kelas_id'}"/>
+                        <filter icon="terp-project" string="Matakuliah" help="By Matakuliah" context="{'group_by':'mata_kuliah_id'}"/>
+                        <filter icon="terp-project" string="Ruangan" help="By Ruangan" context="{'group_by':'ruangan_id'}"/>
+                        <filter icon="terp-project" string="Dosen" help="By Dosen" context="{'group_by':'employee_id'}"/>
+                        <filter icon="terp-project" string="Active" help="By active" context="{'group_by':'is_active'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="jadwal_ujian_mhs_tree_view">
+            <field name="name">jadwal.tree</field>
+            <field name="model">master.jadwal.ujian</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Jadwal Ujian" version="7.0">
+                    <field name="name"/>
+                    <field name="kelas_id"/>                   
+                    <field name="tahun_ajaran_id" invisible="1"/>
+                    <field name="fakultas_id" invisible="1"/>
+                    <field name="prodi_id"/>
+                    <field name="ruangan_id"/>
+                    <field name="hari"/>
+                    <field name="mata_kuliah_id"/>
+                    <field name="employee_id"/>
+                    <field name="is_active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        
+        <record model="ir.ui.view" id="jadwal_ujian_mhs_form_view">
+            <field name="name">jadwal.form</field>
+            <field name="model">master.jadwal.ujian</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Daftar Jadwal Ujian" version="7.0">                   
+                	<sheet>
+                		<group>
+                			<group>
+                                <field name="name"/> 
+                                <field name="tahun_ajaran_id"/>
+                                <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                           </group>
+                			<group>
+                                <field name="kelas_id" domain="[('prodi_id','=',prodi_id)]"/>
+                                <field name="mata_kuliah_id"/>
+                                <field name="employee_id"/>
+                			</group>
+                        </group>
+                        <group>    
+                            <group> 
+                                <field name="semester_id"/>  
+                                <field name="ruangan_id"/>     
+                            </group>
+                            <group>  
+                                <field name="hari" placeholder="-- pilih hari --"/>                                 
+                                <label for="hours_from" string="Waktu"/> 
+                                <div>  
+                                    <field name="hours_from" widget="float_time" nolabel="1" class="oe_inline" /><label string="-" class="oe_inline"/>
+                                    <field name="hours_to" widget="float_time" nolabel="1" class="oe_inline" />
+                                </div>                                                                                            
+                            </group>
+                            <group>
+                                <field name="is_active"/>
+                            </group>
+                            <group>
+                                 
+                            </group>                            
+                		</group>
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="jadwal_ujian_list_action">
+            <field name="name">Jadwal Ujian</field>
+            <field name="res_model">master.jadwal.ujian</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="jadwal_ujian_mhs_search_view"/>
+            <field name="view_id" ref="jadwal_ujian_mhs_tree_view"/>                      
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat jadwal ujian.</p><p>disini belum ada data tentang jadwal ujian !</p></field>
+        </record>
+
+
+        <!-- jadwal ujian Menu Item -->      
+            <menuitem id="jadwal_ujian_sub_menu" name="Jadwal Ujian" parent="vit_universities_v8.ujian_menu" action="jadwal_ujian_list_action" sequence="20"/>
+
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_jadwal_ujian" model="ir.sequence.type">
+            <field name="name">Jadwal Ujian</field>
+            <field name="code">master.jadwal.ujian</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_jadwal_ujian" model="ir.sequence">
+            <field name="name">Jadwal Ujian</field>
+            <field name="code">master.jadwal.ujian</field>
+            <field name="prefix">%(y)s/</field>
+            <field name="padding">5</field>
+        </record> 
+
+	</data>
+</openerp>	
