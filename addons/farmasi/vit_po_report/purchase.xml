@@ -9,7 +9,7 @@
                     <button name="write_bc" string="BC" type="object" icon="terp-stock_effects-object-colorize" class="oe_highlight"/>
                 </button>
                 <page string="Deliveries &amp; Invoices" position='after'>
-                    <page string="Barcode">
+                    <page string="Barcode" groups="base.group_no_one">
                         <field name="barcode_data" readonly='False'/>
                     </page>
                 </page>
