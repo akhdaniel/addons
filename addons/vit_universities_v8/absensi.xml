@@ -106,12 +106,14 @@
                                 </field>        
                             </page>
                             <page string="Nilai">
+                                <p class="oe_grey">Presentase nilai bisa di set ulang pada tab Setting</p>
+                                    <p class="oe_grey">Default penilaian: Absensi(10%), Tugas(20%), UTS(30%), UAS(40%)</p>
                                 <field name="absensi_nilai_ids" nolabel="1" widget="one2many_list">
                                     <tree string="Absensi" editable="bottom">
                                         <field name="partner_id"/>
                                         <field name="ulangan"/>
                                         <field name="presentasi"/>
-                                        <field name="makalah"/>
+                                        <field name="quiz"/>
                                         <field name="tugas"/>
                                         <field name="uts"/>
                                         <field name="uas"/>
@@ -122,7 +124,7 @@
                             </page>                            
                             <page string="Setting" groups="vit_universities_v8.group_univ_dosen">
                                 <sheet>
-                                    <p class="oe_grey">Setting presentase nilai ini berlaku jika jumlah (Absensi+Tugas+UTS+UAS+Ulangan+Presentasi+Makalah+Lainnya = 100 (%)</p>
+                                    <p class="oe_grey">Setting presentase nilai ini berlaku jika jumlah (Absensi+Tugas+UTS+UAS+Ulangan+Presentasi+Quiz+Lainnya = 100 (%)</p>
                                     <p class="oe_grey">Default penilaian: Absensi(10%), Tugas(20%), UTS(30%), UAS(40%)</p>
                                     <group col='4'>
                                         <group col='1'>
@@ -152,8 +154,8 @@
                                             <field name="presentasi" nolabel="1"/> 
                                         </group>
                                          <group col='1'>
-                                             <label for="makalah" />
-                                             <field name="makalah"  nolabel="1"/> 
+                                             <label for="quiz" />
+                                             <field name="quiz"  nolabel="1"/> 
                                         </group>
                                         <group col='1'>
                                             <label for="lainnya" />

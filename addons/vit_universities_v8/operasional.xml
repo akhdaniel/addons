@@ -105,13 +105,18 @@
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="hadir" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi"/>
+                                        <field name="absensi" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi"/>
+                                        <field name="ulangan" invisible="1"/>
+                                        <field name="quiz" invisible="1"/>
+                                        <field name="presentasi" invisible="1"/>
+                                        <field name="lainnya" invisible="1"/>
+
                                         <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <!-- <field name="ulangan" attrs="{'readonly': [('state','!=','confirm')]}"/> -->
                                         <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="nilai_huruf" attrs="{'invisible': [('state','=','draft')]}"/>
                                         <field name="nilai_angka" invisible="1"/>
+                                        <field name="nilai_huruf_field" invisible="1"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                     <form>
@@ -185,6 +190,22 @@
                                         <!-- <field name="krs_id" string="KHS" invisible="0"/>  -->                                        
                                     </tree>                                   
                                 </field>
+                                <group>
+                                    <group >
+                                        <field view_mode="tree,form" name="transkrip_resume_ids" nolabel="1">
+                                        <tree>
+                                            <field name="transkrip_id" invisible="1"/>
+                                            <field name="nilai_id" invisible="1"/>
+                                            <field name="nilai" />
+                                            <field name="jumlah_sks" sum="Total"/>
+                                            <field name="jumlah" sum="Total"/> 
+                                            <!-- <field name="krs_id" string="KHS" invisible="0"/>  -->                                        
+                                        </tree>
+                                        </field>  
+                                    </group>
+                                    <group>
+                                    </group>
+                                </group>    
                            </page>
                         </notebook>
                     </sheet>    

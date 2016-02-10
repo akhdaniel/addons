@@ -60,7 +60,7 @@ class absensi(osv.osv):
 		'ulangan' 		: fields.float('Ulangan (%)'),
 		'quiz' 		    : fields.float('Quiz (%)'),
 		'presentasi' 	: fields.float('Presentasi (%)'),
-		'makalah' 		: fields.float('Makalah (%)'),
+		'quiz' 		: fields.float('Quiz (%)'),
 		'lainnya'		: fields.float('Lainnya (%)'),		
 		'absensi' : fields.float('Absensi (%)'),
 		'tugas' : fields.float('Tugas (%)'),
@@ -96,11 +96,29 @@ class absensi(osv.osv):
 			self.write(cr,uid,ct.id,{'state':'close'},context=context)
 			for det in ct.absensi_ids:
 				mahasiswa = det.partner_id.id
-				tugas = det.tugas
-				uts   = det.uts
-				uas   = det.uas
 				total_hadir = det.percentage
+				krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+													('fakultas_id','=',fakultas),
+													('prodi_id','=',prodi),
+													('konsentrasi_id','=',konsentrasi),
+													('semester_id','=',semester),
+													('partner_id','=',mahasiswa)],context=context)
+				if krs_exist :
+					browse_krs = krs_obj.browse(cr,uid,krs_exist[0])
+					for dtl in browse_krs.krs_detail_ids:
+						if dtl.mata_kuliah_id.id == matakuliah :
+							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'absensi'	:total_hadir})
+							break
 
+			for det in ct.absensi_nilai_ids:
+				mahasiswa 	= det.partner_id.id
+				tugas 		= det.tugas
+				uts   		= det.uts
+				uas   		= det.uas
+				ulangan 	= det.ulangan
+				presentasi  = det.presentasi
+				quiz   		= det.quiz
+				lainnya 	= det.lainnya
 
 				krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
 													('fakultas_id','=',fakultas),
@@ -112,10 +130,13 @@ class absensi(osv.osv):
 					browse_krs = krs_obj.browse(cr,uid,krs_exist[0])
 					for dtl in browse_krs.krs_detail_ids:
 						if dtl.mata_kuliah_id.id == matakuliah :
-							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'hadir'	:total_hadir,
-																						 'tugas'	:tugas,
+							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'tugas'	:tugas,
 																						 'uts'		:uts,
-																						 'uas'		:uas,})
+																						 'uas'		:uas,
+																						 'ulangan'	:ulangan,
+																						 'presentasi':presentasi,
+																						 'quiz'		:quiz,
+																						 'lainnya'	:lainnya})
 							break
 
 				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'close'},context=context)			
@@ -275,7 +296,7 @@ class absensi_detai_nilai(osv.osv):
 		'tugas'			: fields.float('Tugas'),
 		'ulangan' 		: fields.float('Ulangan'),
 		'presentasi' 	: fields.float('Presentasi'),
-		'makalah' 		: fields.float('Makalah'),
+		'quiz' 		: fields.float('Quiz'),
 		'uts'			: fields.float('UTS'),
 		'uas'			: fields.float('UAS'),
 		'lainnya'		: fields.float('Lainnya'),		
