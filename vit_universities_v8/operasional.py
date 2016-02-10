@@ -628,6 +628,10 @@ class krs_detail (osv.Model):
 		presentase_tugas 	= 0.2
 		presentase_uts 		= 0.3
 		presentase_uas 		= 0.4
+		presentase_ulangan		= 0
+		presentase_presentasi 	= 0
+		presentase_quiz 		= 0
+		presentase_lainnya		= 0		
 		result = {}
 		for nil in self.browse(cr,uid,ids,context=context):
 			tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
@@ -644,20 +648,28 @@ class krs_detail (osv.Model):
 														('kelas_id','=',kelas)])
 			if setting_dosen:
 				sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
-				if (sett.absensi + sett.tugas + sett.uts + sett.uas) == 100 :
-					presentase_absen 	= sett.absensi/100
-					presentase_tugas 	= sett.tugas/100
-					presentase_uts 		= sett.uts/100
-					presentase_uas 		= sett.uas/100			
+				total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
+				if total_set == 100 :
+					presentase_absen 		= sett.absensi/100
+					presentase_tugas 		= sett.tugas/100
+					presentase_uts 			= sett.uts/100
+					presentase_uas 			= sett.uas/100			
+					presentase_ulangan		= sett.ulangan/100
+					presentase_presentasi 	= sett.presentasi/100
+					presentase_quiz 		= sett.quiz/100
+					presentase_lainnya		= sett.lainnya/100
 
-			hadir 			= nil.hadir # 10%
-			nilai_kahadiran = (hadir/14)*100
-			tugas 			= nil.tugas # 20%
-			Ulangan 		= nil.ulangan # belum dihitung
-			uts 			= nil.uts # 30%
-			uas 			= nil.uas # 40%	
-			tot 			= (nilai_kahadiran*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)
+			absen 			= nil.absensi
+			tugas 			= nil.tugas
+			ulangan 		= nil.ulangan
+			uts 			= nil.uts
+			uas 			= nil.uas
+			presentasi 		= nil.presentasi
+			quiz 			= nil.quiz
+			lainnya 		= nil.lainnya			
+			tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
 			#tot = (tugas+ulangan+uts+uas)/4
+			#import pdb;pdb.set_trace()
 			nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
 			if nil_src == []:
 				return result
@@ -665,24 +677,28 @@ class krs_detail (osv.Model):
 			nil_par = nil_obj.browse(cr,uid,nil_src,context=context)[0]
 			huruf = nil_par.name
 			angka = nil_par.bobot
-			self.write(cr,uid,nil.id,{'nilai_angka':angka},context=context)
+			
 			result[nil.id] = huruf
-
+			wr = self.write(cr,uid,nil.id,{'nilai_angka':angka,'nilai_huruf_field':huruf})
 		return result
 		
 	_columns = {
 		'krs_id'		:fields.many2one('operasional.krs','Kode KRS',),
 		'mata_kuliah_id':fields.many2one('master.matakuliah','Mata Kuliah',required=True,ondelete="cascade"),
 		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
+		'quiz' 		    : fields.float('Quiz'),
+		'presentasi' 	: fields.float('Presentasi'),
+		'absensi' 		: fields.float('absensi'),
+		'lainnya'		: fields.float('Lainnya'),		
 		'tugas' 		:fields.float('Tugas'),
 		'ulangan' 		:fields.float('Ulangan'),
 		'uts'			:fields.float('UTS'),
 		'uas'			:fields.float('UAS'),
 		'nilai_huruf'	:fields.function(_get_nilai_akhir,type='char',string='Nilai Akhir'),
 		'nilai_angka'	:fields.float('Nilai Angka'),
+		'nilai_huruf_field'	:fields.char('Nilai Huruf Field'),
 		'transkrip_id'	:fields.many2one('operasional.transkrip','Transkrip'),
 		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
-		'hadir'			:fields.integer('Hadir'),
 			}
 
 	_defaults={
@@ -766,16 +782,47 @@ class operasional_transkrip(osv.Model):
 		if context is None:
 			context = {}
 		result = {}
+		
+		for my in self.browse(cr,uid,ids):
+			if my.partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
+				mk = self.get_mk_by_newest(cr, uid, ids, context=None)
+			elif my.partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
+				mk = self.get_mk_by_better(cr, uid, ids, context=None)
 
-		if self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
-			mk = self.get_mk_by_newest(cr, uid, ids, context=None)
-		elif self.browse(cr,uid,ids[0]).partner_id.tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
-			mk = self.get_mk_by_better(cr, uid, ids, context=None)
+			if mk == []:
+				return result
+			result[ids[0]] = mk
 
-		if mk == []:
-			return result			
-
-		result[ids[0]] = mk
+			tran_resume_obj 	= self.pool.get('operasional.transkrip.resume')		
+			nilai_obj		 	= self.pool.get('master.nilai')
+			sql 				= "select id,name from master_nilai order by id asc"
+			cr.execute(sql)
+			hasil = cr.fetchall()
+			if hasil:
+				#jika sdh ada resume hapus dulu
+				resume_exist = tran_resume_obj.search(cr,uid,[('transkrip_id','=',my.id)])	
+				if resume_exist :
+					tran_resume_obj.unlink(cr,uid,resume_exist,context=context)	
+					cr.commit()			
+				resume_ids = []
+				for rsm in hasil:
+					#import pdb;pdb.set_trace()
+					nil = nilai_obj.browse(cr,uid,rsm[0])
+					cr.execute("""SELECT count(okd.id),sum(okd.sks)
+									FROM operasional_krs_detail okd
+									LEFT JOIN master_nilai mn ON mn.name=okd.nilai_huruf_field
+									WHERE okd.id in %s
+									AND mn.id = %s """%(tuple(mk),str(rsm[0])))
+					dpt = cr.fetchall()
+					if dpt :
+						if dpt[0][0] != 0:
+							resume_ids.append((0,0,{'nilai_id'	:nil.id,
+													'nilai'		:nil.name,
+													'jumlah'	:dpt[0][0],
+													'jumlah_sks':dpt[0][1]}))
+				
+				self.write(cr,uid,ids[0],{'transkrip_resume_ids':resume_ids})
+				cr.commit()
 		return result
 
 	def _get_ipk(self, cr, uid, ids, field_name, arg, context=None):
@@ -824,9 +871,21 @@ class operasional_transkrip(osv.Model):
 
 		return result
 
+	def _get_resume_nilai(self, cr, uid, context=None):
+		resume_ids = []
+		nilai_obj = self.pool.get('master.nilai')
+		sql = "select id,name from master_nilai order by id asc"
+		cr.execute(sql)
+		hasil = cr.fetchall()
+		if hasil:
+			for x in hasil:
+				nil = nilai_obj.browse(cr,uid,x[0])
+				resume_ids.append((0,0,{'nilai_id':nil.id,'nilai':nil.name}))
+		return resume_ids
+
 	_columns={
 		'name' : fields.char('Kode',size=28,required=True),
-		'partner_id' : fields.many2one('res.partner','Nama Mahasiswa', required=True, domain="[('status_mahasiswa','=','Mahasiswa')]"),
+		'partner_id' : fields.many2one('res.partner','Nama Mahasiswa', required=True, domain="[('status_mahasiswa','in',('Mahasiswa','alumni'))]"),
 		'npm':fields.related('partner_id','npm',type='char',relation='res.partner',string='NIM'),
 		'tempat_lahir':fields.related('partner_id','tempat_lahir',type='char',relation='res.partner',string='Tempat Lahir',readonly=True),
 		'tanggal_lahir':fields.related('partner_id','tanggal_lahir',type='date',relation='res.partner',string='Tanggal Lahir',readonly=True),
@@ -840,8 +899,25 @@ class operasional_transkrip(osv.Model):
 		'yudisium_id' : fields.many2one('master.yudisium','Yudisium',readonly=True),
 		't_sks' : fields.integer('Total SKS',readonly=True),
 		't_nilai' : fields.char('Total Nilai',readonly=True),
+		'transkrip_resume_ids' : fields.one2many('operasional.transkrip.resume','transkrip_id','Resume',readonly=True, ondelete='cascade'),
 			}    
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode Transkrip tidak boleh sama')]
 
+	_defaults = {
+		#'transkrip_resume_ids' : _get_resume_nilai,
+	}
+
 operasional_transkrip()
+
+
+class operasional_transkrip_resume(osv.osv):
+	_name = "operasional.transkrip.resume"
+	_rec_name = "nilai"
+	_columns = {
+		'transkrip_id' 	: fields.many2one('operasional.transkrip','transkrip_id'),
+		'nilai_id'		: fields.many2one('master.nilai','Nilai ID'),
+		'nilai'			: fields.char('Nilai'),
+		'jumlah'		: fields.integer('Jumlah Nilai'),
+		'jumlah_sks'	: fields.integer('Jumlah SKS'),
+	}
