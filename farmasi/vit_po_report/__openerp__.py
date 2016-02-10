@@ -15,7 +15,7 @@
     'category': 'purchase',
     'version': '0.1',
 
-    'depends': ['purchase','web'],
+    'depends': ['purchase','web','base'],
 
     'data': [
         'purchase.xml',
