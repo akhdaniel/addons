@@ -5,7 +5,7 @@
     'name': 'Sistem Informasi Akademik Perguruan Tinggi',
     'depends': ['base','hr','account','account_voucher'],
     'author'  :'vitraining.com',
-    'version': '0.4',
+    'version': '0.5',
     "website" : "http://www.vitraining.com",
     'category': 'Tools',
     'description': """
