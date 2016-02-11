@@ -89,7 +89,7 @@ class purchase_order(osv.osv):
             # lines
             lines=[]
             # panjang karakter max tiap kolom, to joined by single space
-            lgt = [24,14,10,14,12,16]        
+            lgt = [26,12,10,14,12,16]        
             lineH = ["Description","Taxes","Date Req.","Qty","Unit Price","Net Price"]
             # format header
             lines.append(separator)
@@ -126,10 +126,10 @@ class purchase_order(osv.osv):
             Lf={'1':tabs,'2':3,'3':20,'4':12}
             if data.notes2:
                 footerkiri += [dikiri(Lf['1'],x) for x in diDiv(tabs,data.notes2)]
-            footerkanan1 = [dikiri(Lf['3'],x) for x in ["-------------------","Total Without Taxes", "Taxes","Total","-------------------"]]
+            footerkanan1 = [dikiri(Lf['3'],x) for x in ["-------------------","Total Without Taxes", "Taxes","-------------------","Total"]]
             footerkanan2 = [dikanan(Lf['4'],x) for x in  ["------------"," ".join([rp,str(data.amount_untaxed or 0.0)]) ,
-                                " ".join([rp,str(data.amount_tax or 0.0)]) ,
-                                " ".join([rp,str(data.amount_total or 0.0)]),"------------"] ]
+                                " ".join([rp,str(data.amount_tax or 0.0)]) ,"------------",
+                                " ".join([rp,str(data.amount_total or 0.0)])] ]
             
             kosong=[]
             elem = {}
@@ -147,8 +147,8 @@ class purchase_order(osv.osv):
                 footer.append(S)
                 i+=1
             # print("\n".join(footer))
-
-            result = '\n'.join(mainHeader+titles+lines+footer)
+            ttd = [separator, ditengah(tabs/2,"    Supplier    "," ")+ditengah(tabs/2,"  Hormat Kami,  "," "), "\n\n"+ditengah(tabs/2,"( ________________ )"," ")+ditengah(tabs/2,"( ________________ )"," ")]
+            result = '\n'.join(mainHeader+titles+lines+footer+ttd)
             self.write(cr,uid,data.id,{'barcode_data': result})
         return  True
 
