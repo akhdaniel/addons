@@ -34,7 +34,19 @@ class purchase_order(osv.osv):
                 for x,y in zip(st,fs):
                     L.append(kt[x:y])
                 dived += L
-            return "\n".join(dived)
+            return  dived
+        def cekElem(arrDict):
+            # input : arrDict = {'a':arrayA,'b':arrayB,'c':arrayC}
+            # output : length array will same acording to the bigest length, append by " "
+            kosong = arrDict['kosong']
+            arrDict.pop('kosong')
+            L=0
+            if len(arrDict.keys()) > 1 :
+                L= max(len(k) for k in arrDict.values())
+                for div in  arrDict.keys():
+                    while len(arrDict[div])<L:
+                        arrDict[div].append(dikiri(kosong[div]-1," "))
+            return arrDict,L
 
         # grs separator 95chrs length
         separator="-----------------------------------------------------------------------------------------------"
@@ -59,7 +71,7 @@ class purchase_order(osv.osv):
             almatkpd = ' '.join([str(data.partner_id.street or ''),
                                         str(data.partner_id.street2 or ''),
                                         str(data.partner_id.city or '')])
-            phkpd = ','.join([data.partner_id.phone or '',  data.partner_id.fax and str(" fax %s" % data.partner_id.fax) or ''])
+            phkpd = ' '.join([data.partner_id.phone or '',  data.partner_id.fax and str(" fax %s" % data.partner_id.fax) or ''])
             
             # main title
             titles = []
@@ -96,7 +108,7 @@ class purchase_order(osv.osv):
                     else : taxes.append(tx.name)
                 taxes = ",".join(taxes)
                 names = diDiv(lgt[0],line.name)
-                names = names.split("\n")
+                # names = names.split("\n")
                 lines.append(' '.join([
                         dikiri(lgt[0],names[0]),
                         dikiri(lgt[1],taxes[:14]), 
@@ -105,19 +117,39 @@ class purchase_order(osv.osv):
                         dikanan(lgt[4]," ".join([rp,str(line.price_unit)])),
                         dikanan(lgt[5]," ".join([rp,str(line.price_subtotal)])) 
                         ]))
-                # import pdb;pdb.set_trace()
                 if len(names)>1:
                     names.remove(names[0])
                     for nm in names:
                         lines.append(dikiri(lgt[0],nm))
+            # konstruk div for 3 cols
+            footerkiri = []
+            Lf={'1':tabs,'2':3,'3':20,'4':12}
             if data.notes2:
-                notes = data.notes2.split("\n")
-                lines.append("\n".join(["Catatan :",diDiv(tabs,data.notes2)]))
+                footerkiri += [dikiri(Lf['1'],x) for x in diDiv(tabs,data.notes2)]
+            footerkanan1 = [dikiri(Lf['3'],x) for x in ["-------------------","Total Without Taxes", "Taxes","Total","-------------------"]]
+            footerkanan2 = [dikanan(Lf['4'],x) for x in  ["------------"," ".join([rp,str(data.amount_untaxed or 0.0)]) ,
+                                " ".join([rp,str(data.amount_tax or 0.0)]) ,
+                                " ".join([rp,str(data.amount_total or 0.0)]),"------------"] ]
+            
+            kosong=[]
+            elem = {}
+            elem.update({'1':footerkiri,'2':kosong,'3':footerkanan1,'4':footerkanan2,'kosong':Lf})
+            elem,L = cekElem(elem)
+            
+            L= max(len(k) for k in elem.values())
+            i=0
+            footer = []
+            while i<L:
+                all=[]
+                for y in zip(x for x in elem.values()):
+                    all.append(y[0][i])
+                S = " ".join(all)
+                footer.append(S)
+                i+=1
+            # print("\n".join(footer))
 
-            result = '\n'.join(mainHeader+titles+lines)
-            # import pdb;pdb.set_trace()
+            result = '\n'.join(mainHeader+titles+lines+footer)
             self.write(cr,uid,data.id,{'barcode_data': result})
-        print("OKe")
         return  True
 
     _columns = {
