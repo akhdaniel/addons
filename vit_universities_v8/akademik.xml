@@ -437,7 +437,7 @@
             <field name="model">res.partner</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Mahasiswa">
+                <tree string="Daftar Mahasiswa" version="7.0" create="false" delete="false">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                     <field name="fakultas_id"/>
@@ -456,7 +456,7 @@
             <field name="model">res.partner</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Daftar Alumni">
+                <tree string="Daftar Alumni" version="7.0" create="false" delete="false">
                     <field name="npm"/>
                     <field name="name" string="Nama"/>
                      <field name="fakultas_id"/>
@@ -639,28 +639,29 @@
 
         <!--menu Akadmik -->
         <menuitem id="si_akademik_menu" name="Akademik" groups="vit_universities_v8.group_univ_external_baak"/>
-            <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10"/>
+            <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10" groups="vit_universities_v8.group_menu_pmb_baak"/>
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
                 <menuitem id="spmb" name="PMB" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
-            <menuitem id="master_data_kbm" name="KBM" parent="si_akademik_menu" sequence="20"/>
+                <menuitem id="master_mahasiswa_pmb" name="Mahasiswa " parent="master_data_reg" action="personal_list_action" sequence="21"/> 
+            <menuitem id="master_data_kbm" name="KBM" parent="si_akademik_menu" sequence="20" groups="vit_universities_v8.group_menu_kbm_baak"/>
                 <menuitem id="master_kelas" name="Kelas" parent="master_data_kbm" action="kelas_list_action" sequence="10"/>
             <!-- <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> --> 
                 <menuitem id="master_jadwal" name="Jadwal" parent="master_data_kbm" action="jadwal_kuliah_mhs_list_action" sequence="20"/>
    
-            <menuitem id="master_civitas" name="Civitas" parent="si_akademik_menu" sequence="40"/>
+            <menuitem id="master_civitas" name="Civitas" parent="si_akademik_menu" groups="vit_universities_v8.group_menu_civitas_baak" sequence="40"/>
                 <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" sequence="11"/> 
                 <menuitem id="master_wisuda" name="Wisuda" parent="master_civitas" action="wisuda_list_action" sequence="20"/>  
                 <menuitem id="master_alumni" name="Alumni" parent="master_civitas" action="alumni_list_action" sequence="30"/>
                 <menuitem id="master_dosen" name="Dosen" parent="master_civitas" action="dosen_list_action" sequence="40"/>           
-            <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="60"/>              
+            <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="60" groups="vit_universities_v8.group_menu_studi_baak"/>              
                 <menuitem id="master_krs" name="Kartu Rencana Studi" parent="operasional" action="krs_list_action" sequence="13"/>
                 <menuitem id="master_khs" name="Kartu Hasil Studi" parent="operasional" action="khs_list_action" sequence="14"/>
                 <menuitem id="preview_transkrip" name="Transkrip" parent="operasional" action="preview_list_action" sequence="15"/>    
                      
-            <menuitem id="master_data_kurikulum" name="Kurikulum" parent="si_akademik_menu" sequence="80"/>
+            <menuitem id="master_data_kurikulum" name="Kurikulum" parent="si_akademik_menu" sequence="80" groups="vit_universities_v8.group_menu_kurikulum_baak"/>
                  <menuitem id="master_kurikulum" name="Kurikulum" parent="master_data_kurikulum" action="kurikulum_list_action"/>
                  <menuitem id="master_mk" name="Matakuliah" parent="master_data_kurikulum" action="mk_list_action"/>
-            <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90" groups="vit_universities_v8.group_univ_staff_baak"/>
+            <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90" groups="vit_universities_v8.group_menu_konfigurasi_baak"/>
                 <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action" sequence="10"/>
                 <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
                 <!-- <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/> -->

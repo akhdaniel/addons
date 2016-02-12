@@ -69,7 +69,7 @@
         </record>
 
 
-        <menuitem id="jadwal_usm" name="Jadwal USM" parent="master_data_reg" action="jadwal_usm_list_action" sequence="20"/>
+        <menuitem id="jadwal_usm" name="Jadwal USM" parent="master_data_reg" action="jadwal_usm_list_action" groups="vit_universities_v8.group_univ_pmb_baak" sequence="20"/>
 
 	</data>
 </openerp>	
