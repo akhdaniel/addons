@@ -108,7 +108,7 @@
             <p class="oe_view_nocontent_create">.....</p><p>disini belum ada data tentang calon mahasiswa !</p></field>
         </record>
 
-        <menuitem id="calon_mhs_gagal" name="List Total Calon Mahasiswa" parent="vit_universities_v8.master_data_reg" action="calon_mhs_list_action" sequence="15"/>
+        <menuitem id="calon_mhs_gagal" name="List Total Calon Mahasiswa" parent="vit_universities_v8.master_data_reg" action="calon_mhs_list_action" groups="vit_universities_v8.group_univ_external_baak" sequence="15"/>
 
 
 

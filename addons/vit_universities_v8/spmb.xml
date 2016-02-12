@@ -36,7 +36,7 @@
                 			<group>
 			                    <field name="name" attrs="{'readonly': [('state','=','done')]}"/>
 			                    <field name="kuota" attrs="{'readonly': [('state','=','done')]}"/>
-			                    <field name="nilai"/>		                    
+			                    <field name="nilai" attrs="{'readonly': [('state','=','done')]}"/>		                    
                                 <!--<button name="button_reload" states="draft" string="RELOAD" class="oe_link oe_edit_only" type="object" help="reload data mahasiswa yang masuk list"/> -->
 			                 </group>
 			                 <group>  

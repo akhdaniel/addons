@@ -105,15 +105,15 @@
                                         <div> 
                                             <field name="invoice_id" class="oe_inline"/> 
                                             <label for="create_inv_pendaftaran"/>
-                                            <button name="create_inv_pendaftaran" class="oe_link" type='object' groups="vit_universities_v8.group_univ_staff_baak" string="Create Invoice Pendaftaran" attrs="{'invisible': [('invoice_id','!=',False)]}"/>
+                                            <button name="create_inv_pendaftaran" class="oe_link" type='object' groups="vit_universities_v8.group_univ_pmb_baak" string="Create Invoice Pendaftaran" attrs="{'invisible': [('invoice_id','!=',False)]}"/>
                                         </div>
                                         <field name="invoice_bangunan_state" invisible="1"/>
                                         <label for="invoice_bangunan_id"/>  
                                         <div> 
                                             <field name="invoice_bangunan_id" class="oe_inline"/> 
                                             <label for="create_inv_bangunan"/>
-                                            <button name="create_inv_bangunan" class="oe_link" type='object' groups="vit_universities_v8.group_univ_staff_baak" string="Create Invoice Bangunan" attrs="{'invisible': ['|',('invoice_bangunan_id','!=',False),('invoice_state','!=','paid')]}"/>
-                                            <button name="create_krs_smt_1_dan_2" class="oe_link" type='object' groups="vit_universities_v8.group_univ_staff_baak" string="Convert Status Mahasiswa" attrs="{'invisible': ['|','|',('invoice_bangunan_id','=',False),('invoice_bangunan_state','!=','paid'),('status_mahasiswa','=','Mahasiswa')]}"/>
+                                            <button name="create_inv_bangunan" class="oe_link" type='object' groups="vit_universities_v8.group_univ_pmb_baak" string="Create Invoice Bangunan" attrs="{'invisible': ['|',('invoice_bangunan_id','!=',False),('invoice_state','!=','paid')]}"/>
+                                            <button name="create_krs_smt_1_dan_2" class="oe_link" type='object' groups="vit_universities_v8.group_univ_pmb_baak" string="Convert Status Mahasiswa" attrs="{'invisible': ['|','|',('invoice_bangunan_id','=',False),('invoice_bangunan_state','!=','paid'),('status_mahasiswa','=','Mahasiswa')]}"/>
                                         </div>                                        
                                         <field name="tgl_ujian" attrs="{'readonly': [('status_mahasiswa','!=','calon')]}"/>
                                         <field name="nilai_ujian_asli" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
@@ -177,6 +177,8 @@
         			                    <field name="tempat_lahir"/>
         			                    <field name="tanggal_lahir"/>
         			                    <field name="hubungan_keluarga_id"/>
+                                        <field name="keadaan"/>
+                                        <field name="jenjang_id" widget="selection"/>
         			                    <field name="pekerjaan"/>
         			                    <field name="alamat"/>
                                         <field name="telepon"/>
@@ -185,8 +187,8 @@
 
                                 <separator/>
                                 <group>
-                                    <field name="keluarga_alumni_id" groups="vit_universities_v8.group_univ_ka_baak"/>
-                                    <field name="karyawan_id" groups="vit_universities_v8.group_univ_ka_baak"/>
+                                    <field name="keluarga_alumni_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
+                                    <field name="karyawan_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
                                 </group>
                             </sheet>
 

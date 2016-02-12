@@ -337,8 +337,8 @@ class riwayat_pendidikan (osv.Model):
 	_name = 'master.riwayat_pendidikan'
 	
 	_columns = {
-		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa', required = True, ondelete='cascade',),
-		'nama_sekolah':fields.char('Nama Sekolah'),
+		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa', required = True,),
+		'nama_sekolah':fields.char('Nama Sekolah',required = True, ),
 		'tingkat':fields.selection([('TK','TK'),('SD','SD'),('SMP','SMP'),('SMA','SMA/SMK/SMF'),('Diploma','Akademi/Diploma'),('S1','S1'),('S2','S2'),('S3','S3')],'Tingkat'),
 		'tahun_masuk':fields.char('Tahun Masuk',size=4,),
 		'tahun_lulus':fields.char('Tahun Lulus',size=4,),
@@ -360,6 +360,8 @@ class biodata_keluarga (osv.Model):
 		'alamat':fields.text('Alamat'),
 		'telepon':fields.char('Telepon'),
 		'jenis_kelamin':fields.selection([('laki_laki','Laki-Laki'),('perempuan','Perempuan')],'Jenis Kelamin'),
+		'keadaan':fields.selection([('alm','Alm'),('ada','Masih Ada')],'Keadaan'),
+		'jenjang_id': fields.many2one('master.jenjang','Pendidikan'),
 			}
 biodata_keluarga()
 

@@ -100,7 +100,7 @@
 
 
         <!-- akademik.konversi Menu Item -->
-        <menuitem id="ujian_menu" name="Ujian" parent="vit_universities_v8.si_akademik_menu" sequence="70"/>      
+        <menuitem id="ujian_menu" name="Ujian" parent="vit_universities_v8.si_akademik_menu" sequence="70" groups="vit_universities_v8.group_menu_ujian_baak"/>      
             <menuitem id="peserta_ujian_sub_menu" name="Peserta Ujian" parent="ujian_menu" action="peserta_ujian_list_action" sequence="10"/>
 
         <!--sequance-->

@@ -287,7 +287,7 @@ class absensi_detail(osv.osv):
 		'state':fields.selection([('open','Open'),('close','Close')],'State'),
 	}
 
-class absensi_detai_nilai(osv.osv):
+class absensi_detail_nilai(osv.osv):
 	_name = "absensi.detail.nilai"
 
 	_columns = {
