@@ -34,20 +34,34 @@ class Partner(http.Controller):
 		Semester  = http.request.env['master.semester']
 		semester_ids = Semester.search([])
 
+		Lokasi  = http.request.env['master.alamat.kampus']
+		alamat_ids = Lokasi.search([])
+
+		Type  = http.request.env['master.type.mahasiswa']
+		type_mhs_ids = Type.search([])		
+		
+		Konsentrasi  = http.request.env['master.konsentrasi']
+		konsentrasi_ids = Konsentrasi.search([])
+
 		pekerjaans = [('psn','Pengawai Negeri Sipil'),('tni','TNI'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
 		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
+		type_pendaftarans = [('ganjil','Ganjil'),('Genap','Genap')]
 
 		return http.request.render('vit_universities_web.registration',
 		{
 			'partner'		: partner,
 			'target_title'	: 'Registration', 
 			'prodi_ids'		: prodi_ids,
+			'konsentrasi_ids': konsentrasi_ids,
 			'tahun_ids'		: tahun_ids,
+			'alamat_ids'    : alamat_ids,
+			'type_mhs_ids'	: type_mhs_ids,
 			'semester_ids'	: semester_ids,
 			'pekerjaans'	: pekerjaans,
 			'jenis_kelamins': jenis_kelamins,
 			'agamas'		: agamas,
+			'type_pendaftarans': type_pendaftarans,
 			'partner'		: partner,
 			'message_error'	: message_error,
 			'message_success': message_success
@@ -68,8 +82,12 @@ class Partner(http.Controller):
 		tahun_id 		= kw.get('tahun_id', '')		
 		semester_id 	= kw.get('semester_id', '')	
 		name 			= kw.get('name', '')		
-		prodi_id 		= kw.get('prodi_id', '')		
+		prodi_id 		= kw.get('prodi_id', '')
+		konsentrasi_id 	= kw.get('konsentrasi_id', '')		
 		pekerjaan 		= kw.get('pekerjaan', '')	
+		alamat_id 		= kw.get('alamat_id', '')
+		type_mhs_id 	= kw.get('type_mhs_id', '')
+		type_pendaftaran= kw.get('type_pendaftaran', '')
 
 		#pribadi
 		jenis_kelamin 	= kw.get('jenis_kelamin', '')
@@ -107,6 +125,9 @@ class Partner(http.Controller):
 		prodi 					= http.request.env['master.prodi'].browse( int(prodi_id) )
 		jadwal_id 				= http.request.env['jadwal.usm'].search([('name','=','Gelombang 1')])
 		tahun 					= http.request.env['academic.year'].browse( int(tahun_id) )
+		alamat					= http.request.env['master.alamat.kampus'].browse( int(alamat_id) )
+		type_mhs				= http.request.env['master.type.mahasiswa'].browse( int(type_mhs_id) )
+		konsentrasi				= http.request.env['master.konsentrasi'].browse( int(konsentrasi_id) )
 
 		# import pdb; pdb.set_trace()
 		if partner.reg == "/" or partner.reg == False:
@@ -125,11 +146,15 @@ class Partner(http.Controller):
 				'reg'			: reg,
 				'name'			: name,
 				'jenis_pendaftaran_id' : jenis_pendaftaran_id.id,
+				'alamat_id'		: alamat.id,
+				'type_pendaftaran': type_pendaftaran,
+				'type_mhs_id'	: type_mhs.id,
 				'street'		: street,
 				'street2'		: street2,
 				'city'			: city,
 				'fakultas_id'	: prodi.fakultas_id.id,
 				'prodi_id'		: prodi.id,
+				'konsentrasi_id': konsentrasi.id,
 				'tahun_ajaran_id': tahun.id,
 				'jadwal_usm_id'	: jadwal_id.id,
 				'jenis_kelamin' : jenis_kelamin,
