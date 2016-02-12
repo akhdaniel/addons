@@ -89,11 +89,56 @@
                 </div>    
 
                 <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="konsentrasi_id">
+                          <t t-foreach="konsentrasi_ids" t-as="konsentrasi">
+                            <option t-att-value="'%s' % (konsentrasi.id)" t-esc="konsentrasi.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_pendaftaran">
+                          <t t-foreach="type_pendaftarans" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="type_mhs_id">
+                          <t t-foreach="type_mhs_ids" t-as="type_mhs">
+                            <option t-att-value="'%s' % (type_mhs.id)" t-esc="type_mhs.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
+
+                <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan</label>
                     <div class="col-md-7 col-sm-8">
                         <select class="form-control" name="pekerjaan">
                           <t t-foreach="pekerjaans" t-as="p">
                             <option t-att-value="'%s' % (p[0])" t-esc="p[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="alamat_id">
+                          <t t-foreach="alamat_ids" t-as="alamat">
+                            <option t-att-value="'%s' % (alamat.id)" t-esc="alamat.name" />
                           </t>
                         </select>
                     </div>
@@ -242,9 +287,10 @@
 
 <template id="vit_universities_web.registration_process" name="Registration" page="True">
     <t t-call="website.layout">
-        <t t-set="title">Registration</t>
+        <t t-set="title">Registraation</t>
         <div class="container">
             <h2>Registration Sukses</h2>
+            <p>Silahkan lanjutkan transaksi dengan mengikuti link berikut..</p>
 
             <p>Goto TPA</p>
         </div>
