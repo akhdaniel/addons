@@ -20,7 +20,7 @@
 ##############################################################################
 
 import account_voucher
-import invoice
+# import invoice
 # import report
 # import wizard
 

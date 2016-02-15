@@ -12,7 +12,7 @@ The specific and easy-to-use Invoicing system in OpenERP allows you to keep trac
     'category': 'Accounting & Finance',
     'sequence': 4,
     'website' : 'http://www.vitraining.com',
-    'depends' : ['account'],
+    'depends' : ['account','account_voucher',],
     'demo' : [],
     'data' : [
         # 'security/ir.model.access.csv',
