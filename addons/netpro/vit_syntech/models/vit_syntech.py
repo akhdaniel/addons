@@ -12,6 +12,7 @@ class netpro_syntech(osv.osv):
 
     _columns = {
     	'CARD_NUMB' : fields.char('Card Number', select=1),
+        'NO_POLICY' : fields.char('NO POLICY', select=1),
     	'BIRTH_DATE' : fields.date('Birth Date', select=1),
     	'PAT_NAME' : fields.char('Pat Name', select=1),
     	'PAT_NAME1' : fields.char('Pat Name1', select=1),
