@@ -10,6 +10,7 @@
 	        		<group>
 	        			<group>
 	        				<field name="CARD_NUMB" />
+	        				<field name="NO_POLICY" />
 			        		<field name="BIRTH_DATE" />
 			        		<field name="PAT_NAME" />
 			        		<field name="PAT_NAME1" />
