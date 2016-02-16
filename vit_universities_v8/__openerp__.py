@@ -36,7 +36,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'company.xml',
             'imports.xml',
             'beasiswa_prodi.xml',
-            'users.xml',
+            #'users.xml',
             'ujian.xml',
             'jadwal_ujian.xml',
             'krs_by_mhs.xml',
