@@ -130,14 +130,14 @@
 			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
 			<field name="name">Kepala Perpustakaan</field>
         </record>
-<!-- 
+
         <record id="group_univ_staff_prodi" model="res.groups">
             <field name="category_id" ref="module_category_academic"/>
             <field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
             <field name="name">Staff Prodi</field>
         </record>
 
-		<record id="group_univ_ka_prodi" model="res.groups">
+<!-- 		<record id="group_univ_ka_prodi" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
 			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak')),(4, ref('group_univ_staff_prodi'))]"/>
 			<field name="name">Kepala Prodi</field>
