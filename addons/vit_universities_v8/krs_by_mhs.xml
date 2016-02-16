@@ -1,0 +1,127 @@
+<openerp>
+	<data> 
+
+        <record model="ir.ui.view" id="pengajuan_mhs_search">
+            <field name="name">Cari Pengajuan</field>
+            <field name="model">operasional.krs.mahasiswa</field>
+            <field name="arch" type="xml">
+                <search string="Cari jadwal">
+                    <group col="10" colspan="4">
+                         <field name="name"/>
+                         <field name="nim"/>
+                         <field name="partner_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Tahun Ajaran" help="By Tahun Ajaran" context="{'group_by':'tahun_ajaran_id'}"/>
+                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
+                        <filter icon="terp-project" string="Kelas" help="By Kelas" context="{'group_by':'kelas_id'}"/>
+                        <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
+                        <filter icon="terp-project" string="State" help="By State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+       <!--Operasional--> 
+       <record model="ir.ui.view" id="krs_mhs_tree_view">
+            <field name="name">krs.mhs.tree</field>
+            <field name="model">operasional.krs.mahasiswa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Kartu Studi" version="7.0">
+                    <field name="name"/>
+                    <field name="partner_id"/>  
+                    <field name="nim" invisible="1"/> 
+                    <field name="tahun_ajaran_id"/>                       
+                    <field name="prodi_id"/>            
+                    <field name="semester_id"/>
+                    <field name="kurikulum_id"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="krs_mhs_form_view" model="ir.ui.view">
+            <field name="name">krs.form.mhs</field>
+            <field name="model">operasional.krs.mahasiswa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Pengajuan Kartu Studi" version="7.0">
+                    <header>
+                        <button name='convert_to_krs' string='Confirm' icon="gtk-execute" states='draft' type='object' groups="vit_universities_v8.group_univ_mahasiswa" confirm="Anda yakin dengan data pengajuan KRS yang dibuat ini?"/>
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>
+                	<sheet>                        
+	                    <group>
+	                    	<group>                          
+			                    <field name="name"/>
+			                    <field name="partner_id"/>
+			                    <field name="nim" invisible="1"/> 
+			                    <field name="kelas_id" />
+		                    </group>
+		                    <group>
+			                    <field name="tahun_ajaran_id" />			                    
+                                <field name='fakultas_id'/>
+                                
+                                <field name="prodi_id"/> 
+                                <field name='konsentrasi_id' />                                                   
+			                </group>    
+	                    </group>
+                        <group>
+                            <group>
+                                <field name="semester_id" on_change="onchange_semester(semester_id, partner_id)" attrs="{'readonly': [('state','!=','draft')]}" options="{'limit': 8, 'create': false, 'create_edit': false}" />
+                                <field name="kurikulum_id" widget="selection" invisible="1"/>
+                            </group>
+                            <group>   
+                                <field name="user_id" invisible="1"/>     
+                                <field name="sks_tot" invisible="1"/>          
+<!--                                 <field name="ips" string="IPK"/>  
+                                <field name="ips_field_persemester" readonly="1" string="IPS"/>  
+                                <field name="ips_field" invisible="1"/>   -->                         
+                            </group>    
+                        </group>                        
+                        <notebook colspan="4">
+                            <page string="Kartu Studi">
+                                <field view_mode="tree,form" name="krs_mhs_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree editable="bottom">
+                                        <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                        <field name="sks" sum="Total SKS"/>
+                                        <field name="jadwal_id" domain="[('mata_kuliah_id','=',mata_kuliah_id),('tahun_ajaran_id','=',parent.tahun_ajaran_id),('prodi_id','=',parent.prodi_id),('semester_id','=',parent.semester_id),('is_active','=',True)]"/>
+                                        <field name="tahun_ajaran_id" invisible="1"/>
+                                        <field name="prodi_id" invisible="1"/>
+                                        <field name="semester_id" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                </field>
+                           </page>                       
+                        </notebook>
+
+                    </sheet>    
+                </form>
+            </field>
+        </record>
+ 
+        <record model="ir.actions.act_window" id="pengajuan_krs_list_action">
+            <field name="name">Pengajuan KRS</field>
+            <field name="res_model">operasional.krs.mahasiswa</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <!-- <field name="domain">[('state','=','draft')]</field> -->
+            <!-- <field name="context">{'default_state':'draft'}</field>  -->
+            <field name="search_view_id" ref="pengajuan_mhs_search"/>           
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Pengajuan KRS.</p><p>disini belum ada data tentang Pengajuan KRS !</p></field>
+        </record>
+
+
+        <menuitem id="krs_by_mhs" name="Pengajuan KRS" parent="vit_universities_v8.si_akademik_menu" sequence="50"/>
+            <menuitem id="krs_by_mhs_sub" name="Oleh Mahasiswa" parent="krs_by_mhs" action="pengajuan_krs_list_action" sequence="10" groups="vit_universities_v8.group_univ_mahasiswa"/>
+
+        <menuitem name="Studi" id="portal_studi" parent="portal.portal_menu" sequence="50" />
+            <menuitem id="krs_by_mhs_portal" name="Pengajuan KRS" parent="portal_studi" action="pengajuan_krs_list_action" sequence="10" groups="vit_universities_v8.group_univ_mahasiswa"/>
+
+
+    </data>   
+</openerp>
