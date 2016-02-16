@@ -75,12 +75,13 @@ class master_jadwal_ujian (osv.osv):
 		'date':fields.date('Tanggal'),
 		'hours_from' : fields.float('Jam Mulai'),
 		'hours_to' : fields.float('Jam Selesai'),
-
+		'user_id':fields.many2one('res.users','User'),
 			}
 			
 	_defaults= {
 		'is_active':True,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.jadwal.ujian'), 
+		'user_id': lambda obj, cr, uid, context: uid,
 	}
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode jadwal tidak boleh sama')]

@@ -58,12 +58,14 @@ class master_kelas (osv.Model):
 			('kelas_id','=',False)]",
 			readonly=False),    			
 		'employee_id':fields.many2one('hr.employee', domain="[('is_dosen','=',True)]",required = True,string="Dosen Wali"),
+		'user_id' : fields.many2one('res.users','User'),
 			}
 
 	_defaults = {  
 		'kuota':1,
 		'state':'draft',
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.kelas'), 
+		'user_id': lambda obj, cr, uid, context: uid,
 				}
 			
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode kelas tidak boleh sama')]

@@ -121,14 +121,13 @@ class operasional_krs (osv.Model):
 		return True
 
 	def create(self, cr, uid, vals, context=None):
-		#import pdb;pdb.set_trace()
 		prod_obj 		= self.pool.get('product.product')
 		inv_obj 		= self.pool.get('account.invoice')
 		inv_line_obj 	= self.pool.get('account.invoice.line')
 		if vals.get('kode','/')=='/':
 			npm = vals['npm']
 			if not npm :
-				npm = '<<npm_kosong>> '
+				npm = '<<nim_kosong>> '
 			smt = vals['semester_id']
 			smt_name = self.pool.get('master.semester').browse(cr,uid,smt,context=context).name
 			vals['kode'] = npm +'-'+str(smt_name) or '/'
@@ -246,7 +245,7 @@ class operasional_krs (osv.Model):
 						partner = partner_obj.browse(cr,uid,vals['partner_id'])
 						split_invoice = partner.split_invoice
 						if split_invoice < 1:
-							plit_invoice = 1
+							split_invoice = 1
 						elif split_invoice > 10: # proteksi jika salah input / input terlalu besar, set maks 10 x split
 							split_invoice = 10
 						if split_invoice == 1:														
@@ -429,7 +428,7 @@ class operasional_krs (osv.Model):
 		'semester_id':fields.many2one('master.semester','Semester',domain="[('name','<=',max_smt)]",required = True),
 		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas'), 
-		'krs_detail_ids' : fields.one2many('operasional.krs_detail','krs_id','Mata Kuliah'),
+		'krs_detail_ids' : fields.one2many('operasional.krs_detail','krs_id','Matakuliah'),
 		#'view_ipk_ids' : fields.one2many('operasional.view_ipk','krs_id','Mata Kuliah'),
 		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum'),
 		'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi Kumulatif',),
@@ -684,7 +683,7 @@ class krs_detail (osv.Model):
 		
 	_columns = {
 		'krs_id'		:fields.many2one('operasional.krs','Kode KRS',),
-		'mata_kuliah_id':fields.many2one('master.matakuliah','Mata Kuliah',required=True,ondelete="cascade"),
+		'mata_kuliah_id':fields.many2one('master.matakuliah','Matakuliah',required=True,ondelete="cascade"),
 		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
 		'quiz' 		    : fields.float('Quiz'),
 		'presentasi' 	: fields.float('Presentasi'),

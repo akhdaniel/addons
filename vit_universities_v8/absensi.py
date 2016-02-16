@@ -42,37 +42,39 @@ class absensi(osv.osv):
 		return self.name_get(cr, user, ids, context)
 
 	_columns = {
-		'name'  : fields.char('Kode',size=30,required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'mata_kuliah_id' :fields.many2one('master.matakuliah',string='Matakuliah',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'state':fields.selection([('open','Open'),('close','Closed')],'State',readonly=True, states={'open': [('readonly', False)]}),
-		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'semester_id':fields.many2one('master.semester',string='Semester',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'open': [('readonly', False)]}), 
-		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'open': [('readonly', False)]}),
-		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'open': [('readonly', False)]}),
+		'name'  : fields.char('Kode',size=30,required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'mata_kuliah_id' :fields.many2one('master.matakuliah',string='Matakuliah',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Closed')],'State',readonly=True, states={'draft': [('readonly', False)]}),
+		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'semester_id':fields.many2one('master.semester',string='Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False), 
+		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'draft': [('readonly', False)]}),
 		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa',readonly=True, states={'open': [('readonly', False)]}),
-		'absensi_nilai_ids' : fields.one2many('absensi.detail.nilai','absensi_id','Mahasiswa',readonly=True, states={'open': [('readonly', False)]}),
+		'absensi_nilai_ids' : fields.one2many('absensi.detail.nilai','absensi_id','Mahasiswa',readonly=True, states={'draft': [('readonly', False)]}),
 		#param persentase nilai
-		'ulangan' 		: fields.float('Ulangan (%)'),
-		'quiz' 		    : fields.float('Quiz (%)'),
-		'presentasi' 	: fields.float('Presentasi (%)'),
-		'quiz' 		: fields.float('Quiz (%)'),
-		'lainnya'		: fields.float('Lainnya (%)'),		
-		'absensi' : fields.float('Absensi (%)'),
-		'tugas' : fields.float('Tugas (%)'),
-		'uts' : fields.float('UTS (%)'),
-		'uas' : fields.float('UAS (%)'),
+		'ulangan' 		: fields.float('Ulangan (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'quiz' 		    : fields.float('Quiz (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'presentasi' 	: fields.float('Presentasi (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'quiz' 		: fields.float('Quiz (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'lainnya'		: fields.float('Lainnya (%)',readonly=True, states={'open': [('readonly', False)]}),		
+		'absensi' : fields.float('Absensi (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'tugas' : fields.float('Tugas (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'uts' : fields.float('UTS (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'uas' : fields.float('UAS (%)',readonly=True, states={'open': [('readonly', False)]}),
+		'user_id' : fields.many2one('res.users','User',readonly=True, ),
 
 			}
 			
 	_defaults= {
-		'state':'open',
+		'state':'draft',
 		'sesi':14,
-		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'absensi'), 
+		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'absensi'),
+		'user_id': lambda obj, cr, uid, context: uid, 
 	}
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode Absensi tidak boleh sama')]
@@ -82,6 +84,13 @@ class absensi(osv.osv):
 			self.write(cr,uid,ct.id,{'state':'open'},context=context)
 			for det in ct.absensi_ids:
 				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'open'},context=context)
+		return True	
+
+	def cancel_absensi(self,cr,uid,ids,context=None):
+		for ct in self.browse(cr,uid,ids):
+			self.write(cr,uid,ct.id,{'state':'draft'},context=context)
+			for det in ct.absensi_ids:
+				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'draft'},context=context)
 		return True	
 
 	def close_absensi(self,cr,uid,ids,context=None):
@@ -284,7 +293,7 @@ class absensi_detail(osv.osv):
 		'absensi_13'	:fields.boolean('13'),
 		'absensi_14'	:fields.boolean('14'),				
 		'percentage'	:fields.function(get_percentage_absen,type='float',string='(%)',store=True),
-		'state':fields.selection([('open','Open'),('close','Close')],'State'),
+		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
 	}
 
 class absensi_detail_nilai(osv.osv):
@@ -300,5 +309,5 @@ class absensi_detail_nilai(osv.osv):
 		'uts'			: fields.float('UTS'),
 		'uas'			: fields.float('UAS'),
 		'lainnya'		: fields.float('Lainnya'),		
-		'state':fields.selection([('open','Open'),('close','Close')],'State'),
+		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
 	}	

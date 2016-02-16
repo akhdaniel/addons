@@ -39,6 +39,7 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'users.xml',
             'ujian.xml',
             'jadwal_ujian.xml',
+            'krs_by_mhs.xml',
             # 'data/product.product.csv',
                 ],
 }
