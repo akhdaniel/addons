@@ -101,18 +101,18 @@
 			<field name="name">Wakil Rektor</field>
         </record>        
 
+        <record id="group_univ_staff_dekan" model="res.groups">
+            <field name="category_id" ref="module_category_academic"/>
+            <field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+            <field name="name">Staff Dekan</field>
+        </record> 
+
 		<record id="group_univ_dekan" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
-			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak')),(4, ref('group_univ_staff_dekan'))]"/>
 			<field name="name">Dekan</field>
         </record>
-
-		<record id="group_univ_staff_dekan" model="res.groups">
-			<field name="category_id" ref="module_category_academic"/>
-			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
-			<field name="name">Staff Dekan</field>
-        </record>    
-
+   
 		<record id="group_univ_ka_lppm" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
 			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
@@ -131,17 +131,18 @@
 			<field name="name">Kepala Perpustakaan</field>
         </record>
 
+        <record id="group_univ_staff_prodi" model="res.groups">
+            <field name="category_id" ref="module_category_academic"/>
+            <field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+            <field name="name">Staff Prodi</field>
+        </record>
+
 		<record id="group_univ_ka_prodi" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
-			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
+			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak')),(4, ref('group_univ_staff_prodi'))]"/>
 			<field name="name">Kepala Prodi</field>
         </record>
 
-		<record id="group_univstaff_prodi" model="res.groups">
-			<field name="category_id" ref="module_category_academic"/>
-			<field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/>
-			<field name="name">Staff Prodi</field>
-        </record>
 
 		<record id="group_univ_ka_laboratorium" model="res.groups">
 			<field name="category_id" ref="module_category_academic"/>
@@ -155,10 +156,16 @@
 			<field name="name">Dosen</field>
         </record>
 
+        <record id="group_univ_mahasiswa" model="res.groups">
+            <field name="category_id" ref="module_category_academic"/>
+            <!-- <field name="implied_ids" eval="[(4, ref('group_univ_external_baak'))]"/> -->
+            <field name="name">Mahasiswa</field>
+        </record>
+
     <record id="jadwal_dosen_rule" model="ir.rule">
         <field name="name">Jadwal Dosen</field>
         <field name="model_id" ref="model_master_jadwal"/>
-        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id)]</field>
+        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('user_id.is_baak','=',True)]</field>
         <field name="groups" eval="[(4, ref('group_univ_external_baak'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -169,7 +176,7 @@
     <record id="kelas_dosen_rule" model="ir.rule">
         <field name="name">Dosen Wali</field>
         <field name="model_id" ref="model_master_kelas"/>
-        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id)]</field>
+        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('user_id.is_baak','=',True)]</field>
         <field name="groups" eval="[(4, ref('group_univ_external_baak'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -180,8 +187,18 @@
     <record id="absensi_nilai_dosen_rule" model="ir.rule">
         <field name="name">Absensi dan Nilai</field>
         <field name="model_id" ref="model_absensi"/>
-        <field name="domain_force">['|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id)]</field>
+        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('user_id.is_baak','=',True)]</field>
         <field name="groups" eval="[(4, ref('group_univ_external_baak'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>         
+    </record>
+
+    <record id="pengajuan_krs_rule" model="ir.rule">
+        <field name="name">Pengajuan KRS</field>
+        <field name="model_id" ref="model_operasional_krs_mahasiswa"/>
+        <field name="domain_force">['|',('partner_id','=',user.partner_id.id),('user_id.is_baak','=',True)]</field>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
         <field name="perm_create" eval="False"/>

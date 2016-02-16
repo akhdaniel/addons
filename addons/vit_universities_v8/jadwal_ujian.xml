@@ -44,6 +44,7 @@
                     <field name="mata_kuliah_id"/>
                     <field name="employee_id"/>
                     <field name="is_active" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -64,6 +65,7 @@
                                 <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
                            </group>
                 			<group>
+                                <field name="user_id" invisible="1"/>
                                 <field name="kelas_id" domain="[('prodi_id','=',prodi_id)]"/>
                                 <field name="mata_kuliah_id"/>
                                 <field name="employee_id"/>

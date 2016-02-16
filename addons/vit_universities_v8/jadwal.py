@@ -16,7 +16,7 @@ class master_jadwal (osv.osv):
 		semester 	= vals['semester_id']
 		ruangan 	= vals['ruangan_id']
 		hari 		= vals['hari']
-		kelas 		= vals['kelas_id']
+		
 		hours_from 	= vals['hours_from']	
 		hours_to 	= vals['hours_to']	
 		kls_obj 	= self.pool.get('master.kelas')
@@ -36,26 +36,49 @@ class master_jadwal (osv.osv):
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
 		kapasitas_ruangan 	= rg_obj.browse(cr,uid,ruangan).kapasitas	
 		hasil = 0 
-		sql = "select count(partner_id) from kelas_mahasiswa_rel where kelas_id = %s" % (kelas)
-		cr.execute(sql)
-		hasil = cr.fetchone()		
-		if hasil and hasil[0] != None:
-			hasil = hasil[0]
-			if hasil > kapasitas_ruangan :
-				raise osv.except_osv(_('Error!'), _('Peserta kelas (%s) melebihi kapasitas ruangan (%s) !')%(hasil,kapasitas_ruangan))
+		if 'kelas_id' in vals:
+			kelas 		= vals['kelas_id']
+
+			sql = "select count(partner_id) from kelas_mahasiswa_rel where kelas_id = %s" % (kelas)
+			cr.execute(sql)
+			hasil = cr.fetchone()		
+			if hasil and hasil[0] != None:
+				hasil = hasil[0]
+				if hasil > kapasitas_ruangan :
+					raise osv.except_osv(_('Error!'), _('Peserta kelas (%s) melebihi kapasitas ruangan (%s) !')%(hasil,kapasitas_ruangan))
 		return super(master_jadwal, self).create(cr, uid, vals, context=context)   
 
-	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
-		if not args:
-			args = []
-		if context is None:
-			context = {}
-		ids = []
-		if name:
-			ids = self.search(cr, user, [('name','=',name)] + args, limit=limit, context=context)
+	# def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+	# 	if not args:
+	# 		args = []
+	# 	if context is None:
+	# 		context = {}
+	# 	ids = []
+	# 	if name:
+	# 		ids = self.search(cr, user, [('name','=',name)] + args, limit=limit, context=context)
+	# 	if not ids:
+	# 		ids = self.search(cr, user, [('name',operator,name)] + args, limit=limit, context=context)
+	# 	return self.name_get(cr, user, ids, context)
+
+	def name_get(self, cr, uid, ids, context=None):
+		#import pdb;pdb.set_trace()
 		if not ids:
-			ids = self.search(cr, user, [('name',operator,name)] + args, limit=limit, context=context)
-		return self.name_get(cr, user, ids, context)
+			return []
+		if isinstance(ids, (int, long)):
+					ids = [ids]
+		reads = self.read(cr, uid, ids, ['name', 'mata_kuliah_id','employee_id','ruangan_id','hari','hours_from','hours_to'], context=context)
+		res = []
+		for record in reads:
+			kode 		= record['name']
+			dosen 		= record['employee_id']
+			ruangan 	= record['ruangan_id']
+			hari 		= record['hari']
+			hours_from 	= record['hours_from']
+			hours_to 	= record['hours_to']
+			name 		= kode+' | '+dosen[1]+' | '+ruangan[1]+' | '+hari+' | '+str(hours_from)+'-'+str(hours_to)
+			res.append((record['id'], name))
+		return res
+
 
 	_columns = {
 		'name'  : fields.char('Kode',size=30,required=True),
@@ -64,7 +87,7 @@ class master_jadwal (osv.osv):
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,),
 		'semester_id':fields.many2one('master.semester',string='Semester',required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,), 
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,), 
 		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True),                
 		'employee_id' :fields.many2one('hr.employee','Dosen Utama', domain="[('is_dosen','=',True)]",required=True),
 		'sks' : fields.float('SKS'),
@@ -81,6 +104,7 @@ class master_jadwal (osv.osv):
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum"),
 		'hours_from' : fields.float('Jam Mulai'),
 		'hours_to' : fields.float('Jam Selesai'),
+		'user_id': fields.many2one('res.users','User')
 
 			}
 			
@@ -88,6 +112,7 @@ class master_jadwal (osv.osv):
 		'sesi':14,
 		'is_active':True,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'master.jadwal'), 
+		'user_id': lambda obj, cr, uid, context: uid,
 	}
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode jadwal tidak boleh sama')]

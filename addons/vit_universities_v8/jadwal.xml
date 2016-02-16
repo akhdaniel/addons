@@ -20,6 +20,7 @@
                     <field name="sesi"/>
                     <field name="mata_kuliah_id"/>
                     <field name="is_active" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -48,6 +49,7 @@
                                 <field name="sks2" attrs="{'invisible':[('employee_id2','=',False)]}"/>
                                 <field name="employee_id3"/>
                                 <field name="sks3" attrs="{'invisible':[('employee_id3','=',False)]}"/>
+                                <field name="user_id" invisible="1"/>
                 			</group>
                         </group>
                         <group>    
