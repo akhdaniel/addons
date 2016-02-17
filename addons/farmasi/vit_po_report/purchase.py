@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import osv, fields
+from openerp.report import report_sxw
 
 class purchase_order_line(osv.osv):
     _inherit  = 'purchase.order.line'
@@ -74,6 +75,8 @@ class purchase_order(osv.osv):
                         arrDict[div].append(dikiri(kosong[div]-1," "))
             return arrDict,L
 
+        # PAPER LENGTH 95 chrs
+
         # grs separator 95chrs length
         separator="-----------------------------------------------------------------------------------------------"
         
@@ -101,8 +104,8 @@ class purchase_order(osv.osv):
             
             # main title
             titles = []
-            hdL=[12,22,22,36]
-            tabs = 58
+            hdL=[12,22,18,40]
+            tabs = 54
             titles.append(ditengah(tabs,"PURCHASE ORDER"," "))
             titles.append(" ".join([dikiri(hdL[0],"No.Order :"), dikiri(hdL[1],"Order Date :"), dikiri(hdL[2],"Prepared By :"), dikiri(hdL[3],partner[:hdL[3]])]))
             titles.append(" ".join([dikiri(hdL[0],data.name), dikiri(hdL[1],data.date_order), dikiri(hdL[2],data.validator.name), dikiri(hdL[3],almatkpd[:hdL[3]])]))
@@ -115,7 +118,7 @@ class purchase_order(osv.osv):
             # lines
             lines=[]
             # panjang karakter max tiap kolom, to joined by single space
-            lgt = [26,12,10,14,12,16]        
+            lgt = [23,10,10,14,12,20]        
             lineH = ["Description","Taxes","Date Req.","Qty","Unit Price","Net Price"]
             # format header
             lines.append(separator)
@@ -123,25 +126,29 @@ class purchase_order(osv.osv):
             lines.append(separator)
             
             rp = str(data.currency_id.symbol)
+            rml_parser = report_sxw.rml_parse(cr, uid, '', context=context)
             for line in data.order_line:
                 taxes=[]
                 for tx in line.taxes_id:
                     amt = tx.amount or 0.0
                     if tx.type == 'percent': 
-                        taxes.append(" ".join([str(amt/100),"%"]))
+                        taxes.append(" ".join([str(amt*100),"%"]))
                     elif tx.type == 'fixed': 
                         taxes.append(" ".join([rp,str(amt)]))
                     else : taxes.append(tx.name)
                 taxes = ",".join(taxes)
                 names = diDiv(lgt[0],line.name)
                 # names = names.split("\n")
+                # import pdb;pdb.set_trace()
+                amt_price_unit = rml_parser.formatLang(line.price_unit, currency_obj=data.currency_id).replace(u'\xa0', u' ')
+                amt_price_stot = rml_parser.formatLang(line.price_subtotal, currency_obj=data.currency_id).replace(u'\xa0', u' ')
                 lines.append(' '.join([
                         dikiri(lgt[0],names[0]),
                         dikiri(lgt[1],taxes[:14]), 
                         dikiri(lgt[2],str(line.date_planned)), 
                         dikanan(lgt[3]," ".join([str(line.product_qty),line.product_uom.name])),
-                        dikanan(lgt[4]," ".join([rp,str(line.price_unit)])),
-                        dikanan(lgt[5]," ".join([rp,str(line.price_subtotal)])) 
+                        dikanan(lgt[4],amt_price_unit),
+                        dikanan(lgt[5],amt_price_stot) 
                         ]))
                 if len(names)>1:
                     names.remove(names[0])
@@ -149,13 +156,16 @@ class purchase_order(osv.osv):
                         lines.append(dikiri(lgt[0],nm))
             # konstruk div for 3 cols
             footerkiri = []
-            Lf={'1':tabs,'2':3,'3':20,'4':12}
+            Lf={'1':tabs,'2':3,'3':19,'4':17}
             if data.notes2:
-                footerkiri += [dikiri(Lf['1'],x) for x in diDiv(tabs,data.notes2)]
+                note = '\n'.join(["Terms & Condition :",data.notes2])
+                footerkiri += [dikiri(Lf['1'],x) for x in diDiv(tabs,note)]
             footerkanan1 = [dikiri(Lf['3'],x) for x in ["-------------------","Total Without Taxes", "Taxes","-------------------","Total"]]
-            footerkanan2 = [dikanan(Lf['4'],x) for x in  ["------------"," ".join([rp,str(data.amount_untaxed or 0.0)]) ,
-                                " ".join([rp,str(data.amount_tax or 0.0)]) ,"------------",
-                                " ".join([rp,str(data.amount_total or 0.0)])] ]
+            amt_amount_untax = rml_parser.formatLang(data.amount_untaxed, currency_obj=data.currency_id).replace(u'\xa0', u' ')
+            amt_amount_tax = rml_parser.formatLang(data.amount_tax, currency_obj=data.currency_id).replace(u'\xa0', u' ')
+            amt_amount_tot = rml_parser.formatLang(data.amount_total, currency_obj=data.currency_id).replace(u'\xa0', u' ')
+
+            footerkanan2 = [dikanan(Lf['4'],x) for x in  ["-----------------",amt_amount_untax, amt_amount_tax,"-----------------", amt_amount_tot]]
             
             kosong=[]
             elem = {}
