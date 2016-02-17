@@ -1,6 +1,32 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import osv, fields
 
+class purchase_order_line(osv.osv):
+    _inherit  = 'purchase.order.line'
+
+    def _get_tax_notes(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        res={}
+        rp = str(self.browse(cr, uid, ids[0], context).order_id.currency_id.symbol) or ''
+        for line in self.browse(cr, uid, ids, context):
+            taxes=[]
+            for tx in line.taxes_id:
+                amt = tx.amount or 0.0
+                if tx.type == 'percent': 
+                    taxes.append(" ".join([str(amt*100),"%"]))
+                elif tx.type == 'fixed': 
+                    taxes.append(" ".join([rp,str(amt)]))
+                else : taxes.append(tx.name)
+            taxes = ",".join(taxes)
+            res[line.id] = taxes
+        return res
+
+    _columns = {
+        'taxes_str': fields.function(_get_tax_notes, type='char',string='Taxes',store=False),
+    }
+
+
 class purchase_order(osv.osv):
     _inherit  = 'purchase.order'
 
