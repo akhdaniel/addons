@@ -76,7 +76,7 @@
                                 <span t-field="line.name"/>
                             </td>
                             <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
+                                <span t-esc="line.taxes_str"/>
                             </td>
                             <td class="text-center" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
                                 <span t-field="line.date_planned"/>

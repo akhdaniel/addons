@@ -14,6 +14,18 @@
                     </page>
                 </page>
             </field>
-        </record>       
+        </record>
+
+        <record id="purchase_order_form_tax_inline" model="ir.ui.view">
+            <field name="name">purchase.order.form.tax.inline</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="taxes_id" position="after">
+                    <field name="taxes_str" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
     </data>
 </openerp>
