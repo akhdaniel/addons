@@ -31,6 +31,11 @@ class purchase_order_line(osv.osv):
 class purchase_order(osv.osv):
     _inherit  = 'purchase.order'
 
+    def wkf_confirm_order(self, cr, uid, ids, context=None):
+        self.write_bc(cr,uid,ids,context)
+        super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context=context)
+        return True
+
     def write_bc(self,cr,uid,ids,context):
         # siapkan format penulisan L,R or C
         def dikiri(length,kata):
@@ -118,7 +123,7 @@ class purchase_order(osv.osv):
             # lines
             lines=[]
             # panjang karakter max tiap kolom, to joined by single space
-            lgt = [23,10,10,14,12,20]        
+            lgt = [20,7,10,14,18,21]        
             lineH = ["Description","Taxes","Date Req.","Qty","Unit Price","Net Price"]
             # format header
             lines.append(separator)
@@ -144,7 +149,7 @@ class purchase_order(osv.osv):
                 amt_price_stot = rml_parser.formatLang(line.price_subtotal, currency_obj=data.currency_id).replace(u'\xa0', u' ')
                 lines.append(' '.join([
                         dikiri(lgt[0],names[0]),
-                        dikiri(lgt[1],taxes[:14]), 
+                        dikiri(lgt[1],taxes[:lgt[1]]), 
                         dikiri(lgt[2],str(line.date_planned)), 
                         dikanan(lgt[3]," ".join([str(line.product_qty),line.product_uom.name])),
                         dikanan(lgt[4],amt_price_unit),
