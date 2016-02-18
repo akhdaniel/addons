@@ -10,6 +10,23 @@ _logger = logging.getLogger(__name__)
 class purchase_requisition_line(osv.osv):
 	_name 		= "purchase.requisition.line"
 	_inherit 	= "purchase.requisition.line"
+
+	def onchange_product_id(self, cr, uid, ids, product_id, product_uom_id, parent_analytic_account, analytic_account, parent_date, date, context=None):
+		""" Changes UoM and name if product_id changes.
+		@param name: Name of the field
+		@param product_id: Changed product_id
+		@return:  Dictionary of changed values
+		"""
+		value = {'product_uom_id': ''}
+		if product_id: 
+			prod = self.pool.get('product.product').browse(cr, uid, product_id, context=context)
+			value = {'product_uom_id': prod.uom_id.id}
+		if not analytic_account:
+			value.update({'account_analytic_id': parent_analytic_account})
+		if not date:
+			value.update({'schedule_date': parent_date})
+		return {'value': value}
+
 	_columns 	= {
 		'description' : fields.char('Description')
 	}
@@ -35,6 +52,16 @@ class purchase_requisition(osv.osv):
 				product_names.append( "%s/%s" % (line.product_id.name , line.description) )
 			results[pr.id] = ",".join(product_names)
 		return results	
+
+	def tender_in_progress(self, cr, uid, ids, context=None):
+		header=[]
+		for line in self.browse(cr,uid,ids,context)[0].line_ids:
+			if not line.product_id.is_header:
+				# since inly 1 id, and return value is [(id,name)]
+				header.append(line.product_id.name_get()[0][1]) 
+		if header:
+			raise osv.except_osv(_('Warning!'), _('Produk berikut harus diganti menjadi produk dengan serial no 10 digit \n%s.') % '\n'.join(header))
+		return super(purchase_requisition,self).tender_in_progress( cr, uid, ids, context=None)
 
 	_columns 	= {
 		'product_names' : fields.function(_product_names, type='char', string="Products"),
