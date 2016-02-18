@@ -56,7 +56,8 @@ class purchase_requisition(osv.osv):
 	def tender_in_progress(self, cr, uid, ids, context=None):
 		header=[]
 		for line in self.browse(cr,uid,ids,context)[0].line_ids:
-			if not line.product_id.is_header:
+			# print(line.product_id.is_header)
+			if line.product_id.is_header:
 				# since inly 1 id, and return value is [(id,name)]
 				header.append(line.product_id.name_get()[0][1]) 
 		if header:
