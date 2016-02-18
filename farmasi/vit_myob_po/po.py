@@ -2,6 +2,7 @@ from openerp import tools
 from openerp.osv import fields,osv
 import openerp.addons.decimal_precision as dp
 import time
+import datetime
 import logging
 from openerp.tools.translate import _
 
@@ -28,13 +29,22 @@ class purchase_order(osv.osv):
 			if po.is_myob_export == False:
 				i = i +1
 				self.write(cr, uid, po.id, {'is_myob_export':True}, context=context)
+				if po.currency_id.name == 'IDR':
+					kurs = 1
+				else:
+					kurs = po.currency_id.rate_silent
+
+				x = time.strptime(po.date_order, "%Y-%m-%d %H:%M:%S")
+				po_date = time.strftime("%d/%m/%Y", x)
+
+
 				for po_line in po.order_line:
 					# if po_line.taxes_id:
 					# 	kode_pajak = ",".join(po_line.taxes_id.name)
 					# else:
 					# 	kode_pajak = ""
 					data = {
-						'nama_perusahaan' 	: po.partner_id.name,
+						'nama_perusahaan' 	: po.partner_id.ref,
 						'statis1' 			: "",
 						'statis2' 			: "",
 						'statis3' 			: "",
@@ -43,11 +53,11 @@ class purchase_order(osv.osv):
 						'statis6' 			: "",
 						'statis7' 			: "",
 						'no_po' 			: po.name,
-						'tgl' 				: po.date_order,
+						'tgl' 				: po_date,
 						'no_pr' 			: po.requisition_id.name,
 						'statis8' 			: "",
 						'statis9' 			: "",
-						'kode_barang' 		: po_line.product_id.default_code,
+						'kode_barang' 		: po_line.product_id.default_code[:6],
 						'qty' 				: po_line.product_qty,
 						'nama_barang' 		: po_line.product_id.name,
 						'harga_unit' 		: po_line.price_unit,
@@ -71,7 +81,7 @@ class purchase_order(osv.osv):
 						'statis24' 			: "0",
 						'statis25' 			: "O",
 						'kode_currency' 	: po.currency_id.name,
-						'nilai_kurs'		: po.currency_id.rate_silent,
+						'nilai_kurs'		: kurs,
 						'statis26' 			: "2",
 						'statis27' 			: "0",
 						'statis28' 			: "0",
@@ -81,7 +91,7 @@ class purchase_order(osv.osv):
 						'order' 			: po_line.product_qty,
 						'statis32' 			: "0",
 						'statis33' 			: "",
-						'location_id' 		: po.picking_type_id.default_location_dest_id.complete_name,
+						'location_id' 		: po.picking_type_id.default_location_dest_id.location_id.name,
 						'statis34' 			: po.partner_id.ref,
 						'statis35' 			: "",
 					}
