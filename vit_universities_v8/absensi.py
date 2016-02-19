@@ -79,6 +79,39 @@ class absensi(osv.osv):
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode Absensi tidak boleh sama')]
 
+
+	def query_mahasiswa_by_pengajuan_krs(self,cr,uid,ids,context=None):
+		jadwal_obj = self.pool.get('master.jadwal')
+		for ct in self.browse(cr,uid,ids):
+			#import pdb;pdb.set_trace()
+			jadwal_exist = jadwal_obj.search(cr,uid,[('employee_id','=',ct.employee_id.id),
+														('tahun_ajaran_id','=',ct.tahun_ajaran_id.id),
+														('fakultas_id','=',ct.fakultas_id.id),
+														('prodi_id','=',ct.prodi_id.id),
+														('is_active','=',True),
+														('mata_kuliah_id','=',ct.mata_kuliah_id.id),
+														('semester_id','=',ct.semester_id.id)])
+			if jadwal_exist :
+				jadwal_exist = jadwal_exist+ [0]# tambah id 0 karena jika hasil search tdk buleh satu id
+				cr.execute("""select rp.id from res_partner rp
+								left join operasional_krs_mahasiswa okm on okm.partner_id = rp.id
+								left join operasional_krs_detail_mahasiswa okdm on okm.id = okdm.krs_mhs_id 
+								where okdm.jadwal_id in %s"""%(tuple(jadwal_exist),))
+				dpt = cr.fetchall()		
+				if dpt :
+					mhs_ids = map(lambda x: x[0], dpt)
+
+					res = []
+					for ms in mhs_ids:
+						res.append([0,0,{'partner_id': ms}])	
+					sql = "delete from absensi_detail where absensi_id=%s" % (ct.id)
+					cr.execute(sql)
+					sql = "delete from absensi_detail_nilai where absensi_id=%s" % (ct.id)
+					cr.execute(sql)						
+					self.write(cr,uid,ct.id,{'absensi_ids':res,
+											'absensi_nilai_ids':res})
+		return True	
+
 	def open_absensi(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
 			self.write(cr,uid,ct.id,{'state':'open'},context=context)
@@ -198,7 +231,7 @@ class absensi_detail(osv.osv):
 		if context is None:
 			context = {}
 		result = {}
-		#import pdb;pdb.set_trace()
+		
 		for det in self.browse(cr,uid,ids):
 			s1_h = 0
 			if det.absensi_1:

@@ -187,7 +187,7 @@
 
 <!-- Cron Job Cuti Mahasiswa -->
         <record model="ir.cron" id="cuti_mahasiswa_cron">
-            <field name="name">Activasi Cuti Mahasiswa</field>
+            <field name="name">Activasi cuti mahasiswa</field>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
             <field name="numbercall">-1</field>
@@ -199,6 +199,19 @@
             <field name="args" eval="'()'" />
         </record>
 
+<!-- Cron Job Cuti Mahasiswa otomatis karena ad invoice yg nunggak -->
+        <record model="ir.cron" id="cuti_mahasiswa_nunggak_cron">
+            <field name="name">Otomatis cuti mahasiswa karena nunggak</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="active" eval="False"/>
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'cuti.kuliah'"/>
+            <field name="function" eval="'cron_cuti_mahasiswa_karena_nunggak'"/>
+            <field name="args" eval="'()'" />
+        </record>
 
 
 	</data>

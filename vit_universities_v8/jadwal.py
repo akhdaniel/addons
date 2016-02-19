@@ -36,16 +36,17 @@ class master_jadwal (osv.osv):
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
 		kapasitas_ruangan 	= rg_obj.browse(cr,uid,ruangan).kapasitas	
 		hasil = 0 
+		#import pdb;pdb.set_trace()
 		if 'kelas_id' in vals:
 			kelas 		= vals['kelas_id']
-
-			sql = "select count(partner_id) from kelas_mahasiswa_rel where kelas_id = %s" % (kelas)
-			cr.execute(sql)
-			hasil = cr.fetchone()		
-			if hasil and hasil[0] != None:
-				hasil = hasil[0]
-				if hasil > kapasitas_ruangan :
-					raise osv.except_osv(_('Error!'), _('Peserta kelas (%s) melebihi kapasitas ruangan (%s) !')%(hasil,kapasitas_ruangan))
+			if kelas :
+				sql = "select count(partner_id) from kelas_mahasiswa_rel where kelas_id = %s" % (kelas)
+				cr.execute(sql)
+				hasil = cr.fetchone()		
+				if hasil and hasil[0] != None:
+					hasil = hasil[0]
+					if hasil > kapasitas_ruangan :
+						raise osv.except_osv(_('Error!'), _('Peserta kelas (%s) melebihi kapasitas ruangan (%s) !')%(hasil,kapasitas_ruangan))
 		return super(master_jadwal, self).create(cr, uid, vals, context=context)   
 
 	# def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):

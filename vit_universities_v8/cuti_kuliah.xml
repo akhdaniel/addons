@@ -37,6 +37,7 @@
                         <button name='set_draft' string='Set to Draft' states='cancel' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>   
                         <button name='done' string='Active' states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
+                        
                     </header>                     
                 	<sheet>
                 		<group>

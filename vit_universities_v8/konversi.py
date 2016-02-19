@@ -241,7 +241,8 @@ class konversi(osv.Model):
 										'ulangan'			: det[2],
 										'uts'				: det[2],
 										'uas'				: det[2],
-										'state'				: 'done'
+										'state'				: 'done',
+										'is_konversi'		: True,
 										}))	
 				#create KHS
 				#import pdb;pdb.set_trace()
