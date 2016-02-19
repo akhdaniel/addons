@@ -6,10 +6,10 @@
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher.view_vendor_receipt_dialog_form"/>
             <field name="arch" type="xml">
-                <field name="partner_id" position="replace">
+                <!-- <field name="partner_id" position="replace">
                     <field name="partner_id" required="1" />
+                </field> -->
                     <!-- <field name="partner_id" domain="[('customer','=',True)]" required="1" on_change="onchange_partner_id(partner_id, journal_id, amount, currency_id, type, date, context)" string="Customer" context="{'search_default_customer': 1}"/> -->
-                </field>
                 <field name="amount"  position="replace">
                     <field name="amount" class="oe_inline"
                                     string="Paid Amount"
@@ -17,28 +17,21 @@
                                     invisible="context.get('line_type', False)"
                                     />
                 </field>
-                <field name="journal_id" position="replace">
+                <!-- <field name="journal_id" position="replace">
                     <field name="journal_id"
                                     domain="[('type','in',['bank', 'cash'])]"
                                     invisible="context.get('line_type', False)"
                                     widget="selection"
                                     on_change="onchange_journal(journal_id, company_id, context)"
                                     string="Payment Method"/>
+                </field> -->
 
-                    <!--  <field name="journal_id"
-                                domain="[('type','in',['bank', 'cash'])]"
-                                widget="selection"
-                                on_change="onchange_journal(journal_id, line_cr_ids, False, partner_id, date, amount, type, company_id, context)"
-                                string="Payment Method X"/> -->
-                </field>
-
-                <field name="date"  position="replace"> 
+                <!-- <field name="date"  position="replace"> 
                     <field name="date" invisible="context.get('line_type', False)" />
                 </field>
-
+ -->
                 <xpath expr="/form/footer/button[@string='Pay']" position="replace">
-                     <button name="payment_confirm" string="Quick Pay" class="oe_highlight" type="object"/> or
-                                <button string="Cancel" class="oe_link" special="cancel"/>
+                     <button name="button_proforma_voucher" string="Quick Pay" class="oe_highlight" type="object"/> 
                 </xpath>
             </field>
         </record>
