@@ -14,7 +14,7 @@ class cuti_kuliah(osv.Model):
 		'partner_id' : fields.many2one('res.partner','Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]"),
 		'from_semester_id':fields.many2one('master.semester','Dari Semester',required=True),
 		'to_semester_id':fields.many2one('master.semester','Sampai Semester',required=True),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True),
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False),
 		'prodi_id':fields.many2one('master.prodi','Program Studi',required=True),
 		# 'jurusan_id':fields.many2one('master.jurusan','Jurusan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'fakultas_id':fields.many2one('master.fakultas','Fakultas',required=True),
@@ -121,5 +121,42 @@ class cuti_kuliah(osv.Model):
 				partner_obj.write(cr,uid,mhs.partner_id.id,{'status_mahasiswa':'Mahasiswa'})
 
 		return True
+
+
+	####################################################################################################
+	# Cron Job untuk generate cuti jika mahasiswa telat bayar uang ujian (UAS)
+	####################################################################################################
+	def cron_cuti_mahasiswa_karena_nunggak(self, cr, uid, ids=None,context=None):
+		partner_obj 	= self.pool.get('res.partner')
+		invoice_obj 	= self.pool.get('account.invoice')
+		event_obj 		= self.pool.get('event.event')
+
+		now = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+		date_now =datetime.strptime(now[:10],"%Y-%m-%d")
+		start_date = date_now.strftime("%Y-%m-%d 00:00:00")
+		start_end  = date_now.strftime("%Y-%m-%d 23:59:59")
+
+		event_exist = event_obj.search(cr,uid,[('date_begin','>=',start_date),('date_begin','<=',start_end),('state','=','confirm')])
+		if event_exist :	
+			mahasiswa_nunggak = invoice_obj.search(cr,uid,[('date_invoice','=',now[:10]),('state','=','open'),('krs_id','!=',False)])
+			if mahasiswa_nunggak:
+				mhs_ids = []
+				for inv in invoice_obj.browse(cr,uid,mahasiswa_nunggak):
+					if inv.id not in mhs_ids : 
+						mhs_ids.append(inv.partner_id.id)
+						self.create(cr,uid,{'partner_id'		: inv.partner_id.id,
+											'tahun_ajaran_id'	: inv.partner_id.tahun_ajaran_id.id,
+											'fakultas_id'		: inv.partner_id.fakultas_id.id,
+											'prodi_id'			: inv.partner_id.prodi_id.id,
+											'kelas_id'			: inv.partner_id.kelas_id.id or False,
+											'state' 			: 'confirm',
+											'notes'				: 'Ada tunggakan invoice '+str(inv.number),
+											'from_semester_id' 	: inv.krs_id.semester_id.id,
+											'to_semester_id'	: 8})
+					partner_obj.write(cr,uid,inv.partner_id.id,{'status_mahasiswa':'cuti'})
+					invoice_obj.write(cr,uid,inv.id,{'comment':'Mahasiswa ini sedang dicutikan oleh sistem karena ada keterlambatan pembayaran atas invoice ini'})
+
+		return True
+
 			
 cuti_kuliah()

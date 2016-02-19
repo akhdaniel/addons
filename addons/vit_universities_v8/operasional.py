@@ -698,6 +698,7 @@ class krs_detail (osv.Model):
 		'nilai_huruf_field'	:fields.char('Nilai Huruf Field'),
 		'transkrip_id'	:fields.many2one('operasional.transkrip','Transkrip'),
 		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
+		'is_konversi'	:fields.boolean('Konversi?'),
 			}
 
 	_defaults={
