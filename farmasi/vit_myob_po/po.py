@@ -37,14 +37,18 @@ class purchase_order(osv.osv):
 				x = time.strptime(po.date_order, "%Y-%m-%d %H:%M:%S")
 				po_date = time.strftime("%d/%m/%Y", x)
 
+				old_po_name  = ''
+				j = 0
 
 				for po_line in po.order_line:
 					# if po_line.taxes_id:
 					# 	kode_pajak = ",".join(po_line.taxes_id.name)
 					# else:
 					# 	kode_pajak = ""
+					nama_perusahaan = po.partner_id.ref
+					po_name = po.name
 					data = {
-						'nama_perusahaan' 	: po.partner_id.ref,
+						'nama_perusahaan' 	: nama_perusahaan,
 						'statis1' 			: "",
 						'statis2' 			: "",
 						'statis3' 			: "",
@@ -52,7 +56,7 @@ class purchase_order(osv.osv):
 						'statis5' 			: "",
 						'statis6' 			: "",
 						'statis7' 			: "",
-						'no_po' 			: po.name,
+						'no_po' 			: po_name,
 						'tgl' 				: po_date,
 						'no_pr' 			: po.requisition_id.name,
 						'statis8' 			: "",
@@ -96,6 +100,15 @@ class purchase_order(osv.osv):
 						'statis35' 			: "",
 					}
 					myob_export.create(cr, uid, data, context=context)
+
+
+					# blank line if different po
+					if old_po_name != po_name and j != 0:
+						data = {'nama_perusahaan':''}
+						myob_export.create(cr, uid, data, context=context)
+
+					old_po_name = po_name
+					j += 1
 
 		cr.commit()
 		raise osv.except_osv( 'OK!' , 'Done creating %s PO to Export ' % (i) )		
