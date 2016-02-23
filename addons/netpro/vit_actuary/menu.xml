@@ -31,6 +31,7 @@
     <menuitem name="Actuary" id="menu_netpro_actuary_configuration" parent="menu_netpro_configuration" sequence="5"/>
 		<menuitem name="Age Band" action="action_netpro_age_band" id="menu_netpro_actuary_age_band" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Benefit Setting" action="action_netpro_benefit" id="menu_netpro_actuary_benefit_setting" parent="menu_netpro_actuary_configuration" sequence="10"/>
+		<menuitem name="Master Benefit Map" action="action_netpro_benefit_map" id="menu_netpro_actuary_benefit_map_setting" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Benefit Unit" action="action_netpro_benefit_unit" id="menu_netpro_actuary_benefit_unit" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Claim Document" id="menu_netpro_actuary_claim_document" parent="menu_netpro_actuary_configuration" sequence="10"/>
 		<menuitem name="Default Limit" id="menu_netpro_default_limit" action="action_netpro_default_limit" parent="menu_netpro_actuary_configuration"  sequence="10"/>

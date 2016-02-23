@@ -1,0 +1,36 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_benefit_map_form">
+        <field name="name">netpro.benefit_map.form</field>
+        <field name="model">netpro.benefit_map</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.benefit_map">
+                <group>
+                    <field name="name"/>
+                    <field name="category"/>
+                    <field name="code"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_benefit_map_tree">
+        <field name="name">netpro.benefit_map.tree</field>
+        <field name="model">netpro.benefit_map</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.benefit_map">
+                <field name="name"/>
+                <field name="category"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_benefit_map">
+        <field name="name">Master Benefit Map</field>
+        <field name="res_model">netpro.benefit_map</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>
