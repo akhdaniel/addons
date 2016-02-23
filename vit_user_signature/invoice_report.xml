@@ -1,0 +1,15 @@
+<openerp>
+    <data>
+        <!-- Inherit invoice report (from module sale) -->
+        <template id="report_invoice_inherit_demo" inherit_id="account.report_invoice_document">
+	    <!-- Finds the first table with as class table table-condensed and gives the ability to modify it
+		 This will replace everything withing tr (including tr)-->
+		    <xpath expr="(//div[@class='row'])[1]" position="after">
+                <p>
+                	<span t-field="o.user_id.partner_id.signature" 
+                		t-field-options="{&quot;widget&quot;: &quot;image&quot;}"/>
+                </p>
+		    </xpath>
+        </template>
+    </data>
+</openerp>

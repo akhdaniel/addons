@@ -1,0 +1,14 @@
+<openerp>
+	<data>
+        <record id="view_partner_sign_form" model="ir.ui.view">
+            <field name="name">res.partner.sign</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            	<field name="website" position="after">
+            		<field name="signature" widget="image"/>
+            	</field>
+            </field>
+        </record>
+	</data>
+</openerp>
