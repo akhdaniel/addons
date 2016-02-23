@@ -37,10 +37,8 @@
 							<field name='unit_id'						 />
 							<field name='unit_alt' 					 />
 							<field name='claim_type_id'				 />
-							<div>
-								<field name='max_frequency' class="oe_inline" />
-								<field name='max_frequency_interval' class="oe_inline" />
-							</div>
+							<field name='max_frequency' class="oe_inline" />
+							<field name='max_frequency_interval' class="oe_inline" />
 							<field name='reinstate_in' 				 />
 							<field name='pre_hospitalization'		 />
 							<field name='post_hospitalization' 		 />
@@ -57,26 +55,32 @@
 							<field name='claimable_benefit' 		 />
 							<field name='hide_on_printing' 			 />
 							<field name='pre_post_maternity_benefit' />
-							<field name='benefit_category' 			 />
+							<field name='benefit_category_id' 		 />
 							<field name='pool_fund_benefit' 		 />
-
 			            </group>
+			        </group>
+
+			        <group>
+			        	<group colspan="4">
+			        		<field name="external_benefit_code" />
+			        		<field name="show_benefit_on_receipt" />
+			        		<field name="show_benefit_limit_on_receipt" />
+			        	</group>
 			        </group>
 
 		            <notebook>
 		            	<page string="Diagnosis">
-				            <field name="benefit_diagnosis_ids">
-				            	<tree string="Diagnosis">
-					                <field name="diagnosis_id"/>       
-					            </tree>
-					        </field>
+				            <field name="benefit_diagnosis_ids" />
 					    </page>
 		            	<page string="EDC Maps">
 				            <field name="benefit_edc_map_ids">
-				            	<tree string="benefit_edc_map_ids">
-					                <field name="name"/>       
-					            </tree>
-					        </field>
+				            	<form string="netpro.benefit_map">
+				            		<group>
+				            			<field name="category" />
+				            			<field name="benefit_map_id" domain="[('category','=',category)]" />
+				            		</group>
+				            	</form>
+				            </field>
 					    </page>
 		            	<page string="External Maps">
 				            <field name="benefit_external_map_ids">

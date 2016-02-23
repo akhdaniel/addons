@@ -1,4 +1,4 @@
-id,code,name,name_alt,description,description_alt,short_name,level,unit_id,unit_alt,claim_type_id,max_frequency,reinstate_in,pre_hospitalization,post_hospitalization,limit_from_surgery,limit_from_parent_benefit,allowed_benefit_from,allowed_benefit_to,accumulated_for_one_day,reinstateable_benefit,surgery_benefit,group_term_life_benefit,claimable_benefit,hide_on_printing,pre_post_maternity_benefit,benefit_category,pool_fund_benefit
+id,code,name,name_alt,description,description_alt,short_name,level,unit_id,unit_alt,claim_type_id,max_frequency,reinstate_in,pre_hospitalization,post_hospitalization,limit_from_surgery,limit_from_parent_benefit,allowed_benefit_from,allowed_benefit_to,accumulated_for_one_day,reinstateable_benefit,surgery_benefit,group_term_life_benefit,claimable_benefit,hide_on_printing,pre_post_maternity_benefit,benefit_category_id,pool_fund_benefit
 benefit1,D1110,Perawatan Gigi Dasar,,Perawatan Gigi Dasar,,,,,,,,,,,,,,,,,,,,,,,
 benefit2,D1120,Perawatan Pencegahan,,Perawatan Pencegahan,,,,,,,,,,,,,,,,,,,,,,,
 benefit3,D1130,Perawatan Gusi,,Perawatan Gusi,,,,,,,,,,,,,,,,,,,,,,,

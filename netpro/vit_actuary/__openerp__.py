@@ -66,7 +66,10 @@
                 'views/room_view.xml',
                 'views/default_limit.xml',
                 'views/email_template.xml',
+                'views/benefit_map.xml',
 
+                'data/benefit_map_data.xml',
+                'data/benefit_category_data.xml',
                 'data/marital_data.xml',
                 'data/gender.xml',
                 'data/provider_level_data.xml',

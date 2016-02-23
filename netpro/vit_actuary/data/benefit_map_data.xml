@@ -1,0 +1,127 @@
+<openerp>
+	<data>
+		<!-- BENEFIT MAP OUTPATIENT -->
+		<record model="netpro.benefit_map" id="ben_map1">
+			<field name="name">Jasa Dokter Umum</field>
+			<field name="category">Outpatient</field>
+			<field name="code">01</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map2">
+			<field name="name">Jasa Specialist</field>
+			<field name="category">Outpatient</field>
+			<field name="code">02</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map3">
+			<field name="name">Obat - Obatan</field>
+			<field name="category">Outpatient</field>
+			<field name="code">03</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map4">
+			<field name="name">Penunjang Diagnostic</field>
+			<field name="category">Outpatient</field>
+			<field name="code">04</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map5">
+			<field name="name">Tindakan</field>
+			<field name="category">Outpatient</field>
+			<field name="code">05</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map6">
+			<field name="name">Laboratorium</field>
+			<field name="category">Outpatient</field>
+			<field name="code">06</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map7">
+			<field name="name">Lain - Lain</field>
+			<field name="category">Outpatient</field>
+			<field name="code">07</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map8">
+			<field name="name">Benefit Total</field>
+			<field name="category">Outpatient</field>
+			<field name="code">00</field>
+		</record>
+
+		<!-- BENEFIT MAP INPATIENT -->
+		<record model="netpro.benefit_map" id="ben_map9">
+			<field name="name">Jasa Dokter Umum</field>
+			<field name="category">Inpatient</field>
+			<field name="code">01</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map10">
+			<field name="name">Jasa Specialist</field>
+			<field name="category">Inpatient</field>
+			<field name="code">02</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map11">
+			<field name="name">Obat - Obatan</field>
+			<field name="category">Inpatient</field>
+			<field name="code">03</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map12">
+			<field name="name">Penunjang Diagnostic</field>
+			<field name="category">Inpatient</field>
+			<field name="code">04</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map13">
+			<field name="name">Tindakan</field>
+			<field name="category">Inpatient</field>
+			<field name="code">05</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map14">
+			<field name="name">Kamar</field>
+			<field name="category">Inpatient</field>
+			<field name="code">06</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map15">
+			<field name="name">Lain - Lain</field>
+			<field name="category">Inpatient</field>
+			<field name="code">07</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map16">
+			<field name="name">Administarsi Rawat Inap</field>
+			<field name="category">Inpatient</field>
+			<field name="code">08</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map17">
+			<field name="name">Jasa Dokter Bedah</field>
+			<field name="category">Inpatient</field>
+			<field name="code">09</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map18">
+			<field name="name">Bidan Perawat Pribadi</field>
+			<field name="category">Inpatient</field>
+			<field name="code">10</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map19">
+			<field name="name">Kamar Operasi</field>
+			<field name="category">Inpatient</field>
+			<field name="code">11</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map20">
+			<field name="name">Anastesi</field>
+			<field name="category">Inpatient</field>
+			<field name="code">12</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map21">
+			<field name="name">ICU</field>
+			<field name="category">Inpatient</field>
+			<field name="code">13</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map22">
+			<field name="name">Ambulance</field>
+			<field name="category">Inpatient</field>
+			<field name="code">14</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map23">
+			<field name="name">Gigi Darurat</field>
+			<field name="category">Inpatient</field>
+			<field name="code">15</field>
+		</record>
+		<record model="netpro.benefit_map" id="ben_map24">
+			<field name="name">Benefit Total</field>
+			<field name="category">Inpatient</field>
+			<field name="code">00</field>
+		</record>
+	</data>
+</openerp>

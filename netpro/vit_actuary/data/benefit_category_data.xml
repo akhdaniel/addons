@@ -1,0 +1,40 @@
+<openerp>
+	<data>
+		<record model="netpro.benefit_category" id="ben_cat1">
+			<field name="name">Inpatient</field>
+			<field name="description">Inpatient</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat2">
+			<field name="name">Outpatient</field>
+			<field name="description">Outpatient</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat3">
+			<field name="name">Maternity</field>
+			<field name="description">Maternity</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat4">
+			<field name="name">Dental</field>
+			<field name="description">Dental</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat5">
+			<field name="name">Glasses</field>
+			<field name="description">Glasses</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat6">
+			<field name="name">Personal Accident</field>
+			<field name="description">Personal Accident</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat7">
+			<field name="name">Medical Check Up</field>
+			<field name="description">Medical Check Up</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat8">
+			<field name="name">Medivac Evacuation</field>
+			<field name="description">Medivac Evacuation</field>
+		</record>
+		<record model="netpro.benefit_category" id="ben_cat9">
+			<field name="name">Others</field>
+			<field name="description">Others</field>
+		</record>
+	</data>
+</openerp>

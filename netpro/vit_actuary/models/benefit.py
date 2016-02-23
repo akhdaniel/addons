@@ -27,9 +27,10 @@ class benefit(osv.osv):
 		'pre_hospitalization'		: fields.float("Pre Hospitalization", help="Day(s)"),
 		'post_hospitalization' 		: fields.float("Post Hospitalization", help="Day(s)"),
 		'limit_from_surgery'  		: fields.float("limit from Surgery", help="% (eg. Anesthesy Benefit)"),
-		'limit_from_parent_benefit' : fields.float("Limit From Parent Benefit", help="%"),
 		'allowed_benefit_from' 		: fields.float("allowed Benefit From", help="%"),
 		'allowed_benefit_to' 		: fields.float("Allowed Benefit To", help="%"),
+		'limit_from_parent_benefit' : fields.float("Limit From Parent Benefit", help="%"),
+		'benefit_category_id' 		: fields.many2one("netpro.benefit_category", "Benefit Category"),
 
 		'accumulated_for_one_day'	: fields.boolean("Accumulated for One Day"),
 		'reinstateable_benefit' 	: fields.boolean("Reinstateable Benefit"),
@@ -38,12 +39,15 @@ class benefit(osv.osv):
 		'claimable_benefit' 		: fields.boolean("Claimable Benefit"),
 		'hide_on_printing' 			: fields.boolean("Hide on Printing"),
 		'pre_post_maternity_benefit': fields.boolean("Pre & Post Maternity Benefit"),
-		'benefit_category' 			: fields.boolean("Benefit Category"),
 		'pool_fund_benefit' 		: fields.boolean("Pool Fund Benefit"),
+
+		'external_benefit_code'		: fields.char('External Benefit Code'),
+		'show_benefit_on_receipt'	: fields.boolean('Show Benefit On Receipt'),
+		'show_benefit_limit_on_receipt'	: fields.boolean('Show Benefit Limit On Receipt'),
 
 		'benefit_external_map_ids'	: fields.one2many('netpro.benefit_external_map','benefit_id','External Maps', ondelete="cascade"),
 		'benefit_diagnosis_ids'		: fields.one2many('netpro.benefit_diagnosis','benefit_id','Diagnosis', ondelete="cascade"),
-		'benefit_edc_map_ids'		: fields.one2many('netpro.benefit_edc_map','benefit_id','EDC Maps', ondelete="cascade"),
+		'benefit_edc_map_ids'		: fields.one2many('netpro.benefit_edc_map','benefit_id','EDC Map', ondelete="cascade"),
 		'benefit_rate_ids'			: fields.one2many('netpro.benefit_rate','benefit_id','Rate', ondelete="cascade"),
 		'created_by_id' 			: fields.many2one('res.users', 'Creator'),
 		'tpa_id' 					: fields.many2one('netpro.tpa', 'TPA'),
@@ -82,17 +86,19 @@ class benefit(osv.osv):
 
 class benefit_diagnosis(osv.osv):
 	_name 		= "netpro.benefit_diagnosis"
+	_rec_name 	= "diagnosis_id"
 	_columns 	= {
-		'name'			: fields.char("Name"),
-		'benefit_id' 	: fields.many2one('netpro.benefit', 'Benefit'),
 		'diagnosis_id'	: fields.many2one('netpro.diagnosis', 'Diagnosis'),
+		'benefit_id' 	: fields.many2one('netpro.benefit', 'Benefit'),
 	}
 
 class benefit_edc_map(osv.osv):
 	_name 		= "netpro.benefit_edc_map"
+	_rec_name 	= "benefit_map_id"
 	_columns 	= {
-		'name'			: fields.char("Name"),
-		'benefit_id' 	: fields.many2one('netpro.benefit', 'Benefit'),
+		'category' 			: fields.selection([('Outpatient','Outpatient'),('Inpatient','Inpatient')],'Category'),
+		'benefit_map_id' 	: fields.many2one('netpro.benefit_map', 'Benefit Map'),
+		'benefit_id'		: fields.many2one('netpro.benefit', 'Benefit'),
 	}
 
 class benefit_external_map(osv.osv):
@@ -107,4 +113,11 @@ class benefit_rate(osv.osv):
 	_columns 	= {
 		'name'			: fields.char("Name"),
 		'benefit_id' 	: fields.many2one('netpro.benefit', 'Benefit'),
+	}
+
+class benefit_category(osv.osv):
+	_name 		= "netpro.benefit_category"
+	_columns 	= {
+		'name'			: fields.char("Name"),
+		'description' 	: fields.text('Description'),
 	}
