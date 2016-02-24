@@ -349,7 +349,7 @@
         <field name="model">netpro.member</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="netpro.member">
+            <tree string="netpro.member" colors="red:state == 'nonactive'">
                 <field name="policy_holder" invisible='1'/>
                 <field name="policy_id"/>
                 <field name="name"/>
