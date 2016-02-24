@@ -75,7 +75,7 @@ class benefit(osv.osv):
 			pass
 		vals.update({
 			'created_by_id':uid,
-			'external_benefit_code': external_benefit_code_val
+			'external_benefit_code': external_benefit_code_val,
 			'tpa_id':tpa_val,
 		})
 
