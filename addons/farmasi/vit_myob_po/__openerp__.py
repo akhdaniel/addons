@@ -7,7 +7,8 @@ PO export to MYOB       """,
     'author': 'akhmad.daniel@gmail.com',
     'depends': ['purchase'],
     'data': [
-        'po.xml'
+        'po.xml',
+        'cron.xml',
     ],
     'test': [],    
     'installable': True,
