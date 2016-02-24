@@ -62,12 +62,15 @@ class benefit(osv.osv):
 
 		external_benefit_code_val = False
 
-		if vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) > 1:
-			raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
-		elif vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) == 1:
-			benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
-			benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
-			external_benefit_code_val = benefit_map_obj.code
+		if vals['benefit_edc_map_ids']:
+			if len(vals['benefit_edc_map_ids']) > 1:
+				raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
+			elif vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) == 1:
+				benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
+				benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
+				external_benefit_code_val = benefit_map_obj.code
+			else:
+				True
 		cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
 		tpa_val = False
 		if cur_user.tpa_id:
