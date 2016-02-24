@@ -88,6 +88,7 @@ class benefit(osv.osv):
 		external_benefit_code_val = False
 
 		if 'benefit_edc_map_ids' in vals.keys():
+			import pdb; pdb.set_trace()
 			if len(vals['benefit_edc_map_ids']) > 1:
 				raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
 			elif vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) == 1:
@@ -99,7 +100,7 @@ class benefit(osv.osv):
 			'external_benefit_code': external_benefit_code_val
 		})
 
-		return super(benefit, self).create(cr, uid, vals, context=context)
+		return super(benefit, self).write(cr, uid, ids, vals, context=context)
 
 	def name_get(self, cr, uid, ids, context=None):
 		if not ids:
