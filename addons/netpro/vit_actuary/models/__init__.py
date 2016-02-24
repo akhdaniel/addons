@@ -8,6 +8,7 @@ import gl_notes
 import group_size
 import holiday
 import lob
+import benefit_map
 import benefit
 import modal_factor
 import product
@@ -34,4 +35,3 @@ import room
 import alter_model
 import default_limit
 import email_template
-import benefit_map
