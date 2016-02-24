@@ -2,14 +2,14 @@
 <data>
     <record model="netpro.product" id="product1">
         <field name="product_type_id" ref="vit_actuary.product_type1"/>
-        <field name="code">RI</field>
+        <field name="code">IP</field>
         <field name="name">Rawat Inap</field>
         <field name="description">Rawat Inap</field>
     </record>
 
     <record model="netpro.product" id="product2">
         <field name="product_type_id" ref="vit_actuary.product_type2"/>
-        <field name="code">RJ</field>
+        <field name="code">OP</field>
         <field name="name">Rawat Jalan</field>
         <field name="description">Rawat Jalan</field>
     </record>
