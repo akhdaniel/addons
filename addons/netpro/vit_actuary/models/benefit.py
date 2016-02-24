@@ -59,6 +59,15 @@ class benefit(osv.osv):
     ]
 
 	def create(self, cr, uid, vals, context=None):
+
+		external_benefit_code_val = False
+
+		if vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) > 1:
+			raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
+		elif vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) == 1:
+			benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
+			benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
+			external_benefit_code_val = benefit_map_obj.code
 		cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
 		tpa_val = False
 		if cur_user.tpa_id:
@@ -66,11 +75,28 @@ class benefit(osv.osv):
 			pass
 		vals.update({
 			'created_by_id':uid,
+			'external_benefit_code': external_benefit_code_val,
 			'tpa_id':tpa_val,
 		})
 
 		new_record = super(benefit, self).create(cr, uid, vals, context=context)
 		return new_record
+
+	def write(self, cr, uid, ids, vals, context=None):
+		external_benefit_code_val = False
+
+		if vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) > 1:
+			raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
+		elif vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) == 1:
+			benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
+			benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
+			external_benefit_code_val = benefit_map_obj.code
+
+		vals.update({
+			'external_benefit_code': external_benefit_code_val
+		})
+
+		return super(benefit, self).create(cr, uid, vals, context=context)
 
 	def name_get(self, cr, uid, ids, context=None):
 		if not ids:
