@@ -31,6 +31,7 @@ class benefit(osv.osv):
 		'allowed_benefit_to' 		: fields.float("Allowed Benefit To", help="%"),
 		'limit_from_parent_benefit' : fields.float("Limit From Parent Benefit", help="%"),
 		'benefit_category_id' 		: fields.many2one("netpro.benefit_category", "Benefit Category"),
+		'benefit_type' 		 		: fields.related('benefit_category_id', 'type' , type="char", relation="netpro.benefit_category", string="Benefit Type", store=False),
 
 		'accumulated_for_one_day'	: fields.boolean("Accumulated for One Day"),
 		'reinstateable_benefit' 	: fields.boolean("Reinstateable Benefit"),
@@ -58,6 +59,15 @@ class benefit(osv.osv):
     ]
 
 	def create(self, cr, uid, vals, context=None):
+
+		external_benefit_code_val = False
+
+		if vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) > 1:
+			raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
+		else:
+			benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
+			benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
+			external_benefit_code_val = benefit_map_obj.code
 		cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
 		tpa_val = False
 		if cur_user.tpa_id:
@@ -65,11 +75,28 @@ class benefit(osv.osv):
 			pass
 		vals.update({
 			'created_by_id':uid,
+			'external_benefit_code': external_benefit_code_val
 			'tpa_id':tpa_val,
 		})
 
 		new_record = super(benefit, self).create(cr, uid, vals, context=context)
 		return new_record
+
+	def write(self, cr, uid, ids, vals, context=None):
+		external_benefit_code_val = False
+
+		if vals['benefit_edc_map_ids'] and len(vals['benefit_edc_map_ids']) > 1:
+			raise osv.except_orm(('Warning!'),("Cannot add EDC Map more than 1 record"))
+		else:
+			benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
+			benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
+			external_benefit_code_val = benefit_map_obj.code
+
+		vals.update({
+			'external_benefit_code': external_benefit_code_val
+		})
+
+		return super(benefit, self).create(cr, uid, vals, context=context)
 
 	def name_get(self, cr, uid, ids, context=None):
 		if not ids:
@@ -84,6 +111,19 @@ class benefit(osv.osv):
 
 		return res
 
+	def onchange_ben_cat(self, cr, uid, ids, ben_cat_id):
+		res = {}
+		if not ben_cat_id:
+			return res
+		data = self.pool.get('netpro.benefit_category').browse(cr, uid, ben_cat_id, context=None)
+		res = {
+			'value' : {
+				'benefit_type' : data.type,
+			}
+		}
+		return res
+        
+
 class benefit_diagnosis(osv.osv):
 	_name 		= "netpro.benefit_diagnosis"
 	_rec_name 	= "diagnosis_id"
@@ -96,7 +136,7 @@ class benefit_edc_map(osv.osv):
 	_name 		= "netpro.benefit_edc_map"
 	_rec_name 	= "benefit_map_id"
 	_columns 	= {
-		'category' 			: fields.selection([('Outpatient','Outpatient'),('Inpatient','Inpatient')],'Category'),
+		'category' 			: fields.char('Category'),
 		'benefit_map_id' 	: fields.many2one('netpro.benefit_map', 'Benefit Map'),
 		'benefit_id'		: fields.many2one('netpro.benefit', 'Benefit'),
 	}
@@ -119,5 +159,6 @@ class benefit_category(osv.osv):
 	_name 		= "netpro.benefit_category"
 	_columns 	= {
 		'name'			: fields.char("Name"),
+		'type'			: fields.char("Type"),
 		'description' 	: fields.text('Description'),
 	}

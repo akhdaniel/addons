@@ -55,7 +55,8 @@
 							<field name='claimable_benefit' 		 />
 							<field name='hide_on_printing' 			 />
 							<field name='pre_post_maternity_benefit' />
-							<field name='benefit_category_id' 		 />
+							<field name='benefit_category_id' on_change="onchange_ben_cat(benefit_category_id)"		 />
+							<field name='benefit_type' readonly="1"	 />
 							<field name='pool_fund_benefit' 		 />
 			            </group>
 			        </group>
@@ -73,11 +74,11 @@
 				            <field name="benefit_diagnosis_ids" />
 					    </page>
 		            	<page string="EDC Maps">
-				            <field name="benefit_edc_map_ids">
+				            <field name="benefit_edc_map_ids" context="{'default_category':benefit_type}">
 				            	<form string="netpro.benefit_map">
 				            		<group>
-				            			<field name="category" />
-				            			<field name="benefit_map_id" domain="[('category','=',category)]" />
+				            			<field name="category" readonly='1' />
+				            			<field name="benefit_map_id" domain="[('category','=', category)]"/>
 				            		</group>
 				            	</form>
 				            </field>

@@ -15,3 +15,16 @@ class netpro_benefit_map(osv.osv):
 		'category' : fields.char('Category'),
 		'code' : fields.char('Code'),
 	}
+
+	def name_get(self, cr, uid, ids, context=None):
+		if not ids:
+			return []
+		res = []
+		for r in self.browse(cr, uid, ids, context=context):
+			if r.code and r.name:
+				name = "[%s] %s" % (r.code, r.name)
+				res.append((r.id,name))
+			else :
+				res.append((r.id,r.code))
+
+		return res
