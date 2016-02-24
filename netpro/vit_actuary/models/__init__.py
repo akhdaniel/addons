@@ -1,4 +1,3 @@
-import benefit
 import product_type
 import diagnosis
 import benefit_unit
@@ -9,6 +8,7 @@ import gl_notes
 import group_size
 import holiday
 import lob
+import benefit
 import modal_factor
 import product
 import product_plan
