@@ -69,8 +69,7 @@ class benefit(osv.osv):
 				benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
 				benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
 				external_benefit_code_val = benefit_map_obj.code
-			else:
-				True
+
 		cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
 		tpa_val = False
 		if cur_user.tpa_id:
@@ -95,8 +94,6 @@ class benefit(osv.osv):
 				benefit_map_id = vals['benefit_edc_map_ids'][0][2].values()[0]
 				benefit_map_obj = self.pool.get('netpro.benefit_map').browse(cr, uid, benefit_map_id, context=None)
 				external_benefit_code_val = benefit_map_obj.code
-			else:
-				True
 
 		vals.update({
 			'external_benefit_code': external_benefit_code_val
