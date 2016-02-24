@@ -34,7 +34,8 @@
                 'security/ir.model.access.csv',
                 
                 'views/membership.xml',
-                'views/age_band.xml', 
+                'views/age_band.xml',
+                'views/benefit_map.xml',
                 'views/benefit.xml', 
                 'views/benefit_unit.xml', 
                 'views/diagnosis.xml', 
@@ -66,7 +67,6 @@
                 'views/room_view.xml',
                 'views/default_limit.xml',
                 'views/email_template.xml',
-                'views/benefit_map.xml',
 
                 'data/benefit_map_data.xml',
                 'data/benefit_category_data.xml',
