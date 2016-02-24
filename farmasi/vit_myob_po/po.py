@@ -4,7 +4,10 @@ import openerp.addons.decimal_precision as dp
 import time
 import datetime
 import logging
+import os
 from openerp.tools.translate import _
+import openerp
+import csv
 
 _logger = logging.getLogger(__name__)
 
@@ -20,12 +23,87 @@ class purchase_order(osv.osv):
 		if not context:
 			context = {}
 
+		self.actual_process(cr, uid, active_ids, context=context)
+
+	_columns 	= {
+		'is_myob_export': fields.boolean("Exported to MYOB?")
+	}
+
+	def cron_export_myob(self, cr, uid, context=None):
+		active_ids = self.search(cr, uid, [('is_myob_export','=', False),('state','=','approved')], context=context)
+		if active_ids:
+			self.actual_process(cr, uid, active_ids, context=context)
+		else:
+			print "no po to export"
+		return True
+
+	def actual_process(self, cr, uid, ids, context=None):
+		headers=[
+			'nama_perusahaan' 	,
+			'statis1' 			,
+			'statis2' 			,
+			'statis3' 			,
+			'statis4' 			,
+			'statis5' 			,
+			'statis6' 			,
+			'statis7' 			,
+			'no_po' 			,
+			'tgl' 				,
+			'no_pr' 			,
+			'statis8' 			,
+			'statis9' 			,
+			'kode_barang' 		,
+			'qty' 				,
+			'nama_barang' 		,
+			'harga_unit' 		,
+			'statis10' 			,
+			'statis11' 			,
+			'harga_x_qty' 		,
+			'statis12' 			,
+			'statis13' 			,
+			'statis14' 			,
+			'statis15' 			,
+			'statis16' 			,
+			'kode_pajak' 		,
+			'statis17' 			,
+			'nilai_ppn' 		,
+			'statis18' 			,
+			'statis19' 			,
+			'statis20' 			,
+			'statis21' 			,
+			'statis22' 			,
+			'statis23' 			,
+			'statis24' 			,
+			'statis25' 			,
+			'kode_currency' 	,
+			'nilai_kurs'		,
+			'statis26' 			,
+			'statis27' 			,
+			'statis28' 			,
+			'statis29' 			,
+			'statis30' 			,
+			'statis31' 			,
+			'order' 			,
+			'statis32' 			,
+			'statis33' 			,
+			'location_id' 		,
+			'statis34' 			,
+			'statis35' 			,
+		]
+
 		myob_export = self.pool.get('purchase.myob_export')
 		i = 0
 
+		mpath = openerp.modules.get_module_path('vit_myob_po')
+
+		dtim = time.strftime("%Y-%m-%d %H:%M:%S")
+		csvfile = open(mpath + '/static/po-'+ dtim +'.csv', 'wb')
+		csvwriter = csv.writer(csvfile)
+		csvwriter.writerow( [ h.upper() for h in headers ])
+		
 		cr.execute("delete from purchase_myob_export")
 
-		for po in self.browse(cr, uid, active_ids, context=context):
+		for po in self.browse(cr, uid, ids, context=context):
 			if po.is_myob_export == False:
 				i = i +1
 				self.write(cr, uid, po.id, {'is_myob_export':True}, context=context)
@@ -37,7 +115,6 @@ class purchase_order(osv.osv):
 				x = time.strptime(po.date_order, "%Y-%m-%d %H:%M:%S")
 				po_date = time.strftime("%d/%m/%Y", x)
 
-				old_po_name  = ''
 				j = 0
 
 				for po_line in po.order_line:
@@ -101,22 +178,19 @@ class purchase_order(osv.osv):
 					}
 					myob_export.create(cr, uid, data, context=context)
 
+					csvwriter.writerow( [data[v] for v in headers  ] )
 
 					# blank line if different po
-					if old_po_name != po_name and j != 0:
-						data = {'nama_perusahaan':''}
-						myob_export.create(cr, uid, data, context=context)
 
-					old_po_name = po_name
 					j += 1
 
+				data = {'nama_perusahaan':''}
+				myob_export.create(cr, uid, data, context=context)
+				csvwriter.writerow([])
+
+		csvfile.close()
 		cr.commit()
-		raise osv.except_osv( 'OK!' , 'Done creating %s PO to Export ' % (i) )		
-
-
-	_columns 	= {
-		'is_myob_export': fields.boolean("Exported to MYOB?")
-	}
+		raise osv.except_osv( 'OK!' , 'Done creating %s Approved PO to Export ' % (i) )			
 
 class myob_export(osv.osv):
 	_name 		= "purchase.myob_export"
