@@ -47,6 +47,7 @@
       'report/rka.xml',
       'report/cashflow.xml',
 
+      'security/groups.xml',
       'security/ir.model.access.csv'
     ],    
     'description': """
