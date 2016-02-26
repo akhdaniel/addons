@@ -1,9 +1,25 @@
 # -*- coding: utf-8 -*-
 from openerp.osv import osv, fields
 from openerp.report import report_sxw
+import openerp.addons.decimal_precision as dp
+from openerp.tools.translate import _
 
 class purchase_order_line(osv.osv):
     _inherit  = 'purchase.order.line'
+
+    # add discount before taxes
+    def _calc_line_base_price(self, cr, uid, line, context=None):
+        """Return the base price of the line to be used for tax calculation.
+
+        This function can be extended by other modules to modify this base
+        price (adding a discount, for example).
+        """
+        if line.discount > 100.00:
+            raise osv.except_osv(_('Error!'), _('Discount  lebih dari 100%!'))
+        price =  line.price_unit
+        discount = line.discount/100 or 0.0
+        price -= price*discount
+        return  price
 
     def _get_tax_notes(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
@@ -15,7 +31,7 @@ class purchase_order_line(osv.osv):
             for tx in line.taxes_id:
                 amt = tx.amount or 0.0
                 if tx.type == 'percent': 
-                    taxes.append(" ".join([str(amt*100),"%"]))
+                    taxes.append("%s%%" % str(int(amt*100)) )
                 elif tx.type == 'fixed': 
                     taxes.append(" ".join([rp,str(amt)]))
                 else : taxes.append(tx.name)
@@ -25,6 +41,7 @@ class purchase_order_line(osv.osv):
 
     _columns = {
         'taxes_str': fields.function(_get_tax_notes, type='char',string='Taxes',store=False),
+        'discount': fields.float(string='Discount(%)',digits=(3,1),length=3),
     }
 
 

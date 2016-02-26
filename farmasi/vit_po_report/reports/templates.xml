@@ -32,7 +32,7 @@
                 <!-- Sub Title -->
                 <div class="row" style="font-family: Tahoma;font-size:14px;">                        
                     <div class="col-xs-7 text-center"><b>
-                        <h4 t-if="o.state != 'draft'">PURCHASE ORDER<!-- N° <span t-field="o.name"/> --></h4>
+                        <h4 t-if="o.state != 'draft'"><strong>PURCHASE ORDER<!-- N° <span t-field="o.name"/> --></strong></h4>
                         <h4 t-if="o.state == 'draft'">REQUEST FOR QUOTATION<!--  N° <span t-field="o.name"/> --></h4></b>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         <tr>
                             <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Description</strong></th>
                             <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Taxes</strong></th>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-center"><strong>Date Req.</strong></th>
+                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-center"><strong>Disc(%)</strong></th>
                             <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Qty</strong></th>
                             <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Unit Price</strong></th>
                             <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Net Price</strong></th>
@@ -79,7 +79,7 @@
                                 <span t-esc="line.taxes_str"/>
                             </td>
                             <td class="text-center" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-field="line.date_planned"/>
+                                <span t-field="line.discount"/><span>%</span>
                             </td>
                             <td class="text-right" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
                                 <span t-esc="(line.product_qty*1)"/>
@@ -95,16 +95,26 @@
                     </tbody>
                 </table>
 
-                <!-- Total -->
-                <div class="row" style="font-family: Tahoma;font-size: 14px;">
+                <!-- Keterangan -->
+                <div t-if="o.notes2" class="row" style="font-family: Tahoma;font-size: 14px;">
                     <div class="col-xs-6">
                         <strong>Terms &amp; Condition:</strong>
                         <span t-field="o.notes2"/>
-                        <p/>
-                        <strong>Supplier Ref. :</strong>
-                        <span t-field="o.partner_ref"/>
                     </div>
                 </div>
+                <div class="row" style="font-family: Tahoma;font-size: 14px;">
+                        <div class="col-xs-3">
+                            <strong>Date Req. : </strong>
+                            <span t-field="o.order_line[0].date_planned"/>
+                        </div>
+                        <div t-if="o.partner_ref" class="col-xs-4">
+                            <strong>Supplier Ref. :</strong>
+                            <span t-field="o.partner_ref"/>
+                        </div>
+                </div>
+
+
+                <!-- Total -->
                 <div class="row" style="font-family: Tahoma;font-size: 14px;">
                     <div class="col-xs-7">
                         <table class='table'  style="border: 0;font-family: Tahoma;font-size: 14px;">
