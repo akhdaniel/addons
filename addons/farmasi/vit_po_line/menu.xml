@@ -1,0 +1,48 @@
+<openerp>
+	<data>
+
+		<!-- ini definisi search purchase.order.line -->
+		<record id="view_purchase_order_line_filter" model="ir.ui.view">
+		    <field name="name">purchase.order.line.filter</field>
+		    <field name="model">purchase.order.line</field>
+		    <field name="arch" type="xml">
+		        <search string="Search PO Lines">
+	            
+		            <group expand="1" string="Group By...">
+
+		                <filter string="Partner" name='group_by_partner_id'
+		                    icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'partner_id'}"/>
+		
+		                <filter string="PO" icon="terp-personal" 
+		                    domain="[]" name='group_by_order_id'
+		                	 context="{'group_by':'order_id'}"/>
+
+		                <filter string="Product" name='group_by_product_id' 
+		                    icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'product_id'}"/>
+		            </group>                                        
+		
+		        </search>
+		    </field>
+		</record>
+
+		<record id="action_po_lines_list" model="ir.actions.act_window">
+			<field name="name">PO Lines List</field>
+			<field name="res_model">purchase.order.line</field>
+			<field name="view_mode">tree,form</field>
+	        <field name="search_view_id" ref="view_purchase_order_line_filter"/>
+			<field name="context">{'search_default_group_by_partner_id': 1, 'search_default_group_by_order_id': 1, 'search_default_group_by_product_id': 1}</field>
+		</record>
+
+
+
+		<menuitem id="menu_po_lines_list"
+		 action="action_po_lines_list"
+		 name="PO Lines"
+		 sequence="20"
+		 parent="purchase.menu_procurement_management"/>
+
+
+	</data>
+</openerp>
