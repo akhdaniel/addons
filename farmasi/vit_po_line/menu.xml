@@ -1,6 +1,18 @@
 <openerp>
 	<data>
 
+		<record id="view_order_line_tree_lucas" model="ir.ui.view">
+		    <field name="name">purchase_order_line_tree_lucas</field>
+		    <field name="model">purchase.order.line</field>
+		    <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+		    <field name="arch" type="xml">
+	            <field name="state" position="after">
+		            <field name="total_qty_received"/>
+		            <field name="outstanding_qty"/>
+		        </field>
+		    </field>
+		</record>
+
 		<!-- ini definisi search purchase.order.line -->
 		<record id="view_purchase_order_line_filter" model="ir.ui.view">
 		    <field name="name">purchase.order.line.filter</field>
@@ -27,11 +39,13 @@
 		    </field>
 		</record>
 
+
 		<record id="action_po_lines_list" model="ir.actions.act_window">
 			<field name="name">PO Lines List</field>
 			<field name="res_model">purchase.order.line</field>
 			<field name="view_mode">tree,form</field>
 	        <field name="search_view_id" ref="view_purchase_order_line_filter"/>
+	        <field name="view_id" ref="view_order_line_tree_lucas"/>
 			<field name="context">{'search_default_group_by_partner_id': 1, 'search_default_group_by_order_id': 1, 'search_default_group_by_product_id': 1}</field>
 		</record>
 
