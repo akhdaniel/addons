@@ -453,10 +453,13 @@ class netpro_policy(osv.Model):
         next_day = False
         #import pdb;pdb.set_trace()
         if startnya[2] == 1 :
-            next_bulan = startnya[1]-1
+            if startnya[1] == 1:
+                next_bulan = 12
+            else :
+                next_bulan = startnya[1]-1
             last_day = calendar.monthrange(startnya[0]+1,next_bulan)
             next_day = last_day[1]
-        else :
+        else :  
             next_bulan = startnya[1]
             next_day = startnya[2]-1
 
@@ -956,7 +959,7 @@ class netpro_plan_schedule_detail_benefit_schedule(osv.osv):
         'confinement_inner_limit_limit': fields.float('Limit'),
         'confinement_inner_limit_max': fields.float('Max'),
         'confinement_inner_limit_std': fields.float('Std.'),
-        'annual_inner_limit': fields.boolean('Annual Inner Limit'),
+        'annual_inner_limit': fields.boolean('Per Year Inner Limit'),
         'annual_inner_limit_limit': fields.float('Limit'),
         'annual_inner_limit_max': fields.float('Max'),
         'annual_inner_limit_std': fields.float('Std.'),
