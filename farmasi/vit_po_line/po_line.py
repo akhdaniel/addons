@@ -46,7 +46,7 @@ class order_line(osv.osv):
 		return results	
 
 	_columns 	= {
-		'total_qty_received' 	: fields.function(_get_total_received, type='float', string="Received Qty", store=True),
-		'outstanding_qty' 		: fields.function(_get_outstanding, type='float', string="Outstanding Qty", store=True),
+		'total_qty_received' 	: fields.function(_get_total_received, type='float', string="Received Qty"),
+		'outstanding_qty' 		: fields.function(_get_outstanding, type='float', string="Outstanding Qty"),
 	}
 

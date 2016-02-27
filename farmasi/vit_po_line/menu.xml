@@ -30,9 +30,9 @@
 		                    domain="[]" name='group_by_order_id'
 		                	 context="{'group_by':'order_id'}"/>
 
-		                <filter string="Product" name='group_by_product_id' 
+		                <!-- <filter string="Product" name='group_by_product_id' 
 		                    icon="terp-personal" domain="[]" 
-		                	 context="{'group_by':'product_id'}"/>
+		                	 context="{'group_by':'product_id'}"/> -->
 		            </group>                                        
 		
 		        </search>
@@ -46,7 +46,7 @@
 			<field name="view_mode">tree,form</field>
 	        <field name="search_view_id" ref="view_purchase_order_line_filter"/>
 	        <field name="view_id" ref="view_order_line_tree_lucas"/>
-			<field name="context">{'search_default_group_by_partner_id': 1, 'search_default_group_by_order_id': 1, 'search_default_group_by_product_id': 1}</field>
+			<field name="context">{'search_default_group_by_partner_id': 1, 'search_default_group_by_order_id': 1}</field>
 		</record>
 
 
