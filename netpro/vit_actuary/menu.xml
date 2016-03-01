@@ -82,6 +82,8 @@
 
 		    <menuitem name="Provider Type" id="menu_netpro_provider_type" action="action_netpro_provider_type" parent="menu_netpro_provider_configuration" sequence="10"/>
 
+		    <menuitem name="Provider EDC" id="menu_netpro_provider_edc" action="action_netpro_provider_edc" parent="menu_netpro_provider_configuration" sequence="10"/>
+
 		    <menuitem name="Room" id="menu_netpro_room" action="action_netpro_room" parent="menu_netpro_provider_configuration" sequence="10"/>
 </data>
 </openerp>
