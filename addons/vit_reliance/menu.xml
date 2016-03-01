@@ -1,0 +1,22 @@
+<openerp>
+	<data>
+
+		<record id="action_customer_list" model="ir.actions.act_window">
+			<field name="name">Customer</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm" name="RCM" sequence="10"/>
+		
+		<menuitem id="rcm_customer" name="Customer" sequence="10" parent="rcm"/>
+
+		<menuitem id="rcm_customer_customer"
+		 action="action_customer_list"
+		 name="Customer"
+		 sequence="10"
+		 parent="rcm_customer"/>
+
+
+	</data>
+</openerp>
