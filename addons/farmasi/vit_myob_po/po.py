@@ -98,7 +98,7 @@ class purchase_order(osv.osv):
 
 		dtim = time.strftime("%Y-%m-%d %H:%M:%S")
 		csvfile = open(mpath + '/static/po-'+ dtim +'.csv', 'wb')
-		csvwriter = csv.writer(csvfile)
+		csvwriter = csv.writer(csvfile, delimiter ='	')
 		csvwriter.writerow( [ h.upper() for h in headers ])
 		
 		cr.execute("delete from purchase_myob_export")
