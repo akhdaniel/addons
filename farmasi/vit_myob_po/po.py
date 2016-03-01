@@ -124,8 +124,17 @@ class purchase_order(osv.osv):
 					# 	kode_pajak = ""
 					nama_perusahaan = po.partner_id.ref
 					po_name = po.name
+
+					#  konversi tax ke PPN dan N-T
+					taxes=""
+					# import pdb;pdb.set_trace()
+					for tx in po_line.taxes_id:
+						amt = tx.amount or 0.0
+						if tx.type == 'percent' and amt == 0.1 : taxes="PPN"
+						elif (tx.type == 'fixed' and amt == 0.0) or (tx.type == 'percent' and amt == 0.0) : taxes="N-T"
+						else : taxes = "N-T"
 					data = {
-						'nama_perusahaan' 	: nama_perusahaan,
+						'nama_perusahaan' 	: "",
 						'statis1' 			: "",
 						'statis2' 			: "",
 						'statis3' 			: "",
@@ -135,7 +144,7 @@ class purchase_order(osv.osv):
 						'statis7' 			: "",
 						'no_po' 			: po_name,
 						'tgl' 				: po_date,
-						'no_pr' 			: po.requisition_id.name,
+						'no_pr' 			: po.requisition_id.origin or "",
 						'statis8' 			: "",
 						'statis9' 			: "",
 						'kode_barang' 		: po_line.product_id.default_code[:6],
@@ -150,7 +159,7 @@ class purchase_order(osv.osv):
 						'statis14' 			: "",
 						'statis15' 			: "",
 						'statis16' 			: "",
-						'kode_pajak' 		: po_line.taxes_id.name,
+						'kode_pajak' 		: taxes,
 						'statis17' 			: "0",
 						'nilai_ppn' 		: po_line.product_qty * po_line.price_unit - po_line.price_subtotal,
 						'statis18' 			: "0",
@@ -173,7 +182,7 @@ class purchase_order(osv.osv):
 						'statis32' 			: "0",
 						'statis33' 			: "",
 						'location_id' 		: po.picking_type_id.default_location_dest_id.location_id.name,
-						'statis34' 			: po.partner_id.ref,
+						'statis34' 			: po.partner_id.ref or "",
 						'statis35' 			: "",
 					}
 					myob_export.create(cr, uid, data, context=context)
@@ -184,7 +193,7 @@ class purchase_order(osv.osv):
 
 					j += 1
 
-				data = {'nama_perusahaan':''}
+				# data = {'nama_perusahaan':''}
 				myob_export.create(cr, uid, data, context=context)
 				csvwriter.writerow([])
 
