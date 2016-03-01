@@ -13,26 +13,32 @@ class netpro_diagnosis(osv.osv):
     _columns = {
         'diagnosis': fields.char('Diagnosis'),
         'name': fields.char('Name'),
+        'description': fields.text('Description'),
+        'description_1': fields.text('Description 1'),
         'exclusion_f': fields.boolean('ExclusionF'),
         'pre_existing_f': fields.boolean('PreExistingF'),
         'standard_fee': fields.float('StandardFee'),
-        'created_by_id' : fields.many2one('res.users', 'Creator', readonly=True),
-        'tpa_id' 		: fields.many2one('netpro.tpa', 'TPA'),
+        'standard_treatment_day': fields.integer('StandardTreatmentDay'),
+        'diagnosis_map': fields.char('DiagnosisMap'),
+        'poly': fields.char('Poly'),
+        'last_opr': fields.char('Poly'),
+        'allowed_f': fields.boolean('AllowedF'),
+        'last_update': fields.date('Last Update'),
     }
     _order = "name"
-    def create(self, cr, uid, vals, context=None):
-        cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
-        tpa_val = False
-        if cur_user.tpa_id:
-            tpa_val = cur_user.tpa_id.id
-            pass
-        vals.update({
-            'created_by_id':uid,
-            'tpa_id':tpa_val,
-        })
+    # def create(self, cr, uid, vals, context=None):
+    #     cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
+    #     tpa_val = False
+    #     if cur_user.tpa_id:
+    #         tpa_val = cur_user.tpa_id.id
+    #         pass
+    #     vals.update({
+    #         'created_by_id':uid,
+    #         'tpa_id':tpa_val,
+    #     })
         
-        new_record = super(netpro_diagnosis, self).create(cr, uid, vals, context=context)
-        return new_record
+    #     new_record = super(netpro_diagnosis, self).create(cr, uid, vals, context=context)
+    #     return new_record
 
     def name_get(self, cr, uid, ids, context=None):
         if not ids:

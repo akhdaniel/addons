@@ -30,6 +30,7 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "data" : [
+
                 'security/group.xml',
                 'security/ir.model.access.csv',
                 
@@ -63,11 +64,13 @@
                 'views/provider_view.xml',
                 'views/provider_level_view.xml',
                 'views/provider_type_view.xml',
+                'views/provider_edc.xml',
                 'views/profile_view.xml',
                 'views/room_view.xml',
                 'views/default_limit.xml',
                 'views/email_template.xml',
 
+                'data/netpro.provider_edc.csv',
                 'data/benefit_map_data.xml',
                 'data/benefit_category_data.xml',
                 'data/marital_data.xml',

@@ -150,16 +150,16 @@ class netpro_provider_service_detail(osv.osv):
     }
 netpro_provider_service_detail()
 
-class netpro_provider_edc(osv.osv):
-    _name = 'netpro.provider_edc'
-    _columns = {
-        'provider_id': fields.many2one('netpro.provider', 'Provider'),
-        'tid': fields.char('TID'),
-        'floor': fields.integer('Floor'),
-        'room': fields.char('Room'),
-        'remarks': fields.text('Remarks'),
-    }
-netpro_provider_edc()
+# class netpro_provider_edc(osv.osv):
+#     _name = 'netpro.provider_edc'
+#     _columns = {
+#         'provider_id': fields.many2one('netpro.provider', 'Provider'),
+#         'tid': fields.char('TID'),
+#         'floor': fields.integer('Floor'),
+#         'room': fields.char('Room'),
+#         'remarks': fields.text('Remarks'),
+#     }
+# netpro_provider_edc()
 
 class netpro_provider_map(osv.osv):
     _name = 'netpro.provider_map'

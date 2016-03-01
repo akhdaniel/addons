@@ -9,9 +9,16 @@
                 <group>
                     <field name="diagnosis" select="1"/>
                     <field name="name" select="2"/>
+                    <field name="description" select="0"/>
+                    <field name="description_1" select="0"/>
                     <field name="exclusion_f" select="0"/>
                     <field name="pre_existing_f" select="0"/>
                     <field name="standard_fee" select="0"/>
+                    <field name="standard_treatment_day" select="0"/>
+                    <field name="diagnosis_map" select="0"/>
+                    <field name="poly" select="0"/>
+                    <field name="last_opr" select="0"/>
+                    <field name="allowed_f" select="0"/>
                 </group>
             </form>
         </field>
@@ -22,12 +29,15 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="netpro.diagnosis">
-                <field name="diagnosis"/>
-                <field name="name"/>
-                <field name="exclusion_f"/>
-                <field name="pre_existing_f"/>
-                <field name="standard_fee"/>
-
+                <field name="diagnosis" select="1"/>
+                <field name="name" select="2"/>
+                <field name="description" select="0"/>
+                <field name="description_1" select="0"/>
+                <field name="exclusion_f" select="0"/>
+                <field name="pre_existing_f" select="0"/>
+                <field name="standard_fee" select="0"/>
+                <field name="standard_treatment_day" select="0"/>
+                <field name="diagnosis_map" select="0"/>
             </tree>
         </field>
     </record>

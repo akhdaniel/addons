@@ -69,7 +69,11 @@
                     </page>
 
                     <page string="E D C">
-                        <field name="edc_ids" colspan="4" nolabel="1" select="0"/>
+                        <field name="edc_ids" colspan="4" nolabel="1" select="0">
+                            <tree>
+                                <field name="tid" />
+                            </tree>
+                        </field>
                     </page>
 
                     <page string="MAPPING">
@@ -369,14 +373,13 @@
     </record>
     <!-- <menuitem name="Service Detail" id="menu_netpro_provider_service_detail" action="action_netpro_provider_service_detail"/> -->
         
-    <record model="ir.ui.view" id="view_netpro_provider_edc_form">
+    <!-- <record model="ir.ui.view" id="view_netpro_provider_edc_form">
         <field name="name">netpro.provider_edc.form</field>
         <field name="model">netpro.provider_edc</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="netpro.provider_edc">
                 <group>
-                    <!-- <field name="provider_id" select="1"/> -->
                     <field name="tid" select="2"/>
                     <field name="floor" select="0"/>
                     <field name="room" select="0"/>
@@ -406,7 +409,7 @@
         <field name="res_model">netpro.provider_edc</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-    </record>
+    </record> -->
     <!-- <menuitem name="EDC" id="menu_netpro_provider_edc" action="action_netpro_provider_edc"/> -->
         
     <record model="ir.ui.view" id="view_netpro_provider_map_form">

@@ -128,8 +128,8 @@
         <field name="model">netpro.member</field>
         <field name="arch" type="xml">
             <search string="Search Invoice">
-                <group expand="0" string="Group By...">
-                    <filter name='policy_holder' string="Policy Holder" domain="[]"  context="{'group_by':'policy_holder'}"/>
+                <group expand="0" string="Group By...">group_by
+                    <filter name='policy_holder' string="Policy Holder" domain="[]"  context="{'':'policy_holder'}"/>
                 </group>
            </search>
         </field>

@@ -1,0 +1,39 @@
+<openerp>
+<data>
+    <record model="ir.ui.view" id="view_netpro_provider_edc_form">
+        <field name="name">netpro.provider_edc.form</field>
+        <field name="model">netpro.provider_edc</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="netpro.provider_edc">
+                <group>
+                    <field name="provider_id" select="2"/>
+                    <field name="tid" select="2"/>
+                    <field name="floor" select="2"/>
+                    <field name="room" select="2"/>
+                    <field name="remarks" select="2"/>
+                    <field name="allowed_f" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_netpro_provider_edc_tree">
+        <field name="name">netpro.provider_edc.tree</field>
+        <field name="model">netpro.provider_edc</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="netpro.provider_edc">
+                <field name="tid" select="2"/>
+                <field name="floor" select="2"/>
+                <field name="room" select="2"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_netpro_provider_edc">
+        <field name="name">Provider EDC</field>
+        <field name="res_model">netpro.provider_edc</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</data>
+</openerp>
