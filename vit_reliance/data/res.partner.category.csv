@@ -1,0 +1,4 @@
+id,name,active
+res_partner_categ_100,Manufacturer,True
+res_partner_categ_110,Customer,True
+res_partner_categ_120,Supplier,True
