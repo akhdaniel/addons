@@ -345,14 +345,14 @@ class netpro_member_plan_detail(osv.osv):
     }
 
     def create(self,cr,uid,vals,context=None):
-        if 'provider_limit' in vals.keys() and 'remaining' not in vals.keys():
+        if vals['provider_limit'] > 0 and vals['remaining'] == 0:
             vals.update({
                 'remaining' : vals['provider_limit'],
             })
         return super(netpro_member_plan_detail, self).create(cr, uid, vals, context=context)
 
     def write(self,cr,uid,ids,vals,context=None):
-        if 'provider_limit' in vals.keys() and 'remaining' not in vals.keys():
+        if vals['provider_limit'] > 0 and vals['remaining'] == 0:
             vals.update({
                 'remaining' : vals['provider_limit'],
             })
