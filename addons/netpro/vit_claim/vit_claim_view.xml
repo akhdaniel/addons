@@ -97,6 +97,7 @@
                 <group col="2">
                     <group col="1">
                         <group string="Main">
+                            <field name="trace_number" readonly="True"/>
                             <field name="claim_no" readonly="True"/>
                             <field name="claim_no_revision" select="2"/>
                             <field name="ext_claim_no" />

@@ -163,7 +163,7 @@ class netpro_claim(osv.osv):
         'claim_reason_ids': fields.one2many('netpro.claim_reason', 'claim_id', 'Reasons', ondelete='cascade'),
         'tpa_id' : fields.many2one('netpro.tpa', 'TPA'),
         'provider_id' : fields.many2one('netpro.provider', 'Provider'),
-        'trace_number' : fields.char('Trace Number'),
+        'trace_number' : fields.char('Trace Number', help='Nomor Trace Number saat VOID claim via EDC'),
     }
 
 
