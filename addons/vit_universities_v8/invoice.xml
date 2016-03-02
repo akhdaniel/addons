@@ -81,5 +81,33 @@
         </record>
 
 
+        <record id="portal_action_invoices2" model="ir.actions.act_window">
+            <field name="name">Invoices</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','in',['out_invoice','out_refund'])]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help">We haven't sent you any invoice.</field>
+        </record>
+
+        <record id="portal_action_invoices_tree_spec2" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="portal_action_invoices2"/>
+            <field name="view_id" ref="account.invoice_tree"/>
+            <field name="view_mode">tree</field>
+            <field name="sequence" eval="0"/>
+        </record>
+
+        <record id="portal_action_invoices_form_spec2" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="portal_action_invoices2"/>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="view_mode">form</field>
+            <field name="sequence" eval="1"/>
+        </record>
+
+        <menuitem name="Pembayaran" id="portal_pembayaran" parent="portal.portal_menu" sequence="30"/>
+            <menuitem name="Pembayaran Kuliah" id="portal_pembyaran_kuliah" parent="portal_pembayaran" action="portal_action_invoices2" sequence="30" groups="vit_universities_v8.group_univ_mahasiswa"/>
+
+
 	</data>
 </openerp>

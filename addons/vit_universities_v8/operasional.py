@@ -899,7 +899,7 @@ class operasional_transkrip(osv.Model):
 		'yudisium_id' : fields.many2one('master.yudisium','Yudisium',readonly=True),
 		't_sks' : fields.integer('Total SKS',readonly=True),
 		't_nilai' : fields.char('Total Nilai',readonly=True),
-		'transkrip_resume_ids' : fields.one2many('operasional.transkrip.resume','transkrip_id','Resume',readonly=True, ondelete='cascade'),
+		'transkrip_resume_ids' : fields.one2many('operasional.transkrip.resume','transkrip_id','Resume',readonly=True, ondelete='cascade',store=True),
 			}    
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode Transkrip tidak boleh sama')]

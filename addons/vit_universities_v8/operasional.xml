@@ -10,12 +10,12 @@
                 <tree string="Kartu Studi" version="7.0">
                     <field name="kode"/>
                     <field name="partner_id"/>  
-                    <field name="npm"/> 
+                    <field name="npm" invisible="1"/> 
                     <field name="tahun_ajaran_id"/>                       
                     <field name="prodi_id"/>            
                     <field name="semester_id"/>
                     <field name="kurikulum_id"/>
-                    <field name="state" invisible="1"/>
+                    <field name="state" invisible="0"/>
                 </tree>
             </field>
         </record>
@@ -25,7 +25,7 @@
             <field name="res_model">account.invoice</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="vit_universities_v8.invoice_tree_mhs"/>
+            <!-- <field name="view_id" ref="vit_universities_v8.invoice_tree_mhs"/> -->
             <field name="search_id" ref="account.view_account_invoice_filter"/>
             <field name="domain">[('krs_id','=',active_id),('type','=','out_invoice')]</field>
             <field name="context">{'default_type':'out_invoice','search_default_group_by_state':True}</field>
@@ -117,7 +117,7 @@
                                         <field name="nilai_huruf" attrs="{'invisible': [('state','=','draft')]}"/>
                                         <field name="nilai_angka" invisible="1"/>
                                         <field name="nilai_huruf_field" invisible="1"/>
-                                        <field name="is_konversi" string="*"/>
+                                        <field name="is_konversi" string="*" readonly="True"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                     <form>
@@ -140,7 +140,7 @@
             <field name="arch" type="xml">
                 <tree string="Transkrip Nilai">
                     <field name="partner_id"/> 
-                    <field name="npm"/> 
+                    <field name="npm" invisible="1"/> 
                     <field name="tempat_lahir"/>
                     <field name="tanggal_lahir"/> 
                     <field name="tahun_ajaran_id"/>
@@ -188,7 +188,7 @@
                                         <field name="sks" sum="Total SKS"/>
                                         <field name="nilai_angka" invisible="0"/> 
                                         <field name="nilai_huruf"/>
-                                        <field name="is_konversi" string="*Konversi"/>
+                                        <field name="is_konversi" string="*Konversi" readonly="1"/>
                                         <!-- <field name="krs_id" string="KHS" invisible="0"/>  -->                                        
                                     </tree>                                   
                                 </field>

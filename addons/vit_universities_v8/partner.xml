@@ -82,7 +82,7 @@
                 </field>    
 
                 <label for="street" string="Address" position="before">
-                    <field name="alamat_id" required="1"/>
+                    <field name="alamat_id" attrs="{'invisible': [('is_mahasiswa','=',False)],'required': [('is_mahasiswa','=',True)]}"/>
                 </label>    
 
                 <page  string="Sales &amp; Purchases" position="before">
@@ -134,7 +134,7 @@
                                 	</group>
                                 </group>
 
-                                <separator string="Informasi Calon Mahasiswa" attrs="{'invisible': [('status_mahasiswa','in',('Mahasiswa','alumni',False))]}"/>
+                                <separator string="Informasi Calon Mahasiswa" attrs="{'invisible': [('status_mahasiswa','in',('Mahasiswa','alumni','cuti'))]}"/>
                                 <separator string="Informasi Mahasiswa" attrs="{'invisible': [('status_mahasiswa','=','calon')]}"/>
                                 <group col="4" colspan="4">
                                 	<group>
@@ -156,7 +156,7 @@
                             </sheet>
                         </form>
                     </page>
-                    <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan">
+                    <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan" attrs="{'invisible': [('status_mahasiswa','=',False)]}">
                         <sheet>
                             <separator string="Riwayat Pendidikan"/>
                                 <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
@@ -205,7 +205,7 @@
                     </page>
 
                     <page string="Pindahan" name="pindahan" 
-                        attrs="{'invisible': [('jenis_pendaftaran_id','=',1)]}">
+                        attrs="{'invisible': [('jenis_pendaftaran_id','in',(1,False))]}">
                         <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible':[('status_mahasiswa','!=','calon')]}" groups="vit_universities_v8.group_univ_staff_baak"/>
                         <group>
                             <group>
@@ -222,7 +222,7 @@
                         </group>
                     </page>
 
-                    <page string="History Pekerjaan" name="pekerjaan" >
+                    <page string="History Pekerjaan" name="pekerjaan" attrs="{'invisible': [('status_mahasiswa','=',False)]}">
                         <field view_mode="tree" name="pekerjaan_ids" nolabel="1">
                             <tree editable="bottom">
                                 <field name="name"/>

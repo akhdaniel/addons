@@ -123,7 +123,7 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Mahasiswa Cuti.</p><p>disini belum ada data tentang Mahasiswa Cuti!</p></field>
         </record>
 
-        <menuitem id="cuti_kuliah_menu" name="Cuti Kuliah" parent="vit_universities_v8.master_civitas" sequence="15"/>              
+        <menuitem id="cuti_kuliah_menu" name="Cuti Kuliah" parent="vit_universities_v8.master_civitas" groups="vit_universities_v8.group_menu_civitas_baak" sequence="15"/>              
             <menuitem id="cuti_kuliah_menu_sub_menu" name="Permohonan Cuti Kuliah" parent="cuti_kuliah_menu" action="cuti_kuliah_list_action" sequence="10"/>
             <menuitem id="list_cuti_kuliah_menu_sub_menu" name="Mahasiswa Cuti" parent="cuti_kuliah_menu" action="mhs_cuti_list_action" sequence="20"/>
 

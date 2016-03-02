@@ -9,12 +9,12 @@
             <field name="arch" type="xml">
                 <tree string="Daftar Kelas" version="7.0">
                     <field name="name"/>
-                    <field name="nama"/>
+                    <field name="nama" invisible="1"/>
+                    <field name="employee_id" /> 
                     <field name="tahun_ajaran_id"/>
                     <field name="fakultas_id"/>
                     <!-- <field name="jurusan_id"/> -->
                     <field name="prodi_id"/> 
-                    <field name="employee_id" invisible="1"/> 
                     <field name="user_id" invisible="1"/>
                     <field name="state"/>
                 </tree>                    
