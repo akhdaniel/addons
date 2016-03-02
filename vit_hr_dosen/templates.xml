@@ -1,0 +1,70 @@
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_employee_edit1_form">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="vit_universities_v8.view_teacher_teacher_form"/>
+            <field name="arch" type="xml">
+                <field name="nidn" position="replace"/>
+                <field name="nip" position="replace"/>   
+            </field> 
+        </record>
+
+        <record model="ir.ui.view" id="view_employee_edit2_form">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="job_id" position="replace"/>
+                <page string="Personal Information" groups="base.group_hr_user" position="replace">
+                    <page string="Data Dosen" groups="base.group_hr_user" attrs="{'invisible':[('is_dosen','=',False)]}">
+                        <group>
+                            <group string="Pangkat Akademik">
+                                <field name="job_id"/>
+                                <field name="tmt"/>
+                                <field name="jurusan_id"/>
+                                <field name="thn_png"/>
+                                <field name="ijasah"/>
+                                <field name='no.sk'/>
+                                <field name="ket"/>
+                            </group>
+                            <group string="Data Pribadi">
+                                <field name="birthday"/>
+                                <field name="nid"/>
+                                <field name="nidn"/>
+                                <field name="marital" attrs="{'invisible':[('is_dosen','=',True)]}"/>
+                                <field name="bank_account_id" attrs="{'invisible':[('is_dosen','=',True)]}"/>
+                            </group>
+                        </group>
+                        <group string="Jenjang Pendidikan/Bidang Ilmu">
+                            <field view_mode="tree" name="jenjang" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="jenjang"/>
+                                    <field name="bidang"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                    <page string="Data Karyawan" groups="base.group_hr_user" attrs="{'invisible':[('is_dosen','=',True)]}">
+                        <group>
+                            <group string="Data Pribadi">
+                                <field name="birthday"/>
+                                <field name="place_of_birth"/>
+                                <field name="pendidikan"/>
+                                <field name="mulai_kerja"/>
+                                <field name="sampai_kerja"/>
+                                <field name="no.sk/surat"/>
+                            </group>
+                        </group>
+                    </page>
+
+
+                </page>
+
+            </field> 
+        </record>
+
+    </data>
+</openerp>
