@@ -140,8 +140,8 @@ class purchase_order(osv.osv):
             # lines
             lines=[]
             # panjang karakter max tiap kolom, to joined by single space
-            lgt = [20,7,10,14,18,21]        
-            lineH = ["Description","Taxes","Date Req.","Qty","Unit Price","Net Price"]
+            lgt = [22,7,8,14,18,21]        
+            lineH = ["Description","Tax","Disc (%)","Qty","Unit Price","Net Price"]
             # format header
             lines.append(separator)
             lines.append(' '.join([dikiri(lgt[0],lineH[0]),dikiri(lgt[1],lineH[1]),dikiri(lgt[2],lineH[2]),dikanan(lgt[3],lineH[3]),dikanan(lgt[4],lineH[4]),dikanan(lgt[5],lineH[5])]) )
@@ -167,7 +167,7 @@ class purchase_order(osv.osv):
                 lines.append(' '.join([
                         dikiri(lgt[0],names[0]),
                         dikiri(lgt[1],taxes[:lgt[1]]), 
-                        dikiri(lgt[2],str(line.date_planned)), 
+                        dikiri(lgt[2],str(line.taxes_str)), 
                         dikanan(lgt[3]," ".join([str(line.product_qty),line.product_uom.name])),
                         dikanan(lgt[4],amt_price_unit),
                         dikanan(lgt[5],amt_price_stot) 
@@ -214,3 +214,6 @@ class purchase_order(osv.osv):
         'barcode_data': fields.text('Barcode Data'),  
     }
 
+    _sql_constraints = [
+        ('po_no_uniq', 'unique(name,company_id)', 'The number of PO must be unique per company!'),
+    ]
