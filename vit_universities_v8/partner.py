@@ -571,7 +571,7 @@ class res_partner (osv.osv):
 
 	_defaults = {
 		#'is_dosen':False, #(domain = [('status_mahasiswa','=','calon')]),
-		#'status_mahasiswa' : SESSION_STATES[3][0],
+		'status_mahasiswa' : SESSION_STATES[3][0],
 		#'angkatan': lambda*a : time.strftime('%Y'),
 		'tgl_daftar' : fields.date.context_today,
 		#'npm':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'res.partner'), 
@@ -600,6 +600,7 @@ class res_partner (osv.osv):
 				'fakultas_id'		: mhs.fakultas_id.id,
 				'tahun_ajaran_id'	: mhs.tahun_ajaran_id.id,
 				'konsentrasi_id'	: mhs.konsentrasi_id.id,
+				'status'				: 'draft',
 				'state'				: 'draft',
 				'notes' 			: '',
 				'user_id'			: uid,

@@ -122,7 +122,7 @@ class operasional_krs_mahasiswa (osv.osv):
 			for mk_id in pengajuan.krs_mhs_ids:
 				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_id.mata_kuliah_id.id, 'state': 'draft'}))
 				self.pool.get('operasional.krs_detail.mahasiswa').write(cr,uid,mk_id.id,{'state':'confirm'})
-			krs_obj.create(cr,uid,{'kode'				: str(pengajuan.partner_id.npm)+'-'+str(pengajuan.semester_id.name),
+			krs_obj.create(cr,1,{'kode'					: str(pengajuan.partner_id.npm)+'-'+str(pengajuan.semester_id.name),
 									'partner_id'		: pengajuan.partner_id.id,
 									'tahun_ajaran_id'	: pengajuan.tahun_ajaran_id.id,
 									'fakultas_id'		: pengajuan.fakultas_id.id,
@@ -132,7 +132,7 @@ class operasional_krs_mahasiswa (osv.osv):
 									'kelas_id'			: pengajuan.kelas_id.id or False,
 									'user_id'			: uid,
 									'konsentrasi_id'	: pengajuan.konsentrasi_id.id,
-									#'state'				: 'draft',
+									#'state'			: 'draft',
 									'krs_detail_ids'	: mk_pengajuan
 									})	
 			self.write(cr,uid,pengajuan.id,{'state':'confirm'})

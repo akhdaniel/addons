@@ -18,16 +18,73 @@ class absensi(osv.osv):
 		matakuliah = vals['mata_kuliah_id']	
 		jad_obj = self.pool.get('absensi')
 		jad_id = jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
-			('fakultas_id','=',fakultas),
-			('prodi_id','=',prodi),
-			('konsentrasi_id','=',konsentrasi),
-			('semester_id','=',semester),
-			('mata_kuliah_id','=',matakuliah)])
+										('fakultas_id','=',fakultas),
+										('prodi_id','=',prodi),
+										('konsentrasi_id','=',konsentrasi),
+										('semester_id','=',semester),
+										('mata_kuliah_id','=',matakuliah)])
 
 		if jad_id != [] :
 			raise osv.except_osv(_('Error!'), _('Absensi tersebut sudah ada!'))
 
 		return super(absensi, self).create(cr, uid, vals, context=context)   
+
+	def write(self, cr, uid, ids, vals, context=None):
+		if context is None:
+			context = {}
+		#import pdb;pdb.set_trace()
+		if 'absensi_ids' in vals:
+			absen1 = False ; absen2 = False ; absen3 = False ; absen4 = False ; absen5 = False ; absen6 = False ; absen7 = False
+			absen8 = False ; absen9 = False ; absen10 = False ; absen11 = False ; absen12 = False ; absen13 = False ; absen14 = False
+			for absen in vals['absensi_ids']:
+				if absen[2] : # True
+					if 'absensi_1' in absen[2] :
+						absen1 = str(datetime.now())
+					if 'absensi_2' in absen[2] :
+						absen2 = str(datetime.now())
+					if 'absensi_3' in absen[2] :
+						absen3 = str(datetime.now())
+					if 'absensi_4' in absen[2] :
+						absen4 = str(datetime.now())
+					if 'absensi_5' in absen[2] :
+						absen5 = str(datetime.now())
+					if 'absensi_6' in absen[2] :
+						absen6 = str(datetime.now())
+					if 'absensi_7' in absen[2] :
+						absen7 = str(datetime.now())
+					if 'absensi_8' in absen[2] :
+						absen8 = str(datetime.now())	
+					if 'absensi_9' in absen[2] :
+						absen9 = str(datetime.now())
+					if 'absensi_10' in absen[2] :
+						absen10 = str(datetime.now())
+					if 'absensi_11' in absen[2] :
+						absen11 = str(datetime.now())
+					if 'absensi_12' in absen[2] :
+						absen12 = str(datetime.now())												
+					if 'absensi_13' in absen[2] :
+						absen13 = str(datetime.now())
+					if 'absensi_14' in absen[2] :
+						absen14 = str(datetime.now())
+			if absen1 != False or absen2 != False or absen3 != False or absen4 != False or absen5 != False or absen6 != False or absen7 != False or absen8 != False or absen9 != False or absen10 != False or absen11 != False or absen12 != False or absen13 != False or absen14 != False :
+				data = [[0,0,{'history_absensi_1'	: absen1,
+								'history_absensi_2'	: absen2,
+								'history_absensi_3'	: absen3,
+								'history_absensi_4'	: absen4,
+								'history_absensi_5'	: absen5,
+								'history_absensi_6'	: absen6,
+								'history_absensi_7'	: absen7,
+								'history_absensi_8'	: absen8,
+								'history_absensi_9'	: absen9,
+								'history_absensi_10': absen10,
+								'history_absensi_11': absen11,
+								'history_absensi_12': absen12,
+								'history_absensi_13': absen13,
+								'history_absensi_14': absen14,
+								}]] 
+				vals.update({'history_absensi_ids': data})
+
+		return super(absensi, self).write(cr, uid, ids, vals, context=context)
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
 		if not args:
@@ -49,12 +106,13 @@ class absensi(osv.osv):
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'semester_id':fields.many2one('master.semester',string='Semester',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False), 
+		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,readonly=True, states={'draft': [('readonly', False)]}), 
 		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'draft': [('readonly', False)]}),
 		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa',readonly=True, states={'open': [('readonly', False)]}),
+		'history_absensi_ids' : fields.one2many('absensi.history','absensi_id','Histoty',readonly=True),
 		'absensi_nilai_ids' : fields.one2many('absensi.detail.nilai','absensi_id','Mahasiswa',readonly=True, states={'draft': [('readonly', False)]}),
 		#param persentase nilai
 		'ulangan' 		: fields.float('Ulangan (%)',readonly=True, states={'open': [('readonly', False)]}),
@@ -338,9 +396,30 @@ class absensi_detail_nilai(osv.osv):
 		'tugas'			: fields.float('Tugas'),
 		'ulangan' 		: fields.float('Ulangan'),
 		'presentasi' 	: fields.float('Presentasi'),
-		'quiz' 		: fields.float('Quiz'),
+		'quiz' 			: fields.float('Quiz'),
 		'uts'			: fields.float('UTS'),
 		'uas'			: fields.float('UAS'),
 		'lainnya'		: fields.float('Lainnya'),		
 		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
+	}
+
+class absensi_history (osv.osv):
+	_name = "absensi.history"	
+
+	_columns = {
+		'absensi_id' 			:fields.many2one('absensi','Absensi ID'),
+		'history_absensi_1'		:fields.datetime('Sesi 1',readonly=True),
+		'history_absensi_2'		:fields.datetime('Sesi 2',readonly=True),
+		'history_absensi_3'		:fields.datetime('Sesi 3',readonly=True),
+		'history_absensi_4'		:fields.datetime('Sesi 4',readonly=True),
+		'history_absensi_5'		:fields.datetime('Sesi 5',readonly=True),
+		'history_absensi_6'		:fields.datetime('Sesi 6',readonly=True),
+		'history_absensi_7'		:fields.datetime('Sesi 7',readonly=True),
+		'history_absensi_8'		:fields.datetime('Sesi 8',readonly=True),
+		'history_absensi_9'		:fields.datetime('Sesi 9',readonly=True),
+		'history_absensi_10'	:fields.datetime('Sesi 10',readonly=True),
+		'history_absensi_11'	:fields.datetime('Sesi 11',readonly=True),
+		'history_absensi_12'	:fields.datetime('Sesi 12',readonly=True),
+		'history_absensi_13'	:fields.datetime('Sesi 13',readonly=True),
+		'history_absensi_14'	:fields.datetime('Sesi 14',readonly=True),
 	}	

@@ -10,35 +10,41 @@ class konversi(osv.Model):
 	_name = 'akademik.konversi'
 
 	_columns = {
-		'name' 				: fields.char('Kode Konversi',size=36,required = True,readonly=True, states={'draft': [('readonly', False)]}),
-		'partner_id' 		: fields.many2one('res.partner','Calon Mahasiswa',required=True,readonly=True, domain="[('status_mahasiswa','=','Mahasiswa')]", states={'draft': [('readonly', False)]}),
-		'semester_id'		: fields.many2one('master.semester','Semester Mulai',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'name' 				: fields.char('Kode Konversi',size=36,required = True,readonly=True, ),
+		'partner_id' 		: fields.many2one('res.partner','Calon Mahasiswa',required=True, domain="[('status_mahasiswa','=','Mahasiswa')]",),
+		'semester_id'		: fields.many2one('master.semester','Semester Mulai',required=True,),
 		# 'kelas_id':fields.many2one('master.kelas',string='Kelas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 
-		'asal_univ_id'		: fields.many2one('res.partner','Asal Universitas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'asal_fakultas_id'	: fields.many2one('master.fakultas','Asal Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'asal_prodi_id'		: fields.many2one('master.prodi','Asal Program Studi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'asal_univ_id'		: fields.many2one('res.partner','Asal Universitas',required=True, ),
+		'asal_fakultas_id'	: fields.many2one('master.fakultas','Asal Fakultas',required=True, ),
+		'asal_prodi_id'		: fields.many2one('master.prodi','Asal Program Studi',required=True, ),
 
-		'fakultas_id'		: fields.many2one('master.fakultas','Fakultas',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'prodi_id'			: fields.many2one('master.prodi','Program Studi', required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'tahun_ajaran_id'	: fields.many2one('academic.year','Angkatan', required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'fakultas_id'		: fields.many2one('master.fakultas','Fakultas',required=True, ),
+		'prodi_id'			: fields.many2one('master.prodi','Program Studi', required=True,),
+		'tahun_ajaran_id'	: fields.many2one('academic.year','Angkatan', required=True, ),
+		'status'			: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status',),
+		# tambah field status karena field state error
+		# File "/opt/openerp/odoo-8.0/openerp/fields.py", line 1388, in convert_to_cache
+		# raise ValueError("Wrong value for %s: %r" % (self, value))
+		# ValueError: Wrong value for akademik.konversi.state: 1
 
-		'state'				: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status', states={'draft': [('readonly', False)]}),
-		'notes' 			: fields.text('Alasan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'state'				: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status',),
+		'notes' 			: fields.text('Alasan',required=True, ),
 		'user_id'			: fields.many2one('res.users', 'User',readonly=True),
-		'date'				: fields.date('Tanggal Registrasi',readonly=True,states={'draft': [('readonly', False)]}),
-		'krs_done'			: fields.boolean('KRS Done',readonly=True,states={'draft': [('readonly', False)]}),
+		'date'				: fields.date('Tanggal Registrasi',readonly=True,),
+		'krs_done'			: fields.boolean('KRS Done',readonly=True,),
 
-		'matakuliah_ids' 		: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ,readonly=True, states={'draft': [('readonly', False)]}),
+		'matakuliah_ids' 		: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ,),
 
-		'total_mk_asal'		: fields.integer('Total Matakuliah Asal',readonly=True, states={'draft': [('readonly', False)]}),
-		'total_mk_tujuan'	: fields.integer('Total Matakuliah Tujuan',readonly=True, states={'draft': [('readonly', False)]}),
-		'total_sks_asal'	: fields.integer('Total SKS Asal',readonly=True, states={'draft': [('readonly', False)]}),
-		'total_sks_tujuan'	: fields.integer('Total SKS Tujuan',readonly=True, states={'draft': [('readonly', False)]}),		
+		'total_mk_asal'		: fields.integer('Total Matakuliah Asal',),
+		'total_mk_tujuan'	: fields.integer('Total Matakuliah Tujuan',),
+		'total_sks_asal'	: fields.integer('Total SKS Asal',),
+		'total_sks_tujuan'	: fields.integer('Total SKS Tujuan',),		
 	}
 
 	_defaults = {  
-		'state':'draft',
+		#'state':'draft',
+		'status':'draft',
 		'user_id':lambda obj, cr, uid, context: uid,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'akademik.konversi'), 
 	}
@@ -139,7 +145,7 @@ class konversi(osv.Model):
 											'prodi_id':prodi,
 											'semester_id':smt,
 											'matakuliah_id':mk_tujuan},context=context)
-			self.write(cr,uid,ct.id,{'state':'waiting'},context=context)
+			self.write(cr,uid,ct.id,{'status':'waiting'},context=context)
 			partner_id = partner_obj.search(cr,uid,[('id','=',ct.partner_id.id)])
 			if partner_id:
 				partner_obj.write(cr,uid,partner_id[0],{'asal_sks_diakui':ct.total_sks_tujuan})
@@ -298,29 +304,29 @@ class konversi(osv.Model):
 									'kurikulum_id'		: kur_ids[0],
 									'krs_detail_ids'	: krs_ids,
 									},context=context)	
-			self.write(cr,uid,ct.id,{'state':'confirm','krs_done':True},context=context)
+			self.write(cr,uid,ct.id,{'status':'confirm','krs_done':True},context=context)
 		return True	
 
 	def cancel(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,uid,ct.id,{'state':'cancel'},context=context)
+			self.write(cr,uid,ct.id,{'status':'cancel'},context=context)
 		return True	
 
 	def set_draft(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,uid,ct.id,{'state':'draft'},context=context)
+			self.write(cr,uid,ct.id,{'status':'draft'},context=context)
 		return True	
 
 	def refuse(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,uid,ct.id,{'state':'refuse'},context=context)
+			self.write(cr,uid,ct.id,{'status':'refuse'},context=context)
 		return True	
 
 	def done(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
 			mhs_id = ct.partner_id.id
 			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'Mahasiswa','active':True},context=context)
-			self.write(cr,uid,ct.id,{'state':'done'},context=context)
+			self.write(cr,uid,ct.id,{'status':'done'},context=context)
 		return True	
 
 	def unlink(self, cr, uid, ids, context=None):
@@ -328,7 +334,7 @@ class konversi(osv.Model):
 			context = {}
 		"""Allows to delete in draft state"""
 		for rec in self.browse(cr, uid, ids, context=context):
-			if rec.state != 'draft':
+			if rec.status != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
 		return super(konversi, self).unlink(cr, uid, ids, context=context)
 			

@@ -36,30 +36,37 @@
             <field name="arch" type="xml">
                 <form string="Form Konversi" version="7.0">
                     <header>
-                        <button name='confirm' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>
+<!--                         <button name='confirm' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>
                         <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" states='waiting' type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>
                         <button name='approve' string='Approve' states='waiting' type='object' groups="vit_universities_v8.group_univ_staff_dekan"/>
                         <button name='refuse' string='Refuse' states='waiting' type='object' groups="vit_universities_v8.group_univ_staff_dekan"/> 
                         <button name='set_draft' string='Set to Draft' states='cancel' type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>   
-                        <button name='done' string='Active' states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_dekan"/>                                         
-                        <field name="state" widget="statusbar" nolabel="1"/>
+                        <button name='done' string='Active' states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_dekan"/> -->
+                        <!-- <field name="state" widget="statusbar" nolabel="1"/> -->
+                        <button name='confirm' string='Confirm' attrs="{'invisible':[('status','!=','draft')]}" type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>
+                        <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" attrs="{'invisible':[('status','!=','waiting')]}" type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>
+                        <button name='approve' string='Approve' attrs="{'invisible':[('status','!=','waiting')]}" type='object' groups="vit_universities_v8.group_univ_staff_dekan"/>
+                        <button name='refuse' string='Refuse' attrs="{'invisible':[('status','!=','waiting')]}" type='object' groups="vit_universities_v8.group_univ_staff_dekan"/> 
+                        <button name='set_draft' string='Set to Draft' attrs="{'invisible':[('status','!=','cancel')]}" type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>   
+                        <button name='done' string='Active' attrs="{'invisible':[('status','!=','confirm')]}" type='object' groups="vit_universities_v8.group_univ_staff_dekan"/>                        
+                        <field name="status" widget="statusbar" nolabel="1"/>
                     </header>                     
                 	<sheet>
                 		<group>
-                            <field name="name"/>
-		                    <field name="partner_id" domain="[('status_mahasiswa','=','calon')]" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id,partner_id)"/> 
-		                    <field name="semester_id" />
+                            <field name="name" attrs="{'readonly':[('status','!=','draft')]}"/>
+		                    <field name="partner_id" domain="[('status_mahasiswa','=','calon')]" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id,partner_id)" attrs="{'readonly':[('status','!=','draft')]}"/> 
+		                    <field name="semester_id" attrs="{'readonly':[('status','!=','draft')]}"/>
                         </group>
                         <group>
                             <group>
-                                <field name="asal_univ_id" domain="[('category_id','ilike','external')]"/>
-                                <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id),('is_internal','=',False)]"/>
-                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id),('is_internal','=',False)]"/>                      
+                                <field name="asal_univ_id" domain="[('category_id','ilike','external')]" attrs="{'readonly':[('status','!=','draft')]}"/>
+                                <field name="asal_fakultas_id" domain="[('pt_id','=',asal_univ_id),('is_internal','=',False)]" attrs="{'readonly':[('status','!=','draft')]}"/>
+                                <field name="asal_prodi_id" domain="[('fakultas_id','=',asal_fakultas_id),('is_internal','=',False)]" attrs="{'readonly':[('status','!=','draft')]}"/>                      
                             </group>
                 			<group>                              
-                                <field name="tahun_ajaran_id"/>
-                                <field name="fakultas_id" domain="[('is_internal','=','True')]"/>
-                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id)]"/>  
+                                <field name="tahun_ajaran_id" attrs="{'readonly':[('status','!=','draft')]}"/>
+                                <field name="fakultas_id" domain="[('is_internal','=','True')]" attrs="{'readonly':[('status','!=','draft')]}"/>
+                                <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id)]" attrs="{'readonly':[('status','!=','draft')]}"/>  
                 			</group>
                         </group>
                          <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
@@ -77,17 +84,17 @@
                             <page string="Konversi Mata Kuliah"> 
                                 <group>
                                     <group>
-                                        <field name="total_mk_asal"/>
-                                        <field name="total_sks_asal"/>
+                                        <field name="total_mk_asal" attrs="{'readonly':[('status','!=','draft')]}"/>
+                                        <field name="total_sks_asal" attrs="{'readonly':[('status','!=','draft')]}"/>
                                     </group>
                                     <group>
-                                        <field name="total_mk_tujuan" />
-                                        <field name="total_sks_tujuan"/>
+                                        <field name="total_mk_tujuan" attrs="{'readonly':[('status','!=','draft')]}"/>
+                                        <field name="total_sks_tujuan" attrs="{'readonly':[('status','!=','draft')]}"/>
                                     </group>
                                 </group>                                                           
                                 <group>
                                     <group string="Mata Kuliah Konversi">
-                                        <field name="matakuliah_ids"  nolabel="1" on_change="onchange_konversi(matakuliah_ids,total_mk_asal,total_mk_tujuan,total_sks_asal,total_sks_tujuan)">
+                                        <field name="matakuliah_ids"  nolabel="1" on_change="onchange_konversi(matakuliah_ids,total_mk_asal,total_mk_tujuan,total_sks_asal,total_sks_tujuan)" attrs="{'readonly':[('status','!=','draft')]}">
                                             <tree string="MK Internal" editable="top">
                                                 <field name="asal_matakuliah_id" domain="[('prodi_id','=',parent.asal_prodi_id)]"/>
                                                 <field name="asal_semester_id" string="Smt"/>
@@ -129,7 +136,7 @@
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
                         <filter icon="terp-project" string="Tanggal Aktif" help="By Tanggal Aktif" context="{'group_by':'date'}"/>
                         <filter icon="terp-project" string="KRS Done" help="By Automatic Done" context="{'group_by':'krs_done'}"/>
-                        <filter icon="terp-project" string="Status" help="By Status" context="{'group_by':'state'}"/>
+                        <filter icon="terp-project" string="Status" name="state" help="By Status" context="{'group_by':'status'}"/>
                     </group>
                 </search>
             </field>

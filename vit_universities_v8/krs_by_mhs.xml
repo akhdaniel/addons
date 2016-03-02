@@ -115,12 +115,23 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data Pengajuan KRS.</p><p>disini belum ada data tentang Pengajuan KRS !</p></field>
         </record>
 
+        <record model="ir.actions.act_window" id="khs_mhs_list_action_read">
+            <field name="name">Kartu Hasil Studi</field>
+            <field name="res_model">operasional.krs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','!=','draft')]</field> 
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data KHS.</p><p>disini belum ada data tentang KHS !</p></field>
+        </record>
 
         <menuitem id="krs_by_mhs" name="Pengajuan KRS" parent="vit_universities_v8.si_akademik_menu" sequence="50"/>
             <menuitem id="krs_by_mhs_sub" name="Oleh Mahasiswa" parent="krs_by_mhs" action="pengajuan_krs_list_action" sequence="10" groups="vit_universities_v8.group_univ_mahasiswa"/>
 
+
         <menuitem name="Studi" id="portal_studi" parent="portal.portal_menu" sequence="50" />
             <menuitem id="krs_by_mhs_portal" name="Pengajuan KRS" parent="portal_studi" action="pengajuan_krs_list_action" sequence="10" groups="vit_universities_v8.group_univ_mahasiswa"/>
+            <menuitem id="khs_mhs_portal" name="KHS" parent="portal_studi" action="khs_mhs_list_action_read" sequence="20" groups="vit_universities_v8.group_univ_mahasiswa"/>
 
 
     </data>   

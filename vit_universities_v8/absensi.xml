@@ -107,7 +107,30 @@
                                         <field name="percentage"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
-                                </field>        
+                                </field> 
+                                    <notebook>
+                                     <page string="History Absensi">
+                                        <field name="history_absensi_ids" nolabel="1" widget="one2many_list">
+                                            <tree string="History">
+                                                <field name="absensi_id" invisible="1"/>
+                                                <field name="history_absensi_1"/>
+                                                <field name="history_absensi_2"/>
+                                                <field name="history_absensi_3"/>
+                                                <field name="history_absensi_4"/>
+                                                <field name="history_absensi_5"/>
+                                                <field name="history_absensi_6"/>
+                                                <field name="history_absensi_7"/>
+                                                <field name="history_absensi_8"/>
+                                                <field name="history_absensi_9"/>
+                                                <field name="history_absensi_10"/>
+                                                <field name="history_absensi_11"/>
+                                                <field name="history_absensi_12"/>
+                                                <field name="history_absensi_13"/>
+                                                <field name="history_absensi_14"/>                              
+                                            </tree>
+                                        </field> 
+                                    </page>
+                                </notebook>
                             </page>
                             <page string="Nilai">
                                 <p class="oe_grey">Presentase nilai bisa di set ulang pada tab Setting</p>

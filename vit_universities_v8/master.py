@@ -239,7 +239,7 @@ class master_fakultas (osv.Model):
 	_columns = {
 		'kode'		:fields.char('Kode', size=28, required = True),
 		'kode_dikti':fields.char('Kode DIKTI', size=28,required = True),
-		'pt_id'		: fields.many2one('res.partner', 'Perguruan Tinggi', domain="[('category_id','ilike','perguruan tinggi')]", help="Tag Perguruan Tinggi"),
+		'pt_id'		: fields.many2one('res.partner', 'Perguruan Tinggi', domain="['|',('category_id','ilike','perguruan tinggi'),('is_company','=',True)]", help="Tag Perguruan Tinggi"),
 		'name' 		: fields.char('Nama Fakultas', size=128, required = True),
 		'is_internal': fields.boolean('Internal Fakultas?')
 	}
