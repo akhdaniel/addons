@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_hr_dosen_jenjang_pendidikan,vit_hr_dosen.jenjang_pendidikan,model_jenjang_pendidikan,group_hr_user,1,1,1,1
