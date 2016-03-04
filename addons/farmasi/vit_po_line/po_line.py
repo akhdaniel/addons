@@ -1,7 +1,7 @@
 from openerp import tools
 from openerp.osv import fields,osv
 import openerp.addons.decimal_precision as dp
-import time
+import time,datetime
 import logging
 from openerp.tools.translate import _
 
@@ -45,8 +45,37 @@ class order_line(osv.osv):
 
 		return results	
 
+	#######################################################################
+	# PR related function 
+	#######################################################################
+	def _pr_get_date(self, cr, uid, ids, field_names, arg=None, context=None):
+		res={}
+		for line in self.browse(cr,uid,ids,context) :
+			res[line.id] = line.order_id.requisition_id.line_ids and  line.order_id.requisition_id.line_ids[0].schedule_date and datetime.datetime.strptime(line.order_id.requisition_id.line_ids[0].schedule_date, '%Y-%m-%d').strftime("%m/%d/%Y")  or ''
+		return res
+
+	def _pr_get_date_appr(self, cr, uid, ids, field_names, arg=None, context=None):
+		res={}
+		for line in self.browse(cr,uid,ids,context) :
+			res[line.id]=line.order_id.requisition_id and datetime.datetime.strptime(line.order_id.requisition_id.approved_date, '%Y-%m-%d').strftime("%m/%d/%Y")  or ''
+		return res
+		
+	def _pr_get_appr(self, cr, uid, ids, field_names, arg=None, context=None):
+		res={}
+		for line in self.browse(cr,uid,ids,context) :
+			res[line.id]=line.order_id.requisition_id and line.order_id.requisition_id.user_id and line.order_id.requisition_id.user_id.id or False
+		return res
+
+
 	_columns 	= {
 		'total_qty_received' 	: fields.function(_get_total_received, type='float', string="Received Qty"),
 		'outstanding_qty' 		: fields.function(_get_outstanding, type='float', string="Outstanding Qty"),
+		'bid_no' 	: fields.related('order_id','requisition_id',type='many2one',relation='purchase.requisition',string='BID',readonly=True),
+		'bid_src' 	: fields.related('bid_no','origin',type='char',string='PR Source',readonly=True),
+		'pr_date' 	: fields.function(_pr_get_date, type='char', string="PR Date", ),
+		'pr_date_appr' 	: fields.function(_pr_get_date_appr, type='char', string="PR Approved", ),
+		'pr_approver' 	: fields.function(_pr_get_appr, type='many2one', relation='res.users', string="PR Responsibility", ),
+
 	}
+
 
