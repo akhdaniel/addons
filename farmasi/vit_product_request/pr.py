@@ -56,14 +56,19 @@ class purchase_requisition(osv.osv):
 	def tender_in_progress(self, cr, uid, ids, context=None):
 		header=[]
 		for line in self.browse(cr,uid,ids,context)[0].line_ids:
-			# print(line.product_id.is_header)
 			if line.product_id.is_header:
 				# since inly 1 id, and return value is [(id,name)]
 				header.append(line.product_id.name_get()[0][1]) 
 		if header:
 			raise osv.except_osv(_('Warning!'), _('Produk berikut harus diganti menjadi produk dengan serial no 10 digit \n%s.') % '\n'.join(header))
+		self.write(cr,uid,ids,{'approved_date': time.strftime('%Y-%m-%d')})
 		return super(purchase_requisition,self).tender_in_progress( cr, uid, ids, context=None)
 
 	_columns 	= {
 		'product_names' : fields.function(_product_names, type='char', string="Products"),
-	}
+		'approved_date' : fields.date(string="approved date" , readonly=True,),
+		}
+		
+	_defaults = {
+		'approved_date': lambda *a: time.strftime('%Y-%m-%d'),
+		}
