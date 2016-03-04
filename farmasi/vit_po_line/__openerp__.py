@@ -3,7 +3,8 @@
 	"version": "1.0", 
 	"depends": [
 		"base",
-		"purchase"
+		"purchase",
+		"vit_product_request"
 	], 
 	"author": "akhmad.daniel@gmail.com", 
 	"category": "Purchase", 

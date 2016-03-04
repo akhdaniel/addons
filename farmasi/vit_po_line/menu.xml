@@ -9,6 +9,11 @@
 	            <field name="state" position="after">
 		            <field name="total_qty_received"/>
 		            <field name="outstanding_qty"/>
+		            <field name="bid_no"/>
+		            <field name="bid_src"/>
+		            <field name="pr_date"/>
+		            <field name="pr_date_appr"/>
+		            <field name="pr_approver"/>
 		        </field>
 		    </field>
 		</record>
