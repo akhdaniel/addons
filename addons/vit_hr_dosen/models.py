@@ -15,7 +15,7 @@ class hr_employee(osv.osv):
 		'nid' : fields.char("NID"),
 		'tmt' : fields.char("TMT"),
 		'jurusan_id' : fields.many2one("master.jurusan", string="Jurusan/Program Studi"),
-		'thn_png' : fields.date("Tahun Pengangkatan"),
+		'thn_png' : fields.char("Tahun Pengangkatan"),
 		'ijasah' : fields.many2one("master.jenjang", string="Ijazah"),
 		'no.sk' : fields.char("No. SK Rektor/BPH"),
 		'jenjang' : fields.one2many("jenjang.pendidikan", "employee_id"),
