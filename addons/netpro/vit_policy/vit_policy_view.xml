@@ -106,10 +106,10 @@
                             <field name="policy_type_id" select="0"/>
                             <field name="branch_id" select="0" context="{}" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="marketing_officer_id" attrs="{'invisible': [('policy_category_id','!=',1)]}" domain="[('marketing_officer_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext_marketing', 'default_marketing_officer_flag':1}" />
-                            <field name="policy_holder_id" domain="[('policy_holder_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext', 'default_policy_holder_flag':1}" />
+                            <field name="policy_holder_id" required="1" domain="[('policy_holder_flag','=',1)]" context="{'form_view_ref':'vit_policy.view_res_partner_ext', 'default_policy_holder_flag':1}" />
                             <field name="policy_group_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
-                            <field name="insurance_period_start" on_change="onchange_start(insurance_period_start)" />
-                            <field name="insurance_period_end" select="0"/>
+                            <field name="insurance_period_start" required="1" on_change="onchange_start(insurance_period_start)" />
+                            <field name="insurance_period_end" required="1" select="0"/>
                             <field name="exclusive_period" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>
                             <field name="exclusive_period_value" select="0" attrs="{'invisible': [('exclusive_period','=',False)]}"/>
                             <field name="toc_id" select="0" attrs="{'invisible': [('policy_category_id','!=',1)]}"/>

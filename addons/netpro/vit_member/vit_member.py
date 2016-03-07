@@ -33,7 +33,7 @@ class netpro_member(osv.osv):
         'partner_id': fields.many2one('res.partner', 'Partner', select=True, ondelete='cascade'),
         'policy_id': fields.many2one('netpro.policy', 'Policy', domain='[("state","=","approved"),]'),
         'policy_holder': fields.related('policy_id', 'policy_holder_id', 
-            relation='res.partner', type='many2one', store=True, string='Policy Holder'),
+            relation='res.partner', type='many2one', store=False, string='Policy Holder'),
         'policy_category': fields.related('policy_id', 'policy_category_id', 
             relation='netpro.policy_category', type='many2one', store=False, string='Policy Category'),
         'insurance_period_start': fields.date('Insurance Period Start'),
@@ -293,6 +293,94 @@ class netpro_member(osv.osv):
             result = int(usia)
         return {'value':{'age':result}}
 
+
+    def process_convert(self, cr, uid, ids, context=None):
+        syntech_obj = self.pool.get('netpro.syntech')
+        reliance_obj = self.pool.get('netpro.reliance')
+        
+        # SEDOT DATA FROM SYNTECH
+        if(syntech_obj):
+            syntech_data = syntech_obj.search(cr,uid,[('is_processed', '=', False)])
+            if syntech_data:
+                inc = 1
+                for syntech in syntech_data:
+
+                    ####################################
+                    # collect data from syntech object #
+                    ####################################
+                    member_data = {
+                        'card_no' : syntech.CARD_NUMB,
+                        'date_of_birth' : syntech.BIRTH_DATE,
+                        'name' : syntech.PAT_NAME,
+                        'gender_id' : self.pool.get('netpro.gender').search(cr,uid,[('name','=',syntech.PAT_SEX)])[0],
+                        'street' : syntech.PAT_ADD1,
+                        'zip' : syntech.ZIP_CODE,
+                        'phone' : syntech.PAT_TELP,
+                        'insurance_period_start' : syntech.START_DATE,
+                        'insurance_period_end' : syntech.XPIRY_DATE,
+                        'upd_code' : syntech.UPD_CODE,
+                        'upd_date' : syntech.UPD_DATE,
+                        'remarks' : 'Syntech Data '+inc
+                    }
+
+                    #################################################
+                    # insert record to member object and activating #
+                    #################################################
+                    member_syntech_id = self.create(cr, uid, member_data, context)
+                    member_syntech_id.action_confirm()
+
+                    ###########################################
+                    # add increment number for member remarks #
+                    ###########################################
+                    inc++
+
+        # SEDOT DATA FROM RELIANCE
+        if(reliance_obj):
+            reliance_data = reliance_obj.search(cr,uid,[('is_processed', '=', False)])
+            if reliance_data:
+                inc = 1
+                for reliance in reliance_data:
+
+                    #####################################
+                    # collect data from reliance object #
+                    #####################################
+                    reliance_data = {
+                        'card_no' : reliance.MemberID,
+                        'date_of_birth' : reliance.DOB,
+                        'name' : reliance.FullName,
+                        'gender_id' : self.pool.get('netpro.gender').search(cr,uid,[('name','=',reliance.Sex)])[0],
+                        'insurance_period_start' : reliance.MemberEffDt,
+                        'insurance_period_end' : reliance.MemberExpDt,
+                        'bank_name' : reliance.Bank,
+                        'remarks' : 'Reliance Data '+inc
+                    }
+
+                    #################################################
+                    # insert record to member object and activating #
+                    #################################################
+                    member_reliance_id = self.create(cr, uid, reliance_data, context)
+
+                    ######################################
+                    # get member plan from reliance data #
+                    ######################################
+                    member_plans = reliance.PlanID.split(',')
+                    if member_plans:
+                        for mplan in member_plans:
+                            if mplan != '':
+                                product_plan_obj = self.pool.get('netpro.product_plan').search(cr, uid, [('code', '=', mplan)]
+                                if product_plan_obj:
+                                    member_plan_data = {
+                                        'member_id' : member_reliance_id.id,
+                                        'product_plan_id' : product_plan_obj,
+                                    }
+
+                    member_reliance_id.action_confirm()
+
+                    ###########################################
+                    # add increment number for member remarks #
+                    ###########################################
+                    inc++
+
 netpro_member()
 
 class netpro_member_policy_exception(osv.osv):
@@ -312,7 +400,7 @@ class netpro_member_plan(osv.osv):
         # 'plan_schedule_id': fields.many2one('netpro.plan_schedule', 'PPlan'),
         # 'product_plan': fields.related('plan_schedule_id','product_plan_id', 'product_plan_base_id', 
         #     relation="netpro.product_plan_base",
-        #     type='many2one', string='Product Plan', store=True, readonly=True),
+        #     type='many2one', string='Product Plan', store=False, readonly=True),
         'product_plan_id':  fields.many2one('netpro.product_plan', 'Product Plan'),
         'bamount': fields.float('BAmount'),
         'plan_limit': fields.float('Plan Limit'),
@@ -334,9 +422,8 @@ class netpro_member_plan_detail(osv.osv):
     _columns = {
         'member_plan_id': fields.many2one('netpro.member_plan', 'Member Plan'),
         'benefit_id' : fields.many2one('netpro.benefit', 'Benefit'),
-        'benefit_code' : fields.related('benefit_id', 'code' , type="char", relation="netpro.benefit", string="Benefit Code", store=True),
-        #'benefit_map' : fields.related('benefit_id', 'external_benefit_code' , type="char", relation="netpro.benefit", string="Ext Benefit Code", store=True),
-        'benefit_map' : fields.related('benefit_id', 'external_benefit_code' , type="char", relation="netpro.benefit", string="Ext Benefit Code" ),
+        'benefit_code' : fields.related('benefit_id', 'code' , type="char", relation="netpro.benefit", string="Benefit Code", store=False),
+        'benefit_map' : fields.related('benefit_id', 'external_benefit_code' , type="char", relation="netpro.benefit", string="Ext Benefit Code", store=False),
         'reim': fields.float('Reim'),
         'provider_limit': fields.float('Provider Limit'),
         'non_provider_limit': fields.float('Non Provider Limit'),

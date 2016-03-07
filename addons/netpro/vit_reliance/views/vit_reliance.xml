@@ -1,0 +1,108 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_reliance_form">
+	        <field name="name">netpro.reliance.form</field>
+	        <field name="model">netpro.reliance</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	        	<form string="netpro.reliance" version="7.0">
+	        		<sheet>
+	        		<group>
+	        			<group>
+	        				<field name="RecordMode" />
+	        				<field name="RecordType" />
+			        		<field name="PayorID" />
+			        		<field name="MemberID" />
+			        		<field name="MappingID" />
+			        		<field name="AdMedikaMembID" />
+			        		<field name="CorporateID" />
+			        		<field name="EmployeeID" />
+			        		<field name="Division" />
+			        		<field name="BranchCode" />
+			        		<field name="Bank" />
+			        		<field name="Language" />
+			        		<field name="Race" />
+			        		<field name="PolicyNo" />
+			        		<field name="MaritalStatus" />
+			        		<field name="Relationship" />
+			        		<field name="MemberEffDt" />
+			        		<field name="MemberExpDt" />
+			        		<field name="FullName" />
+			        		<field name="Address1" />
+			        		<field name="Address2" />
+			        		<field name="Address3" />
+			        		<field name="Address4" />
+			        		<field name="City" />
+			        		<field name="State" />
+			        		<field name="PostCode" />
+			        		<field name="Phone1" />
+			        		<field name="Phone2" />
+			        		<field name="Phone3" />
+			        		<field name="NRIC" />
+			        		<field name="PassportNo" />
+			        		<field name="PassportCountry" />
+			        		<field name="DOB" />
+			        		<field name="Sex" />
+	        			</group>
+	        			<group>
+			        		<field name="PlanID" />
+	        				<field name="EsSts" />
+			        		<field name="TermDt" />
+			        		<field name="PreExisting" />
+			        		<field name="Remarks" />
+			        		<field name="MembSince" />
+			        		<field name="PolicyIF" />
+			        		<field name="PolicySusp" />
+			        		<field name="PolicySusp" />
+			        		<field name="InternalUse1" />
+			        		<field name="InternalUse2" />
+			        		<field name="InternalUse3" />
+			        		<field name="InternalUse4" />
+			        		<field name="InternalUse5" />
+			        		<field name="InternalUse6" />
+			        		<field name="InternalUse7" />
+			        		<field name="InternalUse8" />
+			        		<field name="InternalUse9" />
+			        		<field name="InternalUse10" />
+			        		<field name="InternalUse11" />
+			        		<field name="InternalUse12" />
+			        		<field name="InternalUse13" />
+			        		<field name="InternalUse14" />
+			        		<field name="InternalUse15" />
+			        		<field name="InternalUse16" />
+			        		<field name="InternalUse17" />
+			        		<field name="InternalUse18" />
+			        		<field name="InternalUse19" />
+			        		<field name="InternalUse20" />
+			        		<field name="InternalUse21" />
+			        		<field name="InternalUse22" />
+	        			</group>
+	        		</group>
+	        		</sheet>
+	        	</form>
+	        </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="view_reliance_tree">
+	        <field name="name">netpro.reliance.tree</field>
+	        <field name="model">netpro.reliance</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="netpro.reliance">
+	            	<field name="FullName" />
+	        		<field name="Address1" />
+	        		<field name="City" />
+	        		<field name="Phone1" />
+	        		<field name="PolicyNo" />
+	            </tree>
+	        </field>
+	    </record>
+
+	    <record model="ir.actions.act_window" id="action_netpro_reliance">
+	        <field name="name">Syntech</field>
+	        <field name="res_model">netpro.reliance</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+	</data>
+</openerp>

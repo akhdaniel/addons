@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vit_reliance_vit_reliance,vit_reliance.vit_reliance,model_vit_reliance_vit_reliance,,1,0,0,0
