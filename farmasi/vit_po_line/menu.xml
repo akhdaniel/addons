@@ -6,15 +6,24 @@
 		    <field name="model">purchase.order.line</field>
 		    <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
 		    <field name="arch" type="xml">
-	            <field name="state" position="after">
-		            <field name="total_qty_received"/>
-		            <field name="outstanding_qty"/>
-		            <field name="bid_no"/>
-		            <field name="bid_src"/>
-		            <field name="pr_date"/>
-		            <field name="pr_date_appr"/>
-		            <field name="pr_approver"/>
-		        </field>
+	            		<field name="order_id" position="before">
+			            <field name="bid_no"/>
+			            <field name="bid_src"/>
+			            <field name="pr_date"/>
+			            <field name="pr_date_appr"/>
+			            <field name="pr_approver"/>
+			 </field>
+	            		<field name="state" position="after">
+		            		<field name="discount" string="Disc (%)"/>
+		            		<field name="taxes_id" />
+		            		<field name="price_subtotal" />
+		            		<field name="total_qty_received"/>
+		            		<field name="outstanding_qty"/>
+		            		<field name="notes2"/>
+		            		<field name="invo_id"/>
+		            		<field name="invo_date"/>
+		            		<field name="invo_user_id"/>
+		        	</field>
 		    </field>
 		</record>
 
