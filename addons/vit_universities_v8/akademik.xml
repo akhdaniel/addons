@@ -426,8 +426,8 @@
                     <field name="kelas_id"/> 
                     <field name="keluarga_alumni_id"/> 
                     <field name="marketing_id" invisible="1"/>   
-                    <field name="invoice_state" invisible="1"/>
-                    <field name="invoice_bangunan_state" invisible="1"/>                
+                    <field name="invoice_state" string="Pendaftaran"/>
+                    <field name="invoice_bangunan_state" string="Bangunan"/>                
                 </tree>
             </field>
         </record>          

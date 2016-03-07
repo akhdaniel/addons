@@ -111,9 +111,9 @@ class absensi(osv.osv):
 		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'draft': [('readonly', False)]}),
-		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa',readonly=True, states={'open': [('readonly', False)]}),
+		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa'),
 		'history_absensi_ids' : fields.one2many('absensi.history','absensi_id','Histoty',readonly=True),
-		'absensi_nilai_ids' : fields.one2many('absensi.detail.nilai','absensi_id','Mahasiswa',readonly=True, states={'draft': [('readonly', False)]}),
+		'absensi_nilai_ids' : fields.one2many('absensi.detail.nilai','absensi_id','Mahasiswa'),
 		#param persentase nilai
 		'ulangan' 		: fields.float('Ulangan (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'quiz' 		    : fields.float('Quiz (%)',readonly=True, states={'open': [('readonly', False)]}),
@@ -172,16 +172,16 @@ class absensi(osv.osv):
 
 	def open_absensi(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,uid,ct.id,{'state':'open'},context=context)
+			self.write(cr,1,ct.id,{'state':'open'},context=context)
 			for det in ct.absensi_ids:
-				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'open'},context=context)
+				self.pool.get('absensi.detail').write(cr,1,det.id,{'state':'open'},context=context)
 		return True	
 
 	def cancel_absensi(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,uid,ct.id,{'state':'draft'},context=context)
+			self.write(cr,1,ct.id,{'state':'draft'},context=context)
 			for det in ct.absensi_ids:
-				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'draft'},context=context)
+				self.pool.get('absensi.detail').write(cr,1,det.id,{'state':'draft'},context=context)
 		return True	
 
 	def close_absensi(self,cr,uid,ids,context=None):
@@ -193,23 +193,23 @@ class absensi(osv.osv):
 			konsentrasi = ct.konsentrasi_id.id
 			semester = ct.semester_id.id
 			matakuliah = ct.mata_kuliah_id.id
-			self.write(cr,uid,ct.id,{'state':'close'},context=context)
+			#import pdb;pdb.set_trace()
 			for det in ct.absensi_ids:
 				mahasiswa = det.partner_id.id
 				total_hadir = det.percentage
-				krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+				krs_exist = krs_obj.search(cr,1,[('tahun_ajaran_id','=',tahun_ajaran),
 													('fakultas_id','=',fakultas),
 													('prodi_id','=',prodi),
 													('konsentrasi_id','=',konsentrasi),
 													('semester_id','=',semester),
 													('partner_id','=',mahasiswa)],context=context)
 				if krs_exist :
-					browse_krs = krs_obj.browse(cr,uid,krs_exist[0])
+					browse_krs = krs_obj.browse(cr,1,krs_exist[0])
 					for dtl in browse_krs.krs_detail_ids:
 						if dtl.mata_kuliah_id.id == matakuliah :
 							self.pool.get('operasional.krs_detail').write(cr,uid,dtl.id,{'absensi'	:total_hadir})
 							break
-
+				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'close'},context=context)
 			for det in ct.absensi_nilai_ids:
 				mahasiswa 	= det.partner_id.id
 				tugas 		= det.tugas
@@ -239,7 +239,8 @@ class absensi(osv.osv):
 																						 'lainnya'	:lainnya})
 							break
 
-				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'close'},context=context)			
+				self.pool.get('absensi.detail.nilai').write(cr,uid,det.id,{'state':'close'},context=context)
+			self.write(cr,uid,ct.id,{'state':'close'},context=context)			
 		return True	
 
 	def unlink(self, cr, uid, ids, context=None):

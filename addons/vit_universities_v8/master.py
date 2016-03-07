@@ -154,7 +154,7 @@ academic_month()
 
 class master_matakuliah (osv.Model):
 	_name = 'master.matakuliah'
-	_rec_name= 'kode'
+	_rec_name= 'nama'
 
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
@@ -337,8 +337,8 @@ class riwayat_pendidikan (osv.Model):
 	_name = 'master.riwayat_pendidikan'
 	
 	_columns = {
-		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa', required = True,),
-		'nama_sekolah':fields.char('Nama Sekolah',required = True, ),
+		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa',),
+		'nama_sekolah':fields.char('Nama Sekolah',),
 		'tingkat':fields.selection([('TK','TK'),('SD','SD'),('SMP','SMP'),('SMA','SMA/SMK/SMF'),('Diploma','Akademi/Diploma'),('S1','S1'),('S2','S2'),('S3','S3')],'Tingkat'),
 		'tahun_masuk':fields.char('Tahun Masuk',size=4,),
 		'tahun_lulus':fields.char('Tahun Lulus',size=4,),
