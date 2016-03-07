@@ -180,6 +180,17 @@
         <field name="perm_unlink" eval="False"/>        
     </record>
 
+    <record id="jadwal_dosen_rule_by_mhs" model="ir.rule">
+        <field name="name">Jadwal Dosen oleh Mahasiswa</field>
+        <field name="model_id" ref="model_master_jadwal"/>
+        <field name="domain_force">[('prodi_id','=',user.partner_id.prodi_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_univ_mahasiswa'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>        
+    </record>
+
     <record id="kelas_dosen_rule" model="ir.rule">
         <field name="name">Dosen Wali</field>
         <field name="model_id" ref="model_master_kelas"/>

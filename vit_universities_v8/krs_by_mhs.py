@@ -117,11 +117,20 @@ class operasional_krs_mahasiswa (osv.osv):
 
 	def convert_to_krs(self,cr,uid,ids,context=None):
 		krs_obj = self.pool.get('operasional.krs')
+		kur_obj = self.pool.get('master.kurikulum')
 		for pengajuan in self.browse(cr,uid,ids):
+			kurikulum = kur_obj.search(cr,1,[('id','=',pengajuan.kurikulum_id.id)])
+			max_sks = 0
+			if kurikulum :
+				max_sks = kur_obj.browse(cr,1,kurikulum[0]).max_sks
 			mk_pengajuan = []
+			total_sks = 0
 			for mk_id in pengajuan.krs_mhs_ids:
 				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_id.mata_kuliah_id.id, 'state': 'draft'}))
 				self.pool.get('operasional.krs_detail.mahasiswa').write(cr,uid,mk_id.id,{'state':'confirm'})
+				total_sks += int(mk_id.mata_kuliah_id.sks)
+			if total_sks > max_sks: 
+				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(total_sks,max_sks))	
 			krs_obj.create(cr,1,{'kode'					: str(pengajuan.partner_id.npm)+'-'+str(pengajuan.semester_id.name),
 									'partner_id'		: pengajuan.partner_id.id,
 									'tahun_ajaran_id'	: pengajuan.tahun_ajaran_id.id,

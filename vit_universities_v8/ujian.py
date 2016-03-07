@@ -15,6 +15,7 @@ class peserta_ujian (osv.osv):
 		prodi 		= vals['prodi_id']
 		kelas 		= vals['kelas_id']
 		jenis 		= vals['jenis_ujian']
+		semester 	= vals['semester_id']
 		kls_obj 	= self.pool.get('master.kelas')
 		rg_obj 		= self.pool.get('master.ruangan')	
 		jad_id 		= self.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
@@ -22,6 +23,7 @@ class peserta_ujian (osv.osv):
 			('prodi_id','=',prodi),
 			('kelas_id','=',kelas),
 			('jenis_ujian','=',jenis),
+			('semester_id','=',semester)
 			('is_active','=',True),])
 
 		if jad_id != [] :

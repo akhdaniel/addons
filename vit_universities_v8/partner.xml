@@ -85,7 +85,7 @@
                     <field name="alamat_id" attrs="{'invisible': [('is_mahasiswa','=',False)],'required': [('is_mahasiswa','=',True)]}"/>
                 </label>    
 
-                <page  string="Sales &amp; Purchases" position="before">
+                <page string="Sales &amp; Purchases" position="before">
                     <page string="Informasi Umum" autofocus="autofocus" attrs="{'invisible': [('is_mahasiswa','=',False)]}">
                         <form string="Informasi Umum" version="7.0">
                             <sheet>
@@ -300,8 +300,8 @@
                     <filter string="Gender" name="jenis_kelamin" icon="terp-personal" domain="[]" context="{'group_by' : 'jenis_kelamin'}"/>
                     <filter string="Jenis Pendaftaran" name="jenis_pendaftaran_id" icon="terp-personal" domain="[]" context="{'group_by' : 'jenis_pendaftaran_id'}"/>
                     <filter string="Lokasi" name="alamat_id" icon="terp-personal" domain="[]" context="{'group_by' : 'alamat_id'}"/>
-                    <filter string="Pembayaran Pendaftaran" name="invoice_state" icon="terp-personal" domain="[]" context="{'group_by' : 'invoice_state'}"/> 
-                    <filter string="Pembayaran Bangunan" name="invoice_bangunan_state" icon="terp-personal" domain="[]" context="{'group_by' : 'invoice_bangunan_state'}"/>                   
+<!--                     <filter string="Pembayaran Pendaftaran" name="invoice_state" icon="terp-personal" domain="[]" context="{'group_by' : 'invoice_state'}"/> 
+                    <filter string="Pembayaran Bangunan" name="invoice_bangunan_state" icon="terp-personal" domain="[]" context="{'group_by' : 'invoice_bangunan_state'}"/ -->>                   
                 </filter>    
             </field>
         </record>

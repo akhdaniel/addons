@@ -53,7 +53,7 @@
             <field name="arch" type="xml">
                 <form string="Absensi Kuliah" version="7.0">
                     <header>
-                        <button name='open_absensi' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_staff_baak"/>
+                        <button name='open_absensi' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
                         <button name='close_absensi' string='Close' states='open' type='object' groups="vit_universities_v8.group_univ_dosen"/>
                         <button name='cancel_absensi' string='Cancel' states='open' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
                                         
@@ -80,14 +80,14 @@
                             </group>
                             <group>
                                 <field name="konsentrasi_id"/>
-                               <field name="kelas_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kelas_id,konsentrasi_id)" attrs="{'invisible':[('semester_id','not in',(1,2))]}"/> 
+                               <field name="kelas_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kelas_id,konsentrasi_id)" attrs="{'invisible':[('semester_id','not in',(9,10))]}"/> 
                             </group>
                         </group>
-                        <button name="query_mahasiswa_by_pengajuan_krs" string="Query Mahasiswa" type="object" groups="vit_universities_v8.group_univ_staff_baak" attrs="{'invisible':['|',('semester_id','in',(1,2)),('state','!=','draft')]}"/>
+                        <button name="query_mahasiswa_by_pengajuan_krs" string="Query Mahasiswa" type="object" groups="vit_universities_v8.group_univ_staff_baak" attrs="{'invisible':['|',('semester_id','in',(9,10)),('state','!=','draft')]}"/>
                         <notebook colspan="4">
 
                             <page string="Absensi">
-                                <field name="absensi_ids" nolabel="1" widget="one2many_list">
+                                <field name="absensi_ids" nolabel="1" widget="one2many_list" attrs="{'readonly':[('state','=','close')]}">
                                     <tree string="Absensi" editable="bottom">
                                         <field name="partner_id"/>
                                         <field name="absensi_1"/>
@@ -110,7 +110,7 @@
                                 </field> 
                                     <notebook>
                                      <page string="History Absensi">
-                                        <field name="history_absensi_ids" nolabel="1" widget="one2many_list">
+                                        <field name="history_absensi_ids" nolabel="1" widget="one2many_list" attrs="{'readonly':[('state','=','close')]}">
                                             <tree string="History">
                                                 <field name="absensi_id" invisible="1"/>
                                                 <field name="history_absensi_1"/>

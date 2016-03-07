@@ -314,9 +314,9 @@ class res_partner (osv.osv):
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap')],'Type Pendaftaran'),
 
 		'invoice_id' : fields.many2one('account.invoice','Invoice Pendaftaran',readonly=True),
-		'invoice_state' : fields.related('invoice_id','state',type='char',relation='account.invoice',string='Pembayaran Pendaftaran',readonly=True,store=True),
+		'invoice_state' : fields.related('invoice_id','state',type='char',relation='account.invoice',string='Pembayaran Pendaftaran',readonly=True),
 		'invoice_bangunan_id' : fields.many2one('account.invoice','Invoice Bangunan',readonly=True),
-		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran Bangunan',readonly=True,store=True),
+		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran Bangunan',readonly=True),
 
 		'karyawan_id'	: fields.many2one('hr.employee','Karyawan'),
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
@@ -426,6 +426,7 @@ class res_partner (osv.osv):
 		bea_obj = self.pool.get('beasiswa.prodi')
 		kurikulum_obj = self.pool.get('master.kurikulum')
 		krs_obj = self.pool.get('operasional.krs')
+		#import pdb; pdb.set_trace()
 		for partner in self.browse(cr,uid,ids):
 			t_id = partner.tahun_ajaran_id.date_start
 			t_tuple =  tuple(t_id)
@@ -462,7 +463,7 @@ class res_partner (osv.osv):
 				partner.prodi_id.id, 
 				partner.tahun_ajaran_id.id)
 			cr.execute(sql)
-			#import pdb; pdb.set_trace()
+			
 			hasil = cr.fetchone()
 			if hasil and hasil[0] != None:
 				se = "%03d" % (hasil[0] + 1)
@@ -504,7 +505,7 @@ class res_partner (osv.osv):
 				('fakultas_id','=',partner.fakultas_id.id),
 				('prodi_id','=',partner.prodi_id.id),
 				('state','=','confirm'),
-				('semester_id','=',1),
+				('semester_id','=',9),
 				])
 			if kur_sch_smt_1 :
 				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_1,context=context)[0].kurikulum_detail_ids
@@ -518,7 +519,7 @@ class res_partner (osv.osv):
 											'fakultas_id'		: partner.fakultas_id.id,
 											'prodi_id'			: partner.prodi_id.id,
 											'kurikulum_id'		: kur_sch_smt_1[0],
-											'semester_id'		: 1,
+											'semester_id'		: 9,
 											'kelas_id'			: partner.kelas_id.id or False,
 											'user_id'			: uid,
 											'konsentrasi_id'	: partner.konsentrasi_id.id,
@@ -530,7 +531,7 @@ class res_partner (osv.osv):
 				('fakultas_id','=',partner.fakultas_id.id),
 				('prodi_id','=',partner.prodi_id.id),
 				('state','=','confirm'),
-				('semester_id','=',2),
+				('semester_id','=',10),# semester_id sementara hardcode dulu
 				])			
 			if kur_sch_smt_2 :
 				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_2,context=context)[0].kurikulum_detail_ids
@@ -543,7 +544,7 @@ class res_partner (osv.osv):
 											'fakultas_id'		: partner.fakultas_id.id,
 											'prodi_id'			: partner.prodi_id.id,
 											'kurikulum_id'		: kur_sch_smt_2[0],
-											'semester_id'		: 2,
+											'semester_id'		: 10,
 											'kelas_id'			: partner.kelas_id.id or False,
 											'user_id'			: uid,
 											'konsentrasi_id'	: partner.konsentrasi_id.id,
@@ -577,6 +578,7 @@ class res_partner (osv.osv):
 		#'npm':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'res.partner'), 
 		'npm' : '/',  
 		'reg': '/',
+		'no_ijazah_sma':'/',
 		'is_mahasiswa': False,
 		'split_invoice': 1,
 	}
