@@ -1,0 +1,7 @@
+<openerp>
+	<data>
+		<menuitem name="Reliance" id="menu_netpro_reliance" sequence="10" />
+		<menuitem name="Transaction" id="menu_netpro_reliance_transaction" parent="menu_netpro_reliance"/>
+		<menuitem name="Reliance" id="menu_netpro_reliance_individu" parent="menu_netpro_reliance_transaction" action="action_netpro_reliance" sequence="30"/>
+	</data>
+</openerp>

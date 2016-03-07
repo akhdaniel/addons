@@ -45,4 +45,9 @@ class netpro_syntech(osv.osv):
     	'RMKS1' : fields.text('RMKS1'),
     	'RMKS2' : fields.text('RMKS2'),
     	'RMKS3' : fields.text('RMKS3'),
+        'is_processed' : fields.boolean('Is Processed?'),
+    }
+
+    _defaults = {
+        'is_processed' : False,
     }

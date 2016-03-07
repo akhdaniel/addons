@@ -83,7 +83,7 @@
                 'data/product_plan_base.xml', 
                 'data/product_plan.xml',                 
                 'data/netpro.reason.csv',
-                'data/netpro.diagnosis.csv',
+                #'data/netpro.diagnosis.csv',
                 'data/netpro.benefit.csv',
                 'data/netpro.benefit_unit.csv',
                 'data/netpro.region.csv',

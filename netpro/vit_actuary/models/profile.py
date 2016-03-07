@@ -25,43 +25,6 @@ class netpro_profile(osv.osv):
     _name = 'netpro.profile'
     _inherits = {'res.partner': 'partner_id'}
 
-    def create(self, cr, uid, vals, context=None):
-        nomor = self.pool.get('ir.sequence').get(cr, uid, 'profile_seq') or '/'
-        # cur_user = self.pool.get('res.users').browse(cr, uid, uid, context=None)
-        # tpa_val = False
-        # if cur_user.tpa_id:
-        #     tpa_val = cur_user.tpa_id.id
-        vals.update({
-            'profile_id':nomor,
-            'created_by_id':uid,
-            # 'tpa_id':tpa_val,
-            # 'created_by_date':time.strftime("%Y-%m-%d %H:%M:%S"),
-        })
-        new_id = super(netpro_profile, self).create(cr, uid, vals, context=context)
-        return new_id
-
-    def write(self,cr,uid,ids,vals,context=None):
-
-        # Insert history Log
-        if vals:
-            this = self.browse(cr,uid,ids[0])
-            for k,v in vals.items():
-                old_val = getattr(this, k)
-                prof_history = self.pool.get('netpro.profile_history')
-                prof_history.create(cr,uid,{'profile_id':this.id,
-                                            'field_changed': k,
-                                            'old_val':old_val,
-                                            'new_val':v,
-                                            'timestamp':time.strftime("%Y-%m-%d %H:%M:%S"),
-                                            'user':uid})
-
-        #isi tanggal edit dan editor
-        vals.update({
-            'edited_by_id':uid,
-            'edited_date':time.strftime("%Y-%m-%d %H:%M:%S"),
-        })
-        return super(netpro_profile, self).write(cr, uid, ids, vals, context=context)
-
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner', 
             required=True, select=True, ondelete='cascade'),
@@ -161,6 +124,37 @@ class netpro_profile(osv.osv):
         'profile_history_ids' : fields.one2many('netpro.profile_history','profile_id','Profile History', ondelete="cascade"),
     }
 
+    def create(self, cr, uid, vals, context=None):
+        nomor = self.pool.get('ir.sequence').get(cr, uid, 'profile_seq') or '/'
+        vals.update({
+            'profile_id':nomor,
+            'created_by_id':uid,
+        })
+        new_id = super(netpro_profile, self).create(cr, uid, vals, context=context)
+        return new_id
+
+    def write(self,cr,uid,ids,vals,context=None):
+
+        # Insert history Log
+        if vals:
+            this = self.browse(cr,uid,ids[0])
+            for k,v in vals.items():
+                old_val = getattr(this, k)
+                prof_history = self.pool.get('netpro.profile_history')
+                prof_history.create(cr,uid,{'profile_id':this.id,
+                                            'field_changed': k,
+                                            'old_val':old_val,
+                                            'new_val':v,
+                                            'timestamp':time.strftime("%Y-%m-%d %H:%M:%S"),
+                                            'user':uid})
+
+        #isi tanggal edit dan editor
+        vals.update({
+            'edited_by_id':uid,
+            'edited_date':time.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+        return super(netpro_profile, self).write(cr, uid, ids, vals, context=context)
+
     def onchange_lob(self, cr, uid, ids, line_of_business_id, context=None):
         results = {}
         if not line_of_business_id:
@@ -188,6 +182,7 @@ class netpro_profile_history(osv.osv):
         'timestamp' : fields.date('Timestamp'),
         'user' : fields.many2one('res.users', 'User'),
     }
+netpro_profile_history()
 
 
 class netpro_alias(osv.osv):
