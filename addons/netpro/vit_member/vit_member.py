@@ -444,7 +444,7 @@ class netpro_member_plan_detail(osv.osv):
             vals.update({
                 'remaining' : vals['provider_limit'],
            })
-        #return super(netpro_member_plan_detail, self).create(cr, uid, vals, context=context)
+        #SALAH: return super(netpro_member_plan_detail, self).create(cr, uid, vals, context=context)
         return super(netpro_member_plan_detail, self).write(cr, uid, ids, vals, context=context)
 
 netpro_member_plan_detail()
