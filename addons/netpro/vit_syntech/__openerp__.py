@@ -26,6 +26,7 @@
     'data': [
         # 'security/ir.model.access.csv',
         'views/vit_syntech.xml',
+        'data/convert_member_job.xml',
         'menu.xml',
     ],
 
