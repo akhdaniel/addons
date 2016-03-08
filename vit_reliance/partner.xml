@@ -22,7 +22,7 @@
 					<field name='cif' 				 />
 					<field name='agent_id' 			 />		  
 
-					          
+
 		            <group expand="1" string="Group By...">
 		                
 		                <filter string="Country" icon="terp-personal" 
@@ -30,8 +30,8 @@
 		                	context="{'group_by':'country_id'}"/>
 
 		                <filter string="Company" icon="terp-personal" 
-		                    domain="[]" name="group_by_company_id"
-		                	context="{'group_by':'company_id'}"/>
+		                    domain="[]" name="group_by_parent_id"
+		                	context="{'group_by':'parent_id'}"/>
 
 
 		            </group>                                        
