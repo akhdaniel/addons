@@ -1,5 +1,48 @@
 <openerp>
 	<data>
+
+
+		<!-- tree partner reliance -->
+
+
+
+		<!-- search partner reliance -->
+		<record id="view_partner_filter_reliance" model="ir.ui.view">
+		    <field name="name">partner.filter.reliance</field>
+		    <field name="model">res.partner</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Partner">
+				            
+		            <field name="name"/>
+					<field name='reliance_id' 		 />
+					<field name='nomor_participant'  />
+					<field name='sid' 				 />
+					<field name='nomor_polis' 		 />
+					<field name='nomor_nasabah' 	 />
+					<field name='cif' 				 />
+					<field name='agent_id' 			 />		  
+
+					          
+		            <group expand="1" string="Group By...">
+		                
+		                <filter string="Country" icon="terp-personal" 
+		                    domain="[]" name="group_by_country_id"
+		                	context="{'group_by':'country_id'}"/>
+
+		                <filter string="Company" icon="terp-personal" 
+		                    domain="[]" name="group_by_company_id"
+		                	context="{'group_by':'company_id'}"/>
+
+
+		            </group>                                        
+		
+		        </search>
+		    </field>
+		</record>
+
+
+
+		<!-- form partner reliance -->
         <record id="view_partner_form_reliance" model="ir.ui.view">
             <field name="name">res_partner_form_reliance</field>
             <field name="model">res.partner</field>

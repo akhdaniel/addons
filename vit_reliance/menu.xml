@@ -5,6 +5,8 @@
 			<field name="name">Customer</field>
 			<field name="res_model">res.partner</field>
 			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="view_partner_filter_reliance"/>
+            <field name="context">{'search_default_group_by_country_id': 1}</field>
 		</record>
 
 		<menuitem id="rcm" name="RCM" sequence="10"/>
