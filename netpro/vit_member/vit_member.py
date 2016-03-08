@@ -294,9 +294,8 @@ class netpro_member(osv.osv):
         return {'value':{'age':result}}
 
 
-    def process_convert(self, cr, uid, ids, context=None):
+    def process_convert_syntech(self, cr, uid, ids, context=None):
         syntech_obj = self.pool.get('netpro.syntech')
-        reliance_obj = self.pool.get('netpro.reliance')
         
         # SEDOT DATA FROM SYNTECH
         if(syntech_obj):
@@ -334,6 +333,9 @@ class netpro_member(osv.osv):
                     ###########################################
                     inc++
 
+    def process_convert_reliance(self, cr, uid, ids, context=None):
+        reliance_obj = self.pool.get('netpro.reliance')
+        
         # SEDOT DATA FROM RELIANCE
         if(reliance_obj):
             reliance_data = reliance_obj.search(cr,uid,[('is_processed', '=', False)])
