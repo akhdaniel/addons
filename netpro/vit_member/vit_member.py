@@ -331,7 +331,7 @@ class netpro_member(osv.osv):
                     ###########################################
                     # add increment number for member remarks #
                     ###########################################
-                    inc++
+                    inc += 1
 
     def process_convert_reliance(self, cr, uid, ids, context=None):
         reliance_obj = self.pool.get('netpro.reliance')
@@ -381,7 +381,7 @@ class netpro_member(osv.osv):
                     ###########################################
                     # add increment number for member remarks #
                     ###########################################
-                    inc++
+                    inc += 1
 
 netpro_member()
 
