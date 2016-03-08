@@ -369,7 +369,7 @@ class netpro_member(osv.osv):
                     if member_plans:
                         for mplan in member_plans:
                             if mplan != '':
-                                product_plan_obj = self.pool.get('netpro.product_plan').search(cr, uid, [('code', '=', mplan)]
+                                product_plan_obj = self.pool.get('netpro.product_plan').search(cr, uid, [('code', '=', mplan)])
                                 if product_plan_obj:
                                     member_plan_data = {
                                         'member_id' : member_reliance_id.id,
