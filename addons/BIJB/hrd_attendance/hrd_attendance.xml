@@ -1,0 +1,66 @@
+<openerp>
+    <data>
+<!-- employee form -->
+    	<record model="ir.ui.view" id="tab_form_view">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hrd_employee.tab_form_view"/>
+            <field name="arch" type="xml">
+                 <field name="nik" position="after">
+                    <field name='fingerprint_code' placeholder="Fingerprint ID"/>
+                    <field name='no_mesin' placeholder="No Mesin"/>
+                </field>
+            </field>
+        </record>
+
+<!-- Attendance Form -->
+
+        <record id='view_attendance_form' model='ir.ui.view'>
+            <field name='name'>Attandance with FF ID</field>
+            <field name='model'>hr.attendance</field>
+            <field name='inherit_id' ref='hr_attendance.view_attendance_form'/>
+            <field name='arch' type='xml'>
+                <field name="employee_id" position='after'>
+                    <field name='fingerprint_code' placeholder='This ID will overide Employee' />
+                    <field name='sign_red' invisible="1"/>
+                </field>
+                <field name="action" position='replace'>
+                    <field name='binary_action' on_change="_onchange_action(binary_action)"/>
+                    <field name='action' invisible="1"/>
+                </field>
+                <field name="action_desc" position='replace'>
+                    <field name="action_desc"  attrs="{'invisible': [('binary_action','!=','2')]}"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_attendance_tree_inherit" model="ir.ui.view">
+           <field name="name">hr.attendance.tree</field>
+           <field name="model">hr.attendance</field>
+           <field name="inherit_id" ref="hr_attendance.view_attendance_who" />
+           <field name="arch" type="xml">
+               <tree string="Employee attendances" position="replace">
+                   <tree string="Employee attendances" colors="red:sign_red == 1">
+                       <field name="employee_id"/>
+                       <field name="name"/>
+                       <field name="fingerprint_code"/>
+                       <field name="action"/>
+                       <field name="sign_red" invisible="1"/>
+                   </tree>
+               </tree>    
+            </field>
+        </record>
+
+        <record forcecreate="1" id="seq_type_id" model="ir.sequence.type">
+            <field name="name">HR Employee</field>
+            <field name="code">hr.employee</field>
+        </record>
+
+        <record forcecreate="1" id="seq_id" model="ir.sequence">
+            <field name="name">HR Employee</field>
+            <field name="code">hr.employee</field>
+            <field name="prefix"></field>
+            <field name="suffix"></field>
+        </record>
+    </data>
+</openerp>

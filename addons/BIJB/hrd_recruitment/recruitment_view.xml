@@ -1,0 +1,111 @@
+<openerp>
+	<data>
+
+		<record id="hr.view_hr_job_form" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="arch" type="xml">
+                <form string="Job">
+                    <header>
+                        <button name="set_recruit" string="Launch Recruitment" states="open" type="object" class="oe_highlight" groups="base.group_user"/>
+                        <button name="set_open" string="Stop Recruitment" states="recruit" type="object" class="oe_highlight" groups="base.group_user"/>
+                        <field name="state" widget="statusbar" statusbar_visible="recruit,open"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <div>
+                                <field name="bol_name" nolabel="1" />
+                                <label for="name" class="oe_inline" />
+                            </div>
+                            <h1><field name="name" class="oe_inline"/></h1>
+                        </div>
+                        <div class="oe_right" name="buttons"/>
+                            <group name="employee_data">
+                                <field name="department_id" class="oe_inline"/>
+                                <label for="no_of_employee" class="oe_inline"/>
+                                <div>
+                                    <field name="no_of_employee" class="oe_inline"/>
+                                    <p><field name="no_of_recruitment" groups="base.group_user" colspan="0" class="oe_inline" style="padding-top: 1px"/> new employee(s) expected</p>
+                                </div>
+                            </group>
+                            
+                            <group String="Filter Pelamar" col="4" colspan="4" attrs="{'invisible':[('state','!=','recruit')]}">
+                                <div>
+                                    <field name="bol_pengalaman" nolabel="1" />
+                                    <label for="pengalaman" class="oe_inline" />
+                                </div>
+                                <field name="pengalaman" class="oe_inline" nolabel="1"/>
+
+                                <div>
+                                    <field name="bol_usia" nolabel="1" />
+                                    <label for="usia" class="oe_inline" />
+                                </div>
+                                <field nolabel="1" name="usia" class="oe_inline"/>
+
+                                <div>
+                                    <field name="bol_kelamin" nolabel="1" />
+                                    <label for="kelamin" class="oe_inline" />
+                                </div>
+                                <field name="kelamin" nolabel="1" class="oe_inline"/>
+
+                                <div>
+                                    <field name="bol_sts_prk" nolabel="1" />
+                                    <label for="sts_prk" class="oe_inline" />
+                                </div>
+                                <field name="sts_prk" class="oe_inline" nolabel="1"/>
+
+                                <!-- <div>
+                                    <field name="bol_sts_prk" nolabel="1" />
+                                    <label for="sts_prk" class="oe_inline" />
+                                </div>
+                                <field name="domisili_id" class="oe_inline" nolabel="1"/> -->
+
+                                <div>
+                                    <field name="bol_tempat_lahir_id" nolabel="1" />
+                                    <label for="tempat_lahir_id" class="oe_inline" />
+                                </div>
+                                <field name="tempat_lahir_id" class="oe_inline" nolabel="1"/>
+                                
+                                <div>
+                                    <field name="bol_type_id" nolabel="1" />
+                                    <label for="type_id" class="oe_inline" />
+                                </div>    
+                                <field name="type_id" class="oe_inline" nolabel="1"/>
+                            </group>
+
+                            <div attrs="{'invisible': [('state', '!=', 'recruit')]}">
+                                <label for="description"/>
+                                <field name="description"/>
+                            </div>
+                            <div attrs="{'invisible': [('state', '!=', 'recruit')]}">
+                                <label for="requirements"/>
+                                <field name="requirements"/>
+                            </div>
+                            <group name="filter pelamar" string="Seleksi Pelamar" attrs="{'invisible':[('state','!=','recruit')]}">
+                                <div>
+                                    <button string="Filter" type="object" name="seleksi_pelamar"/>
+                                    <button string="Execute" type="object" name="execute"/>
+                                    <field view_mode="tree,form" name="applicant_ids" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="name"/>
+                                            <field name="partner_name"/>
+                                            <field name="app_id"/>                           
+                                            <field name="age"/>
+                                            <field name="status"/> 
+                                            <field name="stage_id"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                        <field name="status_rec" invisible="1"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

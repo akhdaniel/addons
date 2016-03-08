@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="workflow" id="wkf_hr_ppi_training">
+            <field name="name">hr_training.analisa</field>
+            <field name="osv">hr_training.analisa</field>
+            <field name="on_create">True</field>
+        </record>
+              
+       <!--nodes training--> 
+        <record model="workflow.activity" id="act_draft_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_verify_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">verify</field>
+            <field name="kind">function</field>
+            <field name="action">action_verify()</field>
+        </record>
+                        
+        <record model="workflow.activity" id="act_approve_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">approve</field>
+            <field name="kind">function</field>
+            <field name="action">action_approve()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_reject_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">reject</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">action_reject()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act2_approve_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">approve2</field>
+            <field name="kind">function</field>
+            <field name="action">action_approve_hr_department()</field>
+        </record>
+
+        <record model="workflow.activity" id="act3_approve_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">in_prgress</field>
+            <field name="kind">function</field>
+            <field name="action">action_in_prgress()</field>
+        </record>
+                
+        <record model="workflow.activity" id="act_evaluation_training">
+            <field name="wkf_id" ref="wkf_hr_ppi_training"/>
+            <field name="name">evaluation</field>
+            <field name="kind">function</field>
+            <field name="flow_stop">True</field>
+            <field name="action">action_evaluation()</field>
+        </record>
+ 
+        <!--Transition training-->
+        <record model="workflow.transition" id="t_draft_training">
+            <field name="act_from" ref="act_draft_training"/>
+            <field name="act_to" ref="act_verify_training"/>
+            <field name="signal">signal_verify</field>
+        </record>
+        
+        <record model="workflow.transition" id="t1_verify_training">
+            <field name="act_from" ref="act_verify_training"/>
+            <field name="act_to" ref="act_draft_training"/>
+            <field name="signal">signal_cancel</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_approve_training">
+            <field name="act_from" ref="act_verify_training"/>
+            <field name="act_to" ref="act_approve_training"/>
+            <field name="signal">signal_approve</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_reject_training">
+            <field name="act_from" ref="act_verify_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+       
+        <record model="workflow.transition" id="t2_approve_training">
+            <field name="act_from" ref="act_approve_training"/>
+            <field name="act_to" ref="act2_approve_training"/>
+            <field name="signal">signal_approve_hr_department</field>
+        </record>
+
+        <record model="workflow.transition" id="t3_approve_training">
+            <field name="act_from" ref="act_approve_training"/>
+            <field name="act_to" ref="act3_approve_training"/>
+            <field name="signal">signal_approve_hr_department2</field>
+        </record>
+        
+        <record model="workflow.transition" id="t2_reject_training">
+            <field name="act_from" ref="act_approve_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+        
+		<record model="workflow.transition" id="t3_reject_training">
+            <field name="act_from" ref="act2_approve_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+
+        <record model="workflow.transition" id="t4_in_progress">
+            <field name="act_from" ref="act2_approve_training"/>
+            <field name="act_to" ref="act3_approve_training"/>
+            <field name="signal">signal_in_progress</field>
+        </record>
+
+        <record model="workflow.transition" id="t5_reject_training">
+            <field name="act_from" ref="act3_approve_training"/>
+            <field name="act_to" ref="act_reject_training"/>
+            <field name="signal">signal_reject</field>
+        </record>
+
+        <record model="workflow.transition" id="t_evaluation_training">
+            <field name="act_from" ref="act3_approve_training"/>
+            <field name="act_to" ref="act_evaluation_training"/>
+            <field name="signal">signal_evaluation</field>
+        </record>
+
+    </data> 
+</openerp>
+       

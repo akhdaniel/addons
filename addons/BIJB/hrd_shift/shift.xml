@@ -1,0 +1,49 @@
+<openerp>
+	<data>
+        <record id="hr_contract_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+            	<field name="job_id" position="after">
+            		<field name="shift_true"/>
+            	</field>
+            	<page string="Information" name="information" position="after">
+            		<page String="Shift Working Schedule" name="shift_schedule" attrs="{'invisible': [('shift_true','=',False)]}">
+            			<field view_mode="tree" name='shift_ids' nolabel='1'>
+            				<tree editable='bottom'>
+            					<!-- <field name='name'/> -->
+                                <!-- <field name='urutan_shift'/> -->
+            					<field name='schedule_id'/>
+            					<field name='date_from'/>
+            					<field name='date_to'/>
+            				</tree>
+            			</field>
+            		</page>
+            	</page>	
+            </field>
+        </record>
+
+        <record id="view_shift_tree" model="ir.ui.view">
+            <field name="name">hr.shift.karyawan.tree</field>
+            <field name="model">hr.shift_karyawan</field>
+            <field name="arch" type="xml">
+                <tree string="shift Karyawan" editable="bottom">
+                    <field name="contract_id"/>
+                    <!-- <field name='urutan_shift'/> -->
+                    <field name='schedule_id'/>
+                    <field name='date_from'/>
+                    <field name='date_to'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_shift_form" model="ir.actions.act_window">
+            <field name="name">hr.shift.karyawan</field>
+            <field name="res_model">hr.shift_karyawan</field>
+        </record>
+
+        <menuitem action="action_shift_form" id="hr_import_shift" parent="hr.menu_hr_main" name="Import Shift" sequence="5"/>
+
+    </data>
+</openerp>

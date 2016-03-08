@@ -1,0 +1,469 @@
+<openerp>
+    <data>
+                 
+        <record id="hr_training_view_tree1" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.tree</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="department_id"/>
+                    <field name="no"/>
+                    <field name="subject_id"/>
+                    <field name="nama"/>
+                    <field name="tanggal"/> 
+                    <field name="lama"/>    
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_training_view_tree2" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.tree</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="department_id"/>
+                    <field name="no"/>
+                    <field name="subject_id"/>
+                    <field name="tanggal"/> 
+                    <field name="lama"/>   
+                    <field name="state"/>  
+                </tree>
+            </field>
+        </record>         
+        
+        <record id="hr_training2_view_tree" model="ir.ui.view">
+            <field name="name">hr_training.train.view.tree</field>
+            <field name="model">hr_training.train</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Rencana Training">
+                    <field name="employee_id"/>
+                    <field name="subject"/> 
+                    <field name="department_id"/>                                                            
+                    <field name="job_id"/> 
+                    <field name="penyelenggara"/>  
+                    <field name="tanggal"/>
+                    <!-- <field name="durasi"/> -->
+                </tree>
+            </field>
+        </record>
+        
+         <record id="hr_training_view_form1" model="ir.ui.view">
+            <field name="name">hr_training.analisa.view.form</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">       
+                <form string="hr_training.analisa.analisa_id" version="7.0">     
+                <header>                            
+                    <button string="Send for Approval" type="workflow" 
+                        states="draft" name="signal_verify"
+                        class="oe_highlight" /> 
+
+                    <button string="Approve Dept" type="workflow"  
+                        states="verify" name="signal_approve"
+                        class="oe_highlight"  />  
+
+                    <!-- <button string="Cancel" type="workflow"  
+                        states="verify" name="signal_cancel"/> -->
+                        
+                    <button string="Reject" type="workflow"  
+                        states="verify" name="signal_reject"/>     
+                    
+                    <button string="Approve HRD" type="workflow"  
+                        name="signal_approve_hr_department"
+                        class="oe_highlight" attrs="{'invisible': ['|',('tes','=', 'Internal'),('state','!=','approve')]}"/>  
+
+                    <button string="Approve HRD" type="workflow"  
+                        name="signal_approve_hr_department2"
+                        class="oe_highlight" attrs="{'invisible': ['|',('tes','!=', 'Internal'),('state','!=','approve')]}"/>  
+                    
+                    <button string="Approve Presdir" type="workflow"  
+                        states="approve2" name="signal_in_progress" 
+                        class="oe_highlight" /> 
+
+                    <button string="Reject" type="workflow"
+                        states="approve2" name="signal_reject"/>   
+
+                    <button string="Start Evaluasi" type="object"  
+                        states="in_progress" name="action_evaluation" 
+                        class="oe_highlight" /> 
+
+                    <button string="Reject" type="workflow" 
+                        states="in_progress" name="signal_reject"/> 
+
+                    <button string="Reject" type="workflow"  
+                        states="approve" name="signal_reject"/>                                               
+
+                    <!--button string="Reject" type="workflow"  
+                        groups="hrd_ppi.group_hr_manager"
+                        states="approve2" name="signal_reject"/-->
+                        
+                    <field name="state" widget="statusbar" statusbar_visible="draft,verify,approve,approve2,evaluation" attrs="{'invisible': [('state','=', 'reject')]}" class="oe_inline"/>
+                </header>
+                <group>
+                <group >
+                     <field name='tes'/>
+                     <field name='pp' attrs="{'invisible': [('tes','!=','SIO')],'readonly': [('state','=', 'evaluation')]}"/>
+                     <field name='pt' attrs="{'invisible': [('tes','!=','SIO')],'readonly': [('state','=', 'evaluation')]}"/>
+                     <field name="paket_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>
+                     <field name="bulan" attrs="{'readonly': [('state','!=', 'draft')]}"/>
+                     <field name="user_id"  on_change='onchange_dep(user_id)'/>
+                </group>
+                <group >
+                    <field name="department_id" invisible="1"/>                    
+                </group>    
+                </group>
+                    <!--group string="Training Eksternal" attrs="{'invisible': [('is_internal','=', True)],'readonly': [('state','!=', 'draft')]}>
+                    </group>
+                    <group string="Training Internal" attrs="{'invisible': [('is_internal','=', False)]}">
+                    </group-->
+                <group>         
+                    <separator string="Rejected" colspan="2" attrs="{'invisible': [('state','!=', 'reject')]}"/>
+                    <group> 
+                    <field name="no" attrs="{'invisible': [('tes','=','SIO')]}"/>
+                    <field name="subject_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/>
+                    <!--field name="subject"/-->
+                    <!--field name="mgt_id" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/-->                  
+                    <field name="nama" attrs="{'readonly': [('state','!=', 'draft')],'invisible': [('tes','=','SIO')]}"/> 
+                    <field name='penyelenggara' attrs="{'invisible' : [('tes','!=','Eksternal')],'readonly': [('state','=', 'evaluation')]}"/>
+                    <field name='nama_sertifikat' attrs="{'invisible': [('tes','!=','SIO')],'readonly': [('state','=', 'evaluation')]}"/>
+                    <field name='iso' attrs="{'invisible': [('tes','!=','SIO')],'readonly': [('state','=', 'evaluation')]}"/>
+                    <field name="tanggal" attrs="{'readonly': [('state','=', 'evaluation')]}"/>    
+                    <field name="budget_info" attrs="{'readonly': [('state','=', 'evaluation')]}"/>               
+                    </group>
+                    <group>
+                       <!--  <label for="durasi" string="Durasi" /> -->
+                            <!-- <div>
+                                
+                                    <field name="date_from" on_change="onchange_date_from(date_to, date_from)" attrs="{'required': [('state','!=', 'draft')],'invisible': [('state','=', 'draft')],'readonly': [('state','=', 'evaluation')]}" class="oe_inline"/><label string=" s/d " class="oe_inline"/>
+                                    <field name="date_to" on_change="onchange_date_from(date_to, date_from)"  attrs="{'required': [('state','!=', 'draft')],'invisible': [('state','=', 'draft')],'readonly': [('state','=', 'evaluation')]}" class="oe_inline"/> -->
+                                
+                                <!-- <div> 
+                                    <field name="durasi" attrs="{'invisible': [('state','=', 'draft')],'readonly': [('state','=', 'evaluation')]}" class="oe_inline"/> Hari
+                                </div>   -->                           
+                    
+                    
+                    <!--field name="number_of_days" attrs="{'invisible': [('state','=', 'draft')]}" groups="hrd_ppi.group_hr_manager"/-->
+                    
+                    <field name="catatan" attrs="{'readonly': [('state','=', 'evaluation')]}"/>
+                    <field name="description" attrs="{'readonly': [('state','=', 'evaluation')]}"/>
+                    </group>    
+                </group>      
+                         
+                    <notebook colspan="4">
+                          <page string="Karyawan" name="karyawan">
+                            <field view_mode="tree,form" name="employee_ids" nolabel="1" attrs="{'invisible': [('tes','=','SIO')]}">
+                                <tree>
+                                    <field name="employee_id"/> 
+                                    <field name="job_id"/>
+                                    <field name="department_id"/> 
+                                    <field name="nonik"/>                                    
+                                    <field name="evaluasi_id"/>
+                                   <!--  <field name="rekomendasi_id"/> --> 
+                                    <field name="bukti_id"/>                                                
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name='tanggal1' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                            <field name='nama_penilai' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                            <field name='jabatan_penilai' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                            <field name="employee_id" attrs="{'readonly': [('state','=', 'evaluation')]}"/>  
+                                            <field name="state" invisible="0"/>
+                                            <field name='persentase_penguasaan' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                            <!-- <field name='kesimpulan2' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>  -->
+                                            <!-- <field name="rekomendasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}"/>  -->
+                                        </group>
+                                        <group> 
+                                        <field name="evaluasi_id" attrs="{'invisible': [('state','!=', 'evaluation')]}">
+                                                <tree editable="bottom">
+                                                    <field name='name2'/>
+                                                    <field name='skor'/>
+                                                </tree>
+                                            </field> 
+                                        <field name='bukti_id' attrs="{'invisible': [('state','!=', 'evaluation')]}"/>
+                                        <field name="memo"/>
+                                        </group> 
+                                    </group>       
+                                </form>
+                            </field>
+                            <field view_mode="tree,form" name="sio_ids" nolabel="1" attrs="{'invisible': [('tes','!=','SIO')]}">
+                                <tree>
+                                    <field name='employee_id'/>
+                                    <field name='nik'/>
+                                    <field name='department_id'/>
+                                    <field name='bukti'/>
+                                    <field name='berlaku'/>
+                                    <field name='state'/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name='employee_id'/>
+                                        <field name='nik'/>
+                                        <field name='department_id'/>
+                                        <field name='bukti' attrs="{'invisible': [('state','!=','evaluation')]}"/>
+                                        <field name='berlaku' attrs="{'invisible': [('state','!=','evaluation')]}"/>
+                                        <field name="memo"/>
+                                        <field name='state'/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Schedule Perencanaan" name="schedule_perencanaan">
+                            <field view_mode="tree,form" name="date_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="ket"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Evaluasi Penilaian Pelatihan" name="evaluasi_penilaian_pelatihan" attrs="{'invisible': [('state','!=', 'evaluation')]}">
+                            <field view_mode="tree,form" name="penilai_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="job_id"/>
+                                    <field name="department_id"/>
+                                    <field name="kesimpulan3"/>
+                                </tree>
+                                <form>
+                                    <sheet>
+                                    <group colspan="1">
+                                        <field name="name"/>                                
+                                        <field name="evaluasi_ids" >
+                                            <tree editable="bottom">
+                                                <field name='name2'/>
+                                                <field name='skor'/>
+                                            </tree>
+                                        </field> 
+                                        <field name="evaluasi_ids2" >
+                                            <tree editable="bottom">
+                                                <field name='name2'/>
+                                                <field name='skor'/>
+                                            </tree>
+                                        </field> 
+                                    </group>
+                                    <div class="oe_title">
+                                        <label for='komentar_materi' string="Apa komentar / saran anda mengenai materi / isi program training yang disampaikan ?"/>
+                                        <field name='komentar_materi'/>
+                                        <label for='komentar_trainer' string="Apa komentar / saran anda mengenai Trainer yang menyampaikan materi training tersebut diatas?"/>
+                                        <field name='komentar_trainer'/>
+                                        <label for='rekomendasi' string="Rekomendasi"/>
+                                        <field name='rekomendasi'/>
+                                        <label for='alasan' string="Alasan Anda Merekomendasikan/Tidak Merekomendasikan"/>
+                                        <field name='alasan'/>
+                                    </div>
+                                </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        
+        <record id="view_training_filter2" model="ir.ui.view">
+            <field name="name">Training</field>
+            <field name="model">hr_training.analisa</field>
+            <field name="type">search</field>
+            <!--field name="inherit_id" ref="hr.view_employee_filter"/-->
+            <field name="arch" type="xml">
+                <search string="Pelatihan">
+                    <group expand="0" string="Group By...">
+                        <filter string="Nama Training" icon="terp-personal" domain="[]" context="{'group_by':'subject_id'}"/>
+                        <filter string="Department" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Status" icon="terp-personal+" domain="[]" context="{'group_by':'state'}"/>
+                        <!--filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/-->
+                    </group>
+                </search>
+             </field>
+         </record>
+        
+        <record id="hr_training_subject_view_form" model="ir.ui.view">
+            <field name="name">hr_training.subject.view.form</field>
+            <field name="model">hr_training.subject</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="hr_training.subject"> 
+                    <field name="name"/>
+                    <field name="code"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="hr_training_paket_view_form" model="ir.ui.view">
+            <field name="name">hr_training.paket.view.form</field>
+            <field name="model">hr_training.paket</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">                
+                <form string="hr_training.subject"> 
+                    <field name="name"/>
+                    <field name="code"/>
+                </form>
+            </field>
+        </record>
+                
+        <!--sequance-->
+        <record forcecreate="1" id="seq_type_training" model="ir.sequence.type">
+            <field name="name">Training</field>
+            <field name="code">hr_training.analisa.nomor</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_training" model="ir.sequence">
+            <field name="name">Training</field>
+            <field name="code">hr_training.analisa.nomor</field>
+            <field name="prefix"></field>
+            <field name="padding">3</field>
+        </record>      
+
+        
+<!-- ################# form non Training #################### -->
+        
+        <record id="hr_nontraining" model="ir.ui.view">
+            <field name="name">hr.non_training.view.tree</field>
+            <field name="model">hr.non_training</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name='id'/>
+                    <field name="subject_id"/>
+                    <field name="penyelenggara"/>
+                    <field name='tanggal'/> 
+                </tree>
+            </field>
+        </record>       
+
+        <record id="hr_nontraining1" model="ir.ui.view">
+            <field name="name">hr.non_training.view.form</field>
+            <field name="model">hr.non_training</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">       
+                <form string="Non Training">
+                    <group>
+                        <field name='id'/>
+                        <field name="subject_id"/>
+                        <field name='penyelenggara'/>
+                        <field name='tanggal'/>  
+                        <notebook colspan="4">
+                            <page string="Karyawan" name="karyawan">
+                                <field view_mode="tree,form" name="employee_ids" nolabel="1" >
+                                    <tree editable="bottom">
+                                        <field name='employee_id'/>
+                                        <field name='nik' readonly="1"/>
+                                        <!-- <field name='tgl_msk'/> -->
+                                        <!-- <field name='clas_id'/> -->
+                                       <!--  <field name='department_id'/> -->
+                                        <!-- <field name='work_location2'/> -->
+                                        <field name='bukti'/>
+                                        <field name='ket'/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- detail peserta non training -->
+
+        <record id="hr_non_training" model="ir.ui.view">
+            <field name="name">Detail Non Training</field>
+            <field name="model">hr_non.emp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Detail Peserta Non Training'>
+                    <field name="employee_id"/>
+                    <field name='nik'/>
+                    <!-- <field name='tgl_msk'/>
+                    <field name='clas_id'/> 
+                    <field name="department_id"/>                                                            
+                    <field name="work_location2"/>  -->
+                   <!--  <field name="subject_id"/>
+                    <field name="penyelenggara"/>  
+                    <field name="tanggal"/> -->
+                    <field name="bukti"/>
+                    <field name='ket'/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Master Penilaian-->
+
+        <!-- Approval Tree View -->
+        <record model="ir.ui.view" id="hr_penilaian_training_tree">
+            <field name="name">keefektifan.pelatihan.tree</field>
+            <field name="model">keefektifan.pelatihan</field>
+            <field name="arch" type="xml">
+                <tree string="Keefektifan Training">
+                    <field name="_from"/>
+                    <field name="_to"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Approval Form View -->
+        <record model="ir.ui.view" id="hr_penilaian_pelatihan_form">
+            <field name="name">keefektifan.pelatihan.form</field>
+            <field name="model">keefektifan.pelatihan</field>
+            <field name="arch" type="xml">
+                <form string="Keefektifan Pelatihan">
+                    <field name="_from"/>
+                    <field name="_to"/>
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_penilaian_training" model="ir.actions.act_window">
+            <field name="name">Keefektifan Training</field>
+            <field name="res_model">keefektifan.pelatihan</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="hr_penilaian_training_tree"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new stage in the recruitment process.
+              </p><p>
+                Don't forget to specify the department if your recruitment process
+                is different according to the job position.
+              </p>
+            </field>
+        </record>
+
+        <menuitem name="Training"
+        id="penilaian_training"
+        parent="hr.menu_hr_configuration"
+        sequence="40"
+        groups="base.group_hr_user"/>
+
+        <menuitem
+        id="menu_hr_penilaian_training"
+        name="Master Keefektifan"
+        parent="penilaian_training"
+        action="hr_penilaian_training"
+        sequence="1"
+        groups="base.group_hr_user"/>
+
+        <!-- Schedule -->
+        <record forcecreate="1" id="ppi_schedule_iso" model="ir.cron">
+            <field name="name">Schedule Iso</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.training_sio'" name="model" />
+            <field eval="'schedule_iso'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-06-9 17:00:00"</field>
+        </record>
+
+    </data>
+</openerp>
+    
