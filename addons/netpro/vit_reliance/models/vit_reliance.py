@@ -82,3 +82,54 @@ class netpro_reliance(osv.osv):
     _defaults = {
         'is_processed' : False,
     }
+
+    def process_convert_reliance(self, cr, uid, ids, context=None):
+        reliance_obj = self.pool.get('netpro.reliance')
+        
+        # SEDOT DATA FROM RELIANCE
+        if(reliance_obj):
+            reliance_data = reliance_obj.search(cr,uid,[('is_processed', '=', False)])
+            if reliance_data:
+                inc = 1
+                for reliance in reliance_data:
+
+                    #####################################
+                    # collect data from reliance object #
+                    #####################################
+                    reliance_data = {
+                        'card_no' : reliance.MemberID,
+                        'date_of_birth' : reliance.DOB,
+                        'name' : reliance.FullName,
+                        'gender_id' : self.pool.get('netpro.gender').search(cr,uid,[('name','=',reliance.Sex)])[0],
+                        'insurance_period_start' : reliance.MemberEffDt,
+                        'insurance_period_end' : reliance.MemberExpDt,
+                        'bank_name' : reliance.Bank,
+                        'remarks' : 'Reliance Data '+inc
+                    }
+
+                    #################################################
+                    # insert record to member object and activating #
+                    #################################################
+                    member_obj = self.pool.get('netpro.member')
+                    member_reliance_id = member_obj.create(cr, uid, reliance_data, context)
+
+                    ######################################
+                    # get member plan from reliance data #
+                    ######################################
+                    member_plans = reliance.PlanID.split(',')
+                    if member_plans:
+                        for mplan in member_plans:
+                            if mplan != '':
+                                product_plan_obj = self.pool.get('netpro.product_plan').search(cr, uid, [('code', '=', mplan)])
+                                if product_plan_obj:
+                                    member_plan_data = {
+                                        'member_id' : member_reliance_id.id,
+                                        'product_plan_id' : product_plan_obj,
+                                    }
+
+                    member_reliance_id.action_confirm()
+
+                    ###########################################
+                    # add increment number for member remarks #
+                    ###########################################
+                    inc += 1

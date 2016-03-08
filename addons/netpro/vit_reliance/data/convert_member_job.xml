@@ -2,7 +2,7 @@
 	<data>
 		<record model="ir.actions.server" id="convert_member_reliance">
 			<field name="name">Convert Member Reliance</field>
-			<field name="model_id" ref="model_netpro_member"/>
+			<field name="model_id" ref="model_netpro_reliance"/>
 			<field name="code">
 				self.process_convert_reliance(cr, uid, context.get('active_ids', []), context=context)
 			</field>
