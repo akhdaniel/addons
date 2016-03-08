@@ -1,0 +1,126 @@
+<openerp>
+	<data>
+
+		<!--Allowance-->
+		<record id="hr_rule_basic" model="hr.salary.rule">
+            <field name="name">Basic</field>
+            <field name="sequence" eval="1"/>
+            <field name="code">BASIC</field>
+            <field name="category_id" ref="hr_payroll.GROSS"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+        </record>
+
+        <record id="hr_rule_tunj_jabatan" model="hr.salary.rule">
+            <field name="name">Tunjangan Jabatan</field>
+            <field name="sequence" eval="2"/>
+            <field name="code">TJB</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.jenis_tunjangan.tunj_jabatan+contract.tunj_jabatan </field>
+        </record>
+
+        <record id="hr_rule_tunj_makan" model="hr.salary.rule">
+            <field name="name">Tunjangan Makan</field>
+            <field name="sequence" eval="3"/>
+            <field name="code">TJM</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.jenis_tunjangan.tunj_makan+contract.tunj_makan</field>
+        </record>
+
+        <record id="hr_rule_tunj_transport" model="hr.salary.rule">
+            <field name="name">Tunjangan transport</field>
+            <field name="sequence" eval="2"/>
+            <field name="code">TJT</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.jenis_tunjangan.tunj_transport+contract.tunj_transport</field>
+        </record>
+
+        <record id="hr_rule_tunj_komunikasi" model="hr.salary.rule">
+            <field name="name">Tunjangan Komunikasi</field>
+            <field name="sequence" eval="4"/>
+            <field name="code">TK</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.jenis_tunjangan.tunj_komunikasi+contract.tunj_komunikasi</field>
+        </record>
+
+        <record id="hr_payroll_rules_overtime" model="hr.salary.rule">
+	        <field name="name">OVERTIME</field>
+	        <field name="sequence" eval="5"/>
+	        <field name="code">OVERTIME</field>
+	        <field name="category_id" ref="hr_payroll.ALW"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">4</field>
+	        <field name="amount_python_compute">result = (worked_days.LEMBUR.number_of_hours/173)*contract.wage </field>
+	    </record>
+
+	    <!--deduction-->
+	    <record id="hr_payroll_rules_pot_absen" model="hr.salary.rule">
+	        <field name="name">Ketidkhadiran</field>
+	        <field name="code">PKH</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+			<field name="sequence">101</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = -((((contract.wage + contract.jenis_tunjangan.tunj_makan + contract.jenis_tunjangan.tunj_transport)/22)*(worked_days.TK.number_of_days)) + (((contract.jenis_tunjangan.tunj_makan + contract.jenis_tunjangan.tunj_transport)/22)*payslip.jum_is))</field>
+	    </record>
+
+	    <record id="hr_payroll_rules_jht" model="hr.salary.rule">
+	        <field name="name">Iuran JHT</field>
+	        <field name="code">IJHT</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+			<field name="sequence">101</field>
+	        <field name="amount_select">code</field>
+	        <field name="amount_python_compute">result = -(2*contract.wage)/100</field>
+	    </record>
+
+	    <record id="hr_payroll_rules_kasbon" model="hr.salary.rule">
+	        <field name="name">Kasbon</field>
+	        <field name="code">KSBN</field>
+	        <field name="category_id" ref="hr_payroll.DED"/>
+	        <field name="condition_select">none</field>
+	        <field name="amount_select">code</field>
+			<field name="sequence">103</field>
+	        <field name="amount_python_compute">result = -inputs.KASBON.amount </field>
+	    </record>
+
+
+	    <!-- salary rule input -->
+
+	    <record id="hr_payroll_rules_input_kasbon" model="hr.rule.input">
+	        <field name="name">KASBON</field>
+	        <field name="code">KASBON</field>
+			<field name="sequence">21</field>	
+	        <field name="input_id" ref="hr_payroll_rules_kasbon"/>	    	
+		</record>	    
+
+		<!-- Salary Structure -->
+
+		<record model="hr.payroll.structure" id="structure_BIJB" >
+	    	<field name="name">BIJB Salary Structure</field>
+	    	<field name="code">BIJB</field>
+        	<field name="parent_id" ref="hr_payroll.structure_base"/>
+	        <field name="company_id" ref="base.main_company"/>
+            <field eval="[(6, 0, [ref('hr_rule_tunj_jabatan'), 
+            ref('hr_rule_tunj_makan'), 
+            ref('hr_rule_tunj_transport'),
+            ref('hr_rule_tunj_komunikasi'), 
+            ref('hr_payroll_rules_overtime'), 
+            ref('hr_payroll_rules_pot_absen'), 
+            ref('hr_payroll_rules_jht'), 
+            ref('hr_payroll_rules_kasbon'), 
+             ])]" name="rule_ids"/>
+	    </record>
+
+	</data>
+</openerp>

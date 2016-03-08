@@ -1,0 +1,106 @@
+<openerp>
+	<data>
+	    <!--Recomendations-->
+	    <record id="hr_ppi_training_recom1" model="hr_training.rekomendasi_training">
+	        <field name="name">Promotion</field>	    	
+		</record>
+	    <record id="hr_ppi_training_recom2" model="hr_training.rekomendasi_training">
+	        <field name="name">Transfer</field>	    	
+		</record>
+	    <record id="hr_ppi_training_recom3" model="hr_training.rekomendasi_training">
+	        <field name="name">Stay at Current Possition</field>	    	
+		</record>
+	    <record id="hr_ppi_training_recom4" model="hr_training.rekomendasi_training">
+	        <field name="name">Others</field>	    	
+		</record>
+		
+		<record id="hr_ppi_training_sub2" model='hr_training.subject'>
+	        <field name="name">MANAGING PEOPLE EFFECTIVELY - MID MGR</field>	 
+	        <field name="code">TRS02</field>   	
+		</record>
+		<record id="hr_ppi_training_sub3" model='hr_training.subject'>
+	        <field name="name">TOTAL QUALITY MANAGEMENT</field>	 
+	        <field name="code">TRS03</field>   	
+		</record>
+		<record id="hr_ppi_training_sub4" model='hr_training.subject'>
+	        <field name="name">K3</field>	 
+	        <field name="code">TRS04</field>   	
+		</record>
+		<record id="hr_ppi_training_sub5" model='hr_training.subject'>
+	        <field name="name">5R</field>	 
+	        <field name="code">TRS05</field>   	
+		</record>
+		<record id="hr_ppi_training_sub6" model='hr_training.subject'>
+	        <field name="name">FIRE FIGHTING</field>	 
+	        <field name="code">TRS06</field>   	
+		</record>
+		<record id="hr_ppi_training_sub7" model='hr_training.subject'>
+	        <field name="name">SECURITY</field>	 
+	        <field name="code">TRS07</field>   	
+		</record>
+		<record id="hr_ppi_training_sub8" model='hr_training.subject'>
+	        <field name="name">CUSTOMER SERVICE (CORP.IMAGE &#038; COMM)</field>	 
+	        <field name="code">TRS08</field>   	
+		</record>
+		<record id="hr_ppi_training_sub9" model='hr_training.subject'>
+	        <field name="name">ORACLE</field>	 
+	        <field name="code">TRS09</field>   	
+		</record>
+		
+		<!--Paket-->
+		<!--record id="hr_ppi_training_pac1" model='hr_training.paket'>
+	        <field name="name">MANAGEMENT TRAINING</field>	 
+	        <field name="code"></field>   	
+		</record-->
+		<record id="hr_ppi_training_pac2" model='hr_training.paket'>
+	        <field name="name">COMPUTER TRAINING</field>	 
+	        <field name="code"></field>   	
+		</record>
+		<record id="hr_ppi_training_pac3" model='hr_training.paket'>
+	        <field name="name">TECHNICAL TRAINING</field>	 
+	        <field name="code"></field>   	
+		</record>
+		<record id="hr_ppi_training_pac4" model='hr_training.paket'>
+	        <field name="name">SECRETARIAL TRAINING</field>	 
+	        <field name="code"></field>   	
+		</record>
+		
+		<!--mgt-->
+	    <record id="hr_ppi_training_mgt1" model="hr_training.mgt_company">
+	        <field name="name">Ability to Develope Higher-Skill Workforce</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt2" model="hr_training.mgt_company">
+	        <field name="name">Business Knowledge</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt3" model="hr_training.mgt_company">
+	        <field name="name">Conceptual/Analitical Thinking</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt4" model="hr_training.mgt_company">
+	        <field name="name">Customer Awareness</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt5" model="hr_training.mgt_company">
+	        <field name="name">Driving to a Higher Level of Performance</field>	    	
+		</record>
+	    <!--record id="hr_ppi_training_mgt6" model="hr_training.mgt_company">
+	        <field name="name">Effective Agent of Change</field>	    	
+		</record-->
+	    <record id="hr_ppi_training_mgt7" model="hr_training.mgt_company">
+	        <field name="name">Energy Level</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt8" model="hr_training.mgt_company">
+	        <field name="name">Global Perspektive</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt9" model="hr_training.mgt_company">
+	        <field name="name">Influencing Skill</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt10" model="hr_training.mgt_company">
+	        <field name="name">Risk Orientation</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt11" model="hr_training.mgt_company">
+	        <field name="name">Result Orientation</field>	    	
+		</record>
+	    <record id="hr_ppi_training_mgt12" model="hr_training.mgt_company">
+	        <field name="name">Team Working</field>	    	
+		</record>
+	</data>
+</openerp>

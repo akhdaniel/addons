@@ -1,0 +1,91 @@
+<openerp>
+	<data>
+		<!--                  VIEW IZIN                          -->
+		<record model="ir.actions.act_window" id="request_holidays">
+            <field name="name">Permohonan Izin</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_type': 'remove', 'search_default_approve':1}</field>
+            <field name="domain">[('type','=','remove'),('holiday_status_id.name','=','IZIN')]</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_holidays_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_holidays.view_holiday"/>
+            <field name="act_window_id" ref="request_holidays"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_holidays_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="act_window_id" ref="request_holidays"/>
+        </record>
+        <!--                                                     -->
+
+        <!--                  VIEW SAKIT                         -->
+        <record model="ir.actions.act_window" id="request_sakit">
+            <field name="name">Permohonan Sakit</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_type': 'remove', 'search_default_approve':1}</field>
+            <field name="domain">[('type','=','remove'),('holiday_status_id.name','=','SAKIT')]</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_holidays_tree2">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_holidays.view_holiday"/>
+            <field name="act_window_id" ref="request_sakit"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_holidays_form2">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="act_window_id" ref="request_sakit"/>
+        </record>
+        <!--                                                     -->
+
+        <!--                  VIEW PERJALANAN DINAS              -->
+        <record model="ir.actions.act_window" id="request_dinas">
+            <field name="name">Permohonan Dinas</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_type': 'remove', 'search_default_approve':1}</field>
+            <field name="domain">[('type','=','remove'),('holiday_status_id.name','=','PERJALANAN DINAS')]</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_holidays_tree1">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_holidays.view_holiday"/>
+            <field name="act_window_id" ref="request_dinas"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_holidays_form1">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="act_window_id" ref="request_dinas"/>
+        </record>
+        <!--                                                      -->
+
+
+		<menuitem name="Permohonan" parent="hr.menu_hr_root" id="menu_open_permohonan" sequence="20"/>
+		<menuitem name="Pemohonan Izin" parent="menu_open_permohonan" id="menu_permohonan_izin" action="request_holidays" sequence="20"/>
+        <menuitem name="Pemohonan Sakit" parent="menu_open_permohonan" id="menu_permohonan_sakit" action="request_sakit" sequence="21"/>
+        <menuitem name="Perjalanan Dinas" parent="menu_open_permohonan" id="menu_permohonan_dinas" action="request_dinas" sequence="22"/>
+	
+	</data>
+</openerp>
