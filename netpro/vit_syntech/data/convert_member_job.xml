@@ -2,7 +2,7 @@
 	<data>
 		<record model="ir.actions.server" id="convert_member_syntech">
 			<field name="name">Convert Member Syntech</field>
-			<field name="model_id" ref="model_netpro_member"/>
+			<field name="model_id" ref="model_netpro_syntech"/>
 			<field name="code">
 				self.process_convert_syntech(cr, uid, context.get('active_ids', []), context=context)
 			</field>

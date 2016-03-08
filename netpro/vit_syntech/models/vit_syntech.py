@@ -51,3 +51,43 @@ class netpro_syntech(osv.osv):
     _defaults = {
         'is_processed' : False,
     }
+
+    def process_convert_syntech(self, cr, uid, ids, context=None):
+        syntech_obj = self.pool.get('netpro.syntech')
+        
+        # SEDOT DATA FROM SYNTECH
+        if(syntech_obj):
+            syntech_data = syntech_obj.search(cr,uid,[('is_processed', '=', False)])
+            if syntech_data:
+                inc = 1
+                for syntech in syntech_data:
+
+                    ####################################
+                    # collect data from syntech object #
+                    ####################################
+                    member_data = {
+                        'card_no' : syntech.CARD_NUMB,
+                        'date_of_birth' : syntech.BIRTH_DATE,
+                        'name' : syntech.PAT_NAME,
+                        'gender_id' : self.pool.get('netpro.gender').search(cr,uid,[('name','=',syntech.PAT_SEX)])[0],
+                        'street' : syntech.PAT_ADD1,
+                        'zip' : syntech.ZIP_CODE,
+                        'phone' : syntech.PAT_TELP,
+                        'insurance_period_start' : syntech.START_DATE,
+                        'insurance_period_end' : syntech.XPIRY_DATE,
+                        'upd_code' : syntech.UPD_CODE,
+                        'upd_date' : syntech.UPD_DATE,
+                        'remarks' : 'Syntech Data '+inc
+                    }
+
+                    #################################################
+                    # insert record to member object and activating #
+                    #################################################
+                    member_obj = self.pool.get('netpro.member')
+                    member_syntech_id = member_obj.create(cr, uid, member_data, context)
+                    member_syntech_id.action_confirm()
+
+                    ###########################################
+                    # add increment number for member remarks #
+                    ###########################################
+                    inc += 1
