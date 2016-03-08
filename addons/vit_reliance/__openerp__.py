@@ -18,8 +18,8 @@ Manage
 
 """,
 	"data": [
-		"menu.xml", 
 		"partner.xml", 
+		"menu.xml", 
 	],
 	"installable": True,
 	"auto_install": False,
