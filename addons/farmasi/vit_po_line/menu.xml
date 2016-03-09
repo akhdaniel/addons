@@ -8,11 +8,16 @@
 		    <field name="arch" type="xml">
 	            		<field name="order_id" position="before">
 			            <field name="bid_no"/>
+			            <field name="ordering_date"/>
 			            <field name="bid_src"/>
+			            <field name="bid_src_date"/>
 			            <field name="pr_date"/>
 			            <field name="pr_date_appr"/>
 			            <field name="pr_approver"/>
-			 </field>
+			</field>
+	            		<field name="order_id" position="after">
+			            <field name="date_order"/>
+			</field>
 	            		<field name="state" position="after">
 		            		<field name="discount" string="Disc (%)"/>
 		            		<field name="taxes_id" />
@@ -57,7 +62,7 @@
 		<record id="action_po_lines_list" model="ir.actions.act_window">
 			<field name="name">PO Lines List</field>
 			<field name="res_model">purchase.order.line</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree</field>
 	        <field name="search_view_id" ref="view_purchase_order_line_filter"/>
 	        <field name="view_id" ref="view_order_line_tree_lucas"/>
 			<field name="context">{'search_default_group_by_partner_id': 1, 'search_default_group_by_order_id': 1}</field>

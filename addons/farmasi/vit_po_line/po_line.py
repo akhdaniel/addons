@@ -46,6 +46,21 @@ class order_line(osv.osv):
 		return results	
 
 	#######################################################################
+	# BID related function 
+	#######################################################################
+	def _bid_get_pr_date(self, cr, uid, ids, field_names, arg=None, context=None):
+		res={}
+		vit_pr = self.pool.get('vit.product.request')
+		for line in self.browse(cr,uid,ids,context) :
+			pr_date = ''
+			if line.order_id.requisition_id and  line.order_id.requisition_id.origin :
+				pr_datesrc = vit_pr.search(cr,uid,[('name','=',line.order_id.requisition_id.origin)])
+				if pr_datesrc:
+					pr_date=str(vit_pr.browse(cr,uid,pr_datesrc[0],).date)
+			res[line.id] = pr_date
+		return res
+
+	#######################################################################
 	# PR related function 
 	#######################################################################
 	def _pr_get_date(self, cr, uid, ids, field_names, arg=None, context=None):
@@ -71,6 +86,8 @@ class order_line(osv.osv):
 		'outstanding_qty' 		: fields.function(_get_outstanding, type='float', string="Outstanding Qty"),
 		'bid_no' 	: fields.related('order_id','requisition_id',type='many2one',relation='purchase.requisition',string='BID',readonly=True),
 		'bid_src' 	: fields.related('bid_no','origin',type='char',string='BID Source',readonly=True),
+		'bid_src_date' 	: fields.function(_bid_get_pr_date, type='char', string="BID Source Date", ),
+		'ordering_date': fields.related('bid_no','ordering_date',type='datetime',string='Bid Scheduled Ordering Date',readonly=True),
 		'notes2' 	: fields.related('order_id','notes2',type='text',string='Terms & Condition',readonly=True),
 		'pr_date' 	: fields.function(_pr_get_date, type='char', string="PR Date", ),
 		'pr_date_appr' : fields.function(_pr_get_date_appr, type='char', string="PR Approved", ),
@@ -78,4 +95,5 @@ class order_line(osv.osv):
 		'invo_id' 	: fields.related('invoice_lines','invoice_id',type='many2one',relation='account.invoice',string='Invoice',readonly=True),
 		'invo_date' 	: fields.related('invo_id','date_invoice',type='date',string='Invoice Date',readonly=True),
 		'invo_user_id' 	: fields.related('invo_id','user_id',type='many2one',relation='res.users', string='Invoice Responsible',readonly=True),
+		'date_order' 	: fields.related('order_id','date_order',type='datetime',string='Order Date',readonly=True),
 	}
