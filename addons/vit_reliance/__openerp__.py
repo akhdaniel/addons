@@ -21,6 +21,7 @@ Manage
 	"data": [
 		"partner.xml", 
 		"campaign.xml", 
+		"product.xml", 
 		"menu.xml", 
 		"data/sequence.xml",
 	],

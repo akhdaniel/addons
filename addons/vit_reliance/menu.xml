@@ -28,6 +28,7 @@
 			<field name="name">Product</field>
 			<field name="res_model">product.product</field>
 			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_product_tree"/>
 		</record>
 
 		<!-- product category list -->
@@ -37,6 +38,17 @@
 			<field name="res_model">product.category</field>
 			<field name="view_mode">tree,form</field>
 		</record>
+
+
+		<!-- company list -->
+
+		<record id="action_company_list" model="ir.actions.act_window">
+			<field name="name">Company</field>
+			<field name="res_model">res.company</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
 
 
 
@@ -63,7 +75,7 @@
 
 		<!-- product menu -->
 
-		<menuitem id="rcm_product" name="Products" sequence="10" parent="rcm"/>
+		<menuitem id="rcm_product" name="Products" sequence="30" parent="rcm"/>
 
 
 			<menuitem id="rcm_product_product"
@@ -78,5 +90,15 @@
 			 sequence="10"
 			 parent="rcm_product"/>
 
+
+		<!-- company menu -->
+
+		<menuitem id="rcm_company" name="Companies" sequence="30" parent="rcm"/>
+
+			<menuitem id="rcm_company_company"
+			 action="action_company_list"
+			 name="Companies"
+			 sequence="10"
+			 parent="rcm_company"/>
 	</data>
 </openerp>
