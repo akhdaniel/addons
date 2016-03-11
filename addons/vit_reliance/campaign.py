@@ -10,15 +10,17 @@ _logger = logging.getLogger(__name__)
 class reliance_campaign(osv.osv):
 	_name 		= "reliance.campaign"
 	_columns 	= {
-		'name'			: fields.char('Name', select=1),
-		'date_start' 	: fields.date('Start Date', select=1),
-		'date_end' 		: fields.date('End Date', select=1),
-		'campaign_partner_ids' : fields.one2many('reliance.campaign_partner','campaign_id','Parnter', ondelete="cascade"),
+		'name'			: fields.char('Name', select=1, required=True),
+		'date_start' 	: fields.date('Start Date', select=1, required=True),
+		'date_end' 		: fields.date('End Date', select=1, required=True),
+		'criteria'		: fields.text('Criteria'),
+		# 'campaign_partner_ids' : fields.one2many('reliance.campaign_partner','campaign_id','Parnter', ondelete="cascade"),
+		'partner_ids' 	: fields.many2many(
+					'res.partner', 	# 'other.object.name' dengan siapa dia many2many
+					'reliance_campaign_partner',     # 'relation object'
+					'campaign_id',            # 'actual.object.id' in relation table
+					'partner_id',           # 'other.object.id' in relation table
+					'Matched Partner',              # 'Field Name'
+					required=True),
 	}
 
-class reliance_campaign_partner(osv.osv):
-	_name 		= "reliance.campaign_partner"
-	_columns 	= {
-		'campaign_id'		: fields.many2one('reliance.campaign', 'Campaign'),
-		'partner_id'		: fields.many2one('res.partner', 'Partner'),
-	}

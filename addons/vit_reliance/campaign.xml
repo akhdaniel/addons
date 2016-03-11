@@ -38,15 +38,20 @@
 
             	<form version="7">
 	            	<group>
-		            	<field name="name"/>
-		            	<field name="date_start"/>
-		            	<field name="date_end"/>
+		            	<group>
+			            	<field name="name"/>
+			            	<field name="date_start"/>
+			            	<field name="date_end"/>
+			            </group>
+			            <group>
+			            	<field name="criteria"/>
+			            </group>
 		            </group>
 
 	            	<notebook>
 	            		<page string="Matched Partners" >
-	            			<field name="campaign_partner_ids"/>
-	<!--             				<tree string="partner">
+	            			<field name="partner_ids">
+	            				<tree string="partner">
 									<field name='name'/>
 									<field name='phone'/>
 									<field name='email'/>
@@ -54,7 +59,7 @@
 									<field name='city'/>
 	            				</tree>
 	            			</field>
-	 -->            		</page>
+	            		</page>
 
 	            	</notebook>
 	            </form>
