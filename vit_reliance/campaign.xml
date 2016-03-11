@@ -37,14 +37,28 @@
             <field name="arch" type="xml">
 
             	<form version="7">
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" 
+							class="oe_highlight" states="draft" />
+						<button string="Reload" type="object" name="action_reload" 
+							states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	states="open" />
+						<button string="Done" type="object" name="action_done"
+						 	states="open" />
+            			<field name="state" widget="statusbar" />
+            		</header>
 	            	<group>
 		            	<group>
 			            	<field name="name"/>
 			            	<field name="date_start"/>
 			            	<field name="date_end"/>
 			            </group>
-			            <group>
-			            	<field name="criteria"/>
+
+			            <group string="Criteria">
+			            	<field name="criteria_age_start"/>
+			            	<field name="criteria_age_end"/>
+			            	<field name="criteria_product_ids" widget="many2many_tags"/>
 			            </group>
 		            </group>
 
