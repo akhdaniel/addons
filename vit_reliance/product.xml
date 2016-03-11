@@ -1,0 +1,15 @@
+<openerp>
+	<data>
+		<record id="view_product_tree" model="ir.ui.view">
+		    <field name="name">product_product_tree</field>
+		    <field name="model">product.product</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list product" >
+		            <field name="name"/>
+		            <field name="categ_id"/>
+		            <field name="company_id"/>
+		        </tree>    
+		    </field>
+		</record>
+	</data>
+</openerp>
