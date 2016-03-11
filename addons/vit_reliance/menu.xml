@@ -8,6 +8,12 @@
 			<field name="search_view_id" ref="view_partner_filter_reliance"/>
             <field name="context">{'search_default_group_by_country_id': 1}</field>
 		</record>
+		<record id="action_campaign_list" model="ir.actions.act_window">
+			<field name="name">Campaign</field>
+			<field name="res_model">reliance.campaign</field>
+			<field name="view_mode">tree,form</field>
+			<!-- <field name="search_view_id" ref="view_campaign_filter_reliance"/> -->
+		</record>
 
 		<menuitem id="rcm" name="RCM" sequence="10"/>
 		
@@ -17,6 +23,12 @@
 		 action="action_customer_list"
 		 name="Customer"
 		 sequence="10"
+		 parent="rcm_customer"/>
+
+		<menuitem id="rcm_customer_campaign"
+		 action="action_campaign_list"
+		 name="Campaign"
+		 sequence="20"
 		 parent="rcm_customer"/>
 
 

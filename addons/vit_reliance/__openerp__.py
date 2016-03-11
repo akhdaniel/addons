@@ -19,6 +19,7 @@ Manage
 """,
 	"data": [
 		"partner.xml", 
+		"campaign.xml", 
 		"menu.xml", 
 	],
 	"installable": True,

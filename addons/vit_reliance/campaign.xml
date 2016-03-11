@@ -1,0 +1,65 @@
+<openerp>
+	<data>
+
+		<!-- tree campaign reliance -->
+		<record id="view_campaign_tree" model="ir.ui.view">
+		    <field name="name">reliance_campaign_tree</field>
+		    <field name="model">reliance.campaign</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list campaign" >
+		            <field name="name"/>
+					<field name='date_start' />
+					<field name='date_end' 	 />		            
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search campaign reliance -->
+		<record id="view_campaign_filter_reliance" model="ir.ui.view">
+		    <field name="name">campaign.filter.reliance</field>
+		    <field name="model">reliance.campaign</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Campaign">
+				            
+		            <field name="name"/>
+					<field name='date_start' />
+					<field name='date_end' 	 />	  
+                                       
+		
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form campaign reliance -->
+        <record id="view_campaign_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_campaign_form_reliance</field>
+            <field name="model">reliance.campaign</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+	            	<group>
+		            	<field name="name"/>
+		            	<field name="date_start"/>
+		            	<field name="date_end"/>
+		            </group>
+
+	            	<notebook>
+	            		<page string="Matched Partners" >
+	            			<field name="campaign_partner_ids"/>
+	<!--             				<tree string="partner">
+									<field name='name'/>
+									<field name='phone'/>
+									<field name='email'/>
+									<field name='street'/>
+									<field name='city'/>
+	            				</tree>
+	            			</field>
+	 -->            		</page>
+
+	            	</notebook>
+	            </form>
+            </field>
+        </record>
+
+	</data>
+</openerp>
