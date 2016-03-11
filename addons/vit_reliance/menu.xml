@@ -1,6 +1,8 @@
 <openerp>
 	<data>
 
+		<!-- customer list -->
+
 		<record id="action_customer_list" model="ir.actions.act_window">
 			<field name="name">Customer</field>
 			<field name="res_model">res.partner</field>
@@ -8,6 +10,10 @@
 			<field name="search_view_id" ref="view_partner_filter_reliance"/>
             <field name="context">{'search_default_group_by_country_id': 1}</field>
 		</record>
+
+
+		<!-- campaign list -->
+
 		<record id="action_campaign_list" model="ir.actions.act_window">
 			<field name="name">Campaign</field>
 			<field name="res_model">reliance.campaign</field>
@@ -15,22 +21,62 @@
 			<!-- <field name="search_view_id" ref="view_campaign_filter_reliance"/> -->
 		</record>
 
+
+		<!-- product list -->
+
+		<record id="action_product_list" model="ir.actions.act_window">
+			<field name="name">Product</field>
+			<field name="res_model">product.product</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- product category list -->
+
+		<record id="action_product_category_list" model="ir.actions.act_window">
+			<field name="name">Product Category</field>
+			<field name="res_model">product.category</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+
+		<!-- top menu -->
+
 		<menuitem id="rcm" name="RCM" sequence="10"/>
 		
+
+		<!-- customer menu -->
+
 		<menuitem id="rcm_customer" name="Customer" sequence="10" parent="rcm"/>
 
-		<menuitem id="rcm_customer_customer"
-		 action="action_customer_list"
-		 name="Customer"
-		 sequence="10"
-		 parent="rcm_customer"/>
+			<menuitem id="rcm_customer_customer"
+			 action="action_customer_list"
+			 name="Customer"
+			 sequence="10"
+			 parent="rcm_customer"/>
 
-		<menuitem id="rcm_customer_campaign"
-		 action="action_campaign_list"
-		 name="Campaign"
-		 sequence="20"
-		 parent="rcm_customer"/>
+			<menuitem id="rcm_customer_campaign"
+			 action="action_campaign_list"
+			 name="Campaign"
+			 sequence="20"
+			 parent="rcm_customer"/>
 
+		<!-- product menu -->
+
+		<menuitem id="rcm_product" name="Products" sequence="10" parent="rcm"/>
+
+
+			<menuitem id="rcm_product_product"
+			 action="action_product_list"
+			 name="Product"
+			 sequence="10"
+			 parent="rcm_product"/>
+
+			<menuitem id="rcm_product_category"
+			 action="action_product_category_list"
+			 name="Product Category"
+			 sequence="10"
+			 parent="rcm_product"/>
 
 	</data>
 </openerp>
