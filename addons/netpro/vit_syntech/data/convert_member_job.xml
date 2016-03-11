@@ -1,11 +1,17 @@
 <openerp>
 	<data>
-		<record model="ir.actions.server" id="convert_member_syntech">
+		<!-- Cron job for Amazon synchronization -->
+		<record forcecreate="True" id="convert_member_syntech" model="ir.cron">
 			<field name="name">Convert Member Syntech</field>
-			<field name="model_id" ref="model_netpro_syntech"/>
-			<field name="code">
-				self.process_convert_syntech(cr, uid, context.get('active_ids', []), context=context)
-			</field>
+			<field eval="True" name="active" />
+			<field name="user_id" ref="base.user_root" />
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field eval="False" name="doall" />
+			<field eval="'netpro.syntech'" name="model" />
+			<field eval="'process_convert_syntech'" name="function" />
+			<field eval="'()'" name="args" />
 		</record>
 	</data>
 </openerp>
