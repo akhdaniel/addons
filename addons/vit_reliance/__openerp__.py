@@ -3,7 +3,8 @@
 	"version": "1.0", 
 	"depends": [
 		"base",
-		"board"
+		"board",
+		"stock"
 	], 
 	"author": "vitraining.com", 
 	"category": "Tools", 
@@ -21,6 +22,7 @@ Manage
 		"partner.xml", 
 		"campaign.xml", 
 		"menu.xml", 
+		"data/sequence.xml",
 	],
 	"installable": True,
 	"auto_install": False,

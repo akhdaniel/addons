@@ -1,0 +1,21 @@
+<openerp>
+	<data>
+		<!-- Campaign -->
+		<record id="seq_type_campaign" model="ir.sequence.type">
+			<field name="name">Campaign Type</field>
+			<field name="code">reliance.campaign</field>
+		</record>	
+		
+		<record id="seq_campaign" model="ir.sequence">
+			<field name="name">Campaign</field>
+			<field name="code">reliance.campaign</field>
+			<field name="prefix">CP/%(year)s/%(month)s/</field>
+			<field name="padding">3</field>
+			<field name="next_number_actual">1</field>
+			<field name="number_increment">1</field>
+			<field name="implementation">standard</field>
+		</record>
+
+		
+	</data>
+</openerp>
