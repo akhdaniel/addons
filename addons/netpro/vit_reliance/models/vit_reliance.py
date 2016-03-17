@@ -97,7 +97,12 @@ class netpro_reliance(osv.osv):
                     policy_id = False
                     if reliance.PassportCountry:
                         res_pat = self.pool.get('res.partner')
-                        res_pat_id = res_pat.create(cr, uid, {'name':reliance.PassportCountry}, context)
+                        res_exist = res_pat.search(cr, uid, [('name', '=', reliance.PassportCountry)])
+                        res_pat_id = False
+                        if res_exist:
+                            res_pat_id = res_exist
+                        else :
+                            res_pat_id = res_pat.create(cr, uid, {'name':reliance.PassportCountry}, context)
                         if res_pat_id:
                             policy_obj = self.pool.get('netpro.policy')
                             policy_id = policy_obj.create(cr, uid, {'policy_no': reliance.PolicyNo, 'policy_holder_id': res_pat_id, 'policy_category_id':1}, context)
