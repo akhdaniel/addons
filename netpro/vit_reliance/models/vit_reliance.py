@@ -88,8 +88,9 @@ class netpro_reliance(osv.osv):
         
         # SEDOT DATA FROM RELIANCE
         if(reliance_obj):
-            reliance_data = reliance_obj.search(cr,uid,[('is_processed', '=', False)])
-            if reliance_data:
+            reliance_ids = reliance_obj.search(cr,uid,[('is_processed', '=', False)])
+            if reliance_ids:
+                reliance_data = reliance_obj.browse(cr, uid, reliance_ids, context=context)
                 inc = 1
                 for reliance in reliance_data:
 
