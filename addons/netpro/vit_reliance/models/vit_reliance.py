@@ -105,7 +105,7 @@ class netpro_reliance(osv.osv):
                         'insurance_period_start' : reliance.MemberEffDt,
                         'insurance_period_end' : reliance.MemberExpDt,
                         'bank_name' : reliance.Bank,
-                        'remarks' : 'Reliance Data '+inc
+                        'remarks' : 'Reliance Data ' + str(inc)
                     }
 
                     #################################################
