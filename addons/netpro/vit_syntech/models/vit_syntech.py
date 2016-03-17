@@ -63,6 +63,15 @@ class netpro_syntech(osv.osv):
                 inc = 1
                 for syntech in syntech_data:
 
+                    policy_id = False
+                    if syntech.CARD_NO:
+                        res_pat = self.pool.get('res.partner')
+                        res_pat_id = res_pat.create(cr, uid, {'name':syntech.CARD_NO}, context)
+                        if res_pat_id:
+                            policy_obj = self.pool.get('netpro.policy')
+                            policy_id = policy_obj.create(cr, uid, {'policy_no': syntech.NO_POLICY, 'policy_holder_id': res_pat_id, 'policy_category_id':2}, context)
+
+
                     ####################################
                     # collect data from syntech object #
                     ####################################
@@ -81,6 +90,7 @@ class netpro_syntech(osv.osv):
                         'remarks' : 'Syntech Data ' + str(inc),
                         'parent_id' : False,
                         'member_no' : False,
+                        'policy_id' : policy_id,
                     }
 
                     #################################################
