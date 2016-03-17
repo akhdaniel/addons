@@ -33,7 +33,7 @@ class netpro_member(osv.osv):
         'partner_id': fields.many2one('res.partner', 'Partner', select=True, ondelete='cascade'),
         'policy_id': fields.many2one('netpro.policy', 'Policy', domain='[("state","=","approved"),]'),
         'policy_holder': fields.related('policy_id', 'policy_holder_id', 
-            relation='res.partner', type='many2one', store=False, string='Policy Holder'),
+            relation='res.partner', type='many2one', store=True, string='Policy Holder'),
         'policy_category': fields.related('policy_id', 'policy_category_id', 
             relation='netpro.policy_category', type='many2one', store=False, string='Policy Category'),
         'insurance_period_start': fields.date('Insurance Period Start'),
