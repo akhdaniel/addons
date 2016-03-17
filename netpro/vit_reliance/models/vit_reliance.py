@@ -94,6 +94,14 @@ class netpro_reliance(osv.osv):
                 inc = 1
                 for reliance in reliance_data:
 
+                    policy_id = False
+                    if reliance.PassportCountry:
+                        res_pat = self.pool.get('res.partner')
+                        res_pat_id = res_pat.create(cr, uid, {'name':reliance.PassportCountry}, context)
+                        if res_pat_id:
+                            policy_obj = self.pool.get('netpro.policy')
+                            policy_id = policy_obj.create(cr, uid, {'policy_no': reliance.PolicyNo, 'policy_holder_id': res_pat_id, 'policy_category_id':1}, context)
+
                     #####################################
                     # collect data from reliance object #
                     #####################################
@@ -108,6 +116,7 @@ class netpro_reliance(osv.osv):
                         'remarks' : 'Reliance Data ' + str(inc),
                         'parent_id' : False,
                         'member_no' : False,
+                        'policy_id' : policy_id,
                     }
 
                     #################################################
