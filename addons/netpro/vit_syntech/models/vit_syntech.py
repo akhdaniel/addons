@@ -80,6 +80,7 @@ class netpro_syntech(osv.osv):
                         'upd_date' : syntech.UPD_DATE,
                         'remarks' : 'Syntech Data ' + str(inc),
                         'parent_id' : False,
+                        'member_no' : False,
                     }
 
                     #################################################
