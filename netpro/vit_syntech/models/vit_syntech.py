@@ -57,8 +57,9 @@ class netpro_syntech(osv.osv):
         
         # SEDOT DATA FROM SYNTECH
         if(syntech_obj):
-            syntech_data = syntech_obj.search(cr,uid,[('is_processed', '=', False)])
-            if syntech_data:
+            syntech_ids = syntech_obj.search(cr,uid,[('is_processed', '=', False)])
+            if syntech_ids:
+                syntech_data = syntech_obj.browse(cr, uid, syntech_ids, context=context)
                 inc = 1
                 for syntech in syntech_data:
 
@@ -77,7 +78,7 @@ class netpro_syntech(osv.osv):
                         'insurance_period_end' : syntech.XPIRY_DATE,
                         'upd_code' : syntech.UPD_CODE,
                         'upd_date' : syntech.UPD_DATE,
-                        'remarks' : 'Syntech Data '+inc
+                        'remarks' : 'Syntech Data ' + str(inc)
                     }
 
                     #################################################
