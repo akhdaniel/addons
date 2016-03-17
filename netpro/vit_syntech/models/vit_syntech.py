@@ -72,6 +72,10 @@ class netpro_syntech(osv.osv):
                             res_pat_id = res_exist
                         else :
                             res_pat_id = res_pat.create(cr, uid, {'name':syntech.CARD_NO}, context)
+
+                        if isinstance(res_pat_id, (list)):
+                            res_pat_id = res_pat_id[0]
+
                         if res_pat_id:
                             policy_obj = self.pool.get('netpro.policy')
                             policy_id = policy_obj.create(cr, uid, {'policy_no': syntech.NO_POLICY, 'policy_holder_id': res_pat_id, 'policy_category_id':2}, context)
