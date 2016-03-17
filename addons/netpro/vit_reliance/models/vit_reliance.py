@@ -104,7 +104,8 @@ class netpro_reliance(osv.osv):
                         else :
                             res_pat_id = res_pat.create(cr, uid, {'name':reliance.PassportCountry}, context)
 
-                        import pdb; pdb.set_trace()
+                        if isinstance(res_pat_id, (list)):
+                            res_pat_id = res_pat_id[0]
 
                         if res_pat_id:
                             policy_obj = self.pool.get('netpro.policy')
