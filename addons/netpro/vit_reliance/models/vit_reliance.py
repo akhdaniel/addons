@@ -151,6 +151,9 @@ class netpro_reliance(osv.osv):
 
                     member_data.action_confirm()
 
+                    ###### update is processed TRUE ######
+                    self.write(cr,uid,reliance.id,{'is_processed':True},context=context)
+
                     ###########################################
                     # add increment number for member remarks #
                     ###########################################
