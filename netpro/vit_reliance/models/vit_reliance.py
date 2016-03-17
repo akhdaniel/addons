@@ -75,7 +75,7 @@ class netpro_reliance(osv.osv):
         'InternalUse19' : fields.char('Internal Use 19', select=1),
         'InternalUse20' : fields.char('Internal Use 20', select=1),
         'InternalUse21' : fields.char('Internal Use 21', select=1),
-        'InternalUse22' : fields.char('Internal Use 22', select=1,
+        'InternalUse22' : fields.char('Internal Use 22', select=1),
         'is_processed' : fields.boolean('Is Processed?'),
     }
 
