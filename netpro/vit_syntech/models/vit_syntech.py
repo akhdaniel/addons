@@ -88,7 +88,8 @@ class netpro_syntech(osv.osv):
                     #################################################
                     member_obj = self.pool.get('netpro.member')
                     member_syntech_id = member_obj.create(cr, uid, member_data, context)
-                    member_syntech_id.action_confirm()
+                    member_data = member_obj.browse(cr,uid,member_syntech_id,context=context)
+                    member_data.action_confirm()
 
                     ###########################################
                     # add increment number for member remarks #

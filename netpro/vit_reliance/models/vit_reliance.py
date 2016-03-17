@@ -115,6 +115,7 @@ class netpro_reliance(osv.osv):
                     #################################################
                     member_obj = self.pool.get('netpro.member')
                     member_reliance_id = member_obj.create(cr, uid, reliance_data, context)
+                    member_data = member_obj.browse(cr,uid,member_reliance_id,context=context)
 
                     ######################################
                     # get member plan from reliance data #
@@ -126,11 +127,11 @@ class netpro_reliance(osv.osv):
                                 product_plan_obj = self.pool.get('netpro.product_plan').search(cr, uid, [('code', '=', mplan)])
                                 if product_plan_obj:
                                     member_plan_data = {
-                                        'member_id' : member_reliance_id.id,
+                                        'member_id' : member_data.id,
                                         'product_plan_id' : product_plan_obj,
                                     }
 
-                    member_reliance_id.action_confirm()
+                    member_data.action_confirm()
 
                     ###########################################
                     # add increment number for member remarks #
