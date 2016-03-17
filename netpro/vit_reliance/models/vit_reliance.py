@@ -107,6 +107,7 @@ class netpro_reliance(osv.osv):
                         'bank_name' : reliance.Bank,
                         'remarks' : 'Reliance Data ' + str(inc),
                         'parent_id' : False,
+                        'member_no' : False,
                     }
 
                     #################################################
