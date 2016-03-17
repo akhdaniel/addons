@@ -103,6 +103,9 @@ class netpro_reliance(osv.osv):
                             res_pat_id = res_exist
                         else :
                             res_pat_id = res_pat.create(cr, uid, {'name':reliance.PassportCountry}, context)
+
+                        import pdb; pdb.set_trace()
+
                         if res_pat_id:
                             policy_obj = self.pool.get('netpro.policy')
                             policy_id = policy_obj.create(cr, uid, {'policy_no': reliance.PolicyNo, 'policy_holder_id': res_pat_id, 'policy_category_id':1}, context)
