@@ -78,7 +78,7 @@ class netpro_syntech(osv.osv):
                         'insurance_period_end' : syntech.XPIRY_DATE,
                         'upd_code' : syntech.UPD_CODE,
                         'upd_date' : syntech.UPD_DATE,
-                        'remarks' : 'Syntech Data ' + str(inc).
+                        'remarks' : 'Syntech Data ' + str(inc),
                         'parent_id' : False,
                     }
 
