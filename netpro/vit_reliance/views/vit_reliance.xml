@@ -6,6 +6,9 @@
 	        <field name="type">form</field>
 	        <field name="arch" type="xml">
 	        	<form string="netpro.reliance" version="7.0">
+	        		<header>                                             
+	                    <button string="Convert Member" type="action" name="%(process_convert_reliance)d" class="oe_highlight" />
+	                </header>
 	        		<sheet>
 	        		<group>
 	        			<group>
