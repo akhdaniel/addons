@@ -1,5 +1,12 @@
 <openerp>
 	<data>
+
+		<record model="ir.actions.server" id="convert_member">
+			<field name="name">Convert Member</field>
+			<field name="model_id" ref="model_netpro_reliance"/>
+			<field name="code">self.process_convert_reliance(cr, uid, context.get('active_ids', []), context=context)</field>
+		</record>
+
 		<record model="ir.ui.view" id="view_reliance_form">
 	        <field name="name">netpro.reliance.form</field>
 	        <field name="model">netpro.reliance</field>
@@ -7,7 +14,7 @@
 	        <field name="arch" type="xml">
 	        	<form string="netpro.reliance" version="7.0">
 	        		<header>                                             
-	                    <button string="Convert Member" type="action" name="%(process_convert_reliance)d" class="oe_highlight" />
+	                    <button string="Convert Member" type="action" name="%(convert_member)d" class="oe_highlight" />
 	                </header>
 	        		<sheet>
 	        		<group>
