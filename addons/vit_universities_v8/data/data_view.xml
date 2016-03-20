@@ -184,7 +184,26 @@
 	    	<!-- <field name="jurusan_id" search="[('kode','=','04')]" model="master.jurusan"/> -->
 	    <!-- </record> -->
 
-
+<!-- Master hubugan keluarga -->
+	    <record model="master.hubungan_keluarga" id="hub_kel_1" >
+	    	<field name="name">Ayah</field>
+	    </record>
+	    <record model="master.hubungan_keluarga" id="hub_kel_2" >
+	    	<field name="name">Ibu</field>
+	    </record>
+	    <record model="master.hubungan_keluarga" id="hub_kel_3" >
+	    	<field name="name">Saudara Kandung</field>
+	    </record>
+	    <record model="master.hubungan_keluarga" id="hub_kel_4" >
+	    	<field name="name">Saudara Lain</field>
+	    </record>
+	    <record model="master.hubungan_keluarga" id="hub_kel_5" >
+	    	<field name="name">Perusahaan</field>
+	    </record>
+	    <record model="master.hubungan_keluarga" id="hub_kel_6" >
+	    	<field name="name">Dinas</field>
+	    </record>
+	    
 <!-- Cron Job Cuti Mahasiswa -->
         <record model="ir.cron" id="cuti_mahasiswa_cron">
             <field name="name">Activasi cuti mahasiswa</field>
