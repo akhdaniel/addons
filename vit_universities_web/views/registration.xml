@@ -59,23 +59,38 @@
                     </div>
                 </div>  
 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_pendaftaran">
+                          <t t-foreach="type_pendaftarans" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
 
-                
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="name" required="True" 
-                            t-attf-value="{{ partner.name }}" />
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jalur Masuk</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jenis_pendaftaran_id">
+                          <t t-foreach="jenis_pendaftaran_ids" t-as="jp">
+                            <option t-att-value="'%s' % (jp.id)" t-esc="jp.name" />
+                          </t>
+                        </select>
                     </div>
-                </div>    
-                
+                </div>
+
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="email" readonly="True" 
-                            t-attf-value="{{ partner.email }}" />
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_mhs_id">
+                          <t t-foreach="type_mhs_ids" t-as="type_mhs">
+                            <option t-att-value="'%s' % (type_mhs.id)" t-esc="type_mhs.name" />
+                          </t>
+                        </select>
                     </div>
-                </div>    
+                </div>   
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
@@ -100,40 +115,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
-                    <div class="col-md-3 col-sm-4">
-                        <select class="form-control" name="type_pendaftaran">
-                          <t t-foreach="type_pendaftarans" t-as="tp">
-                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
-                          </t>
-                        </select>
-                    </div>
-                </div> 
-
-                <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
-                    <div class="col-md-7 col-sm-8">
-                        <select class="form-control" name="type_mhs_id">
-                          <t t-foreach="type_mhs_ids" t-as="type_mhs">
-                            <option t-att-value="'%s' % (type_mhs.id)" t-esc="type_mhs.name" />
-                          </t>
-                        </select>
-                    </div>
-                </div> 
-
-                <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan</label>
-                    <div class="col-md-7 col-sm-8">
-                        <select class="form-control" name="pekerjaan">
-                          <t t-foreach="pekerjaans" t-as="p">
-                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" />
-                          </t>
-                        </select>
-                    </div>
-                </div>    
-
-
-                <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
                     <div class="col-md-7 col-sm-8">
                         <select class="form-control" name="alamat_id">
@@ -147,16 +128,36 @@
 
                 <h3>DATA PRIBADI</h3>
 
- 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="name" required="True" 
+                            t-attf-value="{{ partner.name }}" maxlength="60"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="id_card" 
+                            t-attf-value="{{ partner.id_card }}" required="True" placeholder="No. KTP/SIM" maxlength="30"/>
+                    </div>  
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="email" readonly="True" 
+                            t-attf-value="{{ partner.email }}" />
+                    </div>
+                </div>    
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
                     <div class="col-md-3 col-sm-4">
-                        <input type="text" class="form-control" name="tempat_lahir" required="True" t-attf-value="{{ partner.tempat_lahir }}"/>
+                        <input type="text" class="form-control" name="tempat_lahir" required="True" t-attf-value="{{ partner.tempat_lahir }}" placeholder="Tempat Lahir"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <input type="text" class="form-control" name="tanggal_lahir" required="True" 
-                            t-attf-value="{{ partner.tanggal_lahir }}" placeholder="yyyy-mm-dd"/>
+                        <input type="date" class="form-control" name="tanggal_lahir" required="True" 
+                            t-attf-value="{{ partner.tanggal_lahir }}" placeholder="Tanggal Lahir"/>
+                            
                     </div>
                 </div>  
 
@@ -182,7 +183,7 @@
                     </div>
                 </div> 
 
-                <div class="form-group">
+<!--                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="street" 
@@ -192,48 +193,179 @@
                         <input type="text" class="form-control" name="street2" 
                             t-attf-value="{{ partner.street2 }}" placeholder="street2"/>
                     </div>
-                </div>  
+                </div>  --> 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="street" 
+                            t-attf-value="{{ partner.street }}" required="True" placeholder="street" maxlength="128"/>
+                    </div>
+                </div> 
+
 
                 <div class="form-group">
                     <div class="col-md-3 col-sm-4"></div>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="city" 
-                            t-attf-value="{{ partner.city }}" required="True" placeholder="city"/>
+                            t-attf-value="{{ partner.city }}" required="True" placeholder="city" maxlength="60"/>
                     </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="zip" 
+                            t-attf-value="{{ partner.zip }}" required="True" placeholder="Kode Pos" maxlength="6"/>
+                    </div>                    
                 </div>
 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="phone" 
+                            t-attf-value="{{ partner.phone }}" placeholder="Telepon Rumah" maxlength="10"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="mobile" 
+                            t-attf-value="{{ partner.mobile }}" required="True" placeholder="Telepon Selular ..." maxlength="15"/>
+                    </div>                    
+                </div>
+
+<!--                 <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="pekerjaan">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div>  --> 
 
                 <h3>DATA ORANG TUA</h3>
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="nama_ayah">Nama Ayah</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="nama_ayah" />
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nama_ayah" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="keadaan_ayah">
+                          <t t-foreach="keadaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Keadaan Ayah"/>
+                          </t>
+                        </select>
+                    </div>                     
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan Ayah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="pekerjaan">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Pekerjaan Ayah"/>
+                          </t>
+                        </select>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="penghasilan_ayah">
+                          <t t-foreach="penghasilan_ayah" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Ayah"/>
+                          </t>
+                        </select>
+                    </div>                    
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="telpon_ayah">Alamat Ayah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="alamat_ayah" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telpon_ayah" placeholder="Telepon Ayah ..." maxlength="15"/>
                     </div>
                 </div>  
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="nama_ibu">Nama Ibu</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="nama_ibu" />
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nama_ibu" required="True"/>
                     </div>
-                </div>  
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="keadaan_ibu">
+                          <t t-foreach="keadaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Keadaan Ibu"/>
+                          </t>
+                        </select>
+                    </div>   
+                </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="telpon_ayah">Telepon Ayah</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="telpon_ayah" />
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan2">Pekerjaan Ibu</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="pekerjaan2">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Pekerjaan Ibu"/>
+                          </t>
+                        </select>
                     </div>
-                </div>  
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="penghasilan_ibu">
+                          <t t-foreach="penghasilan_ayah" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Ibu"/>
+                          </t>
+                        </select>
+                    </div>   
+                </div> 
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="telpon_ibu">Telepon Ibu</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input type="text" class="form-control" name="telpon_ibu" />
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_ibu">Alamat Ibu</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="alamat_ibu" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telpon_ibu" placeholder="Telepon Ibu ..." maxlength="15"/>
                     </div>
                 </div>  
 
+                <h3>DATA PENANGGUNG BIAYA KULIAH</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_penanggung">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nama_penanggung" required="True"/>
+                    </div>  
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jk_penanggung">
+                          <t t-foreach="jenis_kelamins" t-as="jkp">
+                            <option t-att-value="'%s' % (jkp[0])" t-esc="jkp[1]" />
+                          </t>
+                        </select>
+                    </div>                      
+                </div>
 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan3">Pekerjaan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="pekerjaan3">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Pekerjaan Penanggung"/>
+                          </t>
+                        </select>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="penghasilan_penanggung">
+                          <t t-foreach="penghasilan_ayah" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Penanggung"/>
+                          </t>
+                        </select>
+                    </div>                      
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_penanggung">Alamat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="alamat_penanggung" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telpon_penanggung" placeholder="Telepon Penanggung ..." maxlength="15"/>
+                    </div>
+                </div>  
 
 
 
@@ -246,16 +378,16 @@
                     </div>
                 </div>  
                <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal Universitas (Pindahan) dan NIM</label>
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal Universitas (Jika Pindahan)</label>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="asal_universitas" />
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <input type="text" class="form-control" name="nim_asal" />
+                        <input type="text" class="form-control" name="nim_asal" placeholder="NIM ..." />
                     </div>
                 </div>  
 
-                <h3>DATA PEKERJAAN</h3>
+<!--                 <h3>DATA PEKERJAAN (JIKA SUDAH BEKERJA)</h3>
                <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="nama_instansi">Nama Instansi</label>
                     <div class="col-md-7 col-sm-8">
@@ -267,27 +399,34 @@
                     <div class="col-md-7 col-sm-8">
                         <input type="text" class="form-control" name="jabatan" />
                     </div>
-                </div>  
+                </div>  -->
 
-                <div class="form-group">
+                <h3></h3>
+                <div t-attf-class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="photo">Photo</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input class="input-file" id="photo" type="file" name="photo"/>
+                    </div>
+                </div>
+                
+                 <div class="form-group">
                     <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
                         <button type="submit" name="confirm" class="btn btn-primary">
                             Confirm
                         </button>
                     </div>
-                </div>
-                
+                </div> 
+
             </form>
         </div>
     </t>
 </template>
 
-
 <!-- Registration Succeed -->
 
 <template id="vit_universities_web.registration_process" name="Registration" page="True">
     <t t-call="website.layout">
-        <t t-set="title">Registraation</t>
+        <t t-set="title">Registration</t>
         <div class="container">
             <h2>Registration Sukses</h2>
             <p>Silahkan lanjutkan transaksi dengan mengikuti link berikut..</p>
