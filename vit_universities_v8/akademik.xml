@@ -151,6 +151,7 @@
                     <field name="kode_dikti"/>
                     <field name="name"/>
                     <field name="pt_id"/>
+                    <field name="coa_id" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -236,6 +237,7 @@
                                 <field name="semester_id" widget="selection"/>
                                 <field name="jenjang"/> 
                                 <field name="is_internal"/>
+                                <field name="coa_id"/>
                             </group>                          
                         </group>
                     </sheet>                     

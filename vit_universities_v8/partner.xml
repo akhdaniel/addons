@@ -27,8 +27,12 @@
                 <sheet position="before">                 
                 </sheet>
 
-             	<field name="function" position="replace">
+                <field name="function" position="replace">
                     <field name="function" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
+                </field>   
+
+             	<field name="phone" position="before">
+                    <field name="id_card" attrs="{'invisible': [('is_mahasiswa','=',False)]}"/>
                 </field>   
 
              	<field name="fax" position="replace">
@@ -124,7 +128,7 @@
                                 <group col="4" colspan="4">
                                 	<group>
                                 		<field name="tempat_lahir"/>
-                                		<field name="tanggal_lahir"/>
+                                		<field name="tanggal_lahir" options="{'datepicker':{'yearRange': 'c-100:c+0'}}"/>
                                 		<field name="age"/>	
                                 	</group>
                                 	<group>
@@ -171,11 +175,11 @@
 
                         		<separator string="Riwayat Keluarga"/>
                                 <field view_mode="tree" name="biodata_keluarga_ids" nolabel="1">
-                        			<tree string="Daftar Anggota Keluarga" editable="bottom">
+                        			<tree string="Daftar Anggota Keluarga">
         			                    <field name="nama"/>
-        			                    <field name="jenis_kelamin"/>
-        			                    <field name="tempat_lahir"/>
-        			                    <field name="tanggal_lahir"/>
+        			                    <field name="jenis_kelamin" invisible="1"/>
+        			                    <field name="tempat_lahir" invisible="1"/>
+        			                    <field name="tanggal_lahir" invisible="1"/>
         			                    <field name="hubungan_keluarga_id"/>
                                         <field name="keadaan"/>
                                         <field name="jenjang_id" widget="selection"/>
@@ -183,6 +187,25 @@
         			                    <field name="alamat"/>
                                         <field name="telepon"/>
         			                </tree>
+                                    <form string="Daftar Anggota Keluarga">
+                                        <group>
+                                            <group>
+                                                <field name="nama"/>
+                                                <field name="jenis_kelamin"/>
+                                                <field name="tempat_lahir"/>
+                                                <field name="tanggal_lahir"/>
+                                                <field name="hubungan_keluarga_id"/>
+                                                <field name="penghasilan"/>
+                                            </group>
+                                            <group>    
+                                                <field name="keadaan"/>
+                                                <field name="jenjang_id" widget="selection"/>
+                                                <field name="pekerjaan"/>
+                                                <field name="alamat"/>
+                                                <field name="telepon"/>
+                                            </group>
+                                        </group>
+                                    </form>                                    
         			            </field>  
 
                                 <separator/>

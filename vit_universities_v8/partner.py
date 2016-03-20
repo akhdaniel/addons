@@ -326,6 +326,7 @@ class res_partner (osv.osv):
 		'no_sk_dekan'	: fields.char('No. SK Dekan'),
 		'no_transkrip'	: fields.char('No. Transkrip'),
 		'yudisium_id' 	: fields.many2one('master.yudisium','Yudisium'),
+		'id_card'		: fields.char('No. KTP/SIM')
 
 		}
 

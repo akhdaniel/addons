@@ -237,11 +237,12 @@ class master_fakultas (osv.Model):
 	_name='master.fakultas'
 	   
 	_columns = {
-		'kode'		:fields.char('Kode', size=28, required = True),
-		'kode_dikti':fields.char('Kode DIKTI', size=28,required = True),
+		'kode'		: fields.char('Kode', size=28, required = True),
+		'kode_dikti': fields.char('Kode DIKTI', size=28,required = True),
 		'pt_id'		: fields.many2one('res.partner', 'Perguruan Tinggi', domain="['|',('category_id','ilike','perguruan tinggi'),('is_company','=',True)]", help="Tag Perguruan Tinggi"),
 		'name' 		: fields.char('Nama Fakultas', size=128, required = True),
-		'is_internal': fields.boolean('Internal Fakultas?')
+		'is_internal': fields.boolean('Internal Fakultas?'),
+		'coa_id'	: fields.many2one('account.account','CoA'),
 	}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode fakultas tidak boleh sama')]
@@ -282,6 +283,7 @@ class master_prodi (osv.Model):
 		'jenjang': fields.many2one('master.jenjang','Jenjang',required = True),
 		'is_internal': fields.related('fakultas_id', 'is_internal' , type="boolean", relation="master.fakultas", 
 			string="Internal?", store=True),
+		'coa_id'	: fields.many2one('account.account','CoA'),
 	}
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
@@ -359,9 +361,10 @@ class biodata_keluarga (osv.Model):
 		'pekerjaan':fields.char('Pekerjaan'),
 		'alamat':fields.text('Alamat'),
 		'telepon':fields.char('Telepon'),
-		'jenis_kelamin':fields.selection([('laki_laki','Laki-Laki'),('perempuan','Perempuan')],'Jenis Kelamin'),
+		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
 		'keadaan':fields.selection([('alm','Alm'),('ada','Masih Ada')],'Keadaan'),
 		'jenjang_id': fields.many2one('master.jenjang','Pendidikan'),
+		'penghasilan' : fields.char('Penghasilan')
 			}
 biodata_keluarga()
 
