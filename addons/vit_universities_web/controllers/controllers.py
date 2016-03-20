@@ -43,11 +43,19 @@ class Partner(http.Controller):
 		Konsentrasi  = http.request.env['master.konsentrasi']
 		konsentrasi_ids = Konsentrasi.search([])
 
-		pekerjaans = [('psn','Pengawai Negeri Sipil'),('tni','TNI'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
+		Jenis_pendaftaran  = http.request.env['akademik.jenis_pendaftaran']
+		jenis_pendaftaran_ids = Jenis_pendaftaran.search([])
+
+		penghasilans = [('0',' '),('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
+
+		penghasilan_ayah = [('0','Penghasilan ...'),('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
+		pekerjaans = [(' ',' '),('pns','Pengawai Negeri Sipil'),('tni/polri','TNI/Polri'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
 		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
+		keadaans = [('ada','Masih Ada'),('alm','Alm')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
 		type_pendaftarans = [('ganjil','Ganjil'),('Genap','Genap')]
 
+		#import pdb; pdb.set_trace()
 		return http.request.render('vit_universities_web.registration',
 		{
 			'partner'		: partner,
@@ -56,9 +64,17 @@ class Partner(http.Controller):
 			'konsentrasi_ids': konsentrasi_ids,
 			'tahun_ids'		: tahun_ids,
 			'alamat_ids'    : alamat_ids,
+			'jenis_pendaftaran_ids' : jenis_pendaftaran_ids,
+			'type_mhs_ids'	: type_mhs_ids,
 			'type_mhs_ids'	: type_mhs_ids,
 			'semester_ids'	: semester_ids,
 			'pekerjaans'	: pekerjaans,
+			'pekerjaans2'	: pekerjaans,
+			'pekerjaans3'	: pekerjaans,
+			'penghasilan_ayah' : penghasilan_ayah,
+			'penghasilan_ibu'  : penghasilan_ayah,
+			'penghasilan_penanggung' : penghasilan_ayah,
+			'keadaans'		: keadaans,
 			'jenis_kelamins': jenis_kelamins,
 			'agamas'		: agamas,
 			'type_pendaftarans': type_pendaftarans,
@@ -69,8 +85,8 @@ class Partner(http.Controller):
 
 
 	######################################################################################
-	# proses registration patient: 
-	# print, email, save: insert transaksi Partner
+	# proses update data mahasiswa
+	# 
 	######################################################################################
 	@http.route('/registration_process/<model("res.partner"):partner>', auth='user', website=True)
 	def registration_process(self, partner, **kw):
@@ -84,12 +100,16 @@ class Partner(http.Controller):
 		name 			= kw.get('name', '')		
 		prodi_id 		= kw.get('prodi_id', '')
 		konsentrasi_id 	= kw.get('konsentrasi_id', '')		
-		pekerjaan 		= kw.get('pekerjaan', '')	
+			
 		alamat_id 		= kw.get('alamat_id', '')
+		jenis_pendaftaran_id = kw.get('jenis_pendaftaran_id', '')
 		type_mhs_id 	= kw.get('type_mhs_id', '')
 		type_pendaftaran= kw.get('type_pendaftaran', '')
 
 		#pribadi
+		id_card 		= kw.get('id_card', '')
+		phone 			= kw.get('phone', '')
+		mobile 			= kw.get('mobile', '')
 		jenis_kelamin 	= kw.get('jenis_kelamin', '')
 		tempat_lahir	= kw.get('tempat_lahir', '')		
 		tanggal_lahir	= kw.get('tanggal_lahir', '')		
@@ -97,13 +117,31 @@ class Partner(http.Controller):
 		agama 			= kw.get('agama', '')		
 		street 			= kw.get('street', '')		
 		street2			= kw.get('street2', '')		
-		city			= kw.get('city', '')		
+		city			= kw.get('city', '')
+		zip_code 		= kw.get('zip', '') 		
 
 		#orang tua
-		nama_ayah		= kw.get('nama_ayah', '')		
-		nama_ibu		= kw.get('nama_ibu', '')		
-		telpon_ayah		= kw.get('telpon_ayah', '')		
-		telpon_ibu		= kw.get('telpon_ibu', '')		
+		nama_ayah		= kw.get('nama_ayah', '')
+		alamat_ayah		= kw.get('alamat_ayah', '')
+		keadaan_ayah	= kw.get('keadaan_ayah', '')
+		pekerjaan 		= kw.get('pekerjaan', '')
+		telpon_ayah		= kw.get('telpon_ayah', '')	
+		penghasilan_ayah= kw.get('penghasilan_ayah', '')	
+		nama_ibu		= kw.get('nama_ibu', '')
+		keadaan_ibu		= kw.get('keadaan_ibu', '')
+		alamat_ibu		= kw.get('alamat_ibu', '')		
+		pekerjaan2 		= kw.get('pekerjaan2', '')		
+		telpon_ibu		= kw.get('telpon_ibu', '')	
+		penghasilan_ibu = kw.get('penghasilan_ibu', '')
+
+		#penanggung biaya kuliah	
+		nama_penanggung		= kw.get('nama_penanggung', '')
+		jk_penanggung		= kw.get('jk_penanggung', '')
+		alamat_penanggung	= kw.get('alamat_penanggung', '')		
+		pekerjaan3 			= kw.get('pekerjaan3', '')		
+		telpon_penanggung	= kw.get('telpon_penanggung', '')
+		penghasilan_penanggung = kw.get('penghasilan_penanggung', '')
+		keadaan_penanggung		= kw.get('keadaan_penanggung', '')
 
 		#pendidiksn
 		asal_sma		= kw.get('asal_sma', '')		
@@ -113,6 +151,8 @@ class Partner(http.Controller):
 		#pekerjaan
 		nama_instansi 	= kw.get('nama_instansi', '')		
 		jabatan 		= kw.get('jabatan', '')		
+
+		photo 			= kw.get('photo', '')	
 
 		# email_template_obj = http.request.env['netpro.email_template']
 		# email_template = email_template_obj.search([('name','=','Partner_email')])
@@ -128,8 +168,33 @@ class Partner(http.Controller):
 		alamat					= http.request.env['master.alamat.kampus'].browse( int(alamat_id) )
 		type_mhs				= http.request.env['master.type.mahasiswa'].browse( int(type_mhs_id) )
 		konsentrasi				= http.request.env['master.konsentrasi'].browse( int(konsentrasi_id) )
+		#tanggal_lhr 		    = self.env["res.lang"].datetime_formatter(tanggal_lahir)
 
-		# import pdb; pdb.set_trace()
+
+		ortu_datas = [(0,0,{'nama' 			: nama_ayah,
+							'keadaan'		: keadaan_ayah,
+							'telepon' 		: telpon_ayah,
+							'pekerjaan'		: pekerjaan,
+							'alamat'		: alamat_ayah,
+							'jenis_kelamin'	: 'L',
+							'penghasilan' 	: penghasilan_ayah}),
+					(0,0,{'nama' 		: nama_ibu,
+						'keadaan'		: keadaan_ibu,
+						'telepon' 		: telpon_ibu,
+						'pekerjaan'		: pekerjaan2,
+						'alamat'		: alamat_ibu,
+						'jenis_kelamin'	: 'P',
+						'penghasilan' 	: penghasilan_ibu}),
+					(0,0,{'nama' 		: nama_penanggung,
+						'keadaan'		: keadaan_penanggung,
+						'telepon' 		: telpon_penanggung,
+						'pekerjaan'		: pekerjaan3,
+						'alamat'		: alamat_penanggung,
+						'jenis_kelamin'	: jk_penanggung,
+						'penghasilan' 	: penghasilan_penanggung
+						})]
+
+		
 		if partner.reg == "/" or partner.reg == False:
 			reg = request.registry['ir.sequence'].get(cr, SUPERUSER_ID, 'res.partner') 
 		else:
@@ -139,12 +204,14 @@ class Partner(http.Controller):
 
 		if kw.get('confirm') == '':
 			##############################################################################
-			# insert into netpro_Partner
+			# insert into calon mhs
 			##############################################################################
 
 			data = {
+				'image'			: base64.encodestring(photo.read()),
 				'reg'			: reg,
 				'name'			: name,
+				'id_card' 		: id_card,
 				'jenis_pendaftaran_id' : jenis_pendaftaran_id.id,
 				'alamat_id'		: alamat.id,
 				'type_pendaftaran': type_pendaftaran,
@@ -152,6 +219,9 @@ class Partner(http.Controller):
 				'street'		: street,
 				'street2'		: street2,
 				'city'			: city,
+				'zip'			: zip_code,
+				'phone'			: phone,
+				'mobile'		: mobile,
 				'fakultas_id'	: prodi.fakultas_id.id,
 				'prodi_id'		: prodi.id,
 				'konsentrasi_id': konsentrasi.id,
@@ -163,7 +233,9 @@ class Partner(http.Controller):
 				'tanggal_lahir'	: tanggal_lahir,
 				'is_company'	: False,
 				'is_mahasiswa'	: True,
+				'customer'		: True,
 				'status_mahasiswa': 'calon',
+				'biodata_keluarga_ids': ortu_datas,
 
 			}
 			# partner_data = Partner.create( data )
