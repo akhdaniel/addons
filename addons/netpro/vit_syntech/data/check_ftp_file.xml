@@ -1,8 +1,8 @@
 <openerp>
 	<data>
-		<!-- Cron job for Convert member -->
-		<record forcecreate="True" id="convert_member_syntech" model="ir.cron">
-			<field name="name">Convert Member Syntech</field>
+		<!-- Cron job for FTP File -->
+		<record forcecreate="True" id="check_ftp_file_syntech" model="ir.cron">
+			<field name="name">FTP File Syntech</field>
 			<field eval="True" name="active" />
 			<field name="user_id" ref="base.user_root" />
 			<field name="interval_number">1</field>
@@ -10,7 +10,7 @@
 			<field name="numbercall">-1</field>
 			<field eval="False" name="doall" />
 			<field eval="'netpro.syntech'" name="model" />
-			<field eval="'process_convert_syntech'" name="function" />
+			<field eval="'check_ftp_file'" name="function" />
 			<field eval="'()'" name="args" />
 		</record>
 	</data>

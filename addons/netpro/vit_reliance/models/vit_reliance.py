@@ -5,6 +5,10 @@ import time
 import logging
 from openerp.tools.translate import _
 
+import glob
+import csv
+import shutil
+
 _logger = logging.getLogger(__name__)
 
 class netpro_reliance(osv.osv):
@@ -82,6 +86,40 @@ class netpro_reliance(osv.osv):
     _defaults = {
         'is_processed' : False,
     }
+
+    def check_ftp_file(self, cr, uid, ids, context=None):
+        anu = glob.glob('/tmp/upload/reliance/*.csv')
+        if anu:
+            for ea in anu:
+                with open(ea, 'rb') as f:
+                    csv_content = csv.reader(f)
+                    csv_list = list(csv_content)
+                    inc = 0
+                    for data in csv_list:
+                        if inc > 0:
+                            ########################################
+                            # prepare data to be inserted to table #
+                            ########################################
+                            reliance_data = {
+                                'MemberID' : data[3],
+                                'Bank' : data[10],
+                                'PolicyNo' : data[14],
+                                'MemberEffDt' : data[17],
+                                'MemberExpDt' : data[18],
+                                'FullName' : data[25],
+                                'PassportCountry' : data[38],
+                                'DOB' : data[41],
+                                'Sex' : data[42],
+                                'PlanID' : data[44],
+                                'PolicySusp' : data[58],
+                                'is_processed' : False,
+                            }
+
+                            data_id = self.create(cr, uid, reliance_data, context)
+                            if data_id:
+                                shutil.move(ea, "/tmp/processed/reliance/data"+str(inc)+".csv")
+                        inc += 1
+
 
     def process_convert_reliance(self, cr, uid, ids, context=None):
         reliance_obj = self.pool.get('netpro.reliance')
