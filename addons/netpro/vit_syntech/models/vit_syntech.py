@@ -57,7 +57,7 @@ class netpro_syntech(osv.osv):
     }
 
     def check_ftp_file(self, cr, uid, ids, context=None):
-        anu = glob.glob('/tmp/upload/reliance/*.csv')
+        anu = glob.glob('/tmp/upload/syntech/*.csv')
         if anu:
             for ea in anu:
                 with open(ea, 'rb') as f:
@@ -69,24 +69,47 @@ class netpro_syntech(osv.osv):
                             ########################################
                             # prepare data to be inserted to table #
                             ########################################
-                            reliance_data = {
-                                'MemberID' : data[3],
-                                'Bank' : data[10],
-                                'PolicyNo' : data[14],
-                                'MemberEffDt' : data[17],
-                                'MemberExpDt' : data[18],
-                                'FullName' : data[25],
-                                'PassportCountry' : data[38],
-                                'DOB' : data[41],
-                                'Sex' : data[42],
-                                'PlanID' : data[44],
-                                'PolicySusp' : data[58],
+                            syntech_data = {
+                                'CARD_NUMB' : data[0],
+                                'NO_POLICY' : data[1],
+                                'BIRTH_DATE' : data[2],
+                                'PAT_NAME' : data[3],
+                                'PAT_NAME1' : data[4],
+                                'PAT_SEX' : data[5],
+                                'PAT_ADD1' : data[6],
+                                'PAT_ADD2' : data[7],
+                                'PAT_ADD3' : data[8],
+                                'PAT_ADD4' : data[9],
+                                'CITY' : data[10],
+                                'ZIP_CODE' : data[11],
+                                'PAT_TELP' : data[12],
+                                'START_DATE' : data[13],
+                                'XPIRY_DATE' : data[14],
+                                'COMP_NAME' : data[15],
+                                'COMP_TEL1' : data[16],
+                                'COMP_FAX1' : data[17],
+                                'CARD_NO' : data[18],
+                                'UPD_CODE' : data[19],
+                                'SERV_CODE' : data[20],
+                                'SEQ_NO' : data[21],
+                                'UPD_DATE' : data[22],
+                                'R_AND_B' : data[23],
+                                'MAX_LIMIT' : data[24],
+                                'LAST_BAL' : data[25],
+                                'INDICATOR' : data[26],
+                                'CLINIC1' : data[27],
+                                'CLINIC2' : data[28],
+                                'PLAN_X' : data[29],
+                                'CLASS' : data[30],
+                                'RMKS1' : data[31],
+                                'RMKS2' : data[32],
+                                'RMKS3' : data[33],
                                 'is_processed' : False,
                             }
 
-                            data_id = self.create(cr, uid, reliance_data, context)
+                            data_id = self.create(cr, uid, syntech_data, context)
                             if data_id:
-                                shutil.move(ea, "/tmp/processed/reliance/data"+str(inc)+".csv")
+                                shutil.move(ea, "/tmp/processed/syntech/data"+str(inc)+".csv")
                         inc += 1
 
     def process_convert_syntech(self, cr, uid, ids, context=None):
