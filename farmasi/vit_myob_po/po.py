@@ -39,56 +39,56 @@ class purchase_order(osv.osv):
 
 	def actual_process(self, cr, uid, ids, context=None):
 		headers=[
-			'nama_perusahaan' 	,
-			'statis1' 			,
-			'statis2' 			,
-			'statis3' 			,
-			'statis4' 			,
-			'statis5' 			,
-			'statis6' 			,
-			'statis7' 			,
-			'no_po' 			,
-			'tgl' 				,
-			'no_pr' 			,
-			'statis8' 			,
-			'statis9' 			,
-			'kode_barang' 		,
-			'qty' 				,
-			'nama_barang' 		,
-			'harga_unit' 		,
-			'statis10' 			,
-			'statis11' 			,
-			'harga_x_qty' 		,
-			'statis12' 			,
-			'statis13' 			,
-			'statis14' 			,
-			'statis15' 			,
-			'statis16' 			,
-			'kode_pajak' 		,
-			'statis17' 			,
-			'nilai_ppn' 		,
-			'statis18' 			,
-			'statis19' 			,
-			'statis20' 			,
-			'statis21' 			,
-			'statis22' 			,
-			'statis23' 			,
-			'statis24' 			,
-			'statis25' 			,
-			'kode_currency' 	,
-			'nilai_kurs'		,
-			'statis26' 			,
-			'statis27' 			,
-			'statis28' 			,
-			'statis29' 			,
-			'statis30' 			,
-			'statis31' 			,
-			'order' 			,
-			'statis32' 			,
-			'statis33' 			,
-			'location_id' 		,
-			'statis34' 			,
-			'statis35' 			,
+			'nama_perusahaan' 	, #a
+			'statis1' 			, #b
+			'statis2' 			, #c
+			'statis3' 			, #d
+			'statis4' 			, #e
+			'statis5' 			, #f
+			'statis6' 			, #g
+			'statis7' 			, #h
+			'no_po' 			, #i
+			'tgl' 				, #j
+			'no_pr' 			, #k
+			'statis8' 			, #l
+			'statis9' 			, #m
+			'kode_barang' 		, #n
+			'qty' 				, #o
+			'nama_barang' 		, #p
+			'harga_unit' 		, #q
+			'statis10' 			, #r
+			'statis11' 			, #s
+			'harga_x_qty' 		, #t
+			'statis12' 			, #u
+			'statis13' 			, #v
+			'statis14' 			, #w
+			'statis15' 			, #x
+			'statis16' 			, #y
+			'kode_pajak' 		, #z
+			'statis17' 			, #aa
+			'nilai_ppn' 		, #ab
+			'statis18' 			, #ac
+			'statis19' 			, #ad
+			'statis20' 			, #ae
+			'statis21' 			, #af
+			'statis22' 			, #ag
+			'statis23' 			, #ah
+			'statis24' 			, #ai
+			'statis25' 			, #aj
+			'kode_currency' 	, #ak
+			'nilai_kurs'		, #al
+			'statis26' 			, #am
+			'statis27' 			, #an
+			'statis28' 			, #ao
+			'statis29' 			, #ap
+			'statis30' 			, #aq
+			'statis31' 			, #ar
+			'order' 			, #as
+			'statis32' 			, #at
+			'statis33' 			, #au
+			'location_id' 		, #av
+			'statis34' 			, #aw
+			'statis35' 			, #ax
 		]
 
 		myob_export = self.pool.get('purchase.myob_export')
@@ -182,7 +182,8 @@ class purchase_order(osv.osv):
 						'statis32' 			: "0",
 						'statis33' 			: "",
 						'location_id' 		: po.picking_type_id.default_location_dest_id.location_id.name,
-						'statis34' 			: po.partner_id.ref or "",
+						'statis34' 			: po.partner_id.comment or "",
+						# 'statis34' 			: po.partner_id.ref or "",
 						'statis35' 			: "",
 					}
 					myob_export.create(cr, uid, data, context=context)
