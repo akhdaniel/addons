@@ -8,11 +8,13 @@ from collections import defaultdict
 
 _logger = logging.getLogger(__name__)
 PR_STATES =[('draft','Draft'),
+	('pending','Pending Approval'), 
 	('open','Confirmed'), 
 	('onprogress','On Progress'), 
 	('done','Done'),
 	('reject','Rejected')]
 PR_LINE_STATES =[('draft','Draft'),
+	('pending','Pending Approval'), 
 	('open','Confirmed'), 
 	('onprogress','On Progress'), # Call for Bids in progress
 	('done','Done'),# Call for Bids = PO created / done
@@ -99,25 +101,30 @@ class product_request(osv.osv):
 		self.update_line_state(cr, uid, ids, PR_STATES[0][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[0][0]},context=context)
 	
-	def action_confirm(self,cr,uid,ids,context=None):
-		#set to "open" state
+	def action_send_approval(self,cr,uid,ids,context=None):
+		#set to "pending" state
 		self.update_line_state(cr, uid, ids, PR_STATES[1][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[1][0]},context=context)
 	
-	def action_onprogress(self,cr,uid,ids,context=None):
-		#set to "onprogress" state
+	def action_confirm(self,cr,uid,ids,context=None):
+		#set to "open" approved state
 		self.update_line_state(cr, uid, ids, PR_STATES[2][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[2][0]},context=context)
-	
-	def action_done(self,cr,uid,ids,context=None):
-		#set to "done" state
+
+	def action_onprogress(self,cr,uid,ids,context=None):
+		#set to "onprogress" state
 		self.update_line_state(cr, uid, ids, PR_STATES[3][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[3][0]},context=context)
 	
-	def action_reject(self,cr,uid,ids,context=None):
-		#set to "reject" state
+	def action_done(self,cr,uid,ids,context=None):
+		#set to "done" state
 		self.update_line_state(cr, uid, ids, PR_STATES[4][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[4][0]},context=context)
+	
+	def action_reject(self,cr,uid,ids,context=None):
+		#set to "reject" state
+		self.update_line_state(cr, uid, ids, PR_STATES[5][0], context)
+		return self.write(cr,uid,ids,{'state':PR_STATES[5][0]},context=context)
 
 	def update_line_state(self, cr, uid, ids, state , context=None):
 		for request in self.browse(cr, uid, ids, context=context):
