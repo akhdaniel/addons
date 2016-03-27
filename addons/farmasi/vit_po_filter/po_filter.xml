@@ -1,0 +1,27 @@
+<openerp>
+	<data>
+		<!-- ini definisi search order -->
+		<record id="view_purchase_order_filter_month" model="ir.ui.view">
+		    <field name="name">purchase.order.filter.month</field>
+		    <field name="model">purchase.order</field>
+		    <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+		    <field name="arch" type="xml">
+		        <filter name="not_invoiced" position="after">
+					<filter string="Current Month" name="current_month" domain="[('date_order','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date_order','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+
+					<filter string="Last Month" name="prev_month" domain="[('date_order','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_order','&lt;',time.strftime('%%Y-%%m-01'))]"/>
+
+					<filter string="Draft" name="draft" domain="[('state','=','draft')]" />
+					<filter string="Waiting Approval" name="waiting" domain="['|',('state','=','confirmed'),('state','=','confirmed0')]" />
+					<filter string="Approved" name="approved" domain="[('state','=','approved')]" />
+					<filter string="Done" name="done" domain="[('state','=','done')]" />
+					<filter string="Cancel" name="cancel" domain="[('state','=','cancel')]" />
+		        </filter>
+		        
+		        <filter string="Expected Month" position="after">
+                    <filter string="State" icon="terp-go-month" domain="[]" context="{'group_by':'state'}"/>
+		        </filter>
+		    </field>
+		</record>
+	</data>
+</openerp>
