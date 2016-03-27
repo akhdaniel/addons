@@ -3,7 +3,8 @@
     'version' : '0.1',
     'category': 'Purchase Management',
     'images' : [],
-    'depends' : ['stock','purchase', 'purchase_requisition','hr', 'vit_mps_fields'],
+    'depends' : ['stock','purchase', 'purchase_requisition','hr', 'vit_mps_fields',
+        'vit_lucas_groups'],
     'author' : 'vitraining.com',
     'description': """
 Purchase Request
@@ -17,10 +18,11 @@ Purchase Request
     'website': 'http://www.vitraining.com',
     'data': [
         'menu.xml',
+        'security/ir.model.access.csv',
+        'security/groups.xml',        
         'product_request.xml',
         'sequence.xml',
         'pr.xml',
-        'security/ir.model.access.csv',
         'reports/product_request.xml',
     ],
     'test': [

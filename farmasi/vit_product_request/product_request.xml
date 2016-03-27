@@ -10,11 +10,18 @@
             	<form string="product request form" version="7.0">
             		<header>
 
+						<button string="Send Approval" type="object" name="action_send_approval" 
+							class="oe_highlight" 
+						 	states="draft" />
+
 						<button string="Confirm" type="object" name="action_confirm" 
 							class="oe_highlight"
-						 	states="draft" />
+							groups="vit_product_request.product_request_manager"
+						 	states="pending" />
+
 						<button string="Cancel" type="object" name="action_draft"
 						 	states="open" />
+
 						<button string="Reject" type="object" name="action_reject"
 						 	states="open" />
 
