@@ -50,9 +50,11 @@
                                         <field name="name"/> 
                                         <field name="sequence"/>
                                         <field name="limit_nilai"/>
+                                        <field name="limit_nilai_max"/>
                                         <field name="amount"/>
                                         <field name="from_smt_id"/>
-                                        <field name="to_smt_id"/>                 
+                                        <field name="to_smt_id"/> 
+                                        <field name="uang_bangunan"/>                 
                                     </tree>
                                 </field>
                                 

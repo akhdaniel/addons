@@ -102,6 +102,12 @@
                                           <field name="no_formulir" attrs="{'readonly': [('status_mahasiswa','!=','calon')]}"/>
                                           <field name="nilai_ujian" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
                                           <field name="batas_nilai"/>
+                                          <label for="jadwal_pagi" string="Waktu Kuliah"/>  
+                                        <div> 
+                                            <field name="jadwal_pagi" class="oe_inline"/> <label for="jadwal_pagi" string="Pagi"/> 
+                                            <field name="jadwal_siang" class="oe_inline"/> <label for="jadwal_siang" string="Siang"/>
+                                            <field name="jadwal_malam" class="oe_inline"/> <label for="jadwal_malam" string="Malam"/>
+                                        </div> 
                                     </group>
                                     <group>
                                         <field name="invoice_state" invisible="1"/>
@@ -123,6 +129,15 @@
                                         <field name="nilai_ujian_asli" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
                                         <field name="jadwal_usm_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>    
                                     </group>  
+
+                                    <group>
+                                       <field name="rekomendasi"/> 
+                                    </group>
+                                    <group>
+                                        
+                                        <field name="telp_rekomendasi"/>  
+                                    </group>
+
                                    </group>                                
                                 <separator string="Informasi Pribadi"/>
                                 <group col="4" colspan="4">
@@ -145,7 +160,7 @@
                                         <field name="tahun_ajaran_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                 		<field name="fakultas_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                 		<field name="prodi_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>	
-                                        <field name="konsentrasi_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
+                                        <field name="konsentrasi_id" domain="[('prodi_id','=',prodi_id)]"/>
                                 	</group>
                                 	<group>
                                         <field name="tgl_daftar" attrs="{'invisible': [('status_mahasiswa','!=','calon')]}"/>
@@ -155,7 +170,7 @@
                                 	</group>                                        
                                 </group>  
                                 <group>
-                                    <field name="is_beasiswa" attrs="{'invisible': [('is_beasiswa','=',False)]}"/> 
+                                    <field name="is_beasiswa" attrs="{'invisible': [('is_beasiswa','=',False)]}"/>  
                                 </group>                     	                                     
                             </sheet>
                         </form>
@@ -164,13 +179,37 @@
                         <sheet>
                             <separator string="Riwayat Pendidikan"/>
                                 <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
-                        	        <tree string="Daftar Riwayat Pendidikan" editable="bottom">
+                        	        <tree string="Daftar Riwayat Pendidikan">
         			                    <field name="nama_sekolah"/>
+                                        <field name="alamat" invisible="1"/>
+                                        <field name="website" invisible="1"/>
         			                    <field name="tingkat"/>
-                                        <field name="tahun_masuk"/>
-                                        <field name="tahun_lulus"/>
+                                        <field name="jurusan"/>
+                                        <field name="tahun_masuk" invisible="1"/>
+                                        <field name="tahun_lulus" invisible="1"/>
                                         <field name="nilai_akhir"/>
+                                        <field name="satu_yayasan" invisible="1"/>
+                                        <field name="ranking" attrs="{'invisible': [('satu_yayasan','=',False)]}"/>
         			                </tree>
+                                    <form string="Daftar Riwayat Pendidikan">
+                                        <group>
+                                            <group>
+                                                <field name="nama_sekolah"/>
+                                                <field name="alamat" />
+                                                <field name="website" />
+                                            </group>
+                                            <group>
+                                                <field name="tingkat"/>
+                                                <field name="jurusan"/>
+                                                <field name="tahun_masuk"/>
+                                                <field name="tahun_lulus"/>
+                                                <field name="nilai_akhir"/>
+                                                <field name="satu_yayasan" />
+                                                <field name="ranking" attrs="{'invisible': [('satu_yayasan','=',False)]}"/>
+                                                <field name="nim"/>
+                                            </group> 
+                                        </group>       
+                                    </form>                                    
         		                </field>
 
                         		<separator string="Riwayat Keluarga"/>
@@ -212,6 +251,7 @@
                                 <group>
                                     <field name="keluarga_alumni_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
                                     <field name="karyawan_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
+                                    <field name="is_alumni" />
                                 </group>
                             </sheet>
 

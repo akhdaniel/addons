@@ -96,7 +96,8 @@
                                     <group string="Mata Kuliah Konversi">
                                         <field name="matakuliah_ids"  nolabel="1" on_change="onchange_konversi(matakuliah_ids,total_mk_asal,total_mk_tujuan,total_sks_asal,total_sks_tujuan)" attrs="{'readonly':[('status','!=','draft')]}">
                                             <tree string="MK Internal" editable="top">
-                                                <field name="asal_matakuliah_id" domain="[('prodi_id','=',parent.asal_prodi_id)]"/>
+                                                <!-- <field name="asal_matakuliah_id" domain="[('prodi_id','=',parent.asal_prodi_id)]"/> -->
+                                                <field name="asal_matakuliah_id"/>
                                                 <field name="asal_semester_id" string="Smt"/>
                                                 <field name="asal_sks"/>
                                                 <field name="asal_nilai"/>

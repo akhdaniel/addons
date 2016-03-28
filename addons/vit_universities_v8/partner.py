@@ -215,32 +215,33 @@ class res_partner (osv.osv):
 					#cek juga total mk di kurikulum harus sama dengan mk yg sudah ditempuh
 					tahun_ajaran_id = self.browse(cr,uid,ids[0]).tahun_ajaran_id.id
 					prodi_id = self.browse(cr,uid,ids[0]).prodi_id.id
-					cr.execute("""SELECT kmr.matakuliah_id kmr
-									FROM kurikulum_mahasiswa_rel kmr
-									LEFT JOIN master_matakuliah mm ON mm.id = kmr.matakuliah_id
-									LEFT JOIN master_kurikulum mk ON kmr.kurikulum_id = mk.id 
-									WHERE mk.tahun_ajaran_id ="""+ str(tahun_ajaran_id) +""" 
-									AND mk.prodi_id = """+ str(prodi_id) +"""
-									AND mk.state = 'confirm'""")		   
-					mk_klm = cr.fetchall()			
-					if mk_klm != []:
+					if tahun_ajaran_id and prodi_id:
+						cr.execute("""SELECT kmr.matakuliah_id kmr
+										FROM kurikulum_mahasiswa_rel kmr
+										LEFT JOIN master_matakuliah mm ON mm.id = kmr.matakuliah_id
+										LEFT JOIN master_kurikulum mk ON kmr.kurikulum_id = mk.id 
+										WHERE mk.tahun_ajaran_id ="""+ str(tahun_ajaran_id) +""" 
+										AND mk.prodi_id = """+ str(prodi_id) +"""
+										AND mk.state = 'confirm'""")		   
+						mk_klm = cr.fetchall()			
+						if mk_klm != []:
 
-						if self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
-							mk = self.get_ttl_mk_by_newest(cr, uid, ids, context=None)
-						elif self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
-							mk = self.get_ttl_mk_by_better(cr, uid, ids, context=None)	
+							if self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
+								mk = self.get_ttl_mk_by_newest(cr, uid, ids, context=None)
+							elif self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
+								mk = self.get_ttl_mk_by_better(cr, uid, ids, context=None)	
 
-						if mk > 0 :										
-							mk_ids = []
-							for m in mk_klm:
-								if m[0] not in mk_ids:
-									mk_ids.append(m[0])		
-							tot_kurikulum = len(mk_ids)
-							
-							toleransi_mk = self.browse(cr,uid,ids[0]).tahun_ajaran_id.max_mk
-							#jika total mk yg telah ditempuh sama dengan / lebih dari yg ada di kurikulum
-							if mk >= (tot_kurikulum-toleransi_mk):
-								results[siap_sidang.id] = True
+							if mk > 0 :										
+								mk_ids = []
+								for m in mk_klm:
+									if m[0] not in mk_ids:
+										mk_ids.append(m[0])		
+								tot_kurikulum = len(mk_ids)
+								
+								toleransi_mk = self.browse(cr,uid,ids[0]).tahun_ajaran_id.max_mk
+								#jika total mk yg telah ditempuh sama dengan / lebih dari yg ada di kurikulum
+								if mk >= (tot_kurikulum-toleransi_mk):
+									results[siap_sidang.id] = True
 
 		return results
 
@@ -306,12 +307,15 @@ class res_partner (osv.osv):
 		'asal_npm'			: fields.char('Asal NIM'),
 		'asal_sks_diakui' 	: fields.integer('SKS Diakui'),
 		'asal_jenjang_id' 	: fields.many2one('master.jenjang', 'Asal Jenjang'),
-		'semester_id'		:fields.many2one('master.semester','Semester'),
+		'semester_id'		: fields.many2one('master.semester','Semester'),
+
+		# flag jika pernah kuliah di kampus yg sama (alumni)
+		'is_alumni'			: fields.boolean('Alumni'),
 
 		#split invoice
 		'split_invoice' : fields.integer('Angsuran',help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi"),
 		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
-		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap')],'Type Pendaftaran'),
+		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 
 		'invoice_id' : fields.many2one('account.invoice','Invoice Pendaftaran',readonly=True),
 		'invoice_state' : fields.related('invoice_id','state',type='char',relation='account.invoice',string='Pembayaran Pendaftaran',readonly=True),
@@ -326,12 +330,148 @@ class res_partner (osv.osv):
 		'no_sk_dekan'	: fields.char('No. SK Dekan'),
 		'no_transkrip'	: fields.char('No. Transkrip'),
 		'yudisium_id' 	: fields.many2one('master.yudisium','Yudisium'),
-		'id_card'		: fields.char('No. KTP/SIM')
+		'id_card'		: fields.char('No. KTP/SIM'),
+		'jadwal_pagi'	: fields.boolean('Pagi'),
+		'jadwal_siang'	: fields.boolean('Siang'),
+		'jadwal_malam'	: fields.boolean('Malam'),
+
+
+		#pemberi rekomendasi
+		'rekomendasi'	: fields.char('Rekomendasi'),
+		'telp_rekomendasi' : fields.char('Telp. Rekomendasi'),
 
 		}
 
 	_sql_constraints = [('reg_uniq', 'unique(reg)','No. pendaftaran tidak boleh sama')]
 	_sql_constraints = [('npm_uniq', 'unique(npm)','NPM tidak boleh sama')]
+
+
+	def add_discount_sequence_bangunan(self, cr, uid, ids ,disc,inv_line,bea_line_obj,partner,jml_inv,inv_ids, context=None):
+		disc_ids = map(lambda x: x[0], disc)
+		for bea_line in bea_line_obj.browse(cr,uid,disc_ids):
+			disc_code 	= bea_line.code
+			disc_id 	= bea_line.product_id.id
+			disc_name 	= bea_line.name
+			disc_nilai 	= bea_line.limit_nilai
+			disc_nilai_max 	= bea_line.limit_nilai_max
+			disc_amount	= bea_line.amount/int(jml_inv)
+			disc_coa  	= bea_line.product_id.property_account_income.id
+			if not disc_coa:
+				disc_coa = bea_line.product_id.categ_id.property_account_income_categ.id	
+			if bea_line.uang_bangunan:
+				if disc_code == '0':
+					if partner.nilai_beasiswa >= disc_nilai: 
+						for inv in inv_ids:	
+							inv_line.create(cr,uid,{'invoice_id': inv,
+													'product_id': disc_id,
+													'name'		: disc_name,
+													'quantity'	: 1 ,
+													'price_unit': disc_amount,
+													'account_id': disc_coa},context=context)
+						break															  						
+				elif disc_code == '1':
+					if partner.keluarga_alumni_id: 
+						for inv in inv_ids:	
+							inv_line.create(cr,uid,{'invoice_id': inv,
+													'product_id': disc_id,
+													'name'		: disc_name,
+													'quantity'	: 1 ,
+													'price_unit': disc_amount,
+													'account_id': disc_coa},context=context)
+						break						
+				elif disc_code == '2':
+					for inv in inv_ids:	
+						inv_line.create(cr,uid,{'invoice_id': inv,
+												'product_id': disc_id,
+												'name'		: disc_name,
+												'quantity'	: 1 ,
+												'price_unit': disc_amount,
+												'account_id': disc_coa},context=context)
+					break	
+				elif disc_code == '3':
+					if partner.karyawan_id: 
+						for inv in inv_ids:	
+							inv_line.create(cr,uid,{'invoice_id': inv,
+													'product_id': disc_id,
+													'name'		: disc_name,
+													'quantity'	: 1 ,
+													'price_unit': disc_amount,
+													'account_id': disc_coa},context=context)
+						break	
+				elif disc_code == '4':
+					krs_sebelumnya = self.search(cr,uid,[('partner_id','=',partner.id),('semester_id','=',semester.id-1)])
+					if krs_sebelumnya:
+						if self.browse(cr,uid,krs_sebelumnya[0]).ips_field_persemester >= disc_nilai :
+							for inv in inv_ids:	
+								inv_line.create(cr,uid,{'invoice_id': inv,
+														'product_id': disc_id,
+														'name'		: disc_name,
+														'quantity'	: 1 ,
+														'price_unit': disc_amount,
+														'account_id': disc_coa},context=context)
+
+				elif disc_code == '5':
+					if partner.riwayat_pendidikan_ids:
+						ranking = 0
+						for pend in partner.riwayat_pendidikan_ids:
+							if pend.satu_yayasan :
+								ranking = pend.ranking
+								break
+						if ranking > 0 :		
+							if ranking >= disc_nilai and ranking <= disc_nilai_max:
+								for inv in inv_ids:	
+									inv_line.create(cr,uid,{'invoice_id': inv,
+															'product_id': disc_id,
+															'name'		: disc_name,
+															'quantity'	: 1 ,
+															'price_unit': disc_amount,
+															'account_id': disc_coa},context=context)
+								break
+		return True
+
+	def add_discount_bangunan(self, cr, uid, ids ,partner, inv_id, context=None):
+		inv_browse 		= inv_obj.browse(cr,uid,inv_id)
+		tahun_ajaran 	= partner.tahun_ajaran_id
+		fakultas 		= partner.fakultas_id
+		prodi 			= partner.prodi_id 
+		jml_inv 		= len(inv_id)
+		bea_obj 		= self.pool.get('beasiswa.prodi')
+		data_bea 		= bea_obj.search(cr,uid,[('is_active','=',True),
+											('tahun_ajaran_id','=',tahun_ajaran.id),
+											('fakultas_id','=',fakultas.id),
+											('prodi_id','=',prodi.id),],context=context)
+		if data_bea :
+			inv_line = self.pool.get('account.invoice.line')
+			bea_line_obj = self.pool.get('beasiswa.prodi.detail')	
+
+			#########################################################
+			# cari dan hitung disc yg memerlukan sequence
+			#########################################################
+			cr.execute("""SELECT id
+							FROM beasiswa_prodi_detail
+							WHERE sequence >= 0
+							AND beasiswa_prodi_id = %s
+							AND uang_bangunan = True
+							ORDER BY sequence ASC """%(data_bea[0]))
+			disc_seq = cr.fetchall()
+			if disc_seq :				
+				self.add_discount_sequence_bangunan(cr, uid, ids ,disc_seq,inv_line,bea_line_obj,partner,jml_inv,inv_id, context=context)
+
+
+			#########################################################
+			# cari dan hitung disc yg tidak memerlukan sequence
+			#########################################################
+			cr.execute("""SELECT id
+							FROM beasiswa_prodi_detail
+							WHERE sequence < 0
+							AND beasiswa_prodi_id = %s
+							AND uang_bangunan = True
+							ORDER BY sequence ASC """%(data_bea[0]))
+			disc_non_seq = cr.fetchall()
+			if disc_non_seq :
+				self.add_discount_sequence_bangunan(cr, uid, ids ,disc_non_seq,inv_line,bea_line_obj,partner,semester,jml_inv,inv_id, context=context)
+
+		return True
 
 
 	def create_inv_pendaftaran(self,cr,uid,ids,context=None):
@@ -359,6 +499,7 @@ class res_partner (osv.osv):
 					coa_line = product.property_account_income.id
 					if not coa_line:
 						coa_line = product.categ_id.property_account_income_categ.id
+
 					prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
 										 'name'			: bayar.product_id.name,
 										 'price_unit'	: bayar.public_price,
@@ -372,15 +513,30 @@ class res_partner (osv.osv):
 					'account_id':partner.property_account_receivable.id,
 					'invoice_line': prod_id,
 					},context=context)
+
+				cr.commit()
+				self.add_discount_bangunan(self, cr, uid, ids ,partner, inv, context=None)
+
+
 				wf_service = netsvc.LocalService('workflow')
 				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
 				self.write(cr,uid,partner.id,{'invoice_id':inv})
+				
+
 
 		return True		
 
 	def create_inv_bangunan(self,cr,uid,ids,context=None):
 		byr_obj = self.pool.get('master.pembayaran.bangunan')
 		for partner in self.browse(cr,uid,ids):
+			discount_alumni = 0
+			if partner.is_alumni :
+				discount_alumni = 2 # disc alumni 2%
+			disc_pemb_tunai = 0
+			if partner.split_invoice == 1 :
+				disc_pemb_tunai = 5 # disc pembayaran tunai 5%
+			total_pot = discount_alumni + disc_pemb_tunai
+
 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
 				('fakultas_id','=',partner.fakultas_id.id),
 				('prodi_id','=',partner.prodi_id.id),
@@ -403,9 +559,14 @@ class res_partner (osv.osv):
 					coa_line = product.property_account_income.id
 					if not coa_line:
 						coa_line = product.categ_id.property_account_income_categ.id
+
+					price = bayar.public_price
+					if total_pot > 0 :
+						price = price - (price*total_pot/100)
+						
 					prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
 										 'name'			: bayar.product_id.name,
-										 'price_unit'	: bayar.public_price,
+										 'price_unit'	: price,
 										 'account_id'	: coa_line}))
 				inv = self.pool.get('account.invoice').create(cr,uid,{
 					'partner_id':partner.id,

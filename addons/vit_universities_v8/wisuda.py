@@ -105,7 +105,8 @@ class wisuda_mahasiswa(osv.Model):
 			self.pool.get('res.partner').write(cr,uid,alumni.id,{'status_mahasiswa':'alumni',
 																'lokasi_wisuda':my_form.lokasi_wisuda,
 																'title':gelar,
-																'yudisium_id':yudisium},context=context)
+																'yudisium_id':yudisium,
+																'is_alumni':True},context=context)
 		self.write(cr,uid,ids,{'state':'done'},context=context)
 		return True	
 

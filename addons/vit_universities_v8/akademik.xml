@@ -151,7 +151,9 @@
                     <field name="kode_dikti"/>
                     <field name="name"/>
                     <field name="pt_id"/>
-                    <field name="coa_id" invisible="1"/>
+                    <field name="coa_hutang_id" invisible="1"/>
+                   <field name="coa_piutang_id" invisible="1"/>
+
                 </tree>
             </field>
         </record>
@@ -237,7 +239,8 @@
                                 <field name="semester_id" widget="selection"/>
                                 <field name="jenjang"/> 
                                 <field name="is_internal"/>
-                                <field name="coa_id"/>
+                                <field name="coa_hutang_id"/>
+                                <field name="coa_piutang_id"/>
                             </group>                          
                         </group>
                     </sheet>                     
@@ -279,6 +282,16 @@
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data program studi.</p><p>disini belum ada data tentang program studi !</p></field>
+        </record>
+
+        <!--  action window master konsentrasi  -->
+        <record model="ir.actions.act_window" id="konsentrasi_list_action">
+            <field name="name">konsentrasi</field>
+            <field name="res_model">master.konsentrasi</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data konsentrasi.</p><p>disini belum ada data tentang konsentrasi !</p></field>
         </record>
 
 
@@ -668,6 +681,7 @@
                 <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
                 <!-- <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/> -->
                 <menuitem id="master_prodi" name="Program Studi" parent="master_data" action="prodi_list_action" sequence="40"/>
+                <menuitem id="master_konsentrasi" name="Konsentrasi" parent="master_data" action="konsentrasi_list_action" sequence="50"/>
                 <menuitem id="master_tahun_akademik" name="Tahun Akademik" parent="master_data" action="thn_akademik_list_action" sequence="50"/>
                 <!--                 <menuitem id="master_bulan_akademik" name="Bulan Akademik" parent="master_data" action="bln_akademik_list_action"/> -->
                 <menuitem id="master_semester" name="Semester" parent="master_data" action="semester_list_action" sequence="60"/>
@@ -863,6 +877,7 @@
                             <group> 
                                 <field name="mekanisme_nilai"/>                             
                                 <field name="max_mk"/>
+                                <field name="is_active"/>
                             </group>
                         </group>
                         <notebook colspan="4">
