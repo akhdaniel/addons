@@ -2,13 +2,39 @@
 from openerp import http, SUPERUSER_ID
 from openerp.http import request
 import base64
-import simplejson
+import simplejson, json
 import logging
 _logger = logging.getLogger(__name__)
 import time
 from datetime import datetime
 
 class Partner(http.Controller):
+
+
+	@http.route('/cek_prodi', auth='user', website=False)
+	def cek_prodi(self, **kw):
+		cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
+		
+		prodi_id 			= int(kw.get('prodi_id', ''))
+		prodi_ids 			= []
+		if prodi_id :
+			Konsentrasi  	= http.request.env['master.konsentrasi']
+			konsentrasi_ids = Konsentrasi.search([('prodi_id','=',prodi_id)])
+			if konsentrasi_ids :
+
+				for kons in konsentrasi_ids:
+					konsentrasi = [kons.id,kons.name]
+					prodi_ids.append(konsentrasi)
+		#import pdb;pdb.set_trace()	
+		# return http.request.render('vit_universities_web.registration', {
+		# 	'konsentrasi_ids': konsentrasi_ids
+		# })
+
+
+		print json.dumps(prodi_ids)		
+
+
+
 
 	######################################################################################
 	# halaman registration
@@ -29,7 +55,7 @@ class Partner(http.Controller):
 		prodi_ids = Prodi.search([])
 
 		Tahun  = http.request.env['academic.year']
-		tahun_ids = Tahun.search([])
+		tahun_ids = Tahun.search([('is_active','=',True)])
 
 		Semester  = http.request.env['master.semester']
 		semester_ids = Semester.search([])
@@ -48,14 +74,13 @@ class Partner(http.Controller):
 
 		penghasilans = [('0',' '),('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
 
+		jadwal_ids = [('pagi','Pagi'),('siang','Siang'),('malam','Malam')]
 		penghasilan_ayah = [('0','Penghasilan ...'),('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
 		pekerjaans = [(' ',' '),('pns','Pengawai Negeri Sipil'),('tni/polri','TNI/Polri'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
 		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
 		keadaans = [('ada','Masih Ada'),('alm','Alm')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
-		type_pendaftarans = [('ganjil','Ganjil'),('Genap','Genap')]
-
-		#import pdb; pdb.set_trace()
+		type_pendaftarans = [('ganjil','Ganjil'),('Genap','Genap'),('pendek','Pendek')]
 		return http.request.render('vit_universities_web.registration',
 		{
 			'partner'		: partner,
@@ -78,6 +103,7 @@ class Partner(http.Controller):
 			'jenis_kelamins': jenis_kelamins,
 			'agamas'		: agamas,
 			'type_pendaftarans': type_pendaftarans,
+			'jadwal_ids'		: jadwal_ids,
 			'partner'		: partner,
 			'message_error'	: message_error,
 			'message_success': message_success
@@ -105,6 +131,11 @@ class Partner(http.Controller):
 		jenis_pendaftaran_id = kw.get('jenis_pendaftaran_id', '')
 		type_mhs_id 	= kw.get('type_mhs_id', '')
 		type_pendaftaran= kw.get('type_pendaftaran', '')
+		jadwal_ids 		= kw.get('jadwal_ids', '')
+
+		jadwal_pagi 	= kw.get('jadwal_pagi', '')
+		jadwal_siang 	= kw.get('jadwal_siang', '')
+		jadwal_malam 	= kw.get('jadwal_malam', '')
 
 		#pribadi
 		id_card 		= kw.get('id_card', '')
@@ -143,13 +174,23 @@ class Partner(http.Controller):
 		penghasilan_penanggung = kw.get('penghasilan_penanggung', '')
 		keadaan_penanggung		= kw.get('keadaan_penanggung', '')
 
-		#pendidiksn
-		asal_sma		= kw.get('asal_sma', '')		
-		asal_universitas= kw.get('asal_universitas', '')		
-		nim_asal 		= kw.get('nim_asal', '')		
+		#pendidikan
+		asal_sma		= kw.get('asal_sma', '')
+		asal_alamat_sma	= kw.get('asal_alamat_sma', '')
+		asal_website_sma= kw.get('asal_website_sma', '')
+		asal_jurusan_sma= kw.get('asal_jurusan_sma', '')
+
+		asal_universitas= kw.get('asal_universitas', '')
+		asal_alamat_univ= kw.get('asal_alamat_univ', '')
+		asal_website_univ= kw.get('asal_website_univ', '')		
+		nim_asal 		= kw.get('nim_asal', '')
+		prodi_asal_id 	= kw.get('prodi_asal_id', '')	
+
+		ref 		= kw.get('rekomendasi', '')	
+		telp_ref 		= kw.get('telp_rekomendasi', '')	
 		
 		#pekerjaan
-		nama_instansi 	= kw.get('nama_instansi', '')		
+		nama_instansi 	= kw.get('telp_rekomendasi', '')		
 		jabatan 		= kw.get('jabatan', '')		
 
 		photo 			= kw.get('photo', '')	
@@ -161,6 +202,7 @@ class Partner(http.Controller):
 		Partner  = request.registry['res.partner']
 		partner_data = {}
 
+		
 		jenis_pendaftaran_id 	= http.request.env['akademik.jenis_pendaftaran'].search([('name','=','Baru')])
 		prodi 					= http.request.env['master.prodi'].browse( int(prodi_id) )
 		jadwal_id 				= http.request.env['jadwal.usm'].search([('name','=','Gelombang 1')])
@@ -194,6 +236,12 @@ class Partner(http.Controller):
 						'penghasilan' 	: penghasilan_penanggung
 						})]
 
+		pend_datas = [(0,0,{'nama_sekolah'	: asal_sma,
+							'tingkat'		: 'SMA',
+							'jurusan'		: asal_jurusan_sma,
+							'alamat' 		: asal_alamat_sma,
+							'website'		: asal_website_sma})]				
+
 		
 		if partner.reg == "/" or partner.reg == False:
 			reg = request.registry['ir.sequence'].get(cr, SUPERUSER_ID, 'res.partner') 
@@ -225,7 +273,7 @@ class Partner(http.Controller):
 				'fakultas_id'	: prodi.fakultas_id.id,
 				'prodi_id'		: prodi.id,
 				'konsentrasi_id': konsentrasi.id,
-				'tahun_ajaran_id': tahun.id,
+				'tahun_ajaran_id'	: tahun.id,
 				'jadwal_usm_id'	: jadwal_id.id,
 				'jenis_kelamin' : jenis_kelamin,
 				'agama'			: agama,
@@ -235,9 +283,20 @@ class Partner(http.Controller):
 				'is_mahasiswa'	: True,
 				'customer'		: True,
 				'status_mahasiswa': 'calon',
+				'no_ijazah_sma'	: '/',
 				'biodata_keluarga_ids': ortu_datas,
+				'riwayat_pendidikan_ids' : pend_datas,
+				'rekomendasi'	: ref,
+				'telp_rekomendasi'		: telp_ref,
+				'jadwal_pagi'	: jadwal_pagi,
+				'jadwal_siang'	: jadwal_siang,
+				'jadwal_malam'	: jadwal_malam,
 
 			}
+			if prodi.coa_hutang_id:
+				data.update({'property_account_payable': prodi.coa_hutang_id.id})
+			if prodi.coa_piutang_id:
+				data.update({'property_account_receivable': prodi.coa_piutang_id.id})
 			# partner_data = Partner.create( data )
 			partner_data = Partner.write ( cr, SUPERUSER_ID, [partner.id],  data )
 			message = "Registration Success!"
