@@ -3,7 +3,6 @@
 
 
 <!-- Registration Form -->
-
 <template id="vit_universities_web.registration">
     <t t-call="website.layout">
         <t t-set="title">Registration Form</t>
@@ -73,7 +72,7 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jalur Masuk</label>
                     <div class="col-md-3 col-sm-4">
-                        <select class="form-control" name="jenis_pendaftaran_id">
+                        <select class="form-control" name="jenis_pendaftaran_id" id="jalur_masuk">
                           <t t-foreach="jenis_pendaftaran_ids" t-as="jp">
                             <option t-att-value="'%s' % (jp.id)" t-esc="jp.name" />
                           </t>
@@ -81,7 +80,9 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                
+
+                <div class="form-group" id="type_mahasiswa">
                     <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
                     <div class="col-md-3 col-sm-4">
                         <select class="form-control" name="type_mhs_id">
@@ -90,12 +91,36 @@
                           </t>
                         </select>
                     </div>
+<!--                     <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jadwal_id">
+                          <t t-foreach="jadwal_ids" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div> -->
                 </div>   
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pagi">Waktu Kuliah</label>
+
+                    <div class="col-md-1 col-sm-2">
+                        <label><input type="checkbox" name="jadwal_pagi" value="Pagi"/> Pagi</label>
+                    </div>
+
+                    <div class="col-md-1 col-sm-2">
+                        <label><input type="checkbox" name="jadwal_siang" value="Siang"/> Siang</label>
+                    </div>  
+
+                    <div class="col-md-1 col-sm-2">
+                        <label><input type="checkbox" name="jadwal_malam" value="Malam"/> Malam</label>
+                    </div>   
+
+                </div>
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
                     <div class="col-md-7 col-sm-8">
-                        <select class="form-control" name="prodi_id">
+                        <select class="form-control" name="prodi_id" id="prodi">
                           <t t-foreach="prodi_ids" t-as="prodi">
                             <option t-att-value="'%s' % (prodi.id)" t-esc="prodi.name" />
                           </t>
@@ -103,16 +128,6 @@
                     </div>
                 </div>    
 
-                <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi</label>
-                    <div class="col-md-7 col-sm-8">
-                        <select class="form-control" name="konsentrasi_id">
-                          <t t-foreach="konsentrasi_ids" t-as="konsentrasi">
-                            <option t-att-value="'%s' % (konsentrasi.id)" t-esc="konsentrasi.name" />
-                          </t>
-                        </select>
-                    </div>
-                </div>
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
@@ -142,8 +157,11 @@
 
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
-                    <div class="col-md-7 col-sm-8">
+                    <label class="col-md-3 col-sm-4 control-label" for="photo">Pas Photo</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input class="input-file" id="photo" type="file" name="photo" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="email" readonly="True" 
                             t-attf-value="{{ partner.email }}" />
                     </div>
@@ -369,24 +387,77 @@
 
 
 
-                <h3>DATA PENDIDIKAN</h3>
+                <h3>DATA PENDIDIKAN TERAKHIR</h3>
 
                <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="asal_sma">Asal SMA</label>
-                    <div class="col-md-7 col-sm-8">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_sma">Asal SMA/Sederajat</label>
+                    <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="asal_sma" />
                     </div>
-                </div>  
-               <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal Universitas (Jika Pindahan)</label>
                     <div class="col-md-3 col-sm-4">
-                        <input type="text" class="form-control" name="asal_universitas" />
+                        <input type="text" class="form-control" name="asal_jurusan_sma" placeholder="Jurusan (cth: IPA/IPS,dll...)"/>
+                    </div>
+                </div> 
+
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_sma">Alamat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_alamat_sma" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_website_sma" placeholder="Website..."/>
+                    </div>
+                </div> 
+
+               <div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal PT (Jika Pindahan/Lanjutan)</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_universitas" id="asal_universitas"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="nim_asal" placeholder="NIM ..." />
-                    </div>
+                    </div>          
                 </div>  
 
+               <div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_alamat_univ">Alamat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_alamat_univ" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_website_univ" placeholder="Website..." />
+                    </div>           
+                </div> 
+
+               <div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="konsentrasi_id" id="konsentrasi" t-attf-readonly="#{True if readonly==1 else False}">
+                        <t t-foreach="konsentrasi_ids" t-as="konsentrasi">
+                            <option t-att-value="konsentrasi.id" 
+                                t-attf-value="#{partner and partner.prodi_id.id == konsentrasi.prodi_id.id}">
+                                <t t-esc="konsentrasi.name"/>
+                            </option>
+                        </t>
+
+                        </select>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="prodi_asal_id" placeholder="Prodi Asal..." />
+                    </div>         
+                </div> 
+
+
+                <h3>PEMBERI REKOMENDASI</h3>
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="rekomendasi" placeholder="Referensi..."/>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telp_rekomendasi" placeholder="Telepon..."/>
+                    </div>                    
+                </div>                 
 <!--                 <h3>DATA PEKERJAAN (JIKA SUDAH BEKERJA)</h3>
                <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="nama_instansi">Nama Instansi</label>
@@ -401,14 +472,7 @@
                     </div>
                 </div>  -->
 
-                <h3></h3>
-                <div t-attf-class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="photo">Photo</label>
-                    <div class="col-md-7 col-sm-8">
-                        <input class="input-file" id="photo" type="file" name="photo"/>
-                    </div>
-                </div>
-                
+                <h3></h3>              
                  <div class="form-group">
                     <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
                         <button type="submit" name="confirm" class="btn btn-primary">
@@ -420,6 +484,33 @@
             </form>
         </div>
     </t>
+
+    <script>
+        $("#jalur_masuk").change(function(){
+            if($(this).val()!=1){
+                $(".non_baru").hide();
+                $("#asal_universitas").prop("required", true);
+            }else{
+                $(".non_baru").show();
+                $("#asal_universitas").prop("required", false);
+            }
+        });
+
+<!--         var request;
+        $("#prodi").change(function(){
+            if (request) {
+                request.abort();
+            }
+
+            request = $.ajax({
+                url: "/cek_prodi",
+                type: "post",
+                data: {"prodi_id":$(this).val()}
+            });
+
+            alert($(this).val()); 
+        }); -->
+    </script>
 </template>
 
 <!-- Registration Succeed -->
@@ -429,12 +520,15 @@
         <t t-set="title">Registration</t>
         <div class="container">
             <h2>Registration Sukses</h2>
-            <p>Silahkan lanjutkan transaksi dengan mengikuti link berikut..</p>
-
+            <p>Silahkan cek di pojok kanan atas > my account > Invoices</p>
+            <p>Jika sudah divalidasi oleh kami, maka akan muncul tagihan yang harus dibayar</p>
+            <p>Gunakan nomir Invoices tersebut sebagai ID tagihan di BNI</p>
             <p>Goto TPA</p>
         </div>
     </t>
 </template>
+
+
 
 </data>
 </openerp>
