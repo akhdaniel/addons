@@ -45,13 +45,14 @@ class academic_year(osv.Model):
 					\n* Terbaru = Jika terdapat 2 atau lebih matakuliah yang sama maka di ambil yang terbaru sesuai tanggal KHS. \
 					\n* Terbaik = Jika terdapat 2 atau lebih matakuliah yang sama maka di ambil yang terbaik sesuai tanggal KHS.'),
 		'max_mk': fields.integer('Maksimal Matakuliah',required=True,help='Jumlah maksimal matakuliah BL untuk bisa mengajukan judul'),
+		'is_active' : fields.boolean('Active'),
 	}
 
 	_sql_constraints = [('code_uniq', 'unique(code)','Kode tahun akademik tidak boleh sama')]
 
 	_defaults = {
 		'mekanisme_nilai':'terbaru',
-
+		'is_active'		: True,
 	}
 
 	def create_period(self, cr, uid, ids, context=None, interval=1):
@@ -242,7 +243,8 @@ class master_fakultas (osv.Model):
 		'pt_id'		: fields.many2one('res.partner', 'Perguruan Tinggi', domain="['|',('category_id','ilike','perguruan tinggi'),('is_company','=',True)]", help="Tag Perguruan Tinggi"),
 		'name' 		: fields.char('Nama Fakultas', size=128, required = True),
 		'is_internal': fields.boolean('Internal Fakultas?'),
-		'coa_id'	: fields.many2one('account.account','CoA'),
+		'coa_hutang_id'	: fields.many2one('account.account','CoA Hutang'),
+		'coa_piutang_id'	: fields.many2one('account.account','CoA Piutang'),
 	}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode fakultas tidak boleh sama')]
@@ -283,7 +285,8 @@ class master_prodi (osv.Model):
 		'jenjang': fields.many2one('master.jenjang','Jenjang',required = True),
 		'is_internal': fields.related('fakultas_id', 'is_internal' , type="boolean", relation="master.fakultas", 
 			string="Internal?", store=True),
-		'coa_id'	: fields.many2one('account.account','CoA'),
+		'coa_hutang_id'	: fields.many2one('account.account','CoA Hutang'),
+		'coa_piutang_id'	: fields.many2one('account.account','CoA Piutang'),
 	}
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
@@ -339,13 +342,19 @@ class riwayat_pendidikan (osv.Model):
 	_name = 'master.riwayat_pendidikan'
 	
 	_columns = {
-		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa',),
-		'nama_sekolah':fields.char('Nama Sekolah',),
-		'tingkat':fields.selection([('TK','TK'),('SD','SD'),('SMP','SMP'),('SMA','SMA/SMK/SMF'),('Diploma','Akademi/Diploma'),('S1','S1'),('S2','S2'),('S3','S3')],'Tingkat'),
-		'tahun_masuk':fields.char('Tahun Masuk',size=4,),
-		'tahun_lulus':fields.char('Tahun Lulus',size=4,),
-		'no_ijazah':fields.char('Nomor Ijazah'),
-		'nilai_akhir':fields.float('Nilai Akhir / UN',digits=(2,2)),
+		'partner_id' 	:fields.many2one('res.partner','Nama Mahasiswa',),
+		'nama_sekolah'	:fields.char('Nama Sekolah',required = True,),
+		'alamat'		:fields.text('Alamat'),
+		'website'		:fields.char('website'),
+		'tingkat'		:fields.selection([('TK','TK'),('SD','SD'),('SMP','SMP'),('SMA','SMA/SMK/SMF'),('Diploma','Akademi/Diploma'),('S1','S1'),('S2','S2'),('S3','S3')],'Tingkat'),
+		'jurusan' 		:fields.char('Jurusan'),
+		'tahun_masuk'	:fields.char('Tahun Masuk',size=4,),
+		'tahun_lulus'	:fields.char('Tahun Lulus',size=4,),
+		'no_ijazah'		:fields.char('Nomor Ijazah'),
+		'nilai_akhir'	:fields.float('Nilai Akhir / UN',digits=(2,2)),
+		'ranking'		:fields.integer('Rangking'),
+		'satu_yayasan'	:fields.boolean('Satu Yayasan'),
+		'nim'			:fields.char('NIM'),
 			}
 riwayat_pendidikan()
 
@@ -455,6 +464,7 @@ class master_konsentrasi(osv.Model):
 	_name = "master.konsentrasi"
 	_columns  = {
 		'name' : fields.char("Nama",required=True),
+		'prodi_id' : fields.many2one("master.prodi","Prodi"),
 	}
 
 master_type_mahasiswa()

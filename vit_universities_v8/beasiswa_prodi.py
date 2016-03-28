@@ -96,9 +96,11 @@ class beasiswa_prodi_detail(osv.osv):
 		'name'				: fields.char('Deskripsi',required=True),
 		'code'				: fields.char('Kode',required=True),
 		'product_id'		: fields.many2one('product.product', 'Product', domain=[('type','=','service')],required=True, help="Produk services"),
-		'limit_nilai'		: fields.float('Batas Nilai',help='Batas Lolos penerimaan untuk mendapatkan beasiswa'),
+		'limit_nilai'		: fields.float('Batas Nilai Min',help='Batas Lolos penerimaan untuk mendapatkan beasiswa'),
 		'amount'			: fields.float('Besarnya Beasiswa',help='Nilai potongan beasiswa'),
 		'sequence'			: fields.integer('Sequence',required=True,help='Urutan proses dengan disc yang mempunyai sequence, lebih kecil itu yang lebih dulu diproses (jika diisi minus sequence akan diabaikan)'),
 		'from_smt_id'		: fields.many2one('master.semester','Dari Smt'),
 		'to_smt_id'			: fields.many2one('master.semester','Sampai Smt'),
+		'uang_bangunan'		: fields.boolean('SPP'),
+		'limit_nilai_max'	: fields.float('Batas Nilai Max',),
 	}
