@@ -448,7 +448,7 @@
                 </div> 
 
 
-                <h3>PEMBERI REKOMENDASI</h3>
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari :)</h3>
                <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
                     <div class="col-md-3 col-sm-4">
@@ -488,10 +488,10 @@
     <script>
         $("#jalur_masuk").change(function(){
             if($(this).val()!=1){
-                $(".non_baru").hide();
+                $(".non_baru").show();
                 $("#asal_universitas").prop("required", true);
             }else{
-                $(".non_baru").show();
+                $(".non_baru").hide();
                 $("#asal_universitas").prop("required", false);
             }
         });
