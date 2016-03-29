@@ -545,7 +545,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="spmb_list_action">
-            <field name="name">PMB</field>
+            <field name="name">Passing Grade</field>
             <field name="res_model">spmb.mahasiswa</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -656,7 +656,7 @@
         <menuitem id="si_akademik_menu" name="Akademik" groups="vit_universities_v8.group_univ_external_baak"/>
             <menuitem id="master_data_reg" name="Pendaftaran" parent="si_akademik_menu" sequence="10" groups="vit_universities_v8.group_menu_pmb_baak"/>
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
-                <menuitem id="spmb" name="PMB" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
+                <menuitem id="spmb" name="Passing Grade" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
 <!--                 <menuitem id="master_mahasiswa_pmb" name="Mahasiswa " parent="master_data_reg" action="personal_list_action" sequence="21"/>  -->
             <menuitem id="master_data_kbm" name="KBM" parent="si_akademik_menu" sequence="20" groups="vit_universities_v8.group_menu_kbm_baak"/>
                 <menuitem id="master_kelas" name="Kelas" parent="master_data_kbm" action="kelas_list_action" sequence="10"/>
