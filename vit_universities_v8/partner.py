@@ -317,10 +317,10 @@ class res_partner (osv.osv):
 		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 
-		'invoice_id' : fields.many2one('account.invoice','Invoice Pendaftaran',readonly=True),
+		'invoice_id' : fields.many2one('account.invoice','Uang Pendaftaran',readonly=True),
 		'invoice_state' : fields.related('invoice_id','state',type='char',relation='account.invoice',string='Pembayaran Pendaftaran',readonly=True),
-		'invoice_bangunan_id' : fields.many2one('account.invoice','Invoice Bangunan',readonly=True),
-		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran Bangunan',readonly=True),
+		'invoice_bangunan_id' : fields.many2one('account.invoice','Uang Pengembangan',readonly=True),
+		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran UP',readonly=True),
 
 		'karyawan_id'	: fields.many2one('hr.employee','Karyawan'),
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
@@ -356,6 +356,7 @@ class res_partner (osv.osv):
 			disc_nilai_max 	= bea_line.limit_nilai_max
 			disc_amount	= bea_line.amount/int(jml_inv)
 			disc_coa  	= bea_line.product_id.property_account_income.id
+			#import pdb;pdb.set_trace()
 			if not disc_coa:
 				disc_coa = bea_line.product_id.categ_id.property_account_income_categ.id	
 			if bea_line.uang_bangunan:
@@ -398,17 +399,17 @@ class res_partner (osv.osv):
 													'price_unit': disc_amount,
 													'account_id': disc_coa},context=context)
 						break	
-				elif disc_code == '4':
-					krs_sebelumnya = self.search(cr,uid,[('partner_id','=',partner.id),('semester_id','=',semester.id-1)])
-					if krs_sebelumnya:
-						if self.browse(cr,uid,krs_sebelumnya[0]).ips_field_persemester >= disc_nilai :
-							for inv in inv_ids:	
-								inv_line.create(cr,uid,{'invoice_id': inv,
-														'product_id': disc_id,
-														'name'		: disc_name,
-														'quantity'	: 1 ,
-														'price_unit': disc_amount,
-														'account_id': disc_coa},context=context)
+				# elif disc_code == '4':
+				# 	krs_sebelumnya = self.search(cr,uid,[('partner_id','=',partner.id),('semester_id','=',semester.id-1)])
+				# 	if krs_sebelumnya:
+				# 		if self.browse(cr,uid,krs_sebelumnya[0]).ips_field_persemester >= disc_nilai :
+				# 			for inv in inv_ids:	
+				# 				inv_line.create(cr,uid,{'invoice_id': inv,
+				# 										'product_id': disc_id,
+				# 										'name'		: disc_name,
+				# 										'quantity'	: 1 ,
+				# 										'price_unit': disc_amount,
+				# 										'account_id': disc_coa},context=context)
 
 				elif disc_code == '5':
 					if partner.riwayat_pendidikan_ids:
@@ -430,11 +431,10 @@ class res_partner (osv.osv):
 		return True
 
 	def add_discount_bangunan(self, cr, uid, ids ,partner, inv_id, context=None):
-		inv_browse 		= inv_obj.browse(cr,uid,inv_id)
 		tahun_ajaran 	= partner.tahun_ajaran_id
 		fakultas 		= partner.fakultas_id
 		prodi 			= partner.prodi_id 
-		jml_inv 		= len(inv_id)
+		jml_inv 		= partner.split_invoice
 		bea_obj 		= self.pool.get('beasiswa.prodi')
 		data_bea 		= bea_obj.search(cr,uid,[('is_active','=',True),
 											('tahun_ajaran_id','=',tahun_ajaran.id),
@@ -469,7 +469,7 @@ class res_partner (osv.osv):
 							ORDER BY sequence ASC """%(data_bea[0]))
 			disc_non_seq = cr.fetchall()
 			if disc_non_seq :
-				self.add_discount_sequence_bangunan(cr, uid, ids ,disc_non_seq,inv_line,bea_line_obj,partner,semester,jml_inv,inv_id, context=context)
+				self.add_discount_sequence_bangunan(cr, uid, ids ,disc_non_seq,inv_line,bea_line_obj,partner,jml_inv,inv_id, context=context)
 
 		return True
 
@@ -514,10 +514,7 @@ class res_partner (osv.osv):
 					'invoice_line': prod_id,
 					},context=context)
 
-				cr.commit()
-				self.add_discount_bangunan(self, cr, uid, ids ,partner, inv, context=None)
-
-
+				
 				wf_service = netsvc.LocalService('workflow')
 				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
 				self.write(cr,uid,partner.id,{'invoice_id':inv})
@@ -577,6 +574,10 @@ class res_partner (osv.osv):
 					'account_id':partner.property_account_receivable.id,
 					'invoice_line': prod_id,
 					},context=context)
+
+				cr.commit()
+				self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
+
 				wf_service = netsvc.LocalService('workflow')
 				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
 				self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
