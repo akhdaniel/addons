@@ -1,0 +1,44 @@
+<openerp>
+	<data>
+        
+        <record model="ir.ui.view" id="data_calon_view">
+            <field name="name">Update Data Calon Mahasiswa</field>
+            <field name="model">partner.registration</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Data Calon Mahasiswa" version="7.0" create="false" delete="false">                    
+                	<sheet>
+                                     
+                        <field name="is_confirm_text" attrs="{'invisible':[('confirm','!=',True)]}" nolabel="1" readonly="1"/> 
+                        <field name="not_confirm_text" attrs="{'invisible':[('confirm','=',True)]}" nolabel="1" readonly="1"/>    
+                        <field name="no_reg" attrs="{'invisible':[('confirm','!=',True)]}" readonly="1"/>
+                        <button name="%(update_data_calon_mhs_action)d" type='action' string='Update Data' attrs="{'invisible':[('confirm','=',True)]}" icon="gtk-confirm" groups="vit_universities_v8.group_univ_mahasiswa" class="oe_stat_button"/>
+                        <field name="confirm" invisible="1"/>
+                        <field name="registration_paid" invisible="1"/>
+                        <field name="sudah_tpa" invisible="1"/>
+                        <h3><label for="no_reg" string="No Pendaftaran Anda" attrs="{'invisible':[('confirm','!=',True)]}"/></h3>
+                        <h2><field name="no_reg" attrs="{'invisible':[('confirm','!=',True)]}" readonly="1"/></h2>
+                        <button name="action_start_survey_from_registration" type='object' string='Go to TPA' attrs="{'invisible':['|',('registration_paid','!=',True),('sudah_tpa','=',True)]}" icon="gtk-confirm" groups="vit_universities_v8.group_univ_mahasiswa" class="oe_stat_button"/>
+                        <h4><label for="skor_manipulasi_tpa" string="Skor TPA anda" attrs="{'invisible':[('sudah_tpa','!=',True)]}"/></h4>
+                        <h3><field name="skor_manipulasi_tpa" attrs="{'invisible':[('sudah_tpa','!=',True)]}" readonly="1"/></h3>          
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="data_calon_mhs_action">
+            <field name="name">Data Calon Mahasiswa</field>
+            <field name="res_model">partner.registration</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+
+
+        <menuitem name="Update Data" id="update_data" parent="portal.portal_menu" sequence="1" />
+            <menuitem id="partner_registration_menu" name="Data Calon Mahasiswa" parent="update_data" action="data_calon_mhs_action" groups="vit_universities_v8.group_univ_mahasiswa" sequence="10"/>
+
+
+	</data>
+</openerp>	

@@ -41,6 +41,9 @@ Sistem Informasi Akademik Perguruan Tinggi yang sudah di sesuaikan dengan standa
             'ujian.xml',
             'jadwal_ujian.xml',
             'krs_by_mhs.xml',
+            'wizard/absensi_wizard.xml',
+            'wizard/partner_registration_wizard.xml',
+            'partner_registration.xml',
             # 'data/product.product.csv',
                 ],
 }

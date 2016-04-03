@@ -62,5 +62,20 @@
             </field>
         </record>
 
+
+        <!--sequance npm-->
+        <record forcecreate="1" id="seq_type_no_alumni" model="ir.sequence.type">
+            <field name="name">No Alumni</field>
+            <field name="code">seq.alumni.partner</field>
+        </record>
+        
+        <record  forcecreate="1" id="seq_alumni" model="ir.sequence">
+            <field name="name">Partner</field>
+            <field name="code">seq.alumni.partner</field>
+            <field name="prefix">%(year)s/</field>
+            <field name="padding">10</field>
+            <field name="no_alumni" eval="False"/>
+        </record>  
+
 	</data>
 </openerp>			

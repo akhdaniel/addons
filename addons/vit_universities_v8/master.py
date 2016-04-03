@@ -309,8 +309,8 @@ class master_prodi (osv.Model):
 		res = []
 		for record in reads:
 			name = record['name']
-			if record['kode']:
-				name = record['kode'] + ' ' + name
+			# if record['kode']:
+			# 	name = record['kode'] + ' ' + name
 			res.append((record['id'], name))
 		return res				
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode program Studi tidak boleh sama')]         
@@ -373,7 +373,11 @@ class biodata_keluarga (osv.Model):
 		'jenis_kelamin':fields.selection([('L','Laki-Laki'),('P','Perempuan')],'Jenis Kelamin'),
 		'keadaan':fields.selection([('alm','Alm'),('ada','Masih Ada')],'Keadaan'),
 		'jenjang_id': fields.many2one('master.jenjang','Pendidikan'),
-		'penghasilan' : fields.char('Penghasilan')
+		'penghasilan' : fields.selection([('1','Dibawah Rp.1.000.000'),
+												('2','Rp.1.000.000 - Rp.3.000.000'),
+												('3','Rp.3.000.001 - Rp.6.000.000'),
+												('4','Rp.6.000.001 - Rp.10.000.000'),
+												('5','Diatas Rp.10.000.001')],'Penghasilan')
 			}
 biodata_keluarga()
 

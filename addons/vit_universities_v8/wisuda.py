@@ -98,6 +98,7 @@ class wisuda_mahasiswa(osv.Model):
 		for alumni in my_form.partner_ids:
 			gelar = alumni.prodi_id.gelar_id.id
 			transkrip = transkrip_obj.search(cr,uid,[('partner_id','=',alumni.id)])
+			no_alumni = self.pool.get('ir.sequence').get(cr, uid, 'seq.alumni.partner') or '/'
 			yudisium = False
 			if transkrip :
 				yudisium = transkrip_obj.browse(cr,uid,transkrip[0]).yudisium_id.id
@@ -106,6 +107,7 @@ class wisuda_mahasiswa(osv.Model):
 																'lokasi_wisuda':my_form.lokasi_wisuda,
 																'title':gelar,
 																'yudisium_id':yudisium,
+																'no_alumni': no_alumni,
 																'is_alumni':True},context=context)
 		self.write(cr,uid,ids,{'state':'done'},context=context)
 		return True	
@@ -118,3 +120,12 @@ class wisuda_mahasiswa(osv.Model):
 			if rec.state != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
 		return super(wisuda_mahasiswa, self).unlink(cr, uid, ids, context=context)
+
+
+#class untuk menampung sequence no alumni di objek res.partner
+class seq_alumni_partner(osv.Model):
+	_name = "seq.alumni.partner"
+
+	_columns = {
+		'name' : fields.char('Nomor Alumni',size=36),
+	}

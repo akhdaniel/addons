@@ -126,8 +126,8 @@
                                             <button name="create_krs_smt_1_dan_2" class="oe_link" type='object' groups="vit_universities_v8.group_univ_pmb_baak" string="Convert Status Mahasiswa" attrs="{'invisible': ['|','|',('invoice_bangunan_id','=',False),('invoice_bangunan_state','!=','paid'),('status_mahasiswa','=','Mahasiswa')]}"/>
                                         </div>                                        
                                         <field name="tgl_ujian" attrs="{'readonly': [('status_mahasiswa','!=','calon')]}"/>
-                                        <field name="nilai_ujian_asli" attrs="{'required': [('status_mahasiswa','=','calon')]}"/>
-                                        <field name="jadwal_usm_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>    
+                                        <field name="nilai_ujian_asli"/>
+                                        <field name="jadwal_usm_id"/>    
                                     </group>  
 
                                     <group>
@@ -135,7 +135,8 @@
                                     </group>
                                     <group>
                                         
-                                        <field name="telp_rekomendasi"/>  
+                                        <field name="telp_rekomendasi"/> 
+                                         <field name="reg_online" invisible="1"/>  
                                     </group>
 
                                    </group>                                
@@ -308,7 +309,8 @@
                                            <field name="no_transkrip" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
                                            <field name="no_ijazah" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
                                            <field name="no_sk_dekan" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
-                                           <field name="tgl_sk_dekan" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>           
+                                           <field name="tgl_sk_dekan" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
+                                           <field name="no_alumni"/>
                                         </group>                                     
                                         <group>
                                         <label for="tgl_lulus" string="Tanggal Lulus" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
@@ -352,8 +354,13 @@
             <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
                 <field name="name" position="replace">
-                   <field name="name" filter_domain="['|','|','|',('name','ilike',self),('parent_id','ilike',self),('npm','=',self),('reg','=',self)]"/>
-                </field>   
+                   <field name="name" filter_domain="['|','|','|','|',('name','ilike',self),('parent_id','ilike',self),('npm','=',self),('reg','=',self),('no_alumni','=',self)]"/>
+                </field>
+                <filter string="Persons" position="before">   
+                    <filter string="Kuliah Pagi" name="jadwal_pagi" icon="terp-personal" domain="[('jadwal_pagi','=',True)]" context="{}"/>
+                    <filter string="Kuliah Siang" name="jadwal_siang" icon="terp-personal" domain="[('jadwal_siang','=',True)]" context="{}"/>
+                    <filter string="Kuliah Malam" name="jadwal_malam" icon="terp-personal" domain="[('jadwal_malam','=',True)]" context="{}"/>
+                </filter>
                 <filter string="Salesperson" position="before">
                     <filter string="Tahun Ajaran" name="tahun_ajaran_id" icon="terp-personal" domain="[]" context="{'group_by' : 'tahun_ajaran_id'}"/>
                     <filter string="Fakultas" name="fakultas_id" icon="terp-personal" domain="[]" context="{'group_by' : 'fakultas_id'}"/>
@@ -363,6 +370,8 @@
                     <filter string="Gender" name="jenis_kelamin" icon="terp-personal" domain="[]" context="{'group_by' : 'jenis_kelamin'}"/>
                     <filter string="Jenis Pendaftaran" name="jenis_pendaftaran_id" icon="terp-personal" domain="[]" context="{'group_by' : 'jenis_pendaftaran_id'}"/>
                     <filter string="Lokasi" name="alamat_id" icon="terp-personal" domain="[]" context="{'group_by' : 'alamat_id'}"/>
+                    <separator/>
+
 <!--                     <filter string="Pembayaran Pendaftaran" name="invoice_state" icon="terp-personal" domain="[]" context="{'group_by' : 'invoice_state'}"/> 
                     <filter string="Pembayaran Bangunan" name="invoice_bangunan_state" icon="terp-personal" domain="[]" context="{'group_by' : 'invoice_bangunan_state'}"/ -->>                   
                 </filter>    

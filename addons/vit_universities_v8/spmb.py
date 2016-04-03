@@ -286,5 +286,5 @@ class seq_npm_partner(osv.Model):
 	_name = "seq.npm.partner"
 
 	_columns = {
-		'name' : fields.char('Nomor Pokok Mahasiswa',size=36),
+		'name' : fields.char('Nomor Induk Mahasiswa',size=36),
 	}
