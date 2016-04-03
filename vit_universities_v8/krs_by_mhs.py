@@ -21,11 +21,6 @@ class operasional_krs_mahasiswa (osv.osv):
 		user_obj = self.pool.get('res.users')
 		partner_id = user_obj.browse(cr,uid,uid).partner_id.id
 		return partner_id
-
-	def _max_semester(self, cr, uid, context=None):
-		user_obj = self.pool.get('res.users')
-		partner_id = user_obj.browse(cr,uid,uid).partner_id.id
-
 	
 	_columns = {
 		'name' : fields.char('Kode', 128, readonly=True),

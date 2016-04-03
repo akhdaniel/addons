@@ -1,0 +1,2 @@
+import absensi_wizard
+import pertner_registration_wizard

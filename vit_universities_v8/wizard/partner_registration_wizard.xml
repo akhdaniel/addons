@@ -1,0 +1,146 @@
+<openerp>
+	<data>
+        
+        <record model="ir.ui.view" id="update_data_calon_view">
+            <field name="name">Update Data Calon Mahasiswa</field>
+            <field name="model">res.partner.registration.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Update Data Calon Mahasiswa" version="7.0" create="false" delete="false">                    
+                	<sheet>
+
+                        <field name="pas_foto" widget="image" class="oe_left oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_title oe_left">
+                            <label string="* Upload Your Photo"/>
+                            <h1>
+                            <field name="no_reg"/>
+                            </h1>
+
+                        </div>
+                			<group string="Data Akademik" attrs="{'readonly':[('confirm','=',True)]}">
+                                <group>
+                                    <field name="tahun_ajaran_id" readonly="1"/>
+                                    <field name="jenis_pendaftaran_id" widget="selection"/>
+                                    <field name="semester_id" widget="selection" attrs="{'readonly':['|',('jenis_pendaftaran_id','=',1),('jenis_pendaftaran_id','=',False)]}"/>
+                                    <field name="prodi_id" widget="selection"/> 
+                                    <field name="konsentrasi_id" attrs="{'readonly':['|',('jenis_pendaftaran_id','=',1),('jenis_pendaftaran_id','=',False)]}"/> 
+                                </group>
+                                <group>
+                                    <field name="type_pendaftaran"/>
+                                    <field name="type_mhs_id" widget="selection"/>
+                                    <label for="jadwal_pagi" string="Waktu Kuliah"/>
+                                    <div> 
+                                        <field name="jadwal_pagi" class="oe_inline"/> <label for="jadwal_pagi" string="Pagi"/> 
+                                        <field name="jadwal_siang" class="oe_inline"/> <label for="jadwal_siang" string="Siang"/>
+                                        <field name="jadwal_malam" class="oe_inline"/> <label for="jadwal_malam" string="Malam"/>
+                                    </div>
+                                    <field name="alamat_id" widget="selection"/>
+                                </group>                             
+                            </group>
+
+                        <group string="Data Pindahan" attrs="{'invisible': ['|',('jenis_pendaftaran_id','=',1),('jenis_pendaftaran_id','=',False)],'readonly':[('confirm','=',True)]}">
+                            <group>
+                                <field name="asal_univ_id" attrs="{'required': ['|',('jenis_pendaftaran_id','!=',1),('jenis_pendaftaran_id','=',False)]}"/>     
+                                <field name="asal_fakultas_id" attrs="{'required': ['|',('jenis_pendaftaran_id','!=',1),('jenis_pendaftaran_id','=',False)]}"/> 
+                                <field name="asal_prodi_id" attrs="{'required': ['|',('jenis_pendaftaran_id','!=',1),('jenis_pendaftaran_id','=',False)]}"/>    
+                            </group>
+                            <group>
+                                <field name="asal_npm" attrs="{'required': ['|',('jenis_pendaftaran_id','!=',1),('jenis_pendaftaran_id','=',False)]}"/>          
+                                <field name="asal_jenjang_id" attrs="{'required': ['|',('jenis_pendaftaran_id','!=',1),('jenis_pendaftaran_id','=',False)]}"/> 
+                            </group>
+                        </group>
+
+
+            			<group string="Data Pribadi" attrs="{'readonly':[('confirm','=',True)]}">
+                            <group>
+                				<field name="name"/>
+                                <field name="id_card"/> 
+                                <field name="tempat_lahir"/>
+                                <field name="tanggal_lahir"/>
+                                <field name="jenis_kelamin"/>
+                                <field name="agama"/>  
+                            </group> 
+                            <group>
+                                <field name="alamat_pendaftar"/>
+                                <field name="kota_pendaftar"/>
+                                <field name="zip_pendaftar"/>
+                                <field name="telp_pendaftar"/>   
+                            </group>                                           				
+            			</group>
+                        <group string="Data Orang Tua" attrs="{'readonly':[('confirm','=',True)]}">
+                            <group>
+                                <field name="nama_ayah"/>
+                                <field name="keadaan_ayah"/>
+                                <field name="pekerjaan_ayah"/>
+                                <field name="penghasilan_ayah"/>
+                            </group> 
+                            <group>
+                                <field name="alamat_ayah"/>
+                                <field name="telp_ayah"/>                                    
+                            </group> 
+
+                            <group>
+                                <field name="nama_ibu"/>
+                                <field name="keadaan_ibu"/>
+                                <field name="pekerjaan_ibu"/>
+                                <field name="penghasilan_ibu"/>
+                            </group> 
+                            <group>
+                                <field name="alamat_ibu"/>
+                                <field name="telp_ibu"/>                                    
+                            </group>
+                        </group> 
+
+                        <group string="Data Penanggung Biaya Kuliah" attrs="{'readonly':[('confirm','=',True)]}">
+                            <group>
+                                <field name="nama_penanggung"/>
+                                <field name="jenis_kelamin_penanggung"/>
+                                <field name="pekerjaan_penanggung"/>
+                                <field name="penghasilan_penanggung"/>
+                            </group> 
+                            <group>
+                                <field name="alamat_penanggung"/>
+                                <field name="telp_penanggung"/>                                    
+                            </group>
+                        </group> 
+
+                        <group string="Data SMA/Sederajat" attrs="{'readonly':[('confirm','=',True)]}">
+                            <group>
+                                <field name="nama_sekolah"/>
+                                <field name="jurusan_sekolah" placeholder="Cth : IPA/IPS/dll.."/>
+                            </group> 
+                            <group>
+                                <field name="alamat_sekolah"/>
+                                <field name="website_sekolah"/>                                    
+                            </group>
+                        </group>
+
+                        <group string="PEMBERI REKOMENDASI ( Info ISTN Didapat Dari Siapa? )" attrs="{'readonly':[('confirm','=',True)]}">
+                            <group>
+                                <field name="rekomendasi"/>
+                            </group> 
+                            <group>
+                                <field name="telp_rekomendasi"/>  
+                            </group> 
+                        </group> 
+                        <footer>
+                            <button icon="gtk-confirm" name="confirm_registration" string="Confirm" type="object" class="oe_stat_button"/>
+                            <button  icon="gtk-cancel" special="cancel" string="Not Now" class="oe_stat_button"/>
+                        </footer>                                                                         
+	                </sheet>    
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="update_data_calon_mhs_action">
+            <field name="name">Update Data Calon Mahasiswa</field>
+            <field name="res_model">res.partner.registration.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+	</data>
+</openerp>	

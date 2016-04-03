@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Student Meeting Wizard Form View  -->
+        <record id="view_absensi_wizard_form" model="ir.ui.view">
+            <field name="name">absensi.wizard</field>
+            <field name="model">absensi.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generate Absensi">
+                    <sheet>
+	                    <group col="4" colspan="4">
+	                        <field name="tahun_akademik_id"/>
+	                        <field name="semester_id"/>
+	                    </group>
+                    </sheet>
+                    <footer>
+                        <button name="create_absensi" string="Generate Absensi" type="object"/>
+                        <button  icon="gtk-cancel" special="cancel" string="Cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="create_absensi_wizard">
+            <field name="name">Generate Absensi</field>
+            <field name="res_model">absensi.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Generate Absensi" action="create_absensi_wizard"
+            id="create_absensi_menu" parent="vit_universities_v8.master_data_kbm" sequence="29"/>
+
+		
+<!--         <act_window id="action_absensi_wizard_form"
+            key2="client_action_multi"
+            name="Create Absensi"
+            res_model="master.kelas"
+            src_model="master.kelas"
+            view_mode="form"
+            target="new"
+            view_type="form"/> -->
+		
+    </data>
+</openerp>

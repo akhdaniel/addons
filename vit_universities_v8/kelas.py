@@ -57,7 +57,7 @@ class master_kelas (osv.Model):
 			('prodi_id','=',prodi_id),\
 			('kelas_id','=',False)]",
 			readonly=False),    			
-		'employee_id':fields.many2one('hr.employee', domain="[('is_dosen','=',True)]",required = True,string="Dosen Wali"),
+		'employee_id':fields.many2one('hr.employee', domain="[('is_dosen','=',True)]",required = True,string="Penasehat Akademik"),
 		'user_id' : fields.many2one('res.users','User'),
 			}
 

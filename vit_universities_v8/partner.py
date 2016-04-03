@@ -249,6 +249,7 @@ class res_partner (osv.osv):
 		#Mahasiswa
 		'npm' :fields.char(string='NIM',size=34),
 		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
+		'no_alumni': fields.char('No. Alumni', readonly=True, size=34),
 		'street':fields.text('Alamat Rumah'),
 		# 'nama_tengah':fields.char('Nama Tengah',size=60),
 		# 'nama_belakang':fields.char('Nama Tengah',size=60),
@@ -312,7 +313,7 @@ class res_partner (osv.osv):
 		# flag jika pernah kuliah di kampus yg sama (alumni)
 		'is_alumni'			: fields.boolean('Alumni'),
 
-		#split invoice
+		# split invoice
 		'split_invoice' : fields.integer('Angsuran',help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi"),
 		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
@@ -335,10 +336,12 @@ class res_partner (osv.osv):
 		'jadwal_siang'	: fields.boolean('Siang'),
 		'jadwal_malam'	: fields.boolean('Malam'),
 
-
-		#pemberi rekomendasi
+		# pemberi rekomendasi
 		'rekomendasi'	: fields.char('Rekomendasi'),
 		'telp_rekomendasi' : fields.char('Telp. Rekomendasi'),
+
+		# flag registration online
+		'reg_online'	: fields.boolean('Update Registration Online'),
 
 		}
 
@@ -399,6 +402,7 @@ class res_partner (osv.osv):
 													'price_unit': disc_amount,
 													'account_id': disc_coa},context=context)
 						break	
+				# 		
 				# elif disc_code == '4':
 				# 	krs_sebelumnya = self.search(cr,uid,[('partner_id','=',partner.id),('semester_id','=',semester.id-1)])
 				# 	if krs_sebelumnya:
@@ -701,19 +705,19 @@ class res_partner (osv.osv):
 				mk_kurikulum = []
 				for kur in kur_id:
 					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.id, 'state': 'draft'}))
-				krs_obj.create(cr,uid,{'kode'					: nim+'-2',
-											'partner_id'		: partner.id,
-											'tahun_ajaran_id'	: partner.tahun_ajaran_id.id,
-											'fakultas_id'		: partner.fakultas_id.id,
-											'prodi_id'			: partner.prodi_id.id,
-											'kurikulum_id'		: kur_sch_smt_2[0],
-											'semester_id'		: 10,
-											'kelas_id'			: partner.kelas_id.id or False,
-											'user_id'			: uid,
-											'konsentrasi_id'	: partner.konsentrasi_id.id,
-											#'state'				: 'draft',
-											'krs_detail_ids'	: mk_kurikulum
-											})	
+				krs_obj.create(cr,uid,{'kode'				: nim+'-2',
+										'partner_id'		: partner.id,
+										'tahun_ajaran_id'	: partner.tahun_ajaran_id.id,
+										'fakultas_id'		: partner.fakultas_id.id,
+										'prodi_id'			: partner.prodi_id.id,
+										'kurikulum_id'		: kur_sch_smt_2[0],
+										'semester_id'		: 10,
+										'kelas_id'			: partner.kelas_id.id or False,
+										'user_id'			: uid,
+										'konsentrasi_id'	: partner.konsentrasi_id.id,
+										#'state'			: 'draft',
+										'krs_detail_ids'	: mk_kurikulum
+										})	
 
 
 	def action_draft(self,cr,uid,ids,context=None):

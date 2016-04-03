@@ -435,12 +435,15 @@
                 <tree string="Daftar Calon Mahasiswa">
                     <field name="reg"/>
                     <field name="name" string="Nama"/>
-                     <field name="fakultas_id"/>
+                    <field name="fakultas_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/> 
                     <field name="keluarga_alumni_id"/> 
-                    <field name="marketing_id" invisible="1"/>   
+                    <field name="marketing_id" invisible="1"/>
+                    <field name="jadwal_pagi" invisible="1"/>
+                    <field name="jadwal_siang" invisible="1"/>   
+                    <field name="jadwal_malam" invisible="1"/>
                     <field name="invoice_state" string="Pendaftaran"/>
                     <field name="invoice_bangunan_state" string="Bangunan"/>                
                 </tree>
@@ -459,7 +462,10 @@
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
                     <field name="kelas_id"/> 
-                    <field name="marketing_id" invisible="1"/>  
+                    <field name="marketing_id" invisible="1"/> 
+                    <field name="jadwal_pagi" invisible="1"/>
+                    <field name="jadwal_siang" invisible="1"/>   
+                    <field name="jadwal_malam" invisible="1"/>                     
                     <field name="invoice_state" invisible="1"/>
                     <field name="invoice_bangunan_state" invisible="1"/>                                       
                 </tree>
@@ -472,12 +478,16 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Daftar Alumni" version="7.0" create="false" delete="false">
-                    <field name="npm"/>
+                    <field name="no_alumni"/>
+                    <field name="npm" invisible="1"/>
                     <field name="name" string="Nama"/>
                      <field name="fakultas_id"/>
                     <field name="prodi_id"/>
                     <field name="tahun_ajaran_id"/>
-                    <field name="kelas_id"/>  
+                    <field name="kelas_id"/>
+                    <field name="jadwal_pagi" invisible="1"/>
+                    <field name="jadwal_siang" invisible="1"/>   
+                    <field name="jadwal_malam" invisible="1"/>                      
                     <field name="tgl_lulus"/> 
                     <field name="nilai_ujian"/>
                     <field name="marketing_id" invisible="1"/>                  
@@ -658,7 +668,7 @@
                 <menuitem id="master_calon" name="Calon Mahasiswa" parent="master_data_reg" action="calon_list_action" sequence="10"/>
                 <menuitem id="spmb" name="Passing Grade" parent="master_data_reg" action="spmb_list_action" sequence="20"/>
 <!--                 <menuitem id="master_mahasiswa_pmb" name="Mahasiswa " parent="master_data_reg" action="personal_list_action" sequence="21"/>  -->
-            <menuitem id="master_data_kbm" name="KBM" parent="si_akademik_menu" sequence="20" groups="vit_universities_v8.group_menu_kbm_baak"/>
+            <menuitem id="master_data_kbm" name="Perkuliahan" parent="si_akademik_menu" sequence="20" groups="vit_universities_v8.group_menu_kbm_baak"/>
                 <menuitem id="master_kelas" name="Kelas" parent="master_data_kbm" action="kelas_list_action" sequence="10"/>
             <!-- <menuitem id="master_data_jadwal" name="Jadwal" parent="si_akademik_menu" sequence="30"/> --> 
                 <menuitem id="master_jadwal" name="Jadwal" parent="master_data_kbm" action="jadwal_kuliah_mhs_list_action" sequence="20"/>
