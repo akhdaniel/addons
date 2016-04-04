@@ -16,6 +16,7 @@ class master_jadwal (osv.osv):
 		semester 	= vals['semester_id']
 		ruangan 	= vals['ruangan_id']
 		hari 		= vals['hari']
+		partner 	= vals['partner_id']
 		
 		hours_from 	= vals['hours_from']	
 		hours_to 	= vals['hours_to']	
@@ -26,6 +27,7 @@ class master_jadwal (osv.osv):
 			('fakultas_id','=',fakultas),
 			('prodi_id','=',prodi),
 			('semester_id','=',semester),
+			('partner_id','=',ajaran),
 			('ruangan_id','=',ruangan),	
 			('hari','=',hari),
 			('hours_from','>=',hours_from),
@@ -36,7 +38,7 @@ class master_jadwal (osv.osv):
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
 		kapasitas_ruangan 	= rg_obj.browse(cr,uid,ruangan).kapasitas	
 		hasil = 0 
-		#import pdb;pdb.set_trace()
+		
 		if 'kelas_id' in vals:
 			kelas 		= vals['kelas_id']
 			if kelas :
@@ -62,7 +64,7 @@ class master_jadwal (osv.osv):
 	# 	return self.name_get(cr, user, ids, context)
 
 	def name_get(self, cr, uid, ids, context=None):
-		#import pdb;pdb.set_trace()
+		
 		if not ids:
 			return []
 		if isinstance(ids, (int, long)):
@@ -80,6 +82,21 @@ class master_jadwal (osv.osv):
 			res.append((record['id'], name))
 		return res
 
+	def _get_sisa_peserta(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result = {}
+		#import pdb;pdb.set_trace()
+		booking_jadwal_obj = self.pool.get('operasional.krs_detail.mahasiswa')
+		for jad in self.browse(cr,uid,ids,context=context):
+			kapasitas = jad.ruangan_id.kapasitas
+			booking_ids = booking_jadwal_obj.search(cr,1,[('jadwal_id','=',jad.id),('state','=','confirm')])
+			if booking_ids :
+				sisa = int(len(booking_ids))
+				kapasitas = kapasitas - sisa
+			result[jad.id] = kapasitas		
+		return result
+		
 
 	_columns = {
 		'name'  : fields.char('Kode',size=30,required=True),
@@ -89,7 +106,9 @@ class master_jadwal (osv.osv):
 		'semester_id':fields.many2one('master.semester',string='Semester',required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,), 
-		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True),                
+		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True),
+		'kapasitas' : fields.related('ruangan_id','kapasitas',string='Kapasitas'), 
+		'sisa_kapasitas' : fields.function(_get_sisa_peserta,type='integer',string='Sisa Kapasitas',store=True),              
 		'employee_id' :fields.many2one('hr.employee','Dosen Utama', domain="[('is_dosen','=',True)]",required=True),
 		'sks' : fields.float('SKS'),
 		'employee_id2' :fields.many2one('hr.employee','Dosen Pengganti 1', domain="[('is_dosen','=',True)]"),

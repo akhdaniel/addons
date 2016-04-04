@@ -227,7 +227,7 @@
     <record id="pengajuan_krs_rule" model="ir.rule">
         <field name="name">Pengajuan KRS</field>
         <field name="model_id" ref="model_operasional_krs_mahasiswa"/>
-        <field name="domain_force">['|',('partner_id','=',user.partner_id.id),('user_id.is_baak','=',True)]</field>
+        <field name="domain_force">[('partner_id','=',user.partner_id.id)]</field>
         <field name="groups" eval="[(4, ref('group_univ_mahasiswa'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -238,7 +238,7 @@
     <record id="krs_mhs_rule" model="ir.rule">
         <field name="name">KHS</field>
         <field name="model_id" ref="model_operasional_krs"/>
-        <field name="domain_force">['|',('partner_id','=',user.partner_id.id),('user_id.is_baak','=',True)]</field>
+        <field name="domain_force">[('partner_id','=',user.partner_id.id)]</field>
         <field name="groups" eval="[(4, ref('group_univ_mahasiswa'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>

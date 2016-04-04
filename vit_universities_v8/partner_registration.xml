@@ -36,8 +36,8 @@
 
 
 
-        <menuitem name="Update Data" id="update_data" parent="portal.portal_menu" sequence="1" />
-            <menuitem id="partner_registration_menu" name="Data Calon Mahasiswa" parent="update_data" action="data_calon_mhs_action" groups="vit_universities_v8.group_univ_mahasiswa" sequence="10"/>
+<!--         <menuitem name="Update Data" id="update_data" parent="portal.portal_menu" sequence="1" />
+            <menuitem id="partner_registration_menu" name="Data Calon Mahasiswa" parent="update_data" action="data_calon_mhs_action" groups="vit_universities_v8.group_univ_mahasiswa" sequence="10"/> -->
 
 
 	</data>
