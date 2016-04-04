@@ -38,7 +38,9 @@ Persiapan:
         'website',
         'website_blog',
         'website_instantclick',
-        'vit_universities_v8'
+        'vit_universities_v8',
+        'survey',
+        'evaluation'
     ],
 
     # always loaded

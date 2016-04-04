@@ -519,11 +519,22 @@
     <t t-call="website.layout">
         <t t-set="title">Registration</t>
         <div class="container">
-            <h2>Registration Sukses</h2>
+            
             <p>Silahkan cek di pojok kanan atas > my account > Invoices</p>
             <p>Jika sudah divalidasi oleh kami, maka akan muncul tagihan yang harus dibayar</p>
             <p>Gunakan nomir Invoices tersebut sebagai ID tagihan di BNI</p>
-            <p>Goto TPA</p>
+            <t t-if="message_success">
+                <br />
+                <div class="alert alert-success">
+                    <h2>Registration Sukses</h2>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <p>Silahkan melakukan pembayaran sbb:</p>
+
+            <p>Klik menu konfirmasi jika anda sudah melakukan pembayaran</p>
+
         </div>
     </t>
 </template>
