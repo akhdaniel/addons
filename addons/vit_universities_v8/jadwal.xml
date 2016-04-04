@@ -57,7 +57,9 @@
                         <group>    
                             <group> 
                                 <field name="semester_id"/>  
-                                <field name="ruangan_id"/>     
+                                <field name="ruangan_id"/>   
+                                <field name="kapasitas" readonly="1"/>
+                                <field name="sisa_kapasitas" readonly="1"/>   
                             </group>
                             <group>  
                                 <field name="hari" placeholder="-- pilih hari --"/>                                

@@ -88,7 +88,7 @@
                                     <tree editable="bottom">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="jadwal_id" domain="[('mata_kuliah_id','=',mata_kuliah_id),('tahun_ajaran_id','=',parent.tahun_ajaran_id),('prodi_id','=',parent.prodi_id),('semester_id','=',parent.semester_id),('is_active','=',True)]"/>
+                                        <field name="jadwal_id" domain="[('mata_kuliah_id','=',mata_kuliah_id),('tahun_ajaran_id','=',parent.tahun_ajaran_id),('prodi_id','=',parent.prodi_id),('semester_id','=',parent.semester_id),('is_active','=',True),('sisa_kapasitas','&gt;=',1)]"/>
                                         <field name="tahun_ajaran_id" invisible="1"/>
                                         <field name="prodi_id" invisible="1"/>
                                         <field name="semester_id" invisible="1"/>

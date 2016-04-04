@@ -18,7 +18,7 @@ class beasiswa_prodi(osv.Model):
 		if product:
 
 			seq = 0
-			for x in range(0,5):
+			for x in range(0,6):
 				if seq == 0:
 					name = 'Potongan USM'
 					code = 0
@@ -35,6 +35,10 @@ class beasiswa_prodi(osv.Model):
 					name = 'Potongan Prodi'			
 					seq = -1
 					code = 4
+				elif seq == 5:
+					name = 'Potongan Satu Yayasan'			
+					seq = -1
+					code = 5					
 				product_ids.append((0,0,{'product_id':product[0],'name':name,'sequence':seq,'code':code}))
 				seq += 1
 		return product_ids
