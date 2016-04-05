@@ -16,6 +16,7 @@
                     <field name="calon_mhs_ids" /> 
                     <field name="is_active" invisible="1"/>
                     <field name="user_id" invisible="1"/>
+                    <field name="discount" />
                     <field name="state" />
                 </tree>
             </field>
@@ -33,6 +34,7 @@
                                 <field name="name"/>
                                 <field name="tahun_ajaran_id"/>
                                 <field name="limit" /> 
+                    		<field name="discount" />
                                 <field name="user_id" invisible="1"/>        
                             </group>
                 			<group>
