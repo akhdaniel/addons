@@ -143,8 +143,8 @@ class spc(object):
             sql += "key_val_3                 ,"
             sql += "key_val_4                 ,"
             sql += "key_val_5                  "
-            sql += "FROM pembayaran where key_val_1 = %s"
-            cursor.execute(sql, (0) )
+            sql += "FROM pembayaran where key_val_1 = nomor_pembayaran and status_pembayaran=%s"
+            cursor.execute(sql, (1) )
             results = cursor.fetchall()
         return results
 
