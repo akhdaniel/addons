@@ -52,7 +52,7 @@ class account_invoice(osv.osv):
 			if mahasiswa.status_mahasiswa in ('calon','Mahasiswa'):
 
 				if mahasiswa.status_mahasiswa == 'calon':
-					nomor_pembayaran = mahasiswa.reg
+					nomor_pembayaran = mahasiswa.reg.replace('/','')
 				else:
 					nomor_pembayaran = mahasiswa.npm
 

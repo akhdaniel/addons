@@ -14,7 +14,7 @@ class spc(object):
 
     def insert_biller_tagihan(self, data):
         with self.connection.cursor() as cursor:
-            sql = "INSERT INTO `biller_tagihan` ("
+            sql = "INSERT INTO `tagihan` ("
             sql += "id_record_tagihan         ,"
             sql += "nomor_pembayaran          ,"
             sql += "nama                      ,"
@@ -31,8 +31,8 @@ class spc(object):
             sql += "angkatan                  ,"
             sql += "urutan_antrian            ,"
             sql += "total_nilai_tagihan       ,"
-            sql += "minimal_nilai_pembayaran  ,"
-            sql += "maksimal_nilai_pembayaran ,"
+            #sql += "minimal_nilai_pembayaran  ,"
+            #sql += "maksimal_nilai_pembayaran ,"
             sql += "nomor_induk               ,"
             sql += "pembayaran_atau_voucher   ,"
             sql += "voucher_nama              ,"
@@ -42,7 +42,7 @@ class spc(object):
             sql += ") VALUES ("
             sql += "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,"
             sql += "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,"
-            sql += "%s,%s,%s,%s)"
+            sql += "%s,%s)"
 
             cursor.execute(sql, (
                 data['id_record_tagihan']         ,
@@ -61,8 +61,8 @@ class spc(object):
                 data['angkatan']                  ,
                 data['urutan_antrian']            ,
                 data['total_nilai_tagihan']       ,
-                data['minimal_nilai_pembayaran']  ,
-                data['maksimal_nilai_pembayaran'] ,
+                #data['minimal_nilai_pembayaran']  ,
+                #data['maksimal_nilai_pembayaran'] ,
                 data['nomor_induk']               ,
                 data['pembayaran_atau_voucher']   ,
                 data['voucher_nama']              ,
@@ -80,14 +80,14 @@ class spc(object):
 
     def delete_biller_tagihan(self, data):
         with self.connection.cursor() as cursor:
-            sql = "DELETE from biller_tagihan where id_record_tagihan = %s"
+            sql = "DELETE from tagihan where id_record_tagihan = %s"
             cursor.execute(sql, (data['id_record_tagihan']))
         self.connection.commit()
         return True
 
     def insert_biller_tagihan_detil(self, data):
         with self.connection.cursor() as cursor:
-            sql = "INSERT INTO `biller_tagihan_detil` ("
+            sql = "INSERT INTO `detil_tagihan` ("
             sql += "id_record_detil_tagihan   ,"
             sql += "id_record_tagihan         ,"
             sql += "urutan_detil_tagihan      ,"
@@ -112,7 +112,7 @@ class spc(object):
 
     def delete_biller_tagihan_detil(self, data):
         with self.connection.cursor() as cursor:
-            sql = "DELETE from biller_tagihan_detil where id_record_tagihan = %s and id_record_detil_tagihan=%s"
+            sql = "DELETE from detil_tagihan where id_record_tagihan = %s and id_record_detil_tagihan=%s"
             cursor.execute(sql, (data['id_record_tagihan'] , data['id_record_detil_tagihan']))
         self.connection.commit()
         return True
@@ -143,7 +143,7 @@ class spc(object):
             sql += "key_val_3                 ,"
             sql += "key_val_4                 ,"
             sql += "key_val_5                  "
-            sql += "FROM ca_pembayaran where key_val_1 = %s"
+            sql += "FROM pembayaran where key_val_1 = %s"
             cursor.execute(sql, (0) )
             results = cursor.fetchall()
         return results
@@ -151,7 +151,7 @@ class spc(object):
     def set_ca_pembayaran_processed(self, id_record_pembayaran ):
         # import pdb; pdb.set_trace()
         with self.connection.cursor() as cursor:
-            sql = "UPDATE ca_pembayaran SET key_val_1='1' where id_record_pembayaran = %s"
+            sql = "UPDATE pembayaran SET key_val_1='1' where id_record_pembayaran = %s"
             cursor.execute(sql, ( id_record_pembayaran ))
         self.connection.commit()
         return True        
