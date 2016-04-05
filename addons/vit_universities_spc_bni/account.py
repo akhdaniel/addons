@@ -50,11 +50,12 @@ class account_invoice(osv.osv):
 			mahasiswa = inv.partner_id 
 
 			if mahasiswa.status_mahasiswa in ('calon','Mahasiswa'):
-
+				nomor_induk ='00'
 				if mahasiswa.status_mahasiswa == 'calon':
 					nomor_pembayaran = mahasiswa.reg.replace('/','')
 				else:
 					nomor_pembayaran = mahasiswa.npm
+					nomor_induk = mahasiswa.npm
 
 				today = date.today() 
 				three_mon = today + relativedelta(months=3)
@@ -69,17 +70,17 @@ class account_invoice(osv.osv):
 		            'kode_prodi'                : mahasiswa.prodi_id.kode ,
 		            'nama_prodi'                : mahasiswa.prodi_id.name ,
 		            'kode_periode'              : mahasiswa.tahun_ajaran_id.code , ## TODO: tambah semester
-		            'nama_periode'              : mahasiswa.tahun_ajaran_id.name , ## TODO: tambah semester
+		            'nama_periode'              : mahasiswa.tahun_ajaran_id.code, ## TODO: tambah semester
 		            'is_tagihan_aktif'          : 1 ,
 		            'waktu_berlaku'             : today.strftime('%Y-%m-%d'),
 		            'waktu_berakhir'            : three_mon.strftime('%Y-%m-%d') ,
 		            'strata'                    : mahasiswa.prodi_id.jenjang.name ,
-		            'angkatan'                  : mahasiswa.tahun_ajaran_id.name ,
+		            'angkatan'                  : mahasiswa.tahun_ajaran_id.code,
 		            'urutan_antrian'            : 0,   ### TODO : jika ada 4 invoices, ini harus ngurut 0,1,2,3
 		            'total_nilai_tagihan'       : inv.amount_total ,
 		            'minimal_nilai_pembayaran'  : inv.amount_total ,
 		            'maksimal_nilai_pembayaran' : inv.amount_total  ,
-		            'nomor_induk'               : mahasiswa.npm,
+		            'nomor_induk'               : nomor_induk,
 		            'pembayaran_atau_voucher'   : '',
 		            'voucher_nama'              : '' ,
 		            'voucher_nama_fakultas'     : '',
