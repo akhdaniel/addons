@@ -21,6 +21,7 @@ class jadwal_usm(osv.Model):
 		'user_id'			:fields.many2one('res.users','User',readonly=True),
 		'calon_mhs_ids'		: fields.one2many('res.partner','jadwal_usm_id','Calom MHS', ondelete="cascade"),
 		'state'				:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
+		'discount'		: fields.float('Discount'),
 	}
 
 	_defaults = {  
