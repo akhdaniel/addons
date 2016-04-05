@@ -72,11 +72,11 @@ class Partner(http.Controller):
 		Jenis_pendaftaran  = http.request.env['akademik.jenis_pendaftaran']
 		jenis_pendaftaran_ids = Jenis_pendaftaran.search([])
 
-		penghasilans = [('0',' '),('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
+		penghasilans = [('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
 
 		jadwal_ids = [('pagi','Pagi'),('siang','Siang'),('malam','Malam')]
-		penghasilan_ayah = [('0','Penghasilan ...'),('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
-		pekerjaans = [(' ',' '),('pns','Pengawai Negeri Sipil'),('tni/polri','TNI/Polri'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
+		penghasilan_ayah = [('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
+		pekerjaans = [('pns','Pengawai Negeri Sipil'),('tni/polri','TNI/Polri'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
 		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
 		keadaans = [('ada','Masih Ada'),('alm','Alm')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
