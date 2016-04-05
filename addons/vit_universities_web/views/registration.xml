@@ -237,7 +237,7 @@
                     <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="phone" 
-                            t-attf-value="{{ partner.phone }}" placeholder="Telepon Rumah" maxlength="10"/>
+                            t-attf-value="{{ partner.phone }}" placeholder="Telepon Rumah" required="True" maxlength="10"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="mobile" 
@@ -282,7 +282,7 @@
                         </select>
                     </div> 
                     <div class="col-md-3 col-sm-4">
-                        <select class="form-control" name="penghasilan_ayah">
+                        <select class="form-control" name="penghasilan_ayah" required="True" >
                           <t t-foreach="penghasilan_ayah" t-as="p">
                             <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Ayah"/>
                           </t>
@@ -324,7 +324,7 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <select class="form-control" name="penghasilan_ibu">
+                        <select class="form-control" name="penghasilan_ibu" required="True" >
                           <t t-foreach="penghasilan_ayah" t-as="p">
                             <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Ibu"/>
                           </t>
