@@ -81,7 +81,14 @@ class Partner(http.Controller):
 		keadaans = [('ada','Masih Ada'),('alm','Alm')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
 		type_pendaftarans = [('ganjil','Ganjil'),('Genap','Genap'),('pendek','Pendek')]
-		return http.request.render('vit_universities_web.registration',
+		
+
+		page = ''
+		if partner.reg != '/':
+			page = 'vit_universities_web.registration_view'
+		else:
+			page = 'vit_universities_web.registration'
+		return http.request.render(page,
 		{
 			'partner'		: partner,
 			'target_title'	: 'Registration', 
@@ -221,6 +228,11 @@ class Partner(http.Controller):
 		konsentrasi				= http.request.env['master.konsentrasi'].browse( int(konsentrasi_id) )
 		#tanggal_lhr 		    = self.env["res.lang"].datetime_formatter(tanggal_lahir)
 
+		hubungan_keluargas   	= http.request.env['master.hubungan_keluarga'].search([])
+		hub_ayah				= hubungan_keluargas[0].id 
+		hub_ibu					= hubungan_keluargas[1].id 
+		hub_penganggung			= hubungan_keluargas[2].id 
+
 
 		ortu_datas = [(0,0,{'nama' 			: nama_ayah,
 							'keadaan'		: keadaan_ayah,
@@ -228,6 +240,7 @@ class Partner(http.Controller):
 							'pekerjaan'		: pekerjaan,
 							'alamat'		: alamat_ayah,
 							'jenis_kelamin'	: 'L',
+							'hubungan_keluarga_id' : hub_ayah,
 							'penghasilan' 	: penghasilan_ayah}),
 					(0,0,{'nama' 		: nama_ibu,
 						'keadaan'		: keadaan_ibu,
@@ -235,6 +248,7 @@ class Partner(http.Controller):
 						'pekerjaan'		: pekerjaan2,
 						'alamat'		: alamat_ibu,
 						'jenis_kelamin'	: 'P',
+						'hubungan_keluarga_id' : hub_ibu,
 						'penghasilan' 	: penghasilan_ibu}),
 					(0,0,{'nama' 		: nama_penanggung,
 						'keadaan'		: keadaan_penanggung,
@@ -242,6 +256,7 @@ class Partner(http.Controller):
 						'pekerjaan'		: pekerjaan3,
 						'alamat'		: alamat_penanggung,
 						'jenis_kelamin'	: jk_penanggung,
+						'hubungan_keluarga_id' : hub_penganggung,
 						'penghasilan' 	: penghasilan_penanggung
 						})]
 
