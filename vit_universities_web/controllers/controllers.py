@@ -205,7 +205,10 @@ class Partner(http.Controller):
 		
 		jenis_pendaftaran_id 	= http.request.env['akademik.jenis_pendaftaran'].search([('name','=','Baru')])
 		prodi 					= http.request.env['master.prodi'].browse( int(prodi_id) )
+		#jadwal_id 				= http.request.env['jadwal.usm'].search([('name','=','Gelombang 1')])
+
 		jadwal_id 				= http.request.env['jadwal.usm'].search([('name','=','Gelombang 1')])
+
 		tahun 					= http.request.env['academic.year'].browse( int(tahun_id) )
 		alamat					= http.request.env['master.alamat.kampus'].browse( int(alamat_id) )
 		type_mhs				= http.request.env['master.type.mahasiswa'].browse( int(type_mhs_id) )
