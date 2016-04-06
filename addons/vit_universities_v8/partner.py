@@ -7,6 +7,8 @@ from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 from openerp import netsvc
 
+from openerp import tools, api
+
 SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
 class res_partner (osv.osv):
 	_name = 'res.partner'
@@ -718,6 +720,89 @@ class res_partner (osv.osv):
 										#'state'			: 'draft',
 										'krs_detail_ids'	: mk_kurikulum
 										})	
+
+
+	@api.multi
+	def write(self, vals):
+		# res.partner must only allow to set the company_id of a partner if it
+		# is the same as the company of all users that inherit from this partner
+		# (this is to allow the code from res_users to write to the partner!) or
+		# if setting the company_id to False (this is compatible with any user
+		# company)
+		#import pdb;pdb.set_trace()
+		if vals.get('website'):
+			vals['website'] = self._clean_website(vals['website'])
+		if vals.get('company_id'):
+			company = self.env['res.company'].browse(vals['company_id'])
+			for partner in self:
+				if partner.user_ids:
+					companies = set(user.company_id for user in partner.user_ids)
+					if len(companies) > 1 or company not in companies:
+						raise osv.except_osv(_("Warning"),_("You can not change the company as the partner/user has multiple user linked with different companies."))
+
+		# tambah logic jika update data calon mahasiswa dari web, create inv pendaftaran
+		inv = False
+		if vals.get('status_mahasiswa') :
+			if vals.get('status_mahasiswa') == 'calon' :
+				byr_obj = self.env['master.pembayaran.pendaftaran']
+				for partner in self:
+					byr_sch = byr_obj.search([('tahun_ajaran_id','=',vals.get('tahun_ajaran_id')),
+						('prodi_id','=',vals.get('prodi_id')),
+						('state','=','confirm'),
+						('type_mhs_id','=',vals.get('type_mhs_id')),
+						])	
+					if not byr_sch:
+						byr_sch = byr_obj.search([('tahun_ajaran_id','=',vals.get('tahun_ajaran_id')),
+							('prodi_id','=',vals.get('prodi_id')),
+							('state','=','confirm'),
+							])						
+					if byr_sch :
+						# cr = self.pool.cursor()
+						# cr.commit()
+						prod_id = []
+						for bayar in byr_sch.detail_product_ids:
+							#import pdb;pdb.set_trace()
+							product = bayar.product_id
+							coa_line = product.property_account_income.id
+							if not coa_line:
+								coa_line = product.categ_id.property_account_income_categ.id
+
+							prod_id.append((0,0,{'product_id'	: self.env['product.product'].search([('product_tmpl_id','=',product.id)]).id,
+												 'name'			: product.name,
+												 'price_unit'	: bayar.public_price,
+												 'account_id'	: coa_line}))
+						inv = self.env['account.invoice'].create({
+							'partner_id':partner.id,
+							'origin': 'Pendaftaran: '+str(partner.reg),
+							'type':'out_invoice',
+							'fakultas_id': vals.get('fakultas_id'),
+							'prod_id': vals.get('prodi_id'),
+							'account_id':partner.property_account_receivable.id,
+							'invoice_line': prod_id,
+							})
+
+						#wf_service = netsvc.LocalService('workflow')
+						from openerp import workflow
+						workflow.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)	
+						vals.update({'invoice_id':inv.id})
+
+
+		result = super(res_partner, self).write(vals)
+		if inv :
+			invoice_obj = inv.write({'origin': 'Pendaftaran: '+str(partner.reg)})
+
+			# create notifikasi ke email
+			mail = self.env['mail.mail']
+			mail.create({'subject' : 'Pendaftaran Mahasiswa Baru ISTN',
+						'email_to' : partner.email,
+						'recipient_ids' : [(6, 0, [partner.id])],
+						'notification' : True,
+						'body_html': 'Selamat '+str(partner.name)+', pendaftaran sukses, silahkan lakukan pembayaran di Bank BNI terdekat dengan no tagihan '+str(partner.reg),
+
+						})				
+		for partner in self:
+			self._fields_sync(partner, vals)
+		return result
 
 
 	def action_draft(self,cr,uid,ids,context=None):

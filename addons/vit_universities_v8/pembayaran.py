@@ -176,7 +176,7 @@ class master_pembayaran_pendaftaran_detail(osv.Model):
 	_columns ={
 		'pembayaran_id' : fields.many2one('master.pembayaran','Pembayaran ID'),
 		'pembayaran_id2' : fields.many2one('master.pembayaran.pendaftaran','Pembayaran ID'),
-		'product_id':fields.many2one('product.product','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
+		'product_id':fields.many2one('product.template','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
 		'public_price': fields.float('Harga', digits_compute=dp.get_precision('Account')),
 	}
 
