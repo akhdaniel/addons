@@ -327,7 +327,8 @@ class Partner(http.Controller):
 
 		return http.request.render('vit_universities_web.registration_process', {
 			'partner'		: partner_data,
-			'message'		: message
+			'message'		: message,
+			'reg'			: reg
 		})
 
 

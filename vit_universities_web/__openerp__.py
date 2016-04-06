@@ -40,18 +40,19 @@ Persiapan:
         'website_instantclick',
         'vit_universities_v8',
         'survey',
-        'evaluation'
+       # 'evaluation'
     ],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/menu.xml',
         'views/web_asset.xml',
         # 'views/pages.xml', # homepage
         # 'views/search.xml',
         'views/registration.xml',
         # 'views/discharge.xml',
-        'views/menu.xml',
+        
     ],
     'css':['static/src/css/*.css'],
     'js':['static/src/js/*.js','static/src/js/jquery-ui/jquery.ui.autocomplete.html.js'],
