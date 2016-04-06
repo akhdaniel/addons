@@ -520,10 +520,10 @@
     <t t-call="website.layout">
         <t t-set="title">Registration</t>
         <div class="container">
-            
-            <p>Silahkan cek di pojok kanan atas > my account > Invoices</p>
+            <h2>No. Pendaftaran  <t t-esc="reg"/></h2>
+            <p>Silahkan cek di pojok kanan atas > my account > Portal > Pembayaran > Pembayaran Kuliah</p>
             <p>Jika sudah divalidasi oleh kami, maka akan muncul tagihan yang harus dibayar</p>
-            <p>Gunakan nomir Invoices tersebut sebagai ID tagihan di BNI</p>
+
             <t t-if="message_success">
                 <br />
                 <div class="alert alert-success">
@@ -531,7 +531,7 @@
                     <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
                 </div>
             </t>
-
+            <!-- <h2>No Pendaftaran:  <t t-esc="partner.reg"/></h2> -->
             <p>Silahkan melakukan pembayaran sbb:</p>
 
             <p>Klik menu konfirmasi jika anda sudah melakukan pembayaran</p>
@@ -552,7 +552,7 @@
                 <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
             </div>
 
-            <h2>Registration Data  <t t-esc="partner.reg"/></h2>
+            <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
 
             <form class="form-horizontal mt32" >
 
@@ -812,7 +812,7 @@
                 </div> 
 
 
-                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari):</h3>
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
                     <div class="col-md-3 col-sm-4">
