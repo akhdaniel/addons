@@ -220,11 +220,11 @@
 
 
         <menuitem id="akademik_accounting" name="Akademik" parent="account.menu_finance_configuration" sequence="99"/>
-            <menuitem id="pembayaran" name="Template Pembayaran" parent="akademik_accounting" sequence="10"/>            
-                <menuitem id="master_pembayaran" name="Pembayaran Kuliah" parent="pembayaran" action="template_pembayaran_list_action" sequence="10"/>
-                <menuitem id="master_pembayaran_pendaftaran" name="Pembayaran Pendaftaran" parent="pembayaran" action="template_pembayaran_pendaftaran_list_action" sequence="20"/>
-                <menuitem id="master_pembayaran_bangunan" name="Pembayaran Bangunan" parent="pembayaran" action="template_pembayaran_bangunan_list_action" sequence="30"/>                
-                <menuitem id="master_product" name="Jenis Pembayaran" parent="pembayaran" action="jenis_pembayaran_list_action" sequence="40"/>
+            <menuitem id="pembayaran" name="Template Pembayaran" parent="akademik_accounting" sequence="10"/>
+                <menuitem id="master_pembayaran_pendaftaran" name="Penerimaan Uang Pendaftaran" parent="pembayaran" action="template_pembayaran_pendaftaran_list_action" sequence="10"/>           
+                <menuitem id="master_pembayaran" name="Penerimaan Uang Kuliah" parent="pembayaran" action="template_pembayaran_list_action" sequence="20"/>
+                <!-- <menuitem id="master_pembayaran_bangunan" name="Penerimaan Uang Bangunan" parent="pembayaran" action="template_pembayaran_bangunan_list_action" sequence="30"/>  -->               
+                <menuitem id="master_product" name="Jenis Penerimaan" parent="pembayaran" action="jenis_pembayaran_list_action" sequence="40"/>
 
 	</data>
 </openerp>			

@@ -26,3 +26,4 @@ import jadwal_ujian
 import krs_by_mhs
 import wizard
 import partner_registration
+import account
