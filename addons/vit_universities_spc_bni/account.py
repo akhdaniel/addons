@@ -7,8 +7,6 @@ import logging
 from openerp.tools.translate import _
 import bni 
 from openerp import netsvc
-
-
 _logger = logging.getLogger(__name__)
 
 ####################################################################################
