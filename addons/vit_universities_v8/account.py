@@ -41,10 +41,10 @@ class account_voucher(osv.osv):
 		for vc in self.browse(cr,uid,ids,context=context):
 			if vc.partner_id.is_mahasiswa :
 				mail_obj.create(cr,uid,{'subject' : 'Pembayaran ISTN',
-							'email_to' : vc.partner_id.id,
+							'email_to' : vc.partner_id.email,
 							'recipient_ids' : [(6, 0, [vc.partner_id.id])],
 							'notification' : True,
-							'body_html': 'Terima Kasih '+str(vc.partner_id.name)+', pembayaran sebesar Rp.'+str(vc.amount)+' telah diterima, silahkan cek status pembayaran anda di portal mahasiswa !'
+							'body_html': 'Terima Kasih '+str(vc.partner_id.name)+', pembayaran sebesar Rp.'+str(vc.amount)+' telah diterima, silahkan klik link http://113.20.30.74:8069/tpa untuk melakukan Test Potensi Akademik (TPA) Online !'
 
 							})          
 		return True

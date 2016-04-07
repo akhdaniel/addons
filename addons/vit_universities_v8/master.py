@@ -360,10 +360,11 @@ riwayat_pendidikan()
 
 class biodata_keluarga (osv.Model):
 	_name = 'master.biodata_keluarga'
+	_rec_name = 'nama'
 	
 	_columns = {
 		'partner_id' :fields.many2one('res.partner','Nama Mahasiswa', required = True,),
-		'nama':fields.char('Nama',required = True),
+		'nama':fields.char('Nama Orang Tua',required = True),
 		'tempat_lahir':fields.char('Tempat Lahir'),
 		'tanggal_lahir':fields.date('Tanggal Lahir'),
 		'hubungan_keluarga_id':fields.many2one('master.hubungan_keluarga','Hubungan Keluarga'),
@@ -447,6 +448,7 @@ class master_alamat_kampus(osv.Model):
 	_columns  = {
 		'name' : fields.char("Nama",required=True),
 		'Alamat' : fields.text('Alamat'),
+		'kode'	: fields.char('Kode',required=True),
 	}
 master_alamat_kampus()
 

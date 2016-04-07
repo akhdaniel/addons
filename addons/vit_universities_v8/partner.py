@@ -6,7 +6,7 @@ from datetime import datetime
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 from openerp import netsvc
-
+from openerp.addons.base.ir.ir_mail_server import MailDeliveryException
 from openerp import tools, api
 
 SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
@@ -729,7 +729,7 @@ class res_partner (osv.osv):
 		# (this is to allow the code from res_users to write to the partner!) or
 		# if setting the company_id to False (this is compatible with any user
 		# company)
-		#import pdb;pdb.set_trace()
+		#
 		if vals.get('website'):
 			vals['website'] = self._clean_website(vals['website'])
 		if vals.get('company_id'):
@@ -744,17 +744,22 @@ class res_partner (osv.osv):
 		inv = False
 		if vals.get('status_mahasiswa') :
 			if vals.get('status_mahasiswa') == 'calon' :
+				prodi_obj = self.env['master.prodi']
+				coa_prodi = prodi_obj.search([('id','=',vals.get('prodi_id'))]).coa_piutang_id.id,
+
 				byr_obj = self.env['master.pembayaran.pendaftaran']
 				for partner in self:
 					byr_sch = byr_obj.search([('tahun_ajaran_id','=',vals.get('tahun_ajaran_id')),
 						('prodi_id','=',vals.get('prodi_id')),
 						('state','=','confirm'),
 						('type_mhs_id','=',vals.get('type_mhs_id')),
+						('lokasi_kampus_id','=',vals.get('alamat_id')),
 						])	
 					if not byr_sch:
 						byr_sch = byr_obj.search([('tahun_ajaran_id','=',vals.get('tahun_ajaran_id')),
 							('prodi_id','=',vals.get('prodi_id')),
 							('state','=','confirm'),
+							('lokasi_kampus_id','=',vals.get('alamat_id')),
 							])						
 					if byr_sch :
 						# cr = self.pool.cursor()
@@ -777,7 +782,7 @@ class res_partner (osv.osv):
 							'type':'out_invoice',
 							'fakultas_id': vals.get('fakultas_id'),
 							'prod_id': vals.get('prodi_id'),
-							'account_id':partner.property_account_receivable.id,
+							'account_id':coa_prodi,
 							'invoice_line': prod_id,
 							})
 
@@ -790,16 +795,17 @@ class res_partner (osv.osv):
 		result = super(res_partner, self).write(vals)
 		if inv :
 			invoice_obj = inv.write({'origin': 'Pendaftaran: '+str(partner.reg)})
-
+			#import pdb;pdb.set_trace()
 			# create notifikasi ke email
 			mail = self.env['mail.mail']
-			mail.create({'subject' : 'Pendaftaran Mahasiswa Baru ISTN',
-						'email_to' : partner.email,
-						'recipient_ids' : [(6, 0, [partner.id])],
-						'notification' : True,
-						'body_html': 'Selamat '+str(partner.name)+', pendaftaran sukses, silahkan lakukan pembayaran di Bank BNI terdekat dengan no tagihan '+str(partner.reg),
+			notif_mail = mail.create({'subject' 		: 'Pendaftaran Mahasiswa Baru ISTN',
+										'email_to' 		: partner.email,
+										'recipient_ids' : [(6, 0, [partner.id])],
+										'notification' 	: True,
+										'body_html'		: 'Selamat '+str(partner.name)+', pendaftaran sukses, silahkan lakukan pembayaran di Bank BNI terdekat dengan no pembayaran '+str(partner.reg),
 
-						})				
+										})	
+			#mail.send(self._cr, self._uid, [notif_mail.id], auto_commit=False, raise_exception=False,self._context)						
 		for partner in self:
 			self._fields_sync(partner, vals)
 		return result

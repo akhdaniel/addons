@@ -86,7 +86,7 @@
                 </field>    
 
                 <label for="street" string="Address" position="before">
-                    <field name="alamat_id" attrs="{'invisible': [('is_mahasiswa','=',False)],'required': [('is_mahasiswa','=',True)]}"/>
+                    <field name="alamat_id" attrs="{'invisible': [('is_mahasiswa','=',False)],'required': [('is_mahasiswa','=',True)]}" widget="selection"/>
                 </label>    
 
                 <page string="Sales &amp; Purchases" position="before">
@@ -388,7 +388,7 @@
         <record  forcecreate="1" id="seq_personal" model="ir.sequence">
             <field name="name">Partner</field>
             <field name="code">res.partner</field>
-            <field name="prefix">%(y)s/</field>
+            <field name="prefix">%(y)s</field>
             <field name="padding">5</field>
             <field name="reg" eval="False"/>
         </record> 
