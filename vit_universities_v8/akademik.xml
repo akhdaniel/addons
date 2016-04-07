@@ -85,7 +85,14 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data ruangan.</p><p>disini belum ada data tentang ruangan !</p></field>
         </record>
 
-
+        <record model="ir.actions.act_window" id="lokasi_kampus_list_action">
+            <field name="name">Lokasi Kampus</field>
+            <field name="res_model">master.alamat.kampus</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data lokasi kampus.</p><p>disini belum ada data tentang lokasi kampus !</p></field>
+        </record>
 
         <!--  master data jadwal  -->
         <record model="ir.ui.view" id="jadwal_kuliah_mhs_search">
@@ -416,6 +423,88 @@
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data  Alumni.</p><p>disini belum ada data tentang Alumni!</p></field> -->
         </record>
 
+
+        <!-- ortu tree -->
+        <record model="ir.ui.view" id="ortu_tree_view">
+            <field name="name">master.biodata_keluarga</field>
+            <field name="model">master.biodata_keluarga</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Orang Tua Mahasiswa" create="false" delete="false">
+                    <field name="nama"/>
+                    <field name="partner_id"/>
+                    <field name="jenis_kelamin"/>
+                    <field name="tempat_lahir" invisible="1"/>
+                    <field name="tanggal_lahir" invisible="1"/>
+                    <field name="hubungan_keluarga_id"/>
+                    <field name="penghasilan"/>  
+                    <field name="keadaan"/>
+                    <field name="jenjang_id" widget="selection" invisible="1"/>
+                    <field name="pekerjaan"/>
+                    <field name="alamat"/>
+                    <field name="telepon"/>
+                    
+                </tree>               
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ortu_form_view">
+            <field name="name">master.biodata_keluarga</field>
+            <field name="model">master.biodata_keluarga</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Orang Tua" version="7.0" create="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="nama"/>
+                                <field name="partner_id"/>
+                                <field name="jenis_kelamin"/>
+                                <field name="tempat_lahir"/>
+                                <field name="tanggal_lahir"/>
+                                <field name="hubungan_keluarga_id"/>
+                                <field name="penghasilan"/>
+                            </group>
+                            <group>    
+                                <field name="keadaan"/>
+                                <field name="jenjang_id" widget="selection"/>
+                                <field name="pekerjaan"/>
+                                <field name="alamat"/>
+                                <field name="telepon"/>
+                            </group>
+                        </group>
+                    </sheet>                     
+                </form>               
+            </field>
+        </record>
+
+        <!-- Prodi search -->
+        <record model="ir.ui.view" id="ortu_search">
+            <field name="name">Cari Orang Tua Mhs</field>
+            <field name="model">master.biodata_keluarga</field>
+            <field name="arch" type="xml">
+                <search string="Cari Prodi">
+                    <group col="10" colspan="4">
+                         <field name="nama"/>
+                         <field name="partner_id"/>
+                    </group>
+                    <group expand="0" string="Group By..." colspan="12" col="10">
+                        <filter icon="terp-project" string="Mahasiswa" help="By Mahasiswa" context="{'group_by':'partner_id'}"/>
+                        <filter icon="terp-project" string="Jenis Kelamin" help="By Jenis Kelamin" context="{'group_by':'jenis_kelamin'}"/>
+                        <filter icon="terp-project" string="Hubungan Keluarga" help="By Hubungan Keluarga" context="{'group_by':'hubungan_keluarga_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record> 
+
+        <!--  master data orang tua -->
+        <record model="ir.actions.act_window" id="orang_tua_list_action">
+            <field name="name">Orang Tua</field>
+            <field name="res_model">master.biodata_keluarga</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <!--  master data beasiswa-->
         <record model="ir.actions.act_window" id="beasiswa_mahasiswa_list_action">
             <field name="name">Beasiswa USM</field>
@@ -677,7 +766,8 @@
                 <menuitem id="master_mahasiswa" name="Mahasiswa" parent="master_civitas" action="personal_list_action" groups="vit_universities_v8.group_menu_see_mhs" sequence="11"/> 
                 <menuitem id="master_wisuda" name="Wisuda" parent="master_civitas" action="wisuda_list_action" groups="vit_universities_v8.group_menu_civitas_baak" sequence="20"/>  
                 <menuitem id="master_alumni" name="Alumni" parent="master_civitas" action="alumni_list_action" groups="vit_universities_v8.group_menu_civitas_baak" sequence="30"/>
-                <menuitem id="master_dosen" name="Dosen" parent="master_civitas" action="dosen_list_action" groups="vit_universities_v8.group_menu_civitas_baak" sequence="40"/>           
+                <menuitem id="master_dosen" name="Dosen" parent="master_civitas" action="dosen_list_action" groups="vit_universities_v8.group_menu_civitas_baak" sequence="40"/>
+                <menuitem id="master_orangtua" name="Orang Tua Mahasiswa" parent="master_civitas" action="orang_tua_list_action" groups="vit_universities_v8.group_menu_civitas_baak" sequence="50"/>           
             <menuitem id="operasional" name="Studi" parent="si_akademik_menu" sequence="60" groups="vit_universities_v8.group_menu_studi_baak"/>              
                 <menuitem id="master_krs" name="Kartu Rencana Studi" parent="operasional" action="krs_list_action" sequence="13"/>
                 <menuitem id="master_khs" name="Kartu Hasil Studi" parent="operasional" action="khs_list_action" sequence="14"/>
@@ -687,6 +777,7 @@
                  <menuitem id="master_kurikulum" name="Kurikulum" parent="master_data_kurikulum" action="kurikulum_list_action"/>
                  <menuitem id="master_mk" name="Matakuliah" parent="master_data_kurikulum" action="mk_list_action"/>
             <menuitem id="master_data" name="Konfigurasi" parent="si_akademik_menu" sequence="90" groups="vit_universities_v8.group_menu_konfigurasi_baak"/>
+                <menuitem id="master_lokasi" name="Lokasi Kampus" parent="master_data" action="lokasi_kampus_list_action" sequence="5"/>
                 <menuitem id="master_ruangan" name="Ruangan" parent="master_data" action="ruangan_list_action" sequence="10"/>
                 <menuitem id="master_fakultas" name="Fakultas" parent="master_data" action="fakultas_list_action" sequence="20"/>
                 <!-- <menuitem id="master_jurusan" name="Jurusan" parent="master_data" action="jurusan_list_action" sequence="30"/> -->

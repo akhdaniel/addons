@@ -152,6 +152,7 @@ class master_pembayaran_pendaftaran(osv.Model):
 		'state':fields.selection([('draft','Non Aktif'),('confirm','Aktif')],'Status'),
 		'detail_product_ids':fields.one2many('master.pembayaran.pendaftaran.detail','pembayaran_id2',string='Pembayaran'),	
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),	
+		'lokasi_kampus_id' : fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 	}
 	_defaults = {
 		'name': '/',
