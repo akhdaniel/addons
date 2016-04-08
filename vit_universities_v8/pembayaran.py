@@ -24,6 +24,9 @@ class master_pembayaran(osv.Model):
 		pro = vals['prodi_id']
 		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
+		pro = vals['prodi_id']
+		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
+
 		# no = fak_id+jur_id+pro_id+ta_id
 		no = fak_id+pro_id+ta_id
 		vals['name'] = no
@@ -126,8 +129,12 @@ class master_pembayaran_pendaftaran(osv.Model):
 		pro = vals['prodi_id']
 		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
+		#tambah kode lokasi
+		loc = vals['lokasi_kampus_id']
+		loc_id = self.pool.get('master.alamat.kampus').browse(cr,uid,loc,context=context).kode
+
 		# no = fak_id+jur_id+pro_id+ta_id
-		no = fak_id+pro_id+ta_id
+		no = fak_id+pro_id+ta_id+loc_id
 		vals['name'] = no
 		
 		return super(master_pembayaran_pendaftaran, self).create(cr, uid, vals, context=context)
