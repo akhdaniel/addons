@@ -66,13 +66,13 @@ class order_line(osv.osv):
 	def _pr_get_date(self, cr, uid, ids, field_names, arg=None, context=None):
 		res={}
 		for line in self.browse(cr,uid,ids,context) :
-			res[line.id] = line.order_id.requisition_id.line_ids and  line.order_id.requisition_id.line_ids[0].schedule_date and datetime.datetime.strptime(line.order_id.requisition_id.line_ids[0].schedule_date, '%Y-%m-%d').strftime("%m/%d/%Y")  or ''
+			res[line.id] = line.order_id.requisition_id.line_ids and  line.order_id.requisition_id.line_ids[0].schedule_date and datetime.datetime.strptime(line.order_id.requisition_id.line_ids[0].schedule_date, '%Y-%m-%d').strftime("%d %b %Y")  or ''
 		return res
 
 	def _pr_get_date_appr(self, cr, uid, ids, field_names, arg=None, context=None):
 		res={}
 		for line in self.browse(cr,uid,ids,context) :
-			res[line.id]= line.order_id.requisition_id and line.order_id.requisition_id.approved_date and datetime.datetime.strptime(line.order_id.requisition_id.approved_date, '%Y-%m-%d').strftime("%m/%d/%Y")  or False
+			res[line.id]= line.order_id.requisition_id and line.order_id.requisition_id.approved_date and datetime.datetime.strptime(line.order_id.requisition_id.approved_date, '%Y-%m-%d').strftime("%d %b %Y")  or False
 		return res
 		
 	def _pr_get_appr(self, cr, uid, ids, field_names, arg=None, context=None):
@@ -86,7 +86,7 @@ class order_line(osv.osv):
 		'outstanding_qty' 		: fields.function(_get_outstanding, type='float', string="Outstanding Qty"),
 		'bid_no' 	: fields.related('order_id','requisition_id',type='many2one',relation='purchase.requisition',string='BID',readonly=True),
 		'bid_src' 	: fields.related('bid_no','origin',type='char',string='BID Source',readonly=True),
-		'bid_src_date' 	: fields.function(_bid_get_pr_date, type='char', string="BID Source Date", ),
+		'bid_src_date' 	: fields.function(_bid_get_pr_date, type='date', string="BID Source Date", ),
 		'ordering_date': fields.related('bid_no','ordering_date',type='datetime',string='Bid Scheduled Ordering Date',readonly=True),
 		'notes2' 	: fields.related('order_id','notes2',type='text',string='Terms & Condition',readonly=True),
 		'pr_date' 	: fields.function(_pr_get_date, type='char', string="PR Date", ),
@@ -96,4 +96,5 @@ class order_line(osv.osv):
 		'invo_date' 	: fields.related('invo_id','date_invoice',type='date',string='Invoice Date',readonly=True),
 		'invo_user_id' 	: fields.related('invo_id','user_id',type='many2one',relation='res.users', string='Invoice Responsible',readonly=True),
 		'date_order' 	: fields.related('order_id','date_order',type='datetime',string='Order Date',readonly=True),
-	}
+		'product_categ_id' : fields.related('product_id', 'categ_id' , type="many2one", relation="product.category", string="Category"),
+ 	}

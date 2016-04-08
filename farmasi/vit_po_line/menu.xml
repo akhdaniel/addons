@@ -7,19 +7,22 @@
 		    <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
 		    <field name="arch" type="xml">
 	            		<field name="order_id" position="before">
-			            <field name="bid_no"/>
-			            <field name="ordering_date"/>
-			            <field name="bid_src"/>
-			            <field name="bid_src_date"/>
-			            <field name="pr_date"/>
-			            <field name="pr_date_appr"/>
-			            <field name="pr_approver"/>
-			</field>
+				            <field name="bid_no"/>
+				            <field name="ordering_date"/>
+				            <field name="bid_src"/>
+				            <field name="bid_src_date"/>
+				            <field name="pr_date"/>
+				            <field name="pr_date_appr"/>
+				            <field name="pr_approver"/>
+						</field>
+	            		<field name="product_id" position="before">
+				            <field name="product_categ_id"/>
+						</field>
 	            		<field name="order_id" position="after">
-			            <field name="date_order"/>
-			</field>
+				            <field name="date_order"/>
+						</field>
 	            		<field name="state" position="after">
-		            		<field name="discount" string="Disc (%)"/>
+		            		<!-- <field name="discount" string="Disc (%)"/> -->
 		            		<field name="taxes_id" />
 		            		<field name="price_subtotal" />
 		            		<field name="total_qty_received"/>
@@ -75,6 +78,13 @@
 		 name="PO Lines"
 		 sequence="20"
 		 parent="purchase.menu_procurement_management"/>
+
+
+		<menuitem id="menu_acc_po_lines_list"
+		 action="action_po_lines_list"
+		 name="PO Lines"
+		 sequence="20"
+		 parent="account.menu_finance_payables"/>
 
 
 	</data>
