@@ -24,9 +24,6 @@ class master_pembayaran(osv.Model):
 		pro = vals['prodi_id']
 		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
-		pro = vals['prodi_id']
-		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
-
 		# no = fak_id+jur_id+pro_id+ta_id
 		no = fak_id+pro_id+ta_id
 		vals['name'] = no
