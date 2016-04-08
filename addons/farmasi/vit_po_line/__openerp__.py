@@ -4,6 +4,7 @@
 	"depends": [
 		"base",
 		"purchase",
+		"account",
 		"vit_product_request"
 	], 
 	"author": "akhmad.daniel@gmail.com", 
