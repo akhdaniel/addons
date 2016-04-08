@@ -130,8 +130,12 @@ class master_pembayaran_pendaftaran(osv.Model):
 		loc = vals['lokasi_kampus_id']
 		loc_id = self.pool.get('master.alamat.kampus').browse(cr,uid,loc,context=context).kode
 
+		#tambah kode reguler/ paralel
+		type_mhs = vals['type_mhs_id']
+		type_mhs_id = self.pool.get('master.type.mahasiswa').browse(cr,uid,type_mhs,context=context).name
+
 		# no = fak_id+jur_id+pro_id+ta_id
-		no = fak_id+pro_id+ta_id+loc_id
+		no = fak_id+pro_id+ta_id+loc_id+type_mhs_id
 		vals['name'] = no
 		
 		return super(master_pembayaran_pendaftaran, self).create(cr, uid, vals, context=context)
