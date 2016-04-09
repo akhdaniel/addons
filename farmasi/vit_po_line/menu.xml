@@ -31,6 +31,7 @@
 		            		<field name="invo_id"/>
 		            		<field name="invo_date"/>
 		            		<field name="invo_user_id"/>
+		            		<field name="state"/>
 		        	</field>
 		    </field>
 		</record>
