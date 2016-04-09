@@ -133,6 +133,12 @@ class purchase_order(osv.osv):
 						if tx.type == 'percent' and amt == 0.1 : taxes="PPN"
 						elif (tx.type == 'fixed' and amt == 0.0) or (tx.type == 'percent' and amt == 0.0) : taxes="N-T"
 						else : taxes = "N-T"
+
+
+					kode_barang = ""
+					if po_line.product_id.default_code:
+						kode_barang = po_line.product_id.default_code[:6]
+
 					data = {
 						'nama_perusahaan' 	: "",
 						'statis1' 			: "",
@@ -147,7 +153,7 @@ class purchase_order(osv.osv):
 						'no_pr' 			: po.requisition_id.origin or "",
 						'statis8' 			: "",
 						'statis9' 			: "",
-						'kode_barang' 		: po_line.product_id.default_code[:6],
+						'kode_barang' 		: kode_barang,
 						'qty' 				: po_line.product_qty,
 						'nama_barang' 		: po_line.product_id.name,
 						'harga_unit' 		: po_line.price_unit,
