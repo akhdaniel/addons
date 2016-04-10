@@ -4,10 +4,12 @@
     'summary': """
         Release Module QA/QC""",
     'description': """
-        Release Module QA/QC
-- menu QA QC 
-- tambah menu QC PR/PA (produk ruan dan produk antara) dibahwa menu Release: 
+Release Module QA/QC
+========================================================
+* menu QA QC 
+* tambah menu QC PR/PA (produk ruah dan produk antara) dibahwa menu Release: 
 isinya adalah data Work Order khusus untuk proses QC: workcenter_id = QC
+* menu product 
 
     """,
     'author': "rahasia2alha@gmail.com",
