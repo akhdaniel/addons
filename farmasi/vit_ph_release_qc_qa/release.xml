@@ -79,7 +79,12 @@
             <field name="arch" type="xml">
                 <search string="Work Order Lists">
                     <field name="workcenter_id" />
-                    <filter icon="terp-check" name="qc" string="QC Process" domain="[('workcenter_id','=','QC')]" help="QC Process Only"/>
+                    
+                    <filter icon="terp-check" name="qc" string="QC Process" domain="['&amp;',('workcenter_id','=','QC'),('state','=','startworking')]" help="QC Process Only"/>
+
+                    <!-- <filter icon="terp-check" name="in_progress" string="In Progress" domain="[('state','=','startworking')]" help="In Progress Only"/> -->
+
+
                     <group expand="0" string="Group By">
                         <filter string="MO" icon="terp-stock_effects-object-colorize" 
                             name="production_id" domain="[]" context="{'group_by':'production_id'}"/>
@@ -102,12 +107,22 @@
             <field name="help"></field>
         </record>
 
+        <record id="action_product" model="ir.actions.act_window">
+            <field name="name">Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_group_by_categ_id":1}</field>  
+        </record>
+
 
         <menuitem  id="menu_release_root" name="Release" groups="stock.group_stock_manager" />
         <menuitem  id="menu_release"  parent="menu_release_root" name="Release QA/QC"/>
         <menuitem  action="action_qa" id="menu1" parent="menu_release" sequence="10" />    
         <menuitem  action="action_qc" id="menu2" parent="menu_release" sequence="20" />    
         <menuitem  action="action_pra" id="menu3" parent="menu_release" sequence="30" />    
+        <menuitem  action="action_product" id="menu4" parent="menu_release" sequence="40" />    
 
             
        
