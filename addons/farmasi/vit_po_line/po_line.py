@@ -7,6 +7,7 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+
 class order_line(osv.osv):
 	_inherit 		= "purchase.order.line"
 
