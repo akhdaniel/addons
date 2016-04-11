@@ -26,6 +26,7 @@
 		            		<field name="taxes_id" />
 		            		<field name="price_subtotal" />
 		            		<field name="total_qty_received"/>
+		            		<field name="date_last_received"/>
 		            		<field name="outstanding_qty"/>
 		            		<field name="notes2"/>
 		            		<field name="invo_id"/>

@@ -12,6 +12,19 @@ class order_line(osv.osv):
 
 
 	#######################################################################
+	# cari last date received, dari move_ids yg status = done
+	#######################################################################
+	def _get_last_received(self, cr, uid, ids, field, arg, context=None):
+		results = {}
+
+		for po_line in self.browse(cr, uid, ids , context=context):
+			results[po_line.id] = False
+			for move_line in po_line.move_ids:
+				if move_line.state == 'done':
+					results[po_line.id] = move_line.date  
+
+		return results	
+	#######################################################################
 	# cari total qty yang sudah received, dari move_ids yg status = done
 	#######################################################################
 	def _get_total_received(self, cr, uid, ids, field, arg, context=None):
@@ -83,6 +96,7 @@ class order_line(osv.osv):
 
 	_columns 	= {
 		'total_qty_received' 	: fields.function(_get_total_received, type='float', string="Received Qty"),
+		'date_last_received' 	: fields.function(_get_last_received, type='date', string="Received Date"),
 		'outstanding_qty' 		: fields.function(_get_outstanding, type='float', string="Outstanding Qty"),
 		'bid_no' 	: fields.related('order_id','requisition_id',type='many2one',relation='purchase.requisition',string='BID',readonly=True),
 		'bid_src' 	: fields.related('bid_no','origin',type='char',string='BID Source',readonly=True),
