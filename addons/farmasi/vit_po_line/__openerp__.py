@@ -5,7 +5,8 @@
 		"base",
 		"purchase",
 		"account",
-		"vit_product_request"
+		"vit_product_request",
+		"vit_po_report",
 	], 
 	"author": "akhmad.daniel@gmail.com", 
 	"category": "Purchase", 
