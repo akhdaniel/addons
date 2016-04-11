@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+		<!-- ini definisi search order -->
+		<record id="view_mrp_production_workcenter_form_view_filter_draft" model="ir.ui.view">
+		    <field name="name">mrp.production.workcenter.line.filter.draft</field>
+		    <field name="model">mrp.production.workcenter.line</field>
+		    <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
+		    
+		    <field name="arch" type="xml">
+		        <group position="before">
+					<filter string="Penimbangan" name="penimbangan" domain="[('name','ilike','penimbangan'), ('state','=','draft')]"/>
+		        </group>		        
+		    </field>
+		</record>
+	</data>
+</openerp>
