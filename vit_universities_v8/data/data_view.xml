@@ -203,6 +203,127 @@
 	    <record model="master.hubungan_keluarga" id="hub_kel_6" >
 	    	<field name="name">Dinas</field>
 	    </record>
+
+
+<!-- email template tagihan pendaftaran-->
+    <record id="notif_email_pendaftaran" model="email.template">
+        <field name="name">Pendaftaran Mahasiswa Baru ISTN</field>
+        <field name="subject">Pendaftaran Mahasiswa Baru ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Selamat ${object.partner_id.name or 'Calon Mahasiswa'}, pendaftaran anda sukses,</p>
+        <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan Nomor Pendaftaran ${object.partner_id.reg} sebesar Rp. ${'%d'%object.amount_total}</p>
+        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
+    	</p>
+    	<p>
+		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
+    	</p>
+        <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
+		</field>
+    </record>
+
+<!-- email template tagihan UP UK-->
+    <record id="notif_email_up_uk" model="email.template">
+        <field name="name">Uang Pengembangan dan Uang Kuliah ISTN</field>
+        <field name="subject">Uang Pengembangan dan Uang Kuliah ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Selamat ${object.partner_id.name or 'Calon Mahasiswa'}, TPA anda berhasil,</p>
+        <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan Nomor Pendaftaran ${object.partner_id.reg} sebesar Rp. ${'%d'%object.amount_total}</p>
+        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
+    	</p>
+    	<p>
+		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
+    	</p>
+        <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
+		</field>
+    </record>
+
+<!-- email template tagihan UK-->
+    <record id="notif_email_uk" model="email.template">
+        <field name="name">Uang Kuliah ISTN</field>
+        <field name="subject">Uang Kuliah ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Saudara/i ${object.partner_id.name or 'Calon Mahasiswa'}, tagihan Uang Kuliah(UP) anda telah dibuat,</p>
+        <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan NIM ${object.partner_id.npm} sebesar Rp. ${'%d'%object.amount_total}</p>
+        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan NIM ${object.partner_id.npm}
+    	</p>
+    	<p>
+		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
+    	</p>
+        <p>Terima Kasih,<br/>Keuangan ISTN</p>]]>
+		</field>
+    </record>
+
+<!-- email template pembayaran pendaftaran-->
+    <record id="notif_email_pembayaran_pendaftaran" model="email.template">
+        <field name="name">Pembayaran Pendaftaran Mahasiswa Baru ISTN</field>
+        <field name="subject">Pembayaran Pendaftaran Mahasiswa Baru ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account_voucher.model_account_voucher"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Terima kasih ${object.partner_id.name},</p>
+        <p>Pembayaran Pendaftaran Mahasiswa Baru ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
+        <br/>Silahkan klik link http://113.20.30.74:8069/tpa untuk melakukan Test Potensi Akademik (TPA) Online !</p>
+        <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
+		</field>
+    </record>
+
+<!-- email template pembayaran UP UK-->
+    <record id="notif_email_pembayaran_up_uk" model="email.template">
+        <field name="name">Pembayaran Uang Pengembangan dan Uang Kuliah Mahasiswa Baru ISTN</field>
+        <field name="subject">Pembayaran Uang Pengembangan dan Uang Kuliah Mahasiswa Baru ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account_voucher.model_account_voucher"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Terima kasih ${object.partner_id.name },</p>
+        <p>Pembayaran Uang Pengembangan(UP) dan Uang Kuliah(UK) Mahasiswa Baru ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
+        <br/>Silahkan cek di portal mahasiswa untuk melihat detail tagihan dan pembayarannya !</p>
+        <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
+		</field>
+    </record>
+
+<!-- email template pembayaran UK-->
+    <record id="notif_email_pembayaran_uk" model="email.template">
+        <field name="name">Pembayaran Uang Kuliah Mahasiswa ISTN</field>
+        <field name="subject">Pembayaran Uang Kuliah Mahasiswa ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account_voucher.model_account_voucher"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Terima kasih ${object.partner_id.name },</p>
+        <p>Pembayaran Uang Kuliah(UK) Mahasiswa ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
+        <br/>Silahkan cek di portal mahasiswa untuk melihat detail tagihan dan pembayarannya !</p>
+        <p>Terima Kasih,<br/>Keuangan ISTN</p>]]>
+		</field>
+    </record>
 	    
 <!-- Cron Job Cuti Mahasiswa -->
         <record model="ir.cron" id="cuti_mahasiswa_cron">

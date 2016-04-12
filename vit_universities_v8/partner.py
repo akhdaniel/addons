@@ -8,6 +8,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FO
 from openerp import netsvc
 from openerp.addons.base.ir.ir_mail_server import MailDeliveryException
 from openerp import tools, api
+import locale
 
 SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
 class res_partner (osv.osv):
@@ -337,6 +338,7 @@ class res_partner (osv.osv):
 		'jadwal_pagi'	: fields.boolean('Pagi'),
 		'jadwal_siang'	: fields.boolean('Siang'),
 		'jadwal_malam'	: fields.boolean('Malam'),
+		'jalur_masuk'	: fields.selection([('perorangan','Perorangan'),('group','Group'),('prestasi','Jalur Prestasi')],'Jalur Masuk'),
 
 		# pemberi rekomendasi
 		'rekomendasi'	: fields.char('Rekomendasi'),
@@ -344,6 +346,13 @@ class res_partner (osv.osv):
 
 		# flag registration online
 		'reg_online'	: fields.boolean('Update Registration Online'),
+
+		#flag pembeda user
+		'partner_type'	: fields.selection([('mahasiswa','mahasiswa'),
+											('ortu','Orang Tua'),
+											('dosen','Dosen'),
+											('sales','Sales'),
+											('pegawai','Pegawai')],string='Type Partner'),
 
 		}
 
@@ -602,6 +611,13 @@ class res_partner (osv.osv):
 			t_id_final = t_tuple[2]+t_tuple[3]#ambil 2 digit paling belakang dari tahun saja
 			f_id = partner.fakultas_id.kode	
 			p_id = partner.prodi_id.kode
+			lokasi = partner.alamat_id.kode
+			t_pend = partner.type_pendaftaran
+			if t_pend == 'ganjil' :
+				pend = '1'
+			else:
+				pend = '2'
+
 
 			if p_id.find(".") != -1:
 				j = p_id.split(".")
@@ -639,7 +655,7 @@ class res_partner (osv.osv):
 			else:
 				se = "001"
 
-			nim = t_id_final + p_id + jp_id + se
+			nim = t_id_final +pend+ f_id+p_id +lokasi+ jp_id + se
 			self.write(cr,uid,partner.id,{
 										'status_mahasiswa':'Mahasiswa',
 										'npm':nim,
@@ -742,6 +758,7 @@ class res_partner (osv.osv):
 
 		# tambah logic jika update data calon mahasiswa dari web, create inv pendaftaran
 		inv = False
+		
 		if vals.get('status_mahasiswa') :
 			if vals.get('status_mahasiswa') == 'calon' :
 				prodi_obj = self.env['master.prodi']
@@ -760,12 +777,15 @@ class res_partner (osv.osv):
 							('prodi_id','=',vals.get('prodi_id')),
 							('state','=','confirm'),
 							('lokasi_kampus_id','=',vals.get('alamat_id')),
+							])
+						byr_sch = byr_obj.search([('id','=',1)
 							])						
 					if byr_sch :
 						# cr = self.pool.cursor()
 						# cr.commit()
+						
 						prod_id = []
-						for bayar in byr_sch.detail_product_ids:
+						for bayar in byr_sch[0].detail_product_ids:
 							#import pdb;pdb.set_trace()
 							product = bayar.product_id
 							coa_line = product.property_account_income.id
@@ -779,10 +799,10 @@ class res_partner (osv.osv):
 						inv = self.env['account.invoice'].create({
 							'partner_id':partner.id,
 							'origin': 'Pendaftaran: '+str(partner.reg),
-							'type':'out_invoice',
-							'fakultas_id': vals.get('fakultas_id'),
-							'prod_id': vals.get('prodi_id'),
-							'account_id':coa_prodi,
+							'type':'out_invoice',					
+							'fakultas_id': 15,# vals.get('fakultas_id'),
+							'prod_id': 81,#vals.get('prodi_id'),
+							'account_id':8991,#coa_prodi,
 							'invoice_line': prod_id,
 							})
 
@@ -794,17 +814,29 @@ class res_partner (osv.osv):
 
 		result = super(res_partner, self).write(vals)
 		if inv :
-			invoice_obj = inv.write({'origin': 'Pendaftaran: '+str(partner.reg)})
 			#import pdb;pdb.set_trace()
-			# create notifikasi ke email
-			mail = self.env['mail.mail']
-			notif_mail = mail.create({'subject' 		: 'Pendaftaran Mahasiswa Baru ISTN',
-										'email_to' 		: partner.email,
-										'recipient_ids' : [(6, 0, [partner.id])],
-										'notification' 	: True,
-										'body_html'		: 'Selamat '+str(partner.name)+', pendaftaran sukses, silahkan lakukan pembayaran di Bank BNI terdekat dengan no pembayaran '+str(partner.reg),
+			locale.setlocale( locale.LC_ALL, '' )
+			inv_amount 	= locale.currency( inv.amount_total, grouping = True )
+			inv_reg 	= partner.reg
+			inv_name 	= partner.name
+			invoice_obj = inv.write({'origin': 'Pendaftaran: '+str(inv_reg)})
 
-										})	
+			body_html = 'Selamat '+str(inv_name)+', pendaftaran sukses, silahkan lakukan pembayaran di Bank BNI terdekat dengan no pembayaran '+str(partner.reg)+' sebesar '+str(inv_amount)
+			
+			# create notifikasi ke email
+			template_pool = self.env['email.template']
+			template_id = template_pool.search([('name','=ilike','Pendaftaran Mahasiswa Baru ISTN')])
+			if template_id:
+				self.pool.get('email.template').send_mail(self._cr, self._uid, template_id.id, inv.id)
+			# 	body = template_id[0].body_html
+			# mail = self.env['mail.mail']
+			# notif_mail = mail.create({'subject' 		: 'Pendaftaran Mahasiswa Baru ISTN',
+			# 							'email_to' 		: partner.email,
+			# 							'recipient_ids' : [(6, 0, [partner.id])],
+			# 							'notification' 	: True,
+			# 							'body_html'		: body,
+
+			# 							})	
 			#mail.send(self._cr, self._uid, [notif_mail.id], auto_commit=False, raise_exception=False,self._context)						
 		for partner in self:
 			self._fields_sync(partner, vals)

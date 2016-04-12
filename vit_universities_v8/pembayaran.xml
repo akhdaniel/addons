@@ -34,7 +34,7 @@
 			                    <field name="name"/>
 			                    <field name="tahun_ajaran_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="type" attrs="{'readonly': [('state','=','confirm')]}"/>
-                                
+                                <field name="lokasi_kampus_id" attrs="{'readonly': [('state','=','confirm')]}"/>
 			                 </group>
 			                 <group>  
                                 <field name="fakultas_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('is_internal','=',True)]"/>

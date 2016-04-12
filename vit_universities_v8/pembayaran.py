@@ -9,7 +9,6 @@ class master_pembayaran(osv.Model):
 	_name = "master.pembayaran"
 
 	def create(self, cr, uid, vals, context=None):
-		
 		ta = vals['tahun_ajaran_id']
 		t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
 		ta_tuple =  tuple(t_idd)
@@ -18,14 +17,19 @@ class master_pembayaran(osv.Model):
 		fak = vals['fakultas_id']
 		fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
 
-		# jur = vals['jurusan_id']
-		# jur_id = self.pool.get('master.jurusan').browse(cr,uid,jur,context=context).kode
-
 		pro = vals['prodi_id']
 		pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
+		#tambah kode lokasi
+		loc = vals['lokasi_kampus_id']
+		loc_id = self.pool.get('master.alamat.kampus').browse(cr,uid,loc,context=context).kode
+
+		#tambah kode reguler/ paralel
+		type_mhs = vals['type_mhs_id']
+		type_mhs_id = self.pool.get('master.type.mahasiswa').browse(cr,uid,type_mhs,context=context).name
+
 		# no = fak_id+jur_id+pro_id+ta_id
-		no = fak_id+pro_id+ta_id
+		no = fak_id+pro_id+ta_id+loc_id+type_mhs_id
 		vals['name'] = no
 		
 		return super(master_pembayaran, self).create(cr, uid, vals, context=context)
@@ -63,6 +67,7 @@ class master_pembayaran(osv.Model):
 		'sks_plus' : fields.boolean('Bayar jika tambah SKS'),
 		'total': fields.function(_total,type='char',string='Total', digits_compute=dp.get_precision('Account')),
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
+		'lokasi_kampus_id' : fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 	}
 	_defaults = {
 		'type':'flat',
