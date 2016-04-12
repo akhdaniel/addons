@@ -16,8 +16,18 @@ class mrp_production(osv.osv):
 	_inherit = 'mrp.production'
 
 	_columns = {
-		'wps_id':fields.many2one('vit_pharmacy_manufacture.wps','WPS'),
-        'batch_numbering_start' : fields.selection([('kecil','K'),('besar','B')],'B/K'),
+		'wps_id':fields.many2one('vit_pharmacy_manufacture.wps','WPS',
+            readonly=False,
+            states={'done':[('readonly',True)], 
+                'cancel':[('readonly',True)],
+                'in_production':[('readonly',True)]},
+			),
+        'batch_numbering_start' : fields.selection([('kecil','K'),('besar','B')],'B/K',
+            readonly=False,
+            states={'done':[('readonly',True)], 
+                'cancel':[('readonly',True)],
+                'in_production':[('readonly',True)]},
+        	),
 	}
 
  

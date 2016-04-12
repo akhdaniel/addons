@@ -353,7 +353,7 @@
 
 
                       <notebook>
-                        <page string="Non Solid">
+                        <page string="Semi Solid">
                             <field name="mps_detail_ids8"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
                                     colors="red:active_material_status==False;blue:helper_material_status==False;purple:packaging_material_status==False)">
