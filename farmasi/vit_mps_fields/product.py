@@ -30,7 +30,7 @@ class product_template(osv.osv):
             total_qty = 0.00
 
             results[product.id] = 0.0
-            # return 
+            return 
 
             #ambil 6 digit pertama, search dulu product yang sama
             if not product.default_code:
@@ -47,7 +47,7 @@ class product_template(osv.osv):
             for prod in self.browse(cr, uid, same_product, context=context):
                 print "   produk ", prod.id, " ", prod.default_code, " ", prod.virtual_available
                 if not prod:
-                    raise osv.except_osv(_('Erro'),_("no product %s") % (prod.name) ) 
+                    raise osv.except_osv(_('Error'),_("no product %s") % (prod.name) ) 
                 total_qty = total_qty  + prod.virtual_available
             # print "total ", total_qty
             results[product.id] = total_qty
