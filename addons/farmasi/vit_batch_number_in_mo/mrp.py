@@ -174,7 +174,7 @@ class mrp_production(osv.osv):
 
     def _vit_make_consume_line_from_data(self, cr, uid, line_id, production, product, uom_id, qty, uos_id, uos_qty, context=None):
         stock_move = self.pool.get('stock.move')
-        loc_obj = self.pool.get('stock.location')
+        # loc_obj = self.pool.get('stock.location')
         product_obj = self.pool.get('product.product')
         uom_obj = self.pool.get('product.uom')
 
@@ -200,11 +200,14 @@ class mrp_production(osv.osv):
         lot_id = False
         qty_available = 0
         move_ids = [] # untuk semua actual products yang terambil
+        deleted_move_ids = []
+
 
         # cari produk yang is_header = false dan kode produknya 6 digit pertama sama
         same_product = self.pool.get('product.product').search(cr,uid,
             [('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
         print("product_ref",product_ref, "same_product",same_product)
+
 
         if same_product:
             #- cek satu per satu di serial number yang produk_id nya sama, 
@@ -230,11 +233,12 @@ class mrp_production(osv.osv):
 
                     # cari dulu apa sudah ada stock move dengan lot_id yang ini
                     sql = 'SELECT id FROM stock_move WHERE restrict_lot_id = %s AND product_id = %s and raw_material_production_id = %s' % (lot[0], lot[1], production.id)
-                    print sql 
+
                     cr.execute(sql)
                     ada = cr.fetchone()
                     if ada:
                         print "lot sudah ada di move line MO " , ada
+                        self.pool.get('stock.move').action_confirm(cr, uid, ada, context=context)
                         continue
 
                     #cari apakah ada stock barang dengan lot tsb pada suatu location
@@ -268,10 +272,11 @@ class mrp_production(osv.osv):
                                 move_ids.append(move_id)
                                 
                                 # delete produk asli yg is_header
-                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
-                                _logger.error(sql)
-                                cr.execute(sql)
-                                total_lot_qty = total_lot_qty + hasil 
+                                # sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
+                                # _logger.error(sql)
+                                # cr.execute(sql)
+                                deleted_move_ids.append(line_id)
+                                total_lot_qty = total_lot_qty + hasil
                                 break
 
                             # stock kurang daripada yang diperlukan di BOM
@@ -283,9 +288,10 @@ class mrp_production(osv.osv):
                                 move_ids.append(move_id)
 
                                 # delete produk asli yg is_header
-                                sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
-                                _logger.error(sql)
-                                cr.execute(sql)
+                                # sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
+                                # _logger.error(sql)
+                                deleted_move_ids.append(line_id)
+                                # cr.execute(sql)
                         else: # tidak ada stock lot 
                             hasil = 0.00
                     total_lot_qty = total_lot_qty + hasil 
@@ -335,10 +341,11 @@ class mrp_production(osv.osv):
                         qty_bom -= qty_bom
                         total_lot_qty = total_lot_qty + hasil 
 
-                        sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
-                        _logger.error(sql)
-                        cr.execute(sql)                        
-                        break;     
+                        # sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
+                        # _logger.error(sql)
+                        # cr.execute(sql)
+                        deleted_move_ids.append(line_id)
+                        break;
 
                     elif hasil > 0 and  hasil < qty_bom:
                         #cr, uid, production, product, uom_id, qty, uos_id, uos_qty, lot, qty_available, source_location_id, destination_location_id, prev_move, context
@@ -350,8 +357,9 @@ class mrp_production(osv.osv):
                         qty_bom -= hasil
 
                         sql = "delete from stock_move where raw_material_production_id=%s and product_id=%s and id=%s"  % (production.id, product.id, line_id)
-                        _logger.error(sql)
-                        cr.execute(sql)
+                        deleted_move_ids.append(line_id)
+                        # _logger.error(sql)
+                        # cr.execute(sql)
 
                     elif hasil < 0.0:
                         hasil = 0.0                  
@@ -371,10 +379,11 @@ class mrp_production(osv.osv):
                             source_location_id, destination_location_id, prev_move, context=context)  
                     move_ids.append(move_id)
 
+                # tab Scheduled Products
                 if qty_bom == 0.00:
                     cr.execute("update mrp_production_product_line set state='%s' where id=%s" % ("done", line_id))
 
-        self.pool.get('stock.move').action_confirm(cr, uid, move_ids, context=context)
+        # self.pool.get('stock.move').action_confirm(cr, uid, move_ids, context=context)
 
         if prev_move:
             # karena array, maka harus di looping
@@ -383,7 +392,7 @@ class mrp_production(osv.osv):
                     prod_location_id, source_location_id, 
                     context=context)
                 stock_move.action_confirm(cr, uid, [prev_move], context=context)
-        return move_ids
+        return move_ids, deleted_move_ids
 
     # default produk terpilih otomatis berdasarkan:
     # - ED
@@ -412,26 +421,41 @@ class mrp_production(osv.osv):
 
         for production in self.browse(cr, uid, ids, context=context):
             stock_moves = []
+            deleted_move_ids = []
 
             #looping scheduled product
             # for line in production.product_lines:
             for line in production.move_lines:
                 print line.lot_ids, line.product_id.code, line.state 
                 # import pdb; pdb.set_trace()
-                # skip kalau sudah terisi lot 
-                if line.lot_ids.id != False:
+                # skip kalau sudah terisi lot
+
+                if line.state =='assigned':
+                    continue
+
+                # if line.lot_ids.id != False:
+                if line.restrict_lot_id.id != False:
+                    stock_moves.append(line.id)
+
                     continue
 
                 if line.product_id.type != 'service':
                     # ganti dg fungsi custom
-                    stock_move_id = self._vit_make_production_consume_line(cr, uid, line, context=context)
+                    stock_move_id, deleted_move_id = self._vit_make_production_consume_line(cr, uid, line, context=context)
                     for smi in stock_move_id:
                         stock_moves.append(smi)
+                    for dmi in deleted_move_id:
+                        deleted_move_ids.append(dmi)
+
                 else:
                     self._make_service_procurement(cr, uid, line, context=context)       
 
-            # if stock_moves:
-            #     self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
+            if stock_moves:
+                self.pool.get('stock.move').action_confirm(cr, uid, stock_moves, context=context)
+                self.pool.get('stock.move').action_assign(cr, uid, stock_moves, context=context)
+
+            if deleted_move_ids:
+                cr.execute('delete from stock_move where id in %s' , (tuple(deleted_move_ids),) )
 
         super(mrp_production, self).action_assign(cr, uid, ids, context=None)
         return True 
@@ -499,8 +523,14 @@ class mrp_production(osv.osv):
 
     _columns = {
         'batch_number_id': fields.many2one('batch.number', string='Batch Number',
-            domain="[('is_used','=',False)]",required=False,readonly=True,states={'draft':[('readonly',False)]}),
-        'batch_number': fields.char('Batch Number',readonly=True,),
+            domain="[('is_used','=',False)]",required=False,
+            # readonly=True,states={'draft':[('readonly',False)]}
+            ),
+        'batch_number': fields.char('Batch Number',
+            readonly=True,states={'draft':[('readonly',False)]},
+            # readonly=True,
+
+            ),
         'sediaan_id': fields.related('product_id','categ_id','sediaan_id',type='many2one',relation='vit.sediaan',string='Sediaan',readonly=True),
         'allow_batch' : fields.boolean('Batch Number tidak bisa digunakan kembali?',readonly=True),
     }

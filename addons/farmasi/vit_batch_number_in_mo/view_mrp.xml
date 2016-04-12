@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <field name="date_planned" position="replace">
                 <field name="date_planned" string="Manufacturing Date"/>
-                <field name="batch_number"/>
+                <field name="batch_number" />
             </field>     
             <field name="origin" position="after">
                 <field name="sediaan_id"/>
