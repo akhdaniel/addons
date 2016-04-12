@@ -527,7 +527,10 @@ class mrp_production(osv.osv):
             # readonly=True,states={'draft':[('readonly',False)]}
             ),
         'batch_number': fields.char('Batch Number',
-            readonly=True,states={'draft':[('readonly',False)]},
+            readonly=False,
+            states={'done':[('readonly',True)], 
+                'cancel':[('readonly',True)],
+                'in_production':[('readonly',True)]},
             # readonly=True,
 
             ),
