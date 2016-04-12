@@ -65,7 +65,7 @@ class mps(osv.osv):
 
 		'mps_detail_ids8':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Non Solid',
 			readonly=True,
-			domain=[('sediaan_id','=','Non Solid')],
+			domain=[('sediaan_id','=','Semisolid')],
             states={'draft':[('readonly',False)]} ),
 		
 		'forecast_id': fields.many2one('vit_pharmacy_manufacture.forecast_product', 'Forecast',
@@ -269,7 +269,6 @@ class mps(osv.osv):
 			}
 			pr_obj.create(cr, uid, data, context=context)
 
-
 	def calculate_in_request(self, cr, uid, product_id, context=None):
 		r = 0
 		sql = "select sum(product_qty) from vit_product_request_line where product_id=%s and state in ('open', 'onprogress')" % product_id
@@ -365,7 +364,6 @@ class mps(osv.osv):
 		mrp_detail_ids = [(0,0,data_line)]
 		datas = {'mrp_detail_ids' : mrp_detail_ids,}
 		self.pool.get('vit_pharmacy_manufacture.wps').write(cr,uid,wps_obj,datas)
-
 
 	def check_available(self,cr,uid, qty,header_component_product_id, bom, component_type ,context=None):
 		product_obj = self.pool.get('product.product')
@@ -471,6 +469,12 @@ class mps(osv.osv):
 			for detail in mps.mps_detail_ids6:
 				self.update_detail(cr, uid, detail, 6, context=context)
 
+			for detail in mps.mps_detail_ids7:
+				self.update_detail(cr, uid, detail, 7, context=context)
+
+			for detail in mps.mps_detail_ids8:
+				self.update_detail(cr, uid, detail, 8, context=context)
+
 	"""
 	recalculate the w1..w5 details 
 	"""
@@ -575,7 +579,7 @@ class mps(osv.osv):
 		reminder = production_order  + reminder_prev 
 
 
-		for i in range(1,6):
+		for i in range(1,6): #weeks
 			if reminder_per_product > max_batch_per_week:
 
 				reminder = reminder - max_batch_per_week
