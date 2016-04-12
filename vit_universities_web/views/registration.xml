@@ -70,7 +70,7 @@
                 </div> 
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jalur Masuk</label>
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
                     <div class="col-md-3 col-sm-4">
                         <select class="form-control" name="jenis_pendaftaran_id" id="jalur_masuk">
                           <t t-foreach="jenis_pendaftaran_ids" t-as="jp">
@@ -574,7 +574,7 @@
                 </div> 
 
                 <div class="form-group">
-                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jalur Masuk</label>
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
                     <div class="col-md-3 col-sm-4">
                         <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" />
                     </div>
