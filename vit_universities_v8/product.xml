@@ -15,18 +15,11 @@
                 <field name="default_code" position="after"> 
                     <field name="fakultas_id" attrs="{'invisible': [('is_sks','=',False)],'required': [('is_sks','=',True)]}"/>   
                 </field>                                       
-<!--                 <label for="categ_id" position="before"> 
-                        <field name="angsuran1"/>
-                        <field name="angsuran2"/>
-                        <field name="angsuran3"/>
-                        <field name="angsuran4"/>
-                        <field name="angsuran5"/>
-                        <field name="angsuran6"/>
-                        <field name="total_persmt"/>
+                <label for="categ_id" position="before"> 
                         <field name="split_invoice"/>   
 
-                </label>  -->
-                 <field name="categ_id" position="after">
+                </label> 
+<!--                  <field name="categ_id" position="after">
                     <group col='4'>
                         <group col='1'>
                             <label for="angsuran1" />
@@ -64,7 +57,7 @@
                             <field name="split_invoice"  nolabel="1" placeholder="Split Invoice"/>
                         </group>                                                
                     </group>
-                </field>
+                </field> -->
             </field>
         </record>    
 

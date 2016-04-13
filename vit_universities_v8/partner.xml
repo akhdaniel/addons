@@ -214,6 +214,20 @@
                                     </form>                                    
         		                </field>
 
+                                <separator string="Jalur Prestasi"/>
+                                <group>
+                                    <group>
+                                        <field name="semester1"/>
+                                        <field name="semester2" />
+                                        <field name="semester3" />
+                                    </group>
+                                    <group>
+                                        <field name="semester4"/>
+                                        <field name="semester5"/>
+                                        <field name="un"/>
+                                    </group> 
+                                </group>  
+
                         		<separator string="Riwayat Keluarga"/>
                                 <field view_mode="tree" name="biodata_keluarga_ids" nolabel="1">
                         			<tree string="Daftar Anggota Keluarga">

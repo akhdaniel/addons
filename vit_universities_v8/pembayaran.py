@@ -45,8 +45,8 @@ class master_pembayaran(osv.Model):
 
 	def _total(self, cr, uid, ids, field_name, arg, context=None):
 		res = {}
-		for x in self.browse(cr,uid,ids,context=context):
-			tot = 0.00
+		tot = 0.00
+		for x in self.browse(cr,uid,ids,context=context):	
 			for t in x.detail_product_ids:
 				harga = float(t.total)
 				tot += harga
@@ -65,9 +65,11 @@ class master_pembayaran(osv.Model):
 		'detail_product_ids':fields.one2many('master.pembayaran.detail','pembayaran_id',string='Pembayaran'),		
 		'type': fields.selection([('flat','Flat'),('paket','Paket SKS')],'Type Pembayaran',required=True),
 		'sks_plus' : fields.boolean('Bayar jika tambah SKS'),
-		'total': fields.function(_total,type='char',string='Total', digits_compute=dp.get_precision('Account')),
+		#'total': fields.function(_total,type='char',string='Total', digits_compute=dp.get_precision('Account')),
+		'total': fields.float('Total', digits_compute=dp.get_precision('Account')),
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
 		'lokasi_kampus_id' : fields.many2one('master.alamat.kampus','Lokasi Kampus'),
+
 	}
 	_defaults = {
 		'type':'flat',
@@ -111,7 +113,15 @@ class master_pembayaran_detail(osv.Model):
 			'product_id',           # 'other.object.id' in relation table
 			'Pembayaran',              # 'Field Name'
 			domain="[('type','=','service')]"),
-		'total': fields.function(_sub_total,type='char',string='Sub Total', digits_compute=dp.get_precision('Account')),
+		 # master price UP dan UK
+        'angsuran1'		: fields.float('Angsuran 1'),
+        'angsuran2'		: fields.float('Angsuran 2'),
+        'angsuran3'		: fields.float('Angsuran 3'),
+        'angsuran4'		: fields.float('Angsuran 4'),
+        'angsuran5'		: fields.float('Angsuran 5'),
+        'angsuran6'		: fields.float('Angsuran 6'),
+        'total'			: fields.float('Total'),		
+		#'total': fields.function(_sub_total,type='char',string='Sub Total', digits_compute=dp.get_precision('Account')),
 	}
 
 
