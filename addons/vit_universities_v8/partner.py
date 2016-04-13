@@ -353,6 +353,13 @@ class res_partner (osv.osv):
 											('dosen','Dosen'),
 											('sales','Sales'),
 											('pegawai','Pegawai')],string='Type Partner'),
+		# beasiswa dari front_end
+		'semester1'		: fields.float('Semester 1'),
+		'semester2'		: fields.float('Semester 2'),
+		'semester3'		: fields.float('Semester 3'),
+		'semester4'		: fields.float('Semester 4'),
+		'semester5'		: fields.float('Semester 5'),
+		'un'			: fields.float('UN'),
 
 		}
 
