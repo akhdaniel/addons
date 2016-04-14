@@ -12,16 +12,16 @@ class jadwal_usm(osv.Model):
 
 	_columns = {
 		'name'				: fields.char('Kode',required=True,size=32),
-		'tahun_ajaran_id'	:fields.many2one('academic.year',string='Tahun Akademik',required=True),
-		'date_start'		:fields.date('Tanggal Mulai',required=True),
-		'date_end'			:fields.date('Tanggal Akhir',required=True),
-		'date'				:fields.date('Tanggal Ujian',required=True),
-		'is_active'			:fields.boolean('Aktif?',size=128),
-		'limit'				:fields.float('Batas Maximum',required=True,help='Quota Tes'),
-		'user_id'			:fields.many2one('res.users','User',readonly=True),
-		'calon_mhs_ids'		: fields.one2many('res.partner','jadwal_usm_id','Calom MHS', ondelete="cascade"),
-		'state'				:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
-		'discount'		: fields.float('Discount'),
+		'tahun_ajaran_id'	: fields.many2one('academic.year',string='Tahun Akademik',required=True),
+		'date_start'		: fields.date('Tanggal Mulai',required=True),
+		'date_end'			: fields.date('Tanggal Akhir',required=True),
+		'date'				: fields.date('Tanggal Ujian',required=True),
+		'is_active'			: fields.boolean('Aktif?',size=128),
+		'limit'				: fields.float('Batas Maximum',required=True,help='Quota Tes'),
+		'user_id'			: fields.many2one('res.users','User',readonly=True),
+		'calon_mhs_ids'		: fields.one2many('res.partner','jadwal_usm_id','Calon MHS', ondelete="cascade"),
+		'state'				: fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
+		'discount'			: fields.float('Potongan(%)'),
 	}
 
 	_defaults = {  

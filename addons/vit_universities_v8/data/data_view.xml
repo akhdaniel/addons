@@ -261,7 +261,7 @@
         <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
         <field name="model_id" ref="account.model_account_invoice"/>
         <field name="user_signature" eval="0"/>
-        <field name="body_html"><![CDATA[<p>Saudara/i ${object.partner_id.name or 'Calon Mahasiswa'}, tagihan Uang Kuliah(UP) anda telah dibuat,</p>
+        <field name="body_html"><![CDATA[<p>Saudara/i ${object.partner_id.name or 'Mahasiswa'}, tagihan Uang Kuliah(UP) anda telah dibuat,</p>
         <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan NIM ${object.partner_id.npm} sebesar Rp. ${'%d'%object.amount_total}</p>
         <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
         Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
