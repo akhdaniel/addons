@@ -19,11 +19,13 @@ Manage
 
 """,
 	"data": [
-		"partner.xml", 
-		"campaign.xml", 
-		"product.xml", 
+		"views/partner.xml", 
+		"views/campaign.xml", 
+		"views/product.xml", 
+		"views/import_ls.xml", 
 		"menu.xml", 
 		"data/sequence.xml",
+		"data/cron.xml",
 	],
 	"installable": True,
 	"auto_install": False,

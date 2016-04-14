@@ -49,6 +49,29 @@
 		</record>
 
 
+		<!-- improt_ls list -->
+
+		<record id="action_import_ls_list" model="ir.actions.act_window">
+			<field name="name">LS Customer</field>
+			<field name="res_model">reliance.import_ls</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- improt_ls_cash list -->
+
+		<record id="action_import_ls_cash_list" model="ir.actions.act_window">
+			<field name="name">LS Cash</field>
+			<field name="res_model">reliance.import_ls_cash</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- improt_ls_stock list -->
+
+		<record id="action_import_ls_stock_list" model="ir.actions.act_window">
+			<field name="name">LS Stock</field>
+			<field name="res_model">reliance.import_ls_stock</field>
+			<field name="view_mode">tree,form</field>
+		</record>
 
 
 
@@ -100,5 +123,32 @@
 			 name="Companies"
 			 sequence="10"
 			 parent="rcm_company"/>
+		
+		<!-- imports menu -->
+
+		<menuitem id="rcm_import" name="Imports" sequence="40" parent="rcm"/>
+
+			<menuitem id="rcm_import_ls" name="LS" sequence="10" parent="rcm_import"/>
+
+				<!-- import LS customer menu -->
+				<menuitem id="rcm_import_ls_cust"
+				 action="action_import_ls_list"
+				 name="LS Customer"
+				 sequence="10"
+				 parent="rcm_import_ls"/>
+
+				<!-- import LS cash menu -->
+				<menuitem id="rcm_import_ls_cash"
+				 action="action_import_ls_cash_list"
+				 name="LS Cash"
+				 sequence="20"
+				 parent="rcm_import_ls"/>
+
+				<!-- import LS stock menu -->
+				<menuitem id="rcm_import_ls_stock"
+				 action="action_import_ls_stock_list"
+				 name="LS Stock"
+				 sequence="30"
+				 parent="rcm_import_ls"/>
 	</data>
 </openerp>
