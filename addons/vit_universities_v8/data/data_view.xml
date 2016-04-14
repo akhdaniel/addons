@@ -324,6 +324,23 @@
         <p>Terima Kasih,<br/>Keuangan ISTN</p>]]>
 		</field>
     </record>
+
+<!-- email template verivikasi daftal ulang-->
+<!--     <record id="notif_email_pembayaran_uk" model="email.template">
+        <field name="name">Verifikasi Registrasi Ulang Calon Mahasiswa ISTN</field>
+        <field name="subject">Verifikasi Registrasi Ulang Calon Mahasiswa ISTN</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Hallo ${object.partner_id.name },</p>
+        <p>Pembayaran Uang Kuliah(UK) Mahasiswa ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
+        <br/>Silahkan cek di portal mahasiswa untuk melihat detail tagihan dan pembayarannya !</p>
+        <p>Terima Kasih,<br/>PMB ISTN</p>]]>
+		</field>
+    </record>  -->   
 	    
 <!-- Cron Job Cuti Mahasiswa -->
         <record model="ir.cron" id="cuti_mahasiswa_cron">

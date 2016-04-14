@@ -360,6 +360,8 @@ class res_partner (osv.osv):
 		'semester4'		: fields.float('Semester 4'),
 		'semester5'		: fields.float('Semester 5'),
 		'un'			: fields.float('UN'),
+		'hubungan' 		: fields.selection([('umum','Umum'),('ortu','Orang Tua Alumni ISTN'),('cikini','Lulusan SLTA Perguruan Cikini'),('karyawan','Karyawan Tetap (Masih Aktif) ISTN')],'Hubungan Dengan ISTN'),
+
 
 		}
 
@@ -545,66 +547,121 @@ class res_partner (osv.osv):
 
 		return True		
 
-	def create_inv_bangunan(self,cr,uid,ids,context=None):
-		byr_obj = self.pool.get('master.pembayaran.bangunan')
-		for partner in self.browse(cr,uid,ids):
-			discount_alumni = 0
-			if partner.is_alumni :
-				discount_alumni = 2 # disc alumni 2%
-			disc_pemb_tunai = 0
-			if partner.split_invoice == 1 :
-				disc_pemb_tunai = 5 # disc pembayaran tunai 5%
-			total_pot = discount_alumni + disc_pemb_tunai
+	# def create_inv_bangunan(self,cr,uid,ids,context=None):
+	# 	byr_obj = self.pool.get('master.pembayaran.bangunan')
+	# 	for partner in self.browse(cr,uid,ids):
+	# 		discount_alumni = 0
+	# 		if partner.is_alumni :
+	# 			discount_alumni = 2 # disc alumni 2%
+	# 		disc_pemb_tunai = 0
+	# 		if partner.split_invoice == 1 :
+	# 			disc_pemb_tunai = 5 # disc pembayaran tunai 5%
+	# 		total_pot = discount_alumni + disc_pemb_tunai
 
-			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
-				('fakultas_id','=',partner.fakultas_id.id),
-				('prodi_id','=',partner.prodi_id.id),
-				('state','=','confirm'),
-				('type_mhs_id','=',partner.type_mhs_id.id),
-				])
-			if not byr_sch :
-				byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
-					('fakultas_id','=',partner.fakultas_id.id),
-					('prodi_id','=',partner.prodi_id.id),
-					('state','=','confirm'),
-					])						
-			if byr_sch :
-				byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
-				list_pembayaran = byr_brw.detail_product_ids
-				prod_id = []
-				for bayar in list_pembayaran:
-					#import pdb;pdb.set_trace()
-					product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
-					coa_line = product.property_account_income.id
-					if not coa_line:
-						coa_line = product.categ_id.property_account_income_categ.id
+	# 		byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+	# 			('fakultas_id','=',partner.fakultas_id.id),
+	# 			('prodi_id','=',partner.prodi_id.id),
+	# 			('state','=','confirm'),
+	# 			('type_mhs_id','=',partner.type_mhs_id.id),
+	# 			])
+	# 		if not byr_sch :
+	# 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+	# 				('fakultas_id','=',partner.fakultas_id.id),
+	# 				('prodi_id','=',partner.prodi_id.id),
+	# 				('state','=','confirm'),
+	# 				])						
+	# 		if byr_sch :
+	# 			byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+	# 			list_pembayaran = byr_brw.detail_product_ids
+	# 			prod_id = []
+	# 			for bayar in list_pembayaran:
+	# 				#import pdb;pdb.set_trace()
+	# 				product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+	# 				coa_line = product.property_account_income.id
+	# 				if not coa_line:
+	# 					coa_line = product.categ_id.property_account_income_categ.id
 
-					price = bayar.public_price
-					if total_pot > 0 :
-						price = price - (price*total_pot/100)
+	# 				price = bayar.public_price
+	# 				if total_pot > 0 :
+	# 					price = price - (price*total_pot/100)
 						
-					prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
-										 'name'			: bayar.product_id.name,
-										 'price_unit'	: price,
-										 'account_id'	: coa_line}))
-				inv = self.pool.get('account.invoice').create(cr,uid,{
-					'partner_id':partner.id,
-					'origin': 'SPP '+str(partner.reg),
-					'type':'out_invoice',
-					'fakultas_id': partner.fakultas_id.id,
-					'prod_id': partner.prodi_id.id,
-					'account_id':partner.property_account_receivable.id,
-					'invoice_line': prod_id,
-					},context=context)
+	# 				prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+	# 									 'name'			: bayar.product_id.name,
+	# 									 'price_unit'	: price,
+	# 									 'account_id'	: coa_line}))
+	# 			inv = self.pool.get('account.invoice').create(cr,uid,{
+	# 				'partner_id':partner.id,
+	# 				'origin': 'SPP '+str(partner.reg),
+	# 				'type':'out_invoice',
+	# 				'fakultas_id': partner.fakultas_id.id,
+	# 				'prod_id': partner.prodi_id.id,
+	# 				'account_id':partner.property_account_receivable.id,
+	# 				'invoice_line': prod_id,
+	# 				},context=context)
 
-				cr.commit()
-				self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
+	# 			cr.commit()
+	# 			self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
 
-				wf_service = netsvc.LocalService('workflow')
-				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
-				self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
+	# 			wf_service = netsvc.LocalService('workflow')
+	# 			wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
+	# 			self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
 
-		return True	
+	# 	return True	
+
+	# def verifikasi_daftar_ulang(self,cr,uid,ids,context=None):
+	# 	byr_obj = self.pool.get('master.pembayaran')
+	# 	usm_obj = self.pool.get('jadwal.usm')
+	# 	smt_obj = self.pool.get('master.semester')
+	# 	for partner in self.browse(cr,uid,ids):
+	# 		byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
+	# 			('fakultas_id','=',partner.fakultas_id.id),
+	# 			('prodi_id','=',partner.prodi_id.id),
+	# 			('state','=','confirm'),
+	# 			])
+
+	# 		if byr_sch :
+	# 			smt_exist = smt_obj.search(cr,uid,[('name','=','1')])
+	# 			if not smt_exist :
+	# 				raise osv.except_osv(_("Warning"),_("Tidak ada Semester 1 di master semester !"))
+	# 			smt_1 = smt_obj.browse(cr,uid,smt_exist[0])
+	# 			byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+	# 			list_pembayaran = byr_brw.detail_product_ids
+	# 			prod_id = []
+	# 			for bayar in list_pembayaran[:1]:
+	# 				if bayar.semester_id.id == smt_1.id
+	# 					#import pdb;pdb.set_trace()
+	# 					product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+	# 					coa_line = product.property_account_income.id
+	# 					if not coa_line:
+	# 						coa_line = product.categ_id.property_account_income_categ.id
+
+	# 					if not coa_line :
+	# 						raise osv.except_osv(_("Warning"),_("CoA untuk tahun akademik dan prodi ini belum di set di master uang kuliah !"))
+	# 					if bayar.angsuran1 <= 0 or bayar.angsuran2 == <= 0 or bayar.angsuran3 <= 0 or bayar.angsuran4 <= 0 or bayar.angsuran4 <= 0 or bayar.angsuran5 <= 0 or bayar.angsuran6 <= 0 :
+							
+	# 					prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+	# 										 'name'			: bayar.product_id.name,
+	# 										 'price_unit'	: price,
+	# 										 'account_id'	: coa_line}))
+	# 				inv = self.pool.get('account.invoice').create(cr,uid,{
+	# 					'partner_id':partner.id,
+	# 					'origin': 'UP dan UK '+str(partner.reg),
+	# 					'type':'out_invoice',
+	# 					'fakultas_id': partner.fakultas_id.id,
+	# 					'prod_id': partner.prodi_id.id,
+	# 					'account_id':partner.property_account_receivable.id,
+	# 					'invoice_line': prod_id,
+	# 					},context=context)
+
+	# 			cr.commit()
+	# 			#self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
+
+	# 			wf_service = netsvc.LocalService('workflow')
+	# 			wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
+	# 			self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
+
+	# 	return True	
+
 
 	def create_krs_smt_1_dan_2(self,cr,uid,ids,context=None):
 		calon_obj = self.pool.get('res.partner.calon.mhs')
@@ -785,8 +842,7 @@ class res_partner (osv.osv):
 							('state','=','confirm'),
 							('lokasi_kampus_id','=',vals.get('alamat_id')),
 							])
-						byr_sch = byr_obj.search([('id','=',1)
-							])						
+					
 					if byr_sch :
 						# cr = self.pool.cursor()
 						# cr.commit()
@@ -807,9 +863,9 @@ class res_partner (osv.osv):
 							'partner_id':partner.id,
 							'origin': 'Pendaftaran: '+str(partner.reg),
 							'type':'out_invoice',					
-							'fakultas_id': 15,# vals.get('fakultas_id'),
-							'prod_id': 81,#vals.get('prodi_id'),
-							'account_id':8991,#coa_prodi,
+							'fakultas_id':  vals.get('fakultas_id'),
+							'prod_id': vals.get('prodi_id'),
+							'account_id':coa_prodi,
 							'invoice_line': prod_id,
 							})
 
