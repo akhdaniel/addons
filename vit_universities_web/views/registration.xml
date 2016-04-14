@@ -409,7 +409,7 @@
                     </div>
                 </div> 
 
-               <div class="form-group non_baru">
+               <div class="form-group non_baru" style="display: none;">
                     <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal PT (Jika Pindahan/Lanjutan)</label>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="asal_universitas" id="asal_universitas"/>
@@ -419,7 +419,7 @@
                     </div>          
                 </div>  
 
-               <div class="form-group non_baru">
+               <div class="form-group non_baru" style="display: none;">
                     <label class="col-md-3 col-sm-4 control-label" for="asal_alamat_univ">Alamat</label>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="asal_alamat_univ" />
@@ -429,7 +429,7 @@
                     </div>           
                 </div> 
 
-               <div class="form-group non_baru">
+               <div class="form-group non_baru" style="display: none;">
                     <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
                     <div class="col-md-3 col-sm-4">
                         <select class="form-control" name="konsentrasi_id" id="konsentrasi" t-attf-readonly="#{True if readonly==1 else False}">
@@ -515,7 +515,6 @@
 
 
 <!-- Registration Succeed -->
-
 <template id="vit_universities_web.registration_process" name="Registration" page="True">
     <t t-call="website.layout">
         <t t-set="title">Registration</t>
@@ -527,7 +526,7 @@
             <t t-if="message_success">
                 <br />
                 <div class="alert alert-success">
-                    <h2>Registration Sukses</h2>
+                    <h2>Pendaftaran Sukses</h2>
                     <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
                 </div>
             </t>
@@ -544,13 +543,13 @@
         <div class="container">
 
             <div class="alert alert-success">
-                <p>Anda sudah melakukan Pendataran. Berikut data PMB anda. Mohon melakukan pembayaran Uang Pendaftaran agar dapat melanjutkan ke TPA Online.</p>
+                <p>Anda sudah melakukan Pendaftaran. Berikut data PMB anda. Mohon melakukan pembayaran Uang Pendaftaran agar dapat melanjutkan ke TPA Online (Jika belum TPA Online).</p>
                 <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
             </div>
 
             <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
 
-            <form class="form-horizontal mt32" >
+            <form t-attf-action="/second_registration_process/{{ slug(partner) }}" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
                
                 <h3>DATA AKADEMIK</h3>
@@ -558,32 +557,32 @@
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
-                    <div class="col-md-3 col-sm-4" >
-                        <span class="form-control" t-esc="partner.tahun_ajaran_id.name" id="tahun_id"/>
+                    <div class="col-md-7 col-sm-8" >
+                        <span class="form-control" t-esc="partner.tahun_ajaran_id.name" id="tahun_id" style="background-color:Gainsboro; color:black;"/>
                     </div>
-                    <div class="col-md-3 col-sm-4">
+                    <!-- <div class="col-md-3 col-sm-4">
                         <span class="form-control" t-esc="partner.semester_id.name" />
-                    </div>
+                    </div> -->
                 </div>  
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
                     <div class="col-md-3 col-sm-4" >
-                        <span class="form-control" t-esc="partner.type_pendaftaran" id="type_pendaftaran"/>
+                        <span class="form-control" t-esc="partner.type_pendaftaran" id="type_pendaftaran" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div> 
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" />
+                        <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div>
 
                 <div class="form-group" id="type_mahasiswa">
                     <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.type_mhs_id.name" />
+                        <p class="form-control" t-esc="partner.type_mhs_id.name" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div>   
 
@@ -606,21 +605,21 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
                     <div class="col-md-7 col-sm-8">
-                        <p class="form-control" t-esc="partner.prodi_id.name" />
+                        <p class="form-control" t-esc="partner.prodi_id.name" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div>    
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
                     <div class="col-md-7 col-sm-8">
-                        <p class="form-control" t-esc="partner.alamat_id.name" />
+                        <p class="form-control" t-esc="partner.alamat_id.name" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div>    
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Gelombang</label>
                     <div class="col-md-7 col-sm-8">
-                        <p class="form-control" t-esc="partner.jadwal_usm_id.name" />
+                        <p class="form-control" t-esc="partner.jadwal_usm_id.name" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div>    
 
@@ -630,31 +629,31 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.name" />
+                        <p class="form-control" t-esc="partner.name" style="background-color:Gainsboro; color:black;"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.id_card" />
+                        <p class="form-control" t-esc="partner.id_card" style="background-color:Gainsboro; color:black;"/>
                     </div>  
                 </div>    
 
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
-<!--                     <div class="col-md-3 col-sm-4">
+                    <!--<div class="col-md-3 col-sm-4">
                         <p class="form-control" t-esc="partner.image" />
                     </div> -->
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.email" />
+                        <p class="form-control" t-esc="partner.email" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div>    
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.tempat_lahir" />
+                        <p class="form-control" t-esc="partner.tempat_lahir" style="background-color:Gainsboro; color:black;"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.tanggal_lahir" />                        
+                        <p class="form-control" t-esc="partner.tanggal_lahir" style="background-color:Gainsboro; color:black;"/>                        
                     </div>
                 </div>  
 
@@ -662,21 +661,21 @@
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.jenis_kelamin" />
+                        <p class="form-control" t-esc="partner.jenis_kelamin" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div> 
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.agama" />
+                        <p class="form-control" t-esc="partner.agama" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div> 
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
                     <div class="col-md-7 col-sm-8">
-                        <p class="form-control" t-esc="partner.street" />
+                        <p class="form-control" t-esc="partner.street" style="background-color:Gainsboro; color:black;"/>
                     </div>
                 </div> 
 
@@ -684,20 +683,20 @@
                 <div class="form-group">
                     <div class="col-md-3 col-sm-4"></div>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.city" />
+                        <p class="form-control" t-esc="partner.city" style="background-color:Gainsboro; color:black;"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.zip" />
+                        <p class="form-control" t-esc="partner.zip" style="background-color:Gainsboro; color:black;"/>
                     </div>                    
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.phone" />
+                        <p class="form-control" t-esc="partner.phone" style="background-color:Gainsboro; color:black;"/>
                     </div>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.mobile" />
+                        <p class="form-control" t-esc="partner.mobile" style="background-color:Gainsboro; color:black;"/>
                     </div>                    
                 </div>
 
@@ -733,26 +732,26 @@
                         <t t-foreach="partner.biodata_keluarga_ids" t-as="kel">
                             <tr>
                                 <td>
-                                    <p class="form-control" t-esc="kel.nama" />
+                                    <p class="form-control" t-esc="kel.nama" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="kel.hubungan_keluarga_id.name" />
+                                    <p class="form-control" t-esc="kel.hubungan_keluarga_id.name" style="background-color:Gainsboro; color:black;"/>
                                 </td>
 
                                 <td>
-                                    <p class="form-control" t-esc="kel.keadaan" />
+                                    <p class="form-control" t-esc="kel.keadaan" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="kel.jenjang_id.name" />
+                                    <p class="form-control" t-esc="kel.jenjang_id.name" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="kel.pekerjaan" />
+                                    <p class="form-control" t-esc="kel.pekerjaan" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="kel.alamat" />
+                                    <p class="form-control" t-esc="kel.alamat" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="kel.telepon" />
+                                    <p class="form-control" t-esc="kel.telepon" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                             </tr>
                         </t>                   
@@ -784,40 +783,524 @@
                         <t t-foreach="partner.riwayat_pendidikan_ids" t-as="pend">
                             <tr>
                                 <td>
-                                    <p class="form-control" t-esc="pend.nama_sekolah" />
+                                    <p class="form-control" t-esc="pend.nama_sekolah" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="pend.tingkat" />
+                                    <p class="form-control" t-esc="pend.tingkat" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="pend.jurusan" />
+                                    <p class="form-control" t-esc="pend.jurusan" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
-                                    <p class="form-control" t-esc="pend.nilai_akhir" />
+                                    <p class="form-control" t-esc="pend.nilai_akhir" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                             </tr>
                         </t>                   
                     </table>                     
                 </div> 
 
-               <div class="form-group non_baru">
+                <!--<div class="form-group non_baru">
                     <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
                     <div class="col-md-3 col-sm-4">
                         <p class="form-control" t-esc="partner.konsentrasi_id.name" />
                     </div>          
-                </div> 
+                </div>  -->
 
 
                 <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.rekomendasi" />
+                        <p class="form-control" t-esc="partner.rekomendasi" style="background-color:Gainsboro; color:black;"/>
                     </div> 
                     <div class="col-md-3 col-sm-4">
-                        <p class="form-control" t-esc="partner.telp_rekomendasi" />
+                        <p class="form-control" t-esc="partner.telp_rekomendasi" style="background-color:Gainsboro; color:black;"/>
                     </div>                    
-                </div>                 
+                </div>
+
+                <h3>REGISTRASI ULANG</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jalur_masuks" >Jalur Masuk</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jalur_masuks" id="jalur_masuks" autofocus="autofocus">
+                          <t t-foreach="jalur_masuks" t-as="jm" >
+                            <option t-att-value="'%s' % (jm[0])" t-esc="jm[1]" />
+                          </t>
+                        </select>
+                    </div> 
+                </div>
+                <div class="form-group nilai_sma" style="display: none;">     
+                    <label class="col-md-3 col-sm-4 control-label" for="smt1">Input Rata-Rata Nilai Raport dan UN</label>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt1" placeholder="Smt1" id="smt1"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt2" placeholder="Smt2" id="smt2"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt3" placeholder="Smt3" id="smt3"/>
+                    </div> 
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt4" placeholder="Smt4" id="smt4"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt5" placeholder="Smt5" id="smt5"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="un" placeholder="UN" id="un"/>
+                    </div>                                                                                      
+                </div>
+                <div class="form-group nilai_sma" style="display: none;"> 
+                    <label class="col-md-3 col-sm-4 control-label" for="sma_file" >Upload Raport dan Hasil UN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="file" name="prestasi_file" placeholder="File" class="oe_form_binary_file" size="1" id="prestasi_file"/>
+                    </div>
+                </div>       
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="hubungans">Hubungan Dengan ISTN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="hubungans" id="hubungans">
+                          <t t-foreach="hubungans" t-as="hub">
+                            <option t-att-value="'%s' % (hub[0])" t-esc="hub[1]" />
+                          </t>
+                        </select>
+                    </div>                   
+                </div>
+
+                <div class="form-group"> 
+                    <label class="col-md-3 col-sm-4 control-label hub_istn1" for="hub_istn_file">Upload Ijazah Terakhir</label>
+                    <label class="col-md-3 col-sm-4 control-label hub_istn2" style="display: none;" for="hub_istn_file">Upload Kartu Alumni/Kartu Mahasiswa/Ijazah ISTN Orang Tua</label>
+                    <label class="col-md-3 col-sm-4 control-label hub_istn3" style="display: none;" for="hub_istn_file">Upload Ijazah Terakhir(SLTA) Perguruan Cikini</label>
+                    <label class="col-md-3 col-sm-4 control-label hub_istn4" style="display: none;" for="hub_istn_file">Upload SK Pengangkatan Karyawan ISTN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="file" name="hub_istn_file" placeholder="File" class="oe_form_binary_file" size="1" required="True"/>
+                    </div>
+                </div> 
+             
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Type Pembayaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_pembayarans">
+                          <t t-foreach="type_pembayarans" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div>                   
+                </div>
+
+                <div class="alert alert-info">
+                    <p>Catatan: </p>
+                    <p>- Jika diterima di PTN uang yang telah disetor akan dikembalikan 75%</p>
+                    <p>- Jika anda sudah melakukan pembayaran Uang Pendaftaran silahkan lengkapi data Registrasi Ulang diatas !</p>
+                    <p>- Jika diterima di swasta/mengundurkan diri uang yang sudah disetor tidak bisa dikembalikan</p>
+                    <p>- Uang pendaftaran (Rp. 300.000) tidak bisa dikembalikan</p>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                        <button type="submit" name="confirm_second_registration" class="btn btn-primary">
+                            Confirm
+                        </button>
+                    </div>
+                </div> 
+
+            </form>
+        </div>
+    </t>
+
+
+    <script>
+
+        $("#jalur_masuks").change(function(){
+            if($(this).val()=='prestasi'){
+                $(".nilai_sma").show();
+                $("#smt1").prop("required", true);
+                $("#smt2").prop("required", true);
+                $("#smt3").prop("required", true);
+                $("#smt4").prop("required", true);
+                $("#smt5").prop("required", true);
+                $("#un").prop("required", true);
+                $("#prestasi_file").prop("required", true);
+            }else{
+                $(".nilai_sma").hide();
+                $("#smt1").prop("required", false);
+                $("#smt2").prop("required", false);
+                $("#smt3").prop("required", false);
+                $("#smt4").prop("required", false);
+                $("#smt5").prop("required", false);
+                $("#un").prop("required", false);
+                $("#prestasi_file").prop("required", false);
+            }
+        });
+
+        $("#hubungans").change(function(){
+            if($(this).val()=='umum'){
+                $(".hub_istn1").show();
+                $(".hub_istn2").hide();
+                $(".hub_istn3").hide();
+                $(".hub_istn4").hide();
+
+            }else if($(this).val()=='ortu'){
+                $(".hub_istn2").show();
+                $(".hub_istn1").hide();
+                $(".hub_istn3").hide();
+                $(".hub_istn4").hide();
+
+            }else if($(this).val()=='cikini'){
+                $(".hub_istn3").show();
+                $(".hub_istn1").hide();
+                $(".hub_istn2").hide();
+                $(".hub_istn4").hide();
+
+            }else if($(this).val()=='karyawan'){
+                $(".hub_istn4").show();
+                $(".hub_istn1").hide();
+                $(".hub_istn3").hide();
+                $(".hub_istn2").hide();
+            }
+        });
+
+    </script>
+</template>
+
+
+<!-- Second Registration Succeed -->
+<template id="vit_universities_web.second_registration_process" name="Second Registration" page="True">
+    <t t-call="website.layout">
+        <t t-set="title">Second Registration</t>
+        <div class="container">
+            <h2>Registrasi Ulang Sukses !</h2>
+            <h3>No. Pendaftaran  <t t-esc="reg"/></h3>
+            <p>Silahkan cek di pojok kanan atas > my account > Portal > Pembayaran > Pembayaran Kuliah</p>
+            <p>Jika sudah divalidasi oleh kami, maka akan muncul tagihan yang harus dibayar dan kami konfirmasi melalui email anda maximal 2x24 jam</p>
+
+            <t t-if="message_success">
+                <br />
+                <div class="alert alert-success">
+                    <h2>Registrasi Ulang Sukses</h2>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+        </div>
+    </t>
+</template>
+
+<!-- Registration View 2-->
+<template id="vit_universities_web.registration_view2">
+    <t t-call="website.layout">
+        <t t-set="title">Registration Data</t>
+        <div class="container">
+
+            <div class="alert alert-success">
+                <p>Terima kasih sudah melakukan registrasi ulang, berikut data yang sudah diinput dan masuk ke sistem, informasi lainnya diinformasikan lewat email dalam waktu maksimal 2x24 jam</p>
+                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+            </div>
+
+            <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
+
+            <form class="form-horizontal mt32" >
+
+               
+                <h3>DATA AKADEMIK</h3>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
+                    <div class="col-md-7 col-sm-8" >
+                        <span class="form-control" t-esc="partner.tahun_ajaran_id.name" id="tahun_id" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                    <!-- <div class="col-md-3 col-sm-4">
+                        <span class="form-control" t-esc="partner.semester_id.name" />
+                    </div> -->
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4" >
+                        <span class="form-control" t-esc="partner.type_pendaftaran" id="type_pendaftaran" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div>
+
+                <div class="form-group" id="type_mahasiswa">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.type_mhs_id.name" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div>   
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pagi">Waktu Kuliah</label>
+
+                    <div class="col-md-1 col-sm-2">
+                        Pagi <span t-esc="partner.jadwal_pagi" />
+                    </div>
+
+                    <div class="col-md-1 col-sm-2">
+                        Siang <span t-esc="partner.jadwal_siang" />
+                    </div>  
+
+                    <div class="col-md-1 col-sm-2">
+                        Malam <span t-esc="partner.jadwal_malam" />
+                    </div>   
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.prodi_id.name" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.alamat_id.name" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Gelombang</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.jadwal_usm_id.name" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div>    
+
+
+                <h3>DATA PRIBADI</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.name" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.id_card" style="background-color:Gainsboro; color:black;"/>
+                    </div>  
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
+                    <!--<div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.image" />
+                    </div> -->
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.email" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tempat_lahir" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tanggal_lahir" style="background-color:Gainsboro; color:black;"/>                        
+                    </div>
+                </div>  
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_kelamin" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.agama" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.street" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                </div> 
+
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-4"></div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.city" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.zip" style="background-color:Gainsboro; color:black;"/>
+                    </div>                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.phone" style="background-color:Gainsboro; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.mobile" style="background-color:Gainsboro; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>DATA KELUARGA</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Hubungan Keluarga
+                            </td>
+                            <td>
+                                Keadaan
+                            </td>
+                            <td>
+                                Pendidikan
+                            </td>
+                            <td>
+                                Pekerjaan
+                            </td>
+                            <td>
+                                Alamat
+                            </td>
+                            <td>
+                                Telepon
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.biodata_keluarga_ids" t-as="kel">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="kel.nama" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.hubungan_keluarga_id.name" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+
+                                <td>
+                                    <p class="form-control" t-esc="kel.keadaan" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.jenjang_id.name" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.pekerjaan" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.alamat" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.telepon" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>
+
+                </div>  
+
+
+                <h3>DATA PENDIDIKAN TERAKHIR</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Tingkat
+                            </td>
+                            <td>
+                                Jurusan
+                            </td>
+                            <td>
+                                Nilai Akhir
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.riwayat_pendidikan_ids" t-as="pend">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nama_sekolah" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.tingkat" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.jurusan" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nilai_akhir" style="background-color:Gainsboro; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>                     
+                </div> 
+
+                <!--<div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.konsentrasi_id.name" />
+                    </div>          
+                </div>  -->
+
+
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.rekomendasi" style="background-color:Gainsboro; color:black;"/>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.telp_rekomendasi" style="background-color:Gainsboro; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>REGISTRASI ULANG</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jalur_masuks" >Jalur Masuk</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jalur_masuk" style="background-color:Gainsboro; color:black;"/>
+                    </div> 
+                </div>
+      
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="hubungans">Hubungan Dengan ISTN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.hubungan" style="background-color:Gainsboro; color:black;"/>
+                    </div>                   
+                </div>            
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Type Pembayaran (Berapa Kali)</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.split_invoice" style="background-color:Gainsboro; color:black;"/>
+                    </div>                   
+                </div>
+
+                <div class="alert alert-info">
+                    <p>Catatan: </p>
+                    <p>- Jika diterima di PTN uang yang telah disetor akan dikembalikan 75%</p>
+                    <p>- Jika anda sudah melakukan pembayaran Uang Pendaftaran silahkan lengkapi data Registrasi Ulang diatas !</p>
+                    <p>- Jika diterima di swasta/mengundurkan diri uang yang sudah disetor tidak bisa dikembalikan</p>
+                    <p>- Uang pendaftaran (Rp. 300.000) tidak bisa dikembalikan</p>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+
             </form>
         </div>
     </t>

@@ -80,14 +80,20 @@ class Partner(http.Controller):
 		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
 		keadaans = [('ada','Masih Ada'),('alm','Alm')]
 		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
-		type_pendaftarans = [('ganjil','Ganjil'),('Genap','Genap'),('pendek','Pendek')]
+		type_pendaftarans = [('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')]
+		jalur_masuks = [('perorangan','Perorangan'),('group','Group'),('prestasi','Jalur Prestasi')]
+		hubungans = [('umum','Umum'),('ortu','Orang Tua Alumni ISTN'),('cikini','Lulusan SLTA Perguruan Cikini'),('karyawan','Karyawan Tetap (Masih Aktif) ISTN')]
+		type_pembayarans = [('1','Tunai'),('6','6 x Angsuran')]
 		
 
 		page = ''
-		if partner.reg != '/':
-			page = 'vit_universities_web.registration_view'
-		else:
+		if partner.reg == '/' and not partner.hubungan:
 			page = 'vit_universities_web.registration'
+		elif partner.reg != '/' and not partner.hubungan:
+			page = 'vit_universities_web.registration_view'
+		elif partner.reg != '/' and  partner.hubungan:
+			page = 'vit_universities_web.registration_view2'
+
 		return http.request.render(page,
 		{
 			'partner'		: partner,
@@ -110,6 +116,9 @@ class Partner(http.Controller):
 			'jenis_kelamins': jenis_kelamins,
 			'agamas'		: agamas,
 			'type_pendaftarans': type_pendaftarans,
+			'jalur_masuks'	: jalur_masuks,
+			'hubungans'		: hubungans,
+			'type_pembayarans': type_pembayarans,
 			'jadwal_ids'		: jadwal_ids,
 			'partner'		: partner,
 			'message_error'	: message_error,
@@ -219,7 +228,7 @@ class Partner(http.Controller):
 		jadwal_id 				= http.request.env['jadwal.usm'].search([('date_start','<=',today),('date_end','>=',today)])
 		print jadwal_id  
 		if not jadwal_id:
-			return "tidak ada gelombang pendaftaran tanggal hari ini %s" % (today)
+			return "Tidak ada gelombang pendaftaran tanggal hari ini %s" % (today)
 
 
 		tahun 					= http.request.env['academic.year'].browse( int(tahun_id) )
@@ -330,6 +339,120 @@ class Partner(http.Controller):
 			'message'		: message,
 			'reg'			: reg
 		})
+
+
+	######################################################################################
+	# proses update sebagian data mahasiswa 
+	# registrasi ulang
+	######################################################################################
+	@http.route('/second_registration_process/<model("res.partner"):partner>', auth='user', website=True)
+	def second_registration_process(self, partner, **kw):
+		cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
+		
+		message 		= kw.get('message','')
+		
+		#jalur masuk
+		jalur_masuk 	= kw.get('jalur_masuks', '')
+		prestasi = False
+		if jalur_masuk == 'prestasi' :
+			prestasi = True
+			prestasi_file 	= kw.get('prestasi_file', '')	
+			smt1 			= kw.get('smt1', '')
+			smt2 			= kw.get('smt2', '')
+			smt3 			= kw.get('smt3', '')
+			smt4 			= kw.get('smt4', '')
+			smt5 			= kw.get('smt5', '')
+			un 	 			= kw.get('un', '')
+
+		#hubungan dengan istn
+		hubungan 		= kw.get('hubungans', '')
+		hub_istn_file 	= kw.get('hub_istn_file', '')		
+
+		# pembayaran
+		type_pembayaran = kw.get('type_pembayarans', '')	
+
+		Partner  = request.registry['res.partner']
+		partner_data = {}
+
+		if kw.get('confirm_second_registration') == '':
+			Attachments = request.registry['ir.attachment']
+			##############################################################################
+			# insert into calon mhs
+			##############################################################################
+			if prestasi :
+				data = {
+					'jalur_masuk'		: jalur_masuk,
+					'semester1'			: float(smt1),
+					'semester2'			: float(smt2),
+					'semester3'			: float(smt3),
+					'semester4'			: float(smt4),
+					'semester5'			: float(smt5),
+					'un'				: float(un),
+					'split_invoice'		: int(type_pembayaran),
+					'hubungan'			: hubungan,
+				}
+				###############################################################################
+				# Create Attachment
+				###############################################################################
+				attachment_value1 = {
+					'name'		: 'Jalur Prestasi',
+					'type'		: 'binary',
+					'datas'		: base64.encodestring(prestasi_file.read()),
+					'res_model'	: 'res.partner',
+					'res_name'	: partner.name,
+					'res_id'	: int(partner.id),
+					'partner_id': partner.id,
+					'datas_fname': 'Jalur Prestasi',
+				}	
+				Attachments.create(request.cr, SUPERUSER_ID, attachment_value1, context=request.context)		
+			else:
+				data = {
+					'jalur_masuk'		: jalur_masuk,
+					'split_invoice'		: int(type_pembayaran),
+					'hubungan'			: hubungan,
+				}				
+
+			partner_data = Partner.write ( cr, SUPERUSER_ID, [partner.id],  data )
+			message = "Registrasi Ulang Sukses!"
+
+			###############################################################################
+			# Create Attachment
+			###############################################################################
+			attachment_value2 = {
+				'name'		: str(hubungan),
+				'type'		: 'binary',
+				'datas'		: base64.encodestring(hub_istn_file.read()),
+				'res_model'	: 'res.partner',
+				'res_name'	: partner.name,
+				'res_id'	: int(partner.id),
+				'partner_id': partner.id,
+				'datas_fname': str(hubungan),
+				}
+			Attachments.create(request.cr, SUPERUSER_ID, attachment_value2, context=request.context)
+			#import pdb;pdb.set_trace()
+			###############################################################################
+			# create email notif ke user PMB
+			groups = request.registry['res.groups']
+			users  = groups.search(request.cr,SUPERUSER_ID,[('name','ilike','PMB')], context=request.context)
+			if users :
+				users_ids = groups.browse(request.cr,SUPERUSER_ID,users[0], context=request.context)
+				if users_ids.users :
+					mail = request.registry['mail.mail']
+					for notif in users_ids.users :
+						body = 'Hallo '+str(notif.partner_id.name)+', Calon Mahasiswa '+str(partner.name)+' dengan nomor pendaftaran '+str(partner.reg)+' butuh verifikasi anda silahkan cek di sistem !'
+						mail_data = {'subject' 		: 'Verifikasi Registrasi Ulang Calon Mahasiswa ISTN',
+									'email_to' 		: notif.partner_id.email,
+									'recipient_ids' : [(6, 0, [notif.partner_id.id])],
+									'notification' 	: True,
+									'auto_delete'	: False,
+									'body_html'		: body}
+						mail.create(request.cr, SUPERUSER_ID,mail_data,context=request.context)	
+		return http.request.render('vit_universities_web.second_registration_process', {
+			'partner'		: partner_data,
+			'message'		: message,
+			'reg'			: partner.reg
+		})
+
 
 
 	# # # # # # # # # # # # # # # # # # # # # 
