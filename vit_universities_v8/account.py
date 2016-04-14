@@ -47,21 +47,22 @@ class account_voucher(osv.osv):
 		self.action_move_line_create(cr, uid, ids, context=context)
 
 		# create notifikasi ke email
-		#mail_obj = self.pool.get('mail.mail')
 		for vc in self.browse(cr,uid,ids,context=context):
 			if vc.partner_id.is_mahasiswa:
 				template_pool = self.pool.get('email.template')
-				template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Pendaftaran Mahasiswa Baru ISTN')])
+				if vc.partner_id.status_mahasiswa == 'calon' and vc.partner_id.invoice_id and not vc.partner_id.jalur_masuk :
+					template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Pendaftaran Mahasiswa Baru ISTN')])
+				elif vc.partner_id.status_mahasiswa == 'calon' and vc.partner_id.invoice_bangunan_id and vc.partner_id.jalur_masuk :
+					template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Uang Pengembangan dan Uang Kuliah Mahasiswa Baru ISTN')])
+					#create NIM dan KRS asmt 1 dan smt 2
+					self.pool.get('res.partner').create_krs_smt_1_dan_2(cr,uid,[vc.partner_id.id],context=context)
+				elif vc.partner_id.status_mahasiswa == 'Mahasiswa' :
+					template_id = template_pool.search(cr,uid,[('name','=ilike','Uang Kuliah ISTN')])
+
 				if template_id:
 					template_browse_id = template_pool.browse(cr,uid,template_id[0])
 					template_pool.send_mail(cr, uid, template_browse_id.id, vc.id)				
-				# mail_obj.create(cr,uid,{'subject' : 'Pembayaran ISTN',
-				# 			'email_to' : vc.partner_id.email,
-				# 			'recipient_ids' : [(6, 0, [vc.partner_id.id])],
-				# 			'notification' : True,
-				# 			'body_html': 'Terima Kasih '+str(vc.partner_id.name)+', pembayaran sebesar Rp.'+str(vc.amount)+' telah diterima, silahkan klik link http://113.20.30.74:8069/tpa untuk melakukan Test Potensi Akademik (TPA) Online !'
-
-				# 			})          
+      
 		return True
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
