@@ -144,6 +144,8 @@ class import_ls(osv.osv):
 				partner_fname = PARTNER_MAPPING[k]
 				import_ls_fname = "import_ls.%s" % k 
 				data.update( {partner_fname : eval(import_ls_fname)})
+
+			data.update({'comment':'LS'})
 			
 			# check exiting partner 
 			pid = partner.search(cr, uid, [('cif','=',import_ls.client_id)],context=context)
