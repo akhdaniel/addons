@@ -1,0 +1,31 @@
+<openerp>
+	<data>
+
+		<!-- product tree -->
+		<record id="view_product_tree" model="ir.ui.view">
+		    <field name="name">product_product_tree</field>
+		    <field name="model">product.product</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list product" >
+		            <field name="name"/>
+		            <field name="categ_id"/>
+		            <field name="owner_id"/>
+		        </tree>    
+		    </field>
+		</record>
+
+
+		<!-- product form -->
+
+        <record id="view_product_form_reliance" model="ir.ui.view">
+            <field name="name">product_product_form_reliance</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="type" position="after">
+        			<field name="owner_id"/>
+            	</field>
+            </field>
+        </record>
+	</data>
+</openerp>

@@ -1,0 +1,84 @@
+<openerp>
+	<data>
+
+		<!-- tree campaign reliance -->
+		<record id="view_campaign_tree" model="ir.ui.view">
+		    <field name="name">reliance_campaign_tree</field>
+		    <field name="model">reliance.campaign</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list campaign" >
+		            <field name="name"/>
+					<field name='date_start' />
+					<field name='date_end' 	 />		            
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search campaign reliance -->
+		<record id="view_campaign_filter_reliance" model="ir.ui.view">
+		    <field name="name">campaign.filter.reliance</field>
+		    <field name="model">reliance.campaign</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Campaign">
+				            
+		            <field name="name"/>
+					<field name='date_start' />
+					<field name='date_end' 	 />	  
+                                       
+		
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form campaign reliance -->
+        <record id="view_campaign_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_campaign_form_reliance</field>
+            <field name="model">reliance.campaign</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" 
+							class="oe_highlight" states="draft" />
+						<button string="Reload" type="object" name="action_reload" 
+							states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	states="open" />
+						<button string="Done" type="object" name="action_done"
+						 	states="open" />
+            			<field name="state" widget="statusbar" />
+            		</header>
+	            	<group>
+		            	<group>
+			            	<field name="name"/>
+			            	<field name="date_start"/>
+			            	<field name="date_end"/>
+			            </group>
+
+			            <group string="Criteria">
+			            	<field name="criteria_age_start"/>
+			            	<field name="criteria_age_end"/>
+			            	<field name="criteria_product_ids" widget="many2many_tags"/>
+			            </group>
+		            </group>
+
+	            	<notebook>
+	            		<page string="Matched Partners" >
+	            			<field name="partner_ids">
+	            				<tree string="partner">
+									<field name='name'/>
+									<field name='phone'/>
+									<field name='email'/>
+									<field name='street'/>
+									<field name='city'/>
+	            				</tree>
+	            			</field>
+	            		</page>
+
+	            	</notebook>
+	            </form>
+            </field>
+        </record>
+
+	</data>
+</openerp>
