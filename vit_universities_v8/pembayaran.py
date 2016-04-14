@@ -113,6 +113,7 @@ class master_pembayaran_detail(osv.Model):
 			'product_id',           # 'other.object.id' in relation table
 			'Pembayaran',              # 'Field Name'
 			domain="[('type','=','service')]"),
+		#'product_ids':fields.many2one('product.template','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
 		 # master price UP dan UK
         'angsuran1'		: fields.float('Angsuran 1'),
         'angsuran2'		: fields.float('Angsuran 2'),
