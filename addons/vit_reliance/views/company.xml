@@ -1,0 +1,13 @@
+<openerp>
+	<data>
+		<record id="view_company_tree" model="ir.ui.view">
+		    <field name="name">company_company_tree</field>
+		    <field name="model">res.company</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list company" >
+		            <field name="name"/>
+		        </tree>    
+		    </field>
+		</record>
+	</data>
+</openerp>

@@ -1,0 +1,356 @@
+<openerp>
+	<data>
+
+		<!-- tree import_ls reliance -->
+		<record id="view_import_ls_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_ls_tree</field>
+		    <field name="model">reliance.import_ls</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_ls" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="client_id"				 />
+					<field name="client_sid"			 />
+					<field name="client_name"			 />
+					<field name="place_birth"			 />
+					<field name="date_birth"			 />
+					<field name="cr_address"			 />
+					<field name="address"				 />
+					<field name="id_card_type"			 />
+					<field name="id_card"				 />
+					<field name="id_card_expire_date"	 />
+					<field name="npwp"					 />
+					<field name="nationality"			 />
+					<field name="marital_status"		 />
+					<field name="phone"					 />
+					<field name="cellular"				 />
+					<field name="fax"					 />
+					<field name="couplenames"			 />
+					<field name="email"					 />
+					<field name="education"				 />
+					<field name="religion"				 />
+					<field name="mother_name"			 />
+					<field name="mothers_maiden_name"	 />
+					<field name="title"					 />
+					<field name="organization"			 />
+					<field name="original_location"		 />
+					<field name="occupation"			 />
+					<field name="occupation_desc"		 />
+					<field name="company_name"			 />
+					<field name="client_sid"			 />
+					<field name="company_address"		 />
+					<field name="company_city"			 />
+					<field name="company_country"		 />
+					<field name="company_description"	 />
+					<field name="company_zip"			 />
+					<field name="company_phone"			 />
+					<field name="company_fax"			 />
+					<field name="source_of_fund"		 />
+					<field name="source_of_fund_desc"	 />
+					<field name="gross_income_per_year"	 />
+					<field name="house_status"			 />
+					<field name="registered"			 />
+					<field name="void"					 />
+					<field name="is_imported"					 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_ls reliance -->
+		<record id="view_import_ls_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_ls.filter.reliance</field>
+		    <field name="model">reliance.import_ls</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import LS">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+					<field name="client_id"				 />
+					<field name="client_sid"			 />
+					<field name="client_name"			 />
+					<field name="is_imported"			 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_ls reliance -->
+        <record id="view_import_ls_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_ls_form_reliance</field>
+            <field name="model">reliance.import_ls</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" 
+							class="oe_highlight" />
+
+						<!-- <button string="Cancel" type="object" name="action_draft"
+						 	states="open" />
+						<button string="Done" type="object" name="action_done"
+						 	states="open" /> -->
+            			<!-- <field name="state" widget="statusbar" /> -->
+            		</header>
+	            	<group>
+						<field name="client_id"				 />
+						<field name="client_sid"			 />
+						<field name="client_name"			 />
+						<field name="place_birth"			 />
+						<field name="date_birth"			 />
+						<field name="cr_address"			 />
+						<field name="address"				 />
+						<field name="id_card_type"			 />
+						<field name="id_card"				 />
+						<field name="id_card_expire_date"	 />
+						<field name="npwp"					 />
+						<field name="nationality"			 />
+						<field name="marital_status"		 />
+						<field name="phone"					 />
+						<field name="cellular"				 />
+						<field name="fax"					 />
+						<field name="couplenames"			 />
+						<field name="email"					 />
+						<field name="education"				 />
+						<field name="religion"				 />
+						<field name="mother_name"			 />
+						<field name="mothers_maiden_name"	 />
+						<field name="title"					 />
+						<field name="organization"			 />
+						<field name="original_location"		 />
+						<field name="occupation"			 />
+						<field name="occupation_desc"		 />
+						<field name="company_name"			 />
+						<field name="client_sid"			 />
+						<field name="company_address"		 />
+						<field name="company_city"			 />
+						<field name="company_country"		 />
+						<field name="company_description"	 />
+						<field name="company_zip"			 />
+						<field name="company_phone"			 />
+						<field name="company_fax"			 />
+						<field name="source_of_fund"		 />
+						<field name="source_of_fund_desc"	 />
+						<field name="gross_income_per_year"	 />
+						<field name="house_status"			 />
+						<field name="registered"			 />
+						<field name="void"					 />
+						<field name="is_imported"			 />
+		            </group>
+
+	            	<!-- <notebook>
+	            		<page string="Matched Partners" >
+	            			<field name="partner_ids">
+	            				<tree string="partner">
+									<field name='name'/>
+									<field name='phone'/>
+									<field name='email'/>
+									<field name='street'/>
+									<field name='city'/>
+	            				</tree>
+	            			</field>
+	            		</page>
+
+	            	</notebook> -->
+	            </form>
+            </field>
+        </record>
+
+
+
+		<!-- tree import_ls_cash reliance -->
+		<record id="view_import_ls_cash_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_ls_cash_tree</field>
+		    <field name="model">reliance.import_ls_cash</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_ls_cash" >
+					<field name="client_id"		 />
+					<field name="date"			 />
+					<field name="cash_on_hand"	 />
+					<field name="net_ac"		 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_ls_cash reliance -->
+		<record id="view_import_ls_cash_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_ls_cash.filter.reliance</field>
+		    <field name="model">reliance.import_ls_cash</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import LS">
+					<field name="client_id"		 />
+					<field name="date"			 />
+					<field name="cash_on_hand"	 />
+					<field name="net_ac"		 />
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_ls_cash reliance -->
+        <record id="view_import_ls_cash_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_ls_cash_form_reliance</field>
+            <field name="model">reliance.import_ls_cash</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" 
+							class="oe_highlight" />
+
+						<!-- <button string="Cancel" type="object" name="action_draft"
+						 	states="open" />
+						<button string="Done" type="object" name="action_done"
+						 	states="open" /> -->
+            			<!-- <field name="state" widget="statusbar" /> -->
+            		</header>
+	            	<group>
+						<field name="client_id"		 />
+						<field name="date"			 />
+						<field name="cash_on_hand"	 />
+						<field name="net_ac"		 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+
+
+		<!-- tree import_ls_stock reliance -->
+		<record id="view_import_ls_stock_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_ls_stock_tree</field>
+		    <field name="model">reliance.import_ls_stock</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_ls_stock" >
+					<field name="date"				 />
+					<field name="client_id"			 />
+					<field name="stock_id"			 />
+					<field name="avg_price"			 />
+					<field name="close_price"		 />
+					<field name="balance"			 />
+					<field name="lpp"				 />
+					<field name="stock_avg_value"	 />
+					<field name="market_value"		 />					
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_ls_stock reliance -->
+		<record id="view_import_ls_stock_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_ls_stock.filter.reliance</field>
+		    <field name="model">reliance.import_ls_stock</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import LS">
+					<field name="date"				 />
+					<field name="client_id"			 />
+					<field name="stock_id"			 />
+					<field name="avg_price"			 />
+					<field name="close_price"		 />
+					<field name="balance"			 />
+					<field name="lpp"				 />
+					<field name="stock_avg_value"	 />
+					<field name="market_value"		 />	
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_ls_stock reliance -->
+        <record id="view_import_ls_stock_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_ls_stock_form_reliance</field>
+            <field name="model">reliance.import_ls_stock</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+						<button string="Confirm" type="object" name="action_confirm" 
+							class="oe_highlight" />
+
+						<!-- <button string="Cancel" type="object" name="action_draft"
+						 	states="open" />
+						<button string="Done" type="object" name="action_done"
+						 	states="open" /> -->
+            			<!-- <field name="state" widget="statusbar" /> -->
+            		</header>
+	            	<group>
+						<field name="date"				 />
+						<field name="client_id"			 />
+						<field name="stock_id"			 />
+						<field name="avg_price"			 />
+						<field name="close_price"		 />
+						<field name="balance"			 />
+						<field name="lpp"				 />
+						<field name="stock_avg_value"	 />
+						<field name="market_value"		 />	
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+
+
+	    <!-- context menu More.. di tree import_ls -->
+	    <record id="action_import_partner" model="ir.actions.server">
+	        <field name="name">Import to Partner</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_ls"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_ls').action_import_partner(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_ls'" name="model"/>
+	        <field name="name">Import to Partner</field>
+	        <field eval="'ir.actions.server,%d'%action_import_partner" name="value"/>
+	    </record>
+
+
+	    <!-- context menu More.. di tree import_ls_cash -->
+	    <record id="action_import_partner_cash" model="ir.actions.server">
+	        <field name="name">Import to Partner Cash</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_ls_cash"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_ls_cash').action_import_partner_cash(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_cash_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_ls_cash'" name="model"/>
+	        <field name="name">Import to Partner Cash</field>
+	        <field eval="'ir.actions.server,%d'%action_import_partner_cash" name="value"/>
+	    </record>
+
+
+	    <!-- context menu More.. di tree import_ls_stock -->
+	    <record id="action_import_partner_stock" model="ir.actions.server">
+	        <field name="name">Import to Partner Stock</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_ls_stock"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_ls_stock').action_import_partner_stock(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_stock_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_ls_stock'" name="model"/>
+	        <field name="name">Import to Partner Stock</field>
+	        <field eval="'ir.actions.server,%d'%action_import_partner_stock" name="value"/>
+	    </record>
+
+
+	</data>
+</openerp>
