@@ -663,7 +663,7 @@ class res_partner (osv.osv):
 								},context=context)
 						else :
 							# create invoice pertama
-							inv1 = self.pool.get('account.invoice').create(cr,uid,{
+							inv = self.pool.get('account.invoice').create(cr,uid,{
 								'partner_id':partner.id,
 								'origin': 'UP dan UK '+str(partner.reg)+' -1',
 								'type':'out_invoice',
