@@ -24,7 +24,7 @@ class operasional_krs (osv.Model):
 												'product_id': disc_id,
 												'name'		: disc_name,
 												'quantity'	: 1 ,
-												'price_unit': disc_amount,
+												'price_unit': -disc_amount,
 												'account_id': disc_coa},context=context)
 					break															  						
 			elif disc_code == '1':
@@ -34,7 +34,7 @@ class operasional_krs (osv.Model):
 												'product_id': disc_id,
 												'name'		: disc_name,
 												'quantity'	: 1 ,
-												'price_unit': disc_amount,
+												'price_unit': -disc_amount,
 												'account_id': disc_coa},context=context)
 					break						
 			elif disc_code == '2':
@@ -43,7 +43,7 @@ class operasional_krs (osv.Model):
 											'product_id': disc_id,
 											'name'		: disc_name,
 											'quantity'	: 1 ,
-											'price_unit': disc_amount,
+											'price_unit': -disc_amount,
 											'account_id': disc_coa},context=context)
 				break	
 			elif disc_code == '3':
@@ -53,7 +53,7 @@ class operasional_krs (osv.Model):
 												'product_id': disc_id,
 												'name'		: disc_name,
 												'quantity'	: 1 ,
-												'price_unit': disc_amount,
+												'price_unit': -disc_amount,
 												'account_id': disc_coa},context=context)
 					break	
 			elif disc_code == '4':
@@ -65,7 +65,7 @@ class operasional_krs (osv.Model):
 													'product_id': disc_id,
 													'name'		: disc_name,
 													'quantity'	: 1 ,
-													'price_unit': disc_amount,
+													'price_unit': -disc_amount,
 													'account_id': disc_coa},context=context)
 						break
 		return True
