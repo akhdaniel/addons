@@ -97,7 +97,9 @@ class purchase_order(osv.osv):
 		mpath = openerp.modules.get_module_path('vit_myob_po')
 
 		dtim = time.strftime("%Y-%m-%d %H:%M:%S")
-		csvfile = open(mpath + '/static/po-'+ dtim +'.csv', 'wb')
+		dbname = cr.dbname
+		
+		csvfile = open(mpath + '/static/'+dbname+'-po-'+ dtim +'.csv', 'wb')
 		csvwriter = csv.writer(csvfile, delimiter ='	')
 		csvwriter.writerow( [ h.upper() for h in headers ])
 		
