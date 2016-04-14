@@ -85,14 +85,25 @@ class Partner(http.Controller):
 		hubungans = [('umum','Umum'),('ortu','Orang Tua Alumni ISTN'),('cikini','Lulusan SLTA Perguruan Cikini'),('karyawan','Karyawan Tetap (Masih Aktif) ISTN')]
 		type_pembayarans = [('1','Tunai'),('6','6 x Angsuran')]
 		
+		Invoice = http.request.env['account.invoice']
+		invoice = Invoice.search([('origin','ilike','pendaftaran'),('partner_id','=',partner.id)])
+
+		Survey = http.request.env['survey.survey']
+		survey = Survey.search([('title','ilike','tpa')])
+		if not survey:
+			message = "Survey not found! Please try again."
+			return message
+
 
 		page = ''
-		if partner.reg == '/' and not partner.hubungan:
+		if partner.reg == '/' and not partner.hubungan and not invoice:
 			page = 'vit_universities_web.registration'
-		elif partner.reg != '/' and not partner.hubungan:
+		elif partner.reg != '/' and not partner.hubungan and invoice and invoice.state == 'paid':
 			page = 'vit_universities_web.registration_view'
-		elif partner.reg != '/' and  partner.hubungan:
+		elif partner.reg != '/' and  partner.hubungan and invoice and invoice.state == 'paid':
 			page = 'vit_universities_web.registration_view2'
+		else :
+			page = 'vit_universities_web.registration_just_view'
 
 		return http.request.render(page,
 		{
