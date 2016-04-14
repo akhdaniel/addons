@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model="ir.cron" id="import_partner">
+            <field name="name">Auto Import LS Cust to Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'reliance.import_ls'"/>
+            <field name="function" eval="'cron_import_partner'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</openerp>
