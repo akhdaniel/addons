@@ -271,7 +271,7 @@ class Partner(http.Controller):
 						'hubungan_keluarga_id' : hub_ibu,
 						'penghasilan' 	: penghasilan_ibu}),
 					(0,0,{'nama' 		: nama_penanggung,
-						'keadaan'		: keadaan_penanggung,
+						'keadaan'		: 'ada',
 						'telepon' 		: telpon_penanggung,
 						'pekerjaan'		: pekerjaan3,
 						'alamat'		: alamat_penanggung,

@@ -716,9 +716,6 @@
                                 Keadaan
                             </td>
                             <td>
-                                Pendidikan
-                            </td>
-                            <td>
                                 Pekerjaan
                             </td>
                             <td>
@@ -740,9 +737,6 @@
 
                                 <td>
                                     <p class="form-control" t-esc="kel.keadaan" style="background-color:Gainsboro; color:black;"/>
-                                </td>
-                                <td>
-                                    <p class="form-control" t-esc="kel.jenjang_id.name" style="background-color:Gainsboro; color:black;"/>
                                 </td>
                                 <td>
                                     <p class="form-control" t-esc="kel.pekerjaan" style="background-color:Gainsboro; color:black;"/>
@@ -1167,9 +1161,9 @@
                             <td>
                                 Keadaan
                             </td>
-                            <td>
+                            <!--<td>
                                 Pendidikan
-                            </td>
+                            </td> -->
                             <td>
                                 Pekerjaan
                             </td>
@@ -1193,9 +1187,9 @@
                                 <td>
                                     <p class="form-control" t-esc="kel.keadaan" style="background-color:Gainsboro; color:black;"/>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <p class="form-control" t-esc="kel.jenjang_id.name" style="background-color:Gainsboro; color:black;"/>
-                                </td>
+                                </td> -->
                                 <td>
                                     <p class="form-control" t-esc="kel.pekerjaan" style="background-color:Gainsboro; color:black;"/>
                                 </td>
