@@ -14,6 +14,17 @@ class partner(osv.osv):
 		'partner_cash_ids'		: fields.one2many('reliance.partner_cash','partner_id','Cash', ondelete="cascade"),
 		'partner_stock_ids'		: fields.one2many('reliance.partner_stock','partner_id','Stock', ondelete="cascade"),
 	}
+	
+	def get_ls_cash(self, cr, uid, cif, context=None):
+		results = []
+		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
+		if pid:
+			partner = self.browse(cr, uid, pid, context=context)
+			pc_ids = partner.partner_cash_ids
+
+			
+		return results
+
 
 class partner_cash(osv.osv):
 	_name 		= "reliance.partner_cash"

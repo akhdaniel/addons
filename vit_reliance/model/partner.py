@@ -120,6 +120,8 @@ class res_partner(osv.osv):
 	}
 
 
+
+
 class ahli_waris(osv.osv):
 	_name = "reliance.ahli_waris"
 	_columns 	= {
