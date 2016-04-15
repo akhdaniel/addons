@@ -33,7 +33,7 @@ class partner(osv.osv):
 			ps_ids = partner.partner_stock_ids
 
 			
-		return results
+		return ps_ids
 
 
 class partner_cash(osv.osv):
