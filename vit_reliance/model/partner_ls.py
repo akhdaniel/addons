@@ -25,6 +25,16 @@ class partner(osv.osv):
 			
 		return results
 
+	def get_ls_stock(self, cr, uid, cif, context=None):
+		results = []
+		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
+		if pid:
+			partner = self.browse(cr, uid, pid, context=context)
+			ps_ids = partner.partner_stock_ids
+
+			
+		return results
+
 
 class partner_cash(osv.osv):
 	_name 		= "reliance.partner_cash"
