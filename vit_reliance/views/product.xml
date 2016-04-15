@@ -24,6 +24,7 @@
             <field name="arch" type="xml">
             	<field name="type" position="after">
         			<field name="owner_id"/>
+		            <field name="categ_id"/>
             	</field>
             </field>
         </record>
