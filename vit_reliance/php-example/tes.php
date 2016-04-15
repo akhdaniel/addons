@@ -1,5 +1,9 @@
 <?php
 require_once('ripcord/ripcord.php');
-$info = ripcord::client('http://erp2.vitraining.com')->start();
-var_dump($info);
-
+$url = "http://erp2.vitraining.com:8069";
+$db = "reliance";
+$username = "admin";
+$password = "1";
+$common = ripcord::client("$url/xmlrpc/2/common");
+$uid = $common->authenticate($db, $username, $password, array());
+var_dump($uid);
