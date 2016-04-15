@@ -12,5 +12,28 @@
             <field name="function" eval="'cron_import_partner'"/>
             <field name="args" eval="'()'" />
         </record>
+
+        <record model="ir.cron" id="import_partner_cash">
+            <field name="name">Auto Import LS Cash to Partner Cash</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'reliance.import_ls_cash'"/>
+            <field name="function" eval="'cron_import_partner_cash'"/>
+            <field name="args" eval="'()'" />
+        </record>
+        <record model="ir.cron" id="import_partner_stock">
+            <field name="name">Auto Import LS Cash to Partner Stock</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'reliance.import_ls_stock'"/>
+            <field name="function" eval="'cron_import_partner_stock'"/>
+            <field name="args" eval="'()'" />
+        </record>
     </data>
 </openerp>

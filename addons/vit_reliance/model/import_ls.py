@@ -4,6 +4,7 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -107,7 +108,8 @@ class import_ls(osv.osv):
 		"house_status"			:		fields.char("HouseStatus"),
 		"registered"			:		fields.char("Registered"),
 		"void"					:		fields.char("Void"),
-		'is_imported' 			: 		fields.boolean("Imported to Partner?", select=1)
+		'is_imported' 			: 		fields.boolean("Imported to Partner?", select=1),
+		"notes"					:		fields.char("Notes"),
 	}
 
 	def action_import_partner(self, cr, uid, context=None):
@@ -166,7 +168,6 @@ class import_ls(osv.osv):
 ####################################################################
 # partner's cash
 ####################################################################
-
 class import_ls_cash(osv.osv):
 	_name 		= "reliance.import_ls_cash"
 	_columns 	= {
@@ -174,6 +175,8 @@ class import_ls_cash(osv.osv):
 		"date"			:		fields.char("Date", select=1),
 		"cash_on_hand"	:		fields.char("CashOnHand"),
 		"net_ac"		:		fields.char("NetAC"),
+		'is_imported' 	: 		fields.boolean("Imported to Partner Cash?", select=1),
+		"notes"			:		fields.char("Notes"),
 	}
 
 	def action_import_partner_cash(self, cr, uid, context=None):
@@ -183,21 +186,55 @@ class import_ls_cash(osv.osv):
 
 		self.actual_import(cr, uid, active_ids, context=context)
 
-
 	def cron_import_partner_cash(self, cr, uid, context=None):
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], context=context)
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
 		if active_ids:
-			self.actual_process(cr, uid, active_ids, context=context)
+			self.actual_import(cr, uid, active_ids, context=context)
 		else:
 			print "no partner cash to import"
 		return True
 
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
-		cr.commit()
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner_cash ' % (i) )			
+		skip = 0
+		upd = 0
+		date = False
+
+		partner = self.pool.get('res.partner')
+		cash = self.pool.get('reliance.partner_cash')
+		
+		for import_cash in self.browse(cr, uid, ids, context=context):
+			########## cari partner dulu ####################
+			pid = partner.search(cr, uid, [( 'cif','=', import_cash.client_id)], context=context)
+			if pid:
+				###### cari existing Cash record ############
+				cid = cash.search(cr, uid, [('partner_id','=', pid[0] )], context=context)
+				if import_cash.date != "00:00.0":
+					date = datetime.strptime(import_cash.date, "%Y-%m-%d")
+				else:
+					date = False 
+				data = {
+					"partner_id"	: 	pid[0],	
+					"date"			:	date ,
+					"cash_on_hand"	:	import_cash.cash_on_hand,
+					"net_ac"		:	import_cash.net_ac,
+				}
+				if not cid:
+					cash.create(cr,uid,data,context=context)
+					i = i + 1
+				else:
+					upd = upd + 1
+					cash.write(cr, uid, cid, data, context=context)
+					_logger.warning('Update Partner Cash for ClientID=%s' % (import_cash.client_id))
+			else:
+				skip = skip + 1
+				_logger.warning('Partner ID not found for ClientID=%s' % import_cash.client_id)
+
+			cr.execute("update reliance_import_ls_cash set is_imported='t' where id=%s" % import_cash.id)
+			cr.commit()
 
 
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner_cash, skipped=%s,updated=%s ' % (i,skip, upd) )			
 
 
 
@@ -216,6 +253,8 @@ class import_ls_stock(osv.osv):
 		"lpp"				:	fields.char("LPP"),
 		"stock_avg_value"	:	fields.char("StockAvgValue"),
 		"market_value"		:	fields.char("MarketValue"),
+		'is_imported' 		: 		fields.boolean("Imported to Partner Stock?", select=1),
+		"notes"				:		fields.char("Notes"),
 	}
 
 	def action_import_partner_stock(self, cr, uid, context=None):
@@ -227,14 +266,61 @@ class import_ls_stock(osv.osv):
 
 
 	def cron_import_partner_stock(self, cr, uid, context=None):
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], context=context)
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
 		if active_ids:
-			self.actual_process(cr, uid, active_ids, context=context)
+			self.actual_import(cr, uid, active_ids, context=context)
 		else:
 			print "no partner stock to import"
 		return True
 
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
-		cr.commit()
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner_stock ' % (i) )			
+		skip = 0
+		upd = 0
+		date = False
+
+		partner = self.pool.get('res.partner')
+		stock = self.pool.get('reliance.partner_stock')
+		
+		for import_stock in self.browse(cr, uid, ids, context=context):
+			########## cari partner dulu ####################
+			pid = partner.search(cr, uid, [( 'cif','=', import_stock.client_id)], context=context)
+			if pid:
+				###### cari existing Cash record ############
+				cid = stock.search(cr, uid, [('partner_id','=', pid[0]),('stock_id','=',import_stock.stock_id)], context=context)
+				if import_stock.date != "00:00.0":
+					date = datetime.strptime(import_stock.date, "%Y-%m-%d")
+				else:
+					date = False 
+				data = {
+					"date"				: date,
+					"partner_id"		: pid[0],
+					"stock_id"			: import_stock.stock_id,
+					"avg_price"			: import_stock.avg_price,
+					"close_price"		: import_stock.close_price, 
+					"balance"			: import_stock.balance,
+					"lpp"				: import_stock.lpp,
+					"stock_avg_value"	: import_stock.stock_avg_value,
+					"market_value"		: import_stock.market_value,
+				}
+
+			
+				if not cid:
+					stock.create(cr,uid,data,context=context)
+					i = i + 1
+				else:
+					upd = upd + 1
+					stock.write(cr,uid, cid, data, context=context)
+					_logger.warning('updating partner stock_id=%s partner cif=%s' % (import_stock.stock_id, import_stock.client_id))
+					_logger.warning(data)
+
+			else:
+				skip = skip + 1
+				_logger.warning('Partner ID not found for ClientID=%s' % import_stock.client_id)
+
+			cr.execute("update reliance_import_ls_stock set is_imported='t' where id=%s" % import_stock.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner_stock, skipped=%s, updated=%s ' % (i,skip, upd) )			
+
+
