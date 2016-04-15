@@ -1,2 +1,10 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"course_manager","course_manager","model_academic_course","group_manager",1,1,1,1
+access_reliance_ahli_waris,access_reliance_ahli_waris,model_reliance_ahli_waris,,1,0,0,0
+access_reliance_keluarga,access_reliance_keluarga,model_reliance_keluarga,,1,0,0,0
+access_reliance_partner_account,access_reliance_partner_account,model_reliance_partner_account,,1,0,0,0
+access_reliance_campaign,access_reliance_campaign,model_reliance_campaign,,1,0,0,0
+access_reliance_import_ls,access_reliance_import_ls,model_reliance_import_ls,,1,0,0,0
+access_reliance_import_ls_cash,access_reliance_import_ls_cash,model_reliance_import_ls_cash,,1,0,0,0
+access_reliance_import_ls_stock,access_reliance_import_ls_stock,model_reliance_import_ls_stock,,1,0,0,0
+access_reliance_partner_cash,access_reliance_partner_cash,model_reliance_partner_cash,,1,0,0,0
+access_reliance_partner_stock,access_reliance_partner_stock,model_reliance_partner_stock,,1,0,0,0

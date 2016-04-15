@@ -3,7 +3,17 @@
 
 
 		<!-- tree partner reliance -->
-
+		<record id="view_partner_tree_reliance" model="ir.ui.view">
+		    <field name="name">res_partner_tree_reliance</field>
+		    <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+		    <field name="arch" type="xml">
+		    	<field name="display_name" position="after">
+					<field name='sid'	/>
+					<field name='cif'	/>
+		        </field>
+		    </field>
+		</record>
 
 
 		<!-- search partner reliance -->
@@ -58,6 +68,13 @@
 					<field name='agent_id' 			 />            		
             	</field>
 
+            	<page string="Sales &amp; Purchases" position="attributes">
+					<attribute name="attrs">{'invisible':True}</attribute>
+            	</page>
+            	<page string="Accounting" position="attributes">
+					<attribute name="attrs">{'invisible':True}</attribute>
+            	</page>
+
             	<notebook position="inside">
             		<page string="Keluarga" 
             			attrs="{'invisible': [('is_company','=',True)]}" >
@@ -70,6 +87,7 @@
             				</tree>
             			</field>
             		</page>
+            		
             		<page string="Ahli Waris" 
             			attrs="{'invisible': [('is_company','=',True)]}">
             			<field name="partner_ahli_waris_ids">
@@ -82,6 +100,7 @@
             				</tree>
             			</field>
             		</page>
+
             		<page string="Perorangan" 
             			attrs="{'invisible': [('is_company','=',True)]}">
             			<group>
@@ -141,6 +160,7 @@
 							<field name='pekerjaan_nomor_faksimile' 	 />
 						</group>
             		</page>
+
             		<page string="Perusahaan" >
             			<group>
 							<field name='perusahaan_npwp' 						 />
@@ -187,7 +207,39 @@
 							<field name='perusahaan_pendapatan_non_operasional'  />		
 						</group>
             		</page>
+
+            		<page string="LS" >
+            			<notebook string="LS">
+		            		<page string="LS Cash" >
+		            			<field name="partner_cash_ids">
+		            				<tree string="LS Cash">
+										<field name="client_id"		 />
+										<field name="date"			 />
+										<field name="cash_on_hand"	 />
+										<field name="net_ac"		 />
+		            				</tree>
+		            			</field>
+		            		</page>
+
+		            		<page string="LS Stock" >
+		            			<field name="partner_stock_ids">
+		            				<tree string="LS Stock">
+										<field name="date"				 />
+										<field name="client_id"			 />
+										<field name="stock_id"			 />
+										<field name="avg_price"			 />
+										<field name="close_price"		 />
+										<field name="balance"			 />
+										<field name="lpp"				 />
+										<field name="stock_avg_value"	 />
+										<field name="market_value"		 />
+									</tree>
+		            			</field>
+		            		</page>
+		            	</notebook>
+	            	</page>
             	</notebook>
+
             </field>
         </record>
 	</data>

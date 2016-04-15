@@ -93,9 +93,7 @@
 
             	<form version="7">
             		<header>
-						<button string="Confirm" type="object" name="action_confirm" 
-							class="oe_highlight" />
-
+						<!-- <button string="Confirm" type="object" name="action_confirm" class="oe_highlight" /> -->
 						<!-- <button string="Cancel" type="object" name="action_draft"
 						 	states="open" />
 						<button string="Done" type="object" name="action_done"
@@ -168,16 +166,21 @@
 
 
 
+
+
+
+
 		<!-- tree import_ls_cash reliance -->
 		<record id="view_import_ls_cash_tree" model="ir.ui.view">
 		    <field name="name">reliance_import_ls_cash_tree</field>
 		    <field name="model">reliance.import_ls_cash</field>
 		    <field name="arch" type="xml">
-		    	<tree string="list import_ls_cash" >
+		    	<tree string="list import_ls_cash" colors="grey:is_imported==True; blue:is_imported==False">
 					<field name="client_id"		 />
 					<field name="date"			 />
 					<field name="cash_on_hand"	 />
 					<field name="net_ac"		 />
+					<field name="is_imported"		 />
 		        </tree>    
 		    </field>
 		</record>
@@ -187,11 +190,27 @@
 		    <field name="name">import_ls_cash.filter.reliance</field>
 		    <field name="model">reliance.import_ls_cash</field>
 		    <field name="arch" type="xml">
-		        <search string="Search Import LS">
+		        <search string="Search Import LS Cash">
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>		        	
 					<field name="client_id"		 />
 					<field name="date"			 />
 					<field name="cash_on_hand"	 />
 					<field name="net_ac"		 />
+					<field name="is_imported"		 />
+
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
 		        </search>
 		    </field>
 		</record>
@@ -204,8 +223,7 @@
 
             	<form version="7">
             		<header>
-						<button string="Confirm" type="object" name="action_confirm" 
-							class="oe_highlight" />
+						<!-- <button string="Confirm" type="object" name="action_confirm" class="oe_highlight" /> -->
 
 						<!-- <button string="Cancel" type="object" name="action_draft"
 						 	states="open" />
@@ -218,6 +236,7 @@
 						<field name="date"			 />
 						<field name="cash_on_hand"	 />
 						<field name="net_ac"		 />						
+						<field name="is_imported"		 />						
 		            </group>
 
 	            </form>
@@ -227,12 +246,16 @@
 
 
 
+
+
+
+
 		<!-- tree import_ls_stock reliance -->
 		<record id="view_import_ls_stock_tree" model="ir.ui.view">
 		    <field name="name">reliance_import_ls_stock_tree</field>
 		    <field name="model">reliance.import_ls_stock</field>
 		    <field name="arch" type="xml">
-		    	<tree string="list import_ls_stock" >
+		    	<tree string="list import_ls_stock" colors="grey:is_imported==True; blue:is_imported==False">
 					<field name="date"				 />
 					<field name="client_id"			 />
 					<field name="stock_id"			 />
@@ -242,6 +265,7 @@
 					<field name="lpp"				 />
 					<field name="stock_avg_value"	 />
 					<field name="market_value"		 />					
+					<field name="is_imported"		 />					
 		        </tree>    
 		    </field>
 		</record>
@@ -252,6 +276,13 @@
 		    <field name="model">reliance.import_ls_stock</field>
 		    <field name="arch" type="xml">
 		        <search string="Search Import LS">
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+
 					<field name="date"				 />
 					<field name="client_id"			 />
 					<field name="stock_id"			 />
@@ -261,6 +292,13 @@
 					<field name="lpp"				 />
 					<field name="stock_avg_value"	 />
 					<field name="market_value"		 />	
+					<field name="is_imported"		 />
+
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>   					
 		        </search>
 		    </field>
 		</record>
@@ -273,8 +311,7 @@
 
             	<form version="7">
             		<header>
-						<button string="Confirm" type="object" name="action_confirm" 
-							class="oe_highlight" />
+						<!-- <button string="Confirm" type="object" name="action_confirm" class="oe_highlight" /> -->
 
 						<!-- <button string="Cancel" type="object" name="action_draft"
 						 	states="open" />
@@ -292,11 +329,15 @@
 						<field name="lpp"				 />
 						<field name="stock_avg_value"	 />
 						<field name="market_value"		 />	
+						<field name="is_imported"		 />
 		            </group>
 
 	            </form>
             </field>
         </record>
+
+
+
 
 
 
