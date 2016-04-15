@@ -71,9 +71,9 @@
             	<page string="Sales &amp; Purchases" position="attributes">
 					<attribute name="attrs">{'invisible':True}</attribute>
             	</page>
-            	<page string="Accounting" position="attributes">
+            	<!-- <page string="Accounting" position="attributes">
 					<attribute name="attrs">{'invisible':True}</attribute>
-            	</page>
+            	</page> -->
 
             	<notebook position="inside">
             		<page string="Keluarga" 
