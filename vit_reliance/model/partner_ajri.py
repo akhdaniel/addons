@@ -29,7 +29,7 @@ class partner(osv.osv):
 	def get_ajri_pemegang(self, cr, uid, nomor_partisipan, context=None):
 		pemegang = False
 		pid = self.search_read(cr, uid, [('nomor_partisipan','=',nomor_partisipan)], context=context)
-		_logger.warning('participant=%s' % participant)
+		_logger.warning('participant=%s' % pid)
 
 		if pid:
 			pemegang = self.search_read(cr,uid,[('id','=',pid[0].parent_id.id)],context=context)
@@ -41,7 +41,7 @@ class partner(osv.osv):
 		products = False
 		partner_ajri_product = self.pool.get('reliance.partner_ajri_product')
 		pid = self.search(cr, uid, [('nomor_partisipan','=',nomor_partisipan)], context=context)
-		_logger.warning('participant=%s' % participant)
+		_logger.warning('participant=%s' % pid)
 
 		if pid:
 			products = partner_ajri_product.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
