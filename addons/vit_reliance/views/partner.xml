@@ -25,12 +25,13 @@
 				            
 		            <field name="name"/>
 					<field name='reliance_id' 		 />
-					<field name='nomor_partisipan'  />
+					<field name='nomor_partisipan'   />
 					<field name='sid' 				 />
 					<field name='nomor_polis' 		 />
 					<field name='nomor_nasabah' 	 />
 					<field name='cif' 				 />
 					<field name='agent_id' 			 />		  
+					<field name='parent_id' 		 />		  
 
 
 		            <group expand="1" string="Group By...">
