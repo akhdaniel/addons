@@ -64,8 +64,6 @@ class import_ajri(osv.osv):
 
 		for import_ajri in self.browse(cr, uid, ids, context=context):
 			data = {
-				'nomor_participant'	: 
-				'nomor_polis'		: 
 			}
 			data.update({'comment':'AJRI'})
 			
