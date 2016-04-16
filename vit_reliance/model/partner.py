@@ -12,7 +12,7 @@ class res_partner(osv.osv):
 	_name 		= "res.partner"
 	_columns 	= {
 		'reliance_id' 							: fields.char('Reliance ID', select=1),
-		'nomor_participant' 					: fields.char('Nomor Participant', select=1),
+		'nomor_partisipan' 						: fields.char('Nomor Partisipan', select=1),
 		'sid' 									: fields.char('SID', select=1),
 		'nomor_polis' 							: fields.char('Nomor Polis', select=1),
 		'nomor_nasabah' 						: fields.char('Nomor Nasabah', select=1),

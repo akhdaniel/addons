@@ -62,24 +62,56 @@ class import_ajri(osv.osv):
 
 		partner = self.pool.get('res.partner')
 
+		pemegang_old = ''
+
 		for import_ajri in self.browse(cr, uid, ids, context=context):
-			data = {
+
+			# import pdb; pdb.set_trace()
+
+			if pemegang_old != import_ajri.nama_pemegang:
+
+				pemegang_data = {
+					'name'				: import_ajri.nama_pemegang,
+					'nomor_polis'		: import_ajri.nomor_polis,
+					'is_company'		: True,
+					'comment' 			: 'AJRI'
+				}
+				
+				########################## check exiting pemegang partner 
+				pid = partner.search(cr, uid, [('nomor_polis','=',import_ajri.nomor_polis)],context=context)
+				if not pid:
+					pid = partner.create(cr, uid, pemegang_data, context=context)	
+					i = i + 1
+				else:
+					pid = pid[0]
+					_logger.warning('Partner Pemegang exist with nomor_polis %s' % import_ajri.nomor_polis)
+					ex = ex + 1
+
+				pemegang_old = import_ajri.nama_pemegang
+
+
+			########################## check exiting participant partner 
+			participant_data = {
+				'name'				: import_ajri.nama_partisipan,
+				'nomor_partisipan'	: import_ajri.nomor_partisipan,
+				'is_company'		: False,
+				'parent_id'			: pid,
+				'comment' 			: 'AJRI'
 			}
-			data.update({'comment':'AJRI'})
-			
-			# check exiting partner 
-			pid = partner.search(cr, uid, [('nomor_participant','=',import_ajri.nomor_participant)],context=context)
-			if not pid:
-				pid = partner.create(cr, uid, data, context=context)	
+
+			pid2 = partner.search(cr, uid, [('nomor_partisipan','=',import_ajri.nomor_partisipan)],context=context)
+			if not pid2:
+				pid2 = partner.create(cr, uid, participant_data, context=context)	
 				i = i + 1
 			else:
-				_logger.warning('Partner exist with nomor_participant %s' % import_ajri.nomor_participant)
+				_logger.warning('Partner Partisipan exist with nomor_partisipan %s' % import_ajri.nomor_partisipan)
 				ex = ex + 1
 
-			cr.execute("update reliance_import_ajri set is_imported='t' where id=%s" % import_ajri.id)
 
 			#commit per record
+			cr.execute("update reliance_import_ajri set is_imported='t' where id=%s" % import_ajri.id)
 			cr.commit()
+
 		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
 
 

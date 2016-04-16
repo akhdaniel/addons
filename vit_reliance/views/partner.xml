@@ -25,7 +25,7 @@
 				            
 		            <field name="name"/>
 					<field name='reliance_id' 		 />
-					<field name='nomor_participant'  />
+					<field name='nomor_partisipan'  />
 					<field name='sid' 				 />
 					<field name='nomor_polis' 		 />
 					<field name='nomor_nasabah' 	 />
@@ -60,7 +60,7 @@
             <field name="arch" type="xml">
             	<field name="website" position="after">
 					<field name='reliance_id' 		 />
-					<field name='nomor_participant'  />
+					<field name='nomor_partisipan'  />
 					<field name='sid' 				 />
 					<field name='nomor_polis' 		 />
 					<field name='nomor_nasabah' 	 />
