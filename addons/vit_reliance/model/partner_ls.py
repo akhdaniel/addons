@@ -16,27 +16,27 @@ class partner(osv.osv):
 	}
 	
 	def get_ls_cash(self, cr, uid, cif, context=None):
-		results = []
-		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
-		if pid:
-			partner = self.browse(cr, uid, pid, context=context)
-			pc_ids = partner.partner_cash_ids
 
-			
-		return results
+		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
+		partner_cash = self.pool.get('reliance.partner_cash')
+		_logger.warning('pid=%s' % pid)
+		if pid:
+			cashs = partner_cash.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
+		else:
+			_logger.error('no partner with cif=%s' % cif)
+		return cashs 
+
 
 	def get_ls_stock(self, cr, uid, cif, context=None):
-		results = []
+
 		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
 		partner_stock = self.pool.get('reliance.partner_stock')
 		_logger.warning('pid=%s' % pid)
 		if pid:
-			stocks = partner_stock.search_read(cr,uid,[('partner_id','in',pid)],context=context)
+			stocks = partner_stock.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
 			_logger.error('no partner with cif=%s' % cif)
-		return stocks 
-
-
+		return stocks
 
 
 class partner_cash(osv.osv):
@@ -45,7 +45,7 @@ class partner_cash(osv.osv):
 	_columns 	= {
 		"partner_id"	: fields.many2one('res.partner', 'Partner', select=1),
 		"client_id"		: fields.related('partner_id', 'cif' , type="char", 
-			relation="res.partner", string="Client ID" ),
+							relation="res.partner", string="Client ID" ),
 		"date"			: fields.date("Date"),
 		"cash_on_hand"	: fields.float("Cash on Hand"),
 		"net_ac"		: fields.float("Net AC"),
@@ -58,7 +58,7 @@ class partner_stock(osv.osv):
 		"partner_id"		: fields.many2one('res.partner', 'Partner', select=1),
 		"date"				: fields.date("Date", select=1),
 		"client_id"			: fields.related('partner_id', 'cif' , type="char", 
-			relation="res.partner", string="Client ID" ),
+								relation="res.partner", string="Client ID" ),
 		"stock_id"			: fields.char("Stock ID", select=1),
 		"avg_price"			: fields.float("Avg Price"),
 		"close_price"		: fields.float("Close Price"),
