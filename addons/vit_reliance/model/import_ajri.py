@@ -111,18 +111,24 @@ class import_ajri(osv.osv):
 				_logger.warning('Partner Partisipan exist with nomor_partisipan %s' % import_ajri.nomor_partisipan)
 				ex = ex + 1
 
-			########################## check exiting product 
+			########################## check exiting product,category, and company
 			categ = self.pool.get('product.category')
 			categ_id = categ.search(cr, uid, [('name','=','Asuransi Jiwa')], context=context)
 			if not categ_id:
 				raise osv.except_osv(_('Error'),_("Please Create Product Category: Asuransi Jiwa") ) 
+
+			company = self.pool.get('res.company')
+			company_id = company.search(cr, uid, [('name','=','AJRI')], context=context)
+			if not company_id:
+				raise osv.except_osv(_('Error'),_("Please Create Company: AJRI") ) 
 
 			product = self.pool.get('product.product')
 			prod_id = product.search(cr, uid, [('name','=',import_ajri.produk)], context=context)
 			if not prod_id:
 				product_data = {
 					'name'		: import_ajri.produk,
-					'categ_id' 	: categ_id[0]
+					'categ_id' 	: categ_id[0],
+					'owner_id' 	: company_id[0],
 				}
 				prod_id = product.create(cr, uid, product_data, context=context)
 			else:
