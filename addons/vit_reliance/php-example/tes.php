@@ -9,7 +9,7 @@ $uid = $common->authenticate($db, $username, $password, array());
 var_dump($uid);
 
 $models = ripcord::client($url . '/xmlrpc/2/object');
-$method = 'get_ls_cash';
+$method = 'get_ls_stock';
 $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array(
         'BDA001'
 ));
