@@ -63,7 +63,8 @@ class res_partner(osv.osv):
 		'perusahaan_pendapatan_operasional' 	: fields.char('Pendapatan Operasional'),
 		'perusahaan_pendapatan_non_operasional' : fields.char('Pendapatan non Operasional'),
 		
-		'perorangan_tempat_tanggal_lahir' 		: fields.char('Tempat Tanggal Lahir'),
+		'perorangan_tempat_lahir' 				: fields.char('Tempat Lahir'),
+		'perorangan_tanggal_lahir' 				: fields.char('Tanggal Lahir'),
 		'perorangan_nomor_ktp' 					: fields.char('Nomor KTP'),
 		'perorangan_kewarganegaraan' 			: fields.char('Kewarganegaraan'),
 		'perorangan_npwp' 						: fields.char('NPWP'),
