@@ -26,17 +26,28 @@ class partner(osv.osv):
 			_logger.error('no partner with nomor_polis=%s' % nomor_polis)
 		return participants 
 
-
 	def get_ajri_pemegang(self, cr, uid, nomor_partisipan, context=None):
 		pemegang = False
-		participant = self.search_read(cr, uid, [('nomor_partisipan','=',nomor_partisipan)], context=context)
+		pid = self.search_read(cr, uid, [('nomor_partisipan','=',nomor_partisipan)], context=context)
 		_logger.warning('participant=%s' % participant)
 
 		if pid:
-			pemegang = self.search_read(cr,uid,[('id','=',participant[0].parent_id.id)],context=context)
+			pemegang = self.search_read(cr,uid,[('id','=',pid[0].parent_id.id)],context=context)
 		else:
 			_logger.error('no partner with nomor_partisipan=%s' % nomor_partisipan)
 		return pemegang
+
+	def get_ajri_product(self, cr, uid, nomor_partisipan, context=None):
+		products = False
+		partner_ajri_product = self.pool.get('reliance.partner_ajri_product')
+		pid = self.search(cr, uid, [('nomor_partisipan','=',nomor_partisipan)], context=context)
+		_logger.warning('participant=%s' % participant)
+
+		if pid:
+			products = partner_ajri_product.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
+		else:
+			_logger.error('no partner with nomor_partisipan=%s' % nomor_partisipan)
+		return products
 
 
 class partner_ajri_product(osv.osv):
