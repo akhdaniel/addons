@@ -11,14 +11,14 @@ class res_partner(osv.osv):
 	_inherit 	= "res.partner"
 	_name 		= "res.partner"
 	_columns 	= {
-		'reliance_id' 				: fields.char('Reliance ID', select=1),
-		'nomor_participant' 		: fields.char('Nomor Participant', select=1),
-		'sid' 						: fields.char('SID', select=1),
-		'nomor_polis' 				: fields.char('Nomor Polis', select=1),
-		'nomor_nasabah' 			: fields.char('Nomor Nasabah', select=1),
-		'cif' 						: fields.char('CIF', select=1),
-		'agent_id' 					: fields.char('Agent', select=1),
-		'id_card_type' 				: fields.char('ID Card Type', select=1),
+		'reliance_id' 							: fields.char('Reliance ID', select=1),
+		'nomor_participant' 					: fields.char('Nomor Participant', select=1),
+		'sid' 									: fields.char('SID', select=1),
+		'nomor_polis' 							: fields.char('Nomor Polis', select=1),
+		'nomor_nasabah' 						: fields.char('Nomor Nasabah', select=1),
+		'cif' 									: fields.char('CIF', select=1),
+		'agent_id' 								: fields.char('Agent', select=1),
+		'id_card_type' 							: fields.char('ID Card Type', select=1),
 
 		'perusahaan_npwp' 						: fields.char('NPWP'),
 		'perusahaan_bidang_usaha' 				: fields.char('Bidang Usaha'),
