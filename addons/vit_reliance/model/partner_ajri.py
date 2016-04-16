@@ -10,6 +10,9 @@ _logger = logging.getLogger(__name__)
 class partner(osv.osv):
 	_name 		= "res.partner"
 	_inherit 	= "res.partner"
+	_columns = {
+		'partner_ajri_product_ids'	: fields.one2many('reliance.partner_ajri_product','partner_id','Products', ondelete="cascade"),
+	}
 
 	
 	def get_ajri_participant(self, cr, uid, nomor_polis, context=None):
@@ -36,3 +39,18 @@ class partner(osv.osv):
 		return pemegang
 
 
+class partner_ajri_product(osv.osv):
+	_name = "reliance.partner_ajri_product"
+	_columns = {
+		'partner_id'		: fields.many2one('res.partner', 'Partner'),
+		'product_id'		: fields.many2one('product.product', 'Product'),
+		'start_date'		: fields.date('Tanggal Mulai'),
+		'end_date'			: fields.date('Tanggal Selesai'),
+		'status'			: fields.char('Status'),
+		'up'				: fields.float('UP'),
+		"total_premi"		: fields.float('Total Premi'),
+		"status_klaim"		: fields.char('Status Klaim'),
+		"status_bayar"		: fields.char('Status Bayar'),
+		"tgl_bayar"			: fields.date('Tanggal Bayar'),
+		"klaim_disetujui" 	: fields.char('Klaim Disetujui'),
+	}

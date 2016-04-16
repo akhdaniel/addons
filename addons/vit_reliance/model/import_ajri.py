@@ -53,8 +53,6 @@ class import_ajri(osv.osv):
 
 	################################################################
 	# the import process
-	# baca record ids, insert ke partner dengan field sesuai 
-	# PARTNER_MAPPING
 	################################################################
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
@@ -66,7 +64,6 @@ class import_ajri(osv.osv):
 
 		for import_ajri in self.browse(cr, uid, ids, context=context):
 
-			# import pdb; pdb.set_trace()
 
 			if pemegang_old != import_ajri.nama_pemegang:
 
@@ -90,12 +87,18 @@ class import_ajri(osv.osv):
 				pemegang_old = import_ajri.nama_pemegang
 
 
+
 			########################## check exiting participant partner 
+			if import_ajri.tgl_lahir:
+				date = datetime.strptime(import_ajri.tgl_lahir, "%d-%b-%Y")
+			else:
+				date = False 
 			participant_data = {
 				'name'				: import_ajri.nama_partisipan,
 				'nomor_partisipan'	: import_ajri.nomor_partisipan,
 				'is_company'		: False,
 				'parent_id'			: pid,
+				'perorangan_tanggal_lahir'	: date,
 				'comment' 			: 'AJRI'
 			}
 
@@ -104,8 +107,47 @@ class import_ajri(osv.osv):
 				pid2 = partner.create(cr, uid, participant_data, context=context)	
 				i = i + 1
 			else:
+				pid2=pid2[0]
 				_logger.warning('Partner Partisipan exist with nomor_partisipan %s' % import_ajri.nomor_partisipan)
 				ex = ex + 1
+
+			########################## check exiting product 
+			categ = self.pool.get('product.category')
+			categ_id = categ.search(cr, uid, [('name','=','Asuransi Jiwa')], context=context)
+			if not categ_id:
+				raise osv.except_osv(_('Error'),_("Please Create Product Category: Asuransi Jiwa") ) 
+
+			product = self.pool.get('product.product')
+			prod_id = product.search(cr, uid, [('name','=',import_ajri.produk)], context=context)
+			if not prod_id:
+				product_data = {
+					'name'		: import_ajri.produk,
+					'categ_id' 	: categ_id[0]
+				}
+				prod_id = product.create(cr, uid, product_data, context=context)
+			else:
+				prod_id = prod_id[0]
+
+
+			########################## import to partner_ajri_product
+			partner_ajri_product = self.pool.get('reliance.partner_ajri_product')
+
+
+			pap_data = {
+				'partner_id'		: pid2,
+				'product_id'		: prod_id,
+				'start_date'		: datetime.strptime(import_ajri.tgl_mulai, "%d-%b-%Y") if import_ajri.tgl_mulai else False,
+				'end_date'			: datetime.strptime(import_ajri.tgl_selesai, "%d-%b-%Y") if import_ajri.tgl_selesai else False,
+				'status'			: import_ajri.status,
+				'up'				: import_ajri.up.strip().replace(',',''),
+				"total_premi"		: import_ajri.total_premi.strip().replace(',',''),
+				"status_klaim"		: import_ajri.status_klaim,
+				"status_bayar"		: import_ajri.status_bayar,
+				"tgl_bayar"			: datetime.strptime(import_ajri.tgl_bayar, "%d-%b-%Y") if import_ajri.tgl_bayar else False,
+				"klaim_disetujui" 	: import_ajri.klaim_disetujui,
+
+			}
+			partner_ajri_product.create(cr, uid, pap_data, context=context)
 
 
 			#commit per record

@@ -4,7 +4,8 @@
 	"depends": [
 		"base",
 		"board",
-		"stock"
+		"stock",
+		"product",
 	], 
 	"author": "vitraining.com", 
 	"category": "Tools", 
