@@ -28,16 +28,20 @@ class partner(osv.osv):
 	def get_ls_stock(self, cr, uid, cif, context=None):
 		results = []
 		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
+		partner_stock = self.pool.get('reliance.partner_stock')
+		_logger.warning('pid=%s' % pid)
 		if pid:
-			partner = self.browse(cr, uid, pid, context=context)
-			ps_ids = partner.partner_stock_ids
+			stocks = partner_stock.search_read(cr,uid,[('partner_id','in',pid)],context=context)
+		else:
+			_logger.error('no partner with cif=%s' % cif)
+		return stocks 
 
-			
-		return ps_ids
+
 
 
 class partner_cash(osv.osv):
 	_name 		= "reliance.partner_cash"
+	_rec_name 	= "partner_id"
 	_columns 	= {
 		"partner_id"	: fields.many2one('res.partner', 'Partner', select=1),
 		"client_id"		: fields.related('partner_id', 'cif' , type="char", 
@@ -49,6 +53,7 @@ class partner_cash(osv.osv):
 
 class partner_stock(osv.osv):
 	_name 		= "reliance.partner_stock"
+	_rec_name 	= "stock_id"
 	_columns 	= {
 		"partner_id"		: fields.many2one('res.partner', 'Partner', select=1),
 		"date"				: fields.date("Date", select=1),

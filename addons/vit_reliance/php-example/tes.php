@@ -10,8 +10,6 @@ var_dump($uid);
 
 $models = ripcord::client($url . '/xmlrpc/2/object');
 $res = $models->execute_kw( $db, $uid, $password, 'res.partner', 'get_ls_stock', array(
-    array(
-        '000088888'
-    )
+        'BDA001'
 ));
 var_dump($res);
