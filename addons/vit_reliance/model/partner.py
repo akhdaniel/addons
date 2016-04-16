@@ -118,7 +118,8 @@ class res_partner(osv.osv):
 		'partner_keluarga_ids' 					: fields.one2many('reliance.keluarga','partner_id','Keluarga', ondelete="cascade", select=1),
 
 	}
-
+	_sql_constraints = [('unique_reliance_id', 'unique(reliance_id)',
+                         'Reliance ID Must be Unique!')]
 
 
 
