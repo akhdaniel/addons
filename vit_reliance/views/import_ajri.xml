@@ -1,0 +1,151 @@
+<openerp>
+	<data>
+
+		<!-- improt_ajri list -->
+
+		<record id="action_import_ajri_list" model="ir.actions.act_window">
+			<field name="name">AJRI Customer</field>
+			<field name="res_model">reliance.import_ajri</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem id="rcm_import_ajri" name="AJRI" sequence="20" parent="rcm_import"/>
+
+			<!-- import AJRI customer menu -->
+			<menuitem id="rcm_import_ajri_cust"
+			 action="action_import_ajri_list"
+			 name="AJRI Customer"
+			 sequence="10"
+			 parent="rcm_import_ajri"/>
+
+
+		<!-- tree import_ajri reliance -->
+		<record id="view_import_ajri_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_ajri_tree</field>
+		    <field name="model">reliance.import_ajri</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_ajri" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="nomor_polis"		 />
+					<field name="nama_pemegang"		 />
+					<field name="nomor_partisipan"	 />
+					<field name="nama_partisipan"	 />
+					<field name="produk"			 />
+					<field name="tgl_lahir"			 />
+					<field name="tgl_mulai"			 />
+					<field name="tgl_selesai"		 />
+					<field name="status"			 />
+					<field name="up"				 />
+					<field name="total_premi"		 />
+					<field name="status_klaim"		 />
+					<field name="status_bayar"		 />
+					<field name="tgl_bayar"			 />
+					<field name="klaim_disetujui"	 />
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_ajri reliance -->
+		<record id="view_import_ajri_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_ajri.filter.reliance</field>
+		    <field name="model">reliance.import_ajri</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import AJRI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+					<!-- <field name="client_id"				 /> -->
+					<field name="nomor_polis"		 />
+					<field name="nama_pemegang"		 />
+					<field name="nomor_partisipan"	 />
+					<field name="nama_partisipan"	 />
+					<field name="produk"			 />
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		                <filter string="Nomor Polis" icon="terp-personal" 
+		                    domain="[]" name="group_by_nomor_polis"
+		                	 context="{'group_by':'nomor_polis'}"/>
+		                <filter string="Nama Pemegang" icon="terp-personal" 
+		                    domain="[]" name="group_by_nama_pemegang"
+		                	 context="{'group_by':'nama_pemegang'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_ajri reliance -->
+        <record id="view_import_ajri_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_ajri_form_reliance</field>
+            <field name="model">reliance.import_ajri</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+						<field name="nomor_polis"		 />
+						<field name="nama_pemegang"		 />
+						<field name="nomor_partisipan"	 />
+						<field name="nama_partisipan"	 />
+						<field name="produk"			 />
+						<field name="tgl_lahir"			 />
+						<field name="tgl_mulai"			 />
+						<field name="tgl_selesai"		 />
+						<field name="status"			 />
+						<field name="up"				 />
+						<field name="total_premi"		 />
+						<field name="status_klaim"		 />
+						<field name="status_bayar"		 />
+						<field name="tgl_bayar"			 />
+						<field name="klaim_disetujui"	 />
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+	    <!-- context menu More.. di tree import_ajri -->
+	    <record id="action_import_ajri_partner" model="ir.actions.server">
+	        <field name="name">Import to Partner</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_ajri"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_ajri').action_import_partner(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_ajri'" name="model"/>
+	        <field name="name">Import to Partner</field>
+	        <field eval="'ir.actions.server,%d'%action_import_ajri_partner" name="value"/>
+	    </record>
+
+
+
+
+	</data>
+</openerp>
