@@ -8,3 +8,8 @@
 "access_reliance_import_ls_stock","access_reliance_import_ls_stock","model_reliance_import_ls_stock","base.group_sale_manager",1,1,1,1
 "access_reliance_partner_cash","access_reliance_partner_cash","model_reliance_partner_cash","base.group_sale_manager",1,1,1,1
 "access_reliance_partner_stock","access_reliance_partner_stock","model_reliance_partner_stock","base.group_sale_manager",1,1,1,1
+"access_reliance_import_ajri","access_reliance_import_ajri","model_reliance_import_ajri","base.group_sale_manager",1,1,1,1
+"access_reliance_partner_ajri_product","access_reliance_partner_ajri_product","model_reliance_partner_ajri_product","base.group_sale_manager",1,1,1,1
+"access_reliance_import_arg","access_reliance_import_arg","model_reliance_import_arg","base.group_sale_manager",1,1,1,1
+"access_reliance_import_refi","access_reliance_import_refi","model_reliance_import_refi","base.group_sale_manager",1,1,1,1
+"access_reliance_import_rmi","access_reliance_import_rmi","model_reliance_import_rmi","base.group_sale_manager",1,1,1,1

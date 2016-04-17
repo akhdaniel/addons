@@ -12,9 +12,9 @@ CAMPAIGN_STATES =[('draft','Draft'),('open','Open'), ('done','Done')]
 class reliance_campaign(osv.osv):
 	_name 		= "reliance.campaign"
 	_columns 	= {
-		'name'			: fields.char('Name', select=1, required=True),
-		'date_start' 	: fields.date('Start Date', select=1, required=True),
-		'date_end' 		: fields.date('End Date', select=1, required=True),
+		'name'					: fields.char('Name', select=1, required=True),
+		'date_start' 			: fields.date('Start Date', select=1, required=True),
+		'date_end' 				: fields.date('End Date', select=1, required=True),
 
 		'criteria_age_start' 	: fields.integer('Start Age'),
 		'criteria_age_end' 		: fields.integer('To Age'),
@@ -37,14 +37,16 @@ class reliance_campaign(osv.osv):
 					),
 		'state'			: fields.selection(CAMPAIGN_STATES,'Status',readonly=True,required=True),
 		'user_id'		: fields.many2one('res.users', 'Created By'),
+
+		'distribution_list_id' : fields.many2one('distribution.list', 'Distribution List'),
 	}
 
 	_defaults = {
 		'date_start'     	: lambda *a : time.strftime("%Y-%m-%d") ,
 		'date_end'     		: lambda *a : time.strftime("%Y-%m-%d") ,
 		'user_id'			: lambda obj, cr, uid, context: uid,
-		'name'			: lambda obj, cr, uid, context: '/',		
-		'state'       	: CAMPAIGN_STATES[0][0],
+		'name'				: lambda obj, cr, uid, context: '/',		
+		'state'       		: CAMPAIGN_STATES[0][0],
 	}
 
 	def action_draft(self,cr,uid,ids,context=None):

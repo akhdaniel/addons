@@ -1,0 +1,324 @@
+<openerp>
+	<data>
+
+		<!-- improt_rmi list -->
+
+		<record id="action_import_rmi_list" model="ir.actions.act_window">
+			<field name="name">RMI Customer</field>
+			<field name="res_model">reliance.import_rmi</field>
+			<field name="view_mode">tree,form</field>
+		</record>		
+
+		<record id="action_import_rmi_product_holding_list" model="ir.actions.act_window">
+			<field name="name">RMI Product Holding</field>
+			<field name="res_model">reliance.import_rmi_product_holding</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem id="rcm_import_rmi" name="RMI" sequence="50" parent="rcm_import"/>
+
+			<!-- import RMI customer menu -->
+			<menuitem id="rcm_import_rmi_cust"
+			 action="action_import_rmi_list"
+			 name="RMI Customer"
+			 sequence="10"
+			 parent="rcm_import_rmi"/>
+
+			<!-- import RMI product menu -->
+			<menuitem id="rcm_import_rmi_product_holding"
+			 action="action_import_rmi_product_holding_list"
+			 name="RMI Product Holding"
+			 sequence="20"
+			 parent="rcm_import_rmi"/>
+
+
+
+		<!-- PARTNER -->
+
+
+		<!-- tree import_rmi reliance -->
+		<record id="view_import_rmi_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_rmi_tree</field>
+		    <field name="model">reliance.import_rmi</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_rmi" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="sid" />						
+					<field name="nama" />						
+					<field name="alamat_ktp" />				
+					<field name="no_ktp_siup" />				
+					<field name="propinsi" />					
+					<field name="kota" />						
+					<field name="kode_pos" />					
+					<field name="negara" />					
+					<field name="agama" />						
+					<field name="tempat_lahir" />				
+					<field name="tanggal_lahir" />				
+					<field name="nomor_tlp" />					
+					<field name="alamat_surat_menyurat" />		
+					<field name="propinsi_surat_menyurat" />	
+					<field name="kota_surat_menyurat" />		
+					<field name="kode_pos_surat_menyurat" />	
+					<field name="negara_surat_menyurat" />		
+					<field name="pendidikan_terakhir" />		
+					<field name="fax" />						
+					<field name="telpon" />					
+					<field name="email" />						
+					<field name="handphone" />					
+					<field name="pekerjaan" />					
+					<field name="gaji_pertahun" />				
+					<field name="alasan_berinvestasi" />		
+					<field name="kewarganegaraan" />			
+					<field name="ahli_waris" />				
+					<field name="hubungan_dengan_ahli_waris" />
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_rmi reliance -->
+		<record id="view_import_rmi_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_rmi.filter.reliance</field>
+		    <field name="model">reliance.import_rmi</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import RMI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+					<field name="sid" />						
+					<field name="nama" />						
+					<field name="alamat_ktp" />				
+					<field name="no_ktp_siup" />				
+					<field name="propinsi" />					
+					<field name="kota" />						
+					<field name="kode_pos" />					
+					<field name="negara" />					
+					<field name="agama" />						
+					<field name="tempat_lahir" />				
+					<field name="tanggal_lahir" />				
+					<field name="nomor_tlp" />					
+					<field name="alamat_surat_menyurat" />		
+					<field name="propinsi_surat_menyurat" />	
+					<field name="kota_surat_menyurat" />		
+					<field name="kode_pos_surat_menyurat" />	
+					<field name="negara_surat_menyurat" />		
+					<field name="pendidikan_terakhir" />		
+					<field name="fax" />						
+					<field name="telpon" />					
+					<field name="email" />						
+					<field name="handphone" />					
+					<field name="pekerjaan" />					
+					<field name="gaji_pertahun" />				
+					<field name="alasan_berinvestasi" />		
+					<field name="kewarganegaraan" />			
+					<field name="ahli_waris" />				
+					<field name="hubungan_dengan_ahli_waris" />
+		
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_rmi reliance -->
+        <record id="view_import_rmi_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_rmi_form_reliance</field>
+            <field name="model">reliance.import_rmi</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+
+
+						<field name="sid" />						
+						<field name="nama" />						
+						<field name="alamat_ktp" />				
+						<field name="no_ktp_siup" />				
+						<field name="propinsi" />					
+						<field name="kota" />						
+						<field name="kode_pos" />					
+						<field name="negara" />					
+						<field name="agama" />						
+						<field name="tempat_lahir" />				
+						<field name="tanggal_lahir" />				
+						<field name="nomor_tlp" />					
+						<field name="alamat_surat_menyurat" />		
+						<field name="propinsi_surat_menyurat" />	
+						<field name="kota_surat_menyurat" />		
+						<field name="kode_pos_surat_menyurat" />	
+						<field name="negara_surat_menyurat" />		
+						<field name="pendidikan_terakhir" />		
+						<field name="fax" />						
+						<field name="telpon" />					
+						<field name="email" />						
+						<field name="handphone" />					
+						<field name="pekerjaan" />					
+						<field name="gaji_pertahun" />				
+						<field name="alasan_berinvestasi" />		
+						<field name="kewarganegaraan" />			
+						<field name="ahli_waris" />				
+						<field name="hubungan_dengan_ahli_waris" />
+
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+	    <!-- context menu More.. di tree import_rmi -->
+	    <record id="action_import_rmi_partner" model="ir.actions.server">
+	        <field name="name">Import to Partner</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_rmi"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_rmi').action_import_partner(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_rmi'" name="model"/>
+	        <field name="name">Import to Partner</field>
+	        <field eval="'ir.actions.server,%d'%action_import_rmi_partner" name="value"/>
+	    </record>
+
+
+
+
+	    <!-- PRODUCT HOLDING -->
+
+
+
+		<!-- tree import_rmi_product_holding reliance -->
+		<record id="view_import_rmi_product_holding_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_rmi_product_holding_tree</field>
+		    <field name="model">reliance.import_rmi_product_holding</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_rmi_product_holding" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="sid" />						
+					<field name="nama_investor" />				
+					<field name="product_id" />				
+					<field name="product_name" />				
+					<field name="unit_penyertaan" />			
+					<field name="nab_saat_beli" />				
+					<field name="nab_sampai_hari_ini" />		
+					<field name="nominal_investasi_awal" />	
+					<field name="nominal_investasi_akhir" />	
+					<field name="profit_capital_loss" />		
+					<field name='is_imported' /> 				
+					<field name="notes" />						
+
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_rmi_product_holding reliance -->
+		<record id="view_import_rmi_product_holding_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_rmi_product_holding.filter.reliance</field>
+		    <field name="model">reliance.import_rmi_product_holding</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import RMI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+
+					<field name="sid" />						
+					<field name="nama_investor" />				
+					<field name="product_id" />				
+					<field name="product_name" />				
+					<field name="unit_penyertaan" />			
+					<field name="nab_saat_beli" />				
+					<field name="nab_sampai_hari_ini" />		
+					<field name="nominal_investasi_awal" />	
+					<field name="nominal_investasi_akhir" />	
+					<field name="profit_capital_loss" />		
+					<field name='is_imported' /> 				
+					<field name="notes" />			
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_rmi_product_holding reliance -->
+        <record id="view_import_rmi_product_holding_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_rmi_product_holding_form_reliance</field>
+            <field name="model">reliance.import_rmi_product_holding</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+
+	            		<field name="sid" />						
+						<field name="nama_investor" />				
+						<field name="product_id" />				
+						<field name="product_name" />				
+						<field name="unit_penyertaan" />			
+						<field name="nab_saat_beli" />				
+						<field name="nab_sampai_hari_ini" />		
+						<field name="nominal_investasi_awal" />	
+						<field name="nominal_investasi_akhir" />	
+						<field name="profit_capital_loss" />		
+
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+	    <!-- context menu More.. di tree import_rmi_product_holding -->
+	    <record id="action_import_product_holding" model="ir.actions.server">
+	        <field name="name">Import to Product Holding</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_rmi_product_holding"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_rmi_product_holding').action_import_product_holding(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_rmi_product_holding'" name="model"/>
+	        <field name="name">Import to Product Holding</field>
+	        <field eval="'ir.actions.server,%d'%action_import_product_holding" name="value"/>
+	    </record>
+
+
+
+
+	</data>
+</openerp>

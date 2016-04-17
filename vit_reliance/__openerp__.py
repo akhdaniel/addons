@@ -24,9 +24,14 @@ Manage
 		"views/partner.xml", 
 		"views/campaign.xml", 
 		"views/product.xml", 
+		
 		"menu.xml", 
 		"views/import_ls.xml", 
 		"views/import_ajri.xml", 
+		"views/import_arg.xml", 
+		"views/import_refi.xml", 
+		"views/import_rmi.xml", 
+
 		"data/sequence.xml",
 		"data/cron.xml",
 	],
