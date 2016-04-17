@@ -33,9 +33,6 @@ class Partner(http.Controller):
 
 		print json.dumps(prodi_ids)		
 
-
-
-
 	######################################################################################
 	# halaman registration
 	# muncul form registrasi, action ke registraion_process
@@ -463,6 +460,97 @@ class Partner(http.Controller):
 			'message'		: message,
 			'reg'			: partner.reg
 		})
+
+
+	######################################################################################
+	# halaman portal mahasiswa
+	# muncul form portal mahasiswa
+	######################################################################################
+	@http.route('/mahasiswa', auth='user', website=True)
+	def mahasiswa(self, **kw):
+		cr, uid, context, registry = request.cr, request.uid, request.context, request.registry
+
+		message_error = kw.get('message_error','')
+		message_success = kw.get('message_success','')
+
+		User = http.request.env['res.users']
+		user = User.browse( uid )
+		partner = user.partner_id
+
+		Prodi  = http.request.env['master.prodi']
+		prodi_ids = Prodi.search([])
+
+		Tahun  = http.request.env['academic.year']
+		tahun_ids = Tahun.search([('is_active','=',True)])
+
+		Semester  = http.request.env['master.semester']
+		semester_ids = Semester.search([])
+
+		Lokasi  = http.request.env['master.alamat.kampus']
+		alamat_ids = Lokasi.search([])
+
+		Type  = http.request.env['master.type.mahasiswa']
+		type_mhs_ids = Type.search([])		
+		
+		Konsentrasi  = http.request.env['master.konsentrasi']
+		konsentrasi_ids = Konsentrasi.search([])
+
+		Jenis_pendaftaran  = http.request.env['akademik.jenis_pendaftaran']
+		jenis_pendaftaran_ids = Jenis_pendaftaran.search([])
+
+		penghasilans = [('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
+
+		jadwal_ids = [('pagi','Pagi'),('siang','Siang'),('malam','Malam')]
+		penghasilan_ayah = [('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
+		pekerjaans = [('pns','Pengawai Negeri Sipil'),('tni/polri','TNI/Polri'),('petani','Petani'),('peg_swasta', 'Pegawai Swasta'),('wiraswasta','Wiraswasta'),('none','Tidak Bekerja'),('lain','Lain-lain')]
+		jenis_kelamins = [('L','Laki-Laki'),('P','Perempuan')]
+		keadaans = [('ada','Masih Ada'),('alm','Alm')]
+		agamas = [('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')]
+		type_pendaftarans = [('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')]
+		jalur_masuks = [('perorangan','Perorangan'),('group','Group'),('prestasi','Jalur Prestasi')]
+		hubungans = [('umum','Umum'),('ortu','Orang Tua Alumni ISTN'),('cikini','Lulusan SLTA Perguruan Cikini'),('karyawan','Karyawan Tetap (Masih Aktif) ISTN')]
+		type_pembayarans = [('1','Tunai'),('6','6 x Angsuran')]
+		
+		Invoice = http.request.env['account.invoice']
+		invoice = Invoice.search([('origin','ilike','pendaftaran'),('partner_id','=',partner.id)])
+
+
+		page = ''
+		if partner.status_mahasiswa == 'Mahasiswa':
+			page = 'vit_universities_web.mahasiswa_view'
+		else :
+			page = 'vit_universities_web.mahasiswa_view_hidden'
+
+		return http.request.render(page,
+		{
+			'partner'		: partner,
+			'target_title'	: 'Mahasiswa', 
+			'prodi_ids'		: prodi_ids,
+			'konsentrasi_ids': konsentrasi_ids,
+			'tahun_ids'		: tahun_ids,
+			'alamat_ids'    : alamat_ids,
+			'jenis_pendaftaran_ids' : jenis_pendaftaran_ids,
+			'type_mhs_ids'	: type_mhs_ids,
+			'type_mhs_ids'	: type_mhs_ids,
+			'semester_ids'	: semester_ids,
+			'pekerjaans'	: pekerjaans,
+			'pekerjaans2'	: pekerjaans,
+			'pekerjaans3'	: pekerjaans,
+			'penghasilan_ayah' : penghasilan_ayah,
+			'penghasilan_ibu'  : penghasilan_ayah,
+			'penghasilan_penanggung' : penghasilan_ayah,
+			'keadaans'		: keadaans,
+			'jenis_kelamins': jenis_kelamins,
+			'agamas'		: agamas,
+			'type_pendaftarans': type_pendaftarans,
+			'jalur_masuks'	: jalur_masuks,
+			'hubungans'		: hubungans,
+			'type_pembayarans': type_pembayarans,
+			'jadwal_ids'		: jadwal_ids,
+			'partner'		: partner,
+			'message_error'	: message_error,
+			'message_success': message_success
+		} )	
 
 
 
