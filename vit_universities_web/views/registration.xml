@@ -58,7 +58,7 @@
                     </div>
                 </div>  
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
                     <div class="col-md-3 col-sm-4">
                         <select class="form-control" name="type_pendaftaran">
@@ -67,7 +67,7 @@
                           </t>
                         </select>
                     </div>
-                </div> 
+                </div>  -->
 
                 <div class="form-group">
                     <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
@@ -1301,20 +1301,19 @@
 </template>
 
 
-
 <!-- hanya lihat saja -->
 <template id="vit_universities_web.registration_just_view">
     <t t-call="website.layout">
         <t t-set="title">Registration Data</t>
         <div class="container">
 
-<!--             <div class="alert alert-success">
+            <!--<div class="alert alert-success">
                 <p>Terima kasih sudah melakukan pendaftaran mahasiswa baru di ISTN, silahkan lakukan pembayaran uang pendaftaran di ATM BNI </p>
                 <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
             </div> -->
 
             <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
-            <h2>NIM  <t t-esc="partner.npm"/></h2>
+
             <form class="form-horizontal mt32" >
 
                
@@ -1588,7 +1587,6 @@
         </div>
     </t>
 </template>
-
 
 </data>
 </openerp>

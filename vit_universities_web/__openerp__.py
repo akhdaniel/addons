@@ -51,7 +51,7 @@ Persiapan:
         # 'views/pages.xml', # homepage
         # 'views/search.xml',
         'views/registration.xml',
-        # 'views/discharge.xml',
+        'views/mahasiswa.xml',
         
     ],
     'css':['static/src/css/*.css'],
