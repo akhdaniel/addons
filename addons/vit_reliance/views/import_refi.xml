@@ -1,0 +1,115 @@
+<openerp>
+	<data>
+
+		<!-- improt_ajri list -->
+
+		<record id="action_import_refi_list" model="ir.actions.act_window">
+			<field name="name">REFI Customer</field>
+			<field name="res_model">reliance.import_refi</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem id="rcm_import_refi" name="REFI" sequence="40" parent="rcm_import"/>
+
+			<!-- import REFI customer menu -->
+			<menuitem id="rcm_import_refi_cust"
+			 action="action_import_refi_list"
+			 name="REFI Customer"
+			 sequence="10"
+			 parent="rcm_import_refi"/>
+
+
+		<!-- tree import_refi reliance -->
+		<record id="view_import_refi_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_refi_tree</field>
+		    <field name="model">reliance.import_refi</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_refi" colors="grey:is_imported==True; blue:is_imported==False">
+
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_refi reliance -->
+		<record id="view_import_refi_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_refi.filter.reliance</field>
+		    <field name="model">reliance.import_refi</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import REFI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+		
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_refi reliance -->
+        <record id="view_import_refi_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_refi_form_reliance</field>
+            <field name="model">reliance.import_refi</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+
+
+						
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+	    <!-- context menu More.. di tree import_refi -->
+	    <record id="action_import_refi_partner" model="ir.actions.server">
+	        <field name="name">Import to Partner</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_refi"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_refi').action_import_partner(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_refi'" name="model"/>
+	        <field name="name">Import to Partner</field>
+	        <field eval="'ir.actions.server,%d'%action_import_refi_partner" name="value"/>
+	    </record>
+
+
+
+
+	</data>
+</openerp>

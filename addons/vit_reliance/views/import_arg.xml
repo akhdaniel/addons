@@ -1,0 +1,166 @@
+<openerp>
+	<data>
+
+		<!-- improt_ajri list -->
+
+		<record id="action_import_arg_list" model="ir.actions.act_window">
+			<field name="name">ARG Customer</field>
+			<field name="res_model">reliance.import_arg</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<menuitem id="rcm_import_arg" name="ARG" sequence="30" parent="rcm_import"/>
+
+			<!-- import ARG customer menu -->
+			<menuitem id="rcm_import_arg_cust"
+			 action="action_import_arg_list"
+			 name="ARG Customer"
+			 sequence="10"
+			 parent="rcm_import_arg"/>
+
+
+		<!-- tree import_arg reliance -->
+		<record id="view_import_arg_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_arg_tree</field>
+		    <field name="model">reliance.import_arg</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_arg" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="policy_no" />			
+					<field name="class" />				
+					<field name="subclass" />			
+					<field name="eff_date" />			
+					<field name="exp_date" />			
+					<field name="company_code" />		
+					<field name="company_name" />		
+					<field name="company_type" />		
+					<field name="marketing_code" />	
+					<field name="marketing_name" />	
+					<field name="cust_code" />			
+					<field name="cust_name" />			
+					<field name="cust_fullname" />		
+					<field name="qq" />				
+					<field name="cust_cp" />			
+					<field name="cust_addr_1" />		
+					<field name="cust_addr_2" />		
+					<field name="cust_city" />			
+					<field name="cust_postal_code" />	
+					<field name="cust_province" />		
+					<field name="cust_country_name" />	
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_arg reliance -->
+		<record id="view_import_arg_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_arg.filter.reliance</field>
+		    <field name="model">reliance.import_arg</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import ARG">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+					<field name="policy_no" />			
+					<field name="class" />				
+					<field name="subclass" />			
+					<field name="eff_date" />			
+					<field name="exp_date" />			
+					<field name="company_code" />		
+					<field name="company_name" />		
+					<field name="company_type" />		
+					<field name="marketing_code" />	
+					<field name="marketing_name" />	
+					<field name="cust_code" />			
+					<field name="cust_name" />			
+					<field name="cust_fullname" />		
+					<field name="qq" />				
+					<field name="cust_cp" />			
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_arg reliance -->
+        <record id="view_import_arg_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_arg_form_reliance</field>
+            <field name="model">reliance.import_arg</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+						<field name="policy_no" />			
+						<field name="class" />				
+						<field name="subclass" />			
+						<field name="eff_date" />			
+						<field name="exp_date" />			
+						<field name="company_code" />		
+						<field name="company_name" />		
+						<field name="company_type" />		
+						<field name="marketing_code" />	
+						<field name="marketing_name" />	
+						<field name="cust_code" />			
+						<field name="cust_name" />			
+						<field name="cust_fullname" />		
+						<field name="qq" />				
+						<field name="cust_cp" />			
+						<field name="cust_addr_1" />		
+						<field name="cust_addr_2" />		
+						<field name="cust_city" />			
+						<field name="cust_postal_code" />	
+						<field name="cust_province" />		
+						<field name="cust_country_name" />
+						
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+
+
+
+
+
+
+	    <!-- context menu More.. di tree import_arg -->
+	    <record id="action_import_arg_partner" model="ir.actions.server">
+	        <field name="name">Import to Partner</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_arg"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_arg').action_import_partner(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_partner_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_arg'" name="model"/>
+	        <field name="name">Import to Partner</field>
+	        <field eval="'ir.actions.server,%d'%action_import_arg_partner" name="value"/>
+	    </record>
+
+
+
+
+	</data>
+</openerp>

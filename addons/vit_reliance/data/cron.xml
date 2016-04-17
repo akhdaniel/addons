@@ -10,7 +10,7 @@
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
-            <field name="doall" eval="True"/>
+            <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_ls'"/>
             <field name="function" eval="'cron_import_partner'"/>
             <field name="args" eval="'()'" />
@@ -22,7 +22,7 @@
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
-            <field name="doall" eval="True"/>
+            <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_ls_cash'"/>
             <field name="function" eval="'cron_import_partner_cash'"/>
             <field name="args" eval="'()'" />
@@ -34,7 +34,7 @@
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
-            <field name="doall" eval="True"/>
+            <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_ls_stock'"/>
             <field name="function" eval="'cron_import_partner_stock'"/>
             <field name="args" eval="'()'" />
@@ -49,7 +49,7 @@
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
-            <field name="doall" eval="True"/>
+            <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_ajri'"/>
             <field name="function" eval="'cron_import_partner'"/>
             <field name="args" eval="'()'" />

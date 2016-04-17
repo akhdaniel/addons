@@ -96,6 +96,7 @@ class import_ajri(osv.osv):
 			participant_data = {
 				'name'				: import_ajri.nama_partisipan,
 				'nomor_partisipan'	: import_ajri.nomor_partisipan,
+				'nomor_polis'		: import_ajri.nomor_polis,
 				'is_company'		: False,
 				'parent_id'			: pid,
 				'perorangan_tanggal_lahir'	: date,
@@ -145,8 +146,8 @@ class import_ajri(osv.osv):
 				'start_date'		: datetime.strptime(import_ajri.tgl_mulai, "%d-%b-%Y") if import_ajri.tgl_mulai else False,
 				'end_date'			: datetime.strptime(import_ajri.tgl_selesai, "%d-%b-%Y") if import_ajri.tgl_selesai else False,
 				'status'			: import_ajri.status,
-				'up'				: import_ajri.up.strip().replace(',',''),
-				"total_premi"		: import_ajri.total_premi.strip().replace(',',''),
+				'up'				: import_ajri.up.strip().replace(',','').replace('-','0'),
+				"total_premi"		: import_ajri.total_premi.strip().replace(',','').replace('-','0'),
 				"status_klaim"		: import_ajri.status_klaim,
 				"status_bayar"		: import_ajri.status_bayar,
 				"tgl_bayar"			: datetime.strptime(import_ajri.tgl_bayar, "%d-%b-%Y") if import_ajri.tgl_bayar else False,
