@@ -993,7 +993,7 @@ class res_partner (osv.osv):
 			
 			# create notifikasi ke email
 			template_pool = self.env['email.template']
-			template_id = template_pool.search([('name','=ilike','Pendaftaran Mahasiswa Baru ISTN')])
+			template_id = template_pool.search([('name','=ilike','[PMB ISTN] Bukti Booking Nomor Pendaftaran Mahasiswa Baru')])
 			if template_id:
 				self.pool.get('email.template').send_mail(self._cr, self._uid, template_id.id, inv.id)
 			# 	body = template_id[0].body_html
@@ -1070,4 +1070,22 @@ class res_partner (osv.osv):
 			konv_id = konv_obj.create(cr, uid, data, context=context)
 		return konv_id
 
-res_partner()
+
+	####################################################################################################
+	# Cron Job untuk reminder tagihan pendaftaran
+	####################################################################################################
+	def cron_reminder_tagihan_pendaftaran(self, cr, uid, ids=None,context=None):
+		partner_obj 	= self.pool.get('res.partner')
+		account_obj 	= self.pool.get('account.invoice')
+		#import pdb;pdb.set_trace()
+		tagihan_pendaftaran = account_obj.search(cr,uid,[('state','=','open'),('origin','ilike','pendaftaran')])
+		if tagihan_pendaftaran :
+			# create notifikasi ke email
+			template_pool = self.pool.get('email.template')
+			template_id = template_pool.search(cr,uid,[('name','=ilike','[REMINDER] Pendaftaran Mahasiswa Baru ISTN')])
+			if template_id :
+				for tag in account_obj.browse(cr,uid,tagihan_pendaftaran):
+					template_pool.send_mail(cr, uid, template_id[0], tag.id)
+		return True
+
+res_partner()				

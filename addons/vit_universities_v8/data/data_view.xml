@@ -207,8 +207,32 @@
 
 <!-- email template tagihan pendaftaran-->
     <record id="notif_email_pendaftaran" model="email.template">
-        <field name="name">Pendaftaran Mahasiswa Baru ISTN</field>
-        <field name="subject">Pendaftaran Mahasiswa Baru ISTN</field>
+        <field name="name">[PMB ISTN] Bukti Booking Nomor Pendaftaran Mahasiswa Baru</field>
+        <field name="subject">[PMB ISTN] Bukti Booking Nomor Pendaftaran Mahasiswa Baru</field>
+        <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
+        <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="user_signature" eval="0"/>
+        <field name="body_html"><![CDATA[<p>Selamat ${object.partner_id.name or 'Calon Mahasiswa'}, pendaftaran anda sukses,</p>
+        <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan Nomor Pendaftaran ${object.partner_id.reg} sebesar Rp. ${'%d'%object.amount_total}</p>
+        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
+    	</p>
+    	<p>
+		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
+    	</p>
+        <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
+		</field>
+    </record>
+
+
+<!-- email template remider tagihan pendaftaran-->
+    <record id="notif_email_reminder_pendaftaran" model="email.template">
+        <field name="name">[REMINDER] Pendaftaran Mahasiswa Baru ISTN</field>
+        <field name="subject">[REMINDER] Pendaftaran Mahasiswa Baru ISTN</field>
         <field name="email_from">${(object.company_id.email or 'noreply@' + object.company_id.name + '.ac.id')|safe}</field>
         <field name="email_to">${object.partner_id.email}</field>
         <field name="partner_to">${object.partner_id and object.partner_id.id or ''}</field>
@@ -370,6 +394,19 @@
             <field name="args" eval="'()'" />
         </record>
 
+<!-- Cron tagihan uang pendaftaran -->
+        <record model="ir.cron" id="tagihan_pendaftaran_cron">
+            <field name="name">Tagihan Uang Pendaftaran</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="active" eval="True"/>
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'res.partner'"/>
+            <field name="function" eval="'cron_reminder_tagihan_pendaftaran'"/>
+            <field name="args" eval="'()'" />
+        </record>
 
 	</data>
 </openerp>
