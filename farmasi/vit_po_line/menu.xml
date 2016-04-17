@@ -43,6 +43,25 @@
 		    <field name="model">purchase.order.line</field>
 		    <field name="arch" type="xml">
 		        <search string="Search PO Lines">
+		        	
+					<filter string="Received Today" name="today" 
+						domain="[('date_last_received','=',
+						context_today().strftime('%%Y-%%m-01'))]"/>
+
+					<filter string="Received Current Month" name="current_month" domain="[('date_last_received','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date_last_received','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+
+					<filter string="Received Last Month" name="prev_month" domain="[('date_last_received','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_last_received','&lt;',time.strftime('%%Y-%%m-01'))]"/>
+
+					<filter string="Draft" name="draft" domain="[('state','=','draft')]" />
+					
+					<filter string="Waiting Approval" name="waiting" domain="['|',('state','=','confirmed'),('state','=','confirmed0')]" />
+					<filter string="Approved" name="approved" domain="[('state','=','approved')]" />
+
+					<filter string="Done" name="done" domain="[('state','=','done')]" />
+
+					<filter string="Cancel" name="cancel" domain="[('state','=','cancel')]" />
+		        
+                    <filter string="State" icon="terp-go-month" domain="[]" context="{'group_by':'state'}"/>
 	            
 		            <group expand="1" string="Group By...">
 
