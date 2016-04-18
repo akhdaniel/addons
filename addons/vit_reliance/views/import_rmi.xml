@@ -194,7 +194,7 @@
 	        <field name="code">action = pool.get('reliance.import_rmi').action_import_partner(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_wizard" model="ir.values">
+	    <record id="ir_import_rmi_partner" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_rmi'" name="model"/>
 	        <field name="name">Import to Partner</field>
@@ -302,7 +302,7 @@
         </record>
 
 	    <!-- context menu More.. di tree import_rmi_product_holding -->
-	    <record id="action_import_product_holding" model="ir.actions.server">
+	    <record id="action_import_rmi_product_holding" model="ir.actions.server">
 	        <field name="name">Import to Product Holding</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_rmi_product_holding"/>
@@ -310,11 +310,11 @@
 	        <field name="code">action = pool.get('reliance.import_rmi_product_holding').action_import_product_holding(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_wizard" model="ir.values">
+	    <record id="ir_import_rmi_product_holding" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_rmi_product_holding'" name="model"/>
 	        <field name="name">Import to Product Holding</field>
-	        <field eval="'ir.actions.server,%d'%action_import_product_holding" name="value"/>
+	        <field eval="'ir.actions.server,%d'%action_import_rmi_product_holding" name="value"/>
 	    </record>
 
 

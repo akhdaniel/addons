@@ -1,7 +1,7 @@
 <openerp>
 	<data>
 
-		<!-- improt_ajri list -->
+		<!-- ACTION LIST -->
 
 		<record id="action_import_refi_list" model="ir.actions.act_window">
 			<field name="name">REFI Customer</field>
@@ -9,6 +9,26 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 
+		<record id="action_import_refi_pekerjaan_list" model="ir.actions.act_window">
+			<field name="name">REFI Pekerjaan</field>
+			<field name="res_model">reliance.import_refi_pekerjaan</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="action_import_refi_keluarga_list" model="ir.actions.act_window">
+			<field name="name">REFI Keluarga</field>
+			<field name="res_model">reliance.import_refi_keluarga</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="action_import_refi_statement_list" model="ir.actions.act_window">
+			<field name="name">REFI Statement</field>
+			<field name="res_model">reliance.import_refi_statement</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!-- MENU -->
 
 		<menuitem id="rcm_import_refi" name="REFI" sequence="40" parent="rcm_import"/>
 
@@ -19,14 +39,74 @@
 			 sequence="10"
 			 parent="rcm_import_refi"/>
 
+			<!-- import REFI Pekerjaan menu -->
+			<menuitem id="rcm_import_refi_pekerjaan"
+			 action="action_import_refi_pekerjaan_list"
+			 name="REFI Pekerjaan"
+			 sequence="20"
+			 parent="rcm_import_refi"/>
 
+			<!-- import REFI Keluarga menu -->
+			<menuitem id="rcm_import_refi_keluarga"
+			 action="action_import_refi_keluarga_list"
+			 name="REFI Keluarga"
+			 sequence="20"
+			 parent="rcm_import_refi"/>
+
+
+			<!-- import REFI Statement menu -->
+			<menuitem id="rcm_import_refi_statement"
+			 action="action_import_refi_statement_list"
+			 name="REFI Statement"
+			 sequence="20"
+			 parent="rcm_import_refi"/>
+
+
+		<!-- REFI CUST 001 -->
+		
 		<!-- tree import_refi reliance -->
 		<record id="view_import_refi_tree" model="ir.ui.view">
 		    <field name="name">reliance_import_refi_tree</field>
 		    <field name="model">reliance.import_refi</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_refi" colors="grey:is_imported==True; blue:is_imported==False">
-
+					<field name="no_debitur"			 />
+					<field name="nama_depan"			 />
+					<field name="nama_belakang"			 />
+					<field name="nama_lengkap"			 />
+					<field name="nama_ibu"				 />
+					<field name="tipe_id"				 />
+					<field name="no_id"					 />
+					<field name="tgl_exp_id"			 />
+					<field name="tempat_lahir"			 />
+					<field name="tgl_lahir"				 />
+					<field name="npwp"					 />
+					<field name="legal_alamat"			 />
+					<field name="legal_kecamatan"		 />
+					<field name="legal_kota"			 />
+					<field name="legal_propinsi"		 />
+					<field name="legal_kode_pos"		 />
+					<field name="domisil_alamat"		 />
+					<field name="domisili_kecamatan"	 />
+					<field name="domisili_kota"			 />
+					<field name="domisili_propinsi"		 />
+					<field name="domisili_kode_pos"		 />
+					<field name="wilayah"				 />
+					<field name="telepon_rumah"			 />
+					<field name="no_hp"					 />
+					<field name="email"					 />
+					<field name="jns_kelamin"			 />
+					<field name="agama"					 />
+					<field name="warga_negara"			 />
+					<field name="pendidikan"			 />
+					<field name="status_rumah"			 />
+					<field name="pekerjaan"				 />
+					<field name="status_nikah"			 />
+					<field name="profesi"				 />
+					<field name="pisah_harta"			 />
+					<field name="jabatan"				 />
+					<field name="tanggungan"			 />
+					<field name="range_penghasilan"		 />
 
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
@@ -49,7 +129,43 @@
 		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
 		            
 		            <separator/>
-
+					<field name="no_debitur"			 />
+					<field name="nama_depan"			 />
+					<field name="nama_belakang"			 />
+					<field name="nama_lengkap"			 />
+					<field name="nama_ibu"				 />
+					<field name="tipe_id"				 />
+					<field name="no_id"					 />
+					<field name="tgl_exp_id"			 />
+					<field name="tempat_lahir"			 />
+					<field name="tgl_lahir"				 />
+					<field name="npwp"					 />
+					<field name="legal_alamat"			 />
+					<field name="legal_kecamatan"		 />
+					<field name="legal_kota"			 />
+					<field name="legal_propinsi"		 />
+					<field name="legal_kode_pos"		 />
+					<field name="domisil_alamat"		 />
+					<field name="domisili_kecamatan"	 />
+					<field name="domisili_kota"			 />
+					<field name="domisili_propinsi"		 />
+					<field name="domisili_kode_pos"		 />
+					<field name="wilayah"				 />
+					<field name="telepon_rumah"			 />
+					<field name="no_hp"					 />
+					<field name="email"					 />
+					<field name="jns_kelamin"			 />
+					<field name="agama"					 />
+					<field name="warga_negara"			 />
+					<field name="pendidikan"			 />
+					<field name="status_rumah"			 />
+					<field name="pekerjaan"				 />
+					<field name="status_nikah"			 />
+					<field name="profesi"				 />
+					<field name="pisah_harta"			 />
+					<field name="jabatan"				 />
+					<field name="tanggungan"			 />
+					<field name="range_penghasilan"		 />
 		
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
@@ -74,22 +190,56 @@
             		<header>
             		</header>
 	            	<group>
+		            	<group>
 
-
-						
-						<field name='is_imported' 		 />
-						<field name="notes"				 />						
-		            </group>
+							<field name="no_debitur"			 />
+							<field name="nama_depan"			 />
+							<field name="nama_belakang"			 />
+							<field name="nama_lengkap"			 />
+							<field name="nama_ibu"				 />
+							<field name="tipe_id"				 />
+							<field name="no_id"					 />
+							<field name="tgl_exp_id"			 />
+							<field name="tempat_lahir"			 />
+							<field name="tgl_lahir"				 />
+							<field name="npwp"					 />
+							<field name="legal_alamat"			 />
+							<field name="legal_kecamatan"		 />
+							<field name="legal_kota"			 />
+							<field name="legal_propinsi"		 />
+							<field name="legal_kode_pos"		 />
+						</group>
+						<group>
+							<field name="domisil_alamat"		 />
+							<field name="domisili_kecamatan"	 />
+							<field name="domisili_kota"			 />
+							<field name="domisili_propinsi"		 />
+							<field name="domisili_kode_pos"		 />
+							<field name="wilayah"				 />
+							<field name="telepon_rumah"			 />
+							<field name="no_hp"					 />
+							<field name="email"					 />
+							<field name="jns_kelamin"			 />
+							<field name="agama"					 />
+							<field name="warga_negara"			 />
+							<field name="pendidikan"			 />
+							<field name="status_rumah"			 />
+							<field name="pekerjaan"				 />
+							<field name="status_nikah"			 />
+							<field name="profesi"				 />
+							<field name="pisah_harta"			 />
+							<field name="jabatan"				 />
+							<field name="tanggungan"			 />
+							<field name="range_penghasilan"		 />
+							
+							<field name='is_imported' 		 />
+							<field name="notes"				 />						
+			            </group>
+			        </group>
 
 	            </form>
             </field>
         </record>
-
-
-
-
-
-
 
 
 	    <!-- context menu More.. di tree import_refi -->
@@ -101,11 +251,416 @@
 	        <field name="code">action = pool.get('reliance.import_refi').action_import_partner(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_wizard" model="ir.values">
+	    <record id="ir_import_refi_partner" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_refi'" name="model"/>
 	        <field name="name">Import to Partner</field>
 	        <field eval="'ir.actions.server,%d'%action_import_refi_partner" name="value"/>
+	    </record>
+
+
+		<!-- REFI CUST 002 -->
+		
+		<!-- tree import_refi_pekerjaan reliance -->
+		<record id="view_import_refi_pekerjaan_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_refi_pekerjaan_tree</field>
+		    <field name="model">reliance.import_refi_pekerjaan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_refi_pekerjaan" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="no_debitur" />			
+					<field name="nama_perusahaan" />		
+					<field name="jenis_usaha" />			
+					<field name="alamat" />				
+					<field name="kecamatan" />				
+					<field name="kota" />					
+					<field name="provinsi" />				
+					<field name="kode_pos" />				
+					<field name="telepon_1" />				
+					<field name="telepon_2" />				
+					<field name="telex" />					
+					<field name="facsimile" />				
+					<field name="tanggal_masuk_kerja" />
+					<field name="tanggal_bayar" />			
+					<field name="frek_bayar" />			
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_refi_pekerjaan reliance -->
+		<record id="view_import_refi_pekerjaan_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_refi_pekerjaan.filter.reliance</field>
+		    <field name="model">reliance.import_refi_pekerjaan</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import REFI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+					<field name="no_debitur" />			
+					<field name="nama_perusahaan" />		
+					<field name="jenis_usaha" />			
+					<field name="alamat" />				
+					<field name="kecamatan" />				
+					<field name="kota" />					
+					<field name="provinsi" />				
+					<field name="kode_pos" />				
+					<field name="telepon_1" />				
+					<field name="telepon_2" />				
+					<field name="telex" />					
+					<field name="facsimile" />				
+					<field name="tanggal_masuk_kerja" />
+					<field name="tanggal_bayar" />			
+					<field name="frek_bayar" />			
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_refi_pekerjaan reliance -->
+        <record id="view_import_refi_pekerjaan_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_refi_pekerjaan_form_reliance</field>
+            <field name="model">reliance.import_refi_pekerjaan</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+
+						<field name="no_debitur" />			
+						<field name="nama_perusahaan" />		
+						<field name="jenis_usaha" />			
+						<field name="alamat" />				
+						<field name="kecamatan" />				
+						<field name="kota" />					
+						<field name="provinsi" />				
+						<field name="kode_pos" />				
+						<field name="telepon_1" />				
+						<field name="telepon_2" />				
+						<field name="telex" />					
+						<field name="facsimile" />				
+						<field name="tanggal_masuk_kerja" />
+						<field name="tanggal_bayar" />			
+						<field name="frek_bayar" />	
+
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+	    <!-- context menu More.. di tree import_refi_pekerjaan -->
+	    <record id="action_import_refi_pekerjaan" model="ir.actions.server">
+	        <field name="name">Import to Partner Pekerjaan</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_refi_pekerjaan"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_refi_pekerjaan').action_import_pekerjaan(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_refi_pekerjaan" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_refi_pekerjaan'" name="model"/>
+	        <field name="name">Import to Partner Pekerjaan</field>
+	        <field eval="'ir.actions.server,%d'%action_import_refi_pekerjaan" name="value"/>
+	    </record>
+
+
+
+
+		<!-- REFI CUST 003 : gabung dengan 001 -->
+
+
+
+		<!-- REFI CUST 004 -->
+		
+		<!-- tree import_refi_keluarga reliance -->
+		<record id="view_import_refi_keluarga_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_refi_keluarga_tree</field>
+		    <field name="model">reliance.import_refi_keluarga</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_refi_keluarga" colors="grey:is_imported==True; blue:is_imported==False">
+
+					<field name="no_debitur" />	
+					<field name="no_urut" />		
+					<field name="nama" />			
+					<field name="tgl_lahir" />		
+					<field name="hubungan" />		
+					<field name="jenis_kelamin" />	
+					<field name="pendidikan" />	
+					<field name="profesi" />		
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_refi_keluarga reliance -->
+		<record id="view_import_refi_keluarga_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_refi_keluarga.filter.reliance</field>
+		    <field name="model">reliance.import_refi_keluarga</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import REFI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+					
+					<field name="no_debitur" />	
+					<field name="no_urut" />		
+					<field name="nama" />			
+					<field name="tgl_lahir" />		
+					<field name="hubungan" />		
+					<field name="jenis_kelamin" />	
+					<field name="pendidikan" />	
+					<field name="profesi" />				
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_refi_keluarga reliance -->
+        <record id="view_import_refi_keluarga_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_refi_keluarga_form_reliance</field>
+            <field name="model">reliance.import_refi_keluarga</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+
+						<field name="no_debitur" />	
+						<field name="no_urut" />		
+						<field name="nama" />			
+						<field name="tgl_lahir" />		
+						<field name="hubungan" />		
+						<field name="jenis_kelamin" />	
+						<field name="pendidikan" />	
+						<field name="profesi" />		
+
+						
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+	    <!-- context menu More.. di tree import_refi_keluarga -->
+	    <record id="action_import_refi_keluarga" model="ir.actions.server">
+	        <field name="name">Import to Partner Keluarga</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_refi_keluarga"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_refi_keluarga').action_import_keluarga(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_refi_keluarga" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_refi_keluarga'" name="model"/>
+	        <field name="name">Import to Partner Keluarga</field>
+	        <field eval="'ir.actions.server,%d'%action_import_refi_keluarga" name="value"/>
+	    </record>
+
+
+
+		<!-- REFI CUST 005 -->
+		
+		<!-- tree import_refi_statement reliance -->
+		<record id="view_import_refi_statement_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_refi_statement_tree</field>
+		    <field name="model">reliance.import_refi_statement</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_refi_statement" colors="grey:is_imported==True; blue:is_imported==False">
+
+					<field name="no_debitur" />						
+					<field name="bulan_tahun_survey" />				
+					<field name="time_deps_saving_account" />			
+					<field name="vehicle" />							
+					<field name="jml_kendaraan" />						
+					<field name="properties" />						
+					<field name="jml_rumah" />							
+					<field name="others_aktiva_lainnya" />				
+					<field name="mortagage_loan_inst" />				
+					<field name="mortgage_loan_inst_balance" />		
+					<field name="renting" />							
+					<field name="car_credit" />						
+					<field name="car_credit_balance" />				
+					<field name="credit_card" />						
+					<field name="credit_card_balance" />				
+					<field name="credit_line" />						
+					<field name="credit_line_balance" />				
+					<field name="monthly_expenditure" />				
+					<field name="monthly_expenditure_balance" />		
+					<field name="mortgage_loan_int" />					
+					<field name="mortgage_loan_int_balance_equity" />	
+					<field name="other" />								
+					<field name="other_balance_equity_net_income" />	
+					<field name="spouse_income" />						
+					<field name="other_income" />						
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_refi_statement reliance -->
+		<record id="view_import_refi_statement_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_refi_statement.filter.reliance</field>
+		    <field name="model">reliance.import_refi_statement</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import REFI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+
+					<field name="no_debitur" />						
+					<field name="bulan_tahun_survey" />				
+					<field name="time_deps_saving_account" />			
+					<field name="vehicle" />							
+					<field name="jml_kendaraan" />						
+					<field name="properties" />						
+					<field name="jml_rumah" />							
+					<field name="others_aktiva_lainnya" />				
+					<field name="mortagage_loan_inst" />				
+					<field name="mortgage_loan_inst_balance" />		
+					<field name="renting" />							
+					<field name="car_credit" />						
+					<field name="car_credit_balance" />				
+					<field name="credit_card" />						
+					<field name="credit_card_balance" />				
+					<field name="credit_line" />						
+					<field name="credit_line_balance" />				
+					<field name="monthly_expenditure" />				
+					<field name="monthly_expenditure_balance" />		
+					<field name="mortgage_loan_int" />					
+					<field name="mortgage_loan_int_balance_equity" />	
+					<field name="other" />								
+					<field name="other_balance_equity_net_income" />	
+					<field name="spouse_income" />						
+					<field name="other_income" />								
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_refi_statement reliance -->
+        <record id="view_import_refi_statement_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_refi_statement_form_reliance</field>
+            <field name="model">reliance.import_refi_statement</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+		            	<group>
+
+							<field name="no_debitur" />						
+							<field name="bulan_tahun_survey" />				
+							<field name="time_deps_saving_account" />			
+							<field name="vehicle" />							
+							<field name="jml_kendaraan" />						
+							<field name="properties" />						
+							<field name="jml_rumah" />							
+							<field name="others_aktiva_lainnya" />				
+							<field name="mortagage_loan_inst" />				
+							<field name="mortgage_loan_inst_balance" />		
+							<field name="renting" />							
+							<field name="car_credit" />						
+							<field name="car_credit_balance" />	
+						</group>			
+						<group>			
+							<field name="credit_card" />						
+							<field name="credit_card_balance" />				
+							<field name="credit_line" />						
+							<field name="credit_line_balance" />				
+							<field name="monthly_expenditure" />				
+							<field name="monthly_expenditure_balance" />		
+							<field name="mortgage_loan_int" />					
+							<field name="mortgage_loan_int_balance_equity" />	
+							<field name="other" />								
+							<field name="other_balance_equity_net_income" />	
+							<field name="spouse_income" />						
+							<field name="other_income" />							
+							
+							<field name='is_imported' 		 />
+							<field name="notes"				 />						
+			            </group>
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+	    <!-- context menu More.. di tree import_refi_statement -->
+	    <record id="action_import_refi_statement" model="ir.actions.server">
+	        <field name="name">Import to Partner Statement</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_refi_statement"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_refi_statement').action_import_statement(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_refi_statement" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_refi_statement'" name="model"/>
+	        <field name="name">Import to Partner Statement</field>
+	        <field eval="'ir.actions.server,%d'%action_import_refi_statement" name="value"/>
 	    </record>
 
 

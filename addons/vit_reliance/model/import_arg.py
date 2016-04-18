@@ -8,6 +8,36 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
+CUST_MAPPING = {
+	"policy_no"			: "nomor_polis",
+	# "class"				: "arg_class",
+	"subclass"			: "arg_subclass",
+	"eff_date"			: "arg_eff_date",
+	"exp_date"			: "arg_exp_date",
+	"cust_code"			: "cif",
+	"cust_fullname"		: "name",
+	"qq"				: "arg_qq",
+	"cust_cp"			: "arg_cp",
+	"cust_addr_1"		: "street",
+	"cust_addr_2"		: "street2",
+	"cust_city"			: "city",
+	"cust_postal_code"	: "zip",
+	"cust_country_name"	: "country_id",
+	"cust_province"		: "state_id",
+}
+
+COMPANY_MAPPING = {
+	"company_code"		: "cif",
+	"company_name"		: "name",
+	"company_type"		: None,
+}
+
+AGENT_MAPPING = {
+	"marketing_code"	: "cif",
+	"marketing_name"	: "name",
+	
+}
+
 ####################################################################
 # partner data
 # from arg-customer csv file
@@ -64,26 +94,57 @@ class import_arg(osv.osv):
 		i = 0
 		ex = 0
 
+		partner = self.pool.get('res.partner')
+
 		for import_arg in self.browse(cr, uid, ids, context=context):
 
-			pemegang_data = {
-				'name'				: import_arg.nama_pemegang,
-				'policy_no'			: import_arg.policy_no,
-				'is_company'		: True,
-				'comment' 			: 'ARG'
-			}
+			cust_data = {}
+			country_id = False
+
+			for k in CUST_MAPPING.keys():
+				partner_fname = CUST_MAPPING[k]
+
+				import_ls_fname = "import_arg.%s" % k 
+				cust_data.update( {partner_fname : eval(import_ls_fname)})
+
+				# import pdb; pdb.set_trace()
+
+				if k == 'cust_province':
+
+					if import_arg.cust_country_name != False:
+						country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name, context=context)
+						cust_data.update({'country_id': country_id})
+				
+						state_id = self.find_or_create_state(cr, uid, import_arg.cust_province,country_id, context=context)
+						cust_data.update({'state_id': state_id})
+					else:
+						cust_data.update({'state_id': False})
+						cust_data.update({'country_id': False})
+				 
+
+				
+				# if k == 'cust_country_name':
+				# 	if not country_id:
+				# 		country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name)
+				# 	cust_data.update({'country_id': country_id})
+
+			if not country_id:
+				ex = ex + 1
+				continue
+
+			print cust_data
+			cust_data.update({'comment': 'ARG'})
 			
 			########################## check exiting partner partner 
-			pid = partner.search(cr, uid, [('policy_no','=',import_arg.policy_no)],context=context)
+			pid = partner.search(cr, uid, [('nomor_polis','=',import_arg.policy_no)],context=context)
 			if not pid:
-				pid = partner.create(cr, uid, pemegang_data, context=context)	
+				pid = partner.create(cr, uid, cust_data, context=context)	
 				i = i + 1
 			else:
 				pid = pid[0]
-				_logger.warning('Partner Pemegang exist with policy_no %s' % import_arg.policy_no)
+				_logger.warning('Partner exist with nomor_polis %s' % import_arg.policy_no)
 				ex = ex + 1
 
-			pemegang_old = import_arg.nama_pemegang
 
 			#commit per record
 			cr.execute("update reliance_import_arg set is_imported='t' where id=%s" % import_arg.id)
@@ -91,4 +152,24 @@ class import_arg(osv.osv):
 
 		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
 
+	def find_or_create_country(self, cr, uid, name, context=None):
+
+		country = self.pool.get('res.country')
+		country_id = country.search(cr, uid, [('name','=',name)], context=context)
+		if not country_id:
+			data = {'name': name}
+			country_id = country.create(cr, uid, data, context=context)
+		else:
+			country_id = country_id[0]
+		return country_id
+		
+	def find_or_create_state(self, cr, uid, name, country_id, context=None):
+		state = self.pool.get('res.country.state')
+		state_id = state.search(cr, uid, [('name','=',name),('country_id','=',country_id)], context=context)
+		if not state_id:
+			data = {'name': name,'country_id':country_id, 'code': name[0:1]}
+			state_id = state.create(cr, uid, data, context=context)
+		else:
+			state_id = state_id[0]
+		return state_id
 

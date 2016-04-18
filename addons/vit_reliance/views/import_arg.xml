@@ -152,7 +152,7 @@
 	        <field name="code">action = pool.get('reliance.import_arg').action_import_partner(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_wizard" model="ir.values">
+	    <record id="ir_import_arg_partner" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_arg'" name="model"/>
 	        <field name="name">Import to Partner</field>
