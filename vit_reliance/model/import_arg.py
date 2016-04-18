@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 CUST_MAPPING = {
 	"policy_no"			: "nomor_polis",
-	# "class"				: "arg_class",
+	"product_class"		: "arg_class",
 	"subclass"			: "arg_subclass",
 	"eff_date"			: "arg_eff_date",
 	"exp_date"			: "arg_exp_date",
@@ -46,7 +46,7 @@ class import_arg(osv.osv):
 	_name 		= "reliance.import_arg"
 	_columns 	= {
 		"policy_no"			:	fields.char("POLICY_NO", select=1),
-		"class"				:	fields.char("CLASS"),
+		"product_class"		:	fields.char("CLASS"),
 		"subclass"			:	fields.char("SUBCLASS"),
 		"eff_date"			:	fields.char("EFF_DATE"),
 		"exp_date"			:	fields.char("EXP_DATE"),
@@ -100,6 +100,11 @@ class import_arg(osv.osv):
 
 			cust_data = {}
 			country_id = False
+			if not import_arg.cust_country_name:
+				self.write(cr, uid, [import_arg.id], {'notes':'NO COUNTRY'}, context=context)
+				ex = ex + 1
+				cr.commit()
+				continue
 
 			for k in CUST_MAPPING.keys():
 				partner_fname = CUST_MAPPING[k]
@@ -111,26 +116,18 @@ class import_arg(osv.osv):
 
 				if k == 'cust_province':
 
-					if import_arg.cust_country_name != False:
-						country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name, context=context)
-						cust_data.update({'country_id': country_id})
+					country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name, context=context)
+					cust_data.update({'country_id': country_id})
+			
+					state_id = self.find_or_create_state(cr, uid, import_arg.cust_province,country_id, context=context)
+					cust_data.update({'state_id': state_id})
 				
-						state_id = self.find_or_create_state(cr, uid, import_arg.cust_province,country_id, context=context)
-						cust_data.update({'state_id': state_id})
-					else:
-						cust_data.update({'state_id': False})
-						cust_data.update({'country_id': False})
-				 
+				if k == 'cust_country_name':
+					if not country_id:
+						country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name)
+					cust_data.update({'country_id': country_id})
 
-				
-				# if k == 'cust_country_name':
-				# 	if not country_id:
-				# 		country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name)
-				# 	cust_data.update({'country_id': country_id})
 
-			if not country_id:
-				ex = ex + 1
-				continue
 
 			print cust_data
 			cust_data.update({'comment': 'ARG'})
@@ -155,7 +152,7 @@ class import_arg(osv.osv):
 	def find_or_create_country(self, cr, uid, name, context=None):
 
 		country = self.pool.get('res.country')
-		country_id = country.search(cr, uid, [('name','=',name)], context=context)
+		country_id = country.search(cr, uid, [('name','ilike',name)], context=context)
 		if not country_id:
 			data = {'name': name}
 			country_id = country.create(cr, uid, data, context=context)
@@ -165,7 +162,7 @@ class import_arg(osv.osv):
 		
 	def find_or_create_state(self, cr, uid, name, country_id, context=None):
 		state = self.pool.get('res.country.state')
-		state_id = state.search(cr, uid, [('name','=',name),('country_id','=',country_id)], context=context)
+		state_id = state.search(cr, uid, [('name','ilike',name),('country_id','=',country_id)], context=context)
 		if not state_id:
 			data = {'name': name,'country_id':country_id, 'code': name[0:1]}
 			state_id = state.create(cr, uid, data, context=context)

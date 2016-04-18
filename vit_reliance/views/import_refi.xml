@@ -27,6 +27,12 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 
+		<record id="action_import_refi_kontrak_list" model="ir.actions.act_window">
+			<field name="name">REFI Kontrak</field>
+			<field name="res_model">reliance.import_refi_kontrak</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
 
 		<!-- MENU -->
 
@@ -58,6 +64,13 @@
 			<menuitem id="rcm_import_refi_statement"
 			 action="action_import_refi_statement_list"
 			 name="REFI Statement"
+			 sequence="20"
+			 parent="rcm_import_refi"/>
+
+			<!-- import REFI Kontrak menu -->
+			<menuitem id="rcm_import_refi_kontrak"
+			 action="action_import_refi_kontrak_list"
+			 name="REFI Kontrak"
 			 sequence="20"
 			 parent="rcm_import_refi"/>
 
@@ -664,6 +677,124 @@
 	    </record>
 
 
+
+		<!-- REFI KONTRAK -->
+		
+		<!-- tree import_refi_kontrak reliance -->
+		<record id="view_import_refi_kontrak_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_refi_kontrak_tree</field>
+		    <field name="model">reliance.import_refi_kontrak</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_refi_kontrak" colors="grey:is_imported==True; blue:is_imported==False">
+
+
+					<field name="contract_number" />	
+					<field name="customer_no" />		
+					<field name="customer_name" />		
+					<field name="product" />			
+					<field name="asset_name" />		
+					<field name="outstanding" />		
+					<field name="next_installment" />	
+					<field name="pass_due" />			
+					<field name="maturity_date" />		
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_refi_kontrak reliance -->
+		<record id="view_import_refi_kontrak_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_refi_kontrak.filter.reliance</field>
+		    <field name="model">reliance.import_refi_kontrak</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import REFI">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+
+					<field name="contract_number" />	
+					<field name="customer_no" />		
+					<field name="customer_name" />		
+					<field name="product" />			
+					<field name="asset_name" />		
+					<field name="outstanding" />		
+					<field name="next_installment" />	
+					<field name="pass_due" />			
+					<field name="maturity_date" />		
+
+		
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_refi_kontrak reliance -->
+        <record id="view_import_refi_kontrak_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_refi_kontrak_form_reliance</field>
+            <field name="model">reliance.import_refi_kontrak</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+		            	<group>
+
+						<field name="contract_number" />	
+						<field name="customer_no" />		
+						<field name="customer_name" />		
+						<field name="product" />			
+						<field name="asset_name" />		
+						<field name="outstanding" />		
+						<field name="next_installment" />	
+						<field name="pass_due" />			
+						<field name="maturity_date" />		
+			
+						</group>
+						<group>
+
+							<field name='is_imported' 		 />
+							<field name="notes"				 />						
+			            </group>
+			        </group>
+
+	            </form>
+            </field>
+        </record>
+
+
+	    <!-- context menu More.. di tree import_refi_kontrak -->
+	    <record id="action_import_refi_kontrak_partner" model="ir.actions.server">
+	        <field name="name">Import to Partner Kontrak</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_refi_kontrak"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_refi_kontrak').action_import_kontrak(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_refi_kontrak_partner" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_refi_kontrak'" name="model"/>
+	        <field name="name">Import to Partner Kontrak</field>
+	        <field eval="'ir.actions.server,%d'%action_import_refi_kontrak_partner" name="value"/>
+	    </record>
 
 
 	</data>

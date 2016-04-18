@@ -183,3 +183,21 @@ class import_refi_statement(osv.osv):
 		'is_imported' 		: 	fields.boolean("Imported to Partner Statement?", select=1),
 		"notes"				:	fields.char("Notes"),	
 	}
+
+class import_refi_kontrak(osv.osv):
+	_name = "reliance.import_refi_kontrak"
+	_columns = {
+		"contract_number"	:	fields.char("ContractNumber"),
+		"customer_no"		:	fields.char("CustomerNo"),
+		"customer_name"		:	fields.char("CustomerName"),
+		"product"			:	fields.char("Product"),
+		"asset_name"		:	fields.char("AssetName"),
+		"outstanding"		:	fields.char("Outstanding"),
+		"next_installment"	:	fields.char("NextInstallment"),
+		"pass_due"			:	fields.char("PassDue"),
+		"maturity_date"		:	fields.char("MaturityDate"),
+		'is_imported' 		: 	fields.boolean("Imported to Partner Kontrak?", select=1),
+		"notes"				:	fields.char("Notes"),	
+
+	}
+

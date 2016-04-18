@@ -256,6 +256,25 @@
 								<field name="klaim_disetujui" 	 />
 	            			</tree>
 	            		</field>
+					</page>	
+            		<page string="ARG" >
+            			<group>
+							<field name="arg_class" />		
+							<field name="arg_subclass" />	
+							<field name="arg_eff_date" />	
+							<field name="arg_exp_date" />	
+							<field name="arg_qq" />		
+							<field name="arg_cp" />		
+						</group>
+					</page>	    	
+            		<page string="RMI" >
+
+					</page>	    	
+            		<page string="REFI" >
+
+					</page>	            	
+            		<page string="Health" >
+
 					</page>	            	
             	</notebook>
 

@@ -27,7 +27,7 @@
 		    <field name="arch" type="xml">
 		    	<tree string="list import_arg" colors="grey:is_imported==True; blue:is_imported==False">
 					<field name="policy_no" />			
-					<field name="class" />				
+					<field name="product_class" />				
 					<field name="subclass" />			
 					<field name="eff_date" />			
 					<field name="exp_date" />			
@@ -69,7 +69,7 @@
 		            
 		            <separator/>
 					<field name="policy_no" />			
-					<field name="class" />				
+					<field name="product_class" />				
 					<field name="subclass" />			
 					<field name="eff_date" />			
 					<field name="exp_date" />			
@@ -107,7 +107,7 @@
             		</header>
 	            	<group>
 						<field name="policy_no" />			
-						<field name="class" />				
+						<field name="product_class" />				
 						<field name="subclass" />			
 						<field name="eff_date" />			
 						<field name="exp_date" />			
