@@ -6,8 +6,9 @@ import logging
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
-import locale
-locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+# import locale
+# locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+# locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 class order_line(osv.osv):
 	_inherit 		= "purchase.order.line"
