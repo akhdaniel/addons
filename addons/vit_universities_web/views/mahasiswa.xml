@@ -10,7 +10,7 @@
 
             
             <center>
-                <span t-field="partner.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}"/>
+                <span t-field="partner.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}" width="16" height="16"/>
             </center>
             <center>
                 <h3>NIM :  <t t-esc="partner.npm"/></h3>
