@@ -118,10 +118,40 @@ class res_partner(osv.osv):
 		'partner_ahli_waris_ids' 				: fields.one2many('reliance.ahli_waris','partner_id','Ahli Waris', ondelete="cascade", select=1),
 		'partner_keluarga_ids' 					: fields.one2many('reliance.keluarga','partner_id','Keluarga', ondelete="cascade", select=1),
 
+		"arg_class"				: fields.char("ARG Class"),
+		"arg_subclass"			: fields.char("ARG Sub Class"),	
+		"arg_eff_date"			: fields.date("ARG Eff Date"),
+		"arg_exp_date"			: fields.date("ARG Exp Date"),
+		"arg_qq"				: fields.char("ARG QQ"),
+		"arg_cp"				: fields.char("ARG CP"),
 	}
 	_sql_constraints = [('unique_reliance_id', 'unique(reliance_id)',
                          'Reliance ID Must be Unique!')]
 
+
+	#############################################################
+	# search partner_id apakah berada dalam salah satu campaing
+	# if yes: return the campaign records (array)
+	#############################################################
+	def in_campaign(self, cr, uid, reliance_id, context=None):
+		campaigns = []
+		reliance_id = '10'
+
+		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+		if not pid:
+			raise osv.except_osv(_('Error'),_("No Partner with Reliance ID=%s")  % reliance_id ) 
+
+		sql = "select campaign_id from reliance_campaign_partner where campaign_id is not null and partner_id=%s" % pid[0]
+		cr.execute(sql)
+		result = cr.fetchall()
+
+		if result != (None,) : 
+			for r in result :
+				res=map(lambda x:x[0],result)
+				fields = ('name','date_start','date_end','state','user_id')
+		campaigns = self.pool.get('reliance.campaign').search_read(cr, uid, [('id','in',res)], fields, context=context)
+		print campaigns
+		return campaigns
 
 
 class ahli_waris(osv.osv):

@@ -48,6 +48,22 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 
+		<!-- country list -->
+
+		<record id="action_country_list" model="ir.actions.act_window">
+			<field name="name">Countries</field>
+			<field name="res_model">res.country</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- state list -->
+
+		<record id="action_country_state_list" model="ir.actions.act_window">
+			<field name="name">Countries</field>
+			<field name="res_model">res.country.state</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
 
 
 		<!-- top menu -->
@@ -103,6 +119,19 @@
 
 		<menuitem id="rcm_import" name="Imports" sequence="40" parent="rcm"/>
 
+		<!-- configuration data menu -->
+
+		<menuitem id="rcm_configuration" name="Configuration" sequence="50" parent="rcm"/>
+			<menuitem id="rcm_country"
+			 action="action_country_list"
+			 name="Countries"
+			 sequence="10"
+			 parent="rcm_configuration"/>
+			<menuitem id="rcm_country_state"
+			 action="action_country_state_list"
+			 name="States"
+			 sequence="20"
+			 parent="rcm_configuration"/>
 
 	
 	</data>
