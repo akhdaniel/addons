@@ -31,6 +31,7 @@ Manage
 		"views/import_arg.xml", 
 		"views/import_refi.xml", 
 		"views/import_rmi.xml", 
+		"views/import_health.xml", 
 
 		"data/sequence.xml",
 		"data/cron.xml",
