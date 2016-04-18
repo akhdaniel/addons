@@ -781,7 +781,7 @@
 
 
 	    <!-- context menu More.. di tree import_refi_kontrak -->
-	    <record id="action_import_refi_kontrak_partner" model="ir.actions.server">
+	    <record id="action_import_refi_kontrak" model="ir.actions.server">
 	        <field name="name">Import to Partner Kontrak</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_kontrak"/>
@@ -789,11 +789,11 @@
 	        <field name="code">action = pool.get('reliance.import_refi_kontrak').action_import_kontrak(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_refi_kontrak_partner" model="ir.values">
+	    <record id="ir_import_refi_kontrak" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_refi_kontrak'" name="model"/>
 	        <field name="name">Import to Partner Kontrak</field>
-	        <field eval="'ir.actions.server,%d'%action_import_refi_kontrak_partner" name="value"/>
+	        <field eval="'ir.actions.server,%d'%action_import_refi_kontrak" name="value"/>
 	    </record>
 
 
