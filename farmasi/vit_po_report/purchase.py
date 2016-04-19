@@ -21,6 +21,16 @@ class purchase_order_line(osv.osv):
         price -= price*discount
         return  price
 
+
+    def _amount_line(self, cr, uid, ids, prop, arg, context=None):
+        import pdb; pdb.set_trace()
+        results = super(purchase_order_line, self)._amount_line(cr, uid, ids, prop, arg, context=context)
+        for line in self.browse(cr, uid, ids, context=context):
+            if line.discount > 0.0 and line.discount < 100.0:
+                results[line.id] = line.price_subtotal * (100 - line.discount)
+        print results
+        return results    
+
     def _get_tax_notes(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
             context = {}
