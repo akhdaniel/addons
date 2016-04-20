@@ -65,7 +65,11 @@
 					<field name="place_birth"			 />
 					<field name="date_birth"			 />
 					<field name="cr_address"			 />
-					<field name="address"				 />
+					<!-- <field name="address"				 /> -->					
+					<field name="cr_city"			 />
+					<field name="cr_country"			 />
+					<field name="cr_zip"			 />
+
 					<field name="id_card_type"			 />
 					<field name="id_card"				 />
 					<field name="id_card_expire_date"	 />
@@ -160,7 +164,11 @@
 						<field name="place_birth"			 />
 						<field name="date_birth"			 />
 						<field name="cr_address"			 />
-						<field name="address"				 />
+						<!-- <field name="address"				 /> -->
+						<field name="cr_city"			 />
+						<field name="cr_country"			 />
+						<field name="cr_zip"			 />
+
 						<field name="id_card_type"			 />
 						<field name="id_card"				 />
 						<field name="id_card_expire_date"	 />
@@ -233,7 +241,10 @@
 					<field name="client_id"		 />
 					<field name="date"			 />
 					<field name="cash_on_hand"	 />
-					<field name="net_ac"		 />
+
+					<field name="saldo_t1"		 />
+					<field name="saldo_t2"		 />
+					
 					<field name="is_imported"		 />
 					<field name="notes"		 />
 		        </tree>    
@@ -257,7 +268,9 @@
 					<field name="client_id"		 />
 					<field name="date"			 />
 					<field name="cash_on_hand"	 />
-					<field name="net_ac"		 />
+					<field name="saldo_t1"		 />
+					<field name="saldo_t2"		 />
+
 					<field name="is_imported"		 />
 
 		            <group expand="1" string="Group By...">
@@ -290,7 +303,8 @@
 						<field name="client_id"		 />
 						<field name="date"			 />
 						<field name="cash_on_hand"	 />
-						<field name="net_ac"		 />						
+						<field name="saldo_t1"		 />
+						<field name="saldo_t2"		 />
 						<field name="is_imported"		 />						
 						<field name="notes"		 />						
 		            </group>
@@ -315,12 +329,15 @@
 					<field name="date"				 />
 					<field name="client_id"			 />
 					<field name="stock_id"			 />
+					<field name="stock_name"			 />
 					<field name="avg_price"			 />
 					<field name="close_price"		 />
 					<field name="balance"			 />
 					<field name="lpp"				 />
 					<field name="stock_avg_value"	 />
 					<field name="market_value"		 />					
+					<field name="stock_type"		 />					
+					<field name="sharesperlot"		 />					
 					<field name="is_imported"		 />					
 					<field name="notes"		 />					
 		        </tree>    
@@ -399,12 +416,8 @@
 
 
 
-
-
-
-
 	    <!-- context menu More.. di tree import_ls -->
-	    <record id="action_import_partner" model="ir.actions.server">
+	    <record id="action_import_ls_partner" model="ir.actions.server">
 	        <field name="name">Import to Partner</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_ls"/>
@@ -412,16 +425,16 @@
 	        <field name="code">action = pool.get('reliance.import_ls').action_import_partner(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_wizard" model="ir.values">
+	    <record id="ir_import_ls_partner" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_ls'" name="model"/>
 	        <field name="name">Import to Partner</field>
-	        <field eval="'ir.actions.server,%d'%action_import_partner" name="value"/>
+	        <field eval="'ir.actions.server,%d'%action_import_ls_partner" name="value"/>
 	    </record>
 
 
 	    <!-- context menu More.. di tree import_ls_cash -->
-	    <record id="action_import_partner_cash" model="ir.actions.server">
+	    <record id="action_import_ls_cash" model="ir.actions.server">
 	        <field name="name">Import to Partner Cash</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_ls_cash"/>
@@ -429,16 +442,16 @@
 	        <field name="code">action = pool.get('reliance.import_ls_cash').action_import_partner_cash(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_cash_wizard" model="ir.values">
+	    <record id="ir_import_ls_cash_wizard" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_ls_cash'" name="model"/>
 	        <field name="name">Import to Partner Cash</field>
-	        <field eval="'ir.actions.server,%d'%action_import_partner_cash" name="value"/>
+	        <field eval="'ir.actions.server,%d'%action_import_ls_cash" name="value"/>
 	    </record>
 
 
 	    <!-- context menu More.. di tree import_ls_stock -->
-	    <record id="action_import_partner_stock" model="ir.actions.server">
+	    <record id="action_import_ls_stock" model="ir.actions.server">
 	        <field name="name">Import to Partner Stock</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_ls_stock"/>
@@ -446,11 +459,11 @@
 	        <field name="code">action = pool.get('reliance.import_ls_stock').action_import_partner_stock(cr, uid, context)</field>
 	    </record>
 
-	    <record id="ir_import_partner_stock_wizard" model="ir.values">
+	    <record id="ir_import_ls_partner_stock_wizard" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_ls_stock'" name="model"/>
 	        <field name="name">Import to Partner Stock</field>
-	        <field eval="'ir.actions.server,%d'%action_import_partner_stock" name="value"/>
+	        <field eval="'ir.actions.server,%d'%action_import_ls_stock" name="value"/>
 	    </record>
 
 

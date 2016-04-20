@@ -20,7 +20,10 @@ PARTNER_MAPPING = {
 	"place_birth"			:	"perorangan_tempat_lahir",
 	"date_birth"			:	"perorangan_tanggal_lahir",
 	"cr_address"			:	"perorangan_alamat_tempat_tinggal_saat_ini",
-	"address"				:	"street",
+	# "address"				:	"street",
+	"cr_city"				:	"city",
+	"cr_country"			:	"country_id",
+	"cr_zip"				:	"zip",
 	"id_card_type"			:	"id_card_type",
 	"id_card"				:	"perorangan_nomor_ktp",
 	"id_card_expire_date"	:	"perorangan_masa_berlaku_ktp",
@@ -72,7 +75,12 @@ class import_ls(osv.osv):
 		"place_birth"			:		fields.char("PlaceBirth"),
 		"date_birth"			:		fields.char("DateBirth"),
 		"cr_address"			:		fields.char("CrAddress"),
-		"address"				:		fields.char("Address"),
+		
+		# "address"				:		fields.char("Address"),
+		"cr_city"				:		fields.char("CrCity"),
+		"cr_country"			:		fields.char("CrCountry"),
+		"cr_zip"				:		fields.char("CrZip"),
+
 		"id_card_type"			:		fields.char("IDCardType"),
 		"id_card"				:		fields.char("IDCard"),
 		"id_card_expire_date"	:		fields.char("IDCardExpireDate"),
@@ -94,7 +102,7 @@ class import_ls(osv.osv):
 		"occupation"			:		fields.char("Occupation"),
 		"occupation_desc"		:		fields.char("OccupationDesc"),
 		"company_name"			:		fields.char("CompanyName"),
-		"client_sid"			:		fields.char("ClientSID"),
+		"client_sid2"			:		fields.char("ClientSID"),
 		"company_address"		:		fields.char("CompanyAddress"),
 		"company_city"			:		fields.char("CompanyCity"),
 		"company_country"		:		fields.char("CompanyCountry"),
@@ -139,6 +147,7 @@ class import_ls(osv.osv):
 		ex = 0
 
 		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
 
 		for import_ls in self.browse(cr, uid, ids, context=context):
 			data = {}
@@ -146,6 +155,11 @@ class import_ls(osv.osv):
 				partner_fname = PARTNER_MAPPING[k]
 				import_ls_fname = "import_ls.%s" % k 
 				data.update( {partner_fname : eval(import_ls_fname)})
+
+				if k == 'cr_country':
+					country_name = import_ls.cr_country
+					country_id = country.find_or_create_country(cr, uid, country_name, context=context)
+					data.update( {partner_fname :country_id})
 
 			data.update({'comment':'LS'})
 			
@@ -174,7 +188,8 @@ class import_ls_cash(osv.osv):
 		"client_id"		:		fields.char("ClientID", select=1),
 		"date"			:		fields.char("Date", select=1),
 		"cash_on_hand"	:		fields.char("CashOnHand"),
-		"net_ac"		:		fields.char("NetAC"),
+		"saldo_t1"		:		fields.char("SaldoT1"),
+		"saldo_t2"		:		fields.char("SaldoT2"),
 		'is_imported' 	: 		fields.boolean("Imported to Partner Cash?", select=1),
 		"notes"			:		fields.char("Notes"),
 	}
@@ -217,7 +232,9 @@ class import_ls_cash(osv.osv):
 					"partner_id"	: 	pid[0],	
 					"date"			:	date ,
 					"cash_on_hand"	:	import_cash.cash_on_hand,
-					"net_ac"		:	import_cash.net_ac,
+					# "net_ac"		:	import_cash.net_ac,
+					"saldo_t1"		:	import_cash.saldo_t1,
+					"saldo_t2"		:	import_cash.saldo_t2,
 				}
 				if not cid:
 					cash.create(cr,uid,data,context=context)
@@ -247,14 +264,17 @@ class import_ls_stock(osv.osv):
 		"date"				:	fields.char("Date", select=1),
 		"client_id"			:	fields.char("ClientID", select=1),
 		"stock_id"			:	fields.char("StockID", select=1),
+		"stock_name"		:	fields.char("stockname", select=1),
 		"avg_price"			:	fields.char("AvgPrice"),
 		"close_price"		:	fields.char("ClosePrice"),
 		"balance"			:	fields.char("Balance"),
 		"lpp"				:	fields.char("LPP"),
 		"stock_avg_value"	:	fields.char("StockAvgValue"),
 		"market_value"		:	fields.char("MarketValue"),
-		'is_imported' 		: 		fields.boolean("Imported to Partner Stock?", select=1),
-		"notes"				:		fields.char("Notes"),
+		"stock_type"		:	fields.char("StockType"),
+		"sharesperlot"		:	fields.char("sharesperlot"),
+		'is_imported' 		: 	fields.boolean("Imported to Partner Stock?", select=1),
+		"notes"				:	fields.char("Notes"),
 	}
 
 	def action_import_partner_stock(self, cr, uid, context=None):
@@ -296,12 +316,15 @@ class import_ls_stock(osv.osv):
 					"date"				: date,
 					"partner_id"		: pid[0],
 					"stock_id"			: import_stock.stock_id,
+					"stock_name"		: import_stock.stock_name,
 					"avg_price"			: import_stock.avg_price,
 					"close_price"		: import_stock.close_price, 
 					"balance"			: import_stock.balance,
 					"lpp"				: import_stock.lpp,
 					"stock_avg_value"	: import_stock.stock_avg_value,
 					"market_value"		: import_stock.market_value,
+					"stock_type"		: import_stock.stock_type,
+					"sharesperlot"		: import_stock.sharesperlot,
 				}
 
 			
