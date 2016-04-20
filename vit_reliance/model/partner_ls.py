@@ -48,7 +48,8 @@ class partner_cash(osv.osv):
 							relation="res.partner", string="Client ID" ),
 		"date"			: fields.date("Date"),
 		"cash_on_hand"	: fields.float("Cash on Hand"),
-		"net_ac"		: fields.float("Net AC"),
+		"saldo_t1"		: fields.float("SaldoT1"),
+		"saldo_t2"		: fields.float("SaldoT2"),
 	}
 
 class partner_stock(osv.osv):
@@ -60,11 +61,14 @@ class partner_stock(osv.osv):
 		"client_id"			: fields.related('partner_id', 'cif' , type="char", 
 								relation="res.partner", string="Client ID" ),
 		"stock_id"			: fields.char("Stock ID", select=1),
+		"stock_name"		: fields.char("Stock Name", select=1),
 		"avg_price"			: fields.float("Avg Price"),
 		"close_price"		: fields.float("Close Price"),
 		"balance"			: fields.float("Balance"),
 		"lpp"				: fields.float("LPP"),
 		"stock_avg_value"	: fields.float("Stock Avg Value"),
 		"market_value"		: fields.float("Market Value"),
+		"stock_type"		: fields.char("Stock Type"),
+		"sharesperlot"		: fields.char("Shares per Lot"),
 	}
 

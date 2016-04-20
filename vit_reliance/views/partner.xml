@@ -215,10 +215,11 @@
 		            		<page string="LS Cash" >
 		            			<field name="partner_cash_ids">
 		            				<tree string="LS Cash">
-										<field name="client_id"		 />
+										<!-- <field name="client_id"		 /> -->
 										<field name="date"			 />
 										<field name="cash_on_hand"	 />
-										<field name="net_ac"		 />
+										<field name="saldo_t1"		 />
+										<field name="saldo_t2"		 />
 		            				</tree>
 		            			</field>
 		            		</page>
@@ -227,14 +228,17 @@
 		            			<field name="partner_stock_ids">
 		            				<tree string="LS Stock">
 										<field name="date"				 />
-										<field name="client_id"			 />
+										<!-- <field name="client_id"			 /> -->
 										<field name="stock_id"			 />
+										<field name="stock_name"			 />
 										<field name="avg_price"			 />
 										<field name="close_price"		 />
 										<field name="balance"			 />
 										<field name="lpp"				 />
 										<field name="stock_avg_value"	 />
 										<field name="market_value"		 />
+										<field name="stock_type"		 />
+										<field name="sharesperlot"		 />
 									</tree>
 		            			</field>
 		            		</page>
