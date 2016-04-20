@@ -91,7 +91,7 @@
 					<field name="occupation"			 />
 					<field name="occupation_desc"		 />
 					<field name="company_name"			 />
-					<field name="client_sid"			 />
+					<field name="client_sid2"			 />
 					<field name="company_address"		 />
 					<field name="company_city"			 />
 					<field name="company_country"		 />
