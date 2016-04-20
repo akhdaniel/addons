@@ -135,13 +135,13 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_health_peserta"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_health_peserta').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_health_peserta').action_import_peserta(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_health_peserta" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_health_peserta'" name="model"/>
-	        <field name="name">Import to Partner Partner</field>
+	        <field name="name">Import to Partner Peserta</field>
 	        <field eval="'ir.actions.server,%d'%action_import_health_peserta" name="value"/>
 	    </record>
 
@@ -238,17 +238,17 @@
 
 	    <!-- context menu More.. di tree import_health_polis -->
 	    <record id="action_import_health_polis" model="ir.actions.server">
-	        <field name="name">Import to Partner Peserta</field>
+	        <field name="name">Import to Partner Polis Holder</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_health_polis"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_health_polis').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_health_polis').action_import_polis(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_health_polis" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_health_polis'" name="model"/>
-	        <field name="name">Import to Partner Partner</field>
+	        <field name="name">Import to Partner Polis Holder</field>
 	        <field eval="'ir.actions.server,%d'%action_import_health_polis" name="value"/>
 	    </record>
 

@@ -124,6 +124,13 @@ class res_partner(osv.osv):
 		"arg_exp_date"			: fields.date("ARG Exp Date"),
 		"arg_qq"				: fields.char("ARG QQ"),
 		"arg_cp"				: fields.char("ARG CP"),
+
+
+		"health_status"			: fields.char("Health Status"),
+		"health_relationship"	: fields.char("Health Relationship"),
+		"health_product"		: fields.char("Health Product"),
+		"health_effdt"			: fields.date("Health Eff. Date"),
+		"health_expdt"			: fields.date("Health Exp. Date"),
 	}
 	_sql_constraints = [('unique_reliance_id', 'unique(reliance_id)',
                          'Reliance ID Must be Unique!')]
