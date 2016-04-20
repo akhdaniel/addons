@@ -168,6 +168,7 @@ class import_health_peserta(osv.osv):
 				'health_effdt'				: polis_holder.health_effdt,		
 				'health_expdt'				: polis_holder.health_expdt,	
 				'parent_id'					: polis_holder.id,	
+				'comment'					: 'HEALTH',
 			}
 			existing = partner.search(cr, uid, [
 				('cif','=', import_health_peserta.memberid),
@@ -182,6 +183,7 @@ class import_health_peserta(osv.osv):
 
 
 			#commit per record
+			i = i+1
 			cr.execute("update reliance_import_health_peserta set is_imported='t' where id=%s" % import_health_peserta.id)
 			cr.commit()
 

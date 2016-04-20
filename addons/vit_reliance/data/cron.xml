@@ -82,9 +82,9 @@
             <field name="function" eval="'cron_import_peserta'"/>
             <field name="args" eval="'()'" />
         </record>  
-        
+
         <record model="ir.cron" id="import_health_limit">
-            <field name="name">Auto Import Health Peserta Partner</field>
+            <field name="name">Auto Import Health Partner Limit</field>
             <field name="interval_number">10</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
