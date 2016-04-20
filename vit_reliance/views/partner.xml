@@ -278,7 +278,13 @@
 
 					</page>	            	
             		<page string="Health" >
-
+            			<group>
+							<field name='health_product' />
+							<field name='health_effdt'	/>
+							<field name='health_expdt'/>
+							<field name='health_status' />
+							<field name='health_relationship'/>	
+						</group>					
 					</page>	            	
             	</notebook>
 

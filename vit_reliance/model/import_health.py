@@ -8,73 +8,6 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-CUST_MAPPING = {
-}
-
-COMPANY_MAPPING = {
-}
-
-AGENT_MAPPING = {
-}
-
-####################################################################
-# partner data
-# from health_peserta-peserta csv file
-####################################################################
-class import_health_peserta(osv.osv): 
-	_name 		= "reliance.import_health_peserta"
-	_columns 	= {
-		"policyno"			:	fields.char("POLICYNO"),
-		"memberid"			:	fields.char("MEMBERID"),
-		"membername"		:	fields.char("MEMBERNAME"),
-		"sex"				:	fields.char("SEX"),
-		"birthdate"			:	fields.char("BIRTHDATE"),
-		"status"			:	fields.char("STATUS"),
-		"relationship"		:	fields.char("RELATIONSHIP"),
-
-		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
-		"notes"				:	fields.char("Notes"),
-	}
-
-	def action_import_peserta(self, cr, uid, context=None):
-		active_ids = context and context.get('active_ids', False)
-		if not context:
-			context = {}
-
-		self.actual_import(cr, uid, active_ids, context=context)
-
-
-	def cron_import_peserta(self, cr, uid, context=None):
-		_logger.warning('running cron import_health_peserta')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
-		if active_ids:
-			self.actual_import(cr, uid, active_ids, context=context)
-		else:
-			print "no peserta to import"
-		return True
-
-	################################################################
-	# the import process
-	################################################################
-	def actual_import(self, cr, uid, ids, context=None):
-		i = 0
-		ex = 0
-
-		partner = self.pool.get('res.partner')
-
-		for import_health_peserta in self.browse(cr, uid, ids, context=context):
-
-			cust_data = {}
-
-			#commit per record
-			cr.execute("update reliance_import_health_peserta set is_imported='t' where id=%s" % import_health_peserta.id)
-			cr.commit()
-
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
-
-
-
-
 
 ####################################################################
 # partner data
@@ -114,7 +47,7 @@ class import_health_polis(osv.osv):
 		return True
 
 	################################################################
-	# the import process
+	# the import process: create polis holder partner
 	################################################################
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
@@ -124,12 +57,134 @@ class import_health_polis(osv.osv):
 
 		for import_health_polis in self.browse(cr, uid, ids, context=context):
 
+			data = {
+				'nomor_polis' 	: import_health_polis.policyno,
+				'name'			: import_health_polis.clientname,
+				'phone'			: import_health_polis.phone,	
+				'fax' 			: import_health_polis.fax,		
+				'email' 		: import_health_polis.email,
+				'health_product': import_health_polis.product,
+				'health_effdt'	: import_health_polis.effdt,		
+				'health_expdt'	: import_health_polis.expdt,		
+				'is_company'	: True,
+				'comment'		: 'HEALTH',
+			}
+
+
+			existing = partner.search(cr, uid, [
+				('nomor_polis','=',import_health_polis.policyno),
+				('name', '=', import_health_polis.clientname)
+			], context=context)
+
+			if not existing:
+				partner.create(cr, uid, data, context=context)
+			else:
+				ex = ex + 1
+
 			#commit per record
 			cr.execute("update reliance_import_health_polis set is_imported='t' where id=%s" % import_health_polis.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s polis holder partner and skipped %s' % (i, ex) )
 
+
+
+
+
+####################################################################
+# from health_peserta csv file
+# create peserta partner of a polis holder, set the parent_id to
+# polis holder
+####################################################################
+class import_health_peserta(osv.osv): 
+	_name 		= "reliance.import_health_peserta"
+	_columns 	= {
+		"policyno"			:	fields.char("POLICYNO"),
+		"memberid"			:	fields.char("MEMBERID"),
+		"membername"		:	fields.char("MEMBERNAME"),
+		"sex"				:	fields.char("SEX"),
+		"birthdate"			:	fields.char("BIRTHDATE"),
+		"status"			:	fields.char("STATUS"),
+		"relationship"		:	fields.char("RELATIONSHIP"),
+
+
+		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
+		"notes"				:	fields.char("Notes"),
+	}
+
+	def action_import_peserta(self, cr, uid, context=None):
+		active_ids = context and context.get('active_ids', False)
+		if not context:
+			context = {}
+
+		self.actual_import(cr, uid, active_ids, context=context)
+
+
+	def cron_import_peserta(self, cr, uid, context=None):
+		_logger.warning('running cron import_health_peserta')
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		if active_ids:
+			self.actual_import(cr, uid, active_ids, context=context)
+		else:
+			print "no peserta to import"
+		return True
+
+	################################################################
+	# the import process
+	################################################################
+	def actual_import(self, cr, uid, ids, context=None):
+		i = 0
+		ex = 0
+
+		partner = self.pool.get('res.partner')
+
+		for import_health_peserta in self.browse(cr, uid, ids, context=context):
+
+			polis_holder = partner.search(cr, uid, [
+				('nomor_polis','=', import_health_peserta.policyno),
+				('is_company','=', True),
+			], context=context)
+
+			if not polis_holder:
+				self.write(cr, uid,import_health_peserta.id, {'notes': 'NO POLIS HOLDER'}, context=context)
+				cr.commit()
+				ex = ex + 1 
+				continue
+
+			#polis holder
+			polis_holder = partner.browse(cr, uid, polis_holder[0], context=context)
+
+			data = {
+				'nomor_polis' 	: import_health_peserta.policyno	,
+				'cif'			: import_health_peserta.memberid	,
+				'name' 			: import_health_peserta.membername	,
+				'perorangan_jenis_kelamin'	: import_health_peserta.sex			,
+				'perorangan_tanggal_lahir'	: import_health_peserta.birthdate	,
+				'health_status' 			: import_health_peserta.status		,
+				'health_relationship' 		: import_health_peserta.relationship,	
+					
+				'health_product'			: polis_holder.health_product,
+				'health_effdt'				: polis_holder.health_effdt,		
+				'health_expdt'				: polis_holder.health_expdt,	
+				'parent_id'					: polis_holder.id,	
+			}
+			existing = partner.search(cr, uid, [
+				('cif','=', import_health_peserta.memberid),
+				('name','=', import_health_peserta.membername),
+				('nomor_polis','=', import_health_peserta.policyno),
+			], context=context)
+
+			if not existing:
+				partner.create(cr, uid, data, context=context)
+			else:
+				ex=ex+1
+
+
+			#commit per record
+			cr.execute("update reliance_import_health_peserta set is_imported='t' where id=%s" % import_health_peserta.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
 
 
 
