@@ -152,17 +152,24 @@ class import_ls(osv.osv):
 
 		for import_ls in self.browse(cr, uid, ids, context=context):
 			data = {}
+			country_id = False
+
 			for k in PARTNER_MAPPING.keys():
 				partner_fname = PARTNER_MAPPING[k]
 				import_ls_fname = "import_ls.%s" % k 
 				data.update( {partner_fname : eval(import_ls_fname)})
 
-				if k == 'cr_country':
-					country_name = import_ls.cr_country
-					country_id = country.find_or_create_country(cr, uid, country_name, context=context)
-					data.update( {partner_fname :country_id})
+			country_name = import_ls.cr_country
+			country_id = country.search(cr, uid, [('name','ilike',country_name)], context=context)
 
-			data.update({'comment':'LS'})
+			if not country_id:
+				self.write(cr, uid, import_ls.id, {'notes':'NO COUNTRY found for CrCountry'}, context=context)
+				ex = ex+1
+				cr.commit()
+				continue
+
+			data.update( {'country_id' :country_id[0]})
+			data.update( {'comment':'LS'})
 			
 			# check exiting partner 
 			pid = partner.search(cr, uid, [('cif','=',import_ls.client_id)],context=context)
@@ -170,14 +177,15 @@ class import_ls(osv.osv):
 				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
 			else:
+				self.write(cr, uid, import_ls.id, {'notes':'Partner exist with CIF %s' % import_ls.client_id}, context=context)
 				_logger.warning('Partner exist with CIF %s' % import_ls.client_id)
 				ex = ex + 1
 
-			cr.execute("update reliance_import_ls set is_imported='t' where id=%s" % import_ls.id)
-
 			#commit per record
+			cr.execute("update reliance_import_ls set is_imported='t' where id=%s" % import_ls.id)
 			cr.commit()
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )			
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )			
 
 
 ####################################################################
