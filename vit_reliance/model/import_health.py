@@ -82,6 +82,7 @@ class import_health_polis(osv.osv):
 				ex = ex + 1
 
 			#commit per record
+			i = i + 1
 			cr.execute("update reliance_import_health_polis set is_imported='t' where id=%s" % import_health_polis.id)
 			cr.commit()
 
@@ -162,7 +163,7 @@ class import_health_peserta(osv.osv):
 				'perorangan_tanggal_lahir'	: import_health_peserta.birthdate	,
 				'health_status' 			: import_health_peserta.status		,
 				'health_relationship' 		: import_health_peserta.relationship,	
-					
+
 				'health_product'			: polis_holder.health_product,
 				'health_effdt'				: polis_holder.health_effdt,		
 				'health_expdt'				: polis_holder.health_expdt,	

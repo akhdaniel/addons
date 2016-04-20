@@ -23,12 +23,6 @@
 
 		<menuitem id="rcm_import_health" name="Health" sequence="30" parent="rcm_import"/>
 
-			<!-- import Health customer menu -->
-			<menuitem id="rcm_import_health_peserta"
-			 action="action_import_health_peserta_list"
-			 name="Health Peserta"
-			 sequence="10"
-			 parent="rcm_import_health"/>
 
 			<!-- import Health customer menu -->
 			<menuitem id="rcm_import_health_polis"
@@ -38,10 +32,17 @@
 			 parent="rcm_import_health"/>
 
 			<!-- import Health customer menu -->
+			<menuitem id="rcm_import_health_peserta"
+			 action="action_import_health_peserta_list"
+			 name="Health Peserta"
+			 sequence="20"
+			 parent="rcm_import_health"/>
+			 
+			<!-- import Health customer menu -->
 			<menuitem id="rcm_import_health_limit"
 			 action="action_import_health_limit_list"
 			 name="Health Limit"
-			 sequence="10"
+			 sequence="30"
 			 parent="rcm_import_health"/>
 
 

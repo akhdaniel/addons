@@ -56,5 +56,45 @@
         </record>  
 
               
+
+        <!-- HEALTH -->
+
+        <record model="ir.cron" id="import_health_polis">
+            <field name="name">Auto Import Health Polis Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_health'"/>
+            <field name="function" eval="'cron_import_polis'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
+        <record model="ir.cron" id="import_health_peserta">
+            <field name="name">Auto Import Health Peserta Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_health'"/>
+            <field name="function" eval="'cron_import_peserta'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+        
+        <record model="ir.cron" id="import_health_limit">
+            <field name="name">Auto Import Health Peserta Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_health'"/>
+            <field name="function" eval="'cron_import_limit'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
+              
     </data>
 </openerp>
