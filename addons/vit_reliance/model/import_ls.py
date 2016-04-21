@@ -170,6 +170,13 @@ class import_ls(osv.osv):
 
 			data.update( {'country_id' :country_id[0]})
 			data.update( {'comment':'LS'})
+
+			if import_ls.date_birth != "NULL":
+				date_birth = datetime.strptime(import_ls.date_birth, "%Y-%m-%d")
+			else:
+				date_birth = False
+
+			data.update( {'perorangan_tanggal_lahir':date_birth})
 			
 			# check exiting partner 
 			pid = partner.search(cr, uid, [('ls_client_id','=',import_ls.client_id)],context=context)
