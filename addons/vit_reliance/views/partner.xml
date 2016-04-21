@@ -9,8 +9,16 @@
             <field name="inherit_id" ref="base.view_partner_tree"/>
 		    <field name="arch" type="xml">
 		    	<field name="display_name" position="after">
-					<field name='sid'	/>
-					<field name='cif'	/>
+					<field name='reliance_id'	/>
+					<field name='ls_client_sid'	/>
+					<field name='ls_client_id'	/>
+
+					<field name='ajri_nomor_partisipan'   />
+					<field name='ajri_nomor_polis' 		 />
+					
+					<field name='health_nomor_polis' 	 />
+					<field name='health_member_id' 		 />
+
 		        </field>
 		    </field>
 		</record>
@@ -25,11 +33,15 @@
 				            
 		            <field name="name"/>
 					<field name='reliance_id' 		 />
-					<field name='nomor_partisipan'   />
-					<field name='sid' 				 />
-					<field name='nomor_polis' 		 />
-					<field name='nomor_nasabah' 	 />
-					<field name='cif' 				 />
+					
+					<field name='ajri_nomor_partisipan'   />
+					<field name='ajri_nomor_polis' 		 />
+					
+
+					<field name='ls_client_sid' 			 />
+					<field name='ls_client_id' 				 />
+
+					<!-- <field name='nomor_nasabah' 	 /> -->
 					<field name='agent_id' 			 />		  
 					<field name='parent_id' 		 />		  
 
@@ -53,7 +65,7 @@
 
 
 
-		<!-- form partner reliance -->
+		<!-- form partner -->
         <record id="view_partner_form_reliance" model="ir.ui.view">
             <field name="name">res_partner_form_reliance</field>
             <field name="model">res.partner</field>
@@ -61,12 +73,8 @@
             <field name="arch" type="xml">
             	<field name="website" position="after">
 					<field name='reliance_id' 		 />
-					<field name='nomor_partisipan'  />
-					<field name='sid' 				 />
-					<field name='nomor_polis' 		 />
-					<field name='nomor_nasabah' 	 />
-					<field name='cif' 				 />
-					<field name='agent_id' 			 />            		
+					<!-- <field name='nomor_nasabah' 	 />
+					<field name='agent_id' 			 />  -->           		
             	</field>
 
             	<page string="Sales &amp; Purchases" position="attributes">
@@ -211,6 +219,12 @@
             		</page>
 
             		<page string="LS" >
+
+        				<group>
+							<field name='ls_client_sid' 				 />
+							<field name='ls_client_id' 				 />   
+        				</group>
+            			
             			<notebook string="LS">
 		            		<page string="LS Cash" >
 		            			<field name="partner_cash_ids">
@@ -246,6 +260,13 @@
 	            	</page>
 
             		<page string="AJRI" >
+
+            			<group>
+							<field name='ajri_parent_id'  />
+							<field name='ajri_nomor_polis' 		 />
+							<field name='ajri_nomor_partisipan'  />
+						</group>
+
             			<field name="partner_ajri_product_ids">
 	            			<tree string="AJRI">
 								<field name='product_id'		 />
@@ -261,8 +282,11 @@
 	            			</tree>
 	            		</field>
 					</page>	
+
             		<page string="ARG" >
             			<group>
+							<field name="arg_nomor_polis" />		
+							<field name="arg_cust_code" />		
 							<field name="arg_class" />		
 							<field name="arg_subclass" />	
 							<field name="arg_eff_date" />	
@@ -270,15 +294,21 @@
 							<field name="arg_qq" />		
 							<field name="arg_cp" />		
 						</group>
-					</page>	    	
+					</page>	   
+
             		<page string="RMI" >
 
-					</page>	    	
+					</page>	 
+
             		<page string="REFI" >
 
 					</page>	            	
             		<page string="Health" >
             			<group>
+							<field name='health_parent_id' />
+							<field name='health_nomor_polis' />
+							<field name='health_member_id' />
+							
 							<field name='health_product' />
 							<field name='health_effdt'	/>
 							<field name='health_expdt'/>

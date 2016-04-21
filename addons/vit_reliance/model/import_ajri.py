@@ -69,13 +69,13 @@ class import_ajri(osv.osv):
 
 				pemegang_data = {
 					'name'				: import_ajri.nama_pemegang,
-					'nomor_polis'		: import_ajri.nomor_polis,
+					'ajri_nomor_polis'	: import_ajri.nomor_polis,
 					'is_company'		: True,
 					'comment' 			: 'AJRI'
 				}
 				
 				########################## check exiting pemegang partner 
-				pid = partner.search(cr, uid, [('nomor_polis','=',import_ajri.nomor_polis)],context=context)
+				pid = partner.search(cr, uid, [('ajri_nomor_polis','=',import_ajri.nomor_polis)],context=context)
 				if not pid:
 					pid = partner.create(cr, uid, pemegang_data, context=context)	
 					i = i + 1
@@ -94,16 +94,16 @@ class import_ajri(osv.osv):
 			else:
 				date = False 
 			participant_data = {
-				'name'				: import_ajri.nama_partisipan,
-				'nomor_partisipan'	: import_ajri.nomor_partisipan,
-				'nomor_polis'		: import_ajri.nomor_polis,
-				'is_company'		: False,
-				'parent_id'			: pid,
+				'name'					: import_ajri.nama_partisipan,
+				'ajri_nomor_partisipan'	: import_ajri.nomor_partisipan,
+				'ajri_nomor_polis'		: import_ajri.nomor_polis,
+				'is_company'			: False,
+				'ajri_parent_id'		: pid,
 				'perorangan_tanggal_lahir'	: date,
-				'comment' 			: 'AJRI'
+				'comment' 				: 'AJRI'
 			}
 
-			pid2 = partner.search(cr, uid, [('nomor_partisipan','=',import_ajri.nomor_partisipan)],context=context)
+			pid2 = partner.search(cr, uid, [('ajri_nomor_partisipan','=',import_ajri.nomor_partisipan)],context=context)
 			if not pid2:
 				pid2 = partner.create(cr, uid, participant_data, context=context)	
 				i = i + 1

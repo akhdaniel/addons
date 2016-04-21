@@ -9,12 +9,12 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 CUST_MAPPING = {
-	"policy_no"			: "nomor_polis",
+	"policy_no"			: "arg_nomor_polis",
 	"product_class"		: "arg_class",
 	"subclass"			: "arg_subclass",
 	"eff_date"			: "arg_eff_date",
 	"exp_date"			: "arg_exp_date",
-	"cust_code"			: "cif",
+	"cust_code"			: "arg_cust_code",
 	"cust_fullname"		: "name",
 	"qq"				: "arg_qq",
 	"cust_cp"			: "arg_cp",

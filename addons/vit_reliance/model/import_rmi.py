@@ -77,19 +77,18 @@ class import_rmi(osv.osv):
 
 			partner_data = {
 				'name'				: import_rmi.nama_partner,
-				'policy_no'			: import_rmi.policy_no,
-				'is_company'		: True,
-				'comment' 			: 'REFI'
+				'rmi_sid'			: import_rmi.sid,
+				'comment' 			: 'RMI'
 			}
 			
 			########################## check exiting partner partner 
-			pid = partner.search(cr, uid, [('policy_no','=',import_rmi.policy_no)],context=context)
+			pid = partner.search(cr, uid, [('rmi_policy_no','=',import_rmi.policy_no)],context=context)
 			if not pid:
 				pid = partner.create(cr, uid, partner_data, context=context)	
 				i = i + 1
 			else:
 				pid = pid[0]
-				_logger.warning('Partner exist with policy_no %s' % import_rmi.policy_no)
+				_logger.warning('Partner exist with rmi_policy_no %s' % import_rmi.policy_no)
 				ex = ex + 1
 
 			partner_old = import_rmi.nama_partner
