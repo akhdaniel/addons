@@ -45,7 +45,7 @@ class partner(osv.osv):
 
 	def get_health_holder(self, cr, uid, reliance_id, context=None):
 		holder = False
-		pid = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 
 		if pid:
 			if not pid[0].health_parent_id:
