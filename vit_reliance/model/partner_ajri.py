@@ -35,9 +35,9 @@ class partner(osv.osv):
 		_logger.warning('participant=%s' % pid)
 
 		if pid:
-			if not pid[0].ajri_parent_id:
+			if not pid[0]['ajri_parent_id']:
 				raise osv.except_osv(_('error'),_("not linked to any ajri_parent_id") ) 
-			pemegang = self.search_read(cr,uid,[('id','=',pid[0].ajri_parent_id.id)],context=context)
+			pemegang = self.search_read(cr,uid,[('id','=',pid[0]['ajri_parent_id'][0])],context=context)
 		else:
 			raise osv.except_osv(_('error'),'no partner with nomor_partisipan=%s' % nomor_partisipan) 
 		return pemegang
