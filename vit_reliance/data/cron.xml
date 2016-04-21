@@ -66,7 +66,7 @@
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_health'"/>
+            <field name="model" eval="'reliance.import_health_polis'"/>
             <field name="function" eval="'cron_import_polis'"/>
             <field name="args" eval="'()'" />
         </record>  
@@ -78,7 +78,7 @@
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_health'"/>
+            <field name="model" eval="'reliance.import_health_peserta'"/>
             <field name="function" eval="'cron_import_peserta'"/>
             <field name="args" eval="'()'" />
         </record>  
@@ -90,7 +90,7 @@
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_health'"/>
+            <field name="model" eval="'reliance.import_health_limit'"/>
             <field name="function" eval="'cron_import_limit'"/>
             <field name="args" eval="'()'" />
         </record>  
