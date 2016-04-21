@@ -14,8 +14,8 @@ _logger = logging.getLogger(__name__)
 ####################################################################
 
 PARTNER_MAPPING = {
-	"client_id"				:	"cif",
-	"client_sid"			:	"sid",
+	"client_id"				:	"ls_client_id",
+	"client_sid"			:	"ls_client_sid",
 	"client_name"			:	"name",
 	"place_birth"			:	"perorangan_tempat_lahir",
 	"date_birth"			:	"perorangan_tanggal_lahir",
@@ -25,7 +25,7 @@ PARTNER_MAPPING = {
 	"cr_city"				:	"city",
 	"cr_country"			:	"country_id",
 	"cr_zip"				:	"zip",
-	"id_card_type"			:	"id_card_type",
+	"id_card_type"			:	"ls_id_card_type",
 	"id_card"				:	"perorangan_nomor_ktp",
 	"id_card_expire_date"	:	"perorangan_masa_berlaku_ktp",
 	"npwp"					:	"perorangan_npwp",
@@ -172,7 +172,7 @@ class import_ls(osv.osv):
 			data.update( {'comment':'LS'})
 			
 			# check exiting partner 
-			pid = partner.search(cr, uid, [('cif','=',import_ls.client_id)],context=context)
+			pid = partner.search(cr, uid, [('ls_client_id','=',import_ls.client_id)],context=context)
 			if not pid:
 				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
@@ -229,7 +229,7 @@ class import_ls_cash(osv.osv):
 		
 		for import_cash in self.browse(cr, uid, ids, context=context):
 			########## cari partner dulu ####################
-			pid = partner.search(cr, uid, [( 'cif','=', import_cash.client_id)], context=context)
+			pid = partner.search(cr, uid, [( 'ls_client_id','=', import_cash.client_id)], context=context)
 			if pid:
 				###### cari existing Cash record ############
 				cid = cash.search(cr, uid, [('partner_id','=', pid[0] )], context=context)
@@ -313,7 +313,7 @@ class import_ls_stock(osv.osv):
 		
 		for import_stock in self.browse(cr, uid, ids, context=context):
 			########## cari partner dulu ####################
-			pid = partner.search(cr, uid, [( 'cif','=', import_stock.client_id)], context=context)
+			pid = partner.search(cr, uid, [( 'ls_client_id','=', import_stock.client_id)], context=context)
 			if pid:
 				###### cari existing Cash record ############
 				cid = stock.search(cr, uid, [('partner_id','=', pid[0]),('stock_id','=',import_stock.stock_id)], context=context)
@@ -343,7 +343,7 @@ class import_ls_stock(osv.osv):
 				else:
 					upd = upd + 1
 					stock.write(cr,uid, cid, data, context=context)
-					_logger.warning('updating partner stock_id=%s partner cif=%s' % (import_stock.stock_id, import_stock.client_id))
+					_logger.warning('updating partner stock_id=%s partner ls_client_id=%s' % (import_stock.stock_id, import_stock.client_id))
 					_logger.warning(data)
 
 			else:

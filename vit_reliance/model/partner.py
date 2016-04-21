@@ -12,13 +12,9 @@ class res_partner(osv.osv):
 	_name 		= "res.partner"
 	_columns 	= {
 		'reliance_id' 							: fields.char('Reliance ID', select=1),
-		'nomor_partisipan' 						: fields.char('Nomor Partisipan', select=1),
-		'sid' 									: fields.char('SID', select=1),
-		'nomor_polis' 							: fields.char('Nomor Polis', select=1),
+
 		'nomor_nasabah' 						: fields.char('Nomor Nasabah', select=1),
-		'cif' 									: fields.char('CIF', select=1),
 		'agent_id' 								: fields.char('Agent', select=1),
-		'id_card_type' 							: fields.char('ID Card Type', select=1),
 
 		'perusahaan_npwp' 						: fields.char('NPWP'),
 		'perusahaan_bidang_usaha' 				: fields.char('Bidang Usaha'),
@@ -118,19 +114,10 @@ class res_partner(osv.osv):
 		'partner_ahli_waris_ids' 				: fields.one2many('reliance.ahli_waris','partner_id','Ahli Waris', ondelete="cascade", select=1),
 		'partner_keluarga_ids' 					: fields.one2many('reliance.keluarga','partner_id','Keluarga', ondelete="cascade", select=1),
 
-		"arg_class"				: fields.char("ARG Class"),
-		"arg_subclass"			: fields.char("ARG Sub Class"),	
-		"arg_eff_date"			: fields.date("ARG Eff Date"),
-		"arg_exp_date"			: fields.date("ARG Exp Date"),
-		"arg_qq"				: fields.char("ARG QQ"),
-		"arg_cp"				: fields.char("ARG CP"),
 
 
-		"health_status"			: fields.char("Health Status"),
-		"health_relationship"	: fields.char("Health Relationship"),
-		"health_product"		: fields.char("Health Product"),
-		"health_effdt"			: fields.date("Health Eff. Date"),
-		"health_expdt"			: fields.date("Health Exp. Date"),
+
+
 	}
 	_sql_constraints = [('unique_reliance_id', 'unique(reliance_id)',
                          'Reliance ID Must be Unique!')]

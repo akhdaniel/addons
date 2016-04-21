@@ -58,21 +58,23 @@ class import_health_polis(osv.osv):
 		for import_health_polis in self.browse(cr, uid, ids, context=context):
 
 			data = {
-				'nomor_polis' 	: import_health_polis.policyno,
+				'health_nomor_polis' 	: import_health_polis.policyno,
+				'health_product'		: import_health_polis.product,
+				'health_effdt'			: import_health_polis.effdt,		
+				'health_expdt'			: import_health_polis.expdt,		
+
 				'name'			: import_health_polis.clientname,
 				'phone'			: import_health_polis.phone,	
 				'fax' 			: import_health_polis.fax,		
 				'email' 		: import_health_polis.email,
-				'health_product': import_health_polis.product,
-				'health_effdt'	: import_health_polis.effdt,		
-				'health_expdt'	: import_health_polis.expdt,		
+
 				'is_company'	: True,
 				'comment'		: 'HEALTH',
 			}
 
 
 			existing = partner.search(cr, uid, [
-				('nomor_polis','=',import_health_polis.policyno),
+				('health_nomor_polis','=',import_health_polis.policyno),
 				('name', '=', import_health_polis.clientname)
 			], context=context)
 
@@ -142,7 +144,7 @@ class import_health_peserta(osv.osv):
 		for import_health_peserta in self.browse(cr, uid, ids, context=context):
 
 			polis_holder = partner.search(cr, uid, [
-				('nomor_polis','=', import_health_peserta.policyno),
+				('health_nomor_polis','=', import_health_peserta.policyno),
 				('is_company','=', True),
 			], context=context)
 
@@ -156,9 +158,9 @@ class import_health_peserta(osv.osv):
 			polis_holder = partner.browse(cr, uid, polis_holder[0], context=context)
 
 			data = {
-				'nomor_polis' 	: import_health_peserta.policyno	,
-				'cif'			: import_health_peserta.memberid	,
-				'name' 			: import_health_peserta.membername	,
+				'health_nomor_polis' 		: import_health_peserta.policyno	,
+				'health_member_id'			: import_health_peserta.memberid	,
+				'name' 						: import_health_peserta.membername	,
 				'perorangan_jenis_kelamin'	: import_health_peserta.sex			,
 				'perorangan_tanggal_lahir'	: import_health_peserta.birthdate	,
 				'health_status' 			: import_health_peserta.status		,
@@ -167,13 +169,13 @@ class import_health_peserta(osv.osv):
 				'health_product'			: polis_holder.health_product,
 				'health_effdt'				: polis_holder.health_effdt,		
 				'health_expdt'				: polis_holder.health_expdt,	
-				'parent_id'					: polis_holder.id,	
+				'health_parent_id'			: polis_holder.id,	
 				'comment'					: 'HEALTH',
 			}
 			existing = partner.search(cr, uid, [
-				('cif','=', import_health_peserta.memberid),
+				('health_member_id','=', import_health_peserta.memberid),
 				('name','=', import_health_peserta.membername),
-				('nomor_polis','=', import_health_peserta.policyno),
+				('health_nomor_polis','=', import_health_peserta.policyno),
 			], context=context)
 
 			if not existing:

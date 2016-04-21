@@ -11,31 +11,35 @@ class partner(osv.osv):
 	_name 		= "res.partner"
 	_inherit 	= "res.partner"
 	_columns 	= {
+		'ls_client_id' 			: fields.char('LS Client ID', select=1),
+		'ls_client_sid' 		: fields.char('LS SID', select=1),
+		'ls_id_card_type' 		: fields.char('LS ID Card Type', select=1),
+
 		'partner_cash_ids'		: fields.one2many('reliance.partner_cash','partner_id','Cash', ondelete="cascade"),
 		'partner_stock_ids'		: fields.one2many('reliance.partner_stock','partner_id','Stock', ondelete="cascade"),
 	}
 	
-	def get_ls_cash(self, cr, uid, cif, context=None):
+	def get_ls_cash(self, cr, uid, ls_client_id, context=None):
 
-		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
+		pid = self.search(cr, uid, [('ls_client_id','=',ls_client_id)], context=context)
 		partner_cash = self.pool.get('reliance.partner_cash')
 		_logger.warning('pid=%s' % pid)
 		if pid:
 			cashs = partner_cash.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
-			_logger.error('no partner with cif=%s' % cif)
+			_logger.error('no partner with ls_client_id=%s' % ls_client_id)
 		return cashs 
 
 
-	def get_ls_stock(self, cr, uid, cif, context=None):
+	def get_ls_stock(self, cr, uid, ls_client_id, context=None):
 
-		pid = self.search(cr, uid, [('cif','=',cif)], context=context)
+		pid = self.search(cr, uid, [('ls_client_id','=',ls_client_id)], context=context)
 		partner_stock = self.pool.get('reliance.partner_stock')
 		_logger.warning('pid=%s' % pid)
 		if pid:
 			stocks = partner_stock.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
-			_logger.error('no partner with cif=%s' % cif)
+			_logger.error('no partner with ls_client_id=%s' % ls_client_id)
 		return stocks
 
 
@@ -44,7 +48,7 @@ class partner_cash(osv.osv):
 	_rec_name 	= "partner_id"
 	_columns 	= {
 		"partner_id"	: fields.many2one('res.partner', 'Partner', select=1),
-		"client_id"		: fields.related('partner_id', 'cif' , type="char", 
+		"client_id"		: fields.related('partner_id', 'ls_client_id' , type="char", 
 							relation="res.partner", string="Client ID" ),
 		"date"			: fields.date("Date"),
 		"cash_on_hand"	: fields.float("Cash on Hand"),
@@ -58,7 +62,7 @@ class partner_stock(osv.osv):
 	_columns 	= {
 		"partner_id"		: fields.many2one('res.partner', 'Partner', select=1),
 		"date"				: fields.date("Date", select=1),
-		"client_id"			: fields.related('partner_id', 'cif' , type="char", 
+		"client_id"			: fields.related('partner_id', 'ls_client_id' , type="char", 
 								relation="res.partner", string="Client ID" ),
 		"stock_id"			: fields.char("Stock ID", select=1),
 		"stock_name"		: fields.char("Stock Name", select=1),
