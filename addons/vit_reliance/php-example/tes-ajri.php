@@ -22,11 +22,11 @@ $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array
         '13060001147-75'
 ));
 var_dump($res);
-
+/*
 $models = ripcord::client($url . '/xmlrpc/2/object');
 $method = 'get_ajri_participant';
 $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array(
         '1021306000002'
 ));
 var_dump($res);
-
+*/
