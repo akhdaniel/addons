@@ -45,12 +45,12 @@ class partner(osv.osv):
 
 	def get_health_holder(self, cr, uid, reliance_id, context=None):
 		holder = False
-		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+		pid = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 
 		if pid:
-			if not pid[0].health_parent_id:
+			if not pid[0]['health_parent_id']:
 				raise osv.except_osv(_('error'),_("not linked to any health_parent_id") ) 
-			holder = self.search_read(cr,uid,[('id','=',pid[0].health_parent_id.id)],context=context)
+			holder = self.search_read(cr,uid,[('id','=',pid[0]['health_parent_id'][0])],context=context)
 		else:
 			raise osv.except_osv(_('error'),'no partner with reliance_id=%s' % reliance_id) 
 		return holder
