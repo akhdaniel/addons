@@ -75,7 +75,10 @@ class import_ajri(osv.osv):
 				}
 				
 				########################## check exiting pemegang partner 
-				pid = partner.search(cr, uid, [('ajri_nomor_polis','=',import_ajri.nomor_polis)],context=context)
+				pid = partner.search(cr, uid, [
+					('ajri_nomor_polis','=',import_ajri.nomor_polis),
+					('is_company','=',True)
+					],context=context)
 				if not pid:
 					pid = partner.create(cr, uid, pemegang_data, context=context)	
 					i = i + 1
