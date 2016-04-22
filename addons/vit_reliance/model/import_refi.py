@@ -205,14 +205,14 @@ class import_refi_pekerjaan(osv.osv):
 		"notes"				:	fields.char("Notes"),
 	}
 
-	def action_import_partner(self, cr, uid, context=None):
+	def action_import(self, cr, uid, context=None):
 		active_ids = context and context.get('active_ids', False)
 		if not context:
 			context = {}
 		self.actual_import(cr, uid, active_ids, context=context)
 
 
-	def cron_import_partner(self, cr, uid, context=None):
+	def cron_import(self, cr, uid, context=None):
 		_logger.warning('running cron import_refi')
 		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
 		if active_ids:
@@ -385,14 +385,14 @@ class import_refi_statement(osv.osv):
 		"notes"				:	fields.char("Notes"),	
 	}
 
-	def action_import_partner(self, cr, uid, context=None):
+	def action_import(self, cr, uid, context=None):
 		active_ids = context and context.get('active_ids', False)
 		if not context:
 			context = {}
 		self.actual_import(cr, uid, active_ids, context=context)
 
 
-	def cron_import_partner(self, cr, uid, context=None):
+	def cron_import(self, cr, uid, context=None):
 		_logger.warning('running cron import_refi')
 		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
 		if active_ids:
@@ -440,14 +440,14 @@ class import_refi_kontrak(osv.osv):
 	}
 
 
-	def action_import_partner(self, cr, uid, context=None):
+	def action_import(self, cr, uid, context=None):
 		active_ids = context and context.get('active_ids', False)
 		if not context:
 			context = {}
 		self.actual_import(cr, uid, active_ids, context=context)
 
 
-	def cron_import_partner(self, cr, uid, context=None):
+	def cron_import(self, cr, uid, context=None):
 		_logger.warning('running cron import_refi')
 		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
 		if active_ids:
