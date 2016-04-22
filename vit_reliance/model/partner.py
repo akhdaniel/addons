@@ -171,6 +171,11 @@ class keluarga(osv.osv):
 		'nomor_telepon' 	: fields.char('Nomor Telepon'),
 		'hubungan_keluarga' : fields.char('Hubungan keluarga'),
 		'alamat' 			: fields.char('Alamat'),
+		'tgl_lahir'			: fields.date('Tanggal Lahir'),
+		'jenis_kelamin'		: fields.char('Jenis Kelamin'),
+		'pendidikan'		: fields.char('Pendidikan'),
+		'profesi'			: fields.char('Profesi'),
+		
 	}
 
 

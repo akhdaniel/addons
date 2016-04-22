@@ -41,9 +41,35 @@
 					<field name='ls_client_sid' 			 />
 					<field name='ls_client_id' 				 />
 
+					<field name='refi_no_debitur' 				 />
+
 					<!-- <field name='nomor_nasabah' 	 /> -->
 					<field name='agent_id' 			 />		  
 					<field name='parent_id' 		 />		  
+
+	                <filter string="LS" icon="terp-personal" 
+	                    domain="['|',('ls_client_sid','!=',False),('ls_client_id','!=',False)]" name="nasabah_ls"
+	                	context="{}"/>
+	                	
+	                <filter string="AJRI" icon="terp-personal" 
+	                    domain="[('ajri_nomor_polis','!=',False)]" name="nasabah_ajri"
+	                	context="{}"/>
+
+	                <filter string="ARG" icon="terp-personal" 
+	                    domain="[('arg_nomor_polis','!=',False)]" name="nasabah_arg"
+	                	context="{}"/>
+
+	                <filter string="RMI" icon="terp-personal" 
+	                    domain="[('rmi_sid','!=',False)]" name="nasabah_rmi"
+	                	context="{}"/>
+
+	                <filter string="REFI" icon="terp-personal" 
+	                    domain="[('refi_no_debitur','!=',False)]" name="nasabah_refi"
+	                	context="{}"/>
+
+	                <filter string="HEALTH" icon="terp-personal" 
+	                    domain="[('health_nomor_polis','!=',False)]" name="nasabah_health"
+	                	context="{}"/>
 
 
 		            <group expand="1" string="Group By...">
@@ -93,6 +119,10 @@
 								<field name='nomor_telepon' 	 />
 								<field name='hubungan_keluarga'  />
 								<field name='alamat' 			 />
+								<field name='tgl_lahir' />			
+								<field name='jenis_kelamin' />		
+								<field name='pendidikan' />		
+								<field name='profesi' />											
             				</tree>
             			</field>
             		</page>
