@@ -295,6 +295,63 @@ class import_refi_keluarga(osv.osv):
 	}
 
 
+	def action_import(self, cr, uid, context=None):
+		active_ids = context and context.get('active_ids', False)
+		if not context:
+			context = {}
+		self.actual_import(cr, uid, active_ids, context=context)
+
+
+	def cron_import(self, cr, uid, context=None):
+		_logger.warning('running cron import_refi')
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		if active_ids:
+			self.actual_import(cr, uid, active_ids, context=context)
+		else:
+			print "no partner to import"
+		return True
+
+	################################################################
+	# the import process
+	################################################################
+	def actual_import(self, cr, uid, ids, context=None):
+		i = 0
+		ex = 0
+
+		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+
+		for import_refi in self.browse(cr, uid, ids, context=context):
+			pid = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
+			if not pid:
+				ex=ex+1
+				self.write(cr, uid, import_refi.id, {'notes':'NO DEBITUR NOT FOUND'}, context=context)
+				cr.commit()
+				continue
+
+			data = {
+				'partner_keluarga_ids' : [(0,0,{
+					'nama'				: import_refi.nama,
+					'hubungan_keluarga'	: import_refi.hubungan,
+					'alamat'			: False,
+					'nomor_telepon'		: False,
+					'tgl_lahir'			: datetime.strptime(import_refi.tgl_lahir, "%d-%m-%Y"),
+					'jenis_kelamin'		: import_refi.jenis_kelamin,
+					'pendidikan'		: import_refi.pendidikan,
+					'profesi'			: import_refi.profesi,
+				})]
+			}
+
+			partner.write(cr, uid, pid[0], data, context=context)
+
+			#commit per record
+			i = i + 1
+			cr.execute("update reliance_import_refi_keluarga set is_imported='t' where id=%s" % import_refi.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+
+
 class import_refi_statement(osv.osv):
 	_name = "reliance.import_refi_statement"
 	_columns = {
@@ -328,6 +385,42 @@ class import_refi_statement(osv.osv):
 		"notes"				:	fields.char("Notes"),	
 	}
 
+	def action_import_partner(self, cr, uid, context=None):
+		active_ids = context and context.get('active_ids', False)
+		if not context:
+			context = {}
+		self.actual_import(cr, uid, active_ids, context=context)
+
+
+	def cron_import_partner(self, cr, uid, context=None):
+		_logger.warning('running cron import_refi')
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		if active_ids:
+			self.actual_import(cr, uid, active_ids, context=context)
+		else:
+			print "no partner to import"
+		return True
+
+	################################################################
+	# the import process
+	################################################################
+	def actual_import(self, cr, uid, ids, context=None):
+		i = 0
+		ex = 0
+
+		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+
+		for import_refi in self.browse(cr, uid, ids, context=context):
+
+			data = {}
+			#commit per record
+			cr.execute("update reliance_import_refi_statement set is_imported='t' where id=%s" % import_refi.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+
+
 
 class import_refi_kontrak(osv.osv):
 	_name = "reliance.import_refi_kontrak"
@@ -345,4 +438,40 @@ class import_refi_kontrak(osv.osv):
 		"notes"				:	fields.char("Notes"),	
 
 	}
+
+
+	def action_import_partner(self, cr, uid, context=None):
+		active_ids = context and context.get('active_ids', False)
+		if not context:
+			context = {}
+		self.actual_import(cr, uid, active_ids, context=context)
+
+
+	def cron_import_partner(self, cr, uid, context=None):
+		_logger.warning('running cron import_refi')
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		if active_ids:
+			self.actual_import(cr, uid, active_ids, context=context)
+		else:
+			print "no partner to import"
+		return True
+
+	################################################################
+	# the import process
+	################################################################
+	def actual_import(self, cr, uid, ids, context=None):
+		i = 0
+		ex = 0
+
+		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+
+		for import_refi in self.browse(cr, uid, ids, context=context):
+
+			data = {}
+			#commit per record
+			cr.execute("update reliance_import_refi_kontrak set is_imported='t' where id=%s" % import_refi.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
 

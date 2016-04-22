@@ -26,7 +26,7 @@ class partner(osv.osv):
 		"refi_parent_id"			: fields.many2one('res.partner', "REFI Perusahaan", select=1),
 		"refi_tanggal_bayar"		: fields.char("REFI Tanggal Bayar"),
 		"refi_frek_bayar"			: fields.char("REFI Frek Bayar"),
-		"refi_tanggal_masuk_kerja"			: fields.char("REFI Tanggal Masuk Kerja"),
+		"refi_tanggal_masuk_kerja"	: fields.char("REFI Tanggal Masuk Kerja"),
 	}
 
 

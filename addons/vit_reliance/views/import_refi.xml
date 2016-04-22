@@ -503,7 +503,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_keluarga"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi_keluarga').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_keluarga').action_import(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_keluarga" model="ir.values">
