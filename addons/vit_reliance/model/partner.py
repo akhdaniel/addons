@@ -28,6 +28,7 @@ class res_partner(osv.osv):
 		'perusahaan_bentuk_badan_usaha' 		: fields.char('Bentuk Badan Usaha'),
 		'perusahaan_nama_direksi' 				: fields.char('Nama Direksi'),
 		'perusahaan_domisili_perusahaan' 		: fields.char('Domisili Perusahaan'),
+		'perusahaan_kecamatan' 					: fields.char('Kecamatan Perusahaan'),
 		'perusahaan_tanggal_kedaluarsa_siup' 	: fields.date('Tanggal Kedaluarsa SIUP'),
 		'perusahaan_kode_nasabah' 				: fields.char('Kode Nasabah'),
 		'perusahaan_karakteristik_perusahaan' 	: fields.char('Karakteristik Perusahaan'),
@@ -66,6 +67,7 @@ class res_partner(osv.osv):
 		'perorangan_npwp' 						: fields.char('NPWP'),
 		'perorangan_status_perkawinan' 			: fields.char('Status Perkawinan'),
 		'perorangan_alamat_surat_menyurat' 		: fields.char('Alamat surat menyurat'),
+		'perorangan_kecamatan' 					: fields.char('Kecamatan'),
 		'perorangan_jenis_kelamin' 				: fields.char('Jenis Kelamin'),
 		'perorangan_nama_istri_suami' 			: fields.char('Nama istri/ suami'),
 		'perorangan_alamat_email' 				: fields.char('Alamat Email'),
@@ -96,6 +98,7 @@ class res_partner(osv.osv):
 		'perorangan_jabatan' 					: fields.char('Jabatan'),
 
 		'pekerjaan_nama' 						: fields.char('Pekerjaan'),
+		'pekerjaan_profesi' 					: fields.char('Profesi'),
 		'pekerjaan_nama_perusahaan' 			: fields.char('Nama perusahaan'),
 		'pekerjaan_alamat_perusahaan' 			: fields.char('Alamat Perusahaan'),
 		'pekerjaan_bidang_usaha' 				: fields.char('Bidang Usaha'),
