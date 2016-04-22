@@ -119,7 +119,7 @@
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_refi_pekerjaan'"/>
-            <field name="function" eval="'cron_import_pekerjaan'"/>
+            <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 
@@ -131,7 +131,7 @@
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_refi_keluarga'"/>
-            <field name="function" eval="'cron_import_keluarga'"/>
+            <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 
@@ -143,7 +143,7 @@
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_refi_statement'"/>
-            <field name="function" eval="'cron_import_statement'"/>
+            <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 
@@ -155,7 +155,7 @@
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_refi_kontrak'"/>
-            <field name="function" eval="'cron_import_kontrak'"/>
+            <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 

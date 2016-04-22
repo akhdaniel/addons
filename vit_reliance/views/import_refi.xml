@@ -389,7 +389,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_pekerjaan"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi_pekerjaan').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_pekerjaan').action_import(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_pekerjaan" model="ir.values">
@@ -666,7 +666,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_statement"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi_statement').action_import_statement(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_statement').action_import(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_statement" model="ir.values">
@@ -786,7 +786,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_kontrak"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi_kontrak').action_import_kontrak(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_kontrak').action_import(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_kontrak" model="ir.values">
