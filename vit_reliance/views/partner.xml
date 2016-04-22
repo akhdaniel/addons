@@ -18,6 +18,8 @@
 					
 					<field name='health_nomor_polis' 	 />
 					<field name='health_member_id' 		 />
+					
+					<field name='refi_no_debitur' 		 />
 
 		        </field>
 		    </field>
