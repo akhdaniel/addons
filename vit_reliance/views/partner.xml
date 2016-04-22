@@ -302,6 +302,32 @@
 
             		<page string="REFI" >
 
+
+
+            			<group>
+	            			<group>
+	            				<field name="refi_parent_id"/>
+	            				<field name="refi_tanggal_masuk_kerja"/>
+	            				<field name="refi_tanggal_bayar"/>
+	            				<field name="refi_frek_bayar"/>
+	            			</group>            				
+
+            				<group>
+								<field name='refi_no_debitur' />			
+								<field name='refi_wilayah' />				
+								<field name='refi_status_rumah' />			
+								<field name='refi_pisah_harta' />			
+								<field name='refi_tanggunan' />			
+							</group>
+
+							<group>
+								<field name="refi_domisili_kecamatan" /> 	
+								<field name="refi_domisili_kota" />		
+								<field name="refi_domisili_propinsi" />	
+								<field name="refi_kode_pos" />				
+								<field name="refi_tipe_id" />				
+							</group>
+						</group>
 					</page>	            	
             		<page string="Health" >
             			<group>

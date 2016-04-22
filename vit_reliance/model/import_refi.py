@@ -8,12 +8,53 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
+
+PARTNER_MAPPING = {
+	"no_debitur"			: "refi_no_debitur",
+	"nama_depan"			: False,
+	"nama_belakang"			: False,
+	"nama_lengkap"			: "name",
+	"nama_ibu"				: "perorangan_nama_gadis_ibu_kandung",
+	"tipe_id"				: "refi_tipe_id",
+	"no_id"					: "perorangan_nomor_ktp",
+	"tgl_exp_id"			: "perorangan_masa_berlaku_ktp",
+	"tempat_lahir"			: "perorangan_tempat_lahir",
+	"tgl_lahir"				: "perorangan_tanggal_lahir",
+	"npwp"					: "perorangan_npwp",
+	"legal_alamat"			: "street",
+	"legal_kecamatan"		: "perorangan_kecamatan",
+	"legal_kota"			: "city",
+	"legal_propinsi"		: "state_id",
+	"legal_kode_pos"		: "zip",
+	"domisil_alamat"		: "perorangan_alamat_surat_menyurat",
+	"domisili_kecamatan"	: "refi_domisili_kecamatan",
+	"domisili_kota"			: "refi_domisili_kota",
+	"domisili_propinsi"		: "refi_domisili_propinsi",
+	"domisili_kode_pos"		: "refi_kode_pos",
+	"wilayah"				: "refi_wilayah",
+	"telepon_rumah"			: "phone",
+	"no_hp"					: "mobile",
+	"email"					: "email",
+	# CUST 003
+	"jns_kelamin"			: "perorangan_jenis_kelamin",
+	"agama"					: "perorangan_agama",
+	"warga_negara"			: "perorangan_kewarganegaraan",
+	"pendidikan"			: "perorangan_pendidikan_terakhir",
+	"status_rumah"			: "refi_status_rumah",
+	"pekerjaan"				: "pekerjaan_nama",
+	"status_nikah"			: "perorangan_status_perkawinan",
+	"profesi"				: "pekerjaan_profesi",
+	"pisah_harta"			: "refi_pisah_harta",
+	"jabatan"				: "pekerjaan_jabatan",
+	"tanggungan"			: "refi_tanggunan",
+	"range_penghasilan"		: "pekerjaan_penghasilan_per_tahun",
+}
 ####################################################################
 # partner data
 # from refi-customer csv file
 ####################################################################
-class import_refi(osv.osv): 
-	_name 		= "reliance.import_refi"
+class import_refi_partner(osv.osv): 
+	_name 		= "reliance.import_refi_partner"
 	_columns 	= {
 		# CUST 001
 		"no_debitur"			:	fields.char("No.Debitur"),
@@ -83,33 +124,63 @@ class import_refi(osv.osv):
 		i = 0
 		ex = 0
 
+		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+
 		for import_refi in self.browse(cr, uid, ids, context=context):
 
-			pemegang_data = {
-				'name'				: import_refi.nama_pemegang,
-				'policy_no'			: import_refi.policy_no,
-				'is_company'		: True,
-				'comment' 			: 'REFI'
-			}
+			data = {}
+			for k in PARTNER_MAPPING.keys():
+				partner_fname = PARTNER_MAPPING[k]
+				if partner_fname:
+					import_refi_fname = "import_refi.%s" % k 
+					data.update( {partner_fname : eval(import_refi_fname)})
 			
+			
+			########################## lookup country and legal_propinsi
+			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
+			data.update({'country_id': country_id[0]})
+
+			state_id = country.find_or_create_state(cr,uid,import_refi.legal_propinsi, country_id[0], context=context)
+			data.update({'state_id': state_id})
+			
+			data.update({'comment': 'REFI'})
+			
+
 			########################## check exiting partner partner 
-			pid = partner.search(cr, uid, [('policy_no','=',import_refi.policy_no)],context=context)
+			pid = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
 			if not pid:
-				pid = partner.create(cr, uid, pemegang_data, context=context)	
+				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
 			else:
 				pid = pid[0]
-				_logger.warning('Partner exist with policy_no %s' % import_refi.policy_no)
+				_logger.warning('Partner exist with refi_no_debitur %s' % import_refi.no_debitur)
 				ex = ex + 1
 
-			pemegang_old = import_refi.nama_pemegang
 
 			#commit per record
-			cr.execute("update reliance_import_refi set is_imported='t' where id=%s" % import_refi.id)
+			cr.execute("update reliance_import_refi_partner set is_imported='t' where id=%s" % import_refi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
 
+PERUSAHAAN_MAPPING = {
+	"no_debitur"			: False,
+	"nama_perusahaan"		: "name",
+	"jenis_usaha"			: "perusahaan_bidang_usaha",
+	"alamat"				: "street",
+	"kecamatan"				: "perusahaan_kecamatan",
+	"kota"					: "city",
+	"provinsi"				: "state_id",
+	"kode_pos"				: "zip",
+	"telepon_1"				: "phone",
+	"telepon_2"				: "mobile",
+	"telex"					: False,
+	"facsimile"				: "fax",
+	"tanggal_masuk_kerja"	: False,
+	"tanggal_bayar"			: False,
+	"frek_bayar"			: False,
+}
 
 class import_refi_pekerjaan(osv.osv):
 	_name = "reliance.import_refi_pekerjaan"
@@ -133,6 +204,79 @@ class import_refi_pekerjaan(osv.osv):
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
 	}
+
+	def action_import_partner(self, cr, uid, context=None):
+		active_ids = context and context.get('active_ids', False)
+		if not context:
+			context = {}
+		self.actual_import(cr, uid, active_ids, context=context)
+
+
+	def cron_import_partner(self, cr, uid, context=None):
+		_logger.warning('running cron import_refi')
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		if active_ids:
+			self.actual_import(cr, uid, active_ids, context=context)
+		else:
+			print "no partner to import"
+		return True
+
+	################################################################
+	# the import process
+	################################################################
+	def actual_import(self, cr, uid, ids, context=None):
+		i = 0
+		ex = 0
+
+		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+
+		for import_refi in self.browse(cr, uid, ids, context=context):
+
+			data = {}
+			for k in PERUSAHAAN_MAPPING.keys():
+				partner_fname = PERUSAHAAN_MAPPING[k]
+				if partner_fname:
+					import_refi_fname = "import_refi.%s" % k 
+					data.update( {partner_fname : eval(import_refi_fname)})
+			
+			
+			########################## lookup country and legal_propinsi
+			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
+			data.update({'country_id': country_id[0]})
+
+			state_id = country.find_or_create_state(cr,uid,import_refi.provinsi, country_id[0], context=context)
+			data.update({'state_id': state_id})
+			data.update({'is_company': True})			
+			data.update({'comment': 'REFI'})
+			
+			########################## check exiting partner partner 
+			pid = partner.search(cr, uid, [('name','=',import_refi.nama_perusahaan)], context=context)
+			if not pid:
+				pid = partner.create(cr, uid, data, context=context)	
+				i = i + 1
+			else:
+				pid = pid[0]
+				_logger.warning('Partner exist with name %s' % import_refi.nama_perusahaan)
+				ex = ex + 1
+
+			########################## update related no_debitur
+			cust_id = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
+			if not cust_id:
+				raise osv.except_osv(_('Error'),_("No REFI Partner with no_debitur=%s") % import_refi.no_debitur ) 
+
+			partner.write(cr, uid, cust_id, 
+				{'refi_parent_id':pid,
+				'refi_tanggal_bayar': import_refi.tanggal_bayar,
+				'refi_frek_bayar': import_refi.frek_bayar,
+				'refi_tanggal_masuk_kerja': import_refi.tanggal_masuk_kerja,
+				}, context=context)
+
+			#commit per record
+			cr.execute("update reliance_import_refi_pekerjaan set is_imported='t' where id=%s" % import_refi.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
 
 
 class import_refi_keluarga(osv.osv):
@@ -183,6 +327,7 @@ class import_refi_statement(osv.osv):
 		'is_imported' 		: 	fields.boolean("Imported to Partner Statement?", select=1),
 		"notes"				:	fields.char("Notes"),	
 	}
+
 
 class import_refi_kontrak(osv.osv):
 	_name = "reliance.import_refi_kontrak"

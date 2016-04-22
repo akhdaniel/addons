@@ -3,9 +3,9 @@
 
 		<!-- ACTION LIST -->
 
-		<record id="action_import_refi_list" model="ir.actions.act_window">
+		<record id="action_import_refi_partner_list" model="ir.actions.act_window">
 			<field name="name">REFI Customer</field>
-			<field name="res_model">reliance.import_refi</field>
+			<field name="res_model">reliance.import_refi_partner</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 
@@ -39,8 +39,8 @@
 		<menuitem id="rcm_import_refi" name="REFI" sequence="40" parent="rcm_import"/>
 
 			<!-- import REFI customer menu -->
-			<menuitem id="rcm_import_refi_cust"
-			 action="action_import_refi_list"
+			<menuitem id="rcm_import_refi_partner"
+			 action="action_import_refi_partner_list"
 			 name="REFI Customer"
 			 sequence="10"
 			 parent="rcm_import_refi"/>
@@ -78,9 +78,9 @@
 		<!-- REFI CUST 001 -->
 		
 		<!-- tree import_refi reliance -->
-		<record id="view_import_refi_tree" model="ir.ui.view">
-		    <field name="name">reliance_import_refi_tree</field>
-		    <field name="model">reliance.import_refi</field>
+		<record id="view_import_refi_partner_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_refi_partner_tree</field>
+		    <field name="model">reliance.import_refi_partner</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_refi" colors="grey:is_imported==True; blue:is_imported==False">
 					<field name="no_debitur"			 />
@@ -130,7 +130,7 @@
 		<!-- search import_refi reliance -->
 		<record id="view_import_refi_filter_reliance" model="ir.ui.view">
 		    <field name="name">import_refi.filter.reliance</field>
-		    <field name="model">reliance.import_refi</field>
+		    <field name="model">reliance.import_refi_partner</field>
 		    <field name="arch" type="xml">
 		        <search string="Search Import REFI">
 
@@ -196,7 +196,7 @@
 		<!-- form import_refi reliance -->
         <record id="view_import_refi_form_reliance" model="ir.ui.view">
             <field name="name">reliance_import_refi_form_reliance</field>
-            <field name="model">reliance.import_refi</field>
+            <field name="model">reliance.import_refi_partner</field>
             <field name="arch" type="xml">
 
             	<form version="7">
@@ -259,14 +259,14 @@
 	    <record id="action_import_refi_partner" model="ir.actions.server">
 	        <field name="name">Import to Partner</field>
 	        <field name="condition">True</field>
-	        <field name="model_id" ref="model_reliance_import_refi"/>
+	        <field name="model_id" ref="model_reliance_import_refi_partner"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_partner').action_import_partner(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_partner" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
-	        <field eval="'reliance.import_refi'" name="model"/>
+	        <field eval="'reliance.import_refi_partner'" name="model"/>
 	        <field name="name">Import to Partner</field>
 	        <field eval="'ir.actions.server,%d'%action_import_refi_partner" name="value"/>
 	    </record>
@@ -389,7 +389,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_pekerjaan"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi_pekerjaan').action_import_pekerjaan(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_pekerjaan').action_import_partner(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_pekerjaan" model="ir.values">
@@ -503,7 +503,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_refi_keluarga"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_refi_keluarga').action_import_keluarga(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_refi_keluarga').action_import_partner(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_refi_keluarga" model="ir.values">
