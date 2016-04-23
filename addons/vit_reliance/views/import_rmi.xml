@@ -191,7 +191,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_rmi"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_rmi').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_rmi').action_import(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_rmi_partner" model="ir.values">
@@ -307,7 +307,7 @@
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_rmi_product_holding"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_rmi_product_holding').action_import_product_holding(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_rmi_product_holding').action_import(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_rmi_product_holding" model="ir.values">

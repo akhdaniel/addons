@@ -20,6 +20,7 @@
 					<field name='health_member_id' 		 />
 					
 					<field name='refi_no_debitur' 		 />
+					<field name='rmi_sid' 		 />
 
 		        </field>
 		    </field>
@@ -44,6 +45,7 @@
 					<field name='ls_client_id' 				 />
 
 					<field name='refi_no_debitur' 				 />
+					<field name='rmi_sid' 		 />
 
 					<!-- <field name='nomor_nasabah' 	 /> -->
 					<field name='agent_id' 			 />		  
@@ -329,7 +331,29 @@
 					</page>	   
 
             		<page string="RMI" >
+            			<group>
+							<field name="rmi_sid" />					
+							<field name="rmi_tanggal_lahir" />			
+							<field name="rmi_alamat_surat_menyurat" />	
+							<field name="rmi_kota_surat_menyurat" />	
+							<field name="rmi_propinsi_surat_menyurat" />	
+							<field name="rmi_kode_pos_surat_menyurat" />
+							<field name="rmi_negara_surat_menyurat" />	
+							<field name="rmi_alasan_berinvestasi" />	            				
+            			</group>
 
+            			<separator string="Product Holding"/>
+            			
+            			<group>
+							<field name="rmi_product_id"				 />
+							<field name="rmi_product_name"				 />
+							<field name="rmi_unit_penyertaan"			 />
+							<field name="rmi_nab_saat_beli"				 />
+							<field name="rmi_nab_sampai_hari_ini"		 />
+							<field name="rmi_nominal_investasi_awal"	 />
+							<field name="rmi_nominal_investasi_akhir"	 />
+							<field name="rmi_profit_capital_loss"		 />            				
+            			</group>
 					</page>	 
 
             		<page string="REFI" >

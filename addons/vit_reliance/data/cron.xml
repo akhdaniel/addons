@@ -159,6 +159,37 @@
             <field name="args" eval="'()'" />
         </record>  
 
+
+
+
+
+        <!-- RMI -->
+
+        <record model="ir.cron" id="import_rmi_partner">
+            <field name="name">Auto Import RMI Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_rmi'"/>
+            <field name="function" eval="'cron_import'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
+        <record model="ir.cron" id="import_rmi_product_holding">
+            <field name="name">Auto Import RMI Product Holding Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_rmi_product_holding'"/>
+            <field name="function" eval="'cron_import'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
+
               
     </data>
 </openerp>
