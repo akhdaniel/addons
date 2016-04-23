@@ -163,6 +163,8 @@ class import_arg_polis_risk(osv.osv):
 		"asset_description"			:	fields.char("ASSET_DESCRIPTION"),
 		"total_premi"				:	fields.char("TOTAL_PREMI"),
 		"total_nilai_pertanggungan"	:	fields.char("TOTAL_NILAI_PERTANGGUNGAN"),
+		'is_imported' 		: 	fields.boolean("Imported to Polis Risk?", select=1),
+		"notes"				:	fields.char("Notes"),
 	}
 
 
