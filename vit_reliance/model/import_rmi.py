@@ -254,7 +254,10 @@ class import_rmi_product_holding(osv.osv):
 			for k in data.keys():
 				if k in ['product_id','product_name']:
 					continue
-				data[k] = data[k].strip().replace(',','').replace('-','0').replace(')','').replace('(','-')
+				if not data[k]:
+					data[k] = 0.0
+				else:
+					data[k] = data[k].strip().replace(',','').replace('-','0').replace(')','').replace('(','-')
 
 			pid = partner.write(cr, uid, pid, data, context=context)	
 
