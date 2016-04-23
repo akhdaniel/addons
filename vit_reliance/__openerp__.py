@@ -35,6 +35,7 @@ Manage
 
 		"data/sequence.xml",
 		"data/cron.xml",
+		"data/parameter.xml",
 	],
 	"installable": True,
 	"auto_install": False,

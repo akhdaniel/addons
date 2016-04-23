@@ -1,0 +1,30 @@
+<openerp>
+	<data>
+
+		<!-- ajri_import_polis_limit -->
+		<record id="ajri_import_partner_limit" model="ir.config_parameter">
+			<field name="key">ajri_import_partner_limit</field>
+			<field name="value">500</field>
+		</record>
+
+		<!-- health_import_polis_limit -->
+		<record id="health_import_polis_limit" model="ir.config_parameter">
+			<field name="key">health_import_polis_limit</field>
+			<field name="value">500</field>
+		</record>	
+
+		<!-- health_import_peserta_limit -->
+		<record id="health_import_peserta_limit" model="ir.config_parameter">
+			<field name="key">health_import_peserta_limit</field>
+			<field name="value">500</field>
+		</record>	
+		
+		<!-- health_import_limit_limit -->
+		<record id="health_import_limit_limit" model="ir.config_parameter">
+			<field name="key">health_import_limit_limit</field>
+			<field name="value">500</field>
+		</record>	
+	
+		
+	</data>
+</openerp>
