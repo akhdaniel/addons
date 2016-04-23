@@ -31,4 +31,11 @@ class partner(osv.osv):
 	}
 
 
+	def get_rmi_customer(self, cr, uid, reliance_id, context=None):
+		member = self.search_read(cr,uid,[('reliance_id','=',reliance_id)],context=context)
+		return member		
 
+
+	def get_rmi_customer_by_sid(self, cr, uid, sid, context=None):
+		member = self.search_read(cr,uid,[('rmi_sid','=',sid)],context=context)
+		return member		
