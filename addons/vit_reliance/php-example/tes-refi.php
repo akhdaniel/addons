@@ -26,3 +26,12 @@ $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array
       $no_debitur
 ));
 var_dump($res);
+
+echo "get_refi_customer_by_no_kontrak";
+$models = ripcord::client($url . '/xmlrpc/2/object');
+$method = 'get_refi_customer_by_no_kontrak';
+$no_kontrak= '100101120001';
+$res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array(
+      $no_kontrak
+));
+var_dump($res);

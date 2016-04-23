@@ -99,7 +99,7 @@ class partner(osv.osv):
 
 		kontrak = refi_kontrak.browse(cr, uid, kid[0], context=context)
 
-		partner = self.search_read(cr, uid, [('id','=',kontrak.partner_id)], context=context)
+		partner = self.search_read(cr, uid, [('id','=',kontrak.partner_id.id)], context=context)
 		if not partner:
 			raise osv.except_osv(_('error'),_("Partner Not Found for contract_number=%s")%contract_number ) 
 
