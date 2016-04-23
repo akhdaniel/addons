@@ -66,6 +66,10 @@ class import_arg(osv.osv):
 		"cust_postal_code"	:	fields.char("CUST_POSTAL_CODE"),
 		"cust_province"		:	fields.char("CUST_PROVINCE"),
 		"cust_country_name"	:	fields.char("CUST_COUNTRY_NAME"),
+
+		"status_policy"		:	fields.char("STATUS_POLICY"),
+		"source_of_business":	fields.char("SOURCE_OF_BUSINESS"), 
+
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
 	}
@@ -150,3 +154,47 @@ class import_arg(osv.osv):
 		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
 
 
+class import_arg_polis_risk(osv.osv): 
+	_name = "reliance.import_arg_polis_risk"
+	_columns = {
+		"policy_no"					:	fields.char("POLICY_NO"),
+		"asset_description"			:	fields.char("ASSET_DESCRIPTION"),
+		"total_premi"				:	fields.char("TOTAL_PREMI"),
+		"total_nilai_pertanggungan"	:	fields.char("TOTAL_NILAI_PERTANGGUNGAN"),
+	}
+
+
+	def action_import(self, cr, uid, context=None):
+		active_ids = context and context.get('active_ids', False)
+		if not context:
+			context = {}
+
+		self.actual_import(cr, uid, active_ids, context=context)
+
+
+	def cron_import(self, cr, uid, context=None):
+		_logger.warning('running cron import_arg')
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		if active_ids:
+			self.actual_import(cr, uid, active_ids, context=context)
+		else:
+			print "no partner to import"
+		return True
+
+	################################################################
+	# the import process
+	################################################################
+	def actual_import(self, cr, uid, ids, context=None):
+		i = 0
+		ex = 0
+
+		partner = self.pool.get('res.partner')
+
+		for import_arg in self.browse(cr, uid, ids, context=context):	
+
+			#commit per record
+			i = 1 +1
+			cr.execute("update reliance_import_arg set is_imported='t' where id=%s" % import_arg.id)
+			cr.commit()
+
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )

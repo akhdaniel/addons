@@ -55,6 +55,33 @@
             <field name="args" eval="'()'" />
         </record>  
 
+
+        <!-- ARG -->
+
+        <record model="ir.cron" id="import_arg_partner">
+            <field name="name">Auto Import ARG to Partner</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_arg'"/>
+            <field name="function" eval="'cron_import_partner'"/>
+            <field name="args" eval="'()'" />
+        </record> 
+        
+        <record model="ir.cron" id="import_arg_polis_risk">
+            <field name="name">Auto Import ARG to Polis Risk</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_arg_polis_risk'"/>
+            <field name="function" eval="'cron_import'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
               
 
         <!-- HEALTH -->

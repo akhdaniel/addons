@@ -1,25 +1,40 @@
 <openerp>
 	<data>
 
-		<!-- improt_ajri list -->
+		<!-- improt arg list -->
 
 		<record id="action_import_arg_list" model="ir.actions.act_window">
-			<field name="name">ARG Customer</field>
+			<field name="name">ARG Polis</field>
 			<field name="res_model">reliance.import_arg</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="action_import_arg_polis_risk_list" model="ir.actions.act_window">
+			<field name="name">ARG Polis Risk</field>
+			<field name="res_model">reliance.import_arg_polis_risk</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 
 
 		<menuitem id="rcm_import_arg" name="ARG" sequence="30" parent="rcm_import"/>
 
-			<!-- import ARG customer menu -->
+			<!-- import ARG polis menu -->
 			<menuitem id="rcm_import_arg_cust"
 			 action="action_import_arg_list"
-			 name="ARG Customer"
+			 name="ARG Polis"
 			 sequence="10"
 			 parent="rcm_import_arg"/>
 
+			<!-- import ARG polis risk menu -->
+			<menuitem id="rcm_import_arg_polis_risk"
+			 action="action_import_arg_polis_risk_list"
+			 name="ARG Polis Risk"
+			 sequence="20"
+			 parent="rcm_import_arg"/>
 
+
+		<!-- POLIS -->
+		
 		<!-- tree import_arg reliance -->
 		<record id="view_import_arg_tree" model="ir.ui.view">
 		    <field name="name">reliance_import_arg_tree</field>
@@ -136,13 +151,6 @@
             </field>
         </record>
 
-
-
-
-
-
-
-
 	    <!-- context menu More.. di tree import_arg -->
 	    <record id="action_import_arg_partner" model="ir.actions.server">
 	        <field name="name">Import to Partner</field>
@@ -161,6 +169,101 @@
 
 
 
+
+
+		<!-- POLIS RISK -->
+		
+		<!-- tree import_arg_polis_risk reliance -->
+		<record id="view_import_arg_polis_risk_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_arg_polis_risk_tree</field>
+		    <field name="model">reliance.import_arg_polis_risk</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_arg_polis_risk" colors="grey:is_imported==True; blue:is_imported==False">
+					<field name="policy_no" />					
+					<field name="asset_description" />			
+					<field name="total_premi" />				
+					<field name="total_nilai_pertanggungan" />	
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_arg_polis_risk reliance -->
+		<record id="view_import_arg_polis_risk_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_arg_polis_risk.filter.reliance</field>
+		    <field name="model">reliance.import_arg_polis_risk</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import ARG">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
+		            
+		            <separator/>
+
+					<field name="policy_no" />					
+					<field name="asset_description" />			
+					<field name="total_premi" />				
+					<field name="total_nilai_pertanggungan" />						
+
+
+					<field name='is_imported' 		 />
+					<field name="notes"				 />
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_arg_polis_risk reliance -->
+        <record id="view_import_arg_polis_risk_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_arg_polis_risk_form_reliance</field>
+            <field name="model">reliance.import_arg_polis_risk</field>
+            <field name="arch" type="xml">
+
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+	            		
+						<field name="policy_no" />					
+						<field name="asset_description" />			
+						<field name="total_premi" />				
+						<field name="total_nilai_pertanggungan" />	
+						
+						<field name='is_imported' 		 />
+						<field name="notes"				 />						
+		            </group>
+
+	            </form>
+            </field>
+        </record>
+
+	    <!-- context menu More.. di tree import_arg_polis_risk -->
+	    <record id="action_import_arg_polis_risk" model="ir.actions.server">
+	        <field name="name">Import to Polis Risk</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_reliance_import_arg_polis_risk"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('reliance.import_arg_polis_risk').action_import(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_arg_polis_risk" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'reliance.import_arg_polis_risk'" name="model"/>
+	        <field name="name">Import to Polis Risk</field>
+	        <field eval="'ir.actions.server,%d'%action_import_arg_polis_risk" name="value"/>
+	    </record>
 
 	</data>
 </openerp>

@@ -38,8 +38,9 @@ class import_health_polis(osv.osv):
 
 
 	def cron_import_polis(self, cr, uid, context=None):
-		_logger.warning('running cron import_health_polis')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		health_import_polis_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'health_import_polis_limit')
+		_logger.warning('running cron import_health_polis limit=%s' % health_import_polis_limit)
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(health_import_polis_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -124,8 +125,9 @@ class import_health_peserta(osv.osv):
 
 
 	def cron_import_peserta(self, cr, uid, context=None):
-		_logger.warning('running cron import_health_peserta')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		health_import_peserta_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'health_import_peserta_limit')
+		_logger.warning('running cron import_health_peserta, limit=%s' % health_import_peserta_limit)
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(health_import_peserta_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -219,8 +221,9 @@ class import_health_limit(osv.osv):
 
 
 	def cron_import_limit(self, cr, uid, context=None):
-		_logger.warning('running cron import_health_limit')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		health_import_limit_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'health_import_limit_limit')
+		_logger.warning('running cron import_health_limit, limit=%s' % health_import_limit_limit)
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(health_import_limit_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
