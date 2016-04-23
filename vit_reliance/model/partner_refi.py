@@ -61,12 +61,12 @@ class partner(osv.osv):
 	######################################################################
 	# mengambil data kontrak nasabah REFI berdasarkan nomor Reliance ID
 	######################################################################
-	def get_refi_kontrak(cr, uid, reliance_id, context=None):
+	def get_refi_kontrak(self,cr, uid, reliance_id, context=None):
 		kontraks = False
 		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 
 		if pid:
-			refi_kontrak = self.pool.get('refi_kontrak')
+			refi_kontrak = self.pool.get('reliance.refi_kontrak')
 			kontraks = refi_kontrak.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
 			raise osv.except_osv(_('error'),  'no partner with reliance_id=%s' % reliance_id)
@@ -76,12 +76,12 @@ class partner(osv.osv):
 	######################################################################
 	# mengambil data kontrak nasabah REFI berdasarkan nomor Debitur
 	######################################################################
-	def get_refi_kontrak_by_no_debitur(cr, uid, no_debitur, context=None):
+	def get_refi_kontrak_by_no_debitur(self,cr, uid, no_debitur, context=None):
 		kontraks = False
 		pid = self.search(cr, uid, [('refi_no_debitur','=',no_debitur)], context=context)
 
 		if pid:
-			refi_kontrak = self.pool.get('refi_kontrak')
+			refi_kontrak = self.pool.get('reliance.refi_kontrak')
 			kontraks = refi_kontrak.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
 			raise osv.except_osv(_('error'),  'no partner with refi_no_debitur=%s' % no_debitur)
@@ -91,8 +91,8 @@ class partner(osv.osv):
 	######################################################################
 	# mengambil data nasabah REFI berdasarkan nomor Kontrak
 	######################################################################
-	def get_refi_customer_by_no_kontrak(cr, uid, contract_number, context=None):
-		refi_kontrak = self.pool.get('refi_kontrak')
+	def get_refi_customer_by_no_kontrak(self,cr, uid, contract_number, context=None):
+		refi_kontrak = self.pool.get('reliance.refi_kontrak')
 		kid = refi_kontrak.search(cr, uid, [('contract_number','=',contract_number)], context=context)
 		if not kid:
 			raise osv.except_osv(_('error'),_("Not found kontrak with contract_number=%s")%contract_number ) 
@@ -108,6 +108,7 @@ class partner(osv.osv):
 
 class refi_kontrak(osv.osv):
 	_name 		= "reliance.refi_kontrak"
+	_rec_name	= "contract_number"
 
 	_columns = {
 		"partner_id"		: 	fields.many2one('res.partner', 'Partner'),
