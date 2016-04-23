@@ -334,8 +334,6 @@
 
             		<page string="REFI" >
 
-
-
             			<group>
 	            			<group>
 	            				<field name="refi_parent_id"/>
@@ -360,7 +358,57 @@
 								<field name="refi_tipe_id" />				
 							</group>
 						</group>
-					</page>	            	
+
+
+						<group string="Statement">
+							<group>
+								<field name="refi_bulan_tahun_survey" />				
+								<field name="refi_time_deps_saving_account" />			
+								<field name="refi_vehicle" />							
+								<field name="refi_jml_kendaraan" />					
+								<field name="refi_properties" />						
+								<field name="refi_jml_rumah" />						
+								<field name="refi_others_aktiva_lainnya" />			
+								<field name="refi_mortagage_loan_inst" />				
+								<field name="refi_mortgage_loan_inst_balance" />		
+								<field name="refi_renting" />	
+							</group>
+
+							<group>
+								<field name="refi_car_credit" />						
+								<field name="refi_car_credit_balance" />				
+								<field name="refi_credit_card" />						
+								<field name="refi_credit_card_balance" />				
+								<field name="refi_credit_line" />						
+								<field name="refi_credit_line_balance" />				
+								<field name="refi_monthly_expenditure" />				
+								<field name="refi_monthly_expenditure_balance" />		
+								<field name="refi_mortgage_loan_int" />				
+								<field name="refi_mortgage_loan_int_balance_equity" />	
+								<field name="refi_other" />							
+								<field name="refi_other_balance_equity_net_income" />	
+								<field name="refi_spouse_income" />					
+								<field name="refi_other_income" />
+							</group>
+						</group>
+
+						<separator string="Kontrak"/>
+						<field name="refi_kontrak_ids">
+							<tree string="Kontrak">
+								<field name="contract_number" />	
+								<!-- <field name="customer_no" />		 -->
+								<!-- <field name="customer_name" />		 -->
+								<field name="product" />			
+								<field name="asset_name" />		
+								<field name="outstanding" />		
+								<field name="next_installment" />	
+								<field name="pass_due" />			
+								<field name="maturity_date" />
+							</tree>
+						</field>
+
+					</page>	   
+
             		<page string="Health" >
             			<group>
 							<field name='health_parent_id' />
