@@ -352,6 +352,33 @@ class import_refi_keluarga(osv.osv):
 		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
 
 
+STATEMENT_MAPPING = {
+	"bulan_tahun_survey"				:	"refi_bulan_tahun_survey",
+	"time_deps_saving_account"			:	"refi_time_deps_saving_account",
+	"vehicle"							:	"refi_vehicle",
+	"jml_kendaraan"						:	"refi_jml_kendaraan",
+	"properties"						:	"refi_properties",
+	"jml_rumah"							:	"refi_jml_rumah",
+	"others_aktiva_lainnya"				:	"refi_others_aktiva_lainnya",
+	"mortagage_loan_inst"				:	"refi_mortagage_loan_inst",
+	"mortgage_loan_inst_balance"		:	"refi_mortgage_loan_inst_balance",
+	"renting"							:	"refi_renting",
+	"car_credit"						:	"refi_car_credit",
+	"car_credit_balance"				:	"refi_car_credit_balance",
+	"credit_card"						:	"refi_credit_card",
+	"credit_card_balance"				:	"refi_credit_card_balance",
+	"credit_line"						:	"refi_credit_line",
+	"credit_line_balance"				:	"refi_credit_line_balance",
+	"monthly_expenditure"				:	"refi_monthly_expenditure",
+	"monthly_expenditure_balance"		:	"refi_monthly_expenditure_balance",
+	"mortgage_loan_int"					:	"refi_mortgage_loan_int",
+	"mortgage_loan_int_balance_equity"	:	"refi_mortgage_loan_int_balance_equity",
+	"other"								:	"refi_other",
+	"other_balance_equity_net_income"	:	"refi_other_balance_equity_net_income",
+	"spouse_income"						:	"refi_spouse_income",
+	"other_income"						:	"refi_other_income",	
+}
+
 class import_refi_statement(osv.osv):
 	_name = "reliance.import_refi_statement"
 	_columns = {
@@ -414,12 +441,24 @@ class import_refi_statement(osv.osv):
 		for import_refi in self.browse(cr, uid, ids, context=context):
 
 			data = {}
+			for k in STATEMENT_MAPPING.keys():
+				partner_fname = STATEMENT_MAPPING[k]
+				if partner_fname:
+					import_refi_fname = "import_refi.%s" % k 
+					data.update( {partner_fname : eval(import_refi_fname)})
+
+			cust_id = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
+			if not cust_id:
+				raise osv.except_osv(_('Error'),_("No REFI Partner with no_debitur=%s") % import_refi.no_debitur ) 
+
+			partner.write(cr, uid, cust_id, data , context=context)
+
 			#commit per record
+			i = i +1
 			cr.execute("update reliance_import_refi_statement set is_imported='t' where id=%s" % import_refi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
-
+		raise osv.except_osv( 'OK!' , 'Done updating %s partner statement and skipped %s' % (i, ex) )
 
 
 class import_refi_kontrak(osv.osv):
@@ -467,11 +506,37 @@ class import_refi_kontrak(osv.osv):
 		country = self.pool.get('res.country')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
-
 			data = {}
+			cust_id = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.customer_no)], context=context)
+			if not cust_id:
+				msg = _("PARTNER NOT FOUND")
+				self.write(cr, uid, import_refi.id, {'notes':msg}, context=context)
+				cr.commit()
+				ex=ex+1
+				continue
+
+			kontrak = {
+				"partner_id"		: 	cust_id[0],
+				"contract_number"	:	import_refi.contract_number, 
+				"customer_no"		:	import_refi.customer_no,	
+				"customer_name"		:	import_refi.customer_name,	
+				"product"			:	import_refi.product,	
+				"asset_name"		:	import_refi.asset_name,	
+				"outstanding"		:	import_refi.outstanding,	
+				"next_installment"	:	datetime.strptime(import_refi.next_installment,"%d-%m-%Y"),	
+				"pass_due"			:	import_refi.pass_due,	
+				"maturity_date"		:	datetime.strptime(import_refi.maturity_date,"%d-%m-%Y"),				
+			}
+
+			data = {
+				'refi_kontrak_ids'  : [(0,0,kontrak)]
+			}
+			partner.write(cr, uid, cust_id, data , context=context)
+
 			#commit per record
+			i = i +1
 			cr.execute("update reliance_import_refi_kontrak set is_imported='t' where id=%s" % import_refi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner kontrak and skipped %s' % (i, ex) )
 
