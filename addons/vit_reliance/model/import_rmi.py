@@ -91,8 +91,10 @@ class import_rmi(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_rmi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		rmi_import_partner_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'rmi_import_partner_limit')
+		_logger.warning('running cron rmi_import_partner, limit=%s' % rmi_import_partner_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(rmi_import_partner_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -216,8 +218,10 @@ class import_rmi_product_holding(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_rmi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		rmi_import_product_holding_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'rmi_import_product_holding_limit')
+		_logger.warning('running cron refi_import_kontrak, limit=%s' % rmi_import_product_holding_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(rmi_import_product_holding_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
