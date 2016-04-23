@@ -25,3 +25,4 @@ access_reliance_import_health_polis,access_reliance_import_health_polis,model_re
 access_reliance_import_health_limit,access_reliance_import_health_limit,model_reliance_import_health_limit,"base.group_sale_manager",1,1,1,1
 
 ccess_reliance_import_refi_partner,access_reliance_import_refi_partner,model_reliance_import_refi_partner,"base.group_sale_manager",1,1,1,1
+access_reliance_refi_kontrak,access_reliance_refi_kontrak,model_reliance_refi_kontrak,"base.group_sale_manager",1,1,1,1
