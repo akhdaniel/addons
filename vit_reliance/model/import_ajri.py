@@ -44,7 +44,8 @@ class import_ajri(osv.osv):
 
 	def cron_import_partner(self, cr, uid, context=None):
 		ajri_import_partner_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ajri_import_partner_limit')
-		_logger.warning('running cron import_ajri')
+		_logger.warning('running cron import_ajri, limit=%s' % ajri_import_partner_limit)
+		
 		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(ajri_import_partner_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)

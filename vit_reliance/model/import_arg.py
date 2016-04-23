@@ -83,8 +83,10 @@ class import_arg(osv.osv):
 
 
 	def cron_import_partner(self, cr, uid, context=None):
-		_logger.warning('running cron import_arg')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		arg_import_partner_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'arg_import_partner_limit')
+		_logger.warning('running cron arg_import_partner, limit=%s' % arg_import_partner_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(arg_import_partner_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -173,8 +175,10 @@ class import_arg_polis_risk(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_arg')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		arg_import_polis_risk_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'arg_import_polis_risk_limit')
+		_logger.warning('running cron import_arg_polis_risk, limit=%s' % arg_import_polis_risk_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(arg_import_polis_risk_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:

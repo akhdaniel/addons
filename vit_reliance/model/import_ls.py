@@ -130,8 +130,10 @@ class import_ls(osv.osv):
 
 
 	def cron_import_partner(self, cr, uid, context=None):
-		_logger.warning('running cron import_ls')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		ls_import_partner_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ls_import_partner_limit')
+		_logger.warning('running cron ls_import_partner, limit=%s' % ls_import_partner_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(ls_import_partner_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -218,7 +220,10 @@ class import_ls_cash(osv.osv):
 		self.actual_import(cr, uid, active_ids, context=context)
 
 	def cron_import_partner_cash(self, cr, uid, context=None):
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		ls_import_partner_cash_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ls_import_partner_cash_limit')
+		_logger.warning('running cron ls_import_partner_cash, limit=%s' % ls_import_partner_cash_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(ls_import_partner_cash_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -302,7 +307,10 @@ class import_ls_stock(osv.osv):
 
 
 	def cron_import_partner_stock(self, cr, uid, context=None):
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		ls_import_partner_stock_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ls_import_partner_stock_limit')
+		_logger.warning('running cron ls_import_partner, limit=%s' % ls_import_partner_stock_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(ls_import_partner_stock_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:

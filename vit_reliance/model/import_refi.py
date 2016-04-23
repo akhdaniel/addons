@@ -109,8 +109,10 @@ class import_refi_partner(osv.osv):
 
 
 	def cron_import_partner(self, cr, uid, context=None):
-		_logger.warning('running cron import_refi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		refi_import_partner_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'refi_import_partner_limit')
+		_logger.warning('running cron refi_import_partner, limit=%s' % refi_import_partner_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(refi_import_partner_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -213,8 +215,10 @@ class import_refi_pekerjaan(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_refi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		refi_import_pekerjaan_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'refi_import_pekerjaan_limit')
+		_logger.warning('running cron refi_import_pekerjaan, limit=%s' % refi_import_pekerjaan_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(refi_import_pekerjaan_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -303,8 +307,10 @@ class import_refi_keluarga(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_refi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		refi_import_keluarga_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'refi_import_keluarga_limit')
+		_logger.warning('running cron refi_import_pekerjaan, limit=%s' % refi_import_keluarga_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(refi_import_keluarga_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -420,8 +426,10 @@ class import_refi_statement(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_refi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		refi_import_statement_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'refi_import_statement_limit')
+		_logger.warning('running cron refi_import_statement, limit=%s' % refi_import_statement_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(refi_import_statement_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
@@ -487,8 +495,10 @@ class import_refi_kontrak(osv.osv):
 
 
 	def cron_import(self, cr, uid, context=None):
-		_logger.warning('running cron import_refi')
-		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=100, context=context)
+		refi_import_kontrak_limit = self.pool.get('ir.config_parameter').get_param(cr, uid, 'refi_import_kontrak_limit')
+		_logger.warning('running cron refi_import_kontrak, limit=%s' % refi_import_kontrak_limit)
+
+		active_ids = self.search(cr, uid, [('is_imported','=', False)], limit=int(refi_import_kontrak_limit), context=context)
 		if active_ids:
 			self.actual_import(cr, uid, active_ids, context=context)
 		else:
