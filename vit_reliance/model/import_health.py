@@ -56,6 +56,8 @@ class import_health_polis(osv.osv):
 		ex = 0
 
 		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+		indo = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 
 		for import_health_polis in self.browse(cr, uid, ids, context=context):
 
@@ -69,6 +71,7 @@ class import_health_polis(osv.osv):
 				'phone'			: import_health_polis.phone,	
 				'fax' 			: import_health_polis.fax,		
 				'email' 		: import_health_polis.email,
+				'country_id'	: indo[0],
 
 				'is_company'	: True,
 				'comment'		: 'HEALTH',
