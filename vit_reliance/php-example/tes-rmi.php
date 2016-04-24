@@ -21,7 +21,7 @@ var_dump($res);
 echo "get by sid";
 $models = ripcord::client($url . '/xmlrpc/2/object');
 $method = 'get_rmi_customer_by_sid';
-$sid= '100100000001';
+$sid= '1010084';
 $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array(
       $sid
 ));
