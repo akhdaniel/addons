@@ -59,7 +59,7 @@ class partner(osv.osv):
 		if not pol:
 			raise osv.except_osv(_('error'),_("no polis with arg_nomor_polis=%s") % policy_no ) 
 
-		partner = self.browse(cr, uid, pol['partner_id'][0], context=context)
+		partner = self.search_read(cr, uid, [('id','=',pol[0]['partner_id'][0])], context=context)
 		return partner
 
 
