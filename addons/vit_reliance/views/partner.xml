@@ -22,6 +22,8 @@
 					<field name='refi_no_debitur' 		 />
 					<field name='rmi_sid' 		 />
 
+					<field name='arg_cust_code' 		 />
+
 		        </field>
 		    </field>
 		</record>
@@ -47,6 +49,8 @@
 					<field name='refi_no_debitur' 				 />
 					<field name='rmi_sid' 		 />
 
+					<field name='arg_cust_code' 		 />
+
 					<!-- <field name='nomor_nasabah' 	 /> -->
 					<field name='agent_id' 			 />		  
 					<field name='parent_id' 		 />		  
@@ -60,7 +64,7 @@
 	                	context="{}"/>
 
 	                <filter string="ARG" icon="terp-personal" 
-	                    domain="[('arg_nomor_polis','!=',False)]" name="nasabah_arg"
+	                    domain="[('arg_cust_code','!=',False)]" name="nasabah_arg"
 	                	context="{}"/>
 
 	                <filter string="RMI" icon="terp-personal" 
@@ -319,15 +323,25 @@
 
             		<page string="ARG" >
             			<group>
-							<field name="arg_nomor_polis" />		
 							<field name="arg_cust_code" />		
-							<field name="arg_class" />		
-							<field name="arg_subclass" />	
-							<field name="arg_eff_date" />	
-							<field name="arg_exp_date" />	
-							<field name="arg_qq" />		
-							<field name="arg_cp" />		
 						</group>
+
+						<field name="partner_polis_ids">
+							<tree string="Polis">
+								<field name="arg_nomor_polis" />		
+								<field name="arg_class" />		
+								<field name="arg_subclass" />	
+								<field name="arg_eff_date" />	
+								<field name="arg_exp_date" />	
+								<field name="arg_company_code" />	
+								<field name="arg_company_name" />	
+								<field name="arg_company_type" />	
+								<field name="arg_marketing_code" />
+								<field name="arg_marketing_name" />								
+								<field name="arg_qq" />		
+								<field name="arg_cp" />		
+							</tree>
+						</field>
 					</page>	   
 
             		<page string="RMI" >
