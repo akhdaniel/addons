@@ -18,7 +18,7 @@ class partner(osv.osv):
 	################################################################
 	# mengambil data  nasabah ARG berdasarkan  Reliance ID
 	################################################################
-	def get_arg_customer(self, cr, reliance_id, context=None):
+	def get_arg_customer(self, cr, uid, reliance_id, context=None):
 		partner = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 		if not partner:
 			raise osv.except_osv(_('error'), 'no partner with reliance_id=%s' % reliance_id) 
@@ -28,7 +28,7 @@ class partner(osv.osv):
 	################################################################
 	# mengambil data  nasabah ARG berdasarkan  Cust Code ARG
 	################################################################
-	def get_arg_customer_by_cust_code(self, cr, cust_code, context=None):
+	def get_arg_customer_by_cust_code(self, cr, uid, cust_code, context=None):
 		partner = self.search_read(cr, uid, [('arg_cust_code','=',cust_code)], context=context)
 		if not partner:
 			raise osv.except_osv(_('error'), 'no partner with cust_code=%s' % cust_code) 
@@ -38,7 +38,7 @@ class partner(osv.osv):
 	################################################################
 	# mengambil data semua polis yang dimiliki oleh nasabah
 	################################################################
-	def get_arg_customer_all_polis(self, cr, reliance_id, context=None):
+	def get_arg_customer_all_polis(self, cr, uid, reliance_id, context=None):
 		polises = False
 		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 
@@ -53,7 +53,7 @@ class partner(osv.osv):
 	################################################################
 	# mencari data nasabah pemegang polis
 	################################################################
-	def get_arg_customer_by_polis_number(self, cr, policy_no, context=None):
+	def get_arg_customer_by_polis_number(self, cr, uid, policy_no, context=None):
 		polis = self.pool.get('reliance.arg_partner_polis')
 		pol = polis.search_read(cr, uid, [('arg_nomor_polis','=',policy_no)], context=context)
 		if not pol:
