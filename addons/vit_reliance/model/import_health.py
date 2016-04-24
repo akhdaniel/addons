@@ -147,6 +147,8 @@ class import_health_peserta(osv.osv):
 		ex = 0
 
 		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+		indo = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 
 		for import_health_peserta in self.browse(cr, uid, ids, context=context):
 
@@ -177,6 +179,8 @@ class import_health_peserta(osv.osv):
 				'health_effdt'				: polis_holder.health_effdt,		
 				'health_expdt'				: polis_holder.health_expdt,	
 				'health_parent_id'			: polis_holder.id,	
+				'country_id'				: indo[0],
+
 				'comment'					: 'HEALTH',
 			}
 			existing = partner.search(cr, uid, [
