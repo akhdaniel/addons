@@ -9,15 +9,8 @@ from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 CUST_MAPPING = {
-	"policy_no"			: "arg_nomor_polis",
-	"product_class"		: "arg_class",
-	"subclass"			: "arg_subclass",
-	"eff_date"			: "arg_eff_date",
-	"exp_date"			: "arg_exp_date",
 	"cust_code"			: "arg_cust_code",
 	"cust_fullname"		: "name",
-	"qq"				: "arg_qq",
-	"cust_cp"			: "arg_cp",
 	"cust_addr_1"		: "street",
 	"cust_addr_2"		: "street2",
 	"cust_city"			: "city",
@@ -26,17 +19,22 @@ CUST_MAPPING = {
 	"cust_province"		: "state_id",
 }
 
-COMPANY_MAPPING = {
-	"company_code"		: "cif",
-	"company_name"		: "name",
-	"company_type"		: None,
+POLIS_MAPPING = {
+	"policy_no"			: "arg_nomor_polis",
+	"product_class"		: "arg_class",
+	"subclass"			: "arg_subclass",
+	"eff_date"			: "arg_eff_date",
+	"exp_date"			: "arg_exp_date",	
+	"company_code"		: "arg_company_code",
+	"company_name"		: "arg_company_name",
+	"company_type"		: "arg_company_type",
+	"marketing_code"	: "arg_marketing_code",
+	"marketing_name"	: "arg_marketing_name",
+	"qq"				: "arg_qq",
+	"cust_cp"			: "arg_cp",
 }
 
-AGENT_MAPPING = {
-	"marketing_code"	: "cif",
-	"marketing_name"	: "name",
-	
-}
+
 
 ####################################################################
 # partner data
@@ -99,61 +97,75 @@ class import_arg(osv.osv):
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
 		ex = 0
+		polis_created = 0
 
 		partner = self.pool.get('res.partner')
+		country = self.pool.get('res.country')
+		polis   = self.pool.get('reliance.arg_partner_polis')
 
 		for import_arg in self.browse(cr, uid, ids, context=context):
 
 			cust_data = {}
 			country_id = False
-			if not import_arg.cust_country_name:
-				self.write(cr, uid, [import_arg.id], {'notes':'NO COUNTRY'}, context=context)
-				ex = ex + 1
-				cr.commit()
-				continue
 
 			for k in CUST_MAPPING.keys():
 				partner_fname = CUST_MAPPING[k]
-
 				import_ls_fname = "import_arg.%s" % k 
 				cust_data.update( {partner_fname : eval(import_ls_fname)})
 
-				# import pdb; pdb.set_trace()
 
-				if k == 'cust_province':
+			if not import_arg.cust_country_name:
+				cname= 'indonesia'
+				self.write(cr, uid, [import_arg.id], {'notes':'EMPTY COUNTRY, ASSUME INDONESIA'}, context=context)
+			else:
+				cname = import_arg.cust_country_name
 
-					country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name, context=context)
-					cust_data.update({'country_id': country_id})
-			
-					state_id = self.find_or_create_state(cr, uid, import_arg.cust_province,country_id, context=context)
-					cust_data.update({'state_id': state_id})
-				
-				if k == 'cust_country_name':
-					if not country_id:
-						country_id = self.find_or_create_country(cr, uid, import_arg.cust_country_name)
-					cust_data.update({'country_id': country_id})
+			country_id = country.search(cr, uid, [('name','ilike', cname)], context=context)
+			country_id = country_id[0]
+			cust_data.update({'country_id': country_id})
 
+			if import_arg.cust_province:
+				state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
+				cust_data.update({'state_id': state_id})
 
-
-			print cust_data
 			cust_data.update({'comment': 'ARG'})
 			
 			########################## check exiting partner partner 
-			pid = partner.search(cr, uid, [('nomor_polis','=',import_arg.policy_no)],context=context)
+			pid = partner.search(cr, uid, [('arg_cust_code','=',import_arg.cust_code)],context=context)
 			if not pid:
 				pid = partner.create(cr, uid, cust_data, context=context)	
 				i = i + 1
 			else:
 				pid = pid[0]
-				_logger.warning('Partner exist with nomor_polis %s' % import_arg.policy_no)
+				_logger.warning('Partner exist with arg_cust_code %s' % import_arg.cust_code)
 				ex = ex + 1
 
+			########################## import Polis for the above partner
+
+			polis_id = polis.search(cr, uid, [('arg_nomor_polis','=',import_arg.policy_no),
+				('partner_id','=',pid)], context=context)
+
+			if not polis_id:
+				polis_data = {}
+
+				for k in POLIS_MAPPING.keys():
+					polis_fname = POLIS_MAPPING[k]
+					import_polis_fname = "import_arg.%s" % k 
+					polis_data.update( {polis_fname : eval(import_polis_fname)})
+
+				polis_data.update({'partner_id': pid})
+				polis.create(cr, uid, polis_data, context=context)
+				polis_created = polis_created + 1
+			else:
+				polis_id = polis_id[0]
+				_logger.warning('Polis exist with arg_nomor_polis %s' % import_arg.policy_no)
+				ex = ex + 1
 
 			#commit per record
 			cr.execute("update reliance_import_arg set is_imported='t' where id=%s" % import_arg.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s , %s polis created' % (i, ex, polis_created) )
 
 
 class import_arg_polis_risk(osv.osv): 
@@ -163,6 +175,7 @@ class import_arg_polis_risk(osv.osv):
 		"asset_description"			:	fields.char("ASSET_DESCRIPTION"),
 		"total_premi"				:	fields.char("TOTAL_PREMI"),
 		"total_nilai_pertanggungan"	:	fields.char("TOTAL_NILAI_PERTANGGUNGAN"),
+
 		'is_imported' 		: 	fields.boolean("Imported to Polis Risk?", select=1),
 		"notes"				:	fields.char("Notes"),
 	}

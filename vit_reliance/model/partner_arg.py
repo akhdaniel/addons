@@ -11,16 +11,76 @@ class partner(osv.osv):
 	_name 		= "res.partner"
 	_inherit 	= "res.partner"
 	_columns = {
-		"arg_nomor_polis"		: fields.char("ARG Nomor Polis"),
 		"arg_cust_code"			: fields.char("ARG Customer Code"),
-		"arg_class"				: fields.char("ARG Class"),
-		"arg_subclass"			: fields.char("ARG Sub Class"),	
-		"arg_eff_date"			: fields.date("ARG Eff Date"),
-		"arg_exp_date"			: fields.date("ARG Exp Date"),
-		"arg_qq"				: fields.char("ARG QQ"),
-		"arg_cp"				: fields.char("ARG CP"),
-
+		'partner_polis_ids'		: fields.one2many('reliance.arg_partner_polis','partner_id','Polis', ondelete="cascade"),
 	}
 
+	################################################################
+	# mengambil data  nasabah ARG berdasarkan  Reliance ID
+	################################################################
+	def get_arg_customer(self, cr, reliance_id, context=None):
+		partner = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+		if not partner:
+			raise osv.except_osv(_('error'), 'no partner with reliance_id=%s' % reliance_id) 
+
+		return partner 
+
+	################################################################
+	# mengambil data  nasabah ARG berdasarkan  Cust Code ARG
+	################################################################
+	def get_arg_customer_by_cust_code(self, cr, cust_code, context=None):
+		partner = self.search_read(cr, uid, [('arg_cust_code','=',cust_code)], context=context)
+		if not partner:
+			raise osv.except_osv(_('error'), 'no partner with cust_code=%s' % cust_code) 
+
+		return partner 
+
+	################################################################
+	# mengambil data semua polis yang dimiliki oleh nasabah
+	################################################################
+	def get_arg_customer_all_polis(self, cr, reliance_id, context=None):
+		polises = False
+		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+
+		if pid:
+			polis = self.pool.get('reliance.arg_partner_polis')
+			polises = polis.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
+		else:
+			raise osv.except_osv(_('errp'), 'no partner with nomor_polis=%s' % nomor_polis ) 
+
+		return polises 
+
+	################################################################
+	# mencari data nasabah pemegang polis
+	################################################################
+	def get_arg_customer_by_polis_number(self, cr, policy_no, context=None):
+		polis = self.pool.get('reliance.arg_partner_polis')
+		pol = polis.search_read(cr, uid, [('arg_nomor_polis','=',policy_no)], context=context)
+		if not pol:
+			raise osv.except_osv(_('error'),_("no polis with arg_nomor_polis=%s") % policy_no ) 
+
+		partner = self.browse(cr, uid, pol['partner_id'][0], context=context)
+		return partner
 
 
+class partner_polis(osv.osv):
+	_name = "reliance.arg_partner_polis"
+	_columns = {
+		'partner_id'			: fields.many2one('res.partner', 'partner'),
+		"arg_nomor_polis"		: fields.char("Nomor Polis"),
+		"arg_class"				: fields.char("Class"),
+		"arg_subclass"			: fields.char("Sub Class"),	
+		"arg_eff_date"			: fields.date("Eff Date"),
+		"arg_exp_date"			: fields.date("Exp Date"),
+
+		"arg_company_code"		: fields.char("Company Code"),
+		"arg_company_name"		: fields.char("Company Name"),
+		"arg_company_type"		: fields.char("Company Type"),
+		
+		"arg_marketing_code"	: fields.char("Marketing Code"),
+		"arg_marketing_name"	: fields.char("Marketing Name"),
+		
+		"arg_qq"				: fields.char("QQ"),
+		"arg_cp"				: fields.char("Cust CP"),
+
+	}
