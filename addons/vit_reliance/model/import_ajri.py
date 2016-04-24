@@ -64,6 +64,10 @@ class import_ajri(osv.osv):
 
 		pemegang_old = ''
 
+		country = self.pool.get('res.country')
+		indo = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
+
+
 		for import_ajri in self.browse(cr, uid, ids, context=context):
 
 
@@ -73,6 +77,7 @@ class import_ajri(osv.osv):
 					'name'				: import_ajri.nama_pemegang,
 					'ajri_nomor_polis'	: import_ajri.nomor_polis,
 					'is_company'		: True,
+					'country_id'		: indo[0],
 					'comment' 			: 'AJRI'
 				}
 				
@@ -105,6 +110,7 @@ class import_ajri(osv.osv):
 				'is_company'			: False,
 				'ajri_parent_id'		: pid,
 				'perorangan_tanggal_lahir'	: date,
+				'country_id'			: indo[0],
 				'comment' 				: 'AJRI'
 			}
 
