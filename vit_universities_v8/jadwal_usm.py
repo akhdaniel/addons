@@ -22,6 +22,7 @@ class jadwal_usm(osv.Model):
 		'calon_mhs_ids'		: fields.one2many('res.partner','jadwal_usm_id','Calon MHS', ondelete="cascade"),
 		'state'				: fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
 		'discount'			: fields.float('Potongan(%)'),
+		'type_pendaftaran'  : fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 	}
 
 	_defaults = {  

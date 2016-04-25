@@ -286,12 +286,15 @@
 
                     <page string="Pindahan" name="pindahan" 
                         attrs="{'invisible': [('jenis_pendaftaran_id','in',(1,False))]}">
-                        <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible':[('status_mahasiswa','!=','calon')]}" groups="vit_universities_v8.group_univ_staff_baak"/>
+                        <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible':[('status_mahasiswa','!=','calon')]}" groups="vit_universities_v8.group_univ_pmb_baak"/>
                         <group>
                             <group>
-                                <field name="asal_univ_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/>     
-                                <field name="asal_fakultas_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/> 
-                                <field name="asal_prodi_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/>    
+                                <field name='asal_univ'/>
+                                <field name="asal_univ_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" string="-"/>
+                                <field name='asal_fakultas'/>     
+                                <field name="asal_fakultas_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" string="-"/>
+                                 <field name='asal_prodi'/>
+                                <field name="asal_prodi_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" string="-"/>    
                                 <field name="semester_id" string="Semester Mulai" widget="required" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/> 
                             </group>
                             <group>
@@ -376,6 +379,7 @@
                     <filter string="Kuliah Pagi" name="jadwal_pagi" icon="terp-personal" domain="[('jadwal_pagi','=',True)]" context="{}"/>
                     <filter string="Kuliah Siang" name="jadwal_siang" icon="terp-personal" domain="[('jadwal_siang','=',True)]" context="{}"/>
                     <filter string="Kuliah Malam" name="jadwal_malam" icon="terp-personal" domain="[('jadwal_malam','=',True)]" context="{}"/>
+                    <filter string="Registrasi Ulang" name="reg_online" icon="terp-personal" domain="[('reg_online','=',True)]" context="{}"/>
                 </filter>
                 <filter string="Salesperson" position="before">
                     <filter string="Tahun Ajaran" name="tahun_ajaran_id" icon="terp-personal" domain="[]" context="{'group_by' : 'tahun_ajaran_id'}"/>

@@ -29,7 +29,6 @@ from openerp.tools import float_compare
 from openerp.report import report_sxw
 import openerp
 
-
 from dateutil.relativedelta import relativedelta
 
 from datetime import datetime
@@ -45,17 +44,24 @@ class account_voucher(osv.osv):
 
 	def proforma_voucher(self, cr, uid, ids, context=None):
 		self.action_move_line_create(cr, uid, ids, context=context)
-
 		# create notifikasi ke email
 		for vc in self.browse(cr,uid,ids,context=context):
 			if vc.partner_id.is_mahasiswa:
+				partner_obj = self.pool.get('res.partner')
+
+				template_id = False
 				template_pool = self.pool.get('email.template')
 				if vc.partner_id.status_mahasiswa == 'calon' and vc.partner_id.invoice_id and not vc.partner_id.jalur_masuk :
 					template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Pendaftaran Mahasiswa Baru ISTN')])
+				
 				elif vc.partner_id.status_mahasiswa == 'calon' and vc.partner_id.invoice_bangunan_id and vc.partner_id.jalur_masuk :
 					template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Uang Pengembangan dan Uang Kuliah Mahasiswa Baru ISTN')])
-					#create NIM dan KRS asmt 1 dan smt 2
-					self.pool.get('res.partner').create_krs_smt_1_dan_2(cr,uid,[vc.partner_id.id],context=context)
+					#create NIM dan KRS asmt 1 dan smt 2 untuk mahasiswa baru
+					if vc.partner_id.jenis_pendaftaran_id.name == 'Baru' :
+						partner_obj.create_krs_smt_1_dan_2(cr,uid,[vc.partner_id.id],context=context)
+					else :
+						# jalankan fungsi create conversi jika jalur non baru
+						partner_obj.action_konversi(cr,uid,[vc.partner_id.id],context=context)
 				elif vc.partner_id.status_mahasiswa == 'Mahasiswa' :
 					template_id = template_pool.search(cr,uid,[('name','=ilike','Uang Kuliah ISTN')])
 

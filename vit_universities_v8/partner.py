@@ -306,12 +306,17 @@ class res_partner (osv.osv):
 
 		#untuk mhs pindahan
 		'asal_univ_id' 		: fields.many2one('res.partner', 'Asal PT', domain=[('category_id','ilike','external')]),
+		'asal_univ'			: fields.char('Asal PT',readonly=True),
 		'asal_fakultas_id' 	: fields.many2one('master.fakultas', 'Asal Fakultas', domain="[('pt_id','=',asal_univ_id),('is_internal','=',False)]"),
+		'asal_fakultas'		: fields.char('Asal Fakultas',readonly=True),
 		'asal_prodi_id' 	: fields.many2one('master.prodi', 'Asal Prodi', domain="[('fakultas_id','=',asal_fakultas_id),('is_internal','=',False)]"),
+		'asal_prodi'		: fields.char('Asal Prodi',readonly=True),
+		'asal_alamat_univ' 	: fields.char('Asal Alamat PT',readonly=True),
+		'asal_website_univ'	: fields.char('Asal Website PT',readonly=True),
 		'asal_npm'			: fields.char('Asal NIM'),
 		'asal_sks_diakui' 	: fields.integer('SKS Diakui'),
 		'asal_jenjang_id' 	: fields.many2one('master.jenjang', 'Asal Jenjang'),
-		'semester_id'		: fields.many2one('master.semester','Semester'),
+		'semester_id'		: fields.many2one('master.semester','Semester '),
 
 		# flag jika pernah kuliah di kampus yg sama (alumni)
 		'is_alumni'			: fields.boolean('Alumni'),
@@ -344,8 +349,8 @@ class res_partner (osv.osv):
 		'rekomendasi'	: fields.char('Rekomendasi'),
 		'telp_rekomendasi' : fields.char('Telp. Rekomendasi'),
 
-		# flag registration online
-		'reg_online'	: fields.boolean('Update Registration Online'),
+		# flag her registration online
+		'reg_online'	: fields.boolean('Registrasi Ulang'),
 
 		#flag pembeda user
 		'partner_type'	: fields.selection([('mahasiswa','mahasiswa'),
@@ -1048,27 +1053,38 @@ class res_partner (osv.osv):
 
 		for mhs in self.browse(cr, uid, ids, context=context):
 			exist = konv_obj.search(cr,uid,[('partner_id','=',mhs.id)],context=context)
-			if exist:
-				raise osv.except_osv(_('Error!'), _('Data konversi sudah pernah dibuat!'))
-			data = {
-				'partner_id' 		: mhs.id,
-				'semester_id'		: mhs.semester_id.id,
-				'asal_prodi_id'		: mhs.asal_prodi_id.id,
-				'asal_fakultas_id'	: mhs.asal_fakultas_id.id,
-				'asal_univ_id'		: mhs.asal_univ_id.id,
-				'prodi_id'			: mhs.prodi_id.id,
-				'fakultas_id'		: mhs.fakultas_id.id,
-				'tahun_ajaran_id'	: mhs.tahun_ajaran_id.id,
-				'konsentrasi_id'	: mhs.konsentrasi_id.id,
-				'status'			: 'draft',
-				'state'				: 'draft',
-				'notes' 			: '',
-				'user_id'			: uid,
-				'date'				: mhs.tgl_daftar,
-				'krs_done'			: False,
-			}
-			konv_id = konv_obj.create(cr, uid, data, context=context)
-		return konv_id
+			# if exist:
+			# 	raise osv.except_osv(_('Error!'), _('Data konversi sudah pernah dibuat!'))
+			if not exist :
+				data = {
+					'partner_id' 		: mhs.id,
+					'semester_id'		: mhs.semester_id.id,
+					'asal_prodi_id'		: mhs.asal_prodi_id.id,
+					'asal_fakultas_id'	: mhs.asal_fakultas_id.id,
+					'asal_univ_id'		: mhs.asal_univ_id.id,
+					'prodi_id'			: mhs.prodi_id.id,
+					'fakultas_id'		: mhs.fakultas_id.id,
+					'tahun_ajaran_id'	: mhs.tahun_ajaran_id.id,
+					'konsentrasi_id'	: mhs.konsentrasi_id.id,
+					'status'			: 'draft',
+					'state'				: 'draft',
+					'notes' 			: mhs.jenis_pendaftaran_id.name,
+					'user_id'			: uid,
+					'date'				: mhs.tgl_daftar,
+					'create_date'		: time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+					'krs_done'			: False,
+				}
+				konv_id = konv_obj.create(cr, uid, data, context=context)
+
+				# create email notif ke user prodi (doc. konversi)
+				groups_obj = self.pool.get('res.groups')
+				users  = groups_obj.search(cr,uid,[('name','ilike','Staff Prodi')], context=context)
+				if users :
+					users_ids = groups_obj.browse(cr,uid,users[0])
+					if users_ids.users :
+						for usr in users_ids.users :					
+							konv_obj.convertion_notification(cr, uid, [konv_id], usr)
+		return True
 
 
 	####################################################################################################
