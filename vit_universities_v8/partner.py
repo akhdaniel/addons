@@ -44,63 +44,67 @@ class res_partner (osv.osv):
 	def create(self, cr, uid, vals, context=None):
 		
 		if 'status_mahasiswa' in vals :
-			if vals['status_mahasiswa'] == 'calon':
-				if vals.get('reg','/')=='/':
-					vals['reg'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner') or '/'
-				partner = super(res_partner, self).create(cr, uid, vals, context=context)
-				byr_obj = self.pool.get('master.pembayaran.pendaftaran')
-				byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
-					('fakultas_id','=',vals['fakultas_id']),
-					('prodi_id','=',vals['prodi_id']),
-					('state','=','confirm'),
-					])		
-				if byr_sch != []:
-					byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
-					list_pembayaran = byr_brw.detail_product_ids
-					prod_id = []
-					for bayar in list_pembayaran:
-					
-						product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
-						coa_line = product.property_account_income.id
-						if not coa_line:
-							coa_line = product.categ_id.property_account_income_categ.id
-						prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
-											 'name'			: bayar.product_id.name,
-											 'price_unit'	: bayar.public_price,
-											 'account_id'	: coa_line}))
-					inv = self.pool.get('account.invoice').create(cr,uid,{
-						'partner_id':partner,
-						'origin': 'Pendaftaran '+str(self.pool.get('res.partner').browse(cr,uid,partner).reg),
-						'type':'out_invoice',
-						'fakultas_id': vals['fakultas_id'],
-						'prod_id': vals['prodi_id'],
-						'account_id':self.pool.get('res.partner').browse(cr,uid,partner).property_account_receivable.id,
-						'invoice_line': prod_id,
-						},context=context)
-					wf_service = netsvc.LocalService('workflow')
-					wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
-					self.write(cr,uid,partner,{'invoice_id':inv})
+			if 'is_import' not in vals:
+				if vals['status_mahasiswa'] == 'calon':
+					if vals.get('reg','/')=='/':
+						vals['reg'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner') or '/'
+					partner = super(res_partner, self).create(cr, uid, vals, context=context)
+					byr_obj = self.pool.get('master.pembayaran.pendaftaran')
+					byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',vals['tahun_ajaran_id']),
+						('fakultas_id','=',vals['fakultas_id']),
+						('prodi_id','=',vals['prodi_id']),
+						('state','=','confirm'),
+						])		
+					if byr_sch != []:
+						byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+						list_pembayaran = byr_brw.detail_product_ids
+						prod_id = []
+						for bayar in list_pembayaran:
+						
+							product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+							coa_line = product.property_account_income.id
+							if not coa_line:
+								coa_line = product.categ_id.property_account_income_categ.id
+							prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+												 'name'			: bayar.product_id.name,
+												 'price_unit'	: bayar.public_price,
+												 'account_id'	: coa_line}))
+						inv = self.pool.get('account.invoice').create(cr,uid,{
+							'partner_id':partner,
+							'origin': 'Pendaftaran '+str(self.pool.get('res.partner').browse(cr,uid,partner).reg),
+							'type':'out_invoice',
+							'fakultas_id': vals['fakultas_id'],
+							'prod_id': vals['prodi_id'],
+							'account_id':self.pool.get('res.partner').browse(cr,uid,partner).property_account_receivable.id,
+							'invoice_line': prod_id,
+							},context=context)
+						wf_service = netsvc.LocalService('workflow')
+						wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
+						self.write(cr,uid,partner,{'invoice_id':inv})
 
 
 			elif vals['status_mahasiswa'] == 'Mahasiswa':
-				if vals.get('npm','/')=='/':
-					ta = vals['tahun_ajaran_id']
-					t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
-					ta_tuple =  tuple(t_idd)
-					ta_id = ta_tuple[2]+ta_tuple[3]#ambil 2 digit paling belakang dari tahun saja		
+				if 'is_import' not in vals:
+					if vals.get('npm','/')=='/':
+						ta = vals['tahun_ajaran_id']
+						t_idd = self.pool.get('academic.year').browse(cr,uid,ta,context=context).date_start				
+						ta_tuple =  tuple(t_idd)
+						ta_id = ta_tuple[2]+ta_tuple[3]#ambil 2 digit paling belakang dari tahun saja		
 
-					fak = vals['fakultas_id']
-					fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
+						fak = vals['fakultas_id']
+						fak_id = self.pool.get('master.fakultas').browse(cr,uid,fak,context=context).kode
 
-					pro = vals['prodi_id']
-					pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
+						pro = vals['prodi_id']
+						pro_id = self.pool.get('master.prodi').browse(cr,uid,pro,context=context).kode
 
-					sequence = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
+						sequence = self.pool.get('ir.sequence').get(cr, uid, 'seq.npm.partner') or '/'
 
-					vals['npm'] = ta_id+fak_id+pro_id+sequence
-					partner = super(res_partner, self).create(cr, uid, vals, context=context)
+						vals['npm'] = ta_id+fak_id+pro_id+sequence
+						partner = super(res_partner, self).create(cr, uid, vals, context=context)
 			elif vals['status_mahasiswa'] == 'alumni':
-				raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))	
+				if 'is_import' not in vals:
+					raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))
+				partner = super(res_partner, self).create(cr, uid, vals, context=context)		
 			else:
 				partner = super(res_partner, self).create(cr, uid, vals, context=context)
 		else:
@@ -196,63 +200,65 @@ class res_partner (osv.osv):
 		results = {}
 
 		for siap_sidang in  self.browse(cr, uid, ids, context=context):
-			if siap_sidang.tahun_ajaran_id.id != False:
-				tahun_ajaran = siap_sidang.tahun_ajaran_id.id
-				fakultas 	= siap_sidang.fakultas_id.id
-				prodi  		= siap_sidang.prodi_id.id
-				# cari jumlah kurikulum untuk thn akademik ini sesuai dengan settingan master kurikulum
-				kurikulum_obj = self.pool.get('master.kurikulum')
-				th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
-															('fakultas_id','=',fakultas),
-															('prodi_id','=',prodi),
-															('state','=','confirm')])
-				total_kurikulum = len(th_kurikulum)
+			if not siap_sidang.is_import :
+				if siap_sidang.tahun_ajaran_id.id != False:
+					tahun_ajaran = siap_sidang.tahun_ajaran_id.id
+					fakultas 	= siap_sidang.fakultas_id.id
+					prodi  		= siap_sidang.prodi_id.id
+					# cari jumlah kurikulum untuk thn akademik ini sesuai dengan settingan master kurikulum
+					kurikulum_obj = self.pool.get('master.kurikulum')
+					th_kurikulum = kurikulum_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+																('fakultas_id','=',fakultas),
+																('prodi_id','=',prodi),
+																('state','=','confirm')])
+					total_kurikulum = len(th_kurikulum)
 
-				# hitung jumlah kurikulum untuk thn akademik dan mahasiswa yg bersangkutan, harus sama dg jumlah yg ada di kurikulum
-				khs_obj = self.pool.get('operasional.krs')
-				th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_sidang.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
-				total_khs = len(th_khs)
-				
-				results[siap_sidang.id] = False
-				if total_khs >= total_kurikulum :
-					#cek juga total mk di kurikulum harus sama dengan mk yg sudah ditempuh
-					tahun_ajaran_id = self.browse(cr,uid,ids[0]).tahun_ajaran_id.id
-					prodi_id = self.browse(cr,uid,ids[0]).prodi_id.id
-					if tahun_ajaran_id and prodi_id:
-						cr.execute("""SELECT kmr.matakuliah_id kmr
-										FROM kurikulum_mahasiswa_rel kmr
-										LEFT JOIN master_matakuliah mm ON mm.id = kmr.matakuliah_id
-										LEFT JOIN master_kurikulum mk ON kmr.kurikulum_id = mk.id 
-										WHERE mk.tahun_ajaran_id ="""+ str(tahun_ajaran_id) +""" 
-										AND mk.prodi_id = """+ str(prodi_id) +"""
-										AND mk.state = 'confirm'""")		   
-						mk_klm = cr.fetchall()			
-						if mk_klm != []:
+					# hitung jumlah kurikulum untuk thn akademik dan mahasiswa yg bersangkutan, harus sama dg jumlah yg ada di kurikulum
+					khs_obj = self.pool.get('operasional.krs')
+					th_khs = khs_obj.search(cr,uid,[('partner_id','=',siap_sidang.id),('tahun_ajaran_id','=',tahun_ajaran),('state','=','done')])
+					total_khs = len(th_khs)
+					
+					results[siap_sidang.id] = False
+					if total_khs >= total_kurikulum :
+						#cek juga total mk di kurikulum harus sama dengan mk yg sudah ditempuh
+						tahun_ajaran_id = self.browse(cr,uid,ids[0]).tahun_ajaran_id.id
+						prodi_id = self.browse(cr,uid,ids[0]).prodi_id.id
+						if tahun_ajaran_id and prodi_id:
+							cr.execute("""SELECT kmr.matakuliah_id kmr
+											FROM kurikulum_mahasiswa_rel kmr
+											LEFT JOIN master_matakuliah mm ON mm.id = kmr.matakuliah_id
+											LEFT JOIN master_kurikulum mk ON kmr.kurikulum_id = mk.id 
+											WHERE mk.tahun_ajaran_id ="""+ str(tahun_ajaran_id) +""" 
+											AND mk.prodi_id = """+ str(prodi_id) +"""
+											AND mk.state = 'confirm'""")		   
+							mk_klm = cr.fetchall()			
+							if mk_klm != []:
 
-							if self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
-								mk = self.get_ttl_mk_by_newest(cr, uid, ids, context=None)
-							elif self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
-								mk = self.get_ttl_mk_by_better(cr, uid, ids, context=None)	
+								if self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaru' :
+									mk = self.get_ttl_mk_by_newest(cr, uid, ids, context=None)
+								elif self.browse(cr,uid,ids[0]).tahun_ajaran_id.mekanisme_nilai == 'terbaik' :
+									mk = self.get_ttl_mk_by_better(cr, uid, ids, context=None)	
 
-							if mk > 0 :										
-								mk_ids = []
-								for m in mk_klm:
-									if m[0] not in mk_ids:
-										mk_ids.append(m[0])		
-								tot_kurikulum = len(mk_ids)
-								
-								toleransi_mk = self.browse(cr,uid,ids[0]).tahun_ajaran_id.max_mk
-								#jika total mk yg telah ditempuh sama dengan / lebih dari yg ada di kurikulum
-								if mk >= (tot_kurikulum-toleransi_mk):
-									results[siap_sidang.id] = True
-
+								if mk > 0 :										
+									mk_ids = []
+									for m in mk_klm:
+										if m[0] not in mk_ids:
+											mk_ids.append(m[0])		
+									tot_kurikulum = len(mk_ids)
+									
+									toleransi_mk = self.browse(cr,uid,ids[0]).tahun_ajaran_id.max_mk
+									#jika total mk yg telah ditempuh sama dengan / lebih dari yg ada di kurikulum
+									if mk >= (tot_kurikulum-toleransi_mk):
+										results[siap_sidang.id] = True
+			else : 							
+				results[siap_sidang.id] = True
 		return results
 
 	_columns = {
 		#Mahasiswa
 		'npm' :fields.char(string='NIM',size=34),
 		'reg': fields.char('No. Pendaftaran',readonly=True,size=34),
-		'no_alumni': fields.char('No. Alumni', readonly=True, size=34),
+		'no_alumni': fields.char('No. Alumni', size=34),
 		'street':fields.text('Alamat Rumah'),
 		# 'nama_tengah':fields.char('Nama Tengah',size=60),
 		# 'nama_belakang':fields.char('Nama Tengah',size=60),
@@ -270,10 +276,21 @@ class res_partner (osv.osv):
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',readonly=True),                
 
 		#'peserta_kelas_id':fields.many2one('master.peserta_kelas',string='Mahasiswa',),
-		'ipk':fields.float('IPK',digits=(2,2),readonly=True),
+		'is_import': fields.boolean('Import'),
+		'ipk':fields.float('IPK',digits=(2,2)),
 		'judul':fields.text('Judul Tugas Akhir'),
 		'wisuda':fields.date('Tanggal Wisuda'),
+		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,readonly=True),
 		'tgl_lulus':fields.date('Tanggal Lulus'),
+		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True),
+		'tgl_sidang':fields.date('Tanggal Sidang'),
+		'nilai_sidang_huruf':fields.char('Nilai Sidang (Huruf)',size=3),
+		'nilai_sidang_angka':fields.float('Nilai Sidang (Angka)',digits=(2,2)),
+		'jml_praktikum': fields.float('Jumlah Praktikum'),
+		'jml_mk_pilihan': fields.float('Jumlah MK Pilihan'),
+		'jml_nilai_d': fields.float('Jumlah Nilai D (%)'),
+		'jml_sks_komultif': fields.float('Jumlah SKS Komulatif'),
+
 		'no_formulir':fields.char('No Formulir Ujian'),
 		'tgl_ujian':fields.date('Tanggal Ujian'),
 		'nilai_ujian':fields.float('Nilai Ujian'),
@@ -291,9 +308,8 @@ class res_partner (osv.osv):
 		'age':fields.function(_calc_age, method=True, required=True, string='Usia (Tahun)', readonly=True, type="integer"),
 		'status_pernikahan':fields.selection([('belum','Belum Menikah'),('menikah','Menikah'),('janda','Janda'),('duda','Duda')],'Status Pernikahan'),
 		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
-		'lokasi_wisuda':fields.char('Tempat Wisuda',size=128,readonly=True),
 		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
-		'siap_sidang' : fields.function(_get_sidang_ready,type='boolean',string='Siap Sidang',readonly=True),
+
 		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
 		'is_beasiswa' : fields.boolean('Penerima Beasiswa USM',readonly=True),
@@ -1044,6 +1060,7 @@ class res_partner (osv.osv):
 		'no_ijazah_sma':'/',
 		'is_mahasiswa': False,
 		'split_invoice': 1,
+		'is_import' : False,
 	}
 
 

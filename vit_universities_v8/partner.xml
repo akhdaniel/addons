@@ -329,22 +329,35 @@
                                            <field name="no_ijazah" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
                                            <field name="no_sk_dekan" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
                                            <field name="tgl_sk_dekan" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
-                                           <field name="no_alumni"/>
                                         </group>                                     
                                         <group>
-                                        <label for="tgl_lulus" string="Tanggal Lulus" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
-                                        <div>
-                                            <field name="tgl_lulus" class="oe_inline" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
-                                            <label for="%(act_res_partner_view_transkrip)d" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
-                                            <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find" groups="vit_universities_v8.group_univ_staff_baak"/> 
-                                        </div>  
-                                            <field name="siap_sidang" invisible="1"/>
-                                            <field name="wisuda" attrs="{'invisible': [('siap_sidang','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
-                                            <field name="lokasi_wisuda" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>         
+                                            <field name="tgl_sidang" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                            <label for="tgl_lulus" string="Tanggal Lulus" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                            <div>
+                                                <field name="tgl_lulus" class="oe_inline" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                                <label for="%(act_res_partner_view_transkrip)d" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
+                                                <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find" groups="vit_universities_v8.group_univ_staff_baak"/> 
+                                            </div>  
+                                                <field name="siap_sidang" invisible="1"/>
+                                                <field name="wisuda" attrs="{'invisible': [('siap_sidang','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
+                                                <field name="lokasi_wisuda" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>  
+                                            <field name="no_alumni"/>           
                                         </group>
-
                                    </group> 
-                                   <field name="judul" placeholder="Judul Tugas Akhir .."/>                                                             
+                                   <field name="judul" placeholder="Judul Tugas Akhir .."/> 
+                                   <group colspan="4" col="4">
+                                       <group>
+                                            <field name="is_import" invisible="1"/>
+                                           <field name="nilai_sidang_huruf" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
+                                           <field name="nilai_sidang_angka" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                           <field name="jml_praktikum" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>/>
+                                        </group>      
+                                        <group>
+                                           <field name="jml_nilai_d" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
+                                           <field name="jml_mk_pilihan" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
+                                           <field name="jml_sks_komultif" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
+                                        </group>
+                                    </group>             
                             </sheet>
                         </form>
                     </page>
