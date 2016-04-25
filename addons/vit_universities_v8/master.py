@@ -28,7 +28,6 @@ class academic_year(osv.Model):
 	''' Defining an academic year '''
 	_name = "academic.year"
 	_description = "Academic Year"
-	_rec_name = "code"
 	_order = "code"
 
 	_columns = {
@@ -88,12 +87,12 @@ class academic_year(osv.Model):
 	# 		return year_ids[0]
 	# 	return False
 
-	def name_get(self, cr, uid, ids, context=None):
-		res = []
-		for acd_year_rec in self.read(cr, uid, ids, context=context):
-			nam = "[" + acd_year_rec['code'] + "]" + acd_year_rec['name']
-			res.append((acd_year_rec['id'], nam))
-		return res
+	# def name_get(self, cr, uid, ids, context=None):
+	# 	res = []
+	# 	for acd_year_rec in self.read(cr, uid, ids, context=context):
+	# 		nam = "[" + acd_year_rec['code'] + "]" + acd_year_rec['name']
+	# 		res.append((acd_year_rec['id'], nam))
+	# 	return res
 
 	def _check_academic_year(self, cr, uid, ids, context=None):
 		obj_academic_ids = self.search(cr, uid, [], context=context)
@@ -192,6 +191,7 @@ class master_matakuliah (osv.Model):
 		'prodi_id': fields.many2one('master.prodi','Program Studi Pengampu'),
 		'dosen_id': fields.many2one('hr.employee','Dosen Pengampu', domain=[('is_dosen','=',True)]),
 		'jenjang_id': fields.many2one('master.jenjang','Jejang'),
+		'praktikum': fields.boolean('Praktikum'),
 	}
 
 	_defaults = {

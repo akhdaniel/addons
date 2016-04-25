@@ -824,6 +824,7 @@
                                 <field name="kode"/>
                                 <field name="kode_dikti"/>
                                 <field name="nama"/>
+                                <field name="praktikum"/>
                                 <field name="dosen_id"/>
                             </group>
                             <group>
@@ -860,6 +861,9 @@
                 <tree string="Daftar Ruangan">
                     <field name="name"/>
                     <field name="nama"/>
+                    <field name="kapasitas"/>
+                    <field name="kapasitas_uts"/>
+                    <field name="kapasitas_uas"/>                    
                 </tree>
             </field>
         </record>
