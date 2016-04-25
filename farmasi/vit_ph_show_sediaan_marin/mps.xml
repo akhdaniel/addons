@@ -7,25 +7,25 @@
             <field name="model">vit_pharmacy_manufacture.mps</field>
             <field name="inherit_id" ref="vit_pharmacy_manufacture.view_mps_form"/>
             <field name="arch" type="xml">
-                <page string="Syrup" position="attributes">
+                <notebook string="Syrup" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
-                <page string="Soft Capsule" position="attributes">
+                </notebook>
+                <notebook string="Soft Capsule" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
-                <page string="Injeksi" position="attributes">
+                </notebook>
+                <notebook string="Injeksi" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
-                <page string="Larutan" position="attributes">
+                </notebook>
+                <notebook string="Larutan" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
+                </notebook>
 
-                <page string="Betalaktam" position="attributes">
+                <notebook string="Betalaktam" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
-                 <page string="Kapsul" position="attributes">
+                </notebook>
+                 <notebook string="Kapsul" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
+                </notebook>
             </field>
         </record>
     </data>

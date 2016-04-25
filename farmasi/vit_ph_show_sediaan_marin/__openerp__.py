@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Show Sediaan Marin Solid dan Non Solid",
+    'name': "Show Sediaan Marin Solid dan Semi Solid",
     'summary': """
-       Show Sediaan Marin Solid dan Non Solid """,
+       Show Sediaan Marin Solid dan Semi Solid """,
     'description': """
-        Show Sediaan Marin Solid dan Non Solid
-- Show Sediaan Marin Solid dan Non Solid
+        Show Sediaan Marin Solid dan Semi Solid
+- Show Sediaan Marin Solid dan Semi Solid
     """,
     'author': "rahasia2alha@gmail.com",
     'website': "http://www.one2pret.com",

@@ -43,7 +43,7 @@
                         </group>
                     </group>
 
-                    <notebook>
+                    <notebook string="Syrup">
                         <page string="Syrup">
                             <field name="mps_detail_ids2"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -87,7 +87,7 @@
                         </page>
                     </notebook>
 
-                    <notebook>
+                    <notebook string="Soft Capsule">
                         <page string="Soft Capsule">
                             <field name="mps_detail_ids4"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -132,7 +132,7 @@
                     </notebook>
 
 
-                    <notebook>
+                    <notebook string="Injeksi">
                         <page string="Injeksi">
                             <field name="mps_detail_ids6"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -176,7 +176,7 @@
                         </page>
                     </notebook>
 
-                    <notebook>
+                    <notebook string="Larutan">
                         <page string="Larutan">
                             <field name="mps_detail_ids5"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -220,7 +220,7 @@
                         </page>
                     </notebook>
 
-                    <notebook>
+                    <notebook string="Kapsul">
                         <page string="Kapsul">
                             <field name="mps_detail_ids3"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -264,7 +264,7 @@
                         </page>
                     </notebook>
 
-                    <notebook>
+                    <notebook string="Betalaktam">
                         <page string="Betalaktam">
                             <field name="mps_detail_ids1"  view_mode="tree" widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -307,7 +307,7 @@
                         </page>
                     </notebook>
 
-                      <notebook>
+                    <notebook string="Solid">
                         <page string="Solid">
                             <field name="mps_detail_ids7"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -352,7 +352,7 @@
                     </notebook>
 
 
-                      <notebook>
+                    <notebook string="Semi Solid">
                         <page string="Semi Solid">
                             <field name="mps_detail_ids8"  view_mode="tree"   widget="one2many_list">
                                 <tree string="Details" editable="bottom" 
@@ -395,7 +395,6 @@
                             </field>
                         </page>
                     </notebook>
-
 
 
 
