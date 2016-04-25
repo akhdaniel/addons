@@ -62,6 +62,17 @@ class partner(osv.osv):
 		partner = self.search_read(cr, uid, [('id','=',pol[0]['partner_id'][0])], context=context)
 		return partner
 
+	################################################################
+	# mencari data polis
+	################################################################
+	def get_arg_polis(self, cr, uid, policy_no, context=None):
+		polis = self.pool.get('reliance.arg_partner_polis')
+		pol = polis.search_read(cr, uid, [('arg_nomor_polis','=',policy_no)], context=context)
+		if not pol:
+			raise osv.except_osv(_('error'),_("no polis with arg_nomor_polis=%s") % policy_no ) 
+
+		return pol 
+
 
 class partner_polis(osv.osv):
 	_name = "reliance.arg_partner_polis"
