@@ -68,6 +68,9 @@ class Partner(http.Controller):
 
 		Jenis_pendaftaran  = http.request.env['akademik.jenis_pendaftaran']
 		jenis_pendaftaran_ids = Jenis_pendaftaran.search([])
+		
+		Jenjang  = http.request.env['master.jenjang']
+		jenjangs = Jenjang.search([])
 
 		penghasilans = [('1','Dibawah Rp.1.000.000'),('2','Rp.1.000.000 - Rp.3.000.000'),('3','Rp.3.000.001 - Rp.6.000.000'),('4','Rp.6.000.001 - Rp.10.000.000'),('5','Diatas Rp.10.000.001')]
 
@@ -83,7 +86,10 @@ class Partner(http.Controller):
 		type_pembayarans = [('1','Tunai'),('6','6 x Angsuran')]
 		
 		Invoice = http.request.env['account.invoice']
-		invoice = Invoice.search([('origin','ilike','pendaftaran'),('partner_id','=',partner.id)])
+		invoices = Invoice.search([('origin','ilike','pendaftaran'),('partner_id','=',partner.id),('state','!=','cancel')])
+		invoice = []
+		if invoices :
+			invoice = invoices[0]
 
 		Survey = http.request.env['survey.survey']
 		survey = Survey.search([('title','ilike','tpa')])
@@ -128,6 +134,7 @@ class Partner(http.Controller):
 			'hubungans'		: hubungans,
 			'type_pembayarans': type_pembayarans,
 			'jadwal_ids'		: jadwal_ids,
+			'jenjangs'		: jenjangs,
 			'partner'		: partner,
 			'message_error'	: message_error,
 			'message_success': message_success
@@ -208,7 +215,9 @@ class Partner(http.Controller):
 		asal_alamat_univ= kw.get('asal_alamat_univ', '')
 		asal_website_univ= kw.get('asal_website_univ', '')		
 		nim_asal 		= kw.get('nim_asal', '')
-		prodi_asal_id 	= kw.get('prodi_asal_id', '')	
+		fakultas_asal_id 	= kw.get('fakultas_asal_id', '')
+		prodi_asal_id 	= kw.get('prodi_asal_id', '')
+		asal_jenjang_id 		= kw.get('jenjangs', '')	
 
 		ref 		= kw.get('rekomendasi', '')	
 		telp_ref 		= kw.get('telp_rekomendasi', '')	
@@ -227,7 +236,7 @@ class Partner(http.Controller):
 		partner_data = {}
 
 		
-		jenis_pendaftaran_id 	= http.request.env['akademik.jenis_pendaftaran'].search([('name','=','Baru')])
+		jenis_pendaftaran_id 	= http.request.env['akademik.jenis_pendaftaran'].search([('id','=',int(jenis_pendaftaran_id))])
 		prodi 					= http.request.env['master.prodi'].browse( int(prodi_id) )
 
 		#jadwal_id 				= http.request.env['jadwal.usm'].search([('name','=','Gelombang 1')])
@@ -295,7 +304,7 @@ class Partner(http.Controller):
 			##############################################################################
 			# insert into calon mhs
 			##############################################################################
-
+			
 			data = {
 				'image'			: base64.encodestring(photo.read()),
 				'reg'			: reg,
@@ -303,7 +312,8 @@ class Partner(http.Controller):
 				'id_card' 		: id_card,
 				'jenis_pendaftaran_id' : jenis_pendaftaran_id.id,
 				'alamat_id'		: alamat.id,
-				'type_pendaftaran': type_pendaftaran,
+				'street'		: street,
+				'type_pendaftaran': jadwal_id.type_pendaftaran,
 				'type_mhs_id'	: type_mhs.id,
 				'street'		: street,
 				'street2'		: street2,
@@ -334,10 +344,24 @@ class Partner(http.Controller):
 				'jadwal_malam'	: jadwal_malam,
 
 			}
+			# jika coa ada di master prodi
 			if prodi.coa_hutang_id:
 				data.update({'property_account_payable': prodi.coa_hutang_id.id})
 			if prodi.coa_piutang_id:
 				data.update({'property_account_receivable': prodi.coa_piutang_id.id})
+
+			#import pdb;pdb.set_trace()
+			# jika pindahan
+			if jenis_pendaftaran_id.name != 'Baru':
+				data.update({'asal_univ'			: asal_universitas,
+							'asal_alamat_univ' 		: asal_alamat_univ,
+							'asal_website_univ' 	: asal_website_univ,
+							'asal_fakultas'			: fakultas_asal_id,
+							'asal_prodi'			: prodi_asal_id,
+							'asal_npm'				: nim_asal,
+							'asal_jenjang_id'		: asal_jenjang_id,
+							'semester_id'			: semester_id})
+
 			# partner_data = Partner.create( data )
 			partner_data = Partner.write ( cr, SUPERUSER_ID, [partner.id],  data )
 			message = "Registration Success!"
@@ -376,6 +400,9 @@ class Partner(http.Controller):
 		hubungan 		= kw.get('hubungans', '')
 		hub_istn_file 	= kw.get('hub_istn_file', '')		
 
+		# transkrip
+		transkrip_file 	= kw.get('transkrip_file', '')
+
 		# pembayaran
 		type_pembayaran = kw.get('type_pembayarans', '')	
 
@@ -397,6 +424,7 @@ class Partner(http.Controller):
 					'semester5'			: float(smt5),
 					'un'				: float(un),
 					'split_invoice'		: int(type_pembayaran),
+					'reg_online'		: True,
 					'hubungan'			: hubungan,
 				}
 				###############################################################################
@@ -417,6 +445,7 @@ class Partner(http.Controller):
 				data = {
 					'jalur_masuk'		: jalur_masuk,
 					'split_invoice'		: int(type_pembayaran),
+					'reg_online'		: True,
 					'hubungan'			: hubungan,
 				}				
 
@@ -437,6 +466,23 @@ class Partner(http.Controller):
 				'datas_fname': str(hubungan),
 				}
 			Attachments.create(request.cr, SUPERUSER_ID, attachment_value2, context=request.context)
+
+			if transkrip_file != '' :
+				###############################################################################
+				# Create Attachment jika transkrip, jika pindahan
+				###############################################################################
+				attachment_value3 = {
+					'name'		: 'Transkrip Nilai',
+					'type'		: 'binary',
+					'datas'		: base64.encodestring(transkrip_file.read()),
+					'res_model'	: 'res.partner',
+					'res_name'	: partner.name,
+					'res_id'	: int(partner.id),
+					'partner_id': partner.id,
+					'datas_fname': 'Transkrip Nilai',
+					}
+				Attachments.create(request.cr, SUPERUSER_ID, attachment_value3, context=request.context)
+
 			#import pdb;pdb.set_trace()
 			###############################################################################
 			# create email notif ke user PMB
@@ -511,10 +557,6 @@ class Partner(http.Controller):
 		hubungans = [('umum','Umum'),('ortu','Orang Tua Alumni ISTN'),('cikini','Lulusan SLTA Perguruan Cikini'),('karyawan','Karyawan Tetap (Masih Aktif) ISTN')]
 		type_pembayarans = [('1','Tunai'),('6','6 x Angsuran')]
 		
-		Invoice = http.request.env['account.invoice']
-		invoice = Invoice.search([('origin','ilike','pendaftaran'),('partner_id','=',partner.id)])
-
-
 		page = ''
 		if partner.status_mahasiswa == 'Mahasiswa':
 			page = 'vit_universities_web.mahasiswa_view'
