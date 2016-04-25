@@ -52,7 +52,7 @@ class account_voucher(osv.osv):
 				template_id = False
 				template_pool = self.pool.get('email.template')
 				if vc.partner_id.status_mahasiswa == 'calon' and vc.partner_id.invoice_id and not vc.partner_id.jalur_masuk :
-					template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Pendaftaran Mahasiswa Baru ISTN')])
+					template_id = template_pool.search(cr,uid,[('name','=ilike','[PMB ISTN] Bukti Booking Nomor Pendaftaran Mahasiswa Baru')])
 				
 				elif vc.partner_id.status_mahasiswa == 'calon' and vc.partner_id.invoice_bangunan_id and vc.partner_id.jalur_masuk :
 					template_id = template_pool.search(cr,uid,[('name','=ilike','Pembayaran Uang Pengembangan dan Uang Kuliah Mahasiswa Baru ISTN')])
