@@ -30,8 +30,10 @@
     <paraStyle name="P4" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
     <paraStyle name="P5" fontName="Helvetica" fontSize="4.0" leading="5" alignment="CENTER"/>
     <paraStyle name="P6" fontName="Helvetica" fontSize="4.0" leading="5" alignment="LEFT"/>
-    <paraStyle name="P7" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="4.0" leading="5" alignment="LEFT"/>
     <paraStyle name="P8" fontName="Helvetica" fontSize="5.0" leading="7" alignment="CENTER"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="4.0" leading="5" alignment="LEFT"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -56,9 +58,9 @@
         </td>
         <td>
           <para style="P8">[[ partner.user_id.company_id.name ]]</para>
-          <para style="P7">[[partner.user_id.company_id.street]][[partner.user_id.company_id.street2]]</para>
-          <para style="P7">Tlp.[[partner.user_id.company_id.phone]], Fax.[[partner.user_id.company_id.fax]]</para>
-          <para style="P7">Website: [[ partner.user_id.company_id.website ]], E-Mail: [[ partner.user_id.company_id.email ]]</para>
+          <para style="P10">[[partner.user_id.company_id.street]][[partner.user_id.company_id.street2]]</para>
+          <para style="P10">Tlp.[[partner.user_id.company_id.phone]], Fax.[[partner.user_id.company_id.fax]]</para>
+          <para style="P10">Website: [[ partner.user_id.company_id.website ]], E-Mail: [[ partner.user_id.company_id.email ]]</para>
         </td>
         <td>
           <para style="P1">
@@ -74,7 +76,7 @@
     <blockTable colWidths="37.0,51.0,76.0" style="Table2">
       <tr>
         <td>
-          <image width="35" height="40.0" >[[ partner.image or removeParentNode('image') ]]</image>
+          <para style="P2">[[partner.image]]</para>
         </td>
         <td>
           <para style="P3">NPM</para>

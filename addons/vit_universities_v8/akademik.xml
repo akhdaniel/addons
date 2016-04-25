@@ -534,7 +534,8 @@
                     <field name="jadwal_siang" invisible="1"/>   
                     <field name="jadwal_malam" invisible="1"/>
                     <field name="invoice_state" string="Pendaftaran"/>
-                    <field name="invoice_bangunan_state" string="Bangunan"/>                
+                    <field name="invoice_bangunan_state" string="Bangunan"/>  
+                    <field name="reg_online" string="Reg. Ulang"/>             
                 </tree>
             </field>
         </record>          
@@ -871,11 +872,15 @@
                 <form string="Ruangan" version="7.0">
                     <sheet>
                         <group colspan="2">
-                            <group colspan="2">
+                            <group>
                                 <field name="name"/>
                                 <field name="nama"/>
-                                <field name="kapasitas"/>
                             </group>
+                            <group>
+                                <field name="kapasitas"/>
+                                <field name="kapasitas_uts"/>
+                                <field name="kapasitas_uas"/>
+                            </group>                            
                         </group>  
                          <group>
                             <group string="Kelengkapan Ruangan">

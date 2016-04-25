@@ -47,12 +47,12 @@
                         <button name='cancel' string='(Batal)' class="oe_link oe_edit_only" attrs="{'invisible':[('status','!=','waiting')]}" type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>
                         <button name='approve' string='Approve' attrs="{'invisible':[('status','!=','waiting')]}" type='object' groups="vit_universities_v8.group_univ_staff_dekan"/>
                         <button name='refuse' string='Refuse' attrs="{'invisible':[('status','!=','waiting')]}" type='object' groups="vit_universities_v8.group_univ_staff_dekan"/> 
-                        <button name='set_draft' string='Set to Draft' attrs="{'invisible':[('status','!=','cancel')]}" type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>   
-                        <button name='done' string='Active' attrs="{'invisible':[('status','!=','confirm')]}" type='object' groups="vit_universities_v8.group_univ_staff_dekan"/>                        
+                        <button name='set_draft' string='Set to Draft' attrs="{'invisible':[('status','!=','cancel')]}" type='object' groups="vit_universities_v8.group_univ_ka_prodi"/>                           
                         <field name="status" widget="statusbar" nolabel="1"/>
                     </header>                     
                 	<sheet>
                 		<group>
+                            <!-- <button name='cron_notif_email_konversi' type="object" string='Test'/> -->
                             <field name="name" attrs="{'readonly':[('status','!=','draft')]}"/>
 		                    <field name="partner_id" domain="[('status_mahasiswa','=','calon')]" on_change="onchange_partner(tahun_ajaran_id, fakultas_id, prodi_id,partner_id)" attrs="{'readonly':[('status','!=','draft')]}"/> 
 		                    <field name="semester_id" attrs="{'readonly':[('status','!=','draft')]}"/>
@@ -72,11 +72,14 @@
                          <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..."/>
                         <group>    
                             <group>  
-                                <field name="date" />                                   
+                                <field name="user_id"/>                                   
                                 <field name="krs_done" />                                   
                             </group>
                             <group> 
-                                <field name="user_id"/>                                                          
+                                <field name="date" /> 
+                                <field name="create_date" attrs="{'invisible':[('create_date','=',False)]}"/>
+                                <field name="confirm_date" attrs="{'invisible':[('confirm_date','=',False)]}"/>
+                                <field name="approve_date" attrs="{'invisible':[('approve_date','=',False)]}"/>
                             </group>
                         </group>    
 
@@ -135,7 +138,6 @@
                         <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
                         <!-- <filter icon="terp-project" string="Jurusan" help="By Jurusan" context="{'group_by':'jurusan_id'}"/> -->
                         <filter icon="terp-project" string="Program Studi" help="By Prodi" context="{'group_by':'prodi_id'}"/>
-                        <filter icon="terp-project" string="Tanggal Aktif" help="By Tanggal Aktif" context="{'group_by':'date'}"/>
                         <filter icon="terp-project" string="KRS Done" help="By Automatic Done" context="{'group_by':'krs_done'}"/>
                         <filter icon="terp-project" string="Status" name="state" help="By Status" context="{'group_by':'status'}"/>
                     </group>

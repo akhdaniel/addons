@@ -220,6 +220,8 @@ class master_ruangan (osv.Model):
 		'name' :fields.char('Kode Ruangan', size=26,required = True),
 		'nama' :fields.char('Nama Ruangan', size=128),
 		'kapasitas':fields.integer('Kapasitas Ruangan'),
+		'kapasitas_uts':fields.integer('Kapasitas UTS'),
+		'kapasitas_uas':fields.integer('Kapasitas UAS'),
 		'gedung':fields.char('Gedung',size=50),
 		'alamat':fields.char('Alamat',size=128),
 		'ac':fields.boolean('Pendingin Ruangan'),

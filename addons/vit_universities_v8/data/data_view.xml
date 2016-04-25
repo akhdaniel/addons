@@ -310,7 +310,7 @@
         <field name="user_signature" eval="0"/>
         <field name="body_html"><![CDATA[<p>Terima kasih ${object.partner_id.name},</p>
         <p>Pembayaran Pendaftaran Mahasiswa Baru ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
-        <br/>Silahkan klik link http://113.20.30.74:8069/tpa untuk melakukan Test Potensi Akademik (TPA) Online !</p>
+        <br/>Silahkan klik link http://istn.ac.id:8069/tpa untuk melakukan Test Potensi Akademik (TPA) Online !</p>
         <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
 		</field>
     </record>
@@ -325,12 +325,12 @@
         <field name="lang">${object.partner_id and object.partner_id.lang or ''}</field>
         <field name="model_id" ref="account_voucher.model_account_voucher"/>
         <field name="user_signature" eval="0"/>
-        <field name="body_html"><![CDATA[<p>Terima kasih ${object.partner_id.name },</p>
-        <p>Pembayaran Uang Pengembangan(UP) dan Uang Kuliah(UK) Mahasiswa Baru ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
-        <br/>Silahkan cek di portal mahasiswa untuk melihat detail tagihan dan pembayarannya !</p>
-        <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
+        <field name="body_html"><![CDATA[<p><p>Terima kasih ${object.partner_id.name },</p>
+        <p>Pembayaran Uang Pengembangan(UP) dan Uang Kuliah(UK) Mahasiswa Baru ISTN sebesar Rp. ${'%d'%object.amount} telah diterima. Silahkan cek di portal mahasiswa untuk melihat detail tagihan dan pembayarannya !</p><p><span style="font-weight: bold;"></span></p><span style="font-weight: bold;"><h2>Selamat !!!...</h2></span> Anda telah menjadi mahasiswa ISTN dengan NIM ${object.partner_id.npm }<p><a></a></p>
+        <p>Terima Kasih,<br>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
 		</field>
     </record>
+
 
 <!-- email template pembayaran UK-->
     <record id="notif_email_pembayaran_uk" model="email.template">
@@ -405,6 +405,20 @@
             <field name="doall" eval="True"/>
             <field name="model" eval="'res.partner'"/>
             <field name="function" eval="'cron_reminder_tagihan_pendaftaran'"/>
+            <field name="args" eval="'()'" />
+        </record>
+
+<!-- Cron notif email konversi-->
+        <record model="ir.cron" id="dokumen_konversi_cron">
+            <field name="name">Konversi Mahasiswa Baru</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="active" eval="True"/>
+            <field name="doall" eval="True"/>
+            <field name="model" eval="'akademik.konversi'"/>
+            <field name="function" eval="'cron_notif_email_konversi'"/>
             <field name="args" eval="'()'" />
         </record>
 

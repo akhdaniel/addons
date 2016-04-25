@@ -2,12 +2,53 @@ from openerp.osv import fields, osv
 import time
 from dateutil.relativedelta import relativedelta
 import openerp
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 
 class konversi(osv.Model):
 	_name = 'akademik.konversi'
+
+	# fungsi notifikasi konversi
+	def convertion_notification(self, cr, uid, ids, user_id):
+		#import pdb;pdb.set_trace()
+		for conv in self.browse(cr,uid,ids) :
+			state = conv.state
+			if state == 'waiting' :
+				state = 'waiting approval'
+			body_html = 'Hallo '+str(user_id.name)+', Dokumen konversi dengan kode '+ str(conv.name)+' ( '+str(conv.partner_id.name)+' ) '+'masih berstatus '+str(state)+', silahkan untuk ditindaklanjuti !'			
+			# create notifikasi ke email
+			mail 		= self.pool.get('mail.mail')
+			notif_mail 	= mail.create(cr,uid,{'subject' 		: 'Konversi Mahasiswa Baru ISTN',
+												'email_from'	: user_id.company_id.email,
+												'email_to' 		: user_id.partner_id.email,
+												#'email_cc'		: 
+												'recipient_ids' : [(6, 0, [conv.partner_id.id])],
+												'notification' 	: True,
+												'body_html'		: body_html,
+												})	
+		return notif_mail	
+
+	# fungsi notifikasi konversi
+	def convertion_notification_with_cc(self, cr, uid, ids, user_id, cc):
+		#import pdb;pdb.set_trace()
+		for conv in self.browse(cr,uid,ids) :
+			state = conv.state
+			if state == 'waiting' :
+				state = 'waiting approval'
+			body_html = 'Hallo '+str(user_id.name)+', Dokumen konversi dengan kode '+ str(conv.name)+' ( '+str(conv.partner_id.name)+' ) '+'masih berstatus '+str(state)+', silahkan untuk ditindaklanjuti !'			
+			# create notifikasi ke email
+			mail 		= self.pool.get('mail.mail')
+			notif_mail 	= mail.create(cr,uid,{'subject' 		: 'Konversi Mahasiswa Baru ISTN',
+												'email_from'	: user_id.company_id.email,
+												'email_to' 		: user_id.partner_id.email,
+												'email_cc'		: cc,
+												'recipient_ids' : [(6, 0, [conv.partner_id.id])],
+												'notification' 	: True,
+												'body_html'		: body_html,
+												})	
+		return notif_mail
+
 
 	_columns = {
 		'name' 				: fields.char('Kode Konversi',size=36,required = True,readonly=True, ),
@@ -22,7 +63,7 @@ class konversi(osv.Model):
 		'fakultas_id'		: fields.many2one('master.fakultas','Fakultas',required=True, ),
 		'prodi_id'			: fields.many2one('master.prodi','Program Studi', required=True,),
 		'tahun_ajaran_id'	: fields.many2one('academic.year','Angkatan', required=True, ),
-		'status'			: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status',),
+		'status'			: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('cancel','Canceled'),('refuse','Refused'),('confirm','Confirmed')],'Status',),
 		# tambah field status karena field state error
 		# File "/opt/openerp/odoo-8.0/openerp/fields.py", line 1388, in convert_to_cache
 		# raise ValueError("Wrong value for %s: %r" % (self, value))
@@ -31,10 +72,14 @@ class konversi(osv.Model):
 		'state'				: fields.selection([('draft','Draft'),('waiting','Waiting Approval'),('confirm','Confirmed'),('cancel','Canceled'),('refuse','Refused'),('done','Done')],'Status',),
 		'notes' 			: fields.text('Alasan',required=True, ),
 		'user_id'			: fields.many2one('res.users', 'User',readonly=True),
-		'date'				: fields.date('Tanggal Registrasi',readonly=True,),
+		'date'				: fields.datetime('Tanggal Registrasi',readonly=True,),
+		'create_date'		: fields.datetime('Tanggal Permohonan',readonly=True,),
+		'confirm_date'		: fields.datetime('Tanggal Confirm',readonly=True,),
+		'approve_date'		: fields.datetime('Tanggal Approve',readonly=True,),
+		'done_date'			: fields.datetime('Tanggal Aktivasi Mahasiswa',readonly=True,),
 		'krs_done'			: fields.boolean('KRS Done',readonly=True,),
 
-		'matakuliah_ids' 		: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ,),
+		'matakuliah_ids' 	: fields.one2many('akademik.konversi.mk','konversi_id','Mata Kuliah', ondelete="cascade" ,),
 
 		'total_mk_asal'		: fields.integer('Total Matakuliah Asal',),
 		'total_mk_tujuan'	: fields.integer('Total Matakuliah Tujuan',),
@@ -145,7 +190,9 @@ class konversi(osv.Model):
 											'prodi_id':prodi,
 											'semester_id':smt,
 											'matakuliah_id':mk_tujuan},context=context)
-			self.write(cr,uid,ct.id,{'status':'waiting'},context=context)
+			self.write(cr,uid,ct.id,{'status'		: 'waiting',
+									'confirm_date'	: time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+									},context=context)
 			partner_id = partner_obj.search(cr,uid,[('id','=',ct.partner_id.id)])
 			if partner_id:
 				partner_obj.write(cr,uid,partner_id[0],{'asal_sks_diakui':ct.total_sks_tujuan})
@@ -162,8 +209,15 @@ class konversi(osv.Model):
 			t_id = ct.tahun_ajaran_id.date_start
 			t_tuple =  tuple(t_id)
 			t_id_final = t_tuple[2]+t_tuple[3]#ambil 2 digit paling belakang dari tahun saja	
+			f_id = partner.fakultas_id.kode	
+			p_id = partner.prodi_id.kode
+			lokasi = partner.alamat_id.kode
+			t_pend = partner.type_pendaftaran
+			if t_pend == 'ganjil' :
+				pend = '1'
+			else:
+				pend = '2'
 
-			p_id = ct.prodi_id.kode
 			if p_id.find(".") != -1:
 				j = p_id.split(".")
 				p_id = j[1]	
@@ -186,7 +240,7 @@ class konversi(osv.Model):
 				se = "%03d" % (hasil[0] + 1)
 			else:
 				se = "001"	
-			npm = t_id_final + p_id + jp_id + se
+			npm = t_id_final +pend+ f_id+p_id +lokasi+ jp_id + se
 
 			#create data calon yang lulus tersebut ke tabel res.partner.calon.mhs agar ada history terpisah
 			calon_obj.create(cr,uid,{'reg'				:ct.partner_id.reg,
@@ -207,7 +261,7 @@ class konversi(osv.Model):
 									'tgl_daftar'		:ct.partner_id.tgl_daftar or False,
 									'nilai_beasiswa'	:ct.partner_id.nilai_beasiswa or False,
 									'is_beasiswa' 		:False,
-									'state'				:'Lulus',
+									'state'				:'lulus',
 									'date_move'			:time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
 									'user_id'			:uid},									
 									context=context)
@@ -304,7 +358,9 @@ class konversi(osv.Model):
 									'kurikulum_id'		: kur_ids[0],
 									'krs_detail_ids'	: krs_ids,
 									},context=context)	
-			self.write(cr,uid,ct.id,{'status':'confirm','krs_done':True},context=context)
+			self.write(cr,uid,ct.id,{'status'		:'confirm',
+									'krs_done'		: True,
+									'approve_date' 	: time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),},context=context)
 		return True	
 
 	def cancel(self,cr,uid,ids,context=None):
@@ -322,13 +378,6 @@ class konversi(osv.Model):
 			self.write(cr,uid,ct.id,{'status':'refuse'},context=context)
 		return True	
 
-	def done(self,cr,uid,ids,context=None):
-		for ct in self.browse(cr,uid,ids):
-			mhs_id = ct.partner_id.id
-			self.pool.get('res.partner').write(cr,uid,mhs_id,{'status_mahasiswa':'Mahasiswa','active':True},context=context)
-			self.write(cr,uid,ct.id,{'status':'done'},context=context)
-		return True	
-
 	def unlink(self, cr, uid, ids, context=None):
 		if context is None:
 			context = {}
@@ -337,6 +386,91 @@ class konversi(osv.Model):
 			if rec.status != 'draft':
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
 		return super(konversi, self).unlink(cr, uid, ids, context=context)
+
+
+	####################################################################################################
+	# Cron Job untuk kirim notif email ke group
+	####################################################################################################
+	def cron_notif_email_konversi(self, cr, uid, ids=None,context=None):
+		#import pdb;pdb.set_trace()
+		groups_obj = self.pool.get('res.groups')
+
+		now = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+		now_check = datetime.strptime(now,'%Y-%m-%d %H:%M:%S')
+		hari_2 = now_check - timedelta(hours=48)
+		hari_3 = now_check - timedelta(hours=72)
+		hari_4 = now_check - timedelta(hours=96)
+
+		users_prodi  	= groups_obj.search(cr,uid,[('name','ilike','Staff Prodi')], context=context)
+		users_dekan  	= groups_obj.search(cr,uid,[('name','ilike','Staff Dekan')], context=context)
+		users_kabaak  	= groups_obj.search(cr,uid,[('name','ilike','Kepala BAAK')], context=context)
+		users_dirbaak  	= groups_obj.search(cr,uid,[('name','ilike','Direktur BAAK')], context=context)
+		users_rektor  	= groups_obj.search(cr,uid,[('name','ilike','Rektor')], context=context)
+
+		conv_draft_exist4 = self.search(cr,uid,[('create_date','<=',str(hari_4)),('state','=','draft')])
+		if conv_draft_exist4 :	
+			for conv in conv_draft_exist4 :
+				if users_dirbaak :
+					users_ids = groups_obj.browse(cr,uid,users_dirbaak[0])
+					if users_ids.users :
+						for usr in users_ids.users :
+							cc = False
+							if users_rektor :
+								cc = groups_obj.browse(cr,uid,users_rektor[0]).partner_id.email
+							self.convertion_notification_with_cc(cr, uid, [conv], usr, cc)
+
+		conv_draft_exist3 = self.search(cr,uid,[('create_date','>',str(hari_4)),('create_date','<=',str(hari_3)),('state','=','draft')])
+		if conv_draft_exist3 :	
+			for conv in conv_draft_exist3 :
+				if users_dekan :
+					users_ids = groups_obj.browse(cr,uid,users_dekan[0])
+					if users_ids.users :
+						for usr in users_ids.users :
+							if usr.fakultas_id.id == self.browse(cr,uid,conv).fakultas_id.id :
+								self.convertion_notification_with_cc(cr, uid, [conv], usr, usr.partner_id.email)
+
+		conv_draft_exist2 = self.search(cr,uid,[('create_date','>',str(hari_3)),('state','=','draft')])
+		if conv_draft_exist2 :	
+			for conv in conv_draft_exist2 :
+				if users_dekan :
+					users_ids = groups_obj.browse(cr,uid,users_prodi[0])
+					if users_ids.users :
+						for usr in users_ids.users :
+							self.convertion_notification(cr, uid, [conv], usr)
+
+		conv_waiting_exist4 = self.search(cr,uid,[('create_date','<=',str(hari_4)),('state','=','draft')])
+		if conv_waiting_exist4 :	
+			for conv in conv_waiting_exist4 :
+				if users_dirbaak :
+					users_ids = groups_obj.browse(cr,uid,users_dirbaak[0])
+					if users_ids.users :
+						for usr in users_ids.users :
+							cc = False
+							if users_rektor :
+								cc = groups_obj.browse(cr,uid,users_rektor[0]).partner_id.email
+							self.convertion_notification_with_cc(cr, uid, [conv], usr, cc)
+
+		conv_waiting_exist3 = self.search(cr,uid,[('create_date','>',str(hari_4)),('create_date','<=',str(hari_3)),('state','=','draft')])
+		if conv_waiting_exist3 :	
+			for conv in conv_waiting_exist3 :
+				if users_dekan :
+					users_ids = groups_obj.browse(cr,uid,users_dekan[0])
+					if users_ids.users :
+						for usr in users_ids.users :
+							if usr.fakultas_id.id == self.browse(cr,uid,conv).fakultas_id.id :
+								self.convertion_notification_with_cc(cr, uid, [conv], usr, usr.partner_id.email)
+
+		conv_waiting_exist2 = self.search(cr,uid,[('create_date','>',str(hari_3)),('state','=','draft')])
+		if conv_waiting_exist2 :	
+			for conv in conv_waiting_exist2 :
+				if users_dekan :
+					users_ids = groups_obj.browse(cr,uid,users_prodi[0])
+					if users_ids.users :
+						for usr in users_ids.users :
+							self.convertion_notification(cr, uid, [conv], usr)
+
+		return True
+
 			
 konversi()
 
