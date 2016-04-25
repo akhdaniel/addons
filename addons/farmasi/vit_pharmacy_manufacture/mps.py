@@ -63,9 +63,9 @@ class mps(osv.osv):
 			domain=[('sediaan_id','=','Solid')],
             states={'draft':[('readonly',False)]} ),
 
-		'mps_detail_ids8':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Non Solid',
+		'mps_detail_ids8':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Semi Solid',
 			readonly=True,
-			domain=[('sediaan_id','=','Semisolid')],
+			domain=[('sediaan_id','=','Semi Solid')],
             states={'draft':[('readonly',False)]} ),
 		
 		'forecast_id': fields.many2one('vit_pharmacy_manufacture.forecast_product', 'Forecast',

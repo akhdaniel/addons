@@ -7,12 +7,12 @@
             <field name="model">vit_pharmacy_manufacture.mps</field>
             <field name="inherit_id" ref="vit_pharmacy_manufacture.view_mps_form"/>
             <field name="arch" type="xml">
-                <page string="Solid" position="attributes">
+                <notebook string="Solid" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
-                <page string="Non Solid" position="attributes">
+                </notebook>
+                <notebook string="Semi Solid" position="attributes">
                     <attribute name='invisible'>1</attribute> 
-                </page>
+                </notebook>
             </field>
         </record>
     </data>
