@@ -1,7 +1,7 @@
 openerp.web_printscreen_zb = function(instance, m) {
     
-    var _t = instance.web._t,
-    QWeb = instance.web.qweb;
+    var _t = instance.web._t;
+    var QWeb = instance.web.qweb;
     
     instance.web.ListView.include({
         load_list: function () {
@@ -44,7 +44,7 @@ openerp.web_printscreen_zb = function(instance, m) {
 	                group_th_eles = $data_ele.find('th')
 	                $.each(group_th_eles,function(){
 	                    $group_th_ele = $(this)
-	                    text = $group_th_ele.text()
+	                    text = $group_th_ele.text().trim() || ""
 	                    is_analysis = true
 	                    data.push({'data': text, 'bold': true})
 	                });
