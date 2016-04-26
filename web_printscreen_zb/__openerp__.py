@@ -23,7 +23,7 @@
 
 {
     'name': 'Web Printscreen ZB',
-    'version': '1.5',
+    'version': '1.0',
     'category': 'Web',
     'description': """
         Module to export current active tree view in to excel report
@@ -31,7 +31,7 @@
     'author': 'Zesty Beanz Technologies',
     'website': 'http://www.zbeanztech.com',
     'depends': ['web'],
-    'js': ['static/src/js/web_printscreen_export.js'],
+    'data': ['views/web_printscreen_zb.xml'],
     'qweb': ['static/src/xml/web_printscreen_export.xml'],
     'installable': True,
     'auto_install': False,
