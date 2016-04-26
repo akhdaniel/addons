@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="kartu_alumni" 
+        string="Kartu Alumni" 
+        model="res.partner" 
+        name="res_partner" 
+        rml="vit_kartu_alumni/report/kartu_alumni.rml" 
+        auto="False" 
+        header="False"/>          
+    </data> 
+</openerp>

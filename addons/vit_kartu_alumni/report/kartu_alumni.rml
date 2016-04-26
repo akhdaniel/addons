@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(170.0,114.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="3.0" y1="5.0" width="164" height="104"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="4.0" leading="5" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="5.0" leading="7" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="4.0" leading="5" alignment="RIGHT"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="4.0" leading="5" alignment="CENTER"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="4.0" leading="5" alignment="CENTER"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="4.0" leading="5" alignment="CENTER" textColor="#000000" spaceBefore="6.0"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_9" rightIndent="0.0" leftIndent="-3.0" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Header" fontName="Helvetica"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="13.0,139.0,12.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">
+          </para>
+          <para style="P3">
+          </para>
+          <para style="P4">
+          </para>
+          <para style="P4">
+            <font face="Helvetica"/>
+          </para>
+        </td>
+        <td>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">[[ repeatIn(objects,'partner') ]]KARTU TANDA ALUMNI</para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="12.0,44.0,90.0,18.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P5">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P5">
+            <font color="white"> </font>
+          </para>
+          <image width="35" height="40.0" >[[ partner.image or removeParentNode('image') ]]</image>
+        </td>
+        <td>
+          <para style="P8">
+            <font face="Helvetica"/>
+          </para>
+          <para style="P8">
+            <font face="Helvetica">[[partner.no_alumni]]</font>
+          </para>
+          <para style="P9">[[partner.name]]</para>
+          <para style="P9">[[partner.prodi_id.name]]</para>
+        </td>
+        <td>
+          <para style="P9">
+            <font face="Helvetica"/>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
