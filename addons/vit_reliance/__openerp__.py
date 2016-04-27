@@ -3,7 +3,6 @@
 	"version": "1.0", 
 	"depends": [
 		"base",
-		"board",
 		"stock",
 		"product",
 	], 
@@ -21,6 +20,7 @@ Manage
 """,
 	"data": [
 		"security/ir.model.access.csv",
+		"security/groups.xml",
 		"views/partner.xml", 
 		"views/campaign.xml", 
 		"views/product.xml", 
@@ -32,6 +32,13 @@ Manage
 		"views/import_refi.xml", 
 		"views/import_rmi.xml", 
 		"views/import_health.xml", 
+
+		"views/import_zip_ls.xml", 
+		"views/import_zip_ajri.xml", 
+		"views/import_zip_arg.xml", 
+		"views/import_zip_refi.xml", 
+		"views/import_zip_rmi.xml", 
+		"views/import_zip_health.xml", 
 
 		"data/sequence.xml",
 		"data/cron.xml",

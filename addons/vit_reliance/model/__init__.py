@@ -16,4 +16,11 @@ import import_health
 import import_refi
 import import_rmi
 
+import import_zip_ls
+import import_zip_ajri
+import import_zip_arg
+import import_zip_health
+import import_zip_refi
+import import_zip_rmi
+
 import res_country
