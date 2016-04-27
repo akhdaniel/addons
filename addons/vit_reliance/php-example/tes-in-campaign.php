@@ -10,7 +10,7 @@ var_dump($uid);
 
 $models = ripcord::client($url . '/xmlrpc/2/object');
 $method = 'in_campaign';
-$reliance_id = '1';
+$reliance_id = '100';
 $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array(
         $reliance_id
 ));
