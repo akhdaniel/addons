@@ -19,8 +19,8 @@ Manage
 
 """,
 	"data": [
-		"security/ir.model.access.csv",
 		"security/groups.xml",
+		"security/ir.model.access.csv",
 		"views/partner.xml", 
 		"views/campaign.xml", 
 		"views/product.xml", 
