@@ -135,7 +135,11 @@ class res_partner(osv.osv):
 		partner = self.browse(cr, uid, ids[0], context=context)
 		reliance_id = partner.reliance_id
 		campaigns = self.in_campaign(cr, uid, reliance_id, context=context)
-		raise osv.except_osv(_('campaign names:'), campaigns ) 
+		
+		names = []
+		for cam in campaigns:
+			names.append(cam.name)
+		raise osv.except_osv(_('campaign names:'), names ) 
 
 
 	#############################################################
