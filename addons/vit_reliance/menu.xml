@@ -12,13 +12,13 @@
 		</record>
 
 
-		<!-- campaign list -->
+		<!-- ir_filters list -->
 
 		<record id="action_campaign_list" model="ir.actions.act_window">
-			<field name="name">Campaign</field>
-			<field name="res_model">reliance.campaign</field>
+			<field name="name">Campaigns</field>
+			<field name="res_model">ir.filters</field>
 			<field name="view_mode">tree,form</field>
-			<!-- <field name="search_view_id" ref="view_campaign_filter_reliance"/> -->
+            <field name="context">{'search_default_model_id': 'res.partner'}</field>
 		</record>
 
 
