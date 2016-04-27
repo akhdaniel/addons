@@ -12,6 +12,7 @@ class res_partner(osv.osv):
 	_name 		= "res.partner"
 	_columns 	= {
 		'reliance_id' 							: fields.char('Reliance ID', select=1),
+        'city'									: fields.char('City', select=1),
 
 		'nomor_nasabah' 						: fields.char('Nomor Nasabah', select=1),
 		'agent_id' 								: fields.char('Agent', select=1),
@@ -130,9 +131,57 @@ class res_partner(osv.osv):
 	# search partner_id apakah berada dalam salah satu campaing
 	# if yes: return the campaign records (array)
 	#############################################################
+	def button_in_campaign(self, cr, uid, ids, context=None):
+		partner = self.browse(cr, uid, ids[0], context=context)
+		reliance_id = partner.reliance_id
+		campaigns = self.in_campaign(cr, uid, reliance_id, context=context)
+		raise osv.except_osv(_('campaign names:'), campaigns ) 
+
+
+	#############################################################
+	# cek in_campaign by reliance_id
+	#############################################################
 	def in_campaign(self, cr, uid, reliance_id, context=None):
+
+		if not reliance_id:
+			raise osv.except_osv(_('error'),_("Please specify Reliance ID") ) 
+
+		##### cek partner.id 
+		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+		if not pid:
+			raise osv.except_osv(_('Error'),_("No Partner with Reliance ID=%s")  % reliance_id ) 
+
+		campaigns =  self.in_campaign_by_id(cr, uid, pid[0], context=context)
+
+		return campaigns
+
+	#############################################################
+	# cek in_campaign by id 
+	#############################################################
+	def in_campaign_by_id(self, cr, uid, pid, context=None):
+
 		campaigns = []
-		reliance_id = '10'
+
+
+		##### cari filters utk model res.partner
+		ir_filter = self.pool.get('ir.filters')
+		ir_filter_ids = ir_filter.search(cr, uid, [('model_id','=','res.partner')], context=context)
+
+		##### cek apakah pid berada di salah satu filter  
+
+		for filter_id in ir_filter.browse(cr, uid, ir_filter_ids, context=context):
+			if filter_id.domain != '[]':
+				criteria = eval(filter_id.domain)
+				criteria[:0] = ['&',('id','=',pid)]
+				pids = self.search(cr, uid, criteria, context=context)
+				if pids:
+					campaigns.append(filter_id.name)
+
+		return campaigns
+
+
+	def in_campaign_old(self, cr, uid, reliance_id, context=None):
+		campaigns = []
 
 		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 		if not pid:

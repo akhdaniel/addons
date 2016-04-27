@@ -105,10 +105,18 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//div[@name='buttons']" position="inside">
+	                <button class="oe_inline oe_stat_button" 
+	                	string="In Campaign?" type="object" name="button_in_campaign"
+	                    icon="fa-star"/> 
+                </xpath>  
+
             	<field name="website" position="after">
 					<field name='reliance_id' 		 />
 					<!-- <field name='nomor_nasabah' 	 />
-					<field name='agent_id' 			 />  -->           		
+					<field name='agent_id' 			 />  -->     
+      		
             	</field>
 
             	<page string="Sales &amp; Purchases" position="attributes">
