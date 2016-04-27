@@ -175,7 +175,7 @@ class res_partner(osv.osv):
 				criteria[:0] = ['&',('id','=',pid)]
 				pids = self.search(cr, uid, criteria, context=context)
 				if pids:
-					campaigns.append(filter_id.name)
+					campaigns.append({'id':filter_id.id,'name' : filter_id.name} )
 
 		return campaigns
 
