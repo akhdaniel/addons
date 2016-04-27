@@ -1,0 +1,89 @@
+<openerp>
+	<data>
+
+		<record id="action_import_zip_ajri_list" model="ir.actions.act_window">
+			<field name="name">ZIP AJRI</field>
+			<field name="res_model">reliance.import_zip_ajri</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		
+		<!-- import ZIP ajri menu -->
+		<menuitem id="rcm_import_zip_ajri"
+		 action="action_import_zip_ajri_list"
+		 name="Import ZIP AJRI"
+		 sequence="20"
+		 groups="group_uploader_ajri"
+		 parent="rcm_import_zip"/>
+
+		<!-- AJRI -->
+
+		<!-- tree import_zip_ajri reliance -->
+		<record id="view_import_zip_ajri_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_zip_ajri_tree</field>
+		    <field name="model">reliance.import_zip_ajri</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_zip_ajri" colors="grey:is_imported==True; blue:is_imported==Faajrie">
+					<field name='date_import' />			
+					<field name='date_processed' />		
+					<field name='ajri_customer_file' />	
+					<field name='is_imported' /> 			
+					<field name="notes" />										
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_zip_ajri reliance -->
+		<record id="view_import_zip_ajri_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_zip.filter.reliance</field>
+		    <field name="model">reliance.import_zip_ajri</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import ZIP">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',Faajrie)]"/>
+		            
+		            <separator/>
+
+					<!-- <field name="client_id"				 /> -->
+					<field name='date_import' />			
+					<field name='date_processed' />		
+					<field name='ajri_customer_file' />	
+
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		               
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_zip_ajri reliance -->
+        <record id="view_import_zip_ajri_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_zip_ajri_form</field>
+            <field name="model">reliance.import_zip_ajri</field>
+            <field name="arch" type="xml">
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+	            		<field name='date_import' />			
+						<field name='date_processed' />		
+						<field name='ajri_customer_file' />	
+						<field name='is_imported' /> 			
+						<field name="notes" />	
+		            </group>
+	            </form>
+            </field>
+        </record>
+
+	</data>
+</openerp>

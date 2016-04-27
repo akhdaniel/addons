@@ -1,0 +1,79 @@
+<openerp>
+	<data>
+
+		<record id="action_import_zip_health_list" model="ir.actions.act_window">
+			<field name="name">ZIP Health</field>
+			<field name="res_model">reliance.import_zip_health</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- import ZIP health menu -->
+		<menuitem id="rcm_import_zip_health"
+		 action="action_import_zip_health_list"
+		 name="Import ZIP Health"
+		 sequence="40"
+		 parent="rcm_import_zip"/>
+
+
+		<!-- tree import_zip_health reliance -->
+		<record id="view_import_zip_health_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_zip_health_tree</field>
+		    <field name="model">reliance.import_zip_health</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_zip_health" colors="grey:is_imported==True; blue:is_imported==Fahealthe">
+					
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_zip_health reliance -->
+		<record id="view_import_zip_health_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_zip.filter.reliance</field>
+		    <field name="model">reliance.import_zip_health</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import ZIP">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',Fahealthe)]"/>
+		            
+		            <separator/>
+
+					<!-- <field name="client_id"				 /> -->
+					
+
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_zip_health reliance -->
+        <record id="view_import_zip_health_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_zip_health_form</field>
+            <field name="model">reliance.import_zip_health</field>
+            <field name="arch" type="xml">
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+		            </group>
+	            </form>
+            </field>
+        </record>
+
+
+
+
+
+
+	</data>
+</openerp>

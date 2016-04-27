@@ -1,0 +1,83 @@
+<openerp>
+	<data>
+
+
+
+		<record id="action_import_zip_arg_list" model="ir.actions.act_window">
+			<field name="name">ZIP ARG</field>
+			<field name="res_model">reliance.import_zip_arg</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!-- import ZIP arg menu -->
+		<menuitem id="rcm_import_zip_arg"
+		 action="action_import_zip_arg_list"
+		 name="Import ZIP ARG"
+		 sequence="30"
+		 parent="rcm_import_zip"/>
+
+
+		<!-- tree import_zip_arg reliance -->
+		<record id="view_import_zip_arg_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_zip_arg_tree</field>
+		    <field name="model">reliance.import_zip_arg</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_zip_arg" colors="grey:is_imported==True; blue:is_imported==Faarge">
+					
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_zip_arg reliance -->
+		<record id="view_import_zip_arg_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_zip.filter.reliance</field>
+		    <field name="model">reliance.import_zip_arg</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import ZIP">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',Faarge)]"/>
+		            
+		            <separator/>
+
+					<!-- <field name="client_id"				 /> -->
+					
+
+		
+		            <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		              
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+
+		<!-- form import_zip_arg reliance -->
+        <record id="view_import_zip_arg_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_zip_arg_form</field>
+            <field name="model">reliance.import_zip_arg</field>
+            <field name="arch" type="xml">
+            	<form version="7">
+            		<header>
+            		</header>
+	            	<group>
+		            </group>
+	            </form>
+            </field>
+        </record>
+
+
+
+
+
+
+	</data>
+</openerp>

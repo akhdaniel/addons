@@ -10,7 +10,9 @@
 		</record>
 
 
-		<menuitem id="rcm_import_ajri" name="AJRI" sequence="20" parent="rcm_import"/>
+		<menuitem id="rcm_import_ajri" name="AJRI" sequence="20" 
+			groups="group_uploader_ajri"
+			parent="rcm_import"/>
 
 			<!-- import AJRI customer menu -->
 			<menuitem id="rcm_import_ajri_cust"
