@@ -138,7 +138,7 @@ class res_partner(osv.osv):
 		
 		names = []
 		for cam in campaigns:
-			names.append(cam.name)
+			names.append(cam['name'])
 		raise osv.except_osv(_('campaign names:'), names ) 
 
 
