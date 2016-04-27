@@ -45,3 +45,13 @@ $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array
 	$policy_no
 ));
 var_dump($res);
+
+
+echo "get_arg_polis\n\n";
+$models = ripcord::client($url . '/xmlrpc/2/object');
+$method = 'get_arg_polis';
+$policy_no= "JK-R02-00-2012-08-00001663-000";
+$res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method , array(
+	$policy_no
+));
+var_dump($res);
