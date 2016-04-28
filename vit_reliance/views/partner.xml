@@ -37,23 +37,27 @@
 		        <search string="Search Partner">
 				            
 		            <field name="name"/>
-					<field name='reliance_id' 		 />
+					<field name='reliance_id'/>
 					
-					<field name='ajri_nomor_partisipan'   />
-					<field name='ajri_nomor_polis' 		 />
+					<field name='ajri_nomor_partisipan'/>
+					<field name='ajri_nomor_polis'/>
+
+					<field name='health_nomor_polis'/>
+					<field name='health_member_id'/>					
+
+					<field name='ls_client_sid'/>
+					<field name='ls_client_id'/>
+
+					<field name='refi_no_debitur'/>
+					<field name='rmi_sid'/>
+
+					<field name='arg_cust_code'/>
 					
+					<field name='city'/>
+					<field name='state_id'/>
 
-					<field name='ls_client_sid' 			 />
-					<field name='ls_client_id' 				 />
-
-					<field name='refi_no_debitur' 				 />
-					<field name='rmi_sid' 		 />
-
-					<field name='arg_cust_code' 		 />
-
-					<!-- <field name='nomor_nasabah' 	 /> -->
-					<field name='agent_id' 			 />		  
-					<field name='parent_id' 		 />		  
+					<!-- <field name='agent_id'/>-->
+					<!-- <field name='parent_id'/>-->
 
 	                <filter string="LS" icon="terp-personal" 
 	                    domain="['|',('ls_client_sid','!=',False),('ls_client_id','!=',False)]" name="nasabah_ls"
@@ -466,7 +470,18 @@
 							<field name='health_expdt'/>
 							<field name='health_status' />
 							<field name='health_relationship'/>	
-						</group>					
+						</group>	
+
+						<separator string="Benefit and Limit" />
+
+            			<field name="health_limit_ids">
+	            			<tree string="Benefit Limit">
+								<field name="policyno" />
+								<field name="membid" />	
+								<field name="manfaat" />
+								<field name="limit" />		
+	            			</tree>
+	            		</field>										
 					</page>	            	
             	</notebook>
 

@@ -248,13 +248,40 @@ class import_health_limit(osv.osv):
 		ex = 0
 
 		partner = self.pool.get('res.partner')
+		partner_health_limit = self.pool.get('reliance.partner_health_limit')
 
 		for import_health_limit in self.browse(cr, uid, ids, context=context):
 
+			# cari member 
+			partner_id = partner.search(cr, uid, [
+				('is_company','=',False),
+				('health_member_id','=',import_health_limit.membid),
+				('health_nomor_polis','=',import_health_limit.policyno)], context=context)
+
+			if not partner_id:
+				ex= ex+1
+				self.write(cr, uid, import_health_limit.id, {'notes':'NO PARTNER'}, context=context)
+				cr.commit()
+				continue
+			else:
+				partner_id = partner_id[0]
+
+
+			# insert into partner_health_limit
+			data = {
+				"partner_id"	: partner_id,
+				"policyno"		: import_health_limit.policyno,
+				"membid"		: import_health_limit.membid,
+				"manfaat"		: import_health_limit.manfaat,
+				"limit"			: import_health_limit.limit,
+			}
+			partner_health_limit.create(cr, uid, data, context=context)
+
 			#commit per record
+			i = i + 1
 			cr.execute("update reliance_import_health_limit set is_imported='t' where id=%s" % import_health_limit.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s existing' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
 
 

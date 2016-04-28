@@ -20,9 +20,9 @@ class partner(osv.osv):
 		"health_product"		: fields.char("Health Product", select=1),
 		"health_effdt"			: fields.date("Health Eff. Date"),
 		"health_expdt"			: fields.date("Health Exp. Date"),
+
+		"health_limit_ids"		: fields.one2many('reliance.partner_health_limit','partner_id','Limit', ondelete="cascade"),
 	}
-
-
 
 	def get_health_all_member(self, cr, uid, nomor_polis, context=None):
 		members = False
@@ -55,3 +55,13 @@ class partner(osv.osv):
 			raise osv.except_osv(_('error'),'no partner with reliance_id=%s' % reliance_id) 
 		return holder
 
+
+class partner_health_limit(osv.osv):
+	_name 		= "reliance.partner_health_limit"
+	_columns = {
+		"partner_id"	: fields.many2one('res.partner', 'Partner'),
+		"policyno"		: fields.char("Policy No"),
+		"membid"		: fields.char("Member ID"),
+		"manfaat"		: fields.char("Manfaat"),
+		"limit"			: fields.float("Limit"),
+	}
