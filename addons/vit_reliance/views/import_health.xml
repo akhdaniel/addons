@@ -98,6 +98,14 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+
+		                <filter string="Policy No" icon="terp-personal" 
+		                    domain="[]" name="group_by_policyno"
+		                	 context="{'group_by':'policyno'}"/>
+		                	 
+		                <filter string="Member ID" icon="terp-personal" 
+		                    domain="[]" name="group_by_memberid"
+		                	 context="{'group_by':'memberid'}"/>
 		            </group>                                        
 
 		        </search>
@@ -300,6 +308,15 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+
+
+		                <filter string="Policy No" icon="terp-personal" 
+		                    domain="[]" name="group_by_policyno"
+		                	 context="{'group_by':'policyno'}"/>
+		                	 
+		                <filter string="Member ID" icon="terp-personal" 
+		                    domain="[]" name="group_by_membid"
+		                	 context="{'group_by':'membid'}"/>
 		            </group>                                        
 
 		        </search>
@@ -331,17 +348,17 @@
 
 	    <!-- context menu More.. di tree import_health_limit -->
 	    <record id="action_import_health_limit" model="ir.actions.server">
-	        <field name="name">Import to Partner Peserta</field>
+	        <field name="name">Import to Partner Limit</field>
 	        <field name="condition">True</field>
 	        <field name="model_id" ref="model_reliance_import_health_limit"/>
 	        <field name="state">code</field>
-	        <field name="code">action = pool.get('reliance.import_health_limit').action_import_partner(cr, uid, context)</field>
+	        <field name="code">action = pool.get('reliance.import_health_limit').action_import_limit(cr, uid, context)</field>
 	    </record>
 
 	    <record id="ir_import_health_limit" model="ir.values">
 	        <field eval="'client_action_multi'" name="key2"/>
 	        <field eval="'reliance.import_health_limit'" name="model"/>
-	        <field name="name">Import to Partner Partner</field>
+	        <field name="name">Import to Partner Limit</field>
 	        <field eval="'ir.actions.server,%d'%action_import_health_limit" name="value"/>
 	    </record>
 
