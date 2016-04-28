@@ -24,6 +24,9 @@ class partner(osv.osv):
 		"health_limit_ids"		: fields.one2many('reliance.partner_health_limit','partner_id','Limit', ondelete="cascade"),
 	}
 
+	#####################################################################
+	# mengambil data semua member suatu polis
+	#####################################################################
 	def get_health_all_member(self, cr, uid, nomor_polis, context=None):
 		members = False
 		pid = self.search(cr, uid, [('health_nomor_polis','=',nomor_polis)], context=context)
@@ -35,14 +38,23 @@ class partner(osv.osv):
 			_logger.error('no partner with health_nomor_polis=%s' % nomor_polis)
 		return members 
 
+	#####################################################################
+	# mengambil data member health  berdasarkan nomor RelianceID
+	#####################################################################
 	def get_health_member(self, cr, uid, reliance_id, context=None):
 		member = self.search_read(cr,uid,[('reliance_id','=',reliance_id)],context=context)
 		return member
 
+	#####################################################################
+	# mengambil data member health  berdasarkan nomor Member ID
+	#####################################################################
 	def get_health_member_by_member_id(self, cr, uid, member_id, context=None):
 		member = self.search_read(cr,uid,[('health_member_id','=',member_id)],context=context)
 		return member
 
+	#####################################################################
+	# mengambil data Polis Holder seorang member
+	#####################################################################
 	def get_health_holder(self, cr, uid, reliance_id, context=None):
 		holder = False
 		pid = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
@@ -55,6 +67,39 @@ class partner(osv.osv):
 			raise osv.except_osv(_('error'),'no partner with reliance_id=%s' % reliance_id) 
 		return holder
 
+	#####################################################################
+	# mengabmbil data benefit limit suatu member berdasarkan Reliance ID
+	#####################################################################
+	def get_health_limit(self, cr, uid, reliance_id, context=None):
+		pid = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+
+		if not pid:
+			raise osv.except_osv(_('error'), 'no partner with reliance_id=%s' % reliance_id ) 
+
+		limit = self.pool.get('reliance.partner_health_limit')
+
+		limits = limit.search_read(cr, uid, [('partner_id','=',pid[0])], context=context)
+
+		return limits 
+
+	#####################################################################
+	# mengabmbil data benefit limit suatu member berdasarkan 
+	# Policy Number dan Member ID
+	#####################################################################
+	def get_health_limit_by_member_id(self, cr, uid, policy_no, member_id, context=None):
+		pid = self.search_read(cr, uid, [
+			('health_nomor_polis','=',policy_no),
+			('health_member_id','=',member_id),
+			('is_company','=',False)
+			], context=context)
+
+		if not pid:
+			raise osv.except_osv(_('error'), 'no partner with member_id=%s and policyno=%s' % (member_id,policy_no) ) 
+
+		limit = self.pool.get('reliance.partner_health_limit')
+		limits = limit.search_read(cr, uid, [('partner_id','=',pid[0])], context=context)
+
+		return limits 
 
 class partner_health_limit(osv.osv):
 	_name 		= "reliance.partner_health_limit"
