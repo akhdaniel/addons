@@ -71,7 +71,7 @@ class partner(osv.osv):
 	# mengabmbil data benefit limit suatu member berdasarkan Reliance ID
 	#####################################################################
 	def get_health_limit(self, cr, uid, reliance_id, context=None):
-		pid = self.search_read(cr, uid, [('reliance_id','=',reliance_id)], context=context)
+		pid = self.search(cr, uid, [('reliance_id','=',reliance_id)], context=context)
 
 		if not pid:
 			raise osv.except_osv(_('error'), 'no partner with reliance_id=%s' % reliance_id ) 
@@ -87,7 +87,7 @@ class partner(osv.osv):
 	# Policy Number dan Member ID
 	#####################################################################
 	def get_health_limit_by_member_id(self, cr, uid, policy_no, member_id, context=None):
-		pid = self.search_read(cr, uid, [
+		pid = self.search(cr, uid, [
 			('health_nomor_polis','=',policy_no),
 			('health_member_id','=',member_id),
 			('is_company','=',False)
