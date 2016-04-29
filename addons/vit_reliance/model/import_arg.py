@@ -105,6 +105,12 @@ class import_arg(osv.osv):
 
 		for import_arg in self.browse(cr, uid, ids, context=context):
 
+			if not import_arg.policy_no:
+				ex = ex + 1
+				self.write(cr, uid, import_arg.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
 			cust_data = {}
 			country_id = False
 
@@ -210,7 +216,12 @@ class import_arg_polis_risk(osv.osv):
 		partner = self.pool.get('res.partner')
 
 		for import_arg in self.browse(cr, uid, ids, context=context):	
-
+			if not import_arg.policy_no:
+				ex = ex + 1
+				self.write(cr, uid, import_arg.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+				
 			#commit per record
 			i = 1 +1
 			cr.execute("update reliance_import_arg set is_imported='t' where id=%s" % import_arg.id)
