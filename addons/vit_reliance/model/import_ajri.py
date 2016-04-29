@@ -70,7 +70,12 @@ class import_ajri(osv.osv):
 
 		for import_ajri in self.browse(cr, uid, ids, context=context):
 
-
+			if not import_ajri.nomor_polis:
+				ex = ex + 1
+				self.write(cr, uid, import_ajri.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+				
 			if pemegang_old != import_ajri.nama_pemegang:
 
 				pemegang_data = {
