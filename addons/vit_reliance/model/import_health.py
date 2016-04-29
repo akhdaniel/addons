@@ -62,7 +62,7 @@ class import_health_polis(osv.osv):
 		for import_health_polis in self.browse(cr, uid, ids, context=context):
 
 			if not import_health_polis.policyno:
-				skip = skip + 1
+				ex = ex + 1
 				self.write(cr, uid, import_health_polis.id ,  {'notes':'empty line'}, context=context)
 				cr.commit()
 				continue
@@ -158,7 +158,7 @@ class import_health_peserta(osv.osv):
 
 		for import_health_peserta in self.browse(cr, uid, ids, context=context):
 			if not import_health_peserta.policyno:
-				skip = skip + 1
+				ex = ex + 1
 				self.write(cr, uid, import_health_peserta.id ,  {'notes':'empty line'}, context=context)
 				cr.commit()
 				continue
@@ -264,7 +264,7 @@ class import_health_limit(osv.osv):
 		for import_health_limit in self.browse(cr, uid, ids, context=context):
 			
 			if not import_health_limit.policyno:
-				skip = skip + 1
+				ex = ex + 1
 				self.write(cr, uid, import_health_limit.id ,  {'notes':'empty line'}, context=context)
 				cr.commit()
 				continue
