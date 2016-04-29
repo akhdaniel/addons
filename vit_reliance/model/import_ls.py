@@ -237,6 +237,13 @@ class import_ls_cash(osv.osv):
 		cash = self.pool.get('reliance.partner_cash')
 		
 		for import_cash in self.browse(cr, uid, ids, context=context):
+
+			if not import_cash.client_id:
+				skip = skip + 1
+				self.write(cr, uid, import_cash.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
 			########## cari partner dulu ####################
 			pid = partner.search(cr, uid, [( 'ls_client_id','=', import_cash.client_id)], context=context)
 			if pid:
@@ -263,7 +270,10 @@ class import_ls_cash(osv.osv):
 					_logger.warning('Update Partner Cash for ClientID=%s' % (import_cash.client_id))
 			else:
 				skip = skip + 1
+				self.write(cr, uid, import_cash.id ,  {'notes':'No Partner'}, context=context)
 				_logger.warning('Partner ID not found for ClientID=%s' % import_cash.client_id)
+				cr.commit()
+				continue
 
 			cr.execute("update reliance_import_ls_cash set is_imported='t' where id=%s" % import_cash.id)
 			cr.commit()
@@ -324,6 +334,13 @@ class import_ls_stock(osv.osv):
 		stock = self.pool.get('reliance.partner_stock')
 		
 		for import_stock in self.browse(cr, uid, ids, context=context):
+			
+			if not import_stock.client_id:
+				skip = skip + 1
+				self.write(cr, uid, import_stock.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
 			########## cari partner dulu ####################
 			pid = partner.search(cr, uid, [( 'ls_client_id','=', import_stock.client_id)], context=context)
 			if pid:
