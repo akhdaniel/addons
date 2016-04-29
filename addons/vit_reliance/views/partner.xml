@@ -278,7 +278,7 @@
             			<notebook string="LS">
 		            		<page string="LS Cash" >
 		            			<field name="partner_cash_ids">
-		            				<tree string="LS Cash">
+		            				<tree string="LS Cash"  editable="bottom">
 										<!-- <field name="client_id"		 /> -->
 										<field name="date"			 />
 										<field name="cash_on_hand"	 />
@@ -290,7 +290,7 @@
 
 		            		<page string="LS Stock" >
 		            			<field name="partner_stock_ids">
-		            				<tree string="LS Stock">
+		            				<tree string="LS Stock"  editable="bottom">
 										<field name="date"				 />
 										<!-- <field name="client_id"			 /> -->
 										<field name="stock_id"			 />
@@ -317,8 +317,10 @@
 							<field name='ajri_nomor_partisipan'  />
 						</group>
 
+						<separator string="Product"/>
+
             			<field name="partner_ajri_product_ids">
-	            			<tree string="AJRI">
+	            			<tree string="AJRI"  editable="bottom">
 								<field name='product_id'		 />
 								<field name='start_date'		 />
 								<field name='end_date'			 />
@@ -338,8 +340,10 @@
 							<field name="arg_cust_code" />		
 						</group>
 
+						<separator string="Polis" />
+
 						<field name="partner_polis_ids">
-							<tree string="Polis">
+							<tree string="Polis"  editable="bottom">
 								<field name="arg_nomor_polis" />		
 								<field name="arg_class" />		
 								<field name="arg_subclass" />	
@@ -444,7 +448,7 @@
 
 						<separator string="Kontrak"/>
 						<field name="refi_kontrak_ids">
-							<tree string="Kontrak">
+							<tree string="Kontrak"  editable="bottom">
 								<field name="contract_number" />	
 								<!-- <field name="customer_no" />		 -->
 								<!-- <field name="customer_name" />		 -->
@@ -475,7 +479,7 @@
 						<separator string="Benefit and Limit" />
 
             			<field name="health_limit_ids">
-	            			<tree string="Benefit Limit">
+	            			<tree string="Benefit Limit" editable="bottom">
 								<field name="policyno" />
 								<field name="membid" />	
 								<field name="manfaat" />
