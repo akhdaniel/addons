@@ -10,36 +10,42 @@
         <field name="name">Uploader LS</field>
         <field name="category_id" ref="module_category_reliance"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="menu_access" eval="[(4, ref('vit_reliance.rcm'))]"/>
     </record>
 
     <record id="group_uploader_ajri" model="res.groups">
         <field name="name">Uploader AJRI</field>
         <field name="category_id" ref="module_category_reliance"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="menu_access" eval="[(4, ref('vit_reliance.rcm'))]"/>
     </record>
 
     <record id="group_uploader_arg" model="res.groups">
         <field name="name">Uploader ARG</field>
         <field name="category_id" ref="module_category_reliance"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="menu_access" eval="[(4, ref('vit_reliance.rcm'))]"/>
     </record>
 
     <record id="group_uploader_health" model="res.groups">
         <field name="name">Uploader Healt</field>
         <field name="category_id" ref="module_category_reliance"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="menu_access" eval="[(4, ref('vit_reliance.rcm'))]"/>
     </record>
 
     <record id="group_uploader_refi" model="res.groups">
         <field name="name">Uploader REFI</field>
         <field name="category_id" ref="module_category_reliance"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="menu_access" eval="[(4, ref('vit_reliance.rcm'))]"/>
     </record>
 
     <record id="group_uploader_rmi" model="res.groups">
         <field name="name">Uploader RMI</field>
         <field name="category_id" ref="module_category_reliance"/>
         <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="menu_access" eval="[(4, ref('vit_reliance.rcm'))]"/>
     </record>
             
 </data>
