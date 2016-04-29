@@ -137,12 +137,6 @@ class import_zip_ls(osv.osv):
 		header = header.sort()
 
 
-		for head in header:
-			for field in fieldNames:		
-
-
-
-
 
 	def process_cash(self, cr, uid,  zip_ls_cash, context=None):
 		return 
