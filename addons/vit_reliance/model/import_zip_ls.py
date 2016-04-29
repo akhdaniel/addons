@@ -65,20 +65,13 @@ class import_zip_ls(osv.osv):
 
 	def insert_ls_customer(self, cr, uid, csv_file, context=None):
 		import_ls = self.pool.get('reliance.import_ls')
-		model_id = self.pool.get('ir.model').search(cr, uid, [('name','=','reliance.import_ls')], context=context)
-		fields = self.pool.get('ir.model.fields').search_read(cr, uid, 
-			[('model_id','=',model_id[0])], fields=['display_name'], context=context)
-
-		fieldNames = [x['display_name'] for x in fields]
-		print "fieldNames",fieldNames
-
-		import pdb; pdb.set_trace()
 		with open( os.path.join(EXTRACT_DIR, csv_file) , 'rb') as csvfile:
 			spamreader = csv.reader(csvfile)
 			i = 0
 			for row in spamreader:
 				if i==0:
 					print "header",row 
+					data = self.map_fields(cr, uid, 'reliance.import_ls', row)
 					i = i+1
 					continue
 
@@ -131,6 +124,25 @@ class import_zip_ls(osv.osv):
 				import_ls.create(cr, uid, data, context=context)
 
 				i = i +1
+
+	def map_fields(self, cr, uid, model, header):
+		model_id = self.pool.get('ir.model').search(cr, uid, [('name','=',model)], context=context)
+		fields = self.pool.get('ir.model.fields').search_read(cr, uid, 
+			[('model_id','=',model_id[0])], fields=['display_name','name'], context=context)
+
+		fieldNames = [x['name'] for x in fields]
+
+		fieldNames = fieldNames.sort()
+		print "fieldNames",fieldNames
+		header = header.sort()
+
+
+		for head in header:
+			for field in fieldNames:		
+
+
+
+
 
 	def process_cash(self, cr, uid,  zip_ls_cash, context=None):
 		return 
