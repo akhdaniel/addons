@@ -112,7 +112,11 @@ class import_rmi(osv.osv):
 		country =  self.pool.get('res.country')
 
 		for import_rmi in self.browse(cr, uid, ids, context=context):
-
+			if not import_rmi.sid:
+				ex = ex + 1
+				self.write(cr, uid, import_rmi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
 			data = {}
 			for k in PARTNER_MAPPING.keys():
 				partner_fname = PARTNER_MAPPING[k]
@@ -238,6 +242,13 @@ class import_rmi_product_holding(osv.osv):
 		partner =  self.pool.get('res.partner')
 
 		for import_rmi in self.browse(cr, uid, ids, context=context):
+
+			if not import_rmi.sid:
+				ex = ex + 1
+				self.write(cr, uid, import_rmi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
 			pid = partner.search(cr, uid, [('rmi_sid','=', import_rmi.sid)], context=context)
 			if not pid:
 				ex=ex+1
