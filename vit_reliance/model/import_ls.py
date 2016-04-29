@@ -76,12 +76,9 @@ class import_ls(osv.osv):
 		"place_birth"			:		fields.char("PlaceBirth"),
 		"date_birth"			:		fields.char("DateBirth"),
 		"cr_address"			:		fields.char("CrAddress"),
-		
-		# "address"				:		fields.char("Address"),
 		"cr_city"				:		fields.char("CrCity"),
 		"cr_country"			:		fields.char("CrCountry"),
 		"cr_zip"				:		fields.char("CrZip"),
-
 		"id_card_type"			:		fields.char("IDCardType"),
 		"id_card"				:		fields.char("IDCard"),
 		"id_card_expire_date"	:		fields.char("IDCardExpireDate"),

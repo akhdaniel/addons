@@ -22,7 +22,14 @@
 		    <field name="model">reliance.import_zip_ls</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_zip_ls" colors="grey:is_imported==True; blue:is_imported==False">
-					
+					<field name='zip_ls_customer' />	
+					<field name='zip_ls_cash' />		
+					<field name='zip_ls_stock' />
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />			
+
 		        </tree>    
 		    </field>
 		</record>
@@ -41,10 +48,7 @@
 		                string="Not Imported" 
 		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
 		            
-		            <separator/>
-
-					<!-- <field name="client_id"				 /> -->
-					
+		            <separator/>					
 
 		
 		            <group expand="1" string="Group By...">
@@ -64,8 +68,18 @@
             <field name="arch" type="xml">
             	<form version="7">
             		<header>
+            			<button string="Process" name="button_process" type="object"/>
             		</header>
+
 	            	<group>
+						<field name='zip_ls_customer' />	
+						<field name='zip_ls_cash' />		
+						<field name='zip_ls_stock' />	
+
+						<field name='date_import' />	
+						<field name='date_processed' />
+						<field name='is_imported' /> 
+						<field name="notes" />	
 		            </group>
 	            </form>
             </field>
