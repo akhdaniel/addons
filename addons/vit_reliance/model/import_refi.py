@@ -130,6 +130,12 @@ class import_refi_partner(osv.osv):
 		country = self.pool.get('res.country')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
+			if not import_refi.no_debitur:
+				ex = ex + 1
+				self.write(cr, uid, import_refi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
 
 			data = {}
 			for k in PARTNER_MAPPING.keys():
@@ -236,6 +242,11 @@ class import_refi_pekerjaan(osv.osv):
 		country = self.pool.get('res.country')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
+			if not import_refi.no_debitur:
+				ex = ex + 1
+				self.write(cr, uid, import_refi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
 
 			data = {}
 			for k in PERUSAHAAN_MAPPING.keys():
@@ -328,6 +339,14 @@ class import_refi_keluarga(osv.osv):
 		country = self.pool.get('res.country')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
+
+			if not import_refi.no_debitur:
+				ex = ex + 1
+				self.write(cr, uid, import_refi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
+
 			pid = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
 			if not pid:
 				ex=ex+1
@@ -447,6 +466,11 @@ class import_refi_statement(osv.osv):
 		country = self.pool.get('res.country')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
+			if not import_refi.no_debitur:
+				ex = ex + 1
+				self.write(cr, uid, import_refi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
 
 			data = {}
 			for k in STATEMENT_MAPPING.keys():
@@ -516,6 +540,13 @@ class import_refi_kontrak(osv.osv):
 		country = self.pool.get('res.country')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
+
+			if not import_refi.contract_number:
+				ex = ex + 1
+				self.write(cr, uid, import_refi.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+				
 			data = {}
 			cust_id = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.customer_no)], context=context)
 			if not cust_id:
