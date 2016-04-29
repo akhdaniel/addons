@@ -61,6 +61,12 @@ class import_health_polis(osv.osv):
 
 		for import_health_polis in self.browse(cr, uid, ids, context=context):
 
+			if not import_health_polis.policyno:
+				skip = skip + 1
+				self.write(cr, uid, import_health_polis.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
+
 			data = {
 				'health_nomor_polis' 	: import_health_polis.policyno,
 				'health_product'		: import_health_polis.product,
@@ -151,6 +157,11 @@ class import_health_peserta(osv.osv):
 		indo = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 
 		for import_health_peserta in self.browse(cr, uid, ids, context=context):
+			if not import_health_peserta.policyno:
+				skip = skip + 1
+				self.write(cr, uid, import_health_peserta.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
 
 			polis_holder = partner.search(cr, uid, [
 				('health_nomor_polis','=', import_health_peserta.policyno),
@@ -251,6 +262,12 @@ class import_health_limit(osv.osv):
 		partner_health_limit = self.pool.get('reliance.partner_health_limit')
 
 		for import_health_limit in self.browse(cr, uid, ids, context=context):
+			
+			if not import_health_limit.policyno:
+				skip = skip + 1
+				self.write(cr, uid, import_health_limit.id ,  {'notes':'empty line'}, context=context)
+				cr.commit()
+				continue
 
 			# cari member 
 			partner_id = partner.search(cr, uid, [
