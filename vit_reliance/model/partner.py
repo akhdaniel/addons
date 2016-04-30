@@ -282,7 +282,7 @@ class res_partner(osv.osv):
 		# one2many: health_limit
 		############################################################
 		if p1['health_limit_ids']:
-			cr.execute('update reliance_health_limit set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+			cr.execute('update reliance_partner_health_limit set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
 		
 		############################################################
 		# REFI details
