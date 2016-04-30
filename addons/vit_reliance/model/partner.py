@@ -220,7 +220,6 @@ class res_partner(osv.osv):
 		#for partner fields:
 		#fill p2 empty fields from p1
 		############################################################
-		import pdb; pdb.set_trace()
 		for kol in self._columns.keys():
 
 			if isinstance(self._columns[kol], fields.one2many):
@@ -322,7 +321,11 @@ class res_partner(osv.osv):
 		#delete p1 
 		############################################################
 
-		return 
+
+		############################################################
+		# return p2 lengkap
+		############################################################
+		return self.search_read(cr, uid, partner_id2, context=context)
 
 
 class ahli_waris(osv.osv):
