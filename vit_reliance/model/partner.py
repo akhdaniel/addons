@@ -274,9 +274,16 @@ class res_partner(osv.osv):
 		############################################################
 		# HEALTH details
 		# many2one: polis holder
+		############################################################
+		if p1['health_parent_id']:
+			p2_data['health_parent_id'] = p1['health_parent_id'][0]
+
+		############################################################
 		# one2many: health_limit
 		############################################################
-
+		if p1['health_limit_ids']:
+			cr.execute('update reliance_health_limit set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+		
 		############################################################
 		# REFI details
 		# many2one: pindahkan ajri_parent_id punya p1 ke p2
@@ -316,11 +323,10 @@ class res_partner(osv.osv):
 		if p2_data:
 			self.write(cr, uid, partner_id2, p2_data, context=context)
 
-
 		############################################################
 		#delete p1 
 		############################################################
-
+		self.unlink(cr, openerp.SUPERUSER_ID, partner_id1, context=context)
 
 		############################################################
 		# return p2 lengkap
