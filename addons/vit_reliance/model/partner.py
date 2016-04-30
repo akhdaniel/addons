@@ -325,7 +325,7 @@ class res_partner(osv.osv):
 		############################################################
 		# return p2 lengkap
 		############################################################
-		return self.search_read(cr, uid, partner_id2, context=context)
+		return self.read(cr, uid, partner_id2, context=context)
 
 
 class ahli_waris(osv.osv):
