@@ -118,10 +118,6 @@ class res_partner(osv.osv):
 		'partner_ahli_waris_ids' 				: fields.one2many('reliance.ahli_waris','partner_id','Ahli Waris', ondelete="cascade", select=1),
 		'partner_keluarga_ids' 					: fields.one2many('reliance.keluarga','partner_id','Keluarga', ondelete="cascade", select=1),
 
-
-
-
-
 	}
 	_sql_constraints = [('unique_reliance_id', 'unique(reliance_id)',
                          'Reliance ID Must be Unique!')]
@@ -203,8 +199,130 @@ class res_partner(osv.osv):
 		print campaigns
 		return campaigns
 
-	def merge(self, cr, uid, partner_ids, dst_partner=None, context=None):
-		return self._merge(cr, uid, partner_ids, dst_partner=dst_partner, context=context)
+	def button_merge(self, cr, uid, ids, context=None):
+		# test merge to SAGUNG 
+		self.merge(cr, uid, ids[0], 42260, context=context)
+
+	def merge(self, cr, uid, partner_id1, partner_id2, context=None):
+		p1 = self.read(cr, uid, partner_id1, context=context) # src
+		if not p1:
+			raise osv.except_osv(_('error'),_("partner_id1 not found") ) 
+
+		p2 = self.read(cr, uid, partner_id2, context=context) # dest
+		if not p2:
+			raise osv.except_osv(_('error'),_("partner_id2 not found") ) 
+
+		
+
+		p2_data = {}
+
+		############################################################
+		#for partner fields:
+		#fill p2 empty fields from p1
+		############################################################
+		import pdb; pdb.set_trace()
+		for kol in self._columns.keys():
+
+			if isinstance(self._columns[kol], fields.one2many):
+				continue
+			if isinstance(self._columns[kol], fields.many2one):
+				continue
+
+			# only update if p1 field is not empty and p2 field is empty
+			p1_field = p1[kol]
+			p2_field = p2[kol]
+
+			if p1_field and not p2_field:
+				p2_data.update({
+					kol : p1_field,
+				})
+
+		############################################################
+		# ARG details
+		# many2one:
+		# one2many: pindahkan partner_polis_ids punya p1 ke p2
+		############################################################
+		if p1['partner_polis_ids']:
+			cr.execute('update reliance_arg_partner_polis set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+
+		############################################################
+		# AJRI details
+		# many2one: pindahkan ajri_parent_id punya p1 ke p2
+		############################################################
+		if p1['ajri_parent_id']:
+			p2_data['ajri_parent_id'] = p1['ajri_parent_id'][0]
+
+		############################################################
+		# one2many: pindahkan partner_ajri_products punya p1 ke p2
+		############################################################
+		if p1['partner_ajri_product_ids']:
+			cr.execute('update reliance_partner_ajri_product set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+		
+
+		############################################################
+		# LS details
+		# one2many: partner_cash
+		############################################################
+		if p1['partner_cash_ids']:
+			cr.execute('update reliance_partner_cash set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+
+		############################################################
+		# one2many: partner_stock
+		############################################################
+		if p1['partner_stock_ids']:
+			cr.execute('update reliance_partner_stock set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+
+		############################################################
+		# HEALTH details
+		# many2one: polis holder
+		# one2many: health_limit
+		############################################################
+
+		############################################################
+		# REFI details
+		# many2one: pindahkan ajri_parent_id punya p1 ke p2
+		############################################################
+		if p1['refi_parent_id']:
+			p2_data['refi_parent_id'] = p1['refi_parent_id'][0]
+
+		############################################################
+		# pindahkan refi_kontrak punya p1 ke p2
+		############################################################
+		if p1['refi_kontrak_ids']:
+			cr.execute('update reliance_refi_kontrak set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+		
+		############################################################
+		# pindahkan partner_keluarga_ids punya p1 ke p2
+		############################################################
+		if p1['partner_keluarga_ids']:
+			cr.execute('update reliance_keluarga set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+				
+		############################################################
+		# pindahkan partner_ahli_waris_ids punya p1 ke p2
+		############################################################
+		if p1['partner_ahli_waris_ids']:
+			cr.execute('update reliance_ahli_waris set partner_id=%s where partner_id=%s' %(partner_id2, partner_id1) )
+		
+		############################################################
+		# RMI details
+		# many2one
+		# one2many
+		############################################################
+
+		############################################################
+		# save p2
+		############################################################
+		print p2_data
+
+		if p2_data:
+			self.write(cr, uid, partner_id2, p2_data, context=context)
+
+
+		############################################################
+		#delete p1 
+		############################################################
+
+		return 
 
 
 class ahli_waris(osv.osv):
