@@ -203,6 +203,9 @@ class res_partner(osv.osv):
 		print campaigns
 		return campaigns
 
+	def merge(self, cr, uid, partner_ids, dst_partner=None, context=None):
+		return self._merge(cr, uid, partner_ids, dst_partner=dst_partner, context=context)
+
 
 class ahli_waris(osv.osv):
 	_name = "reliance.ahli_waris"
