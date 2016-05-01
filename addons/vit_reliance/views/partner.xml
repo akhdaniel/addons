@@ -114,9 +114,9 @@
 	                <button class="oe_inline oe_stat_button" 
 	                	string="In Campaign?" type="object" name="button_in_campaign"
 	                    icon="fa-star"/> 
-	                <button class="oe_inline oe_stat_button" 
+	                <!-- <button class="oe_inline oe_stat_button" 
 	                	string="Merge" type="object" name="button_merge"
-	                    icon="fa-star"/> 
+	                    icon="fa-star"/> --> 
                 </xpath>  
 
             	<field name="website" position="after">
