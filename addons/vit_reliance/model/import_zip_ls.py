@@ -13,6 +13,13 @@ import csv
 EXTRACT_DIR = '/tmp'
 _logger = logging.getLogger(__name__)
 
+###############################################################
+# upload ZIP from web (binary field) => store to /home/reliance/ls/
+# upload ZIP from ftp => store to /home/reliance/ls/
+# regularly, check  /home/reliance/ls for new files
+# process unzip , save to customer
+# rename file to  /home/reliance/ls/processed/ 
+###############################################################
 class import_zip_ls(osv.osv):
 	_name 		= "reliance.import_zip_ls"
 	_rec_name 	= "date_import"
@@ -135,7 +142,6 @@ class import_zip_ls(osv.osv):
 		fieldNames = fieldNames.sort()
 		print "fieldNames",fieldNames
 		header = header.sort()
-
 
 
 	def process_cash(self, cr, uid,  zip_ls_cash, context=None):

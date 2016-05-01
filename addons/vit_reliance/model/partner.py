@@ -323,11 +323,22 @@ class res_partner(osv.osv):
 		if p2_data:
 			self.write(cr, uid, partner_id2, p2_data, context=context)
 
+
+		############################################################
+		# write logs
+		############################################################
+
+		src_partners = self.browse(cr, uid, [partner_id1], context=context)
+		dst_partner = self.browse(cr, uid, partner_id2, context=context)
+
+		dst= "%s<%s>(ID %s)" % (dst_partner.name, dst_partner.email or 'n/a', dst_partner.id)
+		dst_partner.message_post(body= '%s %s %s' % ( dst, _("merged with the following partners:"), ", ".join('%s<%s>(ID %s)' % (p.name, p.email or 'n/a', p.id) for p in src_partners)))
+
 		############################################################
 		#delete p1 
 		############################################################
 		self.unlink(cr, uid, [partner_id1], context=context)
-
+        
 		############################################################
 		# return p2 lengkap
 		############################################################
