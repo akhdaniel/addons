@@ -108,7 +108,7 @@ class absensi(osv.osv):
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,readonly=True, states={'draft': [('readonly', False)]}), 
 		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'sesi':fields.integer('Total Sesi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'sesi':fields.integer('Total Pertemuan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'draft': [('readonly', False)]}),
 		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa'),

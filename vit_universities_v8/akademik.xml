@@ -143,6 +143,7 @@
             <field name="res_model">master.fakultas</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_is_internal':True}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data fakultas.</p><p>disini belum ada data tentang fakultas !</p></field>
         </record>
@@ -174,10 +175,10 @@
 
                     <filter icon="terp-mail-message-new" 
                         string="Internal" 
-                         name="internal" domain="[('is_internal','=',True)]"/>
+                         name="is_internal" domain="[('is_internal','=',True)]"/>
                     <filter icon="terp-mail-message-new" 
                         string="External" 
-                         name="internal" domain="[('is_internal','=',False)]"/>
+                         name="is_external" domain="[('is_internal','=',False)]"/>
                     <separator/>
 
                     <field name="pt_id"/>
@@ -266,16 +267,16 @@
                     </group>
                     <filter icon="terp-mail-message-new" 
                         string="Internal" 
-                         name="internal" domain="[('is_internal','=',True)]"/>
+                         name="is_internal" domain="[('is_internal','=',True)]"/>
 
                     <filter icon="terp-mail-message-new" 
                         string="External" 
-                         name="internal" domain="[('is_internal','=',False)]"/>
+                         name="is_external" domain="[('is_internal','=',False)]"/>
 
                     <newline/>
                     <group expand="0" string="Group By..." colspan="12" col="10">
-                        <filter icon="terp-project" string="Fakultas" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
-                        <filter icon="terp-project" string="Jenjang" help="By Jenjang" context="{'group_by':'jenjang'}"/>
+                        <filter icon="terp-project" string="Fakultas" name="fakultas_id" help="By Fakultas" context="{'group_by':'fakultas_id'}"/>
+                        <filter icon="terp-project" string="Jenjang" name="jenjang" help="By Jenjang" context="{'group_by':'jenjang'}"/>
                     </group>
                 </search>
             </field>
@@ -287,6 +288,7 @@
             <field name="res_model">master.prodi</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_is_internal':True}</field>
             <field name="help" type="html">
             <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data program studi.</p><p>disini belum ada data tentang program studi !</p></field>
         </record>

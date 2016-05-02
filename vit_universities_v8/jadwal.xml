@@ -41,6 +41,7 @@
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
                                 <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
+                                <field name="konsentrasi_id" required="True"/>
                                 <field name="kelas_id" domain="[('prodi_id','=',prodi_id)]"/>
                                 <field name="mata_kuliah_id"/>                                
                             </group>

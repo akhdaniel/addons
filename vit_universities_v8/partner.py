@@ -310,7 +310,7 @@ class res_partner (osv.osv):
 		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
 		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
 
-		'is_mahasiswa' : fields.boolean('Is Mahasiswa/Calon ?'),
+		'is_mahasiswa' : fields.boolean('Is Mahasiswa'),
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),
 		'is_beasiswa' : fields.boolean('Penerima Beasiswa USM',readonly=True),
 		'jadwal_usm_id': fields.many2one('jadwal.usm', 'Jadwal USM'),

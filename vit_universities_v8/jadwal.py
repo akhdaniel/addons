@@ -103,6 +103,7 @@ class master_jadwal (osv.osv):
 		'mata_kuliah_id' :fields.many2one('master.matakuliah',string='Mata Kuliah',required=True),
 		'fakultas_id':fields.many2one('master.fakultas',string='Fakultas',required=True),
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required=True,),
+		'konsentrasi_id':fields.many2one('master.konsentrasi',string='Konsentrasi'),
 		'semester_id':fields.many2one('master.semester',string='Semester',required=True),
 		'tahun_ajaran_id':fields.many2one('academic.year',string='Tahun Akademik',required=True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,), 
