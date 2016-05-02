@@ -60,9 +60,9 @@
                         </div>                        
 	                    <group>
 	                    	<group>                          
-			                    <field name="kode"/>
+			                    <field name="kode" readonly="1"/>
                                 <!-- <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id,jurusan_id,kelas_id, partner_id,npm)" attrs="{'readonly': [('state','!=','draft')]}"/> -->
-			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id, prodi_id,kelas_id, partner_id,npm,konsentrasi_id)" attrs="{'readonly': [('state','!=','draft')]}"/>
+			                    <field name="partner_id" on_change="onchange_partner(tahun_ajaran_id,fakultas_id, prodi_id,kelas_id, partner_id,npm,konsentrasi_id)" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>
 			                    <field name="npm" invisible="1"/> 
 			                    <field name="kelas_id" widget="selection" attrs="{'readonly': [('state','!=','draft')]}"/>
 			                    <!-- <field name="employee_id"/> -->
@@ -103,7 +103,7 @@
                                 <separator string="Kartu Hasil Studi" attrs="{'invisible': [('state','=','draft')]}"/>
                                 <field view_mode="tree,form" name="krs_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}">
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
-                                        <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>
                                         <field name="sks" sum="Total SKS"/>
                                         <field name="absensi" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi"/>
                                         <field name="ulangan" invisible="1"/>
@@ -116,7 +116,7 @@
                                         <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="nilai_huruf" invisible="1"/>
                                         <field name="nilai_angka" attrs="{'invisible': [('state','=','draft')]}"/>
-                                        <field name="nilai_huruf_field" invisible="1" string="Nilai Akhir"/>
+                                        <field name="nilai_huruf_field" string="Nilai Akhir"/>
                                         <field name="is_konversi" string="*" readonly="True"/>
                                         <field name="state" invisible="1"/>
                                         <field name="is_import" invisible="1"/>

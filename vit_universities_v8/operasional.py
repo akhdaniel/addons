@@ -145,40 +145,41 @@ class operasional_krs (osv.Model):
 					mk_ids_kurikulum.append(klm.id)
 					sks_kurikulum += int(klm.sks)
 
+				mk_ids = []
+				#import pdb;pdb.set_trace()
+				if 'krs_detail_ids' in vals:
+					mk = vals['krs_detail_ids']
+					tot_mk = 0
+					for m in mk:
+						if len([m]) > 1 :
+							mk_id = m[2]['mata_kuliah_id']
+							mk_ids.append(mk_id)
+							sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+							tot_mk += int(sks)
+
+					if tot_mk > t_sks  :
+						raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(tot_mk,t_sks))	
+					
+					# #cek jika mengambil matakuliah lebih
+					# tambahan_mk = 0
+					# ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
+					# for tambahan in mk:
+					# 	if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
+					# 		mk_id = tambahan[2]['mata_kuliah_id']
+					# 		sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+					# 		tambahan_mk += int(sks)
+					# 		ids_tambahan_mk.append(mk_id)
+					# selisih_tambahan_mk = t_sks - sks_kurikulum
+					
+					# #pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
+					# if selisih_tambahan_mk > tambahan_mk :			
+					# 	raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(selisih_tambahan_mk,tambahan_mk))
+
 		#cek partner dan semester yang sama
 		krs_uniq = self.search(cr,uid,[('partner_id','=',vals['partner_id']),('semester_id','=',vals['semester_id'])])
 		if krs_uniq != []:
 			raise osv.except_osv(_('Error!'),
 								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))	
-		mk_ids = []
-		#import pdb;pdb.set_trace()
-		if 'krs_detail_ids' in vals:
-			mk = vals['krs_detail_ids']
-			tot_mk = 0
-			for m in mk:
-				if len([m]) > 1 :
-					mk_id = m[2]['mata_kuliah_id']
-					mk_ids.append(mk_id)
-					sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
-					tot_mk += int(sks)
-
-			if tot_mk > t_sks  :
-				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(tot_mk,t_sks))	
-			
-			# #cek jika mengambil matakuliah lebih
-			# tambahan_mk = 0
-			# ids_tambahan_mk = []#ambil id matakuliah yang diinput lebih
-			# for tambahan in mk:
-			# 	if tambahan[2]['mata_kuliah_id'] not in mk_ids_kurikulum:
-			# 		mk_id = tambahan[2]['mata_kuliah_id']
-			# 		sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
-			# 		tambahan_mk += int(sks)
-			# 		ids_tambahan_mk.append(mk_id)
-			# selisih_tambahan_mk = t_sks - sks_kurikulum
-			
-			# #pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
-			# if selisih_tambahan_mk > tambahan_mk :			
-			# 	raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(selisih_tambahan_mk,tambahan_mk))
 
 		#cek juga apa di setingan kurikulum mengijinkan tambah MK sesuai dengan minimal IP sementara
 		if 'kurikulum_id' in vals :
@@ -430,9 +431,9 @@ class operasional_krs (osv.Model):
 		return res
 	
 	_columns = {
-		'kode' : fields.char('Kode', 128, readonly=True),
-		'state':fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
-		'partner_id' : fields.many2one('res.partner','Mahasiswa', required=True, domain="[('status_mahasiswa','=','Mahasiswa')]"),
+		'kode' : fields.char('Kode', 128),
+		'state':fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status'),
+		'partner_id' : fields.many2one('res.partner','Mahasiswa', domain="[('status_mahasiswa','=','Mahasiswa')]"),
 		#'employee_id' : fields.many2one('hr.employee','Dosen Wali'),
 		#'npm':fields.related('partner_id', 'npm', type='char', relation='res.partner',size=128, string='NPM',readonly=True),
 		'npm' : fields.char('NPM',size=28,),
@@ -441,9 +442,9 @@ class operasional_krs (osv.Model):
 		'prodi_id':fields.many2one('master.prodi',string='Program Studi',required = True),
 		'max_smt': fields.integer("Max Semester",),
 		'semester_id':fields.many2one('master.semester','Semester',domain="[('name','<=',max_smt)]",required = True),
-		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran',required = True),
+		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Akademik',required = True),
 		'kelas_id':fields.many2one('master.kelas',string='Kelas'), 
-		'krs_detail_ids' : fields.one2many('operasional.krs_detail','krs_id','Matakuliah'),
+		'krs_detail_ids' : fields.one2many('operasional.krs_detail','krs_id','Matakuliah',ondelete="cascade"),
 		#'view_ipk_ids' : fields.one2many('operasional.view_ipk','krs_id','Mata Kuliah'),
 		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum'),
 		'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi Kumulatif',),
@@ -648,59 +649,59 @@ class krs_detail (osv.Model):
 		presentase_lainnya		= 0		
 		result = {}
 		for nil in self.browse(cr,uid,ids,context=context):
+			tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
+			fakultas 		= nil.krs_id.fakultas_id.id
+			prodi 	 		= nil.krs_id.prodi_id.id
+			semester 		= nil.krs_id.semester_id.id
+			matakuliah 		= nil.mata_kuliah_id.id
+			kelas 			= nil.krs_id.kelas_id.id 
+			setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+														('fakultas_id','=',fakultas),
+														('prodi_id','=',prodi),
+														('semester_id','=',semester),
+														('mata_kuliah_id','=',matakuliah),
+														('kelas_id','=',kelas)])
+			if setting_dosen:
+				sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
+				total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
+				if total_set == 100 :
+					presentase_absen 		= sett.absensi/100
+					presentase_tugas 		= sett.tugas/100
+					presentase_uts 			= sett.uts/100
+					presentase_uas 			= sett.uas/100			
+					presentase_ulangan		= sett.ulangan/100
+					presentase_presentasi 	= sett.presentasi/100
+					presentase_quiz 		= sett.quiz/100
+					presentase_lainnya		= sett.lainnya/100
+
+			absen 			= nil.absensi
+			tugas 			= nil.tugas
+			ulangan 		= nil.ulangan
+			uts 			= nil.uts
+			uas 			= nil.uas
+			presentasi 		= nil.presentasi
+			quiz 			= nil.quiz
+			lainnya 		= nil.lainnya			
+			tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
+			#tot = (tugas+ulangan+uts+uas)/4
+			#import pdb;pdb.set_trace()
+			nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
+			if nil_src == []:
+				return result
+
+			nil_par = nil_obj.browse(cr,uid,nil_src,context=context)[0]
+			huruf = nil_par.name
+			angka = nil_par.bobot
+			
+			result[nil.id] = huruf
 			if not nil.is_import :
-				tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
-				fakultas 		= nil.krs_id.fakultas_id.id
-				prodi 	 		= nil.krs_id.prodi_id.id
-				semester 		= nil.krs_id.semester_id.id
-				matakuliah 		= nil.mata_kuliah_id.id
-				kelas 			= nil.krs_id.kelas_id.id 
-				setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
-															('fakultas_id','=',fakultas),
-															('prodi_id','=',prodi),
-															('semester_id','=',semester),
-															('mata_kuliah_id','=',matakuliah),
-															('kelas_id','=',kelas)])
-				if setting_dosen:
-					sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
-					total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
-					if total_set == 100 :
-						presentase_absen 		= sett.absensi/100
-						presentase_tugas 		= sett.tugas/100
-						presentase_uts 			= sett.uts/100
-						presentase_uas 			= sett.uas/100			
-						presentase_ulangan		= sett.ulangan/100
-						presentase_presentasi 	= sett.presentasi/100
-						presentase_quiz 		= sett.quiz/100
-						presentase_lainnya		= sett.lainnya/100
-
-				absen 			= nil.absensi
-				tugas 			= nil.tugas
-				ulangan 		= nil.ulangan
-				uts 			= nil.uts
-				uas 			= nil.uas
-				presentasi 		= nil.presentasi
-				quiz 			= nil.quiz
-				lainnya 		= nil.lainnya			
-				tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
-				#tot = (tugas+ulangan+uts+uas)/4
-				#import pdb;pdb.set_trace()
-				nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
-				if nil_src == []:
-					return result
-
-				nil_par = nil_obj.browse(cr,uid,nil_src,context=context)[0]
-				huruf = nil_par.name
-				angka = nil_par.bobot
-				
-				result[nil.id] = huruf
 				wr = self.write(cr,uid,nil.id,{'nilai_angka':angka,'nilai_huruf_field':huruf})
 		return result
 		
 	_columns = {
 		'krs_id'		:fields.many2one('operasional.krs','Kode KRS',),
-		'mata_kuliah_id':fields.many2one('master.matakuliah','Matakuliah',required=True,ondelete="cascade"),
-		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
+		'mata_kuliah_id':fields.many2one('master.matakuliah','Matakuliah'),
+		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',store=True),
 		'quiz' 		    : fields.float('Quiz'),
 		'presentasi' 	: fields.float('Presentasi'),
 		'absensi' 		: fields.float('absensi'),
@@ -862,6 +863,7 @@ class operasional_transkrip(osv.Model):
 		det_obj = self.pool.get('operasional.krs_detail')			
 		tot_nil = 0.0
 		tot_sks = 0.0
+		ipk_import = 0.0
 		for m in mk:
 			det_id = det_obj.browse(cr,uid,m,context=context)
 			sks = det_id.sks
@@ -870,6 +872,11 @@ class operasional_transkrip(osv.Model):
 
 			tot_sks += sks
 			tot_nil += nil_jml
+
+			if det_id.is_import and det_id.krs_id.ips_field > 0:
+				tot_nil = det_id.krs_id.ips_field
+				tot_sks = 1
+				break
 
 		ipk = tot_nil/tot_sks
 		result[ids[0]] = ipk
@@ -916,8 +923,8 @@ class operasional_transkrip(osv.Model):
 		'transkrip_detail_ids' : fields.function(get_total_khs, type='many2many', relation="operasional.krs_detail", string="Total Mata Kuliah"), 
 		'ipk' : fields.function(_get_ipk,type='float',string='IPK',help="SKS = Total ( SKS * bobot nilai ) / Total SKS"),
 		'yudisium_id' : fields.many2one('master.yudisium','Yudisium',readonly=True),
-		't_sks' : fields.integer('Total SKS',readonly=True),
-		't_nilai' : fields.char('Total Nilai',readonly=True),
+		't_sks' : fields.integer('Total SKS'),
+		't_nilai' : fields.char('Total Nilai'),
 		'transkrip_resume_ids' : fields.one2many('operasional.transkrip.resume','transkrip_id','Resume',readonly=True, ondelete='cascade',store=True),
 			}    
 
