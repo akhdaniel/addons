@@ -42,7 +42,7 @@ class res_partner (osv.osv):
 		return res
 
 	def create(self, cr, uid, vals, context=None):
-		
+		#import pdb;pdb.set_trace()
 		if 'status_mahasiswa' in vals :
 			if 'is_import' not in vals:
 				if vals['status_mahasiswa'] == 'calon':
@@ -101,6 +101,8 @@ class res_partner (osv.osv):
 
 						vals['npm'] = ta_id+fak_id+pro_id+sequence
 						partner = super(res_partner, self).create(cr, uid, vals, context=context)
+				else :
+					partner = super(res_partner, self).create(cr, uid, vals, context=context)	
 			elif vals['status_mahasiswa'] == 'alumni':
 				if 'is_import' not in vals:
 					raise osv.except_osv(_('Error!'), _('Data alumni harus dibuat dari data mahasiswa'))
