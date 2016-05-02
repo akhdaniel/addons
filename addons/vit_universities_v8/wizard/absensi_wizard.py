@@ -20,48 +20,62 @@
 #
 ##############################################################################
 from openerp import models, fields, api, _
-from openerp.exceptions import except_orm
-
+from openerp.exceptions import except_orm, Warning as UserError
 
 class absensi_wizard(models.TransientModel):
     _name = "absensi.wizard"
 
     tahun_akademik_id = fields.Many2one('academic.year', 'Tahun Akademik', required=True)
-    semester_id = fields.Many2one('master.semester', 'Semester',required=True)
+    semester_id = fields.Many2one('master.semester', 'Semester',domain="[('name','>',2)]",required=True)
 
     @api.multi
     def create_absensi(self):
-        import pdb;pdb.set_tractae()
+        
         jadwal_obj          = self.env['master.jadwal']
         tahun_akademik_id   = self.tahun_akademik_id.id
         semester_id         = self.semester_id.id 
 
-        jadwal_ids          = jadwal_obj.search([('tahun_akademik_id','=',tahun_akademik_id),('semester_id','=',semester_id)])
+        jadwal_ids          = jadwal_obj.search([('is_active','=',True),('tahun_ajaran_id','=',tahun_akademik_id),('semester_id','=',semester_id)])
         if not jadwal_ids :
             raise UserError(_('Error! \
                                      Tidak ditemukan jadwal dengan parameter tersebut'))
+
+        absensi_obj          = self.env['absensi']    
         attendee_ids = []
-        flag = False
-        error_student = ''
-        for student in student_obj.browse(self._context['active_ids']):
-            if not student.email:
-                flag = True
-                error_student += (student.pid + " : " + student.name + " " +
-                                  student.middle + " " + student.last + "\n")
-            else:
-                attendee_ids.append((0, 0, {'user_id': student.user_id.id,
-                                    'email': student.email}))
-        if flag:
-            raise except_orm(_('Error !'), _("Following Student don't have \
-                             Email ID.\n\n"+error_student+"\nMeeting \
-                             cannot be scheduled."))
-        cal_event_obj.create({
-            'name': cur_rec.name,
-            'start': cur_rec.meeting_date,
-            'stop': cur_rec.deadline,
-            'description': cur_rec.description,
-            'attendee_ids': attendee_ids
-        })
+        for absen in jadwal_ids:
+            # cek jika jadwal sudah ada dan sudah confirm
+            absensi_exist = absensi_obj.search([('employee_id','=',absen.employee_id.id),
+                                                ('semester_id','=',absen.semester_id.id),
+                                                ('mata_kuliah_id','=',absen.mata_kuliah_id.id),
+                                                ('tahun_ajaran_id','=',absen.tahun_ajaran_id.id),
+                                                ('fakultas_id','=',absen.fakultas_id.id),
+                                                ('prodi_id','=',absen.prodi_id.id),
+                                                ('konsentrasi_id','=',absen.konsentrasi_id.id),])
+            if not absensi_exist :
+                #import pdb;pdb.set_trace()
+                self._cr.execute("""select rp.id from res_partner rp
+                                left join operasional_krs_mahasiswa okm on okm.partner_id = rp.id
+                                left join operasional_krs_detail_mahasiswa okdm on okm.id = okdm.krs_mhs_id 
+                                where okdm.jadwal_id = %s"""%(absen.id,))
+                dpt = self._cr.fetchall()     
+                if dpt :
+                    mhs_ids = map(lambda x: x[0], dpt)
+
+                    res = []
+                    for ms in mhs_ids:
+                        res.append([0,0,{'partner_id': ms}])                       
+
+                    absensi_obj.create({'employee_id'       :absen.employee_id.id,
+                                        'semester_id'       :absen.semester_id.id,
+                                        'mata_kuliah_id'    :absen.mata_kuliah_id.id,
+                                        'tahun_ajaran_id'   :absen.tahun_ajaran_id.id,
+                                        'fakultas_id'       :absen.fakultas_id.id,
+                                        'prodi_id'          :absen.prodi_id.id,
+                                        'konsentrasi_id'    :absen.konsentrasi_id.id,
+                                        'state'             :'draft',
+                                        'absensi_ids'       :res,
+                                        'absensi_nilai_ids' :res})
+
         return {'type': 'ir.actions.act_window_close'}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

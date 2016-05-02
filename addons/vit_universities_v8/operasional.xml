@@ -114,11 +114,12 @@
                                         <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}"/>
                                         <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <field name="nilai_huruf" attrs="{'invisible': [('state','=','draft')]}"/>
-                                        <field name="nilai_angka" invisible="1"/>
-                                        <field name="nilai_huruf_field" invisible="1"/>
+                                        <field name="nilai_huruf" invisible="1"/>
+                                        <field name="nilai_angka" attrs="{'invisible': [('state','=','draft')]}"/>
+                                        <field name="nilai_huruf_field" invisible="1" string="Nilai Akhir"/>
                                         <field name="is_konversi" string="*" readonly="True"/>
                                         <field name="state" invisible="1"/>
+                                        <field name="is_import" invisible="1"/>
                                     </tree>
                                     <form>
                                         <field name="mata_kuliah_id"/>
@@ -186,8 +187,8 @@
                                     <tree>
                                         <field name="mata_kuliah_id"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="nilai_angka" invisible="0"/> 
-                                        <field name="nilai_huruf"/>
+                                        <field name="nilai_angka" invisible="1"/> 
+                                        <field name="nilai_huruf_field"/>
                                         <field name="is_konversi" string="*Konversi" readonly="1"/>
                                         <!-- <field name="krs_id" string="KHS" invisible="0"/>  -->                                        
                                     </tree>                                   

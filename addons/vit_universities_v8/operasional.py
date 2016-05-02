@@ -648,52 +648,53 @@ class krs_detail (osv.Model):
 		presentase_lainnya		= 0		
 		result = {}
 		for nil in self.browse(cr,uid,ids,context=context):
-			tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
-			fakultas 		= nil.krs_id.fakultas_id.id
-			prodi 	 		= nil.krs_id.prodi_id.id
-			semester 		= nil.krs_id.semester_id.id
-			matakuliah 		= nil.mata_kuliah_id.id
-			kelas 			= nil.krs_id.kelas_id.id 
-			setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
-														('fakultas_id','=',fakultas),
-														('prodi_id','=',prodi),
-														('semester_id','=',semester),
-														('mata_kuliah_id','=',matakuliah),
-														('kelas_id','=',kelas)])
-			if setting_dosen:
-				sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
-				total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
-				if total_set == 100 :
-					presentase_absen 		= sett.absensi/100
-					presentase_tugas 		= sett.tugas/100
-					presentase_uts 			= sett.uts/100
-					presentase_uas 			= sett.uas/100			
-					presentase_ulangan		= sett.ulangan/100
-					presentase_presentasi 	= sett.presentasi/100
-					presentase_quiz 		= sett.quiz/100
-					presentase_lainnya		= sett.lainnya/100
+			if not nil.is_import :
+				tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
+				fakultas 		= nil.krs_id.fakultas_id.id
+				prodi 	 		= nil.krs_id.prodi_id.id
+				semester 		= nil.krs_id.semester_id.id
+				matakuliah 		= nil.mata_kuliah_id.id
+				kelas 			= nil.krs_id.kelas_id.id 
+				setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+															('fakultas_id','=',fakultas),
+															('prodi_id','=',prodi),
+															('semester_id','=',semester),
+															('mata_kuliah_id','=',matakuliah),
+															('kelas_id','=',kelas)])
+				if setting_dosen:
+					sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
+					total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
+					if total_set == 100 :
+						presentase_absen 		= sett.absensi/100
+						presentase_tugas 		= sett.tugas/100
+						presentase_uts 			= sett.uts/100
+						presentase_uas 			= sett.uas/100			
+						presentase_ulangan		= sett.ulangan/100
+						presentase_presentasi 	= sett.presentasi/100
+						presentase_quiz 		= sett.quiz/100
+						presentase_lainnya		= sett.lainnya/100
 
-			absen 			= nil.absensi
-			tugas 			= nil.tugas
-			ulangan 		= nil.ulangan
-			uts 			= nil.uts
-			uas 			= nil.uas
-			presentasi 		= nil.presentasi
-			quiz 			= nil.quiz
-			lainnya 		= nil.lainnya			
-			tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
-			#tot = (tugas+ulangan+uts+uas)/4
-			#import pdb;pdb.set_trace()
-			nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
-			if nil_src == []:
-				return result
+				absen 			= nil.absensi
+				tugas 			= nil.tugas
+				ulangan 		= nil.ulangan
+				uts 			= nil.uts
+				uas 			= nil.uas
+				presentasi 		= nil.presentasi
+				quiz 			= nil.quiz
+				lainnya 		= nil.lainnya			
+				tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
+				#tot = (tugas+ulangan+uts+uas)/4
+				#import pdb;pdb.set_trace()
+				nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
+				if nil_src == []:
+					return result
 
-			nil_par = nil_obj.browse(cr,uid,nil_src,context=context)[0]
-			huruf = nil_par.name
-			angka = nil_par.bobot
-			
-			result[nil.id] = huruf
-			wr = self.write(cr,uid,nil.id,{'nilai_angka':angka,'nilai_huruf_field':huruf})
+				nil_par = nil_obj.browse(cr,uid,nil_src,context=context)[0]
+				huruf = nil_par.name
+				angka = nil_par.bobot
+				
+				result[nil.id] = huruf
+				wr = self.write(cr,uid,nil.id,{'nilai_angka':angka,'nilai_huruf_field':huruf})
 		return result
 		
 	_columns = {
@@ -714,10 +715,12 @@ class krs_detail (osv.Model):
 		'transkrip_id'	:fields.many2one('operasional.transkrip','Transkrip'),
 		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
 		'is_konversi'	:fields.boolean('Konversi?'),
+		'is_import' 	:fields.boolean('Import?'),
 			}
 
 	_defaults={
 		'state' : 'draft', 
+		'is_import' : False,
 	}
 	 
 krs_detail()
@@ -831,6 +834,7 @@ class operasional_transkrip(osv.Model):
 					dpt = cr.fetchall()
 					if dpt :
 						if dpt[0][0] != 0:
+
 							resume_ids.append((0,0,{'nilai_id'	:nil.id,
 													'nilai'		:nil.name,
 													'jumlah'	:dpt[0][0],

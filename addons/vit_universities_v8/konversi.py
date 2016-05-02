@@ -394,6 +394,7 @@ class konversi(osv.Model):
 	def cron_notif_email_konversi(self, cr, uid, ids=None,context=None):
 		#import pdb;pdb.set_trace()
 		groups_obj = self.pool.get('res.groups')
+		users_obj = self.pool.get('res.users')
 
 		now = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 		now_check = datetime.strptime(now,'%Y-%m-%d %H:%M:%S')
@@ -407,7 +408,7 @@ class konversi(osv.Model):
 		users_dirbaak  	= groups_obj.search(cr,uid,[('name','ilike','Direktur BAAK')], context=context)
 		users_rektor  	= groups_obj.search(cr,uid,[('name','ilike','Rektor')], context=context)
 
-		conv_draft_exist4 = self.search(cr,uid,[('create_date','<=',str(hari_4)),('state','=','draft')])
+		conv_draft_exist4 = self.search(cr,uid,[('create_date','<=',str(hari_4)),('state','in',('draft','waiting'))])
 		if conv_draft_exist4 :	
 			for conv in conv_draft_exist4 :
 				if users_dirbaak :
@@ -416,10 +417,10 @@ class konversi(osv.Model):
 						for usr in users_ids.users :
 							cc = False
 							if users_rektor :
-								cc = groups_obj.browse(cr,uid,users_rektor[0]).partner_id.email
+								cc = users_obj.browse(cr,uid,users_rektor[0]).partner_id.email
 							self.convertion_notification_with_cc(cr, uid, [conv], usr, cc)
 
-		conv_draft_exist3 = self.search(cr,uid,[('create_date','>',str(hari_4)),('create_date','<=',str(hari_3)),('state','=','draft')])
+		conv_draft_exist3 = self.search(cr,uid,[('create_date','>',str(hari_4)),('create_date','<=',str(hari_3)),('state','in',('draft','waiting'))])
 		if conv_draft_exist3 :	
 			for conv in conv_draft_exist3 :
 				if users_dekan :
@@ -429,7 +430,7 @@ class konversi(osv.Model):
 							if usr.fakultas_id.id == self.browse(cr,uid,conv).fakultas_id.id :
 								self.convertion_notification_with_cc(cr, uid, [conv], usr, usr.partner_id.email)
 
-		conv_draft_exist2 = self.search(cr,uid,[('create_date','>',str(hari_3)),('state','=','draft')])
+		conv_draft_exist2 = self.search(cr,uid,[('create_date','>',str(hari_3)),('state','in',('draft','waiting'))])
 		if conv_draft_exist2 :	
 			for conv in conv_draft_exist2 :
 				if users_dekan :
@@ -438,7 +439,7 @@ class konversi(osv.Model):
 						for usr in users_ids.users :
 							self.convertion_notification(cr, uid, [conv], usr)
 
-		conv_waiting_exist4 = self.search(cr,uid,[('create_date','<=',str(hari_4)),('state','=','draft')])
+		conv_waiting_exist4 = self.search(cr,uid,[('create_date','<=',str(hari_4)),('state','in',('draft','waiting'))])
 		if conv_waiting_exist4 :	
 			for conv in conv_waiting_exist4 :
 				if users_dirbaak :
@@ -447,10 +448,10 @@ class konversi(osv.Model):
 						for usr in users_ids.users :
 							cc = False
 							if users_rektor :
-								cc = groups_obj.browse(cr,uid,users_rektor[0]).partner_id.email
+								cc = users_obj.browse(cr,uid,users_rektor[0]).partner_id.email
 							self.convertion_notification_with_cc(cr, uid, [conv], usr, cc)
 
-		conv_waiting_exist3 = self.search(cr,uid,[('create_date','>',str(hari_4)),('create_date','<=',str(hari_3)),('state','=','draft')])
+		conv_waiting_exist3 = self.search(cr,uid,[('create_date','>',str(hari_4)),('create_date','<=',str(hari_3)),('state','in',('draft','waiting'))])
 		if conv_waiting_exist3 :	
 			for conv in conv_waiting_exist3 :
 				if users_dekan :
@@ -460,7 +461,7 @@ class konversi(osv.Model):
 							if usr.fakultas_id.id == self.browse(cr,uid,conv).fakultas_id.id :
 								self.convertion_notification_with_cc(cr, uid, [conv], usr, usr.partner_id.email)
 
-		conv_waiting_exist2 = self.search(cr,uid,[('create_date','>',str(hari_3)),('state','=','draft')])
+		conv_waiting_exist2 = self.search(cr,uid,[('create_date','>',str(hari_3)),('state','in',('draft','waiting'))])
 		if conv_waiting_exist2 :	
 			for conv in conv_waiting_exist2 :
 				if users_dekan :

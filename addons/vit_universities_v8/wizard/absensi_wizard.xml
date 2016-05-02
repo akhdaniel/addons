@@ -15,7 +15,7 @@
 	                    </group>
                     </sheet>
                     <footer>
-                        <button name="create_absensi" string="Generate Absensi" type="object"/>
+                        <button name="create_absensi" string="Generate Absensi" type="object" groups="vit_universities_v8.group_univ_staff_baak"/>
                         <button  icon="gtk-cancel" special="cancel" string="Cancel"/>
                     </footer>
                </form>
