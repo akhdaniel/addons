@@ -16,7 +16,7 @@ class master_jadwal (osv.osv):
 		semester 	= vals['semester_id']
 		ruangan 	= vals['ruangan_id']
 		hari 		= vals['hari']
-		partner 	= vals['partner_id']
+		employee 	= vals['employee_id']
 		
 		hours_from 	= vals['hours_from']	
 		hours_to 	= vals['hours_to']	
@@ -27,7 +27,7 @@ class master_jadwal (osv.osv):
 			('fakultas_id','=',fakultas),
 			('prodi_id','=',prodi),
 			('semester_id','=',semester),
-			('partner_id','=',ajaran),
+			('employee_id','=',employee),
 			('ruangan_id','=',ruangan),	
 			('hari','=',hari),
 			('hours_from','>=',hours_from),

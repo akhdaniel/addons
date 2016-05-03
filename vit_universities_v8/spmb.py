@@ -213,7 +213,7 @@ class spmb_mahasiswa(osv.Model):
 				'status_mahasiswa':'Mahasiswa',
 				'batas_nilai':nilai,
 				# 'npm':t_id_final+f_id+j_id+p_id+se,
-				'npm':t_id_final + p_id + jp_id + se,
+				'npm':t_id_final + p_id + jp_id + se,#t_id_final +pend+ f_id+p_id +lokasi+ jp_id + se
 				'user_id':uid,
 				'is_beasiswa':is_bea},
 				context=context)
