@@ -217,6 +217,20 @@
         </record>  
 
 
+
+        <!-- LS FTP -->
+
+        <record model="ir.cron" id="import_ftp_ls">
+            <field name="name">Auto Process LS FTP Files</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_ftp_ls'"/>
+            <field name="function" eval="'cron_process'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
               
     </data>
 </openerp>

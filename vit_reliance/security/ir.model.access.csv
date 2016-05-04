@@ -31,3 +31,5 @@
 "access_reliance_import_zip_refi","access_reliance_import_zip_refi","model_reliance_import_zip_refi","group_uploader_refi",1,1,1,1
 "access_reliance_import_zip_rmi","access_reliance_import_zip_rmi","model_reliance_import_zip_rmi","group_uploader_rmi",1,1,1,1
 "access_reliance_partner_health_limit","access_reliance_partner_health_limit","model_reliance_partner_health_limit","group_uploader_health",1,1,1,1
+
+"access_reliance_import_ftp_ls","access_reliance_import_ftp_ls","model_reliance_import_ftp_ls","group_uploader_ls",1,1,1,1

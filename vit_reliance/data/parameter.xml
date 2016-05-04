@@ -106,6 +106,42 @@
 			<field name="value">500</field>
 		</record>	
 	
+		<!-- ftp_ls_folder -->
+		<record id="ftp_ls_folder" model="ir.config_parameter">
+			<field name="key">ftp_ls_folder</field>
+			<field name="value">/home/ls</field>
+		</record>	
+
+		<!-- ftp_arg_folder -->
+		<record id="ftp_arg_folder" model="ir.config_parameter">
+			<field name="key">ftp_arg_folder</field>
+			<field name="value">/home/arg</field>
+		</record>	
+	
+		<!-- ftp_ajri_folder -->
+		<record id="ftp_ajri_folder" model="ir.config_parameter">
+			<field name="key">ftp_ajri_folder</field>
+			<field name="value">/home/ajri</field>
+		</record>
+
+		<!-- ftp_health_folder -->
+		<record id="ftp_health_folder" model="ir.config_parameter">
+			<field name="key">ftp_health_folder</field>
+			<field name="value">/home/health</field>
+		</record>	
+
+		<!-- ftp_rmi_folder -->
+		<record id="ftp_rmi_folder" model="ir.config_parameter">
+			<field name="key">ftp_rmi_folder</field>
+			<field name="value">/home/rmi</field>
+		</record>	
+		
+		<!-- ftp_refi_folder -->
+		<record id="ftp_refi_folder" model="ir.config_parameter">
+			<field name="key">ftp_refi_folder</field>
+			<field name="value">/home/refi</field>
+		</record>	
+	
 		
 	</data>
 </openerp>
