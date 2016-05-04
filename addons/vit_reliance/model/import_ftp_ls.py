@@ -119,7 +119,8 @@ class import_ftp_ls(osv.osv):
 			i = 0
 			for row in spamreader:
 				if i==0:
-					print "header",row 
+					_logger.warning("header")
+					_logger.warning(row)
 					# data = self.map_fields(cr, uid, 'reliance.import_ls', row)
 					i = i+1
 					continue
@@ -198,7 +199,8 @@ class import_ftp_ls(osv.osv):
 			i = 0
 			for row in spamreader:
 				if i==0:
-					print "header",row 
+					_logger.warning("header")
+					_logger.warning(row)
 					i = i+1
 					continue
 
@@ -241,7 +243,8 @@ class import_ftp_ls(osv.osv):
 			i = 0
 			for row in spamreader:
 				if i==0:
-					print "header",row 
+					_logger.warning("header")
+					_logger.warning(row)
 					i = i+1
 					continue
 
