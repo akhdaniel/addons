@@ -395,7 +395,10 @@ class import_ls_stock(osv.osv):
 
 			else:
 				ex = ex + 1
-				_logger.warning('Partner ID not found for ClientID=%s' % import_stock.client_id)
+				msg = 'NO PARTNER'
+				self.write(cr, uid, import_stock.id, {'notes':msg}, context=context)
+				cr.commit()
+				continue
 
 			cr.execute("update reliance_import_ls_stock set is_imported='t' where id=%s" % import_stock.id)
 			cr.commit()
