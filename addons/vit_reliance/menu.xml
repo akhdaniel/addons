@@ -1,5 +1,5 @@
 <openerp>
-	<data>
+<data>
 
 		<!-- customer list -->
 
@@ -122,10 +122,11 @@
 
 		<menuitem id="rcm_import" name="Imports" sequence="40" parent="rcm"/>
 		<menuitem id="rcm_import_zip" name="Import ZIPs" sequence="50" parent="rcm"/>
+		<menuitem id="rcm_import_ftp" name="Import FTP" sequence="60" parent="rcm"/>
 
 		<!-- configuration data menu -->
 
-		<menuitem id="rcm_configuration" name="Configuration" sequence="60" parent="rcm" 
+		<menuitem id="rcm_configuration" name="Configuration" sequence="500" parent="rcm" 
 			groups="base.group_sale_manager"/>
 			<menuitem id="rcm_country"
 			 action="action_country_list"

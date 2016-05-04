@@ -15,7 +15,7 @@ Manage
 
 * this is my 
 * this is my 
-* this is my
+* FTP upload: make sure odoo user can read and write ftp upload folders
 
 """,
 	"data": [
@@ -39,6 +39,8 @@ Manage
 		"views/import_zip_refi.xml", 
 		"views/import_zip_rmi.xml", 
 		"views/import_zip_health.xml", 
+
+		"views/import_ftp_ls.xml", 
 
 		"data/sequence.xml",
 		"data/cron.xml",

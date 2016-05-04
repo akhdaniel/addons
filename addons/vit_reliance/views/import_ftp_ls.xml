@@ -1,0 +1,90 @@
+<openerp>
+	<data>
+
+		<record id="action_import_ftp_ls_list" model="ir.actions.act_window">
+			<field name="name">Import FTP LS</field>
+			<field name="res_model">reliance.import_ftp_ls</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!-- import ZIP rmi menu -->
+		<menuitem id="rcm_import_ftp_ls"
+		 action="action_import_ftp_ls_list"
+		 name="Import FTP LS"
+		 sequence="10"
+		 parent="rcm_import_ftp"/>
+
+
+		<!-- FTP -->
+
+		<!-- tree import_ftp_ls reliance -->
+		<record id="view_import_ftp_ls_tree" model="ir.ui.view">
+		    <field name="name">reliance_import_ftp_ls_tree</field>
+		    <field name="model">reliance.import_ftp_ls</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list import_ftp_ls" >
+					<field name='date_start' />	
+					<field name='date_end' />	
+					<field name='user_id' />					
+					<field name='input_file' />					
+					<field name='total_records' />					
+					<field name='notes' />					
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- search import_ftp_ls reliance -->
+		<!-- <record id="view_import_ftp_ls_filter_reliance" model="ir.ui.view">
+		    <field name="name">import_zip.filter.reliance</field>
+		    <field name="model">reliance.import_ftp_ls</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Import ZIP">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Imported" 
+		            	 name="imported" domain="[('is_imported','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Imported" 
+		            	 name="not_imported" domain="[('is_imported','=',Farmie)]"/>
+		            
+		            <separator/> -->
+
+					<!-- <field name="client_id"				 /> -->
+					
+
+		
+		            <!-- <group expand="1" string="Group By...">
+		                <filter string="Is Imported" icon="terp-personal" 
+		                    domain="[]" name="group_by_is_imported"
+		                	 context="{'group_by':'is_imported'}"/>
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record> -->
+
+		<!-- form import_ftp_ls reliance -->
+        <record id="view_import_ftp_ls_form_reliance" model="ir.ui.view">
+            <field name="name">reliance_import_ftp_ls_form</field>
+            <field name="model">reliance.import_ftp_ls</field>
+            <field name="arch" type="xml">
+            	<form version="7">
+            		<header>
+            			<button name="check_new_files" type="object" string="process"/>
+            		</header>
+	            	<group>
+						<field name='date_start' />	
+						<field name='date_end' />	
+						<field name='user_id' />		            		
+						<field name='input_file' />					
+						<field name='total_records' />					
+						<field name='notes' />					
+		            </group>
+	            </form>
+            </field>
+        </record>
+
+
+	</data>
+</openerp>

@@ -7,7 +7,6 @@ from openerp.tools.translate import _
 import os
 import io
 import base64
-import csv
 
 EXTRACT_DIR = '/home'
 _logger = logging.getLogger(__name__)
