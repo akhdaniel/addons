@@ -59,7 +59,6 @@ class import_ftp_ls(osv.osv):
 			context={}
 		context.update({'date_start':time.strftime('%Y-%m-%d %H:%M:%S')})
 
-
 		# check done folders
 		if not os.path.exists(ftp_ls_folder + DONE_FOLDER):
 			os.makedirs(ftp_ls_folder + DONE_FOLDER)
@@ -70,7 +69,7 @@ class import_ftp_ls(osv.osv):
 		for f in zip_files:
 			if zipfile.is_zipfile(f):
 				self.unzip(f, ftp_ls_folder)
-				done = os.path.dirname(f) + DONE_FOLDER
+				done = self.done_filename(cr, uid, f, context=context)
 				shutil.move(f, done)
 			else:
 				_logger.error('wrong zip file')
@@ -175,8 +174,10 @@ class import_ftp_ls(osv.osv):
 				import_ls.create(cr, uid, data, context=context)
 
 				i = i +1
+
+
 		# move csv_file to processed folder
-		done = os.path.dirname(csv_file) + DONE_FOLDER
+		done = self.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
 		data = {
@@ -217,7 +218,7 @@ class import_ftp_ls(osv.osv):
 				i = i +1
 
 
-		done = os.path.dirname(csv_file) + DONE_FOLDER
+		done = self.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
 		data = {
@@ -267,7 +268,7 @@ class import_ftp_ls(osv.osv):
 
 				i = i +1
 
-		done = os.path.dirname(csv_file) + DONE_FOLDER
+		done = self.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
 		data = {
@@ -275,12 +276,16 @@ class import_ftp_ls(osv.osv):
 			'date_end' : time.strftime('%Y-%m-%d %H:%M:%S'),
 			'input_file' : csv_file,
 			'total_records' : i,
-			'notes'	: '%s moved to %s' % (csv_file, done),
+			'notes'	: 'moved to %s' % (done),
 		}
 		self.create(cr, uid, data, context=context )
 
 		return 
 
+	def done_filename(self, cr, uid, csv_file, context=None):
+		basename = os.path.basename(csv_file)
+		done = os.path.dirname(csv_file) + DONE_FOLDER + '/' + basename + '.' + context.get('date_start',False)
+		return done 
 
 
 
