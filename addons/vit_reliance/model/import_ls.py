@@ -170,10 +170,16 @@ class import_ls(osv.osv):
 			data.update( {'country_id' :country_id[0]})
 			data.update( {'comment':'LS'})
 
+			date_birth = False
 			if import_ls.date_birth != "NULL":
-				date_birth = datetime.strptime(import_ls.date_birth, "%Y-%m-%d")
-			else:
-				date_birth = False
+				try: 
+					date_birth = datetime.strptime(import_ls.date_birth, "%Y-%m-%d")
+				except ValueError:
+					self.write(cr, uid, import_ls.id, {'notes':'date birth format error, use yyyy-mm-dd'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+
 
 			data.update( {'perorangan_tanggal_lahir':date_birth})
 			
@@ -229,7 +235,7 @@ class import_ls_cash(osv.osv):
 
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
-		skip = 0
+		ex = 0
 		upd = 0
 		date = False
 
@@ -239,7 +245,7 @@ class import_ls_cash(osv.osv):
 		for import_cash in self.browse(cr, uid, ids, context=context):
 
 			if not import_cash.client_id:
-				skip = skip + 1
+				ex = ex + 1
 				self.write(cr, uid, import_cash.id ,  {'notes':'empty line'}, context=context)
 				cr.commit()
 				continue
@@ -249,10 +255,16 @@ class import_ls_cash(osv.osv):
 			if pid:
 				###### cari existing Cash record ############
 				cid = cash.search(cr, uid, [('partner_id','=', pid[0] )], context=context)
+				date = False 
 				if import_cash.date != "00:00.0":
-					date = datetime.strptime(import_cash.date, "%Y-%m-%d")
-				else:
-					date = False 
+					try: 
+						date = datetime.strptime(import_cash.date, "%Y-%m-%d")
+					except ValueError:
+						self.write(cr, uid, import_cash.id, {'notes':'date format error, use yyyy-mm-dd'}, context=context)
+						ex = ex+1
+						cr.commit()
+						continue
+						
 				data = {
 					"partner_id"	: 	pid[0],	
 					"date"			:	date ,
@@ -269,7 +281,7 @@ class import_ls_cash(osv.osv):
 					cash.write(cr, uid, cid, data, context=context)
 					_logger.warning('Update Partner Cash for ClientID=%s' % (import_cash.client_id))
 			else:
-				skip = skip + 1
+				ex = ex + 1
 				self.write(cr, uid, import_cash.id ,  {'notes':'No Partner'}, context=context)
 				_logger.warning('Partner ID not found for ClientID=%s' % import_cash.client_id)
 				cr.commit()
@@ -279,7 +291,7 @@ class import_ls_cash(osv.osv):
 			cr.commit()
 
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner_cash, skipped=%s,updated=%s ' % (i,skip, upd) )			
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner_cash, skipped=%s,updated=%s ' % (i,ex, upd) )			
 
 
 
@@ -326,7 +338,7 @@ class import_ls_stock(osv.osv):
 
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
-		skip = 0
+		ex = 0
 		upd = 0
 		date = False
 
@@ -336,7 +348,7 @@ class import_ls_stock(osv.osv):
 		for import_stock in self.browse(cr, uid, ids, context=context):
 			
 			if not import_stock.client_id:
-				skip = skip + 1
+				ex = ex + 1
 				self.write(cr, uid, import_stock.id ,  {'notes':'empty line'}, context=context)
 				cr.commit()
 				continue
@@ -346,10 +358,16 @@ class import_ls_stock(osv.osv):
 			if pid:
 				###### cari existing Cash record ############
 				cid = stock.search(cr, uid, [('partner_id','=', pid[0]),('stock_id','=',import_stock.stock_id)], context=context)
+				date = False 
 				if import_stock.date != "00:00.0":
-					date = datetime.strptime(import_stock.date, "%Y-%m-%d")
-				else:
-					date = False 
+					try: 
+						date = datetime.strptime(import_stock.date, "%Y-%m-%d")
+					except ValueError:
+						self.write(cr, uid, import_stock.id, {'notes':'date format error, use yyyy-mm-dd'}, context=context)
+						ex = ex+1
+						cr.commit()
+						continue
+
 				data = {
 					"date"				: date,
 					"partner_id"		: pid[0],
@@ -376,12 +394,12 @@ class import_ls_stock(osv.osv):
 					_logger.warning(data)
 
 			else:
-				skip = skip + 1
+				ex = ex + 1
 				_logger.warning('Partner ID not found for ClientID=%s' % import_stock.client_id)
 
 			cr.execute("update reliance_import_ls_stock set is_imported='t' where id=%s" % import_stock.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner_stock, skipped=%s, updated=%s ' % (i,skip, upd) )			
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner_stock, skipped=%s, updated=%s ' % (i,ex, upd) )			
 
 
