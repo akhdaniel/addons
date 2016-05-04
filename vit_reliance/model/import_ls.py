@@ -171,7 +171,7 @@ class import_ls(osv.osv):
 			data.update( {'comment':'LS'})
 
 			date_birth = False
-			if import_ls.date_birth != "NULL":
+			if import_ls.date_birth and import_ls.date_birth != "NULL":
 				try: 
 					date_birth = datetime.strptime(import_ls.date_birth, "%Y-%m-%d")
 				except ValueError:
@@ -256,7 +256,7 @@ class import_ls_cash(osv.osv):
 				###### cari existing Cash record ############
 				cid = cash.search(cr, uid, [('partner_id','=', pid[0] )], context=context)
 				date = False 
-				if import_cash.date != "00:00.0":
+				if import_cash.date and import_cash.date != "00:00.0":
 					try: 
 						date = datetime.strptime(import_cash.date, "%Y-%m-%d")
 					except ValueError:
@@ -264,7 +264,7 @@ class import_ls_cash(osv.osv):
 						ex = ex+1
 						cr.commit()
 						continue
-						
+
 				data = {
 					"partner_id"	: 	pid[0],	
 					"date"			:	date ,
@@ -359,7 +359,7 @@ class import_ls_stock(osv.osv):
 				###### cari existing Cash record ############
 				cid = stock.search(cr, uid, [('partner_id','=', pid[0]),('stock_id','=',import_stock.stock_id)], context=context)
 				date = False 
-				if import_stock.date != "00:00.0":
+				if import_stock.date and import_stock.date != "00:00.0":
 					try: 
 						date = datetime.strptime(import_stock.date, "%Y-%m-%d")
 					except ValueError:

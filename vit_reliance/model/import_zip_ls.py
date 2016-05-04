@@ -4,21 +4,17 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
-import zipfile,os.path
 import os
 import io
 import base64
 import csv
 
-EXTRACT_DIR = '/tmp'
+EXTRACT_DIR = '/home'
 _logger = logging.getLogger(__name__)
 
 ###############################################################
 # upload ZIP from web (binary field) => store to /home/reliance/ls/
-# upload ZIP from ftp => store to /home/reliance/ls/
-# regularly, check  /home/reliance/ls for new files
-# process unzip , save to customer
-# rename file to  /home/reliance/ls/processed/ 
+# reliance.ftp will continue to process these zip files
 ###############################################################
 class import_zip_ls(osv.osv):
 	_name 		= "reliance.import_zip_ls"
@@ -63,110 +59,16 @@ class import_zip_ls(osv.osv):
 
 	def process_customer(self, cr, uid,  zip_ls_customer, context=None):
 		ls_customer = io.BytesIO(zip_ls_customer)
-		files = self.unzip(ls_customer, EXTRACT_DIR )
+		files = self.pool.get('reliance.ftp').unzip(ls_customer, EXTRACT_DIR )
 		return 
 
 	def process_cash(self, cr, uid,  zip_ls_cash, context=None):
 		ls_cash = io.BytesIO(zip_ls_cash)
-		files = self.unzip(ls_cash, EXTRACT_DIR )
+		files = self.pool.get('reliance.ftp').unzip(ls_cash, EXTRACT_DIR )
 		return 
 
 	def process_stock(self, cr, uid,  zip_ls_stock, context=None):
 		ls_stock = io.BytesIO(zip_ls_stock)
-		files = self.unzip(ls_stock, EXTRACT_DIR )
+		files = self.pool.get('reliance.ftp').unzip(ls_stock, EXTRACT_DIR )
 		return
 
-
-	def insert_zip_ls_customer(self, cr, uid, csv_file, context=None):
-		import_ls = self.pool.get('reliance.import_ls')
-		with open( os.path.join(EXTRACT_DIR, csv_file) , 'rb') as csvfile:
-			spamreader = csv.reader(csvfile)
-			i = 0
-			for row in spamreader:
-				if i==0:
-					print "header",row 
-					data = self.map_fields(cr, uid, 'reliance.import_ls', row)
-					i = i+1
-					continue
-
-				data = {
-					"client_id"				: row[0],
-					"client_sid"			: row[1],
-					"client_name"			: row[2],
-					"place_birth"			: row[3],
-					"date_birth"			: row[4],
-					"cr_address"			: row[5],
-					"cr_city"				: row[6],
-					"cr_country"			: row[7],
-					"cr_zip"				: row[8],
-					"id_card_type"			: row[9],
-					"id_card"				: row[10],
-					"id_card_expire_date"	: row[11],
-					"npwp"					: row[12],
-					"nationality"			: row[13],
-					"marital_status"		: row[14],
-					"phone"					: row[15],
-					"cellular"				: row[16],
-					"fax"					: row[17],
-					"couplenames"			: row[18],
-					"email"					: row[19],
-					"education"				: row[20],
-					"religion"				: row[21],
-					"mother_name"			: row[22],
-					"mothers_maiden_name"	: row[23],
-					"title"					: row[24],
-					"organization"			: row[25],
-					"original_location"		: row[26],
-					"occupation"			: row[27],
-					"occupation_desc"		: row[28],
-					"company_name"			: row[29],
-					"client_sid2"			: row[30],
-					"company_address"		: row[31],
-					"company_city"			: row[32],
-					"company_country"		: row[33],
-					"company_description"	: row[34],
-					"company_zip"			: row[35],
-					"company_phone"			: row[36],
-					"company_fax"			: row[37],
-					"source_of_fund"		: row[38],
-					"source_of_fund_desc"	: row[39],
-					"gross_income_per_year"	: row[40],
-					"house_status"			: row[41],
-					"registered"			: row[42],
-					"void"					: row[43],				
-				}
-				import_ls.create(cr, uid, data, context=context)
-
-				i = i +1
-
-	def map_fields(self, cr, uid, model, header):
-		mapped = []
-		model_id = self.pool.get('ir.model').search(cr, uid, [('name','=',model)], context=context)
-		fields = self.pool.get('ir.model.fields').search_read(cr, uid, 
-			[('model_id','=',model_id[0])], fields=['display_name','name'], context=context)
-
-		fieldNames = [x['name'] for x in fields]
-
-		fieldNames = fieldNames.sort()
-		print "fieldNames",fieldNames
-		header = header.sort()
-		return mapped
-
-
-
-	def unzip(self, source_filename, dest_dir):
-		files = []
-
-		with zipfile.ZipFile(source_filename) as zf:
-			for member in zf.infolist():
-				words = member.filename.split('/')
-				path = dest_dir
-				for word in words[:-1]:
-					drive, word = os.path.splitdrive(word)
-					head, word = os.path.split(word)
-					if word in (os.curdir, os.pardir, ''): continue
-					path = os.path.join(path, word)
-				zf.extract(member, path)
-				files.append(member.filename)
-				
-		return files
