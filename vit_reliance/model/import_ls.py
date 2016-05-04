@@ -116,6 +116,7 @@ class import_ls(osv.osv):
 		"void"					:		fields.char("Void"),
 		'is_imported' 			: 		fields.boolean("Imported to Partner?", select=1),
 		"notes"					:		fields.char("Notes"),
+		"source"				:		fields.char("Source"),
 	}
 
 	def action_import_partner(self, cr, uid, context=None):
@@ -213,6 +214,7 @@ class import_ls_cash(osv.osv):
 		"saldo_t2"		:		fields.char("SaldoT2"),
 		'is_imported' 	: 		fields.boolean("Imported to Partner Cash?", select=1),
 		"notes"			:		fields.char("Notes"),
+		"source"		:		fields.char("Source"),
 	}
 
 	def action_import_partner_cash(self, cr, uid, context=None):
@@ -315,6 +317,7 @@ class import_ls_stock(osv.osv):
 		"sharesperlot"		:	fields.char("sharesperlot"),
 		'is_imported' 		: 	fields.boolean("Imported to Partner Stock?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),
 	}
 
 	def action_import_partner_stock(self, cr, uid, context=None):

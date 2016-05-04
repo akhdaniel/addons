@@ -107,6 +107,7 @@
 					<field name="void"					 />
 					<field name="is_imported"					 />
 					<field name="notes"					 />
+					<field name="source"					 />
 		        </tree>    
 		    </field>
 		</record>
@@ -144,6 +145,10 @@
 		                <filter string="Client SID" icon="terp-personal" 
 		                    domain="[]" name="group_by_client_sid"
 		                	 context="{'group_by':'client_sid'}"/>
+
+		                <filter string="Source" icon="terp-personal" 
+		                    domain="[]" name="group_by_source"
+		                	 context="{'group_by':'source'}"/>
 		            </group>                                        
 
 		        </search>
@@ -214,6 +219,7 @@
 						<field name="void"					 />
 						<field name="is_imported"			 />
 						<field name="notes"			 />
+						<field name="source"			 />
 		            </group>
 
 	            	<!-- <notebook>
@@ -255,6 +261,7 @@
 					
 					<field name="is_imported"		 />
 					<field name="notes"		 />
+					<field name="source"		 />
 		        </tree>    
 		    </field>
 		</record>
@@ -285,6 +292,9 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+		                <filter string="Source" icon="terp-personal" 
+		                    domain="[]" name="group_by_source"
+		                	 context="{'group_by':'source'}"/>
 		            </group>                                        
 
 		        </search>
@@ -315,6 +325,7 @@
 						<field name="saldo_t2"		 />
 						<field name="is_imported"		 />						
 						<field name="notes"		 />						
+						<field name="source"		 />						
 		            </group>
 
 	            </form>
@@ -348,6 +359,7 @@
 					<field name="sharesperlot"		 />					
 					<field name="is_imported"		 />					
 					<field name="notes"		 />					
+					<field name="source"		 />					
 		        </tree>    
 		    </field>
 		</record>
@@ -380,6 +392,10 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+		                <filter string="Source" icon="terp-personal" 
+		                    domain="[]" name="group_by_source"
+		                	 context="{'group_by':'source'}"/>
+
 		            </group>   					
 		        </search>
 		    </field>
@@ -413,6 +429,7 @@
 						<field name="market_value"		 />	
 						<field name="is_imported"		 />
 						<field name="notes"		 />
+						<field name="source"		 />
 		            </group>
 
 	            </form>

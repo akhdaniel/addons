@@ -168,7 +168,8 @@ class import_ftp_ls(osv.osv):
 					"gross_income_per_year"	: row[40],
 					"house_status"			: row[41],
 					"registered"			: row[42],
-					"void"					: row[43],				
+					"void"					: row[43],		
+					"source"				: csv_file,
 				}
 				import_ls.create(cr, uid, data, context=context)
 
@@ -207,6 +208,7 @@ class import_ftp_ls(osv.osv):
 					"cash_on_hand"	:	row[2],
 					"saldo_t1"		:	row[3],
 					"saldo_t2"		:	row[4],
+					"source"		: csv_file,
 				}
 				import_ls_cash.create(cr, uid, data, context=context)
 
@@ -256,6 +258,7 @@ class import_ftp_ls(osv.osv):
 					"market_value"		:	row[9],
 					"stock_type"		:	row[10],
 					"sharesperlot"		:	row[11],
+					"source"			: csv_file,
 				}
 				import_ls_stock.create(cr, uid, data, context=context)
 
