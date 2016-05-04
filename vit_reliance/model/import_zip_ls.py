@@ -64,13 +64,20 @@ class import_zip_ls(osv.osv):
 	def process_customer(self, cr, uid,  zip_ls_customer, context=None):
 		ls_customer = io.BytesIO(zip_ls_customer)
 		files = self.unzip(ls_customer, EXTRACT_DIR )
-
-		for csv_file in files:
-			self.insert_ls_customer(cr, uid, csv_file, context=context)
-
 		return 
 
-	def insert_ls_customer(self, cr, uid, csv_file, context=None):
+	def process_cash(self, cr, uid,  zip_ls_cash, context=None):
+		ls_cash = io.BytesIO(zip_ls_cash)
+		files = self.unzip(ls_cash, EXTRACT_DIR )
+		return 
+
+	def process_stock(self, cr, uid,  zip_ls_stock, context=None):
+		ls_stock = io.BytesIO(zip_ls_stock)
+		files = self.unzip(ls_stock, EXTRACT_DIR )
+		return
+
+
+	def insert_zip_ls_customer(self, cr, uid, csv_file, context=None):
 		import_ls = self.pool.get('reliance.import_ls')
 		with open( os.path.join(EXTRACT_DIR, csv_file) , 'rb') as csvfile:
 			spamreader = csv.reader(csvfile)
@@ -133,6 +140,7 @@ class import_zip_ls(osv.osv):
 				i = i +1
 
 	def map_fields(self, cr, uid, model, header):
+		mapped = []
 		model_id = self.pool.get('ir.model').search(cr, uid, [('name','=',model)], context=context)
 		fields = self.pool.get('ir.model.fields').search_read(cr, uid, 
 			[('model_id','=',model_id[0])], fields=['display_name','name'], context=context)
@@ -142,13 +150,8 @@ class import_zip_ls(osv.osv):
 		fieldNames = fieldNames.sort()
 		print "fieldNames",fieldNames
 		header = header.sort()
+		return mapped
 
-
-	def process_cash(self, cr, uid,  zip_ls_cash, context=None):
-		return 
-
-	def process_stock(self, cr, uid,  zip_ls_stock, context=None):
-		return
 
 
 	def unzip(self, source_filename, dest_dir):
