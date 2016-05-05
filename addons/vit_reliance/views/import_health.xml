@@ -64,6 +64,7 @@
 
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
+					<field name="source"/>
 		        </tree>    
 		    </field>
 		</record>
@@ -106,6 +107,10 @@
 		                <filter string="Member ID" icon="terp-personal" 
 		                    domain="[]" name="group_by_memberid"
 		                	 context="{'group_by':'memberid'}"/>
+
+		                <filter string="Source" icon="terp-personal" 
+		                    domain="[]" name="group_by_source"
+		                	 context="{'group_by':'source'}"/>
 		            </group>                                        
 
 		        </search>
@@ -131,7 +136,8 @@
 						<field name="relationship" />	
 													
 						<field name='is_imported' 		 />
-						<field name="notes"				 />						
+						<field name="notes"				 />	
+						<field name="source"/>					
 		            </group>
 
 	            </form>
