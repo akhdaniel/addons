@@ -127,6 +127,7 @@ class import_ftp_health(osv.osv):
 				'input_file' : csv_file,
 			}
 			self.create(cr, uid, data, context=context )
+			cr.commit()
 			return
 
 
@@ -152,29 +153,40 @@ class import_ftp_health(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_health_peserta = self.pool.get('reliance.import_health_peserta')
 		
-		with open( csv_file, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
-			i = 0
-			for row in spamreader:
-				if i==0:
-					_logger.warning("header")
-					_logger.warning(row)
-					i = i+1
-					continue
+		try:	
+			with open( csv_file, 'rb') as csvfile:
+				spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
+				i = 0
+				for row in spamreader:
+					if i==0:
+						_logger.warning("header")
+						_logger.warning(row)
+						i = i+1
+						continue
 
-				data = {
-					"policyno"		:	row[0],
-					"memberid"		:	row[1],
-					"membername"	:	row[2],
-					"sex"			:	row[3],
-					"birthdate"		:	row[4],
-					"status"		:	row[5],
-					"relationship"	:	row[6],			
-					"source"		: 	csv_file,
-				}
-				import_health_peserta.create(cr, uid, data, context=context)
+					data = {
+						"policyno"		:	row[0],
+						"memberid"		:	row[1],
+						"membername"	:	row[2],
+						"sex"			:	row[3],
+						"birthdate"		:	row[4],
+						"status"		:	row[5],
+						"relationship"	:	row[6],			
+						"source"		: 	csv_file,
+					}
+					import_health_peserta.create(cr, uid, data, context=context)
 
-				i = i +1
+					i = i +1
+		except IOError as e:
+			data = {
+				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
+				'date_start' : context.get('date_start',False),
+				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
+				'input_file' : csv_file,
+			}
+			self.create(cr, uid, data, context=context )
+			cr.commit()
+			return
 
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
@@ -199,27 +211,39 @@ class import_ftp_health(osv.osv):
 		_logger.warning('importing csv data limit health')
 		ftp_utils = ftp.ftp_utils()
 		import_health_limit = self.pool.get('reliance.import_health_limit')
-		with open( csv_file, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
-			i = 0
-			for row in spamreader:
-				if i==0:
-					_logger.warning("header")
-					_logger.warning(row)
-					i = i+1
-					continue
 
-				data = {
-					"policyno"		:	row[0],
-					"membid"		:	row[1],
-					"manfaat"		:	row[2],
-					"limit"			:	row[3],
-					"source"		: 	csv_file,
-				}
-				import_health_limit.create(cr, uid, data, context=context)
+		try:	
+			with open( csv_file, 'rb') as csvfile:
+				spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
+				i = 0
+				for row in spamreader:
+					if i==0:
+						_logger.warning("header")
+						_logger.warning(row)
+						i = i+1
+						continue
 
-				i = i +1
+					data = {
+						"policyno"		:	row[0],
+						"membid"		:	row[1],
+						"manfaat"		:	row[2],
+						"limit"			:	row[3],
+						"source"		: 	csv_file,
+					}
+					import_health_limit.create(cr, uid, data, context=context)
 
+					i = i +1
+		except IOError as e:
+			data = {
+				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
+				'date_start' : context.get('date_start',False),
+				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
+				'input_file' : csv_file,
+			}
+			self.create(cr, uid, data, context=context )
+			cr.commit()
+			return
+		
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
