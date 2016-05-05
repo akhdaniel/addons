@@ -33,3 +33,4 @@
 "access_reliance_partner_health_limit","access_reliance_partner_health_limit","model_reliance_partner_health_limit","group_uploader_health",1,1,1,1
 
 "access_reliance_import_ftp_ls","access_reliance_import_ftp_ls","model_reliance_import_ftp_ls","group_uploader_ls",1,1,1,1
+access_reliance_import_ftp_health,access_reliance_import_ftp_health,model_reliance_import_ftp_health,group_uploader_health,1,1,1,1
