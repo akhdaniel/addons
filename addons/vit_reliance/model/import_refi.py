@@ -559,10 +559,10 @@ class import_refi_kontrak(osv.osv):
 			next_installment = False
 			maturity_date = False
 			
-			if next_installment.strip():
+			if import_refi.next_installment.strip():
 				next_installment = datetime.strptime(import_refi.next_installment.strip(),"%d-%m-%Y")
 			
-			if maturity_date.strip():
+			if import_refi.maturity_date.strip():
 				maturity_date = datetime.strptime(import_refi.maturity_date.strip(),"%d-%m-%Y")
 
 			kontrak = {
