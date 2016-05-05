@@ -93,32 +93,41 @@ class import_ftp_health(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_health_polis = self.pool.get('reliance.import_health_polis')
 
+		try:
+			with open( csv_file, 'rb') as csvfile:
+				spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
+				i = 0
+				for row in spamreader:
+					if i==0:
+						_logger.warning("header")
+						_logger.warning(row)
+						# data = self.map_fields(cr, uid, 'reliance.import_health', row)
+						i = i+1
+						continue
 
-		with open( csv_file, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
-			i = 0
-			for row in spamreader:
-				if i==0:
-					_logger.warning("header")
-					_logger.warning(row)
-					# data = self.map_fields(cr, uid, 'reliance.import_health', row)
-					i = i+1
-					continue
+					data = {
+						"policyno"		: row[0],
+						"clientname"	: row[1],
+						"phone"			: row[2],
+						"fax"			: row[3],
+						"email"			: row[4],
+						"product"		: row[5],
+						"effdt"			: row[6],
+						"expdt"			: row[7],				
+						"source"		: csv_file,
+					}
+					import_health_polis.create(cr, uid, data, context=context)
 
-				data = {
-					"policyno"		: row[0],
-					"clientname"	: row[1],
-					"phone"			: row[2],
-					"fax"			: row[3],
-					"email"			: row[4],
-					"product"		: row[5],
-					"effdt"			: row[6],
-					"expdt"			: row[7],				
-					"source"		: csv_file,
-				}
-				import_health_polis.create(cr, uid, data, context=context)
-
-				i = i +1
+					i = i +1
+		except IOError as e:
+			data = {
+				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
+				'date_start' : context.get('date_start',False),
+				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
+				'input_file' : csv_file,
+			}
+			self.create(cr, uid, data, context=context )
+			return
 
 
 		# move csv_file to processed folder
