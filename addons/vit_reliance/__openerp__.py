@@ -41,6 +41,7 @@ Manage
 		"views/import_zip_health.xml", 
 
 		"views/import_ftp_ls.xml", 
+		"views/import_ftp_health.xml", 
 
 		"data/sequence.xml",
 		"data/cron.xml",

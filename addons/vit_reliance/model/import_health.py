@@ -27,6 +27,7 @@ class import_health_polis(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),
 	}
 
 	def action_import_polis(self, cr, uid, context=None):
@@ -124,6 +125,7 @@ class import_health_peserta(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),
 	}
 
 	def action_import_peserta(self, cr, uid, context=None):
@@ -230,6 +232,7 @@ class import_health_limit(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),
 	}
 
 	def action_import_limit(self, cr, uid, context=None):
