@@ -143,6 +143,8 @@ class import_ftp_health(osv.osv):
 			'notes'	: '%s moved to %s' % (csv_file, done),
 		}
 		self.create(cr, uid, data, context=context )
+		cr.commit()
+		
 		return 
 
 	###########################################################
@@ -200,12 +202,15 @@ class import_ftp_health(osv.osv):
 		}
 		self.create(cr, uid, data, context=context )
 
+		cr.commit()
 
 		return 
 
 
 	###########################################################
 	# read the CSV into ls stock
+	# deactivate Import Healt Limit jobs
+	# and activate after finished
 	###########################################################
 	def insert_health_limit(self, cr, uid, csv_file, context=None):
 		_logger.warning('importing csv data limit health')
@@ -243,7 +248,7 @@ class import_ftp_health(osv.osv):
 			self.create(cr, uid, data, context=context )
 			cr.commit()
 			return
-		
+
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
@@ -255,6 +260,7 @@ class import_ftp_health(osv.osv):
 			'notes'	: 'moved to %s' % (done),
 		}
 		self.create(cr, uid, data, context=context )
+		cr.commit()
 
 		return 
 
