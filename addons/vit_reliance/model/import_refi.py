@@ -556,6 +556,15 @@ class import_refi_kontrak(osv.osv):
 				ex=ex+1
 				continue
 
+			next_installment = False
+			maturity_date = False
+			
+			if next_installment.strip():
+				next_installment = datetime.strptime(import_refi.next_installment.strip(),"%d-%m-%Y")
+			
+			if maturity_date.strip():
+				maturity_date = datetime.strptime(import_refi.maturity_date.strip(),"%d-%m-%Y")
+
 			kontrak = {
 				"partner_id"		: 	cust_id[0],
 				"contract_number"	:	import_refi.contract_number, 
@@ -564,9 +573,9 @@ class import_refi_kontrak(osv.osv):
 				"product"			:	import_refi.product,	
 				"asset_name"		:	import_refi.asset_name,	
 				"outstanding"		:	import_refi.outstanding,	
-				"next_installment"	:	datetime.strptime(import_refi.next_installment,"%d-%m-%Y"),	
+				"next_installment"	:	next_installment,	
 				"pass_due"			:	import_refi.pass_due,	
-				"maturity_date"		:	datetime.strptime(import_refi.maturity_date,"%d-%m-%Y"),				
+				"maturity_date"		:	maturity_date,				
 			}
 
 			data = {
