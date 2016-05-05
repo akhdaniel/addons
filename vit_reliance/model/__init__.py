@@ -26,3 +26,4 @@ import import_zip_rmi
 import res_country
 
 import import_ftp_ls
+import import_ftp_health

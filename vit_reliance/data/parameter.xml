@@ -1,5 +1,5 @@
 <openerp>
-	<data>
+    <data noupdate="1">
 
 		<!-- ls_import_partner_limit -->
 		<record id="ls_import_partner_limit" model="ir.config_parameter">
