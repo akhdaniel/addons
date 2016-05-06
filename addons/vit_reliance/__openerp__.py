@@ -43,6 +43,7 @@ Manage
 		"views/import_ftp_ls.xml", 
 		"views/import_ftp_health.xml", 
 		"views/import_ftp_arg.xml", 
+		"views/import_ftp_ajri.xml", 
 
 		"data/sequence.xml",
 		"data/cron.xml",

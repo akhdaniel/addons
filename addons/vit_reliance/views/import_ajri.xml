@@ -45,6 +45,7 @@
 					<field name="klaim_disetujui"	 />
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
+					<field name="source"				 />
 		        </tree>    
 		    </field>
 		</record>
@@ -73,6 +74,7 @@
 					<field name="produk"			 />
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
+					<field name="source"				 />
 		
 		            <group expand="1" string="Group By...">
 		                <filter string="Is Imported" icon="terp-personal" 
@@ -117,6 +119,7 @@
 						<field name="klaim_disetujui"	 />
 						<field name='is_imported' 		 />
 						<field name="notes"				 />						
+						<field name="source"				 />						
 		            </group>
 
 	            </form>
