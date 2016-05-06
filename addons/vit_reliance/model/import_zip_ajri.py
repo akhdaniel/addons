@@ -16,3 +16,8 @@ class import_zip_ajri(osv.osv):
 		'is_imported' 			: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"					:	fields.char("Notes"),
 	}
+	_defaults = {
+		'date_import'   : lambda *a : time.strftime("%Y-%m-%d") ,
+		'user_id'		: lambda obj, cr, uid, context: uid,
+	}
+	

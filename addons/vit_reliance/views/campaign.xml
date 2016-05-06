@@ -56,7 +56,7 @@
 			            </group>
 
 			            <group string="Criteria">
-			            	<field name="distribution_list_id"/>
+			            	<!-- <field name="distribution_list_id"/> -->
 			            	<!-- <field name="criteria_age_start"/>
 			            	<field name="criteria_age_end"/>
 			            	<field name="criteria_product_ids" widget="many2many_tags"/> -->

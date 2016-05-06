@@ -24,6 +24,12 @@
 		    <field name="model">reliance.import_zip_arg</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_zip_arg" colors="grey:is_imported==True; blue:is_imported==Faarge">
+					<field name='zip_arg_polis' />	
+					<field name='zip_arg_risk' />		
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />			
 					
 		        </tree>    
 		    </field>
@@ -47,7 +53,12 @@
 
 					<!-- <field name="client_id"				 /> -->
 					
-
+					<field name='zip_arg_polis' />	
+					<field name='zip_arg_risk' />		
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />		
 		
 		            <group expand="1" string="Group By...">
 		                <filter string="Is Imported" icon="terp-personal" 
@@ -69,6 +80,12 @@
             		<header>
             		</header>
 	            	<group>
+						<field name='zip_arg_polis' />	
+						<field name='zip_arg_risk' />		
+						<field name='date_import' />	
+						<field name='date_processed' />
+						<field name='is_imported' /> 
+						<field name="notes" />			            		
 		            </group>
 	            </form>
             </field>

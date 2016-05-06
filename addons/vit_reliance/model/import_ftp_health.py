@@ -11,7 +11,8 @@ import shutil
 import ftp_utils as ftp
 
 _logger = logging.getLogger(__name__)
-
+DELIMITER=';'
+QUOTECHAR='"'
 
 class import_ftp_health(osv.osv):
 	_name 		= "reliance.import_ftp_health"
@@ -95,7 +96,7 @@ class import_ftp_health(osv.osv):
 
 		try:
 			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
+				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
 				i = 0
 				for row in spamreader:
 					if i==0:
@@ -157,7 +158,7 @@ class import_ftp_health(osv.osv):
 		
 		try:	
 			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
+				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
 				i = 0
 				for row in spamreader:
 					if i==0:
@@ -219,7 +220,7 @@ class import_ftp_health(osv.osv):
 
 		try:	
 			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=';', quotechar='"')
+				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
 				i = 0
 				for row in spamreader:
 					if i==0:
