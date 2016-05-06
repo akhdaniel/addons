@@ -22,6 +22,16 @@
 		    <field name="arch" type="xml">
 		    	<tree string="list import_zip_refi" colors="grey:is_imported==True; blue:is_imported==Farefie">
 					
+					<field name='zip_refi_customer' />	
+					<field name='zip_refi_pekerjaan' />		
+					<field name='zip_refi_keluarga' />
+					<field name='zip_refi_statement' />
+					<field name='zip_refi_kontrak' />
+
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />								
 		        </tree>    
 		    </field>
 		</record>
@@ -44,7 +54,16 @@
 
 					<!-- <field name="client_id"				 /> -->
 					
+					<field name='zip_refi_customer' />	
+					<field name='zip_refi_pekerjaan' />		
+					<field name='zip_refi_keluarga' />
+					<field name='zip_refi_statement' />
+					<field name='zip_refi_kontrak' />
 
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />	
 		
 		            <group expand="1" string="Group By...">
 		                <filter string="Is Imported" icon="terp-personal" 
@@ -66,6 +85,16 @@
             		<header>
             		</header>
 	            	<group>
+						<field name='zip_refi_customer' />	
+						<field name='zip_refi_pekerjaan' />		
+						<field name='zip_refi_keluarga' />
+						<field name='zip_refi_statement' />
+						<field name='zip_refi_kontrak' />
+
+						<field name='date_import' />	
+						<field name='date_processed' />
+						<field name='is_imported' /> 
+						<field name="notes" />		            		
 		            </group>
 	            </form>
             </field>

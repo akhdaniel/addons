@@ -26,7 +26,13 @@
 		    <field name="model">reliance.import_zip_rmi</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_zip_rmi" colors="grey:is_imported==True; blue:is_imported==Farmie">
-					
+					<field name='zip_rmi_customer' />	
+					<field name='zip_rmi_product_holding' />		
+
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />							
 		        </tree>    
 		    </field>
 		</record>
@@ -49,7 +55,13 @@
 
 					<!-- <field name="client_id"				 /> -->
 					
-
+					<field name='zip_rmi_customer' />	
+					<field name='zip_rmi_product_holding' />		
+					
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />	
 		
 		            <group expand="1" string="Group By...">
 		                <filter string="Is Imported" icon="terp-personal" 
@@ -70,6 +82,13 @@
             		<header>
             		</header>
 	            	<group>
+						<field name='zip_rmi_customer' />	
+						<field name='zip_rmi_product_holding' />		
+						
+						<field name='date_import' />	
+						<field name='date_processed' />
+						<field name='is_imported' /> 
+						<field name="notes" />		            		
 		            </group>
 	            </form>
             </field>

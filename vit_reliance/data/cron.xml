@@ -223,7 +223,7 @@
         <record model="ir.cron" id="import_ftp_ls">
             <field name="name">Auto Process LS FTP Files</field>
             <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_type">hours</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_ftp_ls'"/>
@@ -236,10 +236,23 @@
         <record model="ir.cron" id="import_ftp_health">
             <field name="name">Auto Process Health FTP Files</field>
             <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_type">hours</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
             <field name="model" eval="'reliance.import_ftp_health'"/>
+            <field name="function" eval="'cron_process'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
+        <!-- ARG FTP -->
+        
+        <record model="ir.cron" id="import_ftp_arg">
+            <field name="name">Auto Process ARG FTP Files</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_ftp_arg'"/>
             <field name="function" eval="'cron_process'"/>
             <field name="args" eval="'()'" />
         </record>  

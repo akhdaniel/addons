@@ -70,6 +70,7 @@ class import_arg(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),
 	}
 
 	def action_import_partner(self, cr, uid, context=None):
@@ -184,6 +185,7 @@ class import_arg_polis_risk(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Polis Risk?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),
 	}
 
 

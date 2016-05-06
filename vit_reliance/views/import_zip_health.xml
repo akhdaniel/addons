@@ -20,8 +20,17 @@
 		    <field name="name">reliance_import_zip_health_tree</field>
 		    <field name="model">reliance.import_zip_health</field>
 		    <field name="arch" type="xml">
-		    	<tree string="list import_zip_health" colors="grey:is_imported==True; blue:is_imported==Fahealthe">
-					
+		    	<tree string="list import_zip_health" colors="grey:is_imported==True; blue:is_imported==False">
+
+					<field name='zip_health_polis' />	
+					<field name='zip_health_peserta' />		
+					<field name='zip_health_limit' />		
+
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />			
+										
 		        </tree>    
 		    </field>
 		</record>
@@ -38,12 +47,20 @@
 		            	 name="imported" domain="[('is_imported','=',True)]"/>
 		            <filter icon="terp-mail-message-new" 
 		                string="Not Imported" 
-		            	 name="not_imported" domain="[('is_imported','=',Fahealthe)]"/>
+		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
 		            
 		            <separator/>
 
 					<!-- <field name="client_id"				 /> -->
 					
+					<field name='zip_health_polis' />	
+					<field name='zip_health_peserta' />		
+					<field name='zip_health_limit' />		
+
+					<field name='date_import' />	
+					<field name='date_processed' />
+					<field name='is_imported' /> 
+					<field name="notes" />			
 
 		
 		            <group expand="1" string="Group By...">
@@ -65,14 +82,19 @@
             		<header>
             		</header>
 	            	<group>
+						<field name='zip_health_polis' />	
+						<field name='zip_health_peserta' />		
+						<field name='zip_health_limit' />		
+
+						<field name='date_import' />	
+						<field name='date_processed' />
+						<field name='is_imported' /> 
+						<field name="notes" />			
+
 		            </group>
 	            </form>
             </field>
         </record>
-
-
-
-
 
 
 	</data>

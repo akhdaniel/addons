@@ -38,7 +38,7 @@ class reliance_campaign(osv.osv):
 		'state'			: fields.selection(CAMPAIGN_STATES,'Status',readonly=True,required=True),
 		'user_id'		: fields.many2one('res.users', 'Created By'),
 
-		'distribution_list_id' : fields.many2one('distribution.list', 'Distribution List'),
+		# 'distribution_list_id' : fields.many2one('distribution.list', 'Distribution List'),
 	}
 
 	_defaults = {
