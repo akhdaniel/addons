@@ -29,3 +29,4 @@ import import_ftp_ls
 import import_ftp_health
 import import_ftp_arg
 import import_ftp_ajri
+import import_ftp_rmi

@@ -74,6 +74,7 @@
 
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
+					<field name="source" />
 		        </tree>    
 		    </field>
 		</record>
@@ -124,6 +125,7 @@
 		
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
+					<field name="source" />
 		
 		            <group expand="1" string="Group By...">
 		                <filter string="Is Imported" icon="terp-personal" 
@@ -177,7 +179,8 @@
 						<field name="hubungan_dengan_ahli_waris" />
 
 						<field name='is_imported' 		 />
-						<field name="notes"				 />						
+						<field name="notes"				 />	
+						<field name="source" />					
 		            </group>
 
 	            </form>
@@ -226,6 +229,7 @@
 					<field name="profit_capital_loss" />		
 					<field name='is_imported' /> 				
 					<field name="notes" />						
+					<field name="source" />
 
 		        </tree>    
 		    </field>
@@ -260,6 +264,7 @@
 					<field name="profit_capital_loss" />		
 					<field name='is_imported' /> 				
 					<field name="notes" />			
+					<field name="source" />
 		
 		            <group expand="1" string="Group By...">
 		                <filter string="Is Imported" icon="terp-personal" 
@@ -295,6 +300,7 @@
 
 						<field name='is_imported' 		 />
 						<field name="notes"				 />						
+						<field name="source" />
 		            </group>
 
 	            </form>

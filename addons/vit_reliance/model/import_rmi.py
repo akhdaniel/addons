@@ -46,6 +46,7 @@ PARTNER_MAPPING = {
 class import_rmi(osv.osv): 
 	_name 		= "reliance.import_rmi"
 	_columns 	= {
+		"no"						:	fields.char("No"),
 		"sid"						:	fields.char("SID"),
 		"nama"						:	fields.char("Nama"),
 		"jenis_kelamin"				:	fields.char("Jenis Kelamin"),
@@ -80,6 +81,7 @@ class import_rmi(osv.osv):
 
 		'is_imported' 				: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"						:	fields.char("Notes"),
+		"source"					:	fields.char("Source"),
 	}
 
 	def action_import(self, cr, uid, context=None):
@@ -196,6 +198,7 @@ HOLDING_MAPPING = {
 class import_rmi_product_holding(osv.osv): 
 	_name 		= "reliance.import_rmi_product_holding"
 	_columns 	= {
+		"no"						:	fields.char("No"),
 		"sid"						:	fields.char("SID"),
 		"nama_investor"				:	fields.char("Nama Investor"),
 		"product_id"				:	fields.char("Product ID"),
@@ -209,6 +212,7 @@ class import_rmi_product_holding(osv.osv):
 
 		'is_imported' 				: 	fields.boolean("Imported to Product Holding?", select=1),
 		"notes"						:	fields.char("Notes"),
+		"source"					:	fields.char("Source"),
 
 	}
 
