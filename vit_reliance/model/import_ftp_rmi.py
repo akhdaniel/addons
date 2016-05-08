@@ -6,13 +6,12 @@ import logging
 from openerp.tools.translate import _
 import zipfile,os.path
 import glob
-import csv
 import shutil
 import ftp_utils as ftp
 
 _logger = logging.getLogger(__name__)
-DELIMITER = ','
-QUOTECHAR = '"'
+DELIMITER=","
+QUOTECHAR='"'
 
 class import_ftp_rmi(osv.osv):
 	_name 		= "reliance.import_ftp_rmi"
@@ -52,7 +51,6 @@ class import_ftp_rmi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 
 		ftp_rmi_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_rmi_folder')
-
 		ftp_utils.check_done_folder(ftp_rmi_folder)
 
 		if context==None:
@@ -88,68 +86,50 @@ class import_ftp_rmi(osv.osv):
 	# read the CSV into rmi partner
 	###########################################################
 	def insert_rmi_customer(self, cr, uid, csv_file, context=None):
-		_logger.warning('importing csv data polis arg')
+		_logger.warning('importing csv data insert_rmi_customer')
 		ftp_utils = ftp.ftp_utils()
 		import_rmi = self.pool.get('reliance.import_rmi')
 
-		try:
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter= DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
-
-					data = {
-						"no"						:	row[0],
-						"sid"						:	row[1],
-						"nama"						:	row[2],
-						"jenis_kelamin"				:	row[3],
-						"alamat_ktp"				:	row[4],
-						"no_ktp_siup"				:	row[5],
-						"propinsi"					:	row[6],
-						"kota"						:	row[7],
-						"kode_pos"					:	row[8],
-						"negara"					:	row[9],
-						"agama"						:	row[10],
-						"tempat_lahir"				:	row[11],
-						"tanggal_lahir"				:	row[12],
-						"nomor_tlp"					:	row[13],
-						"alamat_surat_menyurat"		:	row[14],
-						"propinsi_surat_menyurat"	:	row[15],
-						"kota_surat_menyurat"		:	row[16],
-						"kode_pos_surat_menyurat"	:	row[17],
-						"negara_surat_menyurat"		:	row[18],
-						"pendidikan_terakhir"		:	row[19],
-						"fax"						:	row[20],
-						"telpon"					:	row[21],
-						"email"						:	row[22],
-						"handphone"					:	row[23],
-						"ahli_waris"				:	row[24],
-						"hubungan_dengan_ahli_waris":	row[25],
-						"pekerjaan"					:	row[26],
-						"gaji_pertahun"				:	row[27],
-						"alasan_berinvestasi"		:	row[28],
-						"kewarganegaraan"			:	row[29],						
-						"source"					: 	csv_file,
-					}
-					import_rmi.create(cr, uid, data, context=context)
-
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		fields_map = [
+			"no"						,
+			"sid"						,
+			"nama"						,
+			"jenis_kelamin"				,
+			"alamat_ktp"				,
+			"no_ktp_siup"				,
+			"propinsi"					,
+			"kota"						,
+			"kode_pos"					,
+			"negara"					,
+			"agama"						,
+			"tempat_lahir"				,
+			"tanggal_lahir"				,
+			"nomor_tlp"					,
+			"alamat_surat_menyurat"		,
+			"propinsi_surat_menyurat"	,
+			"kota_surat_menyurat"		,
+			"kode_pos_surat_menyurat"	,
+			"negara_surat_menyurat"		,
+			"pendidikan_terakhir"		,
+			"fax"						,
+			"telpon"					,
+			"email"						,
+			"handphone"					,
+			"ahli_waris"				,
+			"hubungan_dengan_ahli_waris",
+			"pekerjaan"					,
+			"gaji_pertahun"				,
+			"alasan_berinvestasi"		,
+			"kewarganegaraan"			,
+		]
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_rmi, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
-
 
 		# move csv_file to processed folder
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
@@ -171,49 +151,33 @@ class import_ftp_rmi(osv.osv):
 	# read the CSV into rmi cash
 	###########################################################
 	def insert_rmi_product_holding(self, cr, uid, csv_file, context=None):
-		_logger.warning('importing csv data risk arg')
+		_logger.warning('importing csv data import_rmi_product_holding')
 		ftp_utils = ftp.ftp_utils()
 		import_rmi_product_holding = self.pool.get('reliance.import_rmi_product_holding')
 		
-		try:	
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
+		fields_map = [
+			"no"						,
+			"sid"						,
+			"nama_investor"				,
+			"product_id"				,
+			"product_name"				,
+			"unit_penyertaan"			,
+			"nab_saat_beli"				,
+			"nab_sampai_hari_ini"		,
+			"nominal_investasi_awal"	,
+			"nominal_investasi_akhir"	,
+			"profit_capital_loss"		,
+		]
 
-					data = {
-						"no"						:	row[0],
-						"sid"						:	row[1],
-						"nama_investor"				:	row[2],
-						"product_id"				:	row[3],
-						"product_name"				:	row[4],
-						"unit_penyertaan"			:	row[5],
-						"nab_saat_beli"				:	row[6],
-						"nab_sampai_hari_ini"		:	row[7],
-						"nominal_investasi_awal"	:	row[8],
-						"nominal_investasi_akhir"	:	row[9],
-						"profit_capital_loss"		:	row[10],					
-						"source"					: 	csv_file,
-					}
-					import_rmi_product_holding.create(cr, uid, data, context=context)
-
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_rmi_product_holding, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
-
+			
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 

@@ -121,7 +121,7 @@
 		<!-- imports menu -->
 
 		<menuitem id="rcm_import" name="Imports" sequence="40" parent="rcm"/>
-		<menuitem id="rcm_import_ftp" name="Import FTP" sequence="50" parent="rcm"/>
+		<menuitem id="rcm_import_ftp" name="Import FTP Logs" sequence="50" parent="rcm"/>
 		<menuitem id="rcm_import_zip" name="Import ZIPs" sequence="60" parent="rcm"/>
 
 		<!-- configuration data menu -->

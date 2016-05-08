@@ -98,6 +98,7 @@ class import_refi_partner(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),	
 	}
 
 	def action_import_partner(self, cr, uid, context=None):
@@ -211,6 +212,7 @@ class import_refi_pekerjaan(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),	
 	}
 
 	def action_import(self, cr, uid, context=None):
@@ -307,6 +309,7 @@ class import_refi_keluarga(osv.osv):
 		"profesi"			:	fields.char("Profesi"),	
 		'is_imported' 		: 	fields.boolean("Imported to Partner Keluarga?", select=1),
 		"notes"				:	fields.char("Notes"),
+		"source"			:	fields.char("Source"),	
 	}
 
 
@@ -435,6 +438,7 @@ class import_refi_statement(osv.osv):
 
 		'is_imported' 		: 	fields.boolean("Imported to Partner Statement?", select=1),
 		"notes"				:	fields.char("Notes"),	
+		"source"			:	fields.char("Source"),	
 	}
 
 	def action_import(self, cr, uid, context=None):
@@ -507,6 +511,7 @@ class import_refi_kontrak(osv.osv):
 		"maturity_date"		:	fields.char("MaturityDate"),
 		'is_imported' 		: 	fields.boolean("Imported to Partner Kontrak?", select=1),
 		"notes"				:	fields.char("Notes"),	
+		"source"			:	fields.char("Source"),	
 
 	}
 
