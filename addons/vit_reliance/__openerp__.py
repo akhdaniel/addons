@@ -45,6 +45,7 @@ Manage
 		"views/import_ftp_arg.xml", 
 		"views/import_ftp_ajri.xml", 
 		"views/import_ftp_rmi.xml", 
+		"views/import_ftp_refi.xml", 
 
 		"data/sequence.xml",
 		"data/cron.xml",

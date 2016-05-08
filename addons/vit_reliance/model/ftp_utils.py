@@ -1,9 +1,17 @@
 import zipfile,os.path
+import time
+import logging
+import csv
+
+_logger = logging.getLogger(__name__)
 
 DONE_FOLDER = '/done'
 
 class ftp_utils(object):
 
+	###########################################################
+	# check or create done folder
+	###########################################################
 	def check_done_folder(self, folder):
 		# check done folders
 		if not os.path.exists(folder + DONE_FOLDER):
@@ -38,3 +46,84 @@ class ftp_utils(object):
 		done = os.path.dirname(csv_file) + DONE_FOLDER + '/' + basename + '.' + context.get('date_start',False)
 		return done 
 
+
+	###########################################################
+	# read csv, insert to dest_obj
+	# according to fields_map
+	###########################################################
+	def read_csv_insert(self, cr, uid, csv_file, fields_map, dest_obj, 
+		delimiter=',', quotechar='"', cron_id=False, cron_obj=False, context=None):
+
+		paused = False
+		i = 0
+		row=[]
+
+		try:
+			#pause cron, exception if failed to pause
+			self.pause_cron(cr,uid,cron_id,cron_obj,context=context)
+			paused = True
+
+			with open( csv_file, 'rb') as csvfile:
+				spamreader = csv.reader(csvfile, delimiter= delimiter, quotechar=quotechar)
+				i = 0
+				for row in spamreader:
+					if not row:
+						continue					
+					
+					if i==0:
+						_logger.warning("header")
+						_logger.warning(row)
+						if len(row) == 1:
+							raise Exception('delimiter not match?') 
+						i = i+1
+						continue
+
+					data = {}
+					r = 0
+					for field in fields_map:
+						data.update({field: row[r]})
+						r = r + 1
+
+					data.update({"source": csv_file})
+					dest_obj.create(cr, uid, data, context=context)
+
+					i = i +1
+
+			self.resume_cron(cr,uid,cron_id,cron_obj,context=context)
+			return i
+
+		except IOError as e:
+			data = {
+				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
+				'date_start' : context.get('date_start',False),
+				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
+				'input_file' : csv_file,
+			}
+			if paused:
+				self.resume_cron(cr,uid,cron_id,cron_obj,context=context)
+			return data
+
+		except Exception as e:
+			data = {
+				'notes': "Exception: %s @row:%s row=%s" % ( str( e ) , i , delimiter.join(row) ),
+				'date_start' : context.get('date_start',False),
+				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
+				'input_file' : csv_file,
+			}
+			if paused:
+				self.resume_cron(cr,uid,cron_id,cron_obj,context=context)
+			return data 
+
+	###########################################################
+	# try to pause the cron job
+	###########################################################
+	def pause_cron(self,cr,uid,cron_id,cron_obj, context=None):
+		cron_obj.write(cr, uid ,cron_id,{'active': False}, context=context)
+		cr.commit()
+
+	###########################################################
+	# resume the cron job
+	###########################################################
+	def resume_cron(self,cr,uid,cron_id,cron_obj, context=None):
+		cron_obj.write(cr, uid ,cron_id,{'active': True}, context=context)
+		cr.commit()

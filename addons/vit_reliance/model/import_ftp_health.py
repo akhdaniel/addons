@@ -6,7 +6,7 @@ import logging
 from openerp.tools.translate import _
 import zipfile,os.path
 import glob
-import csv
+
 import shutil
 import ftp_utils as ftp
 
@@ -94,43 +94,34 @@ class import_ftp_health(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_health_polis = self.pool.get('reliance.import_health_polis')
 
-		try:
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						# data = self.map_fields(cr, uid, 'reliance.import_health', row)
-						i = i+1
-						continue
+		cron_obj = self.pool.get('ir.cron') 
+		cron_id = cron_obj.search(cr, uid, 
+			[('name','=', "Auto Import Health Polis Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job") ) 
 
-					data = {
-						"policyno"		: row[0],
-						"clientname"	: row[1],
-						"phone"			: row[2],
-						"fax"			: row[3],
-						"email"			: row[4],
-						"product"		: row[5],
-						"effdt"			: row[6],
-						"expdt"			: row[7],				
-						"source"		: csv_file,
-					}
-					import_health_polis.create(cr, uid, data, context=context)
+		fields_map = [
+			"policyno"		,
+			"clientname"	,
+			"phone"			,
+			"fax"			,
+			"email"			,
+			"product"		,
+			"effdt"			,
+			"expdt"			,
+		]
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_health_polis, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR, 
+			cron_id=cron_id,
+			cron_obj=cron_obj,
+			context=context)
 
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		#resume cron
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
-
 
 		# move csv_file to processed folder
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
@@ -155,39 +146,31 @@ class import_ftp_health(osv.osv):
 		_logger.warning('importing csv data peserta health')
 		ftp_utils = ftp.ftp_utils()
 		import_health_peserta = self.pool.get('reliance.import_health_peserta')
+
+		cron_obj = self.pool.get('ir.cron') 
+		cron_id = cron_obj.search(cr, uid, 
+			[('name','=', "Auto Import Health Peserta Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job") ) 
+
+		fields_map = [
+			"policyno"		,
+			"memberid"		,
+			"membername"	,
+			"sex"			,
+			"birthdate"		,
+			"status"		,
+			"relationship"	,
+		]
+
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_health_peserta, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR, 
+			cron_id=cron_id,
+			cron_obj=cron_obj,
+			context=context)
 		
-		try:	
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
-
-					data = {
-						"policyno"		:	row[0],
-						"memberid"		:	row[1],
-						"membername"	:	row[2],
-						"sex"			:	row[3],
-						"birthdate"		:	row[4],
-						"status"		:	row[5],
-						"relationship"	:	row[6],			
-						"source"		: 	csv_file,
-					}
-					import_health_peserta.create(cr, uid, data, context=context)
-
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
 
@@ -218,38 +201,33 @@ class import_ftp_health(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_health_limit = self.pool.get('reliance.import_health_limit')
 
-		try:	
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
+		cron_obj = self.pool.get('ir.cron') 
+		cron_id = cron_obj.search(cr, uid, 
+			[('name','=', "Auto Import Health Partner Limit")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job") ) 
 
-					data = {
-						"policyno"		:	row[0],
-						"membid"		:	row[1],
-						"manfaat"		:	row[2],
-						"limit"			:	row[3],
-						"source"		: 	csv_file,
-					}
-					import_health_limit.create(cr, uid, data, context=context)
 
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+
+		fields_map = [
+			"policyno"		,
+			"membid"		,
+			"manfaat"		,
+			"limit"			,
+		]
+
+
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_health_limit, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR, 
+			cron_id=cron_id,
+			cron_obj=cron_obj,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
-			return
-
+			return	
+			
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 

@@ -6,13 +6,12 @@ import logging
 from openerp.tools.translate import _
 import zipfile,os.path
 import glob
-import csv
 import shutil
 import ftp_utils as ftp
 
 _logger = logging.getLogger(__name__)
-DELIMITER = ','
-QUOTECHAR = '"'
+DELIMITER=","
+QUOTECHAR='"'
 
 class import_ftp_ajri(osv.osv):
 	_name 		= "reliance.import_ftp_ajri"
@@ -86,53 +85,37 @@ class import_ftp_ajri(osv.osv):
 	# read the CSV into ls partner
 	###########################################################
 	def insert_ajri_customer(self, cr, uid, csv_file, context=None):
-		_logger.warning('importing csv data polis arg')
+		_logger.warning('importing csv data insert_ajri_customer')
 		ftp_utils = ftp.ftp_utils()
 		import_ajri = self.pool.get('reliance.import_ajri')
 
-		try:
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter= DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
+		fields_map = [
+			"nomor_polis"			,
+			"nama_pemegang"			,
+			"nomor_partisipan"		,
+			"nama_partisipan"		,
+			"produk"				,
+			"tgl_lahir"				,
+			"tgl_mulai"				,
+			"tgl_selesai"			,
+			"status"				,
+			"up"					,
+			"total_premi"			,
+			"status_klaim"			,
+			"status_bayar"			,
+			"tgl_bayar"				,
+			"klaim_disetujui"		,
+		]
 
-					data = {
-						"nomor_polis"			:	row[0],
-						"nama_pemegang"			:	row[1],
-						"nomor_partisipan"		:	row[2],
-						"nama_partisipan"		:	row[3],
-						"produk"				:	row[4],
-						"tgl_lahir"				:	row[5],
-						"tgl_mulai"				:	row[6],
-						"tgl_selesai"			:	row[7],
-						"status"				:	row[8],
-						"up"					:	row[9],
-						"total_premi"			:	row[10],
-						"status_klaim"			:	row[11],
-						"status_bayar"			:	row[12],
-						"tgl_bayar"				:	row[13],
-						"klaim_disetujui"		:	row[14],					
-						"source"				: 	csv_file,
-					}
-					import_ajri.create(cr, uid, data, context=context)
-
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ajri, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
-
 
 		# move csv_file to processed folder
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)

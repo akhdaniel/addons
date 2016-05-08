@@ -8,10 +8,11 @@ import zipfile,os.path
 import glob
 import csv
 import shutil
+import ftp_utils as ftp
 
 _logger = logging.getLogger(__name__)
-
-DONE_FOLDER = '/done'
+DELIMITER="\t"
+QUOTECHAR='"'
 
 class import_ftp_ls(osv.osv):
 	_name 		= "reliance.import_ftp_ls"
@@ -48,28 +49,23 @@ class import_ftp_ls(osv.osv):
 	# process the extracted CSV 
 	###########################################################
 	def check_new_files(self, cr, uid, ids, context=None):
+		ftp_utils = ftp.ftp_utils()
+
 		ftp_ls_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_ls_folder')
-		# ftp_arg_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_arg_folder')
-		# ftp_ajri_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_ajri_folder')
-		# ftp_refi_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_refi_folder')
-		# ftp_rmi_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_rmi_folder')
-		# ftp_health_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_health_folder')
+		ftp_utils.check_done_folder(ftp_ls_folder)
 
 		if context==None:
 			context={}
 		context.update({'date_start':time.strftime('%Y-%m-%d %H:%M:%S')})
 
-		# check done folders
-		if not os.path.exists(ftp_ls_folder + DONE_FOLDER):
-			os.makedirs(ftp_ls_folder + DONE_FOLDER)
 
 		# search and extract ZIP and move zip to done folder
 		zip_files = glob.glob(ftp_ls_folder + '/*.zip')
 
 		for f in zip_files:
 			if zipfile.is_zipfile(f):
-				self.unzip(f, ftp_ls_folder)
-				done = self.done_filename(cr, uid, f, context=context)
+				ftp_utils.unzip(f, ftp_ls_folder)
+				done = ftp_utils.done_filename(cr, uid, f, context=context)
 				shutil.move(f, done)
 			else:
 				_logger.error('wrong zip file')
@@ -87,97 +83,73 @@ class import_ftp_ls(osv.osv):
 		return 
 
 	###########################################################
-	# unzip the uploaded file
-	###########################################################
-	def unzip(self, source_filename, dest_dir):
-		files = []
-
-		with zipfile.ZipFile(source_filename) as zf:
-			for member in zf.infolist():
-				words = member.filename.split('/')
-				path = dest_dir
-				for word in words[:-1]:
-					drive, word = os.path.splitdrive(word)
-					head, word = os.path.split(word)
-					if word in (os.curdir, os.pardir, ''): continue
-					path = os.path.join(path, word)
-				zf.extract(member, path)
-				files.append(member.filename)
-				
-		return files
-
-	###########################################################
 	# read the CSV into ls partner
 	###########################################################
 	def insert_ls_customer(self, cr, uid, csv_file, context=None):
+
+		_logger.warning('importing csv data insert_ls_customer')
+		ftp_utils = ftp.ftp_utils()
 		import_ls = self.pool.get('reliance.import_ls')
 
 
-		with open( csv_file, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile)
-			i = 0
-			for row in spamreader:
-				if i==0:
-					_logger.warning("header")
-					_logger.warning(row)
-					# data = self.map_fields(cr, uid, 'reliance.import_ls', row)
-					i = i+1
-					continue
+		fields_map = [
+			"client_id"				,
+			"client_sid"			,
+			"client_name"			,
+			"place_birth"			,
+			"date_birth"			,
+			"cr_address"			,
+			"cr_city"				,
+			"cr_country"			,
+			"cr_zip"				,
+			"id_card_type"			,
+			"id_card"				,
+			"id_card_expire_date"	,
+			"npwp"					,
+			"nationality"			,
+			"marital_status"		,
+			"phone"					,
+			"cellular"				,
+			"fax"					,
+			"couplenames"			,
+			"email"					,
+			"education"				,
+			"religion"				,
+			"mother_name"			,
+			"mothers_maiden_name"	,
+			"title"					,
+			"organization"			,
+			"original_location"		,
+			"occupation"			,
+			"occupation_desc"		,
+			"company_name"			,
+			"client_sid2"			,
+			"company_address"		,
+			"company_city"			,
+			"company_country"		,
+			"company_description"	,
+			"company_zip"			,
+			"company_phone"			,
+			"company_fax"			,
+			"source_of_fund"		,
+			"source_of_fund_desc"	,
+			"gross_income_per_year"	,
+			"house_status"			,
+			"registered"			,
+			"void"					,
+		]
 
-				data = {
-					"client_id"				: row[0],
-					"client_sid"			: row[1],
-					"client_name"			: row[2],
-					"place_birth"			: row[3],
-					"date_birth"			: row[4],
-					"cr_address"			: row[5],
-					"cr_city"				: row[6],
-					"cr_country"			: row[7],
-					"cr_zip"				: row[8],
-					"id_card_type"			: row[9],
-					"id_card"				: row[10],
-					"id_card_expire_date"	: row[11],
-					"npwp"					: row[12],
-					"nationality"			: row[13],
-					"marital_status"		: row[14],
-					"phone"					: row[15],
-					"cellular"				: row[16],
-					"fax"					: row[17],
-					"couplenames"			: row[18],
-					"email"					: row[19],
-					"education"				: row[20],
-					"religion"				: row[21],
-					"mother_name"			: row[22],
-					"mothers_maiden_name"	: row[23],
-					"title"					: row[24],
-					"organization"			: row[25],
-					"original_location"		: row[26],
-					"occupation"			: row[27],
-					"occupation_desc"		: row[28],
-					"company_name"			: row[29],
-					"client_sid2"			: row[30],
-					"company_address"		: row[31],
-					"company_city"			: row[32],
-					"company_country"		: row[33],
-					"company_description"	: row[34],
-					"company_zip"			: row[35],
-					"company_phone"			: row[36],
-					"company_fax"			: row[37],
-					"source_of_fund"		: row[38],
-					"source_of_fund_desc"	: row[39],
-					"gross_income_per_year"	: row[40],
-					"house_status"			: row[41],
-					"registered"			: row[42],
-					"void"					: row[43],		
-					"source"				: csv_file,
-				}
-				import_ls.create(cr, uid, data, context=context)
-
-				i = i +1
-
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ls, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
+			cr.commit()
+			return
 
 		# move csv_file to processed folder
-		done = self.done_filename(cr, uid, csv_file, context=context)
+		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
 		data = {
@@ -194,31 +166,28 @@ class import_ftp_ls(osv.osv):
 	# read the CSV into ls cash
 	###########################################################
 	def insert_ls_cash(self, cr, uid, csv_file, context=None):
+		
+		_logger.warning('importing csv data insert_ls_cash')
+		ftp_utils = ftp.ftp_utils()
 		import_ls_cash = self.pool.get('reliance.import_ls_cash')
-		with open( csv_file, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile)
-			i = 0
-			for row in spamreader:
-				if i==0:
-					_logger.warning("header")
-					_logger.warning(row)
-					i = i+1
-					continue
 
-				data = {
-					"client_id"		:	row[0],
-					"date"			:	row[1],
-					"cash_on_hand"	:	row[2],
-					"saldo_t1"		:	row[3],
-					"saldo_t2"		:	row[4],
-					"source"		: csv_file,
-				}
-				import_ls_cash.create(cr, uid, data, context=context)
+		fields_map = [
+			"client_id"		,
+			"date"			,
+			"cash_on_hand"	,
+			"saldo_t1"		,
+			"saldo_t2"		,
+		]
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ls_cash, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
+			cr.commit()
+			return
 
-				i = i +1
-
-
-		done = self.done_filename(cr, uid, csv_file, context=context)
+		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
 		data = {
@@ -230,7 +199,6 @@ class import_ftp_ls(osv.osv):
 		}
 		self.create(cr, uid, data, context=context )
 
-
 		return 
 
 
@@ -238,37 +206,35 @@ class import_ftp_ls(osv.osv):
 	# read the CSV into ls stock
 	###########################################################
 	def insert_ls_stock(self, cr, uid, csv_file, context=None):
+
+		_logger.warning('importing csv data insert_ls_cash')
+		ftp_utils = ftp.ftp_utils()
+
 		import_ls_stock = self.pool.get('reliance.import_ls_stock')
-		with open( csv_file, 'rb') as csvfile:
-			spamreader = csv.reader(csvfile)
-			i = 0
-			for row in spamreader:
-				if i==0:
-					_logger.warning("header")
-					_logger.warning(row)
-					i = i+1
-					continue
+		fields_map = [
+			"date"				,
+			"client_id"			,
+			"stock_id"			,
+			"stock_name"		,
+			"avg_price"			,
+			"close_price"		,
+			"balance"			,
+			"lpp"				,
+			"stock_avg_value"	,
+			"market_value"		,
+			"stock_type"		,
+			"sharesperlot"		,
+		]
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ls_stock, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
+			cr.commit()
+			return
 
-				data = {
-					"date"				:	row[0],
-					"client_id"			:	row[1],
-					"stock_id"			:	row[2],
-					"stock_name"		:	row[3],
-					"avg_price"			:	row[4],
-					"close_price"		:	row[5],
-					"balance"			:	row[6],
-					"lpp"				:	row[7],
-					"stock_avg_value"	:	row[8],
-					"market_value"		:	row[9],
-					"stock_type"		:	row[10],
-					"sharesperlot"		:	row[11],
-					"source"			: csv_file,
-				}
-				import_ls_stock.create(cr, uid, data, context=context)
-
-				i = i +1
-
-		done = self.done_filename(cr, uid, csv_file, context=context)
+		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
 		data = {
@@ -281,12 +247,3 @@ class import_ftp_ls(osv.osv):
 		self.create(cr, uid, data, context=context )
 
 		return 
-
-	def done_filename(self, cr, uid, csv_file, context=None):
-		basename = os.path.basename(csv_file)
-		done = os.path.dirname(csv_file) + DONE_FOLDER + '/' + basename + '.' + context.get('date_start',False)
-		return done 
-
-
-
-

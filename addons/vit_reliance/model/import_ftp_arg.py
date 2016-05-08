@@ -6,13 +6,12 @@ import logging
 from openerp.tools.translate import _
 import zipfile,os.path
 import glob
-import csv
 import shutil
 import ftp_utils as ftp
 
 _logger = logging.getLogger(__name__)
-DELIMITER = ','
-QUOTECHAR = '"'
+DELIMITER=","
+QUOTECHAR='"'
 
 class import_ftp_arg(osv.osv):
 	_name 		= "reliance.import_ftp_arg"
@@ -92,57 +91,39 @@ class import_ftp_arg(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_arg = self.pool.get('reliance.import_arg')
 
-		try:
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter= DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
-
-					data = {
-						"policy_no"			:	row[0],
-						"product_class"		:	row[1],
-						"subclass"			:	row[2],
-						"eff_date"			:	row[3],
-						"exp_date"			:	row[4],
-						"company_code"		:	row[5],
-						"company_name"		:	row[6],
-						"company_type"		:	row[7],
-						"marketing_code"	:	row[8],
-						"marketing_name"	:	row[9],
-						"cust_code"			:	row[10],
-						"cust_name"			:	row[11],
-						"cust_fullname"		:	row[12],
-						"qq"				:	row[13],
-						"cust_cp"			:	row[14],
-						"cust_addr_1"		:	row[15],
-						"cust_addr_2"		:	row[16],
-						"cust_city"			:	row[17],
-						"cust_postal_code"	:	row[18],
-						"cust_province"		:	row[19],
-						"cust_country_name"	:	row[20],
-						"status_policy"		:	row[21],
-						"source_of_business":	row[22],		
-						"source"			: 	csv_file,
-					}
-					import_arg.create(cr, uid, data, context=context)
-
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		fields_map = [
+			"policy_no"			,	
+			"product_class"		,	
+			"subclass"			,	
+			"eff_date"			,	
+			"exp_date"			,	
+			"company_code"		,	
+			"company_name"		,	
+			"company_type"		,	
+			"marketing_code"	,	
+			"marketing_name"	,	
+			"cust_code"			,	
+			"cust_name"			,	
+			"cust_fullname"		,	
+			"qq"				,	
+			"cust_cp"			,	
+			"cust_addr_1"		,	
+			"cust_addr_2"		,	
+			"cust_city"			,	
+			"cust_postal_code"	,	
+			"cust_province"		,	
+			"cust_country_name"	,	
+			"status_policy"		,	
+			"source_of_business",	
+		]
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_arg, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
+		
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
-
 
 		# move csv_file to processed folder
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
@@ -167,39 +148,22 @@ class import_ftp_arg(osv.osv):
 		_logger.warning('importing csv data risk arg')
 		ftp_utils = ftp.ftp_utils()
 		import_arg_polis_risk = self.pool.get('reliance.import_arg_polis_risk')
+
+		fields_map = [
+			"policy_no"					,
+			"asset_description"			,
+			"total_premi"				,
+			"total_nilai_pertanggungan"	,
+		]
+		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_arg_polis_risk, 
+			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			context=context)
 		
-		try:	
-			with open( csv_file, 'rb') as csvfile:
-				spamreader = csv.reader(csvfile,delimiter=DELIMITER, quotechar=QUOTECHAR)
-				i = 0
-				for row in spamreader:
-					if i==0:
-						_logger.warning("header")
-						_logger.warning(row)
-						i = i+1
-						continue
-
-					data = {
-						"policy_no"					:	row[0],
-						"asset_description"			:	row[1],
-						"total_premi"				:	row[2],
-						"total_nilai_pertanggungan"	:	row[3],
-						"source"					: 	csv_file,
-					}
-					import_arg_polis_risk.create(cr, uid, data, context=context)
-
-					i = i +1
-		except IOError as e:
-			data = {
-				'notes': "I/O error({0}): {1}".format(e.errno, e.strerror),
-				'date_start' : context.get('date_start',False),
-				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
-				'input_file' : csv_file,
-			}
-			self.create(cr, uid, data, context=context )
+		if isinstance(i, dict):
+			self.create(cr, uid, i, context=context )
 			cr.commit()
 			return
-
+					
 		done = ftp_utils.done_filename(cr, uid, csv_file, context=context)
 		shutil.move(csv_file, done)
 
