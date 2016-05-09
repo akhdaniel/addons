@@ -42,10 +42,10 @@ class partner(osv.osv):
 			_logger.error('no partner with ls_client_id=%s' % ls_client_id)
 		return stocks
 
-	def get_ls_stock2(self, cr, uid, ls_sid_id, ls_client_id=None, context=None):
+	def get_ls_stock2(self, cr, uid, ls_sid, ls_client_id=None, context=None):
 		stocks = []
 		if ls_client_id:
-			pid = self.search(cr, uid, [('ls_sid_id','=',ls_sid_id),('ls_client_id','=',ls_client_id)], context=context)
+			pid = self.search(cr, uid, [('ls_sid','=',ls_sid),('ls_client_id','=',ls_client_id)], context=context)
 		else:	
 			pid = self.search(cr, uid, [('ls_client_id','=',ls_client_id)], context=context)
 
