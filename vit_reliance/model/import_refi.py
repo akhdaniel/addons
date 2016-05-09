@@ -262,8 +262,10 @@ class import_refi_pekerjaan(osv.osv):
 			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 			data.update({'country_id': country_id[0]})
 
-			state_id = country.find_or_create_state(cr,uid,import_refi.provinsi, country_id[0], context=context)
-			data.update({'state_id': state_id})
+			if import_refi.provinsi:
+				state_id = country.find_or_create_state(cr,uid,import_refi.provinsi, country_id[0], context=context)
+				data.update({'state_id': state_id})
+			
 			data.update({'is_company': True})			
 			data.update({'comment': 'REFI'})
 			
