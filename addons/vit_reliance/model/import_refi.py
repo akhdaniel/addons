@@ -150,8 +150,9 @@ class import_refi_partner(osv.osv):
 			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 			data.update({'country_id': country_id[0]})
 
-			state_id = country.find_or_create_state(cr,uid,import_refi.legal_propinsi, country_id[0], context=context)
-			data.update({'state_id': state_id})
+			if import_refi.legal_propinsi:
+				state_id = country.find_or_create_state(cr,uid,import_refi.legal_propinsi, country_id[0], context=context)
+				data.update({'state_id': state_id})
 			
 			data.update({'comment': 'REFI'})
 			
