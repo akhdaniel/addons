@@ -118,12 +118,14 @@ class ftp_utils(object):
 	# try to pause the cron job
 	###########################################################
 	def pause_cron(self,cr,uid,cron_id,cron_obj, context=None):
-		cron_obj.write(cr, uid ,cron_id,{'active': False}, context=context)
-		cr.commit()
+		if cron_obj:
+			cron_obj.write(cr, uid ,cron_id,{'active': False}, context=context)
+			cr.commit()
 
 	###########################################################
 	# resume the cron job
 	###########################################################
 	def resume_cron(self,cr,uid,cron_id,cron_obj, context=None):
-		cron_obj.write(cr, uid ,cron_id,{'active': True}, context=context)
-		cr.commit()
+		if cron_obj:
+			cron_obj.write(cr, uid ,cron_id,{'active': True}, context=context)
+			cr.commit()
