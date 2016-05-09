@@ -54,7 +54,7 @@ class partner(osv.osv):
 		if pid:
 			stocks = partner_stock.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
-			raise osv.except_osv(_('error'), 'no partner with ls_client_id=%s' % ls_client_id ) 
+			raise osv.except_osv(_('error'), 'no partner with ls_client_sid=%ds ls_client_id=%s ' % (ls_client_sid, ls_client_id,) ) 
 
 		return stocks
 
