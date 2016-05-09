@@ -32,7 +32,7 @@ class partner(osv.osv):
 
 
 	def get_ls_stock(self, cr, uid, ls_client_id, context=None):
-
+		stocks = []
 		pid = self.search(cr, uid, [('ls_client_id','=',ls_client_id)], context=context)
 		partner_stock = self.pool.get('reliance.partner_stock')
 		_logger.warning('pid=%s' % pid)
@@ -43,7 +43,7 @@ class partner(osv.osv):
 		return stocks
 
 	def get_ls_stock2(self, cr, uid, ls_sid_id, ls_client_id=None, context=None):
-
+		stocks = []
 		if ls_client_id:
 			pid = self.search(cr, uid, [('ls_sid_id','=',ls_sid_id),('ls_client_id','=',ls_client_id)], context=context)
 		else:	
@@ -54,7 +54,8 @@ class partner(osv.osv):
 		if pid:
 			stocks = partner_stock.search_read(cr,uid,[('partner_id','=',pid[0])],context=context)
 		else:
-			_logger.error('no partner with ls_client_id=%s' % ls_client_id)
+			raise osv.except_osv(_('error'), 'no partner with ls_client_id=%s' % ls_client_id ) 
+
 		return stocks
 
 
