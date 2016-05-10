@@ -105,9 +105,9 @@ class partner_health_limit(osv.osv):
 	_name 		= "reliance.partner_health_limit"
 	_rec_name  	= "manfaat"
 	_columns = {
-		"partner_id"	: fields.many2one('res.partner', 'Partner'),
-		"policyno"		: fields.char("Policy No"),
-		"membid"		: fields.char("Member ID"),
-		"manfaat"		: fields.char("Manfaat"),
+		"partner_id"	: fields.many2one('res.partner', 'Partner', select=1),
+		"policyno"		: fields.char("Policy No", select=1),
+		"membid"		: fields.char("Member ID", select=1),
+		"manfaat"		: fields.char("Manfaat", select=1),
 		"limit"			: fields.float("Limit"),
 	}
