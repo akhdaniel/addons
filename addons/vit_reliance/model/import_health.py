@@ -304,6 +304,7 @@ class import_health_limit(osv.osv):
 			if not phl:
 				partner_health_limit.create(cr, uid, data, context=context)
 			else:
+				_logger.warning('existing limit pid=%s policyno=%s membid=%s manfaat=%s' %(partner_id,import_health_limit.policyno,import_health_limit.membid,import_health_limit.manfaat))
 				partner_health_limit.write(cr, uid, phl, data, context=context)
 
 			#commit per record
