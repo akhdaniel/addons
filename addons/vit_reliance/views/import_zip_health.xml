@@ -80,7 +80,9 @@
             <field name="arch" type="xml">
             	<form version="7">
             		<header>
+            			<button string="Process" name="button_process" type="object"/>
             		</header>
+
 	            	<group>
 						<field name='zip_health_polis' />	
 						<field name='zip_health_peserta' />		
