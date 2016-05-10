@@ -225,7 +225,7 @@ class import_health_peserta(osv.osv):
 class import_health_limit(osv.osv): 
 	_name 		= "reliance.import_health_limit"
 	_columns 	= {
-		"policyno"		:	fields.char("POLICYNO"),
+		"policyno"		:	fields.char("POLICYNO", ),
 		"membid"		:	fields.char("MEMBID"),
 		"manfaat"		:	fields.char("MANFAAT"),
 		"limit"			:	fields.char("LIMIT"),
@@ -295,7 +295,16 @@ class import_health_limit(osv.osv):
 				"manfaat"		: import_health_limit.manfaat,
 				"limit"			: import_health_limit.limit,
 			}
-			partner_health_limit.create(cr, uid, data, context=context)
+			phl = partner_health_limit.search(cr, uid, [
+				('partner_id',	'=' , partner_id),
+				('policyno',	'=' , import_health_limit.policyno),
+				('membid',		'=' , import_health_limit.membid),
+				('manfaat',		'=' , import_health_limit.manfaat),
+				], context=context)
+			if not phl:
+				partner_health_limit.create(cr, uid, data, context=context)
+			else:
+				partner_health_limit.write(cr, uid, phl, data, context=context)
 
 			#commit per record
 			i = i + 1
