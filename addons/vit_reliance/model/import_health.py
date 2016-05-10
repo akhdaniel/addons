@@ -301,6 +301,10 @@ class import_health_limit(osv.osv):
 				('membid',		'=' , import_health_limit.membid),
 				('manfaat',		'=' , import_health_limit.manfaat),
 				], context=context)
+			
+			_logger.warning('phl')
+			_logger.warning(phl)
+
 			if not phl:
 				partner_health_limit.create(cr, uid, data, context=context)
 			else:
