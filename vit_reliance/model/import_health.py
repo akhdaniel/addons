@@ -307,15 +307,16 @@ class import_health_limit(osv.osv):
 
 			if not phl:
 				partner_health_limit.create(cr, uid, data, context=context)
+				i = i + 1
 			else:
+				ex= ex+1
 				_logger.warning('existing limit pid=%s policyno=%s membid=%s manfaat=%s' %(partner_id,import_health_limit.policyno,import_health_limit.membid,import_health_limit.manfaat))
 				partner_health_limit.write(cr, uid, phl, data, context=context)
 
 			#commit per record
-			i = i + 1
 			cr.execute("update reliance_import_health_limit set is_imported='t' where id=%s" % import_health_limit.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped/updated %s' % (i, ex) )
 
 
