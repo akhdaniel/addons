@@ -203,7 +203,7 @@ class import_ftp_health(osv.osv):
 
 		cron_obj = self.pool.get('ir.cron') 
 		cron_id = cron_obj.search(cr, uid, 
-			[('name','=', "Auto Import Health Partner Limit")], context=context)
+			[('name','=', "Auto Import Health Peserta Limit")], context=context)
 		if not cron_id:
 			raise osv.except_osv(_('error'),_("no cron job") ) 
 
