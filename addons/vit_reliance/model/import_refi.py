@@ -546,6 +546,7 @@ class import_refi_kontrak(osv.osv):
 
 		partner = self.pool.get('res.partner')
 		country = self.pool.get('res.country')
+		kontrak = self.pool.get('reliance.refi_kontrak')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
 
@@ -586,15 +587,29 @@ class import_refi_kontrak(osv.osv):
 				"maturity_date"		:	maturity_date,				
 			}
 
-			data = {
-				'refi_kontrak_ids'  : [(0,0,kontrak)]
-			}
-			partner.write(cr, uid, cust_id, data , context=context)
+			# data = {
+			# 	'refi_kontrak_ids'  : [(0,0,kontrak)]
+			# }
+			# partner.write(cr, uid, cust_id, data , context=context)
+			kontrak_ids = kontrak.search(cr, uid, [
+				('partner_id','=',cust_id[0]),
+				('contract_number','=',import_refi.contract_number)
+				('product','=',import_refi.product)
+				('asset_name','=',import_refi.asset_name)
+			], context=context)
+
+			if not kontrak_ids:
+				i = i +1
+				kontrak.create(cr, uid, kontrak, context=context)
+			else:
+				ex = ex +1
+				_logger.warning('existing kontrak pid=%s, contract_number=%s, product=%s, asset_name=%s' % 
+					(cust_id[0], import_refi.contract_number, import_refi.product, import_refi.asset_name))
+				kontrak.write(cr, uid, kontrak_ids, kontrak, context=context)
 
 			#commit per record
-			i = i +1
 			cr.execute("update reliance_import_refi_kontrak set is_imported='t' where id=%s" % import_refi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner kontrak and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner kontrak and skipped/updated %s' % (i, ex) )
 
