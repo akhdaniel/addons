@@ -111,12 +111,12 @@ class refi_kontrak(osv.osv):
 	_rec_name	= "contract_number"
 
 	_columns = {
-		"partner_id"		: 	fields.many2one('res.partner', 'Partner'),
-		"contract_number"	:	fields.char("Contract Number"),	
-		"customer_no"		:	fields.char("Customer No"),	
-		"customer_name"		:	fields.char("Customer Name"),	
-		"product"			:	fields.char("Product"),	
-		"asset_name"		:	fields.char("Asset Name"),	
+		"partner_id"		: 	fields.many2one('res.partner', 'Partner', select=1),
+		"contract_number"	:	fields.char("Contract Number", select=1),	
+		"customer_no"		:	fields.char("Customer No", select=1),	
+		"customer_name"		:	fields.char("Customer Name", select=1),	
+		"product"			:	fields.char("Product", select=1),	
+		"asset_name"		:	fields.char("Asset Name", select=1),	
 		"outstanding"		:	fields.float("Outstanding"),	
 		"next_installment"	:	fields.date("Next Installment"),	
 		"pass_due"			:	fields.float("Pass Due"),	
