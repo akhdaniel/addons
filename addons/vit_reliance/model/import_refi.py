@@ -593,9 +593,9 @@ class import_refi_kontrak(osv.osv):
 			# partner.write(cr, uid, cust_id, data , context=context)
 			kontrak_ids = kontrak.search(cr, uid, [
 				('partner_id','=',cust_id[0]),
-				('contract_number','=',import_refi.contract_number)
-				('product','=',import_refi.product)
-				('asset_name','=',import_refi.asset_name)
+				('contract_number','=',import_refi.contract_number),
+				('product','=',import_refi.product),
+				('asset_name','=',import_refi.asset_name),
 			], context=context)
 
 			if not kontrak_ids:
