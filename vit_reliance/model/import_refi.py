@@ -574,7 +574,7 @@ class import_refi_kontrak(osv.osv):
 			if import_refi.maturity_date.strip():
 				maturity_date = datetime.strptime(import_refi.maturity_date.strip(),"%d-%m-%Y")
 
-			kontrak = {
+			data = {
 				"partner_id"		: 	cust_id[0],
 				"contract_number"	:	import_refi.contract_number, 
 				"customer_no"		:	import_refi.customer_no,	
@@ -600,12 +600,12 @@ class import_refi_kontrak(osv.osv):
 
 			if not kontrak_ids:
 				i = i +1
-				kontrak.create(cr, uid, kontrak, context=context)
+				kontrak.create(cr, uid, data, context=context)
 			else:
 				ex = ex +1
 				_logger.warning('existing kontrak pid=%s, contract_number=%s, product=%s, asset_name=%s' % 
 					(cust_id[0], import_refi.contract_number, import_refi.product, import_refi.asset_name))
-				kontrak.write(cr, uid, kontrak_ids, kontrak, context=context)
+				kontrak.write(cr, uid, kontrak_ids, data, context=context)
 
 			#commit per record
 			cr.execute("update reliance_import_refi_kontrak set is_imported='t' where id=%s" % import_refi.id)
