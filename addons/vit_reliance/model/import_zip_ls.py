@@ -7,8 +7,8 @@ from openerp.tools.translate import _
 import os
 import io
 import base64
+import ftp_utils as ftp
 
-EXTRACT_DIR = '/home'
 _logger = logging.getLogger(__name__)
 
 ###############################################################
@@ -27,7 +27,7 @@ class import_zip_ls(osv.osv):
 		'zip_ls_cash'			: 	fields.binary('Cash ZIP File', required=True),
 		'zip_ls_stock'			: 	fields.binary('Stock ZIP File', required=True),
 
-		'is_imported' 			: 	fields.boolean("Imported to Partner?", select=1),
+		'is_imported' 			: 	fields.boolean("Saved to LS FTP Folder?", select=1),
 		"notes"					:	fields.char("Notes"),
 		'user_id'				: 	fields.many2one('res.users', 'User')
 
@@ -45,29 +45,35 @@ class import_zip_ls(osv.osv):
 	def actual_process(self, cr, uid, ids, context=None):
 
 		for import_zip_ls in self.browse(cr, uid, ids, context=context):
-			self.process_customer( cr, uid,  base64.decodestring(import_zip_ls.zip_ls_customer))
-			self.process_cash(  cr, uid, base64.decodestring(import_zip_ls.zip_ls_cash))
-			self.process_stock(  cr, uid, base64.decodestring(import_zip_ls.zip_ls_stock))
+			cust_files=self.process_customer( cr, uid,  base64.decodestring(import_zip_ls.zip_ls_customer))
+			cash_files=self.process_cash(  cr, uid, base64.decodestring(import_zip_ls.zip_ls_cash))
+			stock_files=self.process_stock(  cr, uid, base64.decodestring(import_zip_ls.zip_ls_stock))
 
 		self.write(cr, uid, ids, {
 			'date_processed': time.strftime("%Y-%m-%d"),
-			'is_imported'	: True
+			'is_imported'	: True,
+			'notes'			: ",".join(cust_files+cash_files+stock_files)  
 		} , context=context)
 
 		return True
 
 	def process_customer(self, cr, uid,  zip_ls_customer, context=None):
+		ftp_ls_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_ls_folder')
+		ftp_utils = ftp.ftp_utils()
 		ls_customer = io.BytesIO(zip_ls_customer)
-		files = self.pool.get('reliance.ftp').unzip(ls_customer, EXTRACT_DIR )
-		return 
+		return ftp_utils.unzip(ls_customer, ftp_ls_folder )
+
 
 	def process_cash(self, cr, uid,  zip_ls_cash, context=None):
+		ftp_ls_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_ls_folder')
+		ftp_utils = ftp.ftp_utils()
 		ls_cash = io.BytesIO(zip_ls_cash)
-		files = self.pool.get('reliance.ftp').unzip(ls_cash, EXTRACT_DIR )
-		return 
+		return ftp_utils.unzip(ls_cash, ftp_ls_folder )
 
 	def process_stock(self, cr, uid,  zip_ls_stock, context=None):
+		ftp_ls_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_ls_folder')
+		ftp_utils = ftp.ftp_utils()
 		ls_stock = io.BytesIO(zip_ls_stock)
-		files = self.pool.get('reliance.ftp').unzip(ls_stock, EXTRACT_DIR )
-		return
+		return ftp_utils.unzip(ls_stock, ftp_ls_folder )
+
 

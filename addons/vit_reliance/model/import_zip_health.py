@@ -5,7 +5,6 @@ import time
 import logging
 from openerp.tools.translate import _
 import ftp_utils as ftp
-
 import io
 import base64
 

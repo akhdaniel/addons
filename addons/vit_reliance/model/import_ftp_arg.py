@@ -10,7 +10,7 @@ import shutil
 import ftp_utils as ftp
 
 _logger = logging.getLogger(__name__)
-DELIMITER=","
+DELIMITER="\t"
 QUOTECHAR='"'
 
 class import_ftp_arg(osv.osv):
