@@ -5,6 +5,9 @@ import time
 import logging
 from openerp.tools.translate import _
 
+
+# edit res country
+
 _logger = logging.getLogger(__name__)
 
 class country(osv.osv):
