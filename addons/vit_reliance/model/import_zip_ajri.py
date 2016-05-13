@@ -15,7 +15,7 @@ class import_zip_ajri(osv.osv):
 	_columns 	= {
 		'date_import'			: 	fields.date("Import Date"),
 		'date_processed'		: 	fields.date("Processed Date"),
-		'zip_ajri_customer'		:	fields.binary('AJRI Customer File (ZIP)'),
+		'zip_ajri_customer'		:	fields.binary('AJRI Cust. File (ZIP)'),
 		'is_imported' 			: 	fields.boolean("Saved to AJRI FTP Folder?", select=1),
 		"notes"					:	fields.char("Notes"),
 	}
