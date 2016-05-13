@@ -1,6 +1,6 @@
 <?php
 require_once('ripcord/ripcord.php');
-$url = "http://relianceku.com:8069";
+$url = "http://127.0.0.1:8069";
 $db = "reliance3";
 $username = "admin";
 $password = "admin789";
@@ -10,9 +10,10 @@ var_dump($uid);
 
 $models = ripcord::client($url . '/xmlrpc/2/object');
 $method = 'get_ls_stock2';
+//$method = 'get_ls_cash2';
 $sid='SCD240480353254';
-$cid='SYA158';
+$cid='SYR011';
 $res = $models->execute_kw( $db, $uid, $password, 'res.partner', $method ,
-[$sid]
+[$sid, $cid]
 );
 var_dump($res);
