@@ -1,4 +1,4 @@
-<np>
+<openerp>
 	<data>
 
 		<record id="action_import_zip_ajri_list" model="ir.actions.act_window">
@@ -52,7 +52,7 @@
 					<!-- <field name="client_id"				 /> -->
 					<field name='date_import' />			
 					<field name='date_processed' />		
-					<field name='zip_ajri_customer' />	
+					<!--field name='zip_ajri_customer' /-->	
 
 		
 		            <group expand="1" string="Group By...">
@@ -78,7 +78,7 @@
 	            	<group>
 	            		<field name='date_import' />			
 						<field name='date_processed' />		
-						<field name='zip_ajri_customer' />	
+						<!--field name='zip_ajri_customer' /-->	
 						<field name='is_imported' /> 			
 						<field name="notes" />	
 		            </group>
