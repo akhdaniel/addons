@@ -42,6 +42,7 @@ class import_zip_ajri(osv.osv):
 
 		return True
 
+
 	def process_cust(self, cr, uid,  zip_ajri_cust, context=None):
 		ftp_ajri_folder = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ftp_ajri_folder')
 		ftp_utils = ftp.ftp_utils()
