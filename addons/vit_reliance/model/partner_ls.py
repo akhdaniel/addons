@@ -5,6 +5,9 @@ import time
 import logging
 from openerp.tools.translate import _
 
+
+# model partner
+
 _logger = logging.getLogger(__name__)
 
 class partner(osv.osv):
