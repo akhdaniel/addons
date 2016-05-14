@@ -1,6 +1,6 @@
 {
 	"name": "Reliance Data Repository Customer Information System", 
-	"version": "1.0", 
+	"version": "1.1", 
 	"depends": [
 		"base",
 		"stock",
