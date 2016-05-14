@@ -27,7 +27,7 @@
 					<field name='date_import' />			
 					<field name='date_processed' />		
 					<!--field name='zip_ajri_customer' /-->	
-					<field name='ajri_customer_file' /> 			
+					<field name='zip_ajri_customer' /> 			
 					<field name='is_imported' /> 			
 					<field name="notes" />										
 		        </tree>    
@@ -53,7 +53,7 @@
 					<!-- <field name="client_id"				 /> -->
 					<field name='date_import' />			
 					<field name='date_processed' />		
-					<field name='ajri_customer_file' />		
+					<field name='zip_ajri_customer' />		
 					<!--field name='zip_ajri_customer' /-->	
 
 		
@@ -80,7 +80,7 @@
 	            	<group>
 	            		<field name='date_import' />			
 						<field name='date_processed' />		
-						<field name='ajri_customer_file' />		
+						<field name='zip_ajri_customer' />		
 						<!--field name='zip_ajri_customer' /-->	
 						<field name='is_imported' /> 			
 						<field name="notes" />	
