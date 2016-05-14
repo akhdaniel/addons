@@ -15,9 +15,10 @@ class import_zip_ajri(osv.osv):
 	_columns 	= {
 		'date_import'			: 	fields.date("Import Date"),
 		'date_processed'		: 	fields.date("Processed Date"),
-		'zip_ajri_customer'		:	fields.binary('AJRI Cust. File (ZIP)'),
+		'ajri_customer_file'		:	fields.binary('AJRI Cust. File (ZIP)'),
 		'is_imported' 			: 	fields.boolean("Saved to AJRI FTP Folder?", select=1),
-		"notes"					:	fields.char("Notes"),
+		"notes"				:	fields.char("Notes"),
+		"test"				:	fields.char("Test"),
 	}
 	_defaults = {
 		'date_import'   : lambda *a : time.strftime("%Y-%m-%d") ,
@@ -32,7 +33,7 @@ class import_zip_ajri(osv.osv):
 		notes = ''
 
 		for import_zip_ajri in self.browse(cr, uid, ids, context=context):
-			cust_files = self.process_cust( cr, uid,  base64.decodestring(import_zip_ajri.zip_ajri_customer))
+			cust_files = self.process_cust( cr, uid,  base64.decodestring(import_zip_ajri.ajri_customer_file))
 
 		self.write(cr, uid, ids, {
 			'date_processed': time.strftime("%Y-%m-%d"),
