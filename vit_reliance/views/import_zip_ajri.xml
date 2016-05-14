@@ -75,7 +75,8 @@
             <field name="arch" type="xml">
             	<form version="7">
             		<header>
-            			<button string="Process" name="button_process" type="object"/>
+            			<button string="Process" name="button_process" type="object" 
+            				invisible="[('is_imported','=',True)]"/>
             		</header>
 	            	<group>
 	            		<field name='date_import' />			
