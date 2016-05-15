@@ -135,6 +135,14 @@
                             <page string="Nilai">
                                 <p class="oe_grey">Presentase nilai bisa di set ulang pada tab Setting</p>
                                     <p class="oe_grey">Default penilaian: Absensi(10%), Tugas(20%), UTS(30%), UAS(40%)</p>
+                                <group colspan="4">
+                                    <group>
+                                    </group>
+                                    <group>
+                                        <button name="posting_nilai_uts" string="Posting Nilai UTS" type="object"/>
+                                        <button name="posting_nilai_uas" string="Posting Nilai UAS" type="object"/>
+                                    </group>
+                                </group>
                                 <field name="absensi_nilai_ids" nolabel="1" widget="one2many_list">
                                     <tree string="Absensi" editable="bottom">
                                         <field name="partner_id"/>
@@ -142,9 +150,11 @@
                                         <field name="presentasi"/>
                                         <field name="quiz"/>
                                         <field name="tugas"/>
+                                        <field name="lainnya"/>
                                         <field name="uts"/>
+                                        <field name="uts_huruf" readonly="1"/>
                                         <field name="uas"/>
-                                        <field name="lainnya"/>                               
+                                        <field name="uas_huruf" readonly="1"/>                               
                                         <field name="state" invisible="1"/>
                                     </tree>
                                 </field>        

@@ -280,6 +280,79 @@ class absensi(osv.osv):
 			}
 		return results
 
+	def posting_nilai_uts(self,cr,uid,ids,context=None):
+		for ps in self.browse(cr,uid,ids):
+			tahun_ajaran 	= ps.tahun_ajaran_id.id
+			fakultas 		= ps.fakultas_id.id
+			prodi 			= ps.prodi_id.id
+			konsentrasi 	= ps.konsentrasi_id.id
+			semester 		= ps.semester_id.id
+			matakuliah 		= ps.mata_kuliah_id.id
+			cr.execute(""" select max(uts),min(uts) from absensi_detail_nilai where absensi_id= %s"""%(ps.id,))
+			dpt = cr.fetchall()
+			if dpt :
+				dpt_max = float(dpt[0][0])
+				dpt_min = float(dpt[0][1])
+				if dpt_min > 0 and dpt_max > 0 :
+					gap = dpt_max-dpt_min
+
+					cr.execute("""select count(id) from master_nilai""")
+					nilai = cr.fetchone()
+					t_nilai = int(nilai[0])
+					kov = gap/t_nilai
+
+					#hapus dulu data master nilai temp brdasarkan user yang akan eksekusi supaya tidak double
+					sql = "delete from master_nilai_temporary where user_id=%s" % (uid)
+					cr.execute(sql)
+
+					cr.execute("""select * from (select name,bobot from master_nilai) as foo order by foo.bobot asc""")
+					nilai_temp = cr.fetchall()
+					
+					temp_nilai_obj = self.pool.get('master.nilai.temporary')
+					minimum = dpt_min
+					maximum = dpt_min + kov
+					for temp in nilai_temp:
+						temp_nilai_obj.create(cr,uid,{'name'		: str(temp[0]),
+														'user_id'	: uid,
+														'bobot'		: float(temp[1]),
+														'min'		: minimum,
+														'max'		: maximum})
+						minimum = minimum+kov
+						maximum = maximum+kov
+					
+					# commit dulu supaya nanti bisa dicari range nya
+					cr.commit()
+					krs_obj = self.pool.get('operasional.krs')
+					krs_det_obj = self.pool.get('operasional.krs_detail')
+					for list_mhs in ps.absensi_nilai_ids:
+						mahasiswa = list_mhs.partner_id.id
+						nil_src = temp_nilai_obj.search(cr,uid,[('user_id','=',uid),('min','<=',list_mhs.uts),('max','>=',list_mhs.uts)])
+						if nil_src :
+							
+							nil_browse = temp_nilai_obj.browse(cr,uid,nil_src[0])
+							det_nilai_obj = self.pool.get('absensi.detail.nilai')
+							det_nilai_obj.write(cr,uid,list_mhs.id,{'uts_huruf':nil_browse.name})
+
+							krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+													('fakultas_id','=',fakultas),
+													('prodi_id','=',prodi),
+													('konsentrasi_id','=',konsentrasi),
+													('semester_id','=',semester),
+													('partner_id','=',mahasiswa)])
+							if krs_exist :
+								cr.execute(""" select id from operasional_krs_detail where krs_id=%s and mata_kuliah_id=%s"""%(krs_exist[0],matakuliah))
+								mk_uts = cr.fetchone()
+								#import pdb;pdb.set_trace()
+								if mk_uts :
+									mk_uts_id = int(mk_uts[0])
+									krs_det_obj.write(cr,uid,mk_uts_id,{'uts_huruf':nil_browse.name})
+
+
+
+
+
+		return True	
+
 absensi()
 
 
@@ -398,8 +471,10 @@ class absensi_detail_nilai(osv.osv):
 		'ulangan' 		: fields.float('Ulangan'),
 		'presentasi' 	: fields.float('Presentasi'),
 		'quiz' 			: fields.float('Quiz'),
-		'uts'			: fields.float('UTS'),
-		'uas'			: fields.float('UAS'),
+		'uts'			: fields.float('UTS (Angka)'),
+		'uts_huruf'		: fields.char('UTS (Huruf)'),
+		'uas'			: fields.float('UAS (Angka)'),
+		'uas_huruf'		: fields.float('UAS (Huruf)'),
 		'lainnya'		: fields.float('Lainnya'),		
 		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
 	}
@@ -424,3 +499,15 @@ class absensi_history (osv.osv):
 		'history_absensi_13'	:fields.datetime('Sesi 13',readonly=True),
 		'history_absensi_14'	:fields.datetime('Sesi 14',readonly=True),
 	}	
+
+class master_nilai_temporary(osv.osv):
+	_name = "master.nilai.temporary"	
+	_description = "Master Bobot Nilai dinamis (field min dan max diisi sesuai hitungan rumus)"
+
+	_columns = {
+		'name'		: fields.char('Nilai Huruf', size=3),
+		'user_id'	: fields.many2one('res.users','Responsible',help="dosen penanggung jawab"),
+		'bobot'		: fields.float('Nilai Angka',help="nilai angka harus antara 0 s/d 4"),
+		'min'		: fields.float("Nilai Minimal",help="nilai angka harus antara 0 s/d 100"),
+		'max'		: fields.float("Nilai Maximal",help="nilai angka harus antara 0 s/d 100"),
+	}

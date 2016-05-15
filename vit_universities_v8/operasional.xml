@@ -105,17 +105,19 @@
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>
                                         <field name="sks" sum="Total SKS"/>
-                                        <field name="absensi" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi"/>
+                                        <field name="absensi" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi" invisible="1"/>
                                         <field name="ulangan" invisible="1"/>
                                         <field name="quiz" invisible="1"/>
                                         <field name="presentasi" invisible="1"/>
                                         <field name="lainnya" invisible="1"/>
 
-                                        <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}"/>
-                                        <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}"/>
+                                        <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}" invisible="1"/>
+                                        <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}" invisible="1"/>
+                                        <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}" />
+                                        <field name="uts_huruf" readonly="1"/>
+                                        <field name="uas_huruf" readonly="1"/>
                                         <field name="nilai_huruf" invisible="1"/>
-                                        <field name="nilai_angka" attrs="{'invisible': [('state','=','draft')]}"/>
+                                        <field name="nilai_angka" attrs="{'invisible': [('state','=','draft')]}" invisible="1"/>
                                         <field name="nilai_huruf_field" string="Nilai Akhir"/>
                                         <field name="is_konversi" string="*" readonly="True"/>
                                         <field name="state" invisible="1"/>

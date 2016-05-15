@@ -344,10 +344,10 @@ class res_partner (osv.osv):
 		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 
-		'invoice_id' : fields.many2one('account.invoice','Uang Pendaftaran',readonly=True),
+		'invoice_id' : fields.many2one('account.invoice','Uang Pendaftaran'),
 		'invoice_state' : fields.related('invoice_id','state',type='char',relation='account.invoice',string='Pembayaran Pendaftaran',readonly=True),
 		'invoice_bangunan_id' : fields.many2one('account.invoice','Uang Pengembangan',readonly=True),
-		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran UP',readonly=True),
+		'invoice_bangunan_state' : fields.related('invoice_bangunan_id','state',type='char',relation='account.invoice',string='Pembayaran UP'),
 
 		'karyawan_id'	: fields.many2one('hr.employee','Karyawan'),
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
@@ -844,9 +844,9 @@ class res_partner (osv.osv):
 			
 			hasil = cr.fetchone()
 			if hasil and hasil[0] != None:
-				se = "%03d" % (hasil[0] + 1)
+				se = "%04d" % (hasil[0] + 1)
 			else:
-				se = "001"
+				se = "0001"
 
 			nim = t_id_final +pend+ f_id+p_id +lokasi+ jp_id + se
 			self.write(cr,uid,partner.id,{
