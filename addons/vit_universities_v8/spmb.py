@@ -205,9 +205,9 @@ class spmb_mahasiswa(osv.Model):
 			#import pdb; pdb.set_trace()
 			hasil = cr.fetchone()
 			if hasil and hasil[0] != None:
-				se = "%03d" % (hasil[0] + 1)
+				se = "%04d" % (hasil[0] + 1)
 			else:
-				se = "001"
+				se = "0001"
 
 			self.pool.get('res.partner').write(cr,uid,p.id,{
 				'status_mahasiswa':'Mahasiswa',
