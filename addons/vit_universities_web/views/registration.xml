@@ -525,6 +525,23 @@
             }
         });
 
+
+        $('#photo').change(function(){
+            var photo=this.files[0]
+
+            if (photo.size > 300000 || photo.fileSize > 300000)
+            {
+                //show an alert to the user
+                alert("Ukuran photo yang bisa di upload max 300 kb)")
+
+                //reset file upload control
+                this.value = null;
+                }
+
+
+        });
+
+
     </script>
 </template>
 
