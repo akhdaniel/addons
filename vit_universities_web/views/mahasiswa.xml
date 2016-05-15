@@ -10,7 +10,14 @@
 
             
             <center>
-                <span t-field="partner.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}" width="16" height="16"/>
+                <span t-field="partner.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}"/>
+                <!-- <div class="oe_employee_image">
+                <span t-att-src="partner.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;}" width="32" height="42"/>
+                </div> -->
+
+                <!-- <div >
+                <img class="oe_picture oe_screenshot" t-att-src="partner.image"/>
+                </div> -->
             </center>
             <center>
                 <h3>NIM :  <t t-esc="partner.npm"/></h3>
@@ -249,6 +256,12 @@
             </form>
         </div>
     </t>
+<style>
+    .img-responsive{
+        width:90px !important; 
+        height:100px !important;
+    }
+</style>
 </template>
 
 
@@ -271,6 +284,5 @@
         </div>
     </t>
 </template>
-
 </data>
 </openerp>
