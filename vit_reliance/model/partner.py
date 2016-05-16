@@ -341,7 +341,8 @@ class res_partner(osv.osv):
 		############################################################
 		#delete p1 
 		############################################################
-		self.unlink(cr, uid, [partner_id1], context=context)
+		# self.unlink(cr, uid, [partner_id1], context=context)
+		self.write(cr, uid, [partner_id1], {'active':False }, context=context)
         
 		############################################################
 		# return p2 lengkap
