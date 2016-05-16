@@ -11,9 +11,9 @@ class partner(osv.osv):
 	_name 		= "res.partner"
 	_inherit 	= "res.partner"
 	_columns = {
-		"arg_cust_code"			: fields.char("ARG Customer Code"),
-		"arg_nomor_polis"		: fields.char("ARG Nomor Polis"),
-		# "arg_parent_id"			: fields.many2one('res.partner', 'ARG Customer'),
+		"arg_cust_code"			: fields.char("ARG Customer Code", select=1),
+		"arg_nomor_polis"		: fields.char("ARG Nomor Polis", select=1),
+		"arg_parent_id"			: fields.many2one('res.partner', 'ARG Customer'),
 
 		'partner_polis_ids'		: fields.one2many('reliance.arg_partner_polis','partner_id','Polis', ondelete="cascade"),
 		'partner_polis_risk_ids': fields.one2many('reliance.arg_partner_polis_risk','partner_id','Polis Risk', ondelete="cascade"),
