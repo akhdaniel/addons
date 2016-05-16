@@ -54,6 +54,7 @@
 
 					<!-- <field name='arg_company_code'/> -->
 					<field name='arg_cust_code'/>
+					<field name='arg_nomor_polis'/>
 					
 					<field name='city'/>
 					<field name='state_id'/>
@@ -367,6 +368,7 @@
             		<page string="ARG" >
             			<group>
 							<field name="arg_cust_code" />		
+							<field name="arg_nomor_polis" />		
 							<!-- <field name="arg_parent_id" />		 -->
 
 						</group>

@@ -139,7 +139,7 @@ class import_arg(osv.osv):
 			##############################################################################   
 			# creating Polis for the above partner
 			##############################################################################   
-			polis_created,i,ex = self.import_polis(cr, uid, import_arg, polis, qq_pid, i,ex,polis_created)
+			polis_created,i,ex = self.import_polis(cr, uid, import_arg, polis, qq_pid, partner, i,ex,polis_created)
 
 			##############################################################################   
 			#commit per record
@@ -244,7 +244,7 @@ class import_arg(osv.osv):
 	##############################################################################   
 	# import polis
 	##############################################################################   
-	def import_polis(self, cr, uid, import_arg, polis,pid, i, ex, polis_created,context=None):
+	def import_polis(self, cr, uid, import_arg, polis,pid, partner, i, ex, polis_created,context=None):
 		
 
 		polis_id = polis.search(cr, uid, [('arg_nomor_polis','=',import_arg.policy_no),
@@ -261,6 +261,20 @@ class import_arg(osv.osv):
 			polis_data.update({'partner_id': pid})
 			polis.create(cr, uid, polis_data, context=context)
 			polis_created = polis_created + 1
+
+
+			#update partner's arg_nomor_polis
+			qq = partner.browse(cr, uid, pid, context=context)
+			if qq.arg_nomor_polis:
+				nomors = qq.arg_nomor_polis + ',' 
+			else:
+				nomors = ''
+
+			nomors = nomors + import_arg.policy_no
+			arg_nomor_polis = nomors
+			partner.write(cr, uid, pid, {'arg_nomor_polis': arg_nomor_polis}, context=context)
+
+
 		else:
 			polis_id = polis_id[0]
 			_logger.warning('Polis exist with arg_nomor_polis %s' % import_arg.policy_no)
