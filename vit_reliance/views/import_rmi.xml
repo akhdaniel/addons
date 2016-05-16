@@ -131,6 +131,9 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+		                <filter string="SID" icon="terp-personal" 
+		                    domain="[]" name="group_by_sid"
+		                	 context="{'group_by':'sid'}"/>
 		            </group>                                        
 
 		        </search>
