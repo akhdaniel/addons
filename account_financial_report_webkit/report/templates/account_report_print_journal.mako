@@ -80,15 +80,17 @@
                     ## date
                     <div class="act_as_cell first_column">${_('Date')}</div>
                     ## move
-                    <div class="act_as_cell" style="width: 150px;">${_('No. Voucher')}</div>
+                    <div class="act_as_cell" style="width: 110px;">${_('No. Voucher')}</div>
                     ## account code
-                    <div class="act_as_cell" style="width: 160px;">${_('Account/CoA')}</div>
+                    <div class="act_as_cell" style="width: 160px;">${_('CoA Code')}</div>
+                    ## account name
+                    <div class="act_as_cell" style="width: 160px;">${_('CoA Name')}</div>
                     ## date
                     ##<div class="act_as_cell">${_('Due Date')}</div>
                     ## partner
                     ##<div class="act_as_cell" style="width: 280px;">${_('Partner')}</div>
                     ## label
-                    <div class="act_as_cell" style="width: 380px;">${_('Description')}</div>
+                    <div class="act_as_cell" style="width: 400px;">${_('Description')}</div>
                     ## debit
                     <div class="act_as_cell amount">${_('Debit')}</div>
                     ## credit
@@ -113,15 +115,17 @@
                         ## date
                         <div class="act_as_cell first_column">${_('')}</div>
                         ## move
-                        <div class="act_as_cell" style="width: 150px;">${_('')}</div>
+                        <div class="act_as_cell" style="width: 110px;">${_('')}</div>
                         ## account code
+                        <div class="act_as_cell" style="width: 130px;">${_('')}</div>
+                        ## account name
                         <div class="act_as_cell" style="width: 160px;">${_('')}</div>
                         ## date
                         ##<div class="act_as_cell">${_('')}</div>
                         ## partner
                         ##<div class="act_as_cell" style="width: 280px;">${_('')}</div>
                         ## label
-                        <div class="act_as_cell" style="width: 380px;">${_('Sub Total')}</div>
+                        <div class="act_as_cell" style="width: 400px;">${_('Sub Total')}</div>
                         ## debit
                         <div class="act_as_cell amount">${formatLang(account_total_debit_per_move) | amount }</div>
                         ## credit
@@ -148,15 +152,17 @@
                         ## date
                         <div class="act_as_cell first_column">${formatLang(move.date, date=True) if new_move else ''}</div>
                         ## move
-                        <div class="act_as_cell" style="width: 150px;">${move.name if new_move else ''}</div>
+                        <div class="act_as_cell" style="width: 110px;">${move.name if new_move else ''}</div>
                         ## account code
-                        <div class="act_as_cell" style="width: 160px;">${line.account_id.code}</div>
+                        <div class="act_as_cell" style="width: 130px;">${line.account_id.code}</div>
+                        ## account name
+                        <div class="act_as_cell" style="width: 160px;">${line.account_id.name}</div>
                         ## date
                         ##<div class="act_as_cell">${formatLang(line.date_maturity or '', date=True)}</div>
                         ## partner
                         ##<div class="act_as_cell overflow_ellipsis" style="width: 280px;">${line.partner_id.name or '' if new_move else ''}</div>
                         ## label
-                        <div class="act_as_cell overflow_ellipsis" style="width: 380px;">${line.name}</div>
+                        <div class="act_as_cell overflow_ellipsis" style="width: 400px;">${line.name}</div>
                         ## debit
                         <div class="act_as_cell amount">${formatLang(line.debit) if line.debit else ''}</div>
                         ## credit
@@ -174,19 +180,50 @@
                 </div>
                 %endfor
             %endfor
+
+            %if account_total_debit_per_move != 0 or account_total_credit_per_move != 0:
+                <div class="act_as_row labels">
+                    ## date
+                    <div class="act_as_cell first_column">${_('')}</div>
+                    ## move
+                    <div class="act_as_cell" style="width: 110px;">${_('')}</div>
+                    ## account code
+                    <div class="act_as_cell" style="width: 130px;">${_('')}</div>
+                    ## account name
+                    <div class="act_as_cell" style="width: 160px;">${_('')}</div>
+                    ## date
+                    ##<div class="act_as_cell">${_('')}</div>
+                    ## partner
+                    ##<div class="act_as_cell" style="width: 280px;">${_('')}</div>
+                    ## label
+                    <div class="act_as_cell" style="width: 400px;">${_('Sub Total')}</div>
+                    ## debit
+                    <div class="act_as_cell amount">${formatLang(account_total_debit_per_move) | amount }</div>
+                    ## credit
+                    <div class="act_as_cell amount">${formatLang(account_total_credit_per_move) | amount }</div>
+                    %if amount_currency(data):
+                        ## currency balance
+                        <div class="act_as_cell amount sep_left">${formatLang(line.amount_currency) if line.amount_currency else ''}</div>
+                        ## curency code
+                        <div class="act_as_cell amount" style="text-align: right;">${line.currency_id.symbol or ''}</div>
+                    %endif
+                </div> 
+            %endif               
             <div class="act_as_row lines labels">
                 ## date
                 <div class="act_as_cell first_column"></div>
                 ## move
-                <div class="act_as_cell" style="width: 150px;"></div>
+                <div class="act_as_cell" style="width: 110px;"></div>
                 ## account code
+                <div class="act_as_cell" style="width: 130px;"></div>
+                ## account name
                 <div class="act_as_cell" style="width: 160px;"></div>
                 ## date
                 ##<div class="act_as_cell"></div>
                 ## partner
                 ##<div class="act_as_cell" style="width: 280px;"></div>
                 ## label
-                <div class="act_as_cell" style="width: 310px;">${_('Total')}</div>
+                <div class="act_as_cell" style="width: 330px;">${_('Total')}</div>
                 ## debit
                 <div class="act_as_cell amount">${formatLang(account_total_debit) | amount }</div>
                 ## credit
