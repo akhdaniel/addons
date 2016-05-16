@@ -109,9 +109,9 @@ class partner_polis_risk(osv.osv):
 		"policy_id"					:	fields.many2one('reliance.arg_partner_polis', 'Polis', required=True),
 		"asset_description"			:	fields.char("Asset Description"),
 		"item_no"					:	fields.char("Item No"),
-		"tahun"						:	fields.char("Tahun"),
-		"total_premi"				:	fields.char("Total Premi"),
-		"total_nilai_pertanggungan"	:	fields.char("Total Nilai Pertanggungan"),
+		"tahun"						:	fields.integer("Tahun"),
+		"total_premi"				:	fields.float("Total Premi"),
+		"total_nilai_pertanggungan"	:	fields.float("Total Nilai Pertanggungan"),
 	}
 
 

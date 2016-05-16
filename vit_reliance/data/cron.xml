@@ -126,62 +126,62 @@
 
         <!-- REFI -->
 
-        <record model="ir.cron" id="import_refi_partner">
+        <record model="ir.cron" id="import_ajri_partner">
             <field name="name">Auto Import REFI Partner</field>
             <field name="interval_number">10</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_refi_partner'"/>
+            <field name="model" eval="'reliance.import_ajri_partner'"/>
             <field name="function" eval="'cron_import_partner'"/>
             <field name="args" eval="'()'" />
         </record>  
 
-        <record model="ir.cron" id="import_refi_pekerjaan">
+        <record model="ir.cron" id="import_ajri_pekerjaan">
             <field name="name">Auto Import REFI Pekerjaan Partner</field>
             <field name="interval_number">10</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_refi_pekerjaan'"/>
+            <field name="model" eval="'reliance.import_ajri_pekerjaan'"/>
             <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 
-        <record model="ir.cron" id="import_refi_keluarga">
+        <record model="ir.cron" id="import_ajri_keluarga">
             <field name="name">Auto Import REFI Partner Keluarga</field>
             <field name="interval_number">10</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_refi_keluarga'"/>
+            <field name="model" eval="'reliance.import_ajri_keluarga'"/>
             <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 
-        <record model="ir.cron" id="import_refi_statement">
+        <record model="ir.cron" id="import_ajri_statement">
             <field name="name">Auto Import REFI Partner Statement</field>
             <field name="interval_number">10</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_refi_statement'"/>
+            <field name="model" eval="'reliance.import_ajri_statement'"/>
             <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
 
-        <record model="ir.cron" id="import_refi_kontrak">
+        <record model="ir.cron" id="import_ajri_kontrak">
             <field name="name">Auto Import REFI Partner Kontrak</field>
             <field name="interval_number">10</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <!-- <field name="nextcall"></field> -->
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_refi_kontrak'"/>
+            <field name="model" eval="'reliance.import_ajri_kontrak'"/>
             <field name="function" eval="'cron_import'"/>
             <field name="args" eval="'()'" />
         </record>  
@@ -273,13 +273,26 @@
               
         <!-- REFI FTP -->
         
-        <record model="ir.cron" id="import_ftp_refi">
+        <record model="ir.cron" id="import_ftp_ajri">
             <field name="name">Auto Process REFI FTP Files</field>
             <field name="interval_number">1</field>
             <field name="interval_type">hours</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_ftp_refi'"/>
+            <field name="model" eval="'reliance.import_ftp_ajri'"/>
+            <field name="function" eval="'cron_process'"/>
+            <field name="args" eval="'()'" />
+        </record>  
+
+        <!-- AJRI FTP -->
+        
+        <record model="ir.cron" id="import_ftp_ajri">
+            <field name="name">Auto Process AJRI FTP Files</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'reliance.import_ftp_ajri'"/>
             <field name="function" eval="'cron_process'"/>
             <field name="args" eval="'()'" />
         </record>  
