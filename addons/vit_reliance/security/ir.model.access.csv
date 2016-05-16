@@ -31,13 +31,13 @@
 "access_reliance_import_zip_refi","access_reliance_import_zip_refi","model_reliance_import_zip_refi","group_uploader_refi",1,1,1,1
 "access_reliance_import_zip_rmi","access_reliance_import_zip_rmi","model_reliance_import_zip_rmi","group_uploader_rmi",1,1,1,1
 "access_reliance_partner_health_limit","access_reliance_partner_health_limit","model_reliance_partner_health_limit","group_uploader_health",1,1,1,1
-
 "access_reliance_import_ftp_ls","access_reliance_import_ftp_ls","model_reliance_import_ftp_ls","group_uploader_ls",1,1,1,1
 access_reliance_import_ftp_health,access_reliance_import_ftp_health,model_reliance_import_ftp_health,group_uploader_health,1,1,1,1
-
 access_reliance_import_ftp_arg,access_reliance_import_ftp_arg,model_reliance_import_ftp_arg,group_uploader_arg,1,1,1,1
-
 access_reliance_import_ftp_ajri,access_reliance_import_ftp_ajri,model_reliance_import_ftp_ajri,group_uploader_ajri,1,1,1,1
 access_reliance_import_ftp_rmi,access_reliance_import_ftp_rmi,model_reliance_import_ftp_rmi,group_uploader_rmi,1,1,1,1
-
 access_reliance_import_ftp_refi,access_reliance_import_ftp_refi,model_reliance_import_ftp_refi,group_uploader_refi,1,1,1,1
+
+"access_filter_employee","access_filter_employee","base.model_ir_filters","base.group_user",1,0,1,0
+
+access_reliance_arg_partner_polis_risk,access_reliance_arg_partner_polis_risk,model_reliance_arg_partner_polis_risk,group_uploader_arg,1,1,1,1

@@ -278,7 +278,7 @@ class import_arg(osv.osv):
 		if not import_arg.qq:
 			qq_name = import_arg.cust_fullname.strip()			
 		else:
-			qq_name = import_arg.qq.strip()
+			qq_name = import_arg.qq.strip().replace("QQ. ", "").replace("QQ ","")
 
 		country = self.pool.get('res.country')
 		cust_data = {}
@@ -367,6 +367,7 @@ class import_arg_polis_risk(osv.osv):
 	def actual_import(self, cr, uid, ids, context=None):
 		i = 0
 		ex = 0
+		upd = 0
 		cust_data = {}
 
 		partner = self.pool.get('res.partner')
@@ -390,12 +391,21 @@ class import_arg_polis_risk(osv.osv):
 				continue
 			else:
 				polis_id = polis_id[0]
-			polis_data = polis.browse(cr, uid, polis_id, context=context)
 
 			for k in POLIS_RISK_MAPPING.keys():
 				partner_fname = POLIS_RISK_MAPPING[k]
 				import_ls_fname = "import_arg.%s" % k 
 				cust_data.update( {partner_fname : eval(import_ls_fname)})
+
+
+			polis_data = polis.browse(cr, uid, polis_id, context=context)
+
+			if not polis_data.partner_id:
+				ex = ex + 1
+				self.write(cr, uid, import_arg.id ,  {'notes':'POLIS NO PARTNER ERROR'}, context=context)
+				cr.commit()
+				continue
+
 
 			cust_data.update({'policy_id': polis_data.id})
 			cust_data.update({'partner_id': polis_data.partner_id.id})
@@ -403,11 +413,12 @@ class import_arg_polis_risk(osv.osv):
 			exist = risk.search(cr, uid, [
 				('policy_id','=',polis_id),
 				('item_no','=',import_arg.item_no),
-				('tahun','=',import_arg.tahun),
+				('tahun','=',int(import_arg.tahun)),
 				], context=context)
 			if not exist:
 				risk.create(cr, uid, cust_data, context=context)
 			else:
+				upd = upd + 1
 				risk.write(cr, uid, exist[0], cust_data, context=context)
 
 			#commit per record
@@ -415,4 +426,4 @@ class import_arg_polis_risk(osv.osv):
 			cr.execute("update reliance_import_arg_polis_risk set is_imported='t' where id=%s" % import_arg.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s polis risk and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s polis risk, skipped %s, updated=%s' % (i, ex, upd) )

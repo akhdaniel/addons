@@ -367,7 +367,7 @@
             		<page string="ARG" >
             			<group>
 							<field name="arg_cust_code" />		
-							<field name="arg_parent_id" />		
+							<!-- <field name="arg_parent_id" />		 -->
 
 						</group>
 
