@@ -16,6 +16,7 @@ class partner(osv.osv):
 		"arg_parent_id"			: fields.many2one('res.partner', 'ARG Customer'),
 
 		'partner_polis_ids'		: fields.one2many('reliance.arg_partner_polis','partner_id','Polis', ondelete="cascade"),
+		'partner_polis_risk_ids': fields.one2many('reliance.arg_partner_polis_risk','partner_id','Polis Risk', ondelete="cascade"),
 
 	}
 
@@ -80,6 +81,7 @@ class partner(osv.osv):
 
 class partner_polis(osv.osv):
 	_name = "reliance.arg_partner_polis"
+	_rec_name = "arg_nomor_polis"
 	_columns = {
 		'partner_id'			: fields.many2one('res.partner', 'partner'),
 		"arg_nomor_polis"		: fields.char("Nomor Polis"),
@@ -103,7 +105,7 @@ class partner_polis(osv.osv):
 class partner_polis_risk(osv.osv):
 	_name = "reliance.arg_partner_polis_risk"
 	_columns = {
-		'partner_id'				: 	fields.many2one('res.partner', 'partner', required=True),
+		'partner_id'				: 	fields.many2one('res.partner', 'Partner', required=True),
 		"policy_id"					:	fields.many2one('reliance.arg_partner_polis', 'Polis', required=True),
 		"asset_description"			:	fields.char("Asset Description"),
 		"item_no"					:	fields.char("Item No"),

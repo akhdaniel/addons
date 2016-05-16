@@ -123,7 +123,8 @@
 
             	<field name="website" position="after">
 					<field name='reliance_id' 		 />
-					<!-- <field name='nomor_nasabah' 	 />
+					<field name='related_partner_id' />
+					<!-- <field name='nomor_nasabah' />
 					<field name='agent_id' 			 />  -->     
       		
             	</field>
@@ -273,6 +274,29 @@
 						</group>
             		</page>
 
+            		<page string="Related Partners" >
+            			<field name="related_partner_ids">
+            				<tree string="Related Parners">
+            					<field name="name"/>
+								<field name='reliance_id'/>
+
+								<field name='ajri_nomor_partisipan'/>
+								<field name='ajri_nomor_polis'/>
+
+								<field name='health_nomor_polis'/>
+								<field name='health_member_id'/>					
+
+								<field name='ls_client_sid'/>
+								<field name='ls_client_id'/>
+
+								<field name='refi_no_debitur'/>
+								<field name='rmi_sid'/>
+
+								<field name='arg_cust_code'/>
+							</tree>            			
+						</field>
+            		</page>
+
             		<page string="LS" >
 
         				<group>
@@ -369,7 +393,18 @@
 						</group>
 
 
-						<group string="Assets" invisible="[('is_company','=',True)]">
+						<group string="Assets" >
+							<field name="partner_polis_risk_ids"  
+								nolabel="1">
+								<tree string="Polis Risk"  editable="bottom">
+									<field name="policy_id"					 />
+									<field name="asset_description"			 />
+									<field name="item_no"					 />
+									<field name="tahun"						 />
+									<field name="total_premi"				 />
+									<field name="total_nilai_pertanggungan"	 />
+								</tree>
+							</field>							
 						</group>
 
 					</page>	   
