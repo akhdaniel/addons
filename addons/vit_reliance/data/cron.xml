@@ -273,13 +273,13 @@
               
         <!-- REFI FTP -->
         
-        <record model="ir.cron" id="import_ftp_ajri">
+        <record model="ir.cron" id="import_ftp_refi">
             <field name="name">Auto Process REFI FTP Files</field>
             <field name="interval_number">1</field>
             <field name="interval_type">hours</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
-            <field name="model" eval="'reliance.import_ftp_ajri'"/>
+            <field name="model" eval="'reliance.import_ftp_refi'"/>
             <field name="function" eval="'cron_process'"/>
             <field name="args" eval="'()'" />
         </record>  
