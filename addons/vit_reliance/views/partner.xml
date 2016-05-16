@@ -23,6 +23,7 @@
 					<field name='rmi_sid' 		 />
 
 					<field name='arg_cust_code' 		 />
+					<field name='arg_nomor_polis' 		 />
 
 		        </field>
 		    </field>
@@ -51,6 +52,7 @@
 					<field name='refi_no_debitur'/>
 					<field name='rmi_sid'/>
 
+					<!-- <field name='arg_company_code'/> -->
 					<field name='arg_cust_code'/>
 					
 					<field name='city'/>
@@ -341,26 +343,35 @@
             		<page string="ARG" >
             			<group>
 							<field name="arg_cust_code" />		
+							<field name="arg_parent_id" />		
+
 						</group>
 
-						<separator string="Polis" />
+						<group string="Polis" >
 
-						<field name="partner_polis_ids">
-							<tree string="Polis"  editable="bottom">
-								<field name="arg_nomor_polis" />		
-								<field name="arg_class" />		
-								<field name="arg_subclass" />	
-								<field name="arg_eff_date" />	
-								<field name="arg_exp_date" />	
-								<field name="arg_company_code" />	
-								<field name="arg_company_name" />	
-								<field name="arg_company_type" />	
-								<field name="arg_marketing_code" />
-								<field name="arg_marketing_name" />								
-								<field name="arg_qq" />		
-								<field name="arg_cp" />		
-							</tree>
-						</field>
+							<field name="partner_polis_ids"  
+								nolabel="1">
+								<tree string="Polis"  editable="bottom">
+									<field name="arg_nomor_polis" />		
+									<field name="arg_class" />		
+									<field name="arg_subclass" />	
+									<field name="arg_eff_date" />	
+									<field name="arg_exp_date" />	
+									<field name="arg_company_code" />	
+									<field name="arg_company_name" />	
+									<field name="arg_company_type" />	
+									<field name="arg_marketing_code" />
+									<field name="arg_marketing_name" />								
+									<field name="arg_qq" />		
+									<field name="arg_cp" />	
+								</tree>
+							</field>
+						</group>
+
+
+						<group string="Assets" invisible="[('is_company','=',True)]">
+						</group>
+
 					</page>	   
 
             		<page string="RMI" >

@@ -107,6 +107,21 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+		                <filter string="Policy No" icon="terp-personal" 
+		                    domain="[]" name="group_by_policy_no"
+		                	 context="{'group_by':'policy_no'}"/>
+		                <filter string="Product Class" icon="terp-personal" 
+		                    domain="[]" name="group_by_product_class"
+		                	 context="{'group_by':'product_class'}"/>
+		                <filter string="Company Name" icon="terp-personal" 
+		                    domain="[]" name="group_by_company_name"
+		                	 context="{'group_by':'company_name'}"/>
+		                <filter string="Cust Name" icon="terp-personal" 
+		                    domain="[]" name="group_by_cust_name"
+		                	 context="{'group_by':'cust_name'}"/>
+		                <filter string="QQ Name" icon="terp-personal" 
+		                    domain="[]" name="group_by_qq"
+		                	 context="{'group_by':'qq'}"/>
 		            </group>                                        
 
 		        </search>
@@ -184,9 +199,10 @@
 		    	<tree string="list import_arg_polis_risk" colors="grey:is_imported==True; blue:is_imported==False">
 					<field name="policy_no" />					
 					<field name="asset_description" />			
+					<field name="item_no" />			
+					<field name="tahun" />			
 					<field name="total_premi" />				
 					<field name="total_nilai_pertanggungan" />	
-
 					<field name='is_imported' 		 />
 					<field name="notes"				 />
 					<field name="source"				 />
@@ -224,6 +240,9 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+		                <filter string="Policy No" icon="terp-personal" 
+		                    domain="[]" name="group_by_policy_no"
+		                	 context="{'group_by':'policy_no'}"/>
 		            </group>                                        
 
 		        </search>
@@ -243,6 +262,9 @@
 	            		
 						<field name="policy_no" />					
 						<field name="asset_description" />			
+						<field name="item_no" />			
+						<field name="tahun" />			
+						
 						<field name="total_premi" />				
 						<field name="total_nilai_pertanggungan" />	
 						

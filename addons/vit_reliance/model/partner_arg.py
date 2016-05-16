@@ -12,7 +12,11 @@ class partner(osv.osv):
 	_inherit 	= "res.partner"
 	_columns = {
 		"arg_cust_code"			: fields.char("ARG Customer Code"),
+		"arg_nomor_polis"		: fields.char("ARG Nomor Polis"),
+		"arg_parent_id"			: fields.many2one('res.partner', 'ARG Customer'),
+
 		'partner_polis_ids'		: fields.one2many('reliance.arg_partner_polis','partner_id','Polis', ondelete="cascade"),
+
 	}
 
 	################################################################
@@ -95,3 +99,17 @@ class partner_polis(osv.osv):
 		"arg_cp"				: fields.char("Cust CP"),
 
 	}
+
+class partner_polis_risk(osv.osv):
+	_name = "reliance.arg_partner_polis_risk"
+	_columns = {
+		'partner_id'				: 	fields.many2one('res.partner', 'partner', required=True),
+		"policy_id"					:	fields.many2one('reliance.arg_partner_polis', 'Polis', required=True),
+		"asset_description"			:	fields.char("Asset Description"),
+		"item_no"					:	fields.char("Item No"),
+		"tahun"						:	fields.char("Tahun"),
+		"total_premi"				:	fields.char("Total Premi"),
+		"total_nilai_pertanggungan"	:	fields.char("Total Nilai Pertanggungan"),
+	}
+
+
