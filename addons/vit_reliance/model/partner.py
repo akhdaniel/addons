@@ -14,6 +14,10 @@ class res_partner(osv.osv):
 		'reliance_id' 							: fields.char('Reliance ID', select=1),
         'city'									: fields.char('City', select=1),
 
+        # related partners
+        'related_partner_id'					: fields.many2one('res.partner', 'Related Partner Parent'),
+        'related_partner_ids'					: fields.one2many('res.partner', 'related_partner_id','Related Partners', ondelete="cascade"),
+
 		'nomor_nasabah' 						: fields.char('Nomor Nasabah', select=1),
 		'agent_id' 								: fields.char('Agent', select=1),
 

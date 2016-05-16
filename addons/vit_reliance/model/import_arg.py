@@ -397,7 +397,7 @@ class import_arg_polis_risk(osv.osv):
 				import_ls_fname = "import_arg.%s" % k 
 				cust_data.update( {partner_fname : eval(import_ls_fname)})
 
-			cust_data.update({'polis_id': polis_data.id})
+			cust_data.update({'policy_id': polis_data.id})
 			cust_data.update({'partner_id': polis_data.partner_id.id})
 
 			exist = risk.search(cr, uid, [
@@ -406,13 +406,13 @@ class import_arg_polis_risk(osv.osv):
 				('tahun','=',import_arg.tahun),
 				], context=context)
 			if not exist:
-				polis.create(cr, uid, cust_data, context=context)
+				risk.create(cr, uid, cust_data, context=context)
 			else:
-				polis.write(cr, iui, exist[0], cust_data, context=context)
+				risk.write(cr, uid, exist[0], cust_data, context=context)
 
 			#commit per record
-			i = 1 +1
+			i = i + 1
 			cr.execute("update reliance_import_arg_polis_risk set is_imported='t' where id=%s" % import_arg.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s polis risk and skipped %s' % (i, ex) )
