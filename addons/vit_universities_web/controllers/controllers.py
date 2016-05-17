@@ -49,7 +49,7 @@ class Partner(http.Controller):
 		partner = user.partner_id
 
 		Prodi  = http.request.env['master.prodi']
-		prodi_ids = Prodi.search([])
+		prodi_ids = Prodi.search([('is_internal','=',True)])
 
 		Tahun  = http.request.env['academic.year']
 		tahun_ids = Tahun.search([('is_active','=',True)])
