@@ -554,5 +554,20 @@
 
             </field>
         </record>
+
+
+
+        <!-- graph -->
+        <record id="view_partner_graph" model="ir.ui.view">
+            <field name="name">partner_graph</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <graph string="partner_analysis" type="pie">
+                    <field name="company_id"/>
+					<!-- <field name="real_order" operator="+"/>
+                    <field name="unfilled" operator="+"/> -->
+                </graph>
+            </field>
+        </record>
 	</data>
 </openerp>
