@@ -82,6 +82,7 @@ class import_health_polis(osv.osv):
 
 				'is_company'	: True,
 				'comment'		: 'HEALTH',
+				'initial_bu'	: 'HEALTH',
 			}
 
 

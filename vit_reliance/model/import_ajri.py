@@ -84,7 +84,8 @@ class import_ajri(osv.osv):
 					'ajri_nomor_polis'	: import_ajri.nomor_polis,
 					'is_company'		: True,
 					'country_id'		: indo[0],
-					'comment' 			: 'AJRI'
+					'comment' 			: 'AJRI',
+					'initial_bu' 		: 'AJRI'
 				}
 				
 				########################## check exiting pemegang partner 

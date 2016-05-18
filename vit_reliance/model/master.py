@@ -102,7 +102,7 @@ class range_penghasilan_rmi(osv.osv):
 class warga_negara(osv.osv):
 	_name 		= "reliance.warga_negara"
 	_columns 	= {
-		"name"			: fields.many2one('res.country', 'Country'),
+		"name"			: fields.char("Name"),
 		"name_ls"		: fields.char("LS Name"),
 		"name_arg"		: fields.char("ARG Name"),
 		"name_ajri"		: fields.char("AJRI Name"),

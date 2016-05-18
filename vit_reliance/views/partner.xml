@@ -109,6 +109,10 @@
 		                    domain="[]" name="group_by_perorangan_jenis_kelamin"
 		                	context="{'group_by':'perorangan_jenis_kelamin'}"/>
 
+		                <filter string="Initial BU" icon="terp-personal" 
+		                    domain="[]" name="group_by_initial_bu"
+		                	context="{'group_by':'initial_bu'}"/>
+
 
 		            </group>                                        
 		
@@ -563,7 +567,7 @@
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
                 <graph string="partner_analysis" type="pie">
-                    <field name="company_id"/>
+                    <field name="initial_bu"/>
 					<!-- <field name="real_order" operator="+"/>
                     <field name="unfilled" operator="+"/> -->
                 </graph>

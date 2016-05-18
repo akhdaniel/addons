@@ -155,6 +155,7 @@ class import_refi_partner(osv.osv):
 				data.update({'state_id': state_id})
 			
 			data.update({'comment': 'REFI'})
+			data.update({'initial_bu': 'REFI'})
 			
 
 			########################## check exiting partner partner 
