@@ -112,6 +112,12 @@ class import_rmi(osv.osv):
 
 		partner =  self.pool.get('res.partner')
 		country =  self.pool.get('res.country')
+		master_agama = self.pool.get('reliance.agama')
+		master_status_nikah = self.pool.get('reliance.status_nikah')
+		master_warga_negara = self.pool.get('reliance.warga_negara')
+		master_pekerjaan = self.pool.get('reliance.pekerjaan_rmi')
+		master_range_penghasilan = self.pool.get('reliance.range_penghasilan_rmi')
+		master_jenis_kelamin = self.pool.get('reliance.jenis_kelamin')
 
 		for import_rmi in self.browse(cr, uid, ids, context=context):
 			if not import_rmi.sid:
@@ -126,7 +132,7 @@ class import_rmi(osv.osv):
 					import_rmi_fname = "import_rmi.%s" % k 
 					data.update( {partner_fname : eval(import_rmi_fname)})
 
-
+			########################## search country
 			country_id = country.search(cr, uid, [('name','ilike',import_rmi.negara)], context=context)
 			if not country_id:
 				ex=ex+1
@@ -136,12 +142,35 @@ class import_rmi(osv.osv):
 			else:
 				country_id = country_id[0]
 
+			########################## search propinsi
 			if import_rmi.propinsi:
 				state_id = country.find_or_create_state(cr, uid, import_rmi.propinsi, country_id, context=context)
 			else:
 				state_id = False
+			
+			############################ cek master agama
+			agama_id = master_agama.get(cr, uid, 'rmi', import_rmi.agama, context=context)
+			data.update({'perorangan_agama': agama_id})
+
+			########################### cek master range_penghasilan_rmi
+			range_penghasilan_id = master_range_penghasilan.get(cr, uid, import_rmi.gaji_pertahun, context=context)
+			data.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
+
+			############################ cek master pekerjaan rmi
+			pekerjaan_id = master_pekerjaan.get(cr, uid, import_rmi.pekerjaan, context=context)
+			data.update({'pekerjaan_nama': pekerjaan_id})
 
 
+						
+			############################ cek master warga_negara
+			warga_negara_id = master_warga_negara.get(cr, uid, 'rmi', import_rmi.kewarganegaraan, context=context)
+			data.update({'perorangan_kewarganegaraan': warga_negara_id})	
+
+			############################ cek master jenis_kelamin
+			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'rmi', import_rmi.jenis_kelamin, context=context)
+			data.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
+
+			########################## insert ahli waris
 			if import_rmi.ahli_waris:
 				partner_ahli_waris_ids = [(0,0,{
 					'nama' 				: import_rmi.ahli_waris,
@@ -153,6 +182,7 @@ class import_rmi(osv.osv):
 			else:
 				partner_ahli_waris_ids = False 
 
+			########################## prepare data
 			data.update({
 				'comment'		: 'RMI',
 				'state_id'		: state_id,
@@ -160,7 +190,7 @@ class import_rmi(osv.osv):
 				'partner_ahli_waris_ids': partner_ahli_waris_ids,
 			})
 
-			########################## check exiting partner 
+			########################## check exiting partner , create if not exists
 			pid = partner.search(cr, uid, [('rmi_sid','=',import_rmi.sid)],context=context)
 			if not pid:
 				pid = partner.create(cr, uid, data, context=context)	
@@ -171,7 +201,7 @@ class import_rmi(osv.osv):
 				ex = ex + 1
 
 
-			#commit per record
+			########################### commit per record
 			cr.execute("update reliance_import_rmi set is_imported='t' where id=%s" % import_rmi.id)
 			cr.commit()
 

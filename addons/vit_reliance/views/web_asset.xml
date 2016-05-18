@@ -1,0 +1,9 @@
+<openerp>
+    <data>
+        <template id="reliance_web_backend" name="reliance web assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/css" src="/vit_reliance/static/src/css/my.css"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

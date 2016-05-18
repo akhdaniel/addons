@@ -1,0 +1,328 @@
+<openerp>
+	<data>
+
+		<!-- master agama -->
+
+		<record id="view_agama_tree" model="ir.ui.view">
+		    <field name="name">reliance_agama_tree</field>
+		    <field name="model">reliance.agama</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list agama" >
+					<field name="name" />		
+					<field name="name_ls" />	
+					<field name="name_arg" />	
+					<field name="name_ajri" />	
+					<field name="name_refi" />	
+					<field name="name_rmi" />	
+					<field name="name_health" />		    		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_agama_list" model="ir.actions.act_window">
+			<field name="name">Agama</field>
+			<field name="res_model">reliance.agama</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_agama"
+		 action="action_agama_list"
+		 name="Agama"
+		 sequence="30"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+		<!-- Master jenis_kelamin -->
+
+		<record id="view_jenis_kelamin_tree" model="ir.ui.view">
+		    <field name="name">reliance_jenis_kelamin_tree</field>
+		    <field name="model">reliance.jenis_kelamin</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list jenis_kelamin" >
+					<field name="name" />		
+					<field name="name_ls" />	
+					<field name="name_arg" />	
+					<field name="name_ajri" />	
+					<field name="name_refi" />	
+					<field name="name_rmi" />	
+					<field name="name_health" />		    		
+		    	</tree>
+		    </field>
+		</record>
+		
+		<record id="action_jenis_kelamin_list" model="ir.actions.act_window">
+			<field name="name">Jenis Kelamin</field>
+			<field name="res_model">reliance.jenis_kelamin</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_jenis_kelamin"
+		 action="action_jenis_kelamin_list"
+		 name="Jenis Kelamin"
+		 sequence="40"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+		<!-- master range_penghasilan -->
+
+		<record id="view_range_penghasilan_tree" model="ir.ui.view">
+		    <field name="name">reliance_range_penghasilan_tree</field>
+		    <field name="model">reliance.range_penghasilan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list range_penghasilan" >
+					<field name="urutan" />		
+					<field name="name" />	    		
+					<field name="min" />	    		
+					<field name="max" />	    		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_range_penghasilan_list" model="ir.actions.act_window">
+			<field name="name">Range Penghasilan</field>
+			<field name="res_model">reliance.range_penghasilan</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_range_penghasilan"
+		 action="action_range_penghasilan_list"
+		 name="Range Penghasilan"
+		 sequence="50"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+		<!-- master range_penghasilan_ls -->
+
+		<record id="view_range_penghasilan_ls_tree" model="ir.ui.view">
+		    <field name="name">reliance_range_penghasilan_ls_tree</field>
+		    <field name="model">reliance.range_penghasilan_ls</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list range_penghasilan_ls" >
+					<field name="range_penghasilan_id" />	    		
+					<field name="name" />	    		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_range_penghasilan_ls_list" model="ir.actions.act_window">
+			<field name="name">Range Penghasilan LS</field>
+			<field name="res_model">reliance.range_penghasilan_ls</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_range_penghasilan_ls"
+		 action="action_range_penghasilan_ls_list"
+		 name="Range Penghasilan LS"
+		 sequence="51"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+		<!-- master range_penghasilan_rmi -->
+
+		<record id="view_range_penghasilan_rmi_tree" model="ir.ui.view">
+		    <field name="name">reliance_range_penghasilan_rmi_tree</field>
+		    <field name="model">reliance.range_penghasilan_rmi</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list range_penghasilan_rmi" >
+					<field name="range_penghasilan_id" />	    		
+					<field name="name" />	    		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_range_penghasilan_rmi_list" model="ir.actions.act_window">
+			<field name="name">Range Penghasilan RMI</field>
+			<field name="res_model">reliance.range_penghasilan_rmi</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_range_penghasilan_rmi"
+		 action="action_range_penghasilan_rmi_list"
+		 name="Range Penghasilan RMI"
+		 sequence="55"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+		<!-- master warga_negara -->
+
+		<record id="view_warga_negara_tree" model="ir.ui.view">
+		    <field name="name">reliance_warga_negara_tree</field>
+		    <field name="model">reliance.warga_negara</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list warga_negara" >
+					<field name="name" />		
+					<field name="name_ls" />	
+					<field name="name_arg" />	
+					<field name="name_ajri" />	
+					<field name="name_refi" />	
+					<field name="name_rmi" />	
+					<field name="name_health" />		    		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_warga_negara_list" model="ir.actions.act_window">
+			<field name="name">Warga Negara</field>
+			<field name="res_model">reliance.warga_negara</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_warga_negara"
+		 action="action_warga_negara_list"
+		 name="Warga Negara"
+		 sequence="60"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+
+		<!-- master pekerjaan -->
+
+		<record id="view_pekerjaan_tree" model="ir.ui.view">
+		    <field name="name">reliance_pekerjaan_tree</field>
+		    <field name="model">reliance.pekerjaan</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list pekerjaan" >
+					<field name="name" />			    		
+		    	</tree>
+		    </field>
+		</record>	
+
+		<record id="action_pekerjaan_list" model="ir.actions.act_window">
+			<field name="name">Pekerjaan</field>
+			<field name="res_model">reliance.pekerjaan</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_pekerjaan"
+		 action="action_pekerjaan_list"
+		 name="Perkerjaan"
+		 sequence="70"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+		<!-- master pekerjaan_ls -->
+
+		<record id="view_pekerjaan_ls_tree" model="ir.ui.view">
+		    <field name="name">reliance_pekerjaan_ls_tree</field>
+		    <field name="model">reliance.pekerjaan_ls</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list pekerjaan_ls" >
+					<field name="pekerjaan_id" />			    		
+					<field name="name" />			    		
+		    	</tree>
+		    </field>
+		</record>	
+
+		<record id="action_pekerjaan_ls_list" model="ir.actions.act_window">
+			<field name="name">Pekerjaan LS</field>
+			<field name="res_model">reliance.pekerjaan_ls</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_pekerjaan_ls"
+		 action="action_pekerjaan_ls_list"
+		 name="Perkerjaan LS"
+		 sequence="71"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+		<!-- master pekerjaan_rmi -->
+
+		<record id="view_pekerjaan_rmi_tree" model="ir.ui.view">
+		    <field name="name">reliance_pekerjaan_rmi_tree</field>
+		    <field name="model">reliance.pekerjaan_rmi</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list pekerjaan_rmi" >
+					<field name="pekerjaan_id" />			    		
+					<field name="name" />			    		
+		    	</tree>
+		    </field>
+		</record>	
+
+		<record id="action_pekerjaan_rmi_list" model="ir.actions.act_window">
+			<field name="name">Pekerjaan RMI</field>
+			<field name="res_model">reliance.pekerjaan_rmi</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_pekerjaan_rmi"
+		 action="action_pekerjaan_rmi_list"
+		 name="Perkerjaan RMI"
+		 sequence="75"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+		<!-- master status_nikah -->
+
+		<record id="view_status_nikah_tree" model="ir.ui.view">
+		    <field name="name">reliance_status_nikah_tree</field>
+		    <field name="model">reliance.status_nikah</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list status_nikah" >
+					<field name="name" />		
+					<field name="name_ls" />	
+					<field name="name_arg" />	
+					<field name="name_ajri" />	
+					<field name="name_refi" />	
+					<field name="name_rmi" />	
+					<field name="name_health" />		    		
+		    	</tree>
+		    </field>
+		</record>	
+
+		<record id="action_status_nikah_list" model="ir.actions.act_window">
+			<field name="name">Status Nikah</field>
+			<field name="res_model">reliance.status_nikah</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_status_nikah"
+		 action="action_status_nikah_list"
+		 name="Status Nikah"
+		 sequence="80"
+		 parent="rcm_configuration"/>
+
+	</data>
+</openerp>
