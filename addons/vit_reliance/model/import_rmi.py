@@ -185,6 +185,7 @@ class import_rmi(osv.osv):
 			########################## prepare data
 			data.update({
 				'comment'		: 'RMI',
+				'initial_bu'	: 'RMI',
 				'state_id'		: state_id,
 				'country_id'	: country_id,
 				'partner_ahli_waris_ids': partner_ahli_waris_ids,

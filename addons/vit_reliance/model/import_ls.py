@@ -175,6 +175,7 @@ class import_ls(osv.osv):
 
 			data.update( {'country_id' :country_id[0]})
 			data.update( {'comment':'LS'})
+			data.update( {'initial_bu':'LS'})
 
 			# date birth
 			date_birth = False

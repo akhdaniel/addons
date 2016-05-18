@@ -180,6 +180,7 @@ class import_arg(osv.osv):
 
 		cust_data.update({'is_company': True})
 		cust_data.update({'comment': 'ARG CUST_NAME'})
+		cust_data.update({'initial_bu': 'ARG'})
 		
 		##############################################################################   
 		# check exiting partner partner by CUST_CODE
@@ -226,6 +227,7 @@ class import_arg(osv.osv):
 
 		cust_data.update({'is_company': True})
 		cust_data.update({'comment': 'ARG COMPANY_NAME'})
+		cust_data.update({'initial_bu': 'ARG'})
 		
 		##############################################################################   
 		# check exiting partner partner by CUST_CODE
@@ -322,6 +324,7 @@ class import_arg(osv.osv):
 		cust_data.update({'name': qq_name})
 		cust_data.update({'arg_parent_id': parent_id})
 		cust_data.update({'comment': 'ARG QQ'})
+		cust_data.update({'initial_bu': 'ARG'})
 		
 		##############################################################################   
 		# check exiting partner partner by QQ's polis no
