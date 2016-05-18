@@ -13,6 +13,7 @@ class res_partner(osv.osv):
 	_columns 	= {
 		'reliance_id' 							: fields.char('Reliance ID', select=1),
         'city'									: fields.char('City', select=1),
+        'initial_bu'							: fields.char('Initial BU', length=4, select=1),
 
         # related partners
         'related_partner_id'					: fields.many2one('res.partner', 'Related Partner Parent'),
