@@ -149,6 +149,11 @@ class import_ls(osv.osv):
 
 		partner = self.pool.get('res.partner')
 		country = self.pool.get('res.country')
+		master_agama = self.pool.get('reliance.agama')
+		master_status_nikah = self.pool.get('reliance.status_nikah')
+		master_warga_negara = self.pool.get('reliance.warga_negara')
+		master_pekerjaan = self.pool.get('reliance.pekerjaan_ls')
+		master_range_penghasilan = self.pool.get('reliance.range_penghasilan_ls')
 
 		for import_ls in self.browse(cr, uid, ids, context=context):
 			data = {}
@@ -171,6 +176,7 @@ class import_ls(osv.osv):
 			data.update( {'country_id' :country_id[0]})
 			data.update( {'comment':'LS'})
 
+			# date birth
 			date_birth = False
 			if import_ls.date_birth:
 				try: 
@@ -180,11 +186,29 @@ class import_ls(osv.osv):
 					ex = ex+1
 					cr.commit()
 					continue
-
-
 			data.update( {'perorangan_tanggal_lahir':date_birth})
+
+			# cek master agama
+			agama_id = master_agama.get(cr, uid, 'ls', import_ls.religion, context=context)
+			data.update({'perorangan_agama': agama_id})
 			
-			# check exiting partner 
+			# cek master status_nikah
+			status_nikah_id = master_status_nikah.get(cr, uid, 'ls', import_ls.marital_status, context=context)
+			data.update({'perorangan_status_perkawinan': status_nikah_id})
+			
+			# cek master warga_negara
+			warga_negara_id = master_warga_negara.get(cr, uid, 'ls', import_ls.nationality, context=context)
+			data.update({'perorangan_kewarganegaraan': warga_negara_id})
+
+			# cek master pekerjaan ls
+			pekerjaan_id = master_pekerjaan.get(cr, uid, import_ls.occupation, context=context)
+			data.update({'pekerjaan_nama': pekerjaan_id})
+			
+			# cek master range_penghasilan_ls
+			range_penghasilan_id = master_range_penghasilan.get(cr, uid, import_ls.gross_income_per_year, context=context)
+			data.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
+
+			# check exiting partner and create if not exists
 			pid = partner.search(cr, uid, [('ls_client_id','=',import_ls.client_id)],context=context)
 			if not pid:
 				pid = partner.create(cr, uid, data, context=context)	
@@ -193,6 +217,8 @@ class import_ls(osv.osv):
 				self.write(cr, uid, import_ls.id, {'notes':'Partner exist with CIF %s' % import_ls.client_id}, context=context)
 				_logger.warning('Partner exist with CIF %s' % import_ls.client_id)
 				ex = ex + 1
+
+
 
 			#commit per record
 			cr.execute("update reliance_import_ls set is_imported='t' where id=%s" % import_ls.id)

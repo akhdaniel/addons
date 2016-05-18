@@ -68,17 +68,26 @@ class res_partner(osv.osv):
 		'perorangan_tempat_lahir' 				: fields.char('Tempat Lahir'),
 		'perorangan_tanggal_lahir' 				: fields.date('Tanggal Lahir'),
 		'perorangan_nomor_ktp' 					: fields.char('Nomor KTP'),
-		'perorangan_kewarganegaraan' 			: fields.char('Kewarganegaraan'),
+		
+		# 'perorangan_kewarganegaraan' 			: fields.char('Kewarganegaraan'),
+		'perorangan_kewarganegaraan' 			: fields.many2one('reliance.warga_negara', 'Kewarganegaraan'),
 		'perorangan_npwp' 						: fields.char('NPWP'),
-		'perorangan_status_perkawinan' 			: fields.char('Status Perkawinan'),
+		
+		# 'perorangan_status_perkawinan' 			: fields.char('Status Perkawinan'),
+		'perorangan_status_perkawinan' 			: fields.many2one('reliance.status_nikah', 'Status Perkawinan'),
+		
 		'perorangan_alamat_surat_menyurat' 		: fields.char('Alamat surat menyurat'),
 		'perorangan_kecamatan' 					: fields.char('Kecamatan'),
-		'perorangan_jenis_kelamin' 				: fields.char('Jenis Kelamin'),
+		
+		# 'perorangan_jenis_kelamin' 				: fields.char('Jenis Kelamin'),
+		'perorangan_jenis_kelamin' 				: fields.many2one('reliance.jenis_kelamin', 'Jenis Kelamin'),
+		
 		'perorangan_nama_istri_suami' 			: fields.char('Nama istri/ suami'),
-		'perorangan_alamat_email' 				: fields.char('Alamat Email'),
+		'perorangan_alamat_email' 				: fields.char('Alamat Email (Perorangan)'),
 		'perorangan_pendidikan_terakhir' 		: fields.char('Pendidikan Terakhir'),
 		'perorangan_masa_berlaku_ktp' 			: fields.char('Masa berlaku KTP'),
-		'perorangan_agama' 						: fields.char('Agama'),
+		# 'perorangan_agama' 						: fields.char('Agama'),
+		'perorangan_agama' 						: fields.many2one('reliance.agama', 'Agama'),
 		'perorangan_tujuan_investasi' 			: fields.char('Tujuan Investasi'),
 		'perorangan_kitas' 						: fields.char('Kitas'),
 		'perorangan_masa_berlaku_kitas' 		: fields.char('Masa berlaku Kitas'),
@@ -102,17 +111,22 @@ class res_partner(osv.osv):
 		'perorangan_nama_organisasi' 			: fields.char('Nama organisasi'),
 		'perorangan_jabatan' 					: fields.char('Jabatan'),
 
-		'pekerjaan_nama' 						: fields.char('Pekerjaan'),
+		# 'pekerjaan_nama' 						: fields.char('Pekerjaan'),
+		'pekerjaan_nama' 						: fields.many2one('reliance.pekerjaan', 'Pekerjaan'),
+
 		'pekerjaan_profesi' 					: fields.char('Profesi'),
 		'pekerjaan_nama_perusahaan' 			: fields.char('Nama perusahaan'),
 		'pekerjaan_alamat_perusahaan' 			: fields.char('Alamat Perusahaan'),
 		'pekerjaan_bidang_usaha' 				: fields.char('Bidang Usaha'),
-		'pekerjaan_penghasilan_per_tahun' 		: fields.char('Penghasilan per tahun'),
+		
+		# 'pekerjaan_penghasilan_per_tahun' 		: fields.char('Penghasilan per tahun'),
+		'pekerjaan_penghasilan_per_tahun' 		: fields.many2one('reliance.range_penghasilan', 'Penghasilan per tahun'),
+
 		'pekerjaan_jabatan' 					: fields.char('Jabatan'),
 		'pekerjaan_penghasilan_per_bulan' 		: fields.char('Penghasilan per bulan'),
 		'pekerjaan_nomor_npwp' 					: fields.char('Nomor NPWP'),
 		'pekerjaan_nomor_telepon' 				: fields.char('Nomor Telepon'),
-		'pekerjaan_alamat_email' 				: fields.char('Alamat Email'),
+		'pekerjaan_alamat_email' 				: fields.char('Alamat Email (Pekerjaan)'),
 		'pekerjaan_masa_kerja' 					: fields.char('Masa Kerja'),
 		'pekerjaan_nama_direktur' 				: fields.char('Nama Direktur'),
 		'pekerjaan_nomor_extension' 			: fields.char('Nomor Extension'),

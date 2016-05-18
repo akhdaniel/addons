@@ -97,6 +97,18 @@
 		                    domain="[]" name="group_by_parent_id"
 		                	context="{'group_by':'parent_id'}"/>
 
+		                <filter string="Penghasilan" icon="terp-personal" 
+		                    domain="[]" name="group_by_pekerjaan_penghasilan_per_tahun"
+		                	context="{'group_by':'pekerjaan_penghasilan_per_tahun'}"/>
+
+		                <filter string="Agama" icon="terp-personal" 
+		                    domain="[]" name="group_by_perorangan_agama"
+		                	context="{'group_by':'perorangan_agama'}"/>
+
+		                <filter string="Jenis Kelamin" icon="terp-personal" 
+		                    domain="[]" name="group_by_perorangan_jenis_kelamin"
+		                	context="{'group_by':'perorangan_jenis_kelamin'}"/>
+
 
 		            </group>                                        
 		

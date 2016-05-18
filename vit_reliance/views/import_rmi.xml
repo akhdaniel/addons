@@ -45,6 +45,7 @@
 		    	<tree string="list import_rmi" colors="grey:is_imported==True; blue:is_imported==False">
 					<field name="sid" />						
 					<field name="nama" />						
+					<field name="jenis_kelamin" />						
 					<field name="alamat_ktp" />				
 					<field name="no_ktp_siup" />				
 					<field name="propinsi" />					
@@ -96,6 +97,7 @@
 		            <separator/>
 					<field name="sid" />						
 					<field name="nama" />						
+					<field name="jenis_kelamin" />						
 					<field name="alamat_ktp" />				
 					<field name="no_ktp_siup" />				
 					<field name="propinsi" />					
@@ -131,9 +133,14 @@
 		                <filter string="Is Imported" icon="terp-personal" 
 		                    domain="[]" name="group_by_is_imported"
 		                	 context="{'group_by':'is_imported'}"/>
+		                
 		                <filter string="SID" icon="terp-personal" 
 		                    domain="[]" name="group_by_sid"
 		                	 context="{'group_by':'sid'}"/>
+
+		                <filter string="Warga Negara" icon="terp-personal" 
+		                    domain="[]" name="group_by_kewarganegaraan"
+		                	 context="{'group_by':'kewarganegaraan'}"/>
 		            </group>                                        
 
 		        </search>
