@@ -29,15 +29,15 @@ PARTNER_MAPPING = {
 	"id_card"				:	"perorangan_nomor_ktp",
 	"id_card_expire_date"	:	"perorangan_masa_berlaku_ktp",
 	"npwp"					:	"perorangan_npwp",
-	"nationality"			:	"perorangan_kewarganegaraan",
-	"marital_status"		:	"perorangan_status_perkawinan",
+	# "nationality"			:	"perorangan_kewarganegaraan",
+	# "marital_status"		:	"perorangan_status_perkawinan",
 	"phone"					:	"phone",
 	"cellular"				:	"mobile",
 	"fax"					:	"fax",
 	# "couplenames"			:	"", masuk ke keluarga
 	"email"					:	"email",
 	"education"				:	"perorangan_pendidikan_terakhir",
-	"religion"				:	"perorangan_agama",
+	# "religion"				:	"perorangan_agama",
 	"mother_name"			:	"perorangan_nama_gadis_ibu_kandung",
 	"mothers_maiden_name"	:	"perorangan_nama_gadis_ibu_kandung",
 	"title"					:	"pekerjaan_nama",
@@ -56,7 +56,7 @@ PARTNER_MAPPING = {
 	"company_fax"			:	"pekerjaan_nomor_faksimile",
 	"source_of_fund"		:	"perorangan_sumber_dana_yg_akan_diinvestasikan",
 	# "source_of_fund_desc"	:	"",
-	"gross_income_per_year"	:	"pekerjaan_penghasilan_per_tahun",
+	# "gross_income_per_year"	:	"pekerjaan_penghasilan_per_tahun",
 	# "house_status"			:	"",
 	# "registered"			:	"",
 	# "void"					:	"",
@@ -157,6 +157,7 @@ class import_ls(osv.osv):
 
 		for import_ls in self.browse(cr, uid, ids, context=context):
 			data = {}
+			data2 = {} # khusus untuk yang update
 			country_id = False
 
 			for k in PARTNER_MAPPING.keys():
@@ -175,11 +176,11 @@ class import_ls(osv.osv):
 
 			data.update( {'country_id' :country_id[0]})
 			data.update( {'comment':'LS'})
-			data.update( {'initial_bu':'LS'})
+			data2.update( {'initial_bu':'LS'})
 
 			# date birth
 			date_birth = False
-			if import_ls.date_birth:
+			if import_ls.date_birth and import_ls.date_birth !="NULL":
 				try: 
 					date_birth = datetime.strptime(import_ls.date_birth, "%Y-%m-%d")
 				except ValueError:
@@ -191,41 +192,42 @@ class import_ls(osv.osv):
 
 			# cek master agama
 			agama_id = master_agama.get(cr, uid, 'ls', import_ls.religion, context=context)
-			data.update({'perorangan_agama': agama_id})
+			data2.update({'perorangan_agama': agama_id})
 			
 			# cek master status_nikah
 			status_nikah_id = master_status_nikah.get(cr, uid, 'ls', import_ls.marital_status, context=context)
-			data.update({'perorangan_status_perkawinan': status_nikah_id})
+			data2.update({'perorangan_status_perkawinan': status_nikah_id})
 			
 			# cek master warga_negara
 			warga_negara_id = master_warga_negara.get(cr, uid, 'ls', import_ls.nationality, context=context)
-			data.update({'perorangan_kewarganegaraan': warga_negara_id})
+			data2.update({'perorangan_kewarganegaraan': warga_negara_id})
 
 			# cek master pekerjaan ls
 			pekerjaan_id = master_pekerjaan.get(cr, uid, import_ls.occupation, context=context)
-			data.update({'pekerjaan_nama': pekerjaan_id})
+			data2.update({'pekerjaan_nama': pekerjaan_id})
 			
 			# cek master range_penghasilan_ls
 			range_penghasilan_id = master_range_penghasilan.get(cr, uid, import_ls.gross_income_per_year, context=context)
-			data.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
+			data2.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
 
 			# check exiting partner and create if not exists
 			pid = partner.search(cr, uid, [('ls_client_id','=',import_ls.client_id)],context=context)
 			if not pid:
+				data.update(data2)
 				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
 			else:
+				partner.write(cr, uid, pid, data2, context=context)	
 				self.write(cr, uid, import_ls.id, {'notes':'Partner exist with CIF %s' % import_ls.client_id}, context=context)
 				_logger.warning('Partner exist with CIF %s' % import_ls.client_id)
 				ex = ex + 1
-
 
 
 			#commit per record
 			cr.execute("update reliance_import_ls set is_imported='t' where id=%s" % import_ls.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )			
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped/updated %s' % (i, ex) )			
 
 
 ####################################################################

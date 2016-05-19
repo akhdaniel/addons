@@ -157,6 +157,7 @@ class import_health_peserta(osv.osv):
 
 		partner = self.pool.get('res.partner')
 		country = self.pool.get('res.country')
+		master_jenis_kelamin = self.pool.get('reliance.jenis_kelamin')
 		indo = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 
 		for import_health_peserta in self.browse(cr, uid, ids, context=context):
@@ -165,6 +166,10 @@ class import_health_peserta(osv.osv):
 				self.write(cr, uid, import_health_peserta.id ,  {'notes':'empty line'}, context=context)
 				cr.commit()
 				continue
+
+			data = {}
+			data2 = {}
+
 
 			polis_holder = partner.search(cr, uid, [
 				('health_nomor_polis','=', import_health_peserta.policyno),
@@ -184,7 +189,7 @@ class import_health_peserta(osv.osv):
 				'health_nomor_polis' 		: import_health_peserta.policyno	,
 				'health_member_id'			: import_health_peserta.memberid	,
 				'name' 						: import_health_peserta.membername	,
-				'perorangan_jenis_kelamin'	: import_health_peserta.sex			,
+				# 'perorangan_jenis_kelamin'	: import_health_peserta.sex			,
 				'perorangan_tanggal_lahir'	: import_health_peserta.birthdate	,
 				'health_status' 			: import_health_peserta.status		,
 				'health_relationship' 		: import_health_peserta.relationship,	
@@ -203,18 +208,25 @@ class import_health_peserta(osv.osv):
 				('health_nomor_polis','=', import_health_peserta.policyno),
 			], context=context)
 
+			############################ cek master jenis_kelamin
+			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'health', import_health_peserta.sex, context=context)
+			data2.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
+			data2.update({'initial_bu': 'HEALTH'})
+
 			if not existing:
+				data.update(data2)
 				partner.create(cr, uid, data, context=context)
+				i = i+1
 			else:
+				partner.write(cr, uid, existing, data2, context=context)
 				ex=ex+1
 
 
 			#commit per record
-			i = i+1
 			cr.execute("update reliance_import_health_peserta set is_imported='t' where id=%s" % import_health_peserta.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped/updated %s' % (i, ex) )
 
 
 

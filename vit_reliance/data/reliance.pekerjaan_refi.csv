@@ -1,0 +1,6 @@
+id,pekerjaan_id,name
+pekerjaan_refi_1,Karyawan Swasta,Swasta Nasional
+pekerjaan_refi_2,Konsultan,Tenaga Ahli
+pekerjaan_refi_3,Pegawai Negeri Sipil,Negeri
+pekerjaan_refi_4,Lainnya,Lain-lain
+pekerjaan_refi_5,Karyawan Swasta Asing,Swasta Asing

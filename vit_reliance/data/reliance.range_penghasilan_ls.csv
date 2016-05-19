@@ -1,7 +1,7 @@
 id,range_penghasilan_id,name
 range_ls_1,50 Jt - 100 Jt,25 Jt - 100 Jt
 range_ls_2,100 Jt - 250 Jt,100 Jt - 250 Jt
-range_ls_3,10 jt - 25 Jt,< 25 Juta
+range_ls_3,21 Jt - 25 Jt,< 25 Juta
 range_ls_4,250 Jt - 500 Jt,250 Jt - 500 Jt
 range_ls_5,1 M - 5 M,> 1 M
 range_ls_6,500 Jt - 1 M,500 Jt - 1 M

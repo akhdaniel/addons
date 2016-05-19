@@ -1,0 +1,7 @@
+id,range_penghasilan_id,name
+range_refi_1,1 Jt - 10 Jt,< 10 juta
+range_refi_2,10 Jt - 15 Jt,10-15 juta
+range_refi_3,16 Jt - 20 Jt,16-20 juta
+range_refi_4,21 Jt - 25 Jt,21-25 juta
+range_refi_5,26 Jt - 50 Jt,26-50 juta
+range_refi_6,50 Jt - 100 Jt,> 50 juta

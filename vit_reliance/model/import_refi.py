@@ -19,7 +19,7 @@ PARTNER_MAPPING = {
 	"no_id"					: "perorangan_nomor_ktp",
 	"tgl_exp_id"			: "perorangan_masa_berlaku_ktp",
 	"tempat_lahir"			: "perorangan_tempat_lahir",
-	"tgl_lahir"				: "perorangan_tanggal_lahir",
+	# "tgl_lahir"				: "perorangan_tanggal_lahir",
 	"npwp"					: "perorangan_npwp",
 	"legal_alamat"			: "street",
 	"legal_kecamatan"		: "perorangan_kecamatan",
@@ -36,18 +36,18 @@ PARTNER_MAPPING = {
 	"no_hp"					: "mobile",
 	"email"					: "email",
 	# CUST 003
-	"jns_kelamin"			: "perorangan_jenis_kelamin",
-	"agama"					: "perorangan_agama",
-	"warga_negara"			: "perorangan_kewarganegaraan",
+	# "jns_kelamin"			: "perorangan_jenis_kelamin",
+	# "agama"					: "perorangan_agama",
+	# "warga_negara"			: "perorangan_kewarganegaraan",
 	"pendidikan"			: "perorangan_pendidikan_terakhir",
 	"status_rumah"			: "refi_status_rumah",
-	"pekerjaan"				: "pekerjaan_nama",
-	"status_nikah"			: "perorangan_status_perkawinan",
+	# "pekerjaan"				: "pekerjaan_nama",
+	# "status_nikah"			: "perorangan_status_perkawinan",
 	"profesi"				: "pekerjaan_profesi",
 	"pisah_harta"			: "refi_pisah_harta",
 	"jabatan"				: "pekerjaan_jabatan",
 	"tanggungan"			: "refi_tanggunan",
-	"range_penghasilan"		: "pekerjaan_penghasilan_per_tahun",
+	# "range_penghasilan"		: "pekerjaan_penghasilan_per_tahun",
 }
 ####################################################################
 # partner data
@@ -129,6 +129,11 @@ class import_refi_partner(osv.osv):
 
 		partner = self.pool.get('res.partner')
 		country = self.pool.get('res.country')
+		master_agama = self.pool.get('reliance.agama')
+		master_status_nikah = self.pool.get('reliance.status_nikah')
+		master_warga_negara = self.pool.get('reliance.warga_negara')
+		master_pekerjaan = self.pool.get('reliance.pekerjaan_refi')
+		master_range_penghasilan = self.pool.get('reliance.range_penghasilan_refi')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
 			if not import_refi.no_debitur:
@@ -139,13 +144,27 @@ class import_refi_partner(osv.osv):
 
 
 			data = {}
+			data2 = {}
+
+			########################### default field mapping
 			for k in PARTNER_MAPPING.keys():
 				partner_fname = PARTNER_MAPPING[k]
 				if partner_fname:
 					import_refi_fname = "import_refi.%s" % k 
 					data.update( {partner_fname : eval(import_refi_fname)})
 			
-			
+			########################### date birth
+			date_birth = False
+			if import_refi.tgl_lahir:
+				try: 
+					date_birth = datetime.strptime(import_refi.tgl_lahir, "%m/%d/%Y")
+				except ValueError:
+					self.write(cr, uid, import_refi.id, {'notes':'date birth format error, use mm/dd/yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+			data2.update( {'perorangan_tanggal_lahir':date_birth})
+
 			########################## lookup country and legal_propinsi
 			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 			data.update({'country_id': country_id[0]})
@@ -155,25 +174,46 @@ class import_refi_partner(osv.osv):
 				data.update({'state_id': state_id})
 			
 			data.update({'comment': 'REFI'})
-			data.update({'initial_bu': 'REFI'})
+			data2.update({'initial_bu': 'REFI'})
 			
+			########################### cek master agama
+			agama_id = master_agama.get(cr, uid, 'refi', import_refi.agama, context=context)
+			data2.update({'perorangan_agama': agama_id})
+			
+			########################### cek master status_nikah
+			status_nikah_id = master_status_nikah.get(cr, uid, 'refi', import_refi.status_nikah, context=context)
+			data2.update({'perorangan_status_perkawinan': status_nikah_id})
+			
+			########################### cek master warga_negara
+			warga_negara_id = master_warga_negara.get(cr, uid, 'refi', import_refi.warga_negara, context=context)
+			data2.update({'perorangan_kewarganegaraan': warga_negara_id})
 
-			########################## check exiting partner partner 
+			############################ cek master pekerjaan refi
+			pekerjaan_id = master_pekerjaan.get(cr, uid, import_refi.pekerjaan, context=context)
+			data2.update({'pekerjaan_nama': pekerjaan_id})
+			
+			############################ cek master range_penghasilan_refi
+			range_penghasilan_id = master_range_penghasilan.get(cr, uid, import_refi.range_penghasilan, context=context)
+			data2.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
+
+			########################### check exiting partner partner 
 			pid = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
 			if not pid:
+				data.update(data2)
 				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
 			else:
 				pid = pid[0]
+				partner.write(cr, uid, pid, data2, context=context)	
 				_logger.warning('Partner exist with refi_no_debitur %s' % import_refi.no_debitur)
 				ex = ex + 1
 
 
-			#commit per record
+			########################### commit per record
 			cr.execute("update reliance_import_refi_partner set is_imported='t' where id=%s" % import_refi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped/updated %s' % (i, ex) )
 
 PERUSAHAAN_MAPPING = {
 	"no_debitur"			: False,
@@ -558,6 +598,7 @@ class import_refi_kontrak(osv.osv):
 				continue
 				
 			data = {}
+
 			cust_id = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.customer_no)], context=context)
 			if not cust_id:
 				msg = _("PARTNER NOT FOUND")
@@ -566,16 +607,31 @@ class import_refi_kontrak(osv.osv):
 				ex=ex+1
 				continue
 
+			########################### next_installment
 			next_installment = False
-			maturity_date = False
-			
 			if import_refi.next_installment.strip():
-				next_installment = datetime.strptime(import_refi.next_installment.strip(),"%d-%m-%Y")
-			
-			if import_refi.maturity_date.strip():
-				maturity_date = datetime.strptime(import_refi.maturity_date.strip(),"%d-%m-%Y")
+				try: 
+					next_installment = datetime.strptime(import_refi.next_installment.strip(), "%d-%m-%Y")
+				except ValueError:
+					self.write(cr, uid, import_refi.id, {'notes':'next_installment format error, use dd-mm-yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+			data.update( {'next_installment':next_installment})
 
-			data = {
+			########################### maturity_date
+			maturity_date = False
+			if import_refi.maturity_date.strip():
+				try: 
+					maturity_date = datetime.strptime(import_refi.maturity_date.strip(), "%d-%m-%Y")
+				except ValueError:
+					self.write(cr, uid, import_refi.id, {'notes':'maturity_date format error, use dd-mm-yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+			data.update( {'maturity_date':maturity_date})
+			
+			data.update({
 				"partner_id"		: 	cust_id[0],
 				"contract_number"	:	import_refi.contract_number, 
 				"customer_no"		:	import_refi.customer_no,	
@@ -583,10 +639,8 @@ class import_refi_kontrak(osv.osv):
 				"product"			:	import_refi.product,	
 				"asset_name"		:	import_refi.asset_name,	
 				"outstanding"		:	import_refi.outstanding,	
-				"next_installment"	:	next_installment,	
 				"pass_due"			:	import_refi.pass_due,	
-				"maturity_date"		:	maturity_date,				
-			}
+			})
 
 			# data = {
 			# 	'refi_kontrak_ids'  : [(0,0,kontrak)]

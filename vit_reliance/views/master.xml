@@ -163,6 +163,35 @@
 
 
 
+		<!-- master range_penghasilan_refi -->
+
+		<record id="view_range_penghasilan_refi_tree" model="ir.ui.view">
+		    <field name="name">reliance_range_penghasilan_refi_tree</field>
+		    <field name="model">reliance.range_penghasilan_refi</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list range_penghasilan_refi" >
+					<field name="range_penghasilan_id" />	    		
+					<field name="name" />	    		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_range_penghasilan_refi_list" model="ir.actions.act_window">
+			<field name="name">Range Penghasilan REFI</field>
+			<field name="res_model">reliance.range_penghasilan_refi</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_range_penghasilan_refi"
+		 action="action_range_penghasilan_refi_list"
+		 name="Range Penghasilan REFI"
+		 sequence="56"
+		 parent="rcm_configuration"/>
+
+
+
+
+
 
 
 		<!-- master warga_negara -->
@@ -286,6 +315,38 @@
 		 action="action_pekerjaan_rmi_list"
 		 name="Perkerjaan RMI"
 		 sequence="75"
+		 parent="rcm_configuration"/>
+
+
+
+
+
+
+
+
+		<!-- master pekerjaan_refi -->
+
+		<record id="view_pekerjaan_refi_tree" model="ir.ui.view">
+		    <field name="name">reliance_pekerjaan_refi_tree</field>
+		    <field name="model">reliance.pekerjaan_refi</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list pekerjaan_refi" >
+					<field name="pekerjaan_id" />			    		
+					<field name="name" />			    		
+		    	</tree>
+		    </field>
+		</record>	
+
+		<record id="action_pekerjaan_refi_list" model="ir.actions.act_window">
+			<field name="name">Pekerjaan REFI</field>
+			<field name="res_model">reliance.pekerjaan_refi</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_pekerjaan_refi"
+		 action="action_pekerjaan_refi_list"
+		 name="Perkerjaan REFI"
+		 sequence="76"
 		 parent="rcm_configuration"/>
 
 

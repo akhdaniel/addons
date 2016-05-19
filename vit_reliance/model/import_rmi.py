@@ -11,16 +11,16 @@ _logger = logging.getLogger(__name__)
 PARTNER_MAPPING = {
 	"sid"						: "rmi_sid",
 	"nama"						: "name",
-	"jenis_kelamin"				: "perorangan_jenis_kelamin",
+	# "jenis_kelamin"				: "perorangan_jenis_kelamin",
 	"alamat_ktp"				: "street",
 	"no_ktp_siup"				: "perorangan_nomor_ktp",
 	"propinsi"					: False,
 	"kota"						: "city",
 	"kode_pos"					: "zip",
 	"negara"					: False,
-	"agama"						: "perorangan_agama",
+	# "agama"						: "perorangan_agama",
 	"tempat_lahir"				: "perorangan_tempat_lahir",
-	"tanggal_lahir"				: "rmi_tanggal_lahir",
+	# "tanggal_lahir"				: "rmi_tanggal_lahir",
 	"nomor_tlp"					: "phone",
 	"alamat_surat_menyurat"		: "rmi_alamat_surat_menyurat",
 	"propinsi_surat_menyurat"	: "rmi_propinsi_surat_menyurat",
@@ -34,10 +34,10 @@ PARTNER_MAPPING = {
 	"handphone"					: "mobile",
 	"ahli_waris"				: False,
 	"hubungan_dengan_ahli_waris": False,
-	"pekerjaan"					: "pekerjaan_nama",
-	"gaji_pertahun"				: "pekerjaan_penghasilan_per_tahun",
+	# "pekerjaan"					: "pekerjaan_nama",
+	# "gaji_pertahun"				: "pekerjaan_penghasilan_per_tahun",
 	"alasan_berinvestasi"		: "rmi_alasan_berinvestasi",
-	"kewarganegaraan"			: "perorangan_kewarganegaraan",
+	# "kewarganegaraan"			: "perorangan_kewarganegaraan",
 }
 ####################################################################
 # partner data
@@ -126,6 +126,8 @@ class import_rmi(osv.osv):
 				cr.commit()
 				continue
 			data = {}
+			data2 = {}
+
 			for k in PARTNER_MAPPING.keys():
 				partner_fname = PARTNER_MAPPING[k]
 				if partner_fname:
@@ -150,25 +152,37 @@ class import_rmi(osv.osv):
 			
 			############################ cek master agama
 			agama_id = master_agama.get(cr, uid, 'rmi', import_rmi.agama, context=context)
-			data.update({'perorangan_agama': agama_id})
+			data2.update({'perorangan_agama': agama_id})
 
 			########################### cek master range_penghasilan_rmi
 			range_penghasilan_id = master_range_penghasilan.get(cr, uid, import_rmi.gaji_pertahun, context=context)
-			data.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
+			data2.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
 
 			############################ cek master pekerjaan rmi
 			pekerjaan_id = master_pekerjaan.get(cr, uid, import_rmi.pekerjaan, context=context)
-			data.update({'pekerjaan_nama': pekerjaan_id})
-
-
+			data2.update({'pekerjaan_nama': pekerjaan_id})
 						
 			############################ cek master warga_negara
 			warga_negara_id = master_warga_negara.get(cr, uid, 'rmi', import_rmi.kewarganegaraan, context=context)
-			data.update({'perorangan_kewarganegaraan': warga_negara_id})	
+			data2.update({'perorangan_kewarganegaraan': warga_negara_id})	
 
 			############################ cek master jenis_kelamin
 			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'rmi', import_rmi.jenis_kelamin, context=context)
-			data.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
+			data2.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
+
+
+			############################# date birth
+			date_birth = False
+			if import_rmi.tanggal_lahir:
+				try: 
+					date_birth = datetime.strptime(import_rmi.tanggal_lahir, "%Y-%m-%d")
+				except ValueError:
+					self.write(cr, uid, import_rmi.id, {'notes':'date birth format error, use yyyy-mm-dd'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+			data.update( {'perorangan_tanggal_lahir':date_birth})
+
 
 			########################## insert ahli waris
 			if import_rmi.ahli_waris:
@@ -185,18 +199,20 @@ class import_rmi(osv.osv):
 			########################## prepare data
 			data.update({
 				'comment'		: 'RMI',
-				'initial_bu'	: 'RMI',
 				'state_id'		: state_id,
 				'country_id'	: country_id,
 				'partner_ahli_waris_ids': partner_ahli_waris_ids,
 			})
+			data2.update({'initial_bu'	: 'RMI'})
 
 			########################## check exiting partner , create if not exists
 			pid = partner.search(cr, uid, [('rmi_sid','=',import_rmi.sid)],context=context)
 			if not pid:
+				data.update(data2)
 				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
 			else:
+				partner.write(cr, uid, pid, data2, context=context)	
 				pid = pid[0]
 				_logger.warning('Partner exist with rmi_sid %s' % import_rmi.sid)
 				ex = ex + 1
@@ -206,7 +222,7 @@ class import_rmi(osv.osv):
 			cr.execute("update reliance_import_rmi set is_imported='t' where id=%s" % import_rmi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped/updated %s' % (i, ex) )
 
 
 
