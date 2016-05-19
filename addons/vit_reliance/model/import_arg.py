@@ -336,6 +336,7 @@ class import_arg(osv.osv):
 			i = i + 1
 		else:
 			pid = pid[0]
+			partner.write(cr, uid, pid, {'initial_bu' : 'ARG'}, context=context)	
 			_logger.warning('QQ Partner exist with name=%s cust_code=%s' % (import_arg.cust_code, qq_name))
 			ex = ex + 1
 

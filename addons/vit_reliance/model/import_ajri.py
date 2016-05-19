@@ -118,7 +118,8 @@ class import_ajri(osv.osv):
 				'ajri_parent_id'		: pid,
 				'perorangan_tanggal_lahir'	: date,
 				'country_id'			: indo[0],
-				'comment' 				: 'AJRI'
+				'comment' 				: 'AJRI',
+				'initial_bu' 			: 'AJRI'
 			}
 
 			pid2 = partner.search(cr, uid, [('ajri_nomor_partisipan','=',import_ajri.nomor_partisipan)],context=context)
@@ -127,6 +128,7 @@ class import_ajri(osv.osv):
 				i = i + 1
 			else:
 				pid2=pid2[0]
+				partner.write(cr, uid, pid2, {'initial_bu' : 'AJRI'}, context=context)	
 				_logger.warning('Partner Partisipan exist with nomor_partisipan %s' % import_ajri.nomor_partisipan)
 				ex = ex + 1
 
