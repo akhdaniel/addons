@@ -56,10 +56,12 @@ Manage
 		"data/reliance.pekerjaan.csv",
 		"data/reliance.pekerjaan_ls.csv",
 		"data/reliance.pekerjaan_rmi.csv",
+		"data/reliance.pekerjaan_refi.csv",
 		"data/reliance.warga_negara.csv",
 		"data/reliance.range_penghasilan.csv",
 		"data/reliance.range_penghasilan_ls.csv",
 		"data/reliance.range_penghasilan_rmi.csv",
+		"data/reliance.range_penghasilan_refi.csv",
         # 'views/web_asset.xml',
         'views/master.xml',
 

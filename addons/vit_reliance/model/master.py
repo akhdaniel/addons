@@ -98,6 +98,22 @@ class range_penghasilan_rmi(osv.osv):
 		else:
 			return False
 
+class range_penghasilan_refi(osv.osv):
+	_name 		= "reliance.range_penghasilan_refi"
+	_columns 	= {
+		"range_penghasilan_id"	: fields.many2one('reliance.range_penghasilan', 'Range Penghasilan'),
+		"name"			: fields.char("Name REFI"),
+	}
+	def get(self , cr, uid, name, context=None):
+		if not name:
+			return False
+
+		res = self.search_read(cr, uid, [('name','=',name)], context=context)
+		if res:
+			return res[0]["range_penghasilan_id"][0]
+		else:
+			return False
+
 
 class warga_negara(osv.osv):
 	_name 		= "reliance.warga_negara"
@@ -147,6 +163,22 @@ class pekerjaan_rmi(osv.osv):
 	_columns 	= {
 		"pekerjaan_id"	: fields.many2one('reliance.pekerjaan', 'Pekerjaan'),
 		"name"			: fields.char("Name RMI"),
+	}
+	def get(self , cr, uid, name, context=None):
+		if not name:
+			return False
+
+		res = self.search_read(cr, uid, [('name','=',name)], context=context)
+		if res:
+			return res[0]["pekerjaan_id"][0]
+		else:
+			return False
+
+class pekerjaan_refi(osv.osv):
+	_name 		= "reliance.pekerjaan_refi"
+	_columns 	= {
+		"pekerjaan_id"	: fields.many2one('reliance.pekerjaan', 'Pekerjaan'),
+		"name"			: fields.char("Name REFI"),
 	}
 	def get(self , cr, uid, name, context=None):
 		if not name:
