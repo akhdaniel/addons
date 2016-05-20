@@ -297,7 +297,7 @@
             		</page>
 
             		<page string="Related Partners" >
-            			<field name="related_partner_ids">
+            			<field name="related_partner_ids" readonly="1">
             				<tree string="Related Parners">
             					<field name="name"/>
 								<field name='reliance_id'/>
