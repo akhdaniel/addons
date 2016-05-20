@@ -160,6 +160,8 @@ class import_health_peserta(osv.osv):
 		master_jenis_kelamin = self.pool.get('reliance.jenis_kelamin')
 		indo = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 
+		old_policyno = ''
+
 		for import_health_peserta in self.browse(cr, uid, ids, context=context):
 			if not import_health_peserta.policyno:
 				ex = ex + 1
@@ -182,8 +184,23 @@ class import_health_peserta(osv.osv):
 				ex = ex + 1 
 				continue
 
-			#polis holder
+			########################### polis holder
 			polis_holder = partner.browse(cr, uid, polis_holder[0], context=context)
+
+			########################### cari related_partner_id (induk)
+			# rule: cari yang policyno dan xxxxxx-1 
+			#                              01234567
+
+			related_partner_id = False
+			# import pdb; pdb.set_trace()
+			if import_health_peserta.memberid[6:] != "-1":
+				sql = "select id from res_partner where health_nomor_polis='%s' and health_member_id='%s'" % (
+					import_health_peserta.policyno, import_health_peserta.memberid[0:6] + "-1")
+				cr.execute(sql)
+				res = cr.fetchone()
+				if res and res[0] != None:
+					related_partner_id = res[0]
+
 
 			data = {
 				'health_nomor_polis' 		: import_health_peserta.policyno	,
@@ -199,7 +216,6 @@ class import_health_peserta(osv.osv):
 				'health_expdt'				: polis_holder.health_expdt,	
 				'health_parent_id'			: polis_holder.id,	
 				'country_id'				: indo[0],
-
 				'comment'					: 'HEALTH',
 			}
 			existing = partner.search(cr, uid, [
@@ -212,6 +228,7 @@ class import_health_peserta(osv.osv):
 			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'health', import_health_peserta.sex, context=context)
 			data2.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
 			data2.update({'initial_bu': 'HEALTH'})
+			data2.update({'related_partner_id': related_partner_id})
 
 			if not existing:
 				data.update(data2)
