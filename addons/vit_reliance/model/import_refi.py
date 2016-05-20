@@ -157,9 +157,9 @@ class import_refi_partner(osv.osv):
 			date_birth = False
 			if import_refi.tgl_lahir:
 				try: 
-					date_birth = datetime.strptime(import_refi.tgl_lahir, "%m/%d/%Y")
+					date_birth = datetime.strptime(import_refi.tgl_lahir, "%d/%m/%Y")
 				except ValueError:
-					self.write(cr, uid, import_refi.id, {'notes':'date birth format error, use mm/dd/yyyy'}, context=context)
+					self.write(cr, uid, import_refi.id, {'notes':'date birth format error, use dd/mm/yyyy'}, context=context)
 					ex = ex+1
 					cr.commit()
 					continue
