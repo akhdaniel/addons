@@ -134,6 +134,7 @@ class import_refi_partner(osv.osv):
 		master_warga_negara = self.pool.get('reliance.warga_negara')
 		master_pekerjaan = self.pool.get('reliance.pekerjaan_refi')
 		master_range_penghasilan = self.pool.get('reliance.range_penghasilan_refi')
+		master_jenis_kelamin = self.pool.get('reliance.jenis_kelamin')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
 			if not import_refi.no_debitur:
@@ -195,6 +196,10 @@ class import_refi_partner(osv.osv):
 			############################ cek master range_penghasilan_refi
 			range_penghasilan_id = master_range_penghasilan.get(cr, uid, import_refi.range_penghasilan, context=context)
 			data2.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
+
+			############################ cek master jenis_kelamin refi
+			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'refi', import_refi_peserta.jns_kelamin, context=context)
+			data2.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
 
 			########################### check exiting partner partner 
 			pid = partner.search(cr, uid, [('refi_no_debitur','=',import_refi.no_debitur)], context=context)
