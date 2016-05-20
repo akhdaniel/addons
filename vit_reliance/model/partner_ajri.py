@@ -14,7 +14,7 @@ class partner(osv.osv):
 		'ajri_nomor_partisipan' 	: fields.char('AJRI Nomor Partisipan', select=1),
 		'ajri_nomor_polis' 			: fields.char('AJRI Nomor Polis', select=1),
 		'ajri_parent_id' 			: fields.many2one('res.partner','AJRI Pemegang Polis', select=1),
-		'partner_ajri_product_ids'	: fields.one2many('reliance.partner_ajri_product','partner_id','Products', ondelete="cascade"),
+		'partner_ajri_product_ids'	: fields.one2many('reliance.partner_ajri_product','partner_id','AJRI Products', ondelete="cascade"),
 	}
 
 	

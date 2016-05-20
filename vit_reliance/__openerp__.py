@@ -5,6 +5,8 @@
 		"base",
 		"stock",
 		"product",
+		"calendar",
+		"mail",
 	], 
 	"author": "vitraining.com", 
 	"category": "Tools", 

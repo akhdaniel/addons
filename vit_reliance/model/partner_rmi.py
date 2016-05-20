@@ -20,14 +20,14 @@ class partner(osv.osv):
 		"rmi_negara_surat_menyurat"		: fields.char("RMI Negara Surat Menyurat"),
 		"rmi_alasan_berinvestasi"		: fields.char("RMI Alasan Berinvestasi"),
 
-		"rmi_product_id"				:	fields.char("Product Id"),
-		"rmi_product_name"				:	fields.char("Product Name"),
-		"rmi_unit_penyertaan"			:	fields.float("Unit Penyertaan"),
-		"rmi_nab_saat_beli"				:	fields.float("NAB Saat Beli"),
-		"rmi_nab_sampai_hari_ini"		:	fields.float("NAB Sampai Hari Ini"),
-		"rmi_nominal_investasi_awal"	:	fields.float("Nominal Investasi Awal"),
-		"rmi_nominal_investasi_akhir"	:	fields.float("Nominal Investasi Akhir"),
-		"rmi_profit_capital_loss"		:	fields.float("Profit Capital Loss"),	
+		"rmi_product_id"				:	fields.char("RMI Product Id"),
+		"rmi_product_name"				:	fields.char("RMI Product Name"),
+		"rmi_unit_penyertaan"			:	fields.float("RMI Unit Penyertaan"),
+		"rmi_nab_saat_beli"				:	fields.float("RMI NAB Saat Beli"),
+		"rmi_nab_sampai_hari_ini"		:	fields.float("RMI NAB Sampai Hari Ini"),
+		"rmi_nominal_investasi_awal"	:	fields.float("RMI Nominal Invst. Awal"),
+		"rmi_nominal_investasi_akhir"	:	fields.float("RMI Nominal Invst. Akhir"),
+		"rmi_profit_capital_loss"		:	fields.float("RMI Profit Capital Loss"),	
 	}
 
 

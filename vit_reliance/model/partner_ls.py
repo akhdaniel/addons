@@ -18,8 +18,8 @@ class partner(osv.osv):
 		'ls_client_sid' 		: fields.char('LS SID', select=1),
 		'ls_id_card_type' 		: fields.char('LS ID Card Type', select=1),
 
-		'partner_cash_ids'		: fields.one2many('reliance.partner_cash','partner_id','Cash', ondelete="cascade"),
-		'partner_stock_ids'		: fields.one2many('reliance.partner_stock','partner_id','Stock', ondelete="cascade"),
+		'partner_cash_ids'		: fields.one2many('reliance.partner_cash','partner_id','LS Cash', ondelete="cascade"),
+		'partner_stock_ids'		: fields.one2many('reliance.partner_stock','partner_id','LS Stock', ondelete="cascade"),
 	}
 	
 	def get_ls_cash(self, cr, uid, ls_client_id, context=None):

@@ -21,7 +21,7 @@ class partner(osv.osv):
 		"health_effdt"			: fields.date("Health Eff. Date"),
 		"health_expdt"			: fields.date("Health Exp. Date"),
 
-		"health_limit_ids"		: fields.one2many('reliance.partner_health_limit','partner_id','Limit', ondelete="cascade"),
+		"health_limit_ids"		: fields.one2many('reliance.partner_health_limit','partner_id','Health Limit', ondelete="cascade"),
 	}
 
 	#####################################################################

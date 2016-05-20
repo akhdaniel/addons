@@ -15,8 +15,8 @@ class partner(osv.osv):
 		"arg_nomor_polis"		: fields.char("ARG Nomor Polis", select=1),
 		"arg_parent_id"			: fields.many2one('res.partner', 'ARG Customer'),
 
-		'partner_polis_ids'		: fields.one2many('reliance.arg_partner_polis','partner_id','Polis', ondelete="cascade"),
-		'partner_polis_risk_ids': fields.one2many('reliance.arg_partner_polis_risk','partner_id','Polis Risk', ondelete="cascade"),
+		'partner_polis_ids'		: fields.one2many('reliance.arg_partner_polis','partner_id','ARG Polis', ondelete="cascade"),
+		'partner_polis_risk_ids': fields.one2many('reliance.arg_partner_polis_risk','partner_id','ARG Polis Risk', ondelete="cascade"),
 
 	}
 
