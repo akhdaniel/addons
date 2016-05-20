@@ -91,19 +91,20 @@ class mrp_production(osv.osv):
         # jika belum punya batch number buat dari 001
         if production.batch_numbering_start == 'besar':
             new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'500')
-            batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'5%')
+            # batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'5%')
         else:
             new_batch_number = str(tahun_2_digit+sediaan_code+bulan_huruf+'001')
-            batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'0%')
-
+            # batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'0%')
+        
+        batch_rule       = str(tahun_2_digit+sediaan_code+bulan_huruf+'%')
 
         # 15SM001 SUBSTRING ( expression ,start , length )
         # 123456
         cr.execute("SELECT batch_number,SUBSTRING(batch_number, 5, 3) AS Initial " \
             "FROM mrp_production " \
             "WHERE state NOT IN ('draft','cancel') " \
-            "AND batch_number like %s ORDER BY Initial DESC" \
-            , (batch_rule,))         
+            "AND batch_number like %s and batch_numbering_start=%s ORDER BY Initial DESC" \
+            , (batch_rule,production.batch_numbering_start))         
         batch_ids      = cr.fetchall()
         
         # import pdb; pdb.set_trace()
