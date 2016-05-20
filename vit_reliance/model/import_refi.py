@@ -198,7 +198,7 @@ class import_refi_partner(osv.osv):
 			data2.update({'pekerjaan_penghasilan_per_tahun': range_penghasilan_id})
 
 			############################ cek master jenis_kelamin refi
-			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'refi', import_refi_peserta.jns_kelamin, context=context)
+			jenis_kelamin_id = master_jenis_kelamin.get(cr, uid, 'refi', import_refi.jns_kelamin, context=context)
 			data2.update({'perorangan_jenis_kelamin': jenis_kelamin_id})
 
 			########################### check exiting partner partner 
