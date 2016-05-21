@@ -154,6 +154,7 @@ class import_arg(osv.osv):
 	##############################################################################   
 	def import_cust(self, cr, uid, import_arg, partner, i, ex, context=None):
 		country = self.pool.get('res.country')
+		states_mapping = self.pool.get('reliance.states_mapping')
 
 		cust_data = {}
 		country_id = False
@@ -174,23 +175,28 @@ class import_arg(osv.osv):
 		country_id = country_id[0]
 		cust_data.update({'country_id': country_id})
 
-		if import_arg.cust_province:
-			state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
-			cust_data.update({'state_id': state_id})
+		# if import_arg.cust_province:
+		# 	state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
+		# 	cust_data.update({'state_id': state_id})
+
+		state_id = states_mapping.get(cr, uid, import_arg.cust_province, context=context)
+		cust_data2.update({'state_id': state_id})
+		cust_data2.update({'initial_bu': 'ARG'})
 
 		cust_data.update({'is_company': True})
 		cust_data.update({'comment': 'ARG CUST_NAME'})
-		cust_data.update({'initial_bu': 'ARG'})
 		
 		##############################################################################   
 		# check exiting partner partner by CUST_CODE
 		##############################################################################   
 		pid = partner.search(cr, uid, [('arg_cust_code','=',import_arg.cust_code)],context=context)
 		if not pid:
+			cust_data.update(cust_data2)
 			pid = partner.create(cr, uid, cust_data, context=context)	
 			i = i + 1
 		else:
 			pid = pid[0]
+			partner.write(cr, uid, pid, cust_data2, context=context)	
 			_logger.warning('Partner exist with arg_cust_code %s' % import_arg.cust_code)
 			ex = ex + 1
 
@@ -201,6 +207,7 @@ class import_arg(osv.osv):
 	##############################################################################   
 	def import_company(self, cr, uid, import_arg, partner, i, ex, context=None):
 		country = self.pool.get('res.country')
+		states_mapping = self.pool.get('reliance.states_mapping')
 
 		cust_data = {}
 		country_id = False
@@ -221,23 +228,27 @@ class import_arg(osv.osv):
 		country_id = country_id[0]
 		cust_data.update({'country_id': country_id})
 
-		if import_arg.cust_province:
-			state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
-			cust_data.update({'state_id': state_id})
+		# if import_arg.cust_province:
+		# 	state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
+		# 	cust_data.update({'state_id': state_id})
+		state_id = states_mapping.get(cr, uid, import_arg.cust_province, context=context)
+		cust_data2.update({'state_id': state_id})
+		cust_data2.update({'initial_bu': 'ARG'})
 
 		cust_data.update({'is_company': True})
 		cust_data.update({'comment': 'ARG COMPANY_NAME'})
-		cust_data.update({'initial_bu': 'ARG'})
 		
 		##############################################################################   
 		# check exiting partner partner by CUST_CODE
 		##############################################################################   
 		pid = partner.search(cr, uid, [('arg_company_code','=',import_arg.company_code)],context=context)
 		if not pid:
+			cust_data.update(cust_data2)
 			pid = partner.create(cr, uid, cust_data, context=context)	
 			i = i + 1
 		else:
 			pid = pid[0]
+			partner.write(cr, uid, pid, cust_data2, context=context)	
 			_logger.warning('Partner exist with arg_company_code %s' % import_arg.company_code)
 			ex = ex + 1
 
@@ -289,7 +300,6 @@ class import_arg(osv.osv):
 	##############################################################################   
 	def import_qq(self, cr, uid, import_arg, partner, parent_id, i ,ex,context=None):
 
-		# import pdb; pdb.set_trace();
 
 		if not import_arg.qq:
 			qq_name = import_arg.cust_fullname.strip()			
@@ -297,7 +307,10 @@ class import_arg(osv.osv):
 			qq_name = import_arg.qq.strip().replace("QQ. ", "").replace("QQ ","")
 
 		country = self.pool.get('res.country')
+		states_mapping = self.pool.get('reliance.states_mapping')
+
 		cust_data = {}
+		cust_data2 = {}
 		country_id = False
 
 		for k in CUST_MAPPING.keys():
@@ -315,11 +328,13 @@ class import_arg(osv.osv):
 		country_id = country.search(cr, uid, [('name','ilike', cname)], context=context)
 		country_id = country_id[0]
 		cust_data.update({'country_id': country_id})
+		# import pdb; pdb.set_trace()
 
-		if import_arg.cust_province:
-			state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
-			cust_data.update({'state_id': state_id})
-
+		# if import_arg.cust_province:
+		# 	state_id = country.find_or_create_state(cr, uid, import_arg.cust_province, country_id, context=context)
+		state_id = states_mapping.get(cr, uid, import_arg.cust_province, context=context)
+		cust_data2.update({'state_id': state_id})
+		cust_data2.update({'initial_bu' : 'ARG'})
 
 		cust_data.update({'name': qq_name})
 		cust_data.update({'arg_parent_id': parent_id})
@@ -332,11 +347,12 @@ class import_arg(osv.osv):
 		pid = partner.search(cr, uid, [('arg_cust_code','=',import_arg.cust_code),
 			('name','=',qq_name)],context=context)
 		if not pid:
+			cust_data.update(cust_data2)
 			pid = partner.create(cr, uid, cust_data, context=context)	
 			i = i + 1
 		else:
 			pid = pid[0]
-			partner.write(cr, uid, pid, {'initial_bu' : 'ARG'}, context=context)	
+			partner.write(cr, uid, pid, cust_data2, context=context)	
 			_logger.warning('QQ Partner exist with name=%s cust_code=%s' % (import_arg.cust_code, qq_name))
 			ex = ex + 1
 

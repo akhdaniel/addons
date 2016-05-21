@@ -52,6 +52,8 @@ Manage
 		"data/sequence.xml",
 		"data/cron.xml",
 		"data/parameter.xml",
+		"data/res.country.state.csv",
+		"data/reliance.states_mapping.csv",
 		"data/reliance.agama.csv",
 		"data/reliance.jenis_kelamin.csv",
 		"data/reliance.status_nikah.csv",

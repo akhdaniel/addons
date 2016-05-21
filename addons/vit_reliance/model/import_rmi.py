@@ -118,6 +118,7 @@ class import_rmi(osv.osv):
 		master_pekerjaan = self.pool.get('reliance.pekerjaan_rmi')
 		master_range_penghasilan = self.pool.get('reliance.range_penghasilan_rmi')
 		master_jenis_kelamin = self.pool.get('reliance.jenis_kelamin')
+		states_mapping = self.pool.get('reliance.states_mapping')
 
 		for import_rmi in self.browse(cr, uid, ids, context=context):
 			if not import_rmi.sid:
@@ -145,10 +146,13 @@ class import_rmi(osv.osv):
 				country_id = country_id[0]
 
 			########################## search propinsi
-			if import_rmi.propinsi:
-				state_id = country.find_or_create_state(cr, uid, import_rmi.propinsi, country_id, context=context)
-			else:
-				state_id = False
+			# if import_rmi.propinsi:
+			# 	state_id = country.find_or_create_state(cr, uid, import_rmi.propinsi, country_id, context=context)
+			# else:
+			# 	state_id = False
+			# import pdb;pdb.set_trace()
+			state_id = states_mapping.get(cr, uid, import_rmi.propinsi, context=context)
+			data2.update({'state_id': state_id})
 			
 			############################ cek master agama
 			agama_id = master_agama.get(cr, uid, 'rmi', import_rmi.agama, context=context)
@@ -175,9 +179,9 @@ class import_rmi(osv.osv):
 			date_birth = False
 			if import_rmi.tanggal_lahir:
 				try: 
-					date_birth = datetime.strptime(import_rmi.tanggal_lahir, "%Y-%m-%d")
+					date_birth = datetime.strptime(import_rmi.tanggal_lahir, "%d-%m-%Y")
 				except ValueError:
-					self.write(cr, uid, import_rmi.id, {'notes':'date birth format error, use yyyy-mm-dd'}, context=context)
+					self.write(cr, uid, import_rmi.id, {'notes':'date birth format error, use dd-mm-yyyy'}, context=context)
 					ex = ex+1
 					cr.commit()
 					continue

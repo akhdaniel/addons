@@ -22,6 +22,7 @@ class agama(osv.osv):
 	def get(self , cr, uid, bu, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search(cr, uid, [('name_'+bu,'ilike',name)], context=context)
 		if res:
@@ -44,6 +45,7 @@ class jenis_kelamin(osv.osv):
 	def get(self , cr, uid, bu, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search(cr, uid, [('name_'+bu,'ilike',name)], context=context)
 		if res:
@@ -75,6 +77,7 @@ class range_penghasilan_ls(osv.osv):
 	def get(self , cr, uid, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search_read(cr, uid, [('name','=',name)], context=context)
 		if res:
@@ -91,6 +94,7 @@ class range_penghasilan_rmi(osv.osv):
 	def get(self , cr, uid, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search_read(cr, uid, [('name','=',name)], context=context)
 		if res:
@@ -107,6 +111,7 @@ class range_penghasilan_refi(osv.osv):
 	def get(self , cr, uid, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search_read(cr, uid, [('name','=',name)], context=context)
 		if res:
@@ -129,6 +134,7 @@ class warga_negara(osv.osv):
 	def get(self , cr, uid, bu, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search(cr, uid, [('name_'+bu,'=',name)], context=context)
 		if res:
@@ -151,6 +157,7 @@ class pekerjaan_ls(osv.osv):
 	def get(self , cr, uid, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search_read(cr, uid, [('name','=',name)], context=context)
 		if res:
@@ -167,6 +174,7 @@ class pekerjaan_rmi(osv.osv):
 	def get(self , cr, uid, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search_read(cr, uid, [('name','=',name)], context=context)
 		if res:
@@ -183,6 +191,7 @@ class pekerjaan_refi(osv.osv):
 	def get(self , cr, uid, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search_read(cr, uid, [('name','=',name)], context=context)
 		if res:
@@ -204,9 +213,44 @@ class status_nikah(osv.osv):
 	def get(self , cr, uid, bu, name, context=None):
 		if not name:
 			return False
+		name = name.strip()
 
 		res = self.search(cr, uid, [('name_'+bu,'=',name)], context=context)
 		if res:
 			return res[0]
+		else:
+			return False
+
+class state(osv.osv):
+	_name 		= "res.country.state"
+	_inherit 	= "res.country.state"
+	_columns 	= {
+        'code': fields.char('State Code', size=10,
+            help='The state code in max. three chars.', required=True),
+	}
+
+
+class states_mapping(osv.osv):
+	_name 		= "reliance.states_mapping"
+	_columns 	= {
+		"state_id"		: fields.many2one('res.country.state', 'State'),
+		"name"			: fields.char("Name"),
+	}
+
+	def get(self , cr, uid, name, context=None):
+
+		
+		if not name:
+			return False
+		name = name.strip()
+
+		state = self.pool.get('res.country.state')
+		state_id = state.search(cr, uid, [('name','=',name)], context=context)
+		if state_id:
+			return state_id[0]
+
+		res = self.search_read(cr, uid, [('name','=',name)], context=context)
+		if res:
+			return res[0]["state_id"][0]
 		else:
 			return False

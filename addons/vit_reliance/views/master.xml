@@ -1,6 +1,35 @@
 <openerp>
 	<data>
 
+		<!-- master state_mapping -->
+
+		<record id="view_states_mapping_tree" model="ir.ui.view">
+		    <field name="name">reliance_states_mapping_tree</field>
+		    <field name="model">reliance.states_mapping</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list states_mapping" >
+					<field name="name" />		
+					<field name="state_id" />		
+		    	</tree>
+		    </field>
+		</record>
+
+		<record id="action_states_mapping_list" model="ir.actions.act_window">
+			<field name="name">States Mapping</field>
+			<field name="res_model">reliance.states_mapping</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_states_mapping"
+		 action="action_states_mapping_list"
+		 name="States Mapping"
+		 sequence="25"
+		 parent="rcm_configuration"/>
+
+
+
+
+
 		<!-- master agama -->
 
 		<record id="view_agama_tree" model="ir.ui.view">
