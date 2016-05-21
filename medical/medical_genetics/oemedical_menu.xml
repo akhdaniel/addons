@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+<!--    Genetics     -->
+
+        <menuitem name="Genetics" id="medical_conf_genetics"
+            parent="medical.medical_root_sub" sequence="70" />
+
+		<menuitem id="medical_genetic" name="Genetic" 
+            parent="medical_conf_genetics" sequence="50" 
+            action="act_open_medical_disease_gene_view" />
+
+
+	</data>
+</openerp>

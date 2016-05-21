@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+ 		<record id="view_medical_patient_form_emr" model="ir.ui.view"> 
+ 			<field name="name">medical.patient.form.emr</field> 
+ 			<field name="model">medical.patient</field> 
+	        <field name="inherit_id" ref="medical.view_medical_patient_form"/>
+ 			<!--field name="priority" eval="8" /--> 
+ 			<field name="arch" type="xml"> 
+ 				<div  position="after">
+                    <separator colspan="4" string="Patient Allergies and Critical Information"/>
+     				<field name="critical_info" colspan="4" nolabel="1"/> 
+				</div>
+	            <notebook position="inside">
+	            	
+	            	<page string="Basic Information"> 
+	            		<group>
+		                    <div> 
+		                    	<label for="blood_type" />
+								<field name="blood_type" style="width: 8%%"/> 
+								<field name="rh" nolabel="1" style="width: 8%%"/> 
+							</div>
+							<group>
+		       					<field name="ethnic_group" /> 
+		     					<field name="family"/> 
+	                        </group>
+
+	                        <group>
+	         					<field name="primary_care_doctor" />
+	                        </group>
+	                    </group>
+
+	     				<group>
+					        <field name="deceased"/>
+					        <field name="dod" attrs="{'invisible':[('deceased','=',False)]}"/>
+					        <field name="cod" attrs="{'invisible':[('deceased','=',False)]}"/>	     					
+	     				</group>
+	 				</page>
+	 				
+
+					<!-- Patient Medications -->
+	 				
+	                <page string="Medication" >
+	                    <separator string="Medications" colspan="4"/>
+	  					<field name="medications"  nolabel="1" colspan="4">  
+		                    <tree string="Patient Medication">
+			                    <field name="doctor" />
+			                    <field name="adverse_reaction" />
+			                    <field name="notes" />
+			                    <field name="is_active" />
+			                    <field name="course_completed" />
+			                    <field name="template" />
+			                    <field name="discontinued_reason" />
+			                    <field name="discontinued" />
+		                    </tree>
+		                    <form string="Patient Medication">
+			                    <field name="doctor" />
+			                    <field name="adverse_reaction" />
+			                    <field name="notes" />
+			                    <field name="is_active" />
+			                    <field name="course_completed" />
+			                    <field name="template" />
+			                    <field name="discontinued_reason" />
+			                    <field name="discontinued" />
+		                    </form>
+	                    </field>
+
+						
+						<!-- Patient Vaccinations -->
+
+	                    <separator string="Vaccinations" colspan="4"/>
+	  					<field name="vaccinations"  nolabel="1" colspan="4"> 
+		                    <tree string="Vaccination">
+			                    <field name="name" />
+			                    <field name="vaccine_lot" />
+			                    <field name="patient_id" />
+			                    <field name="vaccine" />
+			                    <field name="dose" />
+			                    <field name="observations" />
+			                    <field name="date" />
+			                    <field name="institution" />
+			                    <field name="next_dose_date" />
+		                    </tree>
+		                    <form string="Vaccination">
+			                    <field name="name" />
+			                    <field name="vaccine_lot" />
+			                    <field name="patient_id" />
+			                    <field name="vaccine" />
+			                    <field name="dose" />
+			                    <field name="observations" />
+			                    <field name="date" />
+			                    <field name="institution" />
+			                    <field name="next_dose_date" />
+		                    </form>
+	                    </field>
+	                </page>
+		            
+
+					<!-- Patient Diseases -->
+	                <page string="Diseases" >
+                        <separator string="Diseases" colspan="4"/>
+      					<field name="diseases"  nolabel="1" colspan="4">  
+		                    <tree string="Patient Disease">
+			                    <field name="treatment_description" />
+			                    <field name="healed_date" />
+			                    <field name="pathology" />
+			                    <field name="is_allergy" />
+			                    <field name="doctor" />
+			                    <field name="pregnancy_warning" />
+			                    <field name="weeks_of_pregnancy" />
+			                    <field name="is_on_treatment" />
+			                    <field name="diagnosed_date" />
+		                    </tree>
+		                    <form string="Patient Disease">
+			                    <field name="treatment_description" />
+			                    <field name="healed_date" />
+			                    <field name="pathology" />
+			                    <field name="is_allergy" />
+			                    <field name="doctor" />
+			                    <field name="pregnancy_warning" />
+			                    <field name="weeks_of_pregnancy" />
+			                    <field name="is_on_treatment" />
+			                    <field name="diagnosed_date" />
+			                    <field name="extra_info" />
+			                    <field name="is_active" />
+			                    <field name="date_stop_treatment" />
+			                    <field name="pcs_code" />
+			                    <field name="is_infectious" />
+			                    <field name="patient_id" />
+			                    <field name="age" />
+			                    <field name="date_start_treatment" />
+			                    <field name="short_comment" />
+		                    </form>
+                        </field>
+	                </page>
+
+	                <page string="Misc">
+	                    <group colspan="4" col="4">
+	                        <separator colspan="4" string="Patient Extra Information"/>
+	      					<field name="general_info" nolabel="1"  colspan="4"/> 
+	                    </group>
+	                </page>
+				</notebook>
+	                    
+ 			</field> 
+ 		</record> 
+	</data>
+</openerp>
