@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<menuitem id="medical_root" name="OeMedical" sequence="10" />
+
+
+<!--       Laboratory    -->
+		<menuitem name="Laboratory" id="medical_laboratory_menu" 
+            parent="medical.medical_root" sequence="40"/>
+
+<!--       Laboratory       -->
+		<menuitem name="Laboratory" id="medical_conf_laboratory" 
+            parent="medical.medical_root_sub" sequence="30"/>
+
+
+	</data>
+</openerp>
