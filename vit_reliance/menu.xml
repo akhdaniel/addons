@@ -59,7 +59,7 @@
 		<!-- state list -->
 
 		<record id="action_country_state_list" model="ir.actions.act_window">
-			<field name="name">Countries</field>
+			<field name="name">State</field>
 			<field name="res_model">res.country.state</field>
 			<field name="view_mode">tree,form</field>
 		</record>

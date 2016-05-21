@@ -93,6 +93,10 @@
 		                    domain="[]" name="group_by_country_id"
 		                	context="{'group_by':'country_id'}"/>
 
+		                <filter string="State" icon="terp-personal" 
+		                    domain="[]" name="group_by_state_id"
+		                	context="{'group_by':'state_id'}"/>
+
 		                <filter string="Company" icon="terp-personal" 
 		                    domain="[]" name="group_by_parent_id"
 		                	context="{'group_by':'parent_id'}"/>

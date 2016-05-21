@@ -135,6 +135,7 @@ class import_refi_partner(osv.osv):
 		master_pekerjaan = self.pool.get('reliance.pekerjaan_refi')
 		master_range_penghasilan = self.pool.get('reliance.range_penghasilan_refi')
 		master_jenis_kelamin = self.pool.get('reliance.jenis_kelamin')
+		states_mapping = self.pool.get('reliance.states_mapping')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
 			if not import_refi.no_debitur:
@@ -170,12 +171,14 @@ class import_refi_partner(osv.osv):
 			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 			data.update({'country_id': country_id[0]})
 
-			if import_refi.legal_propinsi:
-				state_id = country.find_or_create_state(cr,uid,import_refi.legal_propinsi, country_id[0], context=context)
-				data.update({'state_id': state_id})
+			# if import_refi.legal_propinsi:
+			# state_id = country.find_or_create_state(cr,uid,import_refi.legal_propinsi, country_id[0], context=context)
+			# data.update({'state_id': state_id})
+			state_id = states_mapping.get(cr, uid, import_refi.legal_propinsi, context=context)
+			data2.update({'state_id': state_id})
+			data2.update({'initial_bu': 'REFI'})
 			
 			data.update({'comment': 'REFI'})
-			data2.update({'initial_bu': 'REFI'})
 			
 			########################### cek master agama
 			agama_id = master_agama.get(cr, uid, 'refi', import_refi.agama, context=context)
@@ -289,6 +292,7 @@ class import_refi_pekerjaan(osv.osv):
 
 		partner = self.pool.get('res.partner')
 		country = self.pool.get('res.country')
+		states_mapping = self.pool.get('reliance.states_mapping')
 
 		for import_refi in self.browse(cr, uid, ids, context=context):
 			if not import_refi.no_debitur:
@@ -298,6 +302,7 @@ class import_refi_pekerjaan(osv.osv):
 				continue
 
 			data = {}
+			data2 = {}
 			for k in PERUSAHAAN_MAPPING.keys():
 				partner_fname = PERUSAHAAN_MAPPING[k]
 				if partner_fname:
@@ -309,9 +314,12 @@ class import_refi_pekerjaan(osv.osv):
 			country_id = country.search(cr, uid, [('name','ilike','indonesia')], context=context)
 			data.update({'country_id': country_id[0]})
 
-			if import_refi.provinsi:
-				state_id = country.find_or_create_state(cr,uid,import_refi.provinsi, country_id[0], context=context)
-				data.update({'state_id': state_id})
+			# if import_refi.provinsi:
+			# 	state_id = country.find_or_create_state(cr,uid,import_refi.provinsi, country_id[0], context=context)
+			# 	data.update({'state_id': state_id})
+			state_id = states_mapping.get(cr, uid, import_refi.provinsi, context=context)
+			data2.update({'state_id': state_id})
+			data2.update({'initial_bu': 'REFI'})
 			
 			data.update({'is_company': True})			
 			data.update({'comment': 'REFI'})
@@ -319,10 +327,12 @@ class import_refi_pekerjaan(osv.osv):
 			########################## check exiting partner partner 
 			pid = partner.search(cr, uid, [('name','=',import_refi.nama_perusahaan)], context=context)
 			if not pid:
+				data.update(data2)
 				pid = partner.create(cr, uid, data, context=context)	
 				i = i + 1
 			else:
 				pid = pid[0]
+				partner.write(cr, uid,pid,  data2, context=context)	
 				_logger.warning('Partner exist with name %s' % import_refi.nama_perusahaan)
 				ex = ex + 1
 
@@ -342,7 +352,7 @@ class import_refi_pekerjaan(osv.osv):
 			cr.execute("update reliance_import_refi_pekerjaan set is_imported='t' where id=%s" % import_refi.id)
 			cr.commit()
 
-		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped %s' % (i, ex) )
+		raise osv.except_osv( 'OK!' , 'Done creating %s partner and skipped/updated %s' % (i, ex) )
 
 
 class import_refi_keluarga(osv.osv):

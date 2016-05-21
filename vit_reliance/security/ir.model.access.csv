@@ -52,3 +52,5 @@ access_reliance_range_penghasilan_refi,access_reliance_range_penghasilan_refi,mo
 access_reliance_pekerjaan_ls,access_reliance_pekerjaan_ls,model_reliance_pekerjaan_ls,"base.group_sale_manager",1,1,1,1
 access_reliance_pekerjaan_rmi,access_reliance_pekerjaan_rmi,model_reliance_pekerjaan_rmi,"base.group_sale_manager",1,1,1,1
 access_reliance_pekerjaan_refi,access_reliance_pekerjaan_refi,model_reliance_pekerjaan_refi,"base.group_sale_manager",1,1,1,1
+
+access_reliance_states_mapping,access_reliance_states_mapping,model_reliance_states_mapping,"base.group_sale_manager",1,1,1,1
