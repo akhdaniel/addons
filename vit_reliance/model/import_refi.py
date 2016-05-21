@@ -301,6 +301,12 @@ class import_refi_pekerjaan(osv.osv):
 				cr.commit()
 				continue
 
+			if not import_refi.nama_perusahaan or import_refi.nama_perusahaan == '.':
+				ex = ex + 1
+				self.write(cr, uid, import_refi.id ,  {'notes':'empty or dot nama perusahaan'}, context=context)
+				cr.commit()
+				continue
+
 			data = {}
 			data2 = {}
 			for k in PERUSAHAAN_MAPPING.keys():
