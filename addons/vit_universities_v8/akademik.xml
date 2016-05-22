@@ -117,6 +117,7 @@
                         <filter icon="terp-project" string="Ruangan" help="By Ruangan" context="{'group_by':'ruangan_id'}"/>
                         <filter icon="terp-project" string="Semester" help="By Semester" context="{'group_by':'semester_id'}"/>
                         <filter icon="terp-project" string="Mata Kuliah" help="By Mata Kuliah" context="{'group_by':'mata_kuliah_id'}"/>
+                        <filter icon="terp-project" string="Lokasi Kps" help="By Lokasi Kampus" context="{'group_by':'alamat_id'}"/>
                         <filter icon="terp-project" string="Total Sesi" help="By Total Sesi" context="{'group_by':'sesi'}"/>
                         <filter icon="terp-project" string="Hari" help="By Hari" context="{'group_by':'hari'}"/>
                         <filter icon="terp-project" string="Aktif" help="By Aktif" context="{'group_by':'is_active'}"/>
@@ -862,10 +863,11 @@
             <field name="arch" type="xml">
                 <tree string="Daftar Ruangan">
                     <field name="name"/>
-                    <field name="nama"/>
+                    <field name="nama" invisible="1"/>
                     <field name="kapasitas"/>
                     <field name="kapasitas_uts"/>
-                    <field name="kapasitas_uas"/>                    
+                    <field name="kapasitas_uas"/> 
+                    <field name="alamat_id"/>                   
                 </tree>
             </field>
         </record>
@@ -894,6 +896,7 @@
                                 <field name="infocus"/>
                             </group>
                             <group string="Lokasi">
+                                <field name="alamat_id"/>
                                 <field name="gedung"/>
                                 <field name="alamat"/>
                             </group>                            

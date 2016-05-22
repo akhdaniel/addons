@@ -53,8 +53,8 @@
             <field name="arch" type="xml">
                 <form string="Absensi Kuliah" version="7.0">
                     <header>
-                        <button name='open_absensi' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
-                        <button name='close_absensi' string='Close' states='open' type='object' groups="vit_universities_v8.group_univ_dosen"/>
+                        <button name='open_absensi' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_manager_baak,vit_universities_v8.group_univ_staff_prodi"/>
+                        <button name='close_absensi' string='Close' class="oe_highlight" states='open' type='object' groups="vit_universities_v8.group_univ_dosen"/>
                         <button name='cancel_absensi' string='Cancel' states='open' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
@@ -64,7 +64,7 @@
                             <group>
                                 <field name="name"/>
                                 <field name="employee_id"/> 
-                                <field name="semester_id"/>
+                                <field name="semester_id" domain="[('name','&lt;',3)]"/>
                                 <field name="user_id" invisible="1"/>
                             </group>
                             <group>
@@ -85,52 +85,55 @@
                         </group>
                         <button name="query_mahasiswa_by_pengajuan_krs" string="Query Mahasiswa" type="object" groups="vit_universities_v8.group_univ_staff_baak" attrs="{'invisible':['|',('semester_id','in',(9,10)),('state','!=','draft')]}"/>
                         <notebook colspan="4">
-
                             <page string="Absensi">
+                                <group colspan="4">
+                                    <group>
+                                    </group>
+                                    <group>
+                                        <label for="session"/>
+                                        <div>
+                                        <field name='session' class="oe_inline"/>
+                                        <button name="check_all_absen_per_day" string="Check All" type="object" class="oe_inline" groups="vit_universities_v8.group_univ_dosen" states='open'/>
+                                        <button name="uncheck_all_absen_per_day" string="UnCheck All" type="object" class="oe_inline" groups="vit_universities_v8.group_univ_dosen" states='open'/>
+                                        <button name="confirm_absen_per_day" string="Confirm" class="oe_inline oe_highlight" type="object" groups="vit_universities_v8.group_univ_dosen" states='open'/>
+                                        </div>
+                                    </group>
+                                </group>
                                 <field name="absensi_ids" nolabel="1" widget="one2many_list" attrs="{'readonly':[('state','=','close')]}">
                                     <tree string="Absensi" editable="bottom">
                                         <field name="partner_id"/>
-                                        <field name="absensi_1"/>
-                                        <field name="absensi_2"/>
-                                        <field name="absensi_3"/>
-                                        <field name="absensi_4"/>
-                                        <field name="absensi_5"/>
-                                        <field name="absensi_6"/>
-                                        <field name="absensi_7"/>
-                                        <field name="absensi_8"/>
-                                        <field name="absensi_9"/>
-                                        <field name="absensi_10"/>
-                                        <field name="absensi_11"/>
-                                        <field name="absensi_12"/>
-                                        <field name="absensi_13"/>
-                                        <field name="absensi_14"/>                              
+                                        <field name="read_1" invisible="1"/>
+                                        <field name="absensi_1" attrs="{'readonly':[('read_1','=',True)]}"/>
+                                        <field name="read_2" invisible="1"/>
+                                        <field name="absensi_2" attrs="{'readonly':[('read_2','=',True)]}"/>
+                                        <field name="read_3" invisible="1"/>
+                                        <field name="absensi_3" attrs="{'readonly':[('read_3','=',True)]}"/>
+                                        <field name="read_4" invisible="1"/>
+                                        <field name="absensi_4" attrs="{'readonly':[('read_4','=',True)]}"/>
+                                        <field name="read_5" invisible="1"/>
+                                        <field name="absensi_5" attrs="{'readonly':[('read_5','=',True)]}"/>
+                                        <field name="read_6" invisible="1"/>
+                                        <field name="absensi_6" attrs="{'readonly':[('read_6','=',True)]}"/>
+                                        <field name="read_7" invisible="1"/>
+                                        <field name="absensi_7" attrs="{'readonly':[('read_7','=',True)]}"/>
+                                        <field name="read_8" invisible="1"/>
+                                        <field name="absensi_8" attrs="{'readonly':[('read_8','=',True)]}"/>
+                                        <field name="read_9" invisible="1"/>
+                                        <field name="absensi_9" attrs="{'readonly':[('read_9','=',True)]}"/>
+                                        <field name="read_10" invisible="1"/>
+                                        <field name="absensi_10" attrs="{'readonly':[('read_10','=',True)]}"/>
+                                        <field name="read_11" invisible="1"/>
+                                        <field name="absensi_11" attrs="{'readonly':[('read_11','=',True)]}"/>
+                                        <field name="read_12" invisible="1"/>
+                                        <field name="absensi_12" attrs="{'readonly':[('read_12','=',True)]}"/>
+                                        <field name="read_13" invisible="1"/>
+                                        <field name="absensi_13" attrs="{'readonly':[('read_13','=',True)]}"/>
+                                        <field name="read_14" invisible="1"/>
+                                        <field name="absensi_14" attrs="{'readonly':[('read_14','=',True)]}"/>                              
                                         <field name="percentage"/>
                                         <field name="state" invisible="1"/>
                                     </tree>
                                 </field> 
-                                    <notebook>
-                                     <page string="History Absensi">
-                                        <field name="history_absensi_ids" nolabel="1" widget="one2many_list" attrs="{'readonly':[('state','=','close')]}">
-                                            <tree string="History">
-                                                <field name="absensi_id" invisible="1"/>
-                                                <field name="history_absensi_1"/>
-                                                <field name="history_absensi_2"/>
-                                                <field name="history_absensi_3"/>
-                                                <field name="history_absensi_4"/>
-                                                <field name="history_absensi_5"/>
-                                                <field name="history_absensi_6"/>
-                                                <field name="history_absensi_7"/>
-                                                <field name="history_absensi_8"/>
-                                                <field name="history_absensi_9"/>
-                                                <field name="history_absensi_10"/>
-                                                <field name="history_absensi_11"/>
-                                                <field name="history_absensi_12"/>
-                                                <field name="history_absensi_13"/>
-                                                <field name="history_absensi_14"/>                              
-                                            </tree>
-                                        </field> 
-                                    </page>
-                                </notebook>
                             </page>
                             <page string="Nilai">
                                 <p class="oe_grey">Presentase nilai bisa di set ulang pada tab Setting</p>
@@ -200,7 +203,28 @@
                                         </group>
                                     </group>
                                 </sheet>                                
-                            </page>        
+                            </page> 
+                            <page string="History Absensi">
+                                <field name="history_absensi_ids" nolabel="1" widget="one2many_list" attrs="{'readonly':[('state','=','close')]}">
+                                    <tree string="History">
+                                        <field name="absensi_id" invisible="1"/>
+                                        <field name="history_absensi_1"/>
+                                        <field name="history_absensi_2"/>
+                                        <field name="history_absensi_3"/>
+                                        <field name="history_absensi_4"/>
+                                        <field name="history_absensi_5"/>
+                                        <field name="history_absensi_6"/>
+                                        <field name="history_absensi_7"/>
+                                        <field name="history_absensi_8"/>
+                                        <field name="history_absensi_9"/>
+                                        <field name="history_absensi_10"/>
+                                        <field name="history_absensi_11"/>
+                                        <field name="history_absensi_12"/>
+                                        <field name="history_absensi_13"/>
+                                        <field name="history_absensi_14"/>                              
+                                    </tree>
+                                </field> 
+                            </page>       
                         </notebook>
 <!--                     </sheet>    -->
                 </form>

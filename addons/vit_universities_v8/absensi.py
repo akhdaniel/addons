@@ -29,6 +29,12 @@ class absensi(osv.osv):
 
 		return super(absensi, self).create(cr, uid, vals, context=context)   
 
+	def _get_konsentrasi(self, cr, uid, context=None):
+		konsentrasi_ids = self.pool.get('master.konsentrasi').search(cr,uid,[('name','ilike','umum')])
+		if konsentrasi_ids :
+			return konsentrasi_ids[0]
+		return False
+
 	def write(self, cr, uid, ids, vals, context=None):
 		if context is None:
 			context = {}
@@ -109,7 +115,7 @@ class absensi(osv.osv):
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,readonly=True, states={'draft': [('readonly', False)]}), 
 		'employee_id' :fields.many2one('hr.employee','Dosen', domain="[('is_dosen','=',True)]",required=True,readonly=True, states={'draft': [('readonly', False)]}),
 		'sesi':fields.integer('Total Pertemuan',required=True,readonly=True, states={'draft': [('readonly', False)]}),
-		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'konsentrasi_id': fields.many2one('master.konsentrasi','Konsentrasi',readonly=True, states={'draft': [('readonly', False)]}),
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum",readonly=True, states={'draft': [('readonly', False)]}),
 		'absensi_ids' : fields.one2many('absensi.detail','absensi_id','Mahasiswa'),
 		'history_absensi_ids' : fields.one2many('absensi.history','absensi_id','Histoty',readonly=True),
@@ -125,6 +131,21 @@ class absensi(osv.osv):
 		'uts' : fields.float('UTS (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'uas' : fields.float('UAS (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'user_id' : fields.many2one('res.users','User',readonly=True, ),
+		'session' : fields.selection([('1','1'),
+										('2','2'),
+										('3','3'),
+										('4','4'),
+										('5','5'),
+										('6','6'),
+										('7','7'),
+										('8','8'),
+										('9','9'),
+										('10','10'),
+										('11','11'),
+										('12','12'),
+										('13','13'),
+										('14','14')],string='Sesi',readonly=True, states={'open': [('readonly', False)]}),
+
 
 			}
 			
@@ -132,7 +153,8 @@ class absensi(osv.osv):
 		'state':'draft',
 		'sesi':14,
 		'name':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'absensi'),
-		'user_id': lambda obj, cr, uid, context: uid, 
+		'user_id': lambda obj, cr, uid, context: uid,
+		'konsentrasi_id' : _get_konsentrasi,
 	}
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode Absensi tidak boleh sama')]
@@ -172,16 +194,246 @@ class absensi(osv.osv):
 
 	def open_absensi(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,1,ct.id,{'state':'open'},context=context)
+			self.write(cr,uid,ct.id,{'state':'open'},context=context)
 			for det in ct.absensi_ids:
-				self.pool.get('absensi.detail').write(cr,1,det.id,{'state':'open'},context=context)
+				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'open'},context=context)
 		return True	
 
 	def cancel_absensi(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,1,ct.id,{'state':'draft'},context=context)
+			self.write(cr,uid,ct.id,{'state':'draft'},context=context)
 			for det in ct.absensi_ids:
-				self.pool.get('absensi.detail').write(cr,1,det.id,{'state':'draft'},context=context)
+				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'draft'},context=context)
+		return True	
+
+	def check_all_absen_per_day(self,cr,uid,ids,context=None):
+		for ct in self.browse(cr,uid,ids):
+			ses_obj = self.pool.get('absensi.detail')
+			session = ct.session
+
+			for det in ct.absensi_ids:
+				if session == '1' :
+					if not det.read_1 :
+						ses_obj.write(cr,uid,det.id,{'absensi_1':True},context=context)
+				elif session == '2' :
+					if not det.read_2 :
+						ses_obj.write(cr,uid,det.id,{'absensi_2':True},context=context)
+				elif session == '3' :
+					if not det.read_3 :
+						ses_obj.write(cr,uid,det.id,{'absensi_3':True},context=context)
+				elif session == '4' :
+					if not det.read_4 :
+						ses_obj.write(cr,uid,det.id,{'absensi_4':True},context=context)
+				elif session == '5' :
+					if not det.read_5 :
+						ses_obj.write(cr,uid,det.id,{'absensi_5':True},context=context)
+				elif session == '6' :
+					if not det.read_6 :
+						ses_obj.write(cr,uid,det.id,{'absensi_6':True},context=context)
+				elif session == '7' :
+					if not det.read_7 :
+						ses_obj.write(cr,uid,det.id,{'absensi_7':True},context=context)																								
+				elif session == '8' :
+					if not det.read_8 :
+						ses_obj.write(cr,uid,det.id,{'absensi_8':True},context=context)		
+				elif session == '9' :
+					if not det.read_9 :
+						ses_obj.write(cr,uid,det.id,{'absensi_9':True},context=context)
+				elif session == '10' :
+					if not det.read_10 :
+						ses_obj.write(cr,uid,det.id,{'absensi_10':True},context=context)						
+				elif session == '11' :
+					if not det.read_11 :
+						ses_obj.write(cr,uid,det.id,{'absensi_11':True},context=context)		
+				elif session == '12' :
+					if not det.read_12 :
+						ses_obj.write(cr,uid,det.id,{'absensi_12':True},context=context)		
+				elif session == '13' :
+					if not det.read_13 :
+						ses_obj.write(cr,uid,det.id,{'absensi_13':True},context=context)		
+				elif session == '14' :
+					if not det.read_14 :
+						ses_obj.write(cr,uid,det.id,{'absensi_14':True},context=context)		
+		return True	
+
+	def uncheck_all_absen_per_day(self,cr,uid,ids,context=None):
+		for ct in self.browse(cr,uid,ids):
+			ses_obj = self.pool.get('absensi.detail')
+			session = ct.session
+			for det in ct.absensi_ids:
+				if session == '1' :
+					if not det.read_1 :
+						ses_obj.write(cr,uid,det.id,{'absensi_1':False},context=context)
+				elif session == '2' :
+					if not det.read_2 :
+						ses_obj.write(cr,uid,det.id,{'absensi_2':False},context=context)
+				elif session == '3' :
+					if not det.read_3 :
+						ses_obj.write(cr,uid,det.id,{'absensi_3':False},context=context)
+				elif session == '4' :
+					if not det.read_4 :
+						ses_obj.write(cr,uid,det.id,{'absensi_4':False},context=context)
+				elif session == '5' :
+					if not det.read_5 :
+						ses_obj.write(cr,uid,det.id,{'absensi_5':False},context=context)
+				elif session == '6' :
+					if not det.read_6 :
+						ses_obj.write(cr,uid,det.id,{'absensi_6':False},context=context)
+				elif session == '7' :
+					if not det.read_7 :
+						ses_obj.write(cr,uid,det.id,{'absensi_7':False},context=context)																								
+				elif session == '8' :
+					if not det.read_8 :
+						ses_obj.write(cr,uid,det.id,{'absensi_8':False},context=context)		
+				elif session == '9' :
+					if not det.read_9 :
+						ses_obj.write(cr,uid,det.id,{'absensi_9':False},context=context)
+				elif session == '10' :
+					if not det.read_10 :
+						ses_obj.write(cr,uid,det.id,{'absensi_10':False},context=context)						
+				elif session == '11' :
+					if not det.read_11 :
+						ses_obj.write(cr,uid,det.id,{'absensi_11':False},context=context)		
+				elif session == '12' :
+					if not det.read_12 :
+						ses_obj.write(cr,uid,det.id,{'absensi_12':False},context=context)		
+				elif session == '13' :
+					if not det.read_13 :
+						ses_obj.write(cr,uid,det.id,{'absensi_13':False},context=context)		
+				elif session == '14' :
+					if not det.read_14 :
+						ses_obj.write(cr,uid,det.id,{'absensi_14':False},context=context)							
+
+		return True	
+
+	def confirm_absen_per_day(self,cr,uid,ids,context=None):
+		for ct in self.browse(cr,uid,ids):
+			ses_obj = self.pool.get('absensi.detail')
+			session = ct.session
+			for det in ct.absensi_ids:
+				if session == '1' :
+					if not det.read_1 :
+						ses_obj.write(cr,uid,det.id,{'read_1':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 1 sudah pernah di confirm !'))	
+				elif session == '2' :
+					if not det.read_2 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_1 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 1 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_2':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 2 sudah pernah di confirm !'))	
+				elif session == '3' :
+					if not det.read_3 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_2 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 2 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_3':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 3 sudah pernah di confirm !'))
+				elif session == '4' :
+					if not det.read_4 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_3 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 3 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_4':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 4 sudah pernah di confirm !'))
+				elif session == '5' :
+					if not det.read_5 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_4 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 4 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_5':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 5 sudah pernah di confirm !'))
+				elif session == '6' :
+					if not det.read_6 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_5 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 5 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_6':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 6 sudah pernah di confirm !'))
+				elif session == '7' :
+					if not det.read_7 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_6 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 6 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_7':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 7 sudah pernah di confirm !'))																							
+				elif session == '8' :
+					if not det.read_8 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_7 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 7 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_8':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 8 sudah pernah di confirm !'))		
+				elif session == '9' :
+					if not det.read_9 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_8 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 8 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_9':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 9 sudah pernah di confirm !'))
+				elif session == '10' :
+					if not det.read_10 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_9 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 9 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_10':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 10 sudah pernah di confirm !'))					
+				elif session == '11' :
+					if not det.read_11 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_10 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 10 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_11':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 11 sudah pernah di confirm !'))		
+				elif session == '12' :
+					if not det.read_12 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_11 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 11 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_12':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 12 sudah pernah di confirm'))		
+				elif session == '13' :
+					if not det.read_13 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_12 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 12 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_12':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 13 sudah pernah di confirm !'))		
+				elif session == '14' :
+					if not det.read_14 :
+						# dari sesi ke 2 sampai 14 cek dulu sesi belakangnya apa sdh confirm atau belum 
+						# agar confirm sesi tidak bisa loncat
+						if not det.read_13 :
+							raise osv.except_osv(_('Error!'), _('Data absen sesi 13 belum confirm !'))
+						ses_obj.write(cr,uid,det.id,{'read_14':True},context=context)
+					else :
+						raise osv.except_osv(_('Error!'), _('Data absen sesi 14 sudah pernah di confirm !'))					
+
 		return True	
 
 	def close_absensi(self,cr,uid,ids,context=None):
@@ -324,11 +576,12 @@ class absensi(osv.osv):
 					cr.commit()
 					krs_obj = self.pool.get('operasional.krs')
 					krs_det_obj = self.pool.get('operasional.krs_detail')
+					
 					for list_mhs in ps.absensi_nilai_ids:
 						mahasiswa = list_mhs.partner_id.id
 						nil_src = temp_nilai_obj.search(cr,uid,[('user_id','=',uid),('min','<=',list_mhs.uts),('max','>=',list_mhs.uts)])
 						if nil_src :
-							
+							#import pdb;pdb.set_trace()
 							nil_browse = temp_nilai_obj.browse(cr,uid,nil_src[0])
 							det_nilai_obj = self.pool.get('absensi.detail.nilai')
 							det_nilai_obj.write(cr,uid,list_mhs.id,{'uts_huruf':nil_browse.name})
@@ -342,7 +595,7 @@ class absensi(osv.osv):
 							if krs_exist :
 								cr.execute(""" select id from operasional_krs_detail where krs_id=%s and mata_kuliah_id=%s"""%(krs_exist[0],matakuliah))
 								mk_uts = cr.fetchone()
-								#import pdb;pdb.set_trace()
+								
 								if mk_uts :
 									mk_uts_id = int(mk_uts[0])
 									krs_det_obj.write(cr,uid,mk_uts_id,{'uts_huruf':nil_browse.name})
@@ -358,6 +611,7 @@ absensi()
 
 class absensi_detail(osv.osv):
 	_name = "absensi.detail"
+	_rec_name = "partner_id"
 
 	def get_percentage_absen(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
@@ -444,22 +698,39 @@ class absensi_detail(osv.osv):
 		'absensi_id' 	: fields.many2one('absensi','Jadwal'),
 		'partner_id' 	: fields.many2one('res.partner','Mahasiswa',domain="[('status_mahasiswa','=','Mahasiswa')]",required=True),
 		'absensi_1'		:fields.boolean('1'),
+		'read_1'		:fields.boolean('read1'),
 		'absensi_2'		:fields.boolean('2'),
+		'read_2'		:fields.boolean('read2'),
 		'absensi_3'		:fields.boolean('3'),
+		'read_3'		:fields.boolean('read3'),
 		'absensi_4'		:fields.boolean('4'),
+		'read_4'		:fields.boolean('read4'),
 		'absensi_5'		:fields.boolean('5'),
+		'read_5'		:fields.boolean('read5'),
 		'absensi_6'		:fields.boolean('6'),
+		'read_6'		:fields.boolean('read6'),
 		'absensi_7'		:fields.boolean('7'),
+		'read_7'		:fields.boolean('read7'),
 		'absensi_8'		:fields.boolean('8'),
+		'read_8'		:fields.boolean('read8'),
 		'absensi_9'		:fields.boolean('9'),
+		'read_9'		:fields.boolean('read9'),
 		'absensi_10'	:fields.boolean('10'),
+		'read_10'		:fields.boolean('read10'),
 		'absensi_11'	:fields.boolean('11'),
+		'read_11'		:fields.boolean('read11'),
 		'absensi_12'	:fields.boolean('12'),
+		'read_12'		:fields.boolean('read2'),
 		'absensi_13'	:fields.boolean('13'),
+		'read_13'		:fields.boolean('read13'),
 		'absensi_14'	:fields.boolean('14'),				
+		'read_14'		:fields.boolean('read14'),
 		'percentage'	:fields.function(get_percentage_absen,type='float',string='(%)',store=True),
 		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
 	}
+
+
+
 
 class absensi_detail_nilai(osv.osv):
 	_name = "absensi.detail.nilai"
@@ -474,7 +745,7 @@ class absensi_detail_nilai(osv.osv):
 		'uts'			: fields.float('UTS (Angka)'),
 		'uts_huruf'		: fields.char('UTS (Huruf)'),
 		'uas'			: fields.float('UAS (Angka)'),
-		'uas_huruf'		: fields.float('UAS (Huruf)'),
+		'uas_huruf'		: fields.char('UAS (Huruf)'),
 		'lainnya'		: fields.float('Lainnya'),		
 		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
 	}

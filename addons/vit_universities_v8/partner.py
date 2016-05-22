@@ -11,6 +11,7 @@ from openerp import tools, api
 import locale
 
 SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
+
 class res_partner (osv.osv):
 	_name = 'res.partner'
 	_inherit= 'res.partner'
