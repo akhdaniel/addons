@@ -23,19 +23,62 @@ class master_jadwal (osv.osv):
 		kls_obj 	= self.pool.get('master.kelas')
 		rg_obj 		= self.pool.get('master.ruangan')	
 		jad_obj 	= self.pool.get('master.jadwal')
-		jad_id 		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
+
+		alamat 		= rg_obj.browse(cr,uid,ruangan).alamat_id.id
+		#import pdb;pdb.set_trace()
+		jad_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
 			('prodi_id','=',prodi),
 			('semester_id','=',semester),
 			('employee_id','=',employee),
 			('ruangan_id','=',ruangan),	
+			#('alamat_id','!=',alamat),	
 			('hari','=',hari),
 			('hours_from','>=',hours_from),
 			('hours_to','<=',hours_to),
 			('is_active','=',True),])
 
-		if jad_id != [] :
+		if jad_ids :
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
+
+		# pastikan satu dosen hanya mengajar di satu lokasi kampus perhari
+		jad2_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
+			('fakultas_id','=',fakultas),
+			('prodi_id','=',prodi),		
+			('hari','=',hari),	
+			('semester_id','=',semester),
+			('employee_id','=',employee),
+			('alamat_id','!=',alamat),	
+			('is_active','=',True),])
+
+		if jad2_ids :
+			raise osv.except_osv(_('Error!'), _('Satu dosen tidak boleh mengajar lebih dari satu lokasi kampus perhari !'))
+
+		# pastikan satu dosen tidak boleh over lap jam
+		jad3_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
+			('fakultas_id','=',fakultas),
+			('prodi_id','=',prodi),		
+			('hari','=',hari),	
+			('semester_id','=',semester),
+			('employee_id','=',employee),
+			('hours_to','>=',hours_from),	
+			('is_active','=',True),])
+
+		if jad3_ids :
+			raise osv.except_osv(_('Error!'), _('Jadwal Overlap jam !'))
+
+		jad4_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
+			('fakultas_id','=',fakultas),
+			('prodi_id','=',prodi),		
+			('hari','=',hari),	
+			('semester_id','=',semester),
+			('employee_id','=',employee),
+			('hours_from','<=',hours_to),	
+			('is_active','=',True),])
+
+		if jad3_ids :
+			raise osv.except_osv(_('Error!'), _('Jadwal Overlap jam !'))
+			
 		kapasitas_ruangan 	= rg_obj.browse(cr,uid,ruangan).kapasitas	
 		hasil = 0 
 		
@@ -125,7 +168,8 @@ class master_jadwal (osv.osv):
 		'kurikulum_id':fields.many2one('master.kurikulum',"Kurikulum"),
 		'hours_from' : fields.float('Jam Mulai'),
 		'hours_to' : fields.float('Jam Selesai'),
-		'user_id': fields.many2one('res.users','User')
+		'user_id': fields.many2one('res.users','User'),
+		'alamat_id'	: fields.related('ruangan_id','alamat_id',relation='master.alamat.kampus',store=True,type='many2one',string='Lokasi Kampus'),
 
 			}
 			

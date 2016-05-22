@@ -226,6 +226,7 @@ class master_ruangan (osv.Model):
 		'alamat':fields.char('Alamat',size=128),
 		'ac':fields.boolean('Pendingin Ruangan'),
 		'infocus':fields.boolean('Infocus'),
+		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 			}
 			
 	_sql_constraints = [('kode_uniq', 'unique(kode)','Kode ruangan tidak boleh sama')]           
