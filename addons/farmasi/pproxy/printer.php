@@ -34,6 +34,8 @@ class RawPrinter {
 		$handle = $this->openPrinter();
 		$ret = $this->writePrinter($handle, $data);		
 		$this->closePrinter($handle);
+
+		# system("echo $data > /dev/usb001")
 		return $ret;
 	}
 }
