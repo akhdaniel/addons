@@ -27,10 +27,15 @@
             <field name="arch" type="xml">
                 <filter string="Product" position="after">
                 	<group string=" E D ">
-	                	<filter string="Expired" name="expired" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;',0)]" context="{}"/><filter string="Not Expired" name="not_expired" icon="terp-accessories-archiver" domain="[('expired_days_field','&gt;=',0)]" context="{}"/>
-	                	<filter string="3 Months" name="3months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',90),('expired_days_field','&gt;=',1)]" context="{}"/>
-	                	<filter string="6 Months" name="6months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',182),('expired_days_field','&gt;=',91)]" context="{}"/>
-	                	<filter string="12 Months" name="12months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',365),('expired_days_field','&gt;=',183)]" context="{}"/>
+	                	<filter string="Expired" name="expired" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;',0)]" context="{}"/>
+
+                        <filter string="Not Expired" name="not_expired" icon="terp-accessories-archiver" domain="[('expired_days_field','&gt;=',0)]" context="{}"/>
+	                	
+                        <filter string="3 Months" name="3months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',90),('expired_days_field','&gt;=',1)]" context="{}"/>
+	                	
+                        <filter string="6 Months" name="6months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',182),('expired_days_field','&gt;=',91)]" context="{}"/>
+	                	
+                        <filter string="12 Months" name="12months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',365),('expired_days_field','&gt;=',183)]" context="{}"/>
                 	</group>            	                	
             	</filter>
             </field>
