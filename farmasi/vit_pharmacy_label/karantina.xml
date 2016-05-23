@@ -2,15 +2,16 @@
 <openerp>
     <data>
         <report 
-            id="report_stock_picking_menu"
+            id="report_karantina_menu"
             string="Label Karantina"
             model="stock.picking" 
             report_type="qweb-pdf"
             file="vit_pharmacy_label.karantina" 
             name="vit_pharmacy_label.karantina_report" 
+
         />
 
-        <template id="report_stock_picking_document">
+        <template id="report_karantina_document">
             <div class="page" t-foreach="o.move_lines" t-as="l">
 
                 <table class="table table-condensed">
@@ -23,7 +24,7 @@
 
                     <tr>
                         <td colspan="1">
-                           No Dok
+                           No. Dok
                         </td>
                         <td colspan="2">
                            <span t-field="o.name"/>
@@ -32,24 +33,24 @@
 
                     <tr>
                         <td colspan="1">
-                           Tgl Berlaku
+                           Tgl. Berlaku
                         </td>
                         <td colspan="2">
-                           <span t-field="o.name"/>
+                           <!-- <span t-field="o.name"/> -->
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="1">
-                           Tgl Review
+                           Tgl. Review
                         </td>
                         <td colspan="2">
-                           <span t-field="o.name"/>
+                           <!-- <span t-field="o.name"/> -->
                         </td>
                     </tr>
 
                     <tr>
-                        <th colspan="6">KARANTINA</th>
+                        <th colspan="6"><div align="center">KARANTINA</div></th>
                     </tr>
 
                     <tr>
@@ -81,10 +82,10 @@
 
                     <tr>
                         <td colspan="2">
-                            Tgl Kedaluarsa
+                            Tgl. Kedaluarsa
                         </td>
                         <td colspan="4">
-                            <span t-field="l.product_uom_qty" />
+                            <span t-field="l.restrict_lot_id.life_date" />
                         </td>
                     </tr>
 
@@ -109,7 +110,7 @@
 
                     <tr>
                         <td colspan="2">
-                            Tgl Penerimaan
+                            Tgl. Penerimaan
                         </td>
                         <td colspan="4">
                             <span t-field="o.date_done" />
@@ -141,10 +142,30 @@
         <template id="karantina_report">
             <t t-call="report.html_container">
                 <t t-foreach="doc_ids" t-as="doc_id">
-                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'vit_pharmacy_label.report_stock_picking_document')"/>
+                    <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'vit_pharmacy_label.report_karantina_document')"/>
                 </t>
             </t>
         </template>
+
+        <record id="paperformat_label_karantina" model="report.paperformat">
+            <field name="default" eval="True"/>
+            <field name="name">Label Karantina</field>
+            <field name="format">A5</field>
+            <!-- <field name="Page_height">216</field>
+            <field name="Page_width">138</field> -->
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">0</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">300</field>
+        </record>
+
+        <record id="report_karantina_menu" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="vit_pharmacy_label.paperformat_label_karantina"/>
+        </record>
 
     </data>
 </openerp>
