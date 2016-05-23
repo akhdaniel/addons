@@ -9,6 +9,7 @@ PO export to MYOB       """,
     'data': [
         'po.xml',
         'cron.xml',
+        'security/ir.model.access.csv',
     ],
     'test': [],    
     'installable': True,
