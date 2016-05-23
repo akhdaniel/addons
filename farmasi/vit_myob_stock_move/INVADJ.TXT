@@ -1,0 +1,3 @@
+No Batch	Tgl. Pengambilan	Nomor MO	Kode Barang	Lokasi	Quantity	harga per unit (average)	Statis	no akun	Statis	Statis	Statis
+B00001	13/04/2016	pengambilan b baku utk produksi	B001	Location1	-1	10000		12311			
+B00001	13/04/2016	pengambilan b baku utk produksi	B002	Location1	-1	20000		12311			

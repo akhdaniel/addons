@@ -1,0 +1,79 @@
+<openerp>
+	<data>
+
+		<record id="view_myob_export_tree" model="ir.ui.view">
+		    <field name="name">stock_myob_export_tree</field>
+		    <field name="model">stock.myob_export</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list myob_export">
+					<field name="no_batch"/>			
+					<field name="tgl_pengambilan"/>
+					<field name="nomor_mo"/>			
+					<field name="kode_barang"/>		
+					<field name="lokasi"/>			
+					<field name="quantity"/>			
+					<field name="harga_per_unit"/>	
+					<field name="statis"/>			
+					<field name="no_akun"/>			
+					<field name="statis"/>			
+					<field name="statis"/>			
+					<field name="statis"/>				
+		        </tree>    
+		    </field>
+		</record>
+
+		<!-- action list myob_export -->
+		<record id="action_myob_export_list" model="ir.actions.act_window">
+			<field name="name">List stock myob export</field>
+			<field name="res_model">stock.myob_export</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<!-- menu myob_export -->
+		<menuitem id="myob_export"
+			 action="action_myob_export_list"
+			 name="MYOB Export Stock Move"
+			 sequence="200"
+			 parent="stock.menu_stock_warehouse_mgmt"/>
+
+
+	    <!-- context menu More.. di tree Stock Move -->
+	    <record id="action_export_myob" model="ir.actions.server">
+	        <field name="name">Export Stock Move to MYOB</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_stock_move"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('stock.move').action_export_myob(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_export_myob_wizard" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'stock.move'" name="model"/>
+	        <field name="name">Export Stock Move to MYOB</field>
+	        <field eval="'ir.actions.server,%d'%action_export_myob" name="value"/>
+	    </record>
+
+		<record model="ir.ui.view" id="view_stock_move_export_tree">
+		    <field name="name">view.stock.myob.export.multi</field>
+		    <field name="model">stock.move</field>
+		    <field name="inherit_id" ref="stock.view_move_tree"/>
+		    <field name="arch" type="xml">
+		    	<field name="state" position="after">
+		    		<field name="is_myob_export"/>
+		    	</field>
+		   	</field>
+		</record>		
+
+	     <record model="ir.ui.view" id="vit_stock_move_form_export">
+	        <field name="name">stock.move</field>
+	        <field name="model">stock.move</field>
+	        <field name="inherit_id" ref="stock.view_move_form"/>
+	        <field name="arch" type="xml">
+	            <field name="state" position="after">
+	                <field name="is_myob_export" />
+	            </field>              
+	        </field>
+	    </record>
+
+	</data>
+</openerp>
