@@ -835,6 +835,7 @@
                                 <field name="jenis"/>
                                 <field name="jenjang_id"/>
                                 <field name="prodi_id" attrs="{'invisible': [('jenis','!=','mk_khusus')],'required': [('jenis','=','mk_khusus')]}"/>
+                                <field name="penilaian100persen"/>
                             </group>
                         </group>    
                     </sheet>
