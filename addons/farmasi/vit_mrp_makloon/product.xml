@@ -1,0 +1,15 @@
+<openerp>
+	<data>
+        <record id="view_product_template_makloon" model="ir.ui.view">
+            <field name="name">view_product_template_makloon</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="list_price" position="after">
+            		<field name="is_makloon"/>
+            		<field name="makloon_partner_id" attrs="{'invisible':[('is_makloon','=',False)]}"/>
+            	</field>
+            </field>
+        </record>
+	</data>
+</openerp>
