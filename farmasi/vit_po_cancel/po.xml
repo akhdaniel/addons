@@ -1,0 +1,14 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="purchase_order_form_cancel">
+		    <field name="name">view.purchase.form.cancel</field>
+		    <field name="model">purchase.order</field>
+		    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+		    <field name="arch" type="xml">
+		    	<field name="notes2" position="after">
+		    		<field name="cancel_reason"/>
+		    	</field>
+		   	</field>
+		</record>		
+	</data>
+</openerp>
