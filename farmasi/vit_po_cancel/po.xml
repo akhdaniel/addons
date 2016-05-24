@@ -6,7 +6,7 @@
 		    <field name="inherit_id" ref="purchase.purchase_order_form"/>
 		    <field name="arch" type="xml">
 		    	<field name="notes2" position="after">
-		    		<field name="cancel_reason"/>
+		    		<field name="cancel_reason" placeholder="Cancel reason..."/>
 		    	</field>
 		   	</field>
 		</record>		
