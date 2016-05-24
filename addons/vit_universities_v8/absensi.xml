@@ -55,7 +55,7 @@
                     <header>
                         <button name='open_absensi' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_manager_baak,vit_universities_v8.group_univ_staff_prodi"/>
                         <button name='close_absensi' string='Close' class="oe_highlight" states='open' type='object' groups="vit_universities_v8.group_univ_dosen"/>
-                        <button name='cancel_absensi' string='Cancel' states='open' type='object' groups="vit_universities_v8.group_univ_manager_baak"/>
+                        <button name='cancel_absensi' string='Cancel' states='open,close' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
                                         
                         <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                      
@@ -83,7 +83,7 @@
                                <field name="kelas_id" on_change="onchange_kelas(tahun_ajaran_id, fakultas_id, prodi_id,kelas_id,konsentrasi_id)" attrs="{'invisible':[('semester_id','not in',(9,10))]}"/> 
                             </group>
                         </group>
-                        <button name="query_mahasiswa_by_pengajuan_krs" string="Query Mahasiswa" type="object" groups="vit_universities_v8.group_univ_staff_baak" attrs="{'invisible':['|',('semester_id','in',(9,10)),('state','!=','draft')]}"/>
+                        <button name="query_mahasiswa_by_pengajuan_krs" string="Query Mahasiswa" type="object" groups="vit_universities_v8.group_univ_staff_baak,vit_universities_v8.group_univ_dosen" attrs="{'invisible':['|',('semester_id','in',(9,10)),('state','!=','draft')]}"/>
                         <notebook colspan="4">
                             <page string="Absensi">
                                 <group colspan="4">
@@ -142,18 +142,18 @@
                                     <group>
                                     </group>
                                     <group>
-                                        <button name="posting_nilai_uts" string="Posting Nilai UTS" type="object"/>
-                                        <button name="posting_nilai_uas" string="Posting Nilai UAS" type="object"/>
+                                        <button name="posting_nilai_uts" string="Posting Nilai UTS" type="object" groups="vit_universities_v8.group_univ_dosen"/>
+                                        <button name="posting_nilai_uas" string="Posting Nilai UAS" type="object" groups="vit_universities_v8.group_univ_dosen"/>
                                     </group>
                                 </group>
                                 <field name="absensi_nilai_ids" nolabel="1" widget="one2many_list">
                                     <tree string="Absensi" editable="bottom">
                                         <field name="partner_id"/>
-                                        <field name="ulangan"/>
-                                        <field name="presentasi"/>
-                                        <field name="quiz"/>
-                                        <field name="tugas"/>
-                                        <field name="lainnya"/>
+                                        <field name="ulangan" invisible="1"/>
+                                        <field name="presentasi" invisible="1"/>
+                                        <field name="quiz" invisible="1"/>
+                                        <field name="tugas" string="Tugas/Quiz"/>
+                                        <field name="lainnya" invisible="1"/>
                                         <field name="uts"/>
                                         <field name="uts_huruf" readonly="1"/>
                                         <field name="uas"/>
@@ -162,7 +162,7 @@
                                     </tree>
                                 </field>        
                             </page>                            
-                            <page string="Setting" groups="vit_universities_v8.group_univ_dosen">
+                            <page string="Setting" groups="vit_universities_v8.group_univ_dosen" invisible="1">
                                 <sheet>
                                     <p class="oe_grey">Setting presentase nilai ini berlaku jika jumlah (Absensi+Tugas+UTS+UAS+Ulangan+Presentasi+Quiz+Lainnya = 100 (%)</p>
                                     <p class="oe_grey">Default penilaian: Absensi(10%), Tugas(20%), UTS(30%), UAS(40%)</p>
@@ -230,6 +230,65 @@
                 </form>
             </field>
         </record>
+
+
+        <record model="ir.ui.view" id="master_penilaian_mhs_tree_view">
+            <field name="name">Penilaian</field>
+            <field name="model">master.penilaian</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Daftar Absensi" version="7.0">
+                    <field name="tahun_ajaran_id"/>
+                    <field name="absensi"/>
+                    <field name="tugas"/>                   
+                    <field name="uts"/>
+                    <field name="uas"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="master_penilaian_mhs_form_view">
+            <field name="name">Penilaian</field>
+            <field name="model">master.penilaian</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Master Penilaian" version="7.0">
+                    <header>
+                        <button name='confirm_penilaian' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
+                        <button name='cancel_penilaian' string='Cancel' states='confirm' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
+                                        
+                        <field name="state" widget="statusbar" nolabel="1"/>
+                    </header>                      
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="tahun_ajaran_id"/>
+                            </group>
+                            <group>
+                                <field name="absensi"/>
+                                <field name="tugas"/>
+                                <field name="uts"/>
+                                <field name="uas"/>                                    
+                            </group>
+                        </group>
+<!--                         <notebook >
+                            <page string="Matakuliah">
+                                <field view_mode="tree" name="mk_detail_ids" nolabel="1">
+                                    <tree version="7.0">
+                                        <field name="kode"/>
+                                        <field name="nama"/>
+                                        <field name="sks"/>
+                                        <field name="dosen_id" />                              
+                                    </tree>
+                                </field> 
+                            </page>
+                           
+                        </notebook> -->
+                    </sheet>   
+                </form>
+            </field>
+        </record>
         
 
 
@@ -245,7 +304,18 @@
         </record>
 
 
+        <record model="ir.actions.act_window" id="penilaian_list_action">
+            <field name="name">Penilaian</field>
+            <field name="res_model">master.penilaian</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>                   
+            <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Klik tombol Create untuk membuat data master penilaian.</p><p>disini belum ada data tentang master penilaian !</p></field>
+        </record>
+
+
             <menuitem id="master_absensi" name="Absensi dan Nilai" parent="vit_universities_v8.master_data_kbm" action="absensi_mhs_list_action" sequence="30"/>
+            <menuitem id="master_penilaian" name="Penilaian" parent="vit_universities_v8.master_data" action="penilaian_list_action" sequence="74"/>
 
         <!--sequance-->
         <record forcecreate="1" id="seq_type_absensi_mhs" model="ir.sequence.type">

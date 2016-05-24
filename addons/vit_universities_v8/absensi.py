@@ -124,7 +124,6 @@ class absensi(osv.osv):
 		'ulangan' 		: fields.float('Ulangan (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'quiz' 		    : fields.float('Quiz (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'presentasi' 	: fields.float('Presentasi (%)',readonly=True, states={'open': [('readonly', False)]}),
-		'quiz' 		: fields.float('Quiz (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'lainnya'		: fields.float('Lainnya (%)',readonly=True, states={'open': [('readonly', False)]}),		
 		'absensi' : fields.float('Absensi (%)',readonly=True, states={'open': [('readonly', False)]}),
 		'tugas' : fields.float('Tugas (%)',readonly=True, states={'open': [('readonly', False)]}),
@@ -532,6 +531,76 @@ class absensi(osv.osv):
 			}
 		return results
 
+	# def posting_nilai_uts(self,cr,uid,ids,context=None):
+	# 	for ps in self.browse(cr,uid,ids):
+	# 		tahun_ajaran 	= ps.tahun_ajaran_id.id
+	# 		fakultas 		= ps.fakultas_id.id
+	# 		prodi 			= ps.prodi_id.id
+	# 		konsentrasi 	= ps.konsentrasi_id.id
+	# 		semester 		= ps.semester_id.id
+	# 		matakuliah 		= ps.mata_kuliah_id.id
+	# 		cr.execute(""" select max(uts),min(uts) from absensi_detail_nilai where absensi_id= %s"""%(ps.id,))
+	# 		dpt = cr.fetchall()
+	# 		if dpt :
+	# 			dpt_max = float(dpt[0][0])
+	# 			dpt_min = float(dpt[0][1])
+	# 			if dpt_min > 0 and dpt_max > 0 :
+	# 				gap = dpt_max-dpt_min
+
+	# 				cr.execute("""select count(id) from master_nilai""")
+	# 				nilai = cr.fetchone()
+	# 				t_nilai = int(nilai[0])
+	# 				kov = gap/t_nilai
+
+	# 				#hapus dulu data master nilai temp brdasarkan user yang akan eksekusi supaya tidak double
+	# 				sql = "delete from master_nilai_temporary where user_id=%s" % (uid)
+	# 				cr.execute(sql)
+
+	# 				cr.execute("""select * from (select name,bobot from master_nilai) as foo order by foo.bobot asc""")
+	# 				nilai_temp = cr.fetchall()
+					
+	# 				temp_nilai_obj = self.pool.get('master.nilai.temporary')
+	# 				minimum = dpt_min
+	# 				maximum = dpt_min + kov
+	# 				for temp in nilai_temp:
+	# 					temp_nilai_obj.create(cr,uid,{'name'		: str(temp[0]),
+	# 													'user_id'	: uid,
+	# 													'bobot'		: float(temp[1]),
+	# 													'min'		: minimum,
+	# 													'max'		: maximum})
+	# 					minimum = minimum+kov
+	# 					maximum = maximum+kov
+					
+	# 				# commit dulu supaya nanti bisa dicari range nya
+	# 				cr.commit()
+	# 				krs_obj = self.pool.get('operasional.krs')
+	# 				krs_det_obj = self.pool.get('operasional.krs_detail')
+					
+	# 				for list_mhs in ps.absensi_nilai_ids:
+	# 					mahasiswa = list_mhs.partner_id.id
+	# 					nil_src = temp_nilai_obj.search(cr,uid,[('user_id','=',uid),('min','<=',list_mhs.uts),('max','>=',list_mhs.uts)])
+	# 					if nil_src :
+	# 						#import pdb;pdb.set_trace()
+	# 						nil_browse = temp_nilai_obj.browse(cr,uid,nil_src[0])
+	# 						det_nilai_obj = self.pool.get('absensi.detail.nilai')
+	# 						det_nilai_obj.write(cr,uid,list_mhs.id,{'uts_huruf':nil_browse.name})
+
+	# 						krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+	# 												('fakultas_id','=',fakultas),
+	# 												('prodi_id','=',prodi),
+	# 												('konsentrasi_id','=',konsentrasi),
+	# 												('semester_id','=',semester),
+	# 												('partner_id','=',mahasiswa)])
+	# 						if krs_exist :
+	# 							cr.execute(""" select id from operasional_krs_detail where krs_id=%s and mata_kuliah_id=%s"""%(krs_exist[0],matakuliah))
+	# 							mk_uts = cr.fetchone()
+								
+	# 							if mk_uts :
+	# 								mk_uts_id = int(mk_uts[0])
+	# 								krs_det_obj.write(cr,uid,mk_uts_id,{'uts_huruf':nil_browse.name})
+
+	# 	return True	
+
 	def posting_nilai_uts(self,cr,uid,ids,context=None):
 		for ps in self.browse(cr,uid,ids):
 			tahun_ajaran 	= ps.tahun_ajaran_id.id
@@ -540,71 +609,72 @@ class absensi(osv.osv):
 			konsentrasi 	= ps.konsentrasi_id.id
 			semester 		= ps.semester_id.id
 			matakuliah 		= ps.mata_kuliah_id.id
-			cr.execute(""" select max(uts),min(uts) from absensi_detail_nilai where absensi_id= %s"""%(ps.id,))
-			dpt = cr.fetchall()
-			if dpt :
-				dpt_max = float(dpt[0][0])
-				dpt_min = float(dpt[0][1])
-				if dpt_min > 0 and dpt_max > 0 :
-					gap = dpt_max-dpt_min
+			nil_obj = self.pool.get('master.nilai')
+			krs_obj = self.pool.get('operasional.krs')
+			krs_det_obj = self.pool.get('operasional.krs_detail')
+			
+			for list_mhs in ps.absensi_nilai_ids:
+				mahasiswa = list_mhs.partner_id.id
+				nil_src = nil_obj.search(cr,uid,[('min','<=',list_mhs.uts),('max','>=',list_mhs.uts)])
+				if nil_src :
+					#import pdb;pdb.set_trace()
+					nil_browse = nil_obj.browse(cr,uid,nil_src[0])
+					det_nilai_obj = self.pool.get('absensi.detail.nilai')
+					det_nilai_obj.write(cr,uid,list_mhs.id,{'uts_huruf':nil_browse.name})
 
-					cr.execute("""select count(id) from master_nilai""")
-					nilai = cr.fetchone()
-					t_nilai = int(nilai[0])
-					kov = gap/t_nilai
-
-					#hapus dulu data master nilai temp brdasarkan user yang akan eksekusi supaya tidak double
-					sql = "delete from master_nilai_temporary where user_id=%s" % (uid)
-					cr.execute(sql)
-
-					cr.execute("""select * from (select name,bobot from master_nilai) as foo order by foo.bobot asc""")
-					nilai_temp = cr.fetchall()
-					
-					temp_nilai_obj = self.pool.get('master.nilai.temporary')
-					minimum = dpt_min
-					maximum = dpt_min + kov
-					for temp in nilai_temp:
-						temp_nilai_obj.create(cr,uid,{'name'		: str(temp[0]),
-														'user_id'	: uid,
-														'bobot'		: float(temp[1]),
-														'min'		: minimum,
-														'max'		: maximum})
-						minimum = minimum+kov
-						maximum = maximum+kov
-					
-					# commit dulu supaya nanti bisa dicari range nya
-					cr.commit()
-					krs_obj = self.pool.get('operasional.krs')
-					krs_det_obj = self.pool.get('operasional.krs_detail')
-					
-					for list_mhs in ps.absensi_nilai_ids:
-						mahasiswa = list_mhs.partner_id.id
-						nil_src = temp_nilai_obj.search(cr,uid,[('user_id','=',uid),('min','<=',list_mhs.uts),('max','>=',list_mhs.uts)])
-						if nil_src :
-							#import pdb;pdb.set_trace()
-							nil_browse = temp_nilai_obj.browse(cr,uid,nil_src[0])
-							det_nilai_obj = self.pool.get('absensi.detail.nilai')
-							det_nilai_obj.write(cr,uid,list_mhs.id,{'uts_huruf':nil_browse.name})
-
-							krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
-													('fakultas_id','=',fakultas),
-													('prodi_id','=',prodi),
-													('konsentrasi_id','=',konsentrasi),
-													('semester_id','=',semester),
-													('partner_id','=',mahasiswa)])
-							if krs_exist :
-								cr.execute(""" select id from operasional_krs_detail where krs_id=%s and mata_kuliah_id=%s"""%(krs_exist[0],matakuliah))
-								mk_uts = cr.fetchone()
-								
-								if mk_uts :
-									mk_uts_id = int(mk_uts[0])
-									krs_det_obj.write(cr,uid,mk_uts_id,{'uts_huruf':nil_browse.name})
-
-
-
-
+					krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+											('fakultas_id','=',fakultas),
+											('prodi_id','=',prodi),
+											('konsentrasi_id','=',konsentrasi),
+											('semester_id','=',semester),
+											('partner_id','=',mahasiswa)])
+					if krs_exist :
+						cr.execute(""" select id from operasional_krs_detail where krs_id=%s and mata_kuliah_id=%s"""%(krs_exist[0],matakuliah))
+						mk_uts = cr.fetchone()
+						
+						if mk_uts :
+							mk_uts_id = int(mk_uts[0])
+							krs_det_obj.write(cr,uid,mk_uts_id,{'uts_huruf':nil_browse.name,'uts':list_mhs.uts})
 
 		return True	
+
+	def posting_nilai_uas(self,cr,uid,ids,context=None):
+		for ps in self.browse(cr,uid,ids):
+			tahun_ajaran 	= ps.tahun_ajaran_id.id
+			fakultas 		= ps.fakultas_id.id
+			prodi 			= ps.prodi_id.id
+			konsentrasi 	= ps.konsentrasi_id.id
+			semester 		= ps.semester_id.id
+			matakuliah 		= ps.mata_kuliah_id.id
+			nil_obj = self.pool.get('master.nilai')
+			krs_obj = self.pool.get('operasional.krs')
+			krs_det_obj = self.pool.get('operasional.krs_detail')
+			
+			for list_mhs in ps.absensi_nilai_ids:
+				mahasiswa = list_mhs.partner_id.id
+				nil_src = nil_obj.search(cr,uid,[('min','<=',list_mhs.uas),('max','>=',list_mhs.uas)])
+				if nil_src :
+					#import pdb;pdb.set_trace()
+					nil_browse = nil_obj.browse(cr,uid,nil_src[0])
+					det_nilai_obj = self.pool.get('absensi.detail.nilai')
+					det_nilai_obj.write(cr,uid,list_mhs.id,{'uas_huruf':nil_browse.name})
+
+					krs_exist = krs_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+											('fakultas_id','=',fakultas),
+											('prodi_id','=',prodi),
+											('konsentrasi_id','=',konsentrasi),
+											('semester_id','=',semester),
+											('partner_id','=',mahasiswa)])
+					if krs_exist :
+						cr.execute(""" select id from operasional_krs_detail where krs_id=%s and mata_kuliah_id=%s"""%(krs_exist[0],matakuliah))
+						mk_uas = cr.fetchone()
+						
+						if mk_uas :
+							mk_uas_id = int(mk_uas[0])
+							krs_det_obj.write(cr,uid,mk_uas_id,{'uas_huruf':nil_browse.name,'uas':list_mhs.uas})
+
+		return True	
+
 
 absensi()
 
@@ -747,7 +817,7 @@ class absensi_detail_nilai(osv.osv):
 		'uas'			: fields.float('UAS (Angka)'),
 		'uas_huruf'		: fields.char('UAS (Huruf)'),
 		'lainnya'		: fields.float('Lainnya'),		
-		'state':fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
+		'state'			:fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
 	}
 
 class absensi_history (osv.osv):
@@ -782,3 +852,61 @@ class master_nilai_temporary(osv.osv):
 		'min'		: fields.float("Nilai Minimal",help="nilai angka harus antara 0 s/d 100"),
 		'max'		: fields.float("Nilai Maximal",help="nilai angka harus antara 0 s/d 100"),
 	}
+
+class master_penilaian(osv.osv):
+	_name = "master.penilaian"	
+	_rec_name = 'tahun_ajaran_id'
+
+
+	def create(self, cr, uid, vals, context=None):
+		ajaran = vals['tahun_ajaran_id']
+		jad_id = self.search(cr,uid,[('tahun_ajaran_id','=',ajaran)])
+
+		if jad_id != [] :
+			raise osv.except_osv(_('Error!'), _('Penilaian untuk tahun akademik tersebut sudah ada !'))
+
+		return super(master_penilaian, self).create(cr, uid, vals, context=context)   
+
+	def confirm_penilaian(self,cr,uid,ids,context=None):
+		for ct in self.browse(cr,uid,ids):
+			if not ct.mk_detail_ids :
+				raise osv.except_osv(_('Error!'), _('Daftar Matakuliah tidak boleh kosong !'))		
+			return self.write(cr,uid,ct.id,{'state':'confirm'},context=context)	
+
+	def cancel_penilaian(self,cr,uid,ids,context=None):
+		for ct in self.browse(cr,uid,ids):
+			return self.write(cr,uid,ct.id,{'state':'draft'},context=context)	
+
+	_columns = {
+		'tahun_ajaran_id'	: fields.many2one('academic.year',string='Tahun Akademik',required=True,readonly=True, states={'draft': [('readonly', False)]}),
+		'state' 			: fields.selection([('draft','draft'),('confirm','confirm')],'Status'),
+		'absensi' 			: fields.float('Absensi (%)',readonly=True, states={'draft': [('readonly', False)]}),
+		'tugas' 		    : fields.float('Tugas/Quiz (%)',readonly=True, states={'draft': [('readonly', False)]}),
+		'uts' 				: fields.float('UTS (%)',readonly=True, states={'draft': [('readonly', False)]}),
+		'uas'				: fields.float('UAS (%)',readonly=True, states={'draft': [('readonly', False)]}),	
+		'mk_detail_ids'		: fields.many2many(	'master.matakuliah',   	# 'other.object.name' dengan siapa dia many2many
+												'master_penilaian_rel',       # 'relation object'
+												'penilaian_id',               # 'actual.object.id' in relation table
+												'matakuliah_id',           # 'other.object.id' in relation table
+												'Matakuliah',readonly=True, states={'draft': [('readonly', False)]}),
+
+	}
+
+	_defaults = {
+		'state'		:'draft',
+		'absensi' 	: 10 ,
+		'tugas'		: 20 ,
+		'uts'		: 30 , 
+		'uas'		: 40 ,
+	}		
+
+	def unlink(self, cr, uid, ids, context=None):
+		if context is None:
+			context = {}
+		"""Allows to delete in un active"""
+		for rec in self.browse(cr, uid, ids, context=context):
+			if rec.state == 'confirm':
+				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
+		return super(master_penilaian, self).unlink(cr, uid, ids, context=context)	
+
+master_penilaian()		

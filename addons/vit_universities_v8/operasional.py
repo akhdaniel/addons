@@ -633,11 +633,78 @@ class krs_detail (osv.Model):
 	_rec_name='krs_id'
 
 
+	# def _get_nilai_akhir(self, cr, uid, ids, field_name, arg, context=None):
+	# 	if context is None:
+	# 		context = {}
+	# 	#import pdb;pdb.set_trace()
+	# 	nil_obj = self.pool.get('master.nilai')
+	# 	absen_obj = self.pool.get('absensi')
+	# 	presentase_absen 	= 0.1
+	# 	presentase_tugas 	= 0.2
+	# 	presentase_uts 		= 0.3
+	# 	presentase_uas 		= 0.4
+	# 	presentase_ulangan		= 0
+	# 	presentase_presentasi 	= 0
+	# 	presentase_quiz 		= 0
+	# 	presentase_lainnya		= 0		
+	# 	result = {}
+	# 	for nil in self.browse(cr,uid,ids,context=context):
+	# 		tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
+	# 		fakultas 		= nil.krs_id.fakultas_id.id
+	# 		prodi 	 		= nil.krs_id.prodi_id.id
+	# 		semester 		= nil.krs_id.semester_id.id
+	# 		matakuliah 		= nil.mata_kuliah_id.id
+	# 		kelas 			= nil.krs_id.kelas_id.id 
+	# 		setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
+	# 													('fakultas_id','=',fakultas),
+	# 													('prodi_id','=',prodi),
+	# 													('semester_id','=',semester),
+	# 													('mata_kuliah_id','=',matakuliah),
+	# 													('kelas_id','=',kelas)])
+	# 		if setting_dosen:
+	# 			sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
+	# 			total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
+	# 			if total_set == 100 :
+	# 				presentase_absen 		= sett.absensi/100
+	# 				presentase_tugas 		= sett.tugas/100
+	# 				presentase_uts 			= sett.uts/100
+	# 				presentase_uas 			= sett.uas/100			
+	# 				presentase_ulangan		= sett.ulangan/100
+	# 				presentase_presentasi 	= sett.presentasi/100
+	# 				presentase_quiz 		= sett.quiz/100
+	# 				presentase_lainnya		= sett.lainnya/100
+
+	# 		absen 			= nil.absensi
+	# 		tugas 			= nil.tugas
+	# 		ulangan 		= nil.ulangan
+	# 		uts 			= nil.uts
+	# 		uas 			= nil.uas
+	# 		presentasi 		= nil.presentasi
+	# 		quiz 			= nil.quiz
+	# 		lainnya 		= nil.lainnya			
+	# 		tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
+	# 		#tot = (tugas+ulangan+uts+uas)/4
+	# 		#import pdb;pdb.set_trace()
+	# 		nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)
+	# 		if nil_src == []:
+	# 			return result
+
+	# 		nil_par = nil_obj.browse(cr,uid,nil_src,context=context)[0]
+	# 		huruf = nil_par.name
+	# 		angka = nil_par.bobot
+			
+	# 		result[nil.id] = huruf
+	# 		if not nil.is_import :
+	# 			wr = self.write(cr,uid,nil.id,{'nilai_angka':angka,'nilai_huruf_field':huruf})
+	# 	return result
+
+
 	def _get_nilai_akhir(self, cr, uid, ids, field_name, arg, context=None):
 		if context is None:
 			context = {}
 		#import pdb;pdb.set_trace()
 		nil_obj = self.pool.get('master.nilai')
+		penil_obj = self.pool.get('master.penilaian')
 		absen_obj = self.pool.get('absensi')
 		presentase_absen 	= 0.1
 		presentase_tugas 	= 0.2
@@ -648,41 +715,25 @@ class krs_detail (osv.Model):
 		presentase_quiz 		= 0
 		presentase_lainnya		= 0		
 		result = {}
-		for nil in self.browse(cr,uid,ids,context=context):
+		for nil in self.browse(cr,uid,ids,context=context):	
 			tahun_ajaran 	= nil.krs_id.tahun_ajaran_id.id
-			fakultas 		= nil.krs_id.fakultas_id.id
-			prodi 	 		= nil.krs_id.prodi_id.id
-			semester 		= nil.krs_id.semester_id.id
-			matakuliah 		= nil.mata_kuliah_id.id
-			kelas 			= nil.krs_id.kelas_id.id 
-			setting_dosen 	= absen_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran),
-														('fakultas_id','=',fakultas),
-														('prodi_id','=',prodi),
-														('semester_id','=',semester),
-														('mata_kuliah_id','=',matakuliah),
-														('kelas_id','=',kelas)])
-			if setting_dosen:
-				sett 	= absen_obj.browse(cr,uid,setting_dosen[0]) 
-				total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas + sett.ulangan + sett.presentasi + sett.quiz + sett.lainnya)
+			setting_nilai 	= penil_obj.search(cr,uid,[('tahun_ajaran_id','=',tahun_ajaran)])
+			if setting_nilai:
+				sett 	= absen_obj.browse(cr,uid,setting_nilai[0]) 
+				total_set = (sett.absensi + sett.tugas + sett.uts + sett.uas)
 				if total_set == 100 :
 					presentase_absen 		= sett.absensi/100
 					presentase_tugas 		= sett.tugas/100
 					presentase_uts 			= sett.uts/100
 					presentase_uas 			= sett.uas/100			
-					presentase_ulangan		= sett.ulangan/100
-					presentase_presentasi 	= sett.presentasi/100
-					presentase_quiz 		= sett.quiz/100
-					presentase_lainnya		= sett.lainnya/100
 
 			absen 			= nil.absensi
 			tugas 			= nil.tugas
-			ulangan 		= nil.ulangan
 			uts 			= nil.uts
 			uas 			= nil.uas
-			presentasi 		= nil.presentasi
-			quiz 			= nil.quiz
-			lainnya 		= nil.lainnya			
-			tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)+(presentasi*presentase_presentasi)+(ulangan*presentase_ulangan)+(quiz*presentase_quiz)+(lainnya*presentase_lainnya)
+			tot 			= nil.uas
+			if not nil.mata_kuliah_id.penilaian100persen :		
+				tot 			= (absen*presentase_absen)+(tugas*presentase_tugas)+(uts*presentase_uts)+(uas*presentase_uas)
 			#tot = (tugas+ulangan+uts+uas)/4
 			#import pdb;pdb.set_trace()
 			nil_src = nil_obj.search(cr,uid,[('min','<=',tot),('max','>=',tot)],context=context)

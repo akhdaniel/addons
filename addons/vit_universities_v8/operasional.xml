@@ -113,7 +113,7 @@
 
                                         <field name="tugas" attrs="{'readonly': [('state','!=','confirm')]}" invisible="1"/>
                                         <field name="uts" attrs="{'readonly': [('state','!=','confirm')]}" invisible="1"/>
-                                        <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}" />
+                                        <field name="uas" attrs="{'readonly': [('state','!=','confirm')]}" invisible="1"/>
                                         <field name="uts_huruf" readonly="1"/>
                                         <field name="uas_huruf" readonly="1"/>
                                         <field name="nilai_huruf" invisible="1"/>
