@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="act_as_table list_table">        
+        <div class="act_as_table data_table">        
             <div class="act_as_thead">
                 <div class="act_as_row labels">
                     ## code
@@ -145,23 +145,27 @@
                     <div class="act_as_cell" style="width: 80px;"> </div>
 
                     ## initial balance
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
 
                     ## mutasi
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
 
                     ## balance laba rugi
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
 
                     ## balance neraca
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell amount" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
 
                 </div> 
-            </div>             
+            </div>  
+        </div>
+
+        <div class="act_as_table list_table">        
+
             <div class="act_as_tbody">
               
                 <%
