@@ -110,7 +110,7 @@
             </div>
         %endfor
 
-        <div class="act_as_table list_table" style="margin-top: 20px;">
+        <div class="act_as_table data_table" style="margin-top: 20px;">
             <div class="act_as_thead">
                 <div class="act_as_row labels">
                     
@@ -121,16 +121,16 @@
                     <div class="act_as_cell" style="width: 80px;">${_('Account')}</div>
 
                     ## initial balance
-                    <div class="act_as_cell amount" style="width: 60px;">${_('Initial Balance')}</div>
+                    <div class="act_as_cell" style="width: 60px;">${_('Initial Balance')}</div>
 
                     ## mutasi
-                    <div class="act_as_cell amount" style="width: 60px;">${_('Mutasi')}</div>
+                    <div class="act_as_cell" style="width: 60px;">${_('Mutasi')}</div>
 
                     ## balance laba rugi
-                    <div class="act_as_cell amount" style="width: 60px;">${_('Laba/Rugi')}</div>
+                    <div class="act_as_cell" style="width: 60px;">${_('Laba/Rugi')}</div>
 
                     ## balance neraca
-                    <div class="act_as_cell amount" style="width: 60px;">${_('Neraca')}</div>
+                    <div class="act_as_cell" style="width: 60px;">${_('Neraca')}</div>
                 </div>
             </div>
         </div>
