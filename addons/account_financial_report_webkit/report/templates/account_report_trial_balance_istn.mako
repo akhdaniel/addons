@@ -5,7 +5,7 @@
         <style type="text/css">
             .account_level_1 {
                 text-transform: uppercase;
-                font-size: 30px;
+                font-size: 35px;
                 background-color:#F0F0F0;
             }
 
@@ -118,19 +118,19 @@
                     <div class="act_as_cell first_column" style="width: 20px;">${_('Code')}</div>
                     
                     ## account name
-                    <div class="act_as_cell" style="width: 80px;">${_('Account')}</div>
+                    <div class="act_as_cell" style="width: 70px;">${_('Account')}</div>
 
                     ## initial balance
-                    <div class="act_as_cell" style="width: 60px;">${_('Initial Balance')}</div>
+                    <div class="act_as_cell" style="width: 70px;">${_('Initial Balance')}</div>
 
                     ## mutasi
-                    <div class="act_as_cell" style="width: 60px;">${_('Mutasi')}</div>
+                    <div class="act_as_cell" style="width: 70px;">${_('Mutasi')}</div>
 
                     ## balance laba rugi
-                    <div class="act_as_cell" style="width: 60px;">${_('Laba/Rugi')}</div>
+                    <div class="act_as_cell" style="width: 70px;">${_('Laba/Rugi')}</div>
 
                     ## balance neraca
-                    <div class="act_as_cell" style="width: 60px;">${_('Neraca')}</div>
+                    <div class="act_as_cell" style="width: 70px;">${_('Neraca')}</div>
                 </div>
             </div>
         </div>
@@ -142,23 +142,23 @@
                     <div class="act_as_cell" style="width: 20px;"> </div>
                     
                     ## account name
-                    <div class="act_as_cell" style="width: 80px;"> </div>
+                    <div class="act_as_cell" style="width: 70px;"> </div>
 
                     ## initial balance
-                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Credit')}</div>
 
                     ## mutasi
-                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Credit')}</div>
 
                     ## balance laba rugi
-                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Credit')}</div>
 
                     ## balance neraca
-                    <div class="act_as_cell" style="width: 30px;">${_('Debit')}</div>
-                    <div class="act_as_cell" style="width: 30px;">${_('Credit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Debit')}</div>
+                    <div class="act_as_cell" style="width: 35px;">${_('Credit')}</div>
 
                 </div> 
             </div>  
