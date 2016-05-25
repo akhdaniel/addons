@@ -414,5 +414,30 @@
 		 sequence="80"
 		 parent="rcm_configuration"/>
 
+
+		<!-- master hobby -->
+
+		<record id="view_hobby_tree" model="ir.ui.view">
+		    <field name="name">reliance_hobby_tree</field>
+		    <field name="model">reliance.hobby</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list hobby" >
+					<field name="name" />		
+		    	</tree>
+		    </field>
+		</record>	
+
+		<record id="action_hobby_list" model="ir.actions.act_window">
+			<field name="name">Hobby</field>
+			<field name="res_model">reliance.hobby</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="rcm_hobby"
+		 action="action_hobby_list"
+		 name="Hobby"
+		 sequence="90"
+		 parent="rcm_configuration"/>
+
 	</data>
 </openerp>

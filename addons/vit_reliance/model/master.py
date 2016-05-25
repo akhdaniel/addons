@@ -254,3 +254,9 @@ class states_mapping(osv.osv):
 			return res[0]["state_id"][0]
 		else:
 			return False
+
+class hobby(osv.osv):
+	_name 		= "reliance.hobby"
+	_columns 	= {
+		"name"			: fields.char("Name"),
+	}

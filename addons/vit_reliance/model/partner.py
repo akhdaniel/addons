@@ -146,6 +146,14 @@ class res_partner(osv.osv):
 		            "- Never: no emails are sent\n"
 		            "- All Messages: for every notification you receive in your Inbox"),
 
+		'hobby_ids'								: fields.many2many(
+					'reliance.hobby',    # 'other.object.name' dengan siapa dia many2many
+					'partner_hobby',     # 'relation object'
+					'partner_id',        # 'actual.object.id' in relation table
+					'hobby_id',          # 'other.object.id' in relation table
+					'Hobby',             # 'Field Name'
+					required=False),
+		'risk_profile'							: fields.char('Risk Profile'),
 	}
 	_sql_constraints = [('unique_reliance_id', 'unique(reliance_id)',
                          'Reliance ID Must be Unique!')]
