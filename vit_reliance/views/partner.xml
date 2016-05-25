@@ -150,6 +150,7 @@
 					<field name='reliance_id' 		 />
 					<field name='related_partner_id' />
 					<field name='initial_bu' />
+					<field name='risk_profile' />
 					<!-- <field name='nomor_nasabah' />
 					<field name='agent_id' 			 />  -->     
       		
@@ -195,42 +196,50 @@
             		<page string="Perorangan" 
             			attrs="{'invisible': [('is_company','=',True)]}">
             			<group>
-							<field name='perorangan_tempat_lahir' 		 />
-							<field name='perorangan_tanggal_lahir' 		 />
-							<field name='perorangan_nomor_ktp' 					 />
-							<field name='perorangan_kewarganegaraan' 			 />
-							<field name='perorangan_npwp' 						 />
-							<field name='perorangan_status_perkawinan' 			 />
-							<field name='perorangan_alamat_surat_menyurat' 		 />
-							<field name='perorangan_jenis_kelamin' 				 />
-							<field name='perorangan_nama_istri_suami' 			 />
-							<field name='perorangan_alamat_email' 				 />
-							<field name='perorangan_pendidikan_terakhir' 		 />
-							<field name='perorangan_masa_berlaku_ktp' 			 />
-							<field name='perorangan_agama' 						 />
-							<field name='perorangan_tujuan_investasi' 			 />
-							<field name='perorangan_kitas' 						 />
-							<field name='perorangan_masa_berlaku_kitas' 		 />
-							<field name='perorangan_paspor' 					 />
-							<field name='perorangan_masa_berlaku_paspor' 		 />
-							<field name='perorangan_nama_gadis_ibu_kandung' 	 />
-							<field name='perorangan_sumber_dana_yg_akan_diinvestasikan' />
-							<field name='perorangan_alamat_tempat_tinggal_saat_ini' />
-							<field name='perorangan_periode_asuransi' 			 />
-							<field name='perorangan_lokasi_resiko' 				 />
-							<field name='perorangan_harga_pertanggungan' 		 />
-							<field name='perorangan_kondisi_bangunan' 			 />
-							<field name='perorangan_penggunaan_bangunan_kendaraan' />
-							<field name='perorangan_wilayah_kendaraan' 			 />
-							<field name='perorangan_obyek_pertanggungan' 		 />
-							<field name='perorangan_jenis_pertanggungan' 		 />
-							<field name='perorangan_jenis_perluasan' 			 />
-							<field name='perorangan_pengalaman_klaim' 			 />
-							<field name='perorangan_status_nasabah' 			 />
-							<field name='perorangan_kegiatan_berorganisasi' 	 />
-							<field name='perorangan_nama_organisasi' 			 />
-							<field name='perorangan_jabatan' 	 />	
+	            			<group>
+								<field name='perorangan_tempat_lahir' 		 />
+								<field name='perorangan_tanggal_lahir' 		 />
+								<field name='perorangan_nomor_ktp' 					 />
+								<field name='perorangan_kewarganegaraan' 			 />
+								<field name='perorangan_npwp' 						 />
+								<field name='perorangan_status_perkawinan' 			 />
+								<field name='perorangan_alamat_surat_menyurat' 		 />
+								<field name='perorangan_jenis_kelamin' 				 />
+								<field name='perorangan_nama_istri_suami' 			 />
+								<field name='perorangan_alamat_email' 				 />
+								<field name='perorangan_pendidikan_terakhir' 		 />
+								<field name='perorangan_masa_berlaku_ktp' 			 />
+								<field name='perorangan_agama' 						 />
+								<field name='perorangan_tujuan_investasi' 			 />
+								<field name='perorangan_kitas' 						 />
+								<field name='perorangan_masa_berlaku_kitas' 		 />
+								<field name='perorangan_paspor' 					 />
+								<field name='perorangan_masa_berlaku_paspor' 		 />
+							</group>
+							<group>
+								<field name='perorangan_nama_gadis_ibu_kandung' 	 />
+								<field name='perorangan_sumber_dana_yg_akan_diinvestasikan' />
+								<field name='perorangan_alamat_tempat_tinggal_saat_ini' />
+								<field name='perorangan_periode_asuransi' 			 />
+								<field name='perorangan_lokasi_resiko' 				 />
+								<field name='perorangan_harga_pertanggungan' 		 />
+								<field name='perorangan_kondisi_bangunan' 			 />
+								<field name='perorangan_penggunaan_bangunan_kendaraan' />
+								<field name='perorangan_wilayah_kendaraan' 			 />
+								<field name='perorangan_obyek_pertanggungan' 		 />
+								<field name='perorangan_jenis_pertanggungan' 		 />
+								<field name='perorangan_jenis_perluasan' 			 />
+								<field name='perorangan_pengalaman_klaim' 			 />
+								<field name='perorangan_status_nasabah' 			 />
+								<field name='perorangan_kegiatan_berorganisasi' 	 />
+								<field name='perorangan_nama_organisasi' 			 />
+								<field name='perorangan_jabatan' 	 />	
+	            			</group>
             			</group>
+
+            			<separator string="Hobbies" />
+            			<field name="hobby_ids" />
+
             		</page>
 
             		<page string="Pekerjaan" 
