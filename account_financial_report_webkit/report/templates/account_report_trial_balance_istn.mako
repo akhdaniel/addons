@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="act_as_table data_table">        
+        <div class="act_as_table list_table">        
             <div class="act_as_thead">
                 <div class="act_as_row labels">
                     ## code
@@ -162,9 +162,7 @@
 
                 </div> 
             </div>  
-        </div>
 
-        <div class="act_as_table list_table">        
 
             <div class="act_as_tbody">
               
