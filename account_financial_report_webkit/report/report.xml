@@ -55,14 +55,14 @@
              <field name="model">account.account</field>
              <field name="type">ir.actions.report.xml</field>
              <field name="name">Trial Balance Webkit</field>
-             <field name="report_rml">account_financial_report_webkit/report/templates/account_report_trial_balance.mako</field>
-             <field name="report_file">account_financial_report_webkit/report/templates/account_report_trial_balance.mako</field>
+             <field name="report_rml">account_financial_report_webkit/report/templates/account_report_trial_balance_istn.mako</field>
+             <field name="report_file">account_financial_report_webkit/report/templates/account_report_trial_balance_istn.mako</field>
          </record>
 
         <record id="property_account_report_trial_balance_webkit" model="ir.property">
             <field name="name">account_report_trial_balance_webkit</field>
             <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
-            <field eval="'ir.header_webkit,'+str(ref('account_financial_report_webkit.financial_portrait_header'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.header_webkit,'+str(ref('account_financial_report_webkit.financial_landscape_header'))" model="ir.header_webkit" name="value"/>
             <field eval="'ir.actions.report.xml,'+str(ref('account_financial_report_webkit.account_report_trial_balance_webkit'))" model="ir.actions.report.xml" name="res_id"/>
         </record>
 
