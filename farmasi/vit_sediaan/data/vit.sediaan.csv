@@ -1,0 +1,15 @@
+"id","name","code","is_makloon","factory_code","max_batch_per_shift","index"
+"sediaan_betalaktam","Betalaktam","M",FALSE,"PT. Lucas Djaja",3,1
+"sediaan_syrup","Syrup","S",FALSE,"PT. Lucas Djaja",3,2
+"sediaan_kapsul","Kapsul","C",FALSE,"PT. Lucas Djaja",3,3
+"sediaan_soft_kapsul","Soft Capsule","K",FALSE,"PT. Lucas Djaja",3,4
+"sediaan_larutan","Larutan","L",FALSE,"PT. Lucas Djaja",3,5
+"sediaan_injeksi","Injeksi","I",FALSE,"PT. Lucas Djaja",3,6
+,,,,
+"sediaan_tablet_biasa","Tablet Biasa","T",FALSE,"PT. Marin Liza Farmasi",3,7
+"sediaan_tablet_coating","Tablet Coating","C",FALSE,"PT. Marin Liza Farmasi",3,8
+"sediaan_tablet_effervescent","Tablet Effervescent","E",FALSE,"PT. Marin Liza Farmasi",3,9
+"sediaan_semisolid","Semisolid","S",FALSE,"PT. Marin Liza Farmasi",3,10
+"sediaan_makloon_tablet","Tablet (Makloon)","T",TRUE,"PT. Marin Liza Farmasi",3,11
+"sediaan_makloon_tablet_hisap","Tablet Hisap/ Kunyah (Makloon)","C",TRUE,"PT. Marin Liza Farmasi",3,12
+"sediaan_makloon_effervescent","Effervescent (Makloon)","E",TRUE,"PT. Marin Liza Farmasi",3,13
