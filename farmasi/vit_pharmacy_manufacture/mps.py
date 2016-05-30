@@ -28,6 +28,9 @@ class mps(osv.osv):
 		'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
 		'created_date': fields.datetime('Created Date', required=True, readonly=True, select=True),
 
+
+
+
 		'mps_detail_ids1':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Betalaktam',
 			readonly=True,
 			domain=[('sediaan_id','=','Betalaktam')],
@@ -58,15 +61,46 @@ class mps(osv.osv):
 			domain=[('sediaan_id','=','Injeksi')],
             states={'draft':[('readonly',False)]} ),
 
-		'mps_detail_ids7':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Solid',
+
+
+
+
+		'mps_detail_ids7':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet Biasa',
 			readonly=True,
-			domain=[('sediaan_id','=','Solid')],
+			domain=[('sediaan_id','=','Tablet Biasa')],
             states={'draft':[('readonly',False)]} ),
 
-		'mps_detail_ids8':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Semi Solid',
+		'mps_detail_ids8':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet Coating',
 			readonly=True,
-			domain=[('sediaan_id','=','Semi Solid')],
+			domain=[('sediaan_id','=','Tablet Coating')],
             states={'draft':[('readonly',False)]} ),
+
+		'mps_detail_ids9':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet Effervescent',
+			readonly=True,
+			domain=[('sediaan_id','=','Tablet Effervescent')],
+            states={'draft':[('readonly',False)]} ),
+
+		'mps_detail_ids10':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Semisolid',
+			readonly=True,
+			domain=[('sediaan_id','=','Semisolid')],
+            states={'draft':[('readonly',False)]} ),
+
+		'mps_detail_ids11':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet (Makloon)',
+			readonly=True,
+			domain=[('sediaan_id','=','Tablet Makloon')],
+            states={'draft':[('readonly',False)]} ),
+
+		'mps_detail_ids12':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet Hisap/ Kunyah (Makloon)',
+			readonly=True,
+			domain=[('sediaan_id','=','Tablet Hisap/ Kunyah (Makloon)')],
+            states={'draft':[('readonly',False)]} ),
+
+		'mps_detail_ids13':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Effervescent (Makloon)',
+			readonly=True,
+			domain=[('sediaan_id','=','Effervescent (Makloon)')],
+            states={'draft':[('readonly',False)]} ),
+
+
 		
 		'forecast_id': fields.many2one('vit_pharmacy_manufacture.forecast_product', 'Forecast',
 			readonly=True,
@@ -94,8 +128,11 @@ class mps(osv.osv):
 
 	def action_create_wps(self, cr, uid, ids, context=None):
 		""" Create Sejumlah WPS dari Urutan Week Paling Pertama """
-		for i in range (1,6):
-			fieldname = "self.browse(cr,uid,ids[0],).mps_detail_ids%s" % i
+		# import pdb; pdb.set_trace()
+		sediaan_ids = self.pool.get('vit.sediaan').search(cr, uid, [], context=context)
+		for sediaan in self.pool.get('vit.sediaan').browse(cr, uid, sediaan_ids, context=context):
+			index = sediaan.index 
+			fieldname = "self.browse(cr,uid,ids[0],).mps_detail_ids%s" % index
 			for details_product in eval(fieldname):
 				self.create_wps(cr,uid, ids, details_product, context=context)
 		
@@ -115,6 +152,8 @@ class mps(osv.osv):
 
 		week_on_month = [1,2,3,4,5]
 		week_on_year = self.get_no_week(cr,uid,ids,m)
+
+		# import pdb;pdb.set_trace()
 
 		batch = [details_product.w1,details_product.w2,details_product.w3,details_product.w4]
 		for wm,wy,b in zip(week_on_month,week_on_year,batch):
@@ -451,29 +490,13 @@ class mps(osv.osv):
 	def action_recalculate(self, cr, uid, ids, context=None):
 
 		for mps in self.browse(cr, uid, ids, context=context):
-			for detail in mps.mps_detail_ids1:
-				self.update_detail(cr, uid, detail, 1, context=context)
 
-			for detail in mps.mps_detail_ids2:
-				self.update_detail(cr, uid, detail, 2, context=context)
-
-			for detail in mps.mps_detail_ids3:
-				self.update_detail(cr, uid, detail, 3, context=context)
-
-			for detail in mps.mps_detail_ids4:
-				self.update_detail(cr, uid, detail, 4, context=context)
-
-			for detail in mps.mps_detail_ids5:
-				self.update_detail(cr, uid, detail, 5, context=context)
-
-			for detail in mps.mps_detail_ids6:
-				self.update_detail(cr, uid, detail, 6, context=context)
-
-			for detail in mps.mps_detail_ids7:
-				self.update_detail(cr, uid, detail, 7, context=context)
-
-			for detail in mps.mps_detail_ids8:
-				self.update_detail(cr, uid, detail, 8, context=context)
+			sediaan_ids = self.pool.get('vit.sediaan').search(cr, uid, [], context=context)
+			for sediaan in self.pool.get('vit.sediaan').browse(cr, uid, sediaan_ids, context=context):
+				index = sediaan.index
+				fieldname = "mps.mps_detail_ids%s" % index 
+				for detail in eval(fieldname):
+					self.update_detail(cr, uid, detail, 1, context=context)
 
 	"""
 	recalculate the w1..w5 details 

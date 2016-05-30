@@ -19,5 +19,9 @@ class sediaan(osv.osv):
 	_columns 	= {
 		'name' 	: fields.char("Sediaan"),
 		'code' 	: fields.char("Code"),
-		'max_batch_per_shift': fields.float("Max Batch per Shift")
+		'max_batch_per_shift': fields.float("Max Batch per Shift"),
+		'index'	: fields.integer("Field Index", help="Index number for mps_details_ids[x]"),
+		'is_makloon': fields.boolean('Is Makloon'),
+		'factory_code': fields.char("Factory Code"),
+
 	}
