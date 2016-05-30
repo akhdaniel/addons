@@ -1,0 +1,8 @@
+"id","name","parent_id","type","sediaan_id","removal_days","alert_days","end_of_life_days","best_before_days"
+"product_categ_marin_100","Tablet Biasa","Produk Jadi","Normal","Tablet Biasa",0,0,0,0
+"product_categ_marin_101","Tablet Coating","Produk Jadi","Normal","Tablet Coating",0,0,0,0
+"product_categ_marin_102","Tablet Effervescent","Produk Jadi","Normal","Tablet Effervescent",0,0,0,0
+"product_categ_marin_103","Semisolid","Produk Jadi","Normal","Semisolid",0,0,0,0
+"product_categ_marin_104","Tablet (Makloon)","Produk Jadi","Normal","Tablet (Makloon)",0,0,0,0
+"product_categ_marin_105","Tablet Hisap/ Kunyah (Makloon)","Produk Jadi","Normal","Tablet Hisap/ Kunyah (Makloon)",0,0,0,0
+"product_categ_marin_106","Effervescent (Makloon)","Produk Jadi","Normal","Effervescent (Makloon)",0,0,0,0
