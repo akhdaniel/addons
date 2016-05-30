@@ -43,6 +43,7 @@
                     <filter icon="terp-check" name="karantinagoj_goj" string="GOJ: QA to Stock" domain="[('location_id','ilike','GOJ / Input'), ('location_dest_id','ilike','GOJ / Stock')]"/>
 
                     <filter icon="terp-check" name="karantinabb_bb" string="GBA: QC to Stock" domain="[('location_id','ilike','GBA / Input'), ('location_dest_id','ilike','GBA / Stock')]"/>
+                    <filter icon="terp-check" name="karantinabk_bk" string="GBK: QC to Stock" domain="[('location_id','ilike','GBK / Input'), ('location_dest_id','ilike','GBK / Stock')]"/>
 
                 </search>
             </field>
@@ -60,8 +61,8 @@
             <field name="help"></field>
         </record>
 
-        <record id="action_qc" model="ir.actions.act_window">
-            <field name="name">QC</field>
+        <record id="action_qc_gba" model="ir.actions.act_window">
+            <field name="name">QC GBA</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">stock.picking</field>
             <field name="view_type">form</field>
@@ -69,6 +70,18 @@
             <field name="search_view_id" ref="view_picking_internal_search2" />
             <field name="domain"></field>
             <field name="context">{"search_default_available":1,"search_default_karantinabb_bb":1}</field>  
+            <field name="help"></field>
+        </record>
+
+        <record id="action_qc_gbk" model="ir.actions.act_window">
+            <field name="name">QC GBK</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_picking_internal_search2" />
+            <field name="domain"></field>
+            <field name="context">{"search_default_available":1,"search_default_karantinabk_bk":1}</field>  
             <field name="help"></field>
         </record>
 
@@ -120,7 +133,8 @@
         <menuitem  id="menu_release_root" name="Release" groups="stock.group_stock_manager" />
         <menuitem  id="menu_release"  parent="menu_release_root" name="Release QA/QC"/>
         <menuitem  action="action_qa" id="menu1" parent="menu_release" sequence="10" />    
-        <menuitem  action="action_qc" id="menu2" parent="menu_release" sequence="20" />    
+        <menuitem  action="action_qc_gba" id="menu2" parent="menu_release" sequence="20" />    
+        <menuitem  action="action_qc_gbk" id="menu5" parent="menu_release" sequence="25" />    
         <menuitem  action="action_pra" id="menu3" parent="menu_release" sequence="30" />    
         <menuitem  action="action_product" id="menu4" parent="menu_release" sequence="40" />    
 

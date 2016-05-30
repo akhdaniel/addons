@@ -19,7 +19,8 @@ isinya adalah data Work Order khusus untuk proses QC: workcenter_id = QC
     'depends': ['base','stock', 'mrp' , 'mrp_operations'],
     'data': [
         # 'security/ir.model.access.csv',
-        'release.xml'
+        'release.xml',
+        "data/stock.warehouse.csv"
     ],
     'demo': [
     ],

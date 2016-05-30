@@ -7,10 +7,25 @@
             <field name="model">vit_pharmacy_manufacture.mps</field>
             <field name="inherit_id" ref="vit_pharmacy_manufacture.view_mps_form"/>
             <field name="arch" type="xml">
-                <notebook string="Solid" position="attributes">
+                <notebook string="Tablet Biasa" position="attributes">
                     <attribute name='invisible'>1</attribute> 
                 </notebook>
-                <notebook string="Semi Solid" position="attributes">
+                <notebook string="Tablet Coating" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </notebook>
+                <notebook string="Tablet Effervescent" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </notebook>
+                <notebook string="Semisolid" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </notebook>
+                <notebook string="Tablet (Makloon)" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </notebook>
+                <notebook string="Tablet Hisap/ Kunyah (Makloon)" position="attributes">
+                    <attribute name='invisible'>1</attribute> 
+                </notebook>
+                <notebook string="Effervescent (Makloon)" position="attributes">
                     <attribute name='invisible'>1</attribute> 
                 </notebook>
             </field>

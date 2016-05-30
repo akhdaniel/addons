@@ -20,6 +20,9 @@
 		            <field name="name"/>
 		            <field name="code"/>
 		            <field name="max_batch_per_shift"/>
+		            <field name="index"/>
+		            <field name="is_makloon"/>
+		            <field name="factory_code"/>
 		        </tree>    
 		    </field>
 		</record>

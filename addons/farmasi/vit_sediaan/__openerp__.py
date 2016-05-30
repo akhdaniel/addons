@@ -14,6 +14,7 @@ Fitur Modul
     'data': [
         'product_category_views.xml',
         'security/ir.model.access.csv',
+        'data/vit.sediaan.csv',
     ],
     'test': [],    
     'installable': True,

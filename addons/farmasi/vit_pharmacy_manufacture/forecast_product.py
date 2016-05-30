@@ -124,20 +124,30 @@ class forecast_product(osv.osv):
             sediaan 2 ke mps_detail_ids2
             dst 
             """  
-            
+            # default_company=self._default_company(cr, uid, context=context)
             sediaan_ids = self.pool.get('vit.sediaan').search(cr, uid, [], context=context)
 
             for detail in forecast.forecast_detail_ids:
+                # import pdb; pdb.set_trace()
                 product_sediaan_id = detail.product_id.categ_id.sediaan_id.id
                 i = 0
-                for sediaan_id in sediaan_ids:
-                    i = i + 1
-                    if product_sediaan_id == sediaan_id:
+                for sediaan in self.pool.get('vit.sediaan').browse(cr, uid, sediaan_ids,context=context):
+                    # i = i + 1
+                    sediaan_id = sediaan.index 
+                    i = sediaan.index
+                    if product_sediaan_id == sediaan.id:
                         print m, i, detail.product_id.name, detail.product_id.categ_id.sediaan_id.name 
                         self.fill_mps_line(cr, uid, ids, i, m, sediaan_id, mps_obj, detail )
                         break
 
         # self.write(cr, uid, ids, {'state':'done'}, context=context)                
+    
+    def _default_company(self, cr, uid, context=None):
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        if user.company_id:
+            return user.company_id.id
+        return self.pool.get('res.company').search(cr, uid, [('parent_id', '=', False)])[0]
+
 
     def fill_mps_line(self, cr, uid,ids, i, m, sediaan_id, mps_obj, detail):
 
