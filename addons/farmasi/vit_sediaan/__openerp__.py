@@ -8,6 +8,7 @@ Fitur Modul
 
 * tambah sediaan_id di master produk category
 
+
        """,
     'author': 'vitraining.com',
     'depends': ['stock'],
