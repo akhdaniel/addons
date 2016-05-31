@@ -20,6 +20,23 @@
             </field>
         </record>
 
+       <!--Operasional KRS detail--> 
+       <record model="ir.ui.view" id="krs_detail_tree_view">
+            <field name="name">krs.detail.tree</field>
+            <field name="model">operasional.krs_detail</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="MK KHS" version="7.0">
+                    <field name="krs_id" string='Kode KHS'/>
+                    <field name="mata_kuliah_id"/>  
+                    <field name="sks" /> 
+                    <field name="nilai_huruf_field" string="Nilai Akhir"/>                       
+                    <field name="is_konversi"/>            
+                    <field name="state" />
+                </tree>
+            </field>
+        </record>
+
     <record id="act_invoice_kartu_studi" model="ir.actions.act_window">
             <field name="name">Invoice</field>
             <field name="res_model">account.invoice</field>
@@ -104,7 +121,7 @@
                                 <field view_mode="tree,form" name="krs_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}">
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>
-                                        <field name="sks" sum="Total SKS"/>
+                                        <field name="sks" sum="Total SKS" readonly='1'/>
                                         <field name="absensi" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi" invisible="1"/>
                                         <field name="ulangan" invisible="1"/>
                                         <field name="quiz" invisible="1"/>
@@ -118,7 +135,7 @@
                                         <field name="uas_huruf" readonly="1"/>
                                         <field name="nilai_huruf" invisible="1"/>
                                         <field name="nilai_angka" attrs="{'invisible': [('state','=','draft')]}" invisible="1"/>
-                                        <field name="nilai_huruf_field" string="Nilai Akhir"/>
+                                        <field name="nilai_huruf_field" string="Nilai Akhir" readonly="1"/>
                                         <field name="is_konversi" string="*" readonly="True"/>
                                         <field name="state" invisible="1"/>
                                         <field name="is_import" invisible="1"/>

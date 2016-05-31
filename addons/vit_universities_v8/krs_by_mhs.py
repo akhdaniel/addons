@@ -33,7 +33,15 @@ class operasional_krs_mahasiswa (osv.osv):
 		'semester_id':fields.many2one('master.semester','Semester',domain="[('name','>',2)]",required = True),
 		'tahun_ajaran_id': fields.related('partner_id','tahun_ajaran_id',type='many2one',relation='academic.year', string='Angkatan',store=True,readonly=True),
 		'kelas_id':fields.related('partner_id','kelas_id',type='many2one',relation='master.kelas', string='Kelas',store=True,readonly=True),
-		'krs_mhs_ids' : fields.one2many('operasional.krs_detail.mahasiswa','krs_mhs_id','Matakuliah'),
+		'krs_mhs_ids' : fields.one2many('operasional.krs_detail.mahasiswa','krs_mhs_id','Matakuliah Ids'),
+		'mk_remedial_ids': fields.one2many('operasional.krs_detail.tambahan.mahasiswa','krs_mhs_id','Matakuliah Ids'),
+		# 'mk_remedial_ids': fields.many2many(
+		# 	'operasional.krs_detail',   	# 'other.object.name' dengan siapa dia many2many
+		# 	'mk_tambahan_mahasiswa_rel',       # 'relation object'
+		# 	'tambahan_mk_id',               # 'actual.object.id' in relation table
+		# 	'krs_detail_id',           # 'other.object.id' in relation table
+		# 	'Daftar Mata Kuliah Tambahan',		# 'Field Name'  
+		# 	),
 		#'view_ipk_ids' : fields.one2many('operasional.view_ipk','krs_id','Mata Kuliah'),
 		'kurikulum_id':fields.many2one('master.kurikulum','Kurikulum'),
 		#'ips':fields.function(_get_ips,type='float',string='Indeks Prestasi Kumulatif',),
@@ -63,7 +71,7 @@ class operasional_krs_mahasiswa (osv.osv):
 		prodi_id		= partner.prodi_id.id
 
 		kur_obj = self.pool.get('master.kurikulum')
-		kur_ids = kur_obj.search(cr, uid, [
+		kur_ids = kur_obj.search(cr, 1, [
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('konsentrasi_id','=',konsentrasi_id),
 			('prodi_id','=',prodi_id),
@@ -74,18 +82,18 @@ class operasional_krs_mahasiswa (osv.osv):
 								_('Tidak ada kurikulum yang cocok untuk data ini!'))
 
 		#cek partner dan semester yang sama
-		krs_uniq = self.search(cr,uid,[('partner_id','=',partner_id),
+		krs_uniq = self.search(cr,1,[('partner_id','=',partner_id),
 										('semester_id','=',semester_id),
 										('state','in',('draft','confirm'))])
 		if krs_uniq != []:
 			raise osv.except_osv(_('Error!'),
 								_('Pengajuan KRS untuk semester ini sudah pernah dibuat!'))			
-		
-		kur_id = kur_obj.browse(cr,uid,kur_ids,context=context)[0].kurikulum_detail_ids
-		kur_kode = kur_obj.browse(cr,uid,kur_ids,context=context)[0].id
-		mk_kurikulum = []
+		#import pdb;pdb.set_trace()
+		kur_id = kur_obj.browse(cr,1,kur_ids,context=context)[0].mk_kurikulum_detail_ids
+		kur_kode = kur_ids[0]
+		mk_kurikulums = []
 		for kur in kur_id:
-			mk_kurikulum.append(kur.id)
+			mk_kurikulums.append([kur.matakuliah_id.id,kur.sks,kur.name])
 	
 		#cari matakuliah apa saja yg sdh di tempuh di smt sebelumnya
 		cr.execute("""SELECT okd.id, okd.mata_kuliah_id
@@ -96,37 +104,61 @@ class operasional_krs_mahasiswa (osv.osv):
 		dpt = cr.fetchall()
 		
 		total_mk_ids = map(lambda x: x[1], dpt)
+		mk_kurikulum = map(lambda x: x[0], mk_kurikulums)
 		#filter matakuliah yg benar-benar belum di tempuh
 		mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
 
 		res = []
-		for kur in mk_baru_ids:
-			res.append([0,0,{'mata_kuliah_id': kur,'state':'draft'}])	
+		for kur in mk_kurikulums:
+			if kur[0] in mk_baru_ids:
+				res.append([0,0,{'mata_kuliah_id': kur[0],'sks':kur[1],'state':'draft'}])		
 		results = {
 			'value' : {
 				'kurikulum_id': kur_kode,
 				'krs_mhs_ids' : res,
 			}
 		}
+
 		return results 
 
 	def convert_to_krs(self,cr,uid,ids,context=None):
-		krs_obj = self.pool.get('operasional.krs')
-		kur_obj = self.pool.get('master.kurikulum')
+		krs_obj 		= self.pool.get('operasional.krs')
+		kur_obj 		= self.pool.get('master.kurikulum')
+		jad_obj 		= self.pool.get('master.jadwal')
+		smt_obj 		= self.pool.get('master.semester')
+		range_obj 		= self.pool.get('master.kurikulum.max_sks_ip')
 		for pengajuan in self.browse(cr,uid,ids):
-			kurikulum = kur_obj.search(cr,1,[('id','=',pengajuan.kurikulum_id.id)])
+			smt = pengajuan.semester_id.name
+			kurikulum = kur_obj.search(cr,uid,[('id','=',pengajuan.kurikulum_id.id)])
 			max_sks = 0
 			if kurikulum :
-				max_sks = kur_obj.browse(cr,1,kurikulum[0]).max_sks
+				#search IP KHS sebelumnya
+				smt_sebelumnya = smt_obj.search(cr,uid,[('name','=',smt-1)])
+				khs_sebelumnya = krs_obj.search(cr,uid,[('partner_id','=',pengajuan.partner_id.id),('semester_id','=',smt_sebelumnya[0])])
+				if khs_sebelumnya :
+					khs = krs_obj.browse(cr,uid,khs_sebelumnya[0])
+					ip_persemester = khs.ips_field_persemester
+					msks = range_obj.search(cr,uid,[('kurikulum_id','=',kurikulum[0]),('ip_min','<=',ip_persemester),('ip_max','>=',ip_persemester)])
+					if not msks :
+						raise osv.except_osv(_('Error!'), _('Range batas pengambilan Matakuliah kurikulum ini tidak ada yang sesuai !'))
+					max_sks = range_obj.browse(cr,uid,msks[0]).name	
 			mk_pengajuan = []
 			total_sks = 0
 			for mk_id in pengajuan.krs_mhs_ids:
-				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_id.mata_kuliah_id.id, 'state': 'draft'}))
+				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_id.mata_kuliah_id.id,'sks':mk_id.sks, 'state': 'draft'}))
 				self.pool.get('operasional.krs_detail.mahasiswa').write(cr,uid,mk_id.id,{'state':'confirm'})
+				jad_id = jad_obj.browse(cr,uid,mk_id.jadwal_id.id)
+				sisa_kapasitas_field = (jad_id.sisa_kapasitas_field-1)
+				jad_obj.write(cr,uid,mk_id.jadwal_id.id,{'sisa_kapasitas_field',sisa_kapasitas_field})
 				total_sks += int(mk_id.mata_kuliah_id.sks)
+
+			for mk_tambahan_id in pengajuan.mk_remedial_ids:	
+				total_sks += int(mk_tambahan_id.krs_detail_id.sks)
+				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_tambahan_id.krs_detail_id.mata_kuliah_id.id,'sks':mk_tambahan_id.krs_detail_id.sks, 'state': 'draft'}))
+
 			if total_sks > max_sks: 
 				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(total_sks,max_sks))	
-			krs_obj.create(cr,1,{'kode'					: str(pengajuan.partner_id.npm)+'-'+str(pengajuan.semester_id.name),
+			krs_obj.create(cr,1,{'kode'				: str(pengajuan.partner_id.npm)+'-'+str(smt),
 									'partner_id'		: pengajuan.partner_id.id,
 									'tahun_ajaran_id'	: pengajuan.tahun_ajaran_id.id,
 									'fakultas_id'		: pengajuan.fakultas_id.id,
@@ -157,13 +189,29 @@ class krs_detail_mahasiswa (osv.osv):
 		
 	_columns = {
 		'krs_mhs_id'	:fields.many2one('operasional.krs.mahasiswa','Kode KRS',),
-		'mata_kuliah_id':fields.many2one('master.matakuliah','Matakuliah',required=True),
-		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
+		'mata_kuliah_id':fields.many2one('master.matakuliah','Matakuliah'),
+		#'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',readonly=True,store=True),
+		'sks'			:fields.float('SKS'),
 		'jadwal_id'		:fields.many2one('master.jadwal','Jadwal'),
-		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm')],'Status',readonly=False),     
-		'prodi_id'		:fields.many2one('master.prodi',string='Program Studi'),
-		'semester_id'	:fields.many2one('master.semester','Semester'),
-		'tahun_ajaran_id': fields.many2one('academic.year','Tahun Ajaran'),		
+		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm')],'Status',),     
+			}
+
+	_defaults={
+		'state' : 'draft', 
+	}
+	 
+krs_detail_mahasiswa()
+
+
+class krs_detail_tambahan_mahasiswa(osv.osv):
+	_name='operasional.krs_detail.tambahan.mahasiswa'
+	_rec_name='krs_mhs_id'
+		
+	_columns = {
+		'krs_mhs_id'		:fields.many2one('operasional.krs.mahasiswa','Kode KRS',),
+		'krs_detail_id'		:fields.many2one('operasional.krs_detail','Matakuliah'),
+		'jadwal_id'			:fields.many2one('master.jadwal','Jadwal'),
+		'state'				:fields.selection([('draft','Draft'),('confirm','Confirm')],'Status'), 
 			}
 
 	_defaults={

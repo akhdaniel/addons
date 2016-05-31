@@ -154,7 +154,7 @@ class operasional_krs (osv.Model):
 						if len([m]) > 1 :
 							mk_id = m[2]['mata_kuliah_id']
 							mk_ids.append(mk_id)
-							sks = self.pool.get('master.matakuliah').browse(cr,uid,mk_id,context=context).sks
+							sks = m[2]['sks']
 							tot_mk += int(sks)
 
 					if tot_mk > t_sks  :
@@ -576,8 +576,9 @@ class operasional_krs (osv.Model):
 		results = {}
 		if not semester_id:
 			return results
-
+		
 		kur_obj = self.pool.get('master.kurikulum')
+		kur_det_obj = self.pool.get('master.kurikulum.detail')
 		kur_ids = kur_obj.search(cr, uid, [
 			('tahun_ajaran_id','=',tahun_ajaran_id),
 			('konsentrasi_id','=',konsentrasi_id),
@@ -597,11 +598,11 @@ class operasional_krs (osv.Model):
 			raise osv.except_osv(_('Error!'),
 								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))			
 		
-		kur_id = kur_obj.browse(cr,uid,kur_ids,context=context)[0].kurikulum_detail_ids
+		kur_id = kur_obj.browse(cr,uid,kur_ids,context=context)[0].mk_kurikulum_detail_ids
 		kur_kode = kur_obj.browse(cr,uid,kur_ids,context=context)[0].id
-		mk_kurikulum = []
+		mk_kurikulums = []
 		for kur in kur_id:
-			mk_kurikulum.append(kur.id)
+			mk_kurikulums.append([kur.matakuliah_id.id,kur.sks,kur.name])
 	
 		#cari matakuliah apa saja yg sdh di tempuh di smt sebelumnya
 		cr.execute("""SELECT okd.id, okd.mata_kuliah_id
@@ -612,18 +613,20 @@ class operasional_krs (osv.Model):
 		dpt = cr.fetchall()
 		
 		total_mk_ids = map(lambda x: x[1], dpt)
+		mk_kurikulum = map(lambda x: x[0], mk_kurikulums)
 		#filter matakuliah yg benar-benar belum di tempuh
 		mk_baru_ids =set(mk_kurikulum).difference(total_mk_ids)
-
+		#import pdb;pdb.set_trace()
 		res = []
-		for kur in mk_baru_ids:
-			res.append([0,0,{'mata_kuliah_id': kur,'state':'draft'}])	
-		results = {
-			'value' : {
-				'kurikulum_id': kur_kode,
-				'krs_detail_ids' : res,
+		for kur in mk_kurikulums:
+			if kur[0] in mk_baru_ids:
+				res.append([0,0,{'mata_kuliah_id': kur[0],'sks':kur[1],'state':'draft'}])	
+			results = {
+				'value' : {
+					'kurikulum_id': kur_kode,
+					'krs_detail_ids' : res,
+				}
 			}
-		}
 		return results 
 			
 operasional_krs()
@@ -632,7 +635,21 @@ class krs_detail (osv.Model):
 	_name='operasional.krs_detail'
 	_rec_name='krs_id'
 
-
+	def name_get(self, cr, uid, ids, context=None):
+		
+		if not ids:
+			return []
+		if isinstance(ids, (int, long)):
+					ids = [ids]
+		reads = self.read(cr, uid, ids, [ 'mata_kuliah_id','sks','nilai_huruf_field'], context=context)
+		res = []
+		for record in reads:
+			mata_kuliah_id 		= record['mata_kuliah_id']
+			sks 				= record['sks']
+			nilai_huruf_field 	= record['nilai_huruf_field']
+			name 		= mata_kuliah_id[1]+' || '+str(sks)+' SKS || Nilai '+nilai_huruf_field
+			res.append((record['id'], name))
+		return res
 	# def _get_nilai_akhir(self, cr, uid, ids, field_name, arg, context=None):
 	# 	if context is None:
 	# 		context = {}
@@ -752,7 +769,8 @@ class krs_detail (osv.Model):
 	_columns = {
 		'krs_id'		:fields.many2one('operasional.krs','Kode KRS',),
 		'mata_kuliah_id':fields.many2one('master.matakuliah','Matakuliah'),
-		'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',store=True),
+		#'sks'			:fields.related('mata_kuliah_id', 'sks',type='integer',relation='master.matakuliah', string='SKS',store=True),
+		'sks'			:fields.float('SKS'),
 		'quiz' 		    :fields.float('Quiz'),
 		'presentasi' 	:fields.float('Presentasi'),
 		'absensi' 		:fields.float('absensi'),
@@ -770,6 +788,7 @@ class krs_detail (osv.Model):
 		'state'			:fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=False),
 		'is_konversi'	:fields.boolean('Konversi?'),
 		'is_import' 	:fields.boolean('Import?'),
+		'jadwal_id'		:fields.many2one('master.jadwal','Jadwal'),
 			}
 
 	_defaults={
