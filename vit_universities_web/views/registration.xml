@@ -1,0 +1,1644 @@
+<openerp>
+<data>
+
+
+<!-- Registration Form -->
+<template id="vit_universities_web.registration">
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+  <link rel="stylesheet" href="/resources/demos/style.css"/> 
+    <t t-call="website.layout">
+        <t t-set="title">Registration Form</t>
+        <div class="container">
+
+            <t t-if="message_error">
+                <br />
+                <div class="alert alert-danger">
+                    <t t-esc="message_error"/>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <t t-if="message_success">
+                <br />
+                <div class="alert alert-success">
+                    <t t-esc="message_success"/>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <t t-if="message">
+                <br />
+                <div class="alert alert-info">
+                    <t t-esc="message"/>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+            <h2>Registration Form  <t t-esc="partner.reg"/></h2>
+
+               
+            <form t-attf-action="/registration_process/{{ slug(partner) }}" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+
+                <h3>DATA AKADEMIK</h3>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="tahun_id">
+                          <t t-foreach="tahun_ids" t-as="tahun">
+                            <option t-att-value="'%s' % (tahun.id)" t-esc="tahun.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div>  
+                <!--<div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_pendaftaran" id="type_pendaftaran">
+                          <t t-foreach="type_pendaftarans" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div>  -->
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jenis_pendaftaran_id" id="jalur_masuk">
+                          <t t-foreach="jenis_pendaftaran_ids" t-as="jp">
+                            <option t-att-value="'%s' % (jp.id)" t-esc="jp.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div>
+
+                
+
+                <div class="form-group" id="type_mahasiswa">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_mhs_id">
+                          <t t-foreach="type_mhs_ids" t-as="type_mhs">
+                            <option t-att-value="'%s' % (type_mhs.id)" t-esc="type_mhs.name" />
+                          </t>
+                        </select>
+                    </div>
+                    <!--<div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jadwal_id">
+                          <t t-foreach="jadwal_ids" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div> -->
+                </div>   
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pagi">Waktu Kuliah</label>
+
+                    <div class="col-md-2 col-sm-4">
+                        <label><input type="checkbox" name="jadwal_pagi" id="jadwal_pagi"/> Pagi</label>
+                    </div>
+
+                    <div class="col-md-2 col-sm4">
+                        <label><input type="checkbox" name="jadwal_siang" id="jadwal_siang"/> Siang</label>
+                    </div>  
+
+                    <div class="col-md-2 col-sm-4">
+                        <label><input type="checkbox" name="jadwal_malam" id="jadwal_malam"/> Malam</label>
+                    </div>   
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="prodi_id" id="prodi">
+                          <t t-foreach="prodi_ids" t-as="prodi">
+                            <option t-att-value="'%s' % (prodi.id)" t-esc="prodi.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="alamat_id">
+                          <t t-foreach="alamat_ids" t-as="alamat">
+                            <option t-att-value="'%s' % (alamat.id)" t-esc="alamat.name" />
+                          </t>
+                        </select>
+                    </div>
+                </div>    
+
+
+                <h3>DATA PRIBADI</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="name" required="True" 
+                            t-attf-value="{{ partner.name }}" maxlength="60"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="id_card" 
+                            t-attf-value="{{ partner.id_card }}" required="True" placeholder="No. KTP/SIM" maxlength="30"/>
+                    </div>  
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="photo">Pas Photo</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input class="input-file" id="photo" type="file" name="photo" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="email" readonly="True" 
+                            t-attf-value="{{ partner.email }}" />
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="tempat_lahir" required="True" t-attf-value="{{ partner.tempat_lahir }}" placeholder="Tempat Lahir"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="tanggal_lahir" id="datepicker" required="True" 
+                            t-attf-value="{{ partner.tanggal_lahir }}" placeholder="Tanggal Lahir"/>
+                            
+                    </div>
+                </div>  
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jenis_kelamin">
+                          <t t-foreach="jenis_kelamins" t-as="jk">
+                            <option t-att-value="'%s' % (jk[0])" t-esc="jk[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="agama">
+                          <t t-foreach="agamas" t-as="ag">
+                            <option t-att-value="'%s' % (ag[0])" t-esc="ag[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div> 
+
+                <!--<div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="street" 
+                            t-attf-value="{{ partner.street }}" required="True" placeholder="street"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="street2" 
+                            t-attf-value="{{ partner.street2 }}" placeholder="street2"/>
+                    </div>
+                </div>  --> 
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="street" 
+                            t-attf-value="{{ partner.street }}" required="True" placeholder="street" maxlength="128"/>
+                    </div>
+                </div> 
+
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-4"></div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="city" 
+                            t-attf-value="{{ partner.city }}" required="True" placeholder="city" maxlength="60"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="zip" 
+                            t-attf-value="{{ partner.zip }}" required="True" placeholder="Kode Pos" maxlength="6"/>
+                    </div>                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="phone" 
+                            t-attf-value="{{ partner.phone }}" placeholder="Telepon Rumah" required="True" maxlength="10"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="mobile" 
+                            t-attf-value="{{ partner.mobile }}" required="True" placeholder="Telepon Selular ..." maxlength="15"/>
+                    </div>                    
+                </div>
+
+                <!--<div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan</label>
+                    <div class="col-md-7 col-sm-8">
+                        <select class="form-control" name="pekerjaan">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" />
+                          </t>
+                        </select>
+                    </div>
+                </div>  --> 
+
+                <h3>DATA ORANG TUA</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_ayah">Nama Ayah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nama_ayah" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="keadaan_ayah">
+                          <t t-foreach="keadaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Keadaan Ayah"/>
+                          </t>
+                        </select>
+                    </div>                     
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan">Pekerjaan Ayah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="pekerjaan">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Pekerjaan Ayah"/>
+                          </t>
+                        </select>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="penghasilan_ayah" required="True" >
+                          <t t-foreach="penghasilan_ayah" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Ayah"/>
+                          </t>
+                        </select>
+                    </div>                    
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="telpon_ayah">Alamat Ayah</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="alamat_ayah" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telpon_ayah" placeholder="Telepon Ayah ..." maxlength="15" required="True"/>
+                    </div>
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_ibu">Nama Ibu</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nama_ibu" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="keadaan_ibu">
+                          <t t-foreach="keadaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Keadaan Ibu"/>
+                          </t>
+                        </select>
+                    </div>   
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan2">Pekerjaan Ibu</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="pekerjaan2">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Pekerjaan Ibu"/>
+                          </t>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="penghasilan_ibu" required="True" >
+                          <t t-foreach="penghasilan_ayah" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Ibu"/>
+                          </t>
+                        </select>
+                    </div>   
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_ibu">Alamat Ibu</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="alamat_ibu" required="True" />
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telpon_ibu" placeholder="Telepon Ibu ..." maxlength="15" required="True"/>
+                    </div>
+                </div>  
+
+                <h3>DATA PENANGGUNG BIAYA KULIAH</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_penanggung">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nama_penanggung" required="True"/>
+                    </div>  
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jk_penanggung">
+                          <t t-foreach="jenis_kelamins" t-as="jkp">
+                            <option t-att-value="'%s' % (jkp[0])" t-esc="jkp[1]" />
+                          </t>
+                        </select>
+                    </div>                      
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pekerjaan3">Pekerjaan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="pekerjaan3">
+                          <t t-foreach="pekerjaans" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Pekerjaan Penanggung"/>
+                          </t>
+                        </select>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="penghasilan_penanggung">
+                          <t t-foreach="penghasilan_ayah" t-as="p">
+                            <option t-att-value="'%s' % (p[0])" t-esc="p[1]" placeholder="Penghasilan Penanggung"/>
+                          </t>
+                        </select>
+                    </div>                      
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_penanggung">Alamat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="alamat_penanggung" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telpon_penanggung" placeholder="Telepon Penanggung ..." maxlength="15" required="True"/>
+                    </div>
+                </div>  
+
+
+
+                <h3>DATA PENDIDIKAN TERAKHIR</h3>
+
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_sma">Asal SMA/Sederajat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_sma" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_jurusan_sma" placeholder="Jurusan (cth: IPA/IPS,dll...)" required="True"/>
+                    </div>
+                </div> 
+
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_sma">Alamat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_alamat_sma" required="True"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_website_sma" placeholder="Website..."/>
+                    </div>
+                </div> 
+
+               <div class="form-group non_baru" style="display: none;">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_universitas">Asal PT (Jika Pindahan/Lanjutan)</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_universitas" id="asal_universitas"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="nim_asal" id="nim_asal" placeholder="NIM ..." />
+                    </div>          
+                </div>  
+
+               <div class="form-group non_baru" style="display: none;">
+                    <label class="col-md-3 col-sm-4 control-label" for="fakultas_asal_id">Fakultas</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="fakultas_asal_id" id="fakultas_asal_id"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="prodi_asal_id" id="prodi_asal_id" placeholder="Prodi/Jurusan ..." />
+                    </div>          
+                </div>
+
+               <div class="form-group non_baru" style="display: none;">
+                    <label class="col-md-3 col-sm-4 control-label" for="asal_alamat_univ">Alamat</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_alamat_univ" id="asal_alamat_univ"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="asal_website_univ" id="asal_website_univ" placeholder="Website..." />
+                    </div>           
+                </div> 
+
+               <div class="form-group non_baru" style="display: none;">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="konsentrasi_id" id="konsentrasi" t-attf-readonly="#{True if readonly==1 else False}">
+                        <t t-foreach="konsentrasi_ids" t-as="konsentrasi">
+                            <option t-att-value="konsentrasi.id" 
+                                t-attf-value="#{partner and partner.prodi_id.id == konsentrasi.prodi_id.id}">
+                                <t t-esc="konsentrasi.name"/>
+                            </option>
+                        </t>
+
+                        </select>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jenjangs" id="jenjang_id">
+                          <t t-foreach="jenjangs" t-as="j">
+                            <option t-att-value="'%s' % (j.id)" t-esc="j.name" />
+                          </t>
+                        </select>
+                    </div>         
+                </div>
+
+                <div class="form-group non_baru" style="display: none;">
+                    <label class="col-md-3 col-sm-4 control-label" for="semester_id">Semester Mulai</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="semester_id">
+                          <t t-foreach="semester_ids" t-as="semester">
+                            <option t-att-value="'%s' % (semester.id)" t-esc="semester.name" />
+                          </t>
+                        </select>
+                    </div> 
+                </div>    
+
+
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
+               <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="rekomendasi" placeholder="Referensi..." required="True"/>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <input type="text" class="form-control" name="telp_rekomendasi" placeholder="Telepon..." required="True"/>
+                    </div>                    
+                </div>                 
+                <!--<h3>DATA PEKERJAAN (JIKA SUDAH BEKERJA)</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="nama_instansi">Nama Instansi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="nama_instansi" />
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jabatan">Jabatan</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="jabatan" />
+                    </div>
+                </div>  -->
+
+                <h3></h3>              
+                 <div class="form-group">
+                    <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                        <button type="submit" name="confirm" class="btn btn-primary">
+                            Confirm
+                        </button>
+                    </div>
+                </div> 
+
+            </form>
+        </div>
+    </t>
+
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+        $("#jalur_masuk").change(function(){
+            if($(this).val()!=1){
+                $(".non_baru").show();
+                $("#asal_universitas").prop("required", true);
+                $("#fakultas_asal_id").prop("required", true);
+                $("#prodi_asal_id").prop("required", true);
+                $("#nim_asal").prop("required", true);
+                $("#asal_alamat_univ").prop("required", true);
+                $("#asal_website_univ").prop("required", true);
+                $("#jenjang_id").prop("required", true);
+            }else{
+                $(".non_baru").hide();
+                $("#asal_universitas").prop("required", false);
+                $("#fakultas_asal_id").prop("required", false);
+                $("#prodi_asal_id").prop("required", false);
+                $("#nim_asal").prop("required", false);
+                $("#asal_alamat_univ").prop("required", false);
+                $("#asal_website_univ").prop("required", false);
+                $("#jenjang_id").prop("required", false);                
+            }
+        });
+
+
+        $('#photo').change(function(){
+            var photo=this.files[0]
+
+            if (photo.size > 300000 || photo.fileSize > 300000)
+            {
+                //show an alert to the user
+                alert("Ukuran photo yang bisa di upload max 300 kb")
+
+                //reset file upload control
+                this.value = null;
+                }
+        });
+
+        $(function(){
+            $("#datepicker").datepicker({
+                changeYear:true,
+                yearRange: "1960:2060"
+            });
+        });
+
+    </script>
+</template>
+
+
+<!-- Registration Succeed -->
+<template id="vit_universities_web.registration_process" name="Registration" page="True">
+    <t t-call="website.layout">
+        <t t-set="title">Registration</t>
+        <div class="container">
+            <h2>No. Pendaftaran  <t t-esc="reg"/></h2>
+            <p>Silahkan cek di pojok kanan atas > my account > Portal > Pembayaran > Pembayaran Kuliah</p>
+            <p>Jika sudah divalidasi oleh kami, maka akan muncul tagihan yang harus dibayar dan kami konfirmasi melalui email anda</p>
+
+            <t t-if="message_success">
+                <br />
+                <div class="alert alert-success">
+                    <h2>Pendaftaran Sukses</h2>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+        </div>
+    </t>
+</template>
+
+
+<!-- Registration View -->
+<template id="vit_universities_web.registration_view">
+    <t t-call="website.layout">
+        <t t-set="title">Registration Data</t>
+        <div class="container">
+
+            <div class="alert alert-success">
+                <p>Anda sudah melakukan Pendaftaran. Berikut data PMB anda. Mohon melakukan pembayaran Uang Pendaftaran agar dapat melanjutkan ke TPA Online (Jika belum TPA Online).</p>
+                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+            </div>
+
+            <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
+
+            <form t-attf-action="/second_registration_process/{{ slug(partner) }}" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+
+               
+                <h3>DATA AKADEMIK</h3>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
+                    <div class="col-md-7 col-sm-8" >
+                        <span class="form-control" t-esc="partner.tahun_ajaran_id.name" id="tahun_id" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <!-- <div class="col-md-3 col-sm-4">
+                        <span class="form-control" t-esc="partner.semester_id.name" />
+                    </div> -->
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4" >
+                        <span class="form-control" t-esc="partner.type_pendaftaran" id="type_pendaftaran" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" id="jalur_daftar" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>
+
+                <div class="form-group" id="type_mahasiswa">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.type_mhs_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>   
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pagi">Waktu Kuliah</label>
+
+                    <div class="col-md-2 col-sm-4">
+                        Pagi <span t-esc="partner.jadwal_pagi" />
+                    </div>
+
+                    <div class="col-md-2 col-sm-4">
+                        Siang <span t-esc="partner.jadwal_siang" />
+                    </div>  
+
+                    <div class="col-md-2 col-sm-4">
+                        Malam <span t-esc="partner.jadwal_malam" />
+                    </div>   
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.prodi_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.alamat_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Gelombang</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.jadwal_usm_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+
+                <h3>DATA PRIBADI</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.id_card" style="background-color:yellow; color:black;"/>
+                    </div>  
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
+                    <!--<div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.image" />
+                    </div> -->
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.email" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tempat_lahir" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tanggal_lahir" style="background-color:yellow; color:black;"/>                        
+                    </div>
+                </div>  
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_kelamin" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.agama" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.street" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-4"></div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.city" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.zip" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.phone" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.mobile" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>DATA KELUARGA</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Hubungan Keluarga
+                            </td>
+                            <td>
+                                Keadaan
+                            </td>
+                            <td>
+                                Pekerjaan
+                            </td>
+                            <td>
+                                Alamat
+                            </td>
+                            <td>
+                                Telepon
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.biodata_keluarga_ids" t-as="kel">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="kel.nama" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.hubungan_keluarga_id.name" style="background-color:yellow; color:black;"/>
+                                </td>
+
+                                <td>
+                                    <p class="form-control" t-esc="kel.keadaan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.pekerjaan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.alamat" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.telepon" style="background-color:yellow; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>
+
+                </div>  
+
+
+                <h3>DATA PENDIDIKAN TERAKHIR</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Tingkat
+                            </td>
+                            <td>
+                                Jurusan
+                            </td>
+                            <td>
+                                Nilai Akhir
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.riwayat_pendidikan_ids" t-as="pend">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nama_sekolah" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.tingkat" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.jurusan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nilai_akhir" style="background-color:yellow; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>                     
+                </div> 
+
+                <!--<div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.konsentrasi_id.name" />
+                    </div>          
+                </div>  -->
+
+
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.rekomendasi" style="background-color:yellow; color:black;"/>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.telp_rekomendasi" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>REGISTRASI ULANG</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jalur_masuks" >Jalur Masuk</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="jalur_masuks" id="jalur_masuks" autofocus="autofocus">
+                          <t t-foreach="jalur_masuks" t-as="jm" >
+                            <option t-att-value="'%s' % (jm[0])" t-esc="jm[1]" />
+                          </t>
+                        </select>
+                    </div> 
+                </div>
+                <div class="form-group nilai_sma" style="display: none;">     
+                    <label class="col-md-3 col-sm-4 control-label" for="smt1">Input Rata-Rata Nilai Raport dan UN</label>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt1" placeholder="Smt1" id="smt1"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt2" placeholder="Smt2" id="smt2"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt3" placeholder="Smt3" id="smt3"/>
+                    </div> 
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt4" placeholder="Smt4" id="smt4"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="smt5" placeholder="Smt5" id="smt5"/>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="number" min="0" max="100" name="un" placeholder="UN" id="un"/>
+                    </div>                                                                                      
+                </div>
+                <div class="form-group nilai_sma" style="display: none;"> 
+                    <label class="col-md-3 col-sm-4 control-label" for="sma_file" >Upload Raport dan Hasil UN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="file" name="prestasi_file" placeholder="File" class="oe_form_binary_file" size="1" id="prestasi_file"/>
+                    </div>
+                </div>       
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="hubungans">Hubungan Dengan ISTN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="hubungans" id="hubungans">
+                          <t t-foreach="hubungans" t-as="hub">
+                            <option t-att-value="'%s' % (hub[0])" t-esc="hub[1]" />
+                          </t>
+                        </select>
+                    </div>                   
+                </div>
+
+                <div class="form-group"> 
+                    <label class="col-md-3 col-sm-4 control-label hub_istn1" for="hub_istn_file">Upload Ijazah Terakhir</label>
+                    <label class="col-md-3 col-sm-4 control-label hub_istn2" style="display: none;" for="hub_istn_file">Upload Kartu Alumni/Kartu Mahasiswa/Ijazah ISTN Orang Tua</label>
+                    <label class="col-md-3 col-sm-4 control-label hub_istn3" style="display: none;" for="hub_istn_file">Upload Ijazah Terakhir(SLTA) Perguruan Cikini</label>
+                    <label class="col-md-3 col-sm-4 control-label hub_istn4" style="display: none;" for="hub_istn_file">Upload SK Pengangkatan Karyawan ISTN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="file" name="hub_istn_file" placeholder="File" id="hub_istn_file" class="oe_form_binary_file" size="1" required="True"/>
+                    </div>
+                </div> 
+
+                <div class="form-group transkrip_file_non_baru" id="transkrip_file"> 
+                    <label class="col-md-3 col-sm-4 control-label" for="transkrip_file">Upload Transkrip Nilai Dari PT Sebelumnya</label>
+                    <div class="col-md-3 col-sm-4">
+                        <input type="file" name="transkrip_file" placeholder="File" class="oe_form_binary_file" size="1" />
+                    </div>
+                </div>              
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Type Pembayaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <select class="form-control" name="type_pembayarans">
+                          <t t-foreach="type_pembayarans" t-as="tp">
+                            <option t-att-value="'%s' % (tp[0])" t-esc="tp[1]" />
+                          </t>
+                        </select>
+                    </div>                   
+                </div>
+
+                <div class="alert alert-info">
+                    <p>Catatan: </p>
+                    <p>- Jika diterima di PTN uang yang telah disetor akan dikembalikan 75%</p>
+                    <p>- Jika anda sudah melakukan pembayaran Uang Pendaftaran silahkan lengkapi data Registrasi Ulang diatas !</p>
+                    <p>- Jika diterima di swasta/mengundurkan diri uang yang sudah disetor tidak bisa dikembalikan</p>
+                    <p>- Uang pendaftaran (Rp. 300.000) tidak bisa dikembalikan</p>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                        <button type="submit" name="confirm_second_registration" class="btn btn-primary">
+                            Confirm
+                        </button>
+                    </div>
+                </div> 
+
+            </form>
+        </div>
+    </t>
+
+
+    <script>
+        $( document ).ready(function() {
+            $("#jalur_masuks").change(function(){
+                if($(this).val()=='prestasi'){
+                    $(".nilai_sma").show();
+                    $("#smt1").prop("required", true);
+                    $("#smt2").prop("required", true);
+                    $("#smt3").prop("required", true);
+                    $("#smt4").prop("required", true);
+                    $("#smt5").prop("required", true);
+                    $("#un").prop("required", true);
+                    $("#prestasi_file").prop("required", true);
+                }else{
+                    $(".nilai_sma").hide();
+                    $("#smt1").prop("required", false);
+                    $("#smt2").prop("required", false);
+                    $("#smt3").prop("required", false);
+                    $("#smt4").prop("required", false);
+                    $("#smt5").prop("required", false);
+                    $("#un").prop("required", false);
+                    $("#prestasi_file").prop("required", false);
+                }
+            });
+
+            $("#hubungans").change(function(){
+                if($(this).val()=='umum'){
+                    $(".hub_istn1").show();
+                    $(".hub_istn2").hide();
+                    $(".hub_istn3").hide();
+                    $(".hub_istn4").hide();
+
+                }else if($(this).val()=='ortu'){
+                    $(".hub_istn2").show();
+                    $(".hub_istn1").hide();
+                    $(".hub_istn3").hide();
+                    $(".hub_istn4").hide();
+
+                }else if($(this).val()=='cikini'){
+                    $(".hub_istn3").show();
+                    $(".hub_istn1").hide();
+                    $(".hub_istn2").hide();
+                    $(".hub_istn4").hide();
+
+                }else if($(this).val()=='karyawan'){
+                    $(".hub_istn4").show();
+                    $(".hub_istn1").hide();
+                    $(".hub_istn3").hide();
+                    $(".hub_istn2").hide();
+                }
+            });
+
+            if($("#jalur_daftar").text()=="Baru"){
+                $("#transkrip_file").hide();
+                $("#transkrip_file").prop("required", true);
+            }
+        });
+    </script>
+</template>
+
+
+<!-- Second Registration Succeed -->
+<template id="vit_universities_web.second_registration_process" name="Second Registration" page="True">
+    <t t-call="website.layout">
+        <t t-set="title">Second Registration</t>
+        <div class="container">
+            <h2>Registrasi Ulang Sukses !</h2>
+            <h3>No. Pendaftaran  <t t-esc="reg"/></h3>
+            <p>Silahkan cek di pojok kanan atas > my account > Portal > Pembayaran > Pembayaran Kuliah</p>
+            <p>Jika sudah divalidasi oleh kami, maka akan muncul tagihan yang harus dibayar dan kami konfirmasi melalui email anda maximal 2x24 jam</p>
+
+            <t t-if="message_success">
+                <br />
+                <div class="alert alert-success">
+                    <h2>Registrasi Ulang Sukses</h2>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+            </t>
+
+        </div>
+    </t>
+</template>
+
+<!-- Registration View 2-->
+<template id="vit_universities_web.registration_view2">
+    <t t-call="website.layout">
+        <t t-set="title">Registration Data</t>
+        <div class="container">
+
+            <div class="alert alert-success">
+                <p>Terima kasih sudah melakukan registrasi ulang, berikut data yang sudah diinput dan masuk ke sistem, informasi lainnya diinformasikan lewat email dalam waktu maksimal 2x24 jam</p>
+                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+            </div>
+
+            <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
+
+            <form class="form-horizontal mt32" >
+
+               
+                <h3>DATA AKADEMIK</h3>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
+                    <div class="col-md-7 col-sm-8" >
+                        <span class="form-control" t-esc="partner.tahun_ajaran_id.name" id="tahun_id" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <!-- <div class="col-md-3 col-sm-4">
+                        <span class="form-control" t-esc="partner.semester_id.name" />
+                    </div> -->
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4" >
+                        <span class="form-control" t-esc="partner.type_pendaftaran" id="type_pendaftaran" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>
+
+                <div class="form-group" id="type_mahasiswa">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.type_mhs_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>   
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pagi">Waktu Kuliah</label>
+
+                    <div class="col-md-2 col-sm-4">
+                        Pagi <span t-esc="partner.jadwal_pagi" />
+                    </div>
+
+                    <div class="col-md-2 col-sm-4">
+                        Siang <span t-esc="partner.jadwal_siang" />
+                    </div>  
+
+                    <div class="col-md-2 col-sm-4">
+                        Malam <span t-esc="partner.jadwal_malam" />
+                    </div>   
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.prodi_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.alamat_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Gelombang</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.jadwal_usm_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+
+                <h3>DATA PRIBADI</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.id_card" style="background-color:yellow; color:black;"/>
+                    </div>  
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
+                    <!--<div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.image" />
+                    </div> -->
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.email" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tempat_lahir" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tanggal_lahir" style="background-color:yellow; color:black;"/>                        
+                    </div>
+                </div>  
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_kelamin" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.agama" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.street" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-4"></div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.city" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.zip" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.phone" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.mobile" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>DATA KELUARGA</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Hubungan Keluarga
+                            </td>
+                            <td>
+                                Keadaan
+                            </td>
+                            <!--<td>
+                                Pendidikan
+                            </td> -->
+                            <td>
+                                Pekerjaan
+                            </td>
+                            <td>
+                                Alamat
+                            </td>
+                            <td>
+                                Telepon
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.biodata_keluarga_ids" t-as="kel">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="kel.nama" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.hubungan_keluarga_id.name" style="background-color:yellow; color:black;"/>
+                                </td>
+
+                                <td>
+                                    <p class="form-control" t-esc="kel.keadaan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <!-- <td>
+                                    <p class="form-control" t-esc="kel.jenjang_id.name" style="background-color:yellow; color:black;"/>
+                                </td> -->
+                                <td>
+                                    <p class="form-control" t-esc="kel.pekerjaan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.alamat" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.telepon" style="background-color:yellow; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>
+
+                </div>  
+
+
+                <h3>DATA PENDIDIKAN TERAKHIR</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Tingkat
+                            </td>
+                            <td>
+                                Jurusan
+                            </td>
+                            <td>
+                                Nilai Akhir
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.riwayat_pendidikan_ids" t-as="pend">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nama_sekolah" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.tingkat" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.jurusan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nilai_akhir" style="background-color:yellow; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>                     
+                </div> 
+
+                <!--<div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.konsentrasi_id.name" />
+                    </div>          
+                </div>  -->
+
+
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.rekomendasi" style="background-color:yellow; color:black;"/>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.telp_rekomendasi" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>REGISTRASI ULANG</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jalur_masuks" >Jalur Masuk</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jalur_masuk" style="background-color:yellow; color:black;"/>
+                    </div> 
+                </div>
+      
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="hubungans">Hubungan Dengan ISTN</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.hubungan" style="background-color:yellow; color:black;"/>
+                    </div>                   
+                </div>            
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Type Pembayaran (Berapa Kali)</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.split_invoice" style="background-color:yellow; color:black;"/>
+                    </div>                   
+                </div>
+
+                <div class="alert alert-info">
+                    <p>Catatan: </p>
+                    <p>- Jika diterima di PTN uang yang telah disetor akan dikembalikan 75%</p>
+                    <p>- Jika anda sudah melakukan pembayaran Uang Pendaftaran silahkan lengkapi data Registrasi Ulang diatas !</p>
+                    <p>- Jika diterima di swasta/mengundurkan diri uang yang sudah disetor tidak bisa dikembalikan</p>
+                    <p>- Uang pendaftaran (Rp. 300.000) tidak bisa dikembalikan</p>
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+
+            </form>
+        </div>
+    </t>
+</template>
+
+
+<!-- hanya lihat saja -->
+<template id="vit_universities_web.registration_just_view">
+    <t t-call="website.layout">
+        <t t-set="title">Registration Data</t>
+        <div class="container">
+
+            <!--<div class="alert alert-success">
+                <p>Terima kasih sudah melakukan pendaftaran mahasiswa baru di ISTN, silahkan lakukan pembayaran uang pendaftaran di ATM BNI </p>
+                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+            </div> -->
+
+            <h2>No. Pendaftaran  <t t-esc="partner.reg"/></h2>
+
+            <form class="form-horizontal mt32" >
+
+               
+                <h3>DATA AKADEMIK</h3>
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tahun_id">Tahun Akademik / Semester</label>
+                    <div class="col-md-7 col-sm-8" >
+                        <span class="form-control" t-esc="partner.tahun_ajaran_id.name" id="tahun_id" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <!-- <div class="col-md-3 col-sm-4">
+                        <span class="form-control" t-esc="partner.semester_id.name" />
+                    </div> -->
+                </div>  
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_pendaftaran">Type Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4" >
+                        <span class="form-control" t-esc="partner.type_pendaftaran" id="type_pendaftaran" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_pendaftaran_id">Jenis Pendaftaran</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_pendaftaran_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>
+
+                <div class="form-group" id="type_mahasiswa">
+                    <label class="col-md-3 col-sm-4 control-label" for="type_mhs_id">Type Mahasiswa</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.type_mhs_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>   
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="pagi">Waktu Kuliah</label>
+
+                    <div class="col-md-1 col-sm-2">
+                        Pagi <span t-esc="partner.jadwal_pagi" />
+                    </div>
+
+                    <div class="col-md-1 col-sm-2">
+                        Siang <span t-esc="partner.jadwal_siang" />
+                    </div>  
+
+                    <div class="col-md-1 col-sm-2">
+                        Malam <span t-esc="partner.jadwal_malam" />
+                    </div>   
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_id">Jurusan / Prodi</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.prodi_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Lokasi Kampus</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.alamat_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="alamat_id">Gelombang</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.jadwal_usm_id.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+
+                <h3>DATA PRIBADI</h3>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="name">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.name" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.id_card" style="background-color:yellow; color:black;"/>
+                    </div>  
+                </div>    
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
+                    <!--<div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.image" />
+                    </div> -->
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.email" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div>    
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="tempat_lahir">Tempat / Tanggal Lahir</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tempat_lahir" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.tanggal_lahir" style="background-color:yellow; color:black;"/>                        
+                    </div>
+                </div>  
+
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="jenis_kelamin">Jenis Kelamin</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.jenis_kelamin" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="agama">Agama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.agama" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Alamat Rumah</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control" t-esc="partner.street" style="background-color:yellow; color:black;"/>
+                    </div>
+                </div> 
+
+
+                <div class="form-group">
+                    <div class="col-md-3 col-sm-4"></div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.city" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.zip" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="street">Telepon</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.phone" style="background-color:yellow; color:black;"/>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.mobile" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+                <h3>DATA KELUARGA</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Hubungan Keluarga
+                            </td>
+                            <td>
+                                Keadaan
+                            </td>
+                            <td>
+                                Pendidikan
+                            </td>
+                            <td>
+                                Pekerjaan
+                            </td>
+                            <td>
+                                Alamat
+                            </td>
+                            <td>
+                                Telepon
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.biodata_keluarga_ids" t-as="kel">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="kel.nama" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.hubungan_keluarga_id.name" style="background-color:yellow; color:black;"/>
+                                </td>
+
+                                <td>
+                                    <p class="form-control" t-esc="kel.keadaan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.jenjang_id.name" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.pekerjaan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.alamat" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="kel.telepon" style="background-color:yellow; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>
+
+                </div>  
+
+
+                <h3>DATA PENDIDIKAN TERAKHIR</h3>
+
+                <div class="form-group">
+
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Nama
+                            </td>
+                            <td>
+                                Tingkat
+                            </td>
+                            <td>
+                                Jurusan
+                            </td>
+                            <td>
+                                Nilai Akhir
+                            </td>
+                        </tr>
+
+                        <t t-foreach="partner.riwayat_pendidikan_ids" t-as="pend">
+                            <tr>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nama_sekolah" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.tingkat" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.jurusan" style="background-color:yellow; color:black;"/>
+                                </td>
+                                <td>
+                                    <p class="form-control" t-esc="pend.nilai_akhir" style="background-color:yellow; color:black;"/>
+                                </td>
+                            </tr>
+                        </t>                   
+                    </table>                     
+                </div> 
+
+                <!--<div class="form-group non_baru">
+                    <label class="col-md-3 col-sm-4 control-label" for="konsentrasi_id">Konsentrasi Pilihan</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.konsentrasi_id.name" />
+                    </div>          
+                </div>  -->
+
+
+                <h3>PEMBERI REKOMENDASI (Info ISTN Didapat Dari )</h3>
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label" for="prodi_asal_id">Nama</label>
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.rekomendasi" style="background-color:yellow; color:black;"/>
+                    </div> 
+                    <div class="col-md-3 col-sm-4">
+                        <p class="form-control" t-esc="partner.telp_rekomendasi" style="background-color:yellow; color:black;"/>
+                    </div>                    
+                </div>
+
+            </form>
+        </div>
+    </t>
+</template>
+
+</data>
+</openerp>
