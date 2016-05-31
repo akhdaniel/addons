@@ -48,27 +48,45 @@
                         <notebook colspan="4">
                             <page string="Daftar Mata Kuliah">
                                <!--  <label for="max_sks" string="Maximal SKS"/> -->
-                               <group>
+<!--                                <group>
                                     <group>
                                         <field name="max_sks" attrs="{'readonly': [('state','=','confirm')]}"/>
                                     </group>
                                     <group>    
                                         <field name="min_ip" attrs="{'readonly': [('state','=','confirm')]}"/>
                                     </group>
-                                </group>
-                                <field view_mode="tree" name="kurikulum_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                </group> -->
+<!--                                 <field view_mode="tree" name="kurikulum_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
                                     <tree version="7.0">
                                         <field name="kode"/>
                                         <field name="nama"/>
                                         <field name="sks" sum="Total SKS"/>
                                         <field name="jenis"/>                                        
                                     </tree>
-                                </field>
-                                <group class="oe_subtotal_footer oe_right" colspan="2">
+                                </field> -->
+
+                                <field view_mode="tree" name="mk_kurikulum_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree version="7.0" editable='bottom'>
+                                        <field name="name"/>
+                                        <field name="matakuliah_id"/>
+                                        <field name="sks" sum="Total SKS"/>
+                                        <field name="employee_id"/>                                        
+                                    </tree>
+                                </field>                                
+<!--                                 <group class="oe_subtotal_footer oe_right" colspan="2">
                                     <field name="total_sks"/>
-                                </group>                               
+                                </group>   -->                             
                             </page>
-                            <page string="Total Mata Kuliah">
+                            <page string="Range SKS dan Indeks Prestasi">
+                                <field view_mode="tree" name="mk_kurikulum_max_sks_ip_ids" attrs="{'readonly': [('state','=','confirm')]}">
+                                    <tree version="7.0" editable='bottom'>
+                                        <field name="sks_max"/>
+                                        <field name="ip_min"/>    
+                                        <field name="ip_max"/>                                       
+                                    </tree>
+                                </field>                                                           
+                            </page>                                 
+<!--                             <page string="Total Mata Kuliah">
                                 <field view_mode="tree" name="total_mk_ids">
                                     <tree version="7.0">
                                         <field name="kode"/>
@@ -80,7 +98,7 @@
                                 <group class="oe_subtotal_footer oe_right" colspan="2">
                                     <field name="total_sks2"/>
                                 </group>                                                             
-                            </page>                            
+                            </page>   -->                          
                         </notebook>
                     </sheet>    
                 </form>

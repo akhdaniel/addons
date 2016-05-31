@@ -177,7 +177,7 @@
     <record id="jadwal_dosen_rule" model="ir.rule">
         <field name="name">Jadwal Dosen</field>
         <field name="model_id" ref="model_master_jadwal"/>
-        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('prodi_id','=',user.prodi_id)]</field>
+        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('prodi_id','=',user.prodi_id.id)]</field>
         <field name="groups" eval="[(4, ref('group_univ_dosen'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -210,7 +210,7 @@
     <record id="absensi_nilai_dosen_rule" model="ir.rule">
         <field name="name">Absensi dan Nilai</field>
         <field name="model_id" ref="model_absensi"/>
-        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('prodi_id','=',user.prodi_id)]</field>
+        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('prodi_id','=',user.prodi_id.id)]</field>
         <field name="groups" eval="[(4, ref('group_univ_dosen')),(4, ref('group_univ_staff_baak'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -221,7 +221,7 @@
     <record id="kelas_rule" model="ir.rule">
         <field name="name">Kelas</field>
         <field name="model_id" ref="model_master_kelas"/>
-        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('prodi_id','=',user.prodi_id)]</field>
+        <field name="domain_force">['|','|',('employee_id.user_id','=',user.id),('fakultas_id','=',user.fakultas_id.id),('prodi_id','=',user.prodi_id.id)]</field>
         <field name="groups" eval="[(4, ref('group_univ_dosen')),(4, ref('group_univ_staff_baak'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_write" eval="False"/>

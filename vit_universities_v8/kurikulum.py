@@ -110,7 +110,9 @@ class master_kurikulum (osv.Model):
 			'Daftar Mata Kuliah',		# 'Field Name'  
 			required = False,
 			domain="['|',('prodi_id','=',prodi_id),\
-			('jenis','=','mk_umum')]",),	   
+			('jenis','=','mk_umum')]",),	
+		'mk_kurikulum_detail_ids' : fields.one2many('master.kurikulum.detail','kurikulum_id','Kurikulum',ondelete='cascade'),	
+		'mk_kurikulum_max_sks_ip_ids' : fields.one2many('master.kurikulum.max_sks_ip','kurikulum_id','Range SKS dan IP',ondelete='cascade'),  
 		'total_sks'			:fields.function(_get_total_sks,type="integer",string="Total SKS"),         			
 		'total_mk_ids' 		: fields.function(_get_total_mk_kurikulum, type='many2many', relation="master.matakuliah", string="Total Mata Kuliah",readonly=True),
 		'total_sks2'		:fields.function(_get_total_sks2,type="integer",string="Total SKS"), 
@@ -139,3 +141,29 @@ class master_kurikulum (osv.Model):
 		return super(master_kurikulum, self).unlink(cr, uid, ids, context=context)					
 			
 master_kurikulum()
+
+
+class master_kurikulum_detail(osv.osv):
+	_name = 'master.kurikulum.detail'
+	_order = 'name'
+
+	_columns = {
+		'kurikulum_id'		:fields.many2one('master.kurikulum','Kurikulum'),
+		'name' 				:fields.char('Kode', size=28,required = True),
+		'matakuliah_id'		:fields.many2one('master.matakuliah','Matakuliah',required = True),              
+		'sks'				:fields.float('SKS',required = True,),
+		'employee_id'		:fields.many2one('hr.employee','Dosen Pengampu',domain="[('is_dosen','=',True)]",),	
+		}
+master_kurikulum_detail()
+
+class master_kurikulum_max_sks_ip(osv.osv):
+	_name = 'master.kurikulum.max_sks_ip'
+	_order = 'kurikulum_id'
+
+	_columns = {
+		'kurikulum_id'			:fields.many2one('master.kurikulum','Kurikulum'),          
+		'sks_max'				:fields.float('Max SKS',required = True,),
+		'ip_min'				:fields.float('Min Indeks Prestasi',required = True,),
+		'ip_max'				:fields.float('Max Indeks Prestasi',required = True,),
+		}
+master_kurikulum_detail()			

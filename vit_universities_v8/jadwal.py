@@ -25,7 +25,7 @@ class master_jadwal (osv.osv):
 		jad_obj 	= self.pool.get('master.jadwal')
 
 		alamat 		= rg_obj.browse(cr,uid,ruangan).alamat_id.id
-		#import pdb;pdb.set_trace()
+		
 		jad_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
 			('prodi_id','=',prodi),
@@ -42,18 +42,19 @@ class master_jadwal (osv.osv):
 			raise osv.except_osv(_('Error!'), _('Jadwal tersebut sudah ada!'))
 
 		# pastikan satu dosen hanya mengajar di satu lokasi kampus perhari
-		jad2_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
-			('fakultas_id','=',fakultas),
-			('prodi_id','=',prodi),		
-			('hari','=',hari),	
-			('semester_id','=',semester),
-			('employee_id','=',employee),
-			('alamat_id','!=',alamat),	
-			('is_active','=',True),])
+		# jad2_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
+		# 	('fakultas_id','=',fakultas),
+		# 	('prodi_id','=',prodi),		
+		# 	('hari','=',hari),	
+		# 	('semester_id','=',semester),
+		# 	('employee_id','=',employee),
+		# 	('alamat_id','!=',alamat),	
+		# 	('is_active','=',True),])
 
-		if jad2_ids :
-			raise osv.except_osv(_('Error!'), _('Satu dosen tidak boleh mengajar lebih dari satu lokasi kampus perhari !'))
+		# if jad2_ids :
+		# 	raise osv.except_osv(_('Error!'), _('Satu dosen tidak boleh mengajar lebih dari satu lokasi kampus perhari !'))
 
+		#import pdb;pdb.set_trace()
 		# pastikan satu dosen tidak boleh over lap jam
 		jad3_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
@@ -61,11 +62,11 @@ class master_jadwal (osv.osv):
 			('hari','=',hari),	
 			('semester_id','=',semester),
 			('employee_id','=',employee),
-			('hours_to','>=',hours_from),	
+			('hours_to','>=',hours_from-2),	
 			('is_active','=',True),])
 
 		if jad3_ids :
-			raise osv.except_osv(_('Error!'), _('Jadwal Overlap jam !'))
+			raise osv.except_osv(_('Error!'), _('Jadwal bentrok kurang dari 2 jam !'))
 
 		jad4_ids		= jad_obj.search(cr,uid,[('tahun_ajaran_id','=',ajaran),
 			('fakultas_id','=',fakultas),
@@ -137,8 +138,9 @@ class master_jadwal (osv.osv):
 			if booking_ids :
 				sisa = int(len(booking_ids))
 				kapasitas = kapasitas - sisa
-			result[jad.id] = kapasitas		
-		return result
+			result[jad.id] = kapasitas	
+			self.write(cr,uid,jad.id,{'sisa_kapasitas_field':kapasitas})	
+		return result 
 		
 
 	_columns = {
@@ -152,7 +154,8 @@ class master_jadwal (osv.osv):
 		'kelas_id':fields.many2one('master.kelas',string='Kelas',required=False,), 
 		'ruangan_id' :fields.many2one('master.ruangan',string='Ruangan',required=True),
 		'kapasitas' : fields.related('ruangan_id','kapasitas',string='Kapasitas'), 
-		'sisa_kapasitas' : fields.function(_get_sisa_peserta,type='integer',string='Sisa Kapasitas',store=True),              
+		'sisa_kapasitas' : fields.function(_get_sisa_peserta,type='integer',string='Sisa Kapasitas (F)'),   
+		'sisa_kapasitas_field' : fields.integer('Sisa Kapasitas'),            
 		'employee_id' :fields.many2one('hr.employee','Dosen Utama', domain="[('is_dosen','=',True)]",required=True),
 		'sks' : fields.float('SKS'),
 		'employee_id2' :fields.many2one('hr.employee','Dosen Pengganti 1', domain="[('is_dosen','=',True)]"),

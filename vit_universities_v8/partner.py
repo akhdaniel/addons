@@ -887,11 +887,12 @@ class res_partner (osv.osv):
 				('semester_id','=',smt1_id),
 				])
 			if kur_sch_smt_1 :
-				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_1,context=context)[0].kurikulum_detail_ids
+				#kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_1,context=context)[0].kurikulum_detail_ids
+				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_1,context=context)[0].mk_kurikulum_detail_ids
 				mk_kurikulum = []
 				for kur in kur_id:
 					#mk_kurikulum.append(kur.id)
-					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.id, 'state': 'draft'}))	
+					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.matakuliah_id.id,'sks':kur.sks, 'state': 'draft'}))	
 				krs_obj.create(cr,uid,{'kode'					: nim+'-1',
 											'partner_id'		: partner.id,
 											'tahun_ajaran_id'	: partner.tahun_ajaran_id.id,
@@ -902,7 +903,7 @@ class res_partner (osv.osv):
 											'kelas_id'			: partner.kelas_id.id or False,
 											'user_id'			: uid,
 											'konsentrasi_id'	: partner.konsentrasi_id.id,
-											#'state'			: 'draft',
+											'state'				: 'confirm',
 											'krs_detail_ids'	: mk_kurikulum
 											})	
 
@@ -913,10 +914,11 @@ class res_partner (osv.osv):
 				('semester_id','=',smt2_id),
 				])			
 			if kur_sch_smt_2 :
-				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_2,context=context)[0].kurikulum_detail_ids
+				#kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_2,context=context)[0].kurikulum_detail_ids
+				kur_id   = kurikulum_obj.browse(cr,uid,kur_sch_smt_2,context=context)[0].mk_kurikulum_detail_ids
 				mk_kurikulum = []
 				for kur in kur_id:
-					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.id, 'state': 'draft'}))
+					mk_kurikulum.append((0,0,{'mata_kuliah_id'	: kur.matakuliah_id.id,'sks':kur.sks, 'state': 'draft'}))
 				krs_obj.create(cr,uid,{'kode'				: nim+'-2',
 										'partner_id'		: partner.id,
 										'tahun_ajaran_id'	: partner.tahun_ajaran_id.id,

@@ -62,7 +62,8 @@
                                 <field name="ruangan_id"/>   
                                 <field name="alamat_id" attrs="{'invisible':[('alamat_id','=',False)]}"/> 
                                 <field name="kapasitas" readonly="1"/>
-                                <field name="sisa_kapasitas" readonly="1"/>   
+                                <field name="sisa_kapasitas" readonly="1"/>  
+                                <field name="sisa_kapasitas_field" invisible="1"/> 
                             </group>
                             <group>  
                                 <field name="hari" placeholder="-- pilih hari --"/>                                
