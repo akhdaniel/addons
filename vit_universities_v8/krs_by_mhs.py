@@ -88,7 +88,7 @@ class operasional_krs_mahasiswa (osv.osv):
 		if krs_uniq != []:
 			raise osv.except_osv(_('Error!'),
 								_('Pengajuan KRS untuk semester ini sudah pernah dibuat!'))			
-		#import pdb;pdb.set_trace()
+		
 		kur_id = kur_obj.browse(cr,1,kur_ids,context=context)[0].mk_kurikulum_detail_ids
 		kur_kode = kur_ids[0]
 		mk_kurikulums = []
@@ -136,14 +136,15 @@ class operasional_krs_mahasiswa (osv.osv):
 				smt_sebelumnya = smt_obj.search(cr,uid,[('name','=',smt-1)])
 				khs_sebelumnya = krs_obj.search(cr,uid,[('partner_id','=',pengajuan.partner_id.id),('semester_id','=',smt_sebelumnya[0])])
 				if khs_sebelumnya :
+					#import pdb;pdb.set_trace()
 					khs = krs_obj.browse(cr,uid,khs_sebelumnya[0])
 					ip_persemester = khs.ips_field_persemester
 					msks = range_obj.search(cr,uid,[('kurikulum_id','=',kurikulum[0]),('ip_min','<=',ip_persemester),('ip_max','>=',ip_persemester)])
 					if not msks :
 						raise osv.except_osv(_('Error!'), _('Range batas pengambilan Matakuliah kurikulum ini tidak ada yang sesuai !'))
-					max_sks = range_obj.browse(cr,uid,msks[0]).name	
+					max_sks = range_obj.browse(cr,uid,msks[0]).sks_max	
 			mk_pengajuan = []
-			total_sks = 0
+			total_sks = 0.0
 			for mk_id in pengajuan.krs_mhs_ids:
 				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_id.mata_kuliah_id.id,'sks':mk_id.sks, 'state': 'draft'}))
 				self.pool.get('operasional.krs_detail.mahasiswa').write(cr,uid,mk_id.id,{'state':'confirm'})
@@ -155,6 +156,10 @@ class operasional_krs_mahasiswa (osv.osv):
 			for mk_tambahan_id in pengajuan.mk_remedial_ids:	
 				total_sks += int(mk_tambahan_id.krs_detail_id.sks)
 				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_tambahan_id.krs_detail_id.mata_kuliah_id.id,'sks':mk_tambahan_id.krs_detail_id.sks, 'state': 'draft'}))
+				self.pool.get('operasional.krs_detail.tambahan.mahasiswa').write(cr,uid,mk_tambahan_id.id,{'state':'confirm'})
+				jad_id = jad_obj.browse(cr,uid,mk_tambahan_id.jadwal_id.id)
+				sisa_kapasitas_field = (jad_id.sisa_kapasitas_field-1)
+				jad_obj.write(cr,uid,mk_tambahan_id.jadwal_id.id,{'sisa_kapasitas_field',sisa_kapasitas_field})
 
 			if total_sks > max_sks: 
 				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(total_sks,max_sks))	

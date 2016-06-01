@@ -859,18 +859,32 @@ class master_penilaian(osv.osv):
 
 
 	def create(self, cr, uid, vals, context=None):
-		ajaran = vals['tahun_ajaran_id']
+		ajaran  = vals['tahun_ajaran_id']
+		absensi = vals['absensi']
+		tugas 	= vals['tugas']
+		uts 	= vals['uts']
+		uas 	= vals['uas']
 		jad_id = self.search(cr,uid,[('tahun_ajaran_id','=',ajaran)])
 
 		if jad_id != [] :
 			raise osv.except_osv(_('Error!'), _('Penilaian untuk tahun akademik tersebut sudah ada !'))
+		komposisi = absensi+tugas+uts+uas
+		if komposisi != 100 :
+			raise osv.except_osv(_('Error!'), _('Total komposisi penilaian %s percent (Total persentase harus 100 percent) !')%(komposisi))
 
 		return super(master_penilaian, self).create(cr, uid, vals, context=context)   
 
 	def confirm_penilaian(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			if not ct.mk_detail_ids :
-				raise osv.except_osv(_('Error!'), _('Daftar Matakuliah tidak boleh kosong !'))		
+			# if not ct.mk_detail_ids :
+			# 	raise osv.except_osv(_('Error!'), _('Daftar Matakuliah tidak boleh kosong !'))		
+			absensi = ct.absensi
+			tugas 	= ct.tugas
+			uts 	= ct.uts
+			uas 	= ct.uas
+			komposisi = absensi+tugas+uts+uas
+			if komposisi != 100 :
+				raise osv.except_osv(_('Error!'), _('Total persentase komposisi penilaian %s percent (Total persentase komposisi harus 100 percent) !')%(komposisi))			
 			return self.write(cr,uid,ct.id,{'state':'confirm'},context=context)	
 
 	def cancel_penilaian(self,cr,uid,ids,context=None):

@@ -121,7 +121,7 @@
                                 <field view_mode="tree,form" name="krs_detail_ids" nolabel="1" attrs="{'readonly': [('state','=','done')]}">
                                     <tree editable="bottom" attrs="{'readonly': [('state','=','done')]}">
                                         <field name="mata_kuliah_id" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>
-                                        <field name="sks" sum="Total SKS" readonly='1'/>
+                                        <field name="sks" sum="Total SKS" attrs="{'readonly': [('state','!=','draft')]}"/>
                                         <field name="absensi" attrs="{'readonly': [('state','!=','confirm')]}" string="Absensi" invisible="1"/>
                                         <field name="ulangan" invisible="1"/>
                                         <field name="quiz" invisible="1"/>

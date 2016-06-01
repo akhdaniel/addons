@@ -57,31 +57,35 @@ class res_partner (osv.osv):
 						('state','=','confirm'),
 						])		
 					if byr_sch != []:
-						byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
-						list_pembayaran = byr_brw.detail_product_ids
-						prod_id = []
-						for bayar in list_pembayaran:
-						
-							product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
-							coa_line = product.property_account_income.id
-							if not coa_line:
-								coa_line = product.categ_id.property_account_income_categ.id
-							prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
-												 'name'			: bayar.product_id.name,
-												 'price_unit'	: bayar.public_price,
-												 'account_id'	: coa_line}))
-						inv = self.pool.get('account.invoice').create(cr,uid,{
-							'partner_id':partner,
-							'origin': 'Pendaftaran '+str(self.pool.get('res.partner').browse(cr,uid,partner).reg),
-							'type':'out_invoice',
-							'fakultas_id': vals['fakultas_id'],
-							'prod_id': vals['prodi_id'],
-							'account_id':self.pool.get('res.partner').browse(cr,uid,partner).property_account_receivable.id,
-							'invoice_line': prod_id,
-							},context=context)
-						wf_service = netsvc.LocalService('workflow')
-						wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
-						self.write(cr,uid,partner,{'invoice_id':inv})
+						inv_obj = self.pool.get('account.invoice')
+						origin = str(self.pool.get('res.partner').browse(cr,uid,partner).reg)
+						inv_exist = inv_obj.search(cr,uid,[('origin','=',origin)])
+						if not inv_exist :
+							byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
+							list_pembayaran = byr_brw.detail_product_ids
+							prod_id = []
+							for bayar in list_pembayaran:
+							
+								product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
+								coa_line = product.property_account_income.id
+								if not coa_line:
+									coa_line = product.categ_id.property_account_income_categ.id
+								prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
+													 'name'			: bayar.product_id.name,
+													 'price_unit'	: bayar.public_price,
+													 'account_id'	: coa_line}))
+							inv = inv_obj.create(cr,uid,{
+								'partner_id':partner,
+								'origin': 'Pendaftaran '+origin,
+								'type':'out_invoice',
+								'fakultas_id': vals['fakultas_id'],
+								'prod_id': vals['prodi_id'],
+								'account_id':self.pool.get('res.partner').browse(cr,uid,partner).property_account_receivable.id,
+								'invoice_line': prod_id,
+								},context=context)
+							wf_service = netsvc.LocalService('workflow')
+							wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
+							self.write(cr,uid,partner,{'invoice_id':inv})
 
 
 			elif vals['status_mahasiswa'] == 'Mahasiswa':
