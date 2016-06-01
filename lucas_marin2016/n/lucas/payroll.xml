@@ -1,0 +1,149 @@
+ <openerp>
+    <data> 
+
+        <record id="view_hr_payslip_form999" model="ir.ui.view">
+            <field name="name">hr.payslip.form2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hrd_ppi_payroll.view_hr_payslip_form99"/>
+            <field name="arch" type="xml"> 
+                <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_user,hrd_ppi_access.group_hr_payroll" position="replace">
+                    <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight"/>
+                </button>
+               <!--  <field name='struct_id' position='after'>
+                    <field name='hutang_koperasi'/>
+                </field> -->
+            </field>
+        </record>
+
+        <record id="hr_contract_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hrd_ppi_payroll.hr_contract_view_form1"/>
+            <field name="arch" type="xml">
+                   <field name="master_gaji_id" position='replace'/>
+                   <field name="makan" position='replace'/>
+                   <field name="transport" position='replace'/>
+                   <field name="jenis_lembur" position='replace'/>
+                   <field name='kelompok_sift' position='replace'/>
+            </field>            
+        </record>
+
+<!--         <record id="hr_contract_view_form3" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name='working_hours' position='replace'/>
+            </field>
+        </record> -->
+		
+        <record model="ir.actions.act_window" id="action_hr_master_tunjangan">
+            <field name="name">Master Tunjangan</field>
+            <field name="res_model">hr.master.tunjangan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="master_tunjangan_tree_view" model="ir.ui.view">
+            <field name="name">Master Tunjangan</field>
+            <field name="model">hr.master.tunjangan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Master Tunjangan">
+                    <field name="name"/>
+                    <field name='name_jabatan'/>
+                    <field name="kelas"/>
+                    <field name='tunj_jabatan'/>
+                    <field name='tunj_makan'/>
+                    <field name='tunj_komunikasi'/>
+                    <field name='tunj_fungsional'/>
+                    <field name='tunj_transportasi'/>
+                </tree>
+            </field>
+        </record>
+        <record id="master_tunjangan_form_view" model="ir.ui.view">
+            <field name="name">Master Tunjangan</field>
+            <field name="model">hr.master.tunjangan</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Master Tunjangan">
+                    <field name="name"/>
+                    <field name='name_jabatan'/>
+                    <field name="kelas"/>
+                    <field name='tunj_jabatan'/>
+                    <field name='tunj_makan'/>
+                    <field name='tunj_komunikasi'/>
+                    <field name='tunj_fungsional'/>
+                    <field name='tunj_transportasi'/>
+                    <field name='tunj_lainlain'/>
+                    <notebook colspan='4'>
+                        <page string='Tunjangan Kinerja'>
+                            <field view_mode='tree' name='tunj_kinerja' nolabel='1'>
+                                <tree editable='bottom' string="Tunjangan Kinerja">
+                                    <field name='gol_id'/>
+                                    <field name='nominal'/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>         
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_master_tunjangan_kinerja">
+            <field name="name">Master Tunjangan</field>
+            <field name="res_model">hr.tk.gol</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="master_tunjangan_kinerja_tree_view" model="ir.ui.view">
+            <field name="name">Master Tunjangan Kinerja</field>
+            <field name="model">hr.tk.gol</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Master Tunjangan Kinerja">
+                    <field name="master_tunjangan"/>
+                    <field name='gol_id'/>
+                    <field name="nominal"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- master tunjangan hari raya-->
+        <record id="master_tunjangan_hari_raya_form_view" model="ir.ui.view">
+            <field name="name">Master Tunjangan Hari Raya</field>
+            <field name="model">thr</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Master Tunjangan Hari Raya">
+                    <field name="name"/>
+                    <field name='date'/>
+                </form>
+            </field>
+        </record>
+
+        <record id="master_tunjangan_hari_raya_tree_view" model="ir.ui.view">
+            <field name="name">Master Tunjangan Hari Raya</field>
+            <field name="model">thr</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Master Tunjangan Kinerja">
+                    <field name="name"/>
+                    <field name='date'/>
+                    <field name='tahun'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_hr_master_tunjangan_hariraya">
+            <field name="name">Master Tunjangan Hari Raya</field>
+            <field name="res_model">thr</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_hr_master_tunjangan" parent="base.menu_tools" name="Master Tunjangan" id="master_tunj" sequence="140"/>
+        <menuitem action="action_hr_master_tunjangan_kinerja" parent="base.menu_tools" name="Master Tunjangan Kinerja" id="master_tunj_kinerja" sequence="141"/>
+        <menuitem action="action_hr_master_tunjangan_hariraya" parent="base.menu_tools" name="Master Tunjangan Hari Raya" id="master_tunj_hari_raya" sequence="142"/>
+    </data>
+</openerp>

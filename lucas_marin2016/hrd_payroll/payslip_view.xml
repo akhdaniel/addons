@@ -1,0 +1,220 @@
+<openerp>
+    <data>
+        <!-- Master Gaji -->
+        <record model="ir.actions.act_window" id="action_gaji">
+            <field name="name">Master Incentive dan Transport</field>
+            <field name="res_model">hr.master_gaji</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Master Pajak -->
+        <record model="ir.actions.act_window" id="action_ptkp">
+            <field name="name">Master PTKP</field>
+            <field name="res_model">hr.ptkp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>  
+
+        <record model="ir.actions.act_window" id="action_pkp">
+            <field name="name">Master PKP</field>
+            <field name="res_model">hr.pkp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>  
+
+        <!-- contract -->        
+        <record id="hr_master_gaji_tree" model="ir.ui.view">
+            <field name="name">hr.master_gaji</field>
+            <field name="model">hr.master_gaji</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">  
+                <tree string="Master incentive dan Transport">    
+                <field name="name"/>          
+                <field name="makan"/>
+                <field name="transport"/>
+                </tree>                      
+            </field>
+        </record> 
+
+        <record id="hr_contract_view_form1" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+               <field name="wage" position="after">
+                   <field name="master_gaji_id"/>
+                   <field name="makan"/>
+                   <field name="transport"/>
+                   <field name="jenis_lembur"/>
+                </field>
+               <!--field name='gol'/>
+               </field>
+               <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+               </div-->
+            </field>            
+        </record>
+		
+
+         <record id="hr_contract_type_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.type.view.form2</field>
+            <field name="model">hr.contract.type</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_type_view_form"/>
+            <field name="arch" type="xml">                
+                  <field name="name" position="after">
+                    <!--field name="pajak"/-->
+                    <group colspan="4">
+                        <group string="BPJS">
+                            <field name="jams1"/>
+                            <field name="jams2"/>    
+                        </group>
+                        <group string="Reimburse" >                      
+                            <field name="reimburse_pengobatan" />                        
+                            <field name="range_pengobatan" />                          
+                        </group>
+                        <group string="Biaya Jabatan">
+                            <field name="biaya_jabatan"/>
+                            <field name="max_biaya_jabatan"/>
+                        </group>
+                        <group string="THT">
+                            <field name="tht"/>
+                            <field name="ttht"/>
+                            <field name="max_tht"/>
+                        </group>
+                        <group string="Type Perhitungan Pajak">
+                            <field name="type_perhitungan_pajak"/>
+                        </group>
+                    </group>          
+                  </field>                       
+            </field>
+        </record>
+        
+         <record id="hr_ptkp_view_tree" model="ir.ui.view">
+            <field name="name">hr.ptkp</field>
+            <field name="model">hr.ptkp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">  
+                <tree string="Master PTKP" editable="bottom">    
+                <field name="kode"/>          
+                <field name="nominal_bulan" on_change="onchange_kali(nominal_bulan,nominal_tahun)"/>
+                <field name="nominal_tahun" on_change="onchange_bagi(nominal_bulan,nominal_tahun)"/>
+                </tree>                      
+            </field>
+        </record>         
+
+         <record id="hr_pkp_view_tree" model="ir.ui.view">
+            <field name="name">hr.pkp</field>
+            <field name="model">hr.pkp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">  
+                <tree string="Master PKP" editable="bottom">    
+                <field name="kode"/>          
+                <field name="nominal_min" />
+                <field name="nominal_max"/>
+                <field name="pajak"/>
+                </tree>                      
+            </field>
+        </record>        
+        
+        <!-- payslip batches-->
+        
+        <record id="hr_payslip_run_form99" model="ir.ui.view">
+            <field name="name">hr.payslip.run.form2</field>
+            <field name="model">hr.payslip.run</field>
+            <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="approve" type="object" string="Approve" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager"/>                   
+                </header>
+            </field>
+        </record>
+        
+        <record id="view_hr_payslip_form99" model="ir.ui.view">
+            <field name="name">hr.payslip.form2</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+            <field name="arch" type="xml"> 
+                <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight" position="replace">
+                    <button string="Approve" name="hr_verify_sheet" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_manager,hrd_ppi_access.group_hr_payroll"/>
+                </button>    
+
+                <!--button string="Refund" name="refund_sheet" states="confirm,done" type='object' position="replace">
+                    <button string="Cek2" name="refund_sheet" states="confirm,done" type='object' class="oe_highlight"/>
+                </button--> 
+                <button string="Set to Draft" name="draft" states="cancel" position="replace">
+                    <button string="Set to Draft" name="draft" states="cancel" position="replace" groups="hrd_ppi.group_hr_user"/>
+                </button>
+
+                <button string="Compute Sheet" name="compute_sheet" type="object" states="draft" class="oe_highlight" position="replace">
+                    <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_user,hrd_ppi_access.group_hr_payroll"/>
+                </button>
+
+                <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" position="replace">
+                    <button string="Cancel Payslip" name="cancel_sheet" states="draft,hr_check,confirm,verify" groups="hrd_ppi.group_hr_manager"/>
+                </button> 
+                <field name='contract_id' position='after'>
+                    <field name='total_tp'/>
+                    <field name='total_ttp'/>
+                    <field name='pot_absen'/>
+                    <field name='pkp'/>
+                    <field name='year'/>
+                    <field name='gross_tetap'/>
+                    <field name='gross_ttetap'/>
+                    <field name='tunj_pajak_code'/>
+                    <field name='tunj_pajak_tahun'/>
+                </field>
+                <field name="number_of_days" sum="Total Working Days" position="replace">
+                    <field name="number_of_days"/>
+                </field>          
+            </field>
+        </record>
+
+        <record id="view_hr_payslip_tree" model="ir.ui.view">
+            <field name="name">hr.payslip.tree</field>
+            <field name="model">hr.payslip</field>
+            <field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+            <field name="arch" type="xml">
+                <tree colors="blue:state in ('confirm','hr_check','accont_check');black:state == 'new';gray:state == 'cancel'" string="Payslips">
+                        <field name="net"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="tab_form_view">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="before">
+                    <group string="Cuti Tahunan">
+                        <label for="alokasi"/>
+                        <div>
+                            <field name="alokasi" class="oe_inline"/> days
+                        </div>
+                        <label for="cuti_tahunan"/>
+                        <div>                          
+                            <field name="cuti_tahunan" class="oe_inline"/> days
+                        </div>                     
+                    </group>                   
+                </xpath>
+            </field>
+        </record>
+        <menuitem action="action_gaji" parent="base.menu_tools" name="Master Incentive &#038; Transport " id="master_gaji" sequence="211" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
+        <menuitem action="action_ptkp" parent="base.menu_tools" name="Master PTKP" id="master_ptkp" sequence="212" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
+        <menuitem action="action_pkp" parent="base.menu_tools" name="Master PKP" id="master_pkp" sequence="213" groups="base.group_tool_user,base.group_hr_manager,base.group_hr_user"/>
+
+        <record id="hr_salary_rule_form2" model="ir.ui.view">
+            <field name="name">hr.salary.rule.form</field>
+            <field name="model">hr.salary.rule</field>
+            <field name="inherit_id" ref="hr_payroll.hr_salary_rule_form"/>
+            <field name="arch" type="xml">     
+                <field name='appears_on_payslip' position='after'>
+                    <field name='bonus'/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

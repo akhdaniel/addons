@@ -1,0 +1,67 @@
+<openerp>
+	<data>
+		<record id='warning_schedule_form' model='ir.ui.view'>
+			<field name='name'>Warning Schedule</field>
+			<field name='model'>warning.schedule</field>
+			<field name='type'>form</field>
+			<field name='arch' type='xml'>
+				<form string='Warning Schedule'>
+					<group>
+						<field name='name'/>
+						<field name='date_warning'/>
+						<!-- <field name='warning_kontrak' attrs="{'invisible': [('name','!=','kontrak')]}"/> -->
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id='warning_schedule_tree' model='ir.ui.view'>
+			<field name='name'>Warning Schedule</field>
+			<field name='model'>warning.schedule</field>
+			<field name='type'>tree</field>
+			<field name='arch' type='xml'>
+				<tree string='Worning Schedule'>
+					<field name='name'/>
+					<field name='date_warning'/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="warning_schedule" model="ir.actions.act_window">
+			<field name='name'>Warning Schedule</field>
+			<field name='res_model'>warning.schedule</field>
+			<field name='view_type'>form</field>
+			<field name='view_mode'>tree,form</field>
+		</record>
+
+		<record id="action_hr_warning_contrac" model="ir.actions.act_window">
+	        <field name="name">Detail Warning Kontrak</field>
+	        <field name="res_model">hr.employee</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree</field>
+	        <field name="domain">[('link_warning','=','kontrak')]</field>
+    	</record>
+
+    	<record id="action_hr_warning_sio" model="ir.actions.act_window">
+	        <field name="name">Detail Warning SIO</field>
+	        <field name="res_model">hr.employee</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree</field>
+	        <field name="domain">[('link_warning','=','sio')]</field>
+    	</record>
+
+<!--     	<record id="action_hr_warning_alat_berat" model="ir.actions.act_window">
+	        <field name="name">Detail Warning Alat Berat</field>
+	        <field name="res_model">hr.employee</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree</field>
+	        <field name="domain">[('link_warning','=','alat_berat')]</field>
+    	</record> -->
+
+		<menuitem parent='base.menu_tools' name="Schedule Warning" id='base.warning' action='warning_schedule' sequence='234'/>
+		<menuitem parent='base.menu_tools' name="Schedule Warning Kontrak" id='base.warning_kontrak' action='action_hr_warning_contrac' sequence='235'/>
+		<menuitem parent='base.menu_tools' name="Schedule Warning SIO" id='base.warning_sio' action='action_hr_warning_sio' sequence='236'/>
+<!-- 		<menuitem parent='base.menu_tools' name="Schedule Warning Alat Berat" id='base.warning_alat_berat' action='action_hr_warning_alat_berat' sequence='236'/> -->
+	</data>
+</openerp>
+	

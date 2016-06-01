@@ -1,0 +1,29 @@
+<openerp>
+  <data>
+    <record id="open_eror_attendance" model="ir.actions.act_window">
+      <field name="name">Eror.Attendances</field>
+      <field name="res_model">hr.tampung.error</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree</field>
+    </record>
+
+    <record id="hr_tampung_error_view_tree1" model="ir.ui.view">
+      <field name="name">hr_tampung.error.view.tree</field>
+      <field name="model">hr.tampung.error</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+          <tree string="Error Attendances">
+              <field name="name"/>
+              <field name="employee_id"/>  
+              <field name='no_mesin'/>
+              <field name="department_id"/>
+              <field name="date"/>
+              <field name='lokasi'/>
+          </tree>
+      </field>
+    </record>
+
+    <menuitem action="open_eror_attendance" id="hr_tampung_eror" parent="hr_attendance.menu_hr_attendance" name="Error Attendance" sequence="30"/> 
+
+  </data>
+</openerp>

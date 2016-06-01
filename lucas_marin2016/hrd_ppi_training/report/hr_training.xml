@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="hr_training" 
+        string="Rencana Training" 
+        model="hr_training.analisa" 
+        name="hr_training" 
+        rml="hrd_ppi_training/report/hr_training.rml" 
+        auto="False" 
+        header="False"/>    
+    </data> 
+</openerp>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<report id="employee_bio" 
+			string="Biodata Karyawan" 
+			model="hr.employee" 
+			name="hr.employee" 
+			rml="hrd_ppi/report/employee_info.rml" 
+        	header="True"
+        	auto="True"
+    	/> 
+    	<report id="hierarcy_his" 
+			string="Hierarchy History" 
+			model="hr.employee" 
+			name="hierarcy" 
+			rml="hrd_ppi/report/hierarchy.rml" 
+        	header="False"
+        	auto="True"
+    	/> 
+	</data>
+</openerp>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- Tree & graph views -->
+        <record id="view_hr_turnover_report_tree" model="ir.ui.view">
+            <field name="name">hr.turnover.report.tree</field>
+            <field name="model">hr.turnover.report</field>
+            <field name="arch" type="xml">
+            <tree string="Turnover Analysis Tree" create="false">
+                <field name='name_related' />
+                <field name="nbr" sum="# Employee"/>
+                <field name="status" invisible="1"/>
+                <field name="department_id" invisible="1"/>
+                <field name="th" invisible="1"/>
+                <field name="bln" invisible="1"/>
+            </tree>
+            </field>
+        </record>
+        <record id="view_hr_turnover_report_graph_d" model="ir.ui.view">
+            <field name="name">hr.turnover.report.graph</field>
+            <field name="model">hr.turnover.report</field>
+            <field name="arch" type="xml">
+                <graph orientation="vertical" string="Turnover Analysis Graph" type="bar">
+                    <field name="department_id"/>
+                    <field name="nbr" operator="+"/>
+                </graph>
+            </field>
+        </record>
+
+    	<record id="view_employee_form_inherit_active" model="ir.ui.view">
+            <field name="name">hr.employee.form.active</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="active" position='after'>
+                	<field name='date_inactive'/>
+                </field>
+            </field>
+        </record>
+
+<!-- Turnover Search Filters -->        
+        <record id="view_hr_turnover_report_filter" model="ir.ui.view">
+            <field name="name">hr.turnover.report.select</field>
+            <field name="model">hr.turnover.report</field>
+            <field name="arch" type="xml">
+                <search string="Turnover Analysis">
+                    <separator/>
+                    <field name="th"/>
+                    <field name="bln"/>
+                    <!-- <filter icon="terp-dialog-close" string="In dan Out" domain="[('status', 'in', ['masuk', 'keluar'])]"/> -->
+                    <group expand="0" string="Group By...">
+                        <filter string="Status" name="status" icon="terp-personal+" domain="[]" context="{'group_by':'status'}" />
+                        <filter string="Department" name="department_id" icon="terp-personal" domain="[]" context="{'group_by':'department_id'}" />
+                        <filter string="Tahun" name="th" icon="terp-personal+" domain="[]" context="{'group_by':'th'}" />
+                        <filter string="Bulan" name="bln" icon="terp-personal+" domain="[]" context="{'group_by':'bln'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+<!-- Actions -->
+        <record id="turnover_report_act_d" model="ir.actions.act_window">
+           <field name="name">Employee Turnover by Department</field>
+           <field name="res_model">hr.turnover.report</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree,graph</field>
+           <field name="context">{'search_default_status': 1,'search_default_department_id': 1,'search_default_th': 0,'search_default_bln': 0,'group_by_no_leaf':0, 'group_by':[]}</field>
+           <field name="search_view_id" ref="view_hr_turnover_report_filter"/>
+           <!-- <field name="domain">[]</field> -->
+        </record>
+        <record model="ir.actions.act_window.view" id="turnover_report_tree_d">
+            <field name="sequence" eval="5"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_turnover_report_tree"/>
+            <field name="act_window_id" ref="turnover_report_act_d"/>
+       </record>
+       <record model="ir.actions.act_window.view" id="turnover_report_graph_d">
+            <field name="sequence" eval="6"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_hr_turnover_report_graph_d"/>
+            <field name="act_window_id" ref="turnover_report_act_d"/>
+       </record>
+
+        <menuitem name="Turnover" id="menu_turnover_d" action="turnover_report_act_d" parent="menu_hr_report_ppi"/>
+
+    </data>
+</openerp>

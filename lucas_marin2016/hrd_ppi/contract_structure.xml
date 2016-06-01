@@ -1,0 +1,264 @@
+<openerp>
+    <data>
+    	<!-- Scehedule warning-->
+        <!--record id="warning1" model="warning.schedule">
+	            <field name="name">kontrak</field>
+	            <field name="date_warning">30</field>
+	    </record>
+	    <record id="warning2" model="warning.schedule">
+	            <field name="name">alat_berat</field>
+	            <field name="date_warning">30</field>
+	    </record>
+	    <record id="warning3" model="warning.schedule">
+	            <field name="name">iso</field>
+	            <field name="date_warning">30</field>
+	    </record-->
+
+	<!-- working days staf -->
+	    <record model="resource.calendar" id="working_hours_ppi_staff" >
+	    	<field name="name">PPI Staff Working Hours</field>
+	    </record>
+
+    <!-- detail working days staf -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+	    <record model="resource.calendar.attendance" id="working_hours_tue" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <!-- working days sift 1 -->
+	    <record model="resource.calendar" id="working_hours_ppi_sift1" >
+	    	<field name="name">PPI Sift 1 Working Hours</field>
+	    </record>
+
+    	<!-- detail working days sift 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours1_mon" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift1" />
+	    </record>
+	    <record model="resource.calendar.attendance" id="working_hours1_tue" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift1" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours1_wed" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours1_thu" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours1_fri" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift1" />
+	    </record>
+
+	    <!-- working days sift 2 -->
+	    <record model="resource.calendar" id="working_hours_ppi_sift2" >
+	    	<field name="name">PPI Sift 2 Working Hours</field>
+	    </record>
+
+    	<!-- detail working days sift 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours2_mon" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">15</field>
+	    	<field name="hour_to">24</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift2" />
+	    </record>
+	    <record model="resource.calendar.attendance" id="working_hours2_tue" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">15</field>
+	    	<field name="hour_to">24</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift2" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours2_wed" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">15</field>
+	    	<field name="hour_to">24</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours2_thu" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">15</field>
+	    	<field name="hour_to">24</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours2_fri" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">15</field>
+	    	<field name="hour_to">24</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift2" />
+	    </record>
+
+	    <!-- working days sift 3 -->
+	    <record model="resource.calendar" id="working_hours_ppi_sift3" >
+	    	<field name="name">PPI Sift 3 Working Hours</field>
+	    </record>
+
+    	<!-- detail working days sift 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours3_mon" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">5</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift3" />
+	    </record>
+	    <record model="resource.calendar.attendance" id="working_hours3_tue" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">5</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift3" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours3_wed" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">5</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours3_thu" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">5</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours3_fri" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">5</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_sift3" />
+	    </record>
+
+	<!-- working days proyek -->
+	    <record model="resource.calendar" id="working_hours_ppi_staff" >
+	    	<field name="name">PPI Proyek Working Hours</field>
+	    </record>
+
+    <!-- detail working days staf -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+	    <record model="resource.calendar.attendance" id="working_hours_tue" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">15</field>
+	    	<field name="calendar_id" ref="working_hours_ppi_staff" />
+	    </record>
+
+	    <!-- sift kerja -->
+	    <record id="sift1" model="hr.sift.roling">
+	            <field name="name">1</field>
+	            <field name='schedule' ref='working_hours_ppi_sift1' />
+	    </record>
+	    <record id="sift2" model="hr.sift.roling">
+	            <field name="name">2</field>
+	            <field name='schedule' ref='working_hours_ppi_sift2' />
+	    </record>
+	    <record id="sift3" model="hr.sift.roling">
+	            <field name="name">3</field>
+	            <field name='schedule' ref='working_hours_ppi_sift3' />
+	    </record>
+	</data>
+</openerp>

@@ -1,0 +1,484 @@
+<openerp>
+    <data>
+        <!-- daftar seleksi pelamar-->
+		
+		<record id="view_seleksi_pelamar_filter" model="ir.ui.view">
+            <field name="name">seleksi_pelamar</field>
+            <field name="model">hr.seleksi_pelamar</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Seleksi Pelamar">
+                    <group expand="0" string="Group By...">
+                        <filter string="Tahun" name="tahun" icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
+                        <filter string="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
+                        <filter string="Bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
+                        <filter string="jabatan" icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+		
+        <record model="ir.actions.act_window" id="daftar_seleksi_pelamar">
+                <field name="name">Daftar Seleksi Pelamar</field>
+                <field name="res_model">hr.seleksi_pelamar</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree</field>
+                <field name="context">{'search_default_tahun':1}</field>
+                <field name="search_view_id" ref="view_seleksi_pelamar_filter"/>   
+        </record> 
+
+        <record id="hr_daftar_seleksi_pelamar" model="ir.ui.view">
+                    <field name="name">daftar seleksi pelamar</field>
+                    <field name="model">hr.seleksi_pelamar</field>
+                    <field name="type">tree</field>
+                    <field name="arch" type="xml">
+                        <tree string="Daftar Seleksi Pelamar" editable="bottom">
+                            <field name="nama" readonly="1"/>
+                            <field name="tgl_seleksi" readonly="1"/>
+                            <field name="tgl_seleksi1" readonly="1"/>
+                            <field name="pendidikan" readonly="1"/>
+                            <field name="jurusan" readonly="1"/> 
+                            <field name="tgl_lahir" readonly="1"/>    
+                            <field name="usia" readonly="1"/>
+                            <field name="sumber" readonly="1"/>
+                            <field name="ref" readonly="1"/>
+                            <field name="kehadiran" readonly="1"/>
+                            <field name="department" readonly="1"/>
+                            <field name="bagian" readonly="1"/>  
+                            <field name="jabatan" readonly="1"/> 
+                            <field name="ref_jab" readonly="1"/> 
+                            <field name="status" readonly="1"/>
+                            <field name="status1" readonly="1"/>  
+                            <field name="keputusan" readonly="1"/>  
+                            <field name="tgl_keputusan" readonly="1"/>  
+                            <field name="tahun" readonly="1"/>
+                        </tree>
+                    </field>
+        </record> 
+
+        <!-- lapran pemenuhan recruitment -->
+		<record id="view_pemenuhan_pelamar_filter" model="ir.ui.view">
+            <field name="name">Laporan_pemenuhan</field>
+            <field name="model">hr_pemenuhan</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Progres Recruitment">
+                    <group expand="0" string="Group By...">
+                        <filter string="No Permintaan" name="no_permintaan" icon="terp-personal" domain="[]" context="{'group_by':'no_pmintaan'}"/>
+                        <filter string="department" name="department" icon="terp-personal" domain="[]" context="{'group_by':'department'}"/>
+                        <filter string="posisi" name="posisi" icon="terp-personal" domain="[]" context="{'group_by':'jabatan'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+		
+        <record model="ir.actions.act_window" id="laporan_pemenuhan_recrutiment">
+            <field name="name">Laporan Pemenuhan Recruitment</field>
+            <field name="res_model">hr_pemenuhan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_department':1, 'search_default_no_prmintaan':1, 'search_default_posisi':1}</field>
+            <field name="search_view_id" ref="view_pemenuhan_pelamar_filter"/>            
+        </record> 
+
+        <record id="hr_pemenuhan_recrutiment" model="ir.ui.view">
+                <field name="name">Laporan Pemenuhan Recruitment</field>
+                <field name="model">hr_pemenuhan</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Laporan Pemenuhan Recruitment" editable="bottom">
+                        <field name="no_pmintaan" readonly="1"/>
+                        <field name="tgl_permintaan" readonly="1"/>
+                        <field name="department" readonly="1"/>
+                        <field name="jabatan" readonly="1"/>
+                        <field name="jml_prmintaan" readonly="1"/>
+                        <field name="aktifitas" readonly="1"/> 
+                        <field name="tgl_seleksi" readonly="1"/>    
+                        <field name="jml_kandidat" readonly="1"/>
+                        <field name="jml_diterima" readonly="1"/>
+                        <field name="per_masuk" readonly="1"/>
+                        <field name="status" readonly="1"/>
+                        <field name="ket"/>   
+                    </tree>
+                </field>
+            </record>
+
+        <!-- daftar pemenuhan kebutuhan bulanan/harian-->
+		
+		<record id="view_pemenuhan_kebutuhan_filter" model="ir.ui.view">
+            <field name="name">List Pemenuhan</field>
+            <field name="model">hr.pemenuhan_kebutuhan</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Progres Recruitment">
+                    <group expand="0" string="Group By...">
+                        <filter string="Jenis Permohonan" name="jenis_permohonan" icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Divisi" name="divisi" icon="terp-personal" domain="[]" context="{'group_by':'div'}"/>
+                        <filter string="department" name="department" icon="terp-personal" domain="[]" context="{'group_by':'dept'}"/>
+                        <filter string="Bagian" name="bagian" icon="terp-personal" domain="[]" context="{'group_by':'bagian'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="list_pemenuhan">
+            <field name="name">Daftar Pemenuhan Kebutuhan</field>
+            <field name="res_model">hr.pemenuhan_kebutuhan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_jenis_permohonan':1, 'search_default_divisi':1, 'search_default_department':1, 'search_default_bagian':1}</field>
+            <field name="search_view_id" ref="view_pemenuhan_kebutuhan_filter"/>
+        </record> 
+
+        <record id="list_pemenuhan1" model="ir.ui.view">
+                <field name="name">Daftar Pemenuhan Kebutuhan</field>
+                <field name="model">hr.pemenuhan_kebutuhan</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="List Pemenuhan Recruitment" editable="bottom">
+                        <field name="bul_har" readonly="1"/>
+                        <field name="div" readonly="1"/>
+                        <field name="dept" readonly="1"/>
+                        <field name="bagian" readonly="1"/>
+                        <field name="jabatan" readonly="1"/>
+                        <field name="level" readonly="1"/> 
+                        <field name="tgl_permohonan" readonly="1"/>    
+                        <field name="status_wawancara" readonly="1"/>
+                        <field name="status_pemenuhan" readonly="1"/>
+                        <field name="jumlah_kebutuhan" readonly="1"/>
+                        <field name="jumlah_terpenuhi" readonly="1"/>
+                        <field name="kekurangan_pmenuhan" readonly="1"/>
+                        <field name="status_penempatan" readonly="1"/>
+                        <field name="ket"/>
+                        <field name="review"/>   
+                    </tree>
+                </field>
+        </record>
+
+        <!-- sumary kebutuhan bulanan-->
+		
+		<record id="view_sumary_kebutuhan" model="ir.ui.view">
+            <field name="name">sumary Kebutuhan Bulanan</field>
+            <field name="model">hr.sumary_kebutuhan</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Progres Recruitment">
+                    <group expand="0" string="Group By...">
+                        <filter string="Jenis Permohonan" name="jen_perm" icon="terp-personal" domain="[]" context="{'group_by':'bul_har'}"/>
+                        <filter string="Department" name="dept" icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+		
+        <record model="ir.actions.act_window" id="sumary_pemenuhan">
+            <field name="name">sumary Kebutuhan Bulanan</field>
+            <field name="res_model">hr.sumary_kebutuhan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,graph</field>
+            <field name="context">{'search_default_dept':1}</field>
+            <field name="search_view_id" ref="view_sumary_kebutuhan"/>
+        </record> 
+
+        <record id="sumary_pemenuhan1" model="ir.ui.view">
+                <field name="name">sumary Kebutuhan Bulanan</field>
+                <field name="model">hr.sumary_kebutuhan</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="List Pemenuhan Recruitment" editable="bottom">
+                        <field name="tahun" readonly="1"/>
+                        <field name="dep" readonly="1"/>
+                        <field name="jum_kebutuhan" readonly="1"/>
+                        <field name="jum_terpenuhi" readonly="1"/>
+                        <field name="varian" readonly="1"/>
+                        <field name="percentage" readonly="1"/>
+                        <field name="ket"/>
+                    </tree>
+                </field>
+        </record>
+
+        <record model="ir.ui.view" id="sumary_graph">
+            <field name="name">Sumary Pemenuhan Kebutuhan</field>
+            <field name="model">hr.sumary_kebutuhan</field>
+            <field name="arch" type="xml">
+                  <graph string="Cases By Stage and Estimates" type="bar">   
+                    <field name="dep"/>           
+                    <field name="jum_kebutuhan"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- sumary kebutuhan harian-->
+		
+		<record id="view_sumary_kebutuhan_haarian" model="ir.ui.view">
+            <field name="name">sumary</field>
+            <field name="model">hr.sumary_kebutuhan_harian</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Progres Recruitment">
+                    <group expand="0" string="Group By...">
+                        <filter string="Department" name="dept" icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sumary_pemenuhan_harian">
+            <field name="name">sumary Kebutuhan Harian</field>
+            <field name="res_model">hr.sumary_kebutuhan_harian</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,graph</field>
+            <field name="context">{'search_default_dept':1}</field>
+            <field name="search_view_id" ref="view_sumary_kebutuhan"/>
+        </record> 
+
+        <record id="sumary_pemenuhan_harian1" model="ir.ui.view">
+                <field name="name">sumary</field>
+                <field name="model">hr.sumary_kebutuhan_harian</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="List Pemenuhan Recruitment" editable="bottom">
+                        <field name="tahun" readonly="1"/>
+                        <field name="dep" readonly="1"/>
+                        <field name="jum_kebutuhan" readonly="1"/>
+                        <field name="jum_terpenuhi" readonly="1"/>
+                        <field name="varian" readonly="1"/>
+                        <field name="percentage" readonly="1"/>
+                        <field name="ket"/>
+                    </tree>
+                </field>
+        </record>
+
+        <record model="ir.ui.view" id="sumary_graph_harian">
+            <field name="name">Sumary Pemenuhan Kebutuhan</field>
+            <field name="model">hr.sumary_kebutuhan_harian</field>
+            <field name="arch" type="xml">
+                  <graph string="Cases By Stage and Estimates" type="bar">   
+                    <field name="dep"/>           
+                    <field name="jum_kebutuhan"/>
+                </graph>
+            </field>
+        </record>
+        
+        <!-- Laporan Permintaan Recruitment -->
+		<record id="search_laporan_recruitment" model="ir.ui.view">
+            <field name="name">Laporan Permintaan Recruitment</field>
+            <field name="model">hr.lap_permintaan_karyawan</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Laporan Recruitment">
+                    <group expand="0" string="Group By...">
+                        <filter string="Tahun" name="tahun" icon="terp-personal" domain="[]" context="{'group_by':'tahun'}"/>
+                        <filter string="Department" name="dept" icon="terp-personal" domain="[]" context="{'group_by':'dep'}"/>
+                        <filter string="posisi" name="posisi" icon="terp-personal" domain="[]" context="{'group_by':'posisi'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="laporan_permintaan_recruitment">
+            <field name="name">Laporan Permintaan Recruitment</field>
+            <field name="res_model">hr.lap_permintaan_karyawan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="context">{'search_default_tahun':1, 'search_default_dept':1}</field>
+            <field name="search_view_id" ref="view_sumary_kebutuhan"/>
+        </record> 
+
+        <record id="view_laporan_recruitment" model="ir.ui.view">
+                <field name="name">Laporan Permintaan Recruitment</field>
+                <field name="model">hr.lap_permintaan_karyawan</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Laporan Permintaan Recruitment">
+                        <field name='no'/>
+                        <field name="dep"/>
+                        <field name="posisi"/>
+                        <field name="jumlah"/>
+                        <field name="wkt_penempatan"/>
+                        <field name="pengalaman"/>
+                        <field name="usia"/>
+                        <field name="jenis_kelamin"/>
+                        <field name="status"/>
+                        <field name="domisili"/>
+                        <field name="tahun"/>
+                        <field name='stat'/>
+                    </tree>
+                </field>
+        </record>
+
+        <!-- monitoring recruitment -->
+        <record model="ir.actions.act_window" id="monitoring_recruitment">
+            <field name="name">monitoring Recruitment </field>
+            <field name="res_model">hr.monitoring_recruitment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record> 
+
+        <record id="view_monitoring_recruitment1" model="ir.ui.view">
+                <field name="name">monitoring Recruitment</field>
+                <field name="model">hr.monitoring_recruitment</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Monitoring Recruitment" editable="bottom">
+                        <field name="name" readonly="1"/> 
+                        <field name="dep" readonly="1"/> 
+                        <field name="test1_hrd" readonly="1"/>  
+                        <field name="test2_hrd" readonly="1"/> 
+                        <field name="test1_usr" readonly="1"/> 
+                        <field name="test2_usr" readonly="1"/> 
+                        <field name="approval" readonly="1"/> 
+                        <field name="tes_kesehatan" readonly="1"/>  
+                        <field name="ket"/> 
+                        <field name="status"/>
+                    </tree>
+                </field>
+        </record>
+
+        <!--sumary monitoring recruitment-->
+        <record model="ir.actions.act_window" id="sumary_monitoring_recruitment">
+            <field name="name">Sumary monitoring Recruitment </field>
+            <field name="res_model">hr.sumary_monitoring</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record> 
+
+        <record id="view_sumary_monitoring_recruitment1" model="ir.ui.view">
+                <field name="name">Sumary monitoring Recruitment</field>
+                <field name="model">hr.sumary_monitoring</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Sumary Monitoring Recruitment">
+                        <field name="tahun"/>
+                        <field name="dep"/>
+                        <field name="qty"/>
+                        <field name="test1"/> 
+                        <field name="wawancara_hrd"/>
+                        <field name="wawancara1_usr"/>
+                        <field name="wawancara2_usr"/>
+                        <field name="approval"/>
+                        <field name="tes_kesehatan"/>
+                        <field name="pending"/>
+                    </tree>
+                </field>
+        </record>
+
+        <!--Sarmut HRD-->
+        <record model="ir.actions.act_window" id="sasaran_mutu">
+            <field name="name">Sasaran Mutu HRD </field>
+            <field name="res_model">hr.sarmut</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record> 
+
+        <record id="view_sarmut" model="ir.ui.view">
+                <field name="name">Sasaran Mutu HRD</field>
+                <field name="model">hr.sarmut</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Sasaran  Mutu HRD">
+                        <field name="divisi"/>
+                        <field name="department"/>
+                        <field name="bagian"/>
+                        <field name="jabatan"/> 
+                        <field name="jum_ygdibutuhkan"/>
+                        <field name="level"/>
+                        <field name="tgl_per_user"/>
+                        <field name="per_atasan_usr"/>
+                        <field name="waktu1"/>
+                        <field name="per_dir"/>
+                        <field name="waktu2"/>
+                        <field name="per_dir_fin"/>
+                        <field name="waktu3"/>
+                        <field name="diterima_recruitment"/>
+                        <field name="waktu4"/>
+                        <field name="wawancara1"/>
+                        <field name="jum_nwd"/>
+                        <field name="waktu_tot"/>
+                        <field name="status"/>
+                        <field name="ket"/>
+                    </tree>
+                </field>
+        </record>
+
+         <!--Sumary Sarmut HRD-->
+        <record model="ir.actions.act_window" id="sumary_sasaran_mutu">
+            <field name="name">Sumary Sasaran Mutu HRD </field>
+            <field name="res_model">hr.sumary_sarmut</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record> 
+
+        <record id="view_sumary_sarmut" model="ir.ui.view">
+                <field name="name">Sumary Sasaran Mutu HRD</field>
+                <field name="model">hr.sumary_sarmut</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Sasaran  Mutu HRD">
+                        <field name="jabatan"/> 
+                        <field name="jumlah_permohonan"/>
+                        <field name="jum_ygdibutuhkan"/>
+                        <field name="jum_waktu_pros"/>
+                        <field name="rata_waktu_pros"/>
+                        <field name="jum_waktu_wawancara"/>
+                        <field name="rata_waktu_wawancara"/>
+                        <field name="jum_nwd"/>
+                        <field name="tot_waktu_proses"/>
+                        <field name="rata_waktu_pemenuhan"/>
+                        <field name="target"/>
+                        <field name="status"/>
+                        <field name="ket"/>
+                    </tree>
+                </field>
+        </record>
+		
+    <menuitem name="Recruitment" id="menu_hr_report" parent="hrd_ppi_main_reporting" sequence="27"/> 
+
+    <menuitem name="Daftar Seleksi Pelamar" id="daftar_pelamar" parent="menu_hr_report" sequence="28" action="daftar_seleksi_pelamar"/>   
+
+    <menuitem name="Laporan Pemenuhan Recruitment" id="pemenuhan_recrutiment" parent="menu_hr_report" sequence="29" action="laporan_pemenuhan_recrutiment"/> 
+
+    <menuitem name="List Pemenuhan Recruitment" id="list_pemenuhan_rec" parent="menu_hr_report" sequence="30"/>
+
+        <menuitem name="Kebutuhan Harian/Bulanan" id="kebutuhan_harian" parent="list_pemenuhan_rec" sequence="31" action="list_pemenuhan"/>
+
+        <menuitem name="Sumary Kebutuhan Bulanan" id="sumary_kebutuhan_harian" parent="list_pemenuhan_rec" sequence="32" action="sumary_pemenuhan"/>
+
+        <menuitem name="Sumary Kebutuhan Harian" id="sumary_kebutuhan_harian1" parent="list_pemenuhan_rec" sequence="32" action="sumary_pemenuhan_harian"/>
+
+    <!--menuitem name="Laporan Monitoring Sasaran Mutu"
+        id='laporan_monitoring'
+        parent='menu_hr_report' 
+        sequence='34'/>
+
+        <menuitem name="Sumary Monitoring Sasaran Mutu"
+        id='sumary_laporan_monitoring'
+        parent='laporan_monitoring' 
+        sequence='35' action="sumary_monitoring_recruitment" />
+
+        <menuitem name="Detail Monitoring Sasaran Mutu"
+        id='detail_laporan_monitoring'
+        parent='laporan_monitoring' 
+        sequence='36' action="sumary_monitoring_recruitment" /-->
+
+    <menuitem name="Laporan Permintaan Recruitment" id="laporan_permintaan_karyawan" parent="menu_hr_report" sequence="35" action="laporan_permintaan_recruitment"/>
+
+    <!--menuitem name="Daftar Pelamar"
+        id='daftar_pelamar1'
+        parent='menu_hr_report' 
+        sequence='36' action='crm_case_tree_view_job'/-->
+
+    <menuitem name="Laporan Monitoring Progres Interview" id="monitoring_interview" parent="menu_hr_report" sequence="36"/>
+
+        <menuitem name="Detail Monitoring" id="detail_monitoring" parent="monitoring_interview" sequence="37" action="monitoring_recruitment"/>
+
+        <menuitem name="Sumary Monitoring" id="sumary_monitoring" parent="monitoring_interview" sequence="38" action="sumary_monitoring_recruitment"/>
+    
+    <menuitem name="Sasaran Mutu HRD" id="sarmutu" parent="menu_hr_report" sequence="39"/>
+    
+        <menuitem name="Detail Sasaran Mutu HRD" id="detail_sarmut" parent="sarmutu" sequence="40" action="sasaran_mutu"/>
+
+        <menuitem name="Sumary Sasaran Mutu HRD" id="sumary_sarmut" parent="sarmutu" sequence="41" action="sumary_sasaran_mutu"/>
+
+    </data>
+</openerp>

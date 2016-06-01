@@ -1,0 +1,707 @@
+<?xml version="1.0"?>
+
+<openerp>
+    <data>
+      
+    <record model="ir.ui.view" id="crm_case_form_view_job2">
+        <field name="name">Jobs-Recruitment Form</field>
+        <field name="model">hr.applicant</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="arch" type="xml">
+            <button name="case_close_with_emp"  position="replace">
+                <button name="case_close_with_emp" string="Hire &amp; Create Employee" type="object"
+                        groups="hrd_ppi.group_hr_training_head" 
+                        class="oe_highlight" attrs="{'invisible':['|', ('emp_id','!=',False), ('state','!=','done')]}"/>
+            </button>
+            <button name="action_makeMeeting"  position="replace">
+                <button name="action_makeMeeting" type="object"
+                        string="Schedule Meeting" help="Schedule interview with this applicant" groups="base.group_hr_user"/>
+            </button>
+            <field name="partner_name" position="after">
+                <label for='stage_id' string="Status"/>
+                <field name="stage_id"/>
+                <label for='empgol_id' string="Golongan" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="empgol_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head" />
+                 <label for='fingerprint_code2' string="fingerprint ID" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="fingerprint_code2" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head" />
+                <label for="lokasi_id" string="Lokasi Kerja" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="lokasi_id" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
+                <label for="lokasi_id" string="PTKP" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                <field name="ptkp" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}" groups="hrd_ppi.group_hr_training_head"/>
+            </field>
+
+            <!--div class="oe_right oe_button_box" position="replace"/-->
+            <field name="stage_id" position="replace"/>
+            <field name="reference" position="replace"/>
+            <field name="email_from" position="replace"/>
+            <field name="partner_phone" position="replace"/>
+            <field name="partner_mobile" position="replace"/> 
+            <field name="categ_ids" position="replace"/>
+            <field name="date_action" position="replace"/>
+            <field name="title_action" position="replace"/>
+            <field name="priority" position="replace"/>
+            <field name="type_id" position="replace" />
+            
+            <field name="partner_name" position="replace">               
+                <field name="partner_name"/>    
+            </field>   
+
+            <field name="name" position="replace">  
+                <field name="name"/>
+            </field>         
+
+            <field name="user_id" position="replace">
+                <field name="user_id" readonly="1"/>
+            </field>      
+
+            <field name="source_id" position="replace">
+                <field name="source_id"/>
+            </field>                  
+
+            <field name="partner_id" position="replace">
+                <group string="Informasi Pribadi" colspan="2">
+                    <field name="kelamin"/>
+                    <field name="kota_id"/>
+                    <field name="tgl_lahir"/>
+                    <field name="age"/>
+                    <field name="agama_id"/>
+                    <field name="country_id" on_change="onchange_country(country_id)"/>
+                    <field name="status"/>
+                    <field name="sjk_tanggal" attrs="{'invisible': [('status','=','single')]}"/>
+                    <field name="email_from" widget="email"/>
+                    <field name="partner_phone" />
+					<field name="blood"/>
+                </group>
+                <group string="Kartu Identitas" colspan="2">
+                    <field name="jenis_id"/>
+                    <field name="ktp"/>
+                    <field name="issued_id" attrs="{'invisible': [('jenis_id','=','Passport')]}"/>
+                    <field name="issued_id2" attrs="{'invisible': [('jenis_id','=','KTP')]}"/>
+                    <field name="tgl_keluar_ktp"/>
+                    <field name="tgl_berlaku"/>
+                    <field name="sim"/>
+                    <field name="tgl_keluar_sim"/> 
+                    <field name="tgl_berlaku2"/>
+                </group> 
+                <group string="Interview">
+                    <field view_mode="tree,form" name="surv_ids" >
+                        <tree>
+                            <field name='name'/>
+                        </tree>
+                        <form>
+                            <field name='name'/>
+                        </form>
+                    </field>                  
+                    <field view_mode="tree,form" name="meeting_ids">
+                        <tree>
+                            <field name='name'/>
+                            <field name='date'/>
+                            <field name='location'/>
+                            <field name='state' invisible="1"/>
+                        </tree>
+                    </field>
+                    <field name='stat'/>
+                    <!--field view_mode="tree,form" name="status_ids">
+                        <tree>
+                            <field name="status"/>
+                            <field name="kondisi"/>
+                        </tree>
+                        <form>
+                            <field name="status"/>
+                            <field name="kondisi"/>
+                        </form>
+                    </field>
+                    <field name='keputusan'/-->
+                </group> 
+                                   
+            </field>
+
+            <!--field name="user_id" position="replace">
+                <field name="user_id" attrs="{'required':[('state','=','open')],'invisible':[('state','!=','open')]}" />
+            </field-->
+            <field name="user_id" position="before" >
+            
+                <group string="Pendidikan" colspan="2">
+                    <field name="pengalaman"/>
+                    <field name="type_id" placeholder="Degree"/>
+                    <field name="bidang_id"/>
+                    <field name="jurusan_id"/> 
+                    <field name="pt_id"/>
+                    <field name="result_id"/>  
+                </group>
+			
+               <group colspan="2">
+                    <group string="Alamat Domisili">
+					<field name='country_id1' on_change="onchange_country1(country_id1)"/>	                  
+                    <field name="prov_id"/>
+                    <field name="kab_id"/>
+                    <field name="kec_id"/>
+					<field name="alamat1"/>
+                    <field name='kode1'/>
+                    <field name="telp1"/>
+                    </group>
+                    <newline/>
+                    <group string="Alamat sesuai KTP">
+                    <field name='country_id2' on_change="onchange_country2(country_id2)"/>
+                    <field name="prov_id2"/>
+                    <field name="kab_id2"/>
+                    <field name="kec_id2"/>
+					<field name="alamat2"/>
+                    <field name='kode2'/>                  
+                    <field name="telp2"/>                    	
+                    </group>
+					<newline/>
+					<group>
+					<field name="respon_div"/>
+                    <field name='app_id'/>
+                    <field name='dep_app'/>
+					</group>    
+                </group> 
+            </field>
+            
+            <field name="source_id" position="after"> 
+                <field name="ref"/>              
+                <newline/>
+                <group string="Kesimpulan" states="open,pending" groups="hrd_ppi.group_hr_training_head,base.group_hr_user">
+                <button string="Diterima" name="simpul" type="object" states="open,pending" class="oe_highlight" />
+                <button name="case_cancel" string="Ditolak" type="object" states="open,pending" class="oe_highlight" />
+                <button name="tidak_hadir" string="Tidak Hadir" type="object" states="open,pending" class="oe_highlight" />
+                </group>                 	
+             </field>
+
+			<group string="Job" position="replace" />
+
+            <group string="Contract" position="replace" >
+                <newline/>
+                <group string="Job" col="2">
+                    <field name="survey" invisible="1"/>
+                    <field name="response" invisible="1"/>
+                    <field name="job_id" on_change="onchange_job(job_id)"/>
+                    <field name="department_id" on_change="onchange_department_id(department_id)"/>
+                    <label for="availability"/>
+                    <div>
+                        <field name="availability" class="oe_inline"/> <label string="Day(s)" class="oe_inline"/>
+                    </div>
+                    <group string="Result"  colspan="2" attrs="{'invisible':[('state','=','draft')]}">
+                        <field name="survey_result_ids" view_mode="tree,form" >
+                            <tree>
+                                <field name='result'/>
+                                <field name='user_id'/>
+                                <field name='stage'/>
+                            </tree>
+                            <form >
+                                <field name='result'/>
+                                <field name='user_id' />
+                                <field name='reason' />
+                            </form>
+                        </field>
+                    </group>
+                </group>
+                <group>
+                    <group string="Contract">
+                        <label for="salary_expected"/>
+                        <div>
+                            <field name="salary_expected" class="oe_inline" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name="fasilitas1_ids"/>
+                        </div>
+                        <label for="salary_proposed" string="Standar Gaji Perusahaan" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head"/>
+                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head">
+                            <field name="salary_proposed_botom_margin" class="oe_inline" />
+                            <span class="oe_inline" > - </span>
+                            <field name="salary_proposed_top_margin" class="oe_inline" />
+                            <field name="fasilitas2_ids"/>
+                        </div>
+                        <label for="salary_proposed" groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head"/>
+                        <div groups="hrd_ppi.group_hr_user,hrd_ppi.group_hr_training_head">
+                            <field name="salary_proposed" class="oe_inline" attrs="{'required':[('state','=','done')],'invisible':[('state','!=','done')]}"/>
+                        </div>
+                    </group>
+                </group>
+            </group>
+
+            <field name="description" position="after">
+                <notebook colspan="4">                      
+                        <page string="Susunan Keluarga Istri/Suami" name="istri/suami" attrs="{'invisible':[('status','=','single')]}">
+                            <field view_mode="tree,form" name="susunan_kel1_ids" nolabel="1">
+                                <tree>
+                                    <field name="susunan"/>
+                                    <field name="name"/>
+                                    <field name="kelamin"/>  
+                                    <field name="kota_id"/>
+                                    <field name="tgl_lahir"/>
+                                    <field name="type_id"/>
+                                    <field name="pekerjaan"/>
+                                </tree>
+                                <form>
+                                <group>
+                                    <field name="susunan"/>
+                                    <field name="name"/>
+                                    <field name="kelamin"/>
+                                </group>    
+                                <group>    
+                                    <field name="kota_id"/>
+                                    <field name="tgl_lahir"/>
+                                    <field name="type_id"/>
+                                    <field name="pekerjaan"/>
+                                </group>
+                                </form>
+                            </field>
+                        </page>
+                        
+                         <page string="Susunan Keluarga Ayah/ibu" name="ayah/ibu">
+                            <field view_mode="tree,form" name="susunan_kel2_ids" nolabel="1">
+                                <tree>
+                                    <field name="susunan"/>
+                                    <field name="name"/>
+                                    <field name="kelamin"/>
+                                    <field name="kota_id"/>
+                                    <field name="tgl_lahir"/>
+                                    <field name="type_id"/>
+                                    <field name="pekerjaan"/>
+                                </tree>
+                                <form>
+                                <group>
+                                    <field name="susunan"/>
+                                    <field name="name"/>
+                                    <field name="kelamin"/>
+                                </group>    
+                                <group>    
+                                    <field name="kota_id"/>
+                                    <field name="tgl_lahir"/>
+                                    <field name="type_id"/>
+                                    <field name="pekerjaan"/>
+                                </group>
+                                </form>
+                            </field>
+                        </page>
+                        
+                        <page string="Riwayat Pendidikan" name="rwt_pendidikan">
+                            <field view_mode="tree,form" name="rwt_pend_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="jurusan"/>
+                                    <field name="tempat"/>
+                                    <field name="tahun_msk"/>
+                                    <field name="tahun_klr"/>
+                                    <field name="ijazah"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                    <field name="name"/>                                                                     
+                                    <field name="jurusan"/>
+                                    <field name="tahun_msk"/>
+                                    <field name="tahun_klr"/>                                   
+                                    <field name="ijazah"/>
+                                    </group>
+                                    <group>
+                                    <field name="tempat"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        
+                         <page string="Bahasa" name="bahasa">
+                            <field view_mode="tree,form" name="bahasa_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="tulis"/>
+                                    <field name="lisan"/>
+                                </tree>
+                                <form>
+                                <group>
+                                    <field name="name"/>
+                                </group>  
+                                <group>  
+                                    <field name="tulis"/>
+                                    <field name="lisan"/>
+                                </group>
+                                </form>
+                            </field>
+                        </page>
+                        
+                        <page string="Riwayat Pekerjaan" name="rwt_krj">
+                            <field view_mode="tree,form" name="rwt_krj_ids" nolabel="1">
+                                <tree>
+                                    <!--field name="no"/-->
+                                    <field name="name"/>
+                                    <field name="tempat"/>
+                                    <field name="tahun_msk"/>
+                                    <field name="tahun_klr"/>
+                                    <field name="jabatan"/>
+                                    <field name="gaji"/>
+                                    <field name="alasan"/>
+                                </tree>
+                                <form>
+                                <group>
+                                    <!--field name="no"/-->
+                                    <field name="name"/>
+                                    <field name="tempat"/>
+                                </group>
+                                <group>    
+                                    <field name="tahun_msk"/>
+                                    <field name="tahun_klr"/>
+                                    <field name="jabatan"/>
+                                    <field name="gaji"/>
+                                    <field name="alasan"/>
+                                </group>     
+                                </form>
+                            </field>
+                        </page>    
+                        
+                        <page string="Referensi Internal" name="konek1" >
+                            <field view_mode="tree,form" name="koneksi1_ids" nolabel="1">
+                                <tree>
+                                    <field name='employee_id'/>
+                                    <field name='job_id'/>
+                                    <field name='Departmen_id'/>                                  
+                                    <field name="telepon"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                    <field name='employee_id'/>
+                                    <field name='job_id'/>
+                                    </group>
+                                    <group>
+                                    <field name='Departmen_id'/>                                    
+                                    <field name="telepon"/>
+                                    </group>
+                                </form>
+                            </field>                                
+                        </page>
+                        	    	
+                        <page string="Referensi Eksternal" name="konek2" >
+                            <field view_mode="tree,form" name="koneksi2_ids" nolabel="1">
+                                <tree>
+                                    <field name='name'/>                                    
+                                    <field name='jabatan'/>
+                                    <field name="alamat"/>
+                                    <field nema="telepon"/>
+                                </tree>
+                                <form>
+                                <group>
+                                    <field name='name'/>
+                                    <field name='jabatan'/>
+                                </group>
+                                <group>   
+                                    <field name="alamat"/>
+                                    <field name="telepon"/>
+                               </group>
+                               </form>
+                            </field>                                
+                        </page>
+                        
+                    </notebook>      
+             </field>   
+        </field>
+    </record>
+
+    <record id="view_crm_filter" model="ir.ui.view">
+        <field name="name">Jobs - Recruitment Search</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.view_crm_case_jobs_filter"/>
+        <field name="arch" type="xml">
+            <search string="Search Jobs">
+                <filter string="Status Hire" name="employee" domain="[('emp_id','=',False)]"/>
+           </search>
+        </field>
+    </record>
+
+    <record id="view_country_form" model="ir.ui.view">
+            <field name="name">res.country.form</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name='code_telp'/>
+                </field>
+            </field>
+    </record>  
+
+    <record id="view_meeting_form" model="ir.ui.view">
+            <field name="name">Interview</field>
+            <field name="model">crm.meeting</field>
+            <field name="inherit_id" ref="base_calendar.view_crm_meeting_form"/>
+            <field name="arch" type="xml">
+                <field name="categ_ids" position="replace"/>
+                <field name="organizer" position="replace"/>
+                <field name='description' position='before'>
+                    <field name='stat'/>
+                </field>
+                <field name="description" position="after">
+                <field view_mode="tree" name="applicant_ids" >
+                        <tree editable="bottom">
+                            <field name="create_date"/> 
+                            <field name="name" string="Subject"/> 
+                            <field name="partner_name"/> 
+                            <field name="type_id"/>
+                            <field name="job_id"/> 
+                            <field name="department_id" invisible="context.get('invisible_department', True)"/>
+                            <field name="stage_id"/>
+                        </tree>                  
+                </field>
+                <field name='status'/>  
+                <button name="status" string="status" type="object"/>
+                </field>
+            </field>
+    </record>
+
+        <record id="action_hr_pmeeting applicant" model="ir.actions.act_window">
+            <field name="name">Interview</field>
+            <field name="res_model">crm.meeting</field>
+            <field name="view_type">form</field>           
+            <field name="view_mode">calendar,tree,form</field>
+        </record>   
+
+                  
+        <!--readonly per group-->
+    <!--record id="view_applicant_readonly2" model="ir.ui.view">
+        <field name="name">Recruitment form R</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department')])]"/>
+        <field name="arch" type="xml">
+            <field name='date_from' position="attributes">
+                <attribute name="attrs">{'readonly':[('state','not in',['draft','evaluation'])]}</attribute>
+            </field>
+            <field name='name' position="attributes">
+                <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
+            </field>   
+            <field name='partner_name' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>          
+            <field name='salary_proposed_extra' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>   
+            <field name='salary_expected' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>               
+            <field name='email_from' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field> 
+            <field name='partner_phone' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>                        
+        </field>
+    </record-->     
+
+    <record id="view_recruitment_readonly2" model="ir.ui.view">
+        <field name="name">Recruitment form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hrd_ppi.crm_case_form_view_job2"/>
+        <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department')])]"/>
+        <field name="arch" type="xml">
+z
+            <field name='kelamin' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>        
+            <field name='kota_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>         
+            <field name='tgl_lahir' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='ktp' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='jenis_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='tgl_keluar_ktp' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='tgl_berlaku' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='tgl_berlaku2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='sim' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='tgl_keluar_sim' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='alamat1' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='alamat2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='telp1' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='telp2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='status' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='sjk_tanggal' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='pengalaman' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>   
+            <field name='blood' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='kode1' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='kode2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='salary_proposed_botom_margin' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>  
+            <field name='salary_proposed_top_margin' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>                                                                                                                                      <field name='agama_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>                                                                                                 
+            <field name='country_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='type_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='bidang_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='jurusan_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='pt_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='result_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field> 
+            <field name='issued_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='country_id1' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='prov_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='kab_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='country_id2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='prov_id2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='kab_id2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='kec_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>            
+            <field name='kec_id2' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='respon_div' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='source_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>      
+            <field name='job_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='department_id' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>
+            <field name='availability' position="attributes">
+                <attribute name="attrs">{'readonly':['|',('stage_id','!=','Initial Qualification'),('state','!=','draft')]}</attribute>
+            </field>                                                                                                                                                                                          
+        </field>
+    </record>     
+
+    <!--edit kanban-->
+<!--     <record model="ir.ui.view" id="hr_kanban_view_applicant_edit">
+            <field name="name">Hr Applicants kanban R</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_kanban_view_applicant"/>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id" position="replace">
+                <kanban default_group_by="stage_id" edit="false" quick_create="false">
+                    <field name="stage_id"/>
+                    <field name="color"/>
+                    <field name="priority"/>
+                    <field name="survey"/>
+                    <field name="user_id"/>
+                    <field name="user_email"/>
+                    <field name="partner_name"/>
+                    <field name="type_id"/>
+                    <field name="job_id"/>
+                    <field name="title_action"/>
+                    <field name="department_id"/>
+                    <field name="categ_ids"/>
+                    <field name="message_summary"/>
+                    <templates>
+                        <t t-name="kanban-tooltip">
+                            <ul class="oe_kanban_tooltip">
+                                <li t-if="record.type_id.raw_value"><b>Degree:</b> <field name="type_id"/></li>
+                                <li t-if="record.partner_id.raw_value"><b>Contact:</b> <field name="partner_id"/></li>
+                                <li t-if="record.department_id.raw_value"><b>Departement:</b> <field name="department_id"/></li>
+                            </ul>
+                        </t>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_semantic_html_override">
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban">
+                                    <span class="oe_e">i</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                                        <li><a name="action_makeMeeting" type="object">Schedule Interview</a></li>
+                                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content" tooltip="kanban-tooltip">
+                                    <div>
+                                        <t t-if="record.partner_name.raw_value"><b><field name="partner_name"/></b><br/></t>
+                                        <i><field name="name"/></i><br/>
+                                        <field name="job_id"/><br/>
+                                        <t t-if="record.partner_mobile.raw_value">Mobile: <field name="partner_mobile"/><br/></t>
+                                        <t t-if="record.title_action.raw_value"><field name="title_action"/><br/></t>
+                                        <field name="date_action"/>
+                                    </div>
+                                    <div class="oe_kanban_right">
+                                        <t t-set="priority" t-value="record.priority.raw_value || 5"/>
+                                        <a type="object" name="set_priority" args="['3']" t-if="priority gt 3">
+                                            <img src="/web/static/src/img/icons/star-off.png" width="16" height="16" title="Good"/>
+                                        </a>
+                                        <a type="object" name="set_priority" args="['5']" t-if="priority lte 3">
+                                            <img t-attf-src="/web/static/src/img/icons/star-#{priority lte 3 ? 'on' : 'off'}.png" width="16" height="16" title="Good"/>
+                                        </a>
+                                        <a type="object" name="set_priority" args="['2']">
+                                            <img t-attf-src="/web/static/src/img/icons/star-#{priority lte 2 ? 'on' : 'off'}.png" width="16" height="16" title="Very Good"/>
+                                        </a>
+                                        <a type="object" name="set_priority" args="['1']">
+                                            <img t-attf-src="/web/static/src/img/icons/star-#{priority == 1 ? 'on' : 'off'}.png" width="16" height="16" title="Excellent"/>
+                                        </a>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
+
+                                    </div>
+                                    <div class="oe_kanban_footer_left" style="margin-top:5px;">
+                                        <t t-raw="record.message_summary.raw_value"/>
+                                        <field name="categ_ids"/>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+                </kanban>
+            </field>
+        </record> -->
+
+
+    </data>
+</openerp>

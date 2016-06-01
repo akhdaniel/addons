@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_template_line_calc_field_tree">
+            <field name="name">ea_import.template.line.calc_field.tree</field>
+            <field name="model">ea_import.template.line.calc_field</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Template Line Calculated Field">
+                    <field name="operation"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_template_line_calc_field_form">
+            <field name="name">ea_import.template.line.calc_field.form</field>
+            <field name="model">ea_import.template.line.calc_field</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Template Line Calculated Field" col="2">
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="column_number"/>
+                    <field name="operation"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="ea_import_template_line_calc_field_action">
+            <field name="name">Import Template line.calc_fields</field>
+            <field name="res_model">ea_import.template.line.calc_field</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ea_import_template_line_calc_field_tree"/>
+            <field name="context">{'template_id':active_id}</field>
+	    <field name="target">current</field>
+        </record>        
+
+    </data>
+</openerp>

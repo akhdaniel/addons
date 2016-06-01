@@ -1,0 +1,66 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="tab_form_view2">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hrd_ppi.tab_form_view"/>
+            <field name="arch" type="xml">
+                <field name='clas_id' position='replace'>
+                    <field name='kelas'/>
+                </field>
+                <field name="extitle_id" position="replace"/> 
+             </field>                                                   
+        </record>
+
+        <!--hutang employee-->
+        <record id="view_employee_form_rhutang" model="ir.ui.view">
+            <field name="name">hr.employee.hutang</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="before">
+                    <group string="Hutang Karyawan">
+                        <label for="hutang_koperasi"/>
+                        <div>
+                            <field name="hutang_koperasi" class="oe_inline" on_change='on_change_koperasi(hutang_koperasi)'/>
+                        </div>
+                        <label for="pembayaran"/>
+                        <div>
+                            <field name="pembayaran" class="oe_inline"/>x Pembayaran
+                        </div>
+                        <label for="sisa_tunggakan"/>
+                        <div>
+                            <field name="sisa_tunggakan" class="oe_inline"/>
+                        </div>        
+                        <label for="hutang_perusahaan"/>
+                        <div>
+                            <field name="hutang_perusahaan" class="oe_inline" on_change='on_change_perusahaan(hutang_perusahaan)'/>
+                        </div>
+                        <label for="pembayaran2"/>
+                        <div>
+                            <field name="pembayaran2" class="oe_inline"/>x Pembayaran
+                        </div>
+                        <label for="sisa_tunggakan2"/>
+                        <div>
+                            <field name="sisa_tunggakan2" class="oe_inline"/>
+                        </div>
+                         <label for="denda_kelalaian"/>
+                        <div>
+                            <field name="denda_kelalaian" class="oe_inline" on_change='on_change_denda(denda_kelalaian)'/>
+                        </div>
+                        <label for="cicilan"/>
+                        <div>
+                            <field name="cicilan" class="oe_inline"/>x Pembayaran
+                        </div>
+                        <label for="sisa_denda"/>
+                        <div>
+                            <field name="sisa_denda" class="oe_inline"/>
+                        </div>
+                    </group>                   
+                </xpath>
+            </field>
+        </record>   
+    </data>
+</openerp>

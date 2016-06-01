@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_template_line_tree">
+            <field name="name">ea_import.template.line.tree</field>
+            <field name="model">ea_import.template.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Template Line">
+                    <field name="target_field"/>
+                    <field name="template_id"/>
+                    <field name="sequence"/>
+                    <field name="field_type"/>
+                    <field name="key_field"/>
+                    <field name="required"/>
+                    <field name="header_column_name"/>
+                    <field name="default_value"/>
+                    <field name="use_only_defaults"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_template_line_form">
+            <field name="name">ea_import.template.line.form</field>
+            <field name="model">ea_import.template.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Template Line" col="8">
+                    <field name="sequence" colspan="8" attrs="{'invisible': ['|', ('many2one_rel_type', '=', 'template'), ('use_only_defaults', '=', True)]}"/>
+                    <field name="target_field" colspan="6" domain="[('model_id', '=', target_model_id), ('ttype', '!=', 'many2many')]" on_change="onchange_target_field(target_field)"/>
+                    <field name="template_id" invisible='1'/>
+                    <field name="target_model_id" invisible="1"/>
+                    <field name="field_type" colspan="4" invisible="1"/>
+                    <field name="default_value"/>
+                    <field name="calc_field_ids" attrs="{'invisible': ['|', ('calculated', '=', False), ('field_type', 'not in', ['float', 'integer'] )]}" nolabel="1" colspan="8"/>
+                    <field name="regexp_field_ids" attrs="{'invisible': [('replace', '=', False),]}" nolabel="1" colspan="8"/>
+                    <field name="boolean_field_ids" attrs="{'invisible': [('field_type', '!=', 'boolean')]}" nolabel="1" colspan="8"/>
+                    <field name="use_only_defaults"/>
+                    <field name="replace"/>
+                    <field name="calculated" attrs="{'invisible': [('field_type', 'not in', ['float', 'integer'] )]}"/>
+                    <field name="time_format" colspan="4" attrs="{'invisible': [('field_type', '!=', 'date')]}"/>
+                    <group string="many2one field settings" colspan="8" attrs="{'invisible': [('field_type', '!=', 'many2one')]}">
+                        <field name="many2one_rel_type"/>
+                        <field name="related_field" colspan="8" domain="[('model_id', '=', related_field_model), ('ttype', '!=', 'many2many')]" attrs="{'invisible': [('many2one_rel_type', '!=', 'subfield')]}"/>
+                        <field name="related_template_id" attrs="{'invisible': [('many2one_rel_type', '!=', 'template')]}"/>
+                        <field name="related_field_model" invisible='1'/>
+                    </group>
+                    <field name="key_field" colspan="2"/>
+                    <field name="required" colspan="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="ea_import_template_line_action">
+            <field name="name">Import Template Lines</field>
+            <field name="res_model">ea_import.template.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ea_import_template_line_tree"/>
+            <field name="context">{'template_id':active_id}</field>
+	    <field name="target">current</field>
+        </record>        
+
+    </data>
+</openerp>
