@@ -97,7 +97,7 @@ class purchase_order(osv.osv):
         # Compute what the new orders should contain
         new_orders = {}
 
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         order_lines_to_move = []
         for porder in [order for order in self.browse(cr, uid, ids, context=context) if order.state == 'draft']:
             order_key = make_key(porder, ('partner_id', 'location_id', 'pricelist_id'))
