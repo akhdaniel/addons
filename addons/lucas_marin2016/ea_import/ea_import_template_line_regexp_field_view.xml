@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="ea_import_template_line_regexp_field_tree">
+            <field name="name">ea_import.template.line.regexp_field.tree</field>
+            <field name="model">ea_import.template.line.regexp_field</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Template Line Regexp Field">
+                    <field name="regexp"/>
+                    <field name="replace_by"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ea_import_template_line_regexp_field_form">
+            <field name="name">ea_import.template.line.regexp_field.form</field>
+            <field name="model">ea_import.template.line.regexp_field</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Template Line Regexp Field" col="2">
+                    <field name="regexp"/>
+                    <field name="replace_by"/>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

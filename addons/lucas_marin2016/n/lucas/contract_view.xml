@@ -1,0 +1,35 @@
+<openerp>
+	<data>
+        <record id="hr_contract_view_form3" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hrd_ppi.hr_contract_view_form2"/>
+            <field name="arch" type="xml">
+                <separator string="Kontrak Proyek" position='replace'/>
+            	<field name="proyek" position="replace"/>
+            </field>
+        </record>
+        <record id="hr_contract_view_form4" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="advantages" position="before">
+                    <field name="jenis_tunjangan"/>
+                </field>
+            </field>
+        </record>
+        <!--contract Type-->
+        <record id="hr_contract_type_view_form3" model="ir.ui.view">
+            <field name="name">hr.contract.type.view.form2</field>
+            <field name="model">hr.contract.type</field>
+            <field name="inherit_id" ref="hrd_ppi_payroll.hr_contract_type_view_form2"/>
+            <field name="arch" type="xml">          
+                <field name="jams2" position='after'>
+                    <field name='jams3'/>
+                    <field name='jams4'/>       
+                </field>                       
+            </field>
+        </record>
+    </data>
+</openerp>

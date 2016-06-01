@@ -1,0 +1,1864 @@
+<openerp>
+	<data>
+<!-- working Shift 1 Lucas Produksi 1 -->
+	    <record model="resource.calendar" id="working_shift1_lucas_produksi1" >
+	    	<field name="name">Shift 1 Lucas Produksi 1</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas Produksi 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_produksi1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_produksi1/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_produksi1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_produksi1/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_produksi1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_produksi1/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_produksi1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_produksi1/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_produksi1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_produksi1/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">14</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas1_produksi1" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">11</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi1" />
+	    </record>
+
+<!-- working Shift 1 Lucas produksi 2-->
+	    <record model="resource.calendar" id="working_shift1_lucas_produksi2" >
+	    	<field name="name">Shift 1 Lucas Produksi 2</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas produksi 2-->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_produksi2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_produksi2/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_produksi2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2"/>
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_produksi2/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2"/>
+	    </record>	
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_produksi2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_produksi2/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_produksi2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_produksi2/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">13.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_produksi2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_produksi2/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">14</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas1_produksi2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">13</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_produksi2" />
+	    </record>
+
+
+<!-- working Shift 2 Lucas -->
+	    <record model="resource.calendar" id="working_shift2_lucas_produksi" >
+	    	<field name="name">Shift 2 Lucas produksi</field>
+	    </record>
+
+    <!-- detail working days Shift 2 Lucas -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas2/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">20.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas2/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">20.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas2/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">20.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas2/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">20.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas2/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">20.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas2/2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">20.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_produksi" />
+	    </record>
+
+
+<!-- working Shift 3 Lucas -->
+	    <record model="resource.calendar" id="working_shift3_lucas_produksi" >
+	    	<field name="name">Shift 3 Lucas Produksi</field>
+	    </record>
+
+    <!-- detail working days Shift 3 Lucas -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas3" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">21</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon2_lucas3" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">00.50</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas3" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">21</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>	
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue2_lucas3" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">00.50</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>	        
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas3" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">21</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed2_lucas3" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">00.50</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas3" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">21</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu2_lucas3" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">00.50</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas3" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">21</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri2_lucas3" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">00.50</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas3" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">21</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat2_lucas3" >
+	    	<field name="name">san</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">00.50</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_lucas_produksi" />
+	    </record>
+
+
+<!-- working jadwal non shift Lucas Produksi -->
+	    <record model="resource.calendar" id="working_non_shift_lucas_produksi" >
+	    	<field name="name">Jadwal Non Shift Lucas Produksi</field>
+	    </record>
+
+    <!-- detail working days Jadwal non shift Lucas produksi -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_jadwal_lucas1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_jadwal_lucas1/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_jadwal_lucas1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_jadwal_lucas1/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_jadwal_lucas1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_jadwal_lucas1/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_jadwal_lucas1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_jadwal_lucas1/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_jadwal_lucas1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_jadwal_lucas1/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_jadwal_lucas1" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">11</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi" />
+	    </record>
+
+<!-- working jadwal non shift Lucas Produksi 2 -->
+	    <record model="resource.calendar" id="working_non_shift_lucas_produksi2" >
+	    	<field name="name">Jadwal Non Shift Lucas Produksi 2</field>
+	    </record>
+
+    <!-- detail working days Jadwal non shift Lucas produksi -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_jadwal_lucas2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_jadwal_lucas2/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_jadwal_lucas2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_jadwal_lucas2/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_jadwal_lucas2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_jadwal_lucas2/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_jadwal_lucas2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_jadwal_lucas2/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_jadwal_lucas2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_jadwal_lucas2/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_jadwal_lucas2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">13</field>
+	    	<field name="calendar_id" ref="working_non_shift_lucas_produksi2" />
+	    </record>
+
+<!-- working Shift 2 Lucas Teknik-->
+	    <record model="resource.calendar" id="working_shift2_lucas_teknik" >
+	    	<field name="name">Shift 2 Lucas Teknik</field>
+	    </record>
+
+    <!-- detail working days Shift 2 Lucas -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas2_teknik" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas2/2_teknik" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">21.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas2_teknik" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas2/2_teknik" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">21.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas2_teknik" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas2/2_teknik" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">21.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas2_teknik" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas2/2_teknik" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">21.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas2_teknik" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas2/2_teknik" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">21.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas2_teknik" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas2/2_teknik" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">21.50</field>
+	    	<field name="calendar_id" ref="working_shift2_lucas_teknik" />
+	    </record>
+
+<!-- working Shift 1 Lucas 5 hari kerja 1 -->
+	    <record model="resource.calendar" id="working_shift1_lucas_5_1" >
+	    	<field name="name">Shift 1 Lucas 5 Hari Kerja 1</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_5_1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_5_1/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_5_1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_5_1/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_5_1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_5_1/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_5_1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_5_1/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_5_1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_5_1/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">15</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas1_5_1" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">11</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_1" />
+	    </record>
+
+<!-- working Shift 1 Lucas 5 hari kerja 2 -->
+	    <record model="resource.calendar" id="working_shift1_lucas_5_2" >
+	    	<field name="name">Shift 1 Lucas 5 Hari Kerja 2</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_5_2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_lucas1_5_2/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_5_2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_lucas1_5_2/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_5_2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_lucas1_5_2/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_5_2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">10</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_lucas1_5_2/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">10.50</field>
+	    	<field name="hour_to">14.50</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_5_2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_lucas1_5_2/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">15</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_lucas1_5_2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">13</field>
+	    	<field name="calendar_id" ref="working_shift1_lucas_5_2" />
+	    </record>
+
+<!-- working kimia Lucas 5 hari kerja 1 -->
+	    <record model="resource.calendar" id="working_kimia_lucas_5_1" >
+	    	<field name="name">kimia Lucas 5 Hari Kerja</field>
+	    </record>
+
+    <!-- detail working days kimia Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_kimia_5_1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_kimia_5_1/2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_kimia_5_1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_kimia_5_1/2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_kimia_5_1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_kimia_5_1/2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_kimia_5_1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_kimia_5_1/2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_kimia_5_1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">9</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_kimia_5_1/2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_5_1" />
+	    </record>
+
+<!-- working kimia Lucas 6 hari kerja -->
+	    <record model="resource.calendar" id="working_kimia_lucas_6_1" >
+	    	<field name="name">Kimia Lucas 6 Hari Kerja</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_kimia_6_1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_kimia_6_1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_kimia_6_1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_kimia_6_1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_kimia_6_1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_kimia_6_1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_kimia_6_1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_kimia_6_1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">17.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_kimia_6_1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_kimia_6_1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">18.50</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_kimia_6_1" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">11</field>
+	    	<field name="calendar_id" ref="working_kimia_lucas_6_1" />
+	    </record>
+
+<!-- working normal hari kerja -->
+	    <record model="resource.calendar" id="working_normal" >
+	    	<field name="name">Normal Hari Kerja</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_normal" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_normal" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_normal" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_normal" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_normal" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_normal" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_normal" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_normal" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_normal" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_normal" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">17</field>
+	    	<field name="calendar_id" ref="working_normal" />
+	    </record>
+
+<!-- working normal kuliah hari kerja -->
+	    <record model="resource.calendar" id="working_normal_kuliah" >
+	    	<field name="name">Normal Kuliah Hari Kerja</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_normal_kuliah" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon_normal_kuliah" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_normal_kuliah" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue_normal_kuliah" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_normal_kuliah" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_normal_kuliah" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_normal_kuliah" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_normal_kuliah" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">16.50</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_normal_kuliah" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">7</field>
+	    	<field name="hour_to">12</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_normal_kuliah" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">13</field>
+	    	<field name="hour_to">16</field>
+	    	<field name="calendar_id" ref="working_normal_kuliah" />
+	    </record>
+
+<!-- working satpam hari kerja -->
+	    <record model="resource.calendar" id="working_satpam_1" >
+	    	<field name="name">Normal satpam jam 6.00 - 15.30</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_satpam_1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_satpam_1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_satpam_1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_satpam_1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_satpam_1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_satpam_1" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_satpam_1" >
+	    	<field name="name">san</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">6</field>
+	    	<field name="hour_to">15.50</field>
+	    	<field name="calendar_id" ref="working_satpam_1" />
+	    </record>
+
+<!-- working satpam hari kerja -->
+	    <record model="resource.calendar" id="working_satpam_2" >
+	    	<field name="name">Normal satpam jam 8.00 - 18</field>
+	    </record>
+
+    <!-- detail working days Shift 1 Lucas mikro dan kimia 1 -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_satpam_2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_satpam_2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2"/>
+	    </record>	  
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_satpam_2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_satpam_2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2"/>
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_satpam_2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_satpam_2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_satpam_2" >
+	    	<field name="name">san</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">8</field>
+	    	<field name="hour_to">18</field>
+	    	<field name="calendar_id" ref="working_satpam_2" />
+	    </record>
+
+<!-- working satpam 3 Lucas -->
+	    <record model="resource.calendar" id="working_satpam_3" >
+	    	<field name="name">Jadwal Satpam 18.00 - 4.00</field>
+	    </record>
+
+    <!-- detail working days satpam 3 Lucas -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_satpam_3" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon2_satpam_3" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">4</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_satpam_3" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>	
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue2_satpam_3" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">4</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>	        
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_satpam_3" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed2_satpam_3" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">4</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_satpam_3" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu2_satpam_3" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">00.00</field>
+	    	<field name="hour_to">4</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_satpam_3" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri2_satpam_3" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">00.00</field>
+	    	<field name="hour_to">4</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_satpam_3" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">18</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat2_satpam_3" >
+	    	<field name="name">san</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">4</field>
+	    	<field name="calendar_id" ref="working_satpam_3" />
+	    </record>
+
+<!-- working satpam 4 Lucas -->
+	    <record model="resource.calendar" id="working_satpam_4" >
+	    	<field name="name">Jadwal Satpam 18.00 - 4.00</field>
+	    </record>
+
+    <!-- detail working days satpam 4 Lucas -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_satpam_4" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon2_satpam_4" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">6</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_satpam_4" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>	
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue2_satpam_4" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">6</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>	        
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_satpam_4" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed2_satpam_4" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">6</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_satpam_4" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu2_satpam_4" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">00.00</field>
+	    	<field name="hour_to">6</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_satpam_4" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri2_satpam_4" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">00.00</field>
+	    	<field name="hour_to">6</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_satpam_4" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">20</field>
+	    	<field name="hour_to">00.00</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat2_satpam_4" >
+	    	<field name="name">san</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">00.01</field>
+	    	<field name="hour_to">6</field>
+	    	<field name="calendar_id" ref="working_satpam_4" />
+	    </record>
+
+
+<!-- working Shift 1 Marin -->
+	    <record model="resource.calendar" id="working_shift1_marin" >
+	    	<field name="name">Shift 1 marin</field>
+	    </record>
+
+    <!-- detail working days Shift 1 marin -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_marin1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">5.50</field>
+	    	<field name="hour_to">13.00</field>
+	    	<field name="calendar_id" ref="working_shift1_marin" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_marin1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">5.50</field>
+	    	<field name="hour_to">13.00</field>
+	    	<field name="calendar_id" ref="working_shift1_marin" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_marin1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">5.50</field>
+	    	<field name="hour_to">13.00</field>
+	    	<field name="calendar_id" ref="working_shift1_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_marin1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">5.50</field>
+	    	<field name="hour_to">13.00</field>
+	    	<field name="calendar_id" ref="working_shift1_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_marin1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">5.50</field>
+	    	<field name="hour_to">13.00</field>
+	    	<field name="calendar_id" ref="working_shift1_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_marin1" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">5.50</field>
+	    	<field name="hour_to">13.00</field>
+	    	<field name="calendar_id" ref="working_shift1_marin" />
+	    </record>
+
+
+<!-- working Shift 2 marin -->
+	    <record model="resource.calendar" id="working_shift2_marin" >
+	    	<field name="name">Shift 2 marin</field>
+	    </record>
+
+    <!-- detail working days Shift 2 marin -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_marin2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">22</field>
+	    	<field name="calendar_id" ref="working_shift2_marin" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_marin2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">22</field>
+	    	<field name="calendar_id" ref="working_shift2_marin" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_marin2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">22</field>
+	    	<field name="calendar_id" ref="working_shift2_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_marin2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">22</field>
+	    	<field name="calendar_id" ref="working_shift2_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_marin2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">22</field>
+	    	<field name="calendar_id" ref="working_shift2_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_marin2" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">12.50</field>
+	    	<field name="hour_to">22</field>
+	    	<field name="calendar_id" ref="working_shift2_marin" />
+	    </record>
+
+
+<!-- working Shift 3 marin -->
+	    <record model="resource.calendar" id="working_shift3_marin" >
+	    	<field name="name">Shift 3 marin</field>
+	    </record>
+
+    <!-- detail working days Shift 3 marin -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_marin3" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">21.50</field>
+	    	<field name="hour_to">23.59</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_mon2_marin3" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">00</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_marin3" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">21.50</field>
+	    	<field name="hour_to">23.59</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>	
+
+	    <record model="resource.calendar.attendance" id="working_hours_tue2_marin3" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">00</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>	        
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_marin3" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">21.50</field>
+	    	<field name="hour_to">23.59</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed2_marin3" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">00</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_marin3" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">21.50</field>
+	    	<field name="hour_to">23.59</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu2_marin3" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">00</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_marin3" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">21.50</field>
+	    	<field name="hour_to">23.59</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri2_marin3" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">00</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat_marin3" >
+	    	<field name="name">sat</field>
+	    	<field name="dayofweek">5</field>
+	    	<field name="hour_from">21.50</field>
+	    	<field name="hour_to">23.59</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_sat2_marin3" >
+	    	<field name="name">san</field>
+	    	<field name="dayofweek">6</field>
+	    	<field name="hour_from">00</field>
+	    	<field name="hour_to">5.50</field>
+	    	<field name="calendar_id" ref="working_shift3_marin" />
+	    </record>
+
+
+<!-- working jadwal 1 marin hari senin - jumat -->
+	    <record model="resource.calendar" id="working_jadwal1_marin" >
+	    	<field name="name">Jadwal 1 marin</field>
+	    </record>
+
+    <!-- detail working days Jadwal 1 marin -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_jadwal_marin1" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">18.50</field>
+	    	<field name="calendar_id" ref="working_jadwal1_marin" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_jadwal_marin1" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">18.50</field>
+	    	<field name="calendar_id" ref="working_jadwal1_marin" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_jadwal_marin1" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">18.50</field>
+	    	<field name="calendar_id" ref="working_jadwal1_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_jadwal_marin1" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">18.50</field>
+	    	<field name="calendar_id" ref="working_jadwal1_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_jadwal_marin1" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">10</field>
+	    	<field name="hour_to">18.50</field>
+	    	<field name="calendar_id" ref="working_jadwal1_marin" />
+	    </record>
+
+
+<!-- working jadwal 2 marin hari senin - jumat -->
+	    <record model="resource.calendar" id="working_jadwal2_marin" >
+	    	<field name="name">Jadwal 2 marin</field>
+	    </record>
+
+    <!-- detail working days Jadwal 2 marin -->
+	    <record model="resource.calendar.attendance" id="working_hours_mon_jadwal_marin2" >
+	    	<field name="name">mon</field>
+	    	<field name="dayofweek">0</field>
+	    	<field name="hour_from">11.50</field>
+	    	<field name="hour_to">20</field>
+	    	<field name="calendar_id" ref="working_jadwal2_marin" />
+	    </record>
+	    
+	    <record model="resource.calendar.attendance" id="working_hours_tue_jadwal_marin2" >
+	    	<field name="name">tue</field>
+	    	<field name="dayofweek">1</field>
+	    	<field name="hour_from">11.50</field>
+	    	<field name="hour_to">20</field>
+	    	<field name="calendar_id" ref="working_jadwal2_marin" />
+	    </record>	    
+
+	    <record model="resource.calendar.attendance" id="working_hours_wed_jadwal_marin2" >
+	    	<field name="name">wed</field>
+	    	<field name="dayofweek">2</field>
+	    	<field name="hour_from">11.50</field>
+	    	<field name="hour_to">20</field>
+	    	<field name="calendar_id" ref="working_jadwal2_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_thu_jadwal_marin2" >
+	    	<field name="name">thu</field>
+	    	<field name="dayofweek">3</field>
+	    	<field name="hour_from">11.50</field>
+	    	<field name="hour_to">20</field>
+	    	<field name="calendar_id" ref="working_jadwal2_marin" />
+	    </record>
+
+	    <record model="resource.calendar.attendance" id="working_hours_fri_jadwal_marin2" >
+	    	<field name="name">fri</field>
+	    	<field name="dayofweek">4</field>
+	    	<field name="hour_from">11.50</field>
+	    	<field name="hour_to">20</field>
+	    	<field name="calendar_id" ref="working_jadwal2_marin" />
+	    </record>
+
+	</data>
+</openerp>

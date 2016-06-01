@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="workflow" id="wkf_hr_ppi">
+            <field name="name">hr.job</field>
+            <field name="osv">hr.job</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!--nodes recruitment-->
+        <record model="workflow.activity" id="act_draft">
+            <field name="wkf_id" ref="wkf_hr_ppi"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_submit">
+            <field name="wkf_id" ref="wkf_hr_ppi"/>
+            <field name="name">submit</field>
+            <field name="kind">function</field>
+            <field name="action">action_submit()</field>
+        </record>
+        
+        <record model="workflow.activity" id="act_verify">
+            <field name="wkf_id" ref="wkf_hr_ppi"/>
+            <field name="name">verify</field>
+            <field name="kind">function</field>
+            <field name="action">action_verify()</field>
+        </record>
+                
+        <record model="workflow.activity" id="act_in_progress">
+            <field name="wkf_id" ref="wkf_hr_ppi"/>
+            <field name="name">in_progress</field>
+            <field name="kind">function</field>
+            <field name="action">action_in_progress()</field>
+        </record>
+
+        <!--Transition-->
+        <record model="workflow.transition" id="t_draft">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_submit"/>
+            <field name="signal">signal_submit</field>
+        </record>
+        
+        <record model="workflow.transition" id="t0_draft">
+            <field name="act_from" ref="act_submit"/>
+            <field name="act_to" ref="act_verify"/>
+            <field name="signal">signal_verify</field>
+        </record>
+        
+        <record model="workflow.transition" id="t1_verify">
+            <field name="act_from" ref="act_verify"/>
+            <field name="act_to" ref="act_draft"/>
+            <field name="signal">signal_cancel</field>
+        </record>
+        
+        <record model="workflow.transition" id="t3_in_progress">
+            <field name="act_from" ref="act_verify"/>
+            <field name="act_to" ref="act_in_progress"/>
+            <field name="signal">signal_approve</field>
+        </record>
+        
+        <record model="workflow.transition" id="t_stop">
+            <field name="act_from" ref="act_in_progress"/>
+            <field name="act_to" ref="act_draft"/>
+            <field name="signal">signal_stop_recruit</field>
+        </record>
+
+    </data> 
+</openerp>
+       

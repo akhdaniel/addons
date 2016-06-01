@@ -1,0 +1,44 @@
+<openerp>
+	<data>
+		<!-- ref pegawai a1 -->
+		<record id="view_hr_manpower_report_tree" model="ir.ui.view">
+            <field name="name">hr.pajak.refpegawaia1.tree</field>
+            <field name="model">hr.pajak.refpegawaia1</field>
+            <field name="arch" type="xml">
+	            <tree string="Pegawai A1" create="false">
+	                <field name="npwp" />
+	                <field name="nik" />
+	                <field name='nama'/>
+	                <field name="alamat"/>
+	                <field name='jenis_kelamin'/>
+	                <field name="status_ptkp"/>
+	                <field name='jum_tanggungan'/>
+	                <field name='nama_jabatan'/>
+	                <field name='wp_luar_negri'/>
+	            </tree>
+            </field>
+        </record>
+	   	<record id="refpegawaiaa1_report_act" model="ir.actions.act_window">
+           <field name="name">Ref Pegawai A1</field>
+           <field name="res_model">hr.pajak.refpegawaia1</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">tree</field>
+           <field name="domain">[]</field>
+        </record>
+
+        <!-- XML field res.country, country_code -->
+        <record id="view_country_form2" model="ir.ui.view">
+            <field name="name">res.country.form</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <field name="code" position="after">
+                    <field name='country_code'/>
+                </field>
+            </field>
+    	</record>  
+        <!-- Menu Item -->
+	    <menuitem name="Pajak Report CSV" id="menu_pajak" parent="hrd_ppi.hrd_ppi_main_reporting" groups="base.group_hr_manager,base.group_hr_user"/>
+        <menuitem name="RefPegawaiA1" id="menu_refpegawai" action="refpegawaiaa1_report_act" parent="menu_pajak"/>
+    </data>
+</openerp>

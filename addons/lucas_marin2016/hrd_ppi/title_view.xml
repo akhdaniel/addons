@@ -1,0 +1,43 @@
+<openerp>
+    <data>
+        <record model="ir.actions.act_window" id="action_master_title">
+                <field name="name">Master Title</field>
+                <field name="res_model">hr.title</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_master_extitle">
+                <field name="name">Master ExTitle</field>
+                <field name="res_model">hr.extitle</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+        
+        <record model="ir.ui.view" id="action_master_title-tree">
+                <field name="name">Master Title</field>
+                <field name="model">hr.title</field>
+                <field name="view_type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Master Title'>
+                        <field name='name'/>
+                        <field name='digit'/>
+                        <field name='code'/>
+                    </tree>
+                </field>
+        </record>
+        <record model="ir.ui.view" id="action_master_title_tree">
+                <field name="name">Master Title</field>
+                <field name="model">hr.extitle</field>
+                <field name="view_type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Master ExTitle'>
+                        <field name='name'/>
+                        <field name='digit'/>
+                        <field name='code'/>
+                    </tree>
+                </field>
+        </record>
+        <menuitem parent="base.menu_tools" name="Master Title" id="base.title" action="action_master_title" groups="base.group_tool_manager,base.group_hr_manager,base.group_hr_user"/>
+        <menuitem parent="base.menu_tools" name="Master ExTitle" id="base.extitle" action="action_master_extitle" groups="base.group_tool_manager,base.group_hr_manager,base.group_hr_user"/>
+    </data>
+</openerp>

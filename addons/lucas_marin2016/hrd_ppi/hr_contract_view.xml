@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="hr_contract_view_form2" model="ir.ui.view">
+            <field name="name">hr.contract.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <field name="employee_id" position="replace">
+                    <field name="employee_id" on_change="onchange_employee(employee_id)"/>
+                    <field name='status'/>
+                    <field name='stat'/>
+                </field>
+                <field name='date_end' position='replace'>
+            <!--field name='date_end' on_change='onchange_tahun(date_end)' attrs="{'readonly': [('stat','=','open')]}"/-->
+                    <field name='date_end' on_change='onchange_tahun(date_end)'/>
+                </field>
+                <field name='working_hours' position='before'>
+                    <field name='kelompok_sift' on_change='onchange_sift(kelompok_sift)'/>
+                </field>
+                <field name='notes' position='after'>
+                    <separator string="Kontrak Proyek"/>
+                    <field name='proyek'>
+                        <tree>
+                            <field name='nama'/>
+                            <field name='lokasi'/>
+                            <field name='mulai'/>
+                            <field name='sampai'/>
+                            <field name='jam_kerja'/>
+                            <field name='status'/>
+                        </tree>
+                        <form>
+                            <field name='nama'/>
+                            <field name='lokasi'/>
+                            <field name='mulai'/>
+                            <field name='sampai'/>
+                            <field name='jam_kerja'/>
+                            <field name='tunjangan_proyek'/>
+                            <field name='tunjangan_lain'/>
+                        </form>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_tree2" model="ir.ui.view">
+            <field name="name">hr.contract.view.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Contracts"> 
+                    <field name='status'/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_contract_view_tree1" model="ir.ui.view">
+            <field name="name">hr.contract.view.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Contracts" position='attributes'> 
+                    <attribute name="colors">red:status==False</attribute>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="tab_form_view_contact">
+            <field name="name">employe</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='active_group']" position="before">
+                    <group string="Informasi Kontrak">
+                        <field name='tgl_msk'/>
+                        <label for="status_contract"/>
+                        <div>
+                            <field name="status_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="no_contract"/>
+                        <div>
+                            <field name="no_contract" class="oe_inline"/> 
+                        </div>
+                        <label for="tanggal"/>
+                        <div>                          
+                            <field name="tanggal" class="oe_inline"/>
+                        </div>                     
+                        <label for="warning_hari"/>
+                        <div>                          
+                            <field name="warning_hari" class="oe_inline">Hari</field>
+                        </div> 
+                    </group>                   
+                </xpath>
+            </field>
+        </record>
+
+        <record forcecreate="1" id="ppi_status_contract" model="ir.cron">
+            <field name="name">Status Kontrak Non Aktif</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract'" name="model" />
+            <field eval="'status_employee'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-05-13 17:00:00"</field>
+        </record>
+
+        <record forcecreate="1" id="ppi_batas_contract" model="ir.cron">
+            <field name="name">Batas Aktif Kontrak Dalam Hari</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract'" name="model" />
+            <field eval="'duration_employee'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-05-13 17:00:00"</field>
+        </record>
+
+        <record forcecreate="1" id="ppi_roling_sift" model="ir.cron">
+            <field name="name">Roling Sift</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract.schedule'" name="model" />
+            <field eval="'pindah_sift'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-06-9 17:00:00"</field>
+        </record>
+
+        <record forcecreate="1" id="ppi_schedule_sift" model="ir.cron">
+            <field name="name">Schedul Sift Contract</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract.schedule'" name="model" />
+            <field eval="'working_schedule'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2014-06-9 18:00:00"</field>
+        </record>
+
+        <!-- Sift Kerja Tree -->
+    <record model="ir.ui.view" id="hr_sift_tree">
+        <field name="name">hr.contract.schedule.tree</field>
+        <field name="model">hr.contract.schedule</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="name"/>
+                <field name="sift_roling"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Sift Kerja Form-->
+    <record model="ir.ui.view" id="hr_sift_form">
+        <field name="name">hr.contract.schedule.form</field>
+        <field name="model">hr.contract.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Sift Kerja" version="7.0">
+                <group string="Stage Definition">
+                    <group>
+                        <field name="name"/>
+                        <field name="sift_roling"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Approval Action -->
+    <record id="hr_sift_act" model="ir.actions.act_window">
+        <field name="name">Sift Kerja</field>
+        <field name="res_model">hr.contract.schedule</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="hr_sift_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new stage in the recruitment process.
+          </p><p>
+            Don't forget to specify the department if your recruitment process
+            is different according to the job position.
+          </p>
+        </field>
+    </record>
+
+    <menuitem name="Sift Kerja"
+        id="menu_sift_kerja"
+        parent="hr.menu_hr_configuration"
+        sequence="41" groups="base.group_hr_manager,base.group_hr_user"/>
+
+    <menuitem
+        id="menu_sift_kerja1"
+        name="Pengelompokan Sift Kerja"
+        parent="menu_sift_kerja"
+        action="hr_sift_act"
+        sequence="1" groups="base.group_hr_manager,base.group_hr_user"/>
+
+         <!-- Sift Kerja Tree -->
+    <record model="ir.ui.view" id="hr_sift_roling_tree">
+        <field name="name">hr.sift.roling.tree</field>
+        <field name="model">hr.sift.roling</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="name"/>
+                <field name="schedule"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Sift Kerja Form-->
+    <record model="ir.ui.view" id="hr_sift_roling_form">
+        <field name="name">hr.sift.roling.form</field>
+        <field name="model">hr.sift.roling</field>
+        <field name="arch" type="xml">
+            <form string="Sift Kerja" version="7.0">
+                <group string="Stage Definition">
+                    <group>
+                        <field name="name"/>
+                        <field name="schedule"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Approval Action -->
+    <record id="hr_sift_roling_act" model="ir.actions.act_window">
+        <field name="name"> Urutan Sift Kerja</field>
+        <field name="res_model">hr.sift.roling</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="hr_sift_roling_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new stage in the recruitment process.
+          </p><p>
+            Don't forget to specify the department if your recruitment process
+            is different according to the job position.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_urutan_sift_kerja1"
+        name="Urutan Sift Kerja"
+        parent="menu_sift_kerja"
+        action="hr_sift_roling_act"
+        sequence="1" groups="base.group_hr_manager,base.group_hr_user"/>
+
+    <!-- jenis karyawan kontrak -->
+        <record id="employee_contract" model="hr.contract.type">
+                <field name="name">Kontrak</field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,288 @@
+
+<openerp>
+    <data>
+        <record id="view_hr_job_form2" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+
+                <header>                              
+                    <button string="Send For Approval" type="object" name='action_submit' attrs="{'invisible': [('states_id','!=','submit')]}" groups="hrd_ppi.group_hr_admins"/>
+                    <button string='Approval department' type='object' name='action_verify' attrs="{'invisible': [('states_id','!=','approval')]}" groups="hrd_ppi.group_hr_aprove_dep1"/>
+                    <button string='Approval HR' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval1')]}" groups="base.group_hr_manager"/>
+                    <button string='Approval Presdir' type='object' name='action_in_progress' attrs="{'invisible': [('states_id','!=','approval2')]}" groups="hrd_ppi.group_hr_aprove_presdir"/>
+                    <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval')]}" 
+                    group="hrd_ppi.group_hr_aprove_dep1"/>
+                    <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval1')]}"
+                    groups="base.group_hr_manager"/>
+                    <button string='Cancel' type='object' name='cancel' attrs="{'invisible': [('states_id','!=','approval2')]}"
+                    groups="hrd_ppi.group_hr_aprove_coo"/>
+                    <button string='Selesai' type='object' name='selesai' attrs="{'invisible': [('states_id','!=','in_progress')]}" groups="base.group_hr_user,base.group_hr_manager"/>    
+                    <!-- <field name='state' widget='statusbar'/>       -->
+                    <!--field name='states_id' widget='statusbar'/-->           
+                </header> 
+                <xpath expr="//div[@class='oe_title']" version="7.0" position="replace">                  
+                    <div>
+                        <group colspan="2">
+                            <field name="jenis_permohonan"/> 
+                            <field name='no_permohonan'/>
+                            <field name='status_rec' invisible="1"/>
+                            <field name='states_id' invisible="1"/>
+                        </group>
+
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <div>
+                                <field name="bol_name" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/> 
+                                <field name="name" nolabel="1" class="oe_inline" attrs="{'readonly':[('kunci','=',True)]}"/>
+                                <field name="kunci" groups="base.group_hr_user"/>
+                            </div>
+                        </h1>
+                    </div>                    
+                    <div class='oe_title'/>
+                </xpath>                
+                <field name="no_of_employee" position="before">
+                    <label for="salary_proposed_botom_margin" groups="hrd_ppi.group_hr_manager"/>
+                    <div groups="hrd_ppi.group_hr_manager">
+                        <field name="salary_proposed_botom_margin" class="oe_inline"/>
+                        <span class="oe_inline"> - </span>
+                        <field name="salary_proposed_top_margin" class="oe_inline"/>
+                    </div>                    
+                    <field name="status_jabatan" /> 
+
+                    <div>
+                        <field name="bol_pengalaman" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="pengalaman" class="oe_inline" />
+                    </div>
+                    <field name="pengalaman" class="oe_inline"  nolabel="1"/>
+
+                    <div>
+                        <field name="bol_usia" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="usia" class="oe_inline" />
+                    </div>
+                    <field name="usia" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_kelamin" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="kelamin" class="oe_inline" />
+                    </div>  
+                    <field name="kelamin" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_sts_prk" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="sts_prk" class="oe_inline" />
+                    </div>
+                    <field name="sts_prk" nolabel="1"/> 
+
+                    <div>
+                        <field name="bol_domisili" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="domisili_id" class="oe_inline" />
+                    </div>
+                    <field name="domisili_id" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_tempat_lahir_id" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="tempat_lahir_id" class="oe_inline" />
+                    </div>
+                    <field name="tempat_lahir_id" nolabel="1"/> 
+
+                </field>
+                <field name="department_id" position="replace">
+                    <field name="bagian_id"/>
+                    <field name="divisi_id"/>
+                    <field name="department_id" on_change="onchange_department_id(department_id)"/>
+                </field>
+                <field name="department_id" position="after">                                        
+                    <label for="wkt_pemohon" string="Waktu Penempatan"/>
+                        <div class="oe_title">
+                            <label for="wkt_pemohon"/>
+                            <field name="wkt_pemohon" />
+                            <label for="wkt_rekruter" attrs="{'invisible':[('states_id','!=','in_progress')]}"/>
+                            <field name="wkt_rekruter" attrs="{'invisible':[('states_id','!=','in_progress')]}"/>                   
+                        </div>                    
+                    <field name="catatan" attrs="{'invisible':[('state','!=','in_progress')]}"/>
+
+                     <div>
+                        <field name="bol_type_id" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="type_id" class="oe_inline" />
+                    </div>
+                    <field name="type_id" nolabel="1"/>
+
+                    <div>
+                        <field name="bol_jurusan_ids" nolabel="1" attrs="{'invisible':[('states_id','!=','in_progress')]}" groups="hrd_ppi.group_hr_training_head"/>
+                        <label for="jurusan_ids" class="oe_inline" />
+                    </div>
+                    <field view_mode="tree" name="jurusan_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                        </tree>    
+                    </field>                        
+                      
+                    <field view_mode="tree" name="survey_ids">
+                        <tree>
+                            <field name='surveys_id'/>
+                        </tree>
+                    </field>   
+                </field>
+                <field name="requirements" position="replace">
+                    <div>
+                    <label for="catatan2"/>
+                    <field name="catatan2"/>
+                    </div>             
+                    <button string="Filter" type="object" 
+                        name="cici" status_rec="filter"
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user"  
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','filter')]}"/> 
+                    <button string="Execute" type="object" 
+                        status_rec="execute" name="execute"
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','execute')]}"/> 
+                    <button string="New Recruitment" type="object" 
+                        status_rec="pending" name="new_recruitment" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','pending')]}" /> 
+                    <button string="New Recruitment" type="object" 
+                        status_rec="pending" name="new_recruitment" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','in_progres')]}" />  
+                    <button string="Cancel Recruitment" type="object"
+                        attrs="{'invisible':[('status_rec','=','new')]}" 
+                        status_rec="in_progres" name="cancel_recruitment"
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
+                        class="oe_highlight" />  
+                    <button string="Pending" type="object" 
+                        status_rec="pending" name="pending" 
+                        groups="hrd_ppi.group_hr_training_head,base.group_hr_user" 
+                        class="oe_highlight" attrs="{'invisible':[('status_rec','!=','pending')]}" />   
+                <notebook colspan="4">                      
+                        <page string="Daftar Pelamar" name="Pelamar" attrs="{'invisible':[('states_id','!=','in_progress')]}">
+                        <!--groups="hrd_ppi.group_hr_manager,hrd_ppi.group_hr_training_head" -->
+                            <field view_mode="tree,form" name="applicant_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="partner_name"/>
+                                    <field name="job_id"/>                                    
+                                    <field name="age"/>
+                                    <field name="kelamin"/>
+                                    <field name="status"/> 
+                                    <field name="stage_id"/>
+                                </tree>
+                            </field>
+                        </page>    
+                 </notebook>  
+                </field>                                                                                            
+            </field>      
+        </record>
+
+        <record id="view_recruitment_readonly" model="ir.ui.view">
+            <field name="name">Recruitment form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department'),ref('hrd_ppi.group_hr_user'),ref('hrd_ppi.group_hr_manager')])]"/>
+            <field name="arch" type="xml">
+                <field name='name' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','=','draft')]}</attribute>
+                </field>        
+                <field name='department_id' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','=','draft')]}</attribute>
+                </field>           
+                     
+            </field>
+        </record>     
+
+        <record id="view_recruitment_readonly2" model="ir.ui.view">
+            <field name="name">Recruitment form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hrd_ppi.view_hr_job_form2"/>
+            <field name="groups_id" eval="[(6, 0, [ref('hrd_ppi.group_hr_department'),ref('hrd_ppi.group_hr_user'),ref('hrd_ppi.group_hr_manager')])]"/>
+            <field name="arch" type="xml">
+
+                <field name='wkt_rekruter' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
+                </field>        
+                <field name='catatan' position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','!=','draft')]}</attribute>
+                </field>                
+                     
+            </field>
+        </record>              
+        
+    <!-- Approval Tree View -->
+    <record model="ir.ui.view" id="hr_job_approval_tree">
+        <field name="name">hr.job.approval.tree</field>
+        <field name="model">hr.job.approval</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="sequence" invisible="1"/>
+                <field name="name"/>
+                <field name="jenis_permohonan"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Approval Form View -->
+    <record model="ir.ui.view" id="hr_job_approval_form">
+        <field name="name">hr.job.approval.form</field>
+        <field name="model">hr.job.approval</field>
+        <field name="arch" type="xml">
+            <form string="Stage" version="7.0">
+                <group string="Stage Definition">
+                    <group>
+                        <field name="name"/>
+                        <field name="jenis_permohonan"/>
+                    </group>
+                    <group>
+                        <field name="state"/>
+                        <field name="sequence"/>
+                        <field name="fold"/>
+                    </group>
+                </group>
+                <separator string="Requirements"/>
+                <field name="requirements"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_recruitment_stage_tree2">
+        <field name="name">hr.recruitment.stage.tree</field>
+        <field name="model">hr.recruitment.stage</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_recruitment_stage_tree"/>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Approval Action -->
+    <record id="hr_job_approval_act" model="ir.actions.act_window">
+        <field name="name">Approval</field>
+        <field name="res_model">hr.job.approval</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="hr_job_approval_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new stage in the recruitment process.
+          </p><p>
+            Don't forget to specify the department if your recruitment process
+            is different according to the job position.
+          </p>
+        </field>
+    </record>
+    <menuitem name="Permohonan Recruitment"
+        id="menu_permohonan_recruitment"
+        parent="hr.menu_hr_configuration"
+        sequence="40"
+        groups="base.group_hr_user"/>
+
+    <menuitem
+        id="menu_hr_recruitment_permohonan"
+        name="Approval Permohonan Recruitment"
+        parent="menu_permohonan_recruitment"
+        action="hr_job_approval_act"
+        sequence="1"
+        groups="base.group_hr_user"/>
+    </data>
+</openerp>

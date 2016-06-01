@@ -1,0 +1,11 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"ea_import_template_security_id","ea_import_template_security","model_ea_import_template","group_ea_import",1,1,1,1
+"ea_import_template_line_security_id","ea_import_template_line_security","model_ea_import_template_line","group_ea_import",1,1,1,1
+"ea_import_chain_security_id","ea_import_chain_security","model_ea_import_chain","group_ea_import",1,1,1,1
+"ea_import_chain_link_security_id","ea_import_chain_link_security","model_ea_import_chain_link","group_ea_import",1,1,1,1
+"ea_import_chain_result_security_id","ea_import_chain_result_security","model_ea_import_chain_result","group_ea_import",1,1,1,1
+"ea_import_template_line_calc_field_id","ea_import_line_calc_field_security","model_ea_import_template_line_calc_field","group_ea_import",1,1,1,1
+"ea_import_template_scheduler_id","ea_import_scheduler_security","model_ea_import_scheduler","group_ea_import",1,1,1,1
+"ea_import_template_scheduler_log_id","ea_import_scheduler_log_security","model_ea_import_scheduler_log","group_ea_import",1,1,1,1
+"ea_import_template_line_boolean_field_security_id","ea_import_template_line_boolean_field_security","model_ea_import_template_line_boolean_field","group_ea_import",1,1,1,1
+"ea_import_template_line_regexp_field_security_id","ea_import_template_line_regexp_field_security","model_ea_import_template_line_regexp_field","group_ea_import",1,1,1,1

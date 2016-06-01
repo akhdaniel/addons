@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="pph"
+            string="Cetak PPH21"
+            model="hr.payslip"
+            name="pph"
+            rml="hrd_ppi_payroll/report/pph.rml"           
+            auto="False" 
+            header="False" />
+    </data>
+</openerp>
