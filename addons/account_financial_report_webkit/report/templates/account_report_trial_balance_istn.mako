@@ -210,7 +210,7 @@
                         <div class="act_as_cell amount">
                             %if init_balance_accounts[current_account.id] >0:
                                 ${formatLang(init_balance_accounts[current_account.id]) | amount}
-                                %if current_account.type != 'view' :
+                                %if current_account.level == 1:
                                     <%
                                         init_bal_debit += float(init_balance_accounts[current_account.id])
                                     %>
@@ -221,7 +221,7 @@
                         <div class="act_as_cell amount">
                             %if init_balance_accounts[current_account.id] < 0:
                                 ${formatLang(-1*init_balance_accounts[current_account.id]) | amount}
-                                %if current_account.type != 'view' :
+                                %if current_account.level == 1:
                                     <%
                                         init_bal_credit += float(-1*init_balance_accounts[current_account.id])
                                     %>
@@ -232,14 +232,14 @@
                         ## mutasi
                         ## debit                        
                         <div class="act_as_cell amount">${formatLang(debit_accounts[current_account.id]) | amount}</div>
-                            %if current_account.type != 'view':
+                            %if current_account.level == 1:
                                 <%
                                     mutasi_debit += float(debit_accounts[current_account.id])
                                 %>
                             %endif    
                         ## credit
                         <div class="act_as_cell amount">${formatLang(credit_accounts[current_account.id]) | amount}</div>
-                            %if current_account.type != 'view':
+                            %if current_account.level == 1:
                                 <%
                                     mutasi_credit += float(debit_accounts[current_account.id])
                                 %>
@@ -249,7 +249,7 @@
                             %if current_account.user_type.report_type in ['income','expense']:
                                 %if balance_accounts[current_account.id] > 0.0:
                                     ${formatLang(balance_accounts[current_account.id]) | amount}
-                                    %if current_account.type != 'view':
+                                    %if current_account.level == 1:
                                         <%
                                             labarugi_debit += float(balance_accounts[current_account.id])
                                         %>
@@ -263,7 +263,7 @@
                             %if current_account.user_type.report_type in ['income','expense']:
                                 %if balance_accounts[current_account.id] < 0.0:
                                     ${formatLang(-1 * balance_accounts[current_account.id]) | amount}
-                                    %if current_account.type != 'view':
+                                    %if current_account.level == 1:
                                         <%
                                             labarugi_credit += float(-1 * balance_accounts[current_account.id])
                                         %>
@@ -277,7 +277,7 @@
                             %if current_account.user_type.report_type in ['asset','liability']:
                                 %if balance_accounts[current_account.id] > 0.0:
                                     ${formatLang(balance_accounts[current_account.id]) | amount}
-                                    %if current_account.type != 'view':
+                                    %if current_account.level == 1:
                                         <%
                                             neraca_debit += float(balance_accounts[current_account.id])
                                         %>
@@ -291,7 +291,7 @@
                             %if current_account.user_type.report_type in ['asset','liability']:
                                 %if balance_accounts[current_account.id] < 0.0:
                                     ${formatLang(-1 * balance_accounts[current_account.id]) | amount}
-                                    %if current_account.type != 'view':
+                                    %if current_account.level == 1:
                                         <%
                                             neraca_credit += float(-1 * balance_accounts[current_account.id])
                                         %>
