@@ -219,11 +219,11 @@
                         <div class="act_as_cell first_column" style="width: 615px;">${account.code} - ${account.name}</div>
                         <div class="act_as_cell" style="width: 260px;">${_("Cumulated Balance on Account")}</div>
                         ## debit
-                        <div class="act_as_cell amount" style="width: 75px;">${ formatLang(cumul_debit) | amount }</div>
+                        <div class="act_as_cell amount" style="width: 75px; font-size:10px;">${ formatLang(cumul_debit) | amount }</div>
                         ## credit
-                        <div class="act_as_cell amount" style="width: 75px;">${ formatLang(cumul_credit) | amount }</div>
+                        <div class="act_as_cell amount" style="width: 75px; font-size:10px; ">${ formatLang(cumul_credit) | amount }</div>
                         ## balance cumulated
-                        <div class="act_as_cell amount" style="width: 75px; padding-right: 1px;">${ formatLang(cumul_balance) | amount }</div>
+                        <div class="act_as_cell amount" style="width: 75px; padding-right: 1px; font-size:10px; ">${ formatLang(cumul_balance) | amount }</div>
                         %if amount_currency(data):
                             %if account.currency_id:
                                 ## currency balance
