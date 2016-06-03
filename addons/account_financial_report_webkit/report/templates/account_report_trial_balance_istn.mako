@@ -167,6 +167,14 @@
             <div class="act_as_tbody">
               
                 <%
+                init_bal_debit = 0.0
+                init_bal_credit = 0.0
+                mutasi_debit = 0.0
+                mutasi_credit = 0.0
+                labarugi_debit = 0.0
+                labarugi_credit = 0.0
+                neraca_debit = 0.0
+                neraca_credit = 0.0
                 last_child_consol_ids = []
                 last_level = False
                 %>
@@ -187,7 +195,7 @@
                         level_class = "account_level_%s" % (level,)
                         last_child_consol_ids = [child_consol_id.id for child_consol_id in current_account.child_consol_ids]
                         last_level = current_account.level
-                    %>
+                    %>                 
                     
                     <div class="act_as_row lines ${level_class} ${"%s_account_type" % (current_account.type,)}">
                         ## code
@@ -202,27 +210,50 @@
                         <div class="act_as_cell amount">
                             %if init_balance_accounts[current_account.id] >0:
                                 ${formatLang(init_balance_accounts[current_account.id]) | amount}
+                                %if current_account.type != 'view' :
+                                    <%
+                                        init_bal_debit += float(init_balance_accounts[current_account.id])
+                                    %>
+                                %endif    
                             %endif
                         </div>
                         ## credit
                         <div class="act_as_cell amount">
                             %if init_balance_accounts[current_account.id] < 0:
                                 ${formatLang(-1*init_balance_accounts[current_account.id]) | amount}
+                                %if current_account.type != 'view' :
+                                    <%
+                                        init_bal_credit += float(-1*init_balance_accounts[current_account.id])
+                                    %>
+                                %endif
                             %endif
                         </div>
 
                         ## mutasi
                         ## debit                        
                         <div class="act_as_cell amount">${formatLang(debit_accounts[current_account.id]) | amount}</div>
+                            %if current_account.type != 'view':
+                                <%
+                                    mutasi_debit += float(debit_accounts[current_account.id])
+                                %>
+                            %endif    
                         ## credit
                         <div class="act_as_cell amount">${formatLang(credit_accounts[current_account.id]) | amount}</div>
-
-
+                            %if current_account.type != 'view':
+                                <%
+                                    mutasi_credit += float(debit_accounts[current_account.id])
+                                %>
+                            %endif
                         ## balance laba/rugi debit
                         <div class="act_as_cell amount">
                             %if current_account.user_type.report_type in ['income','expense']:
                                 %if balance_accounts[current_account.id] > 0.0:
                                     ${formatLang(balance_accounts[current_account.id]) | amount}
+                                    %if current_account.type != 'view':
+                                        <%
+                                            labarugi_debit += float(balance_accounts[current_account.id])
+                                        %>
+                                    %endif
                                 %endif
                             %endif
                         </div>
@@ -232,6 +263,11 @@
                             %if current_account.user_type.report_type in ['income','expense']:
                                 %if balance_accounts[current_account.id] < 0.0:
                                     ${formatLang(-1 * balance_accounts[current_account.id]) | amount}
+                                    %if current_account.type != 'view':
+                                        <%
+                                            labarugi_credit += float(-1 * balance_accounts[current_account.id])
+                                        %>
+                                    %endif
                                 %endif
                             %endif
                         </div>
@@ -241,6 +277,11 @@
                             %if current_account.user_type.report_type in ['asset','liability']:
                                 %if balance_accounts[current_account.id] > 0.0:
                                     ${formatLang(balance_accounts[current_account.id]) | amount}
+                                    %if current_account.type != 'view':
+                                        <%
+                                            neraca_debit += float(balance_accounts[current_account.id])
+                                        %>
+                                    %endif    
                                 %endif
                             %endif
                         </div>
@@ -250,12 +291,43 @@
                             %if current_account.user_type.report_type in ['asset','liability']:
                                 %if balance_accounts[current_account.id] < 0.0:
                                     ${formatLang(-1 * balance_accounts[current_account.id]) | amount}
+                                    %if current_account.type != 'view':
+                                        <%
+                                            neraca_credit += float(-1 * balance_accounts[current_account.id])
+                                        %>
+                                    %endif    
                                 %endif
                             %endif
                         </div>
                     </div>
-                    
                 %endfor
+            </div>    
+            <div class="act_as_thead">
+                <div class="act_as_row labels">
+
+                    ## code
+                    <div class="act_as_cell" style="width: 20px;"> </div>
+                    
+                    ## account name
+                    <div class="act_as_cell style="padding-left: ${level * 5}px;"" style="width: 70px;">${_('Jumlah ')}</div>
+
+                    ## initial balance
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(init_bal_debit) | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(init_bal_credit) | amount }</div>
+
+                    ## mutasi
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(mutasi_debit) | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(mutasi_credit) | amount }</div>
+
+                    ## balance laba rugi
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(labarugi_debit) | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(labarugi_credit) | amount }</div>
+
+                    ## balance neraca
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(neraca_debit) | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(neraca_credit) | amount }</div>
+
+                </div>
             </div>
 
         </div>
