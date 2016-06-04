@@ -108,7 +108,6 @@ class account_invoice(osv.osv):
 	#######################################################################################
 	def action_cancel(self, cr, uid, ids, context=None):
 		_logger.info("canceling invoice")
-		res = super(account_invoice, self).action_cancel(cr, uid, ids, context=None)
 
 		self.get_params(cr, uid, context=context)
 		spc = bni.spc()
@@ -130,6 +129,7 @@ class account_invoice(osv.osv):
 				spc.delete_biller_tagihan_detil(data)
 
 		spc.close()
+		res = super(account_invoice, self).action_cancel(cr, uid, ids, context=None)
 		return res
 
 

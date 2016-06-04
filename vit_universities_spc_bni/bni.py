@@ -81,7 +81,7 @@ class spc(object):
     def delete_biller_tagihan(self, data):
         with self.connection.cursor() as cursor:
             sql = "DELETE from tagihan where id_record_tagihan = %s"
-            cursor.execute(sql, (data['id_record_tagihan']))
+            cursor.execute(sql, (data['id_record_tagihan'],))
         self.connection.commit()
         return True
 
