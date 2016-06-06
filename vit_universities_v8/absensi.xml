@@ -101,7 +101,7 @@
                                 </group>
                                 <field name="absensi_ids" nolabel="1" widget="one2many_list" attrs="{'readonly':[('state','=','close')]}">
                                     <tree string="Absensi" editable="bottom">
-                                        <field name="partner_id"/>
+                                        <field name="partner_id" readonly="1"/>
                                         <field name="read_1" invisible="1"/>
                                         <field name="absensi_1" attrs="{'readonly':[('read_1','=',True)]}"/>
                                         <field name="read_2" invisible="1"/>
@@ -142,21 +142,21 @@
                                     <group>
                                     </group>
                                     <group>
-                                        <button name="posting_nilai_uts" string="Posting Nilai UTS" type="object" groups="vit_universities_v8.group_univ_dosen"/>
-                                        <button name="posting_nilai_uas" string="Posting Nilai UAS" type="object" groups="vit_universities_v8.group_univ_dosen"/>
+                                        <button name="posting_nilai_uts" string="Posting Nilai UTS" type="object" groups="vit_universities_v8.group_univ_dosen" attrs="{'invisible':[('state','!=','open')]}"/>
+                                        <button name="posting_nilai_uas" string="Posting Nilai UAS" type="object" groups="vit_universities_v8.group_univ_dosen" attrs="{'invisible':[('state','!=','open')]}"/>
                                     </group>
                                 </group>
                                 <field name="absensi_nilai_ids" nolabel="1" widget="one2many_list">
                                     <tree string="Absensi" editable="bottom">
-                                        <field name="partner_id"/>
+                                        <field name="partner_id" readonly="1"/>
                                         <field name="ulangan" invisible="1"/>
                                         <field name="presentasi" invisible="1"/>
                                         <field name="quiz" invisible="1"/>
-                                        <field name="tugas" string="Tugas/Quiz"/>
+                                        <field name="tugas" string="Tugas/Quiz" attrs="{'readonly':[('state','!=','open')]}"/>
                                         <field name="lainnya" invisible="1"/>
-                                        <field name="uts"/>
+                                        <field name="uts" attrs="{'readonly':[('state','!=','open')]}"/>
                                         <field name="uts_huruf" readonly="1"/>
-                                        <field name="uas"/>
+                                        <field name="uas" attrs="{'readonly':[('state','!=','open')]}"/>
                                         <field name="uas_huruf" readonly="1"/>                               
                                         <field name="state" invisible="1"/>
                                     </tree>

@@ -109,7 +109,7 @@
 
 
         <!-- jadwal ujian Menu Item -->      
-            <menuitem id="jadwal_ujian_sub_menu" name="Jadwal Ujian" parent="vit_universities_v8.ujian_menu" action="jadwal_ujian_list_action" sequence="20"/>
+            <!-- <menuitem id="jadwal_ujian_sub_menu" name="Jadwal Ujian" parent="vit_universities_v8.ujian_menu" action="jadwal_ujian_list_action" sequence="20"/> -->
 
         <!--sequance-->
         <record forcecreate="1" id="seq_type_jadwal_ujian" model="ir.sequence.type">
