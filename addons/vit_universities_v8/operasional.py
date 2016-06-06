@@ -174,57 +174,57 @@ class operasional_krs (osv.Model):
 					# #pastikan matakuliah yang di tambah tidak lebih dari jatah yg bisa di inputkan
 					# if selisih_tambahan_mk > tambahan_mk :			
 					# 	raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS (%s SKS) !')%(selisih_tambahan_mk,tambahan_mk))
-				#cek juga apa di setingan kurikulum mengijinkan tambah MK sesuai dengan minimal IP sementara
-				if klm_brw.min_ip > 0 : #settingan IP di kurikulum harus di isi angka positif
-					if len(mk_ids) > len(mk_ids_kurikulum) :
-						#hitung IP sementara partner ini
-						cr.execute("""SELECT okd.id, okd.mata_kuliah_id
-										FROM operasional_krs_detail okd
-										LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
-										WHERE ok.partner_id = %s
-										AND ok.state <> 'draft'"""%(vals['partner_id']))
-						dpt = cr.fetchall()
-						
-						det_id = map(lambda x: x[0], dpt)
-						total_mk_ids = map(lambda x: x[1], dpt)
-						# for x in dpt:
-						# 	x_id = x[0]
-						# 	det_id.append(x_id)
-						# 	total_mk_ids.append(x[1])
-
-						#cek mk yang dinput lebih harus yang belum di tempuh pada semester sebelumnya
-						mk_baru_ids = []
-						if ids_tambahan_mk != []:
-							for mk_krs in ids_tambahan_mk:	#mk yang baru di tambah
-								if mk_krs not in total_mk_ids:#mk-mk yg telah ditempuh pd semester sebelumnya
-									mk_baru_ids.append(mk_krs)
-
-						det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
-						sks = 0
-						bobot_total = 0.00
-						total_mk_ids = []	
-						for det in det_sch:
-							sks += det.sks
-							bobot_total += (det.nilai_angka*det.sks)			
-
-						### ips = (total nilai angka*total sks) / total sks
-						if sks == 0:
-							ips = 0
-						else :
-							ips = round(bobot_total/sks,2)
-					
-						#jika ada mk bru yg di inputkan dan ip tidak memenuhi syarat
-						if ips <= klm_brw.min_ip :
-							if mk_baru_ids != []:
-								raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
-
-
 
 		#cek partner dan semester yang sama
 		krs_uniq = self.search(cr,uid,[('partner_id','=',vals['partner_id']),('semester_id','=',vals['semester_id'])])
 		if krs_uniq != []:
 			raise osv.except_osv(_('Error!'),
 								_('KRS untuk mahasiswa dengan semester ini sudah dibuat!'))	
+
+		#cek juga apa di setingan kurikulum mengijinkan tambah MK sesuai dengan minimal IP sementara
+		if 'kurikulum_id' in vals :
+			if klm_brw.min_ip > 0 : #settingan IP di kurikulum harus di isi angka positif
+				if len(mk_ids) > len(mk_ids_kurikulum) :
+					#hitung IP sementara partner ini
+					cr.execute("""SELECT okd.id, okd.mata_kuliah_id
+									FROM operasional_krs_detail okd
+									LEFT JOIN operasional_krs ok ON ok.id = okd.krs_id
+									WHERE ok.partner_id = %s
+									AND ok.state <> 'draft'"""%(vals['partner_id']))
+					dpt = cr.fetchall()
+					
+					det_id = map(lambda x: x[0], dpt)
+					total_mk_ids = map(lambda x: x[1], dpt)
+					# for x in dpt:
+					# 	x_id = x[0]
+					# 	det_id.append(x_id)
+					# 	total_mk_ids.append(x[1])
+
+					#cek mk yang dinput lebih harus yang belum di tempuh pada semester sebelumnya
+					mk_baru_ids = []
+					if ids_tambahan_mk != []:
+						for mk_krs in ids_tambahan_mk:	#mk yang baru di tambah
+							if mk_krs not in total_mk_ids:#mk-mk yg telah ditempuh pd semester sebelumnya
+								mk_baru_ids.append(mk_krs)
+
+					det_sch = self.pool.get('operasional.krs_detail').browse(cr,uid,det_id,context=context)
+					sks = 0
+					bobot_total = 0.00
+					total_mk_ids = []	
+					for det in det_sch:
+						sks += det.sks
+						bobot_total += (det.nilai_angka*det.sks)			
+
+					### ips = (total nilai angka*total sks) / total sks
+					if sks == 0:
+						ips = 0
+					else :
+						ips = round(bobot_total/sks,2)
+				
+					#jika ada mk bru yg di inputkan dan ip tidak memenuhi syarat
+					if ips <= klm_brw.min_ip :
+						if mk_baru_ids != []:
+							raise osv.except_osv(_('Error!'), _('Indeks Prestasi Sementara (%s) kurang dari standar minimal untuk tambah matakuliah semester depan(%s) !')%(ips,klm_brw.min_ip))	
 
 		#langsung create invoice nya
 		#import pdb;pdb.set_trace()
