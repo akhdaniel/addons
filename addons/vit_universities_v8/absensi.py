@@ -196,6 +196,8 @@ class absensi(osv.osv):
 			self.write(cr,uid,ct.id,{'state':'open'},context=context)
 			for det in ct.absensi_ids:
 				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'open'},context=context)
+			for det in ct.absensi_nilai_ids:
+				self.pool.get('absensi.detail.nilai').write(cr,uid,det.id,{'state':'open'},context=context)
 		return True	
 
 	def cancel_absensi(self,cr,uid,ids,context=None):
@@ -203,6 +205,8 @@ class absensi(osv.osv):
 			self.write(cr,uid,ct.id,{'state':'draft'},context=context)
 			for det in ct.absensi_ids:
 				self.pool.get('absensi.detail').write(cr,uid,det.id,{'state':'draft'},context=context)
+			for det in ct.absensi_nilai_ids:
+				self.pool.get('absensi.detail.nilai').write(cr,uid,det.id,{'state':'draft'},context=context)	
 		return True	
 
 	def check_all_absen_per_day(self,cr,uid,ids,context=None):

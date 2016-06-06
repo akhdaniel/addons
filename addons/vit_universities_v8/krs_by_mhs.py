@@ -156,6 +156,10 @@ class operasional_krs_mahasiswa (osv.osv):
 			for mk_tambahan_id in pengajuan.mk_remedial_ids:	
 				total_sks += int(mk_tambahan_id.krs_detail_id.sks)
 				mk_pengajuan.append((0,0,{'mata_kuliah_id'	: mk_tambahan_id.krs_detail_id.mata_kuliah_id.id,'sks':mk_tambahan_id.krs_detail_id.sks, 'state': 'draft'}))
+				self.pool.get('operasional.krs_detail.tambahan.mahasiswa').write(cr,uid,mk_tambahan_id.id,{'state':'confirm'})
+				jad_id = jad_obj.browse(cr,uid,mk_tambahan_id.jadwal_id.id)
+				sisa_kapasitas_field = (jad_id.sisa_kapasitas_field-1)
+				jad_obj.write(cr,uid,mk_tambahan_id.jadwal_id.id,{'sisa_kapasitas_field',sisa_kapasitas_field})
 
 			if total_sks > max_sks: 
 				raise osv.except_osv(_('Error!'), _('Total matakuliah (%s SKS) melebihi batas maximal SKS kurikulum (%s SKS) !')%(total_sks,max_sks))	

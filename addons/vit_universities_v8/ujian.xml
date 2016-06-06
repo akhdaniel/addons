@@ -36,9 +36,10 @@
                     <field name="fakultas_id"/>
                     <field name="prodi_id"/>
                     <field name="jenis_ujian"/>
-                    <field name="semester_id"/>
-                    <field name="date_from"/>
-                    <field name="date_to"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="date_from" invisible="1"/>
+                    <field name="date_to" invisible="1"/>
                     <field name="is_active" invisible="1"/>
                 </tree>
             </field>
@@ -52,7 +53,12 @@
             <field name="arch" type="xml">
                 <form string="Daftar Peserta Ujian" version="7.0">     
                     <header>
-                        <button name='get_peserta_ujian' string='Query Peserta Ujian' icon="gtk-execute" type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
+                        <button name='confirm' string='Confirm' states='draft' type='object' groups="vit_universities_v8.group_univ_staff_baak,vit_universities_v8.group_univ_staff_prodi"/>
+                        <button name='done' string='Close' states='confirm' type='object' groups="vit_universities_v8.group_univ_staff_baak,vit_universities_v8.group_univ_staff_prodi"/>
+                        <button name='cancel' string='Cancel' states='confirm' type='object' groups="vit_universities_v8.group_univ_ka_baak"/>
+
+                        <button name='get_peserta_ujian' string='Query Peserta Ujian' icon="gtk-execute" class="oe_highlight" type='object' groups="vit_universities_v8.group_univ_staff_baak,vit_universities_v8.group_univ_staff_prodi" states='draft'/>
+                        <field name="state" widget="statusbar" nolabel="1"/>
                     </header>                              
                 	<sheet>
                 		<group>
@@ -61,18 +67,31 @@
                                 <field name="tahun_ajaran_id"/>
                                 <field name="fakultas_id" domain="[('is_internal','=',True)]"/>
                                 <field name="prodi_id" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
-                                <field name="kelas_id" domain="[('prodi_id','=',prodi_id),('state','=','confirm')]"/>                          
+                                <field name="kelas_id" domain="[('prodi_id','=',prodi_id),('state','=','confirm')]"/>
+                                <field name="matakuliah_id"/>
+                                <field name="ruangan_id"/>                        
                             </group>
                 			<group>
-                                <field name="is_active"/>
-                                <field name="date_from"/>
-                                <field name="date_to"/>
+                                <field name="date"/>
+                                <label for="hours_from" string="Waktu"/> 
+                                <div>  
+                                    <field name="hours_from" widget="float_time" nolabel="1" class="oe_inline" /><label string="-" class="oe_inline"/>
+                                    <field name="hours_to" widget="float_time" nolabel="1" class="oe_inline" />
+                                </div> 
                                 <field name="semester_id" widget="selection"/>
                                 <field name="jenis_ujian"/>
+                                <field name="is_active"/>
+                                <label for="date_from" string="Input Nilai"/> 
+                                <div>  
+                                    <field name="date_from" nolabel="1" class="oe_inline" /><label string="-" class="oe_inline"/>
+                                    <field name="date_to" nolabel="1" class="oe_inline" />
+                                </div>
+                                
+
                 			</group>
                         </group>
                         <notebook>
-                            <page string="Peserta Ujian">
+                            <!-- <page string="Peserta Ujian">
                                 <field view_mode="tree,form" name="partner_ids" nolabel="1">
                                     <tree string="Daftar Peserta Ujian">
                                         <field name="npm" string="NIM"/> 
@@ -80,7 +99,17 @@
                                         <field name="jenis_kelamin"/>   
                                     </tree>
                                 </field>
-                            </page>    
+                            </page>  --> 
+                            <page string="Peserta Ujian">
+                                <field view_mode="tree,form" name="peserta_ujian_detail_ids" nolabel="1" attrs="{'readonly':[('state','=','done')]}">
+                                    <tree string="Daftar Peserta Ujian" editable="bottom">
+                                        <field name="partner_id" string="Mahasiswa" readonly="1"/> 
+                                        <field name="name" string="No Kursi" readonly="1"/> 
+                                        <field name="absensi" attrs="{'readonly':[('state','!=','confirm')]}"/>   
+                                        <field name="state" invisible="1"/> 
+                                    </tree>
+                                </field>
+                            </page>   
                         </notebook>    
 	                </sheet>    
                 </form>
@@ -101,16 +130,16 @@
 
         <!-- akademik.konversi Menu Item -->
         <menuitem id="ujian_menu" name="Ujian" parent="vit_universities_v8.si_akademik_menu" sequence="70" groups="vit_universities_v8.group_menu_ujian_baak"/>      
-            <menuitem id="peserta_ujian_sub_menu" name="Peserta Ujian" parent="ujian_menu" action="peserta_ujian_list_action" sequence="10"/>
+            <menuitem id="peserta_ujian_sub_menu" name="Jadwal Ujian" parent="ujian_menu" action="peserta_ujian_list_action" sequence="10"/>
 
         <!--sequance-->
         <record forcecreate="1" id="seq_type_peserta_ujian" model="ir.sequence.type">
-            <field name="name">Peserta Ujian</field>
+            <field name="name">Jadwal Ujian</field>
             <field name="code">peserta.ujian</field>
         </record>
         
         <record  forcecreate="1" id="seq_peserta_ujian" model="ir.sequence">
-            <field name="name">Peserta Ujian</field>
+            <field name="name">Jadwal Ujian</field>
             <field name="code">peserta.ujian</field>
             <field name="prefix">%(y)s/</field>
             <field name="padding">5</field>
