@@ -5,7 +5,7 @@ import time
 import logging
 from openerp.tools.translate import _
 import zipfile,os.path
-import glob
+# import glob
 
 import shutil
 import ftp_utils as ftp
@@ -61,7 +61,8 @@ class import_ftp_health(osv.osv):
 
 
 		# search and extract ZIP and move zip to done folder
-		zip_files = glob.glob(ftp_health_folder + '/*.zip')
+		# zip_files = glob.glob(ftp_health_folder + '/*.zip')
+		zip_files = ftp_utils.insensitive_glob(ftp_health_folder + '/*.zip')
 
 		for f in zip_files:
 			if zipfile.is_zipfile(f):
@@ -72,7 +73,8 @@ class import_ftp_health(osv.osv):
 				_logger.error('wrong zip file')
 
 		# search CSV
-		csv_files = glob.glob(ftp_health_folder + '/*.csv')
+		# csv_files = glob.glob(ftp_health_folder + '/*.csv')
+		csv_files = ftp_utils.insensitive_glob(ftp_health_folder + '/*.csv')
 
 		for csv_file in csv_files:
 			if csv_file.upper().find('POLIS') != -1:
