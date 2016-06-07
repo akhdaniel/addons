@@ -2,6 +2,7 @@ import zipfile,os.path
 import time
 import logging
 import csv
+import glob
 
 _logger = logging.getLogger(__name__)
 
@@ -129,3 +130,10 @@ class ftp_utils(object):
 		if cron_obj:
 			cron_obj.write(cr, uid ,cron_id,{'active': True}, context=context)
 			cr.commit()
+
+	def insensitive_glob(pattern):
+		# type: () -> object
+		def either(c):
+			return '[%s%s]'%(c.lower(),c.upper()) if c.isalpha() else c
+		return glob.glob(''.join(map(either,pattern)))
+

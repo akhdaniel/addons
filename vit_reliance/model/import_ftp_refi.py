@@ -4,7 +4,6 @@ import openerp.addons.decimal_precision as dp
 import time
 from openerp.tools.translate import _
 import zipfile,os.path
-import glob
 import shutil
 import ftp_utils as ftp
 import logging
@@ -60,7 +59,8 @@ class import_ftp_refi(osv.osv):
 
 
 		# search and extract ZIP and move zip to done folder
-		zip_files = glob.glob(ftp_refi_folder + '/*.zip')
+		# zip_files = glob.glob(ftp_refi_folder + '/*.zip')
+		zip_files = ftp_utils.insensitive_glob(ftp_refi_folder + '/*.zip')
 
 		for f in zip_files:
 			if zipfile.is_zipfile(f):
@@ -70,8 +70,8 @@ class import_ftp_refi(osv.osv):
 			else:
 				_logger.error('wrong zip file')
 
-		# search CSV
-		csv_files = glob.glob(ftp_refi_folder + '/*.csv')
+		csv_files = ftp_utils.insensitive_glob(ftp_refi_folder + '/*.csv')
+
 
 		for csv_file in csv_files:
 			if csv_file.upper().find('PERSONAL') != -1:
