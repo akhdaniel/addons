@@ -131,7 +131,7 @@ class ftp_utils(object):
 			cron_obj.write(cr, uid ,cron_id,{'active': True}, context=context)
 			cr.commit()
 
-	def insensitive_glob(pattern):
+	def insensitive_glob(self,pattern):
 		# type: () -> object
 		def either(c):
 			return '[%s%s]'%(c.lower(),c.upper()) if c.isalpha() else c
