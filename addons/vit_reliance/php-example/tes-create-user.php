@@ -1,9 +1,9 @@
 <?php
 require_once('ripcord/ripcord.php');
-$url = "http://erp2.vitraining.com:8069";
-$db = "reliance";
+$url = "http://127.0.0.1:8069";
+$db = "reliance3";
 $username = "admin";
-$password = "1";
+$password = "admin789";
 $common = ripcord::client("$url/xmlrpc/2/common");
 $uid = $common->authenticate($db, $username, $password, array());
 var_dump($uid);
@@ -13,7 +13,7 @@ var_dump($uid);
 //1. find partner id
 $models = ripcord::client($url . '/xmlrpc/2/object');
 $partner_id = $models->execute_kw($db, $uid, $password, 'res.partner', 'search',
-	[[['cif','=','BDA001']]]
+	[[['refi_no_debitur','=','100100000044']]]
 );
 var_dump($partner_id);
 
