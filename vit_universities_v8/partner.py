@@ -2,13 +2,15 @@ from openerp.osv import fields, osv
 import time
 from dateutil.relativedelta import relativedelta
 import openerp
-from datetime import datetime
+from datetime import datetime,date
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
 from openerp import netsvc
 from openerp.addons.base.ir.ir_mail_server import MailDeliveryException
 from openerp import tools, api
 import locale
+from openerp.addons.vit_universities_spc_bni import bni
+
 
 SESSION_STATES = [('calon','Calon'),('Mahasiswa','Mahasiswa'),('alumni','Alumni'),('orang_tua','Orang Tua'),('cuti','Cuti Kuliah')]
 
@@ -568,7 +570,8 @@ class res_partner (osv.osv):
 
 				
 				wf_service = netsvc.LocalService('workflow')
-				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
+				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+				self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)			
 				self.write(cr,uid,partner.id,{'invoice_id':inv})
 				
 
@@ -776,9 +779,10 @@ class res_partner (osv.osv):
 
 						#cr.commit()
 						#self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
-
+						#import pdb;pdb.set_trace()
 						wf_service = netsvc.LocalService('workflow')
-						wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
+						wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+						#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
 						self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
 
 						# create notifikasi ke email
@@ -955,10 +959,9 @@ class res_partner (osv.osv):
 					companies = set(user.company_id for user in partner.user_ids)
 					if len(companies) > 1 or company not in companies:
 						raise osv.except_osv(_("Warning"),_("You can not change the company as the partner/user has multiple user linked with different companies."))
-
+		result = super(res_partner, self).write(vals)
 		# tambah logic jika update data calon mahasiswa dari web, create inv pendaftaran
 		inv = False
-		
 		if vals.get('status_mahasiswa') :
 			if vals.get('status_mahasiswa') == 'calon' :
 				prodi_obj = self.env['master.prodi']
@@ -977,14 +980,14 @@ class res_partner (osv.osv):
 							('prodi_id','=',vals.get('prodi_id')),
 							('state','=','confirm'),
 							('lokasi_kampus_id','=',vals.get('alamat_id')),
-							])					
+							])	
+
 					if byr_sch :
 						# cr = self.pool.cursor()
 						# cr.commit()
 						
 						prod_id = []
 						for bayar in byr_sch[0].detail_product_ids:
-							#import pdb;pdb.set_trace()
 							product = bayar.product_id
 							coa_line = product.property_account_income.id
 							if not coa_line:
@@ -1003,14 +1006,74 @@ class res_partner (osv.osv):
 							'account_id':coa_prodi,
 							'invoice_line': prod_id,
 							})
+						#self._cr.commit()
+						wf_service = netsvc.LocalService('workflow')
+						#import pdb;pdb.set_trace()
+						#from openerp import workflow
+						wf_service.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)
 
-						#wf_service = netsvc.LocalService('workflow')
-						from openerp import workflow
-						workflow.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)	
+						# insert ke spc bni
+						# acc_obj = self.pool.get('account.invoice')
+						# acc_obj.get_params(self._cr,self._uid, context=self._context)
+						# spc = bni.spc()
+						# spc.connect(host=acc_obj.spc_hostname, user=acc_obj.spc_username, passwd=acc_obj.spc_password, db=acc_obj.spc_dbname)
+						# for inv in acc_obj.browse(self._cr,self._uid,[inv.id],context=self._context):
+						# 	mahasiswa = inv.partner_id 
+
+						# 	nomor_pembayaran = mahasiswa.reg
+
+
+						# 	today = date.today() 
+						# 	three_mon = today + relativedelta(months=3)
+
+						# 	# insert header
+						# 	data = {
+						# 		'id_record_tagihan'         : inv.number ,
+						# 		'nomor_pembayaran'          : nomor_pembayaran ,
+						# 		'nama'                      : mahasiswa.name ,
+						# 		'kode_fakultas'             : mahasiswa.fakultas_id.kode ,
+						# 		'nama_fakultas'             : mahasiswa.fakultas_id.name ,
+						# 		'kode_prodi'                : mahasiswa.prodi_id.kode ,
+						# 		'nama_prodi'                : mahasiswa.prodi_id.name ,
+						# 		'kode_periode'              : mahasiswa.tahun_ajaran_id.code , ## TODO: tambah semester
+						# 		'nama_periode'              : mahasiswa.tahun_ajaran_id.name , ## TODO: tambah semester
+						# 		'is_tagihan_aktif'          : 1 ,
+						# 		'waktu_berlaku'             : today.strftime('%Y-%m-%d'),
+						# 		'waktu_berakhir'            : three_mon.strftime('%Y-%m-%d') ,
+						# 		'strata'                    : mahasiswa.prodi_id.jenjang.name ,
+						# 		'angkatan'                  : mahasiswa.tahun_ajaran_id.name ,
+						# 		'urutan_antrian'            : 0,   ### TODO : jika ada 4 invoices, ini harus ngurut 0,1,2,3
+						# 		'total_nilai_tagihan'       : inv.amount_total ,
+						# 		'minimal_nilai_pembayaran'  : inv.amount_total ,
+						# 		'maksimal_nilai_pembayaran' : inv.amount_total  ,
+						# 		'nomor_induk'               : mahasiswa.npm,
+						# 		'pembayaran_atau_voucher'   : '',
+						# 		'voucher_nama'              : '' ,
+						# 		'voucher_nama_fakultas'     : '',
+						# 		'voucher_nama_prodi'        : '' ,
+						# 		'voucher_nama_periode'      : '' 
+						# 	}
+						# 	spc.insert_biller_tagihan( data )
+
+						# 	# insert detail
+						# 	for line in inv.invoice_line:
+						# 		data = {
+						# 			'id_record_detil_tagihan'	: line.id, 
+						# 			'id_record_tagihan'			: inv.number,
+						# 			'urutan_detil_tagihan'		: line.id, 		
+						# 			'kode_jenis_biaya'			: line.product_id.default_code, 
+						# 			'label_jenis_biaya'			: line.product_id.name, 
+						# 			'label_jenis_biaya_panjang'	: line.name,
+						# 			'nilai_tagihan'				: line.price_subtotal
+						# 		}
+						# 		spc.insert_biller_tagihan_detil(data)
+
+						# spc.close()
 						vals.update({'invoice_id':inv.id})
+						result = super(res_partner, self).write(vals)		
 
 
-		result = super(res_partner, self).write(vals)
+		
 		if inv :
 			#import pdb;pdb.set_trace()
 			locale.setlocale( locale.LC_ALL, '' )
