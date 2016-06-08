@@ -43,8 +43,9 @@
 		    <field name="model">reliance.import_rmi</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_rmi" colors="grey:is_imported==True; blue:is_imported==False">
-					<field name="sid" />						
-					<field name="nama" />						
+					<field name="account_no" />
+					<field name="sid" />
+					<field name="nama" />
 					<field name="jenis_kelamin" />						
 					<field name="alamat_ktp" />				
 					<field name="no_ktp_siup" />				
@@ -95,7 +96,8 @@
 		            	 name="not_imported" domain="[('is_imported','=',False)]"/>
 		            
 		            <separator/>
-					<field name="sid" />						
+					<field name="account_no" />
+					<field name="sid" />
 					<field name="nama" />						
 					<field name="jenis_kelamin" />						
 					<field name="alamat_ktp" />				
@@ -137,6 +139,9 @@
 		                <filter string="SID" icon="terp-personal" 
 		                    domain="[]" name="group_by_sid"
 		                	 context="{'group_by':'sid'}"/>
+		                <filter string="Account No" icon="terp-personal"
+		                    domain="[]" name="group_by_account_no"
+		                	 context="{'group_by':'account_no'}"/>
 
 		                <filter string="Warga Negara" icon="terp-personal" 
 		                    domain="[]" name="group_by_kewarganegaraan"
@@ -159,8 +164,9 @@
 	            	<group>
 
 
-						<field name="sid" />						
-						<field name="nama" />						
+						<field name="account_no" />
+						<field name="sid" />
+						<field name="nama" />
 						<field name="alamat_ktp" />				
 						<field name="no_ktp_siup" />				
 						<field name="propinsi" />					
@@ -227,8 +233,10 @@
 		    <field name="model">reliance.import_rmi_product_holding</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list import_rmi_product_holding" colors="grey:is_imported==True; blue:is_imported==False">
-					<field name="sid" />						
-					<field name="nama_investor" />				
+					<field name="account_no" />
+					<field name="sid" />
+					<field name="tanggal" />
+					<field name="nama_investor" />
 					<field name="product_id" />				
 					<field name="product_name" />				
 					<field name="unit_penyertaan" />			
@@ -262,8 +270,10 @@
 		            <separator/>
 
 
-					<field name="sid" />						
-					<field name="nama_investor" />				
+					<field name="account_no" />
+					<field name="sid" />
+					<field name="tanggal" />
+					<field name="nama_investor" />
 					<field name="product_id" />				
 					<field name="product_name" />				
 					<field name="unit_penyertaan" />			
@@ -297,8 +307,10 @@
             		</header>
 	            	<group>
 
-	            		<field name="sid" />						
-						<field name="nama_investor" />				
+	            		<field name="account_no" />
+	            		<field name="sid" />
+	            		<field name="tanggal" />
+						<field name="nama_investor" />
 						<field name="product_id" />				
 						<field name="product_name" />				
 						<field name="unit_penyertaan" />			
