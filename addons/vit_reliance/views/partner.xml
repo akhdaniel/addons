@@ -51,6 +51,7 @@
 
 					<field name='refi_no_debitur'/>
 					<field name='rmi_sid'/>
+					<field name='rmi_account_no'/>
 
 					<!-- <field name='arg_company_code'/> -->
 					<field name='arg_cust_code'/>

@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 PARTNER_MAPPING = {
 	"sid"						: "rmi_sid",
+	"account_no"				: "rmi_account_no",
 	"nama"						: "name",
 	# "jenis_kelamin"				: "perorangan_jenis_kelamin",
 	"alamat_ktp"				: "street",
@@ -47,6 +48,7 @@ class import_rmi(osv.osv):
 	_name 		= "reliance.import_rmi"
 	_columns 	= {
 		"no"						:	fields.char("No"),
+		"account_no"				:	fields.char("AccountNo"),
 		"sid"						:	fields.char("SID"),
 		"nama"						:	fields.char("Nama"),
 		"jenis_kelamin"				:	fields.char("Jenis Kelamin"),
@@ -121,9 +123,9 @@ class import_rmi(osv.osv):
 		states_mapping = self.pool.get('reliance.states_mapping')
 
 		for import_rmi in self.browse(cr, uid, ids, context=context):
-			if not import_rmi.sid:
+			if not import_rmi.account_no:
 				ex = ex + 1
-				self.write(cr, uid, import_rmi.id ,  {'notes':'empty line'}, context=context)
+				self.write(cr, uid, import_rmi.id ,  {'notes':'empty line, no account_no'}, context=context)
 				cr.commit()
 				continue
 			data = {}
@@ -210,7 +212,7 @@ class import_rmi(osv.osv):
 			data2.update({'initial_bu'	: 'RMI'})
 
 			########################## check exiting partner , create if not exists
-			pid = partner.search(cr, uid, [('rmi_sid','=',import_rmi.sid)],context=context)
+			pid = partner.search(cr, uid, [('rmi_account_no','=',import_rmi.account_no)],context=context)
 			if not pid:
 				data.update(data2)
 				pid = partner.create(cr, uid, data, context=context)	
@@ -218,7 +220,7 @@ class import_rmi(osv.osv):
 			else:
 				partner.write(cr, uid, pid, data2, context=context)	
 				pid = pid[0]
-				_logger.warning('Partner exist with rmi_sid %s' % import_rmi.sid)
+				_logger.warning('Partner exist with rmi_account_no %s' % import_rmi.account_no)
 				ex = ex + 1
 
 
@@ -237,7 +239,8 @@ class import_rmi(osv.osv):
 
 HOLDING_MAPPING = {
 	"product_id"				:	"rmi_product_id",	
-	"product_name"				:	"rmi_product_name",	
+	"tanggal"					:	"rmi_tanggal",
+	"product_name"				:	"rmi_product_name",
 	"unit_penyertaan"			:	"rmi_unit_penyertaan",	
 	"nab_saat_beli"				:	"rmi_nab_saat_beli",	
 	"nab_sampai_hari_ini"		:	"rmi_nab_sampai_hari_ini",	
@@ -250,6 +253,8 @@ class import_rmi_product_holding(osv.osv):
 	_name 		= "reliance.import_rmi_product_holding"
 	_columns 	= {
 		"no"						:	fields.char("No"),
+		"account_no"				:	fields.char("AccountNo"),
+		"tanggal"					: 	fields.char("Tanggal"),
 		"sid"						:	fields.char("SID"),
 		"nama_investor"				:	fields.char("Nama Investor"),
 		"product_id"				:	fields.char("Product ID"),
@@ -298,16 +303,19 @@ class import_rmi_product_holding(osv.osv):
 
 		for import_rmi in self.browse(cr, uid, ids, context=context):
 
-			if not import_rmi.sid:
+			if not import_rmi.account_no:
 				ex = ex + 1
-				self.write(cr, uid, import_rmi.id ,  {'notes':'empty line'}, context=context)
+				self.write(cr, uid, import_rmi.id ,  {'notes':'empty line, no account_no'}, context=context)
 				cr.commit()
 				continue
 
-			pid = partner.search(cr, uid, [('rmi_sid','=', import_rmi.sid)], context=context)
+			# pid = partner.search(cr, uid, [('rmi_sid','=', import_rmi.sid)], context=context)
+			pid = partner.search(cr, uid, [
+				('rmi_account_no','=', import_rmi.account_no),
+				], context=context)
 			if not pid:
 				ex=ex+1
-				self.write(cr, uid, import_rmi.id, {'notes':'NO PARTNER'}, context=context)
+				self.write(cr, uid, import_rmi.id, {'notes':'NO PARTNER with account_no=%s' % (import_rmi.account_no)}, context=context)
 				cr.commit()
 				continue
 			else:
@@ -328,6 +336,18 @@ class import_rmi_product_holding(osv.osv):
 					data[k] = 0.0
 				else:
 					data[k] = data[k].strip().replace(',','').replace('-','0').replace(')','').replace('(','-')
+
+			tanggal = False
+			if import_rmi.tanggal and import_rmi.tanggal != "NULL":
+				try:
+					tanggal = datetime.strptime(import_rmi.tanggal, "%d-%m-%Y")
+				except ValueError:
+					self.write(cr, uid, import_rmi.id, {'notes': 'tanggal format error, use dd-mm-yyyy'},
+							   context=context)
+					ex = ex + 1
+					cr.commit()
+					continue
+			data.update({'rmi_tanggal': tanggal})
 
 			pid = partner.write(cr, uid, pid, data, context=context)	
 
