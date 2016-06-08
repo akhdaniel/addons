@@ -187,9 +187,9 @@ class peserta_ujian (osv.osv):
 
 	def cancel(self,cr,uid,ids,context=None):
 		for ct in self.browse(cr,uid,ids):
-			self.write(cr,uid,ct.id,{'state':'cancel'},context=context)
+			self.write(cr,uid,ct.id,{'state':'draft'},context=context)
 			for det in ct.peserta_ujian_detail_ids:
-				self.pool.get('peserta.ujian.detail').write(cr,uid,det.id,{'state':'cancel'},context=context)
+				self.pool.get('peserta.ujian.detail').write(cr,uid,det.id,{'state':'draft'},context=context)
 		return True	
 
 

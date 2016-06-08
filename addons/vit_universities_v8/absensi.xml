@@ -154,9 +154,11 @@
                                         <field name="quiz" invisible="1"/>
                                         <field name="tugas" string="Tugas/Quiz" attrs="{'readonly':[('state','!=','open')]}"/>
                                         <field name="lainnya" invisible="1"/>
-                                        <field name="uts" attrs="{'readonly':[('state','!=','open')]}"/>
+                                        <field name="allow_uts" invisible="1"/>
+                                        <field name="uts" attrs="{'readonly':['|',('state','!=','open'),('allow_uts','=',False)]}"/>
                                         <field name="uts_huruf" readonly="1"/>
-                                        <field name="uas" attrs="{'readonly':[('state','!=','open')]}"/>
+                                        <field name="allow_uas" invisible="1"/>
+                                        <field name="uas" attrs="{'readonly':['|',('state','!=','open'),('allow_uts','=',False)]}"/>
                                         <field name="uas_huruf" readonly="1"/>                               
                                         <field name="state" invisible="1"/>
                                     </tree>

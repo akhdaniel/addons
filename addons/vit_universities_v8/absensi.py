@@ -2,9 +2,10 @@ from openerp.osv import fields, osv
 import time
 from dateutil.relativedelta import relativedelta
 import openerp
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, image_colorize, image_resize_image_big
+
 
 class absensi(osv.osv):
 	_name = 'absensi'
@@ -809,6 +810,101 @@ class absensi_detail(osv.osv):
 class absensi_detail_nilai(osv.osv):
 	_name = "absensi.detail.nilai"
 
+	def _get_allow_uts(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result      = {}
+		
+		#
+		for obj in self.browse(cr,uid,ids,context=context):  
+			ujian_obj = self.pool.get('peserta.ujian')
+			time_now = datetime.now()-(timedelta(hours=-7))
+			str_date = str(time_now)[:10]
+			tahun_ajaran = obj.absensi_id.tahun_ajaran_id.id
+			prodi = obj.absensi_id.prodi_id.id
+			semester = obj.absensi_id.semester_id.id
+			matakuliah = obj.absensi_id.mata_kuliah_id.id
+			#import  pdb;pdb.set_trace()
+			allow_uts    = False
+			allow_exist = ujian_obj.search(cr,uid,[('date_from','<=',str_date),
+													('date_to','>=',str_date),
+													('jenis_ujian','=','uts'),
+													('state','=','confirm'),
+													('tahun_ajaran_id','=',tahun_ajaran),
+													('prodi_id','=',prodi),
+													('matakuliah_id','=',matakuliah),
+													('semester_id','=',semester)])
+			if allow_exist :
+				partner_id = obj.partner_id.id
+				
+				if len(allow_exist) == 1 :
+					cr.execute('select pud.partner_id '\
+						'from peserta_ujian pu '\
+						'left join peserta_ujian_detail pud on pud.ujian_id = pu.id '\
+						'where ujian_id = %s and partner_id = %s ',(allow_exist[0],partner_id))          
+					allow         = cr.fetchall()
+					if allow :
+						allow_uts = True
+				else :	
+					cr.execute('select pud.partner_id '\
+						'from peserta_ujian pu '\
+						'left join peserta_ujian_detail pud on pud.ujian_id = pu.id '\
+						'where  ujian_id in %s and partner_id = %s ',(tuple(allow_exist),partner_id))          
+					allow         = cr.fetchall() 
+					if allow :
+						allow_uts = True                                                                
+			result[obj.id] = allow_uts
+		return result 
+
+
+	def _get_allow_uas(self, cr, uid, ids, field_name, arg, context=None):
+		if context is None:
+			context = {}
+		result      = {}
+		
+		#
+		for obj in self.browse(cr,uid,ids,context=context):  
+			ujian_obj = self.pool.get('peserta.ujian')
+			time_now = datetime.now()-(timedelta(hours=-7))
+			str_date = str(time_now)[:10]
+			tahun_ajaran = obj.absensi_id.tahun_ajaran_id.id
+			prodi = obj.absensi_id.prodi_id.id
+			semester = obj.absensi_id.semester_id.id
+			matakuliah = obj.absensi_id.mata_kuliah_id.id
+			#import  pdb;pdb.set_trace()
+			allow_uts    = False
+			allow_exist = ujian_obj.search(cr,uid,[('date_from','<=',str_date),
+													('date_to','>=',str_date),
+													('jenis_ujian','=','uas'),
+													('state','=','confirm'),
+													('tahun_ajaran_id','=',tahun_ajaran),
+													('prodi_id','=',prodi),
+													('matakuliah_id','=',matakuliah),
+													('semester_id','=',semester)])
+			if allow_exist :
+				partner_id = obj.partner_id.id
+				
+				if len(allow_exist) == 1 :
+					cr.execute('select pud.partner_id '\
+						'from peserta_ujian pu '\
+						'left join peserta_ujian_detail pud on pud.ujian_id = pu.id '\
+						'where ujian_id = %s and partner_id = %s ',(allow_exist[0],partner_id))          
+					allow         = cr.fetchall()
+					if allow :
+						allow_uts = True
+				else :	
+					cr.execute('select pud.partner_id '\
+						'from peserta_ujian pu '\
+						'left join peserta_ujian_detail pud on pud.ujian_id = pu.id '\
+						'where  ujian_id in %s and partner_id = %s ',(tuple(allow_exist),partner_id))          
+					allow         = cr.fetchall() 
+					if allow :
+						allow_uts = True                                                                
+			result[obj.id] = allow_uts
+		return result 
+
+
+
 	_columns = {
 		'absensi_id' 	: fields.many2one('absensi','Jadwal'),
 		'partner_id' 	: fields.many2one('res.partner','Mahasiswa',domain="[('status_mahasiswa','=','Mahasiswa')]",required=True),	
@@ -821,7 +917,9 @@ class absensi_detail_nilai(osv.osv):
 		'uas'			: fields.float('UAS (Angka)'),
 		'uas_huruf'		: fields.char('UAS (Huruf)'),
 		'lainnya'		: fields.float('Lainnya'),		
-		'state'			:fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
+		'state'			: fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State'),
+		'allow_uts'		: fields.function(_get_allow_uts,type='boolean',string='Allow UTS'),
+		'allow_uas'		: fields.function(_get_allow_uas,type='boolean',string='Allow UAS'),
 	}
 
 class absensi_history (osv.osv):
