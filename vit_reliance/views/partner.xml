@@ -448,8 +448,9 @@
 
             		<page string="RMI" >
             			<group>
-							<field name="rmi_sid" />					
-							<field name="rmi_tanggal_lahir" />			
+							<field name="rmi_account_no" />
+							<field name="rmi_sid" />
+							<field name="rmi_tanggal_lahir" />
 							<field name="rmi_alamat_surat_menyurat" />	
 							<field name="rmi_kota_surat_menyurat" />	
 							<field name="rmi_propinsi_surat_menyurat" />	
