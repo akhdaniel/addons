@@ -93,21 +93,21 @@
                 <div class="act_as_thead">
                     <div class="act_as_row labels">
                         ## date
-                        <div class="act_as_cell first_column" style="width: 50px;">${_('Date')}</div>
+                        <div class="act_as_cell first_column" style="width: 50px;">${_('Tanggal')}</div>
                         ## period
                         <div class="act_as_cell" style="width: 50px;">${_('Period')}</div>
                         ## move
-                        <div class="act_as_cell" style="width: 100px;">${_('Entry')}</div>
+                        <div class="act_as_cell" style="width: 100px;">${_('No Bukti')}</div>
                         ## journal
-                        <div class="act_as_cell" style="width: 70px;">${_('Journal')}</div>
+                        <div class="act_as_cell" style="width: 70px;">${_('Jenis Journal')}</div>
                         ## account code
                         <div class="act_as_cell" style="width: 65px;">${_('Account')}</div>
                         ## partner
-                        <div class="act_as_cell" style="width: 140px;">${_('Partner')}</div>
+                        ##<div class="act_as_cell" style="width: 140px;">${_('Partner')}</div>
                         ## move reference
-                        <div class="act_as_cell" style="width: 140px;">${_('Reference')}</div>
+                        ##<div class="act_as_cell" style="width: 140px;">${_('Reference')}</div>
                         ## label
-                        <div class="act_as_cell" style="width: 160px;">${_('Label')}</div>
+                        <div class="act_as_cell" style="width: 160px;">${_('Keterangan')}</div>
                         ## counterpart
                         <div class="act_as_cell" style="width: 100px;">${_('Counter part')}</div>
                         ## debit
@@ -115,7 +115,7 @@
                         ## credit
                         <div class="act_as_cell amount" style="width: 75px;">${_('Credit')}</div>
                         ## balance cumulated
-                        <div class="act_as_cell amount" style="width: 75px;">${_('Cumul. Bal.')}</div>
+                        <div class="act_as_cell amount" style="width: 75px;">${_('Saldo')}</div>
                         %if amount_currency(data):
                             ## currency balance
                             <div class="act_as_cell amount sep_left" style="width: 75px;">${_('Curr. Balance')}</div>
@@ -145,9 +145,9 @@
                           ## account code
                           <div class="act_as_cell"></div>
                           ## partner
-                          <div class="act_as_cell"></div>
+                          ##<div class="act_as_cell"></div>
                           ## move reference
-                          <div class="act_as_cell"></div>
+                          ##<div class="act_as_cell"></div>
                           ## label
                           <div class="act_as_cell">${_('Initial Balance')}</div>
                           ## counterpart
@@ -191,9 +191,9 @@
                           ## account code
                           <div class="act_as_cell">${account.code}</div>
                           ## partner
-                          <div class="act_as_cell overflow_ellipsis">${line.get('partner_name') or ''}</div>
+                          ##<div class="act_as_cell overflow_ellipsis">${line.get('partner_name') or ''}</div>
                           ## move reference
-                          <div class="act_as_cell">${line.get('lref') or ''}</div>
+                          ##<div class="act_as_cell">${line.get('lref') or ''}</div>
                           ## label
                           <div class="act_as_cell">${label}</div>
                           ## counterpart
