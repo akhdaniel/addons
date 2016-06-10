@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9bff25fc-1374-4b84-85e5-d292397669e3" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hrd_overtime/hr_overtime.py" afterPath="$PROJECT_DIR$/hrd_overtime/hr_overtime.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hrd_payroll/hr_payroll.py" afterPath="$PROJECT_DIR$/hrd_payroll/hr_payroll.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hrd_ppi_attendance/hrd_attendance.py" afterPath="$PROJECT_DIR$/hrd_ppi_attendance/hrd_attendance.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lucas/__openerp__.py" afterPath="$PROJECT_DIR$/lucas/__openerp__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lucas/attendance.py" afterPath="$PROJECT_DIR$/lucas/attendance.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lucas/attendance.xml" afterPath="$PROJECT_DIR$/lucas/attendance.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lucas/payroll.py" afterPath="$PROJECT_DIR$/lucas/payroll.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lucas/payroll.xml" afterPath="$PROJECT_DIR$/lucas/payroll.xml" />
+    </list>
+    <ignored path="lucas_marin2016.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="lucas_marin2016" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="employee.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lucas/employee.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="325" column="0" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attendance.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lucas/attendance.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="84" column="37" selection-start-line="84" selection-start-column="37" selection-end-line="84" selection-end-column="37" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#790#1696#0" expanded="true" />
+                <element signature="e#1767#1948#0" expanded="true" />
+                <element signature="e#2030#2413#0" expanded="true" />
+                <element signature="e#2469#2580#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="payroll.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lucas/payroll.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.28985506">
+              <caret line="364" column="86" selection-start-line="364" selection-start-column="86" selection-end-line="364" selection-end-column="86" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#409#437#1" expanded="true" />
+                <element signature="e#676#5319#0" expanded="true" />
+                <element signature="e#5422#5623#1" expanded="false" />
+                <element signature="e#26988#27839#0" expanded="true" />
+                <element signature="e#58100#58646#0" expanded="true" />
+                <element signature="e#60802#61548#0" expanded="false" />
+                <element signature="e#61605#61867#0" expanded="false" />
+                <element signature="e#61907#62393#0" expanded="false" />
+                <element signature="e#62012#62218#0" expanded="true" />
+                <element signature="e#62449#65647#0" expanded="false" />
+                <element signature="e#62598#63566#0" expanded="true" />
+                <element signature="e#63644#64143#0" expanded="true" />
+                <element signature="e#64217#64669#0" expanded="true" />
+                <marker date="1465076333000" expanded="false" signature="33096:34144" placeholder="..." />
+                <marker date="1465076333000" expanded="true" signature="58673:60741" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/hrd_ppi_attendance/hrd_attendance.py" />
+        <option value="$PROJECT_DIR$/lucas/attendance.py" />
+        <option value="$PROJECT_DIR$/hrd_overtime/hr_overtime.py" />
+        <option value="$PROJECT_DIR$/lucas/__openerp__.py" />
+        <option value="$PROJECT_DIR$/lucas/payroll.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
+    <option name="width" value="1280" />
+    <option name="height" value="720" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas_marin2016" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lucas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../openerp-7.0-20150921/openerp-server" />
+  </component>
+  <component name="RunManager" selected="Python.openerp">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../openerp-7.0-20150921" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../openerp-7.0-20150921/openerp-server" />
+      <option name="PARAMETERS" value="-c ../openerp-server.conf" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Nosetests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="openerp" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../openerp-7.0-20150921" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="lucas_marin2016" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../openerp-7.0-20150921/openerp-server" />
+      <option name="PARAMETERS" value="-c ../openerp-server.conf" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Python.openerp" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="$PROJECT_DIR$" />
+          <option name="myCopyRoot" value="$PROJECT_DIR$" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9bff25fc-1374-4b84-85e5-d292397669e3" name="Default" comment="" />
+      <created>1464920531154</created>
+      <option name="number" value="Default" />
+      <updated>1464920531154</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1280" height="720" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17235902" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294702" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294702" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294702" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24939467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294702" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38039866" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/hrd_payroll/hr_payroll.py</url>
+          <line>509</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/hrd_ppi_payroll/hr_payroll.py</url>
+          <line>509</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/n/lucas/payroll.py</url>
+          <line>280</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/lucas/payroll.py</url>
+          <line>204</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/lucas/payroll.py</url>
+          <line>363</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="36" />
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="presences['number_of_days']" />
+        <watch expression="day" />
+        <watch expression="x" />
+        <watch expression="din" />
+        <watch expression="date" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/tools/safe_eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/base/ir/ir_actions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="610" column="0" selection-start-line="610" selection-start-column="0" selection-end-line="610" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hrd_ppi_attendance/hrd_attendance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.565625">
+          <caret line="64" column="53" selection-start-line="64" selection-start-column="53" selection-end-line="64" selection-end-column="53" />
+          <folding>
+            <element signature="e#607#1469#0" expanded="false" />
+            <element signature="e#1520#1624#0" expanded="false" />
+            <element signature="e#1680#1791#0" expanded="false" />
+            <element signature="e#13907#14569#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/base/ir/ir_fields.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6896552">
+          <caret line="213" column="27" selection-start-line="213" selection-start-column="23" selection-end-line="213" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/resource/resource.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6976127">
+          <caret line="62" column="12" selection-start-line="62" selection-start-column="12" selection-end-line="62" selection-end-column="12" />
+          <folding>
+            <element signature="e#2025#2696#0" expanded="false" />
+            <element signature="e#2756#3884#0" expanded="false" />
+            <element signature="e#3971#6490#0" expanded="false" />
+            <element signature="e#6681#9688#0" expanded="false" />
+            <element signature="e#9783#10477#0" expanded="false" />
+            <element signature="e#10566#11202#0" expanded="false" />
+            <element signature="e#11354#16267#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vit_import_fingerprint/model/krisbow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="50" selection-start-line="101" selection-start-column="50" selection-end-line="101" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hrd_payroll/salary_structure.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.2083335">
+          <caret line="383" column="125" selection-start-line="383" selection-start-column="125" selection-end-line="383" selection-end-column="125" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hrd_overtime/hr_overtime.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.6737401">
+          <caret line="563" column="29" selection-start-line="563" selection-start-column="29" selection-end-line="563" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/purchase/purchase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.1061008">
+          <caret line="642" column="24" selection-start-line="642" selection-start-column="24" selection-end-line="642" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/osv/orm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28116712">
+          <caret line="4427" column="0" selection-start-line="4427" selection-start-column="0" selection-end-line="4427" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51367784">
+          <caret line="766" column="57" selection-start-line="766" selection-start-column="57" selection-end-line="766" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/SocketServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3768997">
+          <caret line="599" column="0" selection-start-line="599" selection-start-column="0" selection-end-line="599" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/werkzeug/serving.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6960486">
+          <caret line="207" column="0" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/service/wsgi_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.331307">
+          <caret line="416" column="0" selection-start-line="416" selection-start-column="0" selection-end-line="416" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/BaseHTTPServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3768997">
+          <caret line="340" column="0" selection-start-line="340" selection-start-column="0" selection-end-line="340" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/werkzeug/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.331307">
+          <caret line="587" column="0" selection-start-line="587" selection-start-column="0" selection-end-line="587" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hrd_payroll/hr_payroll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="508" column="8" selection-start-line="508" selection-start-column="8" selection-end-line="508" selection-end-column="8" />
+          <folding>
+            <element signature="e#458#486#1" expanded="true" />
+            <element signature="e#688#12708#0" expanded="true" />
+            <element signature="e#12803#28475#0" expanded="true" />
+            <element signature="e#13084#13518#0" expanded="true" />
+            <element signature="e#28559#35593#0" expanded="true" />
+            <element signature="e#35658#41578#0" expanded="true" />
+            <element signature="e#41634#48149#0" expanded="true" />
+            <element signature="e#48205#48751#0" expanded="true" />
+            <element signature="e#51152#52109#0" expanded="true" />
+            <element signature="e#52176#52428#0" expanded="true" />
+            <element signature="e#53958#54236#0" expanded="true" />
+            <element signature="e#54485#54520#1" expanded="true" />
+            <element signature="e#55665#55846#0" expanded="true" />
+            <element signature="e#56047#57015#0" expanded="true" />
+            <element signature="e#57093#57544#0" expanded="true" />
+            <element signature="e#57618#58070#0" expanded="true" />
+            <element signature="e#59209#60197#0" expanded="true" />
+            <element signature="e#60275#61370#0" expanded="true" />
+            <element signature="e#61441#61526#0" expanded="true" />
+            <element signature="e#61602#61693#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hrd_payroll/hr_contract.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.8973747">
+          <caret line="136" column="35" selection-start-line="136" selection-start-column="35" selection-end-line="136" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/payroll.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60913706">
+          <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/salary_structur_hl.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.21573605">
+          <caret line="12" column="42" selection-start-line="12" selection-start-column="42" selection-end-line="12" selection-end-column="42" />
+          <folding>
+            <element signature="n#record#1;n#data#0;n#openerp#0;n#!!top" expanded="false" />
+            <element signature="n#record#2;n#data#0;n#openerp#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/salary_structure.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41624364">
+          <caret line="190" column="65" selection-start-line="190" selection-start-column="65" selection-end-line="190" selection-end-column="65" />
+          <folding>
+            <element signature="n#record#10;n#data#0;n#openerp#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/hr_payroll/hr_payroll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18899521">
+          <caret line="426" column="16" selection-start-line="426" selection-start-column="16" selection-end-line="426" selection-end-column="16" />
+          <folding>
+            <element signature="e#4710#6050#0" expanded="false" />
+            <element signature="e#6104#6803#0" expanded="false" />
+            <element signature="e#6869#7739#0" expanded="false" />
+            <element signature="e#8437#9880#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/service/web_services.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="633" column="0" selection-start-line="633" selection-start-column="0" selection-end-line="633" selection-end-column="0" />
+          <folding>
+            <element signature="e#1629#1856#1" expanded="false" />
+            <element signature="e#2225#3516#0" expanded="false" />
+            <element signature="e#3551#4195#0" expanded="false" />
+            <element signature="e#4272#4407#0" expanded="false" />
+            <element signature="e#4457#5081#0" expanded="false" />
+            <element signature="e#5135#5756#0" expanded="false" />
+            <element signature="e#5836#6321#0" expanded="false" />
+            <element signature="e#6410#6797#0" expanded="false" />
+            <element signature="e#6872#7348#0" expanded="false" />
+            <element signature="e#7394#7983#0" expanded="false" />
+            <element signature="e#8026#8753#0" expanded="false" />
+            <element signature="e#8841#9808#0" expanded="false" />
+            <element signature="e#9852#11091#0" expanded="false" />
+            <element signature="e#11143#12605#0" expanded="false" />
+            <element signature="e#12661#13628#0" expanded="false" />
+            <element signature="e#13675#13813#0" expanded="false" />
+            <element signature="e#13863#15252#0" expanded="false" />
+            <element signature="e#15317#15408#0" expanded="false" />
+            <element signature="e#15447#15476#0" expanded="false" />
+            <element signature="e#15520#15679#0" expanded="false" />
+            <element signature="e#15737#16422#0" expanded="false" />
+            <element signature="e#16507#16547#0" expanded="false" />
+            <element signature="e#16597#17203#0" expanded="false" />
+            <element signature="e#17259#17582#0" expanded="false" />
+            <element signature="e#17661#17784#0" expanded="false" />
+            <element signature="e#17821#17841#0" expanded="false" />
+            <element signature="e#17892#18348#0" expanded="false" />
+            <element signature="e#18411#18450#0" expanded="false" />
+            <element signature="e#18533#18994#0" expanded="false" />
+            <element signature="e#19078#22067#0" expanded="false" />
+            <element signature="e#22119#23222#0" expanded="false" />
+            <element signature="e#23265#23312#0" expanded="false" />
+            <element signature="e#23377#23496#0" expanded="false" />
+            <element signature="e#23535#23657#0" expanded="false" />
+            <element signature="e#23705#23744#0" expanded="false" />
+            <element signature="e#23792#23834#0" expanded="false" />
+            <element signature="e#23875#23892#0" expanded="false" />
+            <element signature="e#23934#24168#0" expanded="false" />
+            <element signature="e#24261#24301#0" expanded="false" />
+            <element signature="e#25464#25600#0" expanded="false" />
+            <element signature="e#25650#26174#0" expanded="false" />
+            <element signature="e#26265#27728#0" expanded="false" />
+            <element signature="e#27812#29472#0" expanded="false" />
+            <element signature="e#28158#29385#0" expanded="false" />
+            <element signature="e#29522#30356#0" expanded="false" />
+            <element signature="e#30416#30680#0" expanded="false" />
+            <element signature="e#30708#30764#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/netsvc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+          <folding>
+            <element signature="e#1545#1713#0" expanded="false" />
+            <element signature="e#1744#2530#0" expanded="false" />
+            <element signature="e#2596#2707#0" expanded="false" />
+            <element signature="e#2736#2878#1" expanded="false" />
+            <element signature="e#2936#2993#0" expanded="false" />
+            <element signature="e#3047#3075#0" expanded="false" />
+            <element signature="e#3129#3185#0" expanded="false" />
+            <element signature="e#3215#3456#0" expanded="false" />
+            <element signature="e#3491#3679#1" expanded="false" />
+            <element signature="e#3743#3873#0" expanded="false" />
+            <element signature="e#3930#3956#0" expanded="false" />
+            <element signature="e#4140#4192#0" expanded="false" />
+            <element signature="e#4869#5021#0" expanded="false" />
+            <element signature="e#5098#5294#0" expanded="false" />
+            <element signature="e#5340#9152#0" expanded="false" />
+            <element signature="e#9274#9606#0" expanded="false" />
+            <element signature="e#9344#9433#0" expanded="false" />
+            <element signature="e#9648#9889#0" expanded="false" />
+            <element signature="e#9944#10117#0" expanded="false" />
+            <element signature="e#12192#12321#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/web/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="e#529#592#0" expanded="false" />
+            <element signature="e#637#788#0" expanded="false" />
+            <element signature="e#674#760#0" expanded="false" />
+            <element signature="e#859#958#0" expanded="false" />
+            <element signature="e#1647#1869#0" expanded="false" />
+            <element signature="e#1905#2406#1" expanded="false" />
+            <element signature="e#2439#2693#0" expanded="false" />
+            <element signature="e#2752#3747#0" expanded="false" />
+            <element signature="e#3787#3816#0" expanded="false" />
+            <element signature="e#3872#3971#0" expanded="false" />
+            <element signature="e#4040#4204#0" expanded="false" />
+            <element signature="e#4255#4609#0" expanded="false" />
+            <element signature="e#4647#4780#0" expanded="false" />
+            <element signature="e#4835#4947#0" expanded="false" />
+            <element signature="e#5005#5144#0" expanded="false" />
+            <element signature="e#5182#5490#0" expanded="false" />
+            <element signature="e#5527#5983#0" expanded="false" />
+            <element signature="e#6027#6567#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/web/controllers/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1132" column="0" selection-start-line="1132" selection-start-column="0" selection-end-line="1132" selection-end-column="0" />
+          <folding>
+            <element signature="e#807#2981#0" expanded="false" />
+            <element signature="e#959#1303#0" expanded="false" />
+            <element signature="e#3018#3295#0" expanded="false" />
+            <element signature="e#3330#3376#0" expanded="false" />
+            <element signature="e#3432#4275#0" expanded="false" />
+            <element signature="e#4301#4390#0" expanded="false" />
+            <element signature="e#4440#4835#0" expanded="false" />
+            <element signature="e#4879#6347#0" expanded="false" />
+            <element signature="e#5816#6259#0" expanded="false" />
+            <element signature="e#6380#7213#0" expanded="false" />
+            <element signature="e#7264#8294#0" expanded="false" />
+            <element signature="e#8331#8760#0" expanded="false" />
+            <element signature="e#8793#9610#0" expanded="false" />
+            <element signature="e#9674#10520#0" expanded="false" />
+            <element signature="e#10144#10264#0" expanded="false" />
+            <element signature="e#10574#10831#0" expanded="false" />
+            <element signature="e#10855#10935#0" expanded="false" />
+            <element signature="e#10998#11609#0" expanded="false" />
+            <element signature="e#11670#12195#0" expanded="false" />
+            <element signature="e#12231#12652#0" expanded="false" />
+            <element signature="e#12726#13655#0" expanded="false" />
+            <element signature="e#13724#14027#0" expanded="false" />
+            <element signature="e#14081#14328#0" expanded="false" />
+            <element signature="e#14397#14595#0" expanded="false" />
+            <element signature="e#14632#14840#0" expanded="false" />
+            <element signature="e#14946#16396#0" expanded="false" />
+            <element signature="e#16430#17620#0" expanded="false" />
+            <element signature="e#17667#17988#0" expanded="false" />
+            <element signature="e#18057#18823#0" expanded="false" />
+            <element signature="e#18869#19321#0" expanded="false" />
+            <element signature="e#20505#21107#0" expanded="false" />
+            <element signature="e#21187#21327#0" expanded="false" />
+            <element signature="e#21477#21520#0" expanded="false" />
+            <element signature="e#21596#21638#0" expanded="false" />
+            <element signature="e#21716#21760#0" expanded="false" />
+            <element signature="e#21842#23517#0" expanded="false" />
+            <element signature="e#22358#22896#0" expanded="false" />
+            <element signature="e#23092#23147#0" expanded="false" />
+            <element signature="e#23598#24082#0" expanded="false" />
+            <element signature="e#24165#24638#0" expanded="false" />
+            <element signature="e#24725#25837#0" expanded="false" />
+            <element signature="e#25920#27394#0" expanded="false" />
+            <element signature="e#27465#27514#0" expanded="false" />
+            <element signature="e#27648#28120#0" expanded="false" />
+            <element signature="e#28258#28507#0" expanded="false" />
+            <element signature="e#28580#28884#0" expanded="false" />
+            <element signature="e#28960#29248#0" expanded="false" />
+            <element signature="e#29319#29824#0" expanded="false" />
+            <element signature="e#29919#30626#0" expanded="false" />
+            <element signature="e#30722#31030#0" expanded="false" />
+            <element signature="e#31112#31655#0" expanded="false" />
+            <element signature="e#31767#32061#0" expanded="false" />
+            <element signature="e#32136#32165#0" expanded="false" />
+            <element signature="e#32277#32571#0" expanded="false" />
+            <element signature="e#32652#33626#0" expanded="false" />
+            <element signature="e#33692#33798#0" expanded="false" />
+            <element signature="e#33870#34021#0" expanded="false" />
+            <element signature="e#34087#34209#0" expanded="false" />
+            <element signature="e#34299#35210#0" expanded="false" />
+            <element signature="e#35292#35797#0" expanded="false" />
+            <element signature="e#35861#35907#0" expanded="false" />
+            <element signature="e#35973#36000#0" expanded="false" />
+            <element signature="e#36136#37058#0" expanded="false" />
+            <element signature="e#37121#39237#0" expanded="false" />
+            <element signature="e#39321#39607#0" expanded="false" />
+            <element signature="e#39681#39900#0" expanded="false" />
+            <element signature="e#40107#40182#0" expanded="false" />
+            <element signature="e#40318#41963#0" expanded="false" />
+            <element signature="e#42045#42208#0" expanded="false" />
+            <element signature="e#42304#42354#0" expanded="false" />
+            <element signature="e#42422#43289#0" expanded="false" />
+            <element signature="e#43406#43456#0" expanded="false" />
+            <element signature="e#43729#43913#0" expanded="false" />
+            <element signature="e#44004#44055#0" expanded="false" />
+            <element signature="e#44164#45079#0" expanded="false" />
+            <element signature="e#45226#45458#0" expanded="false" />
+            <element signature="e#45550#46013#0" expanded="false" />
+            <element signature="e#46143#46254#0" expanded="false" />
+            <element signature="e#46409#48551#0" expanded="false" />
+            <element signature="e#48618#48778#0" expanded="false" />
+            <element signature="e#48893#50314#0" expanded="false" />
+            <element signature="e#50397#51659#0" expanded="false" />
+            <element signature="e#51741#52320#0" expanded="false" />
+            <element signature="e#52424#53236#0" expanded="false" />
+            <element signature="e#53320#54719#0" expanded="false" />
+            <element signature="e#54879#55828#0" expanded="false" />
+            <element signature="e#55901#56115#0" expanded="false" />
+            <element signature="e#56248#56668#0" expanded="false" />
+            <element signature="e#56716#56824#0" expanded="false" />
+            <element signature="e#57025#58881#0" expanded="false" />
+            <element signature="e#58966#59497#0" expanded="false" />
+            <element signature="e#59561#62121#0" expanded="false" />
+            <element signature="e#62205#62419#0" expanded="false" />
+            <element signature="e#62499#62577#0" expanded="false" />
+            <element signature="e#62617#62778#0" expanded="false" />
+            <element signature="e#62827#63128#0" expanded="false" />
+            <element signature="e#63205#64218#0" expanded="false" />
+            <element signature="e#64393#64423#0" expanded="false" />
+            <element signature="e#64463#64483#0" expanded="false" />
+            <element signature="e#64532#65181#0" expanded="false" />
+            <element signature="e#65434#65467#0" expanded="false" />
+            <element signature="e#65507#65527#0" expanded="false" />
+            <element signature="e#65576#66349#0" expanded="false" />
+            <element signature="e#66804#68875#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/addons/web/http.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="241" column="0" selection-start-line="241" selection-start-column="0" selection-end-line="241" selection-end-column="0" />
+          <folding>
+            <element signature="e#877#2101#1" expanded="false" />
+            <element signature="e#2143#2245#0" expanded="false" />
+            <element signature="e#2283#3651#0" expanded="false" />
+            <element signature="e#3685#3832#0" expanded="false" />
+            <element signature="e#3869#4710#1" expanded="false" />
+            <element signature="e#8612#9095#0" expanded="false" />
+            <element signature="e#9209#11022#0" expanded="false" />
+            <element signature="e#11095#11899#0" expanded="false" />
+            <element signature="e#11952#12083#0" expanded="false" />
+            <element signature="e#12109#12639#0" expanded="false" />
+            <element signature="e#13050#13357#0" expanded="false" />
+            <element signature="e#13468#13770#0" expanded="false" />
+            <element signature="e#14013#16758#0" expanded="false" />
+            <element signature="e#16795#17173#0" expanded="false" />
+            <element signature="e#17611#17625#0" expanded="false" />
+            <element signature="e#17683#18324#0" expanded="false" />
+            <element signature="e#17731#18276#0" expanded="false" />
+            <element signature="e#18350#18971#0" expanded="false" />
+            <element signature="e#19090#19409#0" expanded="false" />
+            <element signature="e#19468#19559#0" expanded="false" />
+            <element signature="e#19618#20886#0" expanded="false" />
+            <element signature="e#20923#22530#0" expanded="false" />
+            <element signature="e#22572#23835#0" expanded="false" />
+            <element signature="e#23862#23904#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/__openerp__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21052632">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../openerp-7.0-20150921/openerp/osv/osv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0502392">
+          <caret line="202" column="0" selection-start-line="202" selection-start-column="0" selection-end-line="202" selection-end-column="0" />
+          <folding>
+            <element signature="e#1750#1827#0" expanded="true" />
+            <element signature="e#1905#1942#0" expanded="true" />
+            <element signature="e#1970#8125#0" expanded="true" />
+            <element signature="e#2044#8101#0" expanded="true" />
+            <element signature="e#2172#4564#0" expanded="true" />
+            <element signature="e#4606#4628#0" expanded="true" />
+            <element signature="e#8196#8408#0" expanded="true" />
+            <element signature="e#8481#8541#0" expanded="true" />
+            <element signature="e#9301#9551#0" expanded="true" />
+            <element signature="e#9630#9933#0" expanded="true" />
+            <element signature="e#10085#10099#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/n/lucas/payroll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.630319">
+          <caret line="114" column="42" selection-start-line="114" selection-start-column="32" selection-end-line="114" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hrd_ppi_payroll/hr_payroll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.9175532">
+          <caret line="226" column="75" selection-start-line="226" selection-start-column="75" selection-end-line="226" selection-end-column="75" />
+          <folding>
+            <element signature="e#458#486#1" expanded="true" />
+            <element signature="e#688#12708#0" expanded="true" />
+            <element signature="e#969#1403#0" expanded="true" />
+            <element signature="e#13084#13518#0" expanded="true" />
+            <element signature="e#41634#48149#0" expanded="true" />
+            <element signature="e#48205#48751#0" expanded="true" />
+            <element signature="e#51152#52109#0" expanded="true" />
+            <element signature="e#52176#52428#0" expanded="true" />
+            <element signature="e#53958#54236#0" expanded="true" />
+            <element signature="e#54485#54520#1" expanded="true" />
+            <element signature="e#55665#55846#0" expanded="true" />
+            <element signature="e#56047#57015#0" expanded="true" />
+            <element signature="e#57093#57544#0" expanded="true" />
+            <element signature="e#57618#58070#0" expanded="true" />
+            <element signature="e#59209#60197#0" expanded="true" />
+            <element signature="e#60275#61370#0" expanded="true" />
+            <element signature="e#61441#61526#0" expanded="true" />
+            <element signature="e#61602#61693#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/employee.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="325" column="0" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/attendance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="84" column="37" selection-start-line="84" selection-start-column="37" selection-end-line="84" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#790#1696#0" expanded="true" />
+            <element signature="e#1767#1948#0" expanded="true" />
+            <element signature="e#2030#2413#0" expanded="true" />
+            <element signature="e#2469#2580#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lucas/payroll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28985506">
+          <caret line="364" column="86" selection-start-line="364" selection-start-column="86" selection-end-line="364" selection-end-column="86" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#409#437#1" expanded="true" />
+            <element signature="e#676#5319#0" expanded="true" />
+            <element signature="e#5422#5623#1" expanded="false" />
+            <element signature="e#26988#27839#0" expanded="true" />
+            <element signature="e#58100#58646#0" expanded="true" />
+            <element signature="e#60802#61548#0" expanded="false" />
+            <element signature="e#61605#61867#0" expanded="false" />
+            <element signature="e#61907#62393#0" expanded="false" />
+            <element signature="e#62012#62218#0" expanded="true" />
+            <element signature="e#62449#65647#0" expanded="false" />
+            <element signature="e#62598#63566#0" expanded="true" />
+            <element signature="e#63644#64143#0" expanded="true" />
+            <element signature="e#64217#64669#0" expanded="true" />
+            <marker date="1465076333000" expanded="false" signature="33096:34144" placeholder="..." />
+            <marker date="1465076333000" expanded="true" signature="58673:60741" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
