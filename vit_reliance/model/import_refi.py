@@ -422,18 +422,30 @@ class import_refi_keluarga(osv.osv):
 				cr.commit()
 				continue
 
+
 			data = {
 				'partner_keluarga_ids' : [(0,0,{
 					'nama'				: import_refi.nama,
 					'hubungan_keluarga'	: import_refi.hubungan,
 					'alamat'			: False,
 					'nomor_telepon'		: False,
-					'tgl_lahir'			: datetime.strptime(import_refi.tgl_lahir, "%d-%m-%Y"),
+					# 'tgl_lahir'			: datetime.strptime(import_refi.tgl_lahir, "%d-%m-%Y"),
 					'jenis_kelamin'		: import_refi.jenis_kelamin,
 					'pendidikan'		: import_refi.pendidikan,
 					'profesi'			: import_refi.profesi,
 				})]
 			}
+			########################### date birth
+			tgl_lahir = False
+			if import_refi.tgl_lahir:
+				try:
+					tgl_lahir = datetime.strptime(import_refi.tgl_lahir, "%d/%m/%Y")
+				except ValueError:
+					self.write(cr, uid, import_refi.id, {'notes':'tgl_lahir format error, use dd/mm/yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+			data.update( {'tgl_lahir':tgl_lahir})
 
 			partner.write(cr, uid, pid[0], data, context=context)
 
