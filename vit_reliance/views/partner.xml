@@ -124,8 +124,11 @@
 		                	context="{'group_by':'initial_bu'}"/>
 
 		                <filter string="Weekly Growth" icon="terp-personal"
-		                    domain="[]" name="group_by_create_date"
+		                    domain="[]" name="group_by_week"
 		                	context="{'group_by':'create_date:week'}"/>
+		                <filter string="Monthly Growth" icon="terp-personal"
+		                    domain="[]" name="group_by_month"
+		                	context="{'group_by':'create_date'}"/>
 
 		            </group>                                        
 		
