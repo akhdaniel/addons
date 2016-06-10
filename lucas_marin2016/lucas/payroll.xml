@@ -19,8 +19,13 @@
             <field name="inherit_id" ref="hrd_ppi_payroll.view_hr_payslip_form99"/>
             <field name="arch" type="xml"> 
                 <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight" groups="hrd_ppi.group_hr_user,hrd_ppi_access.group_hr_payroll" position="replace">
+
                     <button string="Hitung Payslip" name="compute_sheet" type="object" states="draft" class="oe_highlight"/>
+                    
+                    <button string="Reload Input" name="reload_input" type="object" states="draft"/>
+
                 </button>
+
                <field name='credit_note' position='after'>
                     <field name='thr'/>
                     <field name='lokasi_kerja' invisible="1"/>

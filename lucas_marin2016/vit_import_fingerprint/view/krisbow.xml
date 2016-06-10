@@ -1,0 +1,134 @@
+<openerp>
+	<data>
+
+		<record id="view_krisbow_tree" model="ir.ui.view">
+		    <field name="name">vit_krisbow_tree</field>
+		    <field name="model">vit.krisbow</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list krisbow" colors="grey:is_imported==True;blue:is_imported==False">
+					<field name='number' />			
+					<field name='machine_no' />			
+					<field name='fingerprint_code' />
+					<field name='name' />				
+					<field name='field5' />			
+					<field name='field6' />			
+					<field name='date' />				
+					<field name='is_imported' />		
+					<field name='notes' />				
+					<field name='date_processed' />	            
+		        </tree>    
+		    </field>
+		</record>
+
+        <record id="view_krisbow_form" model="ir.ui.view">
+            <field name="name">vit_krisbow_form</field>
+            <field name="model">vit.krisbow</field>
+            <field name="arch" type="xml">
+            	<form string="krisbow form" version="7.0">
+            		<header>
+            		</header>
+            		<sheet>
+						<group>
+							<field name='number' />			
+							<field name='machine_no' />			
+							<field name='fingerprint_code' />
+							<field name='name' />				
+							<field name='field5' />			
+							<field name='field6' />			
+							<field name='date' />				
+							<field name='is_imported' />		
+							<field name='notes' />				
+							<field name='date_processed' />	 							
+						</group>
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+
+        <!-- ini definisi search krisbow -->
+        <record id="view_krisbow_filter" model="ir.ui.view">
+            <field name="name">krisbow.filter</field>
+            <field name="model">vit.krisbow</field>
+            <field name="arch" type="xml">
+                <search string="Search Krisbow Logs">
+        
+                    <filter icon="terp-mail-message-new" 
+                        string="Imported" 
+                    	 name="imported" domain="[('is_imported','=',True)]"/>
+                    <filter icon="terp-mail-message-new" 
+                        string="Not Imported" 
+                    	 name="not_imported" domain="[('is_imported','=',False)]"/>
+                    <separator/>
+                    
+
+					<field name='number' />			
+					<field name='machine_no' />			
+					<field name='fingerprint_code' />
+					<field name='name' />				
+					<field name='field5' />			
+					<field name='field6' />			
+					<field name='date' />				
+					<field name='is_imported' />		
+					<field name='notes' />				
+					<field name='date_processed' />	 	
+
+                    <group expand="1" string="Group By...">
+
+                        <filter string="Is Imported" icon="terp-personal" 
+                            domain="[]" 
+                        	 context="{'group_by':'is_imported'}"/>
+
+	                    <filter string="Name" 
+	                        icon="terp-personal" domain="[]" 
+	                    	 context="{'group_by':'name'}"/>
+
+	                    <filter string="Fingerprint Code" 
+	                        icon="terp-personal" domain="[]" 
+	                    	 context="{'group_by':'fingerprint_code'}"/>
+        
+	                    <filter string="Date" 
+	                        icon="terp-personal" domain="[]" 
+	                    	 context="{'group_by':'date'}"/>
+                
+	                    <filter string="Date Processed" 
+	                        icon="terp-personal" domain="[]" 
+	                    	 context="{'group_by':'date_processed'}"/>
+        
+                    </group>                                        
+        
+                </search>
+            </field>
+        </record>
+
+		<record id="action_krisbow_list" model="ir.actions.act_window">
+			<field name="name">Import Att. Logs Krisbow</field>
+			<field name="res_model">vit.krisbow</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="import_krisbow"
+		 action="action_krisbow_list"
+		 name="Import Krisbow"
+		 sequence="100"
+		 parent="hr_attendance.menu_hr_attendance"/>
+
+
+	    <!-- context menu More.. di tree Logs Krisbow -->
+	    <record id="action_import_krisbow" model="ir.actions.server">
+	        <field name="name">Import Krisbow Logs</field>
+	        <field name="condition">True</field>
+	        <field name="model_id" ref="model_vit_krisbow"/>
+	        <field name="state">code</field>
+	        <field name="code">action = pool.get('vit.krisbow').action_import(cr, uid, context)</field>
+	    </record>
+
+	    <record id="ir_import_krisbow" model="ir.values">
+	        <field eval="'client_action_multi'" name="key2"/>
+	        <field eval="'vit.krisbow'" name="model"/>
+	        <field name="name">Import Krisbow Logs</field>
+	        <field eval="'ir.actions.server,%d'%action_import_krisbow" name="value"/>
+	    </record>
+		
+	</data>
+</openerp>

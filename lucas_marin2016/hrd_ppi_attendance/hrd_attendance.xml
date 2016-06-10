@@ -33,19 +33,21 @@
                 </field>
             </field>
         </record>
+
         <record id="view_attendance_tree_with_ff" model="ir.ui.view">
             <field name="name">Attandance with FF ID Tree</field>
             <field name="model">hr.attendance</field>
-            <field name='inherit_id' ref='hr_attendance.view_attendance_tree'/>
+            <field name='inherit_id' ref='hr_attendance.view_attendance_who'/>
             <field name="arch" type="xml">
                 <tree string="Employee attendances" position="replace">
-                    <tree string="Employee attendances" colors="red:sign_red == 1">
+                    <tree string="Employee attendances" colors="blue:binary_action=='1';red:sign_red == 1">
                        <field name="employee_id"/>
                        <field name="name"/>
                        <field name="fingerprint_code"/>
                        <field name="no_mesin"/>
                        <field name="action"/>
                        <field name="sign_red" invisible="1"/>
+                       <field name="binary_action"  invisible="1"/>
                     </tree>
                 </tree>
             </field>
