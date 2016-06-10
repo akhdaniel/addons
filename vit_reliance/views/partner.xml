@@ -123,6 +123,9 @@
 		                    domain="[]" name="group_by_initial_bu"
 		                	context="{'group_by':'initial_bu'}"/>
 
+		                <filter string="Weekly Growth" icon="terp-personal"
+		                    domain="[]" name="group_by_create_date"
+		                	context="{'group_by':'create_date:week'}"/>
 
 		            </group>                                        
 		
