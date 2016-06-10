@@ -92,6 +92,12 @@ class import_ftp_arg(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_arg = self.pool.get('reliance.import_arg')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import ARG to Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import ARG to Partner") )
+
 		fields_map = [
 			"policy_no"			,	
 			"product_class"		,	
@@ -119,6 +125,7 @@ class import_ftp_arg(osv.osv):
 		]
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_arg, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -150,6 +157,12 @@ class import_ftp_arg(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_arg_polis_risk = self.pool.get('reliance.import_arg_polis_risk')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import ARG to Polis Risk")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import ARG to Polis Risk") )
+
 		fields_map = [
 			"policy_no"					,
 			"asset_description"			,
@@ -158,6 +171,7 @@ class import_ftp_arg(osv.osv):
 		]
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_arg_polis_risk, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
