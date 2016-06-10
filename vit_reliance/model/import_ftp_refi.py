@@ -100,6 +100,12 @@ class import_ftp_refi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_refi_partner = self.pool.get('reliance.import_refi_partner')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import REFI Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import REFI Partner") )
+
 		fields_map = [
 			"no_debitur"			,
 			"nama_depan"			,
@@ -143,6 +149,7 @@ class import_ftp_refi(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_refi_partner, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -175,6 +182,12 @@ class import_ftp_refi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_refi_pekerjaan = self.pool.get('reliance.import_refi_pekerjaan')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import REFI Partner Pekerjaan")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import REFI Partner Pekerjaan") )
+
 		fields_map = [
 			"no_debitur"		,
 			"nama_perusahaan"	,	
@@ -195,6 +208,7 @@ class import_ftp_refi(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_refi_pekerjaan, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -228,6 +242,13 @@ class import_ftp_refi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_refi_keluarga = self.pool.get('reliance.import_refi_keluarga')
 
+
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import REFI Partner Keluarga")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import REFI Partner Keluarga") )
+
 		fields_map = [
 			"no_debitur"		,
 			"no_urut"			,
@@ -242,6 +263,7 @@ class import_ftp_refi(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_refi_keluarga, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -277,6 +299,12 @@ class import_ftp_refi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_refi_statement = self.pool.get('reliance.import_refi_statement')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import REFI Partner Statement")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import REFI Partner Statement") )
+
 		fields_map = [
 			"no_debitur"						,
 			"bulan_tahun_survey"				,
@@ -308,6 +336,7 @@ class import_ftp_refi(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_refi_statement, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -342,6 +371,12 @@ class import_ftp_refi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_refi_kontrak = self.pool.get('reliance.import_refi_kontrak')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import REFI Partner Kontrak")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import REFI Partner Kontrak") )
+
 		fields_map = [
 			"contract_number"	,
 			"customer_no"		,
@@ -356,6 +391,7 @@ class import_ftp_refi(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_refi_kontrak, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):

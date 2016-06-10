@@ -93,6 +93,11 @@ class import_ftp_ls(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_ls = self.pool.get('reliance.import_ls')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import LS Cust to Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import LS Cust to Partner") )
 
 		fields_map = [
 			"client_id"				,
@@ -143,6 +148,8 @@ class import_ftp_ls(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ls, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id,
+			cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -173,6 +180,13 @@ class import_ftp_ls(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_ls_cash = self.pool.get('reliance.import_ls_cash')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import LS Cash to Partner Cash")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import LS Cash to Partner Cash") )
+
+
 		fields_map = [
 			"client_id"		,
 			"date"			,
@@ -182,6 +196,8 @@ class import_ftp_ls(osv.osv):
 		]
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ls_cash, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id,
+			cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -212,6 +228,13 @@ class import_ftp_ls(osv.osv):
 		_logger.warning('importing csv data insert_ls_cash')
 		ftp_utils = ftp.ftp_utils()
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import LS Stock to Partner Stock")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import LS Stock to Partner Stock") )
+
+
 		import_ls_stock = self.pool.get('reliance.import_ls_stock')
 		fields_map = [
 			"date"				,
@@ -229,6 +252,7 @@ class import_ftp_ls(osv.osv):
 		]
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ls_stock, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):

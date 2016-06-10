@@ -167,8 +167,7 @@ class import_ftp_health(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_health_peserta, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR, 
-			cron_id=cron_id,
-			cron_obj=cron_obj,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):

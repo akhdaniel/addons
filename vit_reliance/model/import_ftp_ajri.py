@@ -91,6 +91,12 @@ class import_ftp_ajri(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_ajri = self.pool.get('reliance.import_ajri')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import AJRI Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import AJRI Partner") )
+
 		fields_map = [
 			"nomor_polis"			,
 			"nama_pemegang"			,
@@ -112,6 +118,7 @@ class import_ftp_ajri(osv.osv):
 		
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_ajri, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):

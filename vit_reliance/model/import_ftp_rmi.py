@@ -92,6 +92,12 @@ class import_ftp_rmi(osv.osv):
 		ftp_utils = ftp.ftp_utils()
 		import_rmi = self.pool.get('reliance.import_rmi')
 
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import RMI Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import RMI Partner") )
+
 		fields_map = [
 			"no"						,
 			"sid"						,
@@ -126,6 +132,7 @@ class import_ftp_rmi(osv.osv):
 		]
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_rmi, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
@@ -156,7 +163,13 @@ class import_ftp_rmi(osv.osv):
 		_logger.warning('importing csv data import_rmi_product_holding')
 		ftp_utils = ftp.ftp_utils()
 		import_rmi_product_holding = self.pool.get('reliance.import_rmi_product_holding')
-		
+
+		cron_obj = self.pool.get('ir.cron')
+		cron_id = cron_obj.search(cr, uid,
+			[('name','=', "Auto Import RMI Product Holding Partner")], context=context)
+		if not cron_id:
+			raise osv.except_osv(_('error'),_("no cron job Auto Import RMI Product Holding Partner") )
+
 		fields_map = [
 			"no"						,
 			"sid"						,
@@ -173,6 +186,7 @@ class import_ftp_rmi(osv.osv):
 
 		i = ftp_utils.read_csv_insert(cr, uid, csv_file, fields_map, import_rmi_product_holding, 
 			delimiter=DELIMITER, quotechar=QUOTECHAR,
+			cron_id=cron_id, cron_obj=cron_obj,
 			context=context)
 		
 		if isinstance(i, dict):
