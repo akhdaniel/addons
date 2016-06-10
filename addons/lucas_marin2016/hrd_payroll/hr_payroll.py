@@ -561,7 +561,7 @@ class hr_payslip(osv.osv):
             number = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
             #delete old payslip lines
             old_slipline_ids = slip_line_pool.search(cr, uid, [('slip_id', '=', payslip.id)], context=context)
-#            old_slipline_ids
+            #old_slipline_ids
             if old_slipline_ids:
                 slip_line_pool.unlink(cr, uid, old_slipline_ids, context=context)
             if payslip.contract_id:

@@ -19,8 +19,53 @@
               <field name="department_id"/>
               <field name="date"/>
               <field name='lokasi'/>
+              <field name='message'/>
           </tree>
       </field>
+    </record>
+
+
+    <!-- ini definisi search tampung.error -->
+    <record id="view_tampung_error_filter" model="ir.ui.view">
+        <field name="name">tampung.error.filter</field>
+        <field name="model">hr.tampung.error</field>
+        <field name="arch" type="xml">
+            <search string="Search Tampung Error">
+  
+                <field name="name"/>
+                <field name="employee_id"/>  
+                <field name='no_mesin'/>
+                <field name="department_id"/>
+                <field name="date"/>
+                <field name='lokasi'/>
+                <field name='message'/>
+                
+                <group expand="1" string="Group By...">
+
+                    <filter string="Name" 
+                        domain="[]" 
+                       context="{'group_by':'name'}"/>
+
+                    <filter string="Employee" 
+                        icon="terp-personal" domain="[]" 
+                       context="{'group_by':'employee_id'}"/>
+
+                    <filter string="Department" 
+                        icon="terp-personal" domain="[]" 
+                       context="{'group_by':'department_id'}"/>
+    
+                    <filter string="Date" 
+                        icon="terp-personal" domain="[]" 
+                       context="{'group_by':'date'}"/>
+
+                    <filter string="Lokasi" 
+                        icon="terp-personal" domain="[]" 
+                       context="{'group_by':'lokasi'}"/>
+    
+                </group>                                        
+    
+            </search>
+        </field>
     </record>
 
     <menuitem action="open_eror_attendance" id="hr_tampung_eror" parent="hr_attendance.menu_hr_attendance" name="Error Attendance" sequence="30"/> 

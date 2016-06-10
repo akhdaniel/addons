@@ -12,6 +12,8 @@ import openerp.addons.decimal_precision as dp
 
 from openerp.tools.safe_eval import safe_eval as eval
 import pprint
+import  logging
+_logger = logging.getLogger(__name__)
 
 class hr_payslip(osv.osv):
     '''
@@ -23,25 +25,31 @@ class hr_payslip(osv.osv):
     _description = 'Pay Slip Inheriteed Lucas Marin'
 
     def onchange_employee_id(self, cr, uid, ids, date_from, date_to, employee_id=False, contract_id=False, context=None):
-        empolyee_obj = self.pool.get('hr.employee')
-        contract_obj = self.pool.get('hr.contract')
+        empolyee_obj    = self.pool.get('hr.employee')
+        contract_obj    = self.pool.get('hr.contract')
         worked_days_obj = self.pool.get('hr.payslip.worked_days')
-        input_obj = self.pool.get('hr.payslip.input')
+        input_obj       = self.pool.get('hr.payslip.input')
 
         if context is None:
             context = {}
+
+        ######################################################################
         #delete old worked days lines
+        ######################################################################
         old_worked_days_ids = ids and worked_days_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
         if old_worked_days_ids:
             worked_days_obj.unlink(cr, uid, old_worked_days_ids, context=context)
 
+        ######################################################################
         #delete old input lines
+        ######################################################################
         old_input_ids = ids and input_obj.search(cr, uid, [('payslip_id', '=', ids[0])], context=context) or False
         if old_input_ids:
             input_obj.unlink(cr, uid, old_input_ids, context=context)
 
-
+        ######################################################################
         #defaults
+        ######################################################################
         res = {'value':{
                       'line_ids':[],
                       'input_line_ids': [],
@@ -55,6 +63,7 @@ class hr_payslip(osv.osv):
             }
         if (not employee_id) or (not date_from) or (not date_to):
             return res
+
         ttyme = datetime.fromtimestamp(time.mktime(time.strptime(date_from, "%Y-%m-%d")))
         employee_id = empolyee_obj.browse(cr, uid, employee_id, context=context)
         res['value'].update({
@@ -63,18 +72,26 @@ class hr_payslip(osv.osv):
         })
 
         if not context.get('contract', False):
+            ######################################################################
             #fill with the first contract of the employee
+            ######################################################################
             contract_ids = self.get_contract(cr, uid, employee_id, date_from, date_to, context=context)
         else:
             if contract_id:
+                ######################################################################
                 #set the list of contract for which the input have to be filled
+                ######################################################################
                 contract_ids = [contract_id]
             else:
+                ######################################################################
                 #if we don't give the contract, then the input to fill should be for all current contracts of the employee
+                ######################################################################
                 contract_ids = self.get_contract(cr, uid, employee_id, date_from, date_to, context=context)
 
         if not contract_ids:
             return res
+
+
         contract_record = contract_obj.browse(cr, uid, contract_ids[0], context=context)
         res['value'].update({
                     'contract_id': contract_record and contract_record.id or False,
@@ -82,18 +99,24 @@ class hr_payslip(osv.osv):
                     'status_karyawan': contract_record.employee_id.status_karyawan.name
         })
         struct_record = contract_record and contract_record.struct_id or False
+
         if not struct_record:
             return res
+
         res['value'].update({
-                    'struct_id': struct_record.id,
+                'struct_id': struct_record.id,
         })
+
+        ######################################################################
         #computation of the salary input
-        worked_days_line_ids = self.get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
-        input_line_ids = self.get_inputs(cr, uid, contract_ids, date_from, date_to, context=context)
-        res['value'].update({
-                    'worked_days_line_ids': worked_days_line_ids,
-                    'input_line_ids': input_line_ids,
-        })
+        # moved to reload input
+        ######################################################################
+        # worked_days_line_ids = self.get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
+        # input_line_ids = self.get_inputs(cr, uid, contract_ids, date_from, date_to, context=context)
+        # res['value'].update({
+        #             'worked_days_line_ids': worked_days_line_ids,
+        #             'input_line_ids': input_line_ids,
+        # })
         return res
 
     def get_worked_day_lines(self, cr, uid, contract_ids, date_from, date_to, context=None):
@@ -110,11 +133,9 @@ class hr_payslip(osv.osv):
             return res
 
         res = []
-        din = 0
+        din = 0 # index record hr_attendance
         for contract in self.pool.get('hr.contract').browse(cr, uid, contract_ids, context=context):
-            # if not contract.working_hours:
-            #     #fill only if the contract as a working schedule linked
-            #     continue
+
             attendances = {
                  'name': _("Normal Working Days paid at 100%"),
                  'sequence': 1,
@@ -123,7 +144,6 @@ class hr_payslip(osv.osv):
                  'number_of_hours': 0.0,
                  'contract_id': contract.id,
             }
-
             presences = {
                  'name': _("Presences"),
                  'sequence': 2,
@@ -175,52 +195,74 @@ class hr_payslip(osv.osv):
             luar ={}
             leaves = {}
             leave={}
-            #import pdb;pdb.set_trace()
-            day_from = datetime.strptime(date_from,"%Y-%m-%d")
-            day_to = datetime.strptime(date_to,"%Y-%m-%d")
-            nb_of_days = (day_to - day_from).days + 1 
-            #search attendance
-            x= -1
-            attid = self.pool.get('hr.attendance').search(cr, uid, [('employee_id', '=', contract.employee_id.id), ('name_date', '>=', date_from), ('name_date', '<=',  date_to)])            
-            for att in self.pool.get('hr.attendance').browse(cr,uid,attid,context=context):
-                x=x+1
+            employee_id = contract.employee_id.id
 
-            #tunjangan Shift 3
-            # shift_obj   = self.pool.get('hr.shift_karyawan')
-            # shift_src   = shift_obj.search(cr,uid,[('contract_id','=',contract.id),('date_from','<=',date_attendance),('date_to','>=',date_attendance),('urutan_shift','=','3')])
-            # import pdb;pdb.set_trace()
-            # for shift in shift_obj.browse(cr,uid,shift_src) :
-            #     Bonus_Shift_3['number_of_days'] += 1.0
-            
+            #################################################################################
+            # jumlah hari dalam range period payslip
+            # start from dimunduri utk handle shift malam
+            #################################################################################
+            day_from = datetime.strptime(date_from,"%Y-%m-%d") -timedelta(hours=12)
+            day_to = datetime.strptime(date_to,"%Y-%m-%d")
+            nb_of_days = (day_to - day_from).days + 1
+
+            #################################################################################
+            # search attendance
+            # x = jumlah records attendance
+            #################################################################################
+            x= -1
+            attid = self.pool.get('hr.attendance').search(cr, uid, [
+                ('employee_id', '=', contract.employee_id.id),
+                ('name_date', '>=', date_from),
+                ('name_date', '<=',  date_to)], order="name asc")
+            x = len(attid)-1
+
+            #################################################################################
+            # loop dari hari ke-0 sd jumlah hari period payslip
+            #################################################################################
             for day in range(0, nb_of_days):
-            	# cek dari jadwal kerja, berapa jam sehari employee bekerja              	
-                
-                working_hours_on_day = False
-                date = (day_from + timedelta(days=day))
-                datess = str(date)[:10]
+
+                #################################################################################
+                # cek dari jadwal kerja, berapa jam sehari employee bekerja
+                #################################################################################
+                working_hours_on_day    = False
+                date                    = day_from + timedelta(days=day)
+                _logger.warning(date)
+                datess                  = str(date)[:10]
               
-                # mencari worker days
-                #import pdb;pdb.set_trace()
-                
-                if not contract.working_hours:
+                #################################################################################
+                # mencari worked hours utk tanggal date
+                # dari shift atau dari calendar kerja, tergantung dari
+                # Working Schedule = field working_hours
+                #################################################################################
+                if not contract.working_hours: # cari dari shift
                     obj_shift = self.pool.get('hr.shift_karyawan')
-                    src_shift = obj_shift.search(cr,uid,[('contract_id','=',contract.id),('date_from','<=',datess),('date_to','>=',datess)])
+                    src_shift = obj_shift.search(cr,uid,[
+                        ('contract_id','=',contract.id),
+                        ('date_from','<=',datess),
+                        ('date_to','>=',datess)])
                     for shift in obj_shift.browse(cr,uid,src_shift):
-                        working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, shift.schedule_id, day_from + timedelta(days=day), context)
-                else :
-                    working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(cr, uid, contract.working_hours, day_from + timedelta(days=day), context)    
-                employee_id = contract.employee_id.id
-                #import pdb;pdb.set_trace()
+                        working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(
+                            cr, uid, shift.schedule_id, date, context)
+                else: # cari dari Working Schedule
+                    working_hours_on_day = self.pool.get('resource.calendar').working_hours_on_day(
+                        cr, uid, contract.working_hours, date, context)
+
+                #################################################################################
+                # ada jadwal untuk tanggal=date ?
+                #################################################################################
                 if working_hours_on_day != False :
-                	# import pdb;pdb.set_trace()
-                    #the employee had to work
-                    #employee info
+
+                    #################################################################################
+                    # apakah dia date ini ada ambil cuti ?
+                    #################################################################################
                     emp_obj = self.pool.get('hr.employee')
                     employee = emp_obj.browse(cr, uid, employee_id, context=context)
-                    leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
+                    leave_type = was_on_leave(contract.employee_id.id, date, context=context)
+
                     if leave_type == "Cuti Tahunan" :
-                        ###### cuti	
-                        #if he was on leave, fill the leaves dict
+                        #################################################################################
+                        ###### cuti	: if he was on leave, fill the leaves dict
+                        #################################################################################
                         
                         if leave_type in leaves:
                             if employee.cuti_tahunan >= 0 :
@@ -231,9 +273,9 @@ class hr_payslip(osv.osv):
                                 ccc=date_to
                                 yyy=datetime.strptime(ccc,"%Y-%m-%d").year
                                 zzz=datetime.strptime(ccc,"%Y-%m-%d")
-                                self_obj=self.pool.get('hr.payslip')
-                                src_obj=self_obj.search(cr,uid,[('employee_id','=',xyz)])
-                                obj=self_obj.browse(cr,uid,src_obj)
+                                pay_objk=self.pool.get('hr.payslip')
+                                src_obj=pay_objk.search(cr,uid,[('employee_id','=',xyz)])
+                                obj=pay_objk.browse(cr,uid,src_obj)
                                 totals = 0.0
                                 alok_cuti = employee.alokasi
                                 for xyc in obj :
@@ -268,9 +310,9 @@ class hr_payslip(osv.osv):
                                 ccc=date_to
                                 yyy=datetime.strptime(ccc,"%Y-%m-%d").year
                                 zzz=datetime.strptime(ccc,"%Y-%m-%d")
-                                self_obj=self.pool.get('hr.payslip')
-                                src_obj=self_obj.search(cr,uid,[('employee_id','=',xyz)])
-                                obj=self_obj.browse(cr,uid,src_obj)
+                                pay_objk=self.pool.get('hr.payslip')
+                                src_obj=pay_objk.search(cr,uid,[('employee_id','=',xyz)])
+                                obj=pay_objk.browse(cr,uid,src_obj)
                                 totals = 0.0
                                 alok_cuti = employee.alokasi
                                 for xyc in obj :
@@ -297,7 +339,7 @@ class hr_payslip(osv.osv):
                                         'number_of_days': 0.0,
                                         'number_of_hours': working_hours_on_day,
                                         'contract_id': contract.id,                                         
-                            }
+                                        }
                     if leave_type != "Cuti Tahunan" and leave_type :
                         if leave_type in leave:
                             leave[leave_type]['number_of_days'] += 1.0
@@ -312,41 +354,62 @@ class hr_payslip(osv.osv):
                                     'contract_id': contract.id,
                                     }   
                         #leaves0 += 1 
-                    real_working_hours_on_day = self.pool.get('hr.attendance').real_working_hours_on_day(cr,uid, contract.employee_id.id, day_from + timedelta(days=day),context)             
-                    #import pdb;pdb.set_trace()
-                    #inid = self.pool.get('hr.attendance').search(cr, uid, [('employee_id', '=', contract.employee_id.id), ('action', '=', 'sign_in'), ('name_date', '>=', date_from), ('name_date', '<=',  date_to)])
-                    #outid = self.pool.get('hr.attendance').search(cr, uid, [('employee_id', '=', contract.employee_id.id), ('action', '=', 'sign_out'), ('name_date', '>=', date_from), ('name_date', '<=',  date_to)])
+
+
+                    #################################################################################
+                    # real_working_hours_on_day
+                    #################################################################################
                     real_working_hours_on_day = 0
-                    #import pdb;pdb.set_trace()
-                    if x-1 >= din :
-                        attout = self.pool.get('hr.attendance').browse(cr,uid,attid[din],context=context)
-                        attin = self.pool.get('hr.attendance').browse(cr,uid,attid[din+1],context=context)
-                        attout_date = attout.name
-                        attin_date = attin.name
+                    if x > din :
+                        attout = self.pool.get('hr.attendance').browse(cr,uid,attid[din+1],context=context)
+                        attin = self.pool.get('hr.attendance').browse(cr,uid,attid[din],context=context)
+                        attout_date = attout.name #dapat GMT
+                        attin_date = attin.name #data GMT
                         din = din+2
-                        real_working_hours_on_day = (datetime.strptime(attout_date,"%Y-%m-%d %H:%M:%S")-datetime.strptime(attin_date,"%Y-%m-%d %H:%M:%S")).seconds / 3600    
+
+                        # jika ketemu record att login - login: maka
+                        # dianggap tdk hadir, din mundurin 1 record
                         if attout.action == 'sign_in' :
-                            din = din-1
+                            din = din - 1
                             real_working_hours_on_day = 0
-                    
-                    #menghitung denda keterlambatan
-                    date_attendance  = time.strftime('%Y-%m-%d', time.strptime(str(day_from + timedelta(days=day)), '%Y-%m-%d %H:%M:%S'))
+                        else:
+                            real_working_hours_on_day = (datetime.strptime(attout_date,"%Y-%m-%d %H:%M:%S") -
+                                datetime.strptime(attin_date, "%Y-%m-%d %H:%M:%S")).seconds / 3600
+
+                    #################################################################################
+                    # menghitung denda keterlambatan
+                    #################################################################################
+                    date_attendance = time.strftime('%Y-%m-%d', time.strptime(str(date), '%Y-%m-%d %H:%M:%S'))
                     attendance_obj  = self.pool.get('hr.attendance')
-                    attendance_src  = attendance_obj.search(cr,uid,[('fingerprint_code','=',contract.employee_id.fingerprint_code),('day','=',date_attendance),('binary_action','=','1')])
+                    attendance_src  = attendance_obj.search(cr,uid,[
+                        ('fingerprint_code','=',contract.employee_id.fingerprint_code),
+                        ('day','=',date_attendance),
+                        ('binary_action','=','1')])
+
                     for atendances in attendance_obj.browse(cr,uid,attendance_src) :
                         if atendances.keterlambatan != False :
                             if float(atendances.keterlambatan) <= 0.15 and float(atendances.keterlambatan) > 0 : 
                                 denda_keterlambatan['number_of_days'] += 1.0
                             elif float(atendances.keterlambatan) > 0.15 :
                                 denda_ketidakhadiran['number_of_days'] += 1.0
-                    
-                    #menghitung tunjangan Shift 3
+
+                    #################################################################################
+                    # menghitung tunjangan Shift 3
+                    #################################################################################
+
                     if attendance_src != [] :
                         shift_obj   = self.pool.get('hr.shift_karyawan')
-                        shift_src   = shift_obj.search(cr,uid,[('contract_id','=',contract.id),('date_from','<=',date_attendance),('date_to','>=',date_attendance),('urutan_shift','=','3')])
+                        shift_src   = shift_obj.search(cr,uid,[
+                            ('contract_id','=',contract.id),
+                            ('date_from','<=',date_attendance),
+                            ('date_to','>=',date_attendance),
+                            ('urutan_shift','=','3')])
                         for shift in shift_obj.browse(cr,uid,shift_src) :
                             Bonus_Shift_3['number_of_days'] += 1.0
-                    
+
+                    #################################################################################
+                    # hitung working hours
+                    #################################################################################
                     working_hours=int(real_working_hours_on_day)
                     working_minutes=real_working_hours_on_day - working_hours
                     work_minutes = working_minutes / 1.66666667
@@ -356,11 +419,10 @@ class hr_payslip(osv.osv):
                         real_working_hours_on_day= working_hours + 1
                     elif working_minutes < 15 :
                         real_working_hours_on_day= working_hours  						
-                    date = (day_from + timedelta(days=day))
-                    #leave_type = was_on_leave(contract.employee_id.id, day_from + timedelta(days=day), context=context)
-                    isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7
-                    #if isNonWorkingDay == False :
-                    #import pdb;pdb.set_trace()
+                    # date = (day_from + timedelta(days=day))
+
+                    # isNonWorkingDay = date.isoweekday()==6 or date.isoweekday()==7
+
                     if working_hours_on_day > 0:
                         if not contract.working_hours:
                             if shift.schedule_id.shift_gt_hr == False :
@@ -376,26 +438,36 @@ class hr_payslip(osv.osv):
                                 attendances['number_of_days'] += 1.0
                                 attendances['number_of_hours'] += working_hours_on_day
                                 ### tidak cuti, cek apakah dia masuk absen?
-                    #menghitung kehadiran
+                    else:
+                        _logger.warning("date=%s working_hours_on_day=%s"% (date, working_hours_on_day))
+
+                    #################################################################################
+                    # jika real_working_hours_on_day>0, hitung sebagai kehadiran
+                    #################################################################################
                     if real_working_hours_on_day >= 0.000000000000000001 :
                         presences['number_of_days'] += 1.0
                         presences['number_of_hours'] += working_hours_on_day
-                    
-                    # #menhitung potongan tunjangan
-                    # import pdb;pdb.set_trace()
-                    # if attendance_src == []  and working_hours_on_day > 0 and leave_type == False :
-                    # 	potongan_tunjangan['number_of_days'] += 1.0
-    	        # menghitung lemburssss
-    	        datas = day_from + timedelta(days=day)
-    	        tanggal = datas.strftime("%Y-%m-%d")
-    	    	obj_over = self.pool.get('hr.overtime')
-                #import pdb;pdb.set_trace()
-    	        src_over = obj_over.search(cr,uid,[('employee_id','=',employee_id),('tanggal','=',tanggal),('state','=','validate')])
+                        _logger.warning("date=%s working_hours_on_day=%s"% (date, working_hours_on_day))
+
+                else:
+                    _logger.warning("date=%s working_hours_on_day=%s"% (date, working_hours_on_day))
+
+                #################################################################################
+                # menghitung lembur
+                #################################################################################
+                tanggal = date.strftime("%Y-%m-%d")
+                obj_over = self.pool.get('hr.overtime')
+
+                src_over = obj_over.search(cr,uid,[
+                    ('employee_id','=',employee_id),
+                    ('tanggal','=',tanggal),
+                    ('state','=','validate')])
                 for overt in obj_over.browse(cr,uid,src_over) :
-    	            if overt.overtime_type_id.name == 'Lembur' :
-    	                jumlah = overt.total_jam1
-    	                jumlah_ril = overt.jam_lembur
-    	                lembur['number_of_hours'] += jumlah
+                    if overt.overtime_type_id.name == 'Lembur' :
+                        jumlah = overt.total_jam1
+                        jumlah_ril = overt.jam_lembur
+                        lembur['number_of_hours'] += jumlah
+
             leaves = [value for key,value in leaves.items()]
             leave = [value for key,value in leave.items()]
             luar = [value for key,value in luar.items()]
@@ -404,24 +476,50 @@ class hr_payslip(osv.osv):
                 attendances['number_of_days'] = attendances['number_of_days'] - 0
             else :    
                 attendances['number_of_days'] = attendances['number_of_days'] - leaves[0]['number_of_days']
-            
-            #menhitung potongan tunjangan
+
+            #################################################################################
+            # menhitung potongan tunjangan
+            #################################################################################
             potongan_tunjangan['number_of_days'] = attendances['number_of_days'] - presences['number_of_days']
              
-            #denda ketidak hadiran
+            #################################################################################
+            # denda ketidak hadiran
+            #################################################################################
             denda_ketidakhadiran['number_of_days'] = potongan_tunjangan['number_of_days']
             res += [attendances] + leaves + leave + luar + [presences] + [Bonus_Shift_3] + [lembur] + [potongan_tunjangan] + [denda_keterlambatan] + [denda_ketidakhadiran]
-        #coos = self.line2(cr, uid, contract_ids,date_to,date_from,context=None) 
-        return res #+ coos 
+
+        return res
+
+    def reload_input(self, cr, uid, ids, context=None):
+        payslip         = self.browse(cr,uid,ids)[0]
+        contract_ids    = [payslip.contract_id.id]
+        date_from       = payslip.date_from
+        date_to         = payslip.date_to
+
+        #clear dulu
+        cr.execute('delete from hr_payslip_worked_days where payslip_id=%s' % (ids[0]))
+        cr.execute('delete from hr_payslip_input where payslip_id=%s' % (ids[0]))
+
+        worked_days_line_ids = self.get_worked_day_lines(cr, uid, contract_ids, date_from, date_to, context=context)
+        input_line_ids = self.get_inputs(cr, uid, contract_ids, date_from, date_to, context=context)
+
+        self.write(cr, uid, ids, {
+                'worked_days_line_ids'  : [(0,0,data) for data in worked_days_line_ids],
+                'input_line_ids'        : [(0,0,data) for data in input_line_ids]
+            }, context=context)
+
+        return True
 
     def compute_sheet(self, cr, uid, ids, context=None):   
-    	self_obj		=self.browse(cr,uid,ids)[0]      
+        pay_objk 		= self.browse(cr,uid,ids)[0]
         slip_line_pool 	= self.pool.get('hr.payslip.line')
         sequence_obj 	= self.pool.get('ir.sequence')
         contract_obj 	= self.pool.get("hr.contract")
-        pay_objk 		= self.browse(cr,uid,ids)[0]
         worked 			= pay_objk.worked_days_line_ids
+
+        ################################################################################
         ### Tunjangan Hari Raya
+        ################################################################################
         for work in worked :
             cod = work.code
             if cod 	== 'UANG_MAKAN_PROY' :
@@ -434,12 +532,17 @@ class hr_payslip(osv.osv):
         date_to 		= pay_objk.date_to
         day_from 		= datetime.strptime(date_from,"%Y-%m-%d")
         day_to 			= datetime.strptime(date_to,"%Y-%m-%d")
-        obj 			= self.pool.get('hr.contract')
-        obj_src 		= obj.search(cr,uid,[('id','=', pay_objk.contract_id.id)])
+
+        contract_id 	= contract_obj.search(cr,uid,[('id','=', pay_objk.contract_id.id)])
+
         tunjangan 		= 0
         jum_umak 		= 0
         total_over 		= 0
-        for kont in obj.browse(cr,uid,obj_src):
+
+        ################################################################################
+        # uang makan proyek
+        ################################################################################
+        for kont in contract_obj.browse(cr,uid,contract_id):
             tunjangan = kont.proyek
             for kontrak in tunjangan :
                 tgl_sampai 	= kontrak.sampai
@@ -453,9 +556,12 @@ class hr_payslip(osv.osv):
                     over_libur 	= kontrak.tunjangan_lain.lembur2
                     jum_umak 	= umak * jum
                     total_over 	= (jum_over * over_biasa) + (jum_libur * over_libur)
-                    self.write(cr,uid,[self_obj.id],{'uang_makan_proyek': jum_umak,'lembur_proyek':total_over})
+                    self.write(cr,uid,[pay_objk.id],{'uang_makan_proyek': jum_umak,'lembur_proyek':total_over})
+
         for payslip in self.browse(cr, uid, ids, context=context):
+            ################################################################################
             #menghitung hutang koperasi dan hutang perusahaan
+            ################################################################################
             if payslip.employee_id.sisa_tunggakan > 0 :
                 pembayaran      = payslip.employee_id.hutang_koperasi / float(payslip.employee_id.pembayaran)
                 self.write(cr,uid,[payslip.id],{'hutang_koperasi': pembayaran})
@@ -472,12 +578,16 @@ class hr_payslip(osv.osv):
             year 			=(date_pays - date_cont) / 5
             date_cont 		= datetime.strptime(date_contract,"%Y-%m-%d").month
             date_pays 		= datetime.strptime(date_to,"%Y-%m-%d").month
+
+            ################################################################################
             #menghitung tunjangan kinerja
+            ################################################################################
             kinerja_obj = self.pool.get("hr.tk.gol")
             kinerja_src = kinerja_obj.search(cr,uid,[('master_tunjangan','=',payslip.contract_id.jenis_tunjangan.id)])
             for kinerja in kinerja_obj.browse(cr,uid,kinerja_src) :
-	       		if self_obj.employee_id.gol_id.id == kinerja.gol_id.id :
+	       		if pay_objk.employee_id.gol_id.id == kinerja.gol_id.id :
 	       			self.write(cr,uid,[payslip.id],{'tunjangan_kinerja' : kinerja.nominal})
+
 	        #menghitung tunjangan hari raya
 			# date_now 	= datetime.now().year
 			# thr_obj		= self.pool.get('thr')
@@ -486,47 +596,57 @@ class hr_payslip(osv.osv):
 			# 	month_date	= thr.date
 			# 	month 		= datetime.strptime(month_date,"%Y-%m-%d").month
 			# 	if date_pays == month :
-			# 		self.write(cr,uid,ids,{'tunjangan_hariraya' : self_obj.contract_id.wage})
-   #          if year == 1 or year == 2 or year == 3 or year == 4 or year == 5 or year == 6 or year == 7 or year ==8 or year == 9 or year == 10 :
-   #              if date_cont == date_pays :
-   #                  nilai	=1
-   #                  self.write(cr, uid,ids, {'komisi': nilai}, context=context)
+			# 		self.write(cr,uid,ids,{'tunjangan_hariraya' : pay_objk.contract_id.wage})
+            # if year == 1 or year == 2 or year == 3 or year == 4 or year == 5 or year == 6 or year == 7 or year ==8 or year == 9 or year == 10 :
+            #    if date_cont == date_pays :
+            #        nilai	=1
+            #        self.write(cr, uid,ids, {'komisi': nilai}, context=context)
           
-            if self_obj.thr == True :
+            if pay_objk.thr == True :
                 # cari tanggal masuk kerja di dalam kontrak
-                tgl_masuk = self_obj.contract_id.date_start
+                tgl_masuk = pay_objk.contract_id.date_start
                 tgl_masuk_str = datetime.strptime(tgl_masuk,"%Y-%m-%d")
                 tgl_masuk_y = datetime.strptime(tgl_masuk,"%Y-%m-%d").year
                 tgl_masuk_m = datetime.strptime(tgl_masuk,"%Y-%m-%d").month
                 
                 # cari tanggal gajian
-                tgl_gaji = self_obj.date_from
+                tgl_gaji = pay_objk.date_from
                 tgl_gaji_str = datetime.strptime(tgl_gaji,"%Y-%m-%d")
                 tgl_gaji_y = datetime.strptime(tgl_gaji,"%Y-%m-%d").year
                 tgl_gaji_m = datetime.strptime(tgl_gaji,"%Y-%m-%d").month
                 
                 if tgl_masuk_y < tgl_gaji_y :
-                    self.write(cr,uid,[self_obj.id],{'tunjangan_hariraya' : self_obj.contract_id.wage})
+                    self.write(cr,uid,[pay_objk.id],{'tunjangan_hariraya' : pay_objk.contract_id.wage})
                 else :
                     pembagi = tgl_gaji_m - (tgl_masuk_m - 1)
-                    terima_thr = self_obj.contract_id.wage/pembagi
-                    self.write(cr,uid,[self_obj.id],{'tunjangan_hariraya' : pembagi})  
+                    terima_thr = pay_objk.contract_id.wage/pembagi
+                    self.write(cr,uid,[pay_objk.id],{'tunjangan_hariraya' : pembagi})  
+
             number          = payslip.number or sequence_obj.get(cr, uid, 'salary.slip')
-                #date_d = datetime.strptime(date,"%Y-%m-%d %H:%M:%S").day
+            #date_d = datetime.strptime(date,"%Y-%m-%d %H:%M:%S").day
 
-
+            ################################################################################
             #delete old payslip lines
+            ################################################################################
             old_slipline_ids = slip_line_pool.search(cr, uid, [('slip_id', '=', payslip.id)], context=context)
-#            old_slipline_ids
             if old_slipline_ids:
                 slip_line_pool.unlink(cr, uid, old_slipline_ids, context=context)
+
             if payslip.contract_id:
+                ################################################################################
                 #set the list of contract for which the rules have to be applied
+                ################################################################################
                 contract_ids 	= [payslip.contract_id.id]
             else:
+                ################################################################################
                 #if we don't give the contract, then the rules to apply should be for all current contracts of the employee
+                ################################################################################
                 contract_ids 	= self.get_contract(cr, uid, payslip.employee_id, payslip.date_from, payslip.date_to, context=context)
+
+
+            ################################################################################
             # overwrite field in payslip for tunjangan pajak and pajak
+            ################################################################################
             gross = 0.0
             cat_obj	=self.pool.get('hr.salary.rule.category')
             cat_src			=cat_obj.search(cr,uid,[('name','=','Net')])
@@ -547,12 +667,14 @@ class hr_payslip(osv.osv):
                         total_gross_ttetap += line['amount']
                     cod =line['code'] 
                     if cod == 'POT_ABSEN' :
-                        self.write(cr,uid,[self_obj.id],{'pot_absen':line['amount']},context=context)    
+                        self.write(cr,uid,[pay_objk.id],{'pot_absen':line['amount']},context=context)    
                     if cod == "BASIC" and brw_rule.category_id.name == "Gross" :
                         potongan = pay_objk.pot_absen
                 gross = total_gross_tetap + potongan      
-                self.write(cr,uid,[self_obj.id],{'gross_tetap': gross ,'gross_ttetap' : total_gross_ttetap})     
+                self.write(cr,uid,[pay_objk.id],{'gross_tetap': gross ,'gross_ttetap' : total_gross_ttetap})     
                 tunjangan_pajak = self.tunjangan(cr,uid,ids,context=None)    
+
+
             total_bonus_tetap = 0.0
             total_bonus_ttetap = 0.0
             basic = 0.0
@@ -607,13 +729,11 @@ class hr_payslip(osv.osv):
                 if cod == 'POT_BPJS_KETENAGAKERJAAN':
                     bpjs_ket2 = line['amount']*-1
                 if cod == 'POT_ABSEN' :
-                    self.write(cr,uid,[self_obj.id],{'pot_absen':line['amount']},context=context)   
+                    self.write(cr,uid,[pay_objk.id],{'pot_absen':line['amount']},context=context)   
                 if cod == 'TPAJ' and brw_rule.category_id.name == "Gross" :
-                    self.write(cr,uid,[self_obj.id],{'tunj_pajak_code':'Gross'},context=context) 
+                    self.write(cr,uid,[pay_objk.id],{'tunj_pajak_code':'Gross'},context=context) 
                 if cod == 'TPAJ' :
-                    tunj = line['amount']  
-            #import pdb;pdb.set_trace()
-            #total_bonus_tetap = ((((total_bonus_tetap - tunj)-bpjs_ket)+(bpjs_ket/payslip.contract_id.type_id.pembagi_bpjs_tk*payslip.contract_id.type_id.pengali_bpjs_tk))*12)+(basic+float(makan)+float(jabatan))
+                    tunj = line['amount']
                 if cod == "BASIC" :
                     basic = line['amount']
                 if cod == 'tunjangan_makan' :
@@ -626,8 +746,6 @@ class hr_payslip(osv.osv):
                     tunj_fung = line['amount']
                 if cod == 'tunjangan_transport' :
                     tunj_trans = line['amount']
-                # if cod == 'tunjangan_kinerja' :
-                #     tunj_kinerja = line['amount']
                 if cod == 'tunjangan_shift_3' :
                     tunj_shift3 = line['amount']
                 if cod == 'Adlk' :
@@ -658,9 +776,40 @@ class hr_payslip(osv.osv):
                     pinjaman_koperasi = line['amount']
                 if cod == 'hutang_per' :
                     pinjaman_perusahaan = line['amount']
+
+            ################################################################################
+            # denda ketidak hadiran
+            ################################################################################
             dendatdkhdrall = denda_tidakhadir + pot_komunikasi + pot_fungsional + pot_transport + pot_kinerja    
-            self.write(cr,uid,[payslip.id],{'status_karyawan':payslip.employee_id.status_karyawan.name,'pinjaman_koperasi':pinjaman_koperasi,'pinjaman_perusahaan':pinjaman_perusahaan,'bpjs_kes_pot':pot_bpjs_kes,'denda_ketidakhadiran':dendatdkhdrall,'denda_keterlambatan':denda_terlambat,'lembur':lembur,'job_id':payslip.employee_id.job_id.name,'department_id':payslip.employee_id.department_id.name,'class_id':payslip.employee_id.clas_id.name,'gol_id':payslip.employee_id.gol_id.name,'lokasi_kerja':payslip.employee_id.address_id2.name,'net':total,'tunjangan_hariraya':tunj_THR,'bpjs_kes':bpjs_kes,'tunj_luarkt':tunj_Adlk,'tunj_shift3':tunj_shift3,'tunj_trans':tunj_trans,'gapok':basic,'tunj_makan':tunj_makan,'tunj_jab':tunj_jab,'tunj_kom':tunj_kom,'tunj_fungsional':tunj_fung,'bpjs_ket':bpjs_ket,'bpjs_ket_pot' : bpjs_ket2 ,'total_tp': total_bonus_tetap ,'total_ttp' : total_bonus_ttetap})      
-            #import pdb;pdb.set_trace()
+            self.write(cr,uid,[payslip.id],{
+                'status_karyawan':payslip.employee_id.status_karyawan.name,
+                'pinjaman_koperasi':pinjaman_koperasi,
+                'pinjaman_perusahaan':pinjaman_perusahaan,
+                'bpjs_kes_pot':pot_bpjs_kes,
+                'denda_ketidakhadiran':dendatdkhdrall,
+                'denda_keterlambatan':denda_terlambat,
+                'lembur':lembur,
+                'job_id':payslip.employee_id.job_id.name,
+                'department_id':payslip.employee_id.department_id.name,
+                'class_id':payslip.employee_id.clas_id.name,
+                'gol_id':payslip.employee_id.gol_id.name,
+                'lokasi_kerja':payslip.employee_id.address_id2.name,
+                'net':total,
+                'tunjangan_hariraya':tunj_THR,
+                'bpjs_kes':bpjs_kes,
+                'tunj_luarkt':tunj_Adlk,
+                'tunj_shift3':tunj_shift3,
+                'tunj_trans':tunj_trans,
+                'gapok':basic,
+                'tunj_makan':tunj_makan,
+                'tunj_jab':tunj_jab,
+                'tunj_kom':tunj_kom,
+                'tunj_fungsional':tunj_fung,
+                'bpjs_ket':bpjs_ket,
+                'bpjs_ket_pot' : bpjs_ket2 ,
+                'total_tp': total_bonus_tetap ,
+                'total_ttp' : total_bonus_ttetap})
+
             if payslip.employee_id.ptkp_id.id != False :
                 pajak = self.pajak(cr,uid,ids,context=None)              
             lines = [(0,0,line) for line in self.pool.get('hr.payslip').get_payslip_lines(cr, uid, contract_ids, payslip.id, context=context)]
@@ -991,7 +1140,6 @@ class hr_payslip(osv.osv):
         }
 hr_payslip()
 
-
 class master_tunjangan(osv.osv):
 	
 	_name			= 'hr.master.tunjangan'
@@ -1041,7 +1189,6 @@ class tunjangan_hari_raya(osv.osv):
 		'date'				: fields.date('Jatuh Tempo Tunjangan Hari Raya'),
 		'tahun'				: fields.integer('Tahun')
 	}
-
 tunjangan_hari_raya()
 
 class hr_holidays(osv.osv):
@@ -1103,5 +1250,4 @@ class hr_holidays(osv.osv):
     _defaults = { 
         'tahun' : lambda *a : time.strftime('%Y'),   
         }    
-         
-hr_holidays()  
+hr_holidays()
