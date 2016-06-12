@@ -445,7 +445,7 @@ class import_refi_keluarga(osv.osv):
 					ex = ex+1
 					cr.commit()
 					continue
-			data.update( {'tgl_lahir':tgl_lahir})
+			data.update( {'perorangan_tanggal_lahir':tgl_lahir})
 
 			partner.write(cr, uid, pid[0], data, context=context)
 
