@@ -106,17 +106,24 @@ class import_ajri(osv.osv):
 
 
 			########################## check exiting participant partner 
+			date_birth = False
 			if import_ajri.tgl_lahir:
-				date = datetime.strptime(import_ajri.tgl_lahir, "%d-%b-%Y")
-			else:
-				date = False 
+				try:
+					date_birth = datetime.strptime(import_ajri.tgl_lahir, "%d-%b-%Y")
+				except ValueError:
+					self.write(cr, uid, import_ajri.id, {'notes':'date birth format error, use dd-bbb-yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+
+
 			participant_data = {
 				'name'					: import_ajri.nama_partisipan,
 				'ajri_nomor_partisipan'	: import_ajri.nomor_partisipan,
 				'ajri_nomor_polis'		: import_ajri.nomor_polis,
 				'is_company'			: False,
 				'ajri_parent_id'		: pid,
-				'perorangan_tanggal_lahir'	: date,
+				'perorangan_tanggal_lahir'	: date_birth,
 				'country_id'			: indo[0],
 				'comment' 				: 'AJRI',
 				'initial_bu' 			: 'AJRI'
