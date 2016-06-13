@@ -166,18 +166,49 @@ class import_ajri(osv.osv):
 			########################## import to partner_ajri_product
 			partner_ajri_product = self.pool.get('reliance.partner_ajri_product')
 
+			########################## check exiting participant partner
+			tgl_mulai = False
+			if import_ajri.tgl_mulai:
+				try:
+					tgl_mulai = datetime.strptime(import_ajri.tgl_mulai, "%d-%b-%Y")
+				except ValueError:
+					self.write(cr, uid, import_ajri.id, {'notes':'tgl_mulai format error, use dd-bbb-yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+
+			tgl_selesai = False
+			if import_ajri.tgl_selesai:
+				try:
+					tgl_selesai = datetime.strptime(import_ajri.tgl_selesai, "%d-%b-%Y")
+				except ValueError:
+					self.write(cr, uid, import_ajri.id, {'notes':'tgl_selesai format error, use dd-bbb-yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+			tgl_bayar = False
+
+			if import_ajri.tgl_bayar:
+				try:
+					tgl_bayar = datetime.strptime(import_ajri.tgl_bayar, "%d-%b-%Y")
+				except ValueError:
+					self.write(cr, uid, import_ajri.id, {'notes':'tgl_bayar format error, use dd-bbb-yyyy'}, context=context)
+					ex = ex+1
+					cr.commit()
+					continue
+
 
 			pap_data = {
 				'partner_id'		: pid2,
 				'product_id'		: prod_id,
-				'start_date'		: datetime.strptime(import_ajri.tgl_mulai, "%d-%b-%Y") if import_ajri.tgl_mulai else False,
-				'end_date'			: datetime.strptime(import_ajri.tgl_selesai, "%d-%b-%Y") if import_ajri.tgl_selesai else False,
+				'start_date'		: tgl_mulai,
+				'end_date'			: tgl_selesai,
 				'status'			: import_ajri.status,
 				'up'				: import_ajri.up.strip().replace(',','').replace('-','0') if import_ajri.up else False,
 				"total_premi"		: import_ajri.total_premi.strip().replace(',','').replace('-','0') if import_ajri.total_premi else False,
 				"status_klaim"		: import_ajri.status_klaim,
 				"status_bayar"		: import_ajri.status_bayar,
-				"tgl_bayar"			: datetime.strptime(import_ajri.tgl_bayar, "%d-%b-%Y") if import_ajri.tgl_bayar else False,
+				"tgl_bayar"			: tgl_bayar,
 				"klaim_disetujui" 	: import_ajri.klaim_disetujui,
 
 			}
